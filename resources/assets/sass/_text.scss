@@ -1,0 +1,178 @@
+/*
+* Header Styles
+*/
+
+h1 {
+  font-size: 5.625em;
+  line-height: 1.22222222em;
+  margin-top: 0.48888889em;
+  margin-bottom: 0.24444444em;
+}
+h2 {
+  font-size: 3.1875em;
+  line-height: 1.294117647em;
+  margin-top: 0.8627451em;
+  margin-bottom: 0.43137255em;
+}
+h3 {
+  font-size: 1.75em;
+  line-height: 1.571428572em;
+  margin-top: 0.78571429em;
+  margin-bottom: 0.43137255em;
+}
+h4 {
+  font-size: 1em;
+  line-height: 1.375em;
+  margin-top: 1.375em;
+  margin-bottom: 1.375em;
+}
+
+h1, h2, h3, h4 {
+  .subheader {
+    display: block;
+    font-size: 0.5em;
+    line-height: 1em;
+    color: lighten($text-dark, 16%);
+  }
+}
+
+/*
+* Link styling
+*/
+a {
+  color: $primary;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color ease-in-out 80ms;
+  &:hover {
+    text-decoration: underline;
+    color: darken($primary, 20%);
+  }
+}
+
+/*
+* Other HTML Text Elements
+*/
+p, ul, ol, pre, table, blockquote {
+  margin-top: 0.3em;
+  margin-bottom: 1.375em;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  border: 0;
+  background: #e3e0e0;
+  margin-bottom: $-l;
+  &.faded {
+    background-image: linear-gradient(to right, #FFF, #e3e0e0 20%, #e3e0e0 80%, #FFF);
+  }
+  &.margin-top {
+    margin-top: $-l;
+  }
+}
+
+strong, b, .bold, .strong {
+  font-weight: bold;
+  > strong, > b, > .bold, > .strong {
+    font-weight: bolder;
+  }
+}
+
+em, i, .italic {
+  font-style: italic;
+}
+
+small, p.small, span.small, .text-small {
+  font-size: 0.8em;
+  color: lighten($text-dark, 20%);
+}
+
+sup, .superscript {
+  vertical-align: super;
+  font-size: 0.8em;
+}
+
+pre {
+  font-family: monospace;
+  white-space:pre;
+}
+
+blockquote {
+  display: block;
+  position: relative;
+  border-left: 4px solid $primary;
+  background-color: #F8F8F8;
+  padding: $-s $-m $-s $-xl;
+  &:before {
+    content: "\201C";
+    font-size: 2em;
+    font-weight: bold;
+    position: absolute;
+    top: $-s;
+    left: $-s;
+    color: lighten($text-dark, 20%);
+  }
+}
+
+.code-base {
+    background-color: #F8F8F8;
+    font-family: monospace;
+    font-size: 0.88em;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+}
+
+code {
+  @extend .code-base;
+  display: block;
+  white-space:pre;
+  line-height: 1.2em;
+  margin-bottom: 1.2em;
+}
+
+span.code {
+  @extend .code-base;
+  padding: 1px $-xs;
+}
+/*
+* Text colors
+*/
+p.pos, p .pos, span.pos, .text-pos {
+	color: $positive;
+}
+
+p.neg, p .neg, span.neg, .text-neg {
+	color: $negative;
+}
+
+p.muted, p .muted, span.muted, .text-muted {
+	color: lighten($text-dark, 26%);
+}
+
+p.primary, p .primary, span.primary, .text-primary {
+	color: $primary;
+}
+
+p.secondary, p .secondary, span.secondary, .text-secondary {
+	color: $secondary;
+}
+
+/*
+* Generic text styling classes
+*/
+.underlined {
+  text-decoration: underline;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}

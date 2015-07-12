@@ -1,0 +1,45 @@
+// Variables
+///////////////
+
+// Sizes
+$max-width: 1100px;
+
+// Screen breakpoints
+$xl: 1100px;
+$ipad-width: 1028px; // Is actually 1024 but we go over to ensure functionality.
+$l: 1000px;
+$m: 800px;
+$s: 600px;
+$xs: 400px;
+$xxs: 360px;
+
+// Spacing (Margins+Padding)
+$-xxxl: 64px;
+$-xxl: 48px;
+$-xl: 32px;
+$-l: 24px;
+$-m: 16px;
+$-s: 12px;
+$-xs: 6px;
+$-xxs: 3px;
+
+// Fonts
+$heading:  'Roboto', Helvetica, Arial, sans-serif;
+$text: 'Roboto', Helvetica, Arial, sans-serif;
+$fs-m: 16px;
+$fs-s: 14px;
+
+// Colours
+$primary: #1c77c1;
+$secondary: #e27b41;
+$positive: #409945;
+$negative: #D35252;
+
+// Text colours
+$text-dark: #444;
+$text-light: #EEE;
+
+// Shadows
+$bs-light: 0 0 4px 1px #CCC;
+$bs-med: 0 1px 3px 1px rgba(76, 76, 76, 0.26);
+$bs-hover: 0 2px 2px 1px rgba(0,0,0,.13);

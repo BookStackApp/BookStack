@@ -1,0 +1,121 @@
+
+/*
+* This file container all block styling including background shading,
+* margins, paddings & borders.
+*/
+
+
+/*
+* Background Shading
+*/
+.shaded {
+  background-color: #f1f1f1;
+  &.pos {
+    background-color: lighten($positive, 40%);
+  }
+  &.neg {
+    background-color: lighten($negative, 20%);
+  }
+  &.primary {
+    background-color: lighten($primary, 40%);
+  }
+  &.secondary {
+    background-color: lighten($secondary, 30%);
+  }
+}
+
+/*
+* Bordering
+*/
+.bordered {
+  border: 1px solid #BBB;
+  &.pos {
+    border-color: $positive;
+  }
+  &.neg {
+    border-color: $negative;
+  }
+  &.primary {
+    border-color: $primary;
+  }
+  &.secondary {
+    border-color: $secondary;
+  }
+  &.thick {
+    border-width: 2px;
+  }
+}
+.rounded {
+  border-radius: 3px;
+}
+
+/*
+* Padding
+*/
+.nopadding {
+  padding: 0;
+}
+.padded {
+  padding: $-l;
+  &.large {
+    padding: $-xl;
+  }
+}
+.padded-vertical, .padded-top {
+  padding-top: $-m;
+  &.large {
+    padding-top: $-xl;
+  }
+}
+.padded-vertical, .padded-bottom {
+  padding-bottom: $-m;
+  &.large {
+    padding-bottom: $-xl;
+  }
+}
+.padded-horizontal, .padded-left {
+  padding-left: $-m;
+  &.large {
+    padding-left: $-xl;
+  }
+}
+.padded-horizontal, .padded-right {
+  padding-right: $-m;
+  &.large {
+    padding-right: $-xl;
+  }
+}
+
+/*
+* Margins
+*/
+.margins {
+  margin: $-l;
+  &.large {
+    margin: $-xl;
+  }
+}
+.margins-vertical, .margin-top {
+  margin-top: $-m;
+  &.large {
+    margin-top: $-xl;
+  }
+}
+.margins-vertical, .margin-bottom {
+  margin-bottom: $-m;
+  &.large {
+    margin-bottom: $-xl;
+  }
+}
+.margins-horizontal, .margin-left {
+  margin-left: $-m;
+  &.large {
+    margin-left: $-xl;
+  }
+}
+.margins-horizontal, .margin-right {
+  margin-right: $-m;
+  &.large {
+    margin-right: $-xl;
+  }
+}

@@ -1,0 +1,13 @@
+* {
+	box-sizing: border-box;
+}
+html {
+	background-color: #FFF;
+}
+body {
+	font-family: $text;
+	font-size: $fs-m;
+	line-height: 1.4em;
+	color: #444;
+	-webkit-font-smoothing: antialiased;
+}

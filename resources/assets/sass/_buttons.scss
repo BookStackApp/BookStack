@@ -1,0 +1,61 @@
+
+@mixin generate-button-colors($textColor, $backgroundColor) {
+  background-color: $backgroundColor;
+  color: $textColor;
+  &:hover {
+    background-color: lighten($backgroundColor, 8%);
+    box-shadow: $bs-med;
+    text-decoration: none;
+    color: $textColor;
+  }
+  &:active {
+    background-color: darken($backgroundColor, 8%);
+  }
+}
+
+// Button Specific Variables
+$button-border-radius: 3px;
+
+.button-base {
+  text-decoration: none;
+  font-size: $fs-m;
+  line-height: 1.4em;
+  padding: $-xs $-m;
+  margin: $-xs $-xs $-xs 0;
+  display: inline-block;
+  border: none;
+  outline: 0;
+  border-radius: $button-border-radius;
+  cursor: pointer;
+  transition: all ease-in-out 80ms;
+  box-shadow: 0 0 0 0 #000;
+  @include generate-button-colors(#EEE, $primary);
+}
+
+.button, button[type="button"], input[type="button"], input[type="submit"]  {
+  @extend .button-base;
+  &.pos {
+    @include generate-button-colors(#EEE, $positive);
+  }
+  &.neg {
+    @include generate-button-colors(#EEE, $negative);
+  }
+  &.secondary {
+    @include generate-button-colors(#EEE, $secondary);
+  }
+}
+
+.button-group {
+  @include clearfix;
+  .button, button[type="button"] {
+    margin: $-xs 0 $-xs 0;
+    float: left;
+    border-radius: 0;
+    &:first-child {
+      border-radius: $button-border-radius 0 0 $button-border-radius;
+    }
+    &:last-child {
+      border-radius: 0 $button-border-radius $button-border-radius 0;
+    }
+  }
+}
