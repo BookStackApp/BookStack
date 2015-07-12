@@ -7,19 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Oxbow\Http\Requests;
 use Oxbow\Repos\BookRepo;
+use Oxbow\Repos\PageRepo;
 
 class BookController extends Controller
 {
 
     protected $bookRepo;
+    protected $pageRepo;
 
     /**
      * BookController constructor.
      * @param BookRepo $bookRepo
+     * @param PageRepo $pageRepo
      */
-    public function __construct(BookRepo $bookRepo)
+    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo)
     {
         $this->bookRepo = $bookRepo;
+        $this->pageRepo = $pageRepo;
     }
 
     /**
@@ -58,7 +62,7 @@ class BookController extends Controller
         $book = $this->bookRepo->newFromInput($request->all());
         $slug = Str::slug($book->name);
         while($this->bookRepo->countBySlug($slug) > 0) {
-            $slug += '1';
+            $slug .= '1';
         }
         $book->slug = $slug;
         $book->save();

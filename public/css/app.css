@@ -941,4 +941,9 @@ header .menu {
     display: inline-block;
     margin-left: 16px; }
 
+.page-title input {
+  display: block;
+  width: 100%;
+  font-size: 1.4em; }
+
 /*# sourceMappingURL=app.css.map */

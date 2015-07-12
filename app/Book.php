@@ -19,4 +19,9 @@ class Book extends Model
         return $this->getUrl() . '/edit';
     }
 
+    public function pages()
+    {
+        return $this->hasMany('Oxbow\Page');
+    }
+
 }

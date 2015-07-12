@@ -4,3 +4,4 @@ Homestead.yaml
 .env
 /public/dist
 .idea
+/public/plugins

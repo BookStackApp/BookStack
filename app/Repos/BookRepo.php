@@ -6,14 +6,17 @@ class BookRepo
 {
 
     protected $book;
+    protected $pageRepo;
 
     /**
      * BookRepo constructor.
-     * @param $book
+     * @param Book $book
+     * @param PageRepo $pageRepo
      */
-    public function __construct(Book $book)
+    public function __construct(Book $book, PageRepo $pageRepo)
     {
         $this->book = $book;
+        $this->pageRepo = $pageRepo;
     }
 
     public function getById($id)
@@ -44,6 +47,9 @@ class BookRepo
     public function destroyById($id)
     {
         $book = $this->getById($id);
+        foreach($book->pages as $page) {
+            $this->pageRepo->destroyById($page->id);
+        }
         $book->delete();
     }
 

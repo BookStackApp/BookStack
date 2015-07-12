@@ -21,6 +21,12 @@ Route::group(['prefix' => 'books'], function() {
     Route::put('/{slug}', 'BookController@update');
     Route::delete('/{id}/destroy', 'BookController@destroy');
     Route::get('/{slug}', 'BookController@show');
+
+    Route::get('/{bookSlug}/page/create', 'PageController@create');
+    Route::post('/{bookSlug}/page', 'PageController@store');
+    Route::get('/{bookSlug}/{pageSlug}', 'PageController@show');
+    Route::get('/{bookSlug}/{pageSlug}/edit', 'PageController@edit');
+    Route::put('/{bookSlug}/{pageSlug}', 'PageController@update');
 });
 
 Route::get('/', function () {
