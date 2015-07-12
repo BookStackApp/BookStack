@@ -5,3 +5,4 @@ Homestead.yaml
 /public/dist
 .idea
 /public/plugins
+/public/css
