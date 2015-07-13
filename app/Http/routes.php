@@ -29,6 +29,10 @@ Route::group(['prefix' => 'books'], function() {
     Route::put('/{bookSlug}/{pageSlug}', 'PageController@update');
 });
 
+Route::post('/upload/image', 'ImageController@upload');
+
+Route::get('/images/{any}', 'ImageController@getImage')->where('any', '.*');
+
 Route::get('/', function () {
     return view('base');
 });

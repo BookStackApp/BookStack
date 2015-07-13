@@ -14,7 +14,13 @@
 
     <script>
         $(function() {
-            $('#html').editable({inlineMode: false});
+            $('#html').editable({
+                inlineMode: false,
+                imageUploadURL: '/upload/image',
+                imageUploadParams: {
+                    '_token': '{{ csrf_token() }}'
+                }
+            });
         });
     </script>
 @stop
