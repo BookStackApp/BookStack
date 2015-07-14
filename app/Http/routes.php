@@ -31,6 +31,8 @@ Route::group(['prefix' => 'books'], function() {
 
 Route::post('/upload/image', 'ImageController@upload');
 
+Route::get('/images/all', 'ImageController@getAll');
+Route::get('/images/all/{page}', 'ImageController@getAll');
 Route::get('/images/{any}', 'ImageController@getImage')->where('any', '.*');
 
 Route::get('/', function () {

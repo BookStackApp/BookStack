@@ -5,6 +5,8 @@ namespace Oxbow\Http\Controllers;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
 
+use Intervention\Image\Facades\Image as ImageTool;
+use Illuminate\Support\Facades\DB;
 use Oxbow\Http\Requests;
 use Oxbow\Image;
 
@@ -62,6 +64,49 @@ class ImageController extends Controller
     }
 
     /**
+     * Get all images, Paginated
+     * @param int $page
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAll($page = 0)
+    {
+        $pageSize = 25;
+        $images = DB::table('images')->orderBy('created_at', 'desc')
+            ->skip($page*$pageSize)->take($pageSize)->get();
+        foreach($images as $image) {
+            $image->thumbnail = $this->getThumbnail($image, 150, 150);
+        }
+        return response()->json($images);
+    }
+
+    /**
+     * Get the thumbnail for an image.
+     * @param $image
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function getThumbnail($image, $width = 220, $height = 220)
+    {
+        $explodedPath = explode('/', $image->url);
+        array_splice($explodedPath, 3, 0, ['thumbs-' . $width . '-' . $height]);
+        $thumbPath = implode('/', $explodedPath);
+        $thumbFilePath = storage_path() . $thumbPath;
+        if(file_exists($thumbFilePath)) {
+            return $thumbPath;
+        }
+
+        //dd($thumbFilePath);
+        $thumb = ImageTool::make(storage_path() . $image->url);
+        $thumb->fit($width, $height);
+        if(!file_exists(dirname($thumbFilePath))) {
+            mkdir(dirname($thumbFilePath), 0775, true);
+        }
+        $thumb->save($thumbFilePath);
+        return $thumbFilePath;
+    }
+
+    /**
      * Handles image uploads for use on pages.
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -69,7 +114,7 @@ class ImageController extends Controller
     public function upload(Request $request)
     {
         $imageUpload = $request->file('file');
-        $name = $imageUpload->getClientOriginalName();
+        $name = str_replace(' ', '-', $imageUpload->getClientOriginalName());
         $imagePath = '/images/' . Date('Y-m-M') . '/';
         $storagePath = storage_path(). $imagePath;
         $fullPath = $storagePath . $name;
@@ -82,7 +127,7 @@ class ImageController extends Controller
         $this->image->name = $name;
         $this->image->url = $imagePath . $name;
         $this->image->save();
-        return response()->json(['link' => $this->image->url]);
+        return response()->json($this->image);
     }
 
 
