@@ -1,0 +1,20 @@
+{
+  "name": "oxbow",
+  "version": "0.0.0",
+  "authors": [
+    "Dan Brown <ssddanbrown@googlemail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dropzone": "~4.0.1",
+    "tinymce-dist": "~4.2.1"
+  }
+}
