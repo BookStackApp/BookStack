@@ -1,9 +1,9 @@
 @extends('base')
 
 @section('head')
-    <link rel="stylesheet" href="/plugins/css/froala_editor.min.css">
-    <link rel="stylesheet" href="/plugins/css/froala_style.min.css">
-    <script src="/plugins/js/froala_editor.min.js"></script>
+    <script src="/bower/tinymce-dist/tinymce.jquery.min.js"></script>
+    <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="/js/image-manager.js"></script>
 @stop
 
 @section('content')

@@ -107,13 +107,14 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
+        $book->fill($request->all());
         $slug = Str::slug($book->name);
         while($this->bookRepo->countBySlug($slug) > 0 && $book->slug != $slug) {
             $slug += '1';
         }
         $book->slug = $slug;
         $book->save();
-        return redirect('/books');
+        return redirect($book->getUrl());
     }
 
     /**

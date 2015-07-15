@@ -32,7 +32,7 @@ $button-border-radius: 3px;
   @include generate-button-colors(#EEE, $primary);
 }
 
-.button, button[type="button"], input[type="button"], input[type="submit"]  {
+.button, input[type="button"], input[type="submit"]  {
   @extend .button-base;
   &.pos {
     @include generate-button-colors(#EEE, $positive);

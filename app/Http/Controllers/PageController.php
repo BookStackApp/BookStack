@@ -85,7 +85,8 @@ class PageController extends Controller
      */
     public function show($bookSlug, $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         return view('pages/show', ['page' => $page]);
     }
 
@@ -98,7 +99,8 @@ class PageController extends Controller
      */
     public function edit($bookSlug, $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         return view('pages/edit', ['page' => $page]);
     }
 
@@ -112,8 +114,8 @@ class PageController extends Controller
      */
     public function update(Request $request, $bookSlug, $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug);
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $page->fill($request->all());
         $slug = Str::slug($page->name);
         while($this->pageRepo->countBySlug($slug, $book->id) > 0 && $slug != $pageSlug) {

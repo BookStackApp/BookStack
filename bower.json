@@ -15,6 +15,8 @@
   ],
   "dependencies": {
     "dropzone": "~4.0.1",
-    "tinymce-dist": "~4.2.1"
+    "tinymce-dist": "~4.2.1",
+    "bootstrap": "~3.3.5",
+    "jquery-sortable": "~0.9.13"
   }
 }

@@ -1,11 +1,26 @@
 @extends('base')
 
 @section('content')
-    <h2>Edit Book</h2>
 
-    <form action="/books/{{$book->slug}}" method="POST">
-        {{ csrf_field() }}
-        <input type="hidden" name="_method" value="PUT">
-        @include('books/form', ['model' => $book])
-    </form>
+
+    <div class="row">
+
+        <div class="col-md-3 page-menu">
+            <h4>You are editing the details for the book '{{$book->name}}'.</h4>
+            <hr>
+            @include('form/delete-button', ['url' => '/books/' . $book->id . '/destroy', 'text' => 'Delete this book'])
+        </div>
+
+        <div class="col-md-9 page-content">
+            <form action="/books/{{$book->slug}}" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                @include('books/form', ['model' => $book])
+            </form>
+        </div>
+
+    </div>
+
+
+
+
 @stop

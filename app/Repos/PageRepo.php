@@ -27,9 +27,9 @@ class PageRepo
         return $this->page->all();
     }
 
-    public function getBySlug($slug)
+    public function getBySlug($slug, $bookId)
     {
-        return $this->page->where('slug', '=', $slug)->first();
+        return $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
     }
 
     public function newFromInput($input)

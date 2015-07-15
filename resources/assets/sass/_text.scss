@@ -1,6 +1,6 @@
 /*
-* Header Styles
-*/
+ * Header Styles
+ */
 
 h1 {
   font-size: 3.625em;
@@ -23,11 +23,12 @@ h3 {
 h4 {
   font-size: 1em;
   line-height: 1.375em;
-  margin-top: 1.375em;
-  margin-bottom: 1.375em;
+  margin-top: 0.78571429em;
+  margin-bottom: 0.43137255em;
 }
 
 h1, h2, h3, h4 {
+  font-weight: 500;
   .subheader {
     display: block;
     font-size: 0.5em;
@@ -37,8 +38,8 @@ h1, h2, h3, h4 {
 }
 
 /*
-* Link styling
-*/
+ * Link styling
+ */
 a {
   color: $primary;
   cursor: pointer;
@@ -48,11 +49,14 @@ a {
     text-decoration: underline;
     color: darken($primary, 20%);
   }
+  i {
+    padding-right: $-s;
+  }
 }
 
 /*
-* Other HTML Text Elements
-*/
+ * Other HTML Text Elements
+ */
 p, ul, ol, pre, table, blockquote {
   margin-top: 0.3em;
   margin-bottom: 1.375em;
@@ -136,8 +140,8 @@ span.code {
   padding: 1px $-xs;
 }
 /*
-* Text colors
-*/
+ * Text colors
+ */
 p.pos, p .pos, span.pos, .text-pos {
 	color: $positive;
 }
@@ -159,8 +163,8 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
 }
 
 /*
-* Generic text styling classes
-*/
+ * Generic text styling classes
+ */
 .underlined {
   text-decoration: underline;
 }
@@ -175,4 +179,14 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
 
 .text-right {
   text-align: right;
+}
+
+/**
+ * Grouping
+ */
+.header-group {
+  margin: $-m 0;
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+  }
 }

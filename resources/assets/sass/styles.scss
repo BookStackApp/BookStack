@@ -7,6 +7,20 @@
 @import "blocks";
 @import "buttons";
 @import "forms";
+@import "tinymce";
+
+header {
+  background-color: #f8f8f8;
+  position: fixed;
+  display: block;
+  width: 100%;
+  z-index: -1;
+  top: 0;
+}
+
+body {
+  margin-top: 64px;
+}
 
 header hr {
   margin-top: 0;
@@ -25,6 +39,81 @@ header .menu {
   display: block;
   width: 100%;
   font-size: 1.4em;
+}
+
+.affix {
+  position: fixed;
+}
+
+.page-style {
+  background-color: #FFF;
+  padding: $-s $-xxl $-xxl $-xxl;
+  border-radius: 4px;
+  box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.15);
+  margin-bottom: $-xxl;
+  max-width: 100%;
+}
+
+.page-style.editor {
+  padding: 0 !important;
+}
+
+.page-content {
+  @extend .page-style;
+  min-height: 70vh;
+  &.right {
+    float: right;
+  }
+  &.left {
+    float: left;
+  }
+}
+
+.page-list {
+  a {
+    display: block;
+    padding: $-s 0;
+    border-bottom: 2px dotted #CCC;
+    &:first-child {
+      border-top: 2px dotted #CCC;
+    }
+  }
+}
+
+.page-menu  {
+  opacity: 0.6;
+  transition: opacity ease-in-out 120ms;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.page-nav-list {
+  $nav-indent: $-s;
+  li {
+    //border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: $-xs;
+  }
+  .nav-H2 {
+    margin-left: $nav-indent;
+    font-size: 0.95em;
+  }
+  .nav-H3 {
+    margin-left: $nav-indent*2;
+    font-size: 0.90em
+  }
+  .nav-H4 {
+    margin-left: $nav-indent*3;
+    font-size: 0.85em
+  }
+  .nav-H5 {
+    margin-left: $nav-indent*4;
+    font-size: 0.80em
+  }
+  .nav-H6 {
+    margin-left: $nav-indent*5;
+    font-size: 0.75em
+  }
 }
 
 .overlay {

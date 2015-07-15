@@ -45,3 +45,40 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
 .form-group {
   margin-bottom: $-s;
 }
+
+.inline-input-style {
+  border: 2px dotted #BBB;
+  display: block;
+  width: 100%;
+  padding: $-xs $-s;
+}
+
+.title-input label, .description-input label{
+  margin-top: $-m;
+  color: #666;
+}
+
+.title-input input[type="text"] {
+  @extend h1;
+  @extend .inline-input-style;
+  margin-top: 0;
+  color: #444;
+}
+
+.title-input.page-title {
+  padding: $-s;
+}
+.title-input.page-title input[type="text"]{
+  //border: 2px dotted #BBB;
+  margin-bottom: 0;
+}
+.edit-area {
+  padding:  0 $-s $-s $-s;
+}
+
+.description-input textarea {
+  @extend .inline-input-style;
+  font-size: $fs-m;
+  color: #666;
+  width: 100%;
+}
