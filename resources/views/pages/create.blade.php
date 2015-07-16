@@ -10,12 +10,6 @@
     <form action="{{$book->getUrl() . '/page'}}" method="POST">
         @include('pages/form')
     </form>
-
-    <script>
-        $(function() {
-            $('#html').editable({inlineMode: false});
-        });
-    </script>
 @stop
 
 @section('bottom')

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Oxbow</title>
+    <title>BookStack</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/css/app.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300' rel='stylesheet' type='text/css'>
@@ -30,7 +30,7 @@
         <div class="container">
             <div class="padded-vertical row clearfix">
                 <div class="col-md-3">
-                    <div class="logo float left">Oxbow</div>
+                    <div ><img class="logo float left" src="/bookstack.svg" alt="BookStack"></div>
                 </div>
                 <div class="col-md-9">
                     <ul class="menu float">
