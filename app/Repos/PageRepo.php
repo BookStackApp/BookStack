@@ -49,4 +49,14 @@ class PageRepo
         $page->delete();
     }
 
+    public function getBySearch($term)
+    {
+        $terms = explode(' ', trim($term));
+        $query = $this->page;
+        foreach($terms as $term) {
+            $query = $query->where('text', 'like', '%'.$term.'%');
+        }
+        return $query->get();
+    }
+
 }

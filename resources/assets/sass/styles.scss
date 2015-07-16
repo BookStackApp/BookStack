@@ -29,9 +29,10 @@ header hr {
 header .menu {
   margin-bottom: 0;
   list-style: none;
+  margin-left: 0;
   li {
     display: inline-block;
-    margin-left: $-m;
+    margin-right: $-m;
   }
 }
 

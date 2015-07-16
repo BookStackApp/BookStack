@@ -16,6 +16,11 @@
             }, 800); // Adjust to change animations speed (ms)
             return this;
         };
+        $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+            return function( elem ) {
+                return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+            };
+        });
     </script>
     @yield('head')
 </head>
@@ -23,11 +28,21 @@
 
     <header>
         <div class="container">
-            <div class="padded-vertical clearfix">
-                <div class="logo float left">Oxbow</div>
-                <ul class="menu float right">
-                    <li><a href="/books"><i class="fa fa-book"></i>Books</a></li>
-                </ul>
+            <div class="padded-vertical row clearfix">
+                <div class="col-md-3">
+                    <div class="logo float left">Oxbow</div>
+                </div>
+                <div class="col-md-9">
+                    <ul class="menu float">
+                        <li><a href="/books"><i class="fa fa-book"></i>Books</a></li>
+                    </ul>
+                    <div class="search-box float right">
+                        <form action="/pages/search/all" id="search-form" method="GET">
+                            {!! csrf_field() !!}
+                            <input type="text" placeholder="Search all pages..." name="term" id="search-input">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </header>

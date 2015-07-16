@@ -132,6 +132,15 @@ class PageController extends Controller
         return redirect($page->getUrl());
     }
 
+    public function searchAll(Request $request)
+    {
+        $searchTerm = $request->get('term');
+        if(empty($searchTerm)) return redirect()->back();
+
+        $pages = $this->pageRepo->getBySearch($searchTerm);
+        return view('pages/search-results', ['pages' => $pages, 'searchTerm' => $searchTerm]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

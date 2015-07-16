@@ -165,6 +165,14 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
 }
 
 /*
+ * Lists
+ */
+ul {
+  list-style: disc;
+  margin-left: $-m;
+}
+
+/*
  * Generic text styling classes
  */
 .underlined {

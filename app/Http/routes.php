@@ -36,6 +36,7 @@ Route::get('/images/all/{page}', 'ImageController@getAll');
 Route::get('/images/{any}', 'ImageController@getImage')->where('any', '.*');
 
 Route::get('/link/{id}', 'PageController@redirectFromLink');
+Route::get('/pages/search/all', 'PageController@searchAll');
 
 Route::get('/', function () {
     return view('base');
