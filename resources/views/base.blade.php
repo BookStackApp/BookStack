@@ -10,6 +10,7 @@
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script>
         $.fn.smoothScrollTo = function() {
+            if(this.length === 0) return;
             $('body').animate({
                 scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
             }, 800); // Adjust to change animations speed (ms)
@@ -35,5 +36,6 @@
         @yield('content')
     </section>
 
+@yield('bottom')
 </body>
 </html>

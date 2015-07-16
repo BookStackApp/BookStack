@@ -18,25 +18,7 @@
 
 
 
-<section class="overlay" style="display:none;">
-    <div id="image-manager">
-        <div class="image-manager-left">
-            <div class="image-manager-header">
-                <button type="button" class="button neg float right" data-action="close">Close</button>
-                <div class="image-manager-title">Image Library</div>
-            </div>
-            <div class="image-manager-display">
-            </div>
-            <form action="/upload/image" class="image-manager-dropzone">
-                {{ csrf_field() }}
-                Drag images or click here to upload
-            </form>
-        </div>
-        {{--<div class="sidebar">--}}
 
-        {{--</div>--}}
-    </div>
-</section>
 
 <script>
     $(function() {
@@ -49,7 +31,7 @@
             relative_urls: false,
             height: 600,
             plugins: "image table textcolor paste link imagetools",
-            toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect full",
+            toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fontsizeselect full",
             content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important}",
             file_browser_callback: function(field_name, url, type, win) {
                 ImageManager.show('#image-manager', function(image) {

@@ -116,6 +116,8 @@ header .menu {
   }
 }
 
+
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.2);
   position: fixed;
@@ -180,4 +182,21 @@ header .menu {
   padding-top: $-xl*1.2;
   color: #666;
   border-top: 2px solid $primary;
+}
+
+// Link hooks & popovers
+a.link-hook {
+  position: absolute;
+  display: inline-block;
+  top: $-xs;
+  left: -$-xl+2px;
+  font-size: 20px;
+  line-height: 20px;
+  color: #BBB;
+  opacity: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  &:hover a.link-hook {
+    opacity: 1;
+  }
 }

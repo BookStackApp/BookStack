@@ -126,6 +126,12 @@ class PageController extends Controller
         return redirect($page->getUrl());
     }
 
+    public function redirectFromLink($pageId)
+    {
+        $page = $this->pageRepo->getById($pageId);
+        return redirect($page->getUrl());
+    }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -50,6 +50,31 @@
                     header.smoothScrollTo();
                 })
             });
+
+            // Set up link hooks
+            var pageId = {{$page->id}};
+            headers.each(function() {
+                var text = $(this).text().trim();
+                var link = '/link/' + pageId + '#' + encodeURIComponent(text);
+                var linkHook = $('<a class="link-hook"><i class="fa fa-link"></i></a>')
+                        .attr({"data-content": link, href: link, target: '_blank'});
+                linkHook.click(function(e) {
+                    e.preventDefault();
+                    goToText(text);
+                });
+                $(this).append(linkHook);
+            });
+
+            function goToText(text) {
+                $('.page-content').find(':contains("'+text+'")').smoothScrollTo();
+            }
+
+            if(window.location.hash) {
+                var text = window.location.hash.replace(/\%20/g, ' ').substr(1);
+                goToText(text);
+            }
+
+            //$('[data-toggle="popover"]').popover()
         });
     </script>
 @stop
