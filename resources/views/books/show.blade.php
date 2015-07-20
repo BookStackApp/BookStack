@@ -20,24 +20,24 @@
                 <h4 class="float">Pages</h4>
                 <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos float right">+ New Page</a>
             </div>
-            <div class="page-list">
-                @if(count($book->pages) > 0)
-                    @foreach($book->pages as $page)
-                        <a href="{{$page->getUrl()}}">{{$page->name}}</a>
-                    @endforeach
-                @else
-                    <p class="text-muted">This book has no pages</p>
-                @endif
-            </div>
 
-            <p>
-
-            </p>
-
+            @include('pages/page-tree-list', ['pageTree' => $pageTree])
 
         </div>
 
 
     </div>
+
+    <script>
+        $(function() {
+
+            $('.nested-page-list i.arrow').click(function() {
+                var list = $(this).closest('.nested-page-list');
+                var listItem = $(this).closest('li');
+                listItem.toggleClass('expanded');
+            });
+
+        });
+    </script>
 
 @stop

@@ -41,12 +41,14 @@ class PageController extends Controller
      * Show the form for creating a new resource.
      *
      * @param $bookSlug
+     * @param bool $pageSlug
      * @return Response
      */
-    public function create($bookSlug)
+    public function create($bookSlug, $pageSlug = false)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        return view('pages/create', ['book' => $book]);
+        $page = $pageSlug ? $this->pageRepo->getBySlug($pageSlug, $book->id) : false;
+        return view('pages/create', ['book' => $book, 'parentPage' => $page]);
     }
 
     /**
@@ -61,7 +63,8 @@ class PageController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'html' => 'required|string',
-            'priority' => 'integer'
+            'priority' => 'integer',
+            'parent' => 'integer|exists:pages,id'
         ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->newFromInput($request->all());
@@ -70,6 +73,11 @@ class PageController extends Controller
             $slug .= '1';
         }
         $page->slug =$slug;
+
+        if($request->has('parent')) {
+            $page->page_id = $request->get('parent');
+        }
+
         $page->book_id = $book->id;
         $page->text = strip_tags($page->html);
         $page->save();
@@ -87,7 +95,8 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        return view('pages/show', ['page' => $page]);
+        $breadCrumbs = $this->pageRepo->getBreadCrumbs($page);
+        return view('pages/show', ['page' => $page, 'breadCrumbs' => $breadCrumbs, 'book' => $book]);
     }
 
     /**

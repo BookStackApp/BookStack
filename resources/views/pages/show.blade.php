@@ -10,12 +10,32 @@
             </div>
             <div class="page-actions">
                 <h4>Actions</h4>
-                <a href="{{$page->getUrl() . '/edit'}}" class="muted"><i class="fa fa-pencil"></i>Edit this page</a>
+                <div class="list">
+                    <a href="{{$page->getUrl() . '/edit'}}" class="muted"><i class="fa fa-pencil"></i>Edit this page</a>
+                    <a href="{{$page->getUrl() . '/create'}}" class="muted"><i class="fa fa-file-o"></i>Create Sub-page</a>
+                </div>
             </div>
         </div>
 
         <div class="page-content right col-md-9">
+            <div class="breadcrumbs">
+                <a href="{{$book->getUrl()}}"><i class="fa fa-book"></i>{{ $book->name }}</a>
+                @if($breadCrumbs)
+                    @foreach($breadCrumbs as $parentPage)
+                        <span class="sep">&gt;</span>
+                        <a href="{{$parentPage->getUrl()}}">{{ $parentPage->name }}</a>
+                    @endforeach
+                @endif
+            </div>
             <h1>{{$page->name}}</h1>
+            @if(count($page->pages) > 0)
+                <h4 class="text-muted">Sub-pages</h4>
+                <div class="page-list">
+                    @foreach($page->pages as $childPage)
+                        <a href="{{ $childPage->getUrl() }}">{{ $childPage->name }}</a>
+                    @endforeach
+                </div>
+            @endif
             {!! $page->html !!}
         </div>
     </div>
@@ -37,7 +57,6 @@
             var pageNav = $('.page-nav-list');
             var pageContent = $('.page-content');
             var headers = pageContent.find('h1, h2, h3, h4, h5, h6');
-            var sortedHeaders = [];
             headers.each(function() {
                 var header = $(this);
                 var tag = header.prop('tagName');

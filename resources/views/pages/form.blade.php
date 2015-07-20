@@ -8,7 +8,7 @@
 
     {{ csrf_field() }}
     <div class="title-input page-title">
-            @include('form/text', ['name' => 'name', 'placeholder' => 'Enter Page Title'])
+        @include('form/text', ['name' => 'name', 'placeholder' => 'Enter Page Title'])
     </div>
     <div class="edit-area">
         @include('form/textarea', ['name' => 'html'])

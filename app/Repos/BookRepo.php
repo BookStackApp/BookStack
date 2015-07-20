@@ -53,4 +53,11 @@ class BookRepo
         $book->delete();
     }
 
+    public function getTree($book)
+    {
+        $tree = $book->toArray();
+        $tree['pages'] = $this->pageRepo->getTreeByBookId($book->id);
+        return $tree;
+    }
+
 }

@@ -72,6 +72,9 @@ header .menu {
   &.left {
     float: left;
   }
+  h1 {
+    margin-top: 0.2em;
+  }
 }
 
 .page-list {
@@ -203,5 +206,66 @@ a.link-hook {
 h1, h2, h3, h4, h5, h6 {
   &:hover a.link-hook {
     opacity: 1;
+  }
+}
+
+.breadcrumbs {
+  margin-top: $-s;
+  a, span {
+    color: #666;
+    font-size: 0.9em;
+  }
+  i {
+    padding-right: 4px;
+  }
+  span.sep {
+    color: #888;
+    padding: 0 $-xs;
+  }
+}
+
+
+.nested-page-list {
+  list-style: none;
+  margin-left: 0;
+  li {
+    border-top: 3px dotted #BBB;
+    padding: $-s 0;
+    user-select: none;
+  }
+  li:last-child {
+    border-bottom: 3px dotted #BBB;
+  }
+  .nested-page-list {
+    margin-top: $-xs;
+    display: none;
+    margin: $-xs 0 $-xs 9px;
+    font-size: $fs-m * 0.9;
+    border-left: 2px solid #EEE;
+  }
+  .nested-page-list li {
+    border: none;
+    padding-right: $-m;
+    padding-left: $-m;
+    &.expanded.has-children {
+      padding-bottom: 0;
+    }
+  }
+  i.arrow {
+    font-size: 0.8em;
+    padding: $-xs;
+    margin-top: -$-xs;
+    margin-bottom: -$-xs;
+    transform-origin: 50% 50%;
+    transition: transform ease-in-out 180ms;
+    cursor: pointer;
+  }
+  li.expanded {
+    > i.arrow {
+      transform: rotate(90deg);
+    }
+    >.nested-page-list {
+      display: block;
+    }
   }
 }
