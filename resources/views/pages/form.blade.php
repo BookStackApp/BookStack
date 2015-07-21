@@ -1,14 +1,14 @@
 
-<div class="col-md-3 page-menu">
-    <h4>You are editing a page</h4>
-    <button type="submit" class="button pos">Save Page</button>
-</div>
 
-<div class="col-md-9 page-style editor">
+
+<div class="page-style editor">
 
     {{ csrf_field() }}
-    <div class="title-input page-title">
-        @include('form/text', ['name' => 'name', 'placeholder' => 'Enter Page Title'])
+    <div class="title-input title-strip clearfix">
+        <button type="submit" class="button pos float right">Save Page</button>
+        <div class="float left">
+            @include('form/text', ['name' => 'name', 'placeholder' => 'Enter Page Title'])
+        </div>
     </div>
     <div class="edit-area">
         @include('form/textarea', ['name' => 'html'])
@@ -29,6 +29,7 @@
             content_css: '/css/app.css',
             body_class: 'container',
             relative_urls: false,
+            statusbar: false,
             height: 600,
             plugins: "image table textcolor paste link imagetools",
             toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fontsizeselect full",

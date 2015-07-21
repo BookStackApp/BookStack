@@ -1,24 +1,24 @@
 @extends('base')
 
+@section('sidebar')
+    <div class="page-nav">
+        <h4>Navigation</h4>
+        <ul class="page-nav-list"></ul>
+    </div>
+    <div class="page-actions">
+        <h4>Actions</h4>
+        <div class="list">
+            <a href="{{$page->getUrl() . '/edit'}}" class="muted"><i class="fa fa-pencil"></i>Edit this page</a>
+            <a href="{{$page->getUrl() . '/create'}}" class="muted"><i class="fa fa-file-o"></i>Create Sub-page</a>
+        </div>
+    </div>
+@stop
+
 @section('content')
 
     <div class="row">
-        <div class="page-menu col-md-3">
-            <div class="page-nav">
-                <h4>Navigation</h4>
-                <ul class="page-nav-list"></ul>
-            </div>
-            <div class="page-actions">
-                <h4>Actions</h4>
-                <div class="list">
-                    <a href="{{$page->getUrl() . '/edit'}}" class="muted"><i class="fa fa-pencil"></i>Edit this page</a>
-                    <a href="{{$page->getUrl() . '/create'}}" class="muted"><i class="fa fa-file-o"></i>Create Sub-page</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-content right col-md-9">
-            <div class="breadcrumbs">
+        <div class="col-md-6">
+            <div class="breadcrumbs padded-horizontal">
                 <a href="{{$book->getUrl()}}"><i class="fa fa-book"></i>{{ $book->name }}</a>
                 @if($breadCrumbs)
                     @foreach($breadCrumbs as $parentPage)
@@ -27,31 +27,25 @@
                     @endforeach
                 @endif
             </div>
-            <h1>{{$page->name}}</h1>
-            @if(count($page->children) > 0)
-                <h4 class="text-muted">Sub-pages</h4>
-                <div class="page-list">
-                    @foreach($page->children as $childPage)
-                        <a href="{{ $childPage->getUrl() }}">{{ $childPage->name }}</a>
-                    @endforeach
-                </div>
-            @endif
-            {!! $page->html !!}
         </div>
     </div>
 
+    <div class="page-content">
+        <h1>{{$page->name}}</h1>
+        @if(count($page->children) > 0)
+            <h4 class="text-muted">Sub-pages</h4>
+            <div class="page-list">
+                @foreach($page->children as $childPage)
+                    <a href="{{ $childPage->getUrl() }}">{{ $childPage->name }}</a>
+                @endforeach
+            </div>
+        @endif
+        {!! $page->html !!}
+    </div>
+
+
     <script>
         $(document).ready(function() {
-
-            // Set up fixed side menu
-            $('.page-menu').affix({
-                offset: {
-                    top: 10,
-                    bottom: function () {
-                        return (this.bottom = $('.footer').outerHeight(true))
-                    }
-                }
-            });
 
             // Set up document navigation
             var pageNav = $('.page-nav-list');

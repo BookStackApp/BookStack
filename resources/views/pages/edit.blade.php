@@ -8,12 +8,10 @@
 
 @section('content')
 
-    <div class="row">
-        <form action="{{$page->getUrl()}}" method="POST">
-            <input type="hidden" name="_method" value="PUT">
-            @include('pages/form', ['model' => $page])
-        </form>
-    </div>
+    <form action="{{$page->getUrl()}}" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        @include('pages/form', ['model' => $page])
+    </form>
 
 @stop
 

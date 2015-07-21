@@ -65,15 +65,13 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
 }
 
 .title-input.page-title {
-  padding: $-s;
+  font-size: 0.8em;
 }
 .title-input.page-title input[type="text"]{
   //border: 2px dotted #BBB;
   margin-bottom: 0;
 }
-.edit-area {
-  padding:  0 $-s $-s $-s;
-}
+
 
 .description-input textarea {
   @extend .inline-input-style;
