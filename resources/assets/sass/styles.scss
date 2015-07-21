@@ -94,6 +94,9 @@ header .menu {
   &:hover {
     opacity: 1;
   }
+  .buttons a {
+    display: block;
+  }
 }
 
 .page-nav-list {
@@ -268,4 +271,44 @@ h1, h2, h3, h4, h5, h6 {
       display: block;
     }
   }
+}
+
+.sortable-page-list, .sortable-page-list ul {
+  list-style: none;
+  //background-color: rgba(0, 0, 0, 0.04);
+}
+.sortable-page-list {
+  margin-left: 0;
+  ul {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  li {
+    border-bottom: 1px solid #BBB;
+    border-left: 1px solid #BBB;
+    border-right: 1px solid #BBB;
+    padding: $-xs $-s;
+  }
+  li:first-child {
+    margin-top: $-xs;
+    border-top: 1px solid #BBB;
+  }
+}
+
+// Jquery Sortable Styles
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.sortable-page-list li.placeholder {
+  position: relative;
+}
+.sortable-page-list li.placeholder:before {
+  position: absolute;
 }

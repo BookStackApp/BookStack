@@ -24,7 +24,7 @@ class Page extends Model
 
     public function children()
     {
-        return $this->hasMany('Oxbow\Page');
+        return $this->hasMany('Oxbow\Page')->orderBy('priority', 'ASC');
     }
 
     public function parent()

@@ -24,6 +24,8 @@ Route::group(['prefix' => 'books'], function() {
 
     Route::get('/{bookSlug}/page/create', 'PageController@create');
     Route::post('/{bookSlug}/page', 'PageController@store');
+    Route::get('/{bookSlug}/sort', 'PageController@sortPages');
+    Route::put('/{bookSlug}/sort', 'PageController@savePageSort');
     Route::get('/{bookSlug}/{pageSlug}', 'PageController@show');
     Route::get('/{bookSlug}/{pageSlug}/create', 'PageController@create');
     Route::get('/{bookSlug}/{pageSlug}/edit', 'PageController@edit');

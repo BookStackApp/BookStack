@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script>
         $.fn.smoothScrollTo = function() {
             if(this.length === 0) return;

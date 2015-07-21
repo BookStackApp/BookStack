@@ -57,6 +57,7 @@ class BookRepo
     {
         $tree = $book->toArray();
         $tree['pages'] = $this->pageRepo->getTreeByBookId($book->id);
+        $tree['hasChildren'] = count($tree['pages']) > 0;
         return $tree;
     }
 

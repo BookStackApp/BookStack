@@ -135,12 +135,23 @@ class PageController extends Controller
         return redirect($page->getUrl());
     }
 
+    /**
+     * Redirect from a special link url which
+     * uses the page id rather than the name.
+     * @param $pageId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function redirectFromLink($pageId)
     {
         $page = $this->pageRepo->getById($pageId);
         return redirect($page->getUrl());
     }
 
+    /**
+     * Search all available pages, Across all books.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function searchAll(Request $request)
     {
         $searchTerm = $request->get('term');
@@ -148,6 +159,30 @@ class PageController extends Controller
 
         $pages = $this->pageRepo->getBySearch($searchTerm);
         return view('pages/search-results', ['pages' => $pages, 'searchTerm' => $searchTerm]);
+    }
+
+    /**
+     * Shows the view which allows pages to be re-ordered and sorted.
+     * @param $bookSlug
+     * @return \Illuminate\View\View
+     */
+    public function sortPages($bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $tree = $this->bookRepo->getTree($book);
+        return view('pages/sort', ['book' => $book, 'tree' => $tree]);
+    }
+
+    public function savePageSort($bookSlug, Request $request)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        if(!$request->has('sort-tree')) {
+            return redirect($book->getUrl());
+        }
+
+        $sortMap = json_decode($request->get('sort-tree'));
+        $this->pageRepo->applySortMap($sortMap, $book->id);
+        return redirect($book->getUrl());
     }
 
     /**

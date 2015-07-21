@@ -9,6 +9,7 @@
             <h4>Book Actions</h4>
             <div class="buttons">
                 <a href="{{$book->getEditUrl()}}"><i class="fa fa-pencil"></i>Edit Book</a>
+                <a href="{{ $book->getUrl() }}/sort"><i class="fa fa-sort"></i>Sort Pages</a>
             </div>
         </div>
 

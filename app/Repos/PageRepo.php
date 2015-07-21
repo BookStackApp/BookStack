@@ -114,7 +114,24 @@ class PageRepo
      */
     private function getTopLevelPages($bookId)
     {
-        return $this->page->where('book_id', '=', $bookId)->where('page_id', '=', 0)->get();
+        return $this->page->where('book_id', '=', $bookId)->where('page_id', '=', 0)->orderBy('priority')->get();
+    }
+
+    /**
+     * Applies a sort map to all applicable pages.
+     * @param $sortMap
+     * @param $bookId
+     */
+    public function applySortMap($sortMap, $bookId)
+    {
+        foreach($sortMap as $index => $map) {
+            $page = $this->getById($map->id);
+            if($page->book_id === $bookId) {
+                $page->page_id = $map->parent;
+                $page->priority = $index;
+                $page->save();
+            }
+        }
     }
 
 }
