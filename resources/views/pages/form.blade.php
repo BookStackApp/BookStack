@@ -47,10 +47,14 @@
             },
             setup: function(editor) {
                 editor.addButton('full', {
-                    text: 'Expand',
-                    icon: false,
+                    title: 'Expand Editor',
+                    icon: 'fullscreen',
                     onclick: function() {
                         var container = $(editor.getContainer()).toggleClass('fullscreen');
+                        var isFull = container.hasClass('fullscreen');
+                        var iframe = container.find('iframe').first();
+                        var height = isFull ? $(window).height()-110 : 600;
+                        iframe.css('height', height + 'px');
                     }
                 });
             }

@@ -15,4 +15,8 @@
   position: fixed;
   top: 0;
   height: 100%;
+  width: 825px;
+  max-width: 100%;
+  margin-left: -$-s;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.08);
 }

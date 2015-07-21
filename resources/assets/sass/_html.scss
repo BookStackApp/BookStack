@@ -11,3 +11,12 @@ body {
 	color: #444;
 	-webkit-font-smoothing: antialiased;
 }
+
+table {
+  min-width: 100px;
+  td {
+	min-width: 10px;
+	padding: 4px 6px;
+	border: 1px solid #DDD;
+  }
+}
