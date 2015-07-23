@@ -27,26 +27,23 @@
 </head>
 <body>
 
-    <header>
-        <div class="padded row clearfix">
-            <div class="col-md-3">
-                <div ><img class="logo float left" src="/bookstack.svg" alt="BookStack"></div>
-            </div>
-            <div class="col-md-9">
-                <ul class="menu float">
-                    <li><a href="/books"><i class="fa fa-book"></i>Books</a></li>
-                </ul>
-                <div class="search-box float right">
-                    <form action="/pages/search/all" id="search-form" method="GET">
-                        {!! csrf_field() !!}
-                        <input type="text" placeholder="Search all pages..." name="term" id="search-input">
-                    </form>
+    <section id="sidebar">
+        <header>
+            <div class="padded row clearfix">
+                <div class="col-md-12">
+                    {{--<div ><img class="logo float left" src="/bookstack.svg" alt="BookStack"></div>--}}
+                    <div class="logo">BookStack</div>
                 </div>
             </div>
+        </header>
+        <div class="search-box">
+            <form action="/pages/search/all" id="search-form" method="GET">
+                <input type="text" placeholder="Search all pages..." name="term" id="search-input">
+            </form>
         </div>
-    </header>
-
-    <section id="sidebar" class="padded">
+        <ul class="menu">
+            <li><a href="/books"><i class="fa fa-book"></i>Books</a></li>
+        </ul>
         @yield('sidebar')
     </section>
 

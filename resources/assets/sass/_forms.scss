@@ -52,6 +52,10 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   padding: $-xs $-s;
 }
 
+.title-input .input {
+  width: 100%;
+}
+
 .title-input label, .description-input label{
   margin-top: $-m;
   color: #666;
@@ -61,6 +65,8 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   @extend h1;
   @extend .inline-input-style;
   margin-top: 0;
+  padding-right: 0;
+  width: 100%;
   color: #444;
 }
 

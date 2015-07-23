@@ -1,23 +1,18 @@
 @extends('base')
 
 @section('sidebar')
-    <div class="page-nav">
-        <h4>Navigation</h4>
-        <ul class="page-nav-list"></ul>
-    </div>
-    <div class="page-actions">
-        <h4>Actions</h4>
-        <div class="list">
-            <a href="{{$page->getUrl() . '/edit'}}" class="muted"><i class="fa fa-pencil"></i>Edit this page</a>
-            <a href="{{$page->getUrl() . '/create'}}" class="muted"><i class="fa fa-file-o"></i>Create Sub-page</a>
-        </div>
+    <div class="book-tree">
+        <h4><a href="/books/{{$sidebarBookTree['slug']}}"><i class="fa fa-book"></i>{{$sidebarBookTree['name']}}</a></h4>
+        @if($sidebarBookTree['hasChildren'])
+            @include('pages/sidebar-tree-list', ['pageTree' => $sidebarBookTree['pages']])
+        @endif
     </div>
 @stop
 
 @section('content')
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row faded-small">
+        <div class="col-md-6 faded">
             <div class="breadcrumbs padded-horizontal">
                 <a href="{{$book->getUrl()}}"><i class="fa fa-book"></i>{{ $book->name }}</a>
                 @if($breadCrumbs)
@@ -28,7 +23,20 @@
                 @endif
             </div>
         </div>
+        <div class="col-md-6 faded">
+            <div class="action-buttons">
+                <a href="{{$page->getUrl() . '/edit'}}" ><i class="fa fa-pencil"></i>Edit this page</a>
+                <a href="{{$page->getUrl() . '/create'}}"><i class="fa fa-file-o"></i>Create Sub-page</a>
+            </div>
+        </div>
     </div>
+
+    <div class="side-nav faded">
+        <h4>Page Navigation</h4>
+        <ul class="page-nav-list">
+        </ul>
+    </div>
+
 
     <div class="page-content">
         <h1>{{$page->name}}</h1>

@@ -96,7 +96,9 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $breadCrumbs = $this->pageRepo->getBreadCrumbs($page);
-        return view('pages/show', ['page' => $page, 'breadCrumbs' => $breadCrumbs, 'book' => $book]);
+        $sidebarBookTree = $this->bookRepo->getTree($book, $page->id);
+        //dd($sidebarBookTree);
+        return view('pages/show', ['page' => $page, 'breadCrumbs' => $breadCrumbs, 'book' => $book, 'sidebarBookTree' => $sidebarBookTree]);
     }
 
     /**

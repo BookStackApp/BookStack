@@ -6,7 +6,11 @@ h1 {
   font-size: 3.625em;
   line-height: 1.22222222em;
   margin-top: 0.48888889em;
-  margin-bottom: 0.24444444em;
+  margin-bottom: 0.48888889em;
+  padding-bottom: 0.3333em;
+  border-bottom: 1px solid #EAEAEA;
+  //margin-left: -$-xxl;
+  //margin-right: -$-xxl;
 }
 h2 {
   font-size: 2.8275em;
@@ -31,6 +35,7 @@ h1, h2, h3, h4 {
   font-weight: 500;
   position: relative;
   display: block;
+  color: #555;
   .subheader {
     display: block;
     font-size: 0.5em;

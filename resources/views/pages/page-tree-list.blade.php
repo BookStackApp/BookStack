@@ -1,4 +1,4 @@
-
+{{--Requires an array of pages to be passed as $pageTree--}}
 
 <ul class="nested-page-list">
     @foreach($pageTree as $subPage)

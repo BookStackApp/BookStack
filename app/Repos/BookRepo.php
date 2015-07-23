@@ -53,10 +53,10 @@ class BookRepo
         $book->delete();
     }
 
-    public function getTree($book)
+    public function getTree($book, $currentPageId = false)
     {
         $tree = $book->toArray();
-        $tree['pages'] = $this->pageRepo->getTreeByBookId($book->id);
+        $tree['pages'] = $this->pageRepo->getTreeByBookId($book->id, $currentPageId);
         $tree['hasChildren'] = count($tree['pages']) > 0;
         return $tree;
     }

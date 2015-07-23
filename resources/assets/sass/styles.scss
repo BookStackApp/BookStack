@@ -10,52 +10,64 @@
 @import "tinymce";
 
 header {
-  background-color: #f8f8f8;
   display: block;
-  width: 100%;
-  position: fixed;
   z-index: 2;
   top: 0;
-  border-bottom: 1px solid #DDD;
   .padded {
     padding: $-m;
   }
+  //margin-bottom: $-l;
 }
 
 #sidebar {
   position: fixed;
-  background-color: #FFF;
+  background-color: #444;
+  color: #EEE;
   height: 100%;
   top: 0;
   z-index: 1;
-  padding-top: 63px + $-m;
+  //padding-top: $-m;
   width: 300px;
   border-right: 1px solid #DDD;
+  h4, li, p, a {
+    color: #CCC;
+  }
 }
 
 #content {
-  margin-top: 63px;
+  //margin-top: 63px;
   margin-left: 300px;
   display: block;
   position: relative;
+  padding: 0 16px;
 }
 
 .logo {
-  width: 180px;
-  opacity: 0.8;
+  font-size: 2em;
+  padding: $-xl $-s;
+  font-weight: bold;
+  color: #CCC;
 }
 
-header hr {
-  margin-top: 0;
+.search-box {
+  input {
+    width: 100%;
+    border-radius: 0;
+    padding: $-s $-m;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+  }
 }
 
-header .menu {
-  margin-bottom: 0;
+ul.menu {
   list-style: none;
-  margin-left: 0;
-  li {
-    display: inline-block;
-    margin-right: $-m;
+  margin: 0;
+  li a {
+    padding: $-m;
+    display: block;
+    border-bottom: 1px solid #333;
   }
 }
 
@@ -87,9 +99,6 @@ header .menu {
   &.left {
     float: left;
   }
-  h1 {
-    margin-top: 0.2em;
-  }
 }
 
 .page-list {
@@ -103,22 +112,27 @@ header .menu {
   }
 }
 
-.page-menu  {
-  opacity: 0.6;
-  transition: opacity ease-in-out 120ms;
-  &:hover {
-    opacity: 1;
-  }
-  .buttons a {
-    display: block;
-  }
+.side-nav {
+  position: fixed;
+  padding-left: $-m;
+  opacity: 0.8;
+  margin-top: $-xxl;
+  margin-left: 0;
+  max-width: 240px;
 }
 
 .page-nav-list {
   $nav-indent: $-s;
+  margin-left: 2px;
+  list-style: none;
   li {
     //border-left: 1px solid rgba(0, 0, 0, 0.1);
     padding-left: $-xs;
+    border-left: 2px solid #888;
+    margin-bottom: 4px;
+  }
+  li a {
+    color: #555;
   }
   .nav-H2 {
     margin-left: $nav-indent;
@@ -229,16 +243,36 @@ h1, h2, h3, h4, h5, h6 {
 
 .breadcrumbs {
   margin-top: $-s;
-  a, span {
-    color: #666;
-    font-size: 0.9em;
-  }
   i {
     padding-right: 4px;
   }
   span.sep {
     color: #888;
     padding: 0 $-xs;
+  }
+}
+
+.faded {
+  opacity: 0.5;
+  transition: opacity ease-in-out 120ms;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.faded-small {
+  color: #666;
+  font-size: 0.9em;
+  a, span {
+    color: #666;
+  }
+}
+
+.action-buttons {
+  text-align: right;
+  a {
+    display: inline-block;
+    padding: $-s;
   }
 }
 
@@ -285,6 +319,25 @@ h1, h2, h3, h4, h5, h6 {
     >.nested-page-list {
       display: block;
     }
+  }
+}
+
+.book-tree h4 {
+  padding: $-m $-s 0 $-s;
+  i {
+    padding-right: $-s;
+  }
+}
+.book-tree .sidebar-page-list {
+  list-style: none;
+  margin: 0;
+  li a {
+    display: block;
+    padding: $-s $-m;
+    border-bottom: 2px dotted #333;
+  }
+  a.bold {
+    color: #EEE !important;
   }
 }
 

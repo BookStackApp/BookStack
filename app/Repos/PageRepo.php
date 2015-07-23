@@ -102,7 +102,7 @@ class PageRepo
         $cPage['current'] = ($currentPageId !== false && $cPage['id'] === $currentPageId);
         $cPage['pages'] = [];
         foreach($page->children as $key => $childPage) {
-            $cPage['pages'][$key] = $this->toArrayTree($childPage);
+            $cPage['pages'][$key] = $this->toArrayTree($childPage, $currentPageId);
         }
         $cPage['hasChildren'] = count($cPage['pages']) > 0;
         return $cPage;
