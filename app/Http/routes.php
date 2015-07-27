@@ -26,10 +26,14 @@ Route::group(['prefix' => 'books'], function() {
     Route::post('/{bookSlug}/page', 'PageController@store');
     Route::get('/{bookSlug}/sort', 'PageController@sortPages');
     Route::put('/{bookSlug}/sort', 'PageController@savePageSort');
-    Route::get('/{bookSlug}/{pageSlug}', 'PageController@show');
-    Route::get('/{bookSlug}/{pageSlug}/create', 'PageController@create');
-    Route::get('/{bookSlug}/{pageSlug}/edit', 'PageController@edit');
-    Route::put('/{bookSlug}/{pageSlug}', 'PageController@update');
+    Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
+    Route::get('/{bookSlug}/page/{pageSlug}/create', 'PageController@create');
+    Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
+    Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
+
+    Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
+    Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
+
 });
 
 Route::post('/upload/image', 'ImageController@upload');

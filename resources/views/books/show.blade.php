@@ -17,11 +17,27 @@
         <p class="text-muted">{{$book->description}}</p>
 
         <div class="clearfix header-group">
-            <h4 class="float">Pages</h4>
-            <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos float right">+ New Page</a>
+            <h4 class="float">Contents</h4>
+            <div class="float right">
+                <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos">+ New Page</a>
+                <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos">+ New Chapter</a>
+            </div>
         </div>
 
-        @include('pages/page-tree-list', ['pageTree' => $pageTree])
+        <div class="page-list">
+            @foreach($book->children() as $childElement)
+                <div class="page-list-item">
+                    @if(is_a($childElement, 'Oxbow\Chapter'))
+                        <i class="fa fa-archive"></i>
+                    @else
+                        <i class="fa fa-file"></i>
+                    @endif
+                    {{$childElement->name}}
+                </div>
+            @endforeach
+        </div>
+
+        {{--@include('pages/page-tree-list', ['pageTree' => $pageTree])--}}
 
     </div>
 

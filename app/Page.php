@@ -34,7 +34,7 @@ class Page extends Model
 
     public function getUrl()
     {
-        return '/books/' . $this->book->slug . '/' . $this->slug;
+        return '/books/' . $this->book->slug . '/page/' . $this->slug;
     }
 
 }

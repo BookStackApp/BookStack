@@ -24,4 +24,17 @@ class Book extends Model
         return $this->hasMany('Oxbow\Page');
     }
 
+    public function chapters()
+    {
+        return $this->hasMany('Oxbow\Chapter');
+    }
+
+    public function children()
+    {
+        $pages = $this->pages()->get();
+        $chapters = $this->chapters()->get();
+        $children = $pages->merge($chapters);
+        return $children->sortBy('priority');
+    }
+
 }

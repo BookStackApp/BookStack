@@ -114,7 +114,7 @@ class PageRepo
      */
     private function getTopLevelPages($bookId)
     {
-        return $this->page->where('book_id', '=', $bookId)->where('page_id', '=', 0)->orderBy('priority')->get();
+        return $this->page->where('book_id', '=', $bookId)->where('chapter_id', '=', 0)->orderBy('priority')->get();
     }
 
     /**

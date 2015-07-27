@@ -79,7 +79,6 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $pageTree = $this->pageRepo->getTreeByBookId($book->id);
-       // dd($pageTree);
         return view('books/show', ['book' => $book, 'pageTree' => $pageTree]);
     }
 
