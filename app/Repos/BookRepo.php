@@ -44,21 +44,19 @@ class BookRepo
         return $this->book->where('slug', '=', $slug)->count();
     }
 
-    public function destroyById($id)
+    public function destroyBySlug($bookSlug)
     {
-        $book = $this->getById($id);
-        foreach($book->pages as $page) {
-            $this->pageRepo->destroyById($page->id);
+        $book = $this->getBySlug($bookSlug);
+        foreach($book->children() as $child) {
+            $child->delete();
         }
         $book->delete();
     }
 
-    public function getTree($book, $currentPageId = false)
+    public function getNewPriority($book)
     {
-        $tree = $book->toArray();
-        $tree['pages'] = $this->pageRepo->getTreeByBookId($book->id, $currentPageId);
-        $tree['hasChildren'] = count($tree['pages']) > 0;
-        return $tree;
+        $lastElem = $book->children()->pop();
+        return $lastElem ? $lastElem->priority + 1 : 0;
     }
 
 }

@@ -19,8 +19,9 @@ Route::group(['prefix' => 'books'], function() {
     Route::post('/', 'BookController@store');
     Route::get('/{slug}/edit', 'BookController@edit');
     Route::put('/{slug}', 'BookController@update');
-    Route::delete('/{id}/destroy', 'BookController@destroy');
+    Route::delete('/{id}', 'BookController@destroy');
     Route::get('/{slug}', 'BookController@show');
+    Route::get('/{slug}/delete', 'BookController@showDelete');
 
     Route::get('/{bookSlug}/page/create', 'PageController@create');
     Route::post('/{bookSlug}/page', 'PageController@store');
@@ -29,10 +30,17 @@ Route::group(['prefix' => 'books'], function() {
     Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
     Route::get('/{bookSlug}/page/{pageSlug}/create', 'PageController@create');
     Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
+    Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
     Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
+    Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
 
     Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
     Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
+    Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
+    Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
+    Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
+    Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
+    Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
 
 });
 

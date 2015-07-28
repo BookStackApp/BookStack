@@ -1,11 +1,15 @@
 {{--Requires an array of pages to be passed as $pageTree--}}
 
 <ul class="sidebar-page-list">
-    @foreach($pageTree as $subPage)
-        <li @if($subPage['hasChildren'])class="has-children"@endif>
-            <a href="{{$subPage['url']}}" @if($subPage['current'])class="bold"@endif>{{$subPage['name']}}</a>
-            @if($subPage['hasChildren'])
-                @include('pages/sidebar-tree-list', ['pageTree' => $subPage['pages']])
+    @foreach($book->children() as $bookChild)
+        <li>
+            {{ $bookChild->name }}
+            @if(is_a($bookChild, 'Oxbow\Chapter') && count($bookChild->pages) > 0)
+                <ul>
+                    @foreach($pages as $page)
+                        <li>{{ $page->name }}</li>
+                    @endforeach
+                </ul>
             @endif
         </li>
     @endforeach

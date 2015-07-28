@@ -71,44 +71,6 @@ class PageRepo
     }
 
     /**
-     * Creates a tree of child pages, Nested by their
-     * set parent pages.
-     * @param $bookId
-     * @param bool $currentPageId
-     * @return array
-     */
-    public function getTreeByBookId($bookId, $currentPageId = false)
-    {
-        $topLevelPages = $this->getTopLevelPages($bookId);
-        $pageTree = [];
-
-        foreach($topLevelPages as $key => $topPage) {
-            $pageTree[$key] = $this->toArrayTree($topPage, $currentPageId);
-        }
-
-        return $pageTree;
-    }
-
-    /**
-     * Creates a page tree array with the supplied page
-     * as the parent of the tree.
-     * @param $page
-     * @param bool $currentPageId
-     * @return mixed
-     */
-    private function toArrayTree($page, $currentPageId = false)
-    {
-        $cPage = $page->toSimpleArray();
-        $cPage['current'] = ($currentPageId !== false && $cPage['id'] === $currentPageId);
-        $cPage['pages'] = [];
-        foreach($page->children as $key => $childPage) {
-            $cPage['pages'][$key] = $this->toArrayTree($childPage, $currentPageId);
-        }
-        $cPage['hasChildren'] = count($cPage['pages']) > 0;
-        return $cPage;
-    }
-
-    /**
      * Gets the pages at the top of the page hierarchy.
      * @param $bookId
      */

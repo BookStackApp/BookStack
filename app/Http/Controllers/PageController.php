@@ -63,7 +63,6 @@ class PageController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'html' => 'required|string',
-            'priority' => 'integer',
             'parent' => 'integer|exists:pages,id'
         ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
@@ -72,7 +71,8 @@ class PageController extends Controller
         while($this->pageRepo->countBySlug($slug, $book->id) > 0) {
             $slug .= '1';
         }
-        $page->slug =$slug;
+        $page->slug = $slug;
+        $page->priority = $this->bookRepo->getNewPriority($book);
 
         if($request->has('parent')) {
             $page->page_id = $request->get('parent');
@@ -96,9 +96,8 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $breadCrumbs = $this->pageRepo->getBreadCrumbs($page);
-        $sidebarBookTree = $this->bookRepo->getTree($book, $page->id);
         //dd($sidebarBookTree);
-        return view('pages/show', ['page' => $page, 'breadCrumbs' => $breadCrumbs, 'book' => $book, 'sidebarBookTree' => $sidebarBookTree]);
+        return view('pages/show', ['page' => $page, 'breadCrumbs' => $breadCrumbs, 'book' => $book]);
     }
 
     /**
@@ -187,14 +186,26 @@ class PageController extends Controller
         return redirect($book->getUrl());
     }
 
+    public function showDelete($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        return view('pages/delete', ['book' => $book, 'page' => $page]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $bookSlug
+     * @param $pageSlug
      * @return Response
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy($bookSlug, $pageSlug)
     {
-        //
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $page->delete();
+        return redirect($book->getUrl());
     }
 }

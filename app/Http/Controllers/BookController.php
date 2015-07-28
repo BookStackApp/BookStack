@@ -78,8 +78,7 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        $pageTree = $this->pageRepo->getTreeByBookId($book->id);
-        return view('books/show', ['book' => $book, 'pageTree' => $pageTree]);
+        return view('books/show', ['book' => $book]);
     }
 
     /**
@@ -119,14 +118,25 @@ class BookController extends Controller
     }
 
     /**
+     * Shows the page to confirm deletion
+     * @param $bookSlug
+     * @return \Illuminate\View\View
+     */
+    public function showDelete($bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        return view('books/delete', ['book' => $book]);
+    }
+
+    /**
      * Remove the specified book from storage.
      *
-     * @param  int  $id
+     * @param $bookSlug
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($bookSlug)
     {
-        $this->bookRepo->destroyById($id);
+        $this->bookRepo->destroyBySlug($bookSlug);
         return redirect('/books');
     }
 }

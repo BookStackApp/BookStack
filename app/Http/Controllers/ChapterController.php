@@ -25,20 +25,10 @@ class ChapterController extends Controller
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
     }
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
+    
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new chapter.
      *
      * @param $bookSlug
      * @return Response
@@ -50,7 +40,7 @@ class ChapterController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created chapter in storage.
      *
      * @param $bookSlug
      * @param  Request $request
@@ -65,52 +55,88 @@ class ChapterController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->newFromInput($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id);
+        $chapter->priority = $this->bookRepo->getNewPriority($book);
         $book->chapters()->save($chapter);
         return redirect($book->getUrl());
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified chapter.
      *
-     * @param  int  $id
+     * @param $bookSlug
+     * @param $chapterSlug
      * @return Response
      */
-    public function show($id)
+    public function show($bookSlug, $chapterSlug)
     {
-        //
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        return view('chapters/show', ['book' => $book, 'chapter' => $chapter]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified chapter.
      *
-     * @param  int  $id
+     * @param $bookSlug
+     * @param $chapterSlug
      * @return Response
      */
-    public function edit($id)
+    public function edit($bookSlug, $chapterSlug)
     {
-        //
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        return view('chapters/edit', ['book' => $book, 'chapter' => $chapter]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified chapter in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param  Request $request
+     * @param $bookSlug
+     * @param $chapterSlug
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $bookSlug, $chapterSlug)
     {
-        //
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter->fill($request->all());
+        $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id, $chapter->id);
+        $chapter->save();
+        return redirect($chapter->getUrl());
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Shows the page to confirm deletion of this chapter.
+     * @param $bookSlug
+     * @param $chapterSlug
+     * @return \Illuminate\View\View
+     */
+    public function showDelete($bookSlug, $chapterSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        return view('chapters/delete', ['book' => $book, 'chapter' => $chapter]);
+    }
+
+    /**
+     * Remove the specified chapter from storage.
      *
-     * @param  int  $id
+     * @param $bookSlug
+     * @param $chapterSlug
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($bookSlug, $chapterSlug)
     {
-        //
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        if(count($chapter->pages) > 0) {
+            foreach($chapter->pages as $page) {
+                $page->chapter_id = 0;
+                $page->save();
+            }
+        }
+        $chapter->delete();
+        return redirect($book->getUrl());
     }
 }

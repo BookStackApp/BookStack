@@ -22,11 +22,6 @@ class Page extends Model
         return $this->belongsTo('Oxbow\Book');
     }
 
-    public function children()
-    {
-        return $this->hasMany('Oxbow\Page')->orderBy('priority', 'ASC');
-    }
-
     public function parent()
     {
         return $this->belongsTo('Oxbow\Page', 'page_id');

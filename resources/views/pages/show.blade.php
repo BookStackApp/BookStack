@@ -2,10 +2,8 @@
 
 @section('sidebar')
     <div class="book-tree">
-        <h4><a href="/books/{{$sidebarBookTree['slug']}}"><i class="fa fa-book"></i>{{$sidebarBookTree['name']}}</a></h4>
-        @if($sidebarBookTree['hasChildren'])
-            @include('pages/sidebar-tree-list', ['pageTree' => $sidebarBookTree['pages']])
-        @endif
+        <h4><a href="{{$book->getUrl()}}"><i class="fa fa-book"></i>{{$book->name}}</a></h4>
+        @include('pages/sidebar-tree-list', ['book' => $book])
     </div>
 @stop
 
@@ -25,8 +23,8 @@
         </div>
         <div class="col-md-6 faded">
             <div class="action-buttons">
-                <a href="{{$page->getUrl() . '/edit'}}" ><i class="fa fa-pencil"></i>Edit this page</a>
-                <a href="{{$page->getUrl() . '/create'}}"><i class="fa fa-file-o"></i>Create Sub-page</a>
+                <a href="{{$page->getUrl() . '/edit'}}" ><i class="fa fa-pencil"></i>Edit</a>
+                <a href="{{$page->getUrl() . '/delete'}}"><i class="fa fa-trash"></i>Delete</a>
             </div>
         </div>
     </div>
