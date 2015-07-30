@@ -7,7 +7,7 @@
     <div class="col-md-6"></div>
     <div class="col-md-6 faded">
         <div class="action-buttons">
-            <a href="/books/create">+ Add new book</a>
+            <a href="/books/create" class="text-pos"><i class="zmdi zmdi-plus"></i>Add new book</a>
         </div>
     </div>
 </div>

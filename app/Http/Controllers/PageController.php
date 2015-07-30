@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Oxbow\Http\Requests;
 use Oxbow\Repos\BookRepo;
+use Oxbow\Repos\ChapterRepo;
 use Oxbow\Repos\PageRepo;
 
 class PageController extends Controller
@@ -14,16 +15,19 @@ class PageController extends Controller
 
     protected $pageRepo;
     protected $bookRepo;
+    protected $chapterRepo;
 
     /**
      * PageController constructor.
-     * @param $pageRepo
-     * @param $bookRepo
+     * @param PageRepo $pageRepo
+     * @param BookRepo $bookRepo
+     * @param ChapterRepo $chapterRepo
      */
-    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo)
+    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo)
     {
         $this->pageRepo = $pageRepo;
         $this->bookRepo = $bookRepo;
+        $this->chapterRepo = $chapterRepo;
     }
 
 
@@ -41,14 +45,15 @@ class PageController extends Controller
      * Show the form for creating a new resource.
      *
      * @param $bookSlug
-     * @param bool $pageSlug
+     * @param bool $chapterSlug
      * @return Response
+     * @internal param bool $pageSlug
      */
-    public function create($bookSlug, $pageSlug = false)
+    public function create($bookSlug, $chapterSlug = false)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $page = $pageSlug ? $this->pageRepo->getBySlug($pageSlug, $book->id) : false;
-        return view('pages/create', ['book' => $book, 'parentPage' => $page]);
+        $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : false;
+        return view('pages/create', ['book' => $book, 'chapter' => $chapter]);
     }
 
     /**
@@ -67,15 +72,12 @@ class PageController extends Controller
         ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->newFromInput($request->all());
-        $slug = Str::slug($page->name);
-        while($this->pageRepo->countBySlug($slug, $book->id) > 0) {
-            $slug .= '1';
-        }
-        $page->slug = $slug;
+
+        $page->slug = $this->pageRepo->findSuitableSlug($page->name, $book->id);
         $page->priority = $this->bookRepo->getNewPriority($book);
 
-        if($request->has('parent')) {
-            $page->page_id = $request->get('parent');
+        if($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) {
+            $page->chapter_id = $request->get('chapter');
         }
 
         $page->book_id = $book->id;
@@ -95,9 +97,8 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        $breadCrumbs = $this->pageRepo->getBreadCrumbs($page);
         //dd($sidebarBookTree);
-        return view('pages/show', ['page' => $page, 'breadCrumbs' => $breadCrumbs, 'book' => $book]);
+        return view('pages/show', ['page' => $page, 'book' => $book]);
     }
 
     /**
@@ -111,7 +112,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        return view('pages/edit', ['page' => $page]);
+        return view('pages/edit', ['page' => $page, 'book' => $book]);
     }
 
     /**
@@ -127,10 +128,7 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $page->fill($request->all());
-        $slug = Str::slug($page->name);
-        while($this->pageRepo->countBySlug($slug, $book->id) > 0 && $slug != $pageSlug) {
-            $slug .= '1';
-        }
+        $page->slug = $this->pageRepo->findSuitableSlug($page->name, $book->id, $page->id);
         $page->text = strip_tags($page->html);
         $page->save();
         return redirect($page->getUrl());
@@ -170,19 +168,36 @@ class PageController extends Controller
     public function sortPages($bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $tree = $this->bookRepo->getTree($book);
-        return view('pages/sort', ['book' => $book, 'tree' => $tree]);
+        return view('pages/sort', ['book' => $book]);
     }
 
+    /**
+     * Saves an array of sort mapping to pages and chapters.
+     *
+     * @param $bookSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function savePageSort($bookSlug, Request $request)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
+        // Return if no map sent
         if(!$request->has('sort-tree')) {
             return redirect($book->getUrl());
         }
 
+        // Sort pages and chapters
         $sortMap = json_decode($request->get('sort-tree'));
-        $this->pageRepo->applySortMap($sortMap, $book->id);
+        foreach($sortMap as $index => $bookChild) {
+            $id = $bookChild->id;
+            $isPage = $bookChild->type == 'page';
+            $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
+            $model->priority = $index;
+            if($isPage) {
+                $model->chapter_id = ($bookChild->parentChapter === false) ? 0 : $bookChild->parentChapter;
+            }
+            $model->save();
+        }
         return redirect($book->getUrl());
     }
 

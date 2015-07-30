@@ -17,6 +17,11 @@ class PageRepo
         $this->page = $page;
     }
 
+    public function idExists($id)
+    {
+        return $this->page->where('page_id', '=', $id)->count() > 0;
+    }
+
     public function getById($id)
     {
         return $this->page->findOrFail($id);
@@ -59,41 +64,38 @@ class PageRepo
         return $query->get();
     }
 
-    public function getBreadCrumbs($page)
+    /**
+     * Checks if a slug exists within a book already.
+     * @param $slug
+     * @param $bookId
+     * @param bool|false $currentId
+     * @return bool
+     */
+    public function doesSlugExist($slug, $bookId, $currentId = false)
     {
-        $tree = [];
-        $cPage = $page;
-        while($cPage->parent && $cPage->parent->id !== 0) {
-            $cPage = $cPage->parent;
-            $tree[] = $cPage;
+        $query = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId);
+        if($currentId) {
+            $query = $query->where('id', '!=', $currentId);
         }
-        return count($tree) > 0 ? array_reverse($tree) : false;
+        return $query->count() > 0;
     }
 
     /**
-     * Gets the pages at the top of the page hierarchy.
+     * Gets a suitable slug for the resource
+     *
+     * @param $name
      * @param $bookId
+     * @param bool|false $currentId
+     * @return string
      */
-    private function getTopLevelPages($bookId)
+    public function findSuitableSlug($name, $bookId, $currentId = false)
     {
-        return $this->page->where('book_id', '=', $bookId)->where('chapter_id', '=', 0)->orderBy('priority')->get();
+        $slug = Str::slug($name);
+        while($this->doesSlugExist($slug, $bookId, $currentId)) {
+            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
+        }
+        return $slug;
     }
 
-    /**
-     * Applies a sort map to all applicable pages.
-     * @param $sortMap
-     * @param $bookId
-     */
-    public function applySortMap($sortMap, $bookId)
-    {
-        foreach($sortMap as $index => $map) {
-            $page = $this->getById($map->id);
-            if($page->book_id === $bookId) {
-                $page->page_id = $map->parent;
-                $page->priority = $index;
-                $page->save();
-            }
-        }
-    }
 
 }

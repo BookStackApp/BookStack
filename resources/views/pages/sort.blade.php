@@ -2,31 +2,35 @@
 
 @section('content')
 
-    <div class="row">
-        <div class="page-menu col-md-3">
-            <div class="page-actions">
-                <form action="{{$book->getUrl()}}/sort" method="POST">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="PUT">
-                    <input type="hidden" id="sort-tree-input" name="sort-tree">
-                    <h4>Actions</h4>
-                    <div class="list">
-                        <button class="button pos" type="submit">Save Ordering</button>
-                    </div>
-                </form>
+    <div class="page-content">
+        <h1>{{ $book->name }} <span class="subheader">Sort Pages</span></h1>
+
+        <ul class="sortable-page-list" id="sort-list">
+            @foreach($book->children() as $bookChild)
+                <li data-id="{{$bookChild->id}}" data-type="{{ is_a($bookChild, 'Oxbow\Chapter') ? 'chapter' : 'page' }}">
+                    {{ $bookChild->name }}
+                    @if(is_a($bookChild, 'Oxbow\Chapter'))
+                        <ul>
+                            @foreach($bookChild->pages as $page)
+                                <li data-id="{{$page->id}}" data-type="page">
+                                    {{ $page->name }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </li>
+            @endforeach
+        </ul>
+
+        <form action="{{$book->getUrl()}}/sort" method="POST">
+            {!! csrf_field() !!}
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" id="sort-tree-input" name="sort-tree">
+            <div class="list">
+                <button class="button pos" type="submit">Save Ordering</button>
             </div>
-        </div>
+        </form>
 
-        <div class="page-content right col-md-9">
-            <h1>{{ $book->name }} <span class="subheader">Sort Pages</span></h1>
-
-            <ul class="sortable-page-list" id="sort-list">
-                @foreach($tree['pages'] as $treePage)
-                    @include('pages/page-tree-sort', ['page' => $treePage])
-                @endforeach
-            </ul>
-
-        </div>
     </div>
 
     <script>
@@ -36,24 +40,35 @@
                 group: 'serialization',
                 onDrop: function($item, container, _super) {
                     var data = group.sortable('serialize').get();
-                    console.log(data);
-                    var pageMap = [];
-                    var parent = 0;
-                    buildPageMap(pageMap, parent, data[0]);
+                    var pageMap = buildPageMap(data[0]);
                     $('#sort-tree-input').val(JSON.stringify(pageMap));
                     _super($item, container);
                 }
             });
 
-            function buildPageMap(pageMap, parent, data) {
+            function buildPageMap(data) {
+                var pageMap = [];
                 for(var i = 0; i < data.length; i++) {
-                    var page = data[i];
+                    var bookChild = data[i];
                     pageMap.push({
-                        id: page.id,
-                        parent: parent
+                        id: bookChild.id,
+                        parentChapter: false,
+                        type: bookChild.type
                     });
-                    buildPageMap(pageMap, page.id, page.children[0]);
+                    if(bookChild.type == 'chapter' && bookChild.children) {
+                        var chapterId = bookChild.id;
+                        var chapterChildren = bookChild.children[0];
+                        for(var j = 0; j < chapterChildren.length; j++) {
+                            var page = chapterChildren[j];
+                            pageMap.push({
+                                id: page.id,
+                                parentChapter: chapterId,
+                                type: 'page'
+                            });
+                        }
+                    }
                 }
+                return pageMap;
             }
 
         });

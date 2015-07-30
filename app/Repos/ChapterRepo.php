@@ -18,6 +18,11 @@ class ChapterRepo
         $this->chapter = $chapter;
     }
 
+    public function idExists($id)
+    {
+        return $this->chapter->where('id', '=', $id)->count() > 0;
+    }
+
     public function getById($id)
     {
         return $this->chapter->findOrFail($id);

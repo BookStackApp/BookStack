@@ -7,8 +7,8 @@ h1 {
   line-height: 1.22222222em;
   margin-top: 0.48888889em;
   margin-bottom: 0.48888889em;
-  padding-bottom: 0.3333em;
-  border-bottom: 1px solid #EAEAEA;
+  //padding-bottom: 0.3333em;
+  //border-bottom: 1px solid #EAEAEA;
   //margin-left: -$-xxl;
   //margin-right: -$-xxl;
 }
@@ -73,7 +73,7 @@ hr {
   border: 0;
   height: 1px;
   border: 0;
-  background: #e3e0e0;
+  background: #EAEAEA;
   margin-bottom: $-l;
   &.faded {
     background-image: linear-gradient(to right, #FFF, #e3e0e0 20%, #e3e0e0 80%, #FFF);
@@ -150,11 +150,17 @@ span.code {
  * Text colors
  */
 p.pos, p .pos, span.pos, .text-pos {
-	color: $positive;
+  color: $positive;
+  &:hover {
+    color: $positive;
+  }
 }
 
 p.neg, p .neg, span.neg, .text-neg {
-	color: $negative;
+  color: $negative;
+  &:hover {
+    color: $negative;
+  }
 }
 
 p.muted, p .muted, span.muted, .text-muted {
@@ -163,10 +169,16 @@ p.muted, p .muted, span.muted, .text-muted {
 
 p.primary, p .primary, span.primary, .text-primary {
 	color: $primary;
+  &:hover {
+    color: $primary;
+  }
 }
 
 p.secondary, p .secondary, span.secondary, .text-secondary {
 	color: $secondary;
+  &:hover {
+    color: $secondary;
+  }
 }
 
 /*

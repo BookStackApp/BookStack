@@ -67,7 +67,7 @@ ul.menu {
   li a {
     padding: $-m;
     display: block;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #3A3939;
   }
 }
 
@@ -102,13 +102,21 @@ ul.menu {
 }
 
 .page-list {
-  a {
+  h3 {
+    margin: $-l 0;
+  }
+  .inset-list {
     display: block;
-    padding: $-s 0;
-    border-bottom: 2px dotted #CCC;
-    &:first-child {
-      border-top: 2px dotted #CCC;
-    }
+    overflow: hidden;
+    padding-left: $-l*2;
+    border-top: 3px dotted #EEE;
+  }
+  h4 {
+    display: block;
+    margin: $-m 0;
+  }
+  hr {
+    margin-top: 0;
   }
 }
 
@@ -247,16 +255,20 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 4px;
   }
   span.sep {
-    color: #888;
+    color: #aaa;
     padding: 0 $-xs;
   }
 }
 
 .faded {
-  opacity: 0.5;
-  transition: opacity ease-in-out 120ms;
-  &:hover {
-    opacity: 1;
+  a {
+    color: #666;
+    opacity: 0.5;
+    transition: all ease-in-out 120ms;
+    &:hover {
+      opacity: 1;
+      text-decoration: none;
+    }
   }
 }
 
@@ -277,67 +289,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-.nested-page-list {
-  list-style: none;
-  margin-left: 0;
-  li {
-    border-top: 3px dotted #BBB;
-    padding: $-s 0;
-    user-select: none;
-  }
-  li:last-child {
-    border-bottom: 3px dotted #BBB;
-  }
-  .nested-page-list {
-    margin-top: $-xs;
-    display: none;
-    margin: $-xs 0 $-xs 9px;
-    font-size: $fs-m * 0.9;
-    border-left: 2px solid #EEE;
-  }
-  .nested-page-list li {
-    border: none;
-    padding-right: $-m;
-    padding-left: $-m;
-    &.expanded.has-children {
-      padding-bottom: 0;
-    }
-  }
-  i.arrow {
-    font-size: 0.8em;
-    padding: $-xs;
-    margin-top: -$-xs;
-    margin-bottom: -$-xs;
-    transform-origin: 50% 50%;
-    transition: transform ease-in-out 180ms;
-    cursor: pointer;
-  }
-  li.expanded {
-    > i.arrow {
-      transform: rotate(90deg);
-    }
-    >.nested-page-list {
-      display: block;
-    }
-  }
-}
-
 .book-tree h4 {
   padding: $-m $-s 0 $-s;
   i {
     padding-right: $-s;
   }
 }
+// Sidebar list
 .book-tree .sidebar-page-list {
   list-style: none;
   margin: 0;
   li a {
     display: block;
-    padding: $-s $-m;
-    border-bottom: 2px dotted #333;
+    border-bottom: 1px solid #3A3939;
   }
   a.bold {
     color: #EEE !important;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+  ul li a {
+    padding-left: $-xl;
+  }
+  .book {
+    color: #7BD06E !important;
+  }
+  .chapter {
+    color: #D2A64B !important;
+  }
+  .page {
+    color: #4599DC !important;
   }
 }
 
@@ -379,9 +362,4 @@ body.dragging, body.dragging * {
 }
 .sortable-page-list li.placeholder:before {
   position: absolute;
-}
-
-.material-icons {
-  font-size: 1em;
-  line-height: 1.4em;
 }

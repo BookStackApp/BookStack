@@ -59,3 +59,30 @@ $button-border-radius: 3px;
     }
   }
 }
+
+// Floating action button
+//.fab {
+//  $size: 70px;
+//  button.button {
+//    border-radius: 100%;
+//    width: $size;
+//    height: $size;
+//    font-size: 48px;
+//    text-align: center;
+//    margin: 0;
+//    padding: 0;
+//    border: 0;
+//    box-shadow: 0 0 2px 2px #DDD;
+//    transition: all ease-in-out 160ms;
+//    i {
+//      transform: rotate(0deg);
+//      transition: all ease-in-out 160ms;
+//    }
+//    &:hover {
+//      box-shadow: 0 2px 4px 2px #CCC;
+//      i {
+//        transform: rotate(180deg);
+//      }
+//    }
+//  }
+//}

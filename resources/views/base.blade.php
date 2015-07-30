@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/css/app.css">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    {{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">--}}
+    <link rel="stylesheet" href="/bower/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
@@ -42,8 +43,13 @@
             </form>
         </div>
         <ul class="menu">
-            <li><a href="/books"><i class="fa fa-book"></i>Books</a></li>
+            <li><a href="/books"><i class="zmdi zmdi-book"></i>Books</a></li>
         </ul>
+        @if(isset($book) && !isset($books))
+            <div class="book-tree">
+                @include('pages/sidebar-tree-list', ['book' => $book])
+            </div>
+        @endif
         @yield('sidebar')
     </section>
 

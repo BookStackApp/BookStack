@@ -31,7 +31,7 @@ class Book extends Model
 
     public function children()
     {
-        $pages = $this->pages()->get();
+        $pages = $this->pages()->where('chapter_id', '=', 0)->get();
         $chapters = $this->chapters()->get();
         $children = $pages->merge($chapters);
         return $children->sortBy('priority');

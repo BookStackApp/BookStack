@@ -1,13 +1,30 @@
-{{--Requires an array of pages to be passed as $pageTree--}}
 
-<ul class="sidebar-page-list">
+<ul class="sidebar-page-list menu">
+    <li class="book-header"><a href="{{$book->getUrl()}}" class="book"><i class="zmdi zmdi-book"></i>{{$book->name}}</a></li>
     @foreach($book->children() as $bookChild)
         <li>
-            {{ $bookChild->name }}
+            <a href="{{$bookChild->getUrl()}}" class="@if(is_a($bookChild, 'Oxbow\Chapter')) chapter @else page @endif">
+                @if(is_a($bookChild, 'Oxbow\Chapter'))
+                    <i class="zmdi zmdi-collection-bookmark chapter-toggle"></i>
+                @else
+                    <i class="zmdi zmdi-file-text"></i>
+                @endif
+                {{ $bookChild->name }}
+            </a>
+
             @if(is_a($bookChild, 'Oxbow\Chapter') && count($bookChild->pages) > 0)
-                <ul>
-                    @foreach($pages as $page)
-                        <li>{{ $page->name }}</li>
+                <ul class="menu">
+                    @foreach($bookChild->pages as $page)
+                        <li>
+                            <a href="{{$page->getUrl()}}" class="@if(is_a($page, 'Oxbow\Chapter')) chapter @else page @endif">
+                                @if(is_a($page, 'Oxbow\Chapter'))
+                                    <i class="zmdi zmdi-collection-bookmark chapter-toggle"></i>
+                                @else
+                                    <i class="zmdi zmdi-file-text"></i>
+                                @endif
+                                {{ $page->name }}
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
             @endif

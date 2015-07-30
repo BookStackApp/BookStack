@@ -28,12 +28,12 @@ Route::group(['prefix' => 'books'], function() {
     Route::get('/{bookSlug}/sort', 'PageController@sortPages');
     Route::put('/{bookSlug}/sort', 'PageController@savePageSort');
     Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
-    Route::get('/{bookSlug}/page/{pageSlug}/create', 'PageController@create');
     Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
     Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
     Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
     Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
 
+    Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
     Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
     Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
     Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');

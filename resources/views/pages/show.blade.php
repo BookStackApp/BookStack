@@ -1,30 +1,24 @@
 @extends('base')
 
-@section('sidebar')
-    <div class="book-tree">
-        <h4><a href="{{$book->getUrl()}}"><i class="fa fa-book"></i>{{$book->name}}</a></h4>
-        @include('pages/sidebar-tree-list', ['book' => $book])
-    </div>
-@stop
-
 @section('content')
 
     <div class="row faded-small">
         <div class="col-md-6 faded">
             <div class="breadcrumbs padded-horizontal">
-                <a href="{{$book->getUrl()}}"><i class="fa fa-book"></i>{{ $book->name }}</a>
-                @if($breadCrumbs)
-                    @foreach($breadCrumbs as $parentPage)
-                        <span class="sep">&gt;</span>
-                        <a href="{{$parentPage->getUrl()}}">{{ $parentPage->name }}</a>
-                    @endforeach
+                <a href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                @if($page->hasChapter())
+                    <span class="sep">&raquo;</span>
+                    <a href="{{ $page->chapter->getUrl() }}">
+                        <i class="zmdi zmdi-collection-bookmark"></i>
+                        {{$page->chapter->name}}
+                    </a>
                 @endif
             </div>
         </div>
         <div class="col-md-6 faded">
             <div class="action-buttons">
-                <a href="{{$page->getUrl() . '/edit'}}" ><i class="fa fa-pencil"></i>Edit</a>
-                <a href="{{$page->getUrl() . '/delete'}}"><i class="fa fa-trash"></i>Delete</a>
+                <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
+                <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
             </div>
         </div>
     </div>
@@ -57,18 +51,23 @@
             var pageNav = $('.page-nav-list');
             var pageContent = $('.page-content');
             var headers = pageContent.find('h1, h2, h3, h4, h5, h6');
-            headers.each(function() {
-                var header = $(this);
-                var tag = header.prop('tagName');
-                var listElem = $('<li></li>').addClass('nav-'+tag);
-                var link = $('<a></a>').text(header.text().trim()).attr('href', '#');
-                listElem.append(link);
-                pageNav.append(listElem);
-                link.click(function(e) {
-                    e.preventDefault();
-                    header.smoothScrollTo();
-                })
-            });
+            if(headers.length > 5) {
+                headers.each(function() {
+                    var header = $(this);
+                    var tag = header.prop('tagName');
+                    var listElem = $('<li></li>').addClass('nav-'+tag);
+                    var link = $('<a></a>').text(header.text().trim()).attr('href', '#');
+                    listElem.append(link);
+                    pageNav.append(listElem);
+                    link.click(function(e) {
+                        e.preventDefault();
+                        header.smoothScrollTo();
+                    })
+                });
+            } else {
+                $('.side-nav').hide();
+            }
+
 
             // Set up link hooks
             var pageId = {{$page->id}};
