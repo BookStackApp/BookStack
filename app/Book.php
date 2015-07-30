@@ -33,8 +33,10 @@ class Book extends Model
     {
         $pages = $this->pages()->where('chapter_id', '=', 0)->get();
         $chapters = $this->chapters()->get();
-        $children = $pages->merge($chapters);
-        return $children->sortBy('priority');
+        foreach($chapters as $chapter) {
+            $pages->push($chapter);
+        }
+        return $pages->sortBy('priority');
     }
 
 }

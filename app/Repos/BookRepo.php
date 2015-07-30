@@ -47,8 +47,11 @@ class BookRepo
     public function destroyBySlug($bookSlug)
     {
         $book = $this->getBySlug($bookSlug);
-        foreach($book->children() as $child) {
-            $child->delete();
+        foreach($book->pages as $page) {
+            $page->delete();
+        }
+        foreach($book->chapters as $chapter) {
+            $chapter->delete();
         }
         $book->delete();
     }
