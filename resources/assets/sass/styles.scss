@@ -241,15 +241,23 @@ a.link-hook {
   position: absolute;
   display: inline-block;
   top: $-xs;
-  left: -$-xl+2px;
+  left: -$-l;
+  padding-bottom: 30px;
   font-size: 20px;
   line-height: 20px;
   color: #BBB;
   opacity: 0;
+  transform: translate3d(10px, 0, 0);
+  transition: all ease-in-out 240ms;
+  background-color: transparent;
+  &:hover {
+    color: $primary;
+  }
 }
 h1, h2, h3, h4, h5, h6 {
   &:hover a.link-hook {
     opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 

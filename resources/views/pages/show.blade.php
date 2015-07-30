@@ -74,7 +74,7 @@
             headers.each(function() {
                 var text = $(this).text().trim();
                 var link = '/link/' + pageId + '#' + encodeURIComponent(text);
-                var linkHook = $('<a class="link-hook"><i class="fa fa-link"></i></a>')
+                var linkHook = $('<a class="link-hook"><i class="zmdi zmdi-link"></i></a>')
                         .attr({"data-content": link, href: link, target: '_blank'});
                 linkHook.click(function(e) {
                     e.preventDefault();
