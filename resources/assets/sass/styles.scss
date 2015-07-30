@@ -99,6 +99,9 @@ ul.menu {
   &.left {
     float: left;
   }
+  img {
+    max-width: 100%;
+  }
 }
 
 .page-list {
