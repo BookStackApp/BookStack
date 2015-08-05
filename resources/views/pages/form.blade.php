@@ -27,7 +27,10 @@
 
         tinymce.init({
             selector: '.edit-area textarea',
-            content_css: '/css/app.css',
+            content_css: [
+                '/css/app.css',
+                '//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300'
+            ],
             body_class: 'page-content',
             relative_urls: false,
             statusbar: false,
