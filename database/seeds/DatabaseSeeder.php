@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         // $this->call(UserTableSeeder::class);
+        \Oxbow\User::create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('password')
+        ]);
 
         Model::reguard();
     }

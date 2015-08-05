@@ -59,6 +59,10 @@ a {
   i {
     padding-right: $-s;
   }
+  i.zmdi-hc-flip-horizontal {
+    padding-right: 0;
+    padding-left: $-s;
+  }
 }
 
 /*

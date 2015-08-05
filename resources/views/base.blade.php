@@ -29,11 +29,13 @@
 <body>
 
     <section id="sidebar">
+        <div class="sidebar-bg"><div class="overlay"></div></div>
         <header>
             <div class="padded row clearfix">
-                <div class="col-md-12">
+                <div class="col-md-12 logo-container">
                     {{--<div ><img class="logo float left" src="/bookstack.svg" alt="BookStack"></div>--}}
                     <div class="logo">BookStack</div>
+                    <div><i class="zmdi zmdi-account"></i> {{ \Illuminate\Support\Facades\Auth::user()->name }}</div>
                 </div>
             </div>
         </header>
@@ -44,6 +46,7 @@
         </div>
         <ul class="menu">
             <li><a href="/books"><i class="zmdi zmdi-book"></i>Books</a></li>
+            <li><a href="/logout"><i class="zmdi zmdi-run zmdi-hc-flip-horizontal"></i>Logout</a></li>
         </ul>
         @if(isset($book) && !isset($books))
             <div class="book-tree">

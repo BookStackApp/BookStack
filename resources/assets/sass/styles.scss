@@ -27,7 +27,7 @@ header {
   top: 0;
   z-index: 1;
   //padding-top: $-m;
-  width: 300px;
+  width: 340px;
   border-right: 1px solid #DDD;
   h4, li, p, a {
     color: #CCC;
@@ -36,18 +36,25 @@ header {
 
 #content {
   //margin-top: 63px;
-  margin-left: 300px;
+  margin-left: 340px;
   display: block;
   position: relative;
   padding: 0 16px;
 }
 
-.logo {
-  font-size: 2em;
-  padding: $-xl $-s;
-  font-weight: bold;
+.logo-container {
+  padding: $-xl $-s $-l $-s;
   color: #CCC;
+  .logo {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: $-m;
+  }
+  i {
+    padding-right: $-s;
+  }
 }
+
 
 .search-box {
   input {
@@ -311,6 +318,7 @@ h1, h2, h3, h4, h5, h6 {
 .book-tree .sidebar-page-list {
   list-style: none;
   margin: 0;
+  border-left: 1px solid #7BD06E;
   li a {
     display: block;
     border-bottom: 1px solid #3A3939;
@@ -374,4 +382,60 @@ body.dragging, body.dragging * {
 }
 .sortable-page-list li.placeholder:before {
   position: absolute;
+}
+
+.image-cover {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
+  &.login {
+    background-image: url('/images/bg-books.jpg');
+  }
+}
+
+.sidebar-bg {
+  background-image: url('/images/bg-books.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: rgba(0,0,0,0.7);
+  }
+}
+
+.image-cover #sidebar {
+  width: auto;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.center-box {
+  margin-top: 15vh;
+  padding: $-m $-xxl $-xl*2 $-xxl;
+  max-width: 346px;
+  h1, label {
+    color: #EEE;
+  }
+  h1 {
+    margin-bottom: $-m;
+  }
+  .button {
+    margin-top: $-xl;
+  }
+  input {
+    background-color: transparent;
+    color: #EEE;
+  }
 }

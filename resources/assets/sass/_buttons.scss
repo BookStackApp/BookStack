@@ -60,6 +60,12 @@ $button-border-radius: 3px;
   }
 }
 
+.button.block {
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
 // Floating action button
 //.fab {
 //  $size: 70px;
