@@ -1,0 +1,18 @@
+
+table.table {
+  width: 100%;
+  tr {
+    border-bottom: 1px solid #DDD;
+  }
+  th, td {
+    text-align: left;
+    border: none;
+    padding: $-xs $-xs;
+  }
+  th {
+    font-weight: bold;
+  }
+  tr:hover {
+    background-color: #EEE;
+  }
+}

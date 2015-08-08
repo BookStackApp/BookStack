@@ -43,6 +43,9 @@ $button-border-radius: 3px;
   &.secondary {
     @include generate-button-colors(#EEE, $secondary);
   }
+  &.muted {
+    @include generate-button-colors(#EEE, #888);
+  }
 }
 
 .button-group {

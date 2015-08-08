@@ -46,6 +46,7 @@
         </div>
         <ul class="menu">
             <li><a href="/books"><i class="zmdi zmdi-book"></i>Books</a></li>
+            <li><a href="/users"><i class="zmdi zmdi-accounts"></i>Users</a></li>
             <li><a href="/logout"><i class="zmdi zmdi-run zmdi-hc-flip-horizontal"></i>Logout</a></li>
         </ul>
         @if(isset($book) && !isset($books))

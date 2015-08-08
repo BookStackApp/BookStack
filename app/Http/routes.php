@@ -50,11 +50,24 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::post('/upload/image', 'ImageController@upload');
 
+    // Users
+    Route::get('/users', 'UserController@index');
+    Route::get('/users/create', 'UserController@create');
+    Route::get('/users/{id}/delete', 'UserController@delete');
+    Route::post('/users/create', 'UserController@store');
+    Route::get('/users/{id}', 'UserController@edit');
+    Route::put('/users/{id}', 'UserController@update');
+    Route::delete('/users/{id}', 'UserController@destroy');
+
+    // Image routes
     Route::get('/images/all', 'ImageController@getAll');
     Route::get('/images/all/{page}', 'ImageController@getAll');
     Route::get('/images/{any}', 'ImageController@getImage')->where('any', '.*');
 
+    // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');
+
+    // Search
     Route::get('/pages/search/all', 'PageController@searchAll');
 
     Route::get('/', function () {
