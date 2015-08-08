@@ -37,7 +37,7 @@
                         {{$childElement->getExcerpt()}}
                     </p>
 
-                    @if(is_a($childElement, 'Oxbow\Chapter'))
+                    @if(is_a($childElement, 'Oxbow\Chapter') && count($childElement->pages) > 0)
                         <div class="inset-list">
                             @foreach($childElement->pages as $page)
                                 <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i> {{$page->name}}</a></h4>
@@ -48,6 +48,12 @@
                 <hr>
             @endforeach
         </div>
+
+        <p class="text-muted small">
+            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
+            <br>
+            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
+        </p>
 
     </div>
 

@@ -4,6 +4,7 @@ namespace Oxbow\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Oxbow\Http\Requests;
 use Oxbow\Repos\BookRepo;
@@ -65,6 +66,8 @@ class BookController extends Controller
             $slug .= '1';
         }
         $book->slug = $slug;
+        $book->created_by = Auth::user()->id;
+        $book->updated_by = Auth::user()->id;
         $book->save();
         return redirect('/books');
     }
@@ -113,6 +116,7 @@ class BookController extends Controller
             $slug += '1';
         }
         $book->slug = $slug;
+        $book->updated_by = Auth::user()->id;
         $book->save();
         return redirect($book->getUrl());
     }

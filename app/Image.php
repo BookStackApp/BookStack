@@ -10,4 +10,14 @@ class Image extends Model
     {
         return storage_path() . $this->url;
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo('Oxbow\User', 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo('Oxbow\User', 'updated_by');
+    }
 }

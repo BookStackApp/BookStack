@@ -42,6 +42,12 @@
         @else
             <p class="text-muted">No pages are in this chapter</p>
         @endif
+
+        <p class="text-muted small">
+            Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->createdBy->name}} @endif
+            <br>
+            Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->updatedBy->name}} @endif
+        </p>
     </div>
 
 

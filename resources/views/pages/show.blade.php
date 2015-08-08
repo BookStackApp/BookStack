@@ -41,6 +41,13 @@
             </div>
         @endif
         {!! $page->html !!}
+
+        <hr>
+        <p class="text-muted small">
+            Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
+            <br>
+            Last Updated {{$page->updated_at->diffForHumans()}} @if($page->createdBy) by {{$page->updatedBy->name}} @endif
+        </p>
     </div>
 
 

@@ -5,6 +5,7 @@ namespace Oxbow\Http\Controllers;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image as ImageTool;
 use Illuminate\Support\Facades\DB;
 use Oxbow\Http\Requests;
@@ -126,6 +127,8 @@ class ImageController extends Controller
         // Create and save image object
         $this->image->name = $name;
         $this->image->url = $imagePath . $name;
+        $this->image->created_by = Auth::user()->id;
+        $this->image->updated_by = Auth::user()->id;
         $this->image->save();
         return response()->json($this->image);
     }

@@ -4,6 +4,7 @@ namespace Oxbow\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Oxbow\Http\Requests;
 use Oxbow\Repos\BookRepo;
@@ -82,6 +83,8 @@ class PageController extends Controller
 
         $page->book_id = $book->id;
         $page->text = strip_tags($page->html);
+        $page->created_by = Auth::user()->id;
+        $page->updated_by = Auth::user()->id;
         $page->save();
         return redirect($page->getUrl());
     }
@@ -130,6 +133,7 @@ class PageController extends Controller
         $page->fill($request->all());
         $page->slug = $this->pageRepo->findSuitableSlug($page->name, $book->id, $page->id);
         $page->text = strip_tags($page->html);
+        $page->updated_by = Auth::user()->id;
         $page->save();
         return redirect($page->getUrl());
     }

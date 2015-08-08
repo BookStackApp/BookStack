@@ -4,6 +4,7 @@ namespace Oxbow\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Oxbow\Http\Requests;
 use Oxbow\Http\Controllers\Controller;
 use Oxbow\Repos\BookRepo;
@@ -56,6 +57,8 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->newFromInput($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id);
         $chapter->priority = $this->bookRepo->getNewPriority($book);
+        $chapter->created_by = Auth::user()->id;
+        $chapter->updated_by = Auth::user()->id;
         $book->chapters()->save($chapter);
         return redirect($book->getUrl());
     }
@@ -102,6 +105,7 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $chapter->fill($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id, $chapter->id);
+        $chapter->updated_by = Auth::user()->id;
         $chapter->save();
         return redirect($chapter->getUrl());
     }

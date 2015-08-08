@@ -29,6 +29,16 @@ class Book extends Model
         return $this->hasMany('Oxbow\Chapter');
     }
 
+    public function createdBy()
+    {
+        return $this->belongsTo('Oxbow\User', 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo('Oxbow\User', 'updated_by');
+    }
+
     public function children()
     {
         $pages = $this->pages()->where('chapter_id', '=', 0)->get();

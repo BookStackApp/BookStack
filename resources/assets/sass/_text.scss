@@ -169,6 +169,9 @@ p.neg, p .neg, span.neg, .text-neg {
 
 p.muted, p .muted, span.muted, .text-muted {
 	color: lighten($text-dark, 26%);
+    &.small, .small {
+      color: lighten($text-dark, 42%);
+    }
 }
 
 p.primary, p .primary, span.primary, .text-primary {

@@ -32,9 +32,14 @@ class Page extends Model
         return $this->chapter()->count() > 0;
     }
 
-    public function parent()
+    public function createdBy()
     {
-        return $this->belongsTo('Oxbow\Page', 'page_id');
+        return $this->belongsTo('Oxbow\User', 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo('Oxbow\User', 'updated_by');
     }
 
     public function getUrl()
