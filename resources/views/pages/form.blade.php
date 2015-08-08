@@ -13,6 +13,7 @@
         @include('form/textarea', ['name' => 'html'])
     </div>
     <div class="margin-top large">
+        <a onclick="window.history.back();" class="button muted">Cancel</a>
         <button type="submit" class="button pos">Save Page</button>
     </div>
 </div>

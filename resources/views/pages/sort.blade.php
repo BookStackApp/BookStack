@@ -27,6 +27,7 @@
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="sort-tree-input" name="sort-tree">
             <div class="list">
+                <a href="{{$book->getUrl()}}" class="button muted">Cancel</a>
                 <button class="button pos" type="submit">Save Ordering</button>
             </div>
         </form>

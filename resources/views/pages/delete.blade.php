@@ -9,8 +9,8 @@
         <form action="{{$page->getUrl()}}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="DELETE">
+            <a href="{{$page->getUrl()}}" class="button muted">Cancel</a>
             <button type="submit" class="button neg">Confirm</button>
-            <a href="{{$page->getUrl()}}" class="button">Cancel</a>
         </form>
     </div>
 
