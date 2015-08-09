@@ -1,5 +1,6 @@
 <?php namespace Oxbow\Repos;
 
+use Illuminate\Support\Str;
 use Oxbow\Book;
 
 class BookRepo
@@ -60,6 +61,24 @@ class BookRepo
     {
         $lastElem = $book->children()->pop();
         return $lastElem ? $lastElem->priority + 1 : 0;
+    }
+
+    public function doesSlugExist($slug, $currentId = false)
+    {
+        $query = $this->book->where('slug', '=', $slug);
+        if($currentId) {
+            $query = $query->where('id', '!=', $currentId);
+        }
+        return $query->count() > 0;
+    }
+
+    public function findSuitableSlug($name, $currentId = false)
+    {
+        $slug = Str::slug($name);
+        while($this->doesSlugExist($slug, $currentId)) {
+            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
+        }
+        return $slug;
     }
 
 }

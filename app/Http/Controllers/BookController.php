@@ -61,11 +61,7 @@ class BookController extends Controller
             'description' => 'string|max:1000'
         ]);
         $book = $this->bookRepo->newFromInput($request->all());
-        $slug = Str::slug($book->name);
-        while($this->bookRepo->countBySlug($slug) > 0) {
-            $slug .= '1';
-        }
-        $book->slug = $slug;
+        $book->slug = $this->bookRepo->findSuitableSlug($book->name);
         $book->created_by = Auth::user()->id;
         $book->updated_by = Auth::user()->id;
         $book->save();
@@ -111,11 +107,7 @@ class BookController extends Controller
             'description' => 'string|max:1000'
         ]);
         $book->fill($request->all());
-        $slug = Str::slug($book->name);
-        while($this->bookRepo->countBySlug($slug) > 0 && $book->slug != $slug) {
-            $slug += '1';
-        }
-        $book->slug = $slug;
+        $book->slug = $this->bookRepo->findSuitableSlug($book->name, $book->id);
         $book->updated_by = Auth::user()->id;
         $book->save();
         return redirect($book->getUrl());
