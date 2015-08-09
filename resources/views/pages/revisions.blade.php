@@ -1,0 +1,47 @@
+@extends('base')
+
+@section('content')
+
+    <div class="row faded-small">
+        <div class="col-md-6 faded">
+            <div class="breadcrumbs padded-horizontal">
+                <a href="{{$page->getUrl()}}" class="text-primary"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
+            </div>
+        </div>
+        <div class="col-md-6 faded">
+        </div>
+    </div>
+
+    <div class="page-content">
+        <h1>Page Revisions <span class="subheader">For "{{ $page->name }}"</span></h1>
+
+        @if(count($page->revisions) > 0)
+
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Created By</th>
+                    <th>Revision Date</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach($page->revisions as $revision)
+                    <tr>
+                        <td>{{$revision->name}}</td>
+                        <td>{{$revision->createdBy->name}}</td>
+                        <td><small>{{$revision->created_at->format('jS F, Y H:i:s')}} ({{$revision->created_at->diffForHumans()}})</small></td>
+                        <td>
+                            <a href="{{$revision->getUrl()}}" target="_blank">Preview</a>
+                            <span class="text-muted">&nbsp;|&nbsp;</span>
+                            <a href="{{$revision->getUrl()}}/restore">Restore</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+
+        @else
+            <p>This page has no revisions.</p>
+        @endif
+
+    </div>
+
+@stop

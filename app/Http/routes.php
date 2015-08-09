@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'books'], function() {
 
+        // Books
         Route::get('/', 'BookController@index');
         Route::get('/create', 'BookController@create');
         Route::post('/', 'BookController@store');
@@ -27,6 +28,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{slug}', 'BookController@show');
         Route::get('/{slug}/delete', 'BookController@showDelete');
 
+        // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
         Route::post('/{bookSlug}/page', 'PageController@store');
         Route::get('/{bookSlug}/sort', 'PageController@sortPages');
@@ -36,7 +38,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
         Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
+        //Revisions
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
 
+        // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
         Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
         Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');

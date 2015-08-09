@@ -17,6 +17,7 @@
         </div>
         <div class="col-md-6 faded">
             <div class="action-buttons">
+                <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a>
                 <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
                 <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
             </div>
@@ -31,17 +32,7 @@
 
 
     <div class="page-content">
-        <h1>{{$page->name}}</h1>
-        @if(count($page->children) > 0)
-            <h4 class="text-muted">Sub-pages</h4>
-            <div class="page-list">
-                @foreach($page->children as $childPage)
-                    <a href="{{ $childPage->getUrl() }}">{{ $childPage->name }}</a>
-                @endforeach
-            </div>
-        @endif
-        {!! $page->html !!}
-
+        @include('pages/page-display')
         <hr>
         <p class="text-muted small">
             Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif

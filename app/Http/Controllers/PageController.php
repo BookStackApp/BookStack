@@ -31,19 +31,8 @@ class PageController extends Controller
         $this->chapterRepo = $chapterRepo;
     }
 
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new page.
      *
      * @param $bookSlug
      * @param bool $chapterSlug
@@ -58,7 +47,7 @@ class PageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created page in storage.
      *
      * @param  Request $request
      * @param $bookSlug
@@ -86,11 +75,12 @@ class PageController extends Controller
         $page->created_by = Auth::user()->id;
         $page->updated_by = Auth::user()->id;
         $page->save();
+        $this->pageRepo->saveRevision($page);
         return redirect($page->getUrl());
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified page.
      *
      * @param $bookSlug
      * @param $pageSlug
@@ -100,12 +90,11 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        //dd($sidebarBookTree);
         return view('pages/show', ['page' => $page, 'book' => $book]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified page.
      *
      * @param $bookSlug
      * @param $pageSlug
@@ -119,7 +108,7 @@ class PageController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified page in storage.
      *
      * @param  Request $request
      * @param $bookSlug
@@ -130,11 +119,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        $page->fill($request->all());
-        $page->slug = $this->pageRepo->findSuitableSlug($page->name, $book->id, $page->id);
-        $page->text = strip_tags($page->html);
-        $page->updated_by = Auth::user()->id;
-        $page->save();
+        $this->pageRepo->updatePage($page, $book->id, $request->all());
         return redirect($page->getUrl());
     }
 
@@ -205,6 +190,12 @@ class PageController extends Controller
         return redirect($book->getUrl());
     }
 
+    /**
+     * Show the deletion page for the specified page.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\View\View
+     */
     public function showDelete($bookSlug, $pageSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
@@ -213,7 +204,7 @@ class PageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified page from storage.
      *
      * @param $bookSlug
      * @param $pageSlug
@@ -226,5 +217,43 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $page->delete();
         return redirect($book->getUrl());
+    }
+
+    /**
+     * Shows the last revisions for this page.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\View\View
+     */
+    public function showRevisions($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        return view('pages/revisions', ['page' => $page, 'book' => $book]);
+    }
+
+    /**
+     * Shows a preview of a single revision
+     * @param $bookSlug
+     * @param $pageSlug
+     * @param $revisionId
+     * @return \Illuminate\View\View
+     */
+    public function showRevision($bookSlug, $pageSlug, $revisionId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $revision = $this->pageRepo->getRevisionById($revisionId);
+        $page->fill($revision->toArray());
+        return view('pages/revision', ['page' => $page, 'book' => $book]);
+    }
+
+    public function restoreRevision($bookSlug, $pageSlug, $revisionId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $revision = $this->pageRepo->getRevisionById($revisionId);
+        $page = $this->pageRepo->updatePage($page, $book->id, $revision->toArray());
+        return redirect($page->getUrl());
     }
 }

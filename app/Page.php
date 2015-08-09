@@ -42,6 +42,11 @@ class Page extends Model
         return $this->belongsTo('Oxbow\User', 'updated_by');
     }
 
+    public function revisions()
+    {
+        return $this->hasMany('Oxbow\PageRevision')->orderBy('created_at', 'desc');
+    }
+
     public function getUrl()
     {
         return '/books/' . $this->book->slug . '/page/' . $this->slug;
