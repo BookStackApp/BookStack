@@ -1,4 +1,19 @@
 
+// Dropzone config
+Dropzone.options.imageUploadDropzone = {
+    uploadMultiple: false,
+    previewsContainer: '.image-manager-display .uploads',
+    init: function() {
+        this.on('success', function(event, image) {
+            $('.image-manager-display .uploads').empty();
+            var newImage = $('<img />').attr('data-image-id', image.id);
+            newImage.attr('title', image.name).attr('src', image.thumbnail);
+            newImage.data('imageData', image);
+            $('.image-manager-display .uploads').after(newImage);
+        });
+    }
+};
+
 (function() {
 
     var isInit = false;
@@ -6,6 +21,9 @@
     var overlay;
     var display;
     var imageIndexUrl = '/images/all';
+    var pageIndex = 0;
+    var hasMore = true;
+    var isGettingImages = true;
 
     var ImageManager =  {};
     var action = false;
@@ -22,22 +40,47 @@
     };
 
     ImageManager.init = function(selector) {
-        console.log('cat');
         elem = $(selector);
         overlay = elem.closest('.overlay');
-        display = elem.find('.image-manager-display').first()
-
+        display = elem.find('.image-manager-display').first();
+        var uploads = display.find('.uploads');
+        var images = display.find('images');
+        var loadMore = display.find('.load-more');
         // Get recent images and show
         $.getJSON(imageIndexUrl, showImages);
-        function showImages(images) {
+        function showImages(data) {
+            var images = data.images;
+            hasMore = data.hasMore;
+            pageIndex++;
+            isGettingImages = false;
             for(var i = 0; i < images.length; i++) {
                 var image = images[i];
                 var newImage = $('<img />').attr('data-image-id', image.id);
                 newImage.attr('title', image.name).attr('src', image.thumbnail);
-                display.append(newImage);
+                loadMore.before(newImage);
                 newImage.data('imageData', image);
             }
+            if(hasMore) loadMore.show();
         }
+
+        loadMore.click(function() {
+            loadMore.hide();
+            if(isGettingImages === false) {
+                isGettingImages = true;
+                $.getJSON(imageIndexUrl + '/' + pageIndex, showImages);
+            }
+        });
+
+        // Image grabbing on scroll
+        display.on('scroll', function() {
+            var displayBottom = display.scrollTop() + display.height();
+            var elemTop = loadMore.offset().top;
+            if(elemTop < displayBottom && hasMore && isGettingImages === false) {
+                isGettingImages = true;
+                loadMore.hide();
+                $.getJSON(imageIndexUrl + '/' + pageIndex, showImages);
+            }
+        });
 
         elem.on('dblclick', '.image-manager-display img', function() {
             var imageElem = $(this);
@@ -55,7 +98,7 @@
         // Set up dropzone
         elem.find('.image-manager-dropzone').first().dropzone({
             uploadMultiple: false
-        })
+        });
 
         isInit = true;
     };

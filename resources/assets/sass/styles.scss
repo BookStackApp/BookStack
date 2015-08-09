@@ -9,6 +9,7 @@
 @import "forms";
 @import "tables";
 @import "tinymce";
+@import "image-manager";
 
 header {
   display: block;
@@ -191,57 +192,6 @@ ul.menu {
   left: 0;
   right: 0;
   bottom: 0;
-}
-#image-manager {
-  background-color: #EEE;
-  max-width: 90%;
-  max-height: 90%;
-  width: 90%;
-  height: 90%;
-  margin: 2% 5%;
-  //border: 2px solid $primary;
-  border-radius: 4px;
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  .image-manager-display img {
-    width: 150px;
-    height: 150px;
-    display: inline-block;
-    margin: $-s 0 0 $-s;
-    cursor: pointer;
-  }
-}
-.image-manager-left {
-  background-color: #FFF;
-  height: 100%;
-  width: 100%;
-  text-align: left;
-  .image-manager-display {
-    height: 75%;
-    width: 100%;
-    text-align: left;
-    overflow-y: scroll;
-  }
-}
-
-.image-manager-title {
-  font-size: 2em;
-  text-align: left;
-  margin: 0 $-m;
-  padding: $-xl $-m;
-  color: #666;
-  border-bottom: 1px solid #DDD;
-}
-
-.image-manager-dropzone {
-  background-color: lighten($primary, 40%);
-  height: 25%;
-  text-align: center;
-  font-size: 2em;
-  line-height: 2em;
-  padding-top: $-xl*1.2;
-  color: #666;
-  border-top: 2px solid $primary;
 }
 
 // Link hooks & popovers

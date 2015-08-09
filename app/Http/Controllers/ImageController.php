@@ -71,13 +71,18 @@ class ImageController extends Controller
      */
     public function getAll($page = 0)
     {
-        $pageSize = 25;
+        $pageSize = 13;
         $images = DB::table('images')->orderBy('created_at', 'desc')
             ->skip($page*$pageSize)->take($pageSize)->get();
         foreach($images as $image) {
             $image->thumbnail = $this->getThumbnail($image, 150, 150);
         }
-        return response()->json($images);
+        $hasMore = count(DB::table('images')->orderBy('created_at', 'desc')
+            ->skip(($page+1)*$pageSize)->take($pageSize)->get()) > 0;
+        return response()->json([
+            'images' => $images,
+            'hasMore' => $hasMore
+        ]);
     }
 
     /**
@@ -93,18 +98,24 @@ class ImageController extends Controller
         array_splice($explodedPath, 3, 0, ['thumbs-' . $width . '-' . $height]);
         $thumbPath = implode('/', $explodedPath);
         $thumbFilePath = storage_path() . $thumbPath;
+
+        // Return the thumbnail url path if already exists
         if(file_exists($thumbFilePath)) {
             return $thumbPath;
         }
 
-        //dd($thumbFilePath);
+        // Otherwise create the thumbnail
         $thumb = ImageTool::make(storage_path() . $image->url);
         $thumb->fit($width, $height);
+
+        // Create thumbnail folder if it does not exist
         if(!file_exists(dirname($thumbFilePath))) {
             mkdir(dirname($thumbFilePath), 0775, true);
         }
+
+        //Save Thumbnail
         $thumb->save($thumbFilePath);
-        return $thumbFilePath;
+        return $thumbPath;
     }
 
     /**
@@ -130,6 +141,7 @@ class ImageController extends Controller
         $this->image->created_by = Auth::user()->id;
         $this->image->updated_by = Auth::user()->id;
         $this->image->save();
+        $this->image->thumbnail = $this->getThumbnail($this->image, 150, 150);
         return response()->json($this->image);
     }
 
