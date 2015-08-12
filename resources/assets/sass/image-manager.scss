@@ -9,7 +9,7 @@
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  .image-manager-display img {
+  .image-list img {
     border-radius: 0;
     float: left;
     margin: 1px;
@@ -36,34 +36,23 @@
     pointer-events: none;
   }
 }
-.image-manager-left {
-  background-color: #FFF;
+.image-manager-display-wrap {
+  height: 100%;
+  padding-top: 87px;
+  position: absolute;
+  top: 0;width: 100%;
+}
+.image-manager-display {
   height: 100%;
   width: 100%;
   text-align: left;
-  position: relative;
-  .image-manager-display-wrap {
-    height: 100%;
-    padding-top: 87px;
-    position: absolute;
-    top: 0;width: 100%;
-  }
-  .image-manager-display {
-    height: 100%;
-    width: 100%;
-    text-align: left;
-    overflow-y: scroll;
-  }
-  .image-manager-header {
-    z-index: 50;
-    position: relative;
-  }
+  overflow-y: scroll;
 }
 
 #image-manager .load-more {
   width: 150px;
   height: 150px;
-  display: none;
+  display: block;
   float: left;
   text-align: center;
   background-color: #888;

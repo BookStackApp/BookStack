@@ -78,7 +78,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/pages/search/all', 'PageController@searchAll');
 
     Route::get('/', function () {
-        return view('base');
+        return view('home');
+    });
+    Route::get('/home', function () {
+        return view('home');
     });
 
 

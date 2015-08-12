@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
+    <script src="https://fb.me/react-0.13.3.js"></script>
     <script>
         $.fn.smoothScrollTo = function() {
             if(this.length === 0) return;
@@ -62,5 +63,7 @@
     </section>
 
 @yield('bottom')
+
+    <script src="/js/all.js"></script>
 </body>
 </html>
