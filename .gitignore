@@ -6,6 +6,7 @@ Homestead.yaml
 .idea
 /public/plugins
 /public/css
-/public/js/all*
+/public/js
+/public/uploads
 /public/bower
 /storage/images

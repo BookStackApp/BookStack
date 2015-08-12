@@ -2,8 +2,6 @@
 
 @section('head')
     <script src="/bower/tinymce-dist/tinymce.jquery.min.js"></script>
-    <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="/js/image-manager.js"></script>
 @stop
 
 @section('content')
@@ -16,5 +14,6 @@
 @stop
 
 @section('bottom')
-    @include('pages/image-manager')
+    <div id="image-manager-container"></div>
+    <script src="/js/image-manager.js"></script>
 @stop

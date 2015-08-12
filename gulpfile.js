@@ -13,5 +13,5 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('styles.scss');
-    mix.babel('image-manager.js');
+    mix.babel('image-manager.js', 'public/js/image-manager.js');
 });

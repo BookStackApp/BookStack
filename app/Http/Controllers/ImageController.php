@@ -71,7 +71,7 @@ class ImageController extends Controller
      */
     public function getAll($page = 0)
     {
-        $pageSize = 13;
+        $pageSize = 25;
         $images = DB::table('images')->orderBy('created_at', 'desc')
             ->skip($page*$pageSize)->take($pageSize)->get();
         foreach($images as $image) {
@@ -95,9 +95,9 @@ class ImageController extends Controller
     public function getThumbnail($image, $width = 220, $height = 220)
     {
         $explodedPath = explode('/', $image->url);
-        array_splice($explodedPath, 3, 0, ['thumbs-' . $width . '-' . $height]);
+        array_splice($explodedPath, 4, 0, ['thumbs-' . $width . '-' . $height]);
         $thumbPath = implode('/', $explodedPath);
-        $thumbFilePath = storage_path() . $thumbPath;
+        $thumbFilePath = public_path() . $thumbPath;
 
         // Return the thumbnail url path if already exists
         if(file_exists($thumbFilePath)) {
@@ -105,7 +105,7 @@ class ImageController extends Controller
         }
 
         // Otherwise create the thumbnail
-        $thumb = ImageTool::make(storage_path() . $image->url);
+        $thumb = ImageTool::make(public_path() . $image->url);
         $thumb->fit($width, $height);
 
         // Create thumbnail folder if it does not exist
@@ -127,17 +127,18 @@ class ImageController extends Controller
     {
         $imageUpload = $request->file('file');
         $name = str_replace(' ', '-', $imageUpload->getClientOriginalName());
-        $imagePath = '/images/' . Date('Y-m-M') . '/';
-        $storagePath = storage_path(). $imagePath;
-        $fullPath = $storagePath . $name;
+        $storageName = substr(sha1(time()), 0, 10) . '-' . $name;
+        $imagePath = '/uploads/images/'.Date('Y-m-M').'/';
+        $storagePath = public_path(). $imagePath;
+        $fullPath = $storagePath . $storageName;
         while(file_exists($fullPath)) {
-            $name = substr(sha1(rand()), 0, 3) . $name;
-            $fullPath = $storagePath . $name;
+            $storageName = substr(sha1(rand()), 0, 3) . $storageName;
+            $fullPath = $storagePath . $storageName;
         }
-        $imageUpload->move($storagePath, $name);
+        $imageUpload->move($storagePath, $storageName);
         // Create and save image object
         $this->image->name = $name;
-        $this->image->url = $imagePath . $name;
+        $this->image->url = $imagePath . $storageName;
         $this->image->created_by = Auth::user()->id;
         $this->image->updated_by = Auth::user()->id;
         $this->image->save();

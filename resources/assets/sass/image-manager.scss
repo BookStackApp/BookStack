@@ -9,45 +9,28 @@
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  .image-list img {
+  .image-manager-list img {
     border-radius: 0;
     float: left;
     margin: 1px;
     cursor: pointer;
   }
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
 }
-#image-manager .dropzone {
-  display: table;
-  position: absolute;
-  top: 10px;
-  left: 300px;
-  width: 480px;
-  height: 60px;
-  border: 4px dashed $primary;
-  text-align: center;
-  z-index: 900;
-  .dz-message {
-    display: table-cell;
-    vertical-align: middle;
-    color: $primary;
-    font-size: 1.2em;
-  }
-  * {
-    pointer-events: none;
-  }
+#image-manager .dropzone-container {
+  height: 100px;
+  position: relative;
 }
-.image-manager-display-wrap {
-  height: 100%;
-  padding-top: 87px;
-  position: absolute;
-  top: 0;width: 100%;
+
+#container {
+  height: 90vh;
 }
-.image-manager-display {
-  height: 100%;
-  width: 100%;
-  text-align: left;
-  overflow-y: scroll;
-}
+
 
 #image-manager .load-more {
   width: 150px;
@@ -62,32 +45,54 @@
   font-size: 20px;
   cursor: pointer;
 }
-.image-manager-title {
-  font-size: 2em;
-  text-align: left;
-  margin: 0 $-m;
-  padding: $-xl $-m;
-  color: #666;
-  border-bottom: 1px solid #DDD;
+
+.image-manager-sidebar {
+  width: 300px;
+  height: 100%;
+  margin-left: 1px;
+  padding: 0 $-l;
+  border-left: 1px solid #DDD;
 }
 
-.image-manager-dropzone {
-  background-color: lighten($primary, 40%);
-  height: 25%;
-  text-align: center;
-  font-size: 2em;
-  line-height: 2em;
-  padding-top: $-xl*1.2;
-  color: #666;
-  border-top: 2px solid $primary;
+.image-manager-list {
+  overflow-y: scroll;
+  flex: 1;
 }
+
+.image-manager-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
+
+
+
 
 // Dropzone
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>
  */
-
+.dz-message {
+  font-size: 1.6em;
+  font-style: italic;
+  color: #aaa;
+  text-align: center;
+  line-height: 90px;
+  cursor: pointer;
+  transition: all ease-in-out 120ms;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  max-width: 400px;
+  width: 400px;
+  margin-left: -200px;
+}
+.dz-drag-hover .dz-message {
+  background-color: rgb(16, 126, 210);
+  color: #EEE;
+}
 @keyframes passing-through {
   0% {
     opacity: 0;
@@ -128,30 +133,13 @@
 .dropzone, .dropzone * {
   box-sizing: border-box; }
 
-.dropzone {
-  background: white;
-  padding: 20px 20px; }
-.dropzone.dz-clickable {
-  cursor: pointer; }
-.dropzone.dz-clickable * {
-  cursor: default; }
-.dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
-  cursor: pointer; }
-.dropzone.dz-started .dz-message {
-  display: none; }
-.dropzone.dz-drag-hover {
-  border-style: solid; }
-.dropzone.dz-drag-hover .dz-message {
-  opacity: 0.5; }
-.dropzone .dz-message {
-  text-align: center;
-  margin: 2em 0; }
+
 .dz-preview {
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 16px;
-  min-height: 100px; }
+  margin: 12px;
+  min-height: 80px; }
 .dz-preview:hover {
   z-index: 1000; }
 .dz-preview:hover .dz-details {
@@ -186,16 +174,16 @@
   top: 0;
   left: 0;
   opacity: 0;
-  font-size: 13px;
+  font-size: 10px;
   min-width: 100%;
   max-width: 100%;
-  padding: 2em 1em;
+  padding: 6px 3px;
   text-align: center;
   color: rgba(0, 0, 0, 0.9);
   line-height: 150%; }
 .dz-preview .dz-details .dz-size {
-  margin-bottom: 1em;
-  font-size: 16px; }
+  margin-bottom: 0.5em;
+  font-size: 12px; }
 .dz-preview .dz-details .dz-filename {
   white-space: nowrap; }
 .dz-preview .dz-details .dz-filename:hover span {
@@ -221,8 +209,8 @@
 .dz-preview .dz-image {
   border-radius: 4px;
   overflow: hidden;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   position: relative;
   display: block;
   z-index: 10; }

@@ -182,7 +182,7 @@ ul.menu {
 .overlay {
   background-color: rgba(0, 0, 0, 0.2);
   position: fixed;
-  display: block;
+  display: none;
   z-index: 95536;
   width: 100%;
   height: 100%;
@@ -355,7 +355,8 @@ body.dragging, body.dragging * {
   width: 100%;
   height: 100%;
   z-index: -1;
-  .overlay {
+  &:after{
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -363,6 +364,7 @@ body.dragging, body.dragging * {
     height: 100%;
     z-index: -1;
     background-color: rgba(0,0,0,0.7);
+    display: block;
   }
 }
 

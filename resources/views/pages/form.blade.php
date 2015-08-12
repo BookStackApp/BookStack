@@ -41,7 +41,7 @@
             toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fontsizeselect fullscreen",
             content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
             file_browser_callback: function(field_name, url, type, win) {
-                ImageManager.show('#image-manager', function(image) {
+                ImageManager.show(function(image) {
                     win.document.getElementById(field_name).value = image.url;
                     if ("createEvent" in document) {
                         var evt = document.createEvent("HTMLEvents");
