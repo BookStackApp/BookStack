@@ -1,5 +1,5 @@
 #image-manager {
-  background-color: #EEE;
+  background-color: rgb(37, 37, 37);
   max-width: 90%;
   max-height: 90%;
   width: 90%;
@@ -21,6 +21,12 @@
   left: 0;
   z-index: 999;
   display: flex;
+  p, h1, h2, h3, h4, label, input {
+    color: #EEE;
+  }
+  h1, h2, h3 {
+    font-weight: 300;
+  }
 }
 #image-manager .dropzone-container {
   height: 100px;
@@ -38,7 +44,7 @@
   display: block;
   float: left;
   text-align: center;
-  background-color: #888;
+  background-color: #404040;
   margin: 1px;
   color: #FFF;
   line-height: 140px;

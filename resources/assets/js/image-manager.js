@@ -18,7 +18,7 @@
             this.callback = callback;
         }
 
-        hide(e) {
+        hide() {
             console.log('test');
             $(React.findDOMNode(this)).hide();
         }
@@ -70,12 +70,19 @@
             });
         }
 
+        overlayClick(e) {
+            if(e.target.className === 'overlay') {
+                this.hide();
+            }
+        }
+
         render() {
             var loadMore = this.loadMore.bind(this);
             var selectImage = this.selectImage.bind(this);
+            var overlayClick = this.overlayClick.bind(this);
             var hide = this.hide.bind(this);
             return (
-                <div className="overlay" onClick={hide}>
+                <div className="overlay" onClick={overlayClick}>
                     <div id="image-manager">
                         <div className="image-manager-content">
                             <div className="dropzone-container" ref="dropZone">
@@ -117,7 +124,7 @@
 
         constructor(){
             super();
-            this._dblClickTime = 160;
+            this._dblClickTime = 350;
             this._cClickTime = 0;
         }
 
@@ -142,7 +149,7 @@
             var imageClick = this.imageClick.bind(this);
             return (
                 <div>
-                    <img onDoubleClick={imageClick} src={this.props.image.thumbnail}/>
+                    <img onClick={imageClick} src={this.props.image.thumbnail}/>
                 </div>
             );
         }
