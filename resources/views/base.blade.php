@@ -12,7 +12,7 @@
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="https://fb.me/react-0.13.3.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
     <script>
         $.fn.smoothScrollTo = function() {
             if(this.length === 0) return;
