@@ -53,7 +53,13 @@
   padding: 0 $-l;
   border-left: 1px solid #DDD;
 }
-
+.image-manager-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  border-radius: 0;
+}
 .image-manager-list {
   overflow-y: scroll;
   flex: 1;

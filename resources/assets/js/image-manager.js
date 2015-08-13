@@ -18,7 +18,8 @@
             this.callback = callback;
         }
 
-        hide() {
+        hide(e) {
+            console.log('test');
             $(React.findDOMNode(this)).hide();
         }
 
@@ -72,8 +73,9 @@
         render() {
             var loadMore = this.loadMore.bind(this);
             var selectImage = this.selectImage.bind(this);
+            var hide = this.hide.bind(this);
             return (
-                <div className="overlay">
+                <div className="overlay" onClick={hide}>
                     <div id="image-manager">
                         <div className="image-manager-content">
                             <div className="dropzone-container" ref="dropZone">
@@ -82,6 +84,7 @@
                             <ImageList data={this.state.images} loadMore={loadMore} selectImage={selectImage} hasMore={this.state.hasMore}/>
                         </div>
                         <div className="image-manager-sidebar">
+                            <button className="neg button image-manager-close" onClick={hide}>x</button>
                             <h2>Images</h2>
                         </div>
                     </div>
@@ -90,7 +93,6 @@
         }
 
     }
-    window.ImageManager = new ImageManager();
 
     class ImageList extends React.Component {
 
@@ -113,17 +115,44 @@
 
     class Image extends React.Component {
 
+        constructor(){
+            super();
+            this._dblClickTime = 160;
+            this._cClickTime = 0;
+        }
+
         setImage() {
             this.props.selectImage(this.props.image);
         }
 
+        imageClick() {
+            var cTime = (new Date()).getTime();
+            var timeDiff = cTime - this._cClickTime;
+            console.log(timeDiff);
+            if(this._cClickTime !== 0 && timeDiff < this._dblClickTime) {
+                // DoubleClick
+                this.setImage();
+            } else {
+                // Single Click
+            }
+            this._cClickTime = cTime;
+        }
+
         render() {
-            var setImage = this.setImage.bind(this);
+            var imageClick = this.imageClick.bind(this);
             return (
                 <div>
-                    <img onDoubleClick={setImage} src={this.props.image.thumbnail}/>
+                    <img onDoubleClick={imageClick} src={this.props.image.thumbnail}/>
                 </div>
             );
+        }
+
+    }
+
+    class ImageInfoPage extends React.Component {
+
+        render() {
+
         }
 
     }
