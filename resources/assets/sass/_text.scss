@@ -82,7 +82,7 @@ hr {
   &.faded {
     background-image: linear-gradient(to right, #FFF, #e3e0e0 20%, #e3e0e0 80%, #FFF);
   }
-  &.margin-top {
+  &.margin-top, &.even {
     margin-top: $-l;
   }
 }
@@ -227,4 +227,11 @@ ul {
 
 .list > * {
   display: block;
+}
+
+/**
+  * Icons
+  */
+i {
+  padding-right: $-xs;
 }

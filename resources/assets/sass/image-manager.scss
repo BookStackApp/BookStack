@@ -1,6 +1,5 @@
 .image-manager-body {
-  background-color: rgb(37, 37, 37);
-  max-width: 90%;
+  background-color: #FFF;
   max-height: 90%;
   width: 90%;
   height: 90%;
@@ -9,18 +8,7 @@
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  .image-manager-list img {
-    border-radius: 0;
-    float: left;
-    margin: 0;
-    cursor: pointer;
-    width: 150px;
-    height: 150px;
-    border: 1px solid transparent;
-    &.selected {
-      border: 3px solid #EEE;
-    }
-  }
+  max-width: 1340px;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -28,34 +16,48 @@
   z-index: 999;
   display: flex;
   p, h1, h2, h3, h4, label, input {
-    color: #EEE;
+    color: #444;
   }
   h1, h2, h3 {
     font-weight: 300;
   }
 }
 #image-manager .dropzone-container {
-  height: 100px;
   position: relative;
+  border: 3px dashed #DDD;
 }
 
-#container {
-  height: 90vh;
+.image-manager-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
+.image-manager-list img {
+  display: block;
+  border-radius: 0;
+  float: left;
+  margin: 0;
+  cursor: pointer;
+  width: (100%/6);
+  height: auto;
+  border: 1px solid #FFF;
+  transition: all cubic-bezier(.4,0,1,1) 160ms;
+  &.selected {
+    transform: scale3d(0.92, 0.92, 0.92);
+  }
+}
 
 #image-manager .load-more {
-  width: 150px;
-  height: 150px;
   display: block;
-  float: left;
   text-align: center;
-  background-color: #404040;
-  margin: 1px;
-  color: #FFF;
-  line-height: 140px;
+  background-color: #EEE;
+  padding: $-s $-m;
+  color: #AAA;
+  clear: both;
   font-size: 20px;
   cursor: pointer;
+  font-style: italic;
 }
 
 .image-manager-sidebar {
@@ -75,6 +77,7 @@
 .image-manager-list {
   overflow-y: scroll;
   flex: 1;
+  border-top: 1px solid #ddd;
 }
 
 .image-manager-content {
@@ -93,19 +96,13 @@
  * Copyright (c) 2012 Matias Meno <m@tias.me>
  */
 .dz-message {
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-style: italic;
   color: #aaa;
   text-align: center;
-  line-height: 90px;
   cursor: pointer;
+  padding: $-xl $-m;
   transition: all ease-in-out 120ms;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  max-width: 400px;
-  width: 400px;
-  margin-left: -200px;
 }
 .dz-drag-hover .dz-message {
   background-color: rgb(16, 126, 210);
@@ -131,22 +128,10 @@
     transform: translateY(0px); } }
 @keyframes pulse {
   0% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
     transform: scale(1); }
   10% {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
     transform: scale(1.1); }
   20% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
     transform: scale(1); } }
 .dropzone, .dropzone * {
   box-sizing: border-box; }
@@ -171,10 +156,6 @@
 .dz-preview.dz-image-preview {
   background: white; }
 .dz-preview.dz-image-preview .dz-details {
-  -webkit-transition: opacity 0.2s linear;
-  -moz-transition: opacity 0.2s linear;
-  -ms-transition: opacity 0.2s linear;
-  -o-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear; }
 .dz-preview .dz-remove {
   font-size: 14px;
@@ -217,12 +198,6 @@
   padding: 0 0.4em;
   border-radius: 3px; }
 .dz-preview:hover .dz-image img {
-  -webkit-transform: scale(1.05, 1.05);
-  -moz-transform: scale(1.05, 1.05);
-  -ms-transform: scale(1.05, 1.05);
-  -o-transform: scale(1.05, 1.05);
-  transform: scale(1.05, 1.05);
-  -webkit-filter: blur(8px);
   filter: blur(8px); }
 .dz-preview .dz-image {
   border-radius: 4px;

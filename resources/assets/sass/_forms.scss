@@ -45,6 +45,12 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   margin-bottom: $-s;
 }
 
+.form-group {
+  .text-pos, .text-neg {
+    padding: $-xs 0;
+  }
+}
+
 .inline-input-style {
   border: 2px dotted #BBB;
   display: block;

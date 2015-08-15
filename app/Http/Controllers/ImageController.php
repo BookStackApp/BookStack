@@ -10,6 +10,9 @@ use Intervention\Image\Facades\Image as ImageTool;
 use Illuminate\Support\Facades\DB;
 use Oxbow\Http\Requests;
 use Oxbow\Image;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
 
 class ImageController extends Controller
 {
@@ -71,7 +74,7 @@ class ImageController extends Controller
      */
     public function getAll($page = 0)
     {
-        $pageSize = 25;
+        $pageSize = 30;
         $images = DB::table('images')->orderBy('created_at', 'desc')
             ->skip($page*$pageSize)->take($pageSize)->get();
         foreach($images as $image) {
@@ -144,6 +147,45 @@ class ImageController extends Controller
         $this->image->save();
         $this->image->thumbnail = $this->getThumbnail($this->image, 150, 150);
         return response()->json($this->image);
+    }
+
+    /**
+     * Update image details
+     * @param $imageId
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update($imageId, Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|min:2|string'
+        ]);
+        $image = $this->image->findOrFail($imageId);
+        $image->fill($request->all());
+        $image->save();
+        return response()->json($this->image);
+    }
+
+    /**
+     * Deletes an image and all thumbnail/image files
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $image = $this->image->findOrFail($id);
+
+        // Delete files
+        $folder = public_path() . dirname($image->url);
+        $pattern = '/' . preg_quote(basename($image->url)). '/';
+        $dir = new RecursiveDirectoryIterator($folder);
+        $ite = new RecursiveIteratorIterator($dir);
+        $files = new RegexIterator($ite, $pattern, RegexIterator::ALL_MATCHES);
+        foreach($files as $path => $file) {
+            unlink($path);
+        }
+        $image->delete();
+        return response()->json('Image Deleted');
     }
 
 
