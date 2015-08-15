@@ -12,8 +12,14 @@
   .image-manager-list img {
     border-radius: 0;
     float: left;
-    margin: 1px;
+    margin: 0;
     cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border: 1px solid transparent;
+    &.selected {
+      border: 3px solid #EEE;
+    }
   }
   position: fixed;
   top: 0;

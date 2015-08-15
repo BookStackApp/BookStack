@@ -9,7 +9,8 @@
             images: [],
             hasMore: false,
             page: 0,
-            cClickTime: 0
+            cClickTime: 0,
+            selectedImage: false
         },
 
         created: function() {
@@ -62,7 +63,7 @@
                     }
                     this.hide();
                 } else {
-                    // Single Click
+                    this.selectedImage = (this.selectedImage===image) ? false : image;
                 }
                 this.cClickTime = cTime;
             },
@@ -70,6 +71,12 @@
             show: function(callback) {
                 this.callback = callback;
                 this.$$.overlay.style.display = 'block';
+            },
+
+            overlayClick: function(e) {
+              if(e.target.className==='overlay') {
+                  this.hide();
+              }
             },
 
             hide: function() {
