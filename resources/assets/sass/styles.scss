@@ -270,10 +270,13 @@ h1, h2, h3, h4, h5, h6 {
 .book-tree .sidebar-page-list {
   list-style: none;
   margin: 0;
-  border-left: 1px solid #7BD06E;
+  border-left: 5px solid #7BD06E;
   li a {
     display: block;
     border-bottom: 1px solid #3A3939;
+  }
+  li, a {
+    display: block;
   }
   a.bold {
     color: #EEE !important;
@@ -291,8 +294,15 @@ h1, h2, h3, h4, h5, h6 {
   .chapter {
     color: #D2A64B !important;
   }
+  .list-item-chapter {
+    border-left: 5px solid #D2A64B;
+    margin: 10px 10px;
+    display: block;
+  }
   .page {
     color: #4599DC !important;
+    border-left: 5px solid #4599DC;
+    margin: 10px 10px;
   }
 }
 
@@ -364,7 +374,7 @@ body.dragging, body.dragging * {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.85);
     display: block;
   }
 }
