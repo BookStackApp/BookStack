@@ -77,7 +77,7 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        return view('books/show', ['book' => $book]);
+        return view('books/show', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -89,7 +89,7 @@ class BookController extends Controller
     public function edit($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        return view('books/edit', ['book' => $book]);
+        return view('books/edit', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -121,7 +121,7 @@ class BookController extends Controller
     public function showDelete($bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        return view('books/delete', ['book' => $book]);
+        return view('books/delete', ['book' => $book, 'current' => $book]);
     }
 
     /**

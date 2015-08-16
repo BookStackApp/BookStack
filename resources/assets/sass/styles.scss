@@ -270,10 +270,15 @@ h1, h2, h3, h4, h5, h6 {
 .book-tree .sidebar-page-list {
   list-style: none;
   margin: 0;
+  margin-top: $-xl;
   border-left: 5px solid #7BD06E;
   li a {
     display: block;
-    border-bottom: 1px solid #3A3939;
+    border-bottom: none;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+    }
   }
   li, a {
     display: block;
@@ -290,19 +295,32 @@ h1, h2, h3, h4, h5, h6 {
   }
   .book {
     color: #7BD06E !important;
+    &.selected {
+      background-color: rgba(123, 208, 110, 0.29);
+    }
   }
   .chapter {
     color: #D2A64B !important;
+    &.selected {
+      background-color: rgba(239, 169, 42, 0.27);
+    }
   }
   .list-item-chapter {
     border-left: 5px solid #D2A64B;
     margin: 10px 10px;
     display: block;
   }
+  .list-item-page {
+    border-bottom: none;
+  }
   .page {
     color: #4599DC !important;
     border-left: 5px solid #4599DC;
     margin: 10px 10px;
+    border-bottom: none;
+    &.selected {
+      background-color: rgba(118, 164, 202, 0.41);
+    }
   }
 }
 

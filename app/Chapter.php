@@ -1,8 +1,7 @@
 <?php namespace Oxbow;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Chapter extends Model
+class Chapter extends Entity
 {
 
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
@@ -15,16 +14,6 @@ class Chapter extends Model
     public function pages()
     {
         return $this->hasMany('Oxbow\Page')->orderBy('priority', 'ASC');
-    }
-
-    public function createdBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'updated_by');
     }
 
     public function getUrl()

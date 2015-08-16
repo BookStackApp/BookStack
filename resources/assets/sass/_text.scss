@@ -133,14 +133,15 @@ blockquote {
 .code-base {
     background-color: #F8F8F8;
     font-family: monospace;
-    font-size: 0.88em;
+    font-size: 0.80em;
     border: 1px solid #DDD;
     border-radius: 3px;
 }
 
 code {
   @extend .code-base;
-  display: block;
+  display: inline;
+  padding: 1px 3px;
   white-space:pre;
   line-height: 1.2em;
   margin-bottom: 1.2em;

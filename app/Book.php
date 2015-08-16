@@ -2,9 +2,7 @@
 
 namespace Oxbow;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Book extends Model
+class Book extends Entity
 {
 
     protected $fillable = ['name', 'description'];
@@ -27,16 +25,6 @@ class Book extends Model
     public function chapters()
     {
         return $this->hasMany('Oxbow\Chapter');
-    }
-
-    public function createdBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'updated_by');
     }
 
     public function children()

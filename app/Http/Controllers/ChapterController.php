@@ -37,7 +37,7 @@ class ChapterController extends Controller
     public function create($bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        return view('chapters/create', ['book' => $book]);
+        return view('chapters/create', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -74,7 +74,7 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
-        return view('chapters/show', ['book' => $book, 'chapter' => $chapter]);
+        return view('chapters/show', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 
     /**
@@ -88,7 +88,7 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
-        return view('chapters/edit', ['book' => $book, 'chapter' => $chapter]);
+        return view('chapters/edit', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 
     /**
@@ -120,7 +120,7 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
-        return view('chapters/delete', ['book' => $book, 'chapter' => $chapter]);
+        return view('chapters/delete', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 
     /**

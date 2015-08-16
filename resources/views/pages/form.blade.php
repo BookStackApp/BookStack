@@ -6,7 +6,7 @@
     {{ csrf_field() }}
     <div class="title-input page-title clearfix">
         <div class="input">
-            @include('form/text', ['name' => 'name', 'placeholder' => 'Enter Page Title'])
+            @include('form/text', ['name' => 'name', 'placeholder' => 'Page Title'])
         </div>
     </div>
     <div class="edit-area">
@@ -38,7 +38,7 @@
             menubar: false,
             height: 700,
             plugins: "image table textcolor paste link imagetools fullscreen",
-            toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fontsizeselect fullscreen",
+            toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fullscreen",
             content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
             file_browser_callback: function(field_name, url, type, win) {
                 ImageManager.show(function(image) {

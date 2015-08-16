@@ -2,9 +2,8 @@
 
 namespace Oxbow;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class Image extends Entity
 {
 
     protected $fillable = ['name'];
@@ -14,13 +13,4 @@ class Image extends Model
         return storage_path() . $this->url;
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'updated_by');
-    }
 }

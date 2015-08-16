@@ -4,7 +4,7 @@ namespace Oxbow;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Page extends Entity
 {
     protected $fillable = ['name', 'html', 'priority'];
 
@@ -32,15 +32,6 @@ class Page extends Model
         return $this->chapter()->count() > 0;
     }
 
-    public function createdBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo('Oxbow\User', 'updated_by');
-    }
 
     public function revisions()
     {

@@ -90,7 +90,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        return view('pages/show', ['page' => $page, 'book' => $book]);
+        return view('pages/show', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
     /**
@@ -104,7 +104,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        return view('pages/edit', ['page' => $page, 'book' => $book]);
+        return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
     /**
@@ -157,7 +157,7 @@ class PageController extends Controller
     public function sortPages($bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        return view('pages/sort', ['book' => $book]);
+        return view('pages/sort', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -200,7 +200,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        return view('pages/delete', ['book' => $book, 'page' => $page]);
+        return view('pages/delete', ['book' => $book, 'page' => $page, 'current' => $page]);
     }
 
     /**
@@ -229,7 +229,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        return view('pages/revisions', ['page' => $page, 'book' => $book]);
+        return view('pages/revisions', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
     /**

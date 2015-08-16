@@ -78,11 +78,17 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
 
 .title-input.page-title {
   font-size: 0.8em;
+  .input {
+    border: 1px solid #BBB;
+    margin-bottom: -1px;
+  }
+  input[type="text"] {
+    max-width: 840px;
+    margin: 0 auto;
+    border: none;
+  }
 }
-.title-input.page-title input[type="text"]{
-  //border: 2px dotted #BBB;
-  margin-bottom: 0;
-}
+
 
 
 .description-input textarea {
