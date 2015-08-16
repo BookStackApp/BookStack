@@ -37,4 +37,15 @@ class Book extends Entity
         return $pages->sortBy('priority');
     }
 
+    /**
+     * Gets only the most recent activity for this book
+     * @param int $limit
+     * @param int $page
+     * @return mixed
+     */
+    public function recentActivity($limit = 20, $page=0)
+    {
+        return $this->hasMany('Oxbow\Activity')->orderBy('created_at', 'desc')->skip($limit*$page)->take($limit)->get();
+    }
+
 }

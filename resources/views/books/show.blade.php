@@ -15,47 +15,61 @@
         </div>
     </div>
 
-    <div class="page-content">
-        <h1>{{$book->name}}</h1>
-        <p class="text-muted">{{$book->description}}</p>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
 
-        <div class="page-list">
-            <hr>
-            @foreach($book->children() as $childElement)
-                <div class="book-child">
-                    <h3>
-                        <a href="{{ $childElement->getUrl() }}">
-                            @if(is_a($childElement, 'Oxbow\Chapter'))
-                                <i class="zmdi zmdi-collection-bookmark chapter-toggle"></i>
-                            @else
-                                <i class="zmdi zmdi-file-text"></i>
+            <div class="page-content">
+                <h1>{{$book->name}}</h1>
+                <p class="text-muted">{{$book->description}}</p>
+
+                <div class="page-list">
+                    <hr>
+                    @foreach($book->children() as $childElement)
+                        <div class="book-child">
+                            <h3>
+                                <a href="{{ $childElement->getUrl() }}">
+                                    @if(is_a($childElement, 'Oxbow\Chapter'))
+                                        <i class="zmdi zmdi-collection-bookmark chapter-toggle"></i>
+                                    @else
+                                        <i class="zmdi zmdi-file-text"></i>
+                                    @endif
+                                    {{ $childElement->name }}
+                                </a>
+                            </h3>
+                            <p class="text-muted">
+                                {{$childElement->getExcerpt()}}
+                            </p>
+
+                            @if(is_a($childElement, 'Oxbow\Chapter') && count($childElement->pages) > 0)
+                                <div class="inset-list">
+                                    @foreach($childElement->pages as $page)
+                                        <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i> {{$page->name}}</a></h4>
+                                    @endforeach
+                                </div>
                             @endif
-                            {{ $childElement->name }}
-                        </a>
-                    </h3>
-                    <p class="text-muted">
-                        {{$childElement->getExcerpt()}}
-                    </p>
-
-                    @if(is_a($childElement, 'Oxbow\Chapter') && count($childElement->pages) > 0)
-                        <div class="inset-list">
-                            @foreach($childElement->pages as $page)
-                                <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i> {{$page->name}}</a></h4>
-                            @endforeach
                         </div>
-                    @endif
+                        <hr>
+                    @endforeach
                 </div>
-                <hr>
-            @endforeach
+
+                <p class="text-muted small">
+                    Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
+                    <br>
+                    Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
+                </p>
+
+            </div>
+
         </div>
 
-        <p class="text-muted small">
-            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
-            <br>
-            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
-        </p>
-
+        <div class="col-md-3 col-md-offset-1">
+            <div class="margin-top large"><br></div>
+            <h3>Recent Activity</h3>
+            @include('partials/activity-list', ['entity' => $book])
+        </div>
     </div>
+
+
 
 
     <script>

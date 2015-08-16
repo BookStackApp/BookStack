@@ -424,3 +424,9 @@ body.dragging, body.dragging * {
     color: #EEE;
   }
 }
+
+.activity-list-item {
+  padding: $-s 0;
+  color: #888;
+  border-bottom: 1px solid #EEE;
+}

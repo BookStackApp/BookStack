@@ -2,6 +2,7 @@
 
 namespace Oxbow\Http\Controllers;
 
+use Activity;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,7 @@ class ChapterController extends Controller
         $chapter->created_by = Auth::user()->id;
         $chapter->updated_by = Auth::user()->id;
         $book->chapters()->save($chapter);
+        Activity::add($chapter, 'chapter_create', $book->id);
         return redirect($book->getUrl());
     }
 
@@ -107,6 +109,7 @@ class ChapterController extends Controller
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id, $chapter->id);
         $chapter->updated_by = Auth::user()->id;
         $chapter->save();
+        Activity::add($chapter, 'chapter_update', $book->id);
         return redirect($chapter->getUrl());
     }
 
@@ -134,6 +137,7 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapterName = $chapter->name;
         if(count($chapter->pages) > 0) {
             foreach($chapter->pages as $page) {
                 $page->chapter_id = 0;
@@ -141,6 +145,7 @@ class ChapterController extends Controller
             }
         }
         $chapter->delete();
+        Activity::addMessage('chapter_delete', $book->id, $chapterName);
         return redirect($book->getUrl());
     }
 }

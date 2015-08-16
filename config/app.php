@@ -141,6 +141,8 @@ return [
          * Third Party
          */
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -148,6 +150,7 @@ return [
         Oxbow\Providers\AppServiceProvider::class,
         Oxbow\Providers\EventServiceProvider::class,
         Oxbow\Providers\RouteServiceProvider::class,
+        Oxbow\Providers\CustomFacadeProvider::class,
 
     ],
 
@@ -202,6 +205,12 @@ return [
          */
 
         'ImageTool' => Intervention\Image\Facades\Image::class,
+
+        /**
+         * Custom
+         */
+
+        'Activity' => Oxbow\Services\Facades\Activity::class,
 
     ],
 

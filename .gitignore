@@ -10,3 +10,4 @@ Homestead.yaml
 /public/uploads
 /public/bower
 /storage/images
+_ide_helper.php

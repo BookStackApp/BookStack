@@ -2,6 +2,7 @@
 
 namespace Oxbow\Http\Controllers;
 
+use Activity;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,7 @@ class BookController extends Controller
         $book->created_by = Auth::user()->id;
         $book->updated_by = Auth::user()->id;
         $book->save();
+        Activity::add($book, 'book_create', $book->id);
         return redirect('/books');
     }
 
@@ -110,6 +112,7 @@ class BookController extends Controller
         $book->slug = $this->bookRepo->findSuitableSlug($book->name, $book->id);
         $book->updated_by = Auth::user()->id;
         $book->save();
+        Activity::add($book, 'book_update', $book->id);
         return redirect($book->getUrl());
     }
 
@@ -132,7 +135,9 @@ class BookController extends Controller
      */
     public function destroy($bookSlug)
     {
+        $bookName = $this->bookRepo->getBySlug($bookSlug)->name;
         $this->bookRepo->destroyBySlug($bookSlug);
+        Activity::addMessage('book_delete', 0, $bookName);
         return redirect('/books');
     }
 }

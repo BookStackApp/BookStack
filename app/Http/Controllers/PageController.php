@@ -2,10 +2,10 @@
 
 namespace Oxbow\Http\Controllers;
 
+use Activity;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Oxbow\Http\Requests;
 use Oxbow\Repos\BookRepo;
 use Oxbow\Repos\ChapterRepo;
@@ -76,6 +76,7 @@ class PageController extends Controller
         $page->updated_by = Auth::user()->id;
         $page->save();
         $this->pageRepo->saveRevision($page);
+        Activity::add($page, 'page_create', $book->id);
         return redirect($page->getUrl());
     }
 
@@ -120,6 +121,7 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $this->pageRepo->updatePage($page, $book->id, $request->all());
+        Activity::add($page, 'page_update', $book->id);
         return redirect($page->getUrl());
     }
 
@@ -187,6 +189,7 @@ class PageController extends Controller
             }
             $model->save();
         }
+        Activity::add($book, 'book_sort', $book->id);
         return redirect($book->getUrl());
     }
 
@@ -215,6 +218,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        Activity::addMessage('page_delete', $book->id, $page->name);
         $page->delete();
         return redirect($book->getUrl());
     }
@@ -254,6 +258,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $revision = $this->pageRepo->getRevisionById($revisionId);
         $page = $this->pageRepo->updatePage($page, $book->id, $revision->toArray());
+        Activity::add($page, 'page_restore', $book->id);
         return redirect($page->getUrl());
     }
 }
