@@ -5,7 +5,7 @@
     "laravel-elixir-livereload": "0.0.3"
   },
   "dependencies": {
-    "laravel-elixir": "^2.0.0",
-    "bootstrap-sass": "^3.0.0"
+    "bootstrap-sass": "^3.0.0",
+    "laravel-elixir": "^2.0.0"
   }
 }

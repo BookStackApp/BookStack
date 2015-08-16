@@ -79,12 +79,9 @@ Route::group(['middleware' => 'auth'], function() {
     // Search
     Route::get('/pages/search/all', 'PageController@searchAll');
 
-    Route::get('/', function () {
-        return view('home');
-    });
-    Route::get('/home', function () {
-        return view('home');
-    });
+    // Other Pages
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
 
 
 });

@@ -18,6 +18,7 @@
     "tinymce-dist": "~4.2.1",
     "bootstrap": "~3.3.5",
     "jquery-sortable": "~0.9.13",
-    "material-design-iconic-font": "~2.1.1"
+    "material-design-iconic-font": "~2.1.1",
+    "vue": "~0.12.10"
   }
 }

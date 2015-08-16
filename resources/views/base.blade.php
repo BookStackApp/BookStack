@@ -12,7 +12,7 @@
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.10/vue.min.js"></script>
+    <script src="/bower/vue/dist/vue.min.js"></script>
     <script>
         $.fn.smoothScrollTo = function() {
             if(this.length === 0) return;
@@ -36,9 +36,8 @@
         <header>
             <div class="padded row clearfix">
                 <div class="col-md-12 logo-container">
-                    {{--<div ><img class="logo float left" src="/bookstack.svg" alt="BookStack"></div>--}}
-                    <div class="logo">BookStack</div>
-                    <div><i class="zmdi zmdi-account"></i> {{ \Illuminate\Support\Facades\Auth::user()->name }}</div>
+                    <a href="/" class="logo">BookStack</a>
+                    <div><i class="zmdi zmdi-account"></i> {{ Auth::user()->name }}</div>
                 </div>
             </div>
         </header>

@@ -19,7 +19,6 @@ class ActivityService
         $this->user = Auth::user();
     }
 
-
     /**
      * Add activity data to database.
      * @para Entity $entity
@@ -52,6 +51,17 @@ class ActivityService
             $this->activity->extra = $extra;
         }
         $this->activity->save();
+    }
+
+    /**
+     * Gets the latest activity.
+     * @param int $count
+     * @param int $page
+     */
+    public function latest($count = 20, $page = 0)
+    {
+        return $this->activity->orderBy('created_at', 'desc')
+            ->skip($count*$page)->take($count)->get();
     }
 
 }

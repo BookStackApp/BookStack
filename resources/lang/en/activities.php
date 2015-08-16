@@ -22,5 +22,6 @@ return [
     'book_create' => 'created book',
     'book_update' => 'updated book',
     'book_delete' => 'deleted book',
+    'book_sort'   => 'sorted book',
 
 ];

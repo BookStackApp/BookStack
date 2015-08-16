@@ -46,12 +46,13 @@ header {
 }
 
 .logo-container {
-  padding: $-xl $-s $-l $-s;
+  padding: $-l $-s;
   color: #CCC;
   .logo {
+    display: block;
     font-size: 2em;
     font-weight: bold;
-    margin-bottom: $-m;
+    padding: $-m 0;
   }
   i {
     padding-right: $-s;
@@ -63,11 +64,12 @@ header {
   input {
     width: 100%;
     border-radius: 0;
-    padding: $-s $-m;
+    padding: $-m;
     background-color: rgba(0, 0, 0, 0.1);
     border: none;
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
+    color: #EEE;
   }
 }
 

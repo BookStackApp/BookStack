@@ -15,6 +15,5 @@
 
 @section('bottom')
     @include('pages/image-manager')
-    <div id="image-manager-container"></div>
     <script src="/js/image-manager.js"></script>
 @stop
