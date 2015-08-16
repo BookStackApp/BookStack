@@ -71,10 +71,13 @@ header {
   }
 }
 
-ul.menu {
+.menu {
   list-style: none;
   margin: 0;
-  li a {
+  .col-md-4 {
+    padding: 0;
+  }
+  a {
     padding: $-m;
     display: block;
     border-bottom: 1px solid #3A3939;

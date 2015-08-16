@@ -47,11 +47,11 @@
                 <input type="text" placeholder="Search all pages..." name="term" id="search-input">
             </form>
         </div>
-        <ul class="menu">
-            <li><a href="/books"><i class="zmdi zmdi-book"></i>Books</a></li>
-            <li><a href="/users"><i class="zmdi zmdi-accounts"></i>Users</a></li>
-            <li><a href="/logout"><i class="zmdi zmdi-run zmdi-hc-flip-horizontal"></i>Logout</a></li>
-        </ul>
+        <div class="row menu">
+            <div class="col-md-4"><a href="/books"><i class="zmdi zmdi-book"></i>Books</a></div>
+            <div class="col-md-4"><a href="/users"><i class="zmdi zmdi-accounts"></i>Users</a></div>
+            <div class="col-md-4"><a href="/logout"><i class="zmdi zmdi-run zmdi-hc-flip-horizontal"></i>Logout</a></div>
+        </div>
         @if(isset($book) && isset($current) && !isset($books))
             <div class="book-tree">
                 @include('pages/sidebar-tree-list', ['book' => $book])
