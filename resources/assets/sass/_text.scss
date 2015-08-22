@@ -7,10 +7,6 @@ h1 {
   line-height: 1.22222222em;
   margin-top: 0.48888889em;
   margin-bottom: 0.48888889em;
-  //padding-bottom: 0.3333em;
-  //border-bottom: 1px solid #EAEAEA;
-  //margin-left: -$-xxl;
-  //margin-right: -$-xxl;
 }
 h2 {
   font-size: 2.8275em;
@@ -111,6 +107,13 @@ sup, .superscript {
 pre {
   font-family: monospace;
   white-space:pre;
+  font-size: 0.8em;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0px rgba(10, 10, 10, 0.06);
+  border: 1px solid rgba(221, 221, 221, 0.66);
+  background-color: #fdf6e3;
+  padding: 0.5em;
 }
 
 blockquote {

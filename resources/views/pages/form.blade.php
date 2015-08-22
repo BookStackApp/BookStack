@@ -10,7 +10,11 @@
         </div>
     </div>
     <div class="edit-area">
-        @include('form/textarea', ['name' => 'html'])
+        <textarea id="html" name="html" rows="5"
+                  @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
+        @if($errors->has('html'))
+            <div class="text-neg text-small">{{ $errors->first('html') }}</div>
+        @endif
     </div>
     <div class="margin-top large">
         <a onclick="window.history.back();" class="button muted">Cancel</a>
@@ -37,8 +41,9 @@
             statusbar: false,
             menubar: false,
             height: 700,
-            plugins: "image table textcolor paste link imagetools fullscreen",
-            toolbar: "undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fullscreen",
+            extended_valid_elements: 'pre[*]',
+            plugins: "image table textcolor paste link imagetools fullscreen code",
+            toolbar: "code undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fullscreen",
             content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
             file_browser_callback: function(field_name, url, type, win) {
                 ImageManager.show(function(image) {
