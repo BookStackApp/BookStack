@@ -177,14 +177,30 @@ class ImageController extends Controller
 
         // Delete files
         $folder = public_path() . dirname($image->url);
-        $pattern = '/' . preg_quote(basename($image->url)). '/';
-        $dir = new RecursiveDirectoryIterator($folder);
-        $ite = new RecursiveIteratorIterator($dir);
-        $files = new RegexIterator($ite, $pattern, RegexIterator::ALL_MATCHES);
-        foreach($files as $path => $file) {
-            unlink($path);
+        $fileName = basename($image->url);
+
+        // Delete thumbnails
+        foreach(glob($folder . '/*') as $file) {
+            if(is_dir($file)) {
+                $thumbName = $file . '/' . $fileName;
+                if(file_exists($file)) {
+                    unlink($thumbName);
+                }
+                // Remove thumb folder if empty
+                if(count(glob($file . '/*')) === 0) {
+                    rmdir($file);
+                }
+            }
         }
+        
+        // Delete file and database entry
+        unlink($folder . '/' . $fileName);
         $image->delete();
+
+        // Delete parent folder if empty
+        if(count(glob($folder . '/*')) === 0) {
+            rmdir($folder);
+        }
         return response()->json('Image Deleted');
     }
 
