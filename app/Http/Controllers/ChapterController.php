@@ -137,15 +137,15 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
-        $chapterName = $chapter->name;
         if(count($chapter->pages) > 0) {
             foreach($chapter->pages as $page) {
                 $page->chapter_id = 0;
                 $page->save();
             }
         }
+        Activity::removeEntity($chapter);
+        Activity::addMessage('chapter_delete', $book->id, $chapter->name);
         $chapter->delete();
-        Activity::addMessage('chapter_delete', $book->id, $chapterName);
         return redirect($book->getUrl());
     }
 }

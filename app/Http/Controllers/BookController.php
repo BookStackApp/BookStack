@@ -135,9 +135,9 @@ class BookController extends Controller
      */
     public function destroy($bookSlug)
     {
-        $bookName = $this->bookRepo->getBySlug($bookSlug)->name;
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        Activity::addMessage('book_delete', 0, $book->name);
         $this->bookRepo->destroyBySlug($bookSlug);
-        Activity::addMessage('book_delete', 0, $bookName);
         return redirect('/books');
     }
 }

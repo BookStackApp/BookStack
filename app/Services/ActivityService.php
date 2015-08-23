@@ -21,9 +21,10 @@ class ActivityService
 
     /**
      * Add activity data to database.
-     * @para Entity $entity
+     * @param Entity $entity
      * @param $activityKey
      * @param int $bookId
+     * @param bool $extra
      */
     public function add(Entity $entity, $activityKey, $bookId = 0, $extra = false)
     {
@@ -51,6 +52,25 @@ class ActivityService
             $this->activity->extra = $extra;
         }
         $this->activity->save();
+    }
+
+    /**
+     * Removes the entity attachment from each of its activities
+     * and instead uses the 'extra' field with the entities name.
+     * Used when an entity is deleted.
+     * @param Entity $entity
+     * @return mixed
+     */
+    public function removeEntity(Entity $entity)
+    {
+        $activities = $entity->activity;
+        foreach($activities as $activity) {
+            $activity->extra = $entity->name;
+            $activity->entity_id = 0;
+            $activity->entity_type = null;
+            $activity->save();
+        }
+        return $activities;
     }
 
     /**

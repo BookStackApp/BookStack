@@ -4,15 +4,11 @@ namespace Oxbow\Http\Controllers;
 
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image as ImageTool;
 use Illuminate\Support\Facades\DB;
 use Oxbow\Http\Requests;
 use Oxbow\Image;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use RegexIterator;
 
 class ImageController extends Controller
 {
@@ -192,7 +188,7 @@ class ImageController extends Controller
                 }
             }
         }
-        
+
         // Delete file and database entry
         unlink($folder . '/' . $fileName);
         $image->delete();
