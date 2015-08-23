@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => env('MAIL_FROM', 'mail@bookstackapp.com'), 'name' => 'BookStack'],
 
     /*
     |--------------------------------------------------------------------------
