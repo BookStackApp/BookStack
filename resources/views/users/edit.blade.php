@@ -12,14 +12,29 @@
         </div>
     </div>
 
-    <div class="page-content">
-        <h1>Edit User</h1>
-
-        <form action="/users/{{$user->id}}" method="post">
-            {!! csrf_field() !!}
-            <input type="hidden" name="_method" value="put">
-            @include('users/form', ['model' => $user])
-        </form>
+    <div class="row">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Edit User</h1>
+                    <form action="/users/{{$user->id}}" method="post">
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="_method" value="put">
+                        @include('users/form', ['model' => $user])
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h1>&nbsp;</h1>
+                    <div class="shaded padded margin-top">
+                        <p>
+                            <img class="avatar" src="{{ $user->getAvatar(80) }}" alt="{{ $user->name }}">
+                        </p>
+                        <p class="text-muted">You can change your profile picture at <a href="http://en.gravatar.com/">Gravatar</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 @stop

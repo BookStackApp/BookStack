@@ -32,4 +32,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Returns the user's avatar,
+     * Uses Gravatar as the avatar service.
+     * @param int $size
+     * @return string
+     */
+    public function getAvatar($size = 50)
+    {
+        $emailHash = md5(strtolower(trim($this->email)));
+        return '//www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
+    }
 }

@@ -20,14 +20,15 @@
             <table class="table">
                 <tr>
                     <th>Name</th>
-                    <th>Created By</th>
+                    <th colspan="2">Created By</th>
                     <th>Revision Date</th>
                     <th>Actions</th>
                 </tr>
                 @foreach($page->revisions as $revision)
                     <tr>
                         <td>{{$revision->name}}</td>
-                        <td>{{$revision->createdBy->name}}</td>
+                        <td style="line-height: 0;"><img class="avatar" src="{{ $revision->createdBy->getAvatar(30) }}" alt="{{$revision->createdBy->name}}"></td>
+                        <td> {{$revision->createdBy->name}}</td>
                         <td><small>{{$revision->created_at->format('jS F, Y H:i:s')}} ({{$revision->created_at->diffForHumans()}})</small></td>
                         <td>
                             <a href="{{$revision->getUrl()}}" target="_blank">Preview</a>

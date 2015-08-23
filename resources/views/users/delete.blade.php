@@ -10,7 +10,7 @@
         <form action="/users/{{$user->id}}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="DELETE">
-            <a href="/user/{{$user->id}}" class="button muted">Cancel</a>
+            <a href="/users/{{$user->id}}" class="button muted">Cancel</a>
             <button type="submit" class="button neg">Confirm</button>
         </form>
     </div>

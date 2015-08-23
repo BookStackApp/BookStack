@@ -37,7 +37,12 @@
             <div class="padded row clearfix">
                 <div class="col-md-12 logo-container">
                     <a href="/" class="logo">BookStack</a>
-                    <div><i class="zmdi zmdi-account"></i> {{ Auth::user()->name }}</div>
+                    <div class="user-overview">
+                        <img class="avatar" src="{{Auth::user()->getAvatar(50)}}" alt="{{ Auth::user()->name }}">
+                        <span class="user-name">
+                            {{ Auth::user()->name }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </header>

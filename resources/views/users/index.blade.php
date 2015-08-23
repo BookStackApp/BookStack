@@ -18,11 +18,13 @@
         <h1>Users</h1>
         <table class="table">
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>Email</th>
             </tr>
             @foreach($users as $user)
                 <tr>
+                    <td style="line-height: 0;"><img class="avatar" src="{{$user->getAvatar(40)}}" alt="{{$user->name}}"></td>
                     <td><a href="/users/{{$user->id}}">{{$user->name}}</a></td>
                     <td>{{$user->email}}</td>
                 </tr>

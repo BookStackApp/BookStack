@@ -46,7 +46,7 @@ header {
 }
 
 .logo-container {
-  padding: $-l $-s;
+  padding: $-l $-s 0 $-s;
   color: #CCC;
   .logo {
     display: block;
@@ -56,6 +56,15 @@ header {
   }
   i {
     padding-right: $-s;
+  }
+}
+
+.user-overview {
+  margin-top: $-m;
+  .user-name {
+    display: inline-block;
+    vertical-align: top;
+    padding: $-m $-s;
   }
 }
 
@@ -432,4 +441,15 @@ body.dragging, body.dragging * {
   padding: $-s 0;
   color: #888;
   border-bottom: 1px solid #EEE;
+  font-size: 0.9em;
+  .left {
+    float: left;
+  }
+  .left + .right {
+    margin-left: 30px + $-s;
+  }
+}
+
+.avatar {
+  border-radius: 100%;
 }
