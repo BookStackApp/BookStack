@@ -34,6 +34,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * Returns a default guest user.
+     */
+    public static function getDefault()
+    {
+        return new static([
+            'email' => 'guest',
+            'name' => 'Guest'
+        ]);
+    }
+
+    /**
      * Returns the user's avatar,
      * Uses Gravatar as the avatar service.
      * @param int $size
