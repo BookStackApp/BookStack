@@ -453,3 +453,36 @@ body.dragging, body.dragging * {
 .avatar {
   border-radius: 100%;
 }
+
+.notification {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: $-xl*2 $-xl;
+  padding: $-l $-xl;
+  background-color: #EEE;
+  border-radius: 3px;
+  box-shadow: $bs-med;
+  z-index: 99999999;
+  display: table;
+  cursor: pointer;
+  max-width: 480px;
+  i, span {
+    display: table-cell;
+  }
+  i {
+    font-size: 2em;
+    padding-right: $-l;
+  }
+  span {
+    vertical-align: middle;
+  }
+  &.pos {
+    background-color: $positive;
+    color: #EEE;
+  }
+  &.neg {
+    background-color: $negative;
+    color: #EEE;
+  }
+}

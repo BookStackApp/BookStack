@@ -15,3 +15,26 @@
     opacity: 1;
   }
 }
+
+.anim.notification {
+  transform: translate3d(580px, 0, 0);
+  animation-name: notification;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes notification {
+  0% {
+    transform: translate3d(580px, 0, 0);
+  }
+  10% {
+    transform: translate3d(0, 0, 0);
+  }
+  90% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(580px, 0, 0);
+  }
+}

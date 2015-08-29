@@ -17,9 +17,13 @@
         </div>
         <div class="col-md-6 faded">
             <div class="action-buttons">
-                <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a>
-                <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
-                <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                @if($currentUser->can('page-update'))
+                    <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a>
+                    <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
+                @endif
+                @if($currentUser->can('page-delete'))
+                        <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                @endif
             </div>
         </div>
     </div>

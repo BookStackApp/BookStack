@@ -10,9 +10,15 @@
         </div>
         <div class="col-md-6 faded">
             <div class="action-buttons">
-                <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos"><i class="zmdi zmdi-plus"></i>New Page</a>
-                <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
-                <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                @if($currentUser->can('chapter-create'))
+                    <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos"><i class="zmdi zmdi-plus"></i>New Page</a>
+                @endif
+                @if($currentUser->can('chapter-update'))
+                    <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
+                @endif
+                @if($currentUser->can('chapter-delete'))
+                    <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                @endif
             </div>
         </div>
     </div>
@@ -33,7 +39,7 @@
                             </a>
                         </h3>
                         <p class="text-muted">
-                            {{$page->getExcerpt()}}
+                            {{$page->getExcerpt(180)}}
                         </p>
                     </div>
                     <hr>

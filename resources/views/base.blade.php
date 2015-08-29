@@ -2,12 +2,17 @@
 <html>
 <head>
     <title>BookStack</title>
+
+    <!-- Meta-->
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
+
+    <!-- Styles and Fonts -->
     <link rel="stylesheet" href="/css/app.css">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300' rel='stylesheet' type='text/css'>
-    {{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">--}}
     <link rel="stylesheet" href="/bower/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+
+    <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
@@ -27,9 +32,22 @@
             };
         });
     </script>
+
     @yield('head')
 </head>
 <body>
+
+    @if(Session::has('success'))
+        <div class="notification anim pos">
+            <i class="zmdi zmdi-mood"></i> <span>{{ Session::get('success') }}</span>
+        </div>
+    @endif
+
+    @if(Session::has('error'))
+        <div class="notification anim neg">
+            <i class="zmdi zmdi-alert-circle"></i> <span>{{ Session::get('error') }}</span>
+        </div>
+    @endif
 
     <section id="sidebar">
         <div class="sidebar-bg"><div class="overlay"></div></div>
@@ -69,5 +87,10 @@
     </section>
 
 @yield('bottom')
+    <script>
+        $('.notification').click(function() {
+            $(this).fadeOut(100);
+        });
+    </script>
 </body>
 </html>

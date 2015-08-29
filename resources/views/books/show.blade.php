@@ -6,11 +6,19 @@
         <div class="col-md-6"></div>
         <div class="col-md-6">
             <div class="action-buttons faded">
-                <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Page</a>
-                <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Chapter</a>
-                <a href="{{$book->getEditUrl()}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
-                <a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a>
-                <a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                @if($currentUser->can('page-create'))
+                    <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Page</a>
+                @endif
+                @if($currentUser->can('chapter-create'))
+                    <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Chapter</a>
+                @endif
+                @if($currentUser->can('book-update'))
+                    <a href="{{$book->getEditUrl()}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
+                    <a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a>
+                @endif
+                @if($currentUser->can('book-delete'))
+                    <a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                @endif
             </div>
         </div>
     </div>

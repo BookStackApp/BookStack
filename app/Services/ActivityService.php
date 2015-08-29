@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Oxbow\Activity;
 use Oxbow\Entity;
+use Session;
 
 class ActivityService
 {
@@ -35,6 +36,7 @@ class ActivityService
             $this->activity->extra = $extra;
         }
         $entity->activity()->save($this->activity);
+        $this->setNotification($activityKey);
     }
 
     /**
@@ -52,7 +54,9 @@ class ActivityService
             $this->activity->extra = $extra;
         }
         $this->activity->save();
+        $this->setNotification($activityKey);
     }
+
 
     /**
      * Removes the entity attachment from each of its activities
@@ -82,6 +86,19 @@ class ActivityService
     {
         return $this->activity->orderBy('created_at', 'desc')
             ->skip($count*$page)->take($count)->get();
+    }
+
+    /**
+     * Flashes a notification message to the session if an appropriate message is available.
+     * @param $activityKey
+     */
+    protected function setNotification($activityKey)
+    {
+        $notificationTextKey = 'activities.' . $activityKey . '_notification';
+        if (trans()->has($notificationTextKey)) {
+            $message = trans($notificationTextKey);
+            Session::flash('success', $message);
+        }
     }
 
 }
