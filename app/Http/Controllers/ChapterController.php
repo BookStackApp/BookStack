@@ -22,12 +22,13 @@ class ChapterController extends Controller
      * @param $bookRepo
      * @param $chapterRepo
      */
-    public function __construct(BookRepo $bookRepo,ChapterRepo $chapterRepo)
+    public function __construct(BookRepo $bookRepo, ChapterRepo $chapterRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
+        parent::__construct();
     }
-    
+
 
     /**
      * Show the form for creating a new chapter.
@@ -37,6 +38,7 @@ class ChapterController extends Controller
      */
     public function create($bookSlug)
     {
+        $this->checkPermission('chapter-create');
         $book = $this->bookRepo->getBySlug($bookSlug);
         return view('chapters/create', ['book' => $book, 'current' => $book]);
     }
@@ -44,12 +46,13 @@ class ChapterController extends Controller
     /**
      * Store a newly created chapter in storage.
      *
-     * @param $bookSlug
+     * @param          $bookSlug
      * @param  Request $request
      * @return Response
      */
     public function store($bookSlug, Request $request)
     {
+        $this->checkPermission('chapter-create');
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
@@ -88,6 +91,7 @@ class ChapterController extends Controller
      */
     public function edit($bookSlug, $chapterSlug)
     {
+        $this->checkPermission('chapter-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         return view('chapters/edit', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
@@ -97,12 +101,13 @@ class ChapterController extends Controller
      * Update the specified chapter in storage.
      *
      * @param  Request $request
-     * @param $bookSlug
-     * @param $chapterSlug
+     * @param          $bookSlug
+     * @param          $chapterSlug
      * @return Response
      */
     public function update(Request $request, $bookSlug, $chapterSlug)
     {
+        $this->checkPermission('chapter-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $chapter->fill($request->all());
@@ -121,6 +126,7 @@ class ChapterController extends Controller
      */
     public function showDelete($bookSlug, $chapterSlug)
     {
+        $this->checkPermission('chapter-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         return view('chapters/delete', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
@@ -135,10 +141,11 @@ class ChapterController extends Controller
      */
     public function destroy($bookSlug, $chapterSlug)
     {
+        $this->checkPermission('chapter-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
-        if(count($chapter->pages) > 0) {
-            foreach($chapter->pages as $page) {
+        if (count($chapter->pages) > 0) {
+            foreach ($chapter->pages as $page) {
                 $page->chapter_id = 0;
                 $page->save();
             }

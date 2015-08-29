@@ -40,13 +40,63 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return new static([
             'email' => 'guest',
-            'name' => 'Guest'
+            'name'  => 'Guest'
         ]);
+    }
+
+    /**
+     * Permissions and roles
+     */
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('Oxbow\Role');
+    }
+
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first();
+    }
+
+    /**
+     * Check if the user has a particular permission.
+     * @param $permissionName
+     * @return bool
+     */
+    public function can($permissionName)
+    {
+        $permissions = $this->role->permissions()->get();
+        $permissionSearch = $permissions->search(function ($item, $key) use ($permissionName) {
+            return $item->name == $permissionName;
+        });
+        return $permissionSearch !== false;
+    }
+
+    /**
+     * Attach a role to this user.
+     * @param Role $role
+     */
+    public function attachRole(Role $role)
+    {
+        $this->attachRoleId($role->id);
+    }
+
+    /**
+     * Attach a role id to this user.
+     * @param $id
+     */
+    public function attachRoleId($id)
+    {
+        $this->roles()->sync([$id]);
     }
 
     /**
      * Returns the user's avatar,
      * Uses Gravatar as the avatar service.
+     *
      * @param int $size
      * @return string
      */

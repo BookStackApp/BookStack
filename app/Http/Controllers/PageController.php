@@ -20,8 +20,8 @@ class PageController extends Controller
 
     /**
      * PageController constructor.
-     * @param PageRepo $pageRepo
-     * @param BookRepo $bookRepo
+     * @param PageRepo    $pageRepo
+     * @param BookRepo    $bookRepo
      * @param ChapterRepo $chapterRepo
      */
     public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo)
@@ -29,18 +29,20 @@ class PageController extends Controller
         $this->pageRepo = $pageRepo;
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
+        parent::__construct();
     }
 
     /**
      * Show the form for creating a new page.
      *
-     * @param $bookSlug
+     * @param      $bookSlug
      * @param bool $chapterSlug
      * @return Response
      * @internal param bool $pageSlug
      */
     public function create($bookSlug, $chapterSlug = false)
     {
+        $this->checkPermission('page-create');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : false;
         return view('pages/create', ['book' => $book, 'chapter' => $chapter]);
@@ -50,14 +52,15 @@ class PageController extends Controller
      * Store a newly created page in storage.
      *
      * @param  Request $request
-     * @param $bookSlug
+     * @param          $bookSlug
      * @return Response
      */
     public function store(Request $request, $bookSlug)
     {
+        $this->checkPermission('page-create');
         $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'html' => 'required|string',
+            'name'   => 'required|string|max:255',
+            'html'   => 'required|string',
             'parent' => 'integer|exists:pages,id'
         ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
@@ -66,7 +69,7 @@ class PageController extends Controller
         $page->slug = $this->pageRepo->findSuitableSlug($page->name, $book->id);
         $page->priority = $this->bookRepo->getNewPriority($book);
 
-        if($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) {
+        if ($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) {
             $page->chapter_id = $request->get('chapter');
         }
 
@@ -103,6 +106,7 @@ class PageController extends Controller
      */
     public function edit($bookSlug, $pageSlug)
     {
+        $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
@@ -112,12 +116,13 @@ class PageController extends Controller
      * Update the specified page in storage.
      *
      * @param  Request $request
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param          $bookSlug
+     * @param          $pageSlug
      * @return Response
      */
     public function update(Request $request, $bookSlug, $pageSlug)
     {
+        $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $this->pageRepo->updatePage($page, $book->id, $request->all());
@@ -145,7 +150,7 @@ class PageController extends Controller
     public function searchAll(Request $request)
     {
         $searchTerm = $request->get('term');
-        if(empty($searchTerm)) return redirect()->back();
+        if (empty($searchTerm)) return redirect()->back();
 
         $pages = $this->pageRepo->getBySearch($searchTerm);
         return view('pages/search-results', ['pages' => $pages, 'searchTerm' => $searchTerm]);
@@ -158,6 +163,7 @@ class PageController extends Controller
      */
     public function sortPages($bookSlug)
     {
+        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         return view('pages/sort', ['book' => $book, 'current' => $book]);
     }
@@ -165,26 +171,27 @@ class PageController extends Controller
     /**
      * Saves an array of sort mapping to pages and chapters.
      *
-     * @param $bookSlug
+     * @param         $bookSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function savePageSort($bookSlug, Request $request)
     {
+        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         // Return if no map sent
-        if(!$request->has('sort-tree')) {
+        if (!$request->has('sort-tree')) {
             return redirect($book->getUrl());
         }
 
         // Sort pages and chapters
         $sortMap = json_decode($request->get('sort-tree'));
-        foreach($sortMap as $index => $bookChild) {
+        foreach ($sortMap as $index => $bookChild) {
             $id = $bookChild->id;
             $isPage = $bookChild->type == 'page';
             $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
             $model->priority = $index;
-            if($isPage) {
+            if ($isPage) {
                 $model->chapter_id = ($bookChild->parentChapter === false) ? 0 : $bookChild->parentChapter;
             }
             $model->save();
@@ -201,6 +208,7 @@ class PageController extends Controller
      */
     public function showDelete($bookSlug, $pageSlug)
     {
+        $this->checkPermission('page-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         return view('pages/delete', ['book' => $book, 'page' => $page, 'current' => $page]);
@@ -216,6 +224,7 @@ class PageController extends Controller
      */
     public function destroy($bookSlug, $pageSlug)
     {
+        $this->checkPermission('page-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         Activity::addMessage('page_delete', $book->id, $page->name);
@@ -255,6 +264,7 @@ class PageController extends Controller
 
     public function restoreRevision($bookSlug, $pageSlug, $revisionId)
     {
+        $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $revision = $this->pageRepo->getRevisionById($revisionId);

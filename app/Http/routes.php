@@ -11,12 +11,14 @@
 |
 */
 
-
+Route::get('/test', function () {
+    return Auth::user()->can('users-edit');
+});
 
 // Authentication routes...
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::group(['prefix' => 'books'], function() {
+    Route::group(['prefix' => 'books'], function () {
 
         // Books
         Route::get('/', 'BookController@index');

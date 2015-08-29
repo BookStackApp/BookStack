@@ -26,6 +26,7 @@ class BookController extends Controller
     {
         $this->bookRepo = $bookRepo;
         $this->pageRepo = $pageRepo;
+        parent::__construct();
     }
 
     /**
@@ -46,19 +47,21 @@ class BookController extends Controller
      */
     public function create()
     {
+        $this->checkPermission('book-create');
         return view('books/create');
     }
 
     /**
      * Store a newly created book in storage.
      *
-     * @param  Request  $request
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
     {
+        $this->checkPermission('book-create');
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
         $book = $this->bookRepo->newFromInput($request->all());
@@ -90,6 +93,7 @@ class BookController extends Controller
      */
     public function edit($slug)
     {
+        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
         return view('books/edit', ['book' => $book, 'current' => $book]);
     }
@@ -98,14 +102,15 @@ class BookController extends Controller
      * Update the specified book in storage.
      *
      * @param  Request $request
-     * @param $slug
+     * @param          $slug
      * @return Response
      */
     public function update(Request $request, $slug)
     {
+        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
         $book->fill($request->all());
@@ -123,6 +128,7 @@ class BookController extends Controller
      */
     public function showDelete($bookSlug)
     {
+        $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         return view('books/delete', ['book' => $book, 'current' => $book]);
     }
@@ -135,6 +141,7 @@ class BookController extends Controller
      */
     public function destroy($bookSlug)
     {
+        $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         Activity::addMessage('book_delete', 0, $book->name);
         $this->bookRepo->destroyBySlug($bookSlug);

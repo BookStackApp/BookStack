@@ -60,6 +60,11 @@
   &.large {
     padding: $-xl;
   }
+  >h1, >h2, >h3, >h4 {
+    &:first-child {
+      margin-top: 0.1em;
+    }
+  }
 }
 .padded-vertical, .padded-top {
   padding-top: $-m;
@@ -67,6 +72,7 @@
     padding-top: $-xl;
   }
 }
+
 .padded-vertical, .padded-bottom {
   padding-bottom: $-m;
   &.large {

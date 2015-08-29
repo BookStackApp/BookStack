@@ -26,8 +26,9 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Oxbow\Http\Middleware\Authenticate::class,
+        'auth'       => \Oxbow\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \Oxbow\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest'      => \Oxbow\Http\Middleware\RedirectIfAuthenticated::class,
+        'perm'       => \Oxbow\Http\Middleware\PermissionMiddleware::class
     ];
 }

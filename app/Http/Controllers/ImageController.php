@@ -18,12 +18,13 @@ class ImageController extends Controller
     /**
      * ImageController constructor.
      * @param Image $image
-     * @param File $file
+     * @param File  $file
      */
     public function __construct(Image $image, File $file)
     {
         $this->image = $image;
         $this->file = $file;
+        parent::__construct();
     }
 
     /**
@@ -33,7 +34,7 @@ class ImageController extends Controller
      */
     public function getImage(Request $request)
     {
-        $cacheTime = 60*60*24;
+        $cacheTime = 60 * 60 * 24;
         $path = storage_path() . '/' . $request->path();
         $modifiedTime = $this->file->lastModified($path);
         $eTag = md5($modifiedTime . $path);
@@ -43,20 +44,20 @@ class ImageController extends Controller
         $headers = [
             'Last-Modified' => $headerLastModified,
             'Cache-Control' => 'must-revalidate',
-            'Pragma' => 'public',
-            'Expires' => $headerExpires,
-            'Etag' => $eTag
+            'Pragma'        => 'public',
+            'Expires'       => $headerExpires,
+            'Etag'          => $eTag
         ];
 
         $browserModifiedSince = $request->header('If-Modified-Since');
         $browserNoneMatch = $request->header('If-None-Match');
-        if($browserModifiedSince !== null && file_exists($path) && ($browserModifiedSince == $headerLastModified || $browserNoneMatch == $eTag)) {
+        if ($browserModifiedSince !== null && file_exists($path) && ($browserModifiedSince == $headerLastModified || $browserNoneMatch == $eTag)) {
             return response()->make('', 304, $headers);
         }
 
-        if(file_exists($path)) {
+        if (file_exists($path)) {
             return response()->make(file_get_contents($path), 200, array_merge($headers, [
-                'Content-Type' => $this->file->mimeType($path),
+                'Content-Type'   => $this->file->mimeType($path),
                 'Content-Length' => filesize($path),
             ]));
         }
@@ -72,21 +73,21 @@ class ImageController extends Controller
     {
         $pageSize = 30;
         $images = DB::table('images')->orderBy('created_at', 'desc')
-            ->skip($page*$pageSize)->take($pageSize)->get();
-        foreach($images as $image) {
+            ->skip($page * $pageSize)->take($pageSize)->get();
+        foreach ($images as $image) {
             $image->thumbnail = $this->getThumbnail($image, 150, 150);
         }
         $hasMore = count(DB::table('images')->orderBy('created_at', 'desc')
-            ->skip(($page+1)*$pageSize)->take($pageSize)->get()) > 0;
+                ->skip(($page + 1) * $pageSize)->take($pageSize)->get()) > 0;
         return response()->json([
-            'images' => $images,
+            'images'  => $images,
             'hasMore' => $hasMore
         ]);
     }
 
     /**
      * Get the thumbnail for an image.
-     * @param $image
+     * @param     $image
      * @param int $width
      * @param int $height
      * @return string
@@ -99,7 +100,7 @@ class ImageController extends Controller
         $thumbFilePath = public_path() . $thumbPath;
 
         // Return the thumbnail url path if already exists
-        if(file_exists($thumbFilePath)) {
+        if (file_exists($thumbFilePath)) {
             return $thumbPath;
         }
 
@@ -108,7 +109,7 @@ class ImageController extends Controller
         $thumb->fit($width, $height);
 
         // Create thumbnail folder if it does not exist
-        if(!file_exists(dirname($thumbFilePath))) {
+        if (!file_exists(dirname($thumbFilePath))) {
             mkdir(dirname($thumbFilePath), 0775, true);
         }
 
@@ -124,13 +125,14 @@ class ImageController extends Controller
      */
     public function upload(Request $request)
     {
+        $this->checkPermission('image-create');
         $imageUpload = $request->file('file');
         $name = str_replace(' ', '-', $imageUpload->getClientOriginalName());
         $storageName = substr(sha1(time()), 0, 10) . '-' . $name;
-        $imagePath = '/uploads/images/'.Date('Y-m-M').'/';
-        $storagePath = public_path(). $imagePath;
+        $imagePath = '/uploads/images/' . Date('Y-m-M') . '/';
+        $storagePath = public_path() . $imagePath;
         $fullPath = $storagePath . $storageName;
-        while(file_exists($fullPath)) {
+        while (file_exists($fullPath)) {
             $storageName = substr(sha1(rand()), 0, 3) . $storageName;
             $fullPath = $storagePath . $storageName;
         }
@@ -147,12 +149,13 @@ class ImageController extends Controller
 
     /**
      * Update image details
-     * @param $imageId
+     * @param         $imageId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($imageId, Request $request)
     {
+        $this->checkPermission('image-update');
         $this->validate($request, [
             'name' => 'required|min:2|string'
         ]);
@@ -169,6 +172,7 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkPermission('image-delete');
         $image = $this->image->findOrFail($id);
 
         // Delete files
@@ -176,14 +180,14 @@ class ImageController extends Controller
         $fileName = basename($image->url);
 
         // Delete thumbnails
-        foreach(glob($folder . '/*') as $file) {
-            if(is_dir($file)) {
+        foreach (glob($folder . '/*') as $file) {
+            if (is_dir($file)) {
                 $thumbName = $file . '/' . $fileName;
-                if(file_exists($file)) {
+                if (file_exists($file)) {
                     unlink($thumbName);
                 }
                 // Remove thumb folder if empty
-                if(count(glob($file . '/*')) === 0) {
+                if (count(glob($file . '/*')) === 0) {
                     rmdir($file);
                 }
             }
@@ -194,7 +198,7 @@ class ImageController extends Controller
         $image->delete();
 
         // Delete parent folder if empty
-        if(count(glob($folder . '/*')) === 0) {
+        if (count(glob($folder . '/*')) === 0) {
             rmdir($folder);
         }
         return response()->json('Image Deleted');

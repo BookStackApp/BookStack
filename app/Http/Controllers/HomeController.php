@@ -19,12 +19,13 @@ class HomeController extends Controller
     /**
      * HomeController constructor.
      * @param ActivityService $activityService
-     * @param BookRepo $bookRepo
+     * @param BookRepo        $bookRepo
      */
     public function __construct(ActivityService $activityService, BookRepo $bookRepo)
     {
         $this->activityService = $activityService;
         $this->bookRepo = $bookRepo;
+        parent::__construct();
     }
 
 

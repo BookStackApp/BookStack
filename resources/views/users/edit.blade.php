@@ -14,6 +14,7 @@
 
     <div class="row">
         <div class="page-content">
+
             <div class="row">
                 <div class="col-md-6">
                     <h1>Edit User</h1>
@@ -33,6 +34,24 @@
                     </div>
                 </div>
             </div>
+
+            <hr class="margin-top large">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Permissions</h3>
+                    <p>User Role: <strong>{{$user->role->display_name}}</strong>.</p>
+                    <ul class="text-muted">
+                        @foreach($user->role->permissions as $permission)
+                            <li>
+                                {{ $permission->display_name }}
+                            </li>
+                        @endforeach
+                    </ul>
+
+                </div>
+            </div>
+
         </div>
     </div>
 

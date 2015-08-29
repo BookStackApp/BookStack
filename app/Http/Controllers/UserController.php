@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Oxbow\Http\Requests;
-use Oxbow\Http\Controllers\Controller;
 use Oxbow\User;
 
 class UserController extends Controller
@@ -21,8 +20,8 @@ class UserController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
+        parent::__construct();
     }
-
 
     /**
      * Display a listing of the users.
@@ -32,7 +31,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user->all();
-        return view('users/index', ['users'=> $users]);
+        return view('users/index', ['users' => $users]);
     }
 
     /**
@@ -42,27 +41,32 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->checkPermission('user-create');
         return view('users/create');
     }
 
     /**
      * Store a newly created user in storage.
      *
-     * @param  Request  $request
+     * @param  Request $request
      * @return Response
      */
     public function store(Request $request)
     {
+        $this->checkPermission('user-create');
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:5',
-            'password-confirm' => 'required|same:password'
+            'name'             => 'required',
+            'email'            => 'required|email',
+            'password'         => 'required|min:5',
+            'password-confirm' => 'required|same:password',
+            'role'             => 'required|exists:roles,id'
         ]);
 
         $user = $this->user->fill($request->all());
         $user->password = Hash::make($request->get('password'));
         $user->save();
+
+        $user->attachRoleId($request->get('role'));
         return redirect('/users');
     }
 
@@ -70,11 +74,14 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
+        $this->checkPermissionOr('user-update', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
         $user = $this->user->findOrFail($id);
         return view('users/edit', ['user' => $user]);
     }
@@ -82,23 +89,31 @@ class UserController extends Controller
     /**
      * Update the specified user in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param  Request $request
+     * @param  int     $id
      * @return Response
      */
     public function update(Request $request, $id)
     {
+        $this->checkPermissionOr('user-update', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'min:5',
-            'password-confirm' => 'same:password'
+            'name'             => 'required',
+            'email'            => 'required|email',
+            'password'         => 'min:5',
+            'password-confirm' => 'same:password',
+            'role'             => 'exists:roles,id'
         ]);
 
         $user = $this->user->findOrFail($id);
         $user->fill($request->all());
 
-        if($request->has('password') && $request->get('password') != '') {
+        if ($this->currentUser->can('user-update') && $request->has('role')) {
+            $user->attachRoleId($request->get('role'));
+        }
+
+        if ($request->has('password') && $request->get('password') != '') {
             $password = $request->get('password');
             $user->password = Hash::make($password);
         }
@@ -113,6 +128,9 @@ class UserController extends Controller
      */
     public function delete($id)
     {
+        $this->checkPermissionOr('user-delete', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
         $user = $this->user->findOrFail($id);
         return view('users/delete', ['user' => $user]);
     }
@@ -120,11 +138,14 @@ class UserController extends Controller
     /**
      * Remove the specified user from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function destroy($id)
     {
+        $this->checkPermissionOr('user-delete', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
         $user = $this->user->findOrFail($id);
         $user->delete();
         return redirect('/users');
