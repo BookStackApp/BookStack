@@ -2,7 +2,7 @@
 ///////////////
 
 // Sizes
-$max-width: 1100px;
+$max-width: 1400px;
 
 // Screen breakpoints
 $xl: 1100px;
@@ -26,14 +26,15 @@ $-xxs: 3px;
 // Fonts
 $heading:  'Roboto', Helvetica, Arial, sans-serif;
 $text: 'Roboto', Helvetica, Arial, sans-serif;
-$fs-m: 16px;
+$fs-m: 15px;
 $fs-s: 14px;
 
 // Colours
-$primary: #1c77c1;
+$primary: #0288D1;
+$primary-dark: #0288D1;
 $secondary: #e27b41;
-$positive: #409945;
-$negative: #D35252;
+$positive: #52A256;
+$negative: #D32F2F;
 
 // Text colours
 $text-dark: #444;

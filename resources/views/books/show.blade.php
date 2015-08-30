@@ -2,31 +2,35 @@
 
 @section('content')
 
-    <div class="row faded-small">
-        <div class="col-md-6"></div>
-        <div class="col-md-6">
-            <div class="action-buttons faded">
-                @if($currentUser->can('page-create'))
-                    <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Page</a>
-                @endif
-                @if($currentUser->can('chapter-create'))
-                    <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Chapter</a>
-                @endif
-                @if($currentUser->can('book-update'))
-                    <a href="{{$book->getEditUrl()}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
-                    <a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a>
-                @endif
-                @if($currentUser->can('book-delete'))
-                    <a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
-                @endif
+    <div class="faded-small">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="action-buttons faded">
+                        @if($currentUser->can('page-create'))
+                            <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Page</a>
+                        @endif
+                        @if($currentUser->can('chapter-create'))
+                            <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos"><i class="zmdi zmdi-plus"></i> New Chapter</a>
+                        @endif
+                        @if($currentUser->can('book-update'))
+                            <a href="{{$book->getEditUrl()}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
+                            <a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a>
+                        @endif
+                        @if($currentUser->can('book-delete'))
+                            <a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6 col-md-offset-1">
 
-            <div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+
                 <h1>{{$book->name}}</h1>
                 <p class="text-muted">{{$book->description}}</p>
 
@@ -51,7 +55,7 @@
                             @if(is_a($childElement, 'Oxbow\Chapter') && count($childElement->pages) > 0)
                                 <div class="inset-list">
                                     @foreach($childElement->pages as $page)
-                                        <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i> {{$page->name}}</a></h4>
+                                        <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
                                     @endforeach
                                 </div>
                             @endif
@@ -66,16 +70,17 @@
                     Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
                 </p>
 
+
             </div>
 
-        </div>
-
-        <div class="col-md-3 col-md-offset-1">
-            <div class="margin-top large"><br></div>
-            <h3>Recent Activity</h3>
-            @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
+            <div class="col-md-4 col-md-offset-1">
+                <div class="margin-top large"><br></div>
+                <h3>Recent Activity</h3>
+                @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
+            </div>
         </div>
     </div>
+
 
 
     <script>

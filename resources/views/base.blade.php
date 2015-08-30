@@ -49,38 +49,40 @@
         </div>
     @endif
 
-    <section id="sidebar">
-        <div class="sidebar-bg"><div class="overlay"></div></div>
-        <header>
-            <div class="padded row clearfix">
-                <div class="col-md-12 logo-container">
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
                     <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
-                    <div class="user-overview">
-                        <img class="avatar" src="{{Auth::user()->getAvatar(50)}}" alt="{{ Auth::user()->name }}">
-                        <span class="user-name">
-                            {{ Auth::user()->name }}
-                        </span>
+                </div>
+                <div class="col-md-3">
+                    <div class="search-box text-center" style="display: none">
+                        <form action="/pages/search/all" id="search-form" method="GET" style="display: none;">
+                            <input type="text" placeholder="Search all pages..." name="term" id="search-input">
+                        </form>
+                    </div>
+                    <img class="avatar" src="{{Auth::user()->getAvatar(30)}}" alt="{{ Auth::user()->name }}">
+                <span class="user-name">
+                    {{ Auth::user()->name }}
+                </span>
+                </div>
+                <div class="col-md-5">
+                    <div class="float right links">
+                        <a href="/search"><i class="zmdi zmdi-search"></i></a>
+                        <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
+                        <a href="/users"><i class="zmdi zmdi-accounts"></i>Users</a>
+                        <a href="/logout"><i class="zmdi zmdi-run zmdi-hc-flip-horizontal"></i>Logout</a>
                     </div>
                 </div>
             </div>
-        </header>
-        <div class="search-box">
-            <form action="/pages/search/all" id="search-form" method="GET">
-                <input type="text" placeholder="Search all pages..." name="term" id="search-input">
-            </form>
         </div>
-        <div class="row menu">
-            <div class="col-md-4"><a href="/books"><i class="zmdi zmdi-book"></i>Books</a></div>
-            <div class="col-md-4"><a href="/users"><i class="zmdi zmdi-accounts"></i>Users</a></div>
-            <div class="col-md-4"><a href="/logout"><i class="zmdi zmdi-run zmdi-hc-flip-horizontal"></i>Logout</a></div>
-        </div>
-        @if(isset($book) && isset($current) && !isset($books))
-            <div class="book-tree">
-                @include('pages/sidebar-tree-list', ['book' => $book])
-            </div>
-        @endif
+        {{--@if(isset($book) && isset($current) && !isset($books))--}}
+            {{--<div class="book-tree">--}}
+                {{--@include('pages/sidebar-tree-list', ['book' => $book])--}}
+            {{--</div>--}}
+        {{--@endif--}}
         @yield('sidebar')
-    </section>
+    </header>
 
     <section id="content">
         @yield('content')

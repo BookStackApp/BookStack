@@ -14,7 +14,7 @@
 }
 
 // Button Specific Variables
-$button-border-radius: 3px;
+$button-border-radius: 2px;
 
 .button-base {
   text-decoration: none;
@@ -24,11 +24,14 @@ $button-border-radius: 3px;
   margin: $-xs $-xs $-xs 0;
   display: inline-block;
   border: none;
+  font-weight: 500;
+  font-family: $text;
   outline: 0;
   border-radius: $button-border-radius;
   cursor: pointer;
-  transition: all ease-in-out 80ms;
-  box-shadow: 0 0 0 0 #000;
+  transition: all ease-in-out 120ms;
+  text-transform: uppercase;
+  box-shadow: 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.21);
   @include generate-button-colors(#EEE, $primary);
 }
 

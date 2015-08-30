@@ -16,83 +16,51 @@ header {
   display: block;
   z-index: 2;
   top: 0;
+  background-color: $primary-dark;
+  color: #fff;
   .padded {
     padding: $-m;
   }
+  border-bottom: 1px solid #DDD;
   //margin-bottom: $-l;
-}
-
-#sidebar {
-  position: fixed;
-  background-color: #444;
-  color: #EEE;
-  height: 100%;
-  top: 0;
-  z-index: 1;
-  //padding-top: $-m;
-  width: 340px;
-  border-right: 1px solid #DDD;
-  h4, li, p, a {
-    color: #CCC;
+  .links a {
+    display: inline-block;
+    padding: $-l;
+    color: #FFF;
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  .search-box {
+    padding-top: $-l *0.8;
+  }
+  .avatar, .user-name {
+    display: inline-block;
+  }
+  .avatar {
+    margin-top: $-l*0.8;
+  }
+  .user-name {
+    vertical-align: top;
+    padding-top: $-l*1.1;
+    padding-left: $-m;
   }
 }
 
 #content {
-  //margin-top: 63px;
-  margin-left: 340px;
   display: block;
   position: relative;
-  padding: 0 16px;
-}
-
-.logo-container {
-  padding: $-l $-s 0 $-s;
-  color: #CCC;
-  .logo {
-    display: block;
-    font-size: 2em;
-    font-weight: bold;
-    padding: $-m 0;
-  }
-  i {
-    padding-right: $-s;
-  }
-}
-
-.user-overview {
-  margin-top: $-m;
-  .user-name {
-    display: inline-block;
-    vertical-align: top;
-    padding: $-m $-s;
-  }
 }
 
 
-.search-box {
-  input {
-    width: 100%;
-    border-radius: 0;
-    padding: $-m;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: none;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-    color: #EEE;
-  }
-}
-
-.menu {
-  list-style: none;
-  margin: 0;
-  .col-md-4 {
-    padding: 0;
-  }
-  a {
-    padding: $-m;
-    display: block;
-    border-bottom: 1px solid #3A3939;
-  }
+.logo {
+  display: inline-block;
+  font-size: 1.8em;
+  color: #fff;
+  font-weight: 400;
+  padding: $-l $-l $-l 0;
+  vertical-align: top;
+  line-height: 1;
 }
 
 .page-title input {
@@ -259,10 +227,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .faded-small {
-  color: #666;
+  color: #000;
   font-size: 0.9em;
+  background-color: rgba(21, 101, 192, 0.15);
   a, span {
-    color: #666;
+    color: #000;
   }
 }
 
@@ -271,6 +240,9 @@ h1, h2, h3, h4, h5, h6 {
   a {
     display: inline-block;
     padding: $-s;
+    &:last-child {
+      padding-right: 0;
+    }
   }
 }
 
@@ -488,16 +460,14 @@ body.dragging, body.dragging * {
 }
 
 .setting-nav {
-  margin-top: $-l;
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
+  text-align: center;
   a {
     padding: $-m;
     display: inline-block;
     //color: #666;
     &.selected {
       //color: $primary;
-      background-color: #f8f8f8;
+      border-bottom: 2px solid $primary;
     }
   }
 }

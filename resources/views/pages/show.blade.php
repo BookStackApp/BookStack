@@ -2,31 +2,36 @@
 
 @section('content')
 
-    <div class="row faded-small">
-        <div class="col-md-6 faded">
-            <div class="breadcrumbs padded-horizontal">
-                <a href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
-                @if($page->hasChapter())
-                    <span class="sep">&raquo;</span>
-                    <a href="{{ $page->chapter->getUrl() }}">
-                        <i class="zmdi zmdi-collection-bookmark"></i>
-                        {{$page->chapter->name}}
-                    </a>
-                @endif
-            </div>
-        </div>
-        <div class="col-md-6 faded">
-            <div class="action-buttons">
-                @if($currentUser->can('page-update'))
-                    <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a>
-                    <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
-                @endif
-                @if($currentUser->can('page-delete'))
-                        <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
-                @endif
+    <div class="faded-small">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 faded">
+                    <div class="breadcrumbs">
+                        <a href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        @if($page->hasChapter())
+                            <span class="sep">&raquo;</span>
+                            <a href="{{ $page->chapter->getUrl() }}">
+                                <i class="zmdi zmdi-collection-bookmark"></i>
+                                {{$page->chapter->name}}
+                            </a>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6 faded">
+                    <div class="action-buttons">
+                        @if($currentUser->can('page-update'))
+                            <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a>
+                            <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
+                        @endif
+                        @if($currentUser->can('page-delete'))
+                            <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 
     <div class="side-nav faded">
         <h4>Page Navigation</h4>
