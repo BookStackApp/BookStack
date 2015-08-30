@@ -81,11 +81,13 @@ class ActivityService
      * Gets the latest activity.
      * @param int $count
      * @param int $page
+     * @return array
      */
     public function latest($count = 20, $page = 0)
     {
-        return $this->activity->orderBy('created_at', 'desc')
+        $activityList =  $this->activity->orderBy('created_at', 'desc')
             ->skip($count * $page)->take($count)->get();
+        return $this->filterSimilar($activityList);
     }
 
     /**
@@ -99,7 +101,7 @@ class ActivityService
     function entityActivity($entity, $count = 20, $page = 0)
     {
         $activity = $entity->hasMany('Oxbow\Activity')->orderBy('created_at', 'desc')
-            ->skip($count*$page)->take($count)->get();
+            ->skip($count * $page)->take($count)->get();
 
         return $this->filterSimilar($activity);
     }
@@ -109,16 +111,17 @@ class ActivityService
      * @param Activity[] $activity
      * @return array
      */
-    protected function filterSimilar($activity) {
+    protected function filterSimilar($activity)
+    {
         $newActivity = [];
         $previousItem = false;
-        foreach($activity as $activityItem) {
-            if($previousItem === false) {
+        foreach ($activity as $activityItem) {
+            if ($previousItem === false) {
                 $previousItem = $activityItem;
                 $newActivity[] = $activityItem;
                 continue;
             }
-            if(!$activityItem->isSimilarTo($previousItem)) {
+            if (!$activityItem->isSimilarTo($previousItem)) {
                 $newActivity[] = $activityItem;
             }
             $previousItem = $activityItem;

@@ -17,7 +17,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h1>Edit User</h1>
+                    <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
                     <form action="/users/{{$user->id}}" method="post">
                         {!! csrf_field() !!}
                         <input type="hidden" name="_method" value="put">

@@ -10,7 +10,7 @@
   color: #222;
   width: 250px;
   max-width: 100%;
-  -webkit-appearance:none;
+  //-webkit-appearance:none;
   &.neg, &.invalid {
     border: 1px solid $negative;
   }
@@ -25,9 +25,10 @@
 label {
   display: block;
   line-height: 1.4em;
-  font-size: 0.9em;
+  font-size: 0.94em;
   font-weight: 500;
-  color: #333;
+  color: #666;
+  padding-bottom: 2px;
 }
 
 label.radio, label.checkbox {

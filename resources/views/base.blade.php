@@ -54,7 +54,7 @@
         <header>
             <div class="padded row clearfix">
                 <div class="col-md-12 logo-container">
-                    <a href="/" class="logo">BookStack</a>
+                    <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
                     <div class="user-overview">
                         <img class="avatar" src="{{Auth::user()->getAvatar(50)}}" alt="{{ Auth::user()->name }}">
                         <span class="user-name">

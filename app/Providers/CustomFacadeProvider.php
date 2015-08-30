@@ -4,6 +4,7 @@ namespace Oxbow\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Oxbow\Services\ActivityService;
+use Oxbow\Services\SettingService;
 
 class CustomFacadeProvider extends ServiceProvider
 {
@@ -26,6 +27,10 @@ class CustomFacadeProvider extends ServiceProvider
     {
         $this->app->bind('activity', function() {
             return new ActivityService($this->app->make('Oxbow\Activity'));
+        });
+
+        $this->app->bind('setting', function() {
+            return new SettingService($this->app->make('Oxbow\Setting'));
         });
     }
 }

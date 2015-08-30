@@ -486,3 +486,18 @@ body.dragging, body.dragging * {
     color: #EEE;
   }
 }
+
+.setting-nav {
+  margin-top: $-l;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  a {
+    padding: $-m;
+    display: inline-block;
+    //color: #666;
+    &.selected {
+      //color: $primary;
+      background-color: #f8f8f8;
+    }
+  }
+}

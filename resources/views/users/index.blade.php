@@ -3,21 +3,15 @@
 
 @section('content')
 
-
-    <div class="row faded-small">
-        <div class="col-md-6"></div>
-        <div class="col-md-6 faded">
-            <div class="action-buttons">
-                @if($currentUser->can('user-create'))
-                    <a href="/users/create" class="text-pos"><i class="zmdi zmdi-account-add"></i>New User</a>
-                @endif
-            </div>
-        </div>
-    </div>
-
+    @include('settings/navbar', ['selected' => 'users'])
 
     <div class="page-content">
         <h1>Users</h1>
+        @if($currentUser->can('user-create'))
+            <p>
+                <a href="/users/create" class="text-pos"><i class="zmdi zmdi-account-add"></i>Add New User</a>
+            </p>
+        @endif
         <table class="table">
             <tr>
                 <th></th>

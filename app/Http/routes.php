@@ -71,6 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
 
+    // Settings
+    Route::get('/settings', 'SettingController@index');
+    Route::post('/settings', 'SettingController@update');
+
 
 });
 
