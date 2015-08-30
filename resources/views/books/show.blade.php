@@ -73,7 +73,7 @@
         <div class="col-md-3 col-md-offset-1">
             <div class="margin-top large"><br></div>
             <h3>Recent Activity</h3>
-            @include('partials/activity-list', ['activity' => $book->recentActivity()])
+            @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
         </div>
     </div>
 

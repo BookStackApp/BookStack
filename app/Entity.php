@@ -44,15 +44,4 @@ class Entity extends Model
         return $this->morphMany('Oxbow\Activity', 'entity')->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Gets only the most recent activity
-     * @param int $limit
-     * @param int $page
-     * @return mixed
-     */
-    public function recentActivity($limit = 20, $page=0)
-    {
-        return $this->activity()->skip($limit*$page)->take($limit)->get();
-    }
-
 }

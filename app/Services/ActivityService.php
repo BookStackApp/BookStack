@@ -23,16 +23,16 @@ class ActivityService
     /**
      * Add activity data to database.
      * @param Entity $entity
-     * @param $activityKey
-     * @param int $bookId
-     * @param bool $extra
+     * @param        $activityKey
+     * @param int    $bookId
+     * @param bool   $extra
      */
     public function add(Entity $entity, $activityKey, $bookId = 0, $extra = false)
     {
         $this->activity->user_id = $this->user->id;
         $this->activity->book_id = $bookId;
         $this->activity->key = strtolower($activityKey);
-        if($extra !== false) {
+        if ($extra !== false) {
             $this->activity->extra = $extra;
         }
         $entity->activity()->save($this->activity);
@@ -41,8 +41,8 @@ class ActivityService
 
     /**
      * Adds a activity history with a message & without binding to a entitiy.
-     * @param $activityKey
-     * @param int $bookId
+     * @param            $activityKey
+     * @param int        $bookId
      * @param bool|false $extra
      */
     public function addMessage($activityKey, $bookId = 0, $extra = false)
@@ -50,7 +50,7 @@ class ActivityService
         $this->activity->user_id = $this->user->id;
         $this->activity->book_id = $bookId;
         $this->activity->key = strtolower($activityKey);
-        if($extra !== false) {
+        if ($extra !== false) {
             $this->activity->extra = $extra;
         }
         $this->activity->save();
@@ -68,7 +68,7 @@ class ActivityService
     public function removeEntity(Entity $entity)
     {
         $activities = $entity->activity;
-        foreach($activities as $activity) {
+        foreach ($activities as $activity) {
             $activity->extra = $entity->name;
             $activity->entity_id = 0;
             $activity->entity_type = null;
@@ -85,7 +85,45 @@ class ActivityService
     public function latest($count = 20, $page = 0)
     {
         return $this->activity->orderBy('created_at', 'desc')
+            ->skip($count * $page)->take($count)->get();
+    }
+
+    /**
+     * Gets the latest activity for an entitiy, Filtering out similar
+     * items to prevent a message activity list.
+     * @param Entity $entity
+     * @param int    $count
+     * @param int    $page
+     * @return array
+     */
+    function entityActivity($entity, $count = 20, $page = 0)
+    {
+        $activity = $entity->hasMany('Oxbow\Activity')->orderBy('created_at', 'desc')
             ->skip($count*$page)->take($count)->get();
+
+        return $this->filterSimilar($activity);
+    }
+
+    /**
+     * Filters out similar acitivity.
+     * @param Activity[] $activity
+     * @return array
+     */
+    protected function filterSimilar($activity) {
+        $newActivity = [];
+        $previousItem = false;
+        foreach($activity as $activityItem) {
+            if($previousItem === false) {
+                $previousItem = $activityItem;
+                $newActivity[] = $activityItem;
+                continue;
+            }
+            if(!$activityItem->isSimilarTo($previousItem)) {
+                $newActivity[] = $activityItem;
+            }
+            $previousItem = $activityItem;
+        }
+        return $newActivity;
     }
 
     /**
