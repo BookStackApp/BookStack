@@ -68,6 +68,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function can($permissionName)
     {
+        if($this->email == 'guest') {
+            return false;
+        }
         $permissions = $this->role->permissions()->get();
         $permissionSearch = $permissions->search(function ($item, $key) use ($permissionName) {
             return $item->name == $permissionName;

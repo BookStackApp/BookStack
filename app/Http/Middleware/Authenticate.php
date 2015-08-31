@@ -4,6 +4,7 @@ namespace Oxbow\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Setting;
 
 class Authenticate
 {
@@ -33,7 +34,8 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
+        $sitePublic = Setting::get('app-public', false) === 'true';
+        if ($this->auth->guest() && !$sitePublic) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
