@@ -36,27 +36,37 @@
 
                 <div class="page-list">
                     <hr>
-                    @foreach($book->children() as $childElement)
-                        <div class="book-child">
-                            <h3>
-                                <a href="{{ $childElement->getUrl() }}" class="{{ $childElement->getName() }}">
-                                    <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark chapter-toggle':'zmdi-file-text'}}"></i>{{ $childElement->name }}
-                                </a>
-                            </h3>
-                            <p class="text-muted">
-                                {{$childElement->getExcerpt()}}
-                            </p>
+                    @if(count($book->children()) > 0)
+                        @foreach($book->children() as $childElement)
+                            <div class="book-child">
+                                <h3>
+                                    <a href="{{ $childElement->getUrl() }}" class="{{ $childElement->getName() }}">
+                                        <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark chapter-toggle':'zmdi-file-text'}}"></i>{{ $childElement->name }}
+                                    </a>
+                                </h3>
+                                <p class="text-muted">
+                                    {{$childElement->getExcerpt()}}
+                                </p>
 
-                            @if($childElement->isA('chapter') && count($childElement->pages) > 0)
-                                <div class="inset-list">
-                                    @foreach($childElement->pages as $page)
-                                        <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
+                                @if($childElement->isA('chapter') && count($childElement->pages) > 0)
+                                    <div class="inset-list">
+                                        @foreach($childElement->pages as $page)
+                                            <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                            <hr>
+                        @endforeach
+                    @else
+                        <p class="text-muted">No pages or chapters have been created for this book.</p>
+                        <p>
+                            <a href="{{$book->getUrl() . '/page/create'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                             &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
+                            <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>Add a chapter</a>
+                        </p>
                         <hr>
-                    @endforeach
+                    @endif
                 </div>
 
                 <p class="text-muted small">

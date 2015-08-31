@@ -56,7 +56,14 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-muted">No pages are in this chapter</p>
+                        <hr>
+                        <p class="text-muted">No pages are currently in this chapter.</p>
+                        <p>
+                            <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                            &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
+                            <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
+                        </p>
+                        <hr>
                     @endif
 
                     <p class="text-muted small">

@@ -9,4 +9,6 @@
             </div>
         @endforeach
     </div>
+@else
+    <p class="text-muted">New activity will show up here.</p>
 @endif

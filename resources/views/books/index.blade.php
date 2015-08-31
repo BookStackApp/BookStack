@@ -18,16 +18,25 @@
     </div>
 
 
-
-    <div class="page-content">
-        <h1>Books</h1>
-        @foreach($books as $book)
-            <div class="book">
-                <h3><a href="{{$book->getUrl()}}">{{$book->name}}</a></h3>
-                <p class="text-muted">{{$book->description}}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Books</h1>
+                @if(count($books) > 0)
+                    @foreach($books as $book)
+                        <div class="book">
+                            <h3><a href="{{$book->getUrl()}}">{{$book->name}}</a></h3>
+                            <p class="text-muted">{{$book->description}}</p>
+                        </div>
+                        <hr>
+                    @endforeach
+                @else
+                    <p class="text-muted">No books have been created.</p>
+                    <a href="/books/create" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>
+                @endif
             </div>
-            <hr>
-        @endforeach
+            <div class="col-md-4"></div>
+        </div>
     </div>
 
 @stop
