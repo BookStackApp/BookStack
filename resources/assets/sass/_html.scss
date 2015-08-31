@@ -1,15 +1,16 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 html {
-	background-color: #FFFFFF;
+  background-color: #FFFFFF;
+  height: 100%;
 }
 body {
-	font-family: $text;
-	font-size: $fs-m;
-	line-height: 1.6;
-	color: #616161;
-	-webkit-font-smoothing: antialiased;
+  font-family: $text;
+  font-size: $fs-m;
+  line-height: 1.6;
+  color: #616161;
+  -webkit-font-smoothing: antialiased;
 }
 
 table {

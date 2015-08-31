@@ -4,13 +4,18 @@
     <script src="/bower/tinymce-dist/tinymce.jquery.min.js"></script>
 @stop
 
+@section('body-class', 'flexbox')
+
 @section('content')
-    <form action="{{$book->getUrl() . '/page'}}" method="POST">
-        @include('pages/form')
-        @if($chapter)
-            <input type="hidden" name="chapter" value="{{$chapter->id}}">
-        @endif
-    </form>
+
+    <div class="flex-fill flex">
+        <form action="{{$book->getUrl() . '/page'}}" method="POST" class="flex flex-fill">
+            @include('pages/form')
+            @if($chapter)
+                <input type="hidden" name="chapter" value="{{$chapter->id}}">
+            @endif
+        </form>
+    </div>
 @stop
 
 @section('bottom')

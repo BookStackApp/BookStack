@@ -23,6 +23,11 @@ header {
   }
   border-bottom: 1px solid #DDD;
   //margin-bottom: $-l;
+  .links {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: $-xl;
+  }
   .links a {
     display: inline-block;
     padding: $-l;
@@ -38,12 +43,19 @@ header {
     display: inline-block;
   }
   .avatar {
-    margin-top: $-l*0.8;
+    margin-top: (45px/2);
+    width: 30px;
+    height: 30px;
   }
   .user-name {
     vertical-align: top;
-    padding-top: $-l*1.1;
+    padding-top: 25.5px;
     padding-left: $-m;
+    display: inline-block;
+    cursor: pointer;
+    i {
+      padding-left: $-xs;
+    }
   }
 }
 
@@ -52,6 +64,40 @@ header {
   position: relative;
 }
 
+body.flexbox {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  #content {
+    flex: 1;
+    display: flex;
+  }
+}
+
+.flex-fill {
+  display: flex;
+  align-items: stretch;
+  .flex, &.flex {
+    flex: 1;
+  }
+}
+
+.page-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .faded-small {
+    height: auto;
+  }
+  .edit-area {
+    flex: 1;
+    flex-direction: column;
+  }
+}
 
 .logo {
   display: inline-block;
@@ -100,6 +146,9 @@ header {
 .page-list {
   h3 {
     margin: $-l 0;
+  }
+  a.chapter {
+    color: $color-chapter;
   }
   .inset-list {
     display: block;
@@ -203,15 +252,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.breadcrumbs {
-  margin-top: $-s;
-  i {
-    padding-right: 4px;
-  }
-  span.sep {
-    color: #aaa;
-    padding: 0 $-xs;
-  }
+.breadcrumbs span.sep {
+  color: #aaa;
+  padding: 0 $-xs;
 }
 
 .faded {
@@ -235,13 +278,20 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.breadcrumbs a, .action-buttons a {
+  display: inline-block;
+  padding: $-s;
+  &:last-child {
+    padding-right: 0;
+  }
+}
 .action-buttons {
   text-align: right;
-  a {
-    display: inline-block;
-    padding: $-s;
-    &:last-child {
-      padding-right: 0;
+  &.text-left {
+    text-align: left;
+    a {
+      padding-right: $-m;
+      padding-left: 0;
     }
   }
 }
@@ -253,15 +303,19 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: $-s;
   }
 }
+
+
 // Sidebar list
 .book-tree .sidebar-page-list {
   list-style: none;
   margin: 0;
   margin-top: $-xl;
-  border-left: 5px solid #7BD06E;
+  border-left: 5px solid $color-book;
   li a {
     display: block;
     border-bottom: none;
+    padding-left: $-s;
+    padding: $-xs 0 $-xs $-s;
     &:hover {
       background-color: rgba(255, 255, 255, 0.2);
       text-decoration: none;
@@ -277,23 +331,20 @@ h1, h2, h3, h4, h5, h6 {
     list-style: none;
     margin: 0;
   }
-  ul li a {
-    padding-left: $-xl;
-  }
   .book {
-    color: #7BD06E !important;
+    color: $color-book !important;
     &.selected {
-      background-color: rgba(123, 208, 110, 0.29);
+      background-color: rgba($color-book, 0.29);
     }
   }
   .chapter {
-    color: #D2A64B !important;
+    color: $color-chapter !important;
     &.selected {
-      background-color: rgba(239, 169, 42, 0.27);
+      background-color: rgba($color-chapter, 0.12);
     }
   }
   .list-item-chapter {
-    border-left: 5px solid #D2A64B;
+    border-left: 5px solid $color-chapter;
     margin: 10px 10px;
     display: block;
   }
@@ -301,35 +352,42 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: none;
   }
   .page {
-    color: #4599DC !important;
-    border-left: 5px solid #4599DC;
+    color: $color-page !important;
+    border-left: 5px solid $color-page;
     margin: 10px 10px;
     border-bottom: none;
     &.selected {
-      background-color: rgba(118, 164, 202, 0.41);
+      background-color: rgba($color-page, 0.1);
     }
   }
 }
 
+// Sortable Lists
 .sortable-page-list, .sortable-page-list ul {
   list-style: none;
-  //background-color: rgba(0, 0, 0, 0.04);
 }
 .sortable-page-list {
   margin-left: 0;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
   ul {
     margin-bottom: 0;
     margin-top: 0;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
   }
   li {
-    border-bottom: 1px solid #BBB;
-    border-left: 1px solid #BBB;
-    border-right: 1px solid #BBB;
+    border: 1px solid #DDD;
     padding: $-xs $-s;
+    margin-top: -1px;
+    min-height: 38px;
+    &.text-chapter {
+      border-left: 2px solid $color-chapter;
+    }
+    &.text-page {
+      border-left: 2px solid $color-page;
+    }
   }
   li:first-child {
     margin-top: $-xs;
-    border-top: 1px solid #BBB;
   }
 }
 
@@ -351,61 +409,14 @@ body.dragging, body.dragging * {
   position: absolute;
 }
 
-.image-cover {
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  background-size: cover;
-  &.login {
-    background-image: url('/images/bg-books.jpg');
-  }
-}
-
-.sidebar-bg {
-  background-image: url('/images/bg-books.jpg');
-  background-size: cover;
-  background-position: 50% 50%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  &:after{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-color: rgba(0,0,0,0.85);
-    display: block;
-  }
-}
-
-.image-cover #sidebar {
-  width: auto;
-  border: 0;
-  background-color: rgba(0, 0, 0, 0.38);
-}
-
 .center-box {
-  margin-top: 15vh;
+  margin: 15vh auto 0 auto;
   padding: $-m $-xxl $-xl*2 $-xxl;
   max-width: 346px;
-  h1, label {
-    color: #EEE;
-  }
-  h1 {
-    margin-bottom: $-m;
-  }
-  .button {
-    margin-top: $-xl;
-  }
-  input {
-    background-color: transparent;
-    color: #EEE;
+  &.login {
+    background-color: #EEE;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid #DDD;
   }
 }
 
@@ -469,5 +480,45 @@ body.dragging, body.dragging * {
       //color: $primary;
       border-bottom: 2px solid $primary;
     }
+  }
+}
+
+.dropdown-container {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+ul.dropdown {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  margin: $-m 0;
+  background-color: #FFFFFF;
+  list-style: none;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 1px;
+  border: 1px solid #EEE;
+  min-width: 180px;
+  padding: $-xs 0;
+  color: #555;
+  a {
+    display: block;
+    padding: $-xs $-m;
+    color: #555;
+    &:hover {
+      text-decoration: none;
+      background-color: #EEE;
+    }
+    i {
+      margin-right: $-m;
+      padding-right: 0;
+      display: inline;
+      width: 22px;
+    }
+  }
+  li.border-bottom {
+    border-bottom: 1px solid #DDD;
   }
 }

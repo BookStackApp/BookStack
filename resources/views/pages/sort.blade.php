@@ -3,16 +3,17 @@
 @section('content')
 
     <div class="page-content">
-        <h1>{{ $book->name }} <span class="subheader">Sort Pages</span></h1>
+        <h1>Sorting Pages & Chapters<span class="subheader">For {{ $book->name }}</span></h1>
 
         <ul class="sortable-page-list" id="sort-list">
             @foreach($book->children() as $bookChild)
-                <li data-id="{{$bookChild->id}}" data-type="{{ is_a($bookChild, 'Oxbow\Chapter') ? 'chapter' : 'page' }}">
-                    {{ $bookChild->name }}
-                    @if(is_a($bookChild, 'Oxbow\Chapter'))
+                <li data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getName() }}" class="text-{{ $bookChild->getName() }}">
+                    <i class="zmdi {{ $bookChild->isA('chapter') ? 'zmdi-collection-bookmark':'zmdi-file-text'}}"></i>{{ $bookChild->name }}
+                    @if($bookChild->isA('chapter'))
                         <ul>
                             @foreach($bookChild->pages as $page)
-                                <li data-id="{{$page->id}}" data-type="page">
+                                <li data-id="{{$page->id}}" class="text-page" data-type="page">
+                                    <i class="zmdi zmdi-file-text"></i>
                                     {{ $page->name }}
                                 </li>
                             @endforeach
@@ -28,7 +29,7 @@
             <input type="hidden" id="sort-tree-input" name="sort-tree">
             <div class="list">
                 <a href="{{$book->getUrl()}}" class="button muted">Cancel</a>
-                <button class="button pos" type="submit">Save Ordering</button>
+                <button class="button pos" type="submit">Save Order</button>
             </div>
         </form>
 

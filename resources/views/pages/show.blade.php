@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-md-6 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        <a href="{{$book->getUrl()}}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
                         @if($page->hasChapter())
                             <span class="sep">&raquo;</span>
-                            <a href="{{ $page->chapter->getUrl() }}">
+                            <a href="{{ $page->chapter->getUrl() }}" class="text-chapter">
                                 <i class="zmdi zmdi-collection-bookmark"></i>
                                 {{$page->chapter->name}}
                             </a>
@@ -33,22 +33,32 @@
     </div>
 
 
-    <div class="side-nav faded">
-        <h4>Page Navigation</h4>
-        <ul class="page-nav-list">
-        </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                @include('pages/sidebar-tree-list', ['book' => $book])
+                <div class="side-nav faded">
+                    <h4>Page Navigation</h4>
+                    <ul class="page-nav-list">
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="page-content">
+                    @include('pages/page-display')
+                    <hr>
+                    <p class="text-muted small">
+                        Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
+                        <br>
+                        Last Updated {{$page->updated_at->diffForHumans()}} @if($page->createdBy) by {{$page->updatedBy->name}} @endif
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
 
-    <div class="page-content">
-        @include('pages/page-display')
-        <hr>
-        <p class="text-muted small">
-            Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
-            <br>
-            Last Updated {{$page->updated_at->diffForHumans()}} @if($page->createdBy) by {{$page->updatedBy->name}} @endif
-        </p>
-    </div>
+
 
 
     <script>

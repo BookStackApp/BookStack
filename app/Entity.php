@@ -44,4 +44,21 @@ class Entity extends Model
         return $this->morphMany('Oxbow\Activity', 'entity')->orderBy('created_at', 'desc');
     }
 
+    /**
+     * Allows checking of the exact class, Used to check entity type.
+     * Cleaner method for is_a.
+     * @param $type
+     * @return bool
+     */
+    public function isA($type)
+    {
+        return $this->getName() === strtolower($type);
+    }
+
+    public function getName()
+    {
+        $fullClassName = get_class($this);
+        return strtolower(array_slice(explode('\\', $fullClassName), -1, 1)[0]);
+    }
+
 }

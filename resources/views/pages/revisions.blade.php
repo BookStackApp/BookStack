@@ -2,15 +2,20 @@
 
 @section('content')
 
-    <div class="row faded-small">
-        <div class="col-md-6 faded">
-            <div class="breadcrumbs padded-horizontal">
-                <a href="{{$page->getUrl()}}" class="text-primary"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
+    <div class="faded-small">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 faded">
+                    <div class="breadcrumbs">
+                        <a href="{{$page->getUrl()}}" class="text-primary"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
+                    </div>
+                </div>
+                <div class="col-md-6 faded">
+                </div>
             </div>
         </div>
-        <div class="col-md-6 faded">
-        </div>
     </div>
+
 
     <div class="page-content">
         <h1>Page Revisions <span class="subheader">For "{{ $page->name }}"</span></h1>

@@ -192,6 +192,25 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
   }
 }
 
+.text-book {
+  color: $color-book;
+  &:hover {
+    color: $color-book;
+  }
+}
+.text-page {
+  color: $color-page;
+  &:hover {
+    color: $color-page;
+  }
+}
+.text-chapter {
+  color: $color-chapter;
+  &:hover {
+    color: $color-chapter;
+  }
+}
+
 /*
  * Lists
  */

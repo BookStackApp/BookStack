@@ -1,24 +1,38 @@
 
 
 
-<div class="page-style editor">
+<div class="page-editor flex-fill flex">
 
     {{ csrf_field() }}
+    <div class="faded-small">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 faded">
+                    <div class="action-buttons text-left">
+                        <a onclick="$('body>header').slideToggle();" class="text-primary"><i class="zmdi zmdi-swap-vertical"></i>Toggle Header</a>
+                    </div>
+                </div>
+                <div class="col-md-8 faded">
+                    <div class="action-buttons">
+                        <a onclick="window.history.back();" class="text-primary"><i class="zmdi zmdi-close"></i>Cancel</a>
+                        <a onclick="$(this).closest('form').submit();" type="submit" class="text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="title-input page-title clearfix">
         <div class="input">
             @include('form/text', ['name' => 'name', 'placeholder' => 'Page Title'])
         </div>
     </div>
-    <div class="edit-area">
+    <div class="edit-area flex-fill flex">
         <textarea id="html" name="html" rows="5"
                   @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
         @if($errors->has('html'))
             <div class="text-neg text-small">{{ $errors->first('html') }}</div>
         @endif
-    </div>
-    <div class="margin-top large">
-        <a onclick="window.history.back();" class="button muted">Cancel</a>
-        <button type="submit" class="button pos">Save Page</button>
     </div>
 </div>
 
@@ -40,7 +54,7 @@
             relative_urls: false,
             statusbar: false,
             menubar: false,
-            height: 700,
+            //height: 700,
             extended_valid_elements: 'pre[*]',
             plugins: "image table textcolor paste link imagetools fullscreen code",
             toolbar: "code undo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fullscreen",
