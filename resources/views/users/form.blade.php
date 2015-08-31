@@ -19,7 +19,7 @@
 @if($currentUser->can('user-update'))
     <div class="form-group">
         <label for="role">User Role</label>
-        @include('form/model-select', ['name' => 'role', 'options' => \Oxbow\Role::all(), 'displayKey' => 'display_name'])
+        @include('form.role-select', ['name' => 'role', 'options' => \Oxbow\Role::all(), 'displayKey' => 'display_name'])
     </div>
 @endif
 
