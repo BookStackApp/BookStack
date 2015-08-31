@@ -36,9 +36,6 @@ header {
       padding-right: 0;
     }
   }
-  .search-box {
-    padding-top: $-l *0.8;
-  }
   .avatar, .user-name {
     display: inline-block;
   }
@@ -56,6 +53,23 @@ header {
     i {
       padding-left: $-xs;
     }
+  }
+}
+
+form.search-box {
+  padding-top: $-l *0.9;
+  display: inline-block;
+  input {
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid #EEE;
+    color: #EEE;
+    padding-left: $-l;
+    outline: 0;
+  }
+  i {
+    margin-right: -$-l;
   }
 }
 

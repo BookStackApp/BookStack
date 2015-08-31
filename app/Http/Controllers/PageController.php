@@ -143,20 +143,6 @@ class PageController extends Controller
     }
 
     /**
-     * Search all available pages, Across all books.
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function searchAll(Request $request)
-    {
-        $searchTerm = $request->get('term');
-        if (empty($searchTerm)) return redirect()->back();
-
-        $pages = $this->pageRepo->getBySearch($searchTerm);
-        return view('pages/search-results', ['pages' => $pages, 'searchTerm' => $searchTerm]);
-    }
-
-    /**
      * Shows the view which allows pages to be re-ordered and sorted.
      * @param $bookSlug
      * @return \Illuminate\View\View

@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/link/{id}', 'PageController@redirectFromLink');
 
     // Search
-    Route::get('/pages/search/all', 'PageController@searchAll');
+    Route::get('/search/all', 'SearchController@searchAll');
 
     // Other Pages
     Route::get('/', 'HomeController@index');

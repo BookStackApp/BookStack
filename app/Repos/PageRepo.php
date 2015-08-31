@@ -13,7 +13,7 @@ class PageRepo
 
     /**
      * PageRepo constructor.
-     * @param Page $page
+     * @param Page         $page
      * @param PageRevision $pageRevision
      */
     public function __construct(Page $page, PageRevision $pageRevision)
@@ -61,19 +61,42 @@ class PageRepo
 
     public function getBySearch($term)
     {
-        $terms = explode(' ', trim($term));
-        $query = $this->page;
-        foreach($terms as $term) {
-            $query = $query->where('text', 'like', '%'.$term.'%');
+        $terms = explode(' ', preg_quote(trim($term)));
+        $pages = $this->page->fullTextSearch(['name', 'text'], $terms);
+
+        // Add highlights to page text.
+        $words = join('|', $terms);
+        //lookahead/behind assertions ensures cut between words
+        $s = '\s\x00-/:-@\[-`{-~'; //character set for start/end of words
+
+        foreach ($pages as $page) {
+            preg_match_all('#(?<=[' . $s . ']).{1,30}((' . $words . ').{1,30})+(?=[' . $s . '])#uis', $page->text, $matches, PREG_SET_ORDER);
+            //delimiter between occurrences
+            $results = [];
+            foreach ($matches as $line) {
+                $results[] = htmlspecialchars($line[0], 0, 'UTF-8');
+            }
+            $matchLimit = 6;
+            if (count($results) > $matchLimit) {
+                $results = array_slice($results, 0, $matchLimit);
+            }
+            $result = join('... ', $results);
+
+            //highlight
+            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $result);
+            if (strlen($result) < 5) {
+                $result = $page->getExcerpt(80);
+            }
+            $page->searchSnippet = $result;
         }
-        return $query->get();
+        return $pages;
     }
 
     /**
      * Updates a page with any fillable data and saves it into the database.
      * @param Page $page
-     * @param $book_id
-     * @param $data
+     * @param      $book_id
+     * @param      $data
      * @return Page
      */
     public function updatePage(Page $page, $book_id, $data)
@@ -95,7 +118,7 @@ class PageRepo
     public function saveRevision(Page $page)
     {
         $lastRevision = $this->getLastRevision($page);
-        if($lastRevision && ($lastRevision->html === $page->html && $lastRevision->name === $page->name)) {
+        if ($lastRevision && ($lastRevision->html === $page->html && $lastRevision->name === $page->name)) {
             return $page;
         }
         $revision = $this->pageRevision->fill($page->toArray());
@@ -103,7 +126,7 @@ class PageRepo
         $revision->created_by = Auth::user()->id;
         $revision->save();
         // Clear old revisions
-        if($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
+        if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
             $this->pageRevision->where('page_id', '=', $page->id)
                 ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
         }
@@ -133,15 +156,15 @@ class PageRepo
 
     /**
      * Checks if a slug exists within a book already.
-     * @param $slug
-     * @param $bookId
+     * @param            $slug
+     * @param            $bookId
      * @param bool|false $currentId
      * @return bool
      */
     public function doesSlugExist($slug, $bookId, $currentId = false)
     {
         $query = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId);
-        if($currentId) {
+        if ($currentId) {
             $query = $query->where('id', '!=', $currentId);
         }
         return $query->count() > 0;
@@ -150,15 +173,15 @@ class PageRepo
     /**
      * Gets a suitable slug for the resource
      *
-     * @param $name
-     * @param $bookId
+     * @param            $name
+     * @param            $bookId
      * @param bool|false $currentId
      * @return string
      */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
         $slug = Str::slug($name);
-        while($this->doesSlugExist($slug, $bookId, $currentId)) {
+        while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
         return $slug;

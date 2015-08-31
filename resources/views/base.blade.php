@@ -55,10 +55,15 @@
                 <div class="col-md-3">
                     <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-3 text-right">
+                    <form action="/search/all" method="GET" class="search-box">
+                        <i class="zmdi zmdi-search"></i>
+                        <input type="text" name="term" tabindex="2" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
+                    </form>
+                </div>
+                <div class="col-md-6">
                     <div class="float right">
                         <div class="links text-center">
-                            <a href="/search"><i class="zmdi zmdi-search"></i></a>
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
                             @if($currentUser->can('settings-update'))
                                 <a href="/settings"><i class="zmdi zmdi-settings"></i>Settings</a>

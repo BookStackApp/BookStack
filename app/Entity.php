@@ -55,10 +55,30 @@ class Entity extends Model
         return $this->getName() === strtolower($type);
     }
 
+    /**
+     * Gets the class name.
+     * @return string
+     */
     public function getName()
     {
         $fullClassName = get_class($this);
         return strtolower(array_slice(explode('\\', $fullClassName), -1, 1)[0]);
+    }
+
+    /**
+     * Perform a full-text search on this entity.
+     * @param string[] $fieldsToSearch
+     * @param string[] $terms
+     * @return mixed
+     */
+    public static function fullTextSearch($fieldsToSearch, $terms)
+    {
+        $termString = '';
+        foreach($terms as $term) {
+            $termString .= $term . '* ';
+        }
+        $fields = implode(',', $fieldsToSearch);
+        return static::whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString])->get();
     }
 
 }

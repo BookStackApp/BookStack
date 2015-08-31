@@ -81,4 +81,17 @@ class BookRepo
         return $slug;
     }
 
+    public function getBySearch($term)
+    {
+        $terms = explode(' ', preg_quote(trim($term)));
+        $books = $this->book->fullTextSearch(['name', 'description'], $terms);
+        $words = join('|', $terms);
+        foreach ($books as $book) {
+            //highlight
+            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $book->getExcerpt(100));
+            $book->searchSnippet = $result;
+        }
+        return $books;
+    }
+
 }

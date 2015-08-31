@@ -37,4 +37,9 @@ class Book extends Entity
         return $pages->sortBy('priority');
     }
 
+    public function getExcerpt($length = 100)
+    {
+        return strlen($this->description) > $length ? substr($this->description, 0, $length-3) . '...' : $this->description;
+    }
+
 }

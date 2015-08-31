@@ -67,4 +67,17 @@ class ChapterRepo
         return $slug;
     }
 
+    public function getBySearch($term)
+    {
+        $terms = explode(' ', preg_quote(trim($term)));
+        $chapters = $this->chapter->fullTextSearch(['name', 'description'], $terms);
+        $words = join('|', $terms);
+        foreach ($chapters as $chapter) {
+            //highlight
+            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $chapter->getExcerpt(100));
+            $chapter->searchSnippet = $result;
+        }
+        return $chapters;
+    }
+
 }

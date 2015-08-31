@@ -211,6 +211,12 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
   }
 }
 
+span.highlight {
+  //background-color: rgba($primary, 0.2);
+  font-weight: bold;
+  //padding: 2px 4px;
+}
+
 /*
  * Lists
  */

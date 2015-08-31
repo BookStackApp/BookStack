@@ -71,7 +71,7 @@ class SettingService
     public function remove($key)
     {
         $setting = $this->getSettingObjectByKey($key);
-        if($setting) {
+        if ($setting) {
             $setting->delete();
         }
         return true;
@@ -82,7 +82,8 @@ class SettingService
      * @param $key
      * @return mixed
      */
-    private function getSettingObjectByKey($key) {
+    private function getSettingObjectByKey($key)
+    {
         return $this->setting->where('setting_key', '=', $key)->first();
     }
 
