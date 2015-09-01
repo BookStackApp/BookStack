@@ -41,3 +41,7 @@ jQuery.fn.showFailure = function (messageMap) {
     });
 
 };
+
+jQuery.fn.submitForm = function() {
+    $(this).closest('form').submit();
+};

@@ -9,6 +9,7 @@ use Intervention\Image\Facades\Image as ImageTool;
 use Illuminate\Support\Facades\DB;
 use Oxbow\Http\Requests;
 use Oxbow\Image;
+use Oxbow\Repos\PageRepo;
 
 class ImageController extends Controller
 {
@@ -27,42 +28,6 @@ class ImageController extends Controller
         parent::__construct();
     }
 
-    /**
-     * Returns an image from behind the public-facing application.
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getImage(Request $request)
-    {
-        $cacheTime = 60 * 60 * 24;
-        $path = storage_path() . '/' . $request->path();
-        $modifiedTime = $this->file->lastModified($path);
-        $eTag = md5($modifiedTime . $path);
-        $headerLastModified = gmdate('r', $modifiedTime);
-        $headerExpires = gmdate('r', $modifiedTime + $cacheTime);
-
-        $headers = [
-            'Last-Modified' => $headerLastModified,
-            'Cache-Control' => 'must-revalidate',
-            'Pragma'        => 'public',
-            'Expires'       => $headerExpires,
-            'Etag'          => $eTag
-        ];
-
-        $browserModifiedSince = $request->header('If-Modified-Since');
-        $browserNoneMatch = $request->header('If-None-Match');
-        if ($browserModifiedSince !== null && file_exists($path) && ($browserModifiedSince == $headerLastModified || $browserNoneMatch == $eTag)) {
-            return response()->make('', 304, $headers);
-        }
-
-        if (file_exists($path)) {
-            return response()->make(file_get_contents($path), 200, array_merge($headers, [
-                'Content-Type'   => $this->file->mimeType($path),
-                'Content-Length' => filesize($path),
-            ]));
-        }
-        abort(404);
-    }
 
     /**
      * Get all images, Paginated
@@ -167,13 +132,22 @@ class ImageController extends Controller
 
     /**
      * Deletes an image and all thumbnail/image files
-     * @param $id
+     * @param PageRepo $pageRepo
+     * @param Request  $request
+     * @param int      $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(PageRepo $pageRepo, Request $request, $id)
     {
         $this->checkPermission('image-delete');
         $image = $this->image->findOrFail($id);
+
+        // Check if this image is used on any pages
+        $pageSearch = $pageRepo->searchForImage($image->url);
+        $isForced = ($request->has('force') && ($request->get('force') === 'true') || $request->get('force') === true);
+        if ($pageSearch !== false && !$isForced) {
+            return response()->json($pageSearch, 400);
+        }
 
         // Delete files
         $folder = public_path() . dirname($image->url);

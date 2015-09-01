@@ -59,7 +59,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/images/update/{imageId}', 'ImageController@update');
     Route::delete('/images/{imageId}', 'ImageController@destroy');
     Route::get('/images/all/{page}', 'ImageController@getAll');
-    Route::get('/images/{any}', 'ImageController@getImage')->where('any', '.*');
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

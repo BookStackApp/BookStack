@@ -1,6 +1,6 @@
 
 <div id="image-manager">
-    <div class="overlay" v-el="overlay" v-on="click: overlayClick" style="display:none;">
+    <div class="overlay" v-el="overlay" v-on="click: overlayClick" >
         <div class="image-manager-body">
             <div class="image-manager-content">
                 <div class="image-manager-list">
@@ -31,8 +31,19 @@
                         </div>
                     </form>
                     <hr class="even">
+                    <div v-show="dependantPages">
+                        <p class="text-neg text-small">
+                            This image is used in the pages below, Click delete again to confirm you want to delete this image.
+                        </p>
+                        <ul class="text-neg">
+                            <li v-repeat="page: dependantPages">
+                                <a v-attr="href: page.url" target="_blank" class="text-neg">@{{ page.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <form v-on="submit: deleteImage" v-el="imageDeleteForm">
-                        {{ csrf_field() }}
+                        <input type="hidden" v-model="deleteForm._token" value="{{ csrf_token() }}">
                         <button class="button neg"><i class="zmdi zmdi-delete"></i>Delete Image</button>
                     </form>
                 </div>

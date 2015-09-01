@@ -93,6 +93,22 @@ class PageRepo
     }
 
     /**
+     * Search for image usage.
+     * @param $imageString
+     * @return mixed
+     */
+    public function searchForImage($imageString)
+    {
+        $pages = $this->page->where('html', 'like', '%'.$imageString.'%')->get();
+        foreach($pages as $page) {
+            $page->url = $page->getUrl();
+            $page->html = '';
+            $page->text = '';
+        }
+        return count($pages) > 0 ? $pages : false;
+    }
+
+    /**
      * Updates a page with any fillable data and saves it into the database.
      * @param Page $page
      * @param      $book_id

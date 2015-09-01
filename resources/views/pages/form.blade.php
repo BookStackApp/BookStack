@@ -14,8 +14,8 @@
                 </div>
                 <div class="col-md-8 faded">
                     <div class="action-buttons">
-                        <a onclick="window.history.back();" class="text-primary"><i class="zmdi zmdi-close"></i>Cancel</a>
-                        <a onclick="$(this).closest('form').submit();" type="submit" class="text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</a>
+                        <a href="{{ back()->getTargetUrl() }}" class="text-primary"><i class="zmdi zmdi-close"></i>Cancel</a>
+                        <a onclick="$(this).submitForm();" type="submit" class="text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</a>
                     </div>
                 </div>
             </div>

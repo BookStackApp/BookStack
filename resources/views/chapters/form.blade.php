@@ -12,6 +12,6 @@
 </div>
 
 <div class="form-group">
-    <a onclick="window.history.back();" class="button muted">Cancel</a>
+    <a href="{{ back()->getTargetUrl() }}" class="button muted">Cancel</a>
     <button type="submit" class="button pos">Save</button>
 </div>
