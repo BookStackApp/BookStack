@@ -9,7 +9,9 @@ window.ImageManager = new Vue({
         hasMore: false,
         page: 0,
         cClickTime: 0,
-        selectedImage: false
+        selectedImage: false,
+        dependantPages: false,
+        deleteForm: {}
     },
 
     created: function () {
@@ -63,6 +65,7 @@ window.ImageManager = new Vue({
                 this.hide();
             } else {
                 this.selectedImage = (this.selectedImage === image) ? false : image;
+                this.dependantPages = false;
             }
             this.cClickTime = cTime;
         },
@@ -106,15 +109,20 @@ window.ImageManager = new Vue({
         deleteImage: function (e) {
             e.preventDefault();
             var _this = this;
-            var form = $(_this.$$.imageDeleteForm);
+            _this.deleteForm.force = _this.dependantPages !== false;
             $.ajax('/images/' + _this.selectedImage.id, {
                 method: 'DELETE',
-                data: form.serialize()
+                data: _this.deleteForm
             }).done(function () {
                 _this.images.splice(_this.images.indexOf(_this.selectedImage), 1);
                 _this.selectedImage = false;
                 $(_this.$$.imageTitle).showSuccess('Image Deleted');
-            })
+            }).fail(function(jqXHR, textStatus) {
+                // Pages failure
+                if(jqXHR.status === 400) {
+                    _this.dependantPages = jqXHR.responseJSON;
+                }
+            });
         }
 
     }
