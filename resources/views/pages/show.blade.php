@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="page-content">
+                <div class="page-content anim fadeIn">
                     @include('pages/page-display')
                     <hr>
                     <p class="text-muted small">

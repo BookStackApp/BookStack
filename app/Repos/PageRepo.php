@@ -59,10 +59,10 @@ class PageRepo
         $page->delete();
     }
 
-    public function getBySearch($term)
+    public function getBySearch($term, $whereTerms = [])
     {
         $terms = explode(' ', preg_quote(trim($term)));
-        $pages = $this->page->fullTextSearch(['name', 'text'], $terms);
+        $pages = $this->page->fullTextSearch(['name', 'text'], $terms, $whereTerms);
 
         // Add highlights to page text.
         $words = join('|', $terms);

@@ -10,8 +10,8 @@
         <form action="{{$book->getUrl()}}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="button neg">Confirm</button>
             <a href="{{$book->getUrl()}}" class="button">Cancel</a>
+            <button type="submit" class="button neg">Confirm</button>
         </form>
     </div>
 

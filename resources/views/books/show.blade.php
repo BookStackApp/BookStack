@@ -27,61 +27,77 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" id="book-dashboard">
         <div class="row">
             <div class="col-md-7">
 
                 <h1>{{$book->name}}</h1>
-                <p class="text-muted">{{$book->description}}</p>
+                <div class="book-content anim fadeIn" v-if="!searching">
+                    <p class="text-muted">{{$book->description}}</p>
 
-                <div class="page-list">
-                    <hr>
-                    @if(count($book->children()) > 0)
-                        @foreach($book->children() as $childElement)
-                            <div class="book-child">
-                                <h3>
-                                    <a href="{{ $childElement->getUrl() }}" class="{{ $childElement->getName() }}">
-                                        <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark chapter-toggle':'zmdi-file-text'}}"></i>{{ $childElement->name }}
-                                    </a>
-                                </h3>
-                                <p class="text-muted">
-                                    {{$childElement->getExcerpt()}}
-                                </p>
-
-                                @if($childElement->isA('chapter') && count($childElement->pages) > 0)
-                                    <div class="inset-list">
-                                        @foreach($childElement->pages as $page)
-                                            <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </div>
-                            <hr>
-                        @endforeach
-                    @else
-                        <p class="text-muted">No pages or chapters have been created for this book.</p>
-                        <p>
-                            <a href="{{$book->getUrl() . '/page/create'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
-                             &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
-                            <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>Add a chapter</a>
-                        </p>
+                    <div class="page-list">
                         <hr>
-                    @endif
-                </div>
+                        @if(count($book->children()) > 0)
+                            @foreach($book->children() as $childElement)
+                                <div class="book-child">
+                                    <h3>
+                                        <a href="{{ $childElement->getUrl() }}" class="{{ $childElement->getName() }}">
+                                            <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark chapter-toggle':'zmdi-file-text'}}"></i>{{ $childElement->name }}
+                                        </a>
+                                    </h3>
+                                    <p class="text-muted">
+                                        {{$childElement->getExcerpt()}}
+                                    </p>
 
-                <p class="text-muted small">
-                    Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
-                    <br>
-                    Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
-                </p>
+                                    @if($childElement->isA('chapter') && count($childElement->pages) > 0)
+                                        <div class="inset-list">
+                                            @foreach($childElement->pages as $page)
+                                                <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                                <hr>
+                            @endforeach
+                        @else
+                            <p class="text-muted">No pages or chapters have been created for this book.</p>
+                            <p>
+                                <a href="{{$book->getUrl() . '/page/create'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                                &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
+                                <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>Add a chapter</a>
+                            </p>
+                            <hr>
+                        @endif
+                        <p class="text-muted small">
+                            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
+                            <br>
+                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
+                        </p>
+                    </div>
+                </div>
+                <div class="search-results" v-if="searching">
+                    <h3 class="text-muted">Search Results <a v-if="searching" v-on="click: clearSearch" class="text-small"><i class="zmdi zmdi-close"></i>Clear Search</a></h3>
+                    <div v-html="searchResults"></div>
+                </div>
 
 
             </div>
 
             <div class="col-md-4 col-md-offset-1">
-                <div class="margin-top large"><br></div>
-                <h3>Recent Activity</h3>
-                @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
+                <div class="margin-top large"></div>
+                {{--<h3>Search This Book</h3>--}}
+                <div class="search-box">
+                    <form v-on="submit: searchBook, input: checkSearchForm" v-el="form" action="/search/book/{{ $book->id }}">
+                        {!! csrf_field() !!}
+                        <input v-model="searchTerm" type="text" name="term" placeholder="Search This Book">
+                        <button type="submit"><i class="zmdi zmdi-search"></i></button>
+                        <button v-if="searching" v-on="click: clearSearch" type="button primary"><i class="zmdi zmdi-close"></i></button>
+                    </form>
+                </div>
+                <div class="activity anim fadeIn">
+                    <h3>Recent Activity</h3>
+                    @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
+                </div>
             </div>
         </div>
     </div>
@@ -98,5 +114,7 @@
 
         });
     </script>
+
+    <script src="/js/book-sidebar.js"></script>
 
 @stop

@@ -14,24 +14,12 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/jquery-extensions.js"></script>
     <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
     <script src="/bower/vue/dist/vue.min.js"></script>
-    <script>
-        $.fn.smoothScrollTo = function() {
-            if(this.length === 0) return;
-            $('body').animate({
-                scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
-            }, 800); // Adjust to change animations speed (ms)
-            return this;
-        };
-        $.expr[":"].contains = $.expr.createPseudo(function(arg) {
-            return function( elem ) {
-                return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
-            };
-        });
-    </script>
+    <script src="/bower/vue-resource/dist/vue-resource.min.js"></script>
 
     @yield('head')
 </head>
@@ -57,8 +45,8 @@
                 </div>
                 <div class="col-md-3 text-right">
                     <form action="/search/all" method="GET" class="search-box">
-                        <i class="zmdi zmdi-search"></i>
                         <input type="text" name="term" tabindex="2" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
+                        <a onclick="$(this).closest('form').submit();"><i class="zmdi zmdi-search"></i></a>
                     </form>
                 </div>
                 <div class="col-md-6">

@@ -69,16 +69,21 @@ class Entity extends Model
      * Perform a full-text search on this entity.
      * @param string[] $fieldsToSearch
      * @param string[] $terms
+     * @param string[] array $wheres
      * @return mixed
      */
-    public static function fullTextSearch($fieldsToSearch, $terms)
+    public static function fullTextSearch($fieldsToSearch, $terms, $wheres = [])
     {
         $termString = '';
-        foreach($terms as $term) {
+        foreach ($terms as $term) {
             $termString .= $term . '* ';
         }
         $fields = implode(',', $fieldsToSearch);
-        return static::whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString])->get();
+        $search = static::whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+        foreach ($wheres as $whereTerm) {
+            $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
+        }
+        return $search->get();
     }
 
 }

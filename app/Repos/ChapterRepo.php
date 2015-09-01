@@ -67,10 +67,10 @@ class ChapterRepo
         return $slug;
     }
 
-    public function getBySearch($term)
+    public function getBySearch($term, $whereTerms = [])
     {
         $terms = explode(' ', preg_quote(trim($term)));
-        $chapters = $this->chapter->fullTextSearch(['name', 'description'], $terms);
+        $chapters = $this->chapter->fullTextSearch(['name', 'description'], $terms, $whereTerms);
         $words = join('|', $terms);
         foreach ($chapters as $chapter) {
             //highlight

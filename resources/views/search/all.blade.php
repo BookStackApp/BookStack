@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container anim fadeIn">
 
         <h1>Search Results&nbsp;&nbsp;&nbsp; <span class="text-muted">{{$searchTerm}}</span></h1>
 
