@@ -7,19 +7,19 @@
             <div class="row">
                 <div class="col-md-4 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
                     </div>
                 </div>
                 <div class="col-md-8 faded">
                     <div class="action-buttons">
                         @if($currentUser->can('chapter-create'))
-                            <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos"><i class="zmdi zmdi-plus"></i>New Page</a>
+                            <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>New Page</a>
                         @endif
                         @if($currentUser->can('chapter-update'))
-                            <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary"><i class="zmdi zmdi-edit"></i>Edit</a>
+                            <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
                         @if($currentUser->can('chapter-delete'))
-                            <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                            <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif
                     </div>
                 </div>

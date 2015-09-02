@@ -35,6 +35,11 @@ class BookRepo
         return $this->book->where('slug', '=', $slug)->first();
     }
 
+    /**
+     * Get a new book instance from request input.
+     * @param $input
+     * @return Book
+     */
     public function newFromInput($input)
     {
         return $this->book->fill($input);

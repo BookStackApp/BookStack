@@ -51,6 +51,17 @@ $button-border-radius: 2px;
   }
 }
 
+.text-button {
+  @extend .link;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+  &:focus, &:active {
+    outline: 0;
+  }
+}
+
 .button-group {
   @include clearfix;
   .button, button[type="button"] {

@@ -6,7 +6,7 @@
         @foreach($book->children() as $bookChild)
             <li class="list-item-{{ $bookChild->getName() }}">
                 <a href="{{$bookChild->getUrl()}}" class="{{ $bookChild->getName() }} {{ $current->matches($bookChild)? 'selected' : '' }}">
-                    @if($bookChild->isA('chapter'))<i class="zmdi zmdi-collection-bookmark chapter-toggle"></i>@else <i class="zmdi zmdi-file-text"></i>@endif{{ $bookChild->name }}
+                    @if($bookChild->isA('chapter'))<i class="zmdi zmdi-collection-bookmark"></i>@else <i class="zmdi zmdi-file-text"></i>@endif{{ $bookChild->name }}
                 </a>
 
                 @if($bookChild->isA('chapter') && count($bookChild->pages) > 0)

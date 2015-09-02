@@ -309,8 +309,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .faded {
-  a {
+  a, button, span {
     color: #666;
+  }
+  .text-button {
     opacity: 0.5;
     transition: all ease-in-out 120ms;
     &:hover {
@@ -324,12 +326,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #000;
   font-size: 0.9em;
   background-color: rgba(21, 101, 192, 0.15);
-  a, span {
-    color: #000;
-  }
 }
 
-.breadcrumbs a, .action-buttons a {
+.breadcrumbs .text-button, .action-buttons .text-button {
   display: inline-block;
   padding: $-s;
   &:last-child {
@@ -340,7 +339,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: right;
   &.text-left {
     text-align: left;
-    a {
+    .text-button {
       padding-right: $-m;
       padding-left: 0;
     }

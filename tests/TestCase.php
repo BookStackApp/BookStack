@@ -1,13 +1,19 @@
 <?php
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
      * The base URL to use while testing the application.
      *
      * @var string
      */
     protected $baseUrl = 'http://localhost';
+    private $admin;
 
     /**
      * Creates the application.
@@ -21,5 +27,13 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    public function asAdmin()
+    {
+        if($this->admin === null) {
+            $this->admin = \Oxbow\User::find(1);
+        }
+        return $this->actingAs($this->admin);
     }
 }

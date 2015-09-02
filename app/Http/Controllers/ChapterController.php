@@ -65,7 +65,7 @@ class ChapterController extends Controller
         $chapter->updated_by = Auth::user()->id;
         $book->chapters()->save($chapter);
         Activity::add($chapter, 'chapter_create', $book->id);
-        return redirect($book->getUrl());
+        return redirect($chapter->getUrl());
     }
 
     /**

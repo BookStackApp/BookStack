@@ -13,5 +13,5 @@
 
 <div class="form-group">
     <a href="{{ back()->getTargetUrl() }}" class="button muted">Cancel</a>
-    <button type="submit" class="button pos">Save</button>
+    <button type="submit" class="button pos">Save Chapter</button>
 </div>

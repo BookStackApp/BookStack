@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-md-6 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
                         @if($page->hasChapter())
                             <span class="sep">&raquo;</span>
-                            <a href="{{ $page->chapter->getUrl() }}" class="text-chapter">
+                            <a href="{{ $page->chapter->getUrl() }}" class="text-chapter text-button">
                                 <i class="zmdi zmdi-collection-bookmark"></i>
                                 {{$page->chapter->name}}
                             </a>
@@ -20,11 +20,11 @@
                 <div class="col-md-6 faded">
                     <div class="action-buttons">
                         @if($currentUser->can('page-update'))
-                            <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a>
-                            <a href="{{$page->getUrl() . '/edit'}}" class="text-primary" ><i class="zmdi zmdi-edit"></i>Edit</a>
+                            <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary text-button"><i class="zmdi zmdi-replay"></i>Revisions</a>
+                            <a href="{{$page->getUrl() . '/edit'}}" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
                         @if($currentUser->can('page-delete'))
-                            <a href="{{$page->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a>
+                            <a href="{{$page->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif
                     </div>
                 </div>

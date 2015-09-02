@@ -43,11 +43,13 @@ h1, h2, h3, h4 {
 /*
  * Link styling
  */
-a {
+a, .link {
   color: $primary;
   cursor: pointer;
   text-decoration: none;
   transition: color ease-in-out 80ms;
+  font-family: $text;
+  line-height: 1.6;
   &:hover {
     text-decoration: underline;
     color: darken($primary, 20%);

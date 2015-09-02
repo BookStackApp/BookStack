@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$page->getUrl()}}" class="text-primary"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
+                        <a href="{{$page->getUrl()}}" class="text-primary text-button"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
                     </div>
                 </div>
                 <div class="col-md-6 faded">

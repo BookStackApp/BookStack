@@ -70,7 +70,7 @@ class BookController extends Controller
         $book->updated_by = Auth::user()->id;
         $book->save();
         Activity::add($book, 'book_create', $book->id);
-        return redirect('/books');
+        return redirect($book->getUrl());
     }
 
     /**
