@@ -39,10 +39,10 @@
                         <hr>
                         @if(count($book->children()) > 0)
                             @foreach($book->children() as $childElement)
-                                <div class="book-child">
+                                <div class="book-child {{ $childElement->getName() }}">
                                     <h3>
                                         <a href="{{ $childElement->getUrl() }}" class="{{ $childElement->getName() }}">
-                                            <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark chapter-toggle':'zmdi-file-text'}}"></i>{{ $childElement->name }}
+                                            <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark':'zmdi-file-text'}}"></i>{{ $childElement->name }}
                                         </a>
                                     </h3>
                                     <p class="text-muted">
@@ -50,6 +50,7 @@
                                     </p>
 
                                     @if($childElement->isA('chapter') && count($childElement->pages) > 0)
+                                        <p class="text-muted chapter-toggle open"><i class="zmdi zmdi-caret-right"></i> {{ count($childElement->pages) }} Pages</p>
                                         <div class="inset-list">
                                             @foreach($childElement->pages as $page)
                                                 <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
@@ -109,6 +110,7 @@
 
             $('.chapter-toggle').click(function(e) {
                 e.preventDefault();
+                $(this).toggleClass('open');
                 $(this).closest('.book-child').find('.inset-list').slideToggle(180);
             });
 

@@ -169,7 +169,7 @@ body.flexbox {
 
 .page-list {
   h3 {
-    margin: $-l 0;
+    margin: $-l 0 $-m 0;
   }
   a.chapter {
     color: $color-chapter;
@@ -177,15 +177,42 @@ body.flexbox {
   .inset-list {
     display: block;
     overflow: hidden;
-    padding-left: $-l*2;
-    border-top: 3px dotted #EEE;
+   // padding-left: $-m;
+    margin-bottom: $-l;
   }
   h4 {
     display: block;
-    margin: $-m 0;
+    margin: $-s 0 0 0;
+    border-left: 5px solid $color-page;
+    padding: $-xs 0 $-xs $-m;
   }
   hr {
     margin-top: 0;
+  }
+  .book-child {
+    padding-left: $-l;
+    &.page {
+      border-left: 5px solid $color-page;
+    }
+    &.chapter {
+      border-left: 5px solid $color-chapter;
+    }
+  }
+}
+.chapter-toggle {
+  cursor: pointer;
+  margin: 0 0 $-l 0;
+  transition: all ease-in-out 180ms;
+  i {
+    transition: all ease-in-out 180ms;
+    transform: rotate(0deg);
+    transform-origin: 25% 50%;
+  }
+  &.open {
+    margin-bottom: 0;
+  }
+  &.open i {
+    transform: rotate(90deg);
   }
 }
 

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-4 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        <a href="{{$book->getUrl()}}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
                     </div>
                 </div>
                 <div class="col-md-8 faded">
