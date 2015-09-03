@@ -64,6 +64,41 @@ body.dragging, body.dragging * {
   }
 }
 
+// Loading icon
+$loadingSize: 10px;
+.loading-container {
+  position: relative;
+  display: block;
+  height: $loadingSize;
+  margin: $-xl auto;
+  > div {
+    width: $loadingSize;
+    height: $loadingSize;
+    border-radius: $loadingSize;
+    display: inline-block;
+    vertical-align: top;
+    transform: translate3d(0, 0, 0);
+    animation-name: loadingBob;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(.62, .28, .23, .99);
+    margin-right: 4px;
+    background-color: $color-page;
+    animation-delay: 0.3s;
+  }
+  > div:first-child {
+      left: -($loadingSize+$-xs);
+      background-color: $color-book;
+      animation-delay: 0s;
+  }
+  > div:last-child {
+    left: $loadingSize+$-xs;
+    background-color: $color-chapter;
+    animation-delay: 0.6s;
+  }
+}
+
+
 // Search results
 .search-results > h3 a {
   font-size: 0.66em;

@@ -38,16 +38,7 @@
                     <div class="page-list">
                         <hr>
                         @foreach($chapter->pages as $page)
-                            <div >
-                                <h3>
-                                    <a href="{{ $page->getUrl() }}">
-                                        <i class="zmdi zmdi-file-text"></i>{{ $page->name }}
-                                    </a>
-                                </h3>
-                                <p class="text-muted">
-                                    {{$page->getExcerpt(180)}}
-                                </p>
-                            </div>
+                            @include('pages/list-item', ['page' => $page])
                             <hr>
                         @endforeach
                     </div>
@@ -68,9 +59,9 @@
                     Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->updatedBy->name}} @endif
                 </p>
             </div>
-        </div>
-        <div class="col-md-3 col-md-offset-1">
-            @include('pages/sidebar-tree-list', ['book' => $book])
+            <div class="col-md-3 col-md-offset-1">
+                @include('pages/sidebar-tree-list', ['book' => $book])
+            </div>
         </div>
     </div>
 

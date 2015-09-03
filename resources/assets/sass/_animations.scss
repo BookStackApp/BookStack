@@ -22,7 +22,7 @@
   animation-name: searchResult;
   animation-duration: 220ms;
   animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(.62,.28,.23,.99);
+  animation-timing-function: cubic-bezier(.62, .28, .23, .99);
 }
 
 @keyframes searchResult {
@@ -60,15 +60,39 @@
 }
 
 @keyframes menuIn {
-  from { opacity: 0;transform: scale3d(0, 0, 1);}
+  from {
+    opacity: 0;
+    transform: scale3d(0, 0, 1);
+  }
 
-  to { opacity: 1; transform: scale3d(1, 1, 1);}
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
 }
 
 .anim.menuIn {
-  transform-origin: 0% 0%;
+  transform-origin: 100% 0%;
   animation-name: menuIn;
   animation-duration: 120ms;
   animation-delay: 0s;
-  animation-timing-function: cubic-bezier(.62,.28,.23,.99);
+  animation-timing-function: cubic-bezier(.62, .28, .23, .99);
+}
+
+@keyframes loadingBob {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  30% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+  70% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }

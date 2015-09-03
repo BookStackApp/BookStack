@@ -39,25 +39,11 @@
                         <hr>
                         @if(count($book->children()) > 0)
                             @foreach($book->children() as $childElement)
-                                <div class="book-child {{ $childElement->getName() }}">
-                                    <h3>
-                                        <a href="{{ $childElement->getUrl() }}" class="{{ $childElement->getName() }}">
-                                            <i class="zmdi {{ $childElement->isA('chapter') ? 'zmdi-collection-bookmark':'zmdi-file-text'}}"></i>{{ $childElement->name }}
-                                        </a>
-                                    </h3>
-                                    <p class="text-muted">
-                                        {{$childElement->getExcerpt()}}
-                                    </p>
-
-                                    @if($childElement->isA('chapter') && count($childElement->pages) > 0)
-                                        <p class="text-muted chapter-toggle open"><i class="zmdi zmdi-caret-right"></i> {{ count($childElement->pages) }} Pages</p>
-                                        <div class="inset-list">
-                                            @foreach($childElement->pages as $page)
-                                                <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                </div>
+                                @if($childElement->isA('chapter'))
+                                    @include('chapters/list-item', ['chapter' => $childElement])
+                                @else
+                                    @include('pages/list-item', ['page' => $childElement])
+                                @endif
                                 <hr>
                             @endforeach
                         @else
@@ -78,6 +64,9 @@
                 </div>
                 <div class="search-results" v-if="searching">
                     <h3 class="text-muted">Search Results <a v-if="searching" v-on="click: clearSearch" class="text-small"><i class="zmdi zmdi-close"></i>Clear Search</a></h3>
+                    <div v-if="!searchResults">
+                        @include('partials/loading-icon')
+                    </div>
                     <div v-html="searchResults"></div>
                 </div>
 
@@ -86,7 +75,6 @@
 
             <div class="col-md-4 col-md-offset-1">
                 <div class="margin-top large"></div>
-                {{--<h3>Search This Book</h3>--}}
                 <div class="search-box">
                     <form v-on="submit: searchBook, input: checkSearchForm" v-el="form" action="/search/book/{{ $book->id }}">
                         {!! csrf_field() !!}
@@ -103,20 +91,6 @@
         </div>
     </div>
 
-
-
-    <script>
-        $(function() {
-
-            $('.chapter-toggle').click(function(e) {
-                e.preventDefault();
-                $(this).toggleClass('open');
-                $(this).closest('.book-child').find('.inset-list').slideToggle(180);
-            });
-
-        });
-    </script>
-
-    <script src="/js/book-sidebar.js"></script>
+    <script src="/js/book-dashboard.js"></script>
 
 @stop

@@ -20,14 +20,17 @@
   hr {
     margin-top: 0;
   }
-  .book-child {
+  .page, .chapter, .book {
     padding-left: $-l;
-    &.page {
-      border-left: 5px solid $color-page;
-    }
-    &.chapter {
-      border-left: 5px solid $color-chapter;
-    }
+  }
+  .page {
+    border-left: 5px solid $color-page;
+  }
+  .chapter {
+    border-left: 5px solid $color-chapter;
+  }
+  .book {
+    border-left: 5px solid $color-book;
   }
 }
 .chapter-toggle {

@@ -1,17 +1,8 @@
-
 <div class="page-list">
     @if(count($pages) > 0)
-        @foreach($pages as $page)
-            <div class="book-child anim searchResult">
-                <h3>
-                    <a href="{{$page->getUrl() . '#' . $searchTerm}}" class="page">
-                        <i class="zmdi zmdi-file-text"></i>{{$page->name}}
-                    </a>
-                </h3>
-
-                <p class="text-muted">
-                    {!! $page->searchSnippet !!}
-                </p>
+        @foreach($pages as $pageIndex => $page)
+            <div class="anim searchResult" style="animation-delay: {{$pageIndex*50 . 'ms'}};">
+                @include('pages/list-item', ['page' => $page])
                 <hr>
             </div>
         @endforeach
@@ -22,17 +13,9 @@
 
 @if(count($chapters) > 0)
     <div class="page-list">
-        @foreach($chapters as $chapter)
-            <div class="book-child anim searchResult">
-                <h3>
-                    <a href="{{$chapter->getUrl()}}" class="text-chapter">
-                        <i class="zmdi zmdi-collection-bookmark"></i>{{$chapter->name}}
-                    </a>
-                </h3>
-
-                <p class="text-muted">
-                    {!! $chapter->searchSnippet !!}
-                </p>
+        @foreach($chapters as $chapterIndex => $chapter)
+            <div class="anim searchResult" style="animation-delay: {{($chapterIndex+count($pages))*50 . 'ms'}};">
+                @include('chapters/list-item', ['chapter' => $chapter, 'hidePages' => true])
                 <hr>
             </div>
         @endforeach
