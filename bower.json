@@ -19,6 +19,7 @@
     "bootstrap": "~3.3.5",
     "jquery-sortable": "~0.9.13",
     "material-design-iconic-font": "~2.1.1",
-    "vue": "~0.12.10"
+    "vue": "~0.12.10",
+    "vue-resource": "~0.1.15"
   }
 }

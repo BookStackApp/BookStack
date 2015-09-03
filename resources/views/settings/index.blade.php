@@ -12,7 +12,7 @@
         {!! csrf_field() !!}
         <div class="form-group">
             <label for="setting-app-name">Application Name</label>
-            <input type="text" value="{{ Setting::get('app-name') }}" name="setting-app-name" id="setting-app-name">
+            <input type="text" value="{{ Setting::get('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
         </div>
         <div class="form-group">
             <label for="setting-app-public">Allow public viewing?</label>
