@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Delete Book</h1>
         <p>This will delete the book with the name '{{$book->name}}', All pages and chapters will be removed.</p>
         <p class="text-neg">Are you sure you want to delete this book?</p>

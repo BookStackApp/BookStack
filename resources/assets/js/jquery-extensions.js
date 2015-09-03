@@ -1,4 +1,5 @@
 
+// Smooth scrolling
 jQuery.fn.smoothScrollTo = function() {
     if(this.length === 0) return;
     $('body').animate({
@@ -6,12 +7,15 @@ jQuery.fn.smoothScrollTo = function() {
     }, 800); // Adjust to change animations speed (ms)
     return this;
 };
+
+// Making contains text expression not worry about casing
 $.expr[":"].contains = $.expr.createPseudo(function(arg) {
     return function( elem ) {
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
 });
 
+// Show a success message after the element it's called upon.
 jQuery.fn.showSuccess = function (message) {
     var elem = $(this);
     var success = $('<div class="text-pos" style="display:none;"><i class="zmdi zmdi-check-circle"></i>' + message + '</div>');
@@ -25,6 +29,7 @@ jQuery.fn.showSuccess = function (message) {
     });
 };
 
+// Show a failure messages from laravel. Searches for the name of the inputs.
 jQuery.fn.showFailure = function (messageMap) {
     var elem = $(this);
     $.each(messageMap, function (key, messages) {
@@ -42,6 +47,20 @@ jQuery.fn.showFailure = function (messageMap) {
 
 };
 
+// Submit the form that the called upon element sits in.
 jQuery.fn.submitForm = function() {
     $(this).closest('form').submit();
+};
+
+// Dropdown menu display
+jQuery.fn.dropDown = function() {
+    var container = $(this),
+        menu = container.find('ul');
+    container.find('[data-dropdown-toggle]').on('click', function() {
+        menu.show().addClass('anim menuIn');
+        container.mouseleave(function() {
+            menu.hide();
+            menu.removeClass('anim menuIn');
+        });
+    });
 };

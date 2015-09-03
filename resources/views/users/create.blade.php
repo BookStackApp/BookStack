@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Create User</h1>
 
         <form action="/users/create" method="post">

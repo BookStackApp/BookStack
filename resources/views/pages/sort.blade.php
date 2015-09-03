@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Sorting Pages & Chapters<span class="subheader">For {{ $book->name }}</span></h1>
 
         <ul class="sortable-page-list" id="sort-list">

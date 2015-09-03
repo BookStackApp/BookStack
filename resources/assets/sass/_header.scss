@@ -1,0 +1,185 @@
+/**
+ * Includes the main navigation header and the faded toolbar.
+ */
+
+header {
+  display: block;
+  z-index: 2;
+  top: 0;
+  background-color: $primary-dark;
+  color: #fff;
+  .padded {
+    padding: $-m;
+  }
+  border-bottom: 1px solid #DDD;
+  //margin-bottom: $-l;
+  .links {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: $-xl;
+  }
+  .links a {
+    display: inline-block;
+    padding: $-l;
+    color: #FFF;
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  .avatar, .user-name {
+    display: inline-block;
+  }
+  .avatar {
+    margin-top: (45px/2);
+    width: 30px;
+    height: 30px;
+  }
+  .user-name {
+    vertical-align: top;
+    padding-top: 25.5px;
+    padding-left: $-m;
+    display: inline-block;
+    cursor: pointer;
+    i {
+      padding-left: $-xs;
+    }
+  }
+}
+
+form.search-box {
+  margin-top: $-l *0.9;
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  input {
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid #EEE;
+    color: #EEE;
+    padding-right: $-l;
+    outline: 0;
+  }
+  button {
+    vertical-align: top;
+    margin-left: -$-l;
+    color: #FFF;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    position: absolute;
+    &:hover {
+      color: #FFF;
+    }
+  }
+}
+
+.logo {
+  display: inline-block;
+  font-size: 1.8em;
+  color: #fff;
+  font-weight: 400;
+  padding: $-l $-l $-l 0;
+  vertical-align: top;
+  line-height: 1;
+  &:hover {
+    color: #FFF;
+    text-decoration: none;
+  }
+}
+
+.dropdown-container {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.dropdown-container ul {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  margin: $-m 0;
+  background-color: #FFFFFF;
+  list-style: none;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 1px;
+  border: 1px solid #EEE;
+  min-width: 180px;
+  padding: $-xs 0;
+  color: #555;
+  a {
+    display: block;
+    padding: $-xs $-m;
+    color: #555;
+    &:hover {
+      text-decoration: none;
+      background-color: #EEE;
+    }
+    i {
+      margin-right: $-m;
+      padding-right: 0;
+      display: inline;
+      width: 22px;
+    }
+  }
+  li.border-bottom {
+    border-bottom: 1px solid #DDD;
+  }
+}
+
+.breadcrumbs span.sep {
+  color: #aaa;
+  padding: 0 $-xs;
+}
+
+.faded {
+  a, button, span {
+    color: #666;
+  }
+  .text-button {
+    opacity: 0.5;
+    transition: all ease-in-out 120ms;
+    &:hover {
+      opacity: 1;
+      text-decoration: none;
+    }
+  }
+}
+
+.faded-small {
+  color: #000;
+  font-size: 0.9em;
+  background-color: rgba(21, 101, 192, 0.15);
+}
+
+.breadcrumbs .text-button, .action-buttons .text-button {
+  display: inline-block;
+  padding: $-s;
+  &:last-child {
+    padding-right: 0;
+  }
+}
+.action-buttons {
+  text-align: right;
+  &.text-left {
+    text-align: left;
+    .text-button {
+      padding-right: $-m;
+      padding-left: 0;
+    }
+  }
+}
+
+.setting-nav {
+  text-align: center;
+  a {
+    padding: $-m;
+    display: inline-block;
+    color: #666;
+    &.selected {
+      border-bottom: 2px solid $primary;
+    }
+  }
+}

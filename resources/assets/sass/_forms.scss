@@ -90,6 +90,12 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   }
 }
 
+.page-title input {
+  display: block;
+  width: 100%;
+  font-size: 1.4em;
+}
+
 .description-input textarea {
   @extend .inline-input-style;
   font-size: $fs-m;

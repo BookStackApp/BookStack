@@ -14,10 +14,9 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/js/jquery-extensions.js"></script>
-    <script src="/bower/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="/js/common.js"></script>
     <script src="/bower/vue/dist/vue.min.js"></script>
     <script src="/bower/vue-resource/dist/vue-resource.min.js"></script>
 
@@ -40,16 +39,16 @@
     <header id="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
                 </div>
-                <div class="col-md-3 text-right">
+                <div class="col-md-4 text-center">
                     <form action="/search/all" method="GET" class="search-box">
                         <input type="text" name="term" tabindex="2" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
-                        <a onclick="$(this).closest('form').submit();"><i class="zmdi zmdi-search"></i></a>
+                        <button class="text-button"><i class="zmdi zmdi-search"></i></button>
                     </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
@@ -63,7 +62,7 @@
                                 <span class="user-name" data-dropdown-toggle>
                                     {{ $currentUser->name }} <i class="zmdi zmdi-caret-down"></i>
                                 </span>
-                                <ul class="dropdown">
+                                <ul>
                                     <li>
                                         <a href="/users/{{$currentUser->id}}" class="text-primary"><i class="zmdi zmdi-edit zmdi-hc-lg"></i>Edit Profile</a>
                                     </li>
@@ -80,32 +79,10 @@
         </div>
     </header>
 
-    <section id="content">
+    <section id="content" class="block">
         @yield('content')
     </section>
 
 @yield('bottom')
-    <script>
-        $(function() {
-
-            $('.notification').click(function() {
-                $(this).fadeOut(100);
-            });
-
-            // Dropdown toggles
-            $('[data-dropdown-toggle]').click(function() {
-                var toggleButton = $(this);
-                var container = toggleButton.closest('[data-dropdown]');
-                var dropdown = container.find('.dropdown');
-                dropdown.show().addClass('anim menuIn');
-
-                container.mouseleave(function() {
-                   dropdown.hide();
-                    dropdown.removeClass('anim menuIn');
-                });
-            });
-
-        });
-    </script>
 </body>
 </html>

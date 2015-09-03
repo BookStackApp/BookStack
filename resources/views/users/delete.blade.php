@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Delete User</h1>
         <p>This will fully delete this user with the name '<span class="text-neg">{{$user->name}}</span>' from the system.</p>
         <p class="text-neg">Are you sure you want to delete this user?</p>

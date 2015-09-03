@@ -1,10 +1,24 @@
+.overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  display: none;
+  z-index: 95536;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .image-manager-body {
   background-color: #FFF;
   max-height: 90%;
   width: 90%;
   height: 90%;
   margin: 2% 5%;
-  //border: 2px solid $primary;
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -245,7 +259,7 @@
   width: 80px;
   margin-left: -40px;
   background: rgba(255, 255, 255, 0.9);
-  -webkit-transform: scale(1);
+  transform: scale(1);
   border-radius: 8px;
   overflow: hidden; }
 .dz-preview .dz-progress .dz-upload {

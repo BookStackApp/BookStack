@@ -1,0 +1,60 @@
+.page-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  .faded-small {
+    height: auto;
+  }
+  .edit-area {
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
+.page-style.editor {
+  padding: 0 !important;
+}
+
+.page-content {
+  max-width: 840px;
+  img {
+    max-width: 100%;
+    height:auto;
+  }
+}
+
+// Link hooks & popovers
+a.link-hook {
+  position: absolute;
+  display: inline-block;
+  top: $-xs;
+  left: -$-l;
+  padding-bottom: 30px;
+  font-size: 20px;
+  line-height: 20px;
+  color: #BBB;
+  opacity: 0;
+  transform: translate3d(10px, 0, 0);
+  transition: all ease-in-out 240ms;
+  background-color: transparent;
+  &:hover {
+    color: $primary;
+  }
+}
+h1, h2, h3, h4, h5, h6 {
+  &:hover a.link-hook {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+// Side Navigation
+.side-nav {
+  position: fixed;
+  padding-left: $-m;
+  opacity: 0.8;
+  margin-top: $-xxl;
+  margin-left: 0;
+  max-width: 240px;
+  display: none;
+}

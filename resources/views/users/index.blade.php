@@ -5,7 +5,8 @@
 
     @include('settings/navbar', ['selected' => 'users'])
 
-    <div class="page-content">
+
+    <div class="container small">
         <h1>Users</h1>
         @if($currentUser->can('user-create'))
             <p>
@@ -25,9 +26,9 @@
                     <td>
                         @if($currentUser->can('user-update') || $currentUser->id == $user->id)
                             <a href="/users/{{$user->id}}">
-                        @endif
+                                @endif
                                 {{$user->name}}
-                        @if($currentUser->can('user-update') || $currentUser->id == $user->id)
+                                @if($currentUser->can('user-update') || $currentUser->id == $user->id)
                             </a>
                         @endif
                     </td>

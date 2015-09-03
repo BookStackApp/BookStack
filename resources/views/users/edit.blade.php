@@ -18,7 +18,7 @@
 
 
 
-    <div class="page-content">
+    <div class="container small">
 
         <div class="row">
             <div class="col-md-6">

@@ -9,10 +9,7 @@
                 <h2>Books</h2>
                 @if(count($books) > 0)
                     @foreach($books as $book)
-                        <div class="book">
-                            <h3><a href="{{$book->getUrl()}}">{{$book->name}}</a></h3>
-                            <p class="text-muted">{{$book->description}}</p>
-                        </div>
+                        @include('books/list-item', ['book' => $book])
                         <hr>
                     @endforeach
                 @else

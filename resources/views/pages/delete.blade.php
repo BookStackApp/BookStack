@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Delete Page</h1>
         <p class="text-neg">Are you sure you want to delete this page?</p>
 

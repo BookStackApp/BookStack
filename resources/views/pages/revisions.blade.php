@@ -17,7 +17,7 @@
     </div>
 
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Page Revisions <span class="subheader">For "{{ $page->name }}"</span></h1>
 
         @if(count($page->revisions) > 0)

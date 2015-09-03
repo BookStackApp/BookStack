@@ -35,14 +35,6 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                @include('pages/sidebar-tree-list', ['book' => $book])
-                <div class="side-nav faded">
-                    <h4>Page Navigation</h4>
-                    <ul class="page-nav-list">
-                    </ul>
-                </div>
-            </div>
             <div class="col-md-9">
                 <div class="page-content anim fadeIn">
                     @include('pages/page-display')
@@ -52,6 +44,14 @@
                         <br>
                         Last Updated {{$page->updated_at->diffForHumans()}} @if($page->createdBy) by {{$page->updatedBy->name}} @endif
                     </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                @include('pages/sidebar-tree-list', ['book' => $book])
+                <div class="side-nav faded">
+                    <h4>Page Navigation</h4>
+                    <ul class="page-nav-list">
+                    </ul>
                 </div>
             </div>
         </div>

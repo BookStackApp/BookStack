@@ -15,5 +15,5 @@ elixir(function(mix) {
     mix.sass('styles.scss');
     mix.scripts('image-manager.js', 'public/js/image-manager.js');
     mix.scripts('book-dashboard.js', 'public/js/book-dashboard.js');
-    mix.scripts('jquery-extensions.js', 'public/js/jquery-extensions.js');
+    mix.scripts(['jquery-extensions.js', 'global.js'], 'public/js/common.js');
 });

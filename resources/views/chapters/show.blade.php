@@ -30,49 +30,47 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                @include('pages/sidebar-tree-list', ['book' => $book])
-            </div>
-            <div class="col-md-9">
-                <div class="page-content">
-                    <h1>{{ $chapter->name }}</h1>
-                    <p class="text-muted">{{ $chapter->description }}</p>
+            <div class="col-md-8">
+                <h1>{{ $chapter->name }}</h1>
+                <p class="text-muted">{{ $chapter->description }}</p>
 
-                    @if(count($chapter->pages) > 0)
-                        <div class="page-list">
+                @if(count($chapter->pages) > 0)
+                    <div class="page-list">
+                        <hr>
+                        @foreach($chapter->pages as $page)
+                            <div >
+                                <h3>
+                                    <a href="{{ $page->getUrl() }}">
+                                        <i class="zmdi zmdi-file-text"></i>{{ $page->name }}
+                                    </a>
+                                </h3>
+                                <p class="text-muted">
+                                    {{$page->getExcerpt(180)}}
+                                </p>
+                            </div>
                             <hr>
-                            @foreach($chapter->pages as $page)
-                                <div >
-                                    <h3>
-                                        <a href="{{ $page->getUrl() }}">
-                                            <i class="zmdi zmdi-file-text"></i>{{ $page->name }}
-                                        </a>
-                                    </h3>
-                                    <p class="text-muted">
-                                        {{$page->getExcerpt(180)}}
-                                    </p>
-                                </div>
-                                <hr>
-                            @endforeach
-                        </div>
-                    @else
-                        <hr>
-                        <p class="text-muted">No pages are currently in this chapter.</p>
-                        <p>
-                            <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
-                            &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
-                            <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
-                        </p>
-                        <hr>
-                    @endif
-
-                    <p class="text-muted small">
-                        Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->createdBy->name}} @endif
-                        <br>
-                        Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->updatedBy->name}} @endif
+                        @endforeach
+                    </div>
+                @else
+                    <hr>
+                    <p class="text-muted">No pages are currently in this chapter.</p>
+                    <p>
+                        <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                        &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
+                        <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
                     </p>
-                </div>
+                    <hr>
+                @endif
+
+                <p class="text-muted small">
+                    Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->createdBy->name}} @endif
+                    <br>
+                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->updatedBy->name}} @endif
+                </p>
             </div>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            @include('pages/sidebar-tree-list', ['book' => $book])
         </div>
     </div>
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="container small">
         <h1>Edit Chapter</h1>
         <form action="{{$chapter->getUrl()}}" method="POST">
             <input type="hidden" name="_method" value="PUT">
