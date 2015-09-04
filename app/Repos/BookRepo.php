@@ -54,9 +54,11 @@ class BookRepo
     {
         $book = $this->getBySlug($bookSlug);
         foreach($book->pages as $page) {
+            \Activity::removeEntity($page);
             $page->delete();
         }
         foreach($book->chapters as $chapter) {
+            \Activity::removeEntity($chapter);
             $chapter->delete();
         }
         $book->delete();

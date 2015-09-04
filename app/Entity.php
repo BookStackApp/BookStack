@@ -4,7 +4,7 @@ namespace Oxbow;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Entity extends Model
+abstract class Entity extends Model
 {
     /**
      * Relation for the user that created this entity.
@@ -85,5 +85,11 @@ class Entity extends Model
         }
         return $search->get();
     }
+
+    /**
+     * Get the url for this item.
+     * @return string
+     */
+    abstract public function getUrl();
 
 }

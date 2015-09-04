@@ -144,6 +144,7 @@ class BookController extends Controller
         $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         Activity::addMessage('book_delete', 0, $book->name);
+        Activity::removeEntity($book);
         $this->bookRepo->destroyBySlug($bookSlug);
         return redirect('/books');
     }
