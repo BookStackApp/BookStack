@@ -30,7 +30,7 @@
                 <a href="/login/service/google" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
             @endif
             @if(isset($socialDrivers['github']))
-                <a href="/login/service/github" style="color:#000;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
+                <a href="/login/service/github" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
             @endif
         @endif
     </div>

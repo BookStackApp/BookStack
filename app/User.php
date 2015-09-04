@@ -97,6 +97,31 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Get the social account associated with this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function socialAccounts()
+    {
+        return $this->hasMany('Oxbow\SocialAccount');
+    }
+
+    /**
+     * Check if the user has a social account,
+     * If a driver is passed it checks for that single account type.
+     * @param bool|string $socialDriver
+     * @return bool
+     */
+    public function hasSocialAccount($socialDriver = false)
+    {
+        if($socialDriver === false) {
+            return $this->socialAccounts()->count() > 0;
+        }
+
+        return $this->socialAccounts()->where('driver', '=', $socialDriver)->exists();
+    }
+
+    /**
      * Returns the user's avatar,
      * Uses Gravatar as the avatar service.
      *
@@ -107,5 +132,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $emailHash = md5(strtolower(trim($this->email)));
         return '//www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
+    }
+
+    public function getEditUrl()
+    {
+        return '/users/' . $this->id;
     }
 }

@@ -78,13 +78,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+// Login using social authentication
+Route::get('/login/service/{socialDriver}', 'Auth\AuthController@getSocialLogin');
+Route::get('/login/service/{socialDriver}/callback', 'Auth\AuthController@socialCallback');
+Route::get('/login/service/{socialDriver}/detach', 'Auth\AuthController@detachSocialAccount');
+
 // Login/Logout routes
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
-// Login using social authentication
-Route::get('/login/service/{socialService}', 'Auth\AuthController@getSocialLogin');
-Route::get('/login/service/{socialService}/callback', 'Auth\AuthController@socialCallback');
 
 // Password reset link request routes...
 Route::get('/password/email', 'Auth\PasswordController@getEmail');

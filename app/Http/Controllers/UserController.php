@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Oxbow\Http\Requests;
+use Oxbow\Services\SocialAuthService;
 use Oxbow\User;
 
 class UserController extends Controller
@@ -74,16 +75,19 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      *
-     * @param  int $id
+     * @param  int              $id
+     * @param SocialAuthService $socialAuthService
      * @return Response
      */
-    public function edit($id)
+    public function edit($id, SocialAuthService $socialAuthService)
     {
         $this->checkPermissionOr('user-update', function () use ($id) {
             return $this->currentUser->id == $id;
         });
+
         $user = $this->user->findOrFail($id);
-        return view('users/edit', ['user' => $user]);
+        $activeSocialDrivers = $socialAuthService->getActiveDrivers();
+        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers]);
     }
 
     /**
@@ -107,13 +111,14 @@ class UserController extends Controller
         ]);
 
         $user = $this->user->findOrFail($id);
-        $user->fill($request->all());
+        $user->fill($request->except('password'));
 
         if ($this->currentUser->can('user-update') && $request->has('role')) {
             $user->attachRoleId($request->get('role'));
         }
 
         if ($request->has('password') && $request->get('password') != '') {
+            //dd('cat');
             $password = $request->get('password');
             $user->password = Hash::make($password);
         }

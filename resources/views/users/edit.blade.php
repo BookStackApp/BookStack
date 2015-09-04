@@ -42,22 +42,43 @@
 
         <hr class="margin-top large">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Permissions</h3>
-                <p>User Role: <strong>{{$user->role->display_name}}</strong>.</p>
-                <ul class="text-muted">
-                    @foreach($user->role->permissions as $permission)
-                        <li>
-                            {{ $permission->display_name }}
-                        </li>
-                    @endforeach
-                </ul>
-
+        @if($currentUser->id === $user->id)
+            <h3>Social Accounts</h3>
+            <p class="text-muted">
+                Here you can connect your other accounts for quicker and easier login. <br>
+                Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.
+            </p>
+            <div class="row">
+                @if(isset($activeSocialDrivers['google']))
+                    <div class="col-md-3 text-center">
+                        <div><i class="zmdi zmdi-google-plus-box zmdi-hc-4x" style="color: #DC4E41;"></i></div>
+                        <div>
+                            @if($user->hasSocialAccount('google'))
+                                <a href="/login/service/google/detach" class="button neg">Disconnect Account</a>
+                            @else
+                                <a href="/login/service/google" class="button pos">Attach Account</a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+                @if(isset($activeSocialDrivers['github']))
+                    <div class="col-md-3 text-center">
+                        <div><i class="zmdi zmdi-github zmdi-hc-4x" style="color: #444;"></i></div>
+                        <div>
+                            @if($user->hasSocialAccount('github'))
+                                <a href="/login/service/github/detach" class="button neg">Disconnect Account</a>
+                            @else
+                                <a href="/login/service/github" class="button pos">Attach Account</a>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
-        </div>
+        @endif
+
 
     </div>
 
+    <p class="margin-top large"><br></p>
 
 @stop

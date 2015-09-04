@@ -55,6 +55,9 @@
                             @if($currentUser->can('settings-update'))
                                 <a href="/settings"><i class="zmdi zmdi-settings"></i>Settings</a>
                             @endif
+                            @if(!$signedIn)
+                                <a href="/login"><i class="zmdi zmdi-sign-in"></i>Sign In</a>
+                            @endif
                         </div>
                         @if($signedIn)
                             <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">

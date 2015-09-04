@@ -2,7 +2,7 @@
 
 namespace Oxbow\Http\Controllers\Auth;
 
-use Oxbow\Exceptions\UserNotFound;
+use Oxbow\Exceptions\SocialSignInException;
 use Oxbow\Services\SocialAuthService;
 use Oxbow\User;
 use Validator;
@@ -37,7 +37,7 @@ class AuthController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService)
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['only' => ['getLogin', 'postLogin']]);
         $this->socialAuthService = $socialAuthService;
     }
 
@@ -95,7 +95,7 @@ class AuthController extends Controller
      */
     public function getSocialLogin($socialDriver)
     {
-        return $this->socialAuthService->logIn($socialDriver);
+        return $this->socialAuthService->startLogIn($socialDriver);
     }
 
     /**
@@ -103,13 +103,21 @@ class AuthController extends Controller
      *
      * @param $socialDriver
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws UserNotFound
+     * @throws SocialSignInException
      */
     public function socialCallback($socialDriver)
     {
-        $user = $this->socialAuthService->getUserFromCallback($socialDriver);
-        \Auth::login($user, true);
-        return redirect($this->redirectPath);
+        return $this->socialAuthService->handleCallback($socialDriver);
+    }
+
+    /**
+     * Detach a social account from a user.
+     * @param $socialDriver
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function detachSocialAccount($socialDriver)
+    {
+        return $this->socialAuthService->detachSocialAccount($socialDriver);
     }
 
 }
