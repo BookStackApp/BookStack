@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'mailgun' => [
+    'mailgun'  => [
         'domain' => '',
         'secret' => '',
     ],
@@ -23,16 +23,28 @@ return [
         'secret' => '',
     ],
 
-    'ses' => [
+    'ses'      => [
         'key'    => '',
         'secret' => '',
         'region' => 'us-east-1',
     ],
 
-    'stripe' => [
+    'stripe'   => [
         'model'  => Oxbow\User::class,
         'key'    => '',
         'secret' => '',
+    ],
+
+    'github'   => [
+        'client_id'     => env('GITHUB_APP_ID', false),
+        'client_secret' => env('GITHUB_APP_SECRET', false),
+        'redirect'      => env('APP_URL') . '/login/service/github/callback',
+    ],
+
+    'google'   => [
+        'client_id'     => env('GOOGLE_APP_ID', false),
+        'client_secret' => env('GOOGLE_APP_SECRET', false),
+        'redirect'      => env('APP_URL') . '/login/service/google/callback',
     ],
 
 ];

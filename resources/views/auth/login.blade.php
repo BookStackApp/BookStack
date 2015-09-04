@@ -1,6 +1,6 @@
 @extends('public')
 
-@section('sidebar')
+@section('content')
 
     <div class="center-box">
         <h1>Log In</h1>
@@ -23,6 +23,16 @@
                 <button class="button block pos">Sign In</button>
             </div>
         </form>
+        @if(count($socialDrivers) > 0)
+            <hr class="margin-top">
+            <h3 class="text-muted">Social Login</h3>
+            @if(isset($socialDrivers['google']))
+                <a href="/login/service/google" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
+            @endif
+            @if(isset($socialDrivers['github']))
+                <a href="/login/service/github" style="color:#000;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
+            @endif
+        @endif
     </div>
 
 @stop

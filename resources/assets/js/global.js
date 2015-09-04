@@ -3,6 +3,7 @@ $(function () {
     // Notification hiding
     $('.notification').click(function () {
         $(this).fadeOut(100);
+
     });
 
     // Dropdown toggles

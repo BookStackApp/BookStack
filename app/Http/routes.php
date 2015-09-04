@@ -82,6 +82,10 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
+// Login using social authentication
+Route::get('/login/service/{socialService}', 'Auth\AuthController@getSocialLogin');
+Route::get('/login/service/{socialService}/callback', 'Auth\AuthController@socialCallback');
+
 // Password reset link request routes...
 Route::get('/password/email', 'Auth\PasswordController@getEmail');
 Route::post('/password/email', 'Auth\PasswordController@postEmail');

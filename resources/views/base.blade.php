@@ -31,7 +31,7 @@
     @endif
 
     @if(Session::has('error'))
-        <div class="notification anim neg">
+        <div class="notification anim neg stopped">
             <i class="zmdi zmdi-alert-circle"></i> <span>{{ Session::get('error') }}</span>
         </div>
     @endif

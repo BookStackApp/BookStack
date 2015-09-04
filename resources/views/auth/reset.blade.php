@@ -2,7 +2,7 @@
 
 @section('body-class', 'image-cover login')
 
-@section('sidebar')
+@section('content')
 
 
     <div class="text-center">

@@ -30,7 +30,6 @@ $button-border-radius: 2px;
   border-radius: $button-border-radius;
   cursor: pointer;
   transition: all ease-in-out 120ms;
-  text-transform: uppercase;
   box-shadow: 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.21);
   @include generate-button-colors(#EEE, $primary);
 }

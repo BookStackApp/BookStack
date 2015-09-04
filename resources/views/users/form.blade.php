@@ -8,18 +8,18 @@
     @include('form/text', ['name' => 'email'])
 </div>
 
+@if($currentUser->can('user-update'))
+    <div class="form-group">
+        <label for="role">User Role</label>
+        @include('form.role-select', ['name' => 'role', 'options' => \Oxbow\Role::all(), 'displayKey' => 'display_name'])
+    </div>
+@endif
+
 @if(isset($model))
     <div class="form-group">
         <span class="text-muted">
             Only fill the below if you would like <br>to change your password:
         </span>
-    </div>
-@endif
-
-@if($currentUser->can('user-update'))
-    <div class="form-group">
-        <label for="role">User Role</label>
-        @include('form.role-select', ['name' => 'role', 'options' => \Oxbow\Role::all(), 'displayKey' => 'display_name'])
     </div>
 @endif
 

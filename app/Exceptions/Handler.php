@@ -22,8 +22,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
-     * @return void
+     * @param  \Exception $e
      */
     public function report(Exception $e)
     {
@@ -39,6 +38,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if($e instanceof NotifyException) {
+            \Session::flash('error', $e->message);
+            return response()->redirectTo($e->redirectLocation);
+        }
+
         return parent::render($request, $e);
     }
 }
