@@ -4,6 +4,7 @@ namespace Oxbow\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Oxbow\Exceptions\UserRegistrationException;
 use Setting;
 
 class Authenticate
@@ -34,6 +35,9 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
+        if(auth()->check() && auth()->user()->email_confirmed == false) {
+            return redirect()->guest('/register/confirm/awaiting');
+        }
         if ($this->auth->guest() && !Setting::get('app-public')) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);

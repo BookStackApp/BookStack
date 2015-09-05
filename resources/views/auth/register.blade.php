@@ -8,9 +8,9 @@
 
     <div class="text-center">
         <div class="center-box">
-            <h1>Register</h1>
+            <h1>Sign Up</h1>
 
-            <form action="/login" method="POST">
+            <form action="/register" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="form-group">
@@ -29,13 +29,14 @@
                 </div>
 
                 <div class="from-group">
-                    <button class="button block pos">Sign In</button>
+                    <button class="button block pos">Create Account</button>
                 </div>
             </form>
 
             @if(count($socialDrivers) > 0)
                 <hr class="margin-top">
                 <h3 class="text-muted">Social Registration</h3>
+                <p class="text-small">Register and sign in using another service.</p>
                 @if(isset($socialDrivers['google']))
                     <a href="/register/service/google" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
                 @endif

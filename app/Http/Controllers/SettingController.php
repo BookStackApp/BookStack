@@ -38,6 +38,7 @@ class SettingController extends Controller
             $key = str_replace('setting-', '', trim($name));
             Setting::put($key, $value);
         }
+        session()->flash('success', 'Settings Saved');
         return redirect('/settings');
     }
 

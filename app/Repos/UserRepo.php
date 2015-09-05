@@ -21,4 +21,9 @@ class UserRepo
     public function getByEmail($email) {
         return $this->user->where('email', '=', $email)->first();
     }
+
+    public function getById($id)
+    {
+        return $this->user->findOrFail($id);
+    }
 }

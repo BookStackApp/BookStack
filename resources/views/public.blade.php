@@ -37,6 +37,19 @@
                     <div class="links text-center">
                         @yield('header-buttons')
                     </div>
+                    @if($signedIn)
+                        <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
+                        <div class="dropdown-container" data-dropdown>
+                                <span class="user-name" data-dropdown-toggle>
+                                    {{ $currentUser->name }} <i class="zmdi zmdi-caret-down"></i>
+                                </span>
+                            <ul>
+                                <li>
+                                    <a href="/logout" class="text-neg"><i class="zmdi zmdi-run zmdi-hc-lg"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

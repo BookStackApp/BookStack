@@ -88,6 +88,11 @@ Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
 Route::get('/register', 'Auth\AuthController@getRegister');
+Route::get('/register/confirm', 'Auth\AuthController@getRegisterConfirmation');
+Route::get('/register/confirm/awaiting', 'Auth\AuthController@showAwaitingConfirmation');
+Route::post('/register/confirm/resend', 'Auth\AuthController@resendConfirmation');
+Route::get('/register/confirm/{token}', 'Auth\AuthController@confirmEmail');
+Route::post('/register', 'Auth\AuthController@postRegister');
 
 // Password reset link request routes...
 Route::get('/password/email', 'Auth\PasswordController@getEmail');

@@ -118,7 +118,6 @@ class UserController extends Controller
         }
 
         if ($request->has('password') && $request->get('password') != '') {
-            //dd('cat');
             $password = $request->get('password');
             $user->password = bcrypt($password);
         }
