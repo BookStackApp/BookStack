@@ -31,12 +31,12 @@ abstract class Controller extends BaseController
     {
         // Get a user instance for the current user
         $user = auth()->user();
-        if (!$user) {
-            $user = User::getDefault();
-        }
+        if (!$user) $user = User::getDefault();
+
         // Share variables with views
         view()->share('signedIn', auth()->check());
         view()->share('currentUser', $user);
+
         // Share variables with controllers
         $this->currentUser = $user;
         $this->signedIn = auth()->check();
@@ -53,7 +53,7 @@ abstract class Controller extends BaseController
         if (!$this->currentUser || !$this->currentUser->can($permissionName)) {
             Session::flash('error', trans('errors.permission'));
             throw new HttpResponseException(
-                redirect()->back()
+                redirect('/')
             );
         }
 

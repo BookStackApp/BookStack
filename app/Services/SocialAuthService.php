@@ -63,8 +63,8 @@ class SocialAuthService
         $isLoggedIn = auth()->check();
         $currentUser = auth()->user();
 
-        // When a user is not logged in but a matching SocialAccount exists,
-        // Log the user found on the SocialAccount into the application.
+        // When a user is not logged in and a matching SocialAccount exists,
+        // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
             return $this->logUserIn($socialAccount->user);
         }
@@ -87,30 +87,16 @@ class SocialAuthService
         // When a user is logged in, A social account exists but the users do not match.
         // Change the user that the social account is assigned to.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
-            $socialAccount->user_id = $currentUser->id;
-            $socialAccount->save();
-            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is now attached to your profile.');
+            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is already used buy another user.');
+            return redirect($currentUser->getEditUrl());
         }
 
-        if ($user === null) {
-            throw new SocialSignInException('A system user with the email ' . $socialUser->getEmail() .
-                ' was not found and this ' . $socialDriver . ' account is not linked to any users.', '/login');
+        // Otherwise let the user know this social account is not used by anyone.
+        $message = 'This ' . $socialDriver . ' account is not linked to any users. Please attach it in your profile settings';
+        if(\Setting::get('registration-enabled')) {
+            $message .= 'or, If you do not yet have an account, You can register an account using the ' . $socialDriver . ' option';
         }
-        return $this->authenticateUserWithNewSocialAccount($user, $socialUser, $socialUser);
-    }
-
-    /**
-     * Logs a user in and creates a new social account entry for future usage.
-     * @param User                              $user
-     * @param string                            $socialDriver
-     * @param \Laravel\Socialite\Contracts\User $socialUser
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    private function authenticateUserWithNewSocialAccount($user, $socialDriver, $socialUser)
-    {
-        $this->fillSocialAccount($socialDriver, $socialUser);
-        $user->socialAccounts()->save($this->socialAccount);
-        return $this->logUserIn($user);
+        throw new SocialSignInException($message . '.', '/login');
     }
 
     private function logUserIn($user)

@@ -33,7 +33,16 @@ class SettingService
     public function get($key, $default = false)
     {
         $setting = $this->getSettingObjectByKey($key);
-        return $setting === null ? $default : $setting->value;
+        $value = $setting === null ? null : $setting->value;
+
+        // Change string booleans to actual booleans
+        if($value === 'true') $value = true;
+        if($value === 'false') $value = false;
+
+        // Set to default if empty
+        if($value === '') $value = $default;
+
+        return $value === null ? $default : $value;
     }
 
     /**

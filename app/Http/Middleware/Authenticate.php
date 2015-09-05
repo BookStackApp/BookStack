@@ -34,8 +34,7 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        $sitePublic = Setting::get('app-public', false) === 'true';
-        if ($this->auth->guest() && !$sitePublic) {
+        if ($this->auth->guest() && !Setting::get('app-public')) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {

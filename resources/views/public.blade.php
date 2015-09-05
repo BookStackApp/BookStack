@@ -26,6 +26,23 @@
     </div>
 @endif
 
+<header id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
+            </div>
+            <div class="col-md-6">
+                <div class="float right">
+                    <div class="links text-center">
+                        @yield('header-buttons')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 <section class="container">
     @yield('content')
 </section>

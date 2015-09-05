@@ -87,6 +87,7 @@ Route::get('/login/service/{socialDriver}/detach', 'Auth\AuthController@detachSo
 Route::get('/login', 'Auth\AuthController@getLogin');
 Route::post('/login', 'Auth\AuthController@postLogin');
 Route::get('/logout', 'Auth\AuthController@getLogout');
+Route::get('/register', 'Auth\AuthController@getRegister');
 
 // Password reset link request routes...
 Route::get('/password/email', 'Auth\PasswordController@getEmail');

@@ -29,6 +29,7 @@ label {
   font-weight: 500;
   color: #666;
   padding-bottom: 2px;
+  margin-bottom: 0.2em;
 }
 
 label.radio, label.checkbox {
@@ -36,6 +37,10 @@ label.radio, label.checkbox {
   input[type="radio"], input[type="checkbox"] {
     margin-right: $-xs;
   }
+}
+
+label + p.small {
+  margin-bottom: 0.8em;
 }
 
 input[type="text"], input[type="number"], input[type="email"], input[type="search"], input[type="url"], input[type="password"], select, textarea {

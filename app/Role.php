@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     /**
+     * Sets the default role name for newly registed users.
+     * @var string
+     */
+    protected static $default = 'viewer';
+
+    /**
      * The roles that belong to the role.
      */
     public function users()
@@ -31,4 +37,12 @@ class Role extends Model
         $this->permissions()->attach($permission->id);
     }
 
+    /**
+     * Get an instance of the default role.
+     * @return Role
+     */
+    public static function getDefault()
+    {
+        return static::where('name', '=', static::$default)->first();
+    }
 }

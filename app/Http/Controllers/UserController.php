@@ -152,6 +152,8 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
         $user = $this->user->findOrFail($id);
+        // Delete social accounts
+        $user->socialAccounts()->delete();
         $user->delete();
         return redirect('/users');
     }

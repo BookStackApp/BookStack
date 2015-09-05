@@ -1,19 +1,22 @@
 @extends('public')
 
 @section('header-buttons')
-    @if(Setting::get('registration-enabled'))
-        <a href="/register"><i class="zmdi zmdi-account-add"></i>Sign up</a>
-    @endif
+    <a href="/login"><i class="zmdi zmdi-sign-in"></i>Sign in</a>
 @stop
 
 @section('content')
 
     <div class="text-center">
         <div class="center-box">
-            <h1>Log In</h1>
+            <h1>Register</h1>
 
             <form action="/login" method="POST">
                 {!! csrf_field() !!}
+
+                <div class="form-group">
+                    <label for="email">Name</label>
+                    @include('form/text', ['name' => 'name'])
+                </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -23,7 +26,6 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     @include('form/password', ['name' => 'password'])
-                    <span class="block small"><a href="/password/email">Forgot Password?</a></span>
                 </div>
 
                 <div class="from-group">
@@ -33,15 +35,16 @@
 
             @if(count($socialDrivers) > 0)
                 <hr class="margin-top">
-                <h3 class="text-muted">Social Login</h3>
+                <h3 class="text-muted">Social Registration</h3>
                 @if(isset($socialDrivers['google']))
-                    <a href="/login/service/google" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
+                    <a href="/register/service/google" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
                 @endif
                 @if(isset($socialDrivers['github']))
-                    <a href="/login/service/github" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
+                    <a href="/register/service/github" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
                 @endif
             @endif
         </div>
     </div>
+
 
 @stop

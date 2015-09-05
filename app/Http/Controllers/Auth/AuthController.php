@@ -37,7 +37,7 @@ class AuthController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService)
     {
-        $this->middleware('guest', ['only' => ['getLogin', 'postLogin']]);
+        $this->middleware('guest', ['only' => ['getLogin', 'postLogin', 'getRegister']]);
         $this->socialAuthService = $socialAuthService;
     }
 
@@ -72,6 +72,17 @@ class AuthController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getRegister()
+    {
+        $socialDrivers = $this->socialAuthService->getActiveDrivers();
+        return view('auth.register', ['socialDrivers' => $socialDrivers]);
+    }
+
+    /**
      * Show the application login form.
      *
      * @return \Illuminate\Http\Response
@@ -84,7 +95,6 @@ class AuthController extends Controller
         }
 
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-
         return view('auth.login', ['socialDrivers' => $socialDrivers]);
     }
 
