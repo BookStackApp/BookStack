@@ -30,16 +30,16 @@ abstract class Controller extends BaseController
     public function __construct()
     {
         // Get a user instance for the current user
-        $user = Auth::user();
+        $user = auth()->user();
         if (!$user) {
             $user = User::getDefault();
         }
         // Share variables with views
-        view()->share('signedIn', Auth::check());
+        view()->share('signedIn', auth()->check());
         view()->share('currentUser', $user);
         // Share variables with controllers
         $this->currentUser = $user;
-        $this->signedIn = Auth::check();
+        $this->signedIn = auth()->check();
     }
 
     /**

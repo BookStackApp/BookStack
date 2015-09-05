@@ -64,7 +64,7 @@ class UserController extends Controller
         ]);
 
         $user = $this->user->fill($request->all());
-        $user->password = Hash::make($request->get('password'));
+        $user->password = bcrypt($request->get('password'));
         $user->save();
 
         $user->attachRoleId($request->get('role'));
@@ -120,7 +120,7 @@ class UserController extends Controller
         if ($request->has('password') && $request->get('password') != '') {
             //dd('cat');
             $password = $request->get('password');
-            $user->password = Hash::make($password);
+            $user->password = bcrypt($password);
         }
         $user->save();
         return redirect('/users');

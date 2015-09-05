@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
+    // Uploads
     Route::post('/upload/image', 'ImageController@upload');
 
     // Users
@@ -74,7 +75,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Settings
     Route::get('/settings', 'SettingController@index');
     Route::post('/settings', 'SettingController@update');
-
 
 });
 
