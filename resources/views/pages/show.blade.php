@@ -5,7 +5,7 @@
     <div class="faded-small">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 faded">
+                <div class="col-sm-6 faded">
                     <div class="breadcrumbs">
                         <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
                         @if($page->hasChapter())
@@ -17,7 +17,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-6 faded">
+                <div class="col-sm-6 faded">
                     <div class="action-buttons">
                         @if($currentUser->can('page-update'))
                             <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary text-button"><i class="zmdi zmdi-replay"></i>Revisions</a>

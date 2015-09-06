@@ -39,16 +39,16 @@
     <header id="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-3">
                     <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-4 col-sm-3 text-center">
                     <form action="/search/all" method="GET" class="search-box">
                         <input type="text" name="term" tabindex="2" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
                         <button class="text-button"><i class="zmdi zmdi-search"></i></button>
                     </form>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-6">
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>

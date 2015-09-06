@@ -109,6 +109,8 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
 }
 
 .search-box {
+  max-width: 100%;
+  position: relative;
   button {
     background-color: transparent;
     border: none;
@@ -124,5 +126,6 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   input {
     padding-right: $-l;
     width: 300px;
+    max-width: 100%;
   }
 }
