@@ -12,14 +12,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}/edit', 'BookController@edit');
         Route::put('/{slug}', 'BookController@update');
         Route::delete('/{id}', 'BookController@destroy');
+        Route::get('/{slug}/sort-item', 'BookController@getSortItem');
         Route::get('/{slug}', 'BookController@show');
         Route::get('/{slug}/delete', 'BookController@showDelete');
+        Route::get('/{bookSlug}/sort', 'BookController@sort');
+        Route::put('/{bookSlug}/sort', 'BookController@saveSort');
+
 
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
         Route::post('/{bookSlug}/page', 'PageController@store');
-        Route::get('/{bookSlug}/sort', 'PageController@sortPages');
-        Route::put('/{bookSlug}/sort', 'PageController@savePageSort');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');

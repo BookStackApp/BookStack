@@ -186,6 +186,17 @@ class PageRepo
         return $query->count() > 0;
     }
 
+    public function setBookId($bookId, Page $page)
+    {
+        $page->book_id = $bookId;
+        foreach($page->activity as $activity) {
+            $activity->book_id = $bookId;
+            $activity->save();
+        }
+        $page->save();
+        return $page;
+    }
+
     /**
      * Gets a suitable slug for the resource
      *

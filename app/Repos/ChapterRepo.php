@@ -80,4 +80,15 @@ class ChapterRepo
         return $chapters;
     }
 
+    public function setBookId($bookId, Chapter $chapter)
+    {
+        $chapter->book_id = $bookId;
+        foreach($chapter->activity as $activity) {
+            $activity->book_id = $bookId;
+            $activity->save();
+        }
+        $chapter->save();
+        return $chapter;
+    }
+
 }

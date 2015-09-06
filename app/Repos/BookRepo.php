@@ -36,6 +36,16 @@ class BookRepo
     }
 
     /**
+     * Checks if a book exists.
+     * @param $id
+     * @return bool
+     */
+    public function exists($id)
+    {
+        return $this->book->where('id', '=', $id)->exists();
+    }
+
+    /**
      * Get a new book instance from request input.
      * @param $input
      * @return Book

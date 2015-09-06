@@ -143,50 +143,6 @@ class PageController extends Controller
     }
 
     /**
-     * Shows the view which allows pages to be re-ordered and sorted.
-     * @param $bookSlug
-     * @return \Illuminate\View\View
-     */
-    public function sortPages($bookSlug)
-    {
-        $this->checkPermission('book-update');
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        return view('pages/sort', ['book' => $book, 'current' => $book]);
-    }
-
-    /**
-     * Saves an array of sort mapping to pages and chapters.
-     *
-     * @param         $bookSlug
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function savePageSort($bookSlug, Request $request)
-    {
-        $this->checkPermission('book-update');
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        // Return if no map sent
-        if (!$request->has('sort-tree')) {
-            return redirect($book->getUrl());
-        }
-
-        // Sort pages and chapters
-        $sortMap = json_decode($request->get('sort-tree'));
-        foreach ($sortMap as $index => $bookChild) {
-            $id = $bookChild->id;
-            $isPage = $bookChild->type == 'page';
-            $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
-            $model->priority = $index;
-            if ($isPage) {
-                $model->chapter_id = ($bookChild->parentChapter === false) ? 0 : $bookChild->parentChapter;
-            }
-            $model->save();
-        }
-        Activity::add($book, 'book_sort', $book->id);
-        return redirect($book->getUrl());
-    }
-
-    /**
      * Show the deletion page for the specified page.
      * @param $bookSlug
      * @param $pageSlug

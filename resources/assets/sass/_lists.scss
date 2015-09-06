@@ -37,6 +37,7 @@
   cursor: pointer;
   margin: 0 0 $-l 0;
   transition: all ease-in-out 180ms;
+  user-select: none;
   i {
     transition: all ease-in-out 180ms;
     transform: rotate(0deg);
@@ -154,10 +155,18 @@
 // Sortable Lists
 .sortable-page-list, .sortable-page-list ul {
   list-style: none;
+  background-color: #FFF;
+}
+.sort-box {
+  margin-bottom: $-m;
+  padding: 0 $-l 0 $-l;
+  border-left: 4px solid $color-book;
 }
 .sortable-page-list {
   margin-left: 0;
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+  > ul {
+    margin-left: 0;
+  }
   ul {
     margin-bottom: 0;
     margin-top: 0;

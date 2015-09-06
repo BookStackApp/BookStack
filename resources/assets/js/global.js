@@ -13,7 +13,7 @@ $(function () {
     $('.chapter-toggle').click(function(e) {
         e.preventDefault();
         $(this).toggleClass('open');
-        $(this).closest('.book-child').find('.inset-list').slideToggle(180);
+        $(this).closest('.chapter').find('.inset-list').slideToggle(180);
     });
 
 });

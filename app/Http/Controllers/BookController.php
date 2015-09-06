@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Oxbow\Http\Requests;
 use Oxbow\Repos\BookRepo;
+use Oxbow\Repos\ChapterRepo;
 use Oxbow\Repos\PageRepo;
 
 class BookController extends Controller
@@ -16,16 +17,19 @@ class BookController extends Controller
 
     protected $bookRepo;
     protected $pageRepo;
+    protected $chapterRepo;
 
     /**
      * BookController constructor.
-     * @param BookRepo $bookRepo
-     * @param PageRepo $pageRepo
+     * @param BookRepo    $bookRepo
+     * @param PageRepo    $pageRepo
+     * @param ChapterRepo $chapterRepo
      */
-    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo)
+    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->pageRepo = $pageRepo;
+        $this->chapterRepo = $chapterRepo;
         parent::__construct();
     }
 
@@ -131,6 +135,71 @@ class BookController extends Controller
         $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         return view('books/delete', ['book' => $book, 'current' => $book]);
+    }
+
+    /**
+     * Shows the view which allows pages to be re-ordered and sorted.
+     * @param string $bookSlug
+     * @return \Illuminate\View\View
+     */
+    public function sort($bookSlug)
+    {
+        $this->checkPermission('book-update');
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $books = $this->bookRepo->getAll();
+        return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books]);
+    }
+
+    public function getSortItem($bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        return view('books/sort-box', ['book' => $book]);
+    }
+
+    /**
+     * Saves an array of sort mapping to pages and chapters.
+     *
+     * @param  string $bookSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function saveSort($bookSlug, Request $request)
+    {
+        $this->checkPermission('book-update');
+        $book = $this->bookRepo->getBySlug($bookSlug);
+
+        // Return if no map sent
+        if (!$request->has('sort-tree')) {
+            return redirect($book->getUrl());
+        }
+
+        $sortedBooks = [];
+        // Sort pages and chapters
+        $sortMap = json_decode($request->get('sort-tree'));
+        $defaultBookId = $book->id;
+        foreach ($sortMap as $index => $bookChild) {
+            $id = $bookChild->id;
+            $isPage = $bookChild->type == 'page';
+            $bookId = $this->bookRepo->exists($bookChild->book) ? $bookChild->book : $defaultBookId;
+            $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
+            $isPage ? $this->pageRepo->setBookId($bookId, $model) : $this->chapterRepo->setBookId($bookId, $model);
+            $model->priority = $index;
+            if ($isPage) {
+                $model->chapter_id = ($bookChild->parentChapter === false) ? 0 : $bookChild->parentChapter;
+            }
+            $model->save();
+            if (!in_array($bookId, $sortedBooks)) {
+                $sortedBooks[] = $bookId;
+            }
+        }
+
+        // Add activity for books
+        foreach ($sortedBooks as $bookId) {
+            $updatedBook = $this->bookRepo->getById($bookId);
+            Activity::add($updatedBook, 'book_sort', $updatedBook->id);
+        }
+
+        return redirect($book->getUrl());
     }
 
     /**
