@@ -22,7 +22,6 @@ class SettingController extends Controller
     }
 
 
-
     /**
      * Update the specified settings in storage.
      *

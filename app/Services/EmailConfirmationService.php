@@ -35,7 +35,7 @@ class EmailConfirmationService
      */
     public function sendConfirmation(User $user)
     {
-        if($user->email_confirmed) {
+        if ($user->email_confirmed) {
             throw new ConfirmationEmailException('Email has already been confirmed, Try logging in.', '/login');
         }
         $this->deleteConfirmationsByUser($user);
@@ -66,7 +66,7 @@ class EmailConfirmationService
         }
 
         // If more than a day old
-        if(Carbon::now()->subDay()->gt($emailConfirmation->created_at)) {
+        if (Carbon::now()->subDay()->gt($emailConfirmation->created_at)) {
             $this->sendConfirmation($emailConfirmation->user);
             throw new UserRegistrationException('The confirmation token has expired, A new confirmation email has been sent.', '/register/confirm');
         }

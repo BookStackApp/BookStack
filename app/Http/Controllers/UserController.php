@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Oxbow\Http\Requests;
+use Oxbow\Repos\UserRepo;
 use Oxbow\Services\SocialAuthService;
 use Oxbow\User;
 
@@ -13,14 +14,16 @@ class UserController extends Controller
 {
 
     protected $user;
+    protected $userRepo;
 
     /**
      * UserController constructor.
      * @param $user
      */
-    public function __construct(User $user)
+    public function __construct(User $user, UserRepo $userRepo)
     {
         $this->user = $user;
+        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
@@ -150,8 +153,12 @@ class UserController extends Controller
         $this->checkPermissionOr('user-delete', function () use ($id) {
             return $this->currentUser->id == $id;
         });
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         // Delete social accounts
+        if($this->userRepo->isOnlyAdmin($user)) {
+            session()->flash('error', 'You cannot delete the only admin');
+            return redirect($user->getEditUrl());
+        }
         $user->socialAccounts()->delete();
         $user->delete();
         return redirect('/users');

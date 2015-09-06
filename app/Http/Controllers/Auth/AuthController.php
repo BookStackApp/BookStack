@@ -7,9 +7,8 @@ use Oxbow\Exceptions\SocialSignInException;
 use Oxbow\Exceptions\UserRegistrationException;
 use Oxbow\Repos\UserRepo;
 use Oxbow\Services\EmailConfirmationService;
-use Oxbow\Services\Facades\Setting;
 use Oxbow\Services\SocialAuthService;
-use Oxbow\User;
+use Oxbow\SocialAccount;
 use Validator;
 use Oxbow\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -46,7 +45,7 @@ class AuthController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
-        $this->middleware('guest', ['only' => ['getLogin', 'postLogin', 'getRegister']]);
+        $this->middleware('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
         $this->socialAuthService = $socialAuthService;
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
@@ -55,7 +54,6 @@ class AuthController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
      * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -68,31 +66,15 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
-
     protected function checkRegistrationAllowed()
     {
-        if(!\Setting::get('registration-enabled')) {
+        if (!\Setting::get('registration-enabled')) {
             throw new UserRegistrationException('Registrations are currently disabled.', '/login');
         }
     }
 
     /**
      * Show the application registration form.
-     *
      * @return \Illuminate\Http\Response
      */
     public function getRegister()
@@ -104,7 +86,6 @@ class AuthController extends Controller
 
     /**
      * Handle a registration request for the application.
-     *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      * @throws UserRegistrationException
@@ -120,18 +101,54 @@ class AuthController extends Controller
             );
         }
 
-        if(\Setting::get('registration-restrict')) {
+        $userData = $request->all();
+        return $this->registerUser($userData);
+    }
+
+    /**
+     * Register a new user after a registration callback.
+     * @param $socialDriver
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws UserRegistrationException
+     */
+    protected function socialRegisterCallback($socialDriver)
+    {
+        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver);
+        $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
+
+        // Create an array of the user data to create a new user instance
+        $userData = [
+            'name'     => $socialUser->getName(),
+            'email'    => $socialUser->getEmail(),
+            'password' => str_random(30)
+        ];
+        return $this->registerUser($userData, $socialAccount);
+    }
+
+    /**
+     * The registrations flow for all users.
+     * @param array                    $userData
+     * @param bool|false|SocialAccount $socialAccount
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws UserRegistrationException
+     * @throws \Oxbow\Exceptions\ConfirmationEmailException
+     */
+    protected function registerUser(array $userData, $socialAccount = false)
+    {
+        if (\Setting::get('registration-restrict')) {
             $restrictedEmailDomains = explode(',', str_replace(' ', '', \Setting::get('registration-restrict')));
-            $userEmailDomain = $domain = substr(strrchr($request->get('email'), "@"), 1);
-            if(!in_array($userEmailDomain, $restrictedEmailDomains)) {
+            $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
+            if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
                 throw new UserRegistrationException('That email domain does not have access to this application', '/register');
             }
         }
 
-        $newUser = $this->create($request->all());
-        $newUser->attachRoleId(\Setting::get('registration-role'), 1);
+        $newUser = $this->userRepo->registerNew($userData);
+        if ($socialAccount) {
+            $newUser->socialAccounts()->save($socialAccount);
+        }
 
-        if(\Setting::get('registration-confirmation') || \Setting::get('registration-restrict')) {
+        if (\Setting::get('registration-confirmation') || \Setting::get('registration-restrict')) {
             $newUser->email_confirmed = false;
             $newUser->save();
             $this->emailConfirmationService->sendConfirmation($newUser);
@@ -139,6 +156,7 @@ class AuthController extends Controller
         }
 
         auth()->login($newUser);
+        session()->flash('success', 'Thanks for signing up! You are now registered and signed in.');
         return redirect($this->redirectPath());
     }
 
@@ -197,7 +215,6 @@ class AuthController extends Controller
 
     /**
      * Show the application login form.
-     *
      * @return \Illuminate\Http\Response
      */
     public function getLogin()
@@ -218,19 +235,41 @@ class AuthController extends Controller
      */
     public function getSocialLogin($socialDriver)
     {
+        session()->put('social-callback', 'login');
         return $this->socialAuthService->startLogIn($socialDriver);
     }
 
     /**
+     * Redirect to the social site for authentication initended to register.
+     * @param $socialDriver
+     * @return mixed
+     */
+    public function socialRegister($socialDriver)
+    {
+        $this->checkRegistrationAllowed();
+        session()->put('social-callback', 'register');
+        return $this->socialAuthService->startRegister($socialDriver);
+    }
+
+    /**
      * The callback for social login services.
-     *
      * @param $socialDriver
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws SocialSignInException
      */
     public function socialCallback($socialDriver)
     {
-        return $this->socialAuthService->handleCallback($socialDriver);
+        if (session()->has('social-callback')) {
+            $action = session()->pull('social-callback');
+            if ($action == 'login') {
+                return $this->socialAuthService->handleLoginCallback($socialDriver);
+            } elseif ($action == 'register') {
+                return $this->socialRegisterCallback($socialDriver);
+            }
+        } else {
+            throw new SocialSignInException('No action defined', '/login');
+        }
+        return redirect()->back();
     }
 
     /**

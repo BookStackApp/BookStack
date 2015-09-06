@@ -1,8 +1,11 @@
 <?php namespace Oxbow\Services;
 
+use GuzzleHttp\Exception\ClientException;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Oxbow\Exceptions\SocialDriverNotConfigured;
 use Oxbow\Exceptions\SocialSignInException;
+use Oxbow\Exceptions\UserRegistrationException;
+use Oxbow\Http\Controllers\Auth\AuthController;
 use Oxbow\Repos\UserRepo;
 use Oxbow\SocialAccount;
 use Oxbow\User;
@@ -29,9 +32,10 @@ class SocialAuthService
         $this->socialAccount = $socialAccount;
     }
 
+
     /**
      * Start the social login path.
-     * @param $socialDriver
+     * @param string $socialDriver
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws SocialDriverNotConfigured
      */
@@ -42,14 +46,52 @@ class SocialAuthService
     }
 
     /**
-     * Get a user from socialite after a oAuth callback.
-     *
+     * Start the social registration process
+     * @param string $socialDriver
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws SocialDriverNotConfigured
+     */
+    public function startRegister($socialDriver)
+    {
+        $driver = $this->validateDriver($socialDriver);
+        return $this->socialite->driver($driver)->redirect();
+    }
+
+    /**
+     * Handle the social registration process on callback.
      * @param $socialDriver
-     * @return User
+     * @return \Laravel\Socialite\Contracts\User
+     * @throws SocialDriverNotConfigured
+     * @throws UserRegistrationException
+     */
+    public function handleRegistrationCallback($socialDriver)
+    {
+        $driver = $this->validateDriver($socialDriver);
+
+        // Get user details from social driver
+        $socialUser = $this->socialite->driver($driver)->user();
+
+        // Check social account has not already been used
+        if ($this->socialAccount->where('driver_id', '=', $socialUser->getId())->exists()) {
+            throw new UserRegistrationException('This ' . $socialDriver . ' account is already in use, Try logging in via the ' . $socialDriver . ' option.', '/login');
+        }
+
+        if($this->userRepo->getByEmail($socialUser->getEmail())) {
+            $email = $socialUser->getEmail();
+            throw new UserRegistrationException('The email '. $email.' is already in use. If you already have an account you can connect your ' . $socialDriver .' account from your profile settings.', '/login');
+        }
+
+        return $socialUser;
+    }
+
+    /**
+     * Handle the login process on a oAuth callback.
+     * @param $socialDriver
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws SocialDriverNotConfigured
      * @throws SocialSignInException
      */
-    public function handleCallback($socialDriver)
+    public function handleLoginCallback($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
 
@@ -93,11 +135,12 @@ class SocialAuthService
 
         // Otherwise let the user know this social account is not used by anyone.
         $message = 'This ' . $socialDriver . ' account is not linked to any users. Please attach it in your profile settings';
-        if(\Setting::get('registration-enabled')) {
-            $message .= 'or, If you do not yet have an account, You can register an account using the ' . $socialDriver . ' option';
+        if (\Setting::get('registration-enabled')) {
+            $message .= ' or, If you do not yet have an account, You can register an account using the ' . $socialDriver . ' option';
         }
         throw new SocialSignInException($message . '.', '/login');
     }
+
 
     private function logUserIn($user)
     {
@@ -150,16 +193,18 @@ class SocialAuthService
     }
 
     /**
-     * @param $socialDriver
-     * @param $socialUser
+     * @param string $socialDriver
+     * @param \Laravel\Socialite\Contracts\User $socialUser
+     * @return SocialAccount
      */
-    private function fillSocialAccount($socialDriver, $socialUser)
+    public function fillSocialAccount($socialDriver, $socialUser)
     {
         $this->socialAccount->fill([
             'driver'    => $socialDriver,
             'driver_id' => $socialUser->getId(),
             'avatar'    => $socialUser->getAvatar()
         ]);
+        return $this->socialAccount;
     }
 
     /**

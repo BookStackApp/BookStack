@@ -92,6 +92,7 @@ Route::get('/register/confirm', 'Auth\AuthController@getRegisterConfirmation');
 Route::get('/register/confirm/awaiting', 'Auth\AuthController@showAwaitingConfirmation');
 Route::post('/register/confirm/resend', 'Auth\AuthController@resendConfirmation');
 Route::get('/register/confirm/{token}', 'Auth\AuthController@confirmEmail');
+Route::get('/register/service/{socialDriver}', 'Auth\AuthController@socialRegister');
 Route::post('/register', 'Auth\AuthController@postRegister');
 
 // Password reset link request routes...

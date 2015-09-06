@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    @include('form/password', ['name' => 'password'])
+                    @include('form/password', ['name' => 'password', 'placeholder' => 'Must be over 5 characters'])
                 </div>
 
                 <div class="from-group">
