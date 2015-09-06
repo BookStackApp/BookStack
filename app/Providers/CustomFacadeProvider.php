@@ -30,7 +30,10 @@ class CustomFacadeProvider extends ServiceProvider
         });
 
         $this->app->bind('setting', function() {
-            return new SettingService($this->app->make('Oxbow\Setting'));
+            return new SettingService(
+                $this->app->make('Oxbow\Setting'),
+                $this->app->make('Illuminate\Contracts\Cache\Repository')
+            );
         });
     }
 }

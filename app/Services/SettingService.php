@@ -1,6 +1,7 @@
 <?php namespace Oxbow\Services;
 
 use Oxbow\Setting;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 /**
  * Class SettingService
@@ -13,14 +14,19 @@ class SettingService
 {
 
     protected $setting;
+    protected $cache;
+
+    protected $cachePrefix = 'setting-';
 
     /**
      * SettingService constructor.
-     * @param $setting
+     * @param Setting $setting
+     * @param Cache   $cache
      */
-    public function __construct(Setting $setting)
+    public function __construct(Setting $setting, Cache $cache)
     {
         $this->setting = $setting;
+        $this->cache = $cache;
     }
 
     /**
@@ -32,17 +38,54 @@ class SettingService
      */
     public function get($key, $default = false)
     {
-        $setting = $this->getSettingObjectByKey($key);
-        $value = $setting === null ? null : $setting->value;
+        $value =  $this->getValueFromStore($key, $default);
+        return $this->formatValue($value, $default);
+    }
 
+    /**
+     * Gets a setting value from the cache or database.
+     * @param $key
+     * @param $default
+     * @return mixed
+     */
+    protected function getValueFromStore($key, $default)
+    {
+        $cacheKey = $this->cachePrefix . $key;
+        if ($this->cache->has($cacheKey)) {
+            return $this->cache->get($cacheKey);
+        }
+
+        $settingObject = $this->getSettingObjectByKey($key);
+        if($settingObject !== null) {
+            $value = $settingObject->value;
+            $this->cache->forever($cacheKey, $value);
+            return $value;
+        }
+
+        return $default;
+    }
+
+    protected function clearFromCache($key)
+    {
+        $cacheKey = $this->cachePrefix . $key;
+        $this->cache->forget($cacheKey);
+    }
+
+    /**
+     * Format a settings value
+     * @param $value
+     * @param $default
+     * @return mixed
+     */
+    protected function formatValue($value, $default)
+    {
         // Change string booleans to actual booleans
-        if($value === 'true') $value = true;
-        if($value === 'false') $value = false;
+        if ($value === 'true') $value = true;
+        if ($value === 'false') $value = false;
 
         // Set to default if empty
-        if($value === '') $value = $default;
-
-        return $value === null ? $default : $value;
+        if ($value === '') $value = $default;
+        return $value;
     }
 
     /**
@@ -69,6 +112,7 @@ class SettingService
         ]);
         $setting->value = $value;
         $setting->save();
+        $this->clearFromCache($key);
         return true;
     }
 
@@ -83,6 +127,7 @@ class SettingService
         if ($setting) {
             $setting->delete();
         }
+        $this->clearFromCache($key);
         return true;
     }
 
