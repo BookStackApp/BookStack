@@ -155,6 +155,7 @@ class AuthController extends Controller
             return redirect('/register/confirm');
         }
 
+        $newUser->email_confirmed = true;
         auth()->login($newUser);
         session()->flash('success', 'Thanks for signing up! You are now registered and signed in.');
         return redirect($this->redirectPath());
