@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Providers;
+namespace BookStack\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Oxbow\Events\SomeEvent' => [
-            'Oxbow\Listeners\EventListener',
+        'BookStack\Events\SomeEvent' => [
+            'BookStack\Listeners\EventListener',
         ],
     ];
 

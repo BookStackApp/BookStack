@@ -1,6 +1,6 @@
-<?php namespace Oxbow\Services;
+<?php namespace BookStack\Services;
 
-use Oxbow\Setting;
+use BookStack\Setting;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 /**
@@ -8,7 +8,7 @@ use Illuminate\Contracts\Cache\Repository as Cache;
  *
  * The settings are a simple key-value database store.
  *
- * @package Oxbow\Services
+ * @package BookStack\Services
  */
 class SettingService
 {

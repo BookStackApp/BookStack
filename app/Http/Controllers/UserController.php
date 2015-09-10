@@ -1,14 +1,14 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
-use Oxbow\Http\Requests;
-use Oxbow\Repos\UserRepo;
-use Oxbow\Services\SocialAuthService;
-use Oxbow\User;
+use BookStack\Http\Requests;
+use BookStack\Repos\UserRepo;
+use BookStack\Services\SocialAuthService;
+use BookStack\User;
 
 class UserController extends Controller
 {

@@ -1,7 +1,7 @@
-<?php namespace Oxbow\Repos;
+<?php namespace BookStack\Repos;
 
 use Illuminate\Support\Str;
-use Oxbow\Book;
+use BookStack\Book;
 
 class BookRepo
 {

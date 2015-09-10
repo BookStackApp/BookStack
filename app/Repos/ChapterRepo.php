@@ -1,8 +1,8 @@
-<?php namespace Oxbow\Repos;
+<?php namespace BookStack\Repos;
 
 
 use Illuminate\Support\Str;
-use Oxbow\Chapter;
+use BookStack\Chapter;
 
 class ChapterRepo
 {

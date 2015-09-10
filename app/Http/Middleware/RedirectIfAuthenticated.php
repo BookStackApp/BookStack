@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Http\Middleware;
+namespace BookStack\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

@@ -1,15 +1,15 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image as ImageTool;
 use Illuminate\Support\Facades\DB;
-use Oxbow\Http\Requests;
-use Oxbow\Image;
-use Oxbow\Repos\PageRepo;
+use BookStack\Http\Requests;
+use BookStack\Image;
+use BookStack\Repos\PageRepo;
 
 class ImageController extends Controller
 {

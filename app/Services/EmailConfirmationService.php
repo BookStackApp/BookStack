@@ -1,15 +1,15 @@
-<?php namespace Oxbow\Services;
+<?php namespace BookStack\Services;
 
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Mail\Message;
-use Oxbow\EmailConfirmation;
-use Oxbow\Exceptions\ConfirmationEmailException;
-use Oxbow\Exceptions\UserRegistrationException;
-use Oxbow\Repos\UserRepo;
-use Oxbow\Setting;
-use Oxbow\User;
+use BookStack\EmailConfirmation;
+use BookStack\Exceptions\ConfirmationEmailException;
+use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Repos\UserRepo;
+use BookStack\Setting;
+use BookStack\User;
 
 class EmailConfirmationService
 {

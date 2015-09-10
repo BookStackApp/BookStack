@@ -18,7 +18,7 @@ class EntityTest extends TestCase
         $this->bookDelete($book);
     }
 
-    public function bookDelete(\Oxbow\Book $book)
+    public function bookDelete(\BookStack\Book $book)
     {
         $this->asAdmin()
             ->visit($book->getUrl())
@@ -32,7 +32,7 @@ class EntityTest extends TestCase
             ->notSeeInDatabase('books', ['id' => $book->id]);
     }
 
-    public function bookUpdate(\Oxbow\Book $book)
+    public function bookUpdate(\BookStack\Book $book)
     {
         $newName = $book->name . ' Updated';
         $this->asAdmin()
@@ -46,12 +46,12 @@ class EntityTest extends TestCase
             ->seePageIs($book->getUrl() . '-updated')
             ->see($newName);
 
-        return \Oxbow\Book::find($book->id);
+        return \BookStack\Book::find($book->id);
     }
 
     public function pageCreation($chapter)
     {
-        $page = factory(\Oxbow\Page::class)->make([
+        $page = factory(\BookStack\Page::class)->make([
             'name' => 'My First Page'
         ]);
 
@@ -68,13 +68,13 @@ class EntityTest extends TestCase
             ->seePageIs($chapter->book->getUrl() . '/page/my-first-page')
             ->see($page->name);
 
-        $page = \Oxbow\Page::where('slug', '=', 'my-first-page')->where('chapter_id', '=', $chapter->id)->first();
+        $page = \BookStack\Page::where('slug', '=', 'my-first-page')->where('chapter_id', '=', $chapter->id)->first();
         return $page;
     }
 
-    public function chapterCreation(\Oxbow\Book $book)
+    public function chapterCreation(\BookStack\Book $book)
     {
-        $chapter = factory(\Oxbow\Chapter::class)->make([
+        $chapter = factory(\BookStack\Chapter::class)->make([
             'name' => 'My First Chapter'
         ]);
 
@@ -91,13 +91,13 @@ class EntityTest extends TestCase
             ->seePageIs($book->getUrl() . '/chapter/my-first-chapter')
             ->see($chapter->name)->see($chapter->description);
 
-        $chapter = \Oxbow\Chapter::where('slug', '=', 'my-first-chapter')->where('book_id', '=', $book->id)->first();
+        $chapter = \BookStack\Chapter::where('slug', '=', 'my-first-chapter')->where('book_id', '=', $book->id)->first();
         return $chapter;
     }
 
     public function bookCreation()
     {
-        $book = factory(\Oxbow\Book::class)->make([
+        $book = factory(\BookStack\Book::class)->make([
             'name' => 'My First Book'
         ]);
         $this->asAdmin()
@@ -113,7 +113,7 @@ class EntityTest extends TestCase
             ->seePageIs('/books/my-first-book')
             ->see($book->name)->see($book->description);
 
-        $book = \Oxbow\Book::where('slug', '=', 'my-first-book')->first();
+        $book = \BookStack\Book::where('slug', '=', 'my-first-book')->first();
         return $book;
     }
 

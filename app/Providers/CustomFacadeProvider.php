@@ -1,10 +1,10 @@
 <?php
 
-namespace Oxbow\Providers;
+namespace BookStack\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Oxbow\Services\ActivityService;
-use Oxbow\Services\SettingService;
+use BookStack\Services\ActivityService;
+use BookStack\Services\SettingService;
 
 class CustomFacadeProvider extends ServiceProvider
 {
@@ -26,12 +26,12 @@ class CustomFacadeProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('activity', function() {
-            return new ActivityService($this->app->make('Oxbow\Activity'));
+            return new ActivityService($this->app->make('BookStack\Activity'));
         });
 
         $this->app->bind('setting', function() {
             return new SettingService(
-                $this->app->make('Oxbow\Setting'),
+                $this->app->make('BookStack\Setting'),
                 $this->app->make('Illuminate\Contracts\Cache\Repository')
             );
         });

@@ -1,8 +1,8 @@
 <?php
 
-namespace Oxbow\Http\Controllers\Auth;
+namespace BookStack\Http\Controllers\Auth;
 
-use Oxbow\Http\Controllers\Controller;
+use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller

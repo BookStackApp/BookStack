@@ -148,10 +148,10 @@ return [
         /*
          * Application Service Providers...
          */
-        Oxbow\Providers\AppServiceProvider::class,
-        Oxbow\Providers\EventServiceProvider::class,
-        Oxbow\Providers\RouteServiceProvider::class,
-        Oxbow\Providers\CustomFacadeProvider::class,
+        BookStack\Providers\AppServiceProvider::class,
+        BookStack\Providers\EventServiceProvider::class,
+        BookStack\Providers\RouteServiceProvider::class,
+        BookStack\Providers\CustomFacadeProvider::class,
 
     ],
 
@@ -212,8 +212,8 @@ return [
          * Custom
          */
 
-        'Activity'  => Oxbow\Services\Facades\Activity::class,
-        'Setting'   => Oxbow\Services\Facades\Setting::class,
+        'Activity'  => BookStack\Services\Facades\Activity::class,
+        'Setting'   => BookStack\Services\Facades\Setting::class,
 
     ],
 

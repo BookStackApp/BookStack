@@ -1,4 +1,4 @@
-<?php namespace Oxbow\Services\Facades;
+<?php namespace BookStack\Services\Facades;
 
 
 use Illuminate\Support\Facades\Facade;

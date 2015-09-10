@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -53,7 +53,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        return $this->belongsToMany('Oxbow\Role');
+        return $this->belongsToMany('BookStack\Role');
     }
 
     public function getRoleAttribute()
@@ -103,7 +103,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function socialAccounts()
     {
-        return $this->hasMany('Oxbow\SocialAccount');
+        return $this->hasMany('BookStack\SocialAccount');
     }
 
     /**

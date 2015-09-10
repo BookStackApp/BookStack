@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Http\Requests;
+namespace BookStack\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

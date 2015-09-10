@@ -1,4 +1,4 @@
-<?php namespace Oxbow\Providers;
+<?php namespace BookStack\Providers;
 
 
 use Illuminate\Support\ServiceProvider;

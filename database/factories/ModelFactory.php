@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(Oxbow\User::class, function ($faker) {
+$factory->define(BookStack\User::class, function ($faker) {
     return [
         'name'           => $faker->name,
         'email'          => $faker->email,
@@ -20,21 +20,21 @@ $factory->define(Oxbow\User::class, function ($faker) {
     ];
 });
 
-$factory->define(Oxbow\Book::class, function ($faker) {
+$factory->define(BookStack\Book::class, function ($faker) {
     return [
         'name'        => $faker->sentence,
         'description' => $faker->paragraph
     ];
 });
 
-$factory->define(Oxbow\Chapter::class, function ($faker) {
+$factory->define(BookStack\Chapter::class, function ($faker) {
     return [
         'name'        => $faker->sentence,
         'description' => $faker->paragraph
     ];
 });
 
-$factory->define(Oxbow\Page::class, function ($faker) {
+$factory->define(BookStack\Page::class, function ($faker) {
     return [
         'name' => $faker->sentence,
         'html' => '<p>' . implode('</p>', $faker->paragraphs(5)) . '</p>'

@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Events;
+namespace BookStack\Events;
 
 abstract class Event
 {

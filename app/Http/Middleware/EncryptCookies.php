@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Http\Middleware;
+namespace BookStack\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

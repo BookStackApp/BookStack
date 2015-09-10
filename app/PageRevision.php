@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,12 +10,12 @@ class PageRevision extends Model
 
     public function createdBy()
     {
-        return $this->belongsTo('Oxbow\User', 'created_by');
+        return $this->belongsTo('BookStack\User', 'created_by');
     }
 
     public function page()
     {
-        return $this->belongsTo('Oxbow\Page');
+        return $this->belongsTo('BookStack\Page');
     }
 
     public function getUrl()

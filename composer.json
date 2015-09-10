@@ -22,7 +22,7 @@
             "database"
         ],
         "psr-4": {
-            "Oxbow\\": "app/"
+            "BookStack\\": "app/"
         }
     },
     "autoload-dev": {

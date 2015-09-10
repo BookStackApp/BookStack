@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 

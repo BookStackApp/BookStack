@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +32,7 @@ class Activity extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Oxbow\User');
+        return $this->belongsTo('BookStack\User');
     }
 
     /**

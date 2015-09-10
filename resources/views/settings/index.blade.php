@@ -35,9 +35,9 @@
                 <div class="form-group">
                     <label for="setting-registration-role">Default user role after registration</label>
                     <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
-                        @foreach(\Oxbow\Role::all() as $role)
+                        @foreach(\BookStack\Role::all() as $role)
                             <option value="{{$role->id}}"
-                                    @if(\Setting::get('registration-role', \Oxbow\Role::getDefault()->id) == $role->id) selected @endif
+                                    @if(\Setting::get('registration-role', \BookStack\Role::getDefault()->id) == $role->id) selected @endif
                                     >
                                 {{ $role->display_name }}
                             </option>

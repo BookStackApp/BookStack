@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use HttpRequestException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Oxbow\User;
+use BookStack\User;
 
 abstract class Controller extends BaseController
 {

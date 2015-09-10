@@ -1,16 +1,16 @@
 <?php
 
-namespace Oxbow\Http\Controllers\Auth;
+namespace BookStack\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use Oxbow\Exceptions\SocialSignInException;
-use Oxbow\Exceptions\UserRegistrationException;
-use Oxbow\Repos\UserRepo;
-use Oxbow\Services\EmailConfirmationService;
-use Oxbow\Services\SocialAuthService;
-use Oxbow\SocialAccount;
+use BookStack\Exceptions\SocialSignInException;
+use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Repos\UserRepo;
+use BookStack\Services\EmailConfirmationService;
+use BookStack\Services\SocialAuthService;
+use BookStack\SocialAccount;
 use Validator;
-use Oxbow\Http\Controllers\Controller;
+use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -131,7 +131,7 @@ class AuthController extends Controller
      * @param bool|false|SocialAccount $socialAccount
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
-     * @throws \Oxbow\Exceptions\ConfirmationEmailException
+     * @throws \BookStack\Exceptions\ConfirmationEmailException
      */
     protected function registerUser(array $userData, $socialAccount = false)
     {

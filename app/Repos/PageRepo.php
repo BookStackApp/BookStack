@@ -1,10 +1,10 @@
-<?php namespace Oxbow\Repos;
+<?php namespace BookStack\Repos;
 
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Oxbow\Page;
-use Oxbow\PageRevision;
+use BookStack\Page;
+use BookStack\PageRevision;
 
 class PageRepo
 {

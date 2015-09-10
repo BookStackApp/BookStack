@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Exceptions;
+namespace BookStack\Exceptions;
 
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;

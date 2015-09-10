@@ -1,8 +1,8 @@
-<?php namespace Oxbow\Services;
+<?php namespace BookStack\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Oxbow\Activity;
-use Oxbow\Entity;
+use BookStack\Activity;
+use BookStack\Entity;
 use Session;
 
 class ActivityService
@@ -100,7 +100,7 @@ class ActivityService
      */
     function entityActivity($entity, $count = 20, $page = 0)
     {
-        $activity = $entity->hasMany('Oxbow\Activity')->orderBy('created_at', 'desc')
+        $activity = $entity->hasMany('BookStack\Activity')->orderBy('created_at', 'desc')
             ->skip($count * $page)->take($count)->get();
 
         return $this->filterSimilar($activity);

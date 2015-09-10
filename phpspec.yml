@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: Oxbow
-        psr4_prefix: Oxbow
+        namespace: BookStack
+        psr4_prefix: BookStack
         src_path: app

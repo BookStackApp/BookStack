@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        \Oxbow\User::create([
+        \BookStack\User::create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => \Illuminate\Support\Facades\Hash::make('password')

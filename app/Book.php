@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 class Book extends Entity
 {
@@ -19,12 +19,12 @@ class Book extends Entity
 
     public function pages()
     {
-        return $this->hasMany('Oxbow\Page');
+        return $this->hasMany('BookStack\Page');
     }
 
     public function chapters()
     {
-        return $this->hasMany('Oxbow\Chapter');
+        return $this->hasMany('BookStack\Chapter');
     }
 
     public function children()

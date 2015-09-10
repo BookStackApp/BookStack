@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Http\Middleware;
+namespace BookStack\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 

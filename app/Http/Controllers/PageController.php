@@ -1,15 +1,15 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use Activity;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
-use Oxbow\Http\Requests;
-use Oxbow\Repos\BookRepo;
-use Oxbow\Repos\ChapterRepo;
-use Oxbow\Repos\PageRepo;
+use BookStack\Http\Requests;
+use BookStack\Repos\BookRepo;
+use BookStack\Repos\ChapterRepo;
+use BookStack\Repos\PageRepo;
 
 class PageController extends Controller
 {

@@ -32,7 +32,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function asAdmin()
     {
         if($this->admin === null) {
-            $this->admin = \Oxbow\User::find(1);
+            $this->admin = \BookStack\User::find(1);
         }
         return $this->actingAs($this->admin);
     }

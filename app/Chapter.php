@@ -1,4 +1,4 @@
-<?php namespace Oxbow;
+<?php namespace BookStack;
 
 
 class Chapter extends Entity
@@ -8,12 +8,12 @@ class Chapter extends Entity
 
     public function book()
     {
-        return $this->belongsTo('Oxbow\Book');
+        return $this->belongsTo('BookStack\Book');
     }
 
     public function pages()
     {
-        return $this->hasMany('Oxbow\Page')->orderBy('priority', 'ASC');
+        return $this->hasMany('BookStack\Page')->orderBy('priority', 'ASC');
     }
 
     public function getUrl()

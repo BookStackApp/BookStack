@@ -1,4 +1,4 @@
-<?php namespace Oxbow\Exceptions;
+<?php namespace BookStack\Exceptions;
 
 
 class UserRegistrationException extends NotifyException

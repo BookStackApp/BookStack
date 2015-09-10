@@ -68,19 +68,19 @@ class AddRolesAndPermissions extends Migration
 
 
         // Create default roles
-        $admin = new \Oxbow\Role();
+        $admin = new \BookStack\Role();
         $admin->name = 'admin';
         $admin->display_name = 'Admin';
         $admin->description = 'Administrator of the whole application';
         $admin->save();
 
-        $editor = new \Oxbow\Role();
+        $editor = new \BookStack\Role();
         $editor->name = 'editor';
         $editor->display_name = 'Editor';
         $editor->description = 'User can edit Books, Chapters & Pages';
         $editor->save();
 
-        $viewer = new \Oxbow\Role();
+        $viewer = new \BookStack\Role();
         $viewer->name = 'viewer';
         $viewer->display_name = 'Viewer';
         $viewer->description = 'User can view books & their content behind authentication';
@@ -91,7 +91,7 @@ class AddRolesAndPermissions extends Migration
         $ops = ['Create', 'Update', 'Delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \Oxbow\Permission();
+                $newPermission = new \BookStack\Permission();
                 $newPermission->name = strtolower($entity) . '-' . strtolower($op);
                 $newPermission->display_name = $op . ' ' . $entity . 's';
                 $newPermission->save();
@@ -105,7 +105,7 @@ class AddRolesAndPermissions extends Migration
         $ops = ['Create', 'Update', 'Delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \Oxbow\Permission();
+                $newPermission = new \BookStack\Permission();
                 $newPermission->name = strtolower($entity) . '-' . strtolower($op);
                 $newPermission->display_name = $op . ' ' . $entity;
                 $newPermission->save();
@@ -115,7 +115,7 @@ class AddRolesAndPermissions extends Migration
 
         // Set all current users as admins
         // (At this point only the initially create user should be an admin)
-        $users = \Oxbow\User::all();
+        $users = \BookStack\User::all();
         foreach ($users as $user) {
             $user->attachRole($admin);
         }

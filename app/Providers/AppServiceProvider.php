@@ -1,10 +1,10 @@
 <?php
 
-namespace Oxbow\Providers;
+namespace BookStack\Providers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use Oxbow\User;
+use BookStack\User;
 
 class AppServiceProvider extends ServiceProvider
 {

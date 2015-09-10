@@ -1,14 +1,14 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Oxbow\Http\Requests;
-use Oxbow\Http\Controllers\Controller;
-use Oxbow\Repos\BookRepo;
-use Oxbow\Services\ActivityService;
-use Oxbow\Services\Facades\Activity;
+use BookStack\Http\Requests;
+use BookStack\Http\Controllers\Controller;
+use BookStack\Repos\BookRepo;
+use BookStack\Services\ActivityService;
+use BookStack\Services\Facades\Activity;
 
 class HomeController extends Controller
 {

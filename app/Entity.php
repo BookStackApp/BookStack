@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ abstract class Entity extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('Oxbow\User', 'created_by');
+        return $this->belongsTo('BookStack\User', 'created_by');
     }
 
     /**
@@ -21,7 +21,7 @@ abstract class Entity extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('Oxbow\User', 'updated_by');
+        return $this->belongsTo('BookStack\User', 'updated_by');
     }
 
     /**
@@ -41,7 +41,7 @@ abstract class Entity extends Model
      */
     public function activity()
     {
-        return $this->morphMany('Oxbow\Activity', 'entity')->orderBy('created_at', 'desc');
+        return $this->morphMany('BookStack\Activity', 'entity')->orderBy('created_at', 'desc');
     }
 
     /**

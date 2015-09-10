@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow\Http;
+namespace BookStack\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -13,11 +13,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \Oxbow\Http\Middleware\EncryptCookies::class,
+        \BookStack\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \Oxbow\Http\Middleware\VerifyCsrfToken::class,
+        \BookStack\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,9 +26,9 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => \Oxbow\Http\Middleware\Authenticate::class,
+        'auth'       => \BookStack\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest'      => \Oxbow\Http\Middleware\RedirectIfAuthenticated::class,
-        'perm'       => \Oxbow\Http\Middleware\PermissionMiddleware::class
+        'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
+        'perm'       => \BookStack\Http\Middleware\PermissionMiddleware::class
     ];
 }

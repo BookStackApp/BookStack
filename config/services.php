@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe'   => [
-        'model'  => Oxbow\User::class,
+        'model'  => BookStack\User::class,
         'key'    => '',
         'secret' => '',
     ],

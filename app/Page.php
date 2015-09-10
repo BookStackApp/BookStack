@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,12 +19,12 @@ class Page extends Entity
 
     public function book()
     {
-        return $this->belongsTo('Oxbow\Book');
+        return $this->belongsTo('BookStack\Book');
     }
 
     public function chapter()
     {
-        return $this->belongsTo('Oxbow\Chapter');
+        return $this->belongsTo('BookStack\Chapter');
     }
 
     public function hasChapter()
@@ -35,7 +35,7 @@ class Page extends Entity
 
     public function revisions()
     {
-        return $this->hasMany('Oxbow\PageRevision')->orderBy('created_at', 'desc');
+        return $this->hasMany('BookStack\PageRevision')->orderBy('created_at', 'desc');
     }
 
     public function getUrl()

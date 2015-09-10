@@ -1,14 +1,14 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Oxbow\Http\Requests;
-use Oxbow\Http\Controllers\Controller;
-use Oxbow\Repos\BookRepo;
-use Oxbow\Repos\ChapterRepo;
-use Oxbow\Repos\PageRepo;
+use BookStack\Http\Requests;
+use BookStack\Http\Controllers\Controller;
+use BookStack\Repos\BookRepo;
+use BookStack\Repos\ChapterRepo;
+use BookStack\Repos\PageRepo;
 
 class SearchController extends Controller
 {

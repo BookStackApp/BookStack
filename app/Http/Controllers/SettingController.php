@@ -1,11 +1,11 @@
 <?php
 
-namespace Oxbow\Http\Controllers;
+namespace BookStack\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Oxbow\Http\Requests;
-use Oxbow\Http\Controllers\Controller;
+use BookStack\Http\Requests;
+use BookStack\Http\Controllers\Controller;
 use Setting;
 
 class SettingController extends Controller

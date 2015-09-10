@@ -1,6 +1,6 @@
 <?php
 
-namespace Oxbow;
+namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +17,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('Oxbow\User');
+        return $this->belongsToMany('BookStack\User');
     }
 
     /**
@@ -25,7 +25,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany('Oxbow\Permission');
+        return $this->belongsToMany('BookStack\Permission');
     }
 
     /**

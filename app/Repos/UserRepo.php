@@ -1,8 +1,8 @@
-<?php namespace Oxbow\Repos;
+<?php namespace BookStack\Repos;
 
 
-use Oxbow\Role;
-use Oxbow\User;
+use BookStack\Role;
+use BookStack\User;
 
 class UserRepo
 {
