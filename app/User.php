@@ -134,6 +134,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return '//www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
     }
 
+    /**
+     * Get the url for editing this user.
+     * @return string
+     */
     public function getEditUrl()
     {
         return '/users/' . $this->id;

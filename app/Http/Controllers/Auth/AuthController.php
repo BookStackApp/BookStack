@@ -171,6 +171,18 @@ class AuthController extends Controller
     }
 
     /**
+     * View the confirmation email as a standard web page.
+     * @param $token
+     * @return \Illuminate\View\View
+     * @throws UserRegistrationException
+     */
+    public function viewConfirmEmail($token)
+    {
+        $confirmation = $this->emailConfirmationService->getEmailConfirmationFromToken($token);
+        return view('emails/email-confirmation', ['token' => $confirmation->token]);
+    }
+
+    /**
      * Confirms an email via a token and logs the user into the system.
      * @param $token
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector

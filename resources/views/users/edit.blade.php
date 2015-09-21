@@ -42,7 +42,7 @@
 
         <hr class="margin-top large">
 
-        @if($currentUser->id === $user->id)
+        @if($currentUser->id === $user->id && count($activeSocialDrivers) > 0)
             <h3>Social Accounts</h3>
             <p class="text-muted">
                 Here you can connect your other accounts for quicker and easier login. <br>
