@@ -36,4 +36,16 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         }
         return $this->actingAs($this->admin);
     }
+
+    /**
+     * Quickly sets an array of settings.
+     * @param $settingsArray
+     */
+    protected function setSettings($settingsArray)
+    {
+        $settings = app('BookStack\Services\SettingService');
+        foreach ($settingsArray as $key => $value) {
+            $settings->put($key, $value);
+        }
+    }
 }

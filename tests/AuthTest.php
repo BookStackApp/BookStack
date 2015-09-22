@@ -113,18 +113,6 @@ class AuthTest extends TestCase
     }
 
     /**
-     * Quickly sets an array of settings.
-     * @param $settingsArray
-     */
-    private function setSettings($settingsArray)
-    {
-        $settings = app('BookStack\Services\SettingService');
-        foreach ($settingsArray as $key => $value) {
-            $settings->put($key, $value);
-        }
-    }
-
-    /**
      * Perform a login
      * @param string $email
      * @param string $password
