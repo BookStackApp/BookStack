@@ -11,16 +11,18 @@
 
             </div>
 
-            <div class="col-md-4">
-                <h3>Show Other Books</h3>
-                @foreach($books as $otherBook)
-                    @if($otherBook->id !== $book->id)
-                    <div id="additional-books">
-                        <a href="/books/{{ $otherBook->slug }}/sort-item" class="text-book"><i class="zmdi zmdi-book"></i>{{ $otherBook->name }}</a>
-                    </div>
-                    @endif
-                @endforeach
-            </div>
+            @if(count($books) > 1)
+                <div class="col-md-4">
+                    <h3>Show Other Books</h3>
+                    @foreach($books as $otherBook)
+                        @if($otherBook->id !== $book->id)
+                        <div id="additional-books">
+                            <a href="/books/{{ $otherBook->slug }}/sort-item" class="text-book"><i class="zmdi zmdi-book"></i>{{ $otherBook->name }}</a>
+                        </div>
+                        @endif
+                    @endforeach
+                </div>
+            @endif
 
         </div>
 

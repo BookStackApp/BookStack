@@ -91,9 +91,12 @@ class BookRepo
 
     public function findSuitableSlug($name, $currentId = false)
     {
-        $slug = Str::slug($name);
+        $originalSlug = Str::slug($name);
+        $slug = $originalSlug;
+        $count = 2;
         while($this->doesSlugExist($slug, $currentId)) {
-            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
+            $slug = $originalSlug . '-' . $count;
+            $count++;
         }
         return $slug;
     }

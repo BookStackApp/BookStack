@@ -37,7 +37,7 @@
                     <div class="links text-center">
                         @yield('header-buttons')
                     </div>
-                    @if($signedIn)
+                    @if(isset($signedIn) && $signedIn)
                         <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
                         <div class="dropdown-container" data-dropdown>
                                 <span class="user-name" data-dropdown-toggle>

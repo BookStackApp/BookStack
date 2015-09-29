@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
 class EntityTest extends TestCase
 {
 
@@ -112,6 +114,12 @@ class EntityTest extends TestCase
             // Check it redirects correctly
             ->seePageIs('/books/my-first-book')
             ->see($book->name)->see($book->description);
+
+        // Ensure duplicate names are given different slugs
+        $this->asAdmin()
+            ->visit('/books/create')
+            ->submitForm('Save Book', $book->toArray())
+            ->seePageIs('/books/my-first-book-2');
 
         $book = \BookStack\Book::where('slug', '=', 'my-first-book')->first();
         return $book;
