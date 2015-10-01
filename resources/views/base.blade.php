@@ -40,7 +40,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-3">
-                    <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
+                    <a href="/" class="logo">
+                        <img class="logo-image" src="/logo.png" alt="Logo">
+                        <span class="logo-text">{{ Setting::get('app-name', 'BookStack') }}</span>
+                    </a>
                 </div>
                 <div class="col-md-4 col-sm-3 text-center">
                     <form action="/search/all" method="GET" class="search-box">

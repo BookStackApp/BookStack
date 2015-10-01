@@ -30,7 +30,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <a href="/" class="logo">{{ Setting::get('app-name', 'BookStack') }}</a>
+
+                <a href="/" class="logo">
+                    <img class="logo-image" src="/logo.png" alt="Logo">
+                    <span class="logo-text">{{ Setting::get('app-name', 'BookStack') }}</span>
+                </a>
             </div>
             <div class="col-md-6">
                 <div class="float right">
