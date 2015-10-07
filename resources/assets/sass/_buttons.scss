@@ -59,6 +59,9 @@ $button-border-radius: 2px;
   &:focus, &:active {
     outline: 0;
   }
+  &.neg {
+    color: $negative;
+  }
 }
 
 .button-group {

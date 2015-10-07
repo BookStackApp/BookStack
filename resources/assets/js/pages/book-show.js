@@ -1,4 +1,5 @@
-var bookDashboard = new Vue({
+
+new Vue({
     el: '#book-dashboard',
     data: {
         searching: false,

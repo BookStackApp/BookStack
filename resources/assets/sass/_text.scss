@@ -256,6 +256,11 @@ ul {
   }
 }
 
+span.sep {
+  color: #BBB;
+  padding: 0 $-xs;
+}
+
 .list > * {
   display: block;
 }
@@ -266,3 +271,4 @@ ul {
 i {
   padding-right: $-xs;
 }
+

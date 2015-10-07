@@ -91,6 +91,4 @@
         </div>
     </div>
 
-    <script src="/js/book-dashboard.js"></script>
-
 @stop

@@ -17,3 +17,35 @@ $(function () {
     });
 
 });
+
+
+// Vue Components
+
+Vue.component('image-picker', {
+    template: require('./templates/image-picker.html'),
+    props: ['currentImage', 'name', 'imageClass'],
+    data: function() {
+        return {
+            image: this.currentImage
+        }
+    },
+    methods: {
+        showImageManager: function(e) {
+            var _this = this;
+            ImageManager.show(function(image) {
+                _this.image = image.url;
+            });
+        },
+        reset: function() {
+            this.image = '';
+        },
+        remove: function() {
+            this.image = 'none';
+        }
+    }
+});
+
+// Global Vue Instance
+var app = new Vue({
+    el: '#app'
+});

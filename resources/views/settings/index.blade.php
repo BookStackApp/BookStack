@@ -12,15 +12,29 @@
         {!! csrf_field() !!}
 
         <h3>App Settings</h3>
-        <div class="form-group">
-            <label for="setting-app-name">Application name</label>
-            <input type="text" value="{{ Setting::get('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="setting-app-name">Application name</label>
+                    <input type="text" value="{{ Setting::get('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
+                </div>
+                <div class="form-group">
+                    <label for="setting-app-public">Allow public viewing?</label>
+                    <label><input type="radio" name="setting-app-public" @if(Setting::get('app-public')) checked @endif value="true"> Yes</label>
+                    <label><input type="radio" name="setting-app-public" @if(!Setting::get('app-public')) checked @endif value="false"> No</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" id="logo-control">
+                    <label for="setting-app-logo">Application Logo</label>
+                    <p class="small">This image should be 43px in height. </p>
+                    <image-picker current-image="{{ Setting::get('app-logo', '') }}" name="setting-app-logo" image-class="logo-image"></image-picker>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="setting-app-public">Allow public viewing?</label>
-            <label><input type="radio" name="setting-app-public" @if(Setting::get('app-public')) checked @endif value="true"> Yes</label>
-            <label><input type="radio" name="setting-app-public" @if(!Setting::get('app-public')) checked @endif value="false"> No</label>
-        </div>
+
+
 
         <hr class="margin-top">
 
@@ -70,4 +84,9 @@
 
 </div>
 
+@stop
+
+@section('bottom')
+    @include('pages/image-manager')
+    <script src="/js/image-manager.js"></script>
 @stop

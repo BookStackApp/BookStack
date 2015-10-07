@@ -16,13 +16,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
     <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="/js/common.js"></script>
     <script src="/bower/vue/dist/vue.min.js"></script>
     <script src="/bower/vue-resource/dist/vue-resource.min.js"></script>
 
     @yield('head')
 </head>
-<body class="@yield('body-class')">
+<body class="@yield('body-class')" id="app">
 
     @if(Session::has('success'))
         <div class="notification anim pos">
@@ -41,7 +40,9 @@
             <div class="row">
                 <div class="col-md-4 col-sm-3">
                     <a href="/" class="logo">
-                        <img class="logo-image" src="/logo.png" alt="Logo">
+                        @if(Setting::get('app-logo', '') !== 'none')
+                            <img class="logo-image" src="{{ Setting::get('app-logo', '') === '' ? '/logo.png' : Setting::get('app-logo', '') }}" alt="Logo">
+                        @endif
                         <span class="logo-text">{{ Setting::get('app-name', 'BookStack') }}</span>
                     </a>
                 </div>
@@ -90,5 +91,6 @@
     </section>
 
 @yield('bottom')
+<script src="/js/common.js"></script>
 </body>
 </html>
