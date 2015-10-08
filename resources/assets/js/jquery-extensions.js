@@ -56,7 +56,7 @@ jQuery.fn.submitForm = function() {
 jQuery.fn.dropDown = function() {
     var container = $(this),
         menu = container.find('ul');
-    container.find('[data-dropdown-toggle]').on('click', function() {
+        container.find('[data-dropdown-toggle]').on('click', function() {
         menu.show().addClass('anim menuIn');
         container.mouseleave(function() {
             menu.hide();

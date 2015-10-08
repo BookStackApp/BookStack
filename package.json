@@ -3,11 +3,14 @@
   "devDependencies": {
     "gulp": "^3.8.8",
     "insert-css": "^0.2.0",
-    "laravel-elixir-livereload": "1.1.3"
+    "laravel-elixir-livereload": "1.1.3",
+    "vueify": "^1.1.5"
   },
   "dependencies": {
     "bootstrap-sass": "^3.0.0",
+    "dropzone": "^4.0.1",
     "laravel-elixir": "^3.3.1",
-    "vue": "^0.12.16"
+    "vue": "^0.12.16",
+    "vue-resource": "^0.1.16"
   }
 }

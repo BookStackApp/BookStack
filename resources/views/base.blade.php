@@ -8,16 +8,13 @@
     <meta name="token" content="{{ csrf_token() }}">
 
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/bower/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/bower/jquery-sortable/source/js/jquery-sortable.js"></script>
-    <script src="/bower/dropzone/dist/min/dropzone.min.js"></script>
-    <script src="/bower/vue/dist/vue.min.js"></script>
-    <script src="/bower/vue-resource/dist/vue-resource.min.js"></script>
 
     @yield('head')
 </head>

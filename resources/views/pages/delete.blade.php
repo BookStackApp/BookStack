@@ -15,7 +15,3 @@
     </div>
 
 @stop
-
-@section('bottom')
-    @include('pages/image-manager')
-@stop

@@ -1,9 +1,10 @@
+
+// Global jQuery Elements
 $(function () {
 
     // Notification hiding
     $('.notification').click(function () {
         $(this).fadeOut(100);
-
     });
 
     // Dropdown toggles
@@ -18,34 +19,25 @@ $(function () {
 
 });
 
+function elemExists(selector) {
+    return document.querySelector(selector) !== null;
+}
+
+// Vue JS elements
+var Vue = require('vue');
+Vue.use(require('vue-resource'));
 
 // Vue Components
+Vue.component('image-manager', require('./components/image-manager.vue'));
+Vue.component('image-picker', require('./components/image-picker.vue'));
 
-Vue.component('image-picker', {
-    template: require('./templates/image-picker.html'),
-    props: ['currentImage', 'name', 'imageClass'],
-    data: function() {
-        return {
-            image: this.currentImage
-        }
-    },
-    methods: {
-        showImageManager: function(e) {
-            var _this = this;
-            ImageManager.show(function(image) {
-                _this.image = image.url;
-            });
-        },
-        reset: function() {
-            this.image = '';
-        },
-        remove: function() {
-            this.image = 'none';
-        }
-    }
-});
+// Vue Controllers
+if(elemExists('#book-dashboard')) {
+    new Vue(require('./pages/book-show'));
+}
 
 // Global Vue Instance
+// Needs to be loaded after all components we want to use.
 var app = new Vue({
     el: '#app'
 });

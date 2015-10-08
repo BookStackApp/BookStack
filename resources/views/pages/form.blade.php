@@ -99,3 +99,5 @@
 
     });
 </script>
+
+<image-manager></image-manager>

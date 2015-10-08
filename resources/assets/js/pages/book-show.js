@@ -1,5 +1,5 @@
 
-new Vue({
+module.exports = {
     el: '#book-dashboard',
     data: {
         searching: false,
@@ -29,4 +29,4 @@ new Vue({
             this.searchTerm = '';
         }
     }
-});
+};

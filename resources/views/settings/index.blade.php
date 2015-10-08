@@ -84,9 +84,6 @@
 
 </div>
 
-@stop
+<image-manager></image-manager>
 
-@section('bottom')
-    @include('pages/image-manager')
-    <script src="/js/image-manager.js"></script>
 @stop
