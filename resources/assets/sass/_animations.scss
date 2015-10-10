@@ -110,3 +110,20 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
+@keyframes pointer {
+  0% {
+      transform: translate3d(0, 20px, 0) scale3d(0, 0, 0);
+  }
+  100% {
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+}
+
+.anim.pointer {
+  transform-origin: 50% 100%;
+  animation-name: pointer;
+  animation-duration: 180ms;
+  animation-delay: 0s;
+  animation-timing-function: cubic-bezier(.62, .28, .23, .99);
+}

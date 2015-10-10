@@ -1,3 +1,7 @@
+window.ZeroClipboard = require('zeroclipboard');
+window.ZeroClipboard.config({
+    swfPath: '/ZeroClipboard.swf'
+});
 
 // Global jQuery Elements
 $(function () {
@@ -21,6 +25,12 @@ $(function () {
 
 function elemExists(selector) {
     return document.querySelector(selector) !== null;
+}
+
+// TinyMCE editor
+if(elemExists('#html-editor')) {
+    var tinyMceOptions = require('./pages/page-form');
+    tinymce.init(tinyMceOptions);
 }
 
 // Vue JS elements

@@ -37,22 +37,31 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="page-content anim fadeIn">
+
+                    <div class="pointer-container" id="pointer">
+                        <div class="pointer anim">
+                            <i class="zmdi zmdi-link"></i>
+                            <input readonly="readonly" type="text" placeholder="url">
+                            <button class="button icon" title="Copy Link" data-clipboard-text=""><i class="zmdi zmdi-copy"></i></button>
+                        </div>
+                    </div>
+
                     @include('pages/page-display')
+
                     <hr>
+
                     <p class="text-muted small">
                         Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
                         <br>
                         Last Updated {{$page->updated_at->diffForHumans()}} @if($page->createdBy) by {{$page->updatedBy->name}} @endif
                     </p>
+
                 </div>
             </div>
             <div class="col-md-3">
+
                 @include('pages/sidebar-tree-list', ['book' => $book])
-                <div class="side-nav faded">
-                    <h4>Page Navigation</h4>
-                    <ul class="page-nav-list">
-                    </ul>
-                </div>
+
             </div>
         </div>
     </div>
@@ -64,45 +73,46 @@
     <script>
         $(document).ready(function() {
 
-            // Set up document navigation
-            var pageNav = $('.page-nav-list');
-            var pageContent = $('.page-content');
-            var headers = pageContent.find('h1, h2, h3, h4, h5, h6');
-            if(headers.length > 5) {
-                headers.each(function() {
-                    var header = $(this);
-                    var tag = header.prop('tagName');
-                    var listElem = $('<li></li>').addClass('nav-'+tag);
-                    var link = $('<a></a>').text(header.text().trim()).attr('href', '#');
-                    listElem.append(link);
-                    pageNav.append(listElem);
-                    link.click(function(e) {
-                        e.preventDefault();
-                        header.smoothScrollTo();
-                    })
-                });
-                $('.side-nav').fadeIn();
-            } else {
-                $('.side-nav').hide();
-            }
 
-
-            // Set up link hooks
+            // Set up pointer
+            var $pointer = $('#pointer').detach();
             var pageId = {{$page->id}};
-            headers.each(function() {
-                var text = $(this).text().trim();
-                var link = '/link/' + pageId + '#' + encodeURIComponent(text);
-                var linkHook = $('<a class="link-hook"><i class="zmdi zmdi-link"></i></a>')
-                        .attr({"data-content": link, href: link, target: '_blank'});
-                linkHook.click(function(e) {
-                    e.preventDefault();
-                    goToText(text);
-                });
-                $(this).append(linkHook);
+            var isSelection = false;
+
+            $pointer.find('input').click(function(e){$(this).select();e.stopPropagation();});
+            new ZeroClipboard( $pointer.find('button').first()[0] );
+
+            $(document.body).find('*').on('click focus', function(e) {
+                if(!isSelection) {
+                    $pointer.detach();
+                }
+            });
+
+            $('.page-content [id^="bkmrk"]').on('mouseup keyup', function(e) {
+                var selection = window.getSelection();
+                if(selection.toString().length === 0) return;
+                // Show pointer and set link
+                var $elem = $(this);
+                var link = window.location.protocol + "//" + window.location.host + '/link/' + pageId + '#' + $elem.attr('id');
+                $pointer.find('input').val(link);
+                $pointer.find('button').first().attr('data-clipboard-text', link);
+                $elem.before($pointer);
+                $pointer.show();
+                e.stopPropagation();
+
+                isSelection = true;
+                setTimeout(function() {
+                    isSelection = false;
+                }, 100);
             });
 
             function goToText(text) {
-                $('.page-content').find(':contains("'+text+'")').smoothScrollTo();
+                var idElem = $('.page-content').find('#' + text).first();
+                if(idElem.length !== 0) {
+                    idElem.smoothScrollTo();
+                } else {
+                    $('.page-content').find(':contains("'+text+'")').smoothScrollTo();
+                }
             }
 
             if(window.location.hash) {
@@ -110,7 +120,6 @@
                 goToText(text);
             }
 
-            //$('[data-toggle="popover"]').popover()
         });
     </script>
 

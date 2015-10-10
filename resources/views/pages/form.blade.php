@@ -28,76 +28,12 @@
         </div>
     </div>
     <div class="edit-area flex-fill flex">
-        <textarea id="html" name="html" rows="5"
+        <textarea id="html-editor" name="html" rows="5"
                   @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
         @if($errors->has('html'))
             <div class="text-neg text-small">{{ $errors->first('html') }}</div>
         @endif
     </div>
 </div>
-
-
-
-
-
-<script>
-    $(function() {
-        //ImageManager.show('#image-manager');
-
-        tinymce.init({
-            selector: '.edit-area textarea',
-            content_css: [
-                '/css/app.css',
-                '//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300'
-            ],
-            body_class: 'page-content',
-            relative_urls: false,
-            statusbar: false,
-            menubar: false,
-            //height: 700,
-            extended_valid_elements: 'pre[*]',
-            plugins: "image table textcolor paste link imagetools fullscreen code hr",
-            toolbar: "code undo | styleselect | hr bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link | fullscreen",
-            content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
-            style_formats: [
-                {title: "Header 1", format: "h1"},
-                {title: "Header 2", format: "h2"},
-                {title: "Header 3", format: "h3"},
-                {title: "Header 4", format: "h4"},
-                {title: "Paragraph", format: "p"},
-                {title: "Blockquote", format: "blockquote"},
-                {title: "Code Block", icon: "code", format: "pre"}
-            ],
-            file_browser_callback: function(field_name, url, type, win) {
-                ImageManager.show(function(image) {
-                    win.document.getElementById(field_name).value = image.url;
-                    if ("createEvent" in document) {
-                        var evt = document.createEvent("HTMLEvents");
-                        evt.initEvent("change", false, true);
-                        win.document.getElementById(field_name).dispatchEvent(evt);
-                    } else {
-                        win.document.getElementById(field_name).fireEvent("onchange");
-                    }
-                });
-            }
-//            setup: function(editor) {
-//                editor.addButton('full', {
-//                    title: 'Expand Editor',
-//                    icon: 'fullscreen',
-//                    onclick: function() {
-//                        var container = $(editor.getContainer()).toggleClass('fullscreen');
-//                        var isFull = container.hasClass('fullscreen');
-//                        var iframe = container.find('iframe').first();
-//                        var height = isFull ? $(window).height()-110 : 600;
-//                        iframe.css('height', height + 'px');
-//                    }
-//                });
-//            }
-        });
-
-
-
-    });
-</script>
 
 <image-manager></image-manager>

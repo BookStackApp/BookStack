@@ -63,22 +63,14 @@ class PageController extends Controller
             'html'   => 'required|string',
             'parent' => 'integer|exists:pages,id'
         ]);
+
+        $input = $request->all();
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $page = $this->pageRepo->newFromInput($request->all());
+        $chapterId = ($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) ? $request->get('chapter') : null;
+        $input['priority'] = $this->bookRepo->getNewPriority($book);
 
-        $page->slug = $this->pageRepo->findSuitableSlug($page->name, $book->id);
-        $page->priority = $this->bookRepo->getNewPriority($book);
+        $page = $this->pageRepo->saveNew($input, $book, $chapterId);
 
-        if ($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) {
-            $page->chapter_id = $request->get('chapter');
-        }
-
-        $page->book_id = $book->id;
-        $page->text = strip_tags($page->html);
-        $page->created_by = Auth::user()->id;
-        $page->updated_by = Auth::user()->id;
-        $page->save();
-        $this->pageRepo->saveRevision($page);
         Activity::add($page, 'page_create', $book->id);
         return redirect($page->getUrl());
     }

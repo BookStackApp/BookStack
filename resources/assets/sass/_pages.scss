@@ -23,38 +23,65 @@
   }
 }
 
-// Link hooks & popovers
-a.link-hook {
-  position: absolute;
+// Page content pointers
+.pointer-container {
+  position: relative;
+  display: none;
+  left: 2%;
+}
+.pointer {
+  border: 1px solid #CCC;
   display: inline-block;
-  top: $-xs;
-  left: -$-l;
-  padding-bottom: 30px;
-  font-size: 20px;
-  line-height: 20px;
-  color: #BBB;
-  opacity: 0;
-  transform: translate3d(10px, 0, 0);
-  transition: all ease-in-out 240ms;
-  background-color: transparent;
-  &:hover {
-    color: $primary;
+  padding: $-xs $-s;
+  border-radius: 4px;
+  box-shadow: 0 0 8px 1px rgba(212, 209, 209, 0.35);
+  position: absolute;
+  top: -60px;
+  background-color:#FFF;
+  &:before {
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    content: '';
+    display: block;
+    background-color:#FFF;
+    transform: rotate(45deg);
+    transform-origin: 50% 50%;
+    border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    z-index: 1;
+  }
+  input {
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    color: #666;
+    width: 180px;
+    z-index: 40;
+  }
+  input, button {
+    position: relative;
+    border-radius: 0;
+    height: 28px;
+    font-size: 12px;
+  }
+  > i {
+    color: #888;
+    font-size: 18px;
+    padding-top: 4px;
+  }
+  .button {
+    line-height: 1;
+    margin: 0 0 0 -4px;
+    box-shadow: none;
   }
 }
+
 h1, h2, h3, h4, h5, h6 {
   &:hover a.link-hook {
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-}
-
-// Side Navigation
-.side-nav {
-  position: fixed;
-  padding-left: $-m;
-  opacity: 0.8;
-  margin-top: $-xxl;
-  margin-left: 0;
-  max-width: 240px;
-  display: none;
 }
