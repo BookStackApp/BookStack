@@ -99,7 +99,7 @@ class PageRepo
         $doc->loadHTML($htmlText);
 
         $container = $doc->documentElement;
-        $body = $container->childNodes[0];
+        $body = $container->childNodes->item(0);
         $childNodes = $body->childNodes;
 
         // Ensure no duplicate ids are used
