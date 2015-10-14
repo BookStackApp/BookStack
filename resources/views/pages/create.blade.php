@@ -16,4 +16,5 @@
             @endif
         </form>
     </div>
+    <image-manager></image-manager>
 @stop

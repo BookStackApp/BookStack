@@ -35,5 +35,3 @@
         @endif
     </div>
 </div>
-
-<image-manager></image-manager>

@@ -14,5 +14,6 @@
             @include('pages/form', ['model' => $page])
         </form>
     </div>
+    <image-manager></image-manager>
 
 @stop

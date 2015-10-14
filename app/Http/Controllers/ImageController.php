@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image as ImageTool;
 use Illuminate\Support\Facades\DB;
-use BookStack\Http\Requests;
 use BookStack\Image;
 use BookStack\Repos\PageRepo;
 
@@ -37,13 +36,13 @@ class ImageController extends Controller
     public function getAll($page = 0)
     {
         $pageSize = 30;
-        $images = DB::table('images')->orderBy('created_at', 'desc')
+        $images = $this->image->orderBy('created_at', 'desc')
             ->skip($page * $pageSize)->take($pageSize)->get();
         foreach ($images as $image) {
             $image->thumbnail = $this->getThumbnail($image, 150, 150);
         }
-        $hasMore = count(DB::table('images')->orderBy('created_at', 'desc')
-                ->skip(($page + 1) * $pageSize)->take($pageSize)->get()) > 0;
+        $hasMore = $this->image->orderBy('created_at', 'desc')
+                ->skip(($page + 1) * $pageSize)->take($pageSize)->count() > 0;
         return response()->json([
             'images'  => $images,
             'hasMore' => $hasMore
@@ -105,8 +104,8 @@ class ImageController extends Controller
         // Create and save image object
         $this->image->name = $name;
         $this->image->url = $imagePath . $storageName;
-        $this->image->created_by = Auth::user()->id;
-        $this->image->updated_by = Auth::user()->id;
+        $this->image->created_by = auth()->user()->id;
+        $this->image->updated_by = auth()->user()->id;
         $this->image->save();
         $this->image->thumbnail = $this->getThumbnail($this->image, 150, 150);
         return response()->json($this->image);
