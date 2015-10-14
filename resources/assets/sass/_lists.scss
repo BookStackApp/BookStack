@@ -32,6 +32,13 @@
   .book {
     border-left: 5px solid $color-book;
   }
+  .meta {
+    margin-top: -$-m;
+    font-size: 0.95em;
+  }
+  .meta span {
+    margin-right: $-s;
+  }
 }
 .chapter-toggle {
   cursor: pointer;
