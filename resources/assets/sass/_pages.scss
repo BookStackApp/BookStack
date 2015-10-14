@@ -17,9 +17,25 @@
 
 .page-content {
   max-width: 840px;
+  .align-left {
+    float: left !important;
+    text-align: left;
+    margin: $-xs $-s $-xs 0;
+  }
+  .align-right {
+    float: right !important;
+    text-align: right;
+    margin: $-xs 0 $-xs $-s;
+  }
+  .align-center {
+    text-align: center;
+  }
   img {
     max-width: 100%;
     height:auto;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    clear: both;
   }
 }
 

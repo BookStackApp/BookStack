@@ -15,7 +15,7 @@ module.exports = {
     automatic_uploads: false,
     valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
     plugins: "image table textcolor paste link imagetools fullscreen code hr",
-    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link hr | code fullscreen",
+    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link hr | removeformat code fullscreen",
     content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
     style_formats: [
         {title: "Header 1", format: "h1"},
@@ -27,6 +27,11 @@ module.exports = {
         {title: "Code Block", icon: "code", format: "pre"},
         {title: "Inline Code", icon: "code", inline: "code"}
     ],
+    formats : {
+        alignleft : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'align-left'},
+        aligncenter : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'align-center'},
+        alignright : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'align-right'},
+    },
     file_browser_callback: function(field_name, url, type, win) {
         ImageManager.show(function(image) {
             win.document.getElementById(field_name).value = image.url;
