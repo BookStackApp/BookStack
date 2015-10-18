@@ -30,7 +30,12 @@
     background-color: #FFF;
   }
 }
-.mce-tinymce.mce-container.mce-panel {
+
+.mce-container-body.mce-flow-layout {
+  text-align: center;
+}
+
+.edit-area.flex > .mce-tinymce.mce-container.mce-panel {
   height: 100%;
   max-height: 100%;
   flex: 1;

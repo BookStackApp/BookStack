@@ -17,6 +17,7 @@
 
 .page-content {
   max-width: 840px;
+  overflow-wrap: break-word;
   .align-left {
     float: left !important;
     text-align: left;
@@ -36,6 +37,10 @@
   }
   h1, h2, h3, h4, h5, h6 {
     clear: both;
+  }
+  hr {
+    clear: both;
+    margin: $-m 0;
   }
 }
 
