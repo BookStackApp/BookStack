@@ -17,6 +17,9 @@ header {
     display: inline-block;
     vertical-align: top;
     margin-right: $-xl;
+    @include smaller-than($screen-md) {
+      margin-right: $-m;
+    }
   }
   .links a {
     display: inline-block;
@@ -25,23 +28,63 @@ header {
     &:last-child {
       padding-right: 0;
     }
+    @include smaller-than($screen-md) {
+      padding: $-l $-s;
+    }
   }
   .avatar, .user-name {
     display: inline-block;
   }
   .avatar {
-    margin-top: (45px/2);
+    //margin-top: (45px/2);
     width: 30px;
     height: 30px;
   }
   .user-name {
     vertical-align: top;
-    padding-top: 25.5px;
-    padding-left: $-m;
+    padding-top: $-l;
     display: inline-block;
     cursor: pointer;
-    i {
+    > * {
+      vertical-align: top;
+    }
+    > span, > i {
       padding-left: $-xs;
+      display: inline-block;
+    }
+    > span {
+      padding-top: $-xxs;
+    }
+    > i {
+      padding-top: $-xs*1.2;
+    }
+    @include smaller-than($screen-md) {
+      padding-left: $-xs;
+      .name {
+        display: none;
+      }
+      i {
+        font-size: 2em;
+        padding-left: 0;
+        padding-top: 0;
+      }
+    }
+  }
+  @include smaller-than($screen-md) {
+    text-align: center;
+    .float.right {
+      float: none;
+    }
+  }
+  @include smaller-than($screen-sm) {
+    .links a {
+      padding: $-s;
+    }
+    form.search-box {
+      margin-top: 0;
+    }
+    .user-name {
+      padding-top: $-s;
     }
   }
 }
@@ -117,6 +160,7 @@ form.search-box {
   min-width: 180px;
   padding: $-xs 0;
   color: #555;
+  text-align: left !important;
   a {
     display: block;
     padding: $-xs $-m;

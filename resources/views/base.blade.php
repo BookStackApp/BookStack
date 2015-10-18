@@ -35,7 +35,7 @@
     <header id="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-3">
+                <div class="col-lg-4 col-sm-4">
                     <a href="/" class="logo">
                         @if(Setting::get('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ Setting::get('app-logo', '') === '' ? '/logo.png' : Setting::get('app-logo', '') }}" alt="Logo">
@@ -43,13 +43,13 @@
                         <span class="logo-text">{{ Setting::get('app-name', 'BookStack') }}</span>
                     </a>
                 </div>
-                <div class="col-md-4 col-sm-3 text-center">
+                <div class="col-lg-4 col-sm-3 text-center">
                     <form action="/search/all" method="GET" class="search-box">
                         <input type="text" name="term" tabindex="2" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
                         <button class="text-button"><i class="zmdi zmdi-search"></i></button>
                     </form>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-lg-4 col-sm-5">
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
@@ -61,10 +61,10 @@
                             @endif
                         </div>
                         @if($signedIn)
-                            <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
                             <div class="dropdown-container" data-dropdown>
                                 <span class="user-name" data-dropdown-toggle>
-                                    {{ $currentUser->name }} <i class="zmdi zmdi-caret-down"></i>
+                                    <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
+                                    <span class="name">{{ $currentUser->name }}</span> <i class="zmdi zmdi-caret-down"></i>
                                 </span>
                                 <ul>
                                     <li>

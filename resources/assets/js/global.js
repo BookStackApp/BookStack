@@ -40,6 +40,7 @@ Vue.use(require('vue-resource'));
 // Vue Components
 Vue.component('image-manager', require('./components/image-manager.vue'));
 Vue.component('image-picker', require('./components/image-picker.vue'));
+Vue.component('toggle-switch', require('./components/toggle-switch.vue'));
 
 // Vue Controllers
 if(elemExists('#book-dashboard')) {

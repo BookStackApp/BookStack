@@ -47,6 +47,39 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   @extend .input-base;
 }
 
+.toggle-switch {
+  display: inline-block;
+  background-color: #BBB;
+  width: 36px;
+  height: 14px;
+  border-radius: 7px;
+  position: relative;
+  transition: all ease-in-out 120ms;
+  cursor: pointer;
+  user-select: none;
+  .switch-handle {
+    display: block;
+    position: relative;
+    left: 0;
+    margin-top: -3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fafafa;
+    border: 1px solid #CCC;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    transition: all ease-in-out 120ms;
+  }
+  &.active {
+    background-color: rgba($positive, 0.4);
+    .switch-handle {
+      left: 16px;
+      background-color: $positive;
+      border: darken($positive, 20%);
+    }
+  }
+}
+
 .form-group {
   margin-bottom: $-s;
 }

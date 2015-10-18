@@ -20,9 +20,8 @@
                     <input type="text" value="{{ Setting::get('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
                 </div>
                 <div class="form-group">
-                    <label for="setting-app-public">Allow public viewing?</label>
-                    <label><input type="radio" name="setting-app-public" @if(Setting::get('app-public')) checked @endif value="true"> Yes</label>
-                    <label><input type="radio" name="setting-app-public" @if(!Setting::get('app-public')) checked @endif value="false"> No</label>
+                    <label>Allow public viewing?</label>
+                    <toggle-switch name="setting-app-public" value="{{ Setting::get('app-public') }}"></toggle-switch>
                 </div>
             </div>
             <div class="col-md-6">
@@ -43,8 +42,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="setting-registration-enabled">Allow registration?</label>
-                    <label><input type="radio" name="setting-registration-enabled" @if(Setting::get('registration-enabled')) checked @endif value="true"> Yes</label>
-                    <label><input type="radio" name="setting-registration-enabled" @if(!Setting::get('registration-enabled')) checked @endif value="false"> No</label>
+                    <toggle-switch name="setting-registration-enabled" value="{{ Setting::get('registration-enabled') }}"></toggle-switch>
                 </div>
                 <div class="form-group">
                     <label for="setting-registration-role">Default user role after registration</label>
@@ -61,8 +59,7 @@
                 <div class="form-group">
                     <label for="setting-registration-confirmation">Require Email Confirmation?</label>
                     <p class="small">If domain restriction is used then email confirmation will be required and the below value will be ignored.</p>
-                    <label><input type="radio" name="setting-registration-confirmation" @if(Setting::get('registration-confirmation')) checked @endif value="true"> Yes</label>
-                    <label><input type="radio" name="setting-registration-confirmation" @if(!Setting::get('registration-confirmation')) checked @endif value="false"> No</label>
+                    <toggle-switch name="setting-registration-confirmation" value="{{ Setting::get('registration-confirmation') }}"></toggle-switch>
                 </div>
             </div>
             <div class="col-md-6">
