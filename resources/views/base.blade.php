@@ -6,6 +6,7 @@
     <!-- Meta-->
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
+    <meta charset="utf-8">
 
     <!-- Styles and Fonts -->
     <link rel="stylesheet" href="/css/styles.css">

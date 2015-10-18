@@ -82,7 +82,6 @@ class PageRepo
         $page->updated_by = auth()->user()->id;
 
         $book->pages()->save($page);
-        $this->saveRevision($page);
         return $page;
     }
 
@@ -202,13 +201,37 @@ class PageRepo
      */
     public function updatePage(Page $page, $book_id, $input)
     {
+        // Save a revision before updating
+        if ($page->html !== $input['html'] || $page->name !== $input['name']) {
+            $this->saveRevision($page);
+        }
+
+        // Update with new details
         $page->fill($input);
         $page->slug = $this->findSuitableSlug($page->name, $book_id, $page->id);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
-        $page->updated_by = Auth::user()->id;
+        $page->updated_by = auth()->user()->id;
         $page->save();
+        return $page;
+    }
+
+    /**
+     * Restores a revision's content back into a page.
+     * @param Page $page
+     * @param Book $book
+     * @param  int $revisionId
+     * @return Page
+     */
+    public function restoreRevision(Page $page, Book $book, $revisionId)
+    {
         $this->saveRevision($page);
+        $revision = $this->getRevisionById($revisionId);
+        $page->fill($revision->toArray());
+        $page->slug = $this->findSuitableSlug($page->name, $book->id, $page->id);
+        $page->text = strip_tags($page->html);
+        $page->updated_by = auth()->user()->id;
+        $page->save();
         return $page;
     }
 
@@ -217,15 +240,12 @@ class PageRepo
      * @param Page $page
      * @return $this
      */
-    public function saveRevision(Page $page)
+    private function saveRevision(Page $page)
     {
-        $lastRevision = $this->getLastRevision($page);
-        if ($lastRevision && ($lastRevision->html === $page->html && $lastRevision->name === $page->name)) {
-            return $page;
-        }
         $revision = $this->pageRevision->fill($page->toArray());
         $revision->page_id = $page->id;
-        $revision->created_by = Auth::user()->id;
+        $revision->created_by = auth()->user()->id;
+        $revision->created_at = $page->updated_at;
         $revision->save();
         // Clear old revisions
         if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
@@ -233,17 +253,6 @@ class PageRepo
                 ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
         }
         return $revision;
-    }
-
-    /**
-     * Gets the most recent revision for a page.
-     * @param Page $page
-     * @return mixed
-     */
-    public function getLastRevision(Page $page)
-    {
-        return $this->pageRevision->where('page_id', '=', $page->id)
-            ->orderBy('created_at', 'desc')->first();
     }
 
     /**
@@ -266,12 +275,17 @@ class PageRepo
     public function doesSlugExist($slug, $bookId, $currentId = false)
     {
         $query = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId);
-        if ($currentId) {
-            $query = $query->where('id', '!=', $currentId);
-        }
+        if ($currentId) $query = $query->where('id', '!=', $currentId);
         return $query->count() > 0;
     }
 
+    /**
+     * Sets the book id for the specified page.
+     * Changes the book id of any relations to the page that store the book id.
+     * @param int  $bookId
+     * @param Page $page
+     * @return Page
+     */
     public function setBookId($bookId, Page $page)
     {
         $page->book_id = $bookId;

@@ -196,13 +196,19 @@ class PageController extends Controller
         return view('pages/revision', ['page' => $page, 'book' => $book]);
     }
 
+    /**
+     * Restores a page using the content of the specified revision.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @param $revisionId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function restoreRevision($bookSlug, $pageSlug, $revisionId)
     {
         $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        $revision = $this->pageRepo->getRevisionById($revisionId);
-        $page = $this->pageRepo->updatePage($page, $book->id, $revision->toArray());
+        $page = $this->pageRepo->restoreRevision($page, $book, $revisionId);
         Activity::add($page, 'page_restore', $book->id);
         return redirect($page->getUrl());
     }
