@@ -10,7 +10,7 @@
         <h1>Users</h1>
         @if($currentUser->can('user-create'))
             <p>
-                <a href="/users/create" class="text-pos"><i class="zmdi zmdi-account-add"></i>Add New User</a>
+                <a href="/users/create" class="text-pos"><i class="zmdi zmdi-account-add"></i>Add new user</a>
             </p>
         @endif
         <table class="table">
@@ -22,7 +22,7 @@
             </tr>
             @foreach($users as $user)
                 <tr>
-                    <td style="line-height: 0;"><img class="avatar" src="{{$user->getAvatar(40)}}" alt="{{$user->name}}"></td>
+                    <td style="line-height: 0;"><img class="avatar med" src="{{$user->getAvatar(40)}}" alt="{{$user->name}}"></td>
                     <td>
                         @if($currentUser->can('user-update') || $currentUser->id == $user->id)
                             <a href="/users/{{$user->id}}">

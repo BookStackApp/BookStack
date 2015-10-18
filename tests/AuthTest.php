@@ -102,6 +102,47 @@ class AuthTest extends TestCase
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => true]);
     }
 
+    public function testUserControl()
+    {
+        $user = factory(\BookStack\User::class)->make();
+        // Test creation
+        $this->asAdmin()
+            ->visit('/users')
+            ->click('Add new user')
+            ->type($user->name, '#name')
+            ->type($user->email, '#email')
+            ->select(2, '#role')
+            ->type($user->password, '#password')
+            ->type($user->password, '#password-confirm')
+            ->press('Save')
+            ->seeInDatabase('users', $user->toArray())
+            ->seePageIs('/users')
+            ->see($user->name);
+        $user = $user->where('email', '=', $user->email)->first();
+
+        // Test editing
+        $this->asAdmin()
+            ->visit('/users')
+            ->click($user->name)
+            ->seePageIs('/users/' . $user->id)
+            ->see($user->email)
+            ->type('Barry Scott', '#name')
+            ->press('Save')
+            ->seePageIs('/users')
+            ->seeInDatabase('users', ['id' => $user->id, 'name' => 'Barry Scott'])
+            ->notSeeInDatabase('users', ['name' => $user->name]);
+        $user = $user->find($user->id);
+
+        // Test Deletion
+        $this->asAdmin()
+            ->visit('/users/' . $user->id)
+            ->click('Delete user')
+            ->see($user->name)
+            ->press('Confirm')
+            ->seePageIs('/users')
+            ->notSeeInDatabase('users', ['name' => $user->name]);
+    }
+
     public function testLogout()
     {
         $this->asAdmin()
