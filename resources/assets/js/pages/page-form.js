@@ -15,7 +15,7 @@ module.exports = {
     automatic_uploads: false,
     valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
     plugins: "image table textcolor paste link imagetools fullscreen code hr",
-    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image link hr | removeformat code fullscreen",
+    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
     content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
     style_formats: [
         {title: "Header 1", format: "h1"},
@@ -51,6 +51,62 @@ module.exports = {
         }
     },
     setup: function(editor) {
+
+        ( function() {
+            var wrap;
+
+            function hasTextContent( node ) {
+                return node && !! ( node.textContent || node.innerText );
+            }
+
+            editor.on( 'dragstart', function() {
+                var node = editor.selection.getNode();
+
+                if ( node.nodeName === 'IMG' ) {
+                    wrap = editor.dom.getParent( node, '.mceTemp' );
+
+                    if ( ! wrap && node.parentNode.nodeName === 'A' && ! hasTextContent( node.parentNode ) ) {
+                        wrap = node.parentNode;
+                    }
+                }
+            } );
+
+            editor.on( 'drop', function( event ) {
+                var dom = editor.dom,
+                    rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint( event.clientX, event.clientY, editor.getDoc() );
+
+                // Don't allow anything to be dropped in a captioned image.
+                if ( dom.getParent( rng.startContainer, '.mceTemp' ) ) {
+                    event.preventDefault();
+                } else if ( wrap ) {
+                    event.preventDefault();
+
+                    editor.undoManager.transact( function() {
+                        editor.selection.setRng( rng );
+                        editor.selection.setNode( wrap );
+                        dom.remove( wrap );
+                    } );
+                }
+
+                wrap = null;
+            } );
+        } )();
+
+        // Image picker button
+        editor.addButton('image-insert', {
+            title: 'My title',
+            icon: 'image',
+            tooltip: 'Insert an image',
+            onclick: function() {
+                ImageManager.show(function(image) {
+                    var html = '<p><a href="'+image.url+'" target="_blank">';
+                    html += '<img src="'+image.display+'" alt="'+image.name+'">';
+                    html += '</a></p>';
+                    console.log(image);
+                    editor.execCommand('mceInsertContent', false, html);
+                });
+            }
+        });
         // Paste image-uploads
         editor.on('paste', function(e) {
             if(e.clipboardData) {

@@ -39,27 +39,40 @@ class ImageController extends Controller
         $images = $this->image->orderBy('created_at', 'desc')
             ->skip($page * $pageSize)->take($pageSize)->get();
         foreach ($images as $image) {
-            $image->thumbnail = $this->getThumbnail($image, 150, 150);
+            $this->loadSizes($image);
         }
         $hasMore = $this->image->orderBy('created_at', 'desc')
                 ->skip(($page + 1) * $pageSize)->take($pageSize)->count() > 0;
         return response()->json([
-            'images'  => $images,
+            'images' => $images,
             'hasMore' => $hasMore
         ]);
     }
 
     /**
+     * Loads the standard thumbnail sizes for an image.
+     * @param Image $image
+     */
+    private function loadSizes(Image $image)
+    {
+        $image->thumbnail = $this->getThumbnail($image, 150, 150);
+        $image->display = $this->getThumbnail($image, 840, 0, true);
+    }
+
+    /**
      * Get the thumbnail for an image.
-     * @param     $image
-     * @param int $width
-     * @param int $height
+     * If $keepRatio is true only the width will be used.
+     * @param      $image
+     * @param int  $width
+     * @param int  $height
+     * @param bool $keepRatio
      * @return string
      */
-    public function getThumbnail($image, $width = 220, $height = 220)
+    public function getThumbnail($image, $width = 220, $height = 220, $keepRatio = false)
     {
         $explodedPath = explode('/', $image->url);
-        array_splice($explodedPath, 4, 0, ['thumbs-' . $width . '-' . $height]);
+        $dirPrefix = $keepRatio ? 'scaled-' : 'thumbs-';
+        array_splice($explodedPath, 4, 0, [$dirPrefix . $width . '-' . $height]);
         $thumbPath = implode('/', $explodedPath);
         $thumbFilePath = public_path() . $thumbPath;
 
@@ -70,7 +83,14 @@ class ImageController extends Controller
 
         // Otherwise create the thumbnail
         $thumb = ImageTool::make(public_path() . $image->url);
-        $thumb->fit($width, $height);
+        if($keepRatio) {
+            $thumb->resize($width, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+        } else {
+            $thumb->fit($width, $height);
+        }
 
         // Create thumbnail folder if it does not exist
         if (!file_exists(dirname($thumbFilePath))) {
@@ -107,7 +127,7 @@ class ImageController extends Controller
         $this->image->created_by = auth()->user()->id;
         $this->image->updated_by = auth()->user()->id;
         $this->image->save();
-        $this->image->thumbnail = $this->getThumbnail($this->image, 150, 150);
+        $this->loadSizes($this->image);
         return response()->json($this->image);
     }
 
@@ -126,6 +146,7 @@ class ImageController extends Controller
         $image = $this->image->findOrFail($imageId);
         $image->fill($request->all());
         $image->save();
+        $this->loadSizes($image);
         return response()->json($this->image);
     }
 

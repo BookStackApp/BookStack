@@ -1,6 +1,6 @@
 <template>
     <div id="image-manager">
-        <div class="overlay" v-el="overlay" v-on="click: overlayClick" >
+        <div class="overlay" v-el="overlay" v-on="click: overlayClick">
             <div class="image-manager-body">
                 <div class="image-manager-content">
                     <div class="image-manager-list">
@@ -32,7 +32,8 @@
                         <hr class="even">
                         <div v-show="dependantPages">
                             <p class="text-neg text-small">
-                                This image is used in the pages below, Click delete again to confirm you want to delete this image.
+                                This image is used in the pages below, Click delete again to confirm you want to delete
+                                this image.
                             </p>
                             <ul class="text-neg">
                                 <li v-repeat="page: dependantPages">
@@ -46,7 +47,9 @@
                         </form>
                     </div>
                     <div class="image-manager-bottom">
-                        <button class="button pos anim fadeIn" v-show="selectedImage" v-on="click:selectButtonClick"><i class="zmdi zmdi-square-right"></i>Select Image</button>
+                        <button class="button pos anim fadeIn" v-show="selectedImage" v-on="click:selectButtonClick"><i
+                                class="zmdi zmdi-square-right"></i>Select Image
+                        </button>
                     </div>
                 </div>
             </div>
@@ -59,7 +62,7 @@
     var Dropzone = require('dropzone');
 
     module.exports = {
-        data: function(){
+        data: function () {
             return {
                 images: [],
                 hasMore: false,
@@ -68,13 +71,12 @@
                 selectedImage: false,
                 dependantPages: false,
                 deleteForm: {},
-                token: document.querySelector('meta[name=token]').getAttribute('content')
+                token: document.querySelector('meta[name=token]').getAttribute('content'),
+                dataLoaded: false
             }
         },
 
         created: function () {
-            // Get initial images
-            this.fetchData(this.page);
             window.ImageManager = this;
         },
 
@@ -139,6 +141,11 @@
             show: function (callback) {
                 this.callback = callback;
                 this.$$.overlay.style.display = 'block';
+                // Get initial images if they have not yet been loaded in.
+                if (!this.dataLoaded) {
+                    this.fetchData(this.page);
+                    this.dataLoaded = true;
+                }
             },
 
             overlayClick: function (e) {
@@ -178,9 +185,9 @@
                     _this.images.splice(_this.images.indexOf(_this.selectedImage), 1);
                     _this.selectedImage = false;
                     $(_this.$$.imageTitle).showSuccess('Image Deleted');
-                }).fail(function(jqXHR, textStatus) {
+                }).fail(function (jqXHR, textStatus) {
                     // Pages failure
-                    if(jqXHR.status === 400) {
+                    if (jqXHR.status === 400) {
                         _this.dependantPages = jqXHR.responseJSON;
                     }
                 });

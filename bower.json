@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "tinymce-dist": "~4.2.1",
+    "tinymce-dist": "~4.2.6",
     "bootstrap": "~3.3.5",
     "jquery-sortable": "~0.9.13",
     "material-design-iconic-font": "~2.1.1"
