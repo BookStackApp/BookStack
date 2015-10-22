@@ -30,6 +30,9 @@ label {
   color: #666;
   padding-bottom: 2px;
   margin-bottom: 0.2em;
+  &.inline {
+    display: inline-block;
+  }
 }
 
 label.radio, label.checkbox {
@@ -57,7 +60,8 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   transition: all ease-in-out 120ms;
   cursor: pointer;
   user-select: none;
-  .switch-handle {
+  &:after {
+    content: '';
     display: block;
     position: relative;
     left: 0;
@@ -72,11 +76,22 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
   }
   &.active {
     background-color: rgba($positive, 0.4);
-    .switch-handle {
+    &:after {
       left: 16px;
       background-color: $positive;
       border: darken($positive, 20%);
     }
+  }
+}
+.toggle-switch-checkbox {
+  display: none;
+}
+input:checked + .toggle-switch {
+  background-color: rgba($positive, 0.4);
+  &:after {
+    left: 16px;
+    background-color: $positive;
+    border: darken($positive, 20%);
   }
 }
 
@@ -161,4 +176,11 @@ input[type="text"], input[type="number"], input[type="email"], input[type="searc
     width: 300px;
     max-width: 100%;
   }
+}
+
+#login-form label[for="remember"] {
+  margin: 0;
+}
+#login-form label.toggle-switch {
+  margin-left: $-xl;
 }

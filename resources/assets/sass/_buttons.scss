@@ -11,6 +11,12 @@
   &:active {
     background-color: darken($backgroundColor, 8%);
   }
+  &:focus {
+    background-color: lighten($backgroundColor, 4%);
+    box-shadow: $bs-light;
+    text-decoration: none;
+    color: $textColor;
+  }
 }
 
 // Button Specific Variables

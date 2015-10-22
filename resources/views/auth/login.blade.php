@@ -12,22 +12,29 @@
         <div class="center-box">
             <h1>Log In</h1>
 
-            <form action="/login" method="POST">
+            <form action="/login" method="POST" id="login-form">
                 {!! csrf_field() !!}
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    @include('form/text', ['name' => 'email'])
+                    @include('form/text', ['name' => 'email', 'tabindex' => 1])
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    @include('form/password', ['name' => 'password'])
+                    @include('form/password', ['name' => 'password', 'tabindex' => 2])
                     <span class="block small"><a href="/password/email">Forgot Password?</a></span>
                 </div>
 
+                <div class="form-group">
+                    <label for="remember" class="inline">Remember Me</label>
+                    <input type="checkbox" id="remember" name="remember"  class="toggle-switch-checkbox">
+                    <label for="remember" class="toggle-switch"></label>
+                </div>
+
+
                 <div class="from-group">
-                    <button class="button block pos">Sign In</button>
+                    <button class="button block pos" tabindex="3">Sign In</button>
                 </div>
             </form>
 
