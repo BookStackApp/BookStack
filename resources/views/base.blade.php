@@ -9,7 +9,8 @@
     <meta charset="utf-8">
 
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="{{ elixir('css/styles.css') }}">
+    <link rel="stylesheet" media="print" href="{{ elixir('css/print-styles.css') }}">
     <link href='//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/bower/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
 
@@ -89,6 +90,6 @@
     </section>
 
 @yield('bottom')
-<script src="/js/common.js"></script>
+<script src="{{ elixir('js/common.js') }}"></script>
 </body>
 </html>

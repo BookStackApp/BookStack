@@ -1,0 +1,34 @@
+@import "variables";
+
+header {
+  display: none;
+}
+
+body {
+  font-size: 12px;
+}
+
+.faded-small {
+  display: none;
+}
+
+.page-content {
+  margin: 0 auto;
+}
+
+.print-hidden {
+  display: none;
+}
+
+.print-full-width {
+  width: 100%;
+  float: none;
+  display: block;
+}
+
+h2 {
+  font-size: 2em;
+  line-height: 1;
+  margin-top: 0.6em;
+  margin-bottom: 0.3em;
+}

@@ -35,7 +35,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9 print-full-width">
                 <div class="page-content anim fadeIn">
 
                     <div class="pointer-container" id="pointer">
@@ -58,7 +58,7 @@
 
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 print-hidden">
 
                 @include('pages/sidebar-tree-list', ['book' => $book])
 
