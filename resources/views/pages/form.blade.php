@@ -15,7 +15,7 @@
                 <div class="col-md-8 faded">
                     <div class="action-buttons">
                         <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary"><i class="zmdi zmdi-close"></i>Cancel</a>
-                        <button type="submit" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
+                        <button type="submit" id="save-button" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
                     </div>
                 </div>
             </div>
