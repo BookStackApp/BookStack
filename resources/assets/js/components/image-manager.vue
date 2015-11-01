@@ -1,29 +1,29 @@
 <template>
     <div id="image-manager">
-        <div class="overlay" v-el="overlay" v-on="click: overlayClick">
+        <div class="overlay" v-el:overlay v-on:click="overlayClick">
             <div class="image-manager-body">
                 <div class="image-manager-content">
                     <div class="image-manager-list">
-                        <div v-repeat="image: images">
+                        <div v-for="image in images">
                             <img class="anim fadeIn"
-                                 v-class="selected: (image==selectedImage)"
-                                 v-attr="src: image.thumbnail, alt: image.name, title: image.name"
-                                 v-on="click: imageClick(image)"
-                                 v-style="animation-delay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'">
+                                 :class="{selected: (image==selectedImage)}"
+                                 :src="image.thumbnail" :alt="image.title" :title="image.name"
+                                 v-on:click="imageClick(image)"
+                                 v-bind:style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}">
                         </div>
-                        <div class="load-more" v-show="hasMore" v-on="click: fetchData">Load More</div>
+                        <div class="load-more" v-show="hasMore" v-on:click="fetchData">Load More</div>
                     </div>
                 </div>
-                <button class="neg button image-manager-close" v-on="click: hide()">x</button>
+                <button class="neg button image-manager-close" v-on:click="hide">x</button>
                 <div class="image-manager-sidebar">
-                    <h2 v-el="imageTitle">Images</h2>
+                    <h2 v-el:image-title>Images</h2>
                     <hr class="even">
-                    <div class="dropzone-container" v-el="dropZone">
+                    <div class="dropzone-container" v-el:drop-zone>
                         <div class="dz-message">Drop files or click here to upload</div>
                     </div>
                     <div class="image-manager-details anim fadeIn" v-show="selectedImage">
                         <hr class="even">
-                        <form v-on="submit: saveImageDetails" v-el="imageForm">
+                        <form v-on:submit="saveImageDetails" v-el:image-form>
                             <div class="form-group">
                                 <label for="name">Image Name</label>
                                 <input type="text" id="name" name="name" v-model="selectedImage.name">
@@ -36,18 +36,18 @@
                                 this image.
                             </p>
                             <ul class="text-neg">
-                                <li v-repeat="page: dependantPages">
-                                    <a v-attr="href: page.url" target="_blank" class="text-neg">@{{ page.name }}</a>
+                                <li v-for="page in dependantPages">
+                                    <a :href="page.url" target="_blank" class="text-neg">{{ page.name }}</a>
                                 </li>
                             </ul>
                         </div>
 
-                        <form v-on="submit: deleteImage" v-el="imageDeleteForm">
+                        <form v-on:submit="deleteImage" v-el:image-delete-form>
                             <button class="button neg"><i class="zmdi zmdi-delete"></i>Delete Image</button>
                         </form>
                     </div>
                     <div class="image-manager-bottom">
-                        <button class="button pos anim fadeIn" v-show="selectedImage" v-on="click:selectButtonClick"><i
+                        <button class="button pos anim fadeIn" v-show="selectedImage" v-on:click="selectButtonClick"><i
                                 class="zmdi zmdi-square-right"></i>Select Image
                         </button>
                     </div>
@@ -97,7 +97,7 @@
 
             setupDropZone: function () {
                 var _this = this;
-                var dropZone = new Dropzone(_this.$$.dropZone, {
+                var dropZone = new Dropzone(_this.$els.dropZone, {
                     url: '/upload/image',
                     init: function () {
                         var dz = this;
@@ -140,7 +140,7 @@
 
             show: function (callback) {
                 this.callback = callback;
-                this.$$.overlay.style.display = 'block';
+                this.$els.overlay.style.display = 'block';
                 // Get initial images if they have not yet been loaded in.
                 if (!this.dataLoaded) {
                     this.fetchData(this.page);
@@ -155,14 +155,14 @@
             },
 
             hide: function () {
-                this.$$.overlay.style.display = 'none';
+                this.$els.overlay.style.display = 'none';
             },
 
             saveImageDetails: function (e) {
                 e.preventDefault();
                 var _this = this;
                 _this.selectedImage._token = _this.token;
-                var form = $(_this.$$.imageForm);
+                var form = $(_this.$els.imageForm);
                 $.ajax('/images/update/' + _this.selectedImage.id, {
                     method: 'PUT',
                     data: _this.selectedImage
@@ -184,7 +184,7 @@
                 }).done(function () {
                     _this.images.splice(_this.images.indexOf(_this.selectedImage), 1);
                     _this.selectedImage = false;
-                    $(_this.$$.imageTitle).showSuccess('Image Deleted');
+                    $(_this.$els.imageTitle).showSuccess('Image Deleted');
                 }).fail(function (jqXHR, textStatus) {
                     // Pages failure
                     if (jqXHR.status === 400) {

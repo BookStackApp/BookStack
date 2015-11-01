@@ -2,12 +2,12 @@
 <template>
     <div class="image-picker">
         <div>
-            <img v-if="image && image !== 'none'" v-attr="src: image, class: imageClass" alt="Image Preview">
+            <img v-if="image && image !== 'none'" :src="image" :class="imageClass" alt="Image Preview">
         </div>
-        <button class="button" type="button" v-on="click: showImageManager">Select Image</button>
+        <button class="button" type="button" v-on:click="showImageManager">Select Image</button>
         <br>
-        <button class="text-button" v-on="click: reset" type="button">Reset</button> <span class="sep">|</span> <button class="text-button neg" v-on="click: remove" type="button">Remove</button>
-        <input type="hidden" v-attr="name: name, id: name" v-model="image">
+        <button class="text-button" v-on:click="reset" type="button">Reset</button> <span class="sep">|</span> <button class="text-button neg" v-on:click="remove" type="button">Remove</button>
+        <input type="hidden" :name="name" :id="name" v-model="image">
     </div>
 </template>
 
@@ -33,5 +33,5 @@
                 this.image = 'none';
             }
         }
-    }
+    };
 </script>

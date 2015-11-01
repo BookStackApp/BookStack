@@ -1,7 +1,7 @@
 
 <template>
-    <div class="toggle-switch" v-on="click: switch" v-class="active: isActive">
-        <input type="hidden" v-attr="name: name, value: value"/>
+    <div class="toggle-switch" v-on:click="switch" :class="{'active': isActive}">
+        <input type="hidden" :name="name" :value="value"/>
         <div class="switch-handle"></div>
     </div>
 </template>
@@ -24,5 +24,5 @@
                 this.value = this.isActive ? 'true' : 'false';
             }
         }
-    }
+    };
 </script>

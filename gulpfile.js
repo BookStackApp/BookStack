@@ -1,10 +1,5 @@
 var elixir = require('laravel-elixir');
 
-elixir.config.js.browserify.transformers.push({
-    name: 'vueify',
-    options: {}
-});
-
 elixir(function(mix) {
     mix.sass('styles.scss')
         .sass('print-styles.scss')

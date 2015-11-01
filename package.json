@@ -2,16 +2,18 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.8.8",
-    "insert-css": "^0.2.0",
-    "laravel-elixir-livereload": "1.1.3",
-    "vueify": "^1.1.5"
+    "insert-css": "^0.2.0"
   },
   "dependencies": {
+    "babel-runtime": "^5.8.29",
     "bootstrap-sass": "^3.0.0",
     "dropzone": "^4.0.1",
-    "laravel-elixir": "^3.3.1",
-    "vue": "^0.12.16",
+    "laravel-elixir": "^3.4.0",
+    "vue": "^1.0.4",
+    "vue-hot-reload-api": "^1.2.1",
     "vue-resource": "^0.1.16",
+    "vueify": "^5.0.1",
+    "vueify-insert-css": "^1.0.0",
     "zeroclipboard": "^2.2.0"
   }
 }
