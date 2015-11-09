@@ -3,17 +3,18 @@
     <div class="image-picker">
         <div>
             <img v-if="image && image !== 'none'" :src="image" :class="imageClass" alt="Image Preview">
+            <img v-if="image === '' && defaultImage" :src="defaultImage" :class="imageClass" alt="Image Preview">
         </div>
-        <button class="button" type="button" v-on:click="showImageManager">Select Image</button>
+        <button class="button" type="button" @click="showImageManager">Select Image</button>
         <br>
-        <button class="text-button" v-on:click="reset" type="button">Reset</button> <span class="sep">|</span> <button class="text-button neg" v-on:click="remove" type="button">Remove</button>
+        <button class="text-button" @click="reset" type="button">Reset</button> <span class="sep">|</span> <button class="text-button neg" v-on:click="remove" type="button">Remove</button>
         <input type="hidden" :name="name" :id="name" v-model="image">
     </div>
 </template>
 
 <script>
     module.exports = {
-        props: ['currentImage', 'name', 'imageClass'],
+        props: ['currentImage', 'name', 'imageClass', 'defaultImage'],
         data: function() {
             return {
                 image: this.currentImage

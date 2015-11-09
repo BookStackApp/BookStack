@@ -1,6 +1,6 @@
 <template>
     <div id="image-manager">
-        <div class="overlay" v-el:overlay v-on:click="overlayClick">
+        <div class="overlay" v-el:overlay @click="overlayClick">
             <div class="image-manager-body">
                 <div class="image-manager-content">
                     <div class="image-manager-list">
@@ -8,13 +8,13 @@
                             <img class="anim fadeIn"
                                  :class="{selected: (image==selectedImage)}"
                                  :src="image.thumbnail" :alt="image.title" :title="image.name"
-                                 v-on:click="imageClick(image)"
-                                 v-bind:style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}">
+                                 @click="imageClick(image)"
+                                 :style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}">
                         </div>
-                        <div class="load-more" v-show="hasMore" v-on:click="fetchData">Load More</div>
+                        <div class="load-more" v-show="hasMore" @click="fetchData">Load More</div>
                     </div>
                 </div>
-                <button class="neg button image-manager-close" v-on:click="hide">x</button>
+                <button class="neg button image-manager-close" @click="hide">x</button>
                 <div class="image-manager-sidebar">
                     <h2 v-el:image-title>Images</h2>
                     <hr class="even">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="image-manager-details anim fadeIn" v-show="selectedImage">
                         <hr class="even">
-                        <form v-on:submit="saveImageDetails" v-el:image-form>
+                        <form @submit="saveImageDetails" v-el:image-form>
                             <div class="form-group">
                                 <label for="name">Image Name</label>
                                 <input type="text" id="name" name="name" v-model="selectedImage.name">
@@ -42,12 +42,12 @@
                             </ul>
                         </div>
 
-                        <form v-on:submit="deleteImage" v-el:image-delete-form>
+                        <form @submit="deleteImage" v-el:image-delete-form>
                             <button class="button neg"><i class="zmdi zmdi-delete"></i>Delete Image</button>
                         </form>
                     </div>
                     <div class="image-manager-bottom">
-                        <button class="button pos anim fadeIn" v-show="selectedImage" v-on:click="selectButtonClick"><i
+                        <button class="button pos anim fadeIn" v-show="selectedImage" @click="selectButtonClick"><i
                                 class="zmdi zmdi-square-right"></i>Select Image
                         </button>
                     </div>

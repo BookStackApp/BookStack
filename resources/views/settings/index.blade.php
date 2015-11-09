@@ -28,7 +28,7 @@
                 <div class="form-group" id="logo-control">
                     <label for="setting-app-logo">Application Logo</label>
                     <p class="small">This image should be 43px in height. </p>
-                    <image-picker current-image="{{ Setting::get('app-logo', '') }}" name="setting-app-logo" image-class="logo-image"></image-picker>
+                    <image-picker current-image="{{ Setting::get('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
             </div>
         </div>
