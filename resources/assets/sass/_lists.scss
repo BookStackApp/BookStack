@@ -215,3 +215,41 @@
     margin-left: 30px + $-s;
   }
 }
+
+ul.pagination {
+  display: inline-block;
+  list-style: none;
+  margin: $-m 0;
+  li {
+    float: left;
+  }
+  li:first-child {
+    a, span {
+      border-radius: 3px 0 0 3px;
+    }
+  }
+  li:last-child {
+    a, span {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+  a, span {
+    display: block;
+    padding: $-xxs $-s;
+    border: 1px solid #CCC;
+    margin-left: -1px;
+    color: #888;
+    user-select: none;
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+  li.active span {
+    background-color: rgba($primary, 0.8);
+    color: #EEE;
+    border-color: rgba($primary, 0.8);
+  }
+  a {
+    color: $primary;
+  }
+}

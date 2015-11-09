@@ -40,7 +40,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->bookRepo->getAll();
+        $books = $this->bookRepo->getAllPaginated(10);
         return view('books/index', ['books' => $books]);
     }
 

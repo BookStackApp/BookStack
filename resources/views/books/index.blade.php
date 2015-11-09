@@ -27,6 +27,7 @@
                         @include('books/list-item', ['book' => $book])
                         <hr>
                     @endforeach
+                    {!! $books->render() !!}
                 @else
                     <p class="text-muted">No books have been created.</p>
                     <a href="/books/create" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>

@@ -11,7 +11,7 @@ class BookRepo
 
     /**
      * BookRepo constructor.
-     * @param Book $book
+     * @param Book     $book
      * @param PageRepo $pageRepo
      */
     public function __construct(Book $book, PageRepo $pageRepo)
@@ -28,6 +28,16 @@ class BookRepo
     public function getAll()
     {
         return $this->book->all();
+    }
+
+    /**
+     * Getas
+     * @param int $count
+     * @return mixed
+     */
+    public function getAllPaginated($count = 10)
+    {
+        return $this->book->orderBy('name', 'asc')->paginate($count);
     }
 
     public function getBySlug($slug)
@@ -63,11 +73,11 @@ class BookRepo
     public function destroyBySlug($bookSlug)
     {
         $book = $this->getBySlug($bookSlug);
-        foreach($book->pages as $page) {
+        foreach ($book->pages as $page) {
             \Activity::removeEntity($page);
             $page->delete();
         }
-        foreach($book->chapters as $chapter) {
+        foreach ($book->chapters as $chapter) {
             \Activity::removeEntity($chapter);
             $chapter->delete();
         }
@@ -83,7 +93,7 @@ class BookRepo
     public function doesSlugExist($slug, $currentId = false)
     {
         $query = $this->book->where('slug', '=', $slug);
-        if($currentId) {
+        if ($currentId) {
             $query = $query->where('id', '!=', $currentId);
         }
         return $query->count() > 0;
@@ -94,7 +104,7 @@ class BookRepo
         $originalSlug = Str::slug($name);
         $slug = $originalSlug;
         $count = 2;
-        while($this->doesSlugExist($slug, $currentId)) {
+        while ($this->doesSlugExist($slug, $currentId)) {
             $slug = $originalSlug . '-' . $count;
             $count++;
         }
