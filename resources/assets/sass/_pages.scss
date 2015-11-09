@@ -42,6 +42,9 @@
     clear: both;
     margin: $-m 0;
   }
+  table {
+    word-break: break-all;
+  }
 }
 
 // Page content pointers
