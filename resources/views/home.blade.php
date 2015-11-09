@@ -11,6 +11,9 @@
                         @include('books/list-item', ['book' => $book])
                         <hr>
                     @endforeach
+                    @if(count($books) === 10)
+                            <a href="/books">View all books &raquo;</a>
+                    @endif
                 @else
                     <p class="text-muted">No books have been created.</p>
                     <a href="/books/create" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>

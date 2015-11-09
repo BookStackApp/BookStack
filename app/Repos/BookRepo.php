@@ -25,9 +25,9 @@ class BookRepo
         return $this->book->findOrFail($id);
     }
 
-    public function getAll()
+    public function getAll($count = 10)
     {
-        return $this->book->all();
+        return $this->book->orderBy('name', 'asc')->take($count)->get();
     }
 
     /**

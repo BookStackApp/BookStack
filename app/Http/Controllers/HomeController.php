@@ -36,7 +36,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = $this->bookRepo->getAll();
+        $books = $this->bookRepo->getAll(10);
         $activity = $this->activityService->latest();
         return view('home', ['books' => $books, 'activity' => $activity]);
     }
