@@ -2,13 +2,12 @@
 
 namespace BookStack\Http\Controllers;
 
+use Activity;
 use Illuminate\Http\Request;
 
 use BookStack\Http\Requests;
-use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\BookRepo;
-use BookStack\Services\ActivityService;
-use BookStack\Services\Facades\Activity;
+use Views;
 
 class HomeController extends Controller
 {
@@ -18,12 +17,10 @@ class HomeController extends Controller
 
     /**
      * HomeController constructor.
-     * @param ActivityService $activityService
      * @param BookRepo        $bookRepo
      */
-    public function __construct(ActivityService $activityService, BookRepo $bookRepo)
+    public function __construct(BookRepo $bookRepo)
     {
-        $this->activityService = $activityService;
         $this->bookRepo = $bookRepo;
         parent::__construct();
     }
@@ -36,9 +33,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = $this->bookRepo->getAll(10);
-        $activity = $this->activityService->latest();
-        return view('home', ['books' => $books, 'activity' => $activity]);
+        $activity = Activity::latest();
+        $recentlyViewed = Views::getUserRecentlyViewed(10, 0);
+        return view('home', ['activity' => $activity, 'recents' => $recentlyViewed]);
     }
 
 }

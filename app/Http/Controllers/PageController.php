@@ -10,6 +10,7 @@ use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
+use Views;
 
 class PageController extends Controller
 {
@@ -86,6 +87,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        Views::add($page);
         return view('pages/show', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 

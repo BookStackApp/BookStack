@@ -214,6 +214,7 @@ return [
 
         'Activity'  => BookStack\Services\Facades\Activity::class,
         'Setting'   => BookStack\Services\Facades\Setting::class,
+        'Views' => BookStack\Services\Facades\Views::class,
 
     ],
 

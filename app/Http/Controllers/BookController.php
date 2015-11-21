@@ -11,6 +11,7 @@ use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
+use Views;
 
 class BookController extends Controller
 {
@@ -41,7 +42,8 @@ class BookController extends Controller
     public function index()
     {
         $books = $this->bookRepo->getAllPaginated(10);
-        return view('books/index', ['books' => $books]);
+        $recents = $this->bookRepo->getRecentlyViewed(10, 0);
+        return view('books/index', ['books' => $books, 'recents' => $recents]);
     }
 
     /**
@@ -86,6 +88,7 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
+        Views::add($book);
         return view('books/show', ['book' => $book, 'current' => $book]);
     }
 

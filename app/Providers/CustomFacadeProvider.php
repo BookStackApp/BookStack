@@ -2,6 +2,7 @@
 
 namespace BookStack\Providers;
 
+use BookStack\Services\ViewService;
 use Illuminate\Support\ServiceProvider;
 use BookStack\Services\ActivityService;
 use BookStack\Services\SettingService;
@@ -27,6 +28,10 @@ class CustomFacadeProvider extends ServiceProvider
     {
         $this->app->bind('activity', function() {
             return new ActivityService($this->app->make('BookStack\Activity'));
+        });
+
+        $this->app->bind('views', function() {
+            return new ViewService($this->app->make('BookStack\View'));
         });
 
         $this->app->bind('setting', function() {

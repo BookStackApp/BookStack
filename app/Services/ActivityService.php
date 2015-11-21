@@ -17,7 +17,7 @@ class ActivityService
     public function __construct(Activity $activity)
     {
         $this->activity = $activity;
-        $this->user = Auth::user();
+        $this->user = auth()->user();
     }
 
     /**

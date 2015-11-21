@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class Entity extends Model
 {
+
     /**
      * Relation for the user that created this entity.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -36,12 +37,30 @@ abstract class Entity extends Model
     }
 
     /**
-     * Gets the activity for this entity.
+     * Gets the activity objects for this entity.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function activity()
     {
         return $this->morphMany('BookStack\Activity', 'entity')->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get View objects for this entity.
+     * @return mixed
+     */
+    public function views()
+    {
+        return $this->morphMany('BookStack\View', 'viewable');
+    }
+
+    /**
+     * Get just the views for the current user.
+     * @return mixed
+     */
+    public function userViews()
+    {
+        return $this->views()->where('user_id', '=', auth()->user()->id);
     }
 
     /**
