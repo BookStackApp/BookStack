@@ -1,6 +1,7 @@
 <?php namespace BookStack\Repos;
 
 
+use Activity;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
 
@@ -18,37 +19,80 @@ class ChapterRepo
         $this->chapter = $chapter;
     }
 
+    /**
+     * Check if an id exists.
+     * @param $id
+     * @return bool
+     */
     public function idExists($id)
     {
         return $this->chapter->where('id', '=', $id)->count() > 0;
     }
 
+    /**
+     * Get a chapter by a specific id.
+     * @param $id
+     * @return mixed
+     */
     public function getById($id)
     {
         return $this->chapter->findOrFail($id);
     }
 
+    /**
+     * Get all chapters.
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getAll()
     {
         return $this->chapter->all();
     }
 
+    /**
+     * Get a chapter that has the given slug within the given book.
+     * @param $slug
+     * @param $bookId
+     * @return mixed
+     */
     public function getBySlug($slug, $bookId)
     {
         return $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
     }
 
+    /**
+     * Create a new chapter from request input.
+     * @param $input
+     * @return $this
+     */
     public function newFromInput($input)
     {
         return $this->chapter->fill($input);
     }
 
-    public function destroyById($id)
+    /**
+     * Destroy a chapter and its relations by providing its slug.
+     * @param Chapter $chapter
+     */
+    public function destroy(Chapter $chapter)
     {
-        $page = $this->getById($id);
-        $page->delete();
+        if (count($chapter->pages) > 0) {
+            foreach ($chapter->pages as $page) {
+                $page->chapter_id = 0;
+                $page->save();
+            }
+        }
+        Activity::removeEntity($chapter);
+        $chapter->views()->delete();
+        $chapter->delete();
     }
 
+    /**
+     * Check if a chapter's slug exists.
+     * @param            $slug
+     * @param            $bookId
+     * @param bool|false $currentId
+     * @return bool
+     */
     public function doesSlugExist($slug, $bookId, $currentId = false)
     {
         $query = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId);
@@ -58,6 +102,14 @@ class ChapterRepo
         return $query->count() > 0;
     }
 
+    /**
+     * Finds a suitable slug for the provided name.
+     * Checks database to prevent duplicate slugs.
+     * @param            $name
+     * @param            $bookId
+     * @param bool|false $currentId
+     * @return string
+     */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
         $slug = Str::slug($name);
@@ -67,6 +119,12 @@ class ChapterRepo
         return $slug;
     }
 
+    /**
+     * Get chapters by the given search term.
+     * @param       $term
+     * @param array $whereTerms
+     * @return mixed
+     */
     public function getBySearch($term, $whereTerms = [])
     {
         $terms = explode(' ', preg_quote(trim($term)));
@@ -80,6 +138,12 @@ class ChapterRepo
         return $chapters;
     }
 
+    /**
+     * Sets a chapters book id.
+     * @param         $bookId
+     * @param Chapter $chapter
+     * @return Chapter
+     */
     public function setBookId($bookId, Chapter $chapter)
     {
         $chapter->book_id = $bookId;

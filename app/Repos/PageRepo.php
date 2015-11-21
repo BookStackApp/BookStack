@@ -1,6 +1,7 @@
 <?php namespace BookStack\Repos;
 
 
+use Activity;
 use BookStack\Book;
 use BookStack\Chapter;
 use Illuminate\Http\Request;
@@ -26,21 +27,41 @@ class PageRepo
         $this->pageRevision = $pageRevision;
     }
 
+    /**
+     * Check if a page id exists.
+     * @param $id
+     * @return bool
+     */
     public function idExists($id)
     {
         return $this->page->where('page_id', '=', $id)->count() > 0;
     }
 
+    /**
+     * Get a page via a specific ID.
+     * @param $id
+     * @return mixed
+     */
     public function getById($id)
     {
         return $this->page->findOrFail($id);
     }
 
+    /**
+     * Get all pages.
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getAll()
     {
         return $this->page->all();
     }
 
+    /**
+     * Get a page identified by the given slug.
+     * @param $slug
+     * @param $bookId
+     * @return mixed
+     */
     public function getBySlug($slug, $bookId)
     {
         return $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
@@ -56,6 +77,12 @@ class PageRepo
         return $page;
     }
 
+    /**
+     * Count the pages with a particular slug within a book.
+     * @param $slug
+     * @param $bookId
+     * @return mixed
+     */
     public function countBySlug($slug, $bookId)
     {
         return $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->count();
@@ -137,12 +164,14 @@ class PageRepo
         return $html;
     }
 
-    public function destroyById($id)
-    {
-        $page = $this->getById($id);
-        $page->delete();
-    }
 
+    /**
+     * Gets pages by a search term.
+     * Highlights page content for showing in results.
+     * @param string      $term
+     * @param array $whereTerms
+     * @return mixed
+     */
     public function getBySearch($term, $whereTerms = [])
     {
         $terms = explode(' ', preg_quote(trim($term)));
@@ -299,7 +328,6 @@ class PageRepo
 
     /**
      * Gets a suitable slug for the resource
-     *
      * @param            $name
      * @param            $bookId
      * @param bool|false $currentId
@@ -312,6 +340,18 @@ class PageRepo
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
         return $slug;
+    }
+
+    /**
+     * Destroy a given page along with its dependencies.
+     * @param $page
+     */
+    public function destroy($page)
+    {
+        Activity::removeEntity($page);
+        $page->views()->delete();
+        $page->revisions()->delete();
+        $page->delete();
     }
 
 

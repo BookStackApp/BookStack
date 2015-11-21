@@ -12,6 +12,6 @@
     @endforeach
 @else
     <p class="text-muted">
-        No items available :(
+        No items available
     </p>
 @endif

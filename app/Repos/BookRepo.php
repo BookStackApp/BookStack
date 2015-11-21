@@ -1,6 +1,6 @@
 <?php namespace BookStack\Repos;
 
-use BookStack\Activity;
+use Activity;
 use Illuminate\Support\Str;
 use BookStack\Book;
 use Views;
@@ -10,16 +10,19 @@ class BookRepo
 
     protected $book;
     protected $pageRepo;
+    protected $chapterRepo;
 
     /**
      * BookRepo constructor.
-     * @param Book     $book
-     * @param PageRepo $pageRepo
+     * @param Book        $book
+     * @param PageRepo    $pageRepo
+     * @param ChapterRepo $chapterRepo
      */
-    public function __construct(Book $book, PageRepo $pageRepo)
+    public function __construct(Book $book, PageRepo $pageRepo, ChapterRepo $chapterRepo)
     {
         $this->book = $book;
         $this->pageRepo = $pageRepo;
+        $this->chapterRepo = $chapterRepo;
     }
 
     /**
@@ -52,6 +55,23 @@ class BookRepo
         return $this->book->orderBy('name', 'asc')->paginate($count);
     }
 
+
+    /**
+     * Get the latest books.
+     * @param int $count
+     * @return mixed
+     */
+    public function getLatest($count = 10)
+    {
+        return $this->book->orderBy('created_at', 'desc')->take($count)->get();
+    }
+
+    /**
+     * Gets the most recently viewed for a user.
+     * @param int $count
+     * @param int $page
+     * @return mixed
+     */
     public function getRecentlyViewed($count = 10, $page = 0)
     {
         return Views::getUserRecentlyViewed($count, $page, $this->book);
@@ -105,13 +125,12 @@ class BookRepo
     {
         $book = $this->getBySlug($bookSlug);
         foreach ($book->pages as $page) {
-            \Activity::removeEntity($page);
-            $page->delete();
+            $this->pageRepo->destroy($page);
         }
         foreach ($book->chapters as $chapter) {
-            \Activity::removeEntity($chapter);
-            $chapter->delete();
+            $this->chapterRepo->destroy($chapter);
         }
+        $book->views()->delete();
         $book->delete();
     }
 

@@ -164,8 +164,7 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         Activity::addMessage('page_delete', $book->id, $page->name);
-        Activity::removeEntity($page);
-        $page->delete();
+        $this->pageRepo->destroy($page);
         return redirect($book->getUrl());
     }
 

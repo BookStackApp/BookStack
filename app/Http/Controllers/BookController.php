@@ -42,7 +42,7 @@ class BookController extends Controller
     public function index()
     {
         $books = $this->bookRepo->getAllPaginated(10);
-        $recents = $this->bookRepo->getRecentlyViewed(10, 0);
+        $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed(10, 0) : false;
         return view('books/index', ['books' => $books, 'recents' => $recents]);
     }
 

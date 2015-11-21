@@ -35,8 +35,10 @@
             </div>
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="margin-top large">&nbsp;</div>
-                <h3>Recently Viewed</h3>
-                @include('partials/entity-list', ['entities' => $recents])
+                @if($recents)
+                    <h3>Recently Viewed</h3>
+                    @include('partials/entity-list', ['entities' => $recents])
+                @endif
             </div>
         </div>
     </div>

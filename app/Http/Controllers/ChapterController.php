@@ -146,15 +146,8 @@ class ChapterController extends Controller
         $this->checkPermission('chapter-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
-        if (count($chapter->pages) > 0) {
-            foreach ($chapter->pages as $page) {
-                $page->chapter_id = 0;
-                $page->save();
-            }
-        }
-        Activity::removeEntity($chapter);
         Activity::addMessage('chapter_delete', $book->id, $chapter->name);
-        $chapter->delete();
+        $this->chapterRepo->destroy($chapter);
         return redirect($book->getUrl());
     }
 }

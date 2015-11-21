@@ -34,8 +34,8 @@ class HomeController extends Controller
     public function index()
     {
         $activity = Activity::latest();
-        $recentlyViewed = Views::getUserRecentlyViewed(10, 0);
-        return view('home', ['activity' => $activity, 'recents' => $recentlyViewed]);
+        $recents = $this->signedIn ? Views::getUserRecentlyViewed(10, 0) : $this->bookRepo->getLatest(10);
+        return view('home', ['activity' => $activity, 'recents' => $recents]);
     }
 
 }
