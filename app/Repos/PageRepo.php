@@ -309,19 +309,20 @@ class PageRepo
     }
 
     /**
-     * Sets the book id for the specified page.
+     * Changes the related book for the specified page.
      * Changes the book id of any relations to the page that store the book id.
      * @param int  $bookId
      * @param Page $page
      * @return Page
      */
-    public function setBookId($bookId, Page $page)
+    public function changeBook($bookId, Page $page)
     {
         $page->book_id = $bookId;
         foreach ($page->activity as $activity) {
             $activity->book_id = $bookId;
             $activity->save();
         }
+        $page->slug = $this->findSuitableSlug($page->name, $bookId, $page->id);
         $page->save();
         return $page;
     }

@@ -185,7 +185,7 @@ class BookController extends Controller
             $isPage = $bookChild->type == 'page';
             $bookId = $this->bookRepo->exists($bookChild->book) ? $bookChild->book : $defaultBookId;
             $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
-            $isPage ? $this->pageRepo->setBookId($bookId, $model) : $this->chapterRepo->setBookId($bookId, $model);
+            $isPage ? $this->pageRepo->changeBook($bookId, $model) : $this->chapterRepo->changeBook($bookId, $model);
             $model->priority = $index;
             if ($isPage) {
                 $model->chapter_id = ($bookChild->parentChapter === false) ? 0 : $bookChild->parentChapter;

@@ -96,7 +96,7 @@ class ChapterRepo
     public function doesSlugExist($slug, $bookId, $currentId = false)
     {
         $query = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId);
-        if($currentId) {
+        if ($currentId) {
             $query = $query->where('id', '!=', $currentId);
         }
         return $query->count() > 0;
@@ -113,7 +113,7 @@ class ChapterRepo
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
         $slug = Str::slug($name);
-        while($this->doesSlugExist($slug, $bookId, $currentId)) {
+        while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
         return $slug;
@@ -139,18 +139,19 @@ class ChapterRepo
     }
 
     /**
-     * Sets a chapters book id.
+     * Changes the book relation of this chapter.
      * @param         $bookId
      * @param Chapter $chapter
      * @return Chapter
      */
-    public function setBookId($bookId, Chapter $chapter)
+    public function changeBook($bookId, Chapter $chapter)
     {
         $chapter->book_id = $bookId;
-        foreach($chapter->activity as $activity) {
+        foreach ($chapter->activity as $activity) {
             $activity->book_id = $bookId;
             $activity->save();
         }
+        $chapter->slug = $this->findSuitableSlug($chapter->name, $bookId, $chapter->id);
         $chapter->save();
         return $chapter;
     }
