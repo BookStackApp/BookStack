@@ -13,7 +13,7 @@ module.exports = {
             if (term.length == 0) return;
             this.searching = true;
             this.searchResults = '';
-            var searchUrl = this.$$.form.getAttribute('action');
+            var searchUrl = this.$els.form.getAttribute('action');
             searchUrl += '?term=' + encodeURIComponent(term);
             this.$http.get(searchUrl, function (data) {
                 this.$set('searchResults', data);

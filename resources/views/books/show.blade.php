@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="search-results" v-if="searching">
-                    <h3 class="text-muted">Search Results <a v-if="searching" v-on="click: clearSearch" class="text-small"><i class="zmdi zmdi-close"></i>Clear Search</a></h3>
+                    <h3 class="text-muted">Search Results <a v-if="searching" v-on:click="clearSearch" class="text-small"><i class="zmdi zmdi-close"></i>Clear Search</a></h3>
                     <div v-if="!searchResults">
                         @include('partials/loading-icon')
                     </div>
@@ -76,11 +76,11 @@
             <div class="col-md-4 col-md-offset-1">
                 <div class="margin-top large"></div>
                 <div class="search-box">
-                    <form v-on="submit: searchBook, input: checkSearchForm" v-el="form" action="/search/book/{{ $book->id }}">
+                    <form v-on:submit="searchBook" v-on:input="checkSearchForm" v-el:form action="/search/book/{{ $book->id }}">
                         {!! csrf_field() !!}
                         <input v-model="searchTerm" type="text" name="term" placeholder="Search This Book">
                         <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                        <button v-if="searching" v-on="click: clearSearch" type="button primary"><i class="zmdi zmdi-close"></i></button>
+                        <button v-if="searching" v-on:click="clearSearch" type="button"><i class="zmdi zmdi-close"></i></button>
                     </form>
                 </div>
                 <div class="activity anim fadeIn">
