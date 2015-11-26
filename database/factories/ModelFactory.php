@@ -23,6 +23,7 @@ $factory->define(BookStack\User::class, function ($faker) {
 $factory->define(BookStack\Book::class, function ($faker) {
     return [
         'name'        => $faker->sentence,
+        'slug'        => str_random(10),
         'description' => $faker->paragraph
     ];
 });
@@ -30,6 +31,7 @@ $factory->define(BookStack\Book::class, function ($faker) {
 $factory->define(BookStack\Chapter::class, function ($faker) {
     return [
         'name'        => $faker->sentence,
+        'slug'        => str_random(10),
         'description' => $faker->paragraph
     ];
 });
@@ -37,6 +39,7 @@ $factory->define(BookStack\Chapter::class, function ($faker) {
 $factory->define(BookStack\Page::class, function ($faker) {
     return [
         'name' => $faker->sentence,
+        'slug'        => str_random(10),
         'html' => '<p>' . implode('</p>', $faker->paragraphs(5)) . '</p>'
     ];
 });

@@ -80,8 +80,9 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($chapter);
-        return view('chapters/show', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
+        return view('chapters/show', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter, 'sidebarTree' => $sidebarTree]);
     }
 
     /**

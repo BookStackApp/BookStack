@@ -3,7 +3,7 @@
     <h6 class="text-muted">Book Navigation</h6>
     <ul class="sidebar-page-list menu">
         <li class="book-header"><a href="{{$book->getUrl()}}" class="book {{ $current->matches($book)? 'selected' : '' }}"><i class="zmdi zmdi-book"></i>{{$book->name}}</a></li>
-        @foreach($book->children() as $bookChild)
+        @foreach($sidebarTree as $bookChild)
             <li class="list-item-{{ $bookChild->getName() }}">
                 <a href="{{$bookChild->getUrl()}}" class="{{ $bookChild->getName() }} {{ $current->matches($bookChild)? 'selected' : '' }}">
                     @if($bookChild->isA('chapter'))<i class="zmdi zmdi-collection-bookmark"></i>@else <i class="zmdi zmdi-file-text"></i>@endif{{ $bookChild->name }}

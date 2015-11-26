@@ -27,16 +27,6 @@ class Book extends Entity
         return $this->hasMany('BookStack\Chapter');
     }
 
-    public function children()
-    {
-        $pages = $this->pages()->where('chapter_id', '=', 0)->get();
-        $chapters = $this->chapters()->get();
-        foreach($chapters as $chapter) {
-            $pages->push($chapter);
-        }
-        return $pages->sortBy('priority');
-    }
-
     public function getExcerpt($length = 100)
     {
         return strlen($this->description) > $length ? substr($this->description, 0, $length-3) . '...' : $this->description;

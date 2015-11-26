@@ -143,6 +143,7 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
 
         /*
@@ -207,6 +208,7 @@ return [
          */
 
         'ImageTool' => Intervention\Image\Facades\Image::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
         /**
          * Custom

@@ -37,8 +37,8 @@
 
                     <div class="page-list">
                         <hr>
-                        @if(count($book->children()) > 0)
-                            @foreach($book->children() as $childElement)
+                        @if(count($bookChildren) > 0)
+                            @foreach($bookChildren as $childElement)
                                 @if($childElement->isA('chapter'))
                                     @include('chapters/list-item', ['chapter' => $childElement])
                                 @else

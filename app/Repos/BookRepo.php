@@ -179,6 +179,30 @@ class BookRepo
     }
 
     /**
+     * Get all child objects of a book.
+     * Returns a sorted collection of Pages and Chapters.
+     * Loads the bookslug onto child elements to prevent access database access for getting the slug.
+     * @param Book $book
+     * @return mixed
+     */
+    public function getChildren(Book $book)
+    {
+        $pages = $book->pages()->where('chapter_id', '=', 0)->get();
+        $chapters = $book->chapters()->with('pages')->get();
+        $children = $pages->merge($chapters);
+        $bookSlug = $book->slug;
+        $children->each(function ($child) use ($bookSlug) {
+            $child->setAttribute('bookSlug', $bookSlug);
+            if ($child->isA('chapter')) {
+                $child->pages->each(function ($page) use ($bookSlug) {
+                    $page->setAttribute('bookSlug', $bookSlug);
+                });
+            }
+        });
+        return $children->sortBy('priority');
+    }
+
+    /**
      * Get books by search term.
      * @param $term
      * @return mixed

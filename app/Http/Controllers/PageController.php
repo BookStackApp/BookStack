@@ -87,8 +87,9 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($page);
-        return view('pages/show', ['page' => $page, 'book' => $book, 'current' => $page]);
+        return view('pages/show', ['page' => $page, 'book' => $book, 'current' => $page, 'sidebarTree' => $sidebarTree]);
     }
 
     /**

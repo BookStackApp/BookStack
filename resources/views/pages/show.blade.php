@@ -60,7 +60,7 @@
             </div>
             <div class="col-md-3 print-hidden">
 
-                @include('pages/sidebar-tree-list', ['book' => $book])
+                @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree])
 
             </div>
         </div>

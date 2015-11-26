@@ -34,13 +34,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * This holds the user's permissions when loaded.
+     * @var array
+     */
+    protected $permissions;
+
+    /**
      * Returns a default guest user.
      */
     public static function getDefault()
     {
         return new static([
             'email' => 'guest',
-            'name'  => 'Guest'
+            'name' => 'Guest'
         ]);
     }
 
@@ -58,7 +64,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function getRoleAttribute()
     {
-        return $this->roles()->first();
+        return $this->roles()->with('permissions')->first();
+    }
+
+    /**
+     * Loads the user's permissions from thier role.
+     */
+    private function loadPermissions()
+    {
+        if (isset($this->permissions)) return;
+        $this->load('roles.permissions');
+        $permissions = $this->roles[0]->permissions;
+        $permissionsArray = $permissions->pluck('name')->all();
+        $this->permissions = $permissionsArray;
     }
 
     /**
@@ -68,14 +86,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function can($permissionName)
     {
-        if($this->email == 'guest') {
+        if ($this->email == 'guest') {
             return false;
         }
-        $permissions = $this->role->permissions()->get();
-        $permissionSearch = $permissions->search(function ($item, $key) use ($permissionName) {
-            return $item->name == $permissionName;
-        });
-        return $permissionSearch !== false;
+        $this->loadPermissions();
+        return array_search($permissionName, $this->permissions) !== false;
     }
 
     /**
@@ -114,7 +129,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function hasSocialAccount($socialDriver = false)
     {
-        if($socialDriver === false) {
+        if ($socialDriver === false) {
             return $this->socialAccounts()->count() > 0;
         }
 

@@ -89,7 +89,8 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         Views::add($book);
-        return view('books/show', ['book' => $book, 'current' => $book]);
+        $bookChildren = $this->bookRepo->getChildren($book);
+        return view('books/show', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**

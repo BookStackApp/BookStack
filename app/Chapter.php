@@ -18,7 +18,8 @@ class Chapter extends Entity
 
     public function getUrl()
     {
-        return '/books/' . $this->book->slug . '/chapter/' . $this->slug;
+        $bookSlug = isset($this->bookSlug) ? $this->bookSlug : $this->book->slug;
+        return '/books/' . $bookSlug. '/chapter/' . $this->slug;
     }
 
     public function getExcerpt($length = 100)

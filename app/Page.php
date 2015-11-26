@@ -40,7 +40,9 @@ class Page extends Entity
 
     public function getUrl()
     {
-        return '/books/' . $this->book->slug . '/page/' . $this->slug;
+        // TODO - Extract this and share with chapters
+        $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
+        return '/books/' . $bookSlug . '/page/' . $this->slug;
     }
 
     public function getExcerpt($length = 100)

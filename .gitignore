@@ -12,3 +12,4 @@ Homestead.yaml
 /public/build
 /storage/images
 _ide_helper.php
+/storage/debugbar
