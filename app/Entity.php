@@ -37,6 +37,32 @@ abstract class Entity extends Model
     }
 
     /**
+     * Checks if an entity matches or contains another given entity.
+     * @param Entity $entity
+     * @return bool
+     */
+    public function matchesOrContains(Entity $entity)
+    {
+        $matches = [get_class($this), $this->id] === [get_class($entity), $entity->id];
+
+        if ($matches) return true;
+
+        if ($entity->isA('chapter') && $this->isA('book')) {
+            return $entity->book_id === $this->id;
+        }
+
+        if ($entity->isA('page') && $this->isA('book')) {
+            return $entity->book_id === $this->id;
+        }
+
+        if ($entity->isA('page') && $this->isA('chapter')) {
+            return $entity->chapter_id === $this->id;
+        }
+
+        return false;
+    }
+
+    /**
      * Gets the activity objects for this entity.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -106,7 +132,7 @@ abstract class Entity extends Model
             $search = $search->with('book');
         }
 
-        if(static::isA('page')) {
+        if (static::isA('page')) {
             $search = $search->with('chapter');
         }
 

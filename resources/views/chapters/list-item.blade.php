@@ -11,7 +11,7 @@
     @endif
 
     @if(count($chapter->pages) > 0 && !isset($hidePages))
-        <p class="text-muted chapter-toggle open"><i class="zmdi zmdi-caret-right"></i> {{ count($chapter->pages) }} Pages</p>
+        <p class="text-muted chapter-toggle"><i class="zmdi zmdi-caret-right"></i> <i class="zmdi zmdi-file-text"></i> <span>{{ count($chapter->pages) }} Pages</span></p>
         <div class="inset-list">
             @foreach($chapter->pages as $page)
                 <h4><a href="{{$page->getUrl()}}"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h4>

@@ -6,7 +6,7 @@
     color: $color-chapter;
   }
   .inset-list {
-    display: block;
+    display: none;
     overflow: hidden;
     // padding-left: $-m;
     margin-bottom: $-l;
@@ -45,7 +45,7 @@
   margin: 0 0 $-l 0;
   transition: all ease-in-out 180ms;
   user-select: none;
-  i {
+  i.zmdi-caret-right {
     transition: all ease-in-out 180ms;
     transform: rotate(0deg);
     transform-origin: 25% 50%;
@@ -53,7 +53,7 @@
   &.open {
     margin-bottom: 0;
   }
-  &.open i {
+  &.open i.zmdi-caret-right {
     transform: rotate(90deg);
   }
 }
@@ -140,6 +140,9 @@
       background-color: rgba($color-chapter, 0.12);
     }
   }
+  .chapter-toggle {
+    padding-left: $-s;
+  }
   .list-item-chapter {
     border-left: 5px solid $color-chapter;
     margin: 10px 10px;
@@ -156,6 +159,12 @@
     &.selected {
       background-color: rgba($color-page, 0.1);
     }
+  }
+  .sub-menu {
+    display: none;
+  }
+  .sub-menu.open {
+    display: block;
   }
 }
 
