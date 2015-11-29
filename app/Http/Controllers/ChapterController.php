@@ -33,7 +33,6 @@ class ChapterController extends Controller
 
     /**
      * Show the form for creating a new chapter.
-     *
      * @param $bookSlug
      * @return Response
      */
@@ -46,7 +45,6 @@ class ChapterController extends Controller
 
     /**
      * Store a newly created chapter in storage.
-     *
      * @param          $bookSlug
      * @param  Request $request
      * @return Response
@@ -62,8 +60,8 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->newFromInput($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id);
         $chapter->priority = $this->bookRepo->getNewPriority($book);
-        $chapter->created_by = Auth::user()->id;
-        $chapter->updated_by = Auth::user()->id;
+        $chapter->created_by = auth()->user()->id;
+        $chapter->updated_by = auth()->user()->id;
         $book->chapters()->save($chapter);
         Activity::add($chapter, 'chapter_create', $book->id);
         return redirect($chapter->getUrl());
@@ -71,7 +69,6 @@ class ChapterController extends Controller
 
     /**
      * Display the specified chapter.
-     *
      * @param $bookSlug
      * @param $chapterSlug
      * @return Response
@@ -87,7 +84,6 @@ class ChapterController extends Controller
 
     /**
      * Show the form for editing the specified chapter.
-     *
      * @param $bookSlug
      * @param $chapterSlug
      * @return Response
@@ -102,7 +98,6 @@ class ChapterController extends Controller
 
     /**
      * Update the specified chapter in storage.
-     *
      * @param  Request $request
      * @param          $bookSlug
      * @param          $chapterSlug
@@ -115,7 +110,7 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $chapter->fill($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id, $chapter->id);
-        $chapter->updated_by = Auth::user()->id;
+        $chapter->updated_by = auth()->user()->id;
         $chapter->save();
         Activity::add($chapter, 'chapter_update', $book->id);
         return redirect($chapter->getUrl());
@@ -137,7 +132,6 @@ class ChapterController extends Controller
 
     /**
      * Remove the specified chapter from storage.
-     *
      * @param $bookSlug
      * @param $chapterSlug
      * @return Response

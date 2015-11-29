@@ -54,36 +54,36 @@ class AddEntityIndexes extends Migration
     public function down()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->dropIndex('slug');
-            $table->dropIndex('created_by');
-            $table->dropIndex('updated_by');
+            $table->dropIndex('books_slug_index');
+            $table->dropIndex('books_created_by_index');
+            $table->dropIndex('books_updated_by_index');
         });
         Schema::table('pages', function (Blueprint $table) {
-            $table->dropIndex('slug');
-            $table->dropIndex('book_id');
-            $table->dropIndex('chapter_id');
-            $table->dropIndex('priority');
-            $table->dropIndex('created_by');
-            $table->dropIndex('updated_by');
+            $table->dropIndex('pages_slug_index');
+            $table->dropIndex('pages_book_id_index');
+            $table->dropIndex('pages_chapter_id_index');
+            $table->dropIndex('pages_priority_index');
+            $table->dropIndex('pages_created_by_index');
+            $table->dropIndex('pages_updated_by_index');
         });
         Schema::table('page_revisions', function (Blueprint $table) {
-            $table->dropIndex('page_id');
+            $table->dropIndex('page_revisions_page_id_index');
         });
         Schema::table('chapters', function (Blueprint $table) {
-            $table->dropIndex('slug');
-            $table->dropIndex('book_id');
-            $table->dropIndex('priority');
-            $table->dropIndex('created_by');
-            $table->dropIndex('updated_by');
+            $table->dropIndex('chapters_slug_index');
+            $table->dropIndex('chapters_book_id_index');
+            $table->dropIndex('chapters_priority_index');
+            $table->dropIndex('chapters_created_by_index');
+            $table->dropIndex('chapters_updated_by_index');
         });
         Schema::table('activities', function (Blueprint $table) {
-            $table->dropIndex('book_id');
-            $table->dropIndex('user_id');
-            $table->dropIndex('entity_id');
+            $table->dropIndex('activities_book_id_index');
+            $table->dropIndex('activities_user_id_index');
+            $table->dropIndex('activities_entity_id_index');
         });
         Schema::table('views', function (Blueprint $table) {
-            $table->dropIndex('user_id');
-            $table->dropIndex('entity_id');
+            $table->dropIndex('views_user_id_index');
+            $table->dropIndex('views_viewable_id_index');
         });
     }
 }

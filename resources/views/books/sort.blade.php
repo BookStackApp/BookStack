@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-8" id="sort-boxes">
 
-                @include('books/sort-box', ['book' => $book])
+                @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
 
             </div>
 

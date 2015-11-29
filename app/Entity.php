@@ -69,19 +69,18 @@ abstract class Entity extends Model
      * @param $type
      * @return bool
      */
-    public function isA($type)
+    public static function isA($type)
     {
-        return $this->getName() === strtolower($type);
+        return static::getName() === strtolower($type);
     }
 
     /**
      * Gets the class name.
      * @return string
      */
-    public function getName()
+    public static function getName()
     {
-        $fullClassName = get_class($this);
-        return strtolower(array_slice(explode('\\', $fullClassName), -1, 1)[0]);
+        return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
     }
 
     /**
@@ -102,6 +101,15 @@ abstract class Entity extends Model
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
+
+        if (!static::isA('book')) {
+            $search = $search->with('book');
+        }
+
+        if(static::isA('page')) {
+            $search = $search->with('chapter');
+        }
+
         return $search->get();
     }
 

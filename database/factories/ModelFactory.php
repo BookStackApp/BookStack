@@ -13,33 +13,35 @@
 
 $factory->define(BookStack\User::class, function ($faker) {
     return [
-        'name'           => $faker->name,
-        'email'          => $faker->email,
-        'password'       => str_random(10),
+        'name' => $faker->name,
+        'email' => $faker->email,
+        'password' => str_random(10),
         'remember_token' => str_random(10),
     ];
 });
 
 $factory->define(BookStack\Book::class, function ($faker) {
     return [
-        'name'        => $faker->sentence,
-        'slug'        => str_random(10),
+        'name' => $faker->sentence,
+        'slug' => str_random(10),
         'description' => $faker->paragraph
     ];
 });
 
 $factory->define(BookStack\Chapter::class, function ($faker) {
     return [
-        'name'        => $faker->sentence,
-        'slug'        => str_random(10),
+        'name' => $faker->sentence,
+        'slug' => str_random(10),
         'description' => $faker->paragraph
     ];
 });
 
 $factory->define(BookStack\Page::class, function ($faker) {
+    $html = '<p>' . implode('</p>', $faker->paragraphs(5)) . '</p>';
     return [
         'name' => $faker->sentence,
-        'slug'        => str_random(10),
-        'html' => '<p>' . implode('</p>', $faker->paragraphs(5)) . '</p>'
+        'slug' => str_random(10),
+        'html' => $html,
+        'text' => strip_tags($html)
     ];
 });

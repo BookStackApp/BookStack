@@ -55,6 +55,18 @@ location / {
 }
 ```
 
+## Testing
+
+BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. To use you will need PHPUnit installed and accessible via command line. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the following database name, user name and password defined as `bookstack-test`. You will have to create that database and credentials before testing.
+
+The testing database will also need migrating and seeding beforehand. This can be done with the following commands:
+
+```
+php artisan migrate --database=mysql_testing
+php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
+```
+
+Once done you can run `phpunit` in the application root directory to run all tests.
 
 ## License
 

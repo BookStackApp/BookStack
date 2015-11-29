@@ -3,7 +3,6 @@
 
 class Chapter extends Entity
 {
-
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
 
     public function book()
@@ -18,7 +17,7 @@ class Chapter extends Entity
 
     public function getUrl()
     {
-        $bookSlug = isset($this->bookSlug) ? $this->bookSlug : $this->book->slug;
+        $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
         return '/books/' . $bookSlug. '/chapter/' . $this->slug;
     }
 

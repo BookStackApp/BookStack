@@ -51,6 +51,34 @@ class EntityTest extends TestCase
         return \BookStack\Book::find($book->id);
     }
 
+    public function testBookSortPageShows()
+    {
+        $books =  \BookStack\Book::all();
+        $bookToSort = $books[0];
+        $this->asAdmin()
+            ->visit($bookToSort->getUrl())
+            ->click('Sort')
+            ->seePageIs($bookToSort->getUrl() . '/sort')
+            ->seeStatusCode(200)
+            ->see($bookToSort->name)
+            // Ensure page shows other books
+            ->see($books[1]->name);
+    }
+
+    public function testBookSortItemReturnsBookContent()
+    {
+        $books =  \BookStack\Book::all();
+        $bookToSort = $books[0];
+        $firstPage = $bookToSort->pages[0];
+        $firstChapter = $bookToSort->chapters[0];
+        $this->asAdmin()
+            ->visit($bookToSort->getUrl() . '/sort-item')
+            // Ensure book details are returned
+            ->see($bookToSort->name)
+            ->see($firstPage->name)
+            ->see($firstChapter->name);
+    }
+
     public function pageCreation($chapter)
     {
         $page = factory(\BookStack\Page::class)->make([
@@ -118,11 +146,28 @@ class EntityTest extends TestCase
         // Ensure duplicate names are given different slugs
         $this->asAdmin()
             ->visit('/books/create')
-            ->submitForm('Save Book', $book->toArray())
+            ->type($book->name, '#name')
+            ->type($book->description, '#description')
+            ->press('Save Book')
             ->seePageIs('/books/my-first-book-2');
 
         $book = \BookStack\Book::where('slug', '=', 'my-first-book')->first();
         return $book;
+    }
+
+    public function testPageSearch()
+    {
+        $book = \BookStack\Book::all()->first();
+        $page = $book->pages->first();
+
+        $this->asAdmin()
+            ->visit('/')
+            ->type($page->name, 'term')
+            ->press('header-search-box-button')
+            ->see('Search Results')
+            ->see($page->name)
+            ->click($page->name)
+            ->seePageIs($page->getUrl());
     }
 
 

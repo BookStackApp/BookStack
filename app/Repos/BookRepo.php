@@ -141,7 +141,7 @@ class BookRepo
      */
     public function getNewPriority($book)
     {
-        $lastElem = $book->children()->pop();
+        $lastElem = $this->getChildren($book)->pop();
         return $lastElem ? $lastElem->priority + 1 : 0;
     }
 

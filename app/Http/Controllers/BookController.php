@@ -150,14 +150,16 @@ class BookController extends Controller
     {
         $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $bookChildren = $this->bookRepo->getChildren($book);
         $books = $this->bookRepo->getAll();
-        return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books]);
+        return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
     }
 
     public function getSortItem($bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        return view('books/sort-box', ['book' => $book]);
+        $bookChildren = $this->bookRepo->getChildren($book);
+        return view('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**
