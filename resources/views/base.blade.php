@@ -3,7 +3,7 @@
 <head>
     <title>BookStack</title>
 
-    <!-- Meta-->
+    <!-- Meta -->
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
@@ -21,17 +21,7 @@
 </head>
 <body class="@yield('body-class')" id="app">
 
-    @if(Session::has('success'))
-        <div class="notification anim pos">
-            <i class="zmdi zmdi-mood"></i> <span>{{ Session::get('success') }}</span>
-        </div>
-    @endif
-
-    @if(Session::has('error'))
-        <div class="notification anim neg stopped">
-            <i class="zmdi zmdi-alert-circle"></i> <span>{{ Session::get('error') }}</span>
-        </div>
-    @endif
+    @include('partials/notifications')
 
     <header id="header">
         <div class="container">
