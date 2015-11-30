@@ -1,5 +1,10 @@
 @extends('base')
 
+@section('head')
+    <script src="/libs/tinymce/tinymce.min.js"></script>
+    <script src="/libs/jquery-sortable/jquery-sortable.min.js"></script>
+@stop
+
 @section('content')
 
     <div class="container">

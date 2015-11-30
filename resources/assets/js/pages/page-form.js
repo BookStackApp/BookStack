@@ -99,10 +99,9 @@ module.exports = {
             tooltip: 'Insert an image',
             onclick: function() {
                 ImageManager.show(function(image) {
-                    var html = '<p><a href="'+image.url+'" target="_blank">';
+                    var html = '<a href="'+image.url+'" target="_blank">';
                     html += '<img src="'+image.display+'" alt="'+image.name+'">';
-                    html += '</a></p>';
-                    console.log(image);
+                    html += '</a>';
                     editor.execCommand('mceInsertContent', false, html);
                 });
             }
@@ -138,10 +137,7 @@ module.exports = {
                             xhr.onload = function() {
                                 if (xhr.status === 200 || xhr.status === 201) {
                                     var result = JSON.parse(xhr.responseText);
-                                    //var newImage =  editor.getDoc().getElementById(id);
-                                    //newImage.setAttribute('src', result.url);
                                     editor.dom.setAttrib(id, 'src', result.url);
-                                    console.log(result);
                                 } else {
                                     console.log('An error occured uploading the image');
                                     console.log(xhr.responseText);

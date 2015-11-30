@@ -10,12 +10,13 @@
 @import "tables";
 @import "animations";
 @import "tinymce";
+@import "highlightjs";
 @import "image-manager";
 @import "header";
 @import "lists";
 @import "pages";
 
-[v-cloak] {display: none;}
+[v-cloak], [v-show] {display: none;}
 
 // Jquery Sortable Styles
 .dragged {
