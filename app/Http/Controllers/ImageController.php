@@ -110,7 +110,11 @@ class ImageController extends Controller
     public function upload(Request $request)
     {
         $this->checkPermission('image-create');
+        $this->validate($request, [
+            'file' => 'image|mimes:jpeg,gif,png'
+        ]);
         $imageUpload = $request->file('file');
+
         $name = str_replace(' ', '-', $imageUpload->getClientOriginalName());
         $storageName = substr(sha1(time()), 0, 10) . '-' . $name;
         $imagePath = '/uploads/images/' . Date('Y-m-M') . '/';

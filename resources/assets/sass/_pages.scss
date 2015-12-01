@@ -19,12 +19,16 @@
   max-width: 840px;
   overflow-wrap: break-word;
   .align-left {
-    float: left !important;
     text-align: left;
+  }
+  img.align-left, table.align-left {
+    float: left !important;
     margin: $-xs $-s $-xs 0;
   }
   .align-right {
     float: right !important;
+  }
+  img.align-right, table.align-right {
     text-align: right;
     margin: $-xs 0 $-xs $-s;
   }
