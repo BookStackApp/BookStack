@@ -2,35 +2,40 @@
 
 A platform to create documentation/wiki content. General information about BookStack can be found at https://www.bookstackapp.com/
 
-**BookStack is currently in rapid development so use now is heavily cautioned as future updates my break existing installations.**
 
 ## Requirements
 
-BookStack has the similar requirements to Laravel. On top of those are some front-end build tools which the requirement of will be removed once out of beta release.
+BookStack has the similar requirements to Laravel. On top of those are some front-end build tools which are only required when developing.
 
 * PHP >= 5.5.9
 * OpenSSL PHP Extension
 * PDO PHP Extension
-* Mbstring PHP Extension
+* MBstring PHP Extension
 * Tokenizer PHP Extension
 * MySQL >= 5.6
+* Git (Not strictly required but helps manage updates)
 * [Composer](https://getcomposer.org/)
-* [Node.js](https://nodejs.org/en/) **To be removed in future**
-* [Bower](http://bower.io/) **To be removed in future**
-* [Gulp](http://gulpjs.com/) **To be removed in future**
+* [Node.js](https://nodejs.org/en/) **Development Only**
+* [Gulp](http://gulpjs.com/) **Development Only**
 
 
 ## Installation
 
 Ensure the requirements are met before installing.
 
-The installation is currently somewhat complicated. Some PHP/Laravel experience will benefit. This will be streamlined in the future.
+This project currently uses the `release` branch of this repository as a stable channel for providing updates.
 
-1. Clone the repository into a folder.
-2. `cd` into folder and run `composer install` followed by `npm install` and `bower install`.
-3. Run `gulp --production` to compile the JavaScript and css files.
-4. Copy the `.env.example` file to `.env` and fill with your own database and mail details.
-5. Ensure the `storage` & `bootstrap/cache` folders are writable by the web server.
+The installation is currently somewhat complicated. Some PHP/Laravel experience will benefit. 
+
+1. Clone the release branch of this repository into a folder.
+
+``` 
+git clone https://github.com/ssddanbrown/BookStack.git --branch release --single-branch
+```
+
+2. `cd` into the application folder and run `composer install`.
+3. Copy the `.env.example` file to `.env` and fill with your own database and mail details.
+4. Ensure the `storage` & `bootstrap/cache` folders are writable by the web server.
 5. In the application root, Run `php artisan key:generate` to generate a unique application key.
 6. If not using apache or `.htaccess` files are disable you will have to create some  URL rewrite rules as shown below.
 7. Run `php migrate` to update the database.
