@@ -27,6 +27,7 @@ class ViewService
      */
     public function add(Entity $entity)
     {
+        if($this->user === null) return 0;
         $view = $entity->views()->where('user_id', '=', $this->user->id)->first();
         // Add view if model exists
         if ($view) {
@@ -52,6 +53,7 @@ class ViewService
      */
     public function getUserRecentlyViewed($count = 10, $page = 0, $filterModel = false)
     {
+        if($this->user === null) return collect();
         $skipCount = $count * $page;
         $query = $this->view->where('user_id', '=', auth()->user()->id);
 

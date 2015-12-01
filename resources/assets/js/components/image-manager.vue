@@ -110,6 +110,12 @@
                                 dz.removeFile(file);
                             });
                         });
+                        this.on('error', function(file, errorMessage, xhr) {
+                            if(errorMessage.file) {
+                                $(file.previewElement).find('[data-dz-errormessage]').text(errorMessage.file[0]);
+                            }
+                            console.log(errorMessage);
+                        });
                     }
                 });
             },
