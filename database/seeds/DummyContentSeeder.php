@@ -23,7 +23,9 @@ class DummyContentSeeder extends Seeder
                        $pages = factory(\BookStack\Page::class, 10)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id]);
                         $chapter->pages()->saveMany($pages);
                     });
+                $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $user->id, 'updated_by' => $user->id]);
                 $book->chapters()->saveMany($chapters);
+                $book->pages()->saveMany($pages);
             });
     }
 }
