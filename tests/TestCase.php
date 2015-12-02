@@ -48,4 +48,31 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
             $settings->put($key, $value);
         }
     }
+
+    /**
+     * Assert that a given string is seen inside an element.
+     *
+     * @param  bool|string|null $element
+     * @param  integer          $position
+     * @param  string           $text
+     * @param  bool             $negate
+     * @return $this
+     */
+    protected function seeInNthElement($element, $position, $text, $negate = false)
+    {
+        $method = $negate ? 'assertNotRegExp' : 'assertRegExp';
+
+        $rawPattern = preg_quote($text, '/');
+
+        $escapedPattern = preg_quote(e($text), '/');
+
+        $content = $this->crawler->filter($element)->eq($position)->html();
+
+        $pattern = $rawPattern == $escapedPattern
+            ? $rawPattern : "({$rawPattern}|{$escapedPattern})";
+
+        $this->$method("/$pattern/i", $content);
+
+        return $this;
+    }
 }

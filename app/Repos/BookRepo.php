@@ -77,6 +77,11 @@ class BookRepo
         return Views::getUserRecentlyViewed($count, $page, $this->book);
     }
 
+    public function getPopular($count = 10, $page = 0)
+    {
+        return Views::getPopular($count, $page, $this->book);
+    }
+
     /**
      * Get a book by slug
      * @param $slug

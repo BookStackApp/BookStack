@@ -44,6 +44,29 @@ class ViewService
         return 1;
     }
 
+
+    /**
+     * Get the entities with the most views.
+     * @param int        $count
+     * @param int        $page
+     * @param bool|false $filterModel
+     */
+    public function getPopular($count = 10, $page = 0, $filterModel = false)
+    {
+        $skipCount = $count * $page;
+        $query = $this->view->select('id', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
+            ->groupBy('viewable_id', 'viewable_type')
+            ->orderBy('view_count', 'desc');
+
+        if($filterModel) $query->where('viewable_type', '=', get_class($filterModel));
+
+        $views = $query->with('viewable')->skip($skipCount)->take($count)->get();
+        $viewedEntities = $views->map(function ($item) {
+            return $item->viewable()->getResults();
+        });
+        return $viewedEntities;
+    }
+
     /**
      * Get all recently viewed entities for the current user.
      * @param int         $count

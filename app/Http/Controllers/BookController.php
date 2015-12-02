@@ -42,8 +42,9 @@ class BookController extends Controller
     public function index()
     {
         $books = $this->bookRepo->getAllPaginated(10);
-        $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed(10, 0) : false;
-        return view('books/index', ['books' => $books, 'recents' => $recents]);
+        $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed(4, 0) : false;
+        $popular = $this->bookRepo->getPopular(4, 0);
+        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular]);
     }
 
     /**
