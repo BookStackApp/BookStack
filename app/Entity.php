@@ -134,20 +134,20 @@ abstract class Entity extends Model
             $termString .= $term . '* ';
         }
         $fields = implode(',', $fieldsToSearch);
-        $search = static::whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+        $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
+        $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
+        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+
+        // Add additional where terms
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
 
-        if (!static::isA('book')) {
-            $search = $search->with('book');
-        }
+        // Load in relations
+        if (!static::isA('book')) $search = $search->with('book');
+        if (static::isA('page'))  $search = $search->with('chapter');
 
-        if (static::isA('page')) {
-            $search = $search->with('chapter');
-        }
-
-        return $search->get();
+        return $search->orderBy('title_relevance', 'desc')->get();
     }
 
     /**
