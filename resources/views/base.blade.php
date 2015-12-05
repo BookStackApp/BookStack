@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BookStack</title>
+    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ Setting::get('app-name', 'BookStack') }}</title>
 
     <!-- Meta -->
     <meta name="viewport" content="width=device-width">

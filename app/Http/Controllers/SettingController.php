@@ -18,6 +18,7 @@ class SettingController extends Controller
     public function index()
     {
         $this->checkPermission('settings-update');
+        $this->setPageTitle('Settings');
         return view('settings/index');
     }
 

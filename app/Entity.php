@@ -97,16 +97,27 @@ abstract class Entity extends Model
      */
     public static function isA($type)
     {
-        return static::getName() === strtolower($type);
+        return static::getClassName() === strtolower($type);
     }
 
     /**
      * Gets the class name.
      * @return string
      */
-    public static function getName()
+    public static function getClassName()
     {
         return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
+    }
+
+    /**
+     *Gets a limited-length version of the entities name.
+     * @param int $length
+     * @return string
+     */
+    public function getShortName($length = 25)
+    {
+        if(strlen($this->name) <= $length) return $this->name;
+        return substr($this->name, 0, $length-3) . '...';
     }
 
     /**

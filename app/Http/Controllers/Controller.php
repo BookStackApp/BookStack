@@ -43,6 +43,15 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Adds the page title into the view.
+     * @param $title
+     */
+    public function setPageTitle($title)
+    {
+        view()->share('pageTitle', $title);
+    }
+
+    /**
      * Checks for a permission.
      *
      * @param $permissionName

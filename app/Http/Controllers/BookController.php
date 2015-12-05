@@ -44,6 +44,7 @@ class BookController extends Controller
         $books = $this->bookRepo->getAllPaginated(10);
         $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed(4, 0) : false;
         $popular = $this->bookRepo->getPopular(4, 0);
+        $this->setPageTitle('Books');
         return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular]);
     }
 
@@ -55,6 +56,7 @@ class BookController extends Controller
     public function create()
     {
         $this->checkPermission('book-create');
+        $this->setPageTitle('Create New Book');
         return view('books/create');
     }
 
@@ -89,8 +91,9 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        Views::add($book);
         $bookChildren = $this->bookRepo->getChildren($book);
+        Views::add($book);
+        $this->setPageTitle($book->getShortName());
         return view('books/show', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
     }
 
@@ -104,6 +107,7 @@ class BookController extends Controller
     {
         $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
+        $this->setPageTitle('Edit Book ' . $book->getShortName());
         return view('books/edit', ['book' => $book, 'current' => $book]);
     }
 
@@ -139,6 +143,7 @@ class BookController extends Controller
     {
         $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->setPageTitle('Delete Book ' . $book->getShortName());
         return view('books/delete', ['book' => $book, 'current' => $book]);
     }
 
@@ -153,9 +158,16 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $bookChildren = $this->bookRepo->getChildren($book);
         $books = $this->bookRepo->getAll();
+        $this->setPageTitle('Sort Book ' . $book->getShortName());
         return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
     }
 
+    /**
+     * Shows the sort box for a single book.
+     * Used via AJAX when loading in extra books to a sort.
+     * @param $bookSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getSortItem($bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);

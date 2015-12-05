@@ -6,8 +6,8 @@
 
 
         @foreach($sidebarTree as $bookChild)
-            <li class="list-item-{{ $bookChild->getName() }} {{ $bookChild->getName() }}">
-                <a href="{{$bookChild->getUrl()}}" class="{{ $bookChild->getName() }} {{ $current->matches($bookChild)? 'selected' : '' }}">
+            <li class="list-item-{{ $bookChild->getClassName() }} {{ $bookChild->getClassName() }}">
+                <a href="{{$bookChild->getUrl()}}" class="{{ $bookChild->getClassName() }} {{ $current->matches($bookChild)? 'selected' : '' }}">
                     @if($bookChild->isA('chapter'))<i class="zmdi zmdi-collection-bookmark"></i>@else <i class="zmdi zmdi-file-text"></i>@endif{{ $bookChild->name }}
                 </a>
 

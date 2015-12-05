@@ -35,6 +35,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->user->all();
+        $this->setPageTitle('Users');
         return view('users/index', ['users' => $users]);
     }
 
@@ -90,6 +91,7 @@ class UserController extends Controller
 
         $user = $this->user->findOrFail($id);
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
+        $this->setPageTitle('User Profile');
         return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers]);
     }
 
@@ -139,6 +141,7 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
         $user = $this->user->findOrFail($id);
+        $this->setPageTitle('Delete User ' . $user->name);
         return view('users/delete', ['user' => $user]);
     }
 

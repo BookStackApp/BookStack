@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-sm-6 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
                         @if($page->hasChapter())
                             <span class="sep">&raquo;</span>
                             <a href="{{ $page->chapter->getUrl() }}" class="text-chapter text-button">
                                 <i class="zmdi zmdi-collection-bookmark"></i>
-                                {{$page->chapter->name}}
+                                {{$page->chapter->getShortName()}}
                             </a>
                         @endif
                     </div>
