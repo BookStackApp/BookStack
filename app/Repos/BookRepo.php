@@ -77,6 +77,12 @@ class BookRepo
         return Views::getUserRecentlyViewed($count, $page, $this->book);
     }
 
+    /**
+     * Gets the most viewed books.
+     * @param int $count
+     * @param int $page
+     * @return mixed
+     */
     public function getPopular($count = 10, $page = 0)
     {
         return Views::getPopular($count, $page, $this->book);

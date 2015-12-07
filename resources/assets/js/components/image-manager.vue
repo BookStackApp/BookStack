@@ -7,7 +7,7 @@
                         <div v-for="image in images">
                             <img class="anim fadeIn"
                                  :class="{selected: (image==selectedImage)}"
-                                 :src="image.thumbnail" :alt="image.title" :title="image.name"
+                                 :src="image.thumbs.gallery" :alt="image.title" :title="image.name"
                                  @click="imageClick(image)"
                                  :style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}">
                         </div>
@@ -88,7 +88,7 @@
         methods: {
             fetchData: function () {
                 var _this = this;
-                this.$http.get('/images/all/' + _this.page, function (data) {
+                this.$http.get('/images/gallery/all/' + _this.page, function (data) {
                     _this.images = _this.images.concat(data.images);
                     _this.hasMore = data.hasMore;
                     _this.page++;
@@ -98,7 +98,7 @@
             setupDropZone: function () {
                 var _this = this;
                 var dropZone = new Dropzone(_this.$els.dropZone, {
-                    url: '/upload/image',
+                    url: '/images/gallery/upload',
                     init: function () {
                         var dz = this;
                         this.on("sending", function (file, xhr, data) {
@@ -110,8 +110,8 @@
                                 dz.removeFile(file);
                             });
                         });
-                        this.on('error', function(file, errorMessage, xhr) {
-                            if(errorMessage.file) {
+                        this.on('error', function (file, errorMessage, xhr) {
+                            if (errorMessage.file) {
                                 $(file.previewElement).find('[data-dz-errormessage]').text(errorMessage.file[0]);
                             }
                             console.log(errorMessage);

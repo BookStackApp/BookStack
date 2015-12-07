@@ -100,7 +100,7 @@ module.exports = {
             onclick: function() {
                 ImageManager.show(function(image) {
                     var html = '<a href="'+image.url+'" target="_blank">';
-                    html += '<img src="'+image.display+'" alt="'+image.name+'">';
+                    html += '<img src="'+image.thumbs.display+'" alt="'+image.name+'">';
                     html += '</a>';
                     editor.execCommand('mceInsertContent', false, html);
                 });

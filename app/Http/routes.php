@@ -45,8 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
-    // Uploads
-    Route::post('/upload/image', 'ImageController@upload');
 
     // Users
     Route::get('/users', 'UserController@index');
@@ -58,10 +56,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/users/{id}', 'UserController@destroy');
 
     // Image routes
-    Route::get('/images/all', 'ImageController@getAll');
-    Route::put('/images/update/{imageId}', 'ImageController@update');
-    Route::delete('/images/{imageId}', 'ImageController@destroy');
-    Route::get('/images/all/{page}', 'ImageController@getAll');
+    Route::group(['prefix' => 'images'], function() {
+        Route::get('/gallery/all', 'ImageController@getAllGallery');
+        Route::get('/gallery/all/{page}', 'ImageController@getAllGallery');
+        Route::post('/gallery/upload', 'ImageController@uploadGallery');
+        Route::put('/update/{imageId}', 'ImageController@update');
+        Route::delete('/{imageId}', 'ImageController@destroy');
+    });
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');
