@@ -237,7 +237,7 @@ class ImageRepo
             // Get the standard public s3 url if s3 is set as storage type
             if ($storageUrl == false && env('STORAGE_TYPE') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
-                $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'] . $filePath;
+                $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
             }
 
             $this->storageUrl = $storageUrl;
