@@ -24,7 +24,7 @@
             showImageManager: function(e) {
                 var _this = this;
                 ImageManager.show(function(image) {
-                    _this.image = image.url;
+                    _this.image = image.thumbs.custom || image.url;
                 });
             },
             reset: function() {

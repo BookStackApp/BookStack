@@ -57,10 +57,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Image routes
     Route::group(['prefix' => 'images'], function() {
-        Route::get('/gallery/all', 'ImageController@getAllGallery');
-        Route::get('/gallery/all/{page}', 'ImageController@getAllGallery');
-        Route::post('/gallery/upload', 'ImageController@uploadGallery');
+        // Standard get, update and deletion for all types
+        Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
         Route::put('/update/{imageId}', 'ImageController@update');
+        Route::post('/{type}/upload', 'ImageController@uploadByType');
+        Route::get('/{type}/all', 'ImageController@getAllByType');
+        Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 

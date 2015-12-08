@@ -52,15 +52,15 @@ class ImageRepo
 
 
     /**
-     * Get all images for the standard gallery view that's used for
-     * adding images to shared content such as pages.
-     * @param int $page
-     * @param int $pageSize
+     * Gets a load images paginated, filtered by image type.
+     * @param string $type
+     * @param int    $page
+     * @param int    $pageSize
      * @return array
      */
-    public function getAllGallery($page = 0, $pageSize = 24)
+    public function getPaginatedByType($type, $page = 0, $pageSize = 24)
     {
-        $images = $this->image->where('type', '=', 'gallery')
+        $images = $this->image->where('type', '=', strtolower($type))
             ->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 
@@ -191,7 +191,7 @@ class ImageRepo
      * @param bool  $keepRatio
      * @return string
      */
-    private function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
+    public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
         $thumbFilePath = dirname($image->path) . $thumbDirName . basename($image->path);

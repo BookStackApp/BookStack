@@ -33,23 +33,24 @@ class ImageController extends Controller
 
 
     /**
-     * Get all images, Paginated
+     * Get all gallery images, Paginated
      * @param int $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllGallery($page = 0)
+    public function getAllByType($type, $page = 0)
     {
-        $imgData = $this->imageRepo->getAllGallery($page);
+        $imgData = $this->imageRepo->getPaginatedByType($type, $page);
         return response()->json($imgData);
     }
 
 
     /**
      * Handles image uploads for use on pages.
+     * @param string  $type
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function uploadGallery(Request $request)
+    public function uploadByType($type, Request $request)
     {
         $this->checkPermission('image-create');
         $this->validate($request, [
@@ -57,10 +58,25 @@ class ImageController extends Controller
         ]);
 
         $imageUpload = $request->file('file');
-        $image = $this->imageRepo->saveNew($imageUpload, 'gallery');
+        $image = $this->imageRepo->saveNew($imageUpload, $type);
         return response()->json($image);
     }
 
+    /**
+     * Generate a sized thumbnail for an image.
+     * @param $id
+     * @param $width
+     * @param $height
+     * @param $crop
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getThumbnail($id, $width, $height, $crop)
+    {
+        $this->checkPermission('image-create');
+        $image = $this->imageRepo->getById($id);
+        $thumbnailUrl = $this->imageRepo->getThumbnail($image, $width, $height, $crop == 'false');
+        return response()->json(['url' => $thumbnailUrl]);
+    }
 
     /**
      * Update image details

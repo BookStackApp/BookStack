@@ -76,6 +76,22 @@
             }
         },
 
+        props: {
+            imageType: {
+                type: String,
+                required: true
+            },
+            resizeWidth: {
+                type: String
+            },
+            resizeHeight: {
+                type: String
+            },
+            resizeCrop: {
+                type: Boolean
+            }
+        },
+
         created: function () {
             window.ImageManager = this;
         },
@@ -88,7 +104,7 @@
         methods: {
             fetchData: function () {
                 var _this = this;
-                this.$http.get('/images/gallery/all/' + _this.page, function (data) {
+                this.$http.get('/images/' + _this.imageType + '/all/' + _this.page, function (data) {
                     _this.images = _this.images.concat(data.images);
                     _this.hasMore = data.hasMore;
                     _this.page++;
@@ -98,7 +114,7 @@
             setupDropZone: function () {
                 var _this = this;
                 var dropZone = new Dropzone(_this.$els.dropZone, {
-                    url: '/images/gallery/upload',
+                    url: '/images/' + _this.imageType + '/upload',
                     init: function () {
                         var dz = this;
                         this.on("sending", function (file, xhr, data) {
@@ -120,6 +136,24 @@
                 });
             },
 
+            returnCallback: function (image) {
+                var _this = this;
+                var isResized = _this.resizeWidth && _this.resizeHeight;
+
+                if (!isResized) {
+                    _this.callback(image);
+                    return;
+                }
+
+                var cropped = _this.resizeCrop ? 'true' : 'false';
+                var requestString = '/images/thumb/' + image.id + '/' + _this.resizeWidth + '/' + _this.resizeHeight + '/' + cropped;
+                _this.$http.get(requestString, function(data) {
+                    image.thumbs.custom = data.url;
+                    _this.callback(image);
+                });
+
+            },
+
             imageClick: function (image) {
                 var dblClickTime = 380;
                 var cTime = (new Date()).getTime();
@@ -127,7 +161,7 @@
                 if (this.cClickTime !== 0 && timeDiff < dblClickTime && this.selectedImage === image) {
                     // DoubleClick
                     if (this.callback) {
-                        this.callback(image);
+                        this.returnCallback(image);
                     }
                     this.hide();
                 } else {
@@ -139,7 +173,7 @@
 
             selectButtonClick: function () {
                 if (this.callback) {
-                    this.callback(this.selectedImage);
+                    this.returnCallback(this.selectedImage);
                 }
                 this.hide();
             },
