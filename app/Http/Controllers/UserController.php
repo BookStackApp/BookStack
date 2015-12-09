@@ -62,7 +62,7 @@ class UserController extends Controller
         $this->checkPermission('user-create');
         $this->validate($request, [
             'name'             => 'required',
-            'email'            => 'required|email',
+            'email'            => 'required|email|unique:users,email',
             'password'         => 'required|min:5',
             'password-confirm' => 'required|same:password',
             'role'             => 'required|exists:roles,id'

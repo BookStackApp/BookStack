@@ -80,15 +80,6 @@
             imageType: {
                 type: String,
                 required: true
-            },
-            resizeWidth: {
-                type: String
-            },
-            resizeHeight: {
-                type: String
-            },
-            resizeCrop: {
-                type: Boolean
             }
         },
 
@@ -137,21 +128,7 @@
             },
 
             returnCallback: function (image) {
-                var _this = this;
-                var isResized = _this.resizeWidth && _this.resizeHeight;
-
-                if (!isResized) {
-                    _this.callback(image);
-                    return;
-                }
-
-                var cropped = _this.resizeCrop ? 'true' : 'false';
-                var requestString = '/images/thumb/' + image.id + '/' + _this.resizeWidth + '/' + _this.resizeHeight + '/' + cropped;
-                _this.$http.get(requestString, function(data) {
-                    image.thumbs.custom = data.url;
-                    _this.callback(image);
-                });
-
+                this.callback(image);
             },
 
             imageClick: function (image) {

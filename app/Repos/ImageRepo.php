@@ -17,7 +17,7 @@ class ImageRepo
      * @param Image        $image
      * @param ImageService $imageService
      */
-    public function __construct(Image $image,ImageService $imageService)
+    public function __construct(Image $image, ImageService $imageService)
     {
         $this->image = $image;
         $this->imageService = $imageService;
@@ -40,12 +40,18 @@ class ImageRepo
      * @param string $type
      * @param int    $page
      * @param int    $pageSize
+     * @param bool|int   $userFilter
      * @return array
      */
-    public function getPaginatedByType($type, $page = 0, $pageSize = 24)
+    public function getPaginatedByType($type, $page = 0, $pageSize = 24, $userFilter = false)
     {
-        $images = $this->image->where('type', '=', strtolower($type))
-            ->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
+        $images = $this->image->where('type', '=', strtolower($type));
+
+        if ($userFilter !== false) {
+            $images = $images->where('created_by', '=', $userFilter);
+        }
+
+        $images = $images->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 
         $returnImages = $images->take(24);
@@ -54,7 +60,7 @@ class ImageRepo
         });
 
         return [
-            'images' => $returnImages,
+            'images'  => $returnImages,
             'hasMore' => $hasMore
         ];
     }
@@ -67,7 +73,7 @@ class ImageRepo
      */
     public function saveNew(UploadedFile $uploadFile, $type)
     {
-        $image = $this->imageService->saveNew($this->image, $uploadFile, $type);
+        $image = $this->imageService->saveNewFromUpload($uploadFile, $type);
         $this->loadThumbs($image);
         return $image;
     }

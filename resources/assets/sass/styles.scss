@@ -36,6 +36,10 @@ body.dragging, body.dragging * {
     width: 40px;
     height: 40px;
   }
+  &.large {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 // System wide notifications

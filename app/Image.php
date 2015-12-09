@@ -3,9 +3,10 @@
 namespace BookStack;
 
 
+use Illuminate\Database\Eloquent\Model;
 use Images;
 
-class Image
+class Image extends Model
 {
     use Ownable;
 
@@ -16,9 +17,10 @@ class Image
      * @param  int       $width
      * @param  int       $height
      * @param bool|false $hardCrop
+     * @return string
      */
     public function getThumb($width, $height, $hardCrop = false)
     {
-        Images::getThumbnail($this, $width, $height, $hardCrop);
+        return Images::getThumbnail($this, $width, $height, $hardCrop);
     }
 }

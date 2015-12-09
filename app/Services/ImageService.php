@@ -1,6 +1,7 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Image;
+use BookStack\User;
 use Intervention\Image\ImageManager;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
@@ -34,11 +35,48 @@ class ImageService
         $this->cache = $cache;
     }
 
-    public function saveNew(Image $image, UploadedFile $uploadedFile, $type)
+    /**
+     * Saves a new image from an upload.
+     * @param UploadedFile $uploadedFile
+     * @param  string      $type
+     * @return mixed
+     */
+    public function saveNewFromUpload(UploadedFile $uploadedFile, $type)
+    {
+        $imageName = $uploadedFile->getClientOriginalName();
+        $imageData = file_get_contents($uploadedFile->getRealPath());
+        return $this->saveNew($imageName, $imageData, $type);
+    }
+
+
+    /**
+     * Gets an image from url and saves it to the database.
+     * @param             $url
+     * @param string      $type
+     * @param bool|string $imageName
+     * @return mixed
+     * @throws \Exception
+     */
+    private function saveNewFromUrl($url, $type, $imageName = false)
+    {
+        $imageName = $imageName ? $imageName : basename($url);
+        $imageData = file_get_contents($url);
+        if($imageData === false) throw new \Exception('Cannot get image from ' . $url);
+        return $this->saveNew($imageName, $imageData, $type);
+    }
+
+    /**
+     * Saves a new image
+     * @param string $imageName
+     * @param string $imageData
+     * @param string $type
+     * @return Image
+     */
+    private function saveNew($imageName, $imageData, $type)
     {
         $storage = $this->getStorage();
         $secureUploads = Setting::get('app-secure-images');
-        $imageName = str_replace(' ', '-', $uploadedFile->getClientOriginalName());
+        $imageName = str_replace(' ', '-', $imageName);
 
         if ($secureUploads) $imageName = str_random(16) . '-' . $imageName;
 
@@ -48,14 +86,14 @@ class ImageService
         }
         $fullPath = $imagePath . $imageName;
 
-        $storage->put($fullPath, file_get_contents($uploadedFile->getRealPath()));
+        $storage->put($fullPath, $imageData);
 
         $userId = auth()->user()->id;
-        $image = $image->forceCreate([
-            'name' => $imageName,
-            'path' => $fullPath,
-            'url' => $this->getPublicUrl($fullPath),
-            'type' => $type,
+        $image = Image::forceCreate([
+            'name'       => $imageName,
+            'path'       => $fullPath,
+            'url'        => $this->getPublicUrl($fullPath),
+            'type'       => $type,
             'created_by' => $userId,
             'updated_by' => $userId
         ]);
@@ -135,6 +173,26 @@ class ImageService
 
         $image->delete();
         return true;
+    }
+
+    /**
+     * Save a gravatar image and set a the profile image for a user.
+     * @param User $user
+     * @param int  $size
+     * @return mixed
+     */
+    public function saveUserGravatar(User $user, $size = 500)
+    {
+        if (!env('USE_GRAVATAR', false)) return false;
+        $emailHash = md5(strtolower(trim($user->email)));
+        $url = 'http://www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
+        $imageName = str_replace(' ', '-', $user->name . '-gravatar.png');
+        $image = $this->saveNewFromUrl($url, 'user', $imageName);
+        $image->created_by = $user->id;
+        $image->save();
+        $user->avatar()->associate($image);
+        $user->save();
+        return $image;
     }
 
     /**

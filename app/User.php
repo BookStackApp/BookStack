@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'image_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -145,8 +145,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getAvatar($size = 50)
     {
-        $emailHash = md5(strtolower(trim($this->email)));
-        return '//www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
+        if ($this->image_id === 0 || $this->image_id === null) return '/user_avatar.png';
+        return $this->avatar->getThumb($size, $size, true);
+    }
+
+    /**
+     * Get the avatar for the user.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function avatar()
+    {
+        return $this->belongsTo('BookStack\Image', 'image_id');
     }
 
     /**

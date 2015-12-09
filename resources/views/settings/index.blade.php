@@ -33,7 +33,7 @@
                 <div class="form-group" id="logo-control">
                     <label for="setting-app-logo">Application Logo</label>
                     <p class="small">This image should be 43px in height. <br>Large images will be scaled down.</p>
-                    <image-picker current-image="{{ Setting::get('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
+                    <image-picker resize-height="43" resize-width="200" current-image="{{ Setting::get('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
             </div>
         </div>
@@ -86,6 +86,6 @@
 
 </div>
 
-<image-manager image-type="system" resize-height="43" resize-width="200"></image-manager>
+<image-manager image-type="system"></image-manager>
 
 @stop

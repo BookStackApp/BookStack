@@ -37,3 +37,4 @@
     <a href="/users" class="button muted">Cancel</a>
     <button class="button pos" type="submit">Save</button>
 </div>
+

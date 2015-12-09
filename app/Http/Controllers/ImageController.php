@@ -33,13 +33,24 @@ class ImageController extends Controller
 
 
     /**
-     * Get all gallery images, Paginated
+     * Get all images for a specific type, Paginated
      * @param int $page
      * @return \Illuminate\Http\JsonResponse
      */
     public function getAllByType($type, $page = 0)
     {
         $imgData = $this->imageRepo->getPaginatedByType($type, $page);
+        return response()->json($imgData);
+    }
+
+    /**
+     * Get all images for a user.
+     * @param int $page
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllForUserType($page = 0)
+    {
+        $imgData = $this->imageRepo->getPaginatedByType('user', $page, 24, $this->currentUser->id);
         return response()->json($imgData);
     }
 

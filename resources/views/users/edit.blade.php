@@ -19,26 +19,25 @@
 
 
     <div class="container small">
-
+        <form action="/users/{{$user->id}}" method="post">
         <div class="row">
             <div class="col-md-6">
                 <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
-                <form action="/users/{{$user->id}}" method="post">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="put">
-                    @include('users/form', ['model' => $user])
-                </form>
+                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="put">
+                @include('users/form', ['model' => $user])
+
             </div>
             <div class="col-md-6">
                 <h1>&nbsp;</h1>
-                <div class="shaded padded margin-top">
-                    <p>
-                        <img class="avatar" src="{{ $user->getAvatar(80) }}" alt="{{ $user->name }}">
-                    </p>
-                    <p class="text-muted">You can change your profile picture at <a href="http://en.gravatar.com/">Gravatar</a>.</p>
+                <div class="form-group" id="logo-control">
+                    <label for="user-avatar">User Avatar</label>
+                    <p class="small">This image should be approx 256px square.</p>
+                    <image-picker resize-height="512" resize-width="512" current-image="{{ $user->getAvatar(80) }}" current-id="{{ $user->image_id }}" default-image="/user_avatar.png" name="image_id" show-remove="false" image-class="avatar large"></image-picker>
                 </div>
             </div>
         </div>
+        </form>
 
         <hr class="margin-top large">
 
@@ -80,5 +79,5 @@
     </div>
 
     <p class="margin-top large"><br></p>
-
+    <image-manager image-type="user"></image-manager>
 @stop
