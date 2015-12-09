@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug'           => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url'             => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone'        => 'UTC',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'locale'          => 'en',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,9 +78,9 @@ return [
     |
     */
 
-    'key'             => env('APP_KEY', 'AbAZchsay4uBTU33RubBzLKw203yqSqr'),
+    'key' => env('APP_KEY', 'AbAZchsay4uBTU33RubBzLKw203yqSqr'),
 
-    'cipher'          => 'AES-256-CBC',
+    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'log'             => 'single',
+    'log' => 'single',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'providers'       => [
+    'providers' => [
 
         /*
          * Laravel Framework Service Providers...
@@ -167,7 +167,7 @@ return [
     |
     */
 
-    'aliases'         => [
+    'aliases' => [
 
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
@@ -208,15 +208,16 @@ return [
          */
 
         'ImageTool' => Intervention\Image\Facades\Image::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
         /**
          * Custom
          */
 
-        'Activity'  => BookStack\Services\Facades\Activity::class,
-        'Setting'   => BookStack\Services\Facades\Setting::class,
-        'Views' => BookStack\Services\Facades\Views::class,
+        'Activity' => BookStack\Services\Facades\Activity::class,
+        'Setting'  => BookStack\Services\Facades\Setting::class,
+        'Views'    => BookStack\Services\Facades\Views::class,
+        'Images'   => \BookStack\Services\Facades\Images::class,
 
     ],
 

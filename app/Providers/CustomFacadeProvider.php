@@ -2,6 +2,7 @@
 
 namespace BookStack\Providers;
 
+use BookStack\Services\ImageService;
 use BookStack\Services\ViewService;
 use Illuminate\Support\ServiceProvider;
 use BookStack\Services\ActivityService;
@@ -37,6 +38,13 @@ class CustomFacadeProvider extends ServiceProvider
         $this->app->bind('setting', function() {
             return new SettingService(
                 $this->app->make('BookStack\Setting'),
+                $this->app->make('Illuminate\Contracts\Cache\Repository')
+            );
+        });
+        $this->app->bind('images', function() {
+            return new ImageService(
+                $this->app->make('Intervention\Image\ImageManager'),
+                $this->app->make('Illuminate\Contracts\Filesystem\Factory'),
                 $this->app->make('Illuminate\Contracts\Cache\Repository')
             );
         });

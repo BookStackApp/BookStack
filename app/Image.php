@@ -3,22 +3,22 @@
 namespace BookStack;
 
 
-class Image extends Entity
+use Images;
+
+class Image
 {
+    use Ownable;
 
     protected $fillable = ['name'];
 
-    public function getFilePath()
-    {
-        return storage_path() . $this->url;
-    }
-
     /**
-     * Get the url for this item.
-     * @return string
+     * Get a thumbnail for this image.
+     * @param  int       $width
+     * @param  int       $height
+     * @param bool|false $hardCrop
      */
-    public function getUrl()
+    public function getThumb($width, $height, $hardCrop = false)
     {
-        return public_path() . $this->url;
+        Images::getThumbnail($this, $width, $height, $hardCrop);
     }
 }
