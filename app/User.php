@@ -145,7 +145,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getAvatar($size = 50)
     {
-        if ($this->image_id === 0 || $this->image_id === null) return '/user_avatar.png';
+        if ($this->image_id === 0 || $this->image_id === '0' || $this->image_id === null) return '/user_avatar.png';
         return $this->avatar->getThumb($size, $size, false);
     }
 
