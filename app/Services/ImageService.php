@@ -183,15 +183,12 @@ class ImageService
      */
     public function saveUserGravatar(User $user, $size = 500)
     {
-        if (!env('USE_GRAVATAR', false)) return false;
         $emailHash = md5(strtolower(trim($user->email)));
         $url = 'http://www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
         $imageName = str_replace(' ', '-', $user->name . '-gravatar.png');
         $image = $this->saveNewFromUrl($url, 'user', $imageName);
         $image->created_by = $user->id;
         $image->save();
-        $user->avatar()->associate($image);
-        $user->save();
         return $image;
     }
 

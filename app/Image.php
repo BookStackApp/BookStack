@@ -16,11 +16,11 @@ class Image extends Model
      * Get a thumbnail for this image.
      * @param  int       $width
      * @param  int       $height
-     * @param bool|false $hardCrop
+     * @param bool|false $keepRatio
      * @return string
      */
-    public function getThumb($width, $height, $hardCrop = false)
+    public function getThumb($width, $height, $keepRatio = false)
     {
-        return Images::getThumbnail($this, $width, $height, $hardCrop);
+        return Images::getThumbnail($this, $width, $height, $keepRatio);
     }
 }

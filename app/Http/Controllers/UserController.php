@@ -4,7 +4,7 @@ namespace BookStack\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 use BookStack\Http\Requests;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\SocialAuthService;
@@ -30,7 +30,6 @@ class UserController extends Controller
 
     /**
      * Display a listing of the users.
-     *
      * @return Response
      */
     public function index()
@@ -42,7 +41,6 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new user.
-     *
      * @return Response
      */
     public function create()
@@ -53,7 +51,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created user in storage.
-     *
      * @param  Request $request
      * @return Response
      */
@@ -73,13 +70,20 @@ class UserController extends Controller
         $user->save();
 
         $user->attachRoleId($request->get('role'));
+
+        // Get avatar from gravatar and save
+        if (!env('DISABLE_EXTERNAL_SERVICES', false)) {
+            $avatar = \Images::saveUserGravatar($user);
+            $user->avatar()->associate($avatar);
+            $user->save();
+        }
+
         return redirect('/users');
     }
 
 
     /**
      * Show the form for editing the specified user.
-     *
      * @param  int              $id
      * @param SocialAuthService $socialAuthService
      * @return Response
@@ -98,7 +102,6 @@ class UserController extends Controller
 
     /**
      * Update the specified user in storage.
-     *
      * @param  Request $request
      * @param  int     $id
      * @return Response
@@ -148,7 +151,6 @@ class UserController extends Controller
 
     /**
      * Remove the specified user from storage.
-     *
      * @param  int $id
      * @return Response
      */
@@ -158,11 +160,13 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
         $user = $this->userRepo->getById($id);
+
         // Delete social accounts
-        if($this->userRepo->isOnlyAdmin($user)) {
+        if ($this->userRepo->isOnlyAdmin($user)) {
             session()->flash('error', 'You cannot delete the only admin');
             return redirect($user->getEditUrl());
         }
+
         $user->socialAccounts()->delete();
         $user->delete();
         return redirect('/users');
