@@ -58,7 +58,7 @@
                         <p class="text-muted small">
                             Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
                             <br>
-                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->createdBy) by {{$book->updatedBy->name}} @endif
+                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->updatedBy) by {{$book->updatedBy->name}} @endif
                         </p>
                     </div>
                 </div>

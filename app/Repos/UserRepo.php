@@ -46,14 +46,19 @@ class UserRepo
     public function registerNew(array $data)
     {
         $user = $this->create($data);
-        $roleId = \Setting::get('registration-role');
-
-        if ($roleId === false) {
-            $roleId = $this->role->getDefault()->id;
-        }
-
-        $user->attachRoleId($roleId);
+        $this->attachDefaultRole($user);
         return $user;
+    }
+
+    /**
+     * Give a user the default role. Used when creating a new user.
+     * @param $user
+     */
+    public function attachDefaultRole($user)
+    {
+        $roleId = \Setting::get('registration-role');
+        if ($roleId === false) $roleId = $this->role->getDefault()->id;
+        $user->attachRoleId($roleId);
     }
 
     /**
@@ -87,5 +92,15 @@ class UserRepo
             'email'    => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
+    }
+
+    /**
+     * Remove the given user from storage, Delete all related content.
+     * @param User $user
+     */
+    public function destroy(User $user)
+    {
+        $user->socialAccounts()->delete();
+        $user->delete();
     }
 }

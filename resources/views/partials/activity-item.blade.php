@@ -10,6 +10,8 @@
 <div class="right">
     @if($activity->user)
         {{$activity->user->name}}
+    @else
+        A deleted user
     @endif
 
     {{ $activity->getText() }}

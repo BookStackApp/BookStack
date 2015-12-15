@@ -159,16 +159,14 @@ class UserController extends Controller
         $this->checkPermissionOr('user-delete', function () use ($id) {
             return $this->currentUser->id == $id;
         });
-        $user = $this->userRepo->getById($id);
 
-        // Delete social accounts
+        $user = $this->userRepo->getById($id);
         if ($this->userRepo->isOnlyAdmin($user)) {
             session()->flash('error', 'You cannot delete the only admin');
             return redirect($user->getEditUrl());
         }
+        $this->userRepo->destroy($user);
 
-        $user->socialAccounts()->delete();
-        $user->delete();
         return redirect('/users');
     }
 }

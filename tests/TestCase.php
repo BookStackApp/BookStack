@@ -50,6 +50,40 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
+     * Create a group of entities that belong to a specific user.
+     * @param $creatorUser
+     * @param $updaterUser
+     * @return array
+     */
+    protected function createEntityChainBelongingToUser($creatorUser, $updaterUser = false)
+    {
+        if ($updaterUser === false) $updaterUser = $creatorUser;
+        $book = factory(BookStack\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
+        $chapter = factory(BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
+        $page = factory(BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
+        $book->chapters()->saveMany([$chapter]);
+        $chapter->pages()->saveMany([$page]);
+        return [
+            'book' => $book,
+            'chapter' => $chapter,
+            'page' => $page
+        ];
+    }
+
+    /**
+     * Quick way to create a new user
+     * @param array $attributes
+     * @return mixed
+     */
+    protected function getNewUser($attributes = [])
+    {
+        $user = factory(\BookStack\User::class)->create($attributes);
+        $userRepo = app('BookStack\Repos\UserRepo');
+        $userRepo->attachDefaultRole($user);
+        return $user;
+    }
+
+    /**
      * Assert that a given string is seen inside an element.
      *
      * @param  bool|string|null $element

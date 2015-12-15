@@ -171,4 +171,29 @@ class EntityTest extends TestCase
     }
 
 
+    public function testEntitiesViewableAfterCreatorDeletion()
+    {
+        $creator = $this->getNewUser();
+        $updater = $this->getNewUser();
+        $entities = $this->createEntityChainBelongingToUser($creator, $updater);
+        app('BookStack\Repos\UserRepo')->destroy($creator);
+
+        $this->asAdmin()->visit($entities['book']->getUrl())->seeStatusCode(200)
+            ->visit($entities['chapter']->getUrl())->seeStatusCode(200)
+            ->visit($entities['page']->getUrl())->seeStatusCode(200);
+    }
+
+    public function testEntitiesViewableAfterUpdaterDeletion()
+    {
+        $creator = $this->getNewUser();
+        $updater = $this->getNewUser();
+        $entities = $this->createEntityChainBelongingToUser($creator, $updater);
+        app('BookStack\Repos\UserRepo')->destroy($updater);
+
+        $this->asAdmin()->visit($entities['book']->getUrl())->seeStatusCode(200)
+            ->visit($entities['chapter']->getUrl())->seeStatusCode(200)
+            ->visit($entities['page']->getUrl())->seeStatusCode(200);
+    }
+
+
 }
