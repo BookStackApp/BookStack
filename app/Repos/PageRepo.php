@@ -269,7 +269,7 @@ class PageRepo
      * @param Page $page
      * @return $this
      */
-    private function saveRevision(Page $page)
+    public function saveRevision(Page $page)
     {
         $revision = $this->pageRevision->fill($page->toArray());
         $revision->page_id = $page->id;

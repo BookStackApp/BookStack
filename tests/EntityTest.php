@@ -173,26 +173,40 @@ class EntityTest extends TestCase
 
     public function testEntitiesViewableAfterCreatorDeletion()
     {
+        // Create required assets and revisions
         $creator = $this->getNewUser();
         $updater = $this->getNewUser();
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
+        $this->actingAs($creator);
         app('BookStack\Repos\UserRepo')->destroy($creator);
+        app('BookStack\Repos\PageRepo')->saveRevision($entities['page']);
 
-        $this->asAdmin()->visit($entities['book']->getUrl())->seeStatusCode(200)
-            ->visit($entities['chapter']->getUrl())->seeStatusCode(200)
-            ->visit($entities['page']->getUrl())->seeStatusCode(200);
+        $this->checkEntitiesViewable($entities);
     }
 
     public function testEntitiesViewableAfterUpdaterDeletion()
     {
+        // Create required assets and revisions
         $creator = $this->getNewUser();
         $updater = $this->getNewUser();
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
+        $this->actingAs($updater);
         app('BookStack\Repos\UserRepo')->destroy($updater);
+        app('BookStack\Repos\PageRepo')->saveRevision($entities['page']);
 
-        $this->asAdmin()->visit($entities['book']->getUrl())->seeStatusCode(200)
+        $this->checkEntitiesViewable($entities);
+    }
+
+    private function checkEntitiesViewable($entities)
+    {
+        // Check pages and books are visible.
+        $this->asAdmin();
+        $this->visit($entities['book']->getUrl())->seeStatusCode(200)
             ->visit($entities['chapter']->getUrl())->seeStatusCode(200)
             ->visit($entities['page']->getUrl())->seeStatusCode(200);
+        // Check revision listing shows no errors.
+        $this->visit($entities['page']->getUrl())
+            ->click('Revisions')->seeStatusCode(200);
     }
 
 
