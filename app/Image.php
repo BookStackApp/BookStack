@@ -3,22 +3,24 @@
 namespace BookStack;
 
 
-class Image extends Entity
+use Illuminate\Database\Eloquent\Model;
+use Images;
+
+class Image extends Model
 {
+    use Ownable;
 
     protected $fillable = ['name'];
 
-    public function getFilePath()
-    {
-        return storage_path() . $this->url;
-    }
-
     /**
-     * Get the url for this item.
+     * Get a thumbnail for this image.
+     * @param  int       $width
+     * @param  int       $height
+     * @param bool|false $keepRatio
      * @return string
      */
-    public function getUrl()
+    public function getThumb($width, $height, $keepRatio = false)
     {
-        return public_path() . $this->url;
+        return Images::getThumbnail($this, $width, $height, $keepRatio);
     }
 }

@@ -46,6 +46,7 @@ class PageController extends Controller
         $this->checkPermission('page-create');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : false;
+        $this->setPageTitle('Create New Page');
         return view('pages/create', ['book' => $book, 'chapter' => $chapter]);
     }
 
@@ -89,6 +90,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($page);
+        $this->setPageTitle($page->getShortName());
         return view('pages/show', ['page' => $page, 'book' => $book, 'current' => $page, 'sidebarTree' => $sidebarTree]);
     }
 
@@ -104,6 +106,7 @@ class PageController extends Controller
         $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->setPageTitle('Editing Page ' . $page->getShortName());
         return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
@@ -148,6 +151,7 @@ class PageController extends Controller
         $this->checkPermission('page-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->setPageTitle('Delete Page ' . $page->getShortName());
         return view('pages/delete', ['book' => $book, 'page' => $page, 'current' => $page]);
     }
 
@@ -179,6 +183,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->setPageTitle('Revisions For ' . $page->getShortName());
         return view('pages/revisions', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
@@ -195,6 +200,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $revision = $this->pageRepo->getRevisionById($revisionId);
         $page->fill($revision->toArray());
+        $this->setPageTitle('Page Revision For ' . $page->getShortName());
         return view('pages/revision', ['page' => $page, 'book' => $book]);
     }
 

@@ -32,7 +32,6 @@ class Page extends Entity
         return $this->chapter()->count() > 0;
     }
 
-
     public function revisions()
     {
         return $this->hasMany('BookStack\PageRevision')->orderBy('created_at', 'desc');
@@ -40,7 +39,6 @@ class Page extends Entity
 
     public function getUrl()
     {
-        // TODO - Extract this and share with chapters
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
         return '/books/' . $bookSlug . '/page/' . $this->slug;
     }

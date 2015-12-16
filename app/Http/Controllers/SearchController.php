@@ -45,6 +45,7 @@ class SearchController extends Controller
         $pages = $this->pageRepo->getBySearch($searchTerm);
         $books = $this->bookRepo->getBySearch($searchTerm);
         $chapters = $this->chapterRepo->getBySearch($searchTerm);
+        $this->setPageTitle('Search For ' . $searchTerm);
         return view('search/all', ['pages' => $pages, 'books' => $books, 'chapters' => $chapters, 'searchTerm' => $searchTerm]);
     }
 

@@ -56,7 +56,7 @@
                 <p class="text-muted small">
                     Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->createdBy->name}} @endif
                     <br>
-                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->updatedBy->name}} @endif
+                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->updatedBy) by {{$chapter->updatedBy->name}} @endif
                 </p>
             </div>
             <div class="col-md-3 col-md-offset-1">

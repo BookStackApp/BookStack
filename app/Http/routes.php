@@ -45,8 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
-    // Uploads
-    Route::post('/upload/image', 'ImageController@upload');
 
     // Users
     Route::get('/users', 'UserController@index');
@@ -58,10 +56,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/users/{id}', 'UserController@destroy');
 
     // Image routes
-    Route::get('/images/all', 'ImageController@getAll');
-    Route::put('/images/update/{imageId}', 'ImageController@update');
-    Route::delete('/images/{imageId}', 'ImageController@destroy');
-    Route::get('/images/all/{page}', 'ImageController@getAll');
+    Route::group(['prefix' => 'images'], function() {
+        // Get for user images
+        Route::get('/user/all', 'ImageController@getAllForUserType');
+        Route::get('/user/all/{page}', 'ImageController@getAllForUserType');
+        // Standard get, update and deletion for all types
+        Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
+        Route::put('/update/{imageId}', 'ImageController@update');
+        Route::post('/{type}/upload', 'ImageController@uploadByType');
+        Route::get('/{type}/all', 'ImageController@getAllByType');
+        Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
+        Route::delete('/{imageId}', 'ImageController@destroy');
+    });
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

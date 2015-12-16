@@ -16,5 +16,5 @@
             @endif
         </form>
     </div>
-    <image-manager></image-manager>
+    <image-manager image-type="gallery"></image-manager>
 @stop

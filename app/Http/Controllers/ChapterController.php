@@ -40,6 +40,7 @@ class ChapterController extends Controller
     {
         $this->checkPermission('chapter-create');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->setPageTitle('Create New Chapter');
         return view('chapters/create', ['book' => $book, 'current' => $book]);
     }
 
@@ -79,6 +80,7 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($chapter);
+        $this->setPageTitle($chapter->getShortName());
         return view('chapters/show', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter, 'sidebarTree' => $sidebarTree]);
     }
 
@@ -93,6 +95,7 @@ class ChapterController extends Controller
         $this->checkPermission('chapter-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->setPageTitle('Edit Chapter' . $chapter->getShortName());
         return view('chapters/edit', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 
@@ -127,6 +130,7 @@ class ChapterController extends Controller
         $this->checkPermission('chapter-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->setPageTitle('Delete Chapter' . $chapter->getShortName());
         return view('chapters/delete', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 

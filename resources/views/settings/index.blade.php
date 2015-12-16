@@ -23,12 +23,17 @@
                     <label>Allow public viewing?</label>
                     <toggle-switch name="setting-app-public" value="{{ Setting::get('app-public') }}"></toggle-switch>
                 </div>
+                <div class="form-group">
+                    <label>Enable higher security image uploads?</label>
+                    <p class="small">For performance reasons, all images are public by default, This option adds a random, hard-to-guess characters in front of image names. Ensure directory indexes are not enabled to prevent easy access.</p>
+                    <toggle-switch name="setting-app-secure-images" value="{{ Setting::get('app-secure-images') }}"></toggle-switch>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group" id="logo-control">
                     <label for="setting-app-logo">Application Logo</label>
-                    <p class="small">This image should be 43px in height. </p>
-                    <image-picker current-image="{{ Setting::get('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
+                    <p class="small">This image should be 43px in height. <br>Large images will be scaled down.</p>
+                    <image-picker resize-height="43" resize-width="200" current-image="{{ Setting::get('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
             </div>
         </div>
@@ -57,7 +62,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="setting-registration-confirmation">Require Email Confirmation?</label>
+                    <label for="setting-registration-confirmation">Require email confirmation?</label>
                     <p class="small">If domain restriction is used then email confirmation will be required and the below value will be ignored.</p>
                     <toggle-switch name="setting-registration-confirmation" value="{{ Setting::get('registration-confirmation') }}"></toggle-switch>
                 </div>
@@ -81,6 +86,6 @@
 
 </div>
 
-<image-manager></image-manager>
+<image-manager image-type="system"></image-manager>
 
 @stop

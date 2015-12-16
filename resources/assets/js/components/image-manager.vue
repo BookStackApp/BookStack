@@ -7,7 +7,7 @@
                         <div v-for="image in images">
                             <img class="anim fadeIn"
                                  :class="{selected: (image==selectedImage)}"
-                                 :src="image.thumbnail" :alt="image.title" :title="image.name"
+                                 :src="image.thumbs.gallery" :alt="image.title" :title="image.name"
                                  @click="imageClick(image)"
                                  :style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}">
                         </div>
@@ -76,6 +76,13 @@
             }
         },
 
+        props: {
+            imageType: {
+                type: String,
+                required: true
+            }
+        },
+
         created: function () {
             window.ImageManager = this;
         },
@@ -88,7 +95,7 @@
         methods: {
             fetchData: function () {
                 var _this = this;
-                this.$http.get('/images/all/' + _this.page, function (data) {
+                this.$http.get('/images/' + _this.imageType + '/all/' + _this.page, function (data) {
                     _this.images = _this.images.concat(data.images);
                     _this.hasMore = data.hasMore;
                     _this.page++;
@@ -98,7 +105,7 @@
             setupDropZone: function () {
                 var _this = this;
                 var dropZone = new Dropzone(_this.$els.dropZone, {
-                    url: '/upload/image',
+                    url: '/images/' + _this.imageType + '/upload',
                     init: function () {
                         var dz = this;
                         this.on("sending", function (file, xhr, data) {
@@ -110,14 +117,18 @@
                                 dz.removeFile(file);
                             });
                         });
-                        this.on('error', function(file, errorMessage, xhr) {
-                            if(errorMessage.file) {
+                        this.on('error', function (file, errorMessage, xhr) {
+                            if (errorMessage.file) {
                                 $(file.previewElement).find('[data-dz-errormessage]').text(errorMessage.file[0]);
                             }
                             console.log(errorMessage);
                         });
                     }
                 });
+            },
+
+            returnCallback: function (image) {
+                this.callback(image);
             },
 
             imageClick: function (image) {
@@ -127,7 +138,7 @@
                 if (this.cClickTime !== 0 && timeDiff < dblClickTime && this.selectedImage === image) {
                     // DoubleClick
                     if (this.callback) {
-                        this.callback(image);
+                        this.returnCallback(image);
                     }
                     this.hide();
                 } else {
@@ -139,7 +150,7 @@
 
             selectButtonClick: function () {
                 if (this.callback) {
-                    this.callback(this.selectedImage);
+                    this.returnCallback(this.selectedImage);
                 }
                 this.hide();
             },

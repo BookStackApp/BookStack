@@ -118,6 +118,9 @@
       text-decoration: none;
     }
   }
+  li a i {
+    padding-right: $-xs + 2px;
+  }
   li, a {
     display: block;
   }
@@ -150,11 +153,11 @@
   }
   .list-item-page {
     border-bottom: none;
+    border-left: 5px solid $color-page;
+    margin: 10px 10px;
   }
   .page {
     color: $color-page !important;
-    border-left: 5px solid $color-page;
-    margin: 10px 10px;
     border-bottom: none;
     &.selected {
       background-color: rgba($color-page, 0.1);

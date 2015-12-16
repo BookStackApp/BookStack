@@ -2,7 +2,7 @@
     <h3 class="text-book"><i class="zmdi zmdi-book"></i>{{ $book->name }}</h3>
     <ul class="sortable-page-list sort-list">
         @foreach($bookChildren as $bookChild)
-            <li data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getName() }}" class="text-{{ $bookChild->getName() }}">
+            <li data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getClassName() }}" class="text-{{ $bookChild->getClassName() }}">
                 <i class="zmdi {{ $bookChild->isA('chapter') ? 'zmdi-collection-bookmark':'zmdi-file-text'}}"></i>{{ $bookChild->name }}
                 @if($bookChild->isA('chapter'))
                     <ul>

@@ -1,6 +1,6 @@
 
 @if(count($entities) > 0)
-    @foreach($entities as $entity)
+    @foreach($entities as $index => $entity)
         @if($entity->isA('page'))
             @include('pages/list-item', ['page' => $entity])
         @elseif($entity->isA('book'))
@@ -8,7 +8,11 @@
         @elseif($entity->isA('chapter'))
             @include('chapters/list-item', ['chapter' => $entity, 'hidePages' => true])
         @endif
-        <hr>
+
+        @if($index !== count($entities) - 1)
+            <hr>
+        @endif
+
     @endforeach
 @else
     <p class="text-muted">

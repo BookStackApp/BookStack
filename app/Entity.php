@@ -7,23 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Entity extends Model
 {
 
-    /**
-     * Relation for the user that created this entity.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function createdBy()
-    {
-        return $this->belongsTo('BookStack\User', 'created_by');
-    }
-
-    /**
-     * Relation for the user that updated this entity.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function updatedBy()
-    {
-        return $this->belongsTo('BookStack\User', 'updated_by');
-    }
+    use Ownable;
 
     /**
      * Compares this entity to another given entity.
@@ -97,16 +81,27 @@ abstract class Entity extends Model
      */
     public static function isA($type)
     {
-        return static::getName() === strtolower($type);
+        return static::getClassName() === strtolower($type);
     }
 
     /**
      * Gets the class name.
      * @return string
      */
-    public static function getName()
+    public static function getClassName()
     {
         return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
+    }
+
+    /**
+     *Gets a limited-length version of the entities name.
+     * @param int $length
+     * @return string
+     */
+    public function getShortName($length = 25)
+    {
+        if(strlen($this->name) <= $length) return $this->name;
+        return substr($this->name, 0, $length-3) . '...';
     }
 
     /**
@@ -123,20 +118,20 @@ abstract class Entity extends Model
             $termString .= $term . '* ';
         }
         $fields = implode(',', $fieldsToSearch);
-        $search = static::whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+        $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
+        $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
+        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+
+        // Add additional where terms
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
 
-        if (!static::isA('book')) {
-            $search = $search->with('book');
-        }
+        // Load in relations
+        if (!static::isA('book')) $search = $search->with('book');
+        if (static::isA('page'))  $search = $search->with('chapter');
 
-        if (static::isA('page')) {
-            $search = $search->with('chapter');
-        }
-
-        return $search->get();
+        return $search->orderBy('title_relevance', 'desc')->get();
     }
 
     /**

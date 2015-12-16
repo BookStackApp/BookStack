@@ -34,11 +34,22 @@
                 @endif
             </div>
             <div class="col-sm-4 col-sm-offset-1">
+                <div id="recents">
+                    @if($recents)
+                        <div class="margin-top large">&nbsp;</div>
+                        <h3>Recently Viewed</h3>
+                        @include('partials/entity-list', ['entities' => $recents])
+                    @endif
+                </div>
                 <div class="margin-top large">&nbsp;</div>
-                @if($recents)
-                    <h3>Recently Viewed</h3>
-                    @include('partials/entity-list', ['entities' => $recents])
-                @endif
+                <div id="popular">
+                    <h3>Popular Books</h3>
+                    @if(count($popular) > 0)
+                        @include('partials/entity-list', ['entities' => $popular])
+                    @else
+                        <p class="text-muted">The most popular books will appear here.</p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

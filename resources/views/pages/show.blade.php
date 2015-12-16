@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-sm-6 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->name }}</a>
+                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
                         @if($page->hasChapter())
                             <span class="sep">&raquo;</span>
                             <a href="{{ $page->chapter->getUrl() }}" class="text-chapter text-button">
                                 <i class="zmdi zmdi-collection-bookmark"></i>
-                                {{$page->chapter->name}}
+                                {{$page->chapter->getShortName()}}
                             </a>
                         @endif
                     </div>
@@ -53,7 +53,7 @@
                     <p class="text-muted small">
                         Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
                         <br>
-                        Last Updated {{$page->updated_at->diffForHumans()}} @if($page->createdBy) by {{$page->updatedBy->name}} @endif
+                        Last Updated {{$page->updated_at->diffForHumans()}} @if($page->updatedBy) by {{$page->updatedBy->name}} @endif
                     </p>
 
                 </div>

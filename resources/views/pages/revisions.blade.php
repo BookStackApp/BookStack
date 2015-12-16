@@ -32,8 +32,12 @@
                 @foreach($page->revisions as $revision)
                     <tr>
                         <td>{{$revision->name}}</td>
-                        <td style="line-height: 0;"><img class="avatar" src="{{ $revision->createdBy->getAvatar(30) }}" alt="{{$revision->createdBy->name}}"></td>
-                        <td> {{$revision->createdBy->name}}</td>
+                        <td style="line-height: 0;">
+                            @if($revision->createdBy)
+                                <img class="avatar" src="{{ $revision->createdBy->getAvatar(30) }}" alt="{{$revision->createdBy->name}}">
+                            @endif
+                        </td>
+                        <td> @if($revision->createdBy) {{$revision->createdBy->name}} @else Deleted User @endif</td>
                         <td><small>{{$revision->created_at->format('jS F, Y H:i:s')}} ({{$revision->created_at->diffForHumans()}})</small></td>
                         <td>
                             <a href="{{$revision->getUrl()}}" target="_blank">Preview</a>
