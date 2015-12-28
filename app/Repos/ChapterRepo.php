@@ -56,7 +56,9 @@ class ChapterRepo
      */
     public function getBySlug($slug, $bookId)
     {
-        return $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        $chapter = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        if ($chapter === null) abort(404);
+        return $chapter;
     }
 
     /**

@@ -95,7 +95,9 @@ class BookRepo
      */
     public function getBySlug($slug)
     {
-        return $this->book->where('slug', '=', $slug)->first();
+        $book = $this->book->where('slug', '=', $slug)->first();
+        if ($book === null) abort(404);
+        return $book;
     }
 
     /**
