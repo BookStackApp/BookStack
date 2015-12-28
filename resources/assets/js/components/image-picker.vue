@@ -65,9 +65,8 @@
                 this.value = this.currentId === 'false' ?  imageUrl : imageModel.id;
             },
             showImageManager: function(e) {
-                var _this = this;
-                ImageManager.show(function(image) {
-                    _this.updateImageFromModel(image);
+                ImageManager.show((image) => {
+                    this.updateImageFromModel(image);
                 });
             },
             reset: function() {
@@ -75,20 +74,20 @@
             },
             remove: function() {
                 this.image = 'none';
+                this.value = 'none';
             },
             updateImageFromModel: function(model) {
-                var _this = this;
-                var isResized = _this.resizeWidth && _this.resizeHeight;
+                var isResized = this.resizeWidth && this.resizeHeight;
 
                 if (!isResized) {
-                    _this.setCurrentValue(model, model.url);
+                    this.setCurrentValue(model, model.url);
                     return;
                 }
 
-                var cropped = _this.resizeCrop ? 'true' : 'false';
-                var requestString = '/images/thumb/' + model.id + '/' + _this.resizeWidth + '/' + _this.resizeHeight + '/' + cropped;
-                _this.$http.get(requestString, function(data) {
-                    _this.setCurrentValue(model, data.url);
+                var cropped = this.resizeCrop ? 'true' : 'false';
+                var requestString = '/images/thumb/' + model.id + '/' + this.resizeWidth + '/' + this.resizeHeight + '/' + cropped;
+                this.$http.get(requestString).then((response) => {
+                    this.setCurrentValue(model, response.data.url);
                 });
             }
         }

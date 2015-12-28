@@ -61,9 +61,7 @@ class PageController extends Controller
     {
         $this->checkPermission('page-create');
         $this->validate($request, [
-            'name'   => 'required|string|max:255',
-            'html'   => 'required|string',
-            'parent' => 'integer|exists:pages,id'
+            'name'   => 'required|string|max:255'
         ]);
 
         $input = $request->all();
@@ -121,6 +119,9 @@ class PageController extends Controller
     public function update(Request $request, $bookSlug, $pageSlug)
     {
         $this->checkPermission('page-update');
+        $this->validate($request, [
+            'name'   => 'required|string|max:255'
+        ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $this->pageRepo->updatePage($page, $book->id, $request->all());

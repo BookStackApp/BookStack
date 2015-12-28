@@ -120,6 +120,7 @@ class PageRepo
      */
     protected function formatHtml($htmlText)
     {
+        if($htmlText == '') return $htmlText;
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
         $doc->loadHTML($htmlText);

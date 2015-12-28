@@ -9,9 +9,9 @@
     "bootstrap-sass": "^3.0.0",
     "dropzone": "^4.0.1",
     "laravel-elixir": "^3.4.0",
-    "vue": "^1.0.4",
+    "vue": "^1.0.13",
     "vue-hot-reload-api": "^1.2.1",
-    "vue-resource": "^0.1.16",
+    "vue-resource": "^0.5.1",
     "vueify": "^5.0.1",
     "vueify-insert-css": "^1.0.0",
     "zeroclipboard": "^2.2.0"

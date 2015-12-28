@@ -94,11 +94,11 @@
 
         methods: {
             fetchData: function () {
-                var _this = this;
-                this.$http.get('/images/' + _this.imageType + '/all/' + _this.page, function (data) {
-                    _this.images = _this.images.concat(data.images);
-                    _this.hasMore = data.hasMore;
-                    _this.page++;
+                var url = '/images/' + this.imageType + '/all/' + this.page;
+                this.$http.get(url).then((response) => {
+                    this.images = this.images.concat(response.data.images);
+                    this.hasMore = response.data.hasMore;
+                    this.page++;
                 });
             },
 
@@ -108,16 +108,16 @@
                     url: '/images/' + _this.imageType + '/upload',
                     init: function () {
                         var dz = this;
-                        this.on("sending", function (file, xhr, data) {
+                        dz.on("sending", function (file, xhr, data) {
                             data.append("_token", _this.token);
                         });
-                        this.on("success", function (file, data) {
+                        dz.on("success", function (file, data) {
                             _this.images.unshift(data);
                             $(file.previewElement).fadeOut(400, function () {
                                 dz.removeFile(file);
                             });
                         });
-                        this.on('error', function (file, errorMessage, xhr) {
+                        dz.on('error', function (file, errorMessage, xhr) {
                             if (errorMessage.file) {
                                 $(file.previewElement).find('[data-dz-errormessage]').text(errorMessage.file[0]);
                             }
@@ -149,9 +149,7 @@
             },
 
             selectButtonClick: function () {
-                if (this.callback) {
-                    this.returnCallback(this.selectedImage);
-                }
+                if (this.callback) this.returnCallback(this.selectedImage);
                 this.hide();
             },
 
@@ -177,17 +175,14 @@
 
             saveImageDetails: function (e) {
                 e.preventDefault();
-                var _this = this;
-                _this.selectedImage._token = _this.token;
-                var form = $(_this.$els.imageForm);
-                $.ajax('/images/update/' + _this.selectedImage.id, {
-                    method: 'PUT',
-                    data: _this.selectedImage
-                }).done(function () {
+                this.selectedImage._token = this.token;
+                var form = $(this.$els.imageForm);
+                var url = '/images/update/' + this.selectedImage.id;
+                this.$http.put(url, this.selectedImage).then((response) => {
                     form.showSuccess('Image name updated');
-                }).fail(function (jqXHR) {
-                    form.showFailure(jqXHR.responseJSON);
-                })
+                }, (response) => {
+                    form.showFailure(response.data);
+                });
             },
 
             deleteImage: function (e) {
@@ -195,17 +190,15 @@
                 var _this = this;
                 _this.deleteForm.force = _this.dependantPages !== false;
                 _this.deleteForm._token = _this.token;
-                $.ajax('/images/' + _this.selectedImage.id, {
-                    method: 'DELETE',
-                    data: _this.deleteForm
-                }).done(function () {
-                    _this.images.splice(_this.images.indexOf(_this.selectedImage), 1);
-                    _this.selectedImage = false;
-                    $(_this.$els.imageTitle).showSuccess('Image Deleted');
-                }).fail(function (jqXHR, textStatus) {
+                var url = '/images/' + _this.selectedImage.id;
+                this.$http.delete(url, this.deleteForm).then((response) => {
+                    this.images.splice(this.images.indexOf(this.selectedImage), 1);
+                    this.selectedImage = false;
+                    $(this.$els.imageTitle).showSuccess('Image Deleted');
+                }, (response) => {
                     // Pages failure
-                    if (jqXHR.status === 400) {
-                        _this.dependantPages = jqXHR.responseJSON;
+                    if (response.status === 400) {
+                        _this.dependantPages = response.data;
                     }
                 });
             }
