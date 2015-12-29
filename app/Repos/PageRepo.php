@@ -177,11 +177,11 @@ class PageRepo
      */
     public function getBySearch($term, $whereTerms = [])
     {
-        $terms = explode(' ', preg_quote(trim($term)));
+        $terms = explode(' ', $term);
         $pages = $this->page->fullTextSearch(['name', 'text'], $terms, $whereTerms);
 
         // Add highlights to page text.
-        $words = join('|', $terms);
+        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         //lookahead/behind assertions ensures cut between words
         $s = '\s\x00-/:-@\[-`{-~'; //character set for start/end of words
 

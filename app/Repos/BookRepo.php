@@ -222,9 +222,9 @@ class BookRepo
      */
     public function getBySearch($term)
     {
-        $terms = explode(' ', preg_quote(trim($term)));
+        $terms = explode(' ', $term);
         $books = $this->book->fullTextSearch(['name', 'description'], $terms);
-        $words = join('|', $terms);
+        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($books as $book) {
             //highlight
             $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $book->getExcerpt(100));

@@ -170,6 +170,16 @@ class EntityTest extends TestCase
             ->seePageIs($page->getUrl());
     }
 
+    public function testInvalidPageSearch()
+    {
+        $this->asAdmin()
+            ->visit('/')
+            ->type('<p>test</p>', 'term')
+            ->press('header-search-box-button')
+            ->see('Search Results')
+            ->seeStatusCode(200);
+    }
+
 
     public function testEntitiesViewableAfterCreatorDeletion()
     {

@@ -1,3 +1,5 @@
-<h1 id="bkmrk-page-title">{{$page->name}}</h1>
+<div v-pre>
+    <h1 id="bkmrk-page-title">{{$page->name}}</h1>
 
-{!! $page->html !!}
+    {!! $page->html !!}
+</div>
