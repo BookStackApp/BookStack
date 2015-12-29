@@ -1,7 +1,14 @@
+// Configure ZeroClipboard
 window.ZeroClipboard = require('zeroclipboard');
 window.ZeroClipboard.config({
     swfPath: '/ZeroClipboard.swf'
 });
+
+// AngularJS - Create application and load components
+var angular = require('angular');
+var angularResource = require('angular-resource');
+var app = angular.module('bookStack', ['ngResource']);
+var directives = require('./directives')(app);
 
 // Global jQuery Elements
 $(function () {
@@ -23,32 +30,8 @@ $(function () {
 
 });
 
-function elemExists(selector) {
-    return document.querySelector(selector) !== null;
-}
-
 // TinyMCE editor
 if(elemExists('#html-editor')) {
     var tinyMceOptions = require('./pages/page-form');
     tinymce.init(tinyMceOptions);
 }
-
-// Vue JS elements
-var Vue = require('vue');
-Vue.use(require('vue-resource'));
-
-// Vue Components
-Vue.component('image-manager', require('./components/image-manager.vue'));
-Vue.component('image-picker', require('./components/image-picker.vue'));
-Vue.component('toggle-switch', require('./components/toggle-switch.vue'));
-
-// Vue Controllers
-if(elemExists('#book-dashboard')) {
-    new Vue(require('./pages/book-show'));
-}
-
-// Global Vue Instance
-// Needs to be loaded after all components we want to use.
-var app = new Vue({
-    el: '#app'
-});

@@ -5,6 +5,8 @@
     "insert-css": "^0.2.0"
   },
   "dependencies": {
+    "angular": "^1.5.0-rc.0",
+    "angular-resource": "^1.5.0-rc.0",
     "babel-runtime": "^5.8.29",
     "bootstrap-sass": "^3.0.0",
     "dropzone": "^4.0.1",

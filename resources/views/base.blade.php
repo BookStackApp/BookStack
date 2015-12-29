@@ -19,7 +19,7 @@
 
     @yield('head')
 </head>
-<body class="@yield('body-class')" id="app">
+<body class="@yield('body-class')" ng-app="bookStack">
 
     @include('partials/notifications')
 
