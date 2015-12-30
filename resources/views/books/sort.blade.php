@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container" ng-non-bindable>
         <h1>Sorting Pages & Chapters<span class="subheader">For {{ $book->name }}</span></h1>
         <div class="row">
             <div class="col-md-8" id="sort-boxes">

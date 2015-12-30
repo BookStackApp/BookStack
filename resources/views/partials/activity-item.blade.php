@@ -7,7 +7,7 @@
     </div>
 @endif
 
-<div class="right">
+<div class="right" ng-non-bindable>
     @if($activity->user)
         {{$activity->user->name}}
     @else

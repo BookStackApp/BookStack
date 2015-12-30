@@ -1,4 +1,4 @@
-<div class="sort-box" data-type="book" data-id="{{ $book->id }}">
+<div class="sort-box" data-type="book" data-id="{{ $book->id }}" ng-non-bindable>
     <h3 class="text-book"><i class="zmdi zmdi-book"></i>{{ $book->name }}</h3>
     <ul class="sortable-page-list sort-list">
         @foreach($bookChildren as $bookChild)

@@ -1,5 +1,5 @@
 
-<div class="book-tree">
+<div class="book-tree" ng-non-bindable>
     <h6 class="text-muted">Book Navigation</h6>
     <ul class="sidebar-page-list menu">
         <li class="book-header"><a href="{{$book->getUrl()}}" class="book {{ $current->matches($book)? 'selected' : '' }}"><i class="zmdi zmdi-book"></i>{{$book->name}}</a></li>

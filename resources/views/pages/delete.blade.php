@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container small">
+    <div class="container small" ng-non-bindable>
         <h1>Delete Page</h1>
         <p class="text-neg">Are you sure you want to delete this page?</p>
 

@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <div class="flex-fill flex">
+    <div class="flex-fill flex" ng-non-bindable>
         <form action="{{$book->getUrl() . '/page'}}" method="POST" class="flex flex-fill">
             @include('pages/form')
             @if($chapter)

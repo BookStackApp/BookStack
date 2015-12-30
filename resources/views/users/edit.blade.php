@@ -21,7 +21,7 @@
     <div class="container small">
         <form action="/users/{{$user->id}}" method="post">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" ng-non-bindable>
                 <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="put">

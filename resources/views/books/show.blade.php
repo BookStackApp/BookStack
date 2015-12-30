@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="faded-small">
+    <div class="faded-small" ng-non-bindable>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

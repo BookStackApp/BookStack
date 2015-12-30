@@ -18,7 +18,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" ng-non-bindable>
         <div class="row">
             <div class="col-sm-7">
                 <h1>Books</h1>

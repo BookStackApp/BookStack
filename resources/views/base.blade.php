@@ -25,7 +25,7 @@
     <header id="header">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-sm-4">
+                <div class="col-lg-4 col-sm-4" ng-non-bindable>
                     <a href="/" class="logo">
                         @if(Setting::get('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ Setting::get('app-logo', '') === '' ? '/logo.png' : Setting::get('app-logo', '') }}" alt="Logo">
@@ -54,7 +54,7 @@
                             <div class="dropdown-container" dropdown>
                                 <span class="user-name" dropdown-toggle>
                                     <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
-                                    <span class="name">{{ $currentUser->name }}</span> <i class="zmdi zmdi-caret-down"></i>
+                                    <span class="name" ng-non-bindable>{{ $currentUser->name }}</span> <i class="zmdi zmdi-caret-down"></i>
                                 </span>
                                 <ul>
                                     <li>

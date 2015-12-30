@@ -17,7 +17,7 @@
     </div>
 
 
-    <div class="container small">
+    <div class="container small" ng-non-bindable>
         <h1>Page Revisions <span class="subheader">For "{{ $page->name }}"</span></h1>
 
         @if(count($page->revisions) > 0)

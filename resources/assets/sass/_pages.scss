@@ -1,3 +1,12 @@
+#page-show {
+  >.row .col-md-9 {
+    z-index: 2;
+  }
+  >.row .col-md-3 {
+    z-index: 1;
+  }
+}
+
 .page-editor {
   display: flex;
   flex-direction: column;
@@ -58,6 +67,7 @@
   position: relative;
   display: none;
   left: 0;
+  z-index: 10;
 }
 .pointer {
   border: 1px solid #CCC;
@@ -69,6 +79,7 @@
   top: -60px;
   background-color:#FFF;
   width: 272px;
+  z-index: 55;
   &:before {
     position: absolute;
     left: 50%;
@@ -83,7 +94,7 @@
     transform-origin: 50% 50%;
     border-bottom: 1px solid #CCC;
     border-right: 1px solid #CCC;
-    z-index: 1;
+    z-index: 56;
   }
   input {
     background-color: #FFF;
@@ -97,6 +108,7 @@
     border-radius: 0;
     height: 28px;
     font-size: 12px;
+    vertical-align: top;
   }
   > i {
     color: #888;
