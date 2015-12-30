@@ -80,5 +80,6 @@
 
 @yield('bottom')
 <script src="{{ versioned_asset('js/common.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

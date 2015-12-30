@@ -1,8 +1,4 @@
-// Configure ZeroClipboard
-window.ZeroClipboard = require('zeroclipboard');
-window.ZeroClipboard.config({
-    swfPath: '/ZeroClipboard.swf'
-});
+
 
 // AngularJS - Create application and load components
 var angular = require('angular');
@@ -60,3 +56,6 @@ if (elemExists('#html-editor')) {
     var tinyMceOptions = require('./pages/page-form');
     tinymce.init(tinyMceOptions);
 }
+
+// Page specific items
+require('./pages/page-show');

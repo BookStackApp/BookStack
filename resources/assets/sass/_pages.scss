@@ -57,7 +57,7 @@
 .pointer-container {
   position: relative;
   display: none;
-  left: 2%;
+  left: 0;
 }
 .pointer {
   border: 1px solid #CCC;
@@ -68,6 +68,7 @@
   position: absolute;
   top: -60px;
   background-color:#FFF;
+  width: 272px;
   &:before {
     position: absolute;
     left: 50%;

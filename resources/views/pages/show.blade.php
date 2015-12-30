@@ -33,7 +33,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" id="page-show">
         <div class="row">
             <div class="col-md-9 print-full-width">
                 <div class="page-content anim fadeIn">
@@ -66,62 +66,11 @@
         </div>
     </div>
 
-
-
-
-
-    <script>
-        $(document).ready(function() {
-
-
-            // Set up pointer
-            var $pointer = $('#pointer').detach();
-            var pageId = {{$page->id}};
-            var isSelection = false;
-
-            $pointer.find('input').click(function(e){$(this).select();e.stopPropagation();});
-            new ZeroClipboard( $pointer.find('button').first()[0] );
-
-            $(document.body).find('*').on('click focus', function(e) {
-                if(!isSelection) {
-                    $pointer.detach();
-                }
-            });
-
-            $('.page-content [id^="bkmrk"]').on('mouseup keyup', function(e) {
-                var selection = window.getSelection();
-                if(selection.toString().length === 0) return;
-                // Show pointer and set link
-                var $elem = $(this);
-                var link = window.location.protocol + "//" + window.location.host + '/link/' + pageId + '#' + $elem.attr('id');
-                $pointer.find('input').val(link);
-                $pointer.find('button').first().attr('data-clipboard-text', link);
-                $elem.before($pointer);
-                $pointer.show();
-                e.stopPropagation();
-
-                isSelection = true;
-                setTimeout(function() {
-                    isSelection = false;
-                }, 100);
-            });
-
-            function goToText(text) {
-                var idElem = $('.page-content').find('#' + text).first();
-                if(idElem.length !== 0) {
-                    idElem.smoothScrollTo();
-                } else {
-                    $('.page-content').find(':contains("'+text+'")').smoothScrollTo();
-                }
-            }
-
-            if(window.location.hash) {
-                var text = window.location.hash.replace(/\%20/g, ' ').substr(1);
-                goToText(text);
-            }
-
-        });
-    </script>
-
     @include('partials/highlight')
+@stop
+
+@section('scripts')
+    <script>
+        setupPageShow({{$page->id}});
+    </script>
 @stop
