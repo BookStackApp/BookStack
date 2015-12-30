@@ -27,15 +27,15 @@
     </div>
 
 
-    <div class="container" id="book-dashboard">
+    <div class="container" id="book-dashboard" ng-controller="BookShowController" book-id="{{ $book->id }}">
         <div class="row">
             <div class="col-md-7">
 
                 <h1>{{$book->name}}</h1>
-                <div class="book-content anim fadeIn" v-show="!searching">
-                    <p class="text-muted">{{$book->description}}</p>
+                <div class="book-content" ng-show="!searching">
+                    <p class="text-muted" ng-non-bindable>{{$book->description}}</p>
 
-                    <div class="page-list">
+                    <div class="page-list" ng-non-bindable>
                         <hr>
                         @if(count($bookChildren) > 0)
                             @foreach($bookChildren as $childElement)
@@ -62,12 +62,12 @@
                         </p>
                     </div>
                 </div>
-                <div class="search-results" v-show="searching">
-                    <h3 class="text-muted">Search Results <a v-if="searching" @click="clearSearch" class="text-small"><i class="zmdi zmdi-close"></i>Clear Search</a></h3>
-                    <div v-if="!searchResults">
+                <div class="search-results" ng-cloak ng-show="searching">
+                    <h3 class="text-muted">Search Results <a ng-if="searching" ng-click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>Clear Search</a></h3>
+                    <div ng-if="!searchResults">
                         @include('partials/loading-icon')
                     </div>
-                    <div v-html="searchResults"></div>
+                    <div ng-bind-html="searchResults"></div>
                 </div>
 
 
@@ -76,11 +76,10 @@
             <div class="col-md-4 col-md-offset-1">
                 <div class="margin-top large"></div>
                 <div class="search-box">
-                    <form @submit="searchBook" @input="checkSearchForm" v-el:form action="/search/book/{{ $book->id }}">
-                        {!! csrf_field() !!}
-                        <input v-model="searchTerm" type="text" name="term" placeholder="Search This Book">
+                    <form ng-submit="searchBook($event)">
+                        <input ng-model="searchTerm" ng-change="checkSearchForm()" type="text" name="term" placeholder="Search This Book">
                         <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                        <button v-if="searching" @click="clearSearch" type="button"><i class="zmdi zmdi-close"></i></button>
+                        <button ng-if="searching" ng-click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
                     </form>
                 </div>
                 <div class="activity anim fadeIn">

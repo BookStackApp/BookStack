@@ -1,21 +1,17 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "insert-css": "^0.2.0"
+    "gulp": "^3.9.0"
   },
   "dependencies": {
     "angular": "^1.5.0-rc.0",
+    "angular-animate": "^1.5.0-rc.0",
     "angular-resource": "^1.5.0-rc.0",
+    "angular-sanitize": "^1.5.0-rc.0",
     "babel-runtime": "^5.8.29",
     "bootstrap-sass": "^3.0.0",
     "dropzone": "^4.0.1",
     "laravel-elixir": "^3.4.0",
-    "vue": "^1.0.13",
-    "vue-hot-reload-api": "^1.2.1",
-    "vue-resource": "^0.5.1",
-    "vueify": "^5.0.1",
-    "vueify-insert-css": "^1.0.0",
     "zeroclipboard": "^2.2.0"
   }
 }

@@ -98,7 +98,7 @@ module.exports = {
             icon: 'image',
             tooltip: 'Insert an image',
             onclick: function() {
-                ImageManager.show(function(image) {
+                window.ImageManager.showExternal(function(image) {
                     var html = '<a href="'+image.url+'" target="_blank">';
                     html += '<img src="'+image.thumbs.display+'" alt="'+image.name+'">';
                     html += '</a>';
@@ -106,6 +106,7 @@ module.exports = {
                 });
             }
         });
+
         // Paste image-uploads
         editor.on('paste', function(e) {
             if(e.clipboardData) {

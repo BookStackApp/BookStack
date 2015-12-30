@@ -33,7 +33,7 @@
                 <div class="form-group" id="logo-control">
                     <label for="user-avatar">User Avatar</label>
                     <p class="small">This image should be approx 256px square.</p>
-                    <image-picker resize-height="512" resize-width="512" current-image="{{ $user->getAvatar(80) }}" current-id="{{ $user->image_id }}" default-image="/user_avatar.png" name="image_id" show-remove="false" image-class="avatar large"></image-picker>
+                    <image-picker resize-height="512" resize-width="512" current-image="{{ $user->getAvatar(80) }}" current-id="{{ $user->image_id }}" default-image="/user_avatar.png" name="image_id" show-remove="false" image-class="['avatar' ,'large']"></image-picker>
                 </div>
             </div>
         </div>
@@ -79,5 +79,5 @@
     </div>
 
     <p class="margin-top large"><br></p>
-    <image-manager image-type="user"></image-manager>
+    @include('partials/image-manager', ['imageType' => 'user'])
 @stop

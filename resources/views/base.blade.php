@@ -52,8 +52,8 @@
                             @endif
                         </div>
                         @if($signedIn)
-                            <div class="dropdown-container" data-dropdown>
-                                <span class="user-name" data-dropdown-toggle>
+                            <div class="dropdown-container" dropdown>
+                                <span class="user-name" dropdown-toggle>
                                     <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
                                     <span class="name">{{ $currentUser->name }}</span> <i class="zmdi zmdi-caret-down"></i>
                                 </span>
