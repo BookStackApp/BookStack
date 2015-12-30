@@ -18,8 +18,8 @@ var controllers = require('./controllers')(ngApp);
 //Global jQuery Config & Extensions
 
 // Smooth scrolling
-jQuery.fn.smoothScrollTo = function() {
-    if(this.length === 0) return;
+jQuery.fn.smoothScrollTo = function () {
+    if (this.length === 0) return;
     $('body').animate({
         scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
     }, 800); // Adjust to change animations speed (ms)
@@ -27,8 +27,8 @@ jQuery.fn.smoothScrollTo = function() {
 };
 
 // Making contains text expression not worry about casing
-$.expr[":"].contains = $.expr.createPseudo(function(arg) {
-    return function( elem ) {
+$.expr[":"].contains = $.expr.createPseudo(function (arg) {
+    return function (elem) {
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
 });
@@ -42,7 +42,7 @@ $(function () {
     });
 
     // Chapter page list toggles
-    $('.chapter-toggle').click(function(e) {
+    $('.chapter-toggle').click(function (e) {
         e.preventDefault();
         $(this).toggleClass('open');
         $(this).closest('.chapter').find('.inset-list').slideToggle(180);
@@ -56,7 +56,7 @@ function elemExists(selector) {
 }
 
 // TinyMCE editor
-if(elemExists('#html-editor')) {
+if (elemExists('#html-editor')) {
     var tinyMceOptions = require('./pages/page-form');
     tinymce.init(tinyMceOptions);
 }
