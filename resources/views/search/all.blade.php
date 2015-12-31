@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container anim fadeIn">
+    <div class="container anim fadeIn" ng-non-bindable>
 
         <h1>Search Results&nbsp;&nbsp;&nbsp; <span class="text-muted">{{$searchTerm}}</span></h1>
 
@@ -50,8 +50,6 @@
 
 
     </div>
-
-
 
 
 @stop

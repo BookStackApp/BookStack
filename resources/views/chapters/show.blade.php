@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="faded-small">
+    <div class="faded-small" ng-non-bindable>
         <div class="container">
             <div class="row">
                 <div class="col-md-4 faded">
@@ -28,7 +28,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" ng-non-bindable>
         <div class="row">
             <div class="col-md-8">
                 <h1>{{ $chapter->name }}</h1>

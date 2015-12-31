@@ -64,7 +64,9 @@ class PageRepo
      */
     public function getBySlug($slug, $bookId)
     {
-        return $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        $page = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        if ($page === null) abort(404);
+        return $page;
     }
 
     /**
@@ -120,6 +122,7 @@ class PageRepo
      */
     protected function formatHtml($htmlText)
     {
+        if($htmlText == '') return $htmlText;
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
         $doc->loadHTML($htmlText);
@@ -174,11 +177,11 @@ class PageRepo
      */
     public function getBySearch($term, $whereTerms = [])
     {
-        $terms = explode(' ', preg_quote(trim($term)));
+        $terms = explode(' ', $term);
         $pages = $this->page->fullTextSearch(['name', 'text'], $terms, $whereTerms);
 
         // Add highlights to page text.
-        $words = join('|', $terms);
+        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         //lookahead/behind assertions ensures cut between words
         $s = '\s\x00-/:-@\[-`{-~'; //character set for start/end of words
 

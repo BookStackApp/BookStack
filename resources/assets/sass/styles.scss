@@ -18,6 +18,10 @@
 
 [v-cloak], [v-show] {display: none;}
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
 // Jquery Sortable Styles
 .dragged {
   position: absolute;

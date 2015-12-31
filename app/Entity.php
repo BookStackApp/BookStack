@@ -115,12 +115,12 @@ abstract class Entity extends Model
     {
         $termString = '';
         foreach ($terms as $term) {
-            $termString .= $term . '* ';
+            $termString .= htmlentities($term) . '* ';
         }
         $fields = implode(',', $fieldsToSearch);
         $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
         $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
-        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termStringEscaped]);
 
         // Add additional where terms
         foreach ($wheres as $whereTerm) {

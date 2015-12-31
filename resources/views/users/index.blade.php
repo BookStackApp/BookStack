@@ -6,7 +6,7 @@
     @include('settings/navbar', ['selected' => 'users'])
 
 
-    <div class="container small">
+    <div class="container small" ng-non-bindable>
         <h1>Users</h1>
         @if($currentUser->can('user-create'))
             <p>

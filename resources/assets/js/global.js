@@ -1,6 +1,32 @@
-window.ZeroClipboard = require('zeroclipboard');
-window.ZeroClipboard.config({
-    swfPath: '/ZeroClipboard.swf'
+
+
+// AngularJS - Create application and load components
+var angular = require('angular');
+var ngResource = require('angular-resource');
+var ngAnimate = require('angular-animate');
+var ngSanitize = require('angular-sanitize');
+
+var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize']);
+var services = require('./services')(ngApp);
+var directives = require('./directives')(ngApp);
+var controllers = require('./controllers')(ngApp);
+
+//Global jQuery Config & Extensions
+
+// Smooth scrolling
+jQuery.fn.smoothScrollTo = function () {
+    if (this.length === 0) return;
+    $('body').animate({
+        scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
+    }, 800); // Adjust to change animations speed (ms)
+    return this;
+};
+
+// Making contains text expression not worry about casing
+$.expr[":"].contains = $.expr.createPseudo(function (arg) {
+    return function (elem) {
+        return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+    };
 });
 
 // Global jQuery Elements
@@ -11,11 +37,8 @@ $(function () {
         $(this).fadeOut(100);
     });
 
-    // Dropdown toggles
-    $('[data-dropdown]').dropDown();
-
     // Chapter page list toggles
-    $('.chapter-toggle').click(function(e) {
+    $('.chapter-toggle').click(function (e) {
         e.preventDefault();
         $(this).toggleClass('open');
         $(this).closest('.chapter').find('.inset-list').slideToggle(180);
@@ -23,32 +46,16 @@ $(function () {
 
 });
 
+
 function elemExists(selector) {
     return document.querySelector(selector) !== null;
 }
 
 // TinyMCE editor
-if(elemExists('#html-editor')) {
+if (elemExists('#html-editor')) {
     var tinyMceOptions = require('./pages/page-form');
     tinymce.init(tinyMceOptions);
 }
 
-// Vue JS elements
-var Vue = require('vue');
-Vue.use(require('vue-resource'));
-
-// Vue Components
-Vue.component('image-manager', require('./components/image-manager.vue'));
-Vue.component('image-picker', require('./components/image-picker.vue'));
-Vue.component('toggle-switch', require('./components/toggle-switch.vue'));
-
-// Vue Controllers
-if(elemExists('#book-dashboard')) {
-    new Vue(require('./pages/book-show'));
-}
-
-// Global Vue Instance
-// Needs to be loaded after all components we want to use.
-var app = new Vue({
-    el: '#app'
-});
+// Page specific items
+require('./pages/page-show');

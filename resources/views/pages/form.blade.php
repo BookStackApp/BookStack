@@ -1,7 +1,7 @@
 
 
 
-<div class="page-editor flex-fill flex">
+<div class="page-editor flex-fill flex" ng-non-bindable>
 
     {{ csrf_field() }}
     <div class="faded-small">

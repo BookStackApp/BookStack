@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div class="container small">
+    <div class="container small" ng-non-bindable>
         <h1>Create User</h1>
 
         <form action="/users/create" method="post">

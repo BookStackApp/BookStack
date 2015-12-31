@@ -56,7 +56,9 @@ class ChapterRepo
      */
     public function getBySlug($slug, $bookId)
     {
-        return $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        $chapter = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        if ($chapter === null) abort(404);
+        return $chapter;
     }
 
     /**
@@ -127,9 +129,9 @@ class ChapterRepo
      */
     public function getBySearch($term, $whereTerms = [])
     {
-        $terms = explode(' ', preg_quote(trim($term)));
+        $terms = explode(' ', $term);
         $chapters = $this->chapter->fullTextSearch(['name', 'description'], $terms, $whereTerms);
-        $words = join('|', $terms);
+        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {
             //highlight
             $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $chapter->getExcerpt(100));

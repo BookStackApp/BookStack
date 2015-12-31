@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container small">
+<div class="container small" ng-non-bindable>
     <h1>Create New Book</h1>
     <form action="/books" method="POST">
         @include('books/form')
