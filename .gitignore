@@ -9,7 +9,6 @@ Homestead.yaml
 /public/js
 /public/uploads
 /public/bower
-/public/build
 /storage/images
 _ide_helper.php
 /storage/debugbar
