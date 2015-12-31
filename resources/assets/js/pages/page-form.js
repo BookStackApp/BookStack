@@ -1,8 +1,7 @@
 module.exports = {
     selector: '#html-editor',
     content_css: [
-        '/css/styles.css',
-        '//fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,100,300'
+        '/css/styles.css'
     ],
     body_class: 'page-content',
     relative_urls: false,
@@ -133,7 +132,7 @@ module.exports = {
                             formData.append('file', file, remoteFilename);
                             formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
 
-                            xhr.open('POST', '/upload/image');
+                            xhr.open('POST', '/images/gallery/upload');
                             xhr.onload = function () {
                                 if (xhr.status === 200 || xhr.status === 201) {
                                     var result = JSON.parse(xhr.responseText);
@@ -141,6 +140,7 @@ module.exports = {
                                 } else {
                                     console.log('An error occured uploading the image');
                                     console.log(xhr.responseText);
+                                    editor.dom.remove(id);
                                 }
                             };
                             xhr.send(formData);
