@@ -107,7 +107,7 @@ class ActivityService
     }
 
     /**
-     * Filters out similar acitivity.
+     * Filters out similar activity.
      * @param Activity[] $activity
      * @return array
      */

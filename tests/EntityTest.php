@@ -180,6 +180,14 @@ class EntityTest extends TestCase
             ->seeStatusCode(200);
     }
 
+    public function testEmptySearchRedirectsBack()
+    {
+        $this->asAdmin()
+            ->visit('/')
+            ->visit('/search/all')
+            ->seePageIs('/');
+    }
+
 
     public function testEntitiesViewableAfterCreatorDeletion()
     {
