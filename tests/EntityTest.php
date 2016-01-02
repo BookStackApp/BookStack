@@ -188,6 +188,29 @@ class EntityTest extends TestCase
             ->seePageIs('/');
     }
 
+    public function testBookSearch()
+    {
+        $book = \BookStack\Book::all()->first();
+        $page = $book->pages->last();
+        $chapter = $book->chapters->last();
+
+        $this->asAdmin()
+            ->visit('/search/book/' . $book->id . '?term=' . urlencode($page->name))
+            ->see($page->name)
+
+            ->visit('/search/book/' . $book->id  . '?term=' . urlencode($chapter->name))
+            ->see($chapter->name);
+    }
+
+    public function testEmptyBookSearchRedirectsBack()
+    {
+        $book = \BookStack\Book::all()->first();
+        $this->asAdmin()
+            ->visit('/books')
+            ->visit('/search/book/' . $book->id . '?term=')
+            ->seePageIs('/books');
+    }
+
 
     public function testEntitiesViewableAfterCreatorDeletion()
     {

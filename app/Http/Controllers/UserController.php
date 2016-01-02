@@ -116,9 +116,11 @@ class UserController extends Controller
         $this->validate($request, [
             'name'             => 'required',
             'email'            => 'required|email|unique:users,email,' . $id,
-            'password'         => 'min:5',
-            'password-confirm' => 'same:password',
+            'password'         => 'min:5|required_with:password_confirm',
+            'password-confirm' => 'same:password|required_with:password',
             'role'             => 'exists:roles,id'
+        ], [
+            'password-confirm.required_with' => 'Password confirmation required'
         ]);
 
         $user = $this->user->findOrFail($id);
@@ -132,6 +134,7 @@ class UserController extends Controller
             $password = $request->get('password');
             $user->password = bcrypt($password);
         }
+
         $user->save();
         return redirect('/users');
     }

@@ -9,7 +9,7 @@
                 <div class="col-md-6"></div>
                 <div class="col-md-6 faded">
                     <div class="action-buttons">
-                        <a href="/users/{{$user->id}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete user</a>
+                        <a href="/users/{{$user->id}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete User</a>
                     </div>
                 </div>
             </div>

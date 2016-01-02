@@ -62,9 +62,9 @@ class SearchController extends Controller
             return redirect()->back();
         }
         $searchTerm = $request->get('term');
-        $whereTerm = [['book_id', '=', $bookId]];
-        $pages = $this->pageRepo->getBySearch($searchTerm, $whereTerm);
-        $chapters = $this->chapterRepo->getBySearch($searchTerm, $whereTerm);
+        $searchWhereTerms = [['book_id', '=', $bookId]];
+        $pages = $this->pageRepo->getBySearch($searchTerm, $searchWhereTerms);
+        $chapters = $this->chapterRepo->getBySearch($searchTerm, $searchWhereTerms);
         return view('search/book', ['pages' => $pages, 'chapters' => $chapters, 'searchTerm' => $searchTerm]);
     }
 

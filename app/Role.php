@@ -43,6 +43,16 @@ class Role extends Model
      */
     public static function getDefault()
     {
-        return static::where('name', '=', static::$default)->first();
+        return static::getRole(static::$default);
+    }
+
+    /**
+     * Get the role object for the specified role.
+     * @param $roleName
+     * @return mixed
+     */
+    public static function getRole($roleName)
+    {
+        return static::where('name', '=', $roleName)->first();
     }
 }
