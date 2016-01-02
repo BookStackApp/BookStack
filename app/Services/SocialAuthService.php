@@ -129,7 +129,7 @@ class SocialAuthService
         // When a user is logged in, A social account exists but the users do not match.
         // Change the user that the social account is assigned to.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
-            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is already used buy another user.');
+            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is already used by another user.');
             return redirect($currentUser->getEditUrl());
         }
 
