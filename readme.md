@@ -23,6 +23,8 @@ BookStack has similar requirements to Laravel. On top of those are some front-en
 
 Ensure the requirements are met before installing.
 
+Currently BookStack requires its own domain/subdomain and will not work in a site subdirectory.
+
 This project currently uses the `release` branch of this repository as a stable channel for providing updates.
 
 The installation is currently somewhat complicated and will be made simpler in future releases. Some PHP/Laravel experience will currently benefit.
