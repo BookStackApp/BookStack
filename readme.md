@@ -82,7 +82,7 @@ BookStack is provided under the MIT License.
 These are the great projects used to help build BookStack:
 
 * [Laravel](http://laravel.com/)
-* [VueJS](http://vuejs.org/)
+* [AngularJS](https://angularjs.org/)
 * [jQuery](https://jquery.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [highlight.js](https://highlightjs.org/)

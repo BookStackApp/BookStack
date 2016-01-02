@@ -102,10 +102,10 @@ class AuthTest extends TestCase
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => true]);
     }
 
-    public function testUserControl()
+    public function testUserCreation()
     {
         $user = factory(\BookStack\User::class)->make();
-        // Test creation
+
         $this->asAdmin()
             ->visit('/users')
             ->click('Add new user')
@@ -118,9 +118,12 @@ class AuthTest extends TestCase
             ->seeInDatabase('users', $user->toArray())
             ->seePageIs('/users')
             ->see($user->name);
-        $user = $user->where('email', '=', $user->email)->first();
+    }
 
-        // Test editing
+    public function testUserUpdating()
+    {
+        $user = \BookStack\User::all()->last();
+        $password = $user->password;
         $this->asAdmin()
             ->visit('/users')
             ->click($user->name)
@@ -129,18 +132,56 @@ class AuthTest extends TestCase
             ->type('Barry Scott', '#name')
             ->press('Save')
             ->seePageIs('/users')
-            ->seeInDatabase('users', ['id' => $user->id, 'name' => 'Barry Scott'])
+            ->seeInDatabase('users', ['id' => $user->id, 'name' => 'Barry Scott', 'password' => $password])
             ->notSeeInDatabase('users', ['name' => $user->name]);
-        $user = $user->find($user->id);
+    }
 
-        // Test Deletion
+    public function testUserPasswordUpdate()
+    {
+        $user = \BookStack\User::all()->last();
+        $userProfilePage = '/users/' . $user->id;
+        $this->asAdmin()
+            ->visit($userProfilePage)
+            ->type('newpassword', '#password')
+            ->press('Save')
+            ->seePageIs($userProfilePage)
+            ->see('Password confirmation required')
+
+            ->type('newpassword', '#password')
+            ->type('newpassword', '#password-confirm')
+            ->press('Save')
+            ->seePageIs('/users');
+
+            $userPassword = \BookStack\User::find($user->id)->password;
+            $this->assertTrue(Hash::check('newpassword', $userPassword));
+    }
+
+    public function testUserDeletion()
+    {
+        $userDetails = factory(\BookStack\User::class)->make();
+        $user = $this->getNewUser($userDetails->toArray());
+
         $this->asAdmin()
             ->visit('/users/' . $user->id)
-            ->click('Delete user')
+            ->click('Delete User')
             ->see($user->name)
             ->press('Confirm')
             ->seePageIs('/users')
             ->notSeeInDatabase('users', ['name' => $user->name]);
+    }
+
+    public function testUserCannotBeDeletedIfLastAdmin()
+    {
+        $adminRole = \BookStack\Role::getRole('admin');
+        // Ensure we currently only have 1 admin user
+        $this->assertEquals(1, $adminRole->users()->count());
+        $user = $adminRole->users->first();
+
+        $this->asAdmin()->visit('/users/' . $user->id)
+            ->click('Delete User')
+            ->press('Confirm')
+            ->seePageIs('/users/' . $user->id)
+            ->see('You cannot delete the only admin');
     }
 
     public function testLogout()

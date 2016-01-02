@@ -31,11 +31,7 @@ abstract class Entity extends Model
 
         if ($matches) return true;
 
-        if ($entity->isA('chapter') && $this->isA('book')) {
-            return $entity->book_id === $this->id;
-        }
-
-        if ($entity->isA('page') && $this->isA('book')) {
+        if (($entity->isA('chapter') || $entity->isA('page')) && $this->isA('book')) {
             return $entity->book_id === $this->id;
         }
 
@@ -62,15 +58,6 @@ abstract class Entity extends Model
     public function views()
     {
         return $this->morphMany('BookStack\View', 'viewable');
-    }
-
-    /**
-     * Get just the views for the current user.
-     * @return mixed
-     */
-    public function userViews()
-    {
-        return $this->views()->where('user_id', '=', auth()->user()->id);
     }
 
     /**

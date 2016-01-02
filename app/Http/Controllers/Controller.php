@@ -43,12 +43,33 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Stops the application and shows a permission error if
+     * the application is in demo mode.
+     */
+    protected function preventAccessForDemoUsers()
+    {
+        if (env('APP_ENV', 'production') === 'demo') $this->showPermissionError();
+    }
+
+    /**
      * Adds the page title into the view.
      * @param $title
      */
     public function setPageTitle($title)
     {
         view()->share('pageTitle', $title);
+    }
+
+    /**
+     * On a permission error redirect to home and display
+     * the error as a notification.
+     */
+    protected function showPermissionError()
+    {
+        Session::flash('error', trans('errors.permission'));
+        throw new HttpResponseException(
+            redirect('/')
+        );
     }
 
     /**
@@ -60,15 +81,18 @@ abstract class Controller extends BaseController
     protected function checkPermission($permissionName)
     {
         if (!$this->currentUser || !$this->currentUser->can($permissionName)) {
-            Session::flash('error', trans('errors.permission'));
-            throw new HttpResponseException(
-                redirect('/')
-            );
+            $this->showPermissionError();
         }
 
         return true;
     }
 
+    /**
+     * Check if a user has a permission or bypass if the callback is true.
+     * @param $permissionName
+     * @param $callback
+     * @return bool
+     */
     protected function checkPermissionOr($permissionName, $callback)
     {
         $callbackResult = $callback();

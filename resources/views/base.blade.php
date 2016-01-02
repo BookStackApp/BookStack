@@ -43,14 +43,14 @@
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
-                            @if($currentUser->can('settings-update'))
+                            @if(isset($currentUser) && $currentUser->can('settings-update'))
                                 <a href="/settings"><i class="zmdi zmdi-settings"></i>Settings</a>
                             @endif
-                            @if(!$signedIn)
+                            @if(!isset($signedIn) || !$signedIn)
                                 <a href="/login"><i class="zmdi zmdi-sign-in"></i>Sign In</a>
                             @endif
                         </div>
-                        @if($signedIn)
+                        @if(isset($signedIn) && $signedIn)
                             <div class="dropdown-container" dropdown>
                                 <span class="user-name" dropdown-toggle>
                                     <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">

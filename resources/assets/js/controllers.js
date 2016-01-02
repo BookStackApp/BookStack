@@ -127,7 +127,7 @@ module.exports = function (ngApp) {
         }]);
 
 
-    ngApp.controller('BookShowController', ['$scope', '$http', '$attrs', function ($scope, $http, $attrs) {
+    ngApp.controller('BookShowController', ['$scope', '$http', '$attrs', '$sce', function ($scope, $http, $attrs, $sce) {
         $scope.searching = false;
         $scope.searchTerm = '';
         $scope.searchResults = '';
@@ -141,7 +141,7 @@ module.exports = function (ngApp) {
             var searchUrl = '/search/book/' + $attrs.bookId;
             searchUrl += '?term=' + encodeURIComponent(term);
             $http.get(searchUrl).then((response) => {
-                $scope.searchResults = response.data;
+                $scope.searchResults = $sce.trustAsHtml(response.data);
             });
         };
 
