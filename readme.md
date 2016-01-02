@@ -38,7 +38,7 @@ git clone https://github.com/ssddanbrown/BookStack.git --branch release --single
 4. Ensure the `storage` & `bootstrap/cache` folders are writable by the web server.
 5. In the application root, Run `php artisan key:generate` to generate a unique application key.
 6. If not using apache or if `.htaccess` files are disabled you will have to create some URL rewrite rules as shown below.
-7. Run `php migrate` to update the database.
+7. Run `php artisan migrate` to update the database.
 8. Done! You can now login using the default admin details `admin@admin.com` with a password of `password`. It is recommended to change these details directly after first logging in.
 
 #### URL Rewrite rules
