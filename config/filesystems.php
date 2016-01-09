@@ -15,7 +15,18 @@ return [
     |
     */
 
-    'default' => 'local',
+    'default' => env('STORAGE_TYPE', 'local'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Storage URL
+    |--------------------------------------------------------------------------
+    |
+    | This is the url to where the storage is located for when using an external
+    | file storage service, such as s3, to store publicly accessible assets.
+    |
+    */
+    'url' => env('STORAGE_URL', false),
 
     /*
     |--------------------------------------------------------------------------

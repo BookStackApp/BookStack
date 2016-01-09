@@ -29,7 +29,6 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $loginPath = '/login';
     protected $redirectPath = '/';
     protected $redirectAfterLogout = '/login';
 
@@ -232,13 +231,9 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
-
-        if (view()->exists('auth.authenticate')) {
-            return view('auth.authenticate');
-        }
-
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        return view('auth.login', ['socialDrivers' => $socialDrivers]);
+        $authMethod = 'standard'; // TODO - rewrite to use config.
+        return view('auth/login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
     }
 
     /**
@@ -253,7 +248,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Redirect to the social site for authentication initended to register.
+     * Redirect to the social site for authentication intended to register.
      * @param $socialDriver
      * @return mixed
      */

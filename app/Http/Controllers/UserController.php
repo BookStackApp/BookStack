@@ -72,7 +72,7 @@ class UserController extends Controller
         $user->attachRoleId($request->get('role'));
 
         // Get avatar from gravatar and save
-        if (!env('DISABLE_EXTERNAL_SERVICES', false)) {
+        if (!config('services.disable_services')) {
             $avatar = \Images::saveUserGravatar($user);
             $user->avatar()->associate($avatar);
             $user->save();

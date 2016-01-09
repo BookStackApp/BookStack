@@ -48,7 +48,7 @@ abstract class Controller extends BaseController
      */
     protected function preventAccessForDemoUsers()
     {
-        if (env('APP_ENV', 'production') === 'demo') $this->showPermissionError();
+        if (config('app.env') === 'demo') $this->showPermissionError();
     }
 
     /**

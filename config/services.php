@@ -13,6 +13,8 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
+    'disable_services' => env('DISABLE_EXTERNAL_SERVICES', false),
+    'callback_url' => env('APP_URL', false),
 
     'mailgun'  => [
         'domain' => '',
@@ -46,5 +48,13 @@ return [
         'client_secret' => env('GOOGLE_APP_SECRET', false),
         'redirect'      => env('APP_URL') . '/login/service/google/callback',
     ],
+
+    'ldap' => [
+        'server' => env('LDAP_SERVER', false),
+        'dn' => env('LDAP_DN', false),
+        'pass' => env('LDAP_PASS', false),
+        'base_dn' => env('LDAP_BASE_DN', false),
+        'user_filter' => env('LDAP_USER_FILTER', '(&(uid=${user}))')
+    ]
 
 ];

@@ -15,16 +15,8 @@
             <form action="/login" method="POST" id="login-form">
                 {!! csrf_field() !!}
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    @include('form/text', ['name' => 'email', 'tabindex' => 1])
-                </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    @include('form/password', ['name' => 'password', 'tabindex' => 2])
-                    <span class="block small"><a href="/password/email">Forgot Password?</a></span>
-                </div>
+                @include('auth/forms/login/' . $authMethod)
 
                 <div class="form-group">
                     <label for="remember" class="inline">Remember Me</label>
@@ -34,7 +26,7 @@
 
 
                 <div class="from-group">
-                    <button class="button block pos" tabindex="3">Sign In</button>
+                    <button class="button block pos" tabindex="3"><i class="zmdi zmdi-sign-in"></i> Sign In</button>
                 </div>
             </form>
 
