@@ -3,6 +3,8 @@
 namespace BookStack\Providers;
 
 
+use BookStack\Role;
+use BookStack\Services\LdapService;
 use BookStack\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
@@ -17,14 +19,21 @@ class LdapUserProvider implements UserProvider
      */
     protected $model;
 
+    /**
+     * @var LdapService
+     */
+    protected $ldapService;
+
 
     /**
      * LdapUserProvider constructor.
-     * @param $model
+     * @param             $model
+     * @param LdapService $ldapService
      */
-    public function __construct($model)
+    public function __construct($model, LdapService $ldapService)
     {
         $this->model = $model;
+        $this->ldapService = $ldapService;
     }
 
     /**
@@ -34,8 +43,7 @@ class LdapUserProvider implements UserProvider
      */
     public function createModel()
     {
-        $class = '\\'.ltrim($this->model, '\\');
-
+        $class = '\\' . ltrim($this->model, '\\');
         return new $class;
     }
 
@@ -55,7 +63,7 @@ class LdapUserProvider implements UserProvider
      * Retrieve a user by their unique identifier and "remember me" token.
      *
      * @param  mixed  $identifier
-     * @param  string  $token
+     * @param  string $token
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByToken($identifier, $token)
@@ -91,16 +99,21 @@ class LdapUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials)
     {
-        // TODO: Implement retrieveByCredentials() method.
-
         // Get user via LDAP
+        $userDetails = $this->ldapService->getUserDetails($credentials['username']);
+        if ($userDetails === null) return null;
 
         // Search current user base by looking up a uid
+        $model = $this->createModel();
+        $currentUser = $model->newQuery()
+            ->where('external_auth_id', $userDetails['uid'])
+            ->first();
 
-        // If not exists create a new user instance with attached role
-        // but do not store it in the database yet
+        if ($currentUser !== null) return $currentUser;
 
-        //
+        $model->name = $userDetails['name'];
+        $model->external_auth_id = $userDetails['uid'];
+        return $model;
     }
 
     /**
@@ -112,6 +125,6 @@ class LdapUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        // TODO: Implement validateCredentials() method.
+        return $this->ldapService->validateUserCredentials($user, $credentials['username'], $credentials['password']);
     }
 }

@@ -3,6 +3,7 @@
 
 use BookStack\Role;
 use BookStack\User;
+use Setting;
 
 class UserRepo
 {
@@ -56,7 +57,7 @@ class UserRepo
      */
     public function attachDefaultRole($user)
     {
-        $roleId = \Setting::get('registration-role');
+        $roleId = Setting::get('registration-role');
         if ($roleId === false) $roleId = $this->role->getDefault()->id;
         $user->attachRoleId($roleId);
     }

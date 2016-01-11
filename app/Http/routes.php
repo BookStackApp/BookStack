@@ -3,7 +3,7 @@
 Route::get('/test', function() {
     // TODO - remove this
     $service = new \BookStack\Services\LdapService();
-    $service->getUserDetails('ssmith');
+    dd($service->getUserDetails('ksmith'));
 });
 
 // Authenticated routes...

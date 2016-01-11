@@ -1,6 +1,6 @@
 <div class="form-group">
-    <label for="email">Username</label>
-    @include('form/text', ['name' => 'email', 'tabindex' => 1])
+    <label for="username">Username</label>
+    @include('form/text', ['name' => 'username', 'tabindex' => 1])
 </div>
 
 <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
@@ -31,6 +32,8 @@ class AuthController extends Controller
 
     protected $redirectPath = '/';
     protected $redirectAfterLogout = '/login';
+    protected $username = 'email';
+
 
     protected $socialAuthService;
     protected $emailConfirmationService;
@@ -48,6 +51,7 @@ class AuthController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
+        $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
     }
 
@@ -102,6 +106,24 @@ class AuthController extends Controller
 
         $userData = $request->all();
         return $this->registerUser($userData);
+    }
+
+
+    /**
+     * Overrides the action when a user is authenticated.
+     * If the user authenticated but does not exist in the user table we create them.
+     * @param Request         $request
+     * @param Authenticatable $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function authenticated(Request $request, Authenticatable $user)
+    {
+        if(!$user->exists) {
+            $user->save();
+            $this->userRepo->attachDefaultRole($user);
+            auth()->login($user);
+        }
+        return redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -232,7 +254,7 @@ class AuthController extends Controller
     public function getLogin()
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $authMethod = 'standard'; // TODO - rewrite to use config.
+        $authMethod = config('auth.method');
         return view('auth/login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
     }
 

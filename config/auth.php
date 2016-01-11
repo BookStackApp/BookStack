@@ -70,7 +70,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => env('AUTH_METHOD', 'eloquent'),
-            'model' => Bookstack\User::class,
+            'model' => BookStack\User::class,
         ],
 
         // 'users' => [
