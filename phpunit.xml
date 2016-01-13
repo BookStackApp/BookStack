@@ -26,6 +26,7 @@
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_CONNECTION" value="mysql_testing"/>
         <env name="MAIL_PRETEND" value="true"/>
+        <env name="AUTH_METHOD" value="standard"/>
         <env name="DISABLE_EXTERNAL_SERVICES" value="false"/>
     </php>
 </phpunit>

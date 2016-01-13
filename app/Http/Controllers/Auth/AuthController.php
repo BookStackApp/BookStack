@@ -118,11 +118,22 @@ class AuthController extends Controller
      */
     protected function authenticated(Request $request, Authenticatable $user)
     {
+        if(!$user->exists && $user->email === null && !$request->has('email')) {
+            $request->flash();
+            session()->flash('request-email', true);
+            return redirect('/login');
+        }
+
+        if(!$user->exists && $user->email === null && $request->has('email')) {
+            $user->email = $request->get('email');
+        }
+
         if(!$user->exists) {
             $user->save();
             $this->userRepo->attachDefaultRole($user);
             auth()->login($user);
         }
+
         return redirect()->intended($this->redirectPath());
     }
 
@@ -183,7 +194,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Show the page to tell the user to check thier email
+     * Show the page to tell the user to check their email
      * and confirm their address.
      */
     public function getRegisterConfirmation()
@@ -243,7 +254,7 @@ class AuthController extends Controller
         ]);
         $user = $this->userRepo->getByEmail($request->get('email'));
         $this->emailConfirmationService->sendConfirmation($user);
-        \Session::flash('success', 'Confirmation email resent, Please check your inbox.');
+        session()->flash('success', 'Confirmation email resent, Please check your inbox.');
         return redirect('/register/confirm');
     }
 

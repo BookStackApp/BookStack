@@ -25,7 +25,7 @@
                 <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="put">
-                @include('users/form', ['model' => $user])
+                @include('users.forms.' . $authMethod, ['model' => $user])
 
             </div>
             <div class="col-md-6">

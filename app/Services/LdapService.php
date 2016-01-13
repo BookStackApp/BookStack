@@ -23,7 +23,7 @@ class LdapService
         // Find user
         $userFilter = $this->buildFilter(config('services.ldap.user_filter'), ['user' => $userName]);
         $baseDn = config('services.ldap.base_dn');
-        $ldapSearch = ldap_search($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn']);
+        $ldapSearch = ldap_search($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', 'mail']);
         $users = ldap_get_entries($ldapConnection, $ldapSearch);
         if ($users['count'] === 0) return null;
 
@@ -31,7 +31,8 @@ class LdapService
         return [
             'uid'  => $user['uid'][0],
             'name' => $user['cn'][0],
-            'dn'   => $user['dn']
+            'dn'   => $user['dn'],
+            'email' => (isset($user['mail'])) ? $user['mail'][0] : null
         ];
     }
 

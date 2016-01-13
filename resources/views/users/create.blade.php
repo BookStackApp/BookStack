@@ -8,7 +8,7 @@
 
         <form action="/users/create" method="post">
             {!! csrf_field() !!}
-            @include('users/form')
+            @include('users.forms.' . $authMethod)
         </form>
     </div>
 

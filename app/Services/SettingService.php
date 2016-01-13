@@ -38,7 +38,7 @@ class SettingService
      */
     public function get($key, $default = false)
     {
-        $value =  $this->getValueFromStore($key, $default);
+        $value = $this->getValueFromStore($key, $default);
         return $this->formatValue($value, $default);
     }
 
@@ -50,13 +50,17 @@ class SettingService
      */
     protected function getValueFromStore($key, $default)
     {
+        $overrideValue = $this->getOverrideValue($key);
+        if ($overrideValue !== null) return $overrideValue;
+
         $cacheKey = $this->cachePrefix . $key;
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
 
         $settingObject = $this->getSettingObjectByKey($key);
-        if($settingObject !== null) {
+
+        if ($settingObject !== null) {
             $value = $settingObject->value;
             $this->cache->forever($cacheKey, $value);
             return $value;
@@ -65,6 +69,10 @@ class SettingService
         return $default;
     }
 
+    /**
+     * Clear an item from the cache completely.
+     * @param $key
+     */
     protected function clearFromCache($key)
     {
         $cacheKey = $this->cachePrefix . $key;
@@ -136,9 +144,23 @@ class SettingService
      * @param $key
      * @return mixed
      */
-    private function getSettingObjectByKey($key)
+    protected function getSettingObjectByKey($key)
     {
         return $this->setting->where('setting_key', '=', $key)->first();
+    }
+
+
+    /**
+     * Returns an override value for a setting based on certain app conditions.
+     * Used where certain configuration options overrule others.
+     * Returns null if no override value is available.
+     * @param $key
+     * @return bool|null
+     */
+    protected function getOverrideValue($key)
+    {
+        if ($key === 'registration-enabled' && config('auth.method') === 'ldap') return false;
+        return null;
     }
 
 }

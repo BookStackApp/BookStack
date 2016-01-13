@@ -88,7 +88,7 @@ class UserRepo
      */
     public function create(array $data)
     {
-        return $this->user->create([
+        return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password'])

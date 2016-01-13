@@ -46,7 +46,8 @@ class UserController extends Controller
     public function create()
     {
         $this->checkPermission('user-create');
-        return view('users/create');
+        $authMethod = config('auth.method');
+        return view('users/create', ['authMethod' => $authMethod]);
     }
 
     /**
@@ -94,10 +95,12 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
+        $authMethod = config('auth.method');
+
         $user = $this->user->findOrFail($id);
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle('User Profile');
-        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers]);
+        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod]);
     }
 
     /**
@@ -124,15 +127,22 @@ class UserController extends Controller
         ]);
 
         $user = $this->user->findOrFail($id);
-        $user->fill($request->except('password'));
+        $user->fill($request->all());
 
+        // Role updates
         if ($this->currentUser->can('user-update') && $request->has('role')) {
             $user->attachRoleId($request->get('role'));
         }
 
+        // Password updates
         if ($request->has('password') && $request->get('password') != '') {
             $password = $request->get('password');
             $user->password = bcrypt($password);
+        }
+
+        // External auth id updates
+        if ($this->currentUser->can('user-update') && $request->has('external_auth_id')) {
+            $user->external_auth_id = $request->get('external_auth_id');
         }
 
         $user->save();
