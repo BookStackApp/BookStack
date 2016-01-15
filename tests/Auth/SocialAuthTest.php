@@ -3,13 +3,13 @@
 class SocialAuthTest extends TestCase
 {
 
-    public function testSocialRegistration()
+    public function test_social_registration()
     {
         // http://docs.mockery.io/en/latest/reference/startup_methods.html
         $user = factory(\BookStack\User::class)->make();
 
         $this->setSettings(['registration-enabled' => 'true']);
-        $this->setEnvironment(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
+        config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
 
         $mockSocialite = Mockery::mock('Laravel\Socialite\Contracts\Factory');
         $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
@@ -30,13 +30,6 @@ class SocialAuthTest extends TestCase
         $this->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email]);
         $user = $user->whereEmail($user->email)->first();
         $this->seeInDatabase('social_accounts', ['user_id' => $user->id]);
-    }
-
-    protected function setEnvironment($array)
-    {
-        foreach ($array as $key => $value) {
-            putenv("$key=$value");
-        }
     }
 
 }

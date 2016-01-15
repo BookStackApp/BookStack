@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class ActivityTrackingTest extends TestCase
 {
 
-    public function testRecentlyViewedBooks()
+    public function test_recently_viewed_books()
     {
         $books = \BookStack\Book::all()->take(10);
 
@@ -21,7 +21,7 @@ class ActivityTrackingTest extends TestCase
             ->seeInElement('#recents', $books[1]->name);
     }
 
-    public function testPopularBooks()
+    public function test_popular_books()
     {
         $books = \BookStack\Book::all()->take(10);
 

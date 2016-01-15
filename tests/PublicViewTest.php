@@ -3,7 +3,7 @@
 class PublicViewTest extends TestCase
 {
 
-    public function testBooksViewable()
+    public function test_books_viewable()
     {
         $this->setSettings(['app-public' => 'true']);
         $books = \BookStack\Book::orderBy('name', 'asc')->take(10)->get();
@@ -13,14 +13,14 @@ class PublicViewTest extends TestCase
         $this->visit('/books')
             ->seeStatusCode(200)
             ->see($books[0]->name)
-            // Check indavidual book page is showing and it's child contents are visible.
+            // Check individual book page is showing and it's child contents are visible.
             ->click($bookToVisit->name)
             ->seePageIs($bookToVisit->getUrl())
             ->see($bookToVisit->name)
             ->see($bookToVisit->chapters()->first()->name);
     }
 
-    public function testChaptersViewable()
+    public function test_chapters_viewable()
     {
         $this->setSettings(['app-public' => 'true']);
         $chapterToVisit = \BookStack\Chapter::first();
@@ -30,7 +30,7 @@ class PublicViewTest extends TestCase
         $this->visit($chapterToVisit->getUrl())
             ->seeStatusCode(200)
             ->see($chapterToVisit->name)
-            // Check indavidual chapter page is showing and it's child contents are visible.
+            // Check individual chapter page is showing and it's child contents are visible.
             ->see($pageToVisit->name)
             ->click($pageToVisit->name)
             ->see($chapterToVisit->book->name)

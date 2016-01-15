@@ -118,17 +118,20 @@ class AuthController extends Controller
      */
     protected function authenticated(Request $request, Authenticatable $user)
     {
-        if(!$user->exists && $user->email === null && !$request->has('email')) {
+        // Explicitly log them out for now if they do no exist.
+        if (!$user->exists) auth()->logout($user);
+
+        if (!$user->exists && $user->email === null && !$request->has('email')) {
             $request->flash();
             session()->flash('request-email', true);
             return redirect('/login');
         }
 
-        if(!$user->exists && $user->email === null && $request->has('email')) {
+        if (!$user->exists && $user->email === null && $request->has('email')) {
             $user->email = $request->get('email');
         }
 
-        if(!$user->exists) {
+        if (!$user->exists) {
             $user->save();
             $this->userRepo->attachDefaultRole($user);
             auth()->login($user);

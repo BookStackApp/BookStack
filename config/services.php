@@ -54,7 +54,8 @@ return [
         'dn' => env('LDAP_DN', false),
         'pass' => env('LDAP_PASS', false),
         'base_dn' => env('LDAP_BASE_DN', false),
-        'user_filter' => env('LDAP_USER_FILTER', '(&(uid=${user}))')
+        'user_filter' => env('LDAP_USER_FILTER', '(&(uid=${user}))'),
+        'version' => env('LDAP_VERSION', false)
     ]
 
 ];

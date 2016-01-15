@@ -4,10 +4,27 @@
 use BookStack\Exceptions\LdapException;
 use Illuminate\Contracts\Auth\Authenticatable;
 
+/**
+ * Class LdapService
+ * Handles any app-specific LDAP tasks.
+ * @package BookStack\Services
+ */
 class LdapService
 {
 
+    protected $ldap;
     protected $ldapConnection;
+    protected $config;
+
+    /**
+     * LdapService constructor.
+     * @param Ldap $ldap
+     */
+    public function __construct(Ldap $ldap)
+    {
+        $this->ldap = $ldap;
+        $this->config = config('services.ldap');
+    }
 
     /**
      * Get the details of a user from LDAP using the given username.
@@ -21,17 +38,16 @@ class LdapService
         $ldapConnection = $this->getConnection();
 
         // Find user
-        $userFilter = $this->buildFilter(config('services.ldap.user_filter'), ['user' => $userName]);
-        $baseDn = config('services.ldap.base_dn');
-        $ldapSearch = ldap_search($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', 'mail']);
-        $users = ldap_get_entries($ldapConnection, $ldapSearch);
+        $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
+        $baseDn = $this->config['base_dn'];
+        $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', 'mail']);
         if ($users['count'] === 0) return null;
 
         $user = $users[0];
         return [
-            'uid'  => $user['uid'][0],
-            'name' => $user['cn'][0],
-            'dn'   => $user['dn'],
+            'uid'   => $user['uid'][0],
+            'name'  => $user['cn'][0],
+            'dn'    => $user['dn'],
             'email' => (isset($user['mail'])) ? $user['mail'][0] : null
         ];
     }
@@ -50,7 +66,12 @@ class LdapService
         if ($ldapUser['uid'] !== $user->external_auth_id) return false;
 
         $ldapConnection = $this->getConnection();
-        $ldapBind = @ldap_bind($ldapConnection, $ldapUser['dn'], $password);
+        try {
+            $ldapBind = $this->ldap->bind($ldapConnection, $ldapUser['dn'], $password);
+        } catch (\ErrorException $e) {
+            $ldapBind = false;
+        }
+
         return $ldapBind;
     }
 
@@ -62,14 +83,14 @@ class LdapService
      */
     protected function bindSystemUser($connection)
     {
-        $ldapDn = config('services.ldap.dn');
-        $ldapPass = config('services.ldap.pass');
+        $ldapDn = $this->config['dn'];
+        $ldapPass = $this->config['pass'];
 
         $isAnonymous = ($ldapDn === false || $ldapPass === false);
         if ($isAnonymous) {
-            $ldapBind = ldap_bind($connection);
+            $ldapBind = $this->ldap->bind($connection);
         } else {
-            $ldapBind = ldap_bind($connection, $ldapDn, $ldapPass);
+            $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
         }
 
         if (!$ldapBind) throw new LdapException('LDAP access failed using ' . $isAnonymous ? ' anonymous bind.' : ' given dn & pass details');
@@ -86,20 +107,22 @@ class LdapService
         if ($this->ldapConnection !== null) return $this->ldapConnection;
 
         // Check LDAP extension in installed
-        if (!function_exists('ldap_connect')) {
+        if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
             throw new LdapException('LDAP PHP extension not installed');
         }
 
         // Get port from server string if specified.
-        $ldapServer = explode(':', config('services.ldap.server'));
-        $ldapConnection = ldap_connect($ldapServer[0], count($ldapServer) > 1 ? $ldapServer[1] : 389);
+        $ldapServer = explode(':', $this->config['server']);
+        $ldapConnection = $this->ldap->connect($ldapServer[0], count($ldapServer) > 1 ? $ldapServer[1] : 389);
 
         if ($ldapConnection === false) {
             throw new LdapException('Cannot connect to ldap server, Initial connection failed');
         }
 
         // Set any required options
-        ldap_set_option($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, 3); // TODO - make configurable
+        if ($this->config['version']) {
+            $this->ldap->setOption($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, $this->config['version']);
+        }
 
         $this->ldapConnection = $ldapConnection;
         return $this->ldapConnection;
@@ -107,7 +130,7 @@ class LdapService
 
     /**
      * Build a filter string by injecting common variables.
-     * @param       $filterString
+     * @param string $filterString
      * @param array $attrs
      * @return string
      */

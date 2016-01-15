@@ -1,11 +1,5 @@
 <?php
 
-Route::get('/test', function() {
-    // TODO - remove this
-    $service = new \BookStack\Services\LdapService();
-    dd($service->getUserDetails('ksmith'));
-});
-
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
 

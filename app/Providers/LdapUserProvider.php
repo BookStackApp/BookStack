@@ -86,8 +86,10 @@ class LdapUserProvider implements UserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        $user->setRememberToken($token);
-        $user->save();
+        if ($user->exists) {
+            $user->setRememberToken($token);
+            $user->save();
+        }
     }
 
     /**
@@ -113,6 +115,7 @@ class LdapUserProvider implements UserProvider
         $model->name = $userDetails['name'];
         $model->external_auth_id = $userDetails['uid'];
         $model->email = $userDetails['email'];
+        $model->email_confirmed = true;
         return $model;
     }
 
