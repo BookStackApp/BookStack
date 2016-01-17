@@ -58,18 +58,31 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->checkPermission('user-create');
-        $this->validate($request, [
+        $validationRules = [
             'name'             => 'required',
             'email'            => 'required|email|unique:users,email',
-            'password'         => 'required|min:5',
-            'password-confirm' => 'required|same:password',
             'role'             => 'required|exists:roles,id'
-        ]);
+        ];
+
+        $authMethod = config('auth.method');
+        if ($authMethod === 'standard') {
+            $validationRules['password'] = 'required|min:5';
+            $validationRules['password-confirm'] = 'required|same:password';
+        } elseif ($authMethod === 'ldap') {
+            $validationRules['external_auth_id'] = 'required';
+        }
+        $this->validate($request, $validationRules);
+
 
         $user = $this->user->fill($request->all());
-        $user->password = bcrypt($request->get('password'));
-        $user->save();
 
+        if ($authMethod === 'standard') {
+            $user->password = bcrypt($request->get('password'));
+        } elseif ($authMethod === 'ldap') {
+            $user->external_auth_id = $request->get('external_auth_id');
+        }
+
+        $user->save();
         $user->attachRoleId($request->get('role'));
 
         // Get avatar from gravatar and save

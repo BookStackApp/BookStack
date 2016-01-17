@@ -48,6 +48,14 @@ class UserRepo
     {
         $user = $this->create($data);
         $this->attachDefaultRole($user);
+
+        // Get avatar from gravatar and save
+        if (!config('services.disable_services')) {
+            $avatar = \Images::saveUserGravatar($user);
+            $user->avatar()->associate($avatar);
+            $user->save();
+        }
+
         return $user;
     }
 

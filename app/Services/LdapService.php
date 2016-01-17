@@ -36,6 +36,7 @@ class LdapService
     public function getUserDetails($userName)
     {
         $ldapConnection = $this->getConnection();
+        $this->bindSystemUser($ldapConnection);
 
         // Find user
         $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
@@ -93,7 +94,7 @@ class LdapService
             $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
         }
 
-        if (!$ldapBind) throw new LdapException('LDAP access failed using ' . $isAnonymous ? ' anonymous bind.' : ' given dn & pass details');
+        if (!$ldapBind) throw new LdapException('LDAP access failed using ' . ($isAnonymous ? ' anonymous bind.' : ' given dn & pass details'));
     }
 
     /**

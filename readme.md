@@ -2,12 +2,24 @@
 
 A platform to create documentation/wiki content. General information about BookStack can be found at https://www.bookstackapp.com/
 
+1. [Requirements](#requirements)
+2. [Installation](#installation)
+  - [Server Rewrite Rules](#url-rewrite-rules)
+3. [Updating](#updating-bookstack)
+4. [Social Authentication](#social-authentication)
+ - [Google](#google)
+ - [GitHub](#github)
+5. [LDAP Authentication](#ldap-authentication)
+6. [Testing](#testing)
+7. [License](#license)
+8. [Attribution](#attribution)
+
 
 ## Requirements
 
 BookStack has similar requirements to Laravel. On top of those are some front-end build tools which are only required when developing.
 
-* PHP >= 5.5.9
+* PHP >= 5.5.9, Will need to be usable from the command line.
 * OpenSSL PHP Extension
 * PDO PHP Extension
 * MBstring PHP Extension
@@ -21,9 +33,7 @@ BookStack has similar requirements to Laravel. On top of those are some front-en
 
 ## Installation
 
-Ensure the requirements are met before installing.
-
-Currently BookStack requires its own domain/subdomain and will not work in a site subdirectory.
+Ensure the above requirements are met before installing. Currently BookStack requires its own domain/subdomain and will not work in a site subdirectory.
 
 This project currently uses the `release` branch of this repository as a stable channel for providing updates.
 
@@ -67,11 +77,11 @@ To update BookStack you can run the following command in the root directory of t
 ```
 git pull origin release && composer install && php artisan migrate
 ```
-This command will update the repository that was created in the installation, install the PHP dependencies using `composer` then run the database migrations. 
+This command will update the repository that was created in the installation, install the PHP dependencies using `composer` then run the database migrations.
 
 ## Social Authentication
 
-BookStack currently supports login via both Google and Github. Once enabled options for these services will show up in the login, registration and user profile pages. By default these services are disabled. To enable them you will have to create an application on the external services to obtain the require application id's and secrets. Here are instructions to do this for the current supported services:
+BookStack currently supports login via both Google and GitHub. Once enabled options for these services will show up in the login, registration and user profile pages. By default these services are disabled. To enable them you will have to create an application on the external services to obtain the require application id's and secrets. Here are instructions to do this for the current supported services:
 
 ### Google
 
@@ -96,6 +106,43 @@ BookStack currently supports login via both Google and Github. Once enabled opti
 4. A 'Client ID' and a 'Client Secret' value will be shown. Add these two values to the to the `GITHUB_APP_ID` and `GITHUB_APP_SECRET` variables, replacing the default false value, in the '.env' file found in the BookStack root folder.
 5. Set the 'APP_URL' environment variable to be the same domain as you entered in step 3.
 6. All done! Users should now be able to link to their social accounts in their account profile pages and also register/login using their Github account.
+
+## LDAP Authentication
+
+BookStack can be configured to allow LDAP based user login. While LDAP login is enabled you cannot log in with the standard user/password login and new user registration is disabled. BookStack will only use the LDAP server for getting user details and for authentication. Data on the LDAP server is not currently editable through BookStack.
+
+When a LDAP user logs into BookStack for the first time their BookStack profile will be created and they will be given the default role set under the 'Default user role after registration' option in the application settings.    
+
+To set up LDAP-based authentication add or modify the following variables in your `.env` file:
+
+```
+# General auth
+AUTH_METHOD=ldap
+
+# The LDAP host, Adding a port is optional
+LDAP_SERVER=ldap://example.com:389
+
+# The base DN from where users will be searched within.
+LDAP_BASE_DN=ou=People,dc=example,dc=com
+
+# The full DN and password of the user used to search the server
+# Can both be left as false to bind anonymously
+LDAP_DN=false
+LDAP_PASS=false
+
+# A filter to use when searching for users
+# The user-provided user-name used to replace any occurrences of '${user}'
+LDAP_USER_FILTER=(&(uid=${user}))
+
+# Set the LDAP version to use when connecting to the server.
+LDAP_VERSION=false
+```
+
+You will also need to have the php-ldap extension installed on your system. It's recommended to change your `APP_DEBUG` variable to `true` while setting up LDAP to make any errors visible. Remember to change this back after LDAP is functioning.
+
+A user in BookStack will be linked to a LDAP user via a 'uid'. If a LDAP user uid changes it can be updated in BookStack by an admin by changing the 'External Authentication ID' field on the user's profile.
+
+You may find that you cannot log in with your initial Admin account after changing the `AUTH_METHOD` to `ldap`. To get around this set the `AUTH_METHOD` to `standard`, login with your admin account then change it back to `ldap`. You get then edit your profile and add your LDAP uid under the 'External Authentication ID' field. You will then be able to login in with that ID.
 
 ## Testing
 

@@ -1,5 +1,6 @@
 <?php namespace BookStack\Services;
 
+use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
 use BookStack\User;
 use Intervention\Image\ImageManager;
@@ -71,6 +72,7 @@ class ImageService
      * @param string $imageData
      * @param string $type
      * @return Image
+     * @throws ImageUploadException
      */
     private function saveNew($imageName, $imageData, $type)
     {
@@ -86,17 +88,24 @@ class ImageService
         }
         $fullPath = $imagePath . $imageName;
 
+        if(!is_writable(dirname(public_path($fullPath)))) throw new ImageUploadException('Image Directory ' . public_path($fullPath) . ' is not writable by the server.');
+
         $storage->put($fullPath, $imageData);
 
-        $userId = auth()->user()->id;
-        $image = Image::forceCreate([
+        $imageDetails = [
             'name'       => $imageName,
             'path'       => $fullPath,
             'url'        => $this->getPublicUrl($fullPath),
-            'type'       => $type,
-            'created_by' => $userId,
-            'updated_by' => $userId
-        ]);
+            'type'       => $type
+        ];
+
+        if (auth()->user() && auth()->user()->id !== 0) {
+            $userId = auth()->user()->id;
+            $imageDetails['created_by'] = $userId;
+            $imageDetails['updated_by'] = $userId;
+        }
+
+        $image = Image::forceCreate($imageDetails);
 
         return $image;
     }
@@ -188,6 +197,7 @@ class ImageService
         $imageName = str_replace(' ', '-', $user->name . '-gravatar.png');
         $image = $this->saveNewFromUrl($url, 'user', $imageName);
         $image->created_by = $user->id;
+        $image->updated_by = $user->id;
         $image->save();
         return $image;
     }
