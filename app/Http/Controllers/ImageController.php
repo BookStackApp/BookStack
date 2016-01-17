@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Exceptions\ImageUploadException;
 use BookStack\Repos\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
@@ -69,7 +70,13 @@ class ImageController extends Controller
         ]);
 
         $imageUpload = $request->file('file');
-        $image = $this->imageRepo->saveNew($imageUpload, $type);
+
+        try {
+            $image = $this->imageRepo->saveNew($imageUpload, $type);
+        } catch (ImageUploadException $e) {
+            return response($e->getMessage(), 500);
+        }
+
         return response()->json($image);
     }
 
