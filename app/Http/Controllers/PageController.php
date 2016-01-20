@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -18,18 +19,21 @@ class PageController extends Controller
     protected $pageRepo;
     protected $bookRepo;
     protected $chapterRepo;
+    protected $exportService;
 
     /**
      * PageController constructor.
-     * @param PageRepo    $pageRepo
-     * @param BookRepo    $bookRepo
-     * @param ChapterRepo $chapterRepo
+     * @param PageRepo      $pageRepo
+     * @param BookRepo      $bookRepo
+     * @param ChapterRepo   $chapterRepo
+     * @param ExportService $exportService
      */
-    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo)
+    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo, ExportService $exportService)
     {
         $this->pageRepo = $pageRepo;
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->exportService = $exportService;
         parent::__construct();
     }
 
@@ -220,5 +224,31 @@ class PageController extends Controller
         $page = $this->pageRepo->restoreRevision($page, $book, $revisionId);
         Activity::add($page, 'page_restore', $book->id);
         return redirect($page->getUrl());
+    }
+
+    public function exportPdf($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $cssContent = file_get_contents(public_path('/css/styles.css'));
+
+        return $pdf->download($pageSlug . '.pdf');
+    }
+
+    /**
+     * Export a page to a self-contained HTML file.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportHtml($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $containedHtml = $this->exportService->pageToContainedHtml($page);
+        return response()->make($containedHtml, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.html'
+        ]);
     }
 }

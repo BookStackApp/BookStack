@@ -18,17 +18,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/sort', 'BookController@sort');
         Route::put('/{bookSlug}/sort', 'BookController@saveSort');
 
-
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
         Route::post('/{bookSlug}/page', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
+        Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageController@exportPdf');
+        Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageController@exportHtml');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
         Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
 
-        //Revisions
+        // Revisions
         Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
