@@ -1,12 +1,14 @@
 <div class="form-group">
     <label for="name">Name</label>
-    @include('form/text', ['name' => 'name'])
+    @include('form.text', ['name' => 'name'])
 </div>
 
+@if($currentUser->can('user-update'))
 <div class="form-group">
     <label for="email">Email</label>
-    @include('form/text', ['name' => 'email'])
+    @include('form.text', ['name' => 'email'])
 </div>
+@endif
 
 @if($currentUser->can('user-update'))
     <div class="form-group">
@@ -15,26 +17,14 @@
     </div>
 @endif
 
-@if(isset($model))
+@if($currentUser->can('user-update'))
     <div class="form-group">
-        <span class="text-muted">
-            Only fill the below if you would like <br>to change your password:
-        </span>
+        <label for="external_auth_id">External Authentication ID</label>
+        @include('form.text', ['name' => 'external_auth_id'])
     </div>
 @endif
-
-<div class="form-group">
-    <label for="password">Password</label>
-    @include('form/password', ['name' => 'password'])
-</div>
-
-<div class="form-group">
-    <label for="password-confirm">Confirm Password</label>
-    @include('form/password', ['name' => 'password-confirm'])
-</div>
 
 <div class="form-group">
     <a href="/users" class="button muted">Cancel</a>
     <button class="button pos" type="submit">Save</button>
 </div>
-

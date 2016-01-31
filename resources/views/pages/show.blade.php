@@ -19,6 +19,14 @@
                 </div>
                 <div class="col-sm-6 faded">
                     <div class="action-buttons">
+                        <span dropdown class="dropdown-container">
+                            <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>Export</div>
+                            <ul class="wide">
+                                <li><a href="{{$page->getUrl() . '/export/html'}}" target="_blank">Contained Web File <span class="text-muted pull-right">.html</span></a></li>
+                                <li><a href="{{$page->getUrl() . '/export/pdf'}}" target="_blank">PDF File <span class="text-muted pull-right">.pdf</span></a></li>
+                                <li><a href="{{$page->getUrl() . '/export/plaintext'}}" target="_blank">Plain Text File <span class="text-muted pull-right">.txt</span></a></li>
+                            </ul>
+                        </span>
                         @if($currentUser->can('page-update'))
                             <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary text-button"><i class="zmdi zmdi-replay"></i>Revisions</a>
                             <a href="{{$page->getUrl() . '/edit'}}" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>Edit</a>

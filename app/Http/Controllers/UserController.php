@@ -46,7 +46,8 @@ class UserController extends Controller
     public function create()
     {
         $this->checkPermission('user-create');
-        return view('users/create');
+        $authMethod = config('auth.method');
+        return view('users/create', ['authMethod' => $authMethod]);
     }
 
     /**
@@ -57,22 +58,35 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->checkPermission('user-create');
-        $this->validate($request, [
+        $validationRules = [
             'name'             => 'required',
             'email'            => 'required|email|unique:users,email',
-            'password'         => 'required|min:5',
-            'password-confirm' => 'required|same:password',
             'role'             => 'required|exists:roles,id'
-        ]);
+        ];
+
+        $authMethod = config('auth.method');
+        if ($authMethod === 'standard') {
+            $validationRules['password'] = 'required|min:5';
+            $validationRules['password-confirm'] = 'required|same:password';
+        } elseif ($authMethod === 'ldap') {
+            $validationRules['external_auth_id'] = 'required';
+        }
+        $this->validate($request, $validationRules);
+
 
         $user = $this->user->fill($request->all());
-        $user->password = bcrypt($request->get('password'));
-        $user->save();
 
+        if ($authMethod === 'standard') {
+            $user->password = bcrypt($request->get('password'));
+        } elseif ($authMethod === 'ldap') {
+            $user->external_auth_id = $request->get('external_auth_id');
+        }
+
+        $user->save();
         $user->attachRoleId($request->get('role'));
 
         // Get avatar from gravatar and save
-        if (!env('DISABLE_EXTERNAL_SERVICES', false)) {
+        if (!config('services.disable_services')) {
             $avatar = \Images::saveUserGravatar($user);
             $user->avatar()->associate($avatar);
             $user->save();
@@ -94,10 +108,12 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
+        $authMethod = config('auth.method');
+
         $user = $this->user->findOrFail($id);
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle('User Profile');
-        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers]);
+        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod]);
     }
 
     /**
@@ -124,15 +140,22 @@ class UserController extends Controller
         ]);
 
         $user = $this->user->findOrFail($id);
-        $user->fill($request->except('password'));
+        $user->fill($request->all());
 
+        // Role updates
         if ($this->currentUser->can('user-update') && $request->has('role')) {
             $user->attachRoleId($request->get('role'));
         }
 
+        // Password updates
         if ($request->has('password') && $request->get('password') != '') {
             $password = $request->get('password');
             $user->password = bcrypt($password);
+        }
+
+        // External auth id updates
+        if ($this->currentUser->can('user-update') && $request->has('external_auth_id')) {
+            $user->external_auth_id = $request->get('external_auth_id');
         }
 
         $user->save();

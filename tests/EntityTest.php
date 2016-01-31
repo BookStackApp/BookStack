@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 class EntityTest extends TestCase
 {
 
-    public function testEntityCreation()
+    public function test_entity_creation()
     {
 
         // Test Creation
@@ -51,7 +51,7 @@ class EntityTest extends TestCase
         return \BookStack\Book::find($book->id);
     }
 
-    public function testBookSortPageShows()
+    public function test_book_sort_page_shows()
     {
         $books =  \BookStack\Book::all();
         $bookToSort = $books[0];
@@ -65,7 +65,7 @@ class EntityTest extends TestCase
             ->see($books[1]->name);
     }
 
-    public function testBookSortItemReturnsBookContent()
+    public function test_book_sort_item_returns_book_content()
     {
         $books =  \BookStack\Book::all();
         $bookToSort = $books[0];
@@ -155,7 +155,7 @@ class EntityTest extends TestCase
         return $book;
     }
 
-    public function testPageSearch()
+    public function test_page_search()
     {
         $book = \BookStack\Book::all()->first();
         $page = $book->pages->first();
@@ -170,7 +170,7 @@ class EntityTest extends TestCase
             ->seePageIs($page->getUrl());
     }
 
-    public function testInvalidPageSearch()
+    public function test_invalid_page_search()
     {
         $this->asAdmin()
             ->visit('/')
@@ -180,7 +180,7 @@ class EntityTest extends TestCase
             ->seeStatusCode(200);
     }
 
-    public function testEmptySearchRedirectsBack()
+    public function test_empty_search_redirects_back()
     {
         $this->asAdmin()
             ->visit('/')
@@ -188,7 +188,7 @@ class EntityTest extends TestCase
             ->seePageIs('/');
     }
 
-    public function testBookSearch()
+    public function test_book_search()
     {
         $book = \BookStack\Book::all()->first();
         $page = $book->pages->last();
@@ -202,7 +202,7 @@ class EntityTest extends TestCase
             ->see($chapter->name);
     }
 
-    public function testEmptyBookSearchRedirectsBack()
+    public function test_empty_book_search_redirects_back()
     {
         $book = \BookStack\Book::all()->first();
         $this->asAdmin()
@@ -212,7 +212,7 @@ class EntityTest extends TestCase
     }
 
 
-    public function testEntitiesViewableAfterCreatorDeletion()
+    public function test_entities_viewable_after_creator_deletion()
     {
         // Create required assets and revisions
         $creator = $this->getNewUser();
@@ -225,7 +225,7 @@ class EntityTest extends TestCase
         $this->checkEntitiesViewable($entities);
     }
 
-    public function testEntitiesViewableAfterUpdaterDeletion()
+    public function test_entities_viewable_after_updater_deletion()
     {
         // Create required assets and revisions
         $creator = $this->getNewUser();

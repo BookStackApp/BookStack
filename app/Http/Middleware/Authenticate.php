@@ -38,6 +38,7 @@ class Authenticate
         if(auth()->check() && auth()->user()->email_confirmed == false) {
             return redirect()->guest('/register/confirm/awaiting');
         }
+
         if ($this->auth->guest() && !Setting::get('app-public')) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);

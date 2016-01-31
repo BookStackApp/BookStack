@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -18,18 +19,21 @@ class PageController extends Controller
     protected $pageRepo;
     protected $bookRepo;
     protected $chapterRepo;
+    protected $exportService;
 
     /**
      * PageController constructor.
-     * @param PageRepo    $pageRepo
-     * @param BookRepo    $bookRepo
-     * @param ChapterRepo $chapterRepo
+     * @param PageRepo      $pageRepo
+     * @param BookRepo      $bookRepo
+     * @param ChapterRepo   $chapterRepo
+     * @param ExportService $exportService
      */
-    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo)
+    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo, ExportService $exportService)
     {
         $this->pageRepo = $pageRepo;
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->exportService = $exportService;
         parent::__construct();
     }
 
@@ -221,4 +225,57 @@ class PageController extends Controller
         Activity::add($page, 'page_restore', $book->id);
         return redirect($page->getUrl());
     }
+
+    /**
+     * Exports a page to pdf format using barryvdh/laravel-dompdf wrapper.
+     * https://github.com/barryvdh/laravel-dompdf
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPdf($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $pdfContent = $this->exportService->pageToPdf($page);
+        return response()->make($pdfContent, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.pdf'
+        ]);
+    }
+
+    /**
+     * Export a page to a self-contained HTML file.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportHtml($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $containedHtml = $this->exportService->pageToContainedHtml($page);
+        return response()->make($containedHtml, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.html'
+        ]);
+    }
+
+    /**
+     * Export a page to a simple plaintext .txt file.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPlainText($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $containedHtml = $this->exportService->pageToPlainText($page);
+        return response()->make($containedHtml, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.txt'
+        ]);
+    }
+
 }

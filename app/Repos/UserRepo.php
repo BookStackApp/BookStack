@@ -3,6 +3,7 @@
 
 use BookStack\Role;
 use BookStack\User;
+use Setting;
 
 class UserRepo
 {
@@ -47,6 +48,14 @@ class UserRepo
     {
         $user = $this->create($data);
         $this->attachDefaultRole($user);
+
+        // Get avatar from gravatar and save
+        if (!config('services.disable_services')) {
+            $avatar = \Images::saveUserGravatar($user);
+            $user->avatar()->associate($avatar);
+            $user->save();
+        }
+
         return $user;
     }
 
@@ -56,7 +65,7 @@ class UserRepo
      */
     public function attachDefaultRole($user)
     {
-        $roleId = \Setting::get('registration-role');
+        $roleId = Setting::get('registration-role');
         if ($roleId === false) $roleId = $this->role->getDefault()->id;
         $user->attachRoleId($roleId);
     }
@@ -87,7 +96,7 @@ class UserRepo
      */
     public function create(array $data)
     {
-        return $this->user->create([
+        return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password'])

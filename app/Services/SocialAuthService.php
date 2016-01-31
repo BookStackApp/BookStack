@@ -76,9 +76,9 @@ class SocialAuthService
             throw new UserRegistrationException('This ' . $socialDriver . ' account is already in use, Try logging in via the ' . $socialDriver . ' option.', '/login');
         }
 
-        if($this->userRepo->getByEmail($socialUser->getEmail())) {
+        if ($this->userRepo->getByEmail($socialUser->getEmail())) {
             $email = $socialUser->getEmail();
-            throw new UserRegistrationException('The email '. $email.' is already in use. If you already have an account you can connect your ' . $socialDriver .' account from your profile settings.', '/login');
+            throw new UserRegistrationException('The email ' . $email . ' is already in use. If you already have an account you can connect your ' . $socialDriver . ' account from your profile settings.', '/login');
         }
 
         return $socialUser;
@@ -129,7 +129,7 @@ class SocialAuthService
         // When a user is logged in, A social account exists but the users do not match.
         // Change the user that the social account is assigned to.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
-            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is already used buy another user.');
+            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is already used by another user.');
             return redirect($currentUser->getEditUrl());
         }
 
@@ -172,9 +172,10 @@ class SocialAuthService
      */
     private function checkDriverConfigured($driver)
     {
-        $upperName = strtoupper($driver);
-        $config = [env($upperName . '_APP_ID', false), env($upperName . '_APP_SECRET', false), env('APP_URL', false)];
-        return (!in_array(false, $config) && !in_array(null, $config));
+        $lowerName = strtolower($driver);
+        $configPrefix = 'services.' . $lowerName . '.';
+        $config = [config($configPrefix . 'client_id'), config($configPrefix . 'client_secret'), config('services.callback_url')];
+        return !in_array(false, $config) && !in_array(null, $config);
     }
 
     /**
@@ -193,7 +194,7 @@ class SocialAuthService
     }
 
     /**
-     * @param string $socialDriver
+     * @param string                            $socialDriver
      * @param \Laravel\Socialite\Contracts\User $socialUser
      * @return SocialAccount
      */

@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
@@ -29,9 +30,10 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $loginPath = '/login';
     protected $redirectPath = '/';
     protected $redirectAfterLogout = '/login';
+    protected $username = 'email';
+
 
     protected $socialAuthService;
     protected $emailConfirmationService;
@@ -49,6 +51,7 @@ class AuthController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
+        $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
     }
 
@@ -105,6 +108,38 @@ class AuthController extends Controller
         return $this->registerUser($userData);
     }
 
+
+    /**
+     * Overrides the action when a user is authenticated.
+     * If the user authenticated but does not exist in the user table we create them.
+     * @param Request         $request
+     * @param Authenticatable $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function authenticated(Request $request, Authenticatable $user)
+    {
+        // Explicitly log them out for now if they do no exist.
+        if (!$user->exists) auth()->logout($user);
+
+        if (!$user->exists && $user->email === null && !$request->has('email')) {
+            $request->flash();
+            session()->flash('request-email', true);
+            return redirect('/login');
+        }
+
+        if (!$user->exists && $user->email === null && $request->has('email')) {
+            $user->email = $request->get('email');
+        }
+
+        if (!$user->exists) {
+            $user->save();
+            $this->userRepo->attachDefaultRole($user);
+            auth()->login($user);
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
     /**
      * Register a new user after a registration callback.
      * @param $socialDriver
@@ -156,13 +191,14 @@ class AuthController extends Controller
         }
 
         $newUser->email_confirmed = true;
+
         auth()->login($newUser);
         session()->flash('success', 'Thanks for signing up! You are now registered and signed in.');
         return redirect($this->redirectPath());
     }
 
     /**
-     * Show the page to tell the user to check thier email
+     * Show the page to tell the user to check their email
      * and confirm their address.
      */
     public function getRegisterConfirmation()
@@ -222,7 +258,7 @@ class AuthController extends Controller
         ]);
         $user = $this->userRepo->getByEmail($request->get('email'));
         $this->emailConfirmationService->sendConfirmation($user);
-        \Session::flash('success', 'Confirmation email resent, Please check your inbox.');
+        session()->flash('success', 'Confirmation email resent, Please check your inbox.');
         return redirect('/register/confirm');
     }
 
@@ -232,13 +268,9 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
-
-        if (view()->exists('auth.authenticate')) {
-            return view('auth.authenticate');
-        }
-
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        return view('auth.login', ['socialDrivers' => $socialDrivers]);
+        $authMethod = config('auth.method');
+        return view('auth/login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
     }
 
     /**
@@ -253,7 +285,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Redirect to the social site for authentication initended to register.
+     * Redirect to the social site for authentication intended to register.
      * @param $socialDriver
      * @return mixed
      */

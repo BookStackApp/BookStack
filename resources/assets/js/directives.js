@@ -56,6 +56,7 @@ module.exports = function (ngApp) {
                 var usingIds = typeof scope.currentId !== 'undefined' || scope.currentId === 'false';
                 scope.image = scope.currentImage;
                 scope.value = scope.currentImage || '';
+                if (usingIds) scope.value = scope.currentId;
 
                 function setImage(imageModel, imageUrl) {
                     scope.image = imageUrl;

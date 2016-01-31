@@ -5,23 +5,19 @@ use BookStack\EmailConfirmation;
 class AuthTest extends TestCase
 {
 
-    public function testAuthWorking()
+    public function test_auth_working()
     {
         $this->visit('/')
             ->seePageIs('/login');
     }
 
-    public function testLogin()
+    public function test_login()
     {
-        $this->visit('/')
-            ->seePageIs('/login');
-
         $this->login('admin@admin.com', 'password')
-            ->seePageIs('/')
-            ->see('BookStack');
+            ->seePageIs('/');
     }
 
-    public function testPublicViewing()
+    public function test_public_viewing()
     {
         $settings = app('BookStack\Services\SettingService');
         $settings->put('app-public', 'true');
@@ -30,7 +26,7 @@ class AuthTest extends TestCase
             ->see('Sign In');
     }
 
-    public function testRegistrationShowing()
+    public function test_registration_showing()
     {
         // Ensure registration form is showing
         $this->setSettings(['registration-enabled' => 'true']);
@@ -40,7 +36,7 @@ class AuthTest extends TestCase
             ->seePageIs('/register');
     }
 
-    public function testNormalRegistration()
+    public function test_normal_registration()
     {
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true']);
@@ -58,7 +54,8 @@ class AuthTest extends TestCase
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email]);
     }
 
-    public function testConfirmedRegistration()
+
+    public function test_confirmed_registration()
     {
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
@@ -102,7 +99,32 @@ class AuthTest extends TestCase
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => true]);
     }
 
-    public function testUserCreation()
+    public function test_restricted_registration()
+    {
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true', 'registration-restrict' => 'example.com']);
+        $user = factory(\BookStack\User::class)->make();
+        // Go through registration process
+        $this->visit('/register')
+            ->type($user->name, '#name')
+            ->type($user->email, '#email')
+            ->type($user->password, '#password')
+            ->press('Create Account')
+            ->seePageIs('/register')
+            ->dontSeeInDatabase('users', ['email' => $user->email])
+            ->see('That email domain does not have access to this application');
+
+        $user->email = 'barry@example.com';
+
+        $this->visit('/register')
+            ->type($user->name, '#name')
+            ->type($user->email, '#email')
+            ->type($user->password, '#password')
+            ->press('Create Account')
+            ->seePageIs('/register/confirm')
+            ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
+    }
+
+    public function test_user_creation()
     {
         $user = factory(\BookStack\User::class)->make();
 
@@ -120,7 +142,7 @@ class AuthTest extends TestCase
             ->see($user->name);
     }
 
-    public function testUserUpdating()
+    public function test_user_updating()
     {
         $user = \BookStack\User::all()->last();
         $password = $user->password;
@@ -136,7 +158,7 @@ class AuthTest extends TestCase
             ->notSeeInDatabase('users', ['name' => $user->name]);
     }
 
-    public function testUserPasswordUpdate()
+    public function test_user_password_update()
     {
         $user = \BookStack\User::all()->last();
         $userProfilePage = '/users/' . $user->id;
@@ -156,7 +178,7 @@ class AuthTest extends TestCase
             $this->assertTrue(Hash::check('newpassword', $userPassword));
     }
 
-    public function testUserDeletion()
+    public function test_user_deletion()
     {
         $userDetails = factory(\BookStack\User::class)->make();
         $user = $this->getNewUser($userDetails->toArray());
@@ -170,7 +192,7 @@ class AuthTest extends TestCase
             ->notSeeInDatabase('users', ['name' => $user->name]);
     }
 
-    public function testUserCannotBeDeletedIfLastAdmin()
+    public function test_user_cannot_be_deleted_if_last_admin()
     {
         $adminRole = \BookStack\Role::getRole('admin');
         // Ensure we currently only have 1 admin user
@@ -184,7 +206,7 @@ class AuthTest extends TestCase
             ->see('You cannot delete the only admin');
     }
 
-    public function testLogout()
+    public function test_logout()
     {
         $this->asAdmin()
             ->visit('/')
@@ -200,7 +222,7 @@ class AuthTest extends TestCase
      * @param string $password
      * @return $this
      */
-    private function login($email, $password)
+    protected function login($email, $password)
     {
         return $this->visit('/login')
             ->type($email, '#email')

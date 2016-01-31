@@ -21,6 +21,7 @@ elixir.extend('queryVersion', function(inputFiles) {
 elixir(function(mix) {
     mix.sass('styles.scss')
         .sass('print-styles.scss')
+        .sass('export-styles.scss')
         .browserify('global.js', 'public/js/common.js')
         .queryVersion(['css/styles.css', 'css/print-styles.css', 'js/common.js']);
 });
