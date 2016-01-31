@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
         Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageController@exportPdf');
         Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageController@exportHtml');
+        Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageController@exportPlainText');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
@@ -45,7 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
 
     });
-
 
     // Users
     Route::get('/users', 'UserController@index');

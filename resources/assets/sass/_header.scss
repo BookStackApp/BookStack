@@ -161,6 +161,12 @@ form.search-box {
   padding: $-xs 0;
   color: #555;
   text-align: left !important;
+  &.wide {
+    min-width: 220px;
+  }
+  .text-muted {
+    color: #999;
+  }
   a {
     display: block;
     padding: $-xs $-m;

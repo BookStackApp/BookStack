@@ -226,13 +226,22 @@ class PageController extends Controller
         return redirect($page->getUrl());
     }
 
+    /**
+     * Exports a page to pdf format using barryvdh/laravel-dompdf wrapper.
+     * https://github.com/barryvdh/laravel-dompdf
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Http\Response
+     */
     public function exportPdf($bookSlug, $pageSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        $cssContent = file_get_contents(public_path('/css/styles.css'));
-
-        return $pdf->download($pageSlug . '.pdf');
+        $pdfContent = $this->exportService->pageToPdf($page);
+        return response()->make($pdfContent, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.pdf'
+        ]);
     }
 
     /**
@@ -251,4 +260,22 @@ class PageController extends Controller
             'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.html'
         ]);
     }
+
+    /**
+     * Export a page to a simple plaintext .txt file.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPlainText($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $containedHtml = $this->exportService->pageToPlainText($page);
+        return response()->make($containedHtml, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.txt'
+        ]);
+    }
+
 }

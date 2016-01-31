@@ -1,32 +1,24 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ $page->name }}</title>
+@extends('pages/export')
 
+@section('head')
     <style>
-        {!! $css !!}
+        body {
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1;
+        }
+
+        table {
+            max-width: 800px !important;
+            font-size: 0.8em;
+            width: auto !important;
+        }
+
+        table td {
+            width: auto !important;
+        }
     </style>
-</head>
-<body>
-<div class="container" id="page-show" ng-non-bindable>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="page-content">
-
-                @include('pages/page-display')
-
-                <hr>
-
-                <p class="text-muted small">
-                    Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
-                    <br>
-                    Last Updated {{$page->updated_at->diffForHumans()}} @if($page->updatedBy) by {{$page->updatedBy->name}} @endif
-                </p>
-
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
+@stop

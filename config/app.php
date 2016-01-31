@@ -143,6 +143,7 @@ return [
          * Third Party
          */
         Intervention\Image\ImageServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
@@ -210,6 +211,7 @@ return [
          */
 
         'ImageTool' => Intervention\Image\Facades\Image::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
         /**
