@@ -21,10 +21,10 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        \BookStack\User::create([
+        \BookStack\User::forceCreate([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('password')
+            'password' => bcrypt('password')
         ]);
     }
 
