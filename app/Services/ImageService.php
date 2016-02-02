@@ -3,6 +3,7 @@
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
 use BookStack\User;
+use Exception;
 use Intervention\Image\ImageManager;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
@@ -88,9 +89,11 @@ class ImageService
         }
         $fullPath = $imagePath . $imageName;
 
-        if(!is_writable(dirname(public_path($fullPath)))) throw new ImageUploadException('Image Directory ' . public_path($fullPath) . ' is not writable by the server.');
-
-        $storage->put($fullPath, $imageData);
+        try {
+            $storage->put($fullPath, $imageData);
+        } catch (Exception $e) {
+            throw new ImageUploadException('Image Path ' . $fullPath . ' is not writable by the server.');
+        }
 
         $imageDetails = [
             'name'       => $imageName,
