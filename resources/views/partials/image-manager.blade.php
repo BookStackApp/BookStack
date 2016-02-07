@@ -5,11 +5,14 @@
             <div class="image-manager-content">
                 <div class="image-manager-list">
                     <div ng-repeat="image in images">
-                        <img class="anim fadeIn"
-                             ng-class="{selected: (image==selectedImage)}"
-                             ng-src="@{{image.thumbs.gallery}}" ng-attr-alt="@{{image.title}}" ng-attr-title="@{{image.name}}"
-                            ng-click="imageSelect(image)"
-                            ng-style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}">
+                        <div class="image anim fadeIn" ng-style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}"
+                             ng-class="{selected: (image==selectedImage)}" ng-click="imageSelect(image)">
+                            <img ng-src="@{{image.thumbs.gallery}}" ng-attr-alt="@{{image.title}}" ng-attr-title="@{{image.name}}">
+                            <div class="image-meta">
+                                <span class="name" ng-bind="image.name"></span>
+                                <span class="date">Uploaded @{{ getDate(image.created_at) | date:'mediumDate' }}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="load-more" ng-show="hasMore" ng-click="fetchData()">Load More</div>
                 </div>
@@ -19,18 +22,20 @@
 
             <div class="image-manager-sidebar">
                 <h2>Images</h2>
-                <hr class="even">
                 <drop-zone upload-url="@{{getUploadUrl()}}" event-success="uploadSuccess"></drop-zone>
                 <div class="image-manager-details anim fadeIn" ng-show="selectedImage">
 
                     <hr class="even">
 
                     <form ng-submit="saveImageDetails($event)">
+                        <div>
+                            <a ng-href="@{{selectedImage.url}}" target="_blank" style="display: block;">
+                                <img ng-src="@{{selectedImage.thumbs.gallery}}" ng-attr-alt="@{{selectedImage.title}}" ng-attr-title="@{{selectedImage.name}}">
+                            </a>
+                        </div>
                         <div class="form-group">
                             <label for="name">Image Name</label>
                             <input type="text" id="name" name="name" ng-model="selectedImage.name">
-                            <p class="text-pos text-small" ng-show="imageUpdateSuccess"><i class="fa fa-check"></i> Image name updated</p>
-                            <p class="text-neg text-small" ng-show="imageUpdateFailure"><i class="fa fa-times"></i> <span ng-bind="imageUpdateFailure"></span></p>
                         </div>
                     </form>
 
@@ -52,8 +57,6 @@
                         <button class="button neg"><i class="zmdi zmdi-delete"></i>Delete Image</button>
                     </form>
                 </div>
-
-                <p class="text-pos" ng-show="imageDeleteSuccess"><i class="fa fa-check"></i> Image deleted</p>
 
                 <div class="image-manager-bottom">
                     <button class="button pos anim fadeIn" ng-show="selectedImage" ng-click="selectButtonClick()">

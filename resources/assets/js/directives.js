@@ -5,7 +5,7 @@ var toggleSwitchTemplate = require('./components/toggle-switch.html');
 var imagePickerTemplate = require('./components/image-picker.html');
 var dropZoneTemplate = require('./components/drop-zone.html');
 
-module.exports = function (ngApp) {
+module.exports = function (ngApp, events) {
 
     /**
      * Toggle Switches

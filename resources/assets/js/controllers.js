@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function (ngApp) {
+module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {
@@ -17,21 +17,40 @@ module.exports = function (ngApp) {
             var dataLoaded = false;
             var callback = false;
 
+            /**
+             * Simple returns the appropriate upload url depending on the image type set.
+             * @returns {string}
+             */
             $scope.getUploadUrl = function () {
                 return '/images/' + $scope.imageType + '/upload';
             };
 
+            /**
+             * Runs on image upload, Adds an image to local list of images
+             * and shows a success message to the user.
+             * @param file
+             * @param data
+             */
             $scope.uploadSuccess = function (file, data) {
                 $scope.$apply(() => {
                     $scope.images.unshift(data);
                 });
+                events.emit('success', 'Image uploaded');
             };
 
+            /**
+             * Runs the callback and hides the image manager.
+             * @param returnData
+             */
             function callbackAndHide(returnData) {
                 if (callback) callback(returnData);
                 $scope.showing = false;
             }
 
+            /**
+             * Image select action. Checks if a double-click was fired.
+             * @param image
+             */
             $scope.imageSelect = function (image) {
                 var dblClickTime = 300;
                 var currentTime = Date.now();
@@ -48,10 +67,19 @@ module.exports = function (ngApp) {
                 previousClickTime = currentTime;
             };
 
+            /**
+             * Action that runs when the 'Select image' button is clicked.
+             * Runs the callback and hides the image manager.
+             */
             $scope.selectButtonClick = function () {
                 callbackAndHide($scope.selectedImage);
             };
 
+            /**
+             * Show the image manager.
+             * Takes a callback to execute later on.
+             * @param doneCallback
+             */
             function show(doneCallback) {
                 callback = doneCallback;
                 $scope.showing = true;
@@ -62,6 +90,8 @@ module.exports = function (ngApp) {
                 }
             }
 
+            // Connects up the image manger so it can be used externally
+            // such as from TinyMCE.
             imageManagerService.show = show;
             imageManagerService.showExternal = function (doneCallback) {
                 $scope.$apply(() => {
@@ -70,10 +100,16 @@ module.exports = function (ngApp) {
             };
             window.ImageManager = imageManagerService;
 
+            /**
+             * Hide the image manager
+             */
             $scope.hide = function () {
                 $scope.showing = false;
             };
 
+            /**
+             * Fetch the list image data from the server.
+             */
             function fetchData() {
                 var url = '/images/' + $scope.imageType + '/all/' + page;
                 $http.get(url).then((response) => {
@@ -82,28 +118,33 @@ module.exports = function (ngApp) {
                     page++;
                 });
             }
+            $scope.fetchData = fetchData;
 
+            /**
+             * Save the details of an image.
+             * @param event
+             */
             $scope.saveImageDetails = function (event) {
                 event.preventDefault();
                 var url = '/images/update/' + $scope.selectedImage.id;
                 $http.put(url, this.selectedImage).then((response) => {
-                    $scope.imageUpdateSuccess = true;
-                    $timeout(() => {
-                        $scope.imageUpdateSuccess = false;
-                    }, 3000);
+                    events.emit('success', 'Image details updated');
                 }, (response) => {
                     var errors = response.data;
                     var message = '';
                     Object.keys(errors).forEach((key) => {
                         message += errors[key].join('\n');
                     });
-                    $scope.imageUpdateFailure = message;
-                    $timeout(() => {
-                        $scope.imageUpdateFailure = false;
-                    }, 5000);
+                    events.emit('error', message);
                 });
             };
 
+            /**
+             * Delete an image from system and notify of success.
+             * Checks if it should force delete when an image
+             * has dependant pages.
+             * @param event
+             */
             $scope.deleteImage = function (event) {
                 event.preventDefault();
                 var force = $scope.dependantPages !== false;
@@ -112,16 +153,22 @@ module.exports = function (ngApp) {
                 $http.delete(url).then((response) => {
                     $scope.images.splice($scope.images.indexOf($scope.selectedImage), 1);
                     $scope.selectedImage = false;
-                    $scope.imageDeleteSuccess = true;
-                    $timeout(() => {
-                        $scope.imageDeleteSuccess = false;
-                    }, 3000);
+                    events.emit('success', 'Image successfully deleted');
                 }, (response) => {
                     // Pages failure
                     if (response.status === 400) {
                         $scope.dependantPages = response.data;
                     }
                 });
+            };
+
+            /**
+             * Simple date creator used to properly format dates.
+             * @param stringDate
+             * @returns {Date}
+             */
+            $scope.getDate = function(stringDate) {
+                return new Date(stringDate);
             };
 
         }]);

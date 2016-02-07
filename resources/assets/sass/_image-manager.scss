@@ -21,7 +21,6 @@
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  max-width: 1340px;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -44,18 +43,49 @@
   right: 0;
 }
 
-.image-manager-list img {
+.image-manager-list .image {
   display: block;
+  position: relative;
   border-radius: 0;
   float: left;
   margin: 0;
   cursor: pointer;
   width: (100%/6);
   height: auto;
-  border: 1px solid #FFF;
+  border: 1px solid #DDD;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   transition: all cubic-bezier(.4, 0, 1, 1) 160ms;
+  overflow: hidden;
   &.selected {
     transform: scale3d(0.92, 0.92, 0.92);
+    border: 1px solid #444;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  }
+  img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+  .image-meta {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: #EEE;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 10px;
+    padding: 3px 4px;
+    span {
+      display: block;
+    }
+  }
+  @include smaller-than($xl) {
+    width: (100%/4);
+  }
+  @include smaller-than($m) {
+    .image-meta {
+      display: none;
+    }
   }
 }
 
