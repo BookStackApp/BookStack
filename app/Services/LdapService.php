@@ -46,7 +46,7 @@ class LdapService
 
         $user = $users[0];
         return [
-            'uid'   => $user['uid'][0],
+            'uid'   => (isset($user['uid'])) ? $user['uid'][0] : $user['dn'],
             'name'  => $user['cn'][0],
             'dn'    => $user['dn'],
             'email' => (isset($user['mail'])) ? $user['mail'][0] : null
