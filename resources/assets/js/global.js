@@ -83,6 +83,29 @@ $(function () {
         $(this).closest('.chapter').find('.inset-list').slideToggle(180);
     });
 
+    // Back to top button
+    $('#back-to-top').click(function() {
+         $('#header').smoothScrollTo();
+    });
+    var scrollTopShowing = false;
+    var scrollTop = document.getElementById('back-to-top');
+    var scrollTopBreakpoint = 1200;
+    window.addEventListener('scroll', function() {
+        if (!scrollTopShowing && document.body.scrollTop > scrollTopBreakpoint) {
+            scrollTop.style.display = 'block';
+            scrollTopShowing = true;
+            setTimeout(() => {
+                scrollTop.style.opacity = 1;
+            }, 1);
+        } else if (scrollTopShowing && document.body.scrollTop < scrollTopBreakpoint) {
+            scrollTop.style.opacity = 0;
+            scrollTopShowing = false;
+            setTimeout(() => {
+                scrollTop.style.display = 'none';
+            }, 500);
+        }
+    });
+
 });
 
 
