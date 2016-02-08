@@ -20,5 +20,11 @@
         table td {
             width: auto !important;
         }
+
+        .page-content img.align-left, .page-content img.align-right  {
+            float: none !important;
+            clear: both;
+            display: block;
+        }
     </style>
 @stop

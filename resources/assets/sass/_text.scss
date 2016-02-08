@@ -223,13 +223,13 @@ span.highlight {
  * Lists
  */
 ul {
-  list-style: disc;
-  margin-left: $-m*1.5;
+  padding-left: $-m * 1.5;
+  list-style: disc inside;
 }
 
 ol {
-  list-style: decimal;
-  margin-left: $-m*1.5;
+  list-style: decimal inside;
+  padding-left: $-m * 1.5;
 }
 
 /*
