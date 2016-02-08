@@ -28,7 +28,7 @@ class LdapTest extends \TestCase
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
-                'dn'    => ['dc=test'.config('services.ldap.base_dn')]
+                'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
 
@@ -46,6 +46,30 @@ class LdapTest extends \TestCase
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => 1, 'external_auth_id' => $this->mockUser->name]);
     }
 
+    public function test_login_works_when_no_uid_provided_by_ldap_server()
+    {
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setOption')->once();
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
+            ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'cn' => [$this->mockUser->name],
+                'dn' => $ldapDn,
+                'mail' => [$this->mockUser->email]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true);
+
+        $this->visit('/login')
+            ->see('Username')
+            ->type($this->mockUser->name, '#username')
+            ->type($this->mockUser->password, '#password')
+            ->press('Sign In')
+            ->seePageIs('/')
+            ->see($this->mockUser->name)
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => 1, 'external_auth_id' => $ldapDn]);
+    }
+
     public function test_initial_incorrect_details()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
@@ -55,7 +79,7 @@ class LdapTest extends \TestCase
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
-                'dn'    => ['dc=test'.config('services.ldap.base_dn')]
+                'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true, true, false);
 

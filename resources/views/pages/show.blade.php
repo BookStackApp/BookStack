@@ -22,9 +22,9 @@
                         <span dropdown class="dropdown-container">
                             <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>Export</div>
                             <ul class="wide">
-                                <li><a href="{{$page->getUrl() . '/export/html'}}" target="_blank">Contained Web File <span class="text-muted pull-right">.html</span></a></li>
-                                <li><a href="{{$page->getUrl() . '/export/pdf'}}" target="_blank">PDF File <span class="text-muted pull-right">.pdf</span></a></li>
-                                <li><a href="{{$page->getUrl() . '/export/plaintext'}}" target="_blank">Plain Text File <span class="text-muted pull-right">.txt</span></a></li>
+                                <li><a href="{{$page->getUrl() . '/export/html'}}" target="_blank">Contained Web File <span class="text-muted float right">.html</span></a></li>
+                                <li><a href="{{$page->getUrl() . '/export/pdf'}}" target="_blank">PDF File <span class="text-muted float right">.pdf</span></a></li>
+                                <li><a href="{{$page->getUrl() . '/export/plaintext'}}" target="_blank">Plain Text File <span class="text-muted float right">.txt</span></a></li>
                             </ul>
                         </span>
                         @if($currentUser->can('page-update'))

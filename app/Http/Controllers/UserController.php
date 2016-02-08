@@ -130,8 +130,8 @@ class UserController extends Controller
         });
 
         $this->validate($request, [
-            'name'             => 'required',
-            'email'            => 'required|email|unique:users,email,' . $id,
+            'name'             => 'min:2',
+            'email'            => 'min:2|email|unique:users,email,' . $id,
             'password'         => 'min:5|required_with:password_confirm',
             'password-confirm' => 'same:password|required_with:password',
             'role'             => 'exists:roles,id'

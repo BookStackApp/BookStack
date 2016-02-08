@@ -127,3 +127,41 @@ $loadingSize: 10px;
     padding-right: $-s;
   }
 }
+
+// Back to top link
+$btt-size: 40px;
+#back-to-top {
+  background-color: rgba($primary, 0.4);
+  position: fixed;
+  bottom: $-m;
+  right: $-m;
+  padding: $-xs $-s;
+  cursor: pointer;
+  color: #FFF;
+  width: $btt-size;
+  height: $btt-size;
+  border-radius: $btt-size;
+  transition: all ease-in-out 180ms;
+  opacity: 0;
+  z-index: 999;
+  &:hover {
+    width: $btt-size*3.4;
+    background-color: rgba($primary, 1);
+    span {
+      display: inline-block;
+    }
+  }
+  .inner {
+    width: $btt-size*3.4;
+  }
+  i {
+    margin: 0;
+    font-size: 28px;
+    padding: 0 $-s 0 0;
+  }
+  span {
+    line-height: 12px;
+    position: relative;
+    top: -5px;
+  }
+}

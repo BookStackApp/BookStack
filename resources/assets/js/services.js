@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(ngApp) {
+module.exports = function(ngApp, events) {
 
     ngApp.factory('imageManagerService', function() {
         return {

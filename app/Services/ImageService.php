@@ -4,6 +4,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
 use BookStack\User;
 use Exception;
+use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
@@ -119,10 +120,12 @@ class ImageService
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
      *
      * @param Image $image
-     * @param int   $width
-     * @param int   $height
-     * @param bool  $keepRatio
+     * @param int $width
+     * @param int $height
+     * @param bool $keepRatio
      * @return string
+     * @throws Exception
+     * @throws ImageUploadException
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
@@ -139,8 +142,16 @@ class ImageService
             return $this->getPublicUrl($thumbFilePath);
         }
 
-        // Otherwise create the thumbnail
-        $thumb = $this->imageTool->make($storage->get($image->path));
+        try {
+            $thumb = $this->imageTool->make($storage->get($image->path));
+        } catch (Exception $e) {
+            if ($e instanceof \ErrorException || $e instanceof NotSupportedException) {
+                throw new ImageUploadException('The server cannot create thumbnails. Please check you have the GD PHP extension installed.');
+            } else {
+                throw $e;
+            }
+        }
+
         if ($keepRatio) {
             $thumb->resize($width, null, function ($constraint) {
                 $constraint->aspectRatio();

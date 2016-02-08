@@ -10,3 +10,8 @@
 @import "header";
 @import "lists";
 @import "pages";
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}

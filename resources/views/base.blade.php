@@ -77,6 +77,11 @@
         @yield('content')
     </section>
 
+    <div id="back-to-top">
+        <div class="inner">
+            <i class="zmdi zmdi-chevron-up"></i> <span>Back to top</span>
+        </div>
+    </div>
 @yield('bottom')
 <script src="{{ versioned_asset('js/common.js') }}"></script>
 @yield('scripts')

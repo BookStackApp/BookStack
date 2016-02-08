@@ -17,19 +17,13 @@ A platform to create documentation/wiki content. General information about BookS
 
 ## Requirements
 
-BookStack has similar requirements to Laravel. On top of those are some front-end build tools which are only required when developing.
+BookStack has similar requirements to Laravel:
 
 * PHP >= 5.5.9, Will need to be usable from the command line.
-* OpenSSL PHP Extension
-* PDO PHP Extension
-* MBstring PHP Extension
-* Tokenizer PHP Extension
+* PHP Extensions: `OpenSSL`, `PDO`, `MBstring`, `Tokenizer`, `GD`
 * MySQL >= 5.6
 * Git (Not strictly required but helps manage updates)
 * [Composer](https://getcomposer.org/)
-* [Node.js](https://nodejs.org/en/) **Development Only**
-* [Gulp](http://gulpjs.com/) **Development Only**
-
 
 ## Installation
 
@@ -144,7 +138,14 @@ A user in BookStack will be linked to a LDAP user via a 'uid'. If a LDAP user ui
 
 You may find that you cannot log in with your initial Admin account after changing the `AUTH_METHOD` to `ldap`. To get around this set the `AUTH_METHOD` to `standard`, login with your admin account then change it back to `ldap`. You get then edit your profile and add your LDAP uid under the 'External Authentication ID' field. You will then be able to login in with that ID.
 
-## Testing
+## Development & Testing
+
+All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at it's version. Here are the current development requirements:
+
+* [Node.js](https://nodejs.org/en/) **Development Only**
+* [Gulp](http://gulpjs.com/) **Development Only**
+
+SASS is used to help the CSS development and the JavaScript is run through browserify/babel to allow for writing ES6 code. Both of these are done using gulp.
 
 BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. To use you will need PHPUnit installed and accessible via command line. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the following database name, user name and password defined as `bookstack-test`. You will have to create that database and credentials before testing.
 

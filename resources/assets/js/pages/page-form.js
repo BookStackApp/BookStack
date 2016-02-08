@@ -8,7 +8,6 @@ module.exports = {
     statusbar: false,
     menubar: false,
     paste_data_images: false,
-    //height: 700,
     extended_valid_elements: 'pre[*]',
     automatic_uploads: false,
     valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
@@ -31,7 +30,7 @@ module.exports = {
         alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
     },
     file_browser_callback: function (field_name, url, type, win) {
-        ImageManager.show(function (image) {
+        window.ImageManager.showExternal(function (image) {
             win.document.getElementById(field_name).value = image.url;
             if ("createEvent" in document) {
                 var evt = document.createEvent("HTMLEvents");
@@ -40,6 +39,10 @@ module.exports = {
             } else {
                 win.document.getElementById(field_name).fireEvent("onchange");
             }
+            var html = '<a href="' + image.url + '" target="_blank">';
+            html += '<img src="' + image.thumbs.display + '" alt="' + image.name + '">';
+            html += '</a>';
+            win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
         });
     },
     paste_preprocess: function (plugin, args) {
