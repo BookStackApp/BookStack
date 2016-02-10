@@ -13,7 +13,7 @@ return [
     'page_update'                 => 'updated page',
     'page_update_notification'    => 'Page Successfully Updated',
     'page_delete'                 => 'deleted page',
-    'page_delete_notification'    => 'Page Successfully Created',
+    'page_delete_notification'    => 'Page Successfully Deleted',
     'page_restore'                => 'restored page',
     'page_restore_notification'   => 'Page Successfully Restored',
 
