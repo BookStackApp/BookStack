@@ -72,4 +72,19 @@ window.setupPageShow = module.exports = function (pageId) {
         goToText(text);
     }
 
+    // Get current tree's width
+    var bookTreeWidth = $(".book-tree").width();
+    // Get header height
+    var headerHeight = $("#header").height() + $(".faded-small").height();
+    $(window).scroll(function () {
+      if($(window).scrollTop() > headerHeight){
+        // Begin to scroll
+        $(".book-tree").width(bookTreeWidth);
+        $(".book-tree").css("position", "fixed");
+        $(".book-tree").css("top", 0);
+      } else {
+        // Lock it back in place
+        $(".book-tree").css("position", "relative");
+      }
+    })
 };
