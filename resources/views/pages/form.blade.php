@@ -4,7 +4,7 @@
 <div class="page-editor flex-fill flex" ng-non-bindable>
 
     {{ csrf_field() }}
-    <div class="faded-small">
+    <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 faded">

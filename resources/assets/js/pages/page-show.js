@@ -13,7 +13,7 @@ window.setupPageShow = module.exports = function (pageId) {
     var isSelection = false;
 
     // Select all contents on input click
-    $pointer.on('click', 'input', function(e) {
+    $pointer.on('click', 'input', function (e) {
         $(this).select();
         e.stopPropagation();
     });
@@ -30,6 +30,7 @@ window.setupPageShow = module.exports = function (pageId) {
 
     // Show pointer when selecting a single block of tagged content
     $('.page-content [id^="bkmrk"]').on('mouseup keyup', function (e) {
+        e.stopPropagation();
         var selection = window.getSelection();
         if (selection.toString().length === 0) return;
 
@@ -46,8 +47,6 @@ window.setupPageShow = module.exports = function (pageId) {
         if (pointerLeftOffset < 0) pointerLeftOffset = 0;
         var pointerLeftOffsetPercent = (pointerLeftOffset / $elem.width()) * 100;
         $pointerInner.css('left', pointerLeftOffsetPercent + '%');
-
-        e.stopPropagation();
 
         isSelection = true;
         setTimeout(() => {
@@ -72,19 +71,43 @@ window.setupPageShow = module.exports = function (pageId) {
         goToText(text);
     }
 
-    // Get current tree's width
-    var bookTreeWidth = $(".book-tree").width();
-    // Get header height
-    var headerHeight = $("#header").height() + $(".faded-small").height();
-    $(window).scroll(function () {
-      if($(window).scrollTop() > headerHeight){
-        // Begin to scroll
-        $(".book-tree").width(bookTreeWidth);
-        $(".book-tree").css("position", "fixed");
-        $(".book-tree").css("top", 0);
-      } else {
-        // Lock it back in place
-        $(".book-tree").css("position", "relative");
-      }
-    })
+    // Make the book-tree sidebar stick in view on scroll
+    var $window = $(window);
+    var $bookTree = $(".book-tree");
+    // Check the page is scrollable and the content is taller than the tree
+    var pageScrollable = ($(document).height() > $window.height()) && ($bookTree.height() < $('.page-content').height());
+    // Get current tree's width and header height
+    var headerHeight = $("#header").height() + $(".toolbar").height();
+    var isFixed = $window.scrollTop() > headerHeight;
+    var bookTreeWidth = $bookTree.width();
+    // Function to fix the tree as a sidebar
+    function stickTree() {
+        $bookTree.width(bookTreeWidth + 48 + 15);
+        $bookTree.addClass("fixed");
+        isFixed = true;
+    }
+    // Function to un-fix the tree back into position
+    function unstickTree() {
+        $bookTree.css('width', 'auto');
+        $bookTree.removeClass("fixed");
+        isFixed = false;
+    }
+    // Checks if the tree stickiness state should change
+    function checkTreeStickiness(skipCheck) {
+        var shouldBeFixed = $window.scrollTop() > headerHeight;
+        if (shouldBeFixed && (!isFixed || skipCheck)) {
+            stickTree();
+        } else if (!shouldBeFixed && (isFixed || skipCheck)) {
+            unstickTree();
+        }
+    }
+    // If the page is scrollable and the window is wide enough listen to scroll events
+    // and evaluate tree stickiness.
+    if (pageScrollable && $window.width() > 1000) {
+        $window.scroll(function() {
+            checkTreeStickiness(false);
+        });
+        checkTreeStickiness(true);
+    }
+
 };

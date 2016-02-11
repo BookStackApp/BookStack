@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="faded-small">
+    <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 faded">
