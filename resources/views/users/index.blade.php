@@ -27,12 +27,20 @@
                         @if($currentUser->can('user-update') || $currentUser->id == $user->id)
                             <a href="/users/{{$user->id}}">
                                 @endif
-                                {{$user->name}}
+                                {{ $user->name }}
                                 @if($currentUser->can('user-update') || $currentUser->id == $user->id)
                             </a>
                         @endif
                     </td>
-                    <td>{{$user->email}}</td>
+                    <td>
+                        @if($currentUser->can('user-update') || $currentUser->id == $user->id)
+                            <a href="/users/{{$user->id}}">
+                                @endif
+                                {{ $user->email }}
+                                @if($currentUser->can('user-update') || $currentUser->id == $user->id)
+                            </a>
+                        @endif
+                    </td>
                     <td>{{ $user->role->display_name }}</td>
                 </tr>
             @endforeach
