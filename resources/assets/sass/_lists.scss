@@ -95,7 +95,27 @@
 
 // Sidebar list
 .book-tree {
-  margin-top: $-xl;
+  padding: $-xl 0 0 0;
+  position: relative;
+  right: 0;
+  top: 0;
+  transition: ease-in-out 240ms;
+  transition-property: right, border;
+  border-left: 0px solid #FFF;
+  &.fixed {
+    position: fixed;
+    top: 0;
+    padding-left: $-l;
+    padding-right: $-l + 15;
+    width: 30%;
+    right: -15px;
+    height: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    //background-color: $primary-faded;
+    border-left: 1px solid #DDD;
+    &::-webkit-scrollbar { width: 0 !important }
+  }
 }
 .book-tree h4 {
   padding: $-m $-s 0 $-s;
@@ -111,10 +131,8 @@
   li a {
     display: block;
     border-bottom: none;
-    padding-left: $-s;
     padding: $-xs 0 $-xs $-s;
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
       text-decoration: none;
     }
   }
@@ -165,6 +183,7 @@
   }
   .sub-menu {
     display: none;
+    padding-left: 0;
   }
   .sub-menu.open {
     display: block;

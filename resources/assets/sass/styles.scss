@@ -134,7 +134,7 @@ $btt-size: 40px;
   background-color: rgba($primary, 0.4);
   position: fixed;
   bottom: $-m;
-  right: $-m;
+  right: $-l;
   padding: $-xs $-s;
   cursor: pointer;
   color: #FFF;
@@ -144,6 +144,7 @@ $btt-size: 40px;
   transition: all ease-in-out 180ms;
   opacity: 0;
   z-index: 999;
+  overflow: hidden;
   &:hover {
     width: $btt-size*3.4;
     background-color: rgba($primary, 1);

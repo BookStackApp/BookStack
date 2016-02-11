@@ -3,11 +3,11 @@
 
 @section('content')
 
-    <div class="faded-small">
+    <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-6 faded">
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6 faded">
                     <div class="action-buttons">
                         <a href="/users/{{$user->id}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete User</a>
                     </div>
