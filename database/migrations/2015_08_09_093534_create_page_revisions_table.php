@@ -19,7 +19,7 @@ class CreatePageRevisionsTable extends Migration
             $table->longText('html');
             $table->longText('text');
             $table->integer('created_by');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

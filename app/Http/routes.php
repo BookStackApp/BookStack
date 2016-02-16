@@ -47,14 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
-    // Users
-    Route::get('/users', 'UserController@index');
-    Route::get('/users/create', 'UserController@create');
-    Route::get('/users/{id}/delete', 'UserController@delete');
-    Route::post('/users/create', 'UserController@store');
-    Route::get('/users/{id}', 'UserController@edit');
-    Route::put('/users/{id}', 'UserController@update');
-    Route::delete('/users/{id}', 'UserController@destroy');
+    // User Profile routes
+    Route::get('/user/{userId}', 'UserController@showProfilePage');
 
     // Image routes
     Route::group(['prefix' => 'images'], function() {
@@ -82,8 +76,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index');
 
     // Settings
-    Route::get('/settings', 'SettingController@index');
-    Route::post('/settings', 'SettingController@update');
+    Route::group(['prefix' => 'settings'], function() {
+        Route::get('/', 'SettingController@index');
+        Route::post('/', 'SettingController@update');
+        // Users
+        Route::get('/users', 'UserController@index');
+        Route::get('/users/create', 'UserController@create');
+        Route::get('/users/{id}/delete', 'UserController@delete');
+        Route::post('/users/create', 'UserController@store');
+        Route::get('/users/{id}', 'UserController@edit');
+        Route::put('/users/{id}', 'UserController@update');
+        Route::delete('/users/{id}', 'UserController@destroy');
+    });
 
 });
 

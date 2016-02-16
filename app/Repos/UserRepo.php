@@ -1,7 +1,9 @@
 <?php namespace BookStack\Repos;
 
 
+use BookStack\Page;
 use BookStack\Role;
+use BookStack\Services\EntityService;
 use BookStack\User;
 use Setting;
 
@@ -10,15 +12,19 @@ class UserRepo
 
     protected $user;
     protected $role;
+    protected $entityService;
 
     /**
      * UserRepo constructor.
-     * @param $user
+     * @param User $user
+     * @param Role $role
+     * @param EntityService $entityService
      */
-    public function __construct(User $user, Role $role)
+    public function __construct(User $user, Role $role, EntityService $entityService)
     {
         $this->user = $user;
         $this->role = $role;
+        $this->entityService = $entityService;
     }
 
     /**
@@ -111,5 +117,43 @@ class UserRepo
     {
         $user->socialAccounts()->delete();
         $user->delete();
+    }
+
+    /**
+     * Get the latest activity for a user.
+     * @param User $user
+     * @param int $count
+     * @param int $page
+     * @return array
+     */
+    public function getActivity(User $user, $count = 20, $page = 0)
+    {
+        return \Activity::userActivity($user, $count, $page);
+    }
+
+    /**
+     * Get the pages the the given user has created.
+     * @param User $user
+     * @param int $count
+     * @param int $page
+     * @return mixed
+     */
+    public function getCreatedPages(User $user, $count = 20, $page = 0)
+    {
+        return $this->entityService->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+            ->skip($page * $count)->take($count)->get();
+    }
+
+    /**
+     * Get asset created counts for the give user.
+     * @return array
+     */
+    public function getAssetCounts(User $user)
+    {
+        return [
+            'pages' => $this->entityService->page->where('created_by', '=', $user->id)->count(),
+            'chapters' => $this->entityService->chapter->where('created_by', '=', $user->id)->count(),
+            'books' => $this->entityService->book->where('created_by', '=', $user->id)->count(),
+        ];
     }
 }

@@ -20,7 +20,7 @@ class AddEmailConfirmationTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->index();
             $table->string('token')->index();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

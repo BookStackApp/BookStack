@@ -91,14 +91,14 @@ class ActivityService
     }
 
     /**
-     * Gets the latest activity for an entitiy, Filtering out similar
+     * Gets the latest activity for an entity, Filtering out similar
      * items to prevent a message activity list.
      * @param Entity $entity
      * @param int    $count
      * @param int    $page
      * @return array
      */
-    function entityActivity($entity, $count = 20, $page = 0)
+    public function entityActivity($entity, $count = 20, $page = 0)
     {
         $activity = $entity->hasMany('BookStack\Activity')->orderBy('created_at', 'desc')
             ->skip($count * $page)->take($count)->get();
@@ -107,15 +107,30 @@ class ActivityService
     }
 
     /**
-     * Filters out similar activity.
-     * @param Activity[] $activity
+     * Get latest activity for a user, Filtering out similar
+     * items.
+     * @param $user
+     * @param int $count
+     * @param int $page
      * @return array
      */
-    protected function filterSimilar($activity)
+    public function userActivity($user, $count = 20, $page = 0)
+    {
+        $activity = $this->activity->where('user_id', '=', $user->id)
+            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
+        return $this->filterSimilar($activity);
+    }
+
+    /**
+     * Filters out similar activity.
+     * @param Activity[] $activities
+     * @return array
+     */
+    protected function filterSimilar($activities)
     {
         $newActivity = [];
         $previousItem = false;
-        foreach ($activity as $activityItem) {
+        foreach ($activities as $activityItem) {
             if ($previousItem === false) {
                 $previousItem = $activityItem;
                 $newActivity[] = $activityItem;

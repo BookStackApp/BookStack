@@ -28,7 +28,7 @@ class AddRolesAndPermissions extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
         // Create table for associating roles to users (Many-to-Many)
@@ -50,7 +50,7 @@ class AddRolesAndPermissions extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
         // Create table for associating permissions to roles (Many-to-Many)

@@ -18,7 +18,7 @@ class CreateViewsTable extends Migration
             $table->integer('viewable_id');
             $table->string('viewable_type');
             $table->integer('views');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

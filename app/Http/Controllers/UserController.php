@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Activity;
 use Illuminate\Http\Request;
 
 use Illuminate\Http\Response;
@@ -92,9 +93,8 @@ class UserController extends Controller
             $user->save();
         }
 
-        return redirect('/users');
+        return redirect('/settings/users');
     }
-
 
     /**
      * Show the form for editing the specified user.
@@ -159,7 +159,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        return redirect('/users');
+        return redirect('/settings/users');
     }
 
     /**
@@ -197,6 +197,19 @@ class UserController extends Controller
         }
         $this->userRepo->destroy($user);
 
-        return redirect('/users');
+        return redirect('/settings/users');
+    }
+
+    /**
+     * Show the user profile page
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showProfilePage($id)
+    {
+        $user = $this->userRepo->getById($id);
+        $userActivity = $this->userRepo->getActivity($user);
+        $recentPages = $this->userRepo->getCreatedPages($user, 5, 0);
+        return view('users/profile', ['user' => $user, 'activity' => $userActivity, 'recentPages' => $recentPages]);
     }
 }

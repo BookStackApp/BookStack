@@ -20,7 +20,7 @@ class CreateActivitiesTable extends Migration
             $table->integer('user_id');
             $table->integer('entity_id');
             $table->string('entity_type');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 
