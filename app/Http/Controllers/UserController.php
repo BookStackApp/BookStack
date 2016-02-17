@@ -209,7 +209,13 @@ class UserController extends Controller
     {
         $user = $this->userRepo->getById($id);
         $userActivity = $this->userRepo->getActivity($user);
-        $recentPages = $this->userRepo->getCreatedPages($user, 5, 0);
-        return view('users/profile', ['user' => $user, 'activity' => $userActivity, 'recentPages' => $recentPages]);
+        $recentlyCreated = $this->userRepo->getRecentlyCreated($user, 5, 0);
+        $assetCounts = $this->userRepo->getAssetCounts($user);
+        return view('users/profile', [
+            'user' => $user,
+            'activity' => $userActivity,
+            'recentlyCreated' => $recentlyCreated,
+            'assetCounts' => $assetCounts
+        ]);
     }
 }

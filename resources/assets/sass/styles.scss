@@ -47,6 +47,13 @@ body.dragging, body.dragging * {
     width: 80px;
     height: 80px;
   }
+  &.huge {
+    width: 120px;
+    height: 120px;
+  }
+  &.square {
+    border-radius: 3px;
+  }
 }
 
 // System wide notifications

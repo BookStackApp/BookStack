@@ -9,7 +9,7 @@
 
 <div class="right" ng-non-bindable>
     @if($activity->user)
-        {{$activity->user->name}}
+        <a href="/user/{{ $activity->user->id }}">{{$activity->user->name}}</a>
     @else
         A deleted user
     @endif

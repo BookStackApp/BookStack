@@ -58,10 +58,13 @@
                                 </span>
                                 <ul>
                                     <li>
-                                        <a href="/settings/users/{{$currentUser->id}}" class="text-primary"><i class="zmdi zmdi-edit zmdi-hc-lg"></i>Edit Profile</a>
+                                        <a href="/user/{{$currentUser->id}}" class="text-primary"><i class="zmdi zmdi-account zmdi-hc-fw zmdi-hc-lg"></i>View Profile</a>
                                     </li>
                                     <li>
-                                        <a href="/logout" class="text-neg"><i class="zmdi zmdi-run zmdi-hc-lg"></i>Logout</a>
+                                        <a href="/settings/users/{{$currentUser->id}}" class="text-primary"><i class="zmdi zmdi-edit zmdi-hc-fw zmdi-hc-lg"></i>Edit Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="/logout" class="text-neg"><i class="zmdi zmdi-run zmdi-hc-fw zmdi-hc-lg"></i>Logout</a>
                                     </li>
                                 </ul>
                             </div>

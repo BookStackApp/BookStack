@@ -5,6 +5,7 @@ use BookStack\Page;
 use BookStack\Role;
 use BookStack\Services\EntityService;
 use BookStack\User;
+use Carbon\Carbon;
 use Setting;
 
 class UserRepo
@@ -132,20 +133,26 @@ class UserRepo
     }
 
     /**
-     * Get the pages the the given user has created.
+     * Get the recently created content for this given user.
      * @param User $user
      * @param int $count
-     * @param int $page
      * @return mixed
      */
-    public function getCreatedPages(User $user, $count = 20, $page = 0)
+    public function getRecentlyCreated(User $user, $count = 20)
     {
-        return $this->entityService->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-            ->skip($page * $count)->take($count)->get();
+        return [
+            'pages' => $this->entityService->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+                ->take($count)->get(),
+            'chapters' => $this->entityService->chapter->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+                ->take($count)->get(),
+            'books' => $this->entityService->book->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+                ->take($count)->get()
+        ];
     }
 
     /**
      * Get asset created counts for the give user.
+     * @param User $user
      * @return array
      */
     public function getAssetCounts(User $user)
@@ -156,4 +163,5 @@ class UserRepo
             'books' => $this->entityService->book->where('created_by', '=', $user->id)->count(),
         ];
     }
+
 }
