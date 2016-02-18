@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 text-bigger">
+                    <div class="col-md-5 text-bigger" id="content-counts">
                         <div class="text-muted">Created Content</div>
                         <div class="text-book">
                             <i class="zmdi zmdi-book zmdi-hc-fw"></i> {{ $assetCounts['books'] }} {{ str_plural('Book', $assetCounts['books']) }}
@@ -65,7 +65,7 @@
                 @endif
             </div>
 
-            <div class="col-sm-4 col-sm-offset-1">
+            <div class="col-sm-4 col-sm-offset-1" id="recent-activity">
                 <h3>Recent Activity</h3>
                 @include('partials/activity-list', ['activity' => $activity])
             </div>

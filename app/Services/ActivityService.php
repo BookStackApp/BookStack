@@ -29,18 +29,19 @@ class ActivityService
      */
     public function add(Entity $entity, $activityKey, $bookId = 0, $extra = false)
     {
-        $this->activity->user_id = $this->user->id;
-        $this->activity->book_id = $bookId;
-        $this->activity->key = strtolower($activityKey);
+        $activity = $this->activity->newInstance();
+        $activity->user_id = $this->user->id;
+        $activity->book_id = $bookId;
+        $activity->key = strtolower($activityKey);
         if ($extra !== false) {
-            $this->activity->extra = $extra;
+            $activity->extra = $extra;
         }
-        $entity->activity()->save($this->activity);
+        $entity->activity()->save($activity);
         $this->setNotification($activityKey);
     }
 
     /**
-     * Adds a activity history with a message & without binding to a entitiy.
+     * Adds a activity history with a message & without binding to a entity.
      * @param            $activityKey
      * @param int        $bookId
      * @param bool|false $extra

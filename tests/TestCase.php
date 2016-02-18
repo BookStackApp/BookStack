@@ -109,4 +109,18 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $this;
     }
+
+    /**
+     * Click the text within the selected element.
+     * @param $parentElement
+     * @param $linkText
+     * @return $this
+     */
+    protected function clickInElement($parentElement, $linkText)
+    {
+        $elem = $this->crawler->filter($parentElement);
+        $link = $elem->selectLink($linkText);
+        $this->visit($link->link()->getUri());
+        return $this;
+    }
 }
