@@ -125,7 +125,7 @@ class PageRepo
         if($htmlText == '') return $htmlText;
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
-        $doc->loadHTML($htmlText);
+        $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
 
         $container = $doc->documentElement;
         $body = $container->childNodes->item(0);
