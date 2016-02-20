@@ -250,5 +250,23 @@ class EntityTest extends TestCase
             ->click('Revisions')->seeStatusCode(200);
     }
 
+    public function test_recently_created_pages_view()
+    {
+        $user = $this->getNewUser();
+        $content = $this->createEntityChainBelongingToUser($user);
+
+        $this->asAdmin()->visit('/pages/recently-created')
+            ->seeInNthElement('.entity-list .page', 0, $content['page']->name);
+    }
+
+    public function test_recently_updated_pages_view()
+    {
+        $user = $this->getNewUser();
+        $content = $this->createEntityChainBelongingToUser($user);
+
+        $this->asAdmin()->visit('/pages/recently-updated')
+            ->seeInNthElement('.entity-list .page', 0, $content['page']->name);
+    }
+
 
 }

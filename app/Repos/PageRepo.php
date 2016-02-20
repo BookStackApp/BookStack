@@ -358,5 +358,22 @@ class PageRepo
         $page->delete();
     }
 
+    /**
+     * Get the latest pages added to the system.
+     * @param $count
+     */
+    public function getRecentlyCreatedPaginated($count = 20)
+    {
+        return $this->page->orderBy('created_at', 'desc')->paginate($count);
+    }
+
+    /**
+     * Get the latest pages added to the system.
+     * @param $count
+     */
+    public function getRecentlyUpdatedPaginated($count = 20)
+    {
+        return $this->page->orderBy('updated_at', 'desc')->paginate($count);
+    }
 
 }

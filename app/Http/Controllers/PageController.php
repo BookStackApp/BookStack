@@ -278,4 +278,30 @@ class PageController extends Controller
         ]);
     }
 
+    /**
+     * Show a listing of recently created pages
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRecentlyCreated()
+    {
+        $pages = $this->pageRepo->getRecentlyCreatedPaginated(20);
+        return view('pages/detailed-listing', [
+            'title' => 'Recently Created Pages',
+            'pages' => $pages
+        ]);
+    }
+
+    /**
+     * Show a listing of recently created pages
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRecentlyUpdated()
+    {
+        $pages = $this->pageRepo->getRecentlyUpdatedPaginated(20);
+        return view('pages/detailed-listing', [
+            'title' => 'Recently Updated Pages',
+            'pages' => $pages
+        ]);
+    }
+
 }

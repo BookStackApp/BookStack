@@ -28,14 +28,15 @@
                 @else
                     <h3>Recent Books</h3>
                 @endif
-                @include('partials/entity-list', ['entities' => $recents, 'size' => 'compact'])
+                @include('partials/entity-list', ['entities' => $recents, 'style' => 'compact'])
             </div>
 
             <div class="col-sm-4">
-                <h3>Recently Created Pages</h3>
-                @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'size' => 'compact'])
-                <h3>Recently Updated Pages</h3>
-                @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'size' => 'compact'])
+                <h3><a class="no-color" href="/pages/recently-created">Recently Created Pages</a></h3>
+                @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'style' => 'compact'])
+
+                <h3><a class="no-color" href="/pages/recently-updated">Recently Updated Pages</a></h3>
+                @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'style' => 'compact'])
             </div>
 
             <div class="col-sm-4" id="recent-activity">

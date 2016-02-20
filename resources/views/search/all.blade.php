@@ -13,7 +13,7 @@
                 <div class="page-list">
                     @if(count($pages) > 0)
                         @foreach($pages as $page)
-                            @include('pages/list-item', ['page' => $page, 'showMeta' => true])
+                            @include('pages/list-item', ['page' => $page, 'style' => 'detailed'])
                             <hr>
                         @endforeach
                     @else
