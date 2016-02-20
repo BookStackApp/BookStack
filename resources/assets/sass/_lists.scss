@@ -284,3 +284,25 @@ ul.pagination {
     color: $primary;
   }
 }
+
+.entity-list.compact {
+  font-size: 0.6em;
+  > div {
+    padding: $-m 0;
+  }
+  h3, a {
+    line-height: 1.2;
+  }
+  h3 {
+    margin: 0;
+  }
+  p {
+    display: none;
+    font-size: $fs-m * 0.8;
+    padding-top: $-xs;
+    margin: 0;
+  }
+  hr {
+    margin: 0;
+  }
+}

@@ -1,11 +1,7 @@
 <?php namespace BookStack\Repos;
 
-
-use BookStack\Page;
 use BookStack\Role;
-use BookStack\Services\EntityService;
 use BookStack\User;
-use Carbon\Carbon;
 use Setting;
 
 class UserRepo
@@ -13,19 +9,19 @@ class UserRepo
 
     protected $user;
     protected $role;
-    protected $entityService;
+    protected $entityRepo;
 
     /**
      * UserRepo constructor.
      * @param User $user
      * @param Role $role
-     * @param EntityService $entityService
+     * @param EntityRepo $entityRepo
      */
-    public function __construct(User $user, Role $role, EntityService $entityService)
+    public function __construct(User $user, Role $role, EntityRepo $entityRepo)
     {
         $this->user = $user;
         $this->role = $role;
-        $this->entityService = $entityService;
+        $this->entityRepo = $entityRepo;
     }
 
     /**
@@ -141,11 +137,11 @@ class UserRepo
     public function getRecentlyCreated(User $user, $count = 20)
     {
         return [
-            'pages' => $this->entityService->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+            'pages' => $this->entityRepo->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
                 ->take($count)->get(),
-            'chapters' => $this->entityService->chapter->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+            'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
                 ->take($count)->get(),
-            'books' => $this->entityService->book->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
+            'books' => $this->entityRepo->book->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
                 ->take($count)->get()
         ];
     }
@@ -158,9 +154,9 @@ class UserRepo
     public function getAssetCounts(User $user)
     {
         return [
-            'pages' => $this->entityService->page->where('created_by', '=', $user->id)->count(),
-            'chapters' => $this->entityService->chapter->where('created_by', '=', $user->id)->count(),
-            'books' => $this->entityService->book->where('created_by', '=', $user->id)->count(),
+            'pages' => $this->entityRepo->page->where('created_by', '=', $user->id)->count(),
+            'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->count(),
+            'books' => $this->entityRepo->book->where('created_by', '=', $user->id)->count(),
         ];
     }
 
