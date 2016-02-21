@@ -132,14 +132,13 @@ class PageRepo
         $childNodes = $body->childNodes;
 
         // Ensure no duplicate ids are used
-        $lastId = false;
         $idArray = [];
 
         foreach ($childNodes as $index => $childNode) {
             /** @var \DOMElement $childNode */
             if (get_class($childNode) !== 'DOMElement') continue;
 
-            // Overwrite id if not a bookstack custom id
+            // Overwrite id if not a BookStack custom id
             if ($childNode->hasAttribute('id')) {
                 $id = $childNode->getAttribute('id');
                 if (strpos($id, 'bkmrk') === 0 && array_search($id, $idArray) === false) {
@@ -149,13 +148,18 @@ class PageRepo
             }
 
             // Create an unique id for the element
-            do {
-                $id = 'bkmrk-' . substr(uniqid(), -5);
-            } while ($id == $lastId);
-            $lastId = $id;
+            // Uses the content as a basis to ensure output is the same every time
+            // the same content is passed through.
+            $contentId = 'bkmrk-' . substr(strtolower(preg_replace('/\s+/', '-', trim($childNode->nodeValue))), 0, 20);
+            $newId = urlencode($contentId);
+            $loopIndex = 0;
+            while (in_array($newId, $idArray)) {
+                $newId = urlencode($contentId . '-' . $loopIndex);
+                $loopIndex++;
+            }
 
-            $childNode->setAttribute('id', $id);
-            $idArray[] = $id;
+            $childNode->setAttribute('id', $newId);
+            $idArray[] = $newId;
         }
 
         // Generate inner html as a string
