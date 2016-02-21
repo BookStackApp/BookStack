@@ -45,7 +45,8 @@ class Page extends Entity
 
     public function getExcerpt($length = 100)
     {
-        return strlen($this->text) > $length ? substr($this->text, 0, $length-3) . '...' : $this->text;
+        $text = strlen($this->text) > $length ? substr($this->text, 0, $length-3) . '...' : $this->text;
+        return mb_convert_encoding($text, 'UTF-8');
     }
 
 }
