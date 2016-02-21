@@ -218,12 +218,15 @@ class BookRepo
     /**
      * Get books by search term.
      * @param $term
+     * @param int $count
+     * @param array $paginationAppends
      * @return mixed
      */
-    public function getBySearch($term)
+    public function getBySearch($term, $count = 20, $paginationAppends = [])
     {
         $terms = explode(' ', $term);
-        $books = $this->book->fullTextSearch(['name', 'description'], $terms);
+        $books = $this->book->fullTextSearchQuery(['name', 'description'], $terms)
+            ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($books as $book) {
             //highlight

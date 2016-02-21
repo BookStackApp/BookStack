@@ -16,10 +16,10 @@
                 Last updated {{ $page->updated_at->diffForHumans() }} @if($page->updatedBy)by {{$page->updatedBy->name}} @endif
             </div>
             <div class="col-md-8">
-                <a class="text-book" href="{{ $page->book->getUrl() }}"><i class="zmdi zmdi-book"></i>{{ $page->book->getExcerpt(30) }}</a>
+                <a class="text-book" href="{{ $page->book->getUrl() }}"><i class="zmdi zmdi-book"></i>{{ $page->book->getShortName(30) }}</a>
                 <br>
                 @if($page->chapter)
-                    <a class="text-chapter" href="{{ $page->chapter->getUrl() }}"><i class="zmdi zmdi-collection-bookmark"></i>{{ $page->chapter->getExcerpt(30) }}</a>
+                    <a class="text-chapter" href="{{ $page->chapter->getUrl() }}"><i class="zmdi zmdi-collection-bookmark"></i>{{ $page->chapter->getShortName(30) }}</a>
                 @else
                     <i class="zmdi zmdi-collection-bookmark"></i> Page is not in a chapter
                 @endif

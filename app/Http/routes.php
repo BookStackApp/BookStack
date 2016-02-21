@@ -74,6 +74,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Search
     Route::get('/search/all', 'SearchController@searchAll');
+    Route::get('/search/pages', 'SearchController@searchPages');
+    Route::get('/search/books', 'SearchController@searchBooks');
+    Route::get('/search/chapters', 'SearchController@searchChapters');
     Route::get('/search/book/{bookId}', 'SearchController@searchBook');
 
     // Other Pages

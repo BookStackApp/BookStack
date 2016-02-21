@@ -125,12 +125,15 @@ class ChapterRepo
      * Get chapters by the given search term.
      * @param       $term
      * @param array $whereTerms
+     * @param int $count
+     * @param array $paginationAppends
      * @return mixed
      */
-    public function getBySearch($term, $whereTerms = [])
+    public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = explode(' ', $term);
-        $chapters = $this->chapter->fullTextSearch(['name', 'description'], $terms, $whereTerms);
+        $chapters = $this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms)
+            ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {
             //highlight

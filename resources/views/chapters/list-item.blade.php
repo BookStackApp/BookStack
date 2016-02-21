@@ -10,7 +10,7 @@
         <p class="text-muted">{{ $chapter->getExcerpt() }}</p>
     @endif
 
-    @if(count($chapter->pages) > 0 && !isset($hidePages))
+    @if(!isset($hidePages) && count($chapter->pages) > 0)
         <p class="text-muted chapter-toggle"><i class="zmdi zmdi-caret-right"></i> <i class="zmdi zmdi-file-text"></i> <span>{{ count($chapter->pages) }} Pages</span></p>
         <div class="inset-list">
             @foreach($chapter->pages as $page)

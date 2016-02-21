@@ -175,14 +175,17 @@ class PageRepo
     /**
      * Gets pages by a search term.
      * Highlights page content for showing in results.
-     * @param string      $term
+     * @param string $term
      * @param array $whereTerms
+     * @param int $count
+     * @param array $paginationAppends
      * @return mixed
      */
-    public function getBySearch($term, $whereTerms = [])
+    public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = explode(' ', $term);
-        $pages = $this->page->fullTextSearch(['name', 'text'], $terms, $whereTerms);
+        $pages = $this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms)
+            ->paginate($count)->appends($paginationAppends);
 
         // Add highlights to page text.
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));

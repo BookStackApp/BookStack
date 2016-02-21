@@ -155,63 +155,6 @@ class EntityTest extends TestCase
         return $book;
     }
 
-    public function test_page_search()
-    {
-        $book = \BookStack\Book::all()->first();
-        $page = $book->pages->first();
-
-        $this->asAdmin()
-            ->visit('/')
-            ->type($page->name, 'term')
-            ->press('header-search-box-button')
-            ->see('Search Results')
-            ->see($page->name)
-            ->click($page->name)
-            ->seePageIs($page->getUrl());
-    }
-
-    public function test_invalid_page_search()
-    {
-        $this->asAdmin()
-            ->visit('/')
-            ->type('<p>test</p>', 'term')
-            ->press('header-search-box-button')
-            ->see('Search Results')
-            ->seeStatusCode(200);
-    }
-
-    public function test_empty_search_redirects_back()
-    {
-        $this->asAdmin()
-            ->visit('/')
-            ->visit('/search/all')
-            ->seePageIs('/');
-    }
-
-    public function test_book_search()
-    {
-        $book = \BookStack\Book::all()->first();
-        $page = $book->pages->last();
-        $chapter = $book->chapters->last();
-
-        $this->asAdmin()
-            ->visit('/search/book/' . $book->id . '?term=' . urlencode($page->name))
-            ->see($page->name)
-
-            ->visit('/search/book/' . $book->id  . '?term=' . urlencode($chapter->name))
-            ->see($chapter->name);
-    }
-
-    public function test_empty_book_search_redirects_back()
-    {
-        $book = \BookStack\Book::all()->first();
-        $this->asAdmin()
-            ->visit('/books')
-            ->visit('/search/book/' . $book->id . '?term=')
-            ->seePageIs('/books');
-    }
-
-
     public function test_entities_viewable_after_creator_deletion()
     {
         // Create required assets and revisions

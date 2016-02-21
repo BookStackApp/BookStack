@@ -98,7 +98,7 @@ abstract class Entity extends Model
      * @param string[] array $wheres
      * @return mixed
      */
-    public static function fullTextSearch($fieldsToSearch, $terms, $wheres = [])
+    public static function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
     {
         $termString = '';
         foreach ($terms as $term) {
@@ -107,7 +107,7 @@ abstract class Entity extends Model
         $fields = implode(',', $fieldsToSearch);
         $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
         $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
-        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termStringEscaped]);
+        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
 
         // Add additional where terms
         foreach ($wheres as $whereTerm) {
@@ -115,10 +115,13 @@ abstract class Entity extends Model
         }
 
         // Load in relations
-        if (!static::isA('book')) $search = $search->with('book');
-        if (static::isA('page'))  $search = $search->with('chapter');
+        if (static::isA('page'))  {
+            $search = $search->with('book', 'chapter', 'createdBy', 'updatedBy');
+        } else if (static::isA('chapter')) {
+            $search = $search->with('book');
+        }
 
-        return $search->orderBy('title_relevance', 'desc')->get();
+        return $search->orderBy('title_relevance', 'desc');
     }
 
     /**
