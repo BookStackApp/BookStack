@@ -28,5 +28,10 @@
         <env name="MAIL_PRETEND" value="true"/>
         <env name="AUTH_METHOD" value="standard"/>
         <env name="DISABLE_EXTERNAL_SERVICES" value="false"/>
+        <env name="LDAP_VERSION" value="3"/>
+        <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
+        <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <env name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
+        <env name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
     </php>
 </phpunit>
