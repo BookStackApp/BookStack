@@ -14,8 +14,8 @@ class BookRepo
 
     /**
      * BookRepo constructor.
-     * @param Book        $book
-     * @param PageRepo    $pageRepo
+     * @param Book $book
+     * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
      */
     public function __construct(Book $book, PageRepo $pageRepo, ChapterRepo $chapterRepo)
@@ -42,7 +42,9 @@ class BookRepo
      */
     public function getAll($count = 10)
     {
-        return $this->book->orderBy('name', 'asc')->take($count)->get();
+        $bookQuery = $this->book->orderBy('name', 'asc');
+        if (!$count) return $bookQuery->get();
+        return $bookQuery->take($count)->get();
     }
 
     /**
@@ -159,7 +161,7 @@ class BookRepo
     }
 
     /**
-     * @param string     $slug
+     * @param string $slug
      * @param bool|false $currentId
      * @return bool
      */
@@ -175,7 +177,7 @@ class BookRepo
     /**
      * Provides a suitable slug for the given book name.
      * Ensures the returned slug is unique in the system.
-     * @param string     $name
+     * @param string $name
      * @param bool|false $currentId
      * @return string
      */
