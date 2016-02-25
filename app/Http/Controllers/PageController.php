@@ -11,6 +11,7 @@ use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Views;
 
 class PageController extends Controller
@@ -81,6 +82,8 @@ class PageController extends Controller
 
     /**
      * Display the specified page.
+     * If the page is not found via the slug the
+     * revisions are searched for a match.
      *
      * @param $bookSlug
      * @param $pageSlug
@@ -89,7 +92,15 @@ class PageController extends Controller
     public function show($bookSlug, $pageSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+
+        try {
+            $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        } catch (NotFoundHttpException $e) {
+            $page = $this->pageRepo->findPageUsingOldSlug($pageSlug, $bookSlug);
+            if ($page === null) abort(404);
+            return redirect($page->getUrl());
+        }
+
         $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($page);
         $this->setPageTitle($page->getShortName());

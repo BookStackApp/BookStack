@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageRepo
 {
@@ -65,11 +66,28 @@ class PageRepo
     public function getBySlug($slug, $bookId)
     {
         $page = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($page === null) abort(404);
+        if ($page === null) throw new NotFoundHttpException('Page not found');
         return $page;
     }
 
     /**
+     * Search through page revisions and retrieve
+     * the last page in the current book that
+     * has a slug equal to the one given.
+     * @param $pageSlug
+     * @param $bookSlug
+     * @return null | Page
+     */
+    public function findPageUsingOldSlug($pageSlug, $bookSlug)
+    {
+        $revision = $this->pageRevision->where('slug', '=', $pageSlug)
+            ->where('book_slug', '=', $bookSlug)->orderBy('created_at', 'desc')
+            ->with('page')->first();
+        return $revision !== null ? $revision->page : null;
+    }
+
+    /**
+     * Get a new Page instance from the given input.
      * @param $input
      * @return Page
      */
@@ -245,9 +263,13 @@ class PageRepo
             $this->saveRevision($page);
         }
 
+        // Prevent slug being updated if no name change
+        if ($page->name !== $input['name']) {
+            $page->slug = $this->findSuitableSlug($input['name'], $book_id, $page->id);
+        }
+
         // Update with new details
         $page->fill($input);
-        $page->slug = $this->findSuitableSlug($page->name, $book_id, $page->id);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
         $page->updated_by = auth()->user()->id;
@@ -283,6 +305,8 @@ class PageRepo
     {
         $revision = $this->pageRevision->fill($page->toArray());
         $revision->page_id = $page->id;
+        $revision->slug = $page->slug;
+        $revision->book_slug = $page->book->slug;
         $revision->created_by = auth()->user()->id;
         $revision->created_at = $page->updated_at;
         $revision->save();

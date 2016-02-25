@@ -211,5 +211,18 @@ class EntityTest extends TestCase
             ->seeInNthElement('.entity-list .page', 0, $content['page']->name);
     }
 
+    public function test_old_page_slugs_redirect_to_new_pages()
+    {
+        $page = \BookStack\Page::all()->first();
+        $pageUrl = $page->getUrl();
+        $newPageUrl = '/books/' . $page->book->slug . '/page/super-test-page';
+        $this->asAdmin()->visit($pageUrl)
+            ->clickInElement('#content', 'Edit')
+            ->type('super test page', '#name')
+            ->press('Save Page')
+            ->seePageIs($newPageUrl)
+            ->visit($pageUrl)
+            ->seePageIs($newPageUrl);
+    }
 
 }
