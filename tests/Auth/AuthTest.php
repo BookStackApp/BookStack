@@ -129,7 +129,7 @@ class AuthTest extends TestCase
         $user = factory(\BookStack\User::class)->make();
 
         $this->asAdmin()
-            ->visit('/users')
+            ->visit('/settings/users')
             ->click('Add new user')
             ->type($user->name, '#name')
             ->type($user->email, '#email')
@@ -138,7 +138,7 @@ class AuthTest extends TestCase
             ->type($user->password, '#password-confirm')
             ->press('Save')
             ->seeInDatabase('users', $user->toArray())
-            ->seePageIs('/users')
+            ->seePageIs('/settings/users')
             ->see($user->name);
     }
 
@@ -147,13 +147,13 @@ class AuthTest extends TestCase
         $user = \BookStack\User::all()->last();
         $password = $user->password;
         $this->asAdmin()
-            ->visit('/users')
+            ->visit('/settings/users')
             ->click($user->name)
-            ->seePageIs('/users/' . $user->id)
+            ->seePageIs('/settings/users/' . $user->id)
             ->see($user->email)
             ->type('Barry Scott', '#name')
             ->press('Save')
-            ->seePageIs('/users')
+            ->seePageIs('/settings/users')
             ->seeInDatabase('users', ['id' => $user->id, 'name' => 'Barry Scott', 'password' => $password])
             ->notSeeInDatabase('users', ['name' => $user->name]);
     }
@@ -161,7 +161,7 @@ class AuthTest extends TestCase
     public function test_user_password_update()
     {
         $user = \BookStack\User::all()->last();
-        $userProfilePage = '/users/' . $user->id;
+        $userProfilePage = '/settings/users/' . $user->id;
         $this->asAdmin()
             ->visit($userProfilePage)
             ->type('newpassword', '#password')
@@ -172,7 +172,7 @@ class AuthTest extends TestCase
             ->type('newpassword', '#password')
             ->type('newpassword', '#password-confirm')
             ->press('Save')
-            ->seePageIs('/users');
+            ->seePageIs('/settings/users');
 
             $userPassword = \BookStack\User::find($user->id)->password;
             $this->assertTrue(Hash::check('newpassword', $userPassword));
@@ -184,11 +184,11 @@ class AuthTest extends TestCase
         $user = $this->getNewUser($userDetails->toArray());
 
         $this->asAdmin()
-            ->visit('/users/' . $user->id)
+            ->visit('/settings/users/' . $user->id)
             ->click('Delete User')
             ->see($user->name)
             ->press('Confirm')
-            ->seePageIs('/users')
+            ->seePageIs('/settings/users')
             ->notSeeInDatabase('users', ['name' => $user->name]);
     }
 
@@ -199,10 +199,10 @@ class AuthTest extends TestCase
         $this->assertEquals(1, $adminRole->users()->count());
         $user = $adminRole->users->first();
 
-        $this->asAdmin()->visit('/users/' . $user->id)
+        $this->asAdmin()->visit('/settings/users/' . $user->id)
             ->click('Delete User')
             ->press('Confirm')
-            ->seePageIs('/users/' . $user->id)
+            ->seePageIs('/settings/users/' . $user->id)
             ->see('You cannot delete the only admin');
     }
 

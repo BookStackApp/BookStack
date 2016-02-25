@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageRepo
 {
@@ -65,11 +66,28 @@ class PageRepo
     public function getBySlug($slug, $bookId)
     {
         $page = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($page === null) abort(404);
+        if ($page === null) throw new NotFoundHttpException('Page not found');
         return $page;
     }
 
     /**
+     * Search through page revisions and retrieve
+     * the last page in the current book that
+     * has a slug equal to the one given.
+     * @param $pageSlug
+     * @param $bookSlug
+     * @return null | Page
+     */
+    public function findPageUsingOldSlug($pageSlug, $bookSlug)
+    {
+        $revision = $this->pageRevision->where('slug', '=', $pageSlug)
+            ->where('book_slug', '=', $bookSlug)->orderBy('created_at', 'desc')
+            ->with('page')->first();
+        return $revision !== null ? $revision->page : null;
+    }
+
+    /**
+     * Get a new Page instance from the given input.
      * @param $input
      * @return Page
      */
@@ -125,21 +143,20 @@ class PageRepo
         if($htmlText == '') return $htmlText;
         libxml_use_internal_errors(true);
         $doc = new \DOMDocument();
-        $doc->loadHTML($htmlText);
+        $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
 
         $container = $doc->documentElement;
         $body = $container->childNodes->item(0);
         $childNodes = $body->childNodes;
 
         // Ensure no duplicate ids are used
-        $lastId = false;
         $idArray = [];
 
         foreach ($childNodes as $index => $childNode) {
             /** @var \DOMElement $childNode */
             if (get_class($childNode) !== 'DOMElement') continue;
 
-            // Overwrite id if not a bookstack custom id
+            // Overwrite id if not a BookStack custom id
             if ($childNode->hasAttribute('id')) {
                 $id = $childNode->getAttribute('id');
                 if (strpos($id, 'bkmrk') === 0 && array_search($id, $idArray) === false) {
@@ -149,13 +166,18 @@ class PageRepo
             }
 
             // Create an unique id for the element
-            do {
-                $id = 'bkmrk-' . substr(uniqid(), -5);
-            } while ($id == $lastId);
-            $lastId = $id;
+            // Uses the content as a basis to ensure output is the same every time
+            // the same content is passed through.
+            $contentId = 'bkmrk-' . substr(strtolower(preg_replace('/\s+/', '-', trim($childNode->nodeValue))), 0, 20);
+            $newId = urlencode($contentId);
+            $loopIndex = 0;
+            while (in_array($newId, $idArray)) {
+                $newId = urlencode($contentId . '-' . $loopIndex);
+                $loopIndex++;
+            }
 
-            $childNode->setAttribute('id', $id);
-            $idArray[] = $id;
+            $childNode->setAttribute('id', $newId);
+            $idArray[] = $newId;
         }
 
         // Generate inner html as a string
@@ -171,14 +193,17 @@ class PageRepo
     /**
      * Gets pages by a search term.
      * Highlights page content for showing in results.
-     * @param string      $term
+     * @param string $term
      * @param array $whereTerms
+     * @param int $count
+     * @param array $paginationAppends
      * @return mixed
      */
-    public function getBySearch($term, $whereTerms = [])
+    public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = explode(' ', $term);
-        $pages = $this->page->fullTextSearch(['name', 'text'], $terms, $whereTerms);
+        $pages = $this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms)
+            ->paginate($count)->appends($paginationAppends);
 
         // Add highlights to page text.
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
@@ -238,9 +263,13 @@ class PageRepo
             $this->saveRevision($page);
         }
 
+        // Prevent slug being updated if no name change
+        if ($page->name !== $input['name']) {
+            $page->slug = $this->findSuitableSlug($input['name'], $book_id, $page->id);
+        }
+
         // Update with new details
         $page->fill($input);
-        $page->slug = $this->findSuitableSlug($page->name, $book_id, $page->id);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
         $page->updated_by = auth()->user()->id;
@@ -276,6 +305,8 @@ class PageRepo
     {
         $revision = $this->pageRevision->fill($page->toArray());
         $revision->page_id = $page->id;
+        $revision->slug = $page->slug;
+        $revision->book_slug = $page->book->slug;
         $revision->created_by = auth()->user()->id;
         $revision->created_at = $page->updated_at;
         $revision->save();
@@ -358,5 +389,22 @@ class PageRepo
         $page->delete();
     }
 
+    /**
+     * Get the latest pages added to the system.
+     * @param $count
+     */
+    public function getRecentlyCreatedPaginated($count = 20)
+    {
+        return $this->page->orderBy('created_at', 'desc')->paginate($count);
+    }
+
+    /**
+     * Get the latest pages added to the system.
+     * @param $count
+     */
+    public function getRecentlyUpdatedPaginated($count = 20)
+    {
+        return $this->page->orderBy('updated_at', 'desc')->paginate($count);
+    }
 
 }

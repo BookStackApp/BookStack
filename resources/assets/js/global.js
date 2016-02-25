@@ -106,6 +106,12 @@ $(function () {
         }
     });
 
+    // Common jQuery actions
+    $('[data-action="expand-entity-list-details"]').click(function() {
+        $('.entity-list.compact').find('p').slideToggle(240);
+    });
+
+
 });
 
 

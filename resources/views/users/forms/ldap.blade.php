@@ -25,6 +25,6 @@
 @endif
 
 <div class="form-group">
-    <a href="/users" class="button muted">Cancel</a>
+    <a href="/settings/users" class="button muted">Cancel</a>
     <button class="button pos" type="submit">Save</button>
 </div>

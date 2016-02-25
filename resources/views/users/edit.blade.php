@@ -9,7 +9,7 @@
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6 faded">
                     <div class="action-buttons">
-                        <a href="/users/{{$user->id}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete User</a>
+                        <a href="/settings/users/{{$user->id}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete User</a>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
 
 
     <div class="container small">
-        <form action="/users/{{$user->id}}" method="post">
+        <form action="/settings/users/{{$user->id}}" method="post">
         <div class="row">
             <div class="col-md-6" ng-non-bindable>
                 <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>

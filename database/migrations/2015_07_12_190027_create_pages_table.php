@@ -21,7 +21,7 @@ class CreatePagesTable extends Migration
             $table->longText('html');
             $table->longText('text');
             $table->integer('priority');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

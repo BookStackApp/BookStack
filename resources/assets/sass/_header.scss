@@ -139,54 +139,6 @@ form.search-box {
   height: 43px;
 }
 
-.dropdown-container {
-  display: inline-block;
-  vertical-align: top;
-  position: relative;
-}
-
-.dropdown-container ul {
-  display: none;
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  list-style: none;
-  right: 0;
-  margin: $-m 0;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 1px;
-  border: 1px solid #EEE;
-  min-width: 180px;
-  padding: $-xs 0;
-  color: #555;
-  text-align: left !important;
-  &.wide {
-    min-width: 220px;
-  }
-  .text-muted {
-    color: #999;
-  }
-  a {
-    display: block;
-    padding: $-xs $-m;
-    color: #555;
-    &:hover {
-      text-decoration: none;
-      background-color: #EEE;
-    }
-    i {
-      margin-right: $-m;
-      padding-right: 0;
-      display: inline;
-      width: 22px;
-    }
-  }
-  li.border-bottom {
-    border-bottom: 1px solid #DDD;
-  }
-}
-
 .breadcrumbs span.sep {
   color: #aaa;
   padding: 0 $-xs;

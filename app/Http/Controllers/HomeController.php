@@ -3,25 +3,21 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
-use Illuminate\Http\Request;
-
+use BookStack\Repos\EntityRepo;
 use BookStack\Http\Requests;
-use BookStack\Repos\BookRepo;
 use Views;
 
 class HomeController extends Controller
 {
-
-    protected $activityService;
-    protected $bookRepo;
+    protected $entityRepo;
 
     /**
      * HomeController constructor.
-     * @param BookRepo        $bookRepo
+     * @param EntityRepo $entityRepo
      */
-    public function __construct(BookRepo $bookRepo)
+    public function __construct(EntityRepo $entityRepo)
     {
-        $this->bookRepo = $bookRepo;
+        $this->entityRepo = $entityRepo;
         parent::__construct();
     }
 
@@ -33,9 +29,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $activity = Activity::latest();
-        $recents = $this->signedIn ? Views::getUserRecentlyViewed(10, 0) : $this->bookRepo->getLatest(10);
-        return view('home', ['activity' => $activity, 'recents' => $recents]);
+        $activity = Activity::latest(10);
+        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12, 0) : $this->entityRepo->getRecentlyCreatedBooks(10);
+        $recentlyCreatedPages = $this->entityRepo->getRecentlyCreatedPages(5);
+        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdatedPages(5);
+        return view('home', [
+            'activity' => $activity,
+            'recents' => $recents,
+            'recentlyCreatedPages' => $recentlyCreatedPages,
+            'recentlyUpdatedPages' => $recentlyUpdatedPages
+        ]);
     }
 
 }

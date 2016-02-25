@@ -10,7 +10,7 @@
         <h1>Users</h1>
         @if($currentUser->can('user-create'))
             <p>
-                <a href="/users/create" class="text-pos"><i class="zmdi zmdi-account-add"></i>Add new user</a>
+                <a href="/settings/users/create" class="text-pos"><i class="zmdi zmdi-account-add"></i>Add new user</a>
             </p>
         @endif
         <table class="table">
@@ -25,7 +25,7 @@
                     <td style="line-height: 0;"><img class="avatar med" src="{{$user->getAvatar(40)}}" alt="{{$user->name}}"></td>
                     <td>
                         @if($currentUser->can('user-update') || $currentUser->id == $user->id)
-                            <a href="/users/{{$user->id}}">
+                            <a href="/settings/users/{{$user->id}}">
                                 @endif
                                 {{ $user->name }}
                                 @if($currentUser->can('user-update') || $currentUser->id == $user->id)
@@ -34,7 +34,7 @@
                     </td>
                     <td>
                         @if($currentUser->can('user-update') || $currentUser->id == $user->id)
-                            <a href="/users/{{$user->id}}">
+                            <a href="/settings/users/{{$user->id}}">
                                 @endif
                                 {{ $user->email }}
                                 @if($currentUser->can('user-update') || $currentUser->id == $user->id)

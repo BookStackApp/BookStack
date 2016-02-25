@@ -42,11 +42,77 @@ class SearchController extends Controller
             return redirect()->back();
         }
         $searchTerm = $request->get('term');
-        $pages = $this->pageRepo->getBySearch($searchTerm);
-        $books = $this->bookRepo->getBySearch($searchTerm);
-        $chapters = $this->chapterRepo->getBySearch($searchTerm);
+        $paginationAppends = $request->only('term');
+        $pages = $this->pageRepo->getBySearch($searchTerm, [], 20, $paginationAppends);
+        $books = $this->bookRepo->getBySearch($searchTerm, 10, $paginationAppends);
+        $chapters = $this->chapterRepo->getBySearch($searchTerm, [], 10, $paginationAppends);
         $this->setPageTitle('Search For ' . $searchTerm);
-        return view('search/all', ['pages' => $pages, 'books' => $books, 'chapters' => $chapters, 'searchTerm' => $searchTerm]);
+        return view('search/all', [
+            'pages' => $pages,
+            'books' => $books,
+            'chapters' => $chapters,
+            'searchTerm' => $searchTerm
+        ]);
+    }
+
+    /**
+     * Search only the pages in the system.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function searchPages(Request $request)
+    {
+        if (!$request->has('term')) return redirect()->back();
+
+        $searchTerm = $request->get('term');
+        $paginationAppends = $request->only('term');
+        $pages = $this->pageRepo->getBySearch($searchTerm, [], 20, $paginationAppends);
+        $this->setPageTitle('Page Search For ' . $searchTerm);
+        return view('search/entity-search-list', [
+            'entities' => $pages,
+            'title' => 'Page Search Results',
+            'searchTerm' => $searchTerm
+        ]);
+    }
+
+    /**
+     * Search only the chapters in the system.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function searchChapters(Request $request)
+    {
+        if (!$request->has('term')) return redirect()->back();
+
+        $searchTerm = $request->get('term');
+        $paginationAppends = $request->only('term');
+        $chapters = $this->chapterRepo->getBySearch($searchTerm, [], 20, $paginationAppends);
+        $this->setPageTitle('Chapter Search For ' . $searchTerm);
+        return view('search/entity-search-list', [
+            'entities' => $chapters,
+            'title' => 'Chapter Search Results',
+            'searchTerm' => $searchTerm
+        ]);
+    }
+
+    /**
+     * Search only the books in the system.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function searchBooks(Request $request)
+    {
+        if (!$request->has('term')) return redirect()->back();
+
+        $searchTerm = $request->get('term');
+        $paginationAppends = $request->only('term');
+        $books = $this->bookRepo->getBySearch($searchTerm, 20, $paginationAppends);
+        $this->setPageTitle('Book Search For ' . $searchTerm);
+        return view('search/entity-search-list', [
+            'entities' => $books,
+            'title' => 'Book Search Results',
+            'searchTerm' => $searchTerm
+        ]);
     }
 
     /**

@@ -18,7 +18,7 @@ class CreateSocialAccountsTable extends Migration
             $table->string('driver')->index();
             $table->string('driver_id');
             $table->string('avatar');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

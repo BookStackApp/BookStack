@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->rememberToken();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
         \BookStack\User::forceCreate([

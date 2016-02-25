@@ -19,7 +19,7 @@ class CreateChaptersTable extends Migration
             $table->text('name');
             $table->text('description');
             $table->integer('priority');
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
     }
 

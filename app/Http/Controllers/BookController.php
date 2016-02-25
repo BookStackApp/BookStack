@@ -157,7 +157,7 @@ class BookController extends Controller
         $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $bookChildren = $this->bookRepo->getChildren($book);
-        $books = $this->bookRepo->getAll();
+        $books = $this->bookRepo->getAll(false);
         $this->setPageTitle('Sort Book ' . $book->getShortName());
         return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
     }

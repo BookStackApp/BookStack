@@ -94,7 +94,7 @@ class LdapTest extends \TestCase
 
     public function test_create_user_form()
     {
-        $this->asAdmin()->visit('/users/create')
+        $this->asAdmin()->visit('/settings/users/create')
             ->dontSee('Password')
             ->type($this->mockUser->name, '#name')
             ->type($this->mockUser->email, '#email')
@@ -102,19 +102,19 @@ class LdapTest extends \TestCase
             ->see('The external auth id field is required.')
             ->type($this->mockUser->name, '#external_auth_id')
             ->press('Save')
-            ->seePageIs('/users')
+            ->seePageIs('/settings/users')
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'external_auth_id' => $this->mockUser->name, 'email_confirmed' => true]);
     }
 
     public function test_user_edit_form()
     {
         $editUser = User::all()->last();
-        $this->asAdmin()->visit('/users/' . $editUser->id)
+        $this->asAdmin()->visit('/settings/users/' . $editUser->id)
             ->see('Edit User')
             ->dontSee('Password')
             ->type('test_auth_id', '#external_auth_id')
             ->press('Save')
-            ->seePageIs('/users')
+            ->seePageIs('/settings/users')
             ->seeInDatabase('users', ['email' => $editUser->email, 'external_auth_id' => 'test_auth_id']);
     }
 
@@ -127,7 +127,7 @@ class LdapTest extends \TestCase
     public function test_non_admins_cannot_change_auth_id()
     {
         $testUser = User::all()->last();
-        $this->actingAs($testUser)->visit('/users/' . $testUser->id)
+        $this->actingAs($testUser)->visit('/settings/users/' . $testUser->id)
             ->dontSee('External Authentication');
     }
 

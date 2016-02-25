@@ -164,6 +164,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getEditUrl()
     {
-        return '/users/' . $this->id;
+        return '/settings/users/' . $this->id;
     }
 }
