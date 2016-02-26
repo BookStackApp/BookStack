@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'settings'], function() {
         Route::get('/', 'SettingController@index');
         Route::post('/', 'SettingController@update');
+
         // Users
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
@@ -95,6 +96,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');
         Route::delete('/users/{id}', 'UserController@destroy');
+
+        // Roles
+        Route::get('/roles', 'PermissionController@listRoles');
+        Route::get('/roles/{id}', 'PermissionController@editRole');
     });
 
 });

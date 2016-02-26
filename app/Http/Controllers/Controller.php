@@ -81,6 +81,7 @@ abstract class Controller extends BaseController
     protected function checkPermission($permissionName)
     {
         if (!$this->currentUser || !$this->currentUser->can($permissionName)) {
+            dd($this->currentUser);
             $this->showPermissionError();
         }
 
