@@ -7,17 +7,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="action-buttons faded">
-                        @if($currentUser->can('page-create'))
+                        @if(userCan('page-create', $book))
                             <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Page</a>
                         @endif
-                        @if($currentUser->can('chapter-create'))
+                        @if(userCan('chapter-create', $book))
                             <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Chapter</a>
                         @endif
-                        @if($currentUser->can('book-update'))
+                        @if(userCan('book-update', $book))
                             <a href="{{$book->getEditUrl()}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                             <a href="{{ $book->getUrl() }}/sort" class="text-primary text-button"><i class="zmdi zmdi-sort"></i>Sort</a>
                         @endif
-                        @if($currentUser->can('book-delete'))
+                        @if(userCan('book-delete', $book))
                             <a href="{{ $book->getUrl() }}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif
                     </div>

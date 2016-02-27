@@ -22,8 +22,8 @@ class BookController extends Controller
 
     /**
      * BookController constructor.
-     * @param BookRepo    $bookRepo
-     * @param PageRepo    $pageRepo
+     * @param BookRepo $bookRepo
+     * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
      */
     public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo)
@@ -55,7 +55,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $this->checkPermission('book-create');
+        $this->checkPermission('book-create-all');
         $this->setPageTitle('Create New Book');
         return view('books/create');
     }
@@ -68,9 +68,9 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $this->checkPermission('book-create');
+        $this->checkPermission('book-create-all');
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
         $book = $this->bookRepo->newFromInput($request->all());
@@ -105,8 +105,8 @@ class BookController extends Controller
      */
     public function edit($slug)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
+        $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle('Edit Book ' . $book->getShortName());
         return view('books/edit', ['book' => $book, 'current' => $book]);
     }
@@ -120,10 +120,10 @@ class BookController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
+        $this->checkOwnablePermission('book-update', $book);
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
         $book->fill($request->all());
@@ -141,8 +141,8 @@ class BookController extends Controller
      */
     public function showDelete($bookSlug)
     {
-        $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle('Delete Book ' . $book->getShortName());
         return view('books/delete', ['book' => $book, 'current' => $book]);
     }
@@ -154,8 +154,8 @@ class BookController extends Controller
      */
     public function sort($bookSlug)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-update', $book);
         $bookChildren = $this->bookRepo->getChildren($book);
         $books = $this->bookRepo->getAll(false);
         $this->setPageTitle('Sort Book ' . $book->getShortName());
@@ -184,8 +184,8 @@ class BookController extends Controller
      */
     public function saveSort($bookSlug, Request $request)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent
         if (!$request->has('sort-tree')) {
@@ -229,8 +229,8 @@ class BookController extends Controller
      */
     public function destroy($bookSlug)
     {
-        $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-delete', $book);
         Activity::addMessage('book_delete', 0, $book->name);
         Activity::removeEntity($book);
         $this->bookRepo->destroyBySlug($bookSlug);

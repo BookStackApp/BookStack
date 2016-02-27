@@ -28,3 +28,23 @@ if (! function_exists('versioned_asset')) {
         throw new InvalidArgumentException("File {$file} not defined in asset manifest.");
     }
 }
+
+/**
+ * Check if the current user has a permission.
+ * If an ownable element is passed in the permissions are checked against
+ * that particular item.
+ * @param $permission
+ * @param \BookStack\Ownable $ownable
+ * @return mixed
+ */
+function userCan($permission, \BookStack\Ownable $ownable = null)
+{
+    if ($ownable === null) {
+        return auth()->user() && auth()->user()->can($permission);
+    }
+
+    $permissionBaseName = strtolower($permission) . '-';
+    if (userCan($permissionBaseName . 'all')) return true;
+    if (userCan($permissionBaseName . 'own') && $ownable->createdBy->id === auth()->user()->id) return true;
+    return false;
+}

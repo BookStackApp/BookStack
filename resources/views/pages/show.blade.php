@@ -27,11 +27,11 @@
                                 <li><a href="{{$page->getUrl() . '/export/plaintext'}}" target="_blank">Plain Text File <span class="text-muted float right">.txt</span></a></li>
                             </ul>
                         </span>
-                        @if($currentUser->can('page-update'))
+                        @if(userCan('page-update', $page))
                             <a href="{{$page->getUrl() . '/revisions'}}" class="text-primary text-button"><i class="zmdi zmdi-replay"></i>Revisions</a>
                             <a href="{{$page->getUrl() . '/edit'}}" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
-                        @if($currentUser->can('page-delete'))
+                        @if(userCan('page-delete', $page))
                             <a href="{{$page->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif
                     </div>

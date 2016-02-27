@@ -1,13 +1,8 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use Activity;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Auth;
 use BookStack\Http\Requests;
-use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
 use Views;
@@ -30,7 +25,6 @@ class ChapterController extends Controller
         parent::__construct();
     }
 
-
     /**
      * Show the form for creating a new chapter.
      * @param $bookSlug
@@ -38,8 +32,8 @@ class ChapterController extends Controller
      */
     public function create($bookSlug)
     {
-        $this->checkPermission('chapter-create');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('chapter-create', $book);
         $this->setPageTitle('Create New Chapter');
         return view('chapters/create', ['book' => $book, 'current' => $book]);
     }
@@ -52,12 +46,13 @@ class ChapterController extends Controller
      */
     public function store($bookSlug, Request $request)
     {
-        $this->checkPermission('chapter-create');
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
 
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('chapter-create', $book);
+
         $chapter = $this->chapterRepo->newFromInput($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id);
         $chapter->priority = $this->bookRepo->getNewPriority($book);
@@ -92,9 +87,9 @@ class ChapterController extends Controller
      */
     public function edit($bookSlug, $chapterSlug)
     {
-        $this->checkPermission('chapter-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-update', $chapter);
         $this->setPageTitle('Edit Chapter' . $chapter->getShortName());
         return view('chapters/edit', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
@@ -108,9 +103,9 @@ class ChapterController extends Controller
      */
     public function update(Request $request, $bookSlug, $chapterSlug)
     {
-        $this->checkPermission('chapter-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-update', $chapter);
         $chapter->fill($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id, $chapter->id);
         $chapter->updated_by = auth()->user()->id;
@@ -127,9 +122,9 @@ class ChapterController extends Controller
      */
     public function showDelete($bookSlug, $chapterSlug)
     {
-        $this->checkPermission('chapter-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
         $this->setPageTitle('Delete Chapter' . $chapter->getShortName());
         return view('chapters/delete', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
     }
@@ -142,9 +137,9 @@ class ChapterController extends Controller
      */
     public function destroy($bookSlug, $chapterSlug)
     {
-        $this->checkPermission('chapter-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
         Activity::addMessage('chapter_delete', $book->id, $chapter->name);
         $this->chapterRepo->destroy($chapter);
         return redirect($book->getUrl());

@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->all();
+        $users = $this->userRepo->getAllUsers();
         $this->setPageTitle('Users');
         return view('users/index', ['users' => $users]);
     }
@@ -46,7 +46,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->checkPermission('user-create');
+        $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
         return view('users/create', ['authMethod' => $authMethod]);
     }
@@ -58,11 +58,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->checkPermission('user-create');
+        $this->checkPermission('users-manage');
         $validationRules = [
             'name'             => 'required',
-            'email'            => 'required|email|unique:users,email',
-            'role'             => 'required|exists:roles,id'
+            'email'            => 'required|email|unique:users,email'
         ];
 
         $authMethod = config('auth.method');
@@ -84,7 +83,11 @@ class UserController extends Controller
         }
 
         $user->save();
-        $user->attachRoleId($request->get('role'));
+
+        if ($request->has('roles')) {
+            $roles = $request->get('roles');
+            $user->roles()->sync($roles);
+        }
 
         // Get avatar from gravatar and save
         if (!config('services.disable_services')) {
@@ -104,7 +107,7 @@ class UserController extends Controller
      */
     public function edit($id, SocialAuthService $socialAuthService)
     {
-        $this->checkPermissionOr('user-update', function () use ($id) {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
             return $this->currentUser->id == $id;
         });
 
@@ -125,7 +128,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermissionOr('user-update', function () use ($id) {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
             return $this->currentUser->id == $id;
         });
 
@@ -133,8 +136,7 @@ class UserController extends Controller
             'name'             => 'min:2',
             'email'            => 'min:2|email|unique:users,email,' . $id,
             'password'         => 'min:5|required_with:password_confirm',
-            'password-confirm' => 'same:password|required_with:password',
-            'role'             => 'exists:roles,id'
+            'password-confirm' => 'same:password|required_with:password'
         ], [
             'password-confirm.required_with' => 'Password confirmation required'
         ]);
@@ -143,8 +145,9 @@ class UserController extends Controller
         $user->fill($request->all());
 
         // Role updates
-        if ($this->currentUser->can('user-update') && $request->has('role')) {
-            $user->attachRoleId($request->get('role'));
+        if (userCan('users-manage') && $request->has('roles')) {
+            $roles = $request->get('roles');
+            $user->roles()->sync($roles);
         }
 
         // Password updates
@@ -154,11 +157,12 @@ class UserController extends Controller
         }
 
         // External auth id updates
-        if ($this->currentUser->can('user-update') && $request->has('external_auth_id')) {
+        if ($this->currentUser->can('users-manage') && $request->has('external_auth_id')) {
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
         $user->save();
+        session()->flash('success', 'User successfully updated');
         return redirect('/settings/users');
     }
 
@@ -169,7 +173,7 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        $this->checkPermissionOr('user-delete', function () use ($id) {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
             return $this->currentUser->id == $id;
         });
 
@@ -186,7 +190,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermissionOr('user-delete', function () use ($id) {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
             return $this->currentUser->id == $id;
         });
 

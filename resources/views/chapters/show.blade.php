@@ -12,13 +12,13 @@
                 </div>
                 <div class="col-md-8 faded">
                     <div class="action-buttons">
-                        @if($currentUser->can('chapter-create'))
+                        @if(userCan('page-create', $chapter))
                             <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>New Page</a>
                         @endif
-                        @if($currentUser->can('chapter-update'))
+                        @if(userCan('chapter-update', $chapter))
                             <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
-                        @if($currentUser->can('chapter-delete'))
+                        @if(userCan('chapter-delete', $chapter))
                             <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif
                     </div>

@@ -99,7 +99,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Roles
         Route::get('/roles', 'PermissionController@listRoles');
+        Route::get('/roles/new', 'PermissionController@createRole');
+        Route::post('/roles/new', 'PermissionController@storeRole');
+        Route::get('/roles/delete/{id}', 'PermissionController@showDeleteRole');
+        Route::delete('/roles/delete/{id}', 'PermissionController@deleteRole');
         Route::get('/roles/{id}', 'PermissionController@editRole');
+        Route::put('/roles/{id}', 'PermissionController@updateRole');
     });
 
 });

@@ -43,6 +43,15 @@ class UserRepo
     }
 
     /**
+     * Get all the users with their permissions.
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function getAllUsers()
+    {
+        return $this->user->with('roles', 'avatar')->orderBy('name', 'asc')->get();
+    }
+
+    /**
      * Creates a new user and attaches a role to them.
      * @param array $data
      * @return User
@@ -69,7 +78,7 @@ class UserRepo
     public function attachDefaultRole($user)
     {
         $roleId = Setting::get('registration-role');
-        if ($roleId === false) $roleId = $this->role->getDefault()->id;
+        if ($roleId === false) $roleId = $this->role->first()->id;
         $user->attachRoleId($roleId);
     }
 
@@ -80,15 +89,10 @@ class UserRepo
      */
     public function isOnlyAdmin(User $user)
     {
-        if ($user->role->name != 'admin') {
-            return false;
-        }
+        if (!$user->roles->pluck('name')->contains('admin')) return false;
 
-        $adminRole = $this->role->where('name', '=', 'admin')->first();
-        if (count($adminRole->users) > 1) {
-            return false;
-        }
-
+        $adminRole = $this->role->getRole('admin');
+        if ($adminRole->users->count() > 1) return false;
         return true;
     }
 

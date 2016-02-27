@@ -32,7 +32,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function asAdmin()
     {
         if($this->admin === null) {
-            $this->admin = \BookStack\User::find(1);
+            $adminRole = \BookStack\Role::getRole('admin');
+            $this->admin = $adminRole->users->first();
         }
         return $this->actingAs($this->admin);
     }

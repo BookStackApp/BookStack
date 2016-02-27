@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Ownable;
 use HttpRequestException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Exception\HttpResponseException;
@@ -61,7 +62,7 @@ abstract class Controller extends BaseController
     }
 
     /**
-     * On a permission error redirect to home and display
+     * On a permission error redirect to home and display.
      * the error as a notification.
      */
     protected function showPermissionError()
@@ -74,18 +75,29 @@ abstract class Controller extends BaseController
 
     /**
      * Checks for a permission.
-     *
-     * @param $permissionName
+     * @param string $permissionName
      * @return bool|\Illuminate\Http\RedirectResponse
      */
     protected function checkPermission($permissionName)
     {
         if (!$this->currentUser || !$this->currentUser->can($permissionName)) {
-            dd($this->currentUser);
             $this->showPermissionError();
         }
-
         return true;
+    }
+
+    /**
+     * Check the current user's permissions against an ownable item.
+     * @param $permission
+     * @param Ownable $ownable
+     * @return bool
+     */
+    protected function checkOwnablePermission($permission, Ownable $ownable)
+    {
+        $permissionBaseName = strtolower($permission) . '-';
+        if (userCan($permissionBaseName . 'all')) return true;
+        if (userCan($permissionBaseName . 'own') && $ownable->createdBy->id === $this->currentUser->id) return true;
+        $this->showPermissionError();
     }
 
     /**

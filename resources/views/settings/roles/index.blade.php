@@ -7,6 +7,11 @@
     <div class="container">
 
         <h1>User Roles</h1>
+
+        <p>
+            <a href="/settings/roles/new" class="text-pos"><i class="zmdi zmdi-lock-open"></i>Add new role</a>
+        </p>
+
         <table class="table">
             <tr>
                 <th>Role Name</th>

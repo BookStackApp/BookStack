@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+
+    protected $fillable = ['display_name', 'description'];
     /**
      * Sets the default role name for newly registered users.
      * @var string
@@ -26,6 +28,15 @@ class Role extends Model
     public function permissions()
     {
         return $this->belongsToMany('BookStack\Permission');
+    }
+
+    /**
+     * Check if this role has a permission.
+     * @param $permission
+     */
+    public function hasPermission($permission)
+    {
+        return $this->permissions->pluck('name')->contains($permission);
     }
 
     /**

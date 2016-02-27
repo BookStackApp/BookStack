@@ -1,13 +1,8 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
-
-abstract class Entity extends Model
+abstract class Entity extends Ownable
 {
-
-    use Ownable;
 
     /**
      * Compares this entity to another given entity.
@@ -72,16 +67,7 @@ abstract class Entity extends Model
     }
 
     /**
-     * Gets the class name.
-     * @return string
-     */
-    public static function getClassName()
-    {
-        return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
-    }
-
-    /**
-     *Gets a limited-length version of the entities name.
+     * Gets a limited-length version of the entities name.
      * @param int $length
      * @return string
      */
