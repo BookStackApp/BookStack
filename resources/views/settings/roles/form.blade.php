@@ -31,7 +31,9 @@
             </tr>
             <tr>
                 <td>Books</td>
-                <td>@include('settings/roles/checkbox', ['permission' => 'book-create-all'])</td>
+                <td>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'book-create-all']) All</label>
+                </td>
                 <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'book-update-own']) Own</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'book-update-all']) All</label>
@@ -43,7 +45,10 @@
             </tr>
             <tr>
                 <td>Chapters</td>
-                <td>@include('settings/roles/checkbox', ['permission' => 'chapter-create-all'])</td>
+                <td>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'chapter-create-own']) Own</label>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'chapter-create-all']) All</label>
+                </td>
                 <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'chapter-update-own']) Own</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'chapter-update-all']) All</label>
@@ -55,7 +60,10 @@
             </tr>
             <tr>
                 <td>Pages</td>
-                <td>@include('settings/roles/checkbox', ['permission' => 'page-create-all'])</td>
+                <td>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'page-create-own']) Own</label>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'page-create-all']) All</label>
+                </td>
                 <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'page-update-own']) Own</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'page-update-all']) All</label>

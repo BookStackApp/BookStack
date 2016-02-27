@@ -68,9 +68,8 @@ abstract class Controller extends BaseController
     protected function showPermissionError()
     {
         Session::flash('error', trans('errors.permission'));
-        throw new HttpResponseException(
-            redirect('/')
-        );
+        $response = request()->wantsJson() ? response()->json(['error' => trans('errors.permissionJson')], 403) : redirect('/', 403);
+        throw new HttpResponseException($response);
     }
 
     /**
