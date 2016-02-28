@@ -2,6 +2,7 @@
 
 
 use Activity;
+use BookStack\Services\RestrictionService;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
 
@@ -9,14 +10,26 @@ class ChapterRepo
 {
 
     protected $chapter;
+    protected $restrictionService;
 
     /**
      * ChapterRepo constructor.
-     * @param $chapter
+     * @param Chapter $chapter
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Chapter $chapter)
+    public function __construct(Chapter $chapter, RestrictionService $restrictionService)
     {
         $this->chapter = $chapter;
+        $this->restrictionService = $restrictionService;
+    }
+
+    /**
+     * Base query for getting chapters, Takes restrictions into account.
+     * @return mixed
+     */
+    private function chapterQuery()
+    {
+        return $this->restrictionService->enforceChapterRestrictions($this->chapter, 'view');
     }
 
     /**
@@ -26,7 +39,7 @@ class ChapterRepo
      */
     public function idExists($id)
     {
-        return $this->chapter->where('id', '=', $id)->count() > 0;
+        return $this->chapterQuery()->where('id', '=', $id)->count() > 0;
     }
 
     /**
@@ -36,7 +49,7 @@ class ChapterRepo
      */
     public function getById($id)
     {
-        return $this->chapter->findOrFail($id);
+        return $this->chapterQuery()->findOrFail($id);
     }
 
     /**
@@ -45,7 +58,7 @@ class ChapterRepo
      */
     public function getAll()
     {
-        return $this->chapter->all();
+        return $this->chapterQuery()->all();
     }
 
     /**
@@ -56,7 +69,7 @@ class ChapterRepo
      */
     public function getBySlug($slug, $bookId)
     {
-        $chapter = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
         if ($chapter === null) abort(404);
         return $chapter;
     }
@@ -132,7 +145,7 @@ class ChapterRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = explode(' ', $term);
-        $chapters = $this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms)
+        $chapters = $this->restrictionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {

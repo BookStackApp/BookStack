@@ -4,6 +4,7 @@
 use Activity;
 use BookStack\Book;
 use BookStack\Chapter;
+use BookStack\Services\RestrictionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -16,26 +17,28 @@ class PageRepo
 {
     protected $page;
     protected $pageRevision;
+    protected $restrictionService;
 
     /**
      * PageRepo constructor.
-     * @param Page         $page
+     * @param Page $page
      * @param PageRevision $pageRevision
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Page $page, PageRevision $pageRevision)
+    public function __construct(Page $page, PageRevision $pageRevision, RestrictionService $restrictionService)
     {
         $this->page = $page;
         $this->pageRevision = $pageRevision;
+        $this->restrictionService = $restrictionService;
     }
 
     /**
-     * Check if a page id exists.
-     * @param $id
-     * @return bool
+     * Base query for getting pages, Takes restrictions into account.
+     * @return mixed
      */
-    public function idExists($id)
+    private function pageQuery()
     {
-        return $this->page->where('page_id', '=', $id)->count() > 0;
+        return $this->restrictionService->enforcePageRestrictions($this->page, 'view');
     }
 
     /**
@@ -45,16 +48,7 @@ class PageRepo
      */
     public function getById($id)
     {
-        return $this->page->findOrFail($id);
-    }
-
-    /**
-     * Get all pages.
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function getAll()
-    {
-        return $this->page->all();
+        return $this->pageQuery()->findOrFail($id);
     }
 
     /**
@@ -65,7 +59,7 @@ class PageRepo
      */
     public function getBySlug($slug, $bookId)
     {
-        $page = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        $page = $this->pageQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
         if ($page === null) throw new NotFoundHttpException('Page not found');
         return $page;
     }
@@ -81,6 +75,9 @@ class PageRepo
     public function findPageUsingOldSlug($pageSlug, $bookSlug)
     {
         $revision = $this->pageRevision->where('slug', '=', $pageSlug)
+            ->whereHas('page', function($query) {
+                $this->restrictionService->enforcePageRestrictions($query);
+            })
             ->where('book_slug', '=', $bookSlug)->orderBy('created_at', 'desc')
             ->with('page')->first();
         return $revision !== null ? $revision->page : null;
@@ -97,16 +94,6 @@ class PageRepo
         return $page;
     }
 
-    /**
-     * Count the pages with a particular slug within a book.
-     * @param $slug
-     * @param $bookId
-     * @return mixed
-     */
-    public function countBySlug($slug, $bookId)
-    {
-        return $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId)->count();
-    }
 
     /**
      * Save a new page into the system.
@@ -202,7 +189,7 @@ class PageRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = explode(' ', $term);
-        $pages = $this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms)
+        $pages = $this->restrictionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
 
         // Add highlights to page text.
@@ -240,7 +227,7 @@ class PageRepo
      */
     public function searchForImage($imageString)
     {
-        $pages = $this->page->where('html', 'like', '%' . $imageString . '%')->get();
+        $pages = $this->pageQuery()->where('html', 'like', '%' . $imageString . '%')->get();
         foreach ($pages as $page) {
             $page->url = $page->getUrl();
             $page->html = '';
@@ -395,7 +382,7 @@ class PageRepo
      */
     public function getRecentlyCreatedPaginated($count = 20)
     {
-        return $this->page->orderBy('created_at', 'desc')->paginate($count);
+        return $this->pageQuery()->orderBy('created_at', 'desc')->paginate($count);
     }
 
     /**
@@ -404,7 +391,7 @@ class PageRepo
      */
     public function getRecentlyUpdatedPaginated($count = 20)
     {
-        return $this->page->orderBy('updated_at', 'desc')->paginate($count);
+        return $this->pageQuery()->orderBy('updated_at', 'desc')->paginate($count);
     }
 
     /**

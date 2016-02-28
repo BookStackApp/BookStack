@@ -19,11 +19,7 @@ class Activity extends Model
      */
     public function entity()
     {
-        if ($this->entity_id) {
-            return $this->morphTo('entity')->first();
-        } else {
-            return false;
-        }
+        return $this->morphTo('entity');
     }
 
     /**

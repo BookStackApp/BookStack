@@ -4,6 +4,7 @@
 use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Page;
+use BookStack\Services\RestrictionService;
 
 class EntityRepo
 {
@@ -11,18 +12,21 @@ class EntityRepo
     public $book;
     public $chapter;
     public $page;
+    private $restrictionService;
 
     /**
      * EntityService constructor.
-     * @param $book
-     * @param $chapter
-     * @param $page
+     * @param Book $book
+     * @param Chapter $chapter
+     * @param Page $page
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Book $book, Chapter $chapter, Page $page)
+    public function __construct(Book $book, Chapter $chapter, Page $page, RestrictionService $restrictionService)
     {
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
+        $this->restrictionService = $restrictionService;
     }
 
     /**
@@ -32,7 +36,8 @@ class EntityRepo
      */
     public function getRecentlyCreatedBooks($count = 20, $page = 0)
     {
-        return $this->book->orderBy('created_at', 'desc')->skip($page*$count)->take($count)->get();
+        return $this->restrictionService->enforceBookRestrictions($this->book)
+            ->orderBy('created_at', 'desc')->skip($page*$count)->take($count)->get();
     }
 
     /**
@@ -43,7 +48,8 @@ class EntityRepo
      */
     public function getRecentlyUpdatedBooks($count = 20, $page = 0)
     {
-        return $this->book->orderBy('updated_at', 'desc')->skip($page*$count)->take($count)->get();
+        return $this->restrictionService->enforceBookRestrictions($this->book)
+            ->orderBy('updated_at', 'desc')->skip($page*$count)->take($count)->get();
     }
 
     /**
@@ -53,7 +59,8 @@ class EntityRepo
      */
     public function getRecentlyCreatedPages($count = 20, $page = 0)
     {
-        return $this->page->orderBy('created_at', 'desc')->skip($page*$count)->take($count)->get();
+        return $this->restrictionService->enforcePageRestrictions($this->page)
+            ->orderBy('created_at', 'desc')->skip($page*$count)->take($count)->get();
     }
 
     /**
@@ -64,7 +71,8 @@ class EntityRepo
      */
     public function getRecentlyUpdatedPages($count = 20, $page = 0)
     {
-        return $this->page->orderBy('updated_at', 'desc')->skip($page*$count)->take($count)->get();
+        return $this->restrictionService->enforcePageRestrictions($this->page)
+            ->orderBy('updated_at', 'desc')->skip($page*$count)->take($count)->get();
     }
 
 

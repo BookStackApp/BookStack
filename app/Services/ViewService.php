@@ -9,15 +9,18 @@ class ViewService
 
     protected $view;
     protected $user;
+    protected $restrictionService;
 
     /**
      * ViewService constructor.
-     * @param $view
+     * @param View $view
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(View $view)
+    public function __construct(View $view, RestrictionService $restrictionService)
     {
         $this->view = $view;
         $this->user = auth()->user();
+        $this->restrictionService = $restrictionService;
     }
 
     /**
@@ -27,7 +30,7 @@ class ViewService
      */
     public function add(Entity $entity)
     {
-        if($this->user === null) return 0;
+        if ($this->user === null) return 0;
         $view = $entity->views()->where('user_id', '=', $this->user->id)->first();
         // Add view if model exists
         if ($view) {
@@ -47,18 +50,19 @@ class ViewService
 
     /**
      * Get the entities with the most views.
-     * @param int        $count
-     * @param int        $page
+     * @param int $count
+     * @param int $page
      * @param bool|false $filterModel
      */
     public function getPopular($count = 10, $page = 0, $filterModel = false)
     {
         $skipCount = $count * $page;
-        $query = $this->view->select('id', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
+        $query = $this->restrictionService->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type')
+            ->select('id', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');
 
-        if($filterModel) $query->where('viewable_type', '=', get_class($filterModel));
+        if ($filterModel) $query->where('viewable_type', '=', get_class($filterModel));
 
         $views = $query->with('viewable')->skip($skipCount)->take($count)->get();
         $viewedEntities = $views->map(function ($item) {
@@ -69,22 +73,24 @@ class ViewService
 
     /**
      * Get all recently viewed entities for the current user.
-     * @param int         $count
-     * @param int         $page
+     * @param int $count
+     * @param int $page
      * @param Entity|bool $filterModel
      * @return mixed
      */
     public function getUserRecentlyViewed($count = 10, $page = 0, $filterModel = false)
     {
-        if($this->user === null) return collect();
+        if ($this->user === null) return collect();
         $skipCount = $count * $page;
-        $query = $this->view->where('user_id', '=', auth()->user()->id);
+        $query = $this->restrictionService
+            ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
 
-        if ($filterModel) $query->where('viewable_type', '=', get_class($filterModel));
+        if ($filterModel) $query = $query->where('viewable_type', '=', get_class($filterModel));
+        $query = $query->where('user_id', '=', auth()->user()->id);
 
         $views = $query->with('viewable')->orderBy('updated_at', 'desc')->skip($skipCount)->take($count)->get();
         $viewedEntities = $views->map(function ($item) {
-            return $item->viewable()->getResults();
+            return $item->viewable;
         });
         return $viewedEntities;
     }
