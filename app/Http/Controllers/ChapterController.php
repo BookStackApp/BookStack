@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
@@ -12,16 +13,19 @@ class ChapterController extends Controller
 
     protected $bookRepo;
     protected $chapterRepo;
+    protected $userRepo;
 
     /**
      * ChapterController constructor.
-     * @param $bookRepo
-     * @param $chapterRepo
+     * @param BookRepo $bookRepo
+     * @param ChapterRepo $chapterRepo
+     * @param UserRepo $userRepo
      */
-    public function __construct(BookRepo $bookRepo, ChapterRepo $chapterRepo)
+    public function __construct(BookRepo $bookRepo, ChapterRepo $chapterRepo, UserRepo $userRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
@@ -143,5 +147,40 @@ class ChapterController extends Controller
         Activity::addMessage('chapter_delete', $book->id, $chapter->name);
         $this->chapterRepo->destroy($chapter);
         return redirect($book->getUrl());
+    }
+
+    /**
+     * Show the Restrictions view.
+     * @param $bookSlug
+     * @param $chapterSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRestrict($bookSlug, $chapterSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('restrictions-manage', $chapter);
+        $roles = $this->userRepo->getRestrictableRoles();
+        return view('chapters/restrictions', [
+            'chapter' => $chapter,
+            'roles' => $roles
+        ]);
+    }
+
+    /**
+     * Set the restrictions for this chapter.
+     * @param $bookSlug
+     * @param $chapterSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function restrict($bookSlug, $chapterSlug, Request $request)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('restrictions-manage', $chapter);
+        $this->chapterRepo->updateRestrictionsFromRequest($request, $chapter);
+        session()->flash('success', 'Page Restrictions Updated');
+        return redirect($chapter->getUrl());
     }
 }

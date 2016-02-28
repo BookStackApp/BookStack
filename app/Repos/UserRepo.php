@@ -164,4 +164,14 @@ class UserRepo
         ];
     }
 
+    /**
+     * Get all the roles which can be given restricted access to
+     * other entities in the system.
+     * @return mixed
+     */
+    public function getRestrictableRoles()
+    {
+        return $this->role->where('name', '!=', 'admin')->get();
+    }
+
 }

@@ -17,6 +17,9 @@
                             <a href="{{$book->getEditUrl()}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                             <a href="{{ $book->getUrl() }}/sort" class="text-primary text-button"><i class="zmdi zmdi-sort"></i>Sort</a>
                         @endif
+                        @if(userCan('restrictions-manage', $book))
+                            <a href="{{$book->getUrl()}}/restrict" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Restrict</a>
+                        @endif
                         @if(userCan('book-delete', $book))
                             <a href="{{ $book->getUrl() }}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif

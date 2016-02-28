@@ -18,6 +18,9 @@
                         @if(userCan('chapter-update', $chapter))
                             <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
+                        @if(userCan('restrictions-manage', $chapter))
+                            <a href="{{$chapter->getUrl()}}/restrict" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Restrict</a>
+                        @endif
                         @if(userCan('chapter-delete', $chapter))
                             <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif

@@ -12,13 +12,28 @@
             @include('form/text', ['name' => 'description'])
         </div>
         <hr class="even">
-        <div class="form-group">
-            <label>Manage users @include('settings/roles/checkbox', ['permission' => 'users-manage'])</label>
-            <hr class="even">
-            <label>Manage user roles & Permissions @include('settings/roles/checkbox', ['permission' => 'user-roles-manage'])</label>
-            <hr class="even">
-            <label>Manage app settings @include('settings/roles/checkbox', ['permission' => 'settings-manage'])</label>
+        <div class="row">
+            <div class="col-md-6">
+                <label> @include('settings/roles/checkbox', ['permission' => 'users-manage']) Manage users</label>
+            </div>
+            <div class="col-md-6">
+                <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) Manage user roles & Permissions</label>
+            </div>
         </div>
+        <hr class="even">
+        <div class="row">
+            <div class="col-md-6">
+                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-all']) Manage all restrictions</label>
+            </div>
+            <div class="col-md-6">
+                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-own']) Manage restrictions on own content</label>
+            </div>
+        </div>
+        <hr class="even">
+        <div class="form-group">
+            <label>@include('settings/roles/checkbox', ['permission' => 'settings-manage']) Manage app settings</label>
+        </div>
+
     </div>
 
     <div class="col-md-6">

@@ -238,4 +238,27 @@ class BookRepo
         return $books;
     }
 
+    /**
+     * Updates books restrictions from a request
+     * @param $request
+     * @param $book
+     */
+    public function updateRestrictionsFromRequest($request, $book)
+    {
+        // TODO - extract into shared repo
+        $book->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $book->restrictions()->delete();
+        if ($request->has('restrictions')) {
+            foreach($request->get('restrictions') as $roleId => $restrictions) {
+                foreach ($restrictions as $action => $value) {
+                    $book->restrictions()->create([
+                        'role_id' => $roleId,
+                        'action'  => strtolower($action)
+                    ]);
+                }
+            }
+        }
+        $book->save();
+    }
+
 }

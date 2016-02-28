@@ -19,6 +19,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{id}', 'BookController@destroy');
         Route::get('/{slug}/sort-item', 'BookController@getSortItem');
         Route::get('/{slug}', 'BookController@show');
+        Route::get('/{bookSlug}/restrict', 'BookController@showRestrict');
+        Route::put('/{bookSlug}/restrict', 'BookController@restrict');
         Route::get('/{slug}/delete', 'BookController@showDelete');
         Route::get('/{bookSlug}/sort', 'BookController@sort');
         Route::put('/{bookSlug}/sort', 'BookController@saveSort');
@@ -32,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageController@exportPlainText');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
+        Route::get('/{bookSlug}/page/{pageSlug}/restrict', 'PageController@showRestrict');
+        Route::put('/{bookSlug}/page/{pageSlug}/restrict', 'PageController@restrict');
         Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
         Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
 
@@ -47,6 +51,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
         Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/restrict', 'ChapterController@showRestrict');
+        Route::put('/{bookSlug}/chapter/{chapterSlug}/restrict', 'ChapterController@restrict');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
 

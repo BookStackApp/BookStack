@@ -26,7 +26,9 @@ class UpdatePermissionsAndRoles extends Migration
         $permissionsToCreate = [
             'settings-manage' => 'Manage Settings',
             'users-manage' => 'Manage Users',
-            'user-roles-manage' => 'Manage Roles & Permissions'
+            'user-roles-manage' => 'Manage Roles & Permissions',
+            'restrictions-manage-all' => 'Manage All Entity Restrictions',
+            'restrictions-manage-own' => 'Manage Entity Restrictions On Own Content'
         ];
         foreach ($permissionsToCreate as $name => $displayName) {
             $newPermission = new \BookStack\Permission();

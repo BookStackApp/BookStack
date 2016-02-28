@@ -48,11 +48,29 @@ abstract class Entity extends Ownable
 
     /**
      * Get View objects for this entity.
-     * @return mixed
      */
     public function views()
     {
         return $this->morphMany('BookStack\View', 'viewable');
+    }
+
+    /**
+     * Get this entities restrictions.
+     */
+    public function restrictions()
+    {
+        return $this->morphMany('BookStack\Restriction', 'restrictable');
+    }
+
+    /**
+     * Check if this entity has a specific restriction set against it.
+     * @param $role_id
+     * @param $action
+     * @return bool
+     */
+    public function hasRestriction($role_id, $action)
+    {
+        return $this->restrictions->where('role_id', $role_id)->where('action', $action)->count() > 0;
     }
 
     /**

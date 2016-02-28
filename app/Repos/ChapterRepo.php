@@ -161,4 +161,27 @@ class ChapterRepo
         return $chapter;
     }
 
+    /**
+     * Updates pages restrictions from a request
+     * @param $request
+     * @param $chapter
+     */
+    public function updateRestrictionsFromRequest($request, $chapter)
+    {
+        // TODO - extract into shared repo
+        $chapter->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $chapter->restrictions()->delete();
+        if ($request->has('restrictions')) {
+            foreach($request->get('restrictions') as $roleId => $restrictions) {
+                foreach ($restrictions as $action => $value) {
+                    $chapter->restrictions()->create([
+                        'role_id' => $roleId,
+                        'action'  => strtolower($action)
+                    ]);
+                }
+            }
+        }
+        $chapter->save();
+    }
+
 }

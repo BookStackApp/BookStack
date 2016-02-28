@@ -407,4 +407,27 @@ class PageRepo
         return $this->page->orderBy('updated_at', 'desc')->paginate($count);
     }
 
+    /**
+     * Updates pages restrictions from a request
+     * @param $request
+     * @param $page
+     */
+    public function updateRestrictionsFromRequest($request, $page)
+    {
+        // TODO - extract into shared repo
+        $page->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $page->restrictions()->delete();
+        if ($request->has('restrictions')) {
+            foreach($request->get('restrictions') as $roleId => $restrictions) {
+                foreach ($restrictions as $action => $value) {
+                    $page->restrictions()->create([
+                        'role_id' => $roleId,
+                        'action'  => strtolower($action)
+                    ]);
+                }
+            }
+        }
+        $page->save();
+    }
+
 }

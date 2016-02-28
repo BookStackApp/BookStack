@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -19,18 +20,21 @@ class BookController extends Controller
     protected $bookRepo;
     protected $pageRepo;
     protected $chapterRepo;
+    protected $userRepo;
 
     /**
      * BookController constructor.
      * @param BookRepo $bookRepo
      * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
+     * @param UserRepo $userRepo
      */
-    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo)
+    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo, UserRepo $userRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
@@ -177,7 +181,6 @@ class BookController extends Controller
 
     /**
      * Saves an array of sort mapping to pages and chapters.
-     *
      * @param  string $bookSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -223,7 +226,6 @@ class BookController extends Controller
 
     /**
      * Remove the specified book from storage.
-     *
      * @param $bookSlug
      * @return Response
      */
@@ -235,5 +237,37 @@ class BookController extends Controller
         Activity::removeEntity($book);
         $this->bookRepo->destroyBySlug($bookSlug);
         return redirect('/books');
+    }
+
+    /**
+     * Show the Restrictions view.
+     * @param $bookSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRestrict($bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('restrictions-manage', $book);
+        $roles = $this->userRepo->getRestrictableRoles();
+        return view('books/restrictions', [
+            'book' => $book,
+            'roles' => $roles
+        ]);
+    }
+
+    /**
+     * Set the restrictions for this book.
+     * @param $bookSlug
+     * @param $bookSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function restrict($bookSlug, Request $request)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('restrictions-manage', $book);
+        $this->bookRepo->updateRestrictionsFromRequest($request, $book);
+        session()->flash('success', 'Page Restrictions Updated');
+        return redirect($book->getUrl());
     }
 }
