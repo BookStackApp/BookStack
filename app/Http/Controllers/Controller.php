@@ -68,7 +68,7 @@ abstract class Controller extends BaseController
     protected function showPermissionError()
     {
         Session::flash('error', trans('errors.permission'));
-        $response = request()->wantsJson() ? response()->json(['error' => trans('errors.permissionJson')], 403) : redirect('/', 403);
+        $response = request()->wantsJson() ? response()->json(['error' => trans('errors.permissionJson')], 403) : redirect('/');
         throw new HttpResponseException($response);
     }
 
@@ -93,10 +93,8 @@ abstract class Controller extends BaseController
      */
     protected function checkOwnablePermission($permission, Ownable $ownable)
     {
-        $permissionBaseName = strtolower($permission) . '-';
-        if (userCan($permissionBaseName . 'all')) return true;
-        if (userCan($permissionBaseName . 'own') && $ownable->createdBy->id === $this->currentUser->id) return true;
-        $this->showPermissionError();
+        if (userCan($permission, $ownable)) return true;
+        return $this->showPermissionError();
     }
 
     /**

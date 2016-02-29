@@ -1,5 +1,7 @@
 <?php namespace BookStack\Services;
 
+use BookStack\Entity;
+
 class RestrictionService
 {
 
@@ -12,8 +14,24 @@ class RestrictionService
      */
     public function __construct()
     {
-        $this->userRoles = auth()->user()->roles->pluck('id');
-        $this->isAdmin = auth()->user()->hasRole('admin');
+        $user = auth()->user();
+        $this->userRoles = $user ? auth()->user()->roles->pluck('id') : false;
+        $this->isAdmin = $user ? auth()->user()->hasRole('admin') : false;
+    }
+
+    public function checkIfEntityRestricted(Entity $entity, $action)
+    {
+        if ($this->isAdmin) return true;
+        $this->currentAction = $action;
+        $baseQuery = $entity->where('id', '=', $entity->id);
+        if ($entity->isA('page')) {
+            return $this->pageRestrictionQuery($baseQuery)->count() > 0;
+        } elseif ($entity->isA('chapter')) {
+            return $this->chapterRestrictionQuery($baseQuery)->count() > 0;
+        } elseif ($entity->isA('book')) {
+            return $this->bookRestrictionQuery($baseQuery)->count() > 0;
+        }
+        return false;
     }
 
     /**
@@ -184,25 +202,25 @@ class RestrictionService
         if ($this->isAdmin) return $query;
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
-        return $query->where(function($query) use ($tableDetails) {
+        return $query->where(function ($query) use ($tableDetails) {
             $query->where(function ($query) use (&$tableDetails) {
                 $query->where($tableDetails['entityTypeColumn'], '=', 'BookStack\Page')
                     ->whereExists(function ($query) use (&$tableDetails) {
-                        $query->select('*')->from('pages')->whereRaw('pages.id='.$tableDetails['tableName'].'.'.$tableDetails['entityIdColumn'])
+                        $query->select('*')->from('pages')->whereRaw('pages.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                             ->where(function ($query) {
                                 $this->pageRestrictionQuery($query);
                             });
                     });
             })->orWhere(function ($query) use (&$tableDetails) {
                 $query->where($tableDetails['entityTypeColumn'], '=', 'BookStack\Book')->whereExists(function ($query) use (&$tableDetails) {
-                    $query->select('*')->from('books')->whereRaw('books.id='.$tableDetails['tableName'].'.'.$tableDetails['entityIdColumn'])
+                    $query->select('*')->from('books')->whereRaw('books.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where(function ($query) {
                             $this->bookRestrictionQuery($query);
                         });
                 });
             })->orWhere(function ($query) use (&$tableDetails) {
                 $query->where($tableDetails['entityTypeColumn'], '=', 'BookStack\Chapter')->whereExists(function ($query) use (&$tableDetails) {
-                    $query->select('*')->from('chapters')->whereRaw('chapters.id='.$tableDetails['tableName'].'.'.$tableDetails['entityIdColumn'])
+                    $query->select('*')->from('chapters')->whereRaw('chapters.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where(function ($query) {
                             $this->chapterRestrictionQuery($query);
                         });

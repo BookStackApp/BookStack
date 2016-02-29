@@ -43,8 +43,18 @@ function userCan($permission, \BookStack\Ownable $ownable = null)
         return auth()->user() && auth()->user()->can($permission);
     }
 
+    // Check permission on ownable item
     $permissionBaseName = strtolower($permission) . '-';
-    if (userCan($permissionBaseName . 'all')) return true;
-    if (userCan($permissionBaseName . 'own') && $ownable->createdBy->id === auth()->user()->id) return true;
-    return false;
+    $hasPermission = false;
+    if (auth()->user()->can($permissionBaseName . 'all')) $hasPermission = true;
+    if (auth()->user()->can($permissionBaseName . 'own') && $ownable->createdBy->id === auth()->user()->id) $hasPermission = true;
+
+    if(!$ownable instanceof \BookStack\Entity) return $hasPermission;
+
+    // Check restrictions on the entitiy
+    $restrictionService = app('BookStack\Services\RestrictionService');
+    $explodedPermission = explode('-', $permission);
+    $action = end($explodedPermission);
+    $hasAccess = $restrictionService->checkIfEntityRestricted($ownable, $action);
+    return $hasAccess && $hasPermission;
 }
