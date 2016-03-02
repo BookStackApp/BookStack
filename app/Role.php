@@ -8,11 +8,6 @@ class Role extends Model
 {
 
     protected $fillable = ['display_name', 'description'];
-    /**
-     * Sets the default role name for newly registered users.
-     * @var string
-     */
-    protected static $default = 'viewer';
 
     /**
      * The roles that belong to the role.
@@ -46,15 +41,6 @@ class Role extends Model
     public function attachPermission(Permission $permission)
     {
         $this->permissions()->attach($permission->id);
-    }
-
-    /**
-     * Get an instance of the default role.
-     * @return Role
-     */
-    public static function getDefault()
-    {
-        return static::getRole(static::$default);
     }
 
     /**

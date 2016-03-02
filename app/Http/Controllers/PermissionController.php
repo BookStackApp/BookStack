@@ -1,28 +1,22 @@
-<?php
+<?php namespace BookStack\Http\Controllers;
 
-namespace BookStack\Http\Controllers;
-
-use BookStack\Permission;
-use BookStack\Role;
+use BookStack\Exceptions\PermissionsException;
+use BookStack\Repos\PermissionsRepo;
 use Illuminate\Http\Request;
 use BookStack\Http\Requests;
 
 class PermissionController extends Controller
 {
 
-    protected $role;
-    protected $permission;
+    protected $permissionsRepo;
 
     /**
      * PermissionController constructor.
-     * @param Role $role
-     * @param Permission $permission
-     * @internal param $user
+     * @param PermissionsRepo $permissionsRepo
      */
-    public function __construct(Role $role, Permission $permission)
+    public function __construct(PermissionsRepo $permissionsRepo)
     {
-        $this->role = $role;
-        $this->permission = $permission;
+        $this->permissionsRepo = $permissionsRepo;
         parent::__construct();
     }
 
@@ -32,7 +26,7 @@ class PermissionController extends Controller
     public function listRoles()
     {
         $this->checkPermission('user-roles-manage');
-        $roles = $this->role->all();
+        $roles = $this->permissionsRepo->getAllRoles();
         return view('settings/roles/index', ['roles' => $roles]);
     }
 
@@ -59,22 +53,7 @@ class PermissionController extends Controller
             'description' => 'max:250'
         ]);
 
-        $role = $this->role->newInstance($request->all());
-        $role->name = str_replace(' ', '-', strtolower($request->get('display_name')));
-        // Prevent duplicate names
-        while ($this->role->where('name', '=', $role->name)->count() > 0) {
-            $role->name .= strtolower(str_random(2));
-        }
-        $role->save();
-
-        if ($request->has('permissions')) {
-            $permissionsNames = array_keys($request->get('permissions'));
-            $permissions = $this->permission->whereIn('name', $permissionsNames)->pluck('id')->toArray();
-            $role->permissions()->sync($permissions);
-        } else {
-            $role->permissions()->sync([]);
-        }
-
+        $this->permissionsRepo->saveNewRole($request->all());
         session()->flash('success', 'Role successfully created');
         return redirect('/settings/roles');
     }
@@ -87,7 +66,7 @@ class PermissionController extends Controller
     public function editRole($id)
     {
         $this->checkPermission('user-roles-manage');
-        $role = $this->role->findOrFail($id);
+        $role = $this->permissionsRepo->getRoleById($id);
         return view('settings/roles/edit', ['role' => $role]);
     }
 
@@ -105,24 +84,7 @@ class PermissionController extends Controller
             'description' => 'max:250'
         ]);
 
-        $role = $this->role->findOrFail($id);
-        if ($request->has('permissions')) {
-            $permissionsNames = array_keys($request->get('permissions'));
-            $permissions = $this->permission->whereIn('name', $permissionsNames)->pluck('id')->toArray();
-            $role->permissions()->sync($permissions);
-        } else {
-            $role->permissions()->sync([]);
-        }
-
-        // Ensure admin account always has all permissions
-        if ($role->name === 'admin') {
-            $permissions = $this->permission->all()->pluck('id')->toArray();
-            $role->permissions()->sync($permissions);
-        }
-
-        $role->fill($request->all());
-        $role->save();
-
+        $this->permissionsRepo->updateRole($id, $request->all());
         session()->flash('success', 'Role successfully updated');
         return redirect('/settings/roles');
     }
@@ -136,9 +98,9 @@ class PermissionController extends Controller
     public function showDeleteRole($id)
     {
         $this->checkPermission('user-roles-manage');
-        $role = $this->role->findOrFail($id);
-        $roles = $this->role->where('id', '!=', $id)->get();
-        $blankRole = $this->role->newInstance(['display_name' => 'Don\'t migrate users']);
+        $role = $this->permissionsRepo->getRoleById($id);
+        $roles = $this->permissionsRepo->getAllRolesExcept($role);
+        $blankRole = $role->newInstance(['display_name' => 'Don\'t migrate users']);
         $roles->prepend($blankRole);
         return view('settings/roles/delete', ['role' => $role, 'roles' => $roles]);
     }
@@ -153,28 +115,13 @@ class PermissionController extends Controller
     public function deleteRole($id, Request $request)
     {
         $this->checkPermission('user-roles-manage');
-        $role = $this->role->findOrFail($id);
 
-        // Prevent deleting admin role
-        if ($role->name === 'admin') {
-            session()->flash('error', 'The admin role cannot be deleted');
+        try {
+            $this->permissionsRepo->deleteRole($id, $request->get('migrate_role_id'));
+        } catch (PermissionsException $e) {
+            session()->flash('error', $e->getMessage());
             return redirect()->back();
         }
-
-        if ($role->id == \Setting::get('registration-role')) {
-            session()->flash('error', 'This role cannot be deleted while set as the default registration role.');
-            return redirect()->back();
-        }
-
-        if ($request->has('migration_role_id')) {
-            $newRole = $this->role->find($request->get('migration_role_id'));
-            if ($newRole) {
-                $users = $role->users->pluck('id')->toArray();
-                $newRole->users()->sync($users);
-            }
-        }
-
-        $role->delete();
 
         session()->flash('success', 'Role successfully deleted');
         return redirect('/settings/roles');

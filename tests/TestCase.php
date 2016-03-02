@@ -79,8 +79,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected function getNewUser($attributes = [])
     {
         $user = factory(\BookStack\User::class)->create($attributes);
-        $userRepo = app('BookStack\Repos\UserRepo');
-        $userRepo->attachDefaultRole($user);
+        $role = \BookStack\Role::getRole('editor');
+        $user->attachRole($role);;
         return $user;
     }
 
