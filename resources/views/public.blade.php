@@ -15,7 +15,19 @@
 
     <!-- Scripts -->
     <script src="/libs/jquery/jquery.min.js?version=2.1.4"></script>
-
+    @if(Setting::get('app-color'))
+        <style>
+            header {
+                background-color: #{{ Setting::get('app-color') }};
+            }
+            .faded-small {
+                background-color: {{ Setting::get('app-color-rgba') }}}
+            }
+            .button-base, .button, input[type="button"], input[type="submit"] {
+                background-color: #{{ Setting::get('app-color') }} !IMPORTANT;
+            }
+        </style>
+    @endif
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 

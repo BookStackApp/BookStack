@@ -35,6 +35,11 @@
                     <p class="small">This image should be 43px in height. <br>Large images will be scaled down.</p>
                     <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ Setting::get('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
+                <div class="form-group" id="color-control">
+                    <label for="setting-app-color">Application Primary Color</label>
+                    <p class="small">This should be a hex value.</p>
+                    <input class="jscolor" type="text" value="{{ Setting::get('app-color', '') }}" name="setting-app-color" id="setting-app-color" placeholder="0288D1">
+                </div>
             </div>
         </div>
 
@@ -88,4 +93,8 @@
 
 @include('partials/image-manager', ['imageType' => 'system'])
 
+@stop
+
+@section('scripts')
+    <script src="/libs/jscolor/jscolor.min.js?version=2.0.4"></script>
 @stop
