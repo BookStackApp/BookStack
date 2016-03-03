@@ -201,7 +201,14 @@ class PageRepo
      */
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
-        $terms = explode(' ', $term);
+        preg_match_all('/"(.*?)"/', $term, $matches);
+        if (count($matches[1]) > 0) {
+            $terms = $matches[1];
+            $term = trim(preg_replace('/"(.*?)"/', '', $term));
+        } else {
+            $terms = [];
+        }
+        $terms = array_merge($terms, explode(' ', $term));
         $pages = $this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms)
             ->paginate($count)->appends($paginationAppends);
 

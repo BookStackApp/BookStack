@@ -226,7 +226,14 @@ class BookRepo
      */
     public function getBySearch($term, $count = 20, $paginationAppends = [])
     {
-        $terms = explode(' ', $term);
+        preg_match_all('/"(.*?)"/', $term, $matches);
+        if (count($matches[1]) > 0) {
+            $terms = $matches[1];
+            $term = trim(preg_replace('/"(.*?)"/', '', $term));
+        } else {
+            $terms = [];
+        }
+        $terms = array_merge($terms, explode(' ', $term));
         $books = $this->book->fullTextSearchQuery(['name', 'description'], $terms)
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
