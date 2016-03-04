@@ -208,7 +208,9 @@ class PageRepo
         } else {
             $terms = [];
         }
-        $terms = array_merge($terms, explode(' ', $term));
+        if (!empty($term)) {
+            $terms = array_merge($terms, explode(' ', $term));
+        }
         $pages = $this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms)
             ->paginate($count)->appends($paginationAppends);
 

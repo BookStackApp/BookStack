@@ -100,10 +100,14 @@ abstract class Entity extends Model
      */
     public static function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
     {
-        $termString = '';
-        foreach ($terms as $term) {
-            $termString .= htmlentities($term) . '* ';
+        foreach ($terms as $key => $term) {
+            $term = htmlentities($term);
+            if (preg_match('/\s/', $term)) {
+                $term = '"' . $term . '"';
+            }
+            $terms[$key] = $term . '*';
         }
+        $termString = "'" . implode(' ', $terms) . "'";
         $fields = implode(',', $fieldsToSearch);
         $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
         $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
@@ -113,9 +117,8 @@ abstract class Entity extends Model
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
-
         // Load in relations
-        if (static::isA('page'))  {
+        if (static::isA('page')) {
             $search = $search->with('book', 'chapter', 'createdBy', 'updatedBy');
         } else if (static::isA('chapter')) {
             $search = $search->with('book');
