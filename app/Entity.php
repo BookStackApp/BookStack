@@ -87,8 +87,8 @@ abstract class Entity extends Model
      */
     public function getShortName($length = 25)
     {
-        if(strlen($this->name) <= $length) return $this->name;
-        return substr($this->name, 0, $length-3) . '...';
+        if (strlen($this->name) <= $length) return $this->name;
+        return substr($this->name, 0, $length - 3) . '...';
     }
 
     /**
@@ -100,18 +100,33 @@ abstract class Entity extends Model
      */
     public static function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
     {
+        $exactTerms = [];
         foreach ($terms as $key => $term) {
-            $term = htmlentities($term);
+            $term = htmlentities($term, ENT_QUOTES);
+            $term =  preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
             if (preg_match('/\s/', $term)) {
+                $exactTerms[] = '%' . $term . '%';
                 $term = '"' . $term . '"';
+            } else {
+                $term = '' . $term . '*';
             }
-            $terms[$key] = $term . '*';
+            if ($term !== '*') $terms[$key] = $term;
         }
-        $termString = "'" . implode(' ', $terms) . "'";
+        $termString = implode(' ', $terms);
         $fields = implode(',', $fieldsToSearch);
-        $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
-        $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
+        $search = static::selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
         $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+
+        // Ensure at least one exact term matches if in search
+        if (count($exactTerms) > 0) {
+            $search = $search->where(function($query) use ($exactTerms, $fieldsToSearch) {
+                foreach ($exactTerms as $exactTerm) {
+                    foreach ($fieldsToSearch as $field) {
+                        $query->orWhere($field, 'like', $exactTerm);
+                    }
+                }
+            });
+        }
 
         // Add additional where terms
         foreach ($wheres as $whereTerm) {

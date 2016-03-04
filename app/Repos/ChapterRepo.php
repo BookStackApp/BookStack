@@ -138,7 +138,9 @@ class ChapterRepo
         } else {
             $terms = [];
         }
-        $terms = array_merge($terms, explode(' ', $term));
+        if (!empty($term)) {
+            $terms = array_merge($terms, explode(' ', $term));
+        }
         $chapters = $this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms)
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));

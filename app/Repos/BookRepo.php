@@ -233,7 +233,9 @@ class BookRepo
         } else {
             $terms = [];
         }
-        $terms = array_merge($terms, explode(' ', $term));
+        if (!empty($term)) {
+            $terms = array_merge($terms, explode(' ', $term));
+        }
         $books = $this->book->fullTextSearchQuery(['name', 'description'], $terms)
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
