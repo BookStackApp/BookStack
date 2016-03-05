@@ -1,10 +1,10 @@
 <?php
 
-if (! function_exists('versioned_asset')) {
+if (!function_exists('versioned_asset')) {
     /**
      * Get the path to a versioned file.
      *
-     * @param  string  $file
+     * @param  string $file
      * @return string
      *
      * @throws \InvalidArgumentException
@@ -39,6 +39,7 @@ if (! function_exists('versioned_asset')) {
  */
 function userCan($permission, \BookStack\Ownable $ownable = null)
 {
+    if (!auth()->check()) return false;
     if ($ownable === null) {
         return auth()->user() && auth()->user()->can($permission);
     }
@@ -47,9 +48,9 @@ function userCan($permission, \BookStack\Ownable $ownable = null)
     $permissionBaseName = strtolower($permission) . '-';
     $hasPermission = false;
     if (auth()->user()->can($permissionBaseName . 'all')) $hasPermission = true;
-    if (auth()->user()->can($permissionBaseName . 'own') && $ownable->createdBy->id === auth()->user()->id) $hasPermission = true;
+    if (auth()->user()->can($permissionBaseName . 'own') && $ownable->createdBy && $ownable->createdBy->id === auth()->user()->id) $hasPermission = true;
 
-    if(!$ownable instanceof \BookStack\Entity) return $hasPermission;
+    if (!$ownable instanceof \BookStack\Entity) return $hasPermission;
 
     // Check restrictions on the entitiy
     $restrictionService = app('BookStack\Services\RestrictionService');

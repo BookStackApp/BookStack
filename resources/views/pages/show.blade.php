@@ -70,7 +70,38 @@
                 </div>
             </div>
             <div class="col-md-3 print-hidden">
+                <div class="margin-top large"></div>
+                @if($book->restricted || ($page->chapter && $page->chapter->restricted) || $page->restricted)
+                    <div class="text-muted">
 
+                        @if($book->restricted)
+                            @if(userCan('restrictions-manage', $book))
+                                <a href="{{ $book->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Book restricted</a>
+                            @else
+                                <i class="zmdi zmdi-lock-outline"></i>Book restricted
+                            @endif
+                            <br>
+                        @endif
+
+                        @if($page->chapter && $page->chapter->restricted)
+                            @if(userCan('restrictions-manage', $page->chapter))
+                                <a href="{{ $page->chapter->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Chapter restricted</a>
+                            @else
+                                <i class="zmdi zmdi-lock-outline"></i>Chapter restricted
+                            @endif
+                            <br>
+                        @endif
+
+                        @if($page->restricted)
+                            @if(userCan('restrictions-manage', $page))
+                                <a href="{{ $page->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Page restricted</a>
+                            @else
+                                <i class="zmdi zmdi-lock-outline"></i>Page restricted
+                            @endif
+                            <br>
+                        @endif
+                    </div>
+                @endif
                 @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree])
 
             </div>

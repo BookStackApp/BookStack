@@ -1,6 +1,7 @@
 <?php namespace BookStack\Repos;
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Services\RestrictionService;
 use Illuminate\Support\Str;
 use BookStack\Book;
@@ -111,11 +112,12 @@ class BookRepo
      * Get a book by slug
      * @param $slug
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug)
     {
         $book = $this->bookQuery()->where('slug', '=', $slug)->first();
-        if ($book === null) abort(404);
+        if ($book === null) throw new NotFoundException('Book not found');
         return $book;
     }
 
@@ -153,6 +155,7 @@ class BookRepo
             $this->chapterRepo->destroy($chapter);
         }
         $book->views()->delete();
+        $book->restrictions()->delete();
         $book->delete();
     }
 
@@ -210,11 +213,13 @@ class BookRepo
     public function getChildren(Book $book)
     {
         $pageQuery = $book->pages()->where('chapter_id', '=', 0);
-        $this->restrictionService->enforcePageRestrictions($pageQuery, 'view');
+        $pageQuery = $this->restrictionService->enforcePageRestrictions($pageQuery, 'view');
         $pages = $pageQuery->get();
 
-        $chapterQuery = $book->chapters()->with('pages');
-        $this->restrictionService->enforceChapterRestrictions($chapterQuery, 'view');
+        $chapterQuery = $book->chapters()->with(['pages' => function($query) {
+            $this->restrictionService->enforcePageRestrictions($query, 'view');
+        }]);
+        $chapterQuery = $this->restrictionService->enforceChapterRestrictions($chapterQuery, 'view');
         $chapters = $chapterQuery->get();
         $children = $pages->merge($chapters);
         $bookSlug = $book->slug;

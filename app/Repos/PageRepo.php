@@ -4,6 +4,7 @@
 use Activity;
 use BookStack\Book;
 use BookStack\Chapter;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Services\RestrictionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,11 +57,12 @@ class PageRepo
      * @param $slug
      * @param $bookId
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
     {
         $page = $this->pageQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($page === null) throw new NotFoundHttpException('Page not found');
+        if ($page === null) throw new NotFoundException('Page not found');
         return $page;
     }
 
@@ -373,6 +375,7 @@ class PageRepo
         Activity::removeEntity($page);
         $page->views()->delete();
         $page->revisions()->delete();
+        $page->restrictions()->delete();
         $page->delete();
     }
 

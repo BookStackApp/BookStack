@@ -80,7 +80,14 @@ class ChapterController extends Controller
         $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($chapter);
         $this->setPageTitle($chapter->getShortName());
-        return view('chapters/show', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter, 'sidebarTree' => $sidebarTree]);
+        $pages = $this->chapterRepo->getChildren($chapter);
+        return view('chapters/show', [
+            'book' => $book,
+            'chapter' => $chapter,
+            'current' => $chapter,
+            'sidebarTree' => $sidebarTree,
+            'pages' => $pages
+        ]);
     }
 
     /**

@@ -4,7 +4,7 @@
 
     @include('settings/navbar', ['selected' => 'roles'])
 
-    <div class="container">
+    <div class="container small">
 
         <h1>User Roles</h1>
 

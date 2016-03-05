@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
@@ -94,7 +95,7 @@ class PageController extends Controller
 
         try {
             $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        } catch (NotFoundHttpException $e) {
+        } catch (NotFoundException $e) {
             $page = $this->pageRepo->findPageUsingOldSlug($pageSlug, $bookSlug);
             if ($page === null) abort(404);
             return redirect($page->getUrl());

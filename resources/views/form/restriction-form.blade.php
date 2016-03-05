@@ -3,7 +3,7 @@
     <input type="hidden" name="_method" value="PUT">
 
     <div class="form-group">
-        @include('form/checkbox', ['name' => 'restricted', 'label' => 'Restrict this page?'])
+        @include('form/checkbox', ['name' => 'restricted', 'label' => 'Restrict this ' . $model->getClassName()])
     </div>
 
     <table class="table">
@@ -24,5 +24,6 @@
         @endforeach
     </table>
 
+    <a href="{{ $model->getUrl() }}" class="button muted">Cancel</a>
     <button type="submit" class="button pos">Save Restrictions</button>
 </form>

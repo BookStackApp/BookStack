@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Symfony\Component\DomCrawler\Crawler;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -119,6 +120,40 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $this->$method("/$pattern/i", $content);
 
+        return $this;
+    }
+
+    /**
+     * Assert that the current page matches a given URI.
+     *
+     * @param  string  $uri
+     * @return $this
+     */
+    protected function seePageUrlIs($uri)
+    {
+        $this->assertEquals(
+            $uri, $this->currentUri, "Did not land on expected page [{$uri}].\n"
+        );
+
+        return $this;
+    }
+
+    /**
+     * Do a forced visit that does not error out on exception.
+     * @param string $uri
+     * @param array $parameters
+     * @param array $cookies
+     * @param array $files
+     * @return $this
+     */
+    protected function forceVisit($uri, $parameters = [], $cookies = [], $files = [])
+    {
+        $method = 'GET';
+        $uri = $this->prepareUrlForRequest($uri);
+        $this->call($method, $uri, $parameters, $cookies, $files);
+        $this->clearInputs()->followRedirects();
+        $this->currentUri = $this->app->make('request')->fullUrl();
+        $this->crawler = new Crawler($this->response->getContent(), $uri);
         return $this;
     }
 

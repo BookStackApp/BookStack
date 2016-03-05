@@ -30,7 +30,9 @@
                     {!! $books->render() !!}
                 @else
                     <p class="text-muted">No books have been created.</p>
-                    <a href="/books/create" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>
+                    @if(userCan('books-create-all'))
+                        <a href="/books/create" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>
+                    @endif
                 @endif
             </div>
             <div class="col-sm-4 col-sm-offset-1">

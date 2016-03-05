@@ -15,10 +15,16 @@ class RestrictionService
     public function __construct()
     {
         $user = auth()->user();
-        $this->userRoles = $user ? auth()->user()->roles->pluck('id') : false;
+        $this->userRoles = $user ? auth()->user()->roles->pluck('id') : [];
         $this->isAdmin = $user ? auth()->user()->hasRole('admin') : false;
     }
 
+    /**
+     * Checks if an entity has a restriction set upon it.
+     * @param Entity $entity
+     * @param $action
+     * @return bool
+     */
     public function checkIfEntityRestricted(Entity $entity, $action)
     {
         if ($this->isAdmin) return true;
@@ -93,12 +99,28 @@ class RestrictionService
                                 });
                         });
                 })
+                // Page unrestricted, Has an unrestricted chapter & book has accepted restrictions
+                ->orWhere(function ($query) {
+                    $query->where('restricted', '=', false)
+                        ->whereExists(function ($query) {
+                            $query->select('*')->from('chapters')
+                                ->whereRaw('chapters.id=pages.chapter_id')->where('restricted', '=', false);
+                        })
+                        ->whereExists(function ($query) {
+                            $query->select('*')->from('books')
+                                ->whereRaw('books.id=pages.book_id')
+                                ->whereExists(function ($query) {
+                                    $this->checkRestrictionsQuery($query, 'books', 'Book');
+                                });
+                        });
+                })
                 // Page unrestricted, Has a chapter with accepted permissions
                 ->orWhere(function ($query) {
                     $query->where('restricted', '=', false)
                         ->whereExists(function ($query) {
                             $query->select('*')->from('chapters')
                                 ->whereRaw('chapters.id=pages.chapter_id')
+                                ->where('restricted', '=', true)
                                 ->whereExists(function ($query) {
                                     $this->checkRestrictionsQuery($query, 'chapters', 'Chapter');
                                 });
@@ -183,8 +205,10 @@ class RestrictionService
         return $query->where(function ($parentWhereQuery) {
             $parentWhereQuery
                 ->where('restricted', '=', false)
-                ->orWhereExists(function ($query) {
-                    $this->checkRestrictionsQuery($query, 'books', 'Book');
+                ->orWhere(function ($query) {
+                    $query->where('restricted', '=', true)->whereExists(function ($query) {
+                        $this->checkRestrictionsQuery($query, 'books', 'Book');
+                    });
                 });
         });
     }

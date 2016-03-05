@@ -2,6 +2,7 @@
 
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Services\RestrictionService;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
@@ -66,12 +67,22 @@ class ChapterRepo
      * @param $slug
      * @param $bookId
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
     {
         $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($chapter === null) abort(404);
+        if ($chapter === null) throw new NotFoundException('Chapter not found');
         return $chapter;
+    }
+
+    /**
+     * Get the child items for a chapter
+     * @param Chapter $chapter
+     */
+    public function getChildren(Chapter $chapter)
+    {
+        return $this->restrictionService->enforcePageRestrictions($chapter->pages())->get();
     }
 
     /**
@@ -98,6 +109,7 @@ class ChapterRepo
         }
         Activity::removeEntity($chapter);
         $chapter->views()->delete();
+        $chapter->restrictions()->delete();
         $chapter->delete();
     }
 

@@ -3,6 +3,7 @@
 <div class="row">
 
     <div class="col-md-6">
+        <h3>Role Details</h3>
         <div class="form-group">
             <label for="name">Role Name</label>
             @include('form/text', ['name' => 'display_name'])
@@ -11,7 +12,7 @@
             <label for="name">Short Role Description</label>
             @include('form/text', ['name' => 'description'])
         </div>
-        <hr class="even">
+        <h3>System Permissions</h3>
         <div class="row">
             <div class="col-md-6">
                 <label> @include('settings/roles/checkbox', ['permission' => 'users-manage']) Manage users</label>
@@ -33,10 +34,17 @@
         <div class="form-group">
             <label>@include('settings/roles/checkbox', ['permission' => 'settings-manage']) Manage app settings</label>
         </div>
+        <hr class="even">
 
     </div>
 
     <div class="col-md-6">
+
+        <h3>Asset Permissions</h3>
+        <p>
+            These permissions control default access to the assets within the system. <br>
+            Restrictions on Books, Chapters and Pages will override these permissions.
+        </p>
         <table class="table">
             <tr>
                 <th></th>
@@ -104,4 +112,6 @@
     </div>
 
 </div>
+
+<a href="/settings/roles" class="button muted">Cancel</a>
 <button type="submit" class="button pos">Save Role</button>
