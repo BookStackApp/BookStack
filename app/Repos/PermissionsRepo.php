@@ -101,6 +101,7 @@ class PermissionsRepo
     public function assignRolePermissions(Role $role, $permissionNameArray = [])
     {
         $permissions = [];
+        $permissionNameArray = array_values($permissionNameArray);
         if ($permissionNameArray && count($permissionNameArray) > 0) {
             $permissions = $this->permission->whereIn('name', $permissionNameArray)->pluck('id')->toArray();
         }

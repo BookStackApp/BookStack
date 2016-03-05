@@ -16,7 +16,7 @@
 
     {{ $activity->getText() }}
 
-    @if($activity->entity())
+    @if($activity->entity)
         <a href="{{ $activity->entity->getUrl() }}">{{ $activity->entity->name }}</a>
     @endif
 

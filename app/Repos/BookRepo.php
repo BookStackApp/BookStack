@@ -136,7 +136,7 @@ class BookRepo
      */
     public function newFromInput($input)
     {
-        return $this->bookQuery()->fill($input);
+        return $this->book->newInstance($input);
     }
 
     /**

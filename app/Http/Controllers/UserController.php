@@ -35,6 +35,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->checkPermission('users-manage');
         $users = $this->userRepo->getAllUsers();
         $this->setPageTitle('Users');
         return view('users/index', ['users' => $users]);

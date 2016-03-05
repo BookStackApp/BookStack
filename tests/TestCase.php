@@ -85,6 +85,17 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
+     * Quick way to create a new user without any permissions
+     * @param array $attributes
+     * @return mixed
+     */
+    protected function getNewBlankUser($attributes = [])
+    {
+        $user = factory(\BookStack\User::class)->create($attributes);
+        return $user;
+    }
+
+    /**
      * Assert that a given string is seen inside an element.
      *
      * @param  bool|string|null $element

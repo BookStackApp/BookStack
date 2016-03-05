@@ -67,11 +67,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Get all permissions belonging to a the current user.
+     * @param bool $cache
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function permissions()
+    public function permissions($cache = true)
     {
-        if(isset($this->permissions)) return $this->permissions;
+        if(isset($this->permissions) && $cache) return $this->permissions;
         $this->load('roles.permissions');
         $permissions = $this->roles->map(function($role) {
             return $role->permissions;
@@ -106,7 +107,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function attachRoleId($id)
     {
-        $this->roles()->attach([$id]);
+        $this->roles()->attach($id);
     }
 
     /**

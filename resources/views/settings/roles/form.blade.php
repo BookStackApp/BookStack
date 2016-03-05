@@ -17,7 +17,7 @@
                 <label> @include('settings/roles/checkbox', ['permission' => 'users-manage']) Manage users</label>
             </div>
             <div class="col-md-6">
-                <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) Manage user roles & Permissions</label>
+                <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) Manage user roles</label>
             </div>
         </div>
         <hr class="even">
