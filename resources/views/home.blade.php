@@ -33,10 +33,14 @@
 
             <div class="col-sm-4">
                 <h3><a class="no-color" href="/pages/recently-created">Recently Created Pages</a></h3>
-                @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'style' => 'compact'])
+                <div id="recently-created-pages">
+                    @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'style' => 'compact'])
+                </div>
 
                 <h3><a class="no-color" href="/pages/recently-updated">Recently Updated Pages</a></h3>
-                @include('partials/entity-list', ['entities' => $recentlyCreatedPages, 'style' => 'compact'])
+                <div id="recently-updated-pages">
+                    @include('partials/entity-list', ['entities' => $recentlyUpdatedPages, 'style' => 'compact'])
+                </div>
             </div>
 
             <div class="col-sm-4" id="recent-activity">
