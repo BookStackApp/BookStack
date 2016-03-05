@@ -2,6 +2,8 @@
 
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
+use BookStack\Services\RestrictionService;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
 
@@ -9,14 +11,26 @@ class ChapterRepo
 {
 
     protected $chapter;
+    protected $restrictionService;
 
     /**
      * ChapterRepo constructor.
-     * @param $chapter
+     * @param Chapter $chapter
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Chapter $chapter)
+    public function __construct(Chapter $chapter, RestrictionService $restrictionService)
     {
         $this->chapter = $chapter;
+        $this->restrictionService = $restrictionService;
+    }
+
+    /**
+     * Base query for getting chapters, Takes restrictions into account.
+     * @return mixed
+     */
+    private function chapterQuery()
+    {
+        return $this->restrictionService->enforceChapterRestrictions($this->chapter, 'view');
     }
 
     /**
@@ -26,7 +40,7 @@ class ChapterRepo
      */
     public function idExists($id)
     {
-        return $this->chapter->where('id', '=', $id)->count() > 0;
+        return $this->chapterQuery()->where('id', '=', $id)->count() > 0;
     }
 
     /**
@@ -36,7 +50,7 @@ class ChapterRepo
      */
     public function getById($id)
     {
-        return $this->chapter->findOrFail($id);
+        return $this->chapterQuery()->findOrFail($id);
     }
 
     /**
@@ -45,7 +59,7 @@ class ChapterRepo
      */
     public function getAll()
     {
-        return $this->chapter->all();
+        return $this->chapterQuery()->all();
     }
 
     /**
@@ -53,12 +67,22 @@ class ChapterRepo
      * @param $slug
      * @param $bookId
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
     {
-        $chapter = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($chapter === null) abort(404);
+        $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        if ($chapter === null) throw new NotFoundException('Chapter not found');
         return $chapter;
+    }
+
+    /**
+     * Get the child items for a chapter
+     * @param Chapter $chapter
+     */
+    public function getChildren(Chapter $chapter)
+    {
+        return $this->restrictionService->enforcePageRestrictions($chapter->pages())->get();
     }
 
     /**
@@ -85,6 +109,7 @@ class ChapterRepo
         }
         Activity::removeEntity($chapter);
         $chapter->views()->delete();
+        $chapter->restrictions()->delete();
         $chapter->delete();
     }
 
@@ -141,7 +166,7 @@ class ChapterRepo
         if (!empty($term)) {
             $terms = array_merge($terms, explode(' ', $term));
         }
-        $chapters = $this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms)
+        $chapters = $this->restrictionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {
@@ -168,6 +193,29 @@ class ChapterRepo
         $chapter->slug = $this->findSuitableSlug($chapter->name, $bookId, $chapter->id);
         $chapter->save();
         return $chapter;
+    }
+
+    /**
+     * Updates pages restrictions from a request
+     * @param $request
+     * @param $chapter
+     */
+    public function updateRestrictionsFromRequest($request, $chapter)
+    {
+        // TODO - extract into shared repo
+        $chapter->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $chapter->restrictions()->delete();
+        if ($request->has('restrictions')) {
+            foreach($request->get('restrictions') as $roleId => $restrictions) {
+                foreach ($restrictions as $action => $value) {
+                    $chapter->restrictions()->create([
+                        'role_id' => $roleId,
+                        'action'  => strtolower($action)
+                    ]);
+                }
+            }
+        }
+        $chapter->save();
     }
 
 }

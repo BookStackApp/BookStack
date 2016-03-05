@@ -17,6 +17,7 @@ $factory->define(BookStack\User::class, function ($faker) {
         'email' => $faker->email,
         'password' => str_random(10),
         'remember_token' => str_random(10),
+        'email_confirmed' => 1
     ];
 });
 
@@ -43,5 +44,12 @@ $factory->define(BookStack\Page::class, function ($faker) {
         'slug' => str_random(10),
         'html' => $html,
         'text' => strip_tags($html)
+    ];
+});
+
+$factory->define(BookStack\Role::class, function ($faker) {
+    return [
+        'display_name' => $faker->sentence(3),
+        'description' => $faker->sentence(10)
     ];
 });

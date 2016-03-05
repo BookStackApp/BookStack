@@ -28,11 +28,17 @@ class CustomFacadeProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('activity', function() {
-            return new ActivityService($this->app->make('BookStack\Activity'));
+            return new ActivityService(
+                $this->app->make('BookStack\Activity'),
+                $this->app->make('BookStack\Services\RestrictionService')
+            );
         });
 
         $this->app->bind('views', function() {
-            return new ViewService($this->app->make('BookStack\View'));
+            return new ViewService(
+                $this->app->make('BookStack\View'),
+                $this->app->make('BookStack\Services\RestrictionService')
+            );
         });
 
         $this->app->bind('setting', function() {
@@ -41,6 +47,7 @@ class CustomFacadeProvider extends ServiceProvider
                 $this->app->make('Illuminate\Contracts\Cache\Repository')
             );
         });
+
         $this->app->bind('images', function() {
             return new ImageService(
                 $this->app->make('Intervention\Image\ImageManager'),

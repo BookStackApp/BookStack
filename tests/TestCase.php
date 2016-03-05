@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Symfony\Component\DomCrawler\Crawler;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -32,7 +33,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function asAdmin()
     {
         if($this->admin === null) {
-            $this->admin = \BookStack\User::find(1);
+            $adminRole = \BookStack\Role::getRole('admin');
+            $this->admin = $adminRole->users->first();
         }
         return $this->actingAs($this->admin);
     }
@@ -78,8 +80,19 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected function getNewUser($attributes = [])
     {
         $user = factory(\BookStack\User::class)->create($attributes);
-        $userRepo = app('BookStack\Repos\UserRepo');
-        $userRepo->attachDefaultRole($user);
+        $role = \BookStack\Role::getRole('editor');
+        $user->attachRole($role);;
+        return $user;
+    }
+
+    /**
+     * Quick way to create a new user without any permissions
+     * @param array $attributes
+     * @return mixed
+     */
+    protected function getNewBlankUser($attributes = [])
+    {
+        $user = factory(\BookStack\User::class)->create($attributes);
         return $user;
     }
 
@@ -107,6 +120,40 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $this->$method("/$pattern/i", $content);
 
+        return $this;
+    }
+
+    /**
+     * Assert that the current page matches a given URI.
+     *
+     * @param  string  $uri
+     * @return $this
+     */
+    protected function seePageUrlIs($uri)
+    {
+        $this->assertEquals(
+            $uri, $this->currentUri, "Did not land on expected page [{$uri}].\n"
+        );
+
+        return $this;
+    }
+
+    /**
+     * Do a forced visit that does not error out on exception.
+     * @param string $uri
+     * @param array $parameters
+     * @param array $cookies
+     * @param array $files
+     * @return $this
+     */
+    protected function forceVisit($uri, $parameters = [], $cookies = [], $files = [])
+    {
+        $method = 'GET';
+        $uri = $this->prepareUrlForRequest($uri);
+        $this->call($method, $uri, $parameters, $cookies, $files);
+        $this->clearInputs()->followRedirects();
+        $this->currentUri = $this->app->make('request')->fullUrl();
+        $this->crawler = new Crawler($this->response->getContent(), $uri);
         return $this;
     }
 

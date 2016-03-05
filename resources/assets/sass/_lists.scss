@@ -95,13 +95,14 @@
 
 // Sidebar list
 .book-tree {
-  padding: $-xl 0 0 0;
+  padding: $-l 0 0 0;
   position: relative;
   right: 0;
   top: 0;
   transition: ease-in-out 240ms;
   transition-property: right, border;
   border-left: 0px solid #FFF;
+  background-color: #FFF;
   &.fixed {
     position: fixed;
     top: 0;

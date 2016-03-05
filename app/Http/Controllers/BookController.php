@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -19,18 +20,21 @@ class BookController extends Controller
     protected $bookRepo;
     protected $pageRepo;
     protected $chapterRepo;
+    protected $userRepo;
 
     /**
      * BookController constructor.
-     * @param BookRepo    $bookRepo
-     * @param PageRepo    $pageRepo
+     * @param BookRepo $bookRepo
+     * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
+     * @param UserRepo $userRepo
      */
-    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo)
+    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo, UserRepo $userRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
@@ -55,7 +59,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $this->checkPermission('book-create');
+        $this->checkPermission('book-create-all');
         $this->setPageTitle('Create New Book');
         return view('books/create');
     }
@@ -68,9 +72,9 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $this->checkPermission('book-create');
+        $this->checkPermission('book-create-all');
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
         $book = $this->bookRepo->newFromInput($request->all());
@@ -105,8 +109,8 @@ class BookController extends Controller
      */
     public function edit($slug)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
+        $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle('Edit Book ' . $book->getShortName());
         return view('books/edit', ['book' => $book, 'current' => $book]);
     }
@@ -120,10 +124,10 @@ class BookController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($slug);
+        $this->checkOwnablePermission('book-update', $book);
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
         $book->fill($request->all());
@@ -141,8 +145,8 @@ class BookController extends Controller
      */
     public function showDelete($bookSlug)
     {
-        $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle('Delete Book ' . $book->getShortName());
         return view('books/delete', ['book' => $book, 'current' => $book]);
     }
@@ -154,8 +158,8 @@ class BookController extends Controller
      */
     public function sort($bookSlug)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-update', $book);
         $bookChildren = $this->bookRepo->getChildren($book);
         $books = $this->bookRepo->getAll(false);
         $this->setPageTitle('Sort Book ' . $book->getShortName());
@@ -177,15 +181,14 @@ class BookController extends Controller
 
     /**
      * Saves an array of sort mapping to pages and chapters.
-     *
      * @param  string $bookSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function saveSort($bookSlug, Request $request)
     {
-        $this->checkPermission('book-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent
         if (!$request->has('sort-tree')) {
@@ -223,17 +226,48 @@ class BookController extends Controller
 
     /**
      * Remove the specified book from storage.
-     *
      * @param $bookSlug
      * @return Response
      */
     public function destroy($bookSlug)
     {
-        $this->checkPermission('book-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-delete', $book);
         Activity::addMessage('book_delete', 0, $book->name);
         Activity::removeEntity($book);
         $this->bookRepo->destroyBySlug($bookSlug);
         return redirect('/books');
+    }
+
+    /**
+     * Show the Restrictions view.
+     * @param $bookSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRestrict($bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('restrictions-manage', $book);
+        $roles = $this->userRepo->getRestrictableRoles();
+        return view('books/restrictions', [
+            'book' => $book,
+            'roles' => $roles
+        ]);
+    }
+
+    /**
+     * Set the restrictions for this book.
+     * @param $bookSlug
+     * @param $bookSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function restrict($bookSlug, Request $request)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('restrictions-manage', $book);
+        $this->bookRepo->updateRestrictionsFromRequest($request, $book);
+        session()->flash('success', 'Page Restrictions Updated');
+        return redirect($book->getUrl());
     }
 }

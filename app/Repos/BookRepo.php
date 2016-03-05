@@ -11,18 +11,31 @@ class BookRepo
     protected $book;
     protected $pageRepo;
     protected $chapterRepo;
+    protected $restrictionService;
 
     /**
      * BookRepo constructor.
      * @param Book $book
      * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Book $book, PageRepo $pageRepo, ChapterRepo $chapterRepo)
+    public function __construct(Book $book, PageRepo $pageRepo, ChapterRepo $chapterRepo, RestrictionService $restrictionService)
     {
         $this->book = $book;
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->restrictionService = $restrictionService;
+    }
+
+    /**
+     * Base query for getting books.
+     * Takes into account any restrictions.
+     * @return mixed
+     */
+    private function bookQuery()
+    {
+        return $this->restrictionService->enforceBookRestrictions($this->book, 'view');
     }
 
     /**
@@ -32,7 +45,7 @@ class BookRepo
      */
     public function getById($id)
     {
-        return $this->book->findOrFail($id);
+        return $this->bookQuery()->findOrFail($id);
     }
 
     /**
@@ -42,7 +55,7 @@ class BookRepo
      */
     public function getAll($count = 10)
     {
-        $bookQuery = $this->book->orderBy('name', 'asc');
+        $bookQuery = $this->bookQuery()->orderBy('name', 'asc');
         if (!$count) return $bookQuery->get();
         return $bookQuery->take($count)->get();
     }
@@ -54,7 +67,8 @@ class BookRepo
      */
     public function getAllPaginated($count = 10)
     {
-        return $this->book->orderBy('name', 'asc')->paginate($count);
+        return $this->bookQuery()
+            ->orderBy('name', 'asc')->paginate($count);
     }
 
 
@@ -65,7 +79,7 @@ class BookRepo
      */
     public function getLatest($count = 10)
     {
-        return $this->book->orderBy('created_at', 'desc')->take($count)->get();
+        return $this->bookQuery()->orderBy('created_at', 'desc')->take($count)->get();
     }
 
     /**
@@ -76,6 +90,7 @@ class BookRepo
      */
     public function getRecentlyViewed($count = 10, $page = 0)
     {
+        // TODO restrict
         return Views::getUserRecentlyViewed($count, $page, $this->book);
     }
 
@@ -87,6 +102,7 @@ class BookRepo
      */
     public function getPopular($count = 10, $page = 0)
     {
+        // TODO - Restrict
         return Views::getPopular($count, $page, $this->book);
     }
 
@@ -94,11 +110,12 @@ class BookRepo
      * Get a book by slug
      * @param $slug
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug)
     {
-        $book = $this->book->where('slug', '=', $slug)->first();
-        if ($book === null) abort(404);
+        $book = $this->bookQuery()->where('slug', '=', $slug)->first();
+        if ($book === null) throw new NotFoundException('Book not found');
         return $book;
     }
 
@@ -109,7 +126,7 @@ class BookRepo
      */
     public function exists($id)
     {
-        return $this->book->where('id', '=', $id)->exists();
+        return $this->bookQuery()->where('id', '=', $id)->exists();
     }
 
     /**
@@ -119,17 +136,7 @@ class BookRepo
      */
     public function newFromInput($input)
     {
-        return $this->book->fill($input);
-    }
-
-    /**
-     * Count the amount of books that have a specific slug.
-     * @param $slug
-     * @return mixed
-     */
-    public function countBySlug($slug)
-    {
-        return $this->book->where('slug', '=', $slug)->count();
+        return $this->book->newInstance($input);
     }
 
     /**
@@ -146,6 +153,7 @@ class BookRepo
             $this->chapterRepo->destroy($chapter);
         }
         $book->views()->delete();
+        $book->restrictions()->delete();
         $book->delete();
     }
 
@@ -202,8 +210,15 @@ class BookRepo
      */
     public function getChildren(Book $book)
     {
-        $pages = $book->pages()->where('chapter_id', '=', 0)->get();
-        $chapters = $book->chapters()->with('pages')->get();
+        $pageQuery = $book->pages()->where('chapter_id', '=', 0);
+        $pageQuery = $this->restrictionService->enforcePageRestrictions($pageQuery, 'view');
+        $pages = $pageQuery->get();
+
+        $chapterQuery = $book->chapters()->with(['pages' => function($query) {
+            $this->restrictionService->enforcePageRestrictions($query, 'view');
+        }]);
+        $chapterQuery = $this->restrictionService->enforceChapterRestrictions($chapterQuery, 'view');
+        $chapters = $chapterQuery->get();
         $children = $pages->merge($chapters);
         $bookSlug = $book->slug;
         $children->each(function ($child) use ($bookSlug) {
@@ -236,7 +251,7 @@ class BookRepo
         if (!empty($term)) {
             $terms = array_merge($terms, explode(' ', $term));
         }
-        $books = $this->book->fullTextSearchQuery(['name', 'description'], $terms)
+        $books = $this->restrictionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($books as $book) {
@@ -245,6 +260,29 @@ class BookRepo
             $book->searchSnippet = $result;
         }
         return $books;
+    }
+
+    /**
+     * Updates books restrictions from a request
+     * @param $request
+     * @param $book
+     */
+    public function updateRestrictionsFromRequest($request, $book)
+    {
+        // TODO - extract into shared repo
+        $book->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $book->restrictions()->delete();
+        if ($request->has('restrictions')) {
+            foreach ($request->get('restrictions') as $roleId => $restrictions) {
+                foreach ($restrictions as $action => $value) {
+                    $book->restrictions()->create([
+                        'role_id' => $roleId,
+                        'action' => strtolower($action)
+                    ]);
+                }
+            }
+        }
+        $book->save();
     }
 
 }

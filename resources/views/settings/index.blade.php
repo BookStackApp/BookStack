@@ -54,7 +54,7 @@
                     <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
                         @foreach(\BookStack\Role::all() as $role)
                             <option value="{{$role->id}}"
-                                    @if(\Setting::get('registration-role', \BookStack\Role::getDefault()->id) == $role->id) selected @endif
+                                    @if(\Setting::get('registration-role', \BookStack\Role::first()->id) == $role->id) selected @endif
                                     >
                                 {{ $role->display_name }}
                             </option>

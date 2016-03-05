@@ -1,13 +1,8 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
-
-abstract class Entity extends Model
+abstract class Entity extends Ownable
 {
-
-    use Ownable;
 
     /**
      * Compares this entity to another given entity.
@@ -53,11 +48,29 @@ abstract class Entity extends Model
 
     /**
      * Get View objects for this entity.
-     * @return mixed
      */
     public function views()
     {
         return $this->morphMany('BookStack\View', 'viewable');
+    }
+
+    /**
+     * Get this entities restrictions.
+     */
+    public function restrictions()
+    {
+        return $this->morphMany('BookStack\Restriction', 'restrictable');
+    }
+
+    /**
+     * Check if this entity has a specific restriction set against it.
+     * @param $role_id
+     * @param $action
+     * @return bool
+     */
+    public function hasRestriction($role_id, $action)
+    {
+        return $this->restrictions->where('role_id', $role_id)->where('action', $action)->count() > 0;
     }
 
     /**
@@ -72,16 +85,7 @@ abstract class Entity extends Model
     }
 
     /**
-     * Gets the class name.
-     * @return string
-     */
-    public static function getClassName()
-    {
-        return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
-    }
-
-    /**
-     *Gets a limited-length version of the entities name.
+     * Gets a limited-length version of the entities name.
      * @param int $length
      * @return string
      */

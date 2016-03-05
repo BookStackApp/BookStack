@@ -43,7 +43,7 @@
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
-                            @if(isset($currentUser) && $currentUser->can('settings-update'))
+                            @if(isset($currentUser) && $currentUser->can('settings-manage'))
                                 <a href="/settings"><i class="zmdi zmdi-settings"></i>Settings</a>
                             @endif
                             @if(!isset($signedIn) || !$signedIn)

@@ -64,7 +64,7 @@ class ImageController extends Controller
      */
     public function uploadByType($type, Request $request)
     {
-        $this->checkPermission('image-create');
+        $this->checkPermission('image-create-all');
         $this->validate($request, [
             'file' => 'image|mimes:jpeg,gif,png'
         ]);
@@ -90,7 +90,7 @@ class ImageController extends Controller
      */
     public function getThumbnail($id, $width, $height, $crop)
     {
-        $this->checkPermission('image-create');
+        $this->checkPermission('image-create-all');
         $image = $this->imageRepo->getById($id);
         $thumbnailUrl = $this->imageRepo->getThumbnail($image, $width, $height, $crop == 'false');
         return response()->json(['url' => $thumbnailUrl]);
@@ -104,11 +104,11 @@ class ImageController extends Controller
      */
     public function update($imageId, Request $request)
     {
-        $this->checkPermission('image-update');
         $this->validate($request, [
             'name' => 'required|min:2|string'
         ]);
         $image = $this->imageRepo->getById($imageId);
+        $this->checkOwnablePermission('image-update', $image);
         $image = $this->imageRepo->updateImageDetails($image, $request->all());
         return response()->json($image);
     }
@@ -123,8 +123,8 @@ class ImageController extends Controller
      */
     public function destroy(PageRepo $pageRepo, Request $request, $id)
     {
-        $this->checkPermission('image-delete');
         $image = $this->imageRepo->getById($id);
+        $this->checkOwnablePermission('image-delete', $image);
 
         // Check if this image is used on any pages
         $isForced = ($request->has('force') && ($request->get('force') === 'true') || $request->get('force') === true);
