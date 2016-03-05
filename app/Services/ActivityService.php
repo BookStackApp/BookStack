@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-use Illuminate\Support\Facades\Auth;
 use BookStack\Activity;
 use BookStack\Entity;
 use Session;

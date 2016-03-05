@@ -1,32 +1,43 @@
 <?php namespace BookStack\Repos;
 
-
 use BookStack\Book;
 use BookStack\Chapter;
+use BookStack\Entity;
 use BookStack\Page;
 use BookStack\Services\RestrictionService;
 
 class EntityRepo
 {
 
+    /**
+     * @var Book $book
+     */
     public $book;
+
+    /**
+     * @var Chapter
+     */
     public $chapter;
+
+    /**
+     * @var Page
+     */
     public $page;
-    private $restrictionService;
+
+    /**
+     * @var RestrictionService
+     */
+    protected $restrictionService;
 
     /**
      * EntityService constructor.
-     * @param Book $book
-     * @param Chapter $chapter
-     * @param Page $page
-     * @param RestrictionService $restrictionService
      */
-    public function __construct(Book $book, Chapter $chapter, Page $page, RestrictionService $restrictionService)
+    public function __construct()
     {
-        $this->book = $book;
-        $this->chapter = $chapter;
-        $this->page = $page;
-        $this->restrictionService = $restrictionService;
+        $this->book = app(Book::class);
+        $this->chapter = app(Chapter::class);
+        $this->page = app(Page::class);
+        $this->restrictionService = app(RestrictionService::class);
     }
 
     /**
@@ -37,7 +48,7 @@ class EntityRepo
     public function getRecentlyCreatedBooks($count = 20, $page = 0)
     {
         return $this->restrictionService->enforceBookRestrictions($this->book)
-            ->orderBy('created_at', 'desc')->skip($page*$count)->take($count)->get();
+            ->orderBy('created_at', 'desc')->skip($page * $count)->take($count)->get();
     }
 
     /**
@@ -49,7 +60,7 @@ class EntityRepo
     public function getRecentlyUpdatedBooks($count = 20, $page = 0)
     {
         return $this->restrictionService->enforceBookRestrictions($this->book)
-            ->orderBy('updated_at', 'desc')->skip($page*$count)->take($count)->get();
+            ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
     }
 
     /**
@@ -60,7 +71,7 @@ class EntityRepo
     public function getRecentlyCreatedPages($count = 20, $page = 0)
     {
         return $this->restrictionService->enforcePageRestrictions($this->page)
-            ->orderBy('created_at', 'desc')->skip($page*$count)->take($count)->get();
+            ->orderBy('created_at', 'desc')->skip($page * $count)->take($count)->get();
     }
 
     /**
@@ -72,7 +83,49 @@ class EntityRepo
     public function getRecentlyUpdatedPages($count = 20, $page = 0)
     {
         return $this->restrictionService->enforcePageRestrictions($this->page)
-            ->orderBy('updated_at', 'desc')->skip($page*$count)->take($count)->get();
+            ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
+    }
+
+    /**
+     * Updates entity restrictions from a request
+     * @param $request
+     * @param Entity $entity
+     */
+    public function updateRestrictionsFromRequest($request, Entity $entity)
+    {
+        $entity->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $entity->restrictions()->delete();
+        if ($request->has('restrictions')) {
+            foreach ($request->get('restrictions') as $roleId => $restrictions) {
+                foreach ($restrictions as $action => $value) {
+                    $entity->restrictions()->create([
+                        'role_id' => $roleId,
+                        'action' => strtolower($action)
+                    ]);
+                }
+            }
+        }
+        $entity->save();
+    }
+
+    /**
+     * Prepare a string of search terms by turning
+     * it into an array of terms.
+     * Keeps quoted terms together.
+     * @param $termString
+     * @return array
+     */
+    protected function prepareSearchTerms($termString)
+    {
+        preg_match_all('/"(.*?)"/', $termString, $matches);
+        if (count($matches[1]) > 0) {
+            $terms = $matches[1];
+            $termString = trim(preg_replace('/"(.*?)"/', '', $termString));
+        } else {
+            $terms = [];
+        }
+        if (!empty($termString)) $terms = array_merge($terms, explode(' ', $termString));
+        return $terms;
     }
 
 

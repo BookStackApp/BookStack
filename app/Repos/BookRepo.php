@@ -1,31 +1,25 @@
 <?php namespace BookStack\Repos;
 
-use Activity;
+use BookStack\Exceptions\NotFoundException;
 use Illuminate\Support\Str;
 use BookStack\Book;
 use Views;
 
-class BookRepo
+class BookRepo extends EntityRepo
 {
-
-    protected $book;
     protected $pageRepo;
     protected $chapterRepo;
-    protected $restrictionService;
 
     /**
      * BookRepo constructor.
-     * @param Book $book
      * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
-     * @param RestrictionService $restrictionService
      */
-    public function __construct(Book $book, PageRepo $pageRepo, ChapterRepo $chapterRepo, RestrictionService $restrictionService)
+    public function __construct(PageRepo $pageRepo, ChapterRepo $chapterRepo)
     {
-        $this->book = $book;
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
-        $this->restrictionService = $restrictionService;
+        parent::__construct();
     }
 
     /**
@@ -90,7 +84,6 @@ class BookRepo
      */
     public function getRecentlyViewed($count = 10, $page = 0)
     {
-        // TODO restrict
         return Views::getUserRecentlyViewed($count, $page, $this->book);
     }
 
@@ -102,7 +95,6 @@ class BookRepo
      */
     public function getPopular($count = 10, $page = 0)
     {
-        // TODO - Restrict
         return Views::getPopular($count, $page, $this->book);
     }
 
@@ -241,16 +233,7 @@ class BookRepo
      */
     public function getBySearch($term, $count = 20, $paginationAppends = [])
     {
-        preg_match_all('/"(.*?)"/', $term, $matches);
-        if (count($matches[1]) > 0) {
-            $terms = $matches[1];
-            $term = trim(preg_replace('/"(.*?)"/', '', $term));
-        } else {
-            $terms = [];
-        }
-        if (!empty($term)) {
-            $terms = array_merge($terms, explode(' ', $term));
-        }
+        $terms = $this->prepareSearchTerms($term);
         $books = $this->restrictionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
@@ -260,29 +243,6 @@ class BookRepo
             $book->searchSnippet = $result;
         }
         return $books;
-    }
-
-    /**
-     * Updates books restrictions from a request
-     * @param $request
-     * @param $book
-     */
-    public function updateRestrictionsFromRequest($request, $book)
-    {
-        // TODO - extract into shared repo
-        $book->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
-        $book->restrictions()->delete();
-        if ($request->has('restrictions')) {
-            foreach ($request->get('restrictions') as $roleId => $restrictions) {
-                foreach ($restrictions as $action => $value) {
-                    $book->restrictions()->create([
-                        'role_id' => $roleId,
-                        'action' => strtolower($action)
-                    ]);
-                }
-            }
-        }
-        $book->save();
     }
 
 }

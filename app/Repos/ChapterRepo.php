@@ -3,27 +3,11 @@
 
 use Activity;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Services\RestrictionService;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
 
-class ChapterRepo
+class ChapterRepo extends EntityRepo
 {
-
-    protected $chapter;
-    protected $restrictionService;
-
-    /**
-     * ChapterRepo constructor.
-     * @param Chapter $chapter
-     * @param RestrictionService $restrictionService
-     */
-    public function __construct(Chapter $chapter, RestrictionService $restrictionService)
-    {
-        $this->chapter = $chapter;
-        $this->restrictionService = $restrictionService;
-    }
-
     /**
      * Base query for getting chapters, Takes restrictions into account.
      * @return mixed
@@ -148,7 +132,7 @@ class ChapterRepo
 
     /**
      * Get chapters by the given search term.
-     * @param       $term
+     * @param string $term
      * @param array $whereTerms
      * @param int $count
      * @param array $paginationAppends
@@ -156,16 +140,7 @@ class ChapterRepo
      */
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
-        preg_match_all('/"(.*?)"/', $term, $matches);
-        if (count($matches[1]) > 0) {
-            $terms = $matches[1];
-            $term = trim(preg_replace('/"(.*?)"/', '', $term));
-        } else {
-            $terms = [];
-        }
-        if (!empty($term)) {
-            $terms = array_merge($terms, explode(' ', $term));
-        }
+        $terms = $this->prepareSearchTerms($term);
         $chapters = $this->restrictionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
@@ -193,29 +168,6 @@ class ChapterRepo
         $chapter->slug = $this->findSuitableSlug($chapter->name, $bookId, $chapter->id);
         $chapter->save();
         return $chapter;
-    }
-
-    /**
-     * Updates pages restrictions from a request
-     * @param $request
-     * @param $chapter
-     */
-    public function updateRestrictionsFromRequest($request, $chapter)
-    {
-        // TODO - extract into shared repo
-        $chapter->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
-        $chapter->restrictions()->delete();
-        if ($request->has('restrictions')) {
-            foreach($request->get('restrictions') as $roleId => $restrictions) {
-                foreach ($restrictions as $action => $value) {
-                    $chapter->restrictions()->create([
-                        'role_id' => $roleId,
-                        'action'  => strtolower($action)
-                    ]);
-                }
-            }
-        }
-        $chapter->save();
     }
 
 }

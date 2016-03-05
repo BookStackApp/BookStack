@@ -3,34 +3,23 @@
 
 use Activity;
 use BookStack\Book;
-use BookStack\Chapter;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Services\RestrictionService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PageRepo
+class PageRepo extends EntityRepo
 {
-    protected $page;
     protected $pageRevision;
-    protected $restrictionService;
 
     /**
      * PageRepo constructor.
-     * @param Page $page
      * @param PageRevision $pageRevision
-     * @param RestrictionService $restrictionService
      */
-    public function __construct(Page $page, PageRevision $pageRevision, RestrictionService $restrictionService)
+    public function __construct(PageRevision $pageRevision)
     {
-        $this->page = $page;
         $this->pageRevision = $pageRevision;
-        $this->restrictionService = $restrictionService;
+        parent::__construct();
     }
 
     /**
@@ -200,16 +189,7 @@ class PageRepo
      */
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
-        preg_match_all('/"(.*?)"/', $term, $matches);
-        if (count($matches[1]) > 0) {
-            $terms = $matches[1];
-            $term = trim(preg_replace('/"(.*?)"/', '', $term));
-        } else {
-            $terms = [];
-        }
-        if (!empty($term)) {
-            $terms = array_merge($terms, explode(' ', $term));
-        }
+        $terms = $this->prepareSearchTerms($term);
         $pages = $this->restrictionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
 
@@ -414,29 +394,6 @@ class PageRepo
     public function getRecentlyUpdatedPaginated($count = 20)
     {
         return $this->pageQuery()->orderBy('updated_at', 'desc')->paginate($count);
-    }
-
-    /**
-     * Updates pages restrictions from a request
-     * @param $request
-     * @param $page
-     */
-    public function updateRestrictionsFromRequest($request, $page)
-    {
-        // TODO - extract into shared repo
-        $page->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
-        $page->restrictions()->delete();
-        if ($request->has('restrictions')) {
-            foreach($request->get('restrictions') as $roleId => $restrictions) {
-                foreach ($restrictions as $action => $value) {
-                    $page->restrictions()->create([
-                        'role_id' => $roleId,
-                        'action'  => strtolower($action)
-                    ]);
-                }
-            }
-        }
-        $page->save();
     }
 
 }
