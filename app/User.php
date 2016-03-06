@@ -14,21 +14,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * The database table used by the model.
-     *
      * @var string
      */
     protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = ['name', 'email', 'image_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
-     *
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
@@ -51,10 +48,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Permissions and roles
-     */
-
-    /**
      * The roles that belong to the user.
      */
     public function roles()
@@ -62,21 +55,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany('BookStack\Role');
     }
 
-    public function getRoleAttribute()
+    /**
+     * Check if the user has a role.
+     * @param $role
+     * @return mixed
+     */
+    public function hasRole($role)
     {
-        return $this->roles()->with('permissions')->first();
+        return $this->roles->pluck('name')->contains($role);
     }
 
     /**
-     * Loads the user's permissions from their role.
+     * Get all permissions belonging to a the current user.
+     * @param bool $cache
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    private function loadPermissions()
+    public function permissions($cache = true)
     {
-        if (isset($this->permissions)) return;
+        if(isset($this->permissions) && $cache) return $this->permissions;
         $this->load('roles.permissions');
-        $permissions = $this->roles[0]->permissions;
-        $permissionsArray = $permissions->pluck('name')->all();
-        $this->permissions = $permissionsArray;
+        $permissions = $this->roles->map(function($role) {
+            return $role->permissions;
+        })->flatten()->unique();
+        $this->permissions = $permissions;
+        return $permissions;
     }
 
     /**
@@ -86,11 +88,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function can($permissionName)
     {
-        if ($this->email == 'guest') {
-            return false;
-        }
-        $this->loadPermissions();
-        return array_search($permissionName, $this->permissions) !== false;
+        if ($this->email === 'guest') return false;
+        return $this->permissions()->pluck('name')->contains($permissionName);
     }
 
     /**
@@ -108,12 +107,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function attachRoleId($id)
     {
-        $this->roles()->sync([$id]);
+        $this->roles()->attach($id);
     }
 
     /**
      * Get the social account associated with this user.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function socialAccounts()
@@ -138,8 +136,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Returns the user's avatar,
-     * Uses Gravatar as the avatar service.
-     *
      * @param int $size
      * @return string
      */

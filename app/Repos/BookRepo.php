@@ -1,28 +1,35 @@
 <?php namespace BookStack\Repos;
 
-use Activity;
+use BookStack\Exceptions\NotFoundException;
 use Illuminate\Support\Str;
 use BookStack\Book;
 use Views;
 
-class BookRepo
+class BookRepo extends EntityRepo
 {
-
-    protected $book;
     protected $pageRepo;
     protected $chapterRepo;
 
     /**
      * BookRepo constructor.
-     * @param Book $book
      * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo
      */
-    public function __construct(Book $book, PageRepo $pageRepo, ChapterRepo $chapterRepo)
+    public function __construct(PageRepo $pageRepo, ChapterRepo $chapterRepo)
     {
-        $this->book = $book;
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
+        parent::__construct();
+    }
+
+    /**
+     * Base query for getting books.
+     * Takes into account any restrictions.
+     * @return mixed
+     */
+    private function bookQuery()
+    {
+        return $this->restrictionService->enforceBookRestrictions($this->book, 'view');
     }
 
     /**
@@ -32,7 +39,7 @@ class BookRepo
      */
     public function getById($id)
     {
-        return $this->book->findOrFail($id);
+        return $this->bookQuery()->findOrFail($id);
     }
 
     /**
@@ -42,7 +49,7 @@ class BookRepo
      */
     public function getAll($count = 10)
     {
-        $bookQuery = $this->book->orderBy('name', 'asc');
+        $bookQuery = $this->bookQuery()->orderBy('name', 'asc');
         if (!$count) return $bookQuery->get();
         return $bookQuery->take($count)->get();
     }
@@ -54,7 +61,8 @@ class BookRepo
      */
     public function getAllPaginated($count = 10)
     {
-        return $this->book->orderBy('name', 'asc')->paginate($count);
+        return $this->bookQuery()
+            ->orderBy('name', 'asc')->paginate($count);
     }
 
 
@@ -65,7 +73,7 @@ class BookRepo
      */
     public function getLatest($count = 10)
     {
-        return $this->book->orderBy('created_at', 'desc')->take($count)->get();
+        return $this->bookQuery()->orderBy('created_at', 'desc')->take($count)->get();
     }
 
     /**
@@ -94,11 +102,12 @@ class BookRepo
      * Get a book by slug
      * @param $slug
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug)
     {
-        $book = $this->book->where('slug', '=', $slug)->first();
-        if ($book === null) abort(404);
+        $book = $this->bookQuery()->where('slug', '=', $slug)->first();
+        if ($book === null) throw new NotFoundException('Book not found');
         return $book;
     }
 
@@ -109,7 +118,7 @@ class BookRepo
      */
     public function exists($id)
     {
-        return $this->book->where('id', '=', $id)->exists();
+        return $this->bookQuery()->where('id', '=', $id)->exists();
     }
 
     /**
@@ -119,17 +128,7 @@ class BookRepo
      */
     public function newFromInput($input)
     {
-        return $this->book->fill($input);
-    }
-
-    /**
-     * Count the amount of books that have a specific slug.
-     * @param $slug
-     * @return mixed
-     */
-    public function countBySlug($slug)
-    {
-        return $this->book->where('slug', '=', $slug)->count();
+        return $this->book->newInstance($input);
     }
 
     /**
@@ -146,6 +145,7 @@ class BookRepo
             $this->chapterRepo->destroy($chapter);
         }
         $book->views()->delete();
+        $book->restrictions()->delete();
         $book->delete();
     }
 
@@ -202,8 +202,15 @@ class BookRepo
      */
     public function getChildren(Book $book)
     {
-        $pages = $book->pages()->where('chapter_id', '=', 0)->get();
-        $chapters = $book->chapters()->with('pages')->get();
+        $pageQuery = $book->pages()->where('chapter_id', '=', 0);
+        $pageQuery = $this->restrictionService->enforcePageRestrictions($pageQuery, 'view');
+        $pages = $pageQuery->get();
+
+        $chapterQuery = $book->chapters()->with(['pages' => function($query) {
+            $this->restrictionService->enforcePageRestrictions($query, 'view');
+        }]);
+        $chapterQuery = $this->restrictionService->enforceChapterRestrictions($chapterQuery, 'view');
+        $chapters = $chapterQuery->get();
         $children = $pages->merge($chapters);
         $bookSlug = $book->slug;
         $children->each(function ($child) use ($bookSlug) {
@@ -226,8 +233,8 @@ class BookRepo
      */
     public function getBySearch($term, $count = 20, $paginationAppends = [])
     {
-        $terms = explode(' ', $term);
-        $books = $this->book->fullTextSearchQuery(['name', 'description'], $terms)
+        $terms = $this->prepareSearchTerms($term);
+        $books = $this->restrictionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($books as $book) {

@@ -118,6 +118,7 @@ module.exports = function (ngApp, events) {
                     page++;
                 });
             }
+
             $scope.fetchData = fetchData;
 
             /**
@@ -130,12 +131,16 @@ module.exports = function (ngApp, events) {
                 $http.put(url, this.selectedImage).then((response) => {
                     events.emit('success', 'Image details updated');
                 }, (response) => {
-                    var errors = response.data;
-                    var message = '';
-                    Object.keys(errors).forEach((key) => {
-                        message += errors[key].join('\n');
-                    });
-                    events.emit('error', message);
+                    if (response.status === 422) {
+                        var errors = response.data;
+                        var message = '';
+                        Object.keys(errors).forEach((key) => {
+                            message += errors[key].join('\n');
+                        });
+                        events.emit('error', message);
+                    } else if (response.status === 403) {
+                        events.emit('error', response.data.error);
+                    }
                 });
             };
 
@@ -158,6 +163,8 @@ module.exports = function (ngApp, events) {
                     // Pages failure
                     if (response.status === 400) {
                         $scope.dependantPages = response.data;
+                    } else if (response.status === 403) {
+                        events.emit('error', response.data.error);
                     }
                 });
             };
@@ -167,7 +174,7 @@ module.exports = function (ngApp, events) {
              * @param stringDate
              * @returns {Date}
              */
-            $scope.getDate = function(stringDate) {
+            $scope.getDate = function (stringDate) {
                 return new Date(stringDate);
             };
 

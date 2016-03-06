@@ -225,4 +225,22 @@ class EntityTest extends TestCase
             ->seePageIs($newPageUrl);
     }
 
+    public function test_recently_updated_pages_on_home()
+    {
+        $page = \BookStack\Page::orderBy('updated_at', 'asc')->first();
+        $this->asAdmin()->visit('/')
+            ->dontSeeInElement('#recently-updated-pages', $page->name);
+        $this->visit($page->getUrl() . '/edit')
+            ->press('Save Page')
+            ->visit('/')
+            ->seeInElement('#recently-updated-pages', $page->name);
+    }
+
+    public function test_recently_created_pages_on_home()
+    {
+        $entityChain = $this->createEntityChainBelongingToUser($this->getNewUser());
+        $this->asAdmin()->visit('/')
+            ->seeInElement('#recently-created-pages', $entityChain['page']->name);
+    }
+
 }

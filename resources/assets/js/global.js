@@ -95,7 +95,7 @@ $(function () {
             scrollTop.style.display = 'block';
             scrollTopShowing = true;
             setTimeout(() => {
-                scrollTop.style.opacity = 1;
+                scrollTop.style.opacity = 0.4;
             }, 1);
         } else if (scrollTopShowing && document.body.scrollTop < scrollTopBreakpoint) {
             scrollTop.style.opacity = 0;

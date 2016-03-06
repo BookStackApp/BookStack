@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ Setting::get('app-name', 'BookStack') }}</title>
+    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name', 'BookStack') }}</title>
 
     <!-- Meta -->
     <meta name="viewport" content="width=device-width">
@@ -17,6 +17,8 @@
     <script src="/libs/jquery/jquery.min.js?version=2.1.4"></script>
 
     @yield('head')
+
+    @include('partials/custom-styles')
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 
@@ -27,10 +29,10 @@
             <div class="row">
                 <div class="col-lg-4 col-sm-4" ng-non-bindable>
                     <a href="/" class="logo">
-                        @if(Setting::get('app-logo', '') !== 'none')
-                            <img class="logo-image" src="{{ Setting::get('app-logo', '') === '' ? '/logo.png' : Setting::get('app-logo', '') }}" alt="Logo">
+                        @if(setting('app-logo', '') !== 'none')
+                            <img class="logo-image" src="{{ setting('app-logo', '') === '' ? '/logo.png' : setting('app-logo', '') }}" alt="Logo">
                         @endif
-                        <span class="logo-text">{{ Setting::get('app-name', 'BookStack') }}</span>
+                        <span class="logo-text">{{ setting('app-name', 'BookStack') }}</span>
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-3 text-center">
@@ -43,7 +45,7 @@
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
-                            @if(isset($currentUser) && $currentUser->can('settings-update'))
+                            @if(isset($currentUser) && userCan('settings-manage'))
                                 <a href="/settings"><i class="zmdi zmdi-settings"></i>Settings</a>
                             @endif
                             @if(!isset($signedIn) || !$signedIn)

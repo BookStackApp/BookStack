@@ -15,7 +15,7 @@
 
     <!-- Scripts -->
     <script src="/libs/jquery/jquery.min.js?version=2.1.4"></script>
-
+    @include('partials/custom-styles')
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 

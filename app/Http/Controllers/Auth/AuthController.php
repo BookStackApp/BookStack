@@ -41,9 +41,9 @@ class AuthController extends Controller
 
     /**
      * Create a new authentication controller instance.
-     * @param SocialAuthService        $socialAuthService
+     * @param SocialAuthService $socialAuthService
      * @param EmailConfirmationService $emailConfirmationService
-     * @param UserRepo                 $userRepo
+     * @param UserRepo $userRepo
      */
     public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
@@ -63,15 +63,15 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => 'required|max:255',
-            'email'    => 'required|email|max:255|unique:users',
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6',
         ]);
     }
 
     protected function checkRegistrationAllowed()
     {
-        if (!\Setting::get('registration-enabled')) {
+        if (!setting('registration-enabled')) {
             throw new UserRegistrationException('Registrations are currently disabled.', '/login');
         }
     }
@@ -112,7 +112,7 @@ class AuthController extends Controller
     /**
      * Overrides the action when a user is authenticated.
      * If the user authenticated but does not exist in the user table we create them.
-     * @param Request         $request
+     * @param Request $request
      * @param Authenticatable $user
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -153,8 +153,8 @@ class AuthController extends Controller
 
         // Create an array of the user data to create a new user instance
         $userData = [
-            'name'     => $socialUser->getName(),
-            'email'    => $socialUser->getEmail(),
+            'name' => $socialUser->getName(),
+            'email' => $socialUser->getEmail(),
             'password' => str_random(30)
         ];
         return $this->registerUser($userData, $socialAccount);
@@ -162,7 +162,7 @@ class AuthController extends Controller
 
     /**
      * The registrations flow for all users.
-     * @param array                    $userData
+     * @param array $userData
      * @param bool|false|SocialAccount $socialAccount
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
@@ -170,8 +170,8 @@ class AuthController extends Controller
      */
     protected function registerUser(array $userData, $socialAccount = false)
     {
-        if (\Setting::get('registration-restrict')) {
-            $restrictedEmailDomains = explode(',', str_replace(' ', '', \Setting::get('registration-restrict')));
+        if (setting('registration-restrict')) {
+            $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
             $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
             if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
                 throw new UserRegistrationException('That email domain does not have access to this application', '/register');
@@ -183,7 +183,7 @@ class AuthController extends Controller
             $newUser->socialAccounts()->save($socialAccount);
         }
 
-        if (\Setting::get('registration-confirmation') || \Setting::get('registration-restrict')) {
+        if (setting('registration-confirmation') || setting('registration-restrict')) {
             $newUser->email_confirmed = false;
             $newUser->save();
             $this->emailConfirmationService->sendConfirmation($newUser);

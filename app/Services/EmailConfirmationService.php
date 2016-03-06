@@ -45,7 +45,7 @@ class EmailConfirmationService
             'token'   => $token,
         ]);
         $this->mailer->send('emails/email-confirmation', ['token' => $token], function (Message $message) use ($user) {
-            $appName = \Setting::get('app-name', 'BookStack');
+            $appName = setting('app-name', 'BookStack');
             $message->to($user->email, $user->name)->subject('Confirm your email on ' . $appName . '.');
         });
     }

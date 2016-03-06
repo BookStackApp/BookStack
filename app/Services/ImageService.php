@@ -79,7 +79,7 @@ class ImageService
     private function saveNew($imageName, $imageData, $type)
     {
         $storage = $this->getStorage();
-        $secureUploads = Setting::get('app-secure-images');
+        $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
         if ($secureUploads) $imageName = str_random(16) . '-' . $imageName;

@@ -43,6 +43,15 @@ class UserRepo
     }
 
     /**
+     * Get all the users with their permissions.
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function getAllUsers()
+    {
+        return $this->user->with('roles', 'avatar')->orderBy('name', 'asc')->get();
+    }
+
+    /**
      * Creates a new user and attaches a role to them.
      * @param array $data
      * @return User
@@ -68,8 +77,8 @@ class UserRepo
      */
     public function attachDefaultRole($user)
     {
-        $roleId = Setting::get('registration-role');
-        if ($roleId === false) $roleId = $this->role->getDefault()->id;
+        $roleId = setting('registration-role');
+        if ($roleId === false) $roleId = $this->role->first()->id;
         $user->attachRoleId($roleId);
     }
 
@@ -80,15 +89,10 @@ class UserRepo
      */
     public function isOnlyAdmin(User $user)
     {
-        if ($user->role->name != 'admin') {
-            return false;
-        }
+        if (!$user->roles->pluck('name')->contains('admin')) return false;
 
-        $adminRole = $this->role->where('name', '=', 'admin')->first();
-        if (count($adminRole->users) > 1) {
-            return false;
-        }
-
+        $adminRole = $this->role->getRole('admin');
+        if ($adminRole->users->count() > 1) return false;
         return true;
     }
 
@@ -137,12 +141,15 @@ class UserRepo
     public function getRecentlyCreated(User $user, $count = 20)
     {
         return [
-            'pages' => $this->entityRepo->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-                ->take($count)->get(),
-            'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-                ->take($count)->get(),
-            'books' => $this->entityRepo->book->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-                ->take($count)->get()
+            'pages'    => $this->entityRepo->getRecentlyCreatedPages($count, 0, function ($query) use ($user) {
+                $query->where('created_by', '=', $user->id);
+            }),
+            'chapters' => $this->entityRepo->getRecentlyCreatedChapters($count, 0, function ($query) use ($user) {
+                $query->where('created_by', '=', $user->id);
+            }),
+            'books'    => $this->entityRepo->getRecentlyCreatedBooks($count, 0, function ($query) use ($user) {
+                $query->where('created_by', '=', $user->id);
+            })
         ];
     }
 
@@ -154,10 +161,20 @@ class UserRepo
     public function getAssetCounts(User $user)
     {
         return [
-            'pages' => $this->entityRepo->page->where('created_by', '=', $user->id)->count(),
+            'pages'    => $this->entityRepo->page->where('created_by', '=', $user->id)->count(),
             'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->count(),
-            'books' => $this->entityRepo->book->where('created_by', '=', $user->id)->count(),
+            'books'    => $this->entityRepo->book->where('created_by', '=', $user->id)->count(),
         ];
+    }
+
+    /**
+     * Get all the roles which can be given restricted access to
+     * other entities in the system.
+     * @return mixed
+     */
+    public function getRestrictableRoles()
+    {
+        return $this->role->where('name', '!=', 'admin')->get();
     }
 
 }

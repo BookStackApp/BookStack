@@ -12,13 +12,16 @@
                 </div>
                 <div class="col-md-8 faded">
                     <div class="action-buttons">
-                        @if($currentUser->can('chapter-create'))
+                        @if(userCan('page-create', $chapter))
                             <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>New Page</a>
                         @endif
-                        @if($currentUser->can('chapter-update'))
+                        @if(userCan('chapter-update', $chapter))
                             <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
-                        @if($currentUser->can('chapter-delete'))
+                        @if(userCan('restrictions-manage', $chapter))
+                            <a href="{{$chapter->getUrl()}}/restrict" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Restrict</a>
+                        @endif
+                        @if(userCan('chapter-delete', $chapter))
                             <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
                         @endif
                     </div>
@@ -34,10 +37,10 @@
                 <h1>{{ $chapter->name }}</h1>
                 <p class="text-muted">{{ $chapter->description }}</p>
 
-                @if(count($chapter->pages) > 0)
+                @if(count($pages) > 0)
                     <div class="page-list">
                         <hr>
-                        @foreach($chapter->pages as $page)
+                        @foreach($pages as $page)
                             @include('pages/list-item', ['page' => $page])
                             <hr>
                         @endforeach
@@ -60,6 +63,29 @@
                 </p>
             </div>
             <div class="col-md-3 col-md-offset-1">
+                <div class="margin-top large"></div>
+                @if($book->restricted || $chapter->restricted)
+                    <div class="text-muted">
+
+                        @if($book->restricted)
+                            @if(userCan('restrictions-manage', $book))
+                                <a href="{{ $book->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Book Restricted</a>
+                            @else
+                                <i class="zmdi zmdi-lock-outline"></i>Book Restricted
+                            @endif
+                                <br>
+                        @endif
+
+                        @if($chapter->restricted)
+                            @if(userCan('restrictions-manage', $chapter))
+                                <a href="{{ $chapter->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Chapter Restricted</a>
+                            @else
+                                <i class="zmdi zmdi-lock-outline"></i>Chapter Restricted
+                            @endif
+                        @endif
+                    </div>
+                @endif
+
                 @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree])
             </div>
         </div>

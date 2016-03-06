@@ -56,7 +56,8 @@ class Handler extends ExceptionHandler
         // Which will include the basic message to point the user roughly to the cause.
         if (($e instanceof PrettyException || $e->getPrevious() instanceof PrettyException)  && !config('app.debug')) {
             $message = ($e instanceof PrettyException) ? $e->getMessage() : $e->getPrevious()->getMessage();
-            return response()->view('errors/500', ['message' => $message], 500);
+            $code = ($e->getCode() === 0) ? 500 : $e->getCode();
+            return response()->view('errors/' . $code, ['message' => $message], $code);
         }
 
         return parent::render($request, $e);

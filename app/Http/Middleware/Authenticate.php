@@ -39,7 +39,7 @@ class Authenticate
             return redirect()->guest('/register/confirm/awaiting');
         }
 
-        if ($this->auth->guest() && !Setting::get('app-public')) {
+        if ($this->auth->guest() && !setting('app-public')) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
