@@ -42,13 +42,19 @@ class EntityRepo
 
     /**
      * Get the latest books added to the system.
-     * @param $count
-     * @param $page
+     * @param int $count
+     * @param int $page
+     * @param bool $additionalQuery
+     * @return
      */
-    public function getRecentlyCreatedBooks($count = 20, $page = 0)
+    public function getRecentlyCreatedBooks($count = 20, $page = 0, $additionalQuery = false)
     {
-        return $this->restrictionService->enforceBookRestrictions($this->book)
-            ->orderBy('created_at', 'desc')->skip($page * $count)->take($count)->get();
+        $query = $this->restrictionService->enforceBookRestrictions($this->book)
+            ->orderBy('created_at', 'desc');
+        if ($additionalQuery !== false && is_callable($additionalQuery)) {
+            $additionalQuery($query);
+        }
+        return $query->skip($page * $count)->take($count)->get();
     }
 
     /**
@@ -65,13 +71,36 @@ class EntityRepo
 
     /**
      * Get the latest pages added to the system.
-     * @param $count
-     * @param $page
+     * @param int $count
+     * @param int $page
+     * @param bool $additionalQuery
+     * @return
      */
-    public function getRecentlyCreatedPages($count = 20, $page = 0)
+    public function getRecentlyCreatedPages($count = 20, $page = 0, $additionalQuery = false)
     {
-        return $this->restrictionService->enforcePageRestrictions($this->page)
-            ->orderBy('created_at', 'desc')->skip($page * $count)->take($count)->get();
+        $query = $this->restrictionService->enforcePageRestrictions($this->page)
+            ->orderBy('created_at', 'desc');
+        if ($additionalQuery !== false && is_callable($additionalQuery)) {
+            $additionalQuery($query);
+        }
+        return $query->skip($page * $count)->take($count)->get();
+    }
+
+    /**
+     * Get the latest chapters added to the system.
+     * @param int $count
+     * @param int $page
+     * @param bool $additionalQuery
+     * @return
+     */
+    public function getRecentlyCreatedChapters($count = 20, $page = 0, $additionalQuery = false)
+    {
+        $query = $this->restrictionService->enforceChapterRestrictions($this->chapter)
+            ->orderBy('created_at', 'desc');
+        if ($additionalQuery !== false && is_callable($additionalQuery)) {
+            $additionalQuery($query);
+        }
+        return $query->skip($page * $count)->take($count)->get();
     }
 
     /**
@@ -100,7 +129,7 @@ class EntityRepo
                 foreach ($restrictions as $action => $value) {
                     $entity->restrictions()->create([
                         'role_id' => $roleId,
-                        'action' => strtolower($action)
+                        'action'  => strtolower($action)
                     ]);
                 }
             }

@@ -26,8 +26,8 @@ class ActivityService
      * Add activity data to database.
      * @param Entity $entity
      * @param        $activityKey
-     * @param int    $bookId
-     * @param bool   $extra
+     * @param int $bookId
+     * @param bool $extra
      */
     public function add(Entity $entity, $activityKey, $bookId = 0, $extra = false)
     {
@@ -45,7 +45,7 @@ class ActivityService
     /**
      * Adds a activity history with a message & without binding to a entity.
      * @param            $activityKey
-     * @param int        $bookId
+     * @param int $bookId
      * @param bool|false $extra
      */
     public function addMessage($activityKey, $bookId = 0, $extra = false)
@@ -88,7 +88,7 @@ class ActivityService
      */
     public function latest($count = 20, $page = 0)
     {
-        $activityList =  $this->restrictionService
+        $activityList = $this->restrictionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
 
@@ -99,8 +99,8 @@ class ActivityService
      * Gets the latest activity for an entity, Filtering out similar
      * items to prevent a message activity list.
      * @param Entity $entity
-     * @param int    $count
-     * @param int    $page
+     * @param int $count
+     * @param int $page
      * @return array
      */
     public function entityActivity($entity, $count = 20, $page = 0)
@@ -121,9 +121,10 @@ class ActivityService
      */
     public function userActivity($user, $count = 20, $page = 0)
     {
-        $activity = $this->activity->where('user_id', '=', $user->id)
-            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
-        return $this->filterSimilar($activity);
+        $activityList = $this->restrictionService
+            ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
+            ->orderBy('created_at', 'desc')->where('user_id', '=', $user->id)->skip($count * $page)->take($count)->get();
+        return $this->filterSimilar($activityList);
     }
 
     /**

@@ -141,12 +141,15 @@ class UserRepo
     public function getRecentlyCreated(User $user, $count = 20)
     {
         return [
-            'pages' => $this->entityRepo->page->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-                ->take($count)->get(),
-            'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-                ->take($count)->get(),
-            'books' => $this->entityRepo->book->where('created_by', '=', $user->id)->orderBy('created_at', 'desc')
-                ->take($count)->get()
+            'pages'    => $this->entityRepo->getRecentlyCreatedPages($count, 0, function ($query) use ($user) {
+                $query->where('created_by', '=', $user->id);
+            }),
+            'chapters' => $this->entityRepo->getRecentlyCreatedChapters($count, 0, function ($query) use ($user) {
+                $query->where('created_by', '=', $user->id);
+            }),
+            'books'    => $this->entityRepo->getRecentlyCreatedBooks($count, 0, function ($query) use ($user) {
+                $query->where('created_by', '=', $user->id);
+            })
         ];
     }
 
@@ -158,9 +161,9 @@ class UserRepo
     public function getAssetCounts(User $user)
     {
         return [
-            'pages' => $this->entityRepo->page->where('created_by', '=', $user->id)->count(),
+            'pages'    => $this->entityRepo->page->where('created_by', '=', $user->id)->count(),
             'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->count(),
-            'books' => $this->entityRepo->book->where('created_by', '=', $user->id)->count(),
+            'books'    => $this->entityRepo->book->where('created_by', '=', $user->id)->count(),
         ];
     }
 
