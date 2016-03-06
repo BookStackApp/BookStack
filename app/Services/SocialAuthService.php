@@ -135,7 +135,7 @@ class SocialAuthService
 
         // Otherwise let the user know this social account is not used by anyone.
         $message = 'This ' . $socialDriver . ' account is not linked to any users. Please attach it in your profile settings';
-        if (\Setting::get('registration-enabled')) {
+        if (setting('registration-enabled')) {
             $message .= ' or, If you do not yet have an account, You can register an account using the ' . $socialDriver . ' option';
         }
         throw new SocialSignInException($message . '.', '/login');

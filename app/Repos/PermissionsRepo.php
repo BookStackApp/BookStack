@@ -124,7 +124,7 @@ class PermissionsRepo
         // Prevent deleting admin role or default registration role.
         if ($role->name === 'admin') {
             throw new PermissionsException('The admin role cannot be deleted');
-        } else if ($role->id == Setting::get('registration-role')) {
+        } else if ($role->id == setting('registration-role')) {
             throw new PermissionsException('This role cannot be deleted while set as the default registration role.');
         }
 

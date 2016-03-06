@@ -77,7 +77,7 @@ class UserRepo
      */
     public function attachDefaultRole($user)
     {
-        $roleId = Setting::get('registration-role');
+        $roleId = setting('registration-role');
         if ($roleId === false) $roleId = $this->role->first()->id;
         $user->attachRoleId($roleId);
     }

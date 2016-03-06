@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ Setting::get('app-name', 'BookStack') }}</title>
+    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name', 'BookStack') }}</title>
 
     <!-- Meta -->
     <meta name="viewport" content="width=device-width">
@@ -29,10 +29,10 @@
             <div class="row">
                 <div class="col-lg-4 col-sm-4" ng-non-bindable>
                     <a href="/" class="logo">
-                        @if(Setting::get('app-logo', '') !== 'none')
-                            <img class="logo-image" src="{{ Setting::get('app-logo', '') === '' ? '/logo.png' : Setting::get('app-logo', '') }}" alt="Logo">
+                        @if(setting('app-logo', '') !== 'none')
+                            <img class="logo-image" src="{{ setting('app-logo', '') === '' ? '/logo.png' : setting('app-logo', '') }}" alt="Logo">
                         @endif
-                        <span class="logo-text">{{ Setting::get('app-name', 'BookStack') }}</span>
+                        <span class="logo-text">{{ setting('app-name', 'BookStack') }}</span>
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-3 text-center">

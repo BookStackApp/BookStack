@@ -107,7 +107,7 @@ abstract class Entity extends Ownable
         $exactTerms = [];
         foreach ($terms as $key => $term) {
             $term = htmlentities($term, ENT_QUOTES);
-            $term =  preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
+            $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
             if (preg_match('/\s/', $term)) {
                 $exactTerms[] = '%' . $term . '%';
                 $term = '"' . $term . '"';
@@ -123,7 +123,7 @@ abstract class Entity extends Ownable
 
         // Ensure at least one exact term matches if in search
         if (count($exactTerms) > 0) {
-            $search = $search->where(function($query) use ($exactTerms, $fieldsToSearch) {
+            $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
                 foreach ($exactTerms as $exactTerm) {
                     foreach ($fieldsToSearch as $field) {
                         $query->orWhere($field, 'like', $exactTerm);

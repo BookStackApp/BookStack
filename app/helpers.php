@@ -59,3 +59,15 @@ function userCan($permission, \BookStack\Ownable $ownable = null)
     $hasAccess = $restrictionService->checkIfEntityRestricted($ownable, $action);
     return $hasAccess && $hasPermission;
 }
+
+/**
+ * Helper to access system settings.
+ * @param $key
+ * @param bool $default
+ * @return mixed
+ */
+function setting($key, $default = false)
+{
+    $settingService = app('BookStack\Services\SettingService');
+    return $settingService->get($key, $default);
+}
