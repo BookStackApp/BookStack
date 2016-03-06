@@ -17,7 +17,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $this->checkPermission('settings-update');
+        $this->checkPermission('settings-manage');
         $this->setPageTitle('Settings');
         return view('settings/index');
     }
@@ -32,7 +32,7 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermission('settings-update');
+        $this->checkPermission('settings-manage');
 
         // Cycles through posted settings and update them
         foreach($request->all() as $name => $value) {

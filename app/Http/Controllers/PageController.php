@@ -1,12 +1,10 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
+use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Auth;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
@@ -21,26 +19,28 @@ class PageController extends Controller
     protected $bookRepo;
     protected $chapterRepo;
     protected $exportService;
+    protected $userRepo;
 
     /**
      * PageController constructor.
-     * @param PageRepo      $pageRepo
-     * @param BookRepo      $bookRepo
-     * @param ChapterRepo   $chapterRepo
+     * @param PageRepo $pageRepo
+     * @param BookRepo $bookRepo
+     * @param ChapterRepo $chapterRepo
      * @param ExportService $exportService
+     * @param UserRepo $userRepo
      */
-    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo, ExportService $exportService)
+    public function __construct(PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo, ExportService $exportService, UserRepo $userRepo)
     {
         $this->pageRepo = $pageRepo;
         $this->bookRepo = $bookRepo;
         $this->chapterRepo = $chapterRepo;
         $this->exportService = $exportService;
+        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
     /**
      * Show the form for creating a new page.
-     *
      * @param      $bookSlug
      * @param bool $chapterSlug
      * @return Response
@@ -48,23 +48,22 @@ class PageController extends Controller
      */
     public function create($bookSlug, $chapterSlug = false)
     {
-        $this->checkPermission('page-create');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : false;
+        $parent = $chapter ? $chapter : $book;
+        $this->checkOwnablePermission('page-create', $parent);
         $this->setPageTitle('Create New Page');
         return view('pages/create', ['book' => $book, 'chapter' => $chapter]);
     }
 
     /**
      * Store a newly created page in storage.
-     *
      * @param  Request $request
      * @param          $bookSlug
      * @return Response
      */
     public function store(Request $request, $bookSlug)
     {
-        $this->checkPermission('page-create');
         $this->validate($request, [
             'name'   => 'required|string|max:255'
         ]);
@@ -72,6 +71,8 @@ class PageController extends Controller
         $input = $request->all();
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapterId = ($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) ? $request->get('chapter') : null;
+        $parent = $chapterId !== null ? $this->chapterRepo->getById($chapterId) : $book;
+        $this->checkOwnablePermission('page-create', $parent);
         $input['priority'] = $this->bookRepo->getNewPriority($book);
 
         $page = $this->pageRepo->saveNew($input, $book, $chapterId);
@@ -84,7 +85,6 @@ class PageController extends Controller
      * Display the specified page.
      * If the page is not found via the slug the
      * revisions are searched for a match.
-     *
      * @param $bookSlug
      * @param $pageSlug
      * @return Response
@@ -95,7 +95,7 @@ class PageController extends Controller
 
         try {
             $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
-        } catch (NotFoundHttpException $e) {
+        } catch (NotFoundException $e) {
             $page = $this->pageRepo->findPageUsingOldSlug($pageSlug, $bookSlug);
             if ($page === null) abort(404);
             return redirect($page->getUrl());
@@ -109,23 +109,21 @@ class PageController extends Controller
 
     /**
      * Show the form for editing the specified page.
-     *
      * @param $bookSlug
      * @param $pageSlug
      * @return Response
      */
     public function edit($bookSlug, $pageSlug)
     {
-        $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle('Editing Page ' . $page->getShortName());
         return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
     /**
      * Update the specified page in storage.
-     *
      * @param  Request $request
      * @param          $bookSlug
      * @param          $pageSlug
@@ -133,12 +131,12 @@ class PageController extends Controller
      */
     public function update(Request $request, $bookSlug, $pageSlug)
     {
-        $this->checkPermission('page-update');
         $this->validate($request, [
             'name'   => 'required|string|max:255'
         ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-update', $page);
         $this->pageRepo->updatePage($page, $book->id, $request->all());
         Activity::add($page, 'page_update', $book->id);
         return redirect($page->getUrl());
@@ -164,9 +162,9 @@ class PageController extends Controller
      */
     public function showDelete($bookSlug, $pageSlug)
     {
-        $this->checkPermission('page-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle('Delete Page ' . $page->getShortName());
         return view('pages/delete', ['book' => $book, 'page' => $page, 'current' => $page]);
     }
@@ -181,9 +179,9 @@ class PageController extends Controller
      */
     public function destroy($bookSlug, $pageSlug)
     {
-        $this->checkPermission('page-delete');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-delete', $page);
         Activity::addMessage('page_delete', $book->id, $page->name);
         $this->pageRepo->destroy($page);
         return redirect($book->getUrl());
@@ -229,9 +227,9 @@ class PageController extends Controller
      */
     public function restoreRevision($bookSlug, $pageSlug, $revisionId)
     {
-        $this->checkPermission('page-update');
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-update', $page);
         $page = $this->pageRepo->restoreRevision($page, $book, $revisionId);
         Activity::add($page, 'page_restore', $book->id);
         return redirect($page->getUrl());
@@ -313,6 +311,41 @@ class PageController extends Controller
             'title' => 'Recently Updated Pages',
             'pages' => $pages
         ]);
+    }
+
+    /**
+     * Show the Restrictions view.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRestrict($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('restrictions-manage', $page);
+        $roles = $this->userRepo->getRestrictableRoles();
+        return view('pages/restrictions', [
+            'page' => $page,
+            'roles' => $roles
+        ]);
+    }
+
+    /**
+     * Set the restrictions for this page.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function restrict($bookSlug, $pageSlug, Request $request)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('restrictions-manage', $page);
+        $this->pageRepo->updateRestrictionsFromRequest($request, $page);
+        session()->flash('success', 'Page Restrictions Updated');
+        return redirect($page->getUrl());
     }
 
 }

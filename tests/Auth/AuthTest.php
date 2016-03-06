@@ -133,12 +133,12 @@ class AuthTest extends TestCase
             ->click('Add new user')
             ->type($user->name, '#name')
             ->type($user->email, '#email')
-            ->select(2, '#role')
+            ->check('roles[admin]')
             ->type($user->password, '#password')
             ->type($user->password, '#password-confirm')
             ->press('Save')
-            ->seeInDatabase('users', $user->toArray())
             ->seePageIs('/settings/users')
+            ->seeInDatabase('users', $user->toArray())
             ->see($user->name);
     }
 

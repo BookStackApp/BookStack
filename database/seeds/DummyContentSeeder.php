@@ -12,7 +12,7 @@ class DummyContentSeeder extends Seeder
     public function run()
     {
         $user = factory(BookStack\User::class, 1)->create();
-        $role = \BookStack\Role::getDefault();
+        $role = \BookStack\Role::getRole('editor');
         $user->attachRole($role);
 
 

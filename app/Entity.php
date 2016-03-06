@@ -1,13 +1,8 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
-
-abstract class Entity extends Model
+abstract class Entity extends Ownable
 {
-
-    use Ownable;
 
     /**
      * Compares this entity to another given entity.
@@ -53,11 +48,29 @@ abstract class Entity extends Model
 
     /**
      * Get View objects for this entity.
-     * @return mixed
      */
     public function views()
     {
         return $this->morphMany('BookStack\View', 'viewable');
+    }
+
+    /**
+     * Get this entities restrictions.
+     */
+    public function restrictions()
+    {
+        return $this->morphMany('BookStack\Restriction', 'restrictable');
+    }
+
+    /**
+     * Check if this entity has a specific restriction set against it.
+     * @param $role_id
+     * @param $action
+     * @return bool
+     */
+    public function hasRestriction($role_id, $action)
+    {
+        return $this->restrictions->where('role_id', $role_id)->where('action', $action)->count() > 0;
     }
 
     /**
@@ -72,23 +85,14 @@ abstract class Entity extends Model
     }
 
     /**
-     * Gets the class name.
-     * @return string
-     */
-    public static function getClassName()
-    {
-        return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
-    }
-
-    /**
-     *Gets a limited-length version of the entities name.
+     * Gets a limited-length version of the entities name.
      * @param int $length
      * @return string
      */
     public function getShortName($length = 25)
     {
-        if(strlen($this->name) <= $length) return $this->name;
-        return substr($this->name, 0, $length-3) . '...';
+        if (strlen($this->name) <= $length) return $this->name;
+        return substr($this->name, 0, $length - 3) . '...';
     }
 
     /**
@@ -100,22 +104,40 @@ abstract class Entity extends Model
      */
     public static function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
     {
-        $termString = '';
-        foreach ($terms as $term) {
-            $termString .= htmlentities($term) . '* ';
+        $exactTerms = [];
+        foreach ($terms as $key => $term) {
+            $term = htmlentities($term, ENT_QUOTES);
+            $term =  preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
+            if (preg_match('/\s/', $term)) {
+                $exactTerms[] = '%' . $term . '%';
+                $term = '"' . $term . '"';
+            } else {
+                $term = '' . $term . '*';
+            }
+            if ($term !== '*') $terms[$key] = $term;
         }
+        $termString = implode(' ', $terms);
         $fields = implode(',', $fieldsToSearch);
-        $termStringEscaped = \DB::connection()->getPdo()->quote($termString);
-        $search = static::addSelect(\DB::raw('*, MATCH(name) AGAINST('.$termStringEscaped.' IN BOOLEAN MODE) AS title_relevance'));
+        $search = static::selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
         $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+
+        // Ensure at least one exact term matches if in search
+        if (count($exactTerms) > 0) {
+            $search = $search->where(function($query) use ($exactTerms, $fieldsToSearch) {
+                foreach ($exactTerms as $exactTerm) {
+                    foreach ($fieldsToSearch as $field) {
+                        $query->orWhere($field, 'like', $exactTerm);
+                    }
+                }
+            });
+        }
 
         // Add additional where terms
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
-
         // Load in relations
-        if (static::isA('page'))  {
+        if (static::isA('page')) {
             $search = $search->with('book', 'chapter', 'createdBy', 'updatedBy');
         } else if (static::isA('chapter')) {
             $search = $search->with('book');

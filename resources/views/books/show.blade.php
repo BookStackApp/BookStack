@@ -2,23 +2,35 @@
 
 @section('content')
 
-    <div class="faded-small toolbar" ng-non-bindable>
+    <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="action-buttons faded">
-                        @if($currentUser->can('page-create'))
+                        @if(userCan('page-create', $book))
                             <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Page</a>
                         @endif
-                        @if($currentUser->can('chapter-create'))
+                        @if(userCan('chapter-create', $book))
                             <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Chapter</a>
                         @endif
-                        @if($currentUser->can('book-update'))
+                        @if(userCan('book-update', $book))
                             <a href="{{$book->getEditUrl()}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
-                            <a href="{{ $book->getUrl() }}/sort" class="text-primary text-button"><i class="zmdi zmdi-sort"></i>Sort</a>
                         @endif
-                        @if($currentUser->can('book-delete'))
-                            <a href="{{ $book->getUrl() }}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
+                        @if(userCan('book-update', $book) || userCan('restrictions-manage', $book) || userCan('book-delete', $book))
+                            <div dropdown class="dropdown-container">
+                                <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul>
+                                    @if(userCan('book-update', $book))
+                                        <li><a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a></li>
+                                    @endif
+                                    @if(userCan('restrictions-manage', $book))
+                                        <li><a href="{{$book->getUrl()}}/restrict" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Restrict</a></li>
+                                    @endif
+                                    @if(userCan('book-delete', $book))
+                                        <li><a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a></li>
+                                    @endif
+                                </ul>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -75,6 +87,15 @@
 
             <div class="col-md-4 col-md-offset-1">
                 <div class="margin-top large"></div>
+                @if($book->restricted)
+                    <p class="text-muted">
+                        @if(userCan('restrictions-manage', $book))
+                            <a href="{{ $book->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Book Restricted</a>
+                        @else
+                            <i class="zmdi zmdi-lock-outline"></i>Book Restricted
+                        @endif
+                    </p>
+                @endif
                 <div class="search-box">
                     <form ng-submit="searchBook($event)">
                         <input ng-model="searchTerm" ng-change="checkSearchForm()" type="text" name="term" placeholder="Search This Book">

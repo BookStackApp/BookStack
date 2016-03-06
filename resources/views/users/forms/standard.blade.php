@@ -8,10 +8,10 @@
     @include('form.text', ['name' => 'email'])
 </div>
 
-@if($currentUser->can('user-update'))
+@if(userCan('users-manage'))
     <div class="form-group">
         <label for="role">User Role</label>
-        @include('form.role-select', ['name' => 'role', 'options' => \BookStack\Role::all(), 'displayKey' => 'display_name'])
+        @include('form/role-checkboxes', ['name' => 'roles', 'roles' => \BookStack\Role::all()])
     </div>
 @endif
 

@@ -6,11 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    /**
-     * Sets the default role name for newly registered users.
-     * @var string
-     */
-    protected static $default = 'viewer';
+
+    protected $fillable = ['display_name', 'description'];
 
     /**
      * The roles that belong to the role.
@@ -29,21 +26,21 @@ class Role extends Model
     }
 
     /**
+     * Check if this role has a permission.
+     * @param $permission
+     */
+    public function hasPermission($permission)
+    {
+        return $this->permissions->pluck('name')->contains($permission);
+    }
+
+    /**
      * Add a permission to this role.
      * @param Permission $permission
      */
     public function attachPermission(Permission $permission)
     {
         $this->permissions()->attach($permission->id);
-    }
-
-    /**
-     * Get an instance of the default role.
-     * @return Role
-     */
-    public static function getDefault()
-    {
-        return static::getRole(static::$default);
     }
 
     /**

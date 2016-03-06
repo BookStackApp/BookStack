@@ -1,14 +1,9 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
-
-
-use Illuminate\Database\Eloquent\Model;
 use Images;
 
-class Image extends Model
+class Image extends Ownable
 {
-    use Ownable;
 
     protected $fillable = ['name'];
 

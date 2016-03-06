@@ -1,5 +1,18 @@
 <?php
 
+// MEMCACHED - Split out configuration into an array
+if (env('CACHE_DRIVER') === 'memcached') {
+    $memcachedServerKeys = ['host', 'port', 'weight'];
+    $memcachedServers = explode(',', trim(env('MEMCACHED_SERVERS', '127.0.0.1:11211:100'), ','));
+    foreach ($memcachedServers as $index => $memcachedServer) {
+        $memcachedServerDetails = explode(':', $memcachedServer);
+        $components = count($memcachedServerDetails);
+        if ($components < 2) $memcachedServerDetails[] = '11211';
+        if ($components < 3) $memcachedServerDetails[] = '100';
+        $memcachedServers[$index] = array_combine($memcachedServerKeys, $memcachedServerDetails);
+    }
+}
+
 return [
 
     /*
@@ -49,11 +62,7 @@ return [
 
         'memcached' => [
             'driver'  => 'memcached',
-            'servers' => [
-                [
-                    'host' => '127.0.0.1', 'port' => 11211, 'weight' => 100,
-                ],
-            ],
+            'servers' => env('CACHE_DRIVER') === 'memcached' ? $memcachedServers : [],
         ],
 
         'redis' => [

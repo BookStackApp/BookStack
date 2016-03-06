@@ -15,15 +15,11 @@ class Activity extends Model
 
     /**
      * Get the entity for this activity.
-     * @return bool
      */
     public function entity()
     {
-        if ($this->entity_id) {
-            return $this->morphTo('entity')->first();
-        } else {
-            return false;
-        }
+        if ($this->entity_type === '') $this->entity_type = null;
+        return $this->morphTo('entity');
     }
 
     /**

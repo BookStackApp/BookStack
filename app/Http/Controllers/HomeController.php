@@ -24,7 +24,6 @@ class HomeController extends Controller
 
     /**
      * Display the homepage.
-     *
      * @return Response
      */
     public function index()

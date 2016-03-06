@@ -2,21 +2,19 @@
 
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
 
-class ChapterRepo
+class ChapterRepo extends EntityRepo
 {
-
-    protected $chapter;
-
     /**
-     * ChapterRepo constructor.
-     * @param $chapter
+     * Base query for getting chapters, Takes restrictions into account.
+     * @return mixed
      */
-    public function __construct(Chapter $chapter)
+    private function chapterQuery()
     {
-        $this->chapter = $chapter;
+        return $this->restrictionService->enforceChapterRestrictions($this->chapter, 'view');
     }
 
     /**
@@ -26,7 +24,7 @@ class ChapterRepo
      */
     public function idExists($id)
     {
-        return $this->chapter->where('id', '=', $id)->count() > 0;
+        return $this->chapterQuery()->where('id', '=', $id)->count() > 0;
     }
 
     /**
@@ -36,7 +34,7 @@ class ChapterRepo
      */
     public function getById($id)
     {
-        return $this->chapter->findOrFail($id);
+        return $this->chapterQuery()->findOrFail($id);
     }
 
     /**
@@ -45,7 +43,7 @@ class ChapterRepo
      */
     public function getAll()
     {
-        return $this->chapter->all();
+        return $this->chapterQuery()->all();
     }
 
     /**
@@ -53,12 +51,22 @@ class ChapterRepo
      * @param $slug
      * @param $bookId
      * @return mixed
+     * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
     {
-        $chapter = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($chapter === null) abort(404);
+        $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
+        if ($chapter === null) throw new NotFoundException('Chapter not found');
         return $chapter;
+    }
+
+    /**
+     * Get the child items for a chapter
+     * @param Chapter $chapter
+     */
+    public function getChildren(Chapter $chapter)
+    {
+        return $this->restrictionService->enforcePageRestrictions($chapter->pages())->get();
     }
 
     /**
@@ -85,6 +93,7 @@ class ChapterRepo
         }
         Activity::removeEntity($chapter);
         $chapter->views()->delete();
+        $chapter->restrictions()->delete();
         $chapter->delete();
     }
 
@@ -123,7 +132,7 @@ class ChapterRepo
 
     /**
      * Get chapters by the given search term.
-     * @param       $term
+     * @param string $term
      * @param array $whereTerms
      * @param int $count
      * @param array $paginationAppends
@@ -131,8 +140,8 @@ class ChapterRepo
      */
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
-        $terms = explode(' ', $term);
-        $chapters = $this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms)
+        $terms = $this->prepareSearchTerms($term);
+        $chapters = $this->restrictionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {

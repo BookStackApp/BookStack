@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-use Illuminate\Support\Facades\Auth;
 use BookStack\Activity;
 use BookStack\Entity;
 use Session;
@@ -9,14 +8,17 @@ class ActivityService
 {
     protected $activity;
     protected $user;
+    protected $restrictionService;
 
     /**
      * ActivityService constructor.
-     * @param $activity
+     * @param Activity $activity
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Activity $activity)
+    public function __construct(Activity $activity, RestrictionService $restrictionService)
     {
         $this->activity = $activity;
+        $this->restrictionService = $restrictionService;
         $this->user = auth()->user();
     }
 
@@ -86,8 +88,10 @@ class ActivityService
      */
     public function latest($count = 20, $page = 0)
     {
-        $activityList =  $this->activity->orderBy('created_at', 'desc')
-            ->skip($count * $page)->take($count)->get();
+        $activityList =  $this->restrictionService
+            ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
+            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
+
         return $this->filterSimilar($activityList);
     }
 
