@@ -17,25 +17,8 @@
     <script src="/libs/jquery/jquery.min.js?version=2.1.4"></script>
 
     @yield('head')
-    @if(Setting::get('app-color'))
-        <style>
-            header{
-                background-color: #{{ Setting::get('app-color') }};
-            }
-            .faded-small{
-                background-color: {{ Setting::get('app-color-rgba') }};
-            }
-            .button-base, .button, input[type="button"], input[type="submit"] {
-                background-color: #{{ Setting::get('app-color') }};
-            }
-            .button-base:hover, .button:hover, input[type="button"]:hover, input[type="submit"]:hover {
-                background-color: #{{ Setting::get('app-color') }};
-            }
-            p.primary:hover, p .primary:hover, span.primary:hover, .text-primary:hover {
-                color: #{{ Setting::get('app-color') }};
-            }
-        </style>
-    @endif
+
+    @include('partials/custom-styles')
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 
@@ -62,7 +45,7 @@
                     <div class="float right">
                         <div class="links text-center">
                             <a href="/books"><i class="zmdi zmdi-book"></i>Books</a>
-                            @if(isset($currentUser) && $currentUser->can('settings-manage'))
+                            @if(isset($currentUser) && userCan('settings-manage'))
                                 <a href="/settings"><i class="zmdi zmdi-settings"></i>Settings</a>
                             @endif
                             @if(!isset($signedIn) || !$signedIn)

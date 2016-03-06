@@ -37,8 +37,9 @@
                 </div>
                 <div class="form-group" id="color-control">
                     <label for="setting-app-color">Application Primary Color</label>
-                    <p class="small">This should be a hex value.</p>
-                    <input class="jscolor" type="text" value="{{ Setting::get('app-color', '') }}" name="setting-app-color" id="setting-app-color" placeholder="0288D1">
+                    <p class="small">This should be a hex value. <br> Leave empty to reset to the default color.</p>
+                    <input  type="text" value="{{ Setting::get('app-color', '') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
+                    <input  type="hidden" value="{{ Setting::get('app-color-light', '') }}" name="setting-app-color-light" id="setting-app-color-light" placeholder="rgba(21, 101, 192, 0.15)">
                 </div>
             </div>
         </div>
@@ -96,5 +97,23 @@
 @stop
 
 @section('scripts')
-    <script src="/libs/jscolor/jscolor.min.js?version=2.0.4"></script>
+    <script src="/libs/jq-color-picker/tiny-color-picker.min.js?version=1.0.0"></script>
+    <script type="text/javascript">
+        $('#setting-app-color').colorPicker({
+            opacity: false,
+            renderCallback: function($elm, toggled) {
+                var hexVal = '#' + this.color.colors.HEX;
+                var rgb = this.color.colors.RND.rgb;
+                var rgbLightVal = 'rgba('+ [rgb.r, rgb.g, rgb.b, '0.15'].join(',') +')';
+                // Set textbox color to hex color code.
+                var isEmpty = $.trim($elm.val()).length === 0;
+                if (!isEmpty) $elm.val(hexVal);
+                $('#setting-app-color-light').val(isEmpty ? '' : rgbLightVal);
+                // Set page elements to provide preview
+                $('#header, .image-picker .button').css('background-color', hexVal);
+                $('.faded-small').css('background-color', rgbLightVal);
+                $('.setting-nav a.selected').css('border-bottom-color', hexVal);
+            }
+        });
+    </script>
 @stop

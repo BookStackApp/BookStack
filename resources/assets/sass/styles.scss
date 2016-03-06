@@ -138,7 +138,7 @@ $loadingSize: 10px;
 // Back to top link
 $btt-size: 40px;
 #back-to-top {
-  background-color: rgba($primary, 0.4);
+  background-color: $primary;
   position: fixed;
   bottom: $-m;
   right: $-l;
@@ -154,7 +154,7 @@ $btt-size: 40px;
   overflow: hidden;
   &:hover {
     width: $btt-size*3.4;
-    background-color: rgba($primary, 1);
+    opacity: 1 !important;
     span {
       display: inline-block;
     }
