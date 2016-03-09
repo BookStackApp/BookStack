@@ -217,20 +217,22 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
 span.highlight {
   //background-color: rgba($primary, 0.2);
   font-weight: bold;
-  //padding: 2px 4px;
+  padding: 2px 4px;
 }
 
 /*
  * Lists
  */
 ul {
-  padding-left: $-m * 1.5;
-  list-style: disc inside;
+  padding-left: $-m * 1.3;
+  list-style: disc;
+  overflow: hidden;
 }
 
 ol {
-  list-style: decimal inside;
-  padding-left: $-m * 1.5;
+  list-style: decimal;
+  padding-left: $-m * 1.3;
+  overflow: hidden;
 }
 
 /*
