@@ -8,8 +8,8 @@
 
 @section('content')
 
-    <div class="flex-fill flex" ng-non-bindable>
-        <form action="{{$page->getUrl()}}" method="POST" class="flex flex-fill">
+    <div class="flex-fill flex">
+        <form action="{{$page->getUrl()}}" data-page-id="{{ $page->id }}" method="POST" class="flex flex-fill">
             <input type="hidden" name="_method" value="PUT">
             @include('pages/form', ['model' => $page])
         </form>

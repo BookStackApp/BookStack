@@ -119,11 +119,5 @@ function elemExists(selector) {
     return document.querySelector(selector) !== null;
 }
 
-// TinyMCE editor
-if (elemExists('#html-editor')) {
-    var tinyMceOptions = require('./pages/page-form');
-    tinymce.init(tinyMceOptions);
-}
-
 // Page specific items
 require('./pages/page-show');

@@ -75,6 +75,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 
+    // Ajax routes
+    Route::put('/ajax/page/{id}/save-draft', 'PageController@saveUpdateDraft');
+
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');
 

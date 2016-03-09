@@ -4,6 +4,7 @@
 use Activity;
 use BookStack\Book;
 use BookStack\Exceptions\NotFoundException;
+use DOMDocument;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
@@ -66,9 +67,10 @@ class PageRepo extends EntityRepo
     public function findPageUsingOldSlug($pageSlug, $bookSlug)
     {
         $revision = $this->pageRevision->where('slug', '=', $pageSlug)
-            ->whereHas('page', function($query) {
+            ->whereHas('page', function ($query) {
                 $this->restrictionService->enforcePageRestrictions($query);
             })
+            ->where('type', '=', 'version')
             ->where('book_slug', '=', $bookSlug)->orderBy('created_at', 'desc')
             ->with('page')->first();
         return $revision !== null ? $revision->page : null;
@@ -100,8 +102,8 @@ class PageRepo extends EntityRepo
      * Save a new page into the system.
      * Input validation must be done beforehand.
      * @param array $input
-     * @param Book  $book
-     * @param int   $chapterId
+     * @param Book $book
+     * @param int $chapterId
      * @return Page
      */
     public function saveNew(array $input, Book $book, $chapterId = null)
@@ -128,9 +130,9 @@ class PageRepo extends EntityRepo
      */
     protected function formatHtml($htmlText)
     {
-        if($htmlText == '') return $htmlText;
+        if ($htmlText == '') return $htmlText;
         libxml_use_internal_errors(true);
-        $doc = new \DOMDocument();
+        $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
 
         $container = $doc->documentElement;
@@ -239,8 +241,8 @@ class PageRepo extends EntityRepo
 
     /**
      * Updates a page with any fillable data and saves it into the database.
-     * @param Page   $page
-     * @param int    $book_id
+     * @param Page $page
+     * @param int $book_id
      * @param string $input
      * @return Page
      */
@@ -297,6 +299,7 @@ class PageRepo extends EntityRepo
         $revision->book_slug = $page->book->slug;
         $revision->created_by = auth()->user()->id;
         $revision->created_at = $page->updated_at;
+        $revision->type = 'version';
         $revision->save();
         // Clear old revisions
         if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
@@ -304,6 +307,36 @@ class PageRepo extends EntityRepo
                 ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
         }
         return $revision;
+    }
+
+    /**
+     * Save a page update draft.
+     * @param Page $page
+     * @param array $data
+     * @return PageRevision
+     */
+    public function saveUpdateDraft(Page $page, $data = [])
+    {
+        $userId = auth()->user()->id;
+        $drafts = $this->pageRevision->where('created_by', '=', $userId)
+            ->where('type', 'update_draft')
+            ->where('page_id', '=', $page->id)
+            ->orderBy('created_at', 'desc')->get();
+
+        if ($drafts->count() > 0) {
+            $draft = $drafts->first();
+        } else {
+            $draft = $this->pageRevision->newInstance();
+            $draft->page_id = $page->id;
+            $draft->slug = $page->slug;
+            $draft->book_slug = $page->book->slug;
+            $draft->created_by = $userId;
+            $draft->type = 'update_draft';
+        }
+
+        $draft->fill($data);
+        $draft->save();
+        return $draft;
     }
 
     /**
@@ -333,7 +366,7 @@ class PageRepo extends EntityRepo
     /**
      * Changes the related book for the specified page.
      * Changes the book id of any relations to the page that store the book id.
-     * @param int  $bookId
+     * @param int $bookId
      * @param Page $page
      * @return Page
      */

@@ -143,6 +143,23 @@ class PageController extends Controller
     }
 
     /**
+     * Save a draft update as a revision.
+     * @param Request $request
+     * @param $pageId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveUpdateDraft(Request $request, $pageId)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255'
+        ]);
+        $page = $this->pageRepo->getById($pageId);
+        $this->checkOwnablePermission('page-update', $page);
+        $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
+        return response()->json(['status' => 'success', 'message' => 'Draft successfully saved']);
+    }
+
+    /**
      * Redirect from a special link url which
      * uses the page id rather than the name.
      * @param $pageId

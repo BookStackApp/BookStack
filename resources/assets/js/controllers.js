@@ -213,4 +213,49 @@ module.exports = function (ngApp, events) {
     }]);
 
 
+    ngApp.controller('PageEditController',  ['$scope', '$http', '$attrs', '$interval', function ($scope, $http, $attrs, $interval) {
+
+        $scope.editorOptions = require('./pages/page-form');
+        $scope.editorHtml = '';
+        $scope.draftText = '';
+        var pageId = Number($attrs.pageId);
+        var isEdit = pageId !== 0;
+
+        if (isEdit) {
+            startAutoSave();
+        }
+
+        $scope.editorChange = function() {
+            $scope.draftText = '';
+        }
+
+        function startAutoSave() {
+            var currentTitle = $('#name').val();
+            var currentHtml = $scope.editorHtml;
+
+            console.log('Starting auto save');
+
+            $interval(() => {
+                var newTitle = $('#name').val();
+                var newHtml = $scope.editorHtml;
+
+                if (newTitle !== currentTitle || newHtml !== currentHtml) {
+                    currentHtml = newHtml;
+                    currentTitle = newTitle;
+                    saveDraftUpdate(newTitle, newHtml);
+                }
+            }, 1000*5);
+        }
+
+        function saveDraftUpdate(title, html) {
+            $http.put('/ajax/page/' + pageId + '/save-draft', {
+                name: title,
+                html: html
+            }).then((responseData) => {
+                $scope.draftText = 'Draft saved'
+            })
+        }
+
+    }]);
+
 };

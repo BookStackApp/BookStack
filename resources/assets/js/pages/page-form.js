@@ -1,4 +1,4 @@
-module.exports = {
+var mceOptions = module.exports = {
     selector: '#html-editor',
     content_css: [
         '/css/styles.css'
@@ -51,7 +51,14 @@ module.exports = {
             args.content = '';
         }
     },
+    extraSetups: [],
     setup: function (editor) {
+
+        console.log(mceOptions.extraSetups);
+
+        for (var i = 0; i < mceOptions.extraSetups.length; i++) {
+            mceOptions.extraSetups[i](editor);
+        }
 
         (function () {
             var wrap;

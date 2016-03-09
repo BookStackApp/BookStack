@@ -162,5 +162,31 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
+    ngApp.directive('tinymce', [function() {
+        return {
+            restrict: 'A',
+            scope: {
+                tinymce: '=',
+                ngModel: '=',
+                ngChange: '='
+            },
+            link: function (scope, element, attrs) {
+
+                function tinyMceSetup(editor) {
+                    editor.on('keyup', (e) => {
+                        var content = editor.getContent();
+                        scope.$apply(() => {
+                            scope.ngModel = content;
+                        });
+                        scope.ngChange(content);
+                    });
+                }
+
+                scope.tinymce.extraSetups.push(tinyMceSetup);
+                tinymce.init(scope.tinymce);
+            }
+        }
+    }])
+
 
 };
