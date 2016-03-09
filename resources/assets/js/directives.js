@@ -167,18 +167,19 @@ module.exports = function (ngApp, events) {
             restrict: 'A',
             scope: {
                 tinymce: '=',
-                ngModel: '=',
-                ngChange: '='
+                mceModel: '=',
+                mceChange: '='
             },
             link: function (scope, element, attrs) {
 
                 function tinyMceSetup(editor) {
                     editor.on('keyup', (e) => {
                         var content = editor.getContent();
+                        console.log(content);
                         scope.$apply(() => {
-                            scope.ngModel = content;
+                            scope.mceModel = content;
                         });
-                        scope.ngChange(content);
+                        scope.mceChange(content);
                     });
                 }
 

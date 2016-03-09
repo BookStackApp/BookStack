@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="edit-area flex-fill flex">
-        <textarea id="html-editor" tinymce="editorOptions" ng-change="editorChange" ng-model="editorHtml" name="html" rows="5"
+        <textarea id="html-editor" tinymce="editorOptions" mce-change="editorChange" mce-model="editorHtml"  name="html" rows="5"
                   @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
         @if($errors->has('html'))
             <div class="text-neg text-small">{{ $errors->first('html') }}</div>
