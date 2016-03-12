@@ -34,7 +34,7 @@ class Page extends Entity
 
     public function revisions()
     {
-        return $this->hasMany('BookStack\PageRevision')->orderBy('created_at', 'desc');
+        return $this->hasMany('BookStack\PageRevision')->where('type', '=', 'version')->orderBy('created_at', 'desc');
     }
 
     public function getUrl()

@@ -213,4 +213,85 @@ module.exports = function (ngApp, events) {
     }]);
 
 
+    ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', function ($scope, $http, $attrs, $interval, $timeout) {
+
+        $scope.editorOptions = require('./pages/page-form');
+        $scope.editorHtml = '';
+        $scope.draftText = '';
+        var pageId = Number($attrs.pageId);
+        var isEdit = pageId !== 0;
+        var autosaveFrequency = 30; // AutoSave interval in seconds.
+        $scope.isDraft = Number($attrs.pageDraft) === 1;
+        if ($scope.isDraft) $scope.draftText = 'Editing Draft';
+
+        var autoSave = false;
+
+        var currentContent = {
+            title: false,
+            html: false
+        };
+
+        if (isEdit) {
+            setTimeout(() => {
+                startAutoSave();
+            }, 1000);
+        }
+
+        $scope.editorChange = function () {}
+
+        /**
+         * Start the AutoSave loop, Checks for content change
+         * before performing the costly AJAX request.
+         */
+        function startAutoSave() {
+            currentContent.title = $('#name').val();
+            currentContent.html = $scope.editorHtml;
+
+            autoSave = $interval(() => {
+                var newTitle = $('#name').val();
+                var newHtml = $scope.editorHtml;
+
+                if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
+                    currentContent.html = newHtml;
+                    currentContent.title = newTitle;
+                    saveDraftUpdate(newTitle, newHtml);
+                }
+            }, 1000 * autosaveFrequency);
+        }
+
+        /**
+         * Save a draft update into the system via an AJAX request.
+         * @param title
+         * @param html
+         */
+        function saveDraftUpdate(title, html) {
+            $http.put('/ajax/page/' + pageId + '/save-draft', {
+                name: title,
+                html: html
+            }).then((responseData) => {
+                $scope.draftText = responseData.data.message;
+                $scope.isDraft = true;
+            });
+        }
+
+        /**
+         * Discard the current draft and grab the current page
+         * content from the system via an AJAX request.
+         */
+        $scope.discardDraft = function () {
+            $http.get('/ajax/page/' + pageId).then((responseData) => {
+                if (autoSave) $interval.cancel(autoSave);
+                $scope.draftText = '';
+                $scope.isDraft = false;
+                $scope.$broadcast('html-update', responseData.data.html);
+                $('#name').val(currentContent.title);
+                $timeout(() => {
+                    startAutoSave();
+                }, 1000);
+                events.emit('success', 'Draft discarded, The editor has been updated with the current page content');
+            });
+        };
+
+    }]);
+
 };

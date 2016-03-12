@@ -162,5 +162,42 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
+    ngApp.directive('tinymce', ['$timeout', function($timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                tinymce: '=',
+                mceModel: '=',
+                mceChange: '='
+            },
+            link: function (scope, element, attrs) {
+
+                function tinyMceSetup(editor) {
+                    editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
+                        var content = editor.getContent();
+                        $timeout(() => {
+                            scope.mceModel = content;
+                        });
+                        scope.mceChange(content);
+                    });
+
+                    editor.on('init', (e) => {
+                        scope.mceModel = editor.getContent();
+                    });
+
+                    scope.$on('html-update', (event, value) => {
+                        editor.setContent(value);
+                        editor.selection.select(editor.getBody(), true);
+                        editor.selection.collapse(false);
+                        scope.mceModel = editor.getContent();
+                    });
+                }
+
+                scope.tinymce.extraSetups.push(tinyMceSetup);
+                tinymce.init(scope.tinymce);
+            }
+        }
+    }])
+
 
 };
