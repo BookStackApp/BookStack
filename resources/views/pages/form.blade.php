@@ -14,14 +14,11 @@
                     </div>
                 </div>
                 <div class="col-sm-4 faded text-center">
-                    <div class="action-buttons text-center" ng-cloak>
-                        <span class="faded-text" ng-bind="draftText"></span>
-                        <button type="button" ng-if="isDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
-                    </div>
+                    <span class="faded-text" ng-bind="draftText"></span>
                 </div>
                 <div class="col-sm-4 faded">
-                    <div class="action-buttons">
-
+                    <div class="action-buttons" ng-cloak>
+                        <button type="button" ng-if="isDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
                         <button type="submit" id="save-button" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
                     </div>
                 </div>
