@@ -4,6 +4,7 @@
 use Activity;
 use BookStack\Book;
 use BookStack\Exceptions\NotFoundException;
+use Carbon\Carbon;
 use DOMDocument;
 use Illuminate\Support\Str;
 use BookStack\Page;
@@ -259,11 +260,16 @@ class PageRepo extends EntityRepo
         }
 
         // Update with new details
+        $userId = auth()->user()->id;
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
-        $page->updated_by = auth()->user()->id;
+        $page->updated_by = $userId;
         $page->save();
+
+        // Remove all update drafts for this user & page.
+        $this->userUpdateDraftsQuery($page, $userId)->delete();
+
         return $page;
     }
 
@@ -318,10 +324,7 @@ class PageRepo extends EntityRepo
     public function saveUpdateDraft(Page $page, $data = [])
     {
         $userId = auth()->user()->id;
-        $drafts = $this->pageRevision->where('created_by', '=', $userId)
-            ->where('type', 'update_draft')
-            ->where('page_id', '=', $page->id)
-            ->orderBy('created_at', 'desc')->get();
+        $drafts = $this->userUpdateDraftsQuery($page, $userId)->get();
 
         if ($drafts->count() > 0) {
             $draft = $drafts->first();
@@ -337,6 +340,107 @@ class PageRepo extends EntityRepo
         $draft->fill($data);
         $draft->save();
         return $draft;
+    }
+
+    /**
+     * The base query for getting user update drafts.
+     * @param Page $page
+     * @param $userId
+     * @return mixed
+     */
+    private function userUpdateDraftsQuery(Page $page, $userId)
+    {
+        return $this->pageRevision->where('created_by', '=', $userId)
+            ->where('type', 'update_draft')
+            ->where('page_id', '=', $page->id)
+            ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Checks whether a user has a draft version of a particular page or not.
+     * @param Page $page
+     * @param $userId
+     * @return bool
+     */
+    public function hasUserGotPageDraft(Page $page, $userId)
+    {
+        return $this->userUpdateDraftsQuery($page, $userId)->count() > 0;
+    }
+
+    /**
+     * Get the latest updated draft revision for a particular page and user.
+     * @param Page $page
+     * @param $userId
+     * @return mixed
+     */
+    public function getUserPageDraft(Page $page, $userId)
+    {
+        return $this->userUpdateDraftsQuery($page, $userId)->first();
+    }
+
+    /**
+     * Get the notification message that informs the user that they are editing a draft page.
+     * @param PageRevision $draft
+     * @return string
+     */
+    public function getUserPageDraftMessage(PageRevision $draft)
+    {
+        $message = 'You are currently editing a draft that was last saved ' . $draft->updated_at->diffForHumans() . '.';
+        if ($draft->page->updated_at->timestamp > $draft->updated_at->timestamp) {
+            $message .= "\n This page has been updated by since that time. It is recommended that you discard this draft.";
+        }
+        return $message;
+    }
+
+    /**
+     * Check if a page is being actively editing.
+     * Checks for edits since last page updated.
+     * Passing in a minuted range will check for edits
+     * within the last x minutes.
+     * @param Page $page
+     * @param null $minRange
+     * @return bool
+     */
+    public function isPageEditingActive(Page $page, $minRange = null)
+    {
+        $draftSearch = $this->activePageEditingQuery($page, $minRange);
+        return $draftSearch->count() > 0;
+    }
+
+    /**
+     * Get a notification message concerning the editing activity on
+     * a particular page.
+     * @param Page $page
+     * @param null $minRange
+     * @return string
+     */
+    public function getPageEditingActiveMessage(Page $page, $minRange = null)
+    {
+        $pageDraftEdits = $this->activePageEditingQuery($page, $minRange)->get();
+        $userMessage = $pageDraftEdits->count() > 1 ? $pageDraftEdits->count() . ' users have' : $pageDraftEdits->first()->createdBy->name . ' has';
+        $timeMessage = $minRange === null ? 'since the page was last updated' : 'in the last ' . $minRange . ' minutes';
+        $message = '%s started editing this page %s. Take care not to overwrite each other\'s updates!';
+        return sprintf($message, $userMessage, $timeMessage);
+    }
+
+    /**
+     * A query to check for active update drafts on a particular page.
+     * @param Page $page
+     * @param null $minRange
+     * @return mixed
+     */
+    private function activePageEditingQuery(Page $page, $minRange = null)
+    {
+        $query = $this->pageRevision->where('type', '=', 'update_draft')
+            ->where('updated_at', '>', $page->updated_at)
+            ->where('created_by', '!=', auth()->user()->id)
+            ->with('createdBy');
+
+        if ($minRange !== null) {
+            $query = $query->where('updated_at', '>=', Carbon::now()->subMinutes($minRange));
+        }
+
+        return $query;
     }
 
     /**

@@ -1,7 +1,7 @@
 
 
 
-<div class="page-editor flex-fill flex" ng-controller="PageEditController" page-id="{{ $model->id or 0 }}">
+<div class="page-editor flex-fill flex" ng-controller="PageEditController" page-id="{{ $model->id or 0 }}" page-draft="{{ $page->isDraft or 0 }}">
 
     {{ csrf_field() }}
     <div class="faded-small toolbar">
@@ -9,15 +9,19 @@
             <div class="row">
                 <div class="col-sm-4 faded">
                     <div class="action-buttons text-left">
+                        <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary"><i class="zmdi zmdi-arrow-left"></i>Back</a>
                         <a onclick="$('body>header').slideToggle();" class="text-button text-primary"><i class="zmdi zmdi-swap-vertical"></i>Toggle Header</a>
                     </div>
                 </div>
                 <div class="col-sm-4 faded text-center">
-                    <span ng-bind="draftText"></span>
+                    <div class="action-buttons text-center" ng-cloak>
+                        <span class="faded-text" ng-bind="draftText"></span>
+                        <button type="button" ng-if="isDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
+                    </div>
                 </div>
                 <div class="col-sm-4 faded">
                     <div class="action-buttons">
-                        <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary"><i class="zmdi zmdi-close"></i>Cancel</a>
+
                         <button type="submit" id="save-button" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
                     </div>
                 </div>

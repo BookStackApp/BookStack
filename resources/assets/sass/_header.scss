@@ -161,6 +161,12 @@ form.search-box {
   }
 }
 
+.faded > span.faded-text {
+  display: inline-block;
+  padding: $-s;
+  opacity: 0.5;
+}
+
 .faded-small {
   color: #000;
   font-size: 0.9em;

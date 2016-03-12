@@ -108,6 +108,17 @@ class PageController extends Controller
     }
 
     /**
+     * Get page from an ajax request.
+     * @param $pageId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPageAjax($pageId)
+    {
+        $page = $this->pageRepo->getById($pageId);
+        return response()->json($page);
+    }
+
+    /**
      * Show the form for editing the specified page.
      * @param $bookSlug
      * @param $pageSlug
@@ -119,6 +130,24 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle('Editing Page ' . $page->getShortName());
+        $page->isDraft = false;
+
+        // Check for active editing and drafts
+        $warnings = [];
+        if ($this->pageRepo->isPageEditingActive($page, 60)) {
+            $warnings[] = $this->pageRepo->getPageEditingActiveMessage($page, 60);
+        }
+
+        if ($this->pageRepo->hasUserGotPageDraft($page, $this->currentUser->id)) {
+            $draft = $this->pageRepo->getUserPageDraft($page, $this->currentUser->id);
+            $page->name = $draft->name;
+            $page->html = $draft->html;
+            $page->isDraft = true;
+            $warnings [] = $this->pageRepo->getUserPageDraftMessage($draft);
+        }
+
+        if (count($warnings) > 0) session()->flash('warning', implode("\n", $warnings));
+
         return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
 
@@ -155,8 +184,9 @@ class PageController extends Controller
         ]);
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
-        $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
-        return response()->json(['status' => 'success', 'message' => 'Draft successfully saved']);
+        $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
+        $updateTime = $draft->updated_at->format('H:i');
+        return response()->json(['status' => 'success', 'message' => 'Draft saved at ' . $updateTime]);
     }
 
     /**

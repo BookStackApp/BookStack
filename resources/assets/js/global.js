@@ -54,10 +54,10 @@ $.expr[":"].contains = $.expr.createPseudo(function (arg) {
 // Global jQuery Elements
 $(function () {
 
-
     var notifications = $('.notification');
     var successNotification = notifications.filter('.pos');
     var errorNotification = notifications.filter('.neg');
+    var warningNotification = notifications.filter('.warning');
     // Notification Events
     window.Events.listen('success', function (text) {
         successNotification.hide();
@@ -65,6 +65,10 @@ $(function () {
         setTimeout(() => {
             successNotification.show();
         }, 1);
+    });
+    window.Events.listen('warning', function (text) {
+        warningNotification.find('span').text(text);
+        warningNotification.show();
     });
     window.Events.listen('error', function (text) {
         errorNotification.find('span').text(text);

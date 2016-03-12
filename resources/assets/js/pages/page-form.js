@@ -54,8 +54,6 @@ var mceOptions = module.exports = {
     extraSetups: [],
     setup: function (editor) {
 
-        console.log(mceOptions.extraSetups);
-
         for (var i = 0; i < mceOptions.extraSetups.length; i++) {
             mceOptions.extraSetups[i](editor);
         }

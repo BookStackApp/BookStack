@@ -88,6 +88,10 @@ body.dragging, body.dragging * {
     background-color: $negative;
     color: #EEE;
   }
+  &.warning {
+    background-color: $secondary;
+    color: #EEE;
+  }
 }
 
 // Loading icon

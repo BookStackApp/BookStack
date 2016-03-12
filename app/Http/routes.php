@@ -77,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Ajax routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveUpdateDraft');
+    Route::get('/ajax/page/{id}', 'PageController@getPageAjax');
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

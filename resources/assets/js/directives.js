@@ -162,7 +162,7 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
-    ngApp.directive('tinymce', [function() {
+    ngApp.directive('tinymce', ['$timeout', function($timeout) {
         return {
             restrict: 'A',
             scope: {
@@ -173,13 +173,23 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 function tinyMceSetup(editor) {
-                    editor.on('keyup', (e) => {
+                    editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
                         var content = editor.getContent();
-                        console.log(content);
-                        scope.$apply(() => {
+                        $timeout(() => {
                             scope.mceModel = content;
                         });
                         scope.mceChange(content);
+                    });
+
+                    editor.on('init', (e) => {
+                        scope.mceModel = editor.getContent();
+                    });
+
+                    scope.$on('html-update', (event, value) => {
+                        editor.setContent(value);
+                        editor.selection.select(editor.getBody(), true);
+                        editor.selection.collapse(false);
+                        scope.mceModel = editor.getContent();
                     });
                 }
 
