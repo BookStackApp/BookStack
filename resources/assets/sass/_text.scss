@@ -206,6 +206,12 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
   &:hover {
     color: $color-page;
   }
+  &.draft {
+    color: $color-page-draft;
+  }
+  &.draft:hover {
+    color: $color-page-draft;
+  }
 }
 .text-chapter {
   color: $color-chapter;

@@ -16,6 +16,9 @@
     margin: $-s 0 0 0;
     border-left: 5px solid $color-page;
     padding: $-xs 0 $-xs $-m;
+    &.draft {
+      border-left-color: $color-page-draft;
+    }
   }
   hr {
     margin-top: 0;
