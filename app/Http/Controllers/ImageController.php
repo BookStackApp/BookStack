@@ -65,8 +65,7 @@ class ImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => 'image|mimes:jpeg,gif,png',
-            'uploaded_to' => 'integer|exists:pages,id'
+            'file' => 'image|mimes:jpeg,gif,png'
         ]);
 
         $imageUpload = $request->file('file');

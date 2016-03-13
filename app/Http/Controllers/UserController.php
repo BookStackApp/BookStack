@@ -164,7 +164,9 @@ class UserController extends Controller
 
         $user->save();
         session()->flash('success', 'User successfully updated');
-        return redirect('/settings/users');
+
+        $redirectUrl = userCan('users-manage') ? '/settings/users' : '/settings/users/' . $user->id;
+        return redirect($redirectUrl);
     }
 
     /**
