@@ -50,10 +50,10 @@ class RestrictionService
     public function enforcePageRestrictions($query, $action = 'view')
     {
         // Prevent drafts being visible to others.
-        $query = $query->where(function($query) {
+        $query = $query->where(function ($query) {
             $query->where('draft', '=', false);
             if ($this->currentUser) {
-                $query->orWhere(function($query) {
+                $query->orWhere(function ($query) {
                     $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser->id);
                 });
             }
@@ -260,6 +260,30 @@ class RestrictionService
                             $this->chapterRestrictionQuery($query);
                         });
                 });
+            });
+        });
+    }
+
+    /**
+     * Filters pages that are a direct relation to another item.
+     * @param $query
+     * @param $tableName
+     * @param $entityIdColumn
+     * @return mixed
+     */
+    public function filterRelatedPages($query, $tableName, $entityIdColumn)
+    {
+        if ($this->isAdmin) return $query;
+        $this->currentAction = 'view';
+        $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
+        return $query->where(function ($query) use (&$tableDetails) {
+            $query->where(function ($query) use (&$tableDetails) {
+                $query->whereExists(function ($query) use (&$tableDetails) {
+                    $query->select('*')->from('pages')->whereRaw('pages.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                        ->where(function ($query) {
+                            $this->pageRestrictionQuery($query);
+                        });
+                })->orWhere($tableDetails['entityIdColumn'], '=', 0);
             });
         });
     }

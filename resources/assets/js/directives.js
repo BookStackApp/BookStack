@@ -110,7 +110,8 @@ module.exports = function (ngApp, events) {
             scope: {
                 uploadUrl: '@',
                 eventSuccess: '=',
-                eventError: '='
+                eventError: '=',
+                uploadedTo: '@'
             },
             link: function (scope, element, attrs) {
                 var dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
@@ -120,6 +121,8 @@ module.exports = function (ngApp, events) {
                         dz.on('sending', function (file, xhr, data) {
                             var token = window.document.querySelector('meta[name=token]').getAttribute('content');
                             data.append('_token', token);
+                            var uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
+                            data.append('uploaded_to', uploadedTo);
                         });
                         if (typeof scope.eventSuccess !== 'undefined') dz.on('success', scope.eventSuccess);
                         dz.on('success', function (file, data) {

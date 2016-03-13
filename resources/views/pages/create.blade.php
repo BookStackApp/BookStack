@@ -13,5 +13,5 @@
             @include('pages/form', ['model' => $draft])
         </form>
     </div>
-    @include('partials/image-manager', ['imageType' => 'gallery'])
+    @include('partials/image-manager', ['imageType' => 'gallery', 'uploaded_to' => $draft->id])
 @stop

@@ -13,6 +13,7 @@ module.exports = function (ngApp, events) {
             $scope.hasMore = false;
             $scope.imageUpdateSuccess = false;
             $scope.imageDeleteSuccess = false;
+            $scope.uploadedTo = $attrs.uploadedTo;
 
             var page = 0;
             var previousClickTime = 0;

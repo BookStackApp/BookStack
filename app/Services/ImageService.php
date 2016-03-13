@@ -41,14 +41,16 @@ class ImageService
     /**
      * Saves a new image from an upload.
      * @param UploadedFile $uploadedFile
-     * @param  string      $type
+     * @param  string $type
+     * @param int $uploadedTo
      * @return mixed
+     * @throws ImageUploadException
      */
-    public function saveNewFromUpload(UploadedFile $uploadedFile, $type)
+    public function saveNewFromUpload(UploadedFile $uploadedFile, $type, $uploadedTo = 0)
     {
         $imageName = $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
-        return $this->saveNew($imageName, $imageData, $type);
+        return $this->saveNew($imageName, $imageData, $type, $uploadedTo);
     }
 
 
@@ -73,10 +75,11 @@ class ImageService
      * @param string $imageName
      * @param string $imageData
      * @param string $type
+     * @param int $uploadedTo
      * @return Image
      * @throws ImageUploadException
      */
-    private function saveNew($imageName, $imageData, $type)
+    private function saveNew($imageName, $imageData, $type, $uploadedTo = 0)
     {
         $storage = $this->getStorage();
         $secureUploads = setting('app-secure-images');
@@ -100,7 +103,8 @@ class ImageService
             'name'       => $imageName,
             'path'       => $fullPath,
             'url'        => $this->getPublicUrl($fullPath),
-            'type'       => $type
+            'type'       => $type,
+            'uploaded_to' => $uploadedTo
         ];
 
         if (auth()->user() && auth()->user()->id !== 0) {

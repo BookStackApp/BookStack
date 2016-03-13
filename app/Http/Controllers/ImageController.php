@@ -20,8 +20,8 @@ class ImageController extends Controller
 
     /**
      * ImageController constructor.
-     * @param Image     $image
-     * @param File      $file
+     * @param Image $image
+     * @param File $file
      * @param ImageRepo $imageRepo
      */
     public function __construct(Image $image, File $file, ImageRepo $imageRepo)
@@ -34,6 +34,7 @@ class ImageController extends Controller
 
     /**
      * Get all images for a specific type, Paginated
+     * @param string $type
      * @param int $page
      * @return \Illuminate\Http\JsonResponse
      */
@@ -56,7 +57,7 @@ class ImageController extends Controller
 
     /**
      * Handles image uploads for use on pages.
-     * @param string  $type
+     * @param string $type
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -64,13 +65,15 @@ class ImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => 'image|mimes:jpeg,gif,png'
+            'file' => 'image|mimes:jpeg,gif,png',
+            'uploaded_to' => 'integer|exists:pages,id'
         ]);
 
         $imageUpload = $request->file('file');
 
         try {
-            $image = $this->imageRepo->saveNew($imageUpload, $type);
+            $uploadedTo = $request->has('uploaded_to') ? $request->get('uploaded_to') : 0;
+            $image = $this->imageRepo->saveNew($imageUpload, $type, $uploadedTo);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);
         }
@@ -96,7 +99,7 @@ class ImageController extends Controller
 
     /**
      * Update image details
-     * @param         $imageId
+     * @param integer $imageId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -114,8 +117,8 @@ class ImageController extends Controller
     /**
      * Deletes an image and all thumbnail/image files
      * @param PageRepo $pageRepo
-     * @param Request  $request
-     * @param int      $id
+     * @param Request $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(PageRepo $pageRepo, Request $request, $id)

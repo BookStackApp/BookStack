@@ -3,6 +3,7 @@
 
 use BookStack\Image;
 use BookStack\Services\ImageService;
+use BookStack\Services\RestrictionService;
 use Setting;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -11,16 +12,19 @@ class ImageRepo
 
     protected $image;
     protected $imageService;
+    protected $restictionService;
 
     /**
      * ImageRepo constructor.
-     * @param Image        $image
+     * @param Image $image
      * @param ImageService $imageService
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Image $image, ImageService $imageService)
+    public function __construct(Image $image, ImageService $imageService, RestrictionService $restrictionService)
     {
         $this->image = $image;
         $this->imageService = $imageService;
+        $this->restictionService = $restrictionService;
     }
 
 
@@ -34,13 +38,12 @@ class ImageRepo
         return $this->image->findOrFail($id);
     }
 
-
     /**
      * Gets a load images paginated, filtered by image type.
      * @param string $type
-     * @param int    $page
-     * @param int    $pageSize
-     * @param bool|int   $userFilter
+     * @param int $page
+     * @param int $pageSize
+     * @param bool|int $userFilter
      * @return array
      */
     public function getPaginatedByType($type, $page = 0, $pageSize = 24, $userFilter = false)
@@ -51,6 +54,7 @@ class ImageRepo
             $images = $images->where('created_by', '=', $userFilter);
         }
 
+        $images = $this->restictionService->filterRelatedPages($images, 'images', 'uploaded_to');
         $images = $images->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 
@@ -68,12 +72,13 @@ class ImageRepo
     /**
      * Save a new image into storage and return the new image.
      * @param UploadedFile $uploadFile
-     * @param  string      $type
+     * @param  string $type
+     * @param int $uploadedTo
      * @return Image
      */
-    public function saveNew(UploadedFile $uploadFile, $type)
+    public function saveNew(UploadedFile $uploadFile, $type, $uploadedTo = 0)
     {
-        $image = $this->imageService->saveNewFromUpload($uploadFile, $type);
+        $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo);
         $this->loadThumbs($image);
         return $image;
     }
@@ -123,9 +128,9 @@ class ImageRepo
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
      *
      * @param Image $image
-     * @param int   $width
-     * @param int   $height
-     * @param bool  $keepRatio
+     * @param int $width
+     * @param int $height
+     * @param bool $keepRatio
      * @return string
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
