@@ -48,6 +48,7 @@ class PageDraftTest extends TestCase
 
     public function test_alert_message_shows_if_someone_else_editing()
     {
+        $nonEditedPage = \BookStack\Page::take(10)->get()->last();
         $addedContent = '<p>test message content</p>';
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->dontSeeInField('html', $addedContent);
@@ -55,8 +56,13 @@ class PageDraftTest extends TestCase
         $newContent = $this->page->html . $addedContent;
         $newUser = $this->getNewUser();
         $this->pageRepo->saveUpdateDraft($this->page, ['html' => $newContent]);
-        $this->actingAs($newUser)->visit($this->page->getUrl() . '/edit')
+
+        $this->actingAs($newUser)
+            ->visit($this->page->getUrl() . '/edit')
             ->see('Admin has started editing this page');
+            $this->flushSession();
+        $this->visit($nonEditedPage->getUrl() . '/edit')
+            ->dontSeeInElement('.notification', 'Admin has started editing this page');
     }
 
     public function test_draft_pages_show_on_homepage()

@@ -498,6 +498,7 @@ class PageRepo extends EntityRepo
     private function activePageEditingQuery(Page $page, $minRange = null)
     {
         $query = $this->pageRevision->where('type', '=', 'update_draft')
+            ->where('page_id', '=', $page->id)
             ->where('updated_at', '>', $page->updated_at)
             ->where('created_by', '!=', auth()->user()->id)
             ->with('createdBy');
