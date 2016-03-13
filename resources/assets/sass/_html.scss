@@ -4,6 +4,10 @@
 html {
   background-color: #FFFFFF;
   height: 100%;
+  overflow-y: scroll;
+  &.flexbox {
+    overflow-y: hidden;
+  }
 }
 body {
   font-family: $text;

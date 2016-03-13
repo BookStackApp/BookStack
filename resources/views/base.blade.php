@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="@yield('body-class')">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name', 'BookStack') }}</title>
 
