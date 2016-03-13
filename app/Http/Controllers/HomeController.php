@@ -29,14 +29,17 @@ class HomeController extends Controller
     public function index()
     {
         $activity = Activity::latest(10);
-        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12, 0) : $this->entityRepo->getRecentlyCreatedBooks(10);
+        $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
+        $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
+        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreatedBooks(10*$recentFactor);
         $recentlyCreatedPages = $this->entityRepo->getRecentlyCreatedPages(5);
         $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdatedPages(5);
         return view('home', [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyCreatedPages' => $recentlyCreatedPages,
-            'recentlyUpdatedPages' => $recentlyUpdatedPages
+            'recentlyUpdatedPages' => $recentlyUpdatedPages,
+            'draftPages' => $draftPages
         ]);
     }
 

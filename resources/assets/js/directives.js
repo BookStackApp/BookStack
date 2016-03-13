@@ -110,7 +110,8 @@ module.exports = function (ngApp, events) {
             scope: {
                 uploadUrl: '@',
                 eventSuccess: '=',
-                eventError: '='
+                eventError: '=',
+                uploadedTo: '@'
             },
             link: function (scope, element, attrs) {
                 var dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
@@ -120,6 +121,8 @@ module.exports = function (ngApp, events) {
                         dz.on('sending', function (file, xhr, data) {
                             var token = window.document.querySelector('meta[name=token]').getAttribute('content');
                             data.append('_token', token);
+                            var uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
+                            data.append('uploaded_to', uploadedTo);
                         });
                         if (typeof scope.eventSuccess !== 'undefined') dz.on('success', scope.eventSuccess);
                         dz.on('success', function (file, data) {
@@ -161,6 +164,43 @@ module.exports = function (ngApp, events) {
             }
         };
     }]);
+
+    ngApp.directive('tinymce', ['$timeout', function($timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                tinymce: '=',
+                mceModel: '=',
+                mceChange: '='
+            },
+            link: function (scope, element, attrs) {
+
+                function tinyMceSetup(editor) {
+                    editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
+                        var content = editor.getContent();
+                        $timeout(() => {
+                            scope.mceModel = content;
+                        });
+                        scope.mceChange(content);
+                    });
+
+                    editor.on('init', (e) => {
+                        scope.mceModel = editor.getContent();
+                    });
+
+                    scope.$on('html-update', (event, value) => {
+                        editor.setContent(value);
+                        editor.selection.select(editor.getBody(), true);
+                        editor.selection.collapse(false);
+                        scope.mceModel = editor.getContent();
+                    });
+                }
+
+                scope.tinymce.extraSetups.push(tinyMceSetup);
+                tinymce.init(scope.tinymce);
+            }
+        }
+    }])
 
 
 };

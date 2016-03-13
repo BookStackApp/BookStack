@@ -4,6 +4,10 @@
 html {
   background-color: #FFFFFF;
   height: 100%;
+  overflow-y: scroll;
+  &.flexbox {
+    overflow-y: hidden;
+  }
 }
 body {
   font-family: $text;
@@ -11,6 +15,10 @@ body {
   line-height: 1.6;
   color: #616161;
   -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-size: 100%;
 }
 
 table {

@@ -4,6 +4,7 @@ module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {
+
             $scope.images = [];
             $scope.imageType = $attrs.imageType;
             $scope.selectedImage = false;
@@ -12,6 +13,8 @@ module.exports = function (ngApp, events) {
             $scope.hasMore = false;
             $scope.imageUpdateSuccess = false;
             $scope.imageDeleteSuccess = false;
+            $scope.uploadedTo = $attrs.uploadedTo;
+
             var page = 0;
             var previousClickTime = 0;
             var dataLoaded = false;
@@ -212,5 +215,97 @@ module.exports = function (ngApp, events) {
 
     }]);
 
+
+    ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', function ($scope, $http, $attrs, $interval, $timeout) {
+
+        $scope.editorOptions = require('./pages/page-form');
+        $scope.editorHtml = '';
+        $scope.draftText = '';
+        var pageId = Number($attrs.pageId);
+        var isEdit = pageId !== 0;
+        var autosaveFrequency = 30; // AutoSave interval in seconds.
+        $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
+        $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
+        if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
+            $scope.draftText = 'Editing Draft'
+        } else {
+            $scope.draftText = 'Editing Page'
+        };
+
+        var autoSave = false;
+
+        var currentContent = {
+            title: false,
+            html: false
+        };
+
+        if (isEdit) {
+            setTimeout(() => {
+                startAutoSave();
+            }, 1000);
+        }
+
+        $scope.editorChange = function () {}
+
+        /**
+         * Start the AutoSave loop, Checks for content change
+         * before performing the costly AJAX request.
+         */
+        function startAutoSave() {
+            currentContent.title = $('#name').val();
+            currentContent.html = $scope.editorHtml;
+
+            autoSave = $interval(() => {
+                var newTitle = $('#name').val();
+                var newHtml = $scope.editorHtml;
+
+                if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
+                    currentContent.html = newHtml;
+                    currentContent.title = newTitle;
+                    saveDraft(newTitle, newHtml);
+                }
+            }, 1000 * autosaveFrequency);
+        }
+
+        /**
+         * Save a draft update into the system via an AJAX request.
+         * @param title
+         * @param html
+         */
+        function saveDraft(title, html) {
+            $http.put('/ajax/page/' + pageId + '/save-draft', {
+                name: title,
+                html: html
+            }).then((responseData) => {
+                $scope.draftText = responseData.data.message;
+                if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
+            });
+        }
+
+        $scope.forceDraftSave = function() {
+            var newTitle = $('#name').val();
+            var newHtml = $scope.editorHtml;
+            saveDraft(newTitle, newHtml);
+        };
+
+        /**
+         * Discard the current draft and grab the current page
+         * content from the system via an AJAX request.
+         */
+        $scope.discardDraft = function () {
+            $http.get('/ajax/page/' + pageId).then((responseData) => {
+                if (autoSave) $interval.cancel(autoSave);
+                $scope.draftText = 'Editing Page';
+                $scope.isUpdateDraft = false;
+                $scope.$broadcast('html-update', responseData.data.html);
+                $('#name').val(responseData.data.name);
+                $timeout(() => {
+                    startAutoSave();
+                }, 1000);
+                events.emit('success', 'Draft discarded, The editor has been updated with the current page content');
+            });
+        };
+
+    }]);
 
 };

@@ -161,6 +161,11 @@ form.search-box {
   }
 }
 
+.faded span.faded-text {
+  display: inline-block;
+  padding: $-s;
+}
+
 .faded-small {
   color: #000;
   font-size: 0.9em;
@@ -182,6 +187,9 @@ form.search-box {
       padding-right: $-m;
       padding-left: 0;
     }
+  }
+  &.text-center {
+    text-align: center;
   }
 }
 

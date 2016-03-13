@@ -47,7 +47,7 @@
 	background: transparent no-repeat url(data:image/gif;base64,R0lGODlhDgAKAIABALu7u////yH5BAEAAAEALAAAAAAOAAoAAAIajI8HybbxIoiuwjan04jep1iZ1XRlAo5bVgAAOw==);
 }
 
-.mce-visualblocks div {
+.mce-visualblocks div:not([data-mce-bogus]) {
 	padding-top: 10px;
 	border: 1px dashed #BBB;
 	margin-left: 3px;

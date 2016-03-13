@@ -1,4 +1,4 @@
-<div id="image-manager" image-type="{{ $imageType }}" ng-controller="ImageManagerController">
+<div id="image-manager" image-type="{{ $imageType }}" ng-controller="ImageManagerController" uploaded-to="{{ $uploaded_to or 0 }}">
     <div class="overlay anim-slide" ng-show="showing" ng-cloak ng-click="hide()">
         <div class="image-manager-body" ng-click="$event.stopPropagation()">
 
@@ -22,7 +22,7 @@
 
             <div class="image-manager-sidebar">
                 <h2>Images</h2>
-                <drop-zone upload-url="@{{getUploadUrl()}}" event-success="uploadSuccess"></drop-zone>
+                <drop-zone upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
                 <div class="image-manager-details anim fadeIn" ng-show="selectedImage">
 
                     <hr class="even">

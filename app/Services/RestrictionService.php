@@ -8,15 +8,16 @@ class RestrictionService
     protected $userRoles;
     protected $isAdmin;
     protected $currentAction;
+    protected $currentUser;
 
     /**
      * RestrictionService constructor.
      */
     public function __construct()
     {
-        $user = auth()->user();
-        $this->userRoles = $user ? auth()->user()->roles->pluck('id') : [];
-        $this->isAdmin = $user ? auth()->user()->hasRole('admin') : false;
+        $this->currentUser = auth()->user();
+        $this->userRoles = $this->currentUser ? $this->currentUser->roles->pluck('id') : [];
+        $this->isAdmin = $this->currentUser ? $this->currentUser->hasRole('admin') : false;
     }
 
     /**
@@ -48,6 +49,16 @@ class RestrictionService
      */
     public function enforcePageRestrictions($query, $action = 'view')
     {
+        // Prevent drafts being visible to others.
+        $query = $query->where(function ($query) {
+            $query->where('draft', '=', false);
+            if ($this->currentUser) {
+                $query->orWhere(function ($query) {
+                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser->id);
+                });
+            }
+        });
+
         if ($this->isAdmin) return $query;
         $this->currentAction = $action;
         return $this->pageRestrictionQuery($query);
@@ -249,6 +260,30 @@ class RestrictionService
                             $this->chapterRestrictionQuery($query);
                         });
                 });
+            });
+        });
+    }
+
+    /**
+     * Filters pages that are a direct relation to another item.
+     * @param $query
+     * @param $tableName
+     * @param $entityIdColumn
+     * @return mixed
+     */
+    public function filterRelatedPages($query, $tableName, $entityIdColumn)
+    {
+        if ($this->isAdmin) return $query;
+        $this->currentAction = 'view';
+        $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
+        return $query->where(function ($query) use (&$tableDetails) {
+            $query->where(function ($query) use (&$tableDetails) {
+                $query->whereExists(function ($query) use (&$tableDetails) {
+                    $query->select('*')->from('pages')->whereRaw('pages.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                        ->where(function ($query) {
+                            $this->pageRestrictionQuery($query);
+                        });
+                })->orWhere($tableDetails['entityIdColumn'], '=', 0);
             });
         });
     }

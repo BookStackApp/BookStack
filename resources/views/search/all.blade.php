@@ -7,7 +7,11 @@
         <h1>Search Results&nbsp;&nbsp;&nbsp; <span class="text-muted">{{$searchTerm}}</span></h1>
 
         <p>
-            <a href="/search/pages?term={{$searchTerm}}" class="text-page"><i class="zmdi zmdi-file-text"></i>View all matched pages</a>
+
+            @if(count($pages) > 0)
+                <a href="/search/pages?term={{$searchTerm}}" class="text-page"><i class="zmdi zmdi-file-text"></i>View all matched pages</a>
+            @endif
+
 
             @if(count($chapters) > 0)
                 &nbsp; &nbsp;&nbsp;

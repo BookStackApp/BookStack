@@ -213,15 +213,27 @@ class BookRepo extends EntityRepo
         $chapters = $chapterQuery->get();
         $children = $pages->merge($chapters);
         $bookSlug = $book->slug;
+
         $children->each(function ($child) use ($bookSlug) {
             $child->setAttribute('bookSlug', $bookSlug);
             if ($child->isA('chapter')) {
                 $child->pages->each(function ($page) use ($bookSlug) {
                     $page->setAttribute('bookSlug', $bookSlug);
                 });
+                $child->pages = $child->pages->sortBy(function($child, $key) {
+                    $score = $child->priority;
+                    if ($child->draft) $score -= 100;
+                    return $score;
+                });
             }
         });
-        return $children->sortBy('priority');
+
+        // Sort items with drafts first then by priority.
+        return $children->sortBy(function($child, $key) {
+            $score = $child->priority;
+            if ($child->isA('page') && $child->draft) $score -= 100;
+            return $score;
+        });
     }
 
     /**

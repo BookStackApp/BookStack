@@ -88,8 +88,11 @@ class EntityTest extends TestCase
         $this->asAdmin()
             // Navigate to page create form
             ->visit($chapter->getUrl())
-            ->click('New Page')
-            ->seePageIs($chapter->getUrl() . '/create-page')
+            ->click('New Page');
+
+        $draftPage = \BookStack\Page::where('draft', '=', true)->orderBy('created_at', 'desc')->first();
+
+        $this->seePageIs($draftPage->getUrl())
             // Fill out form
             ->type($page->name, '#name')
             ->type($page->html, '#html')

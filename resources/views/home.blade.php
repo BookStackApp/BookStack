@@ -23,6 +23,12 @@
         <div class="row">
 
             <div class="col-sm-4">
+                <div id="recent-drafts">
+                    @if(count($draftPages) > 0)
+                        <h3>My Recent Drafts</h3>
+                        @include('partials/entity-list', ['entities' => $draftPages, 'style' => 'compact'])
+                    @endif
+                </div>
                 @if($signedIn)
                     <h3>My Recently Viewed</h3>
                 @else

@@ -38,12 +38,14 @@ $primary-dark: #0288D1;
 $secondary: #e27b41;
 $positive: #52A256;
 $negative: #E84F4F;
+$warning: $secondary;
 $primary-faded: rgba(21, 101, 192, 0.15);
 
 // Item Colors
 $color-book: #009688;
 $color-chapter: #ef7c3c;
 $color-page: $primary;
+$color-page-draft: #9A60DA;
 
 // Text colours
 $text-dark: #444;
