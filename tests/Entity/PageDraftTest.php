@@ -1,7 +1,7 @@
 <?php
 
 
-class PageUpdateDraftTest extends TestCase
+class PageDraftTest extends TestCase
 {
     protected $page;
     protected $pageRepo;
@@ -57,6 +57,35 @@ class PageUpdateDraftTest extends TestCase
         $this->pageRepo->saveUpdateDraft($this->page, ['html' => $newContent]);
         $this->actingAs($newUser)->visit($this->page->getUrl() . '/edit')
             ->see('Admin has started editing this page');
+    }
+
+    public function test_draft_pages_show_on_homepage()
+    {
+        $book = \BookStack\Book::first();
+        $this->asAdmin()->visit('/')
+            ->dontSeeInElement('#recent-drafts', 'New Page')
+            ->visit($book->getUrl() . '/page/create')
+            ->visit('/')
+            ->seeInElement('#recent-drafts', 'New Page');
+    }
+
+    public function test_draft_pages_not_visible_by_others()
+    {
+        $book = \BookStack\Book::first();
+        $chapter = $book->chapters->first();
+        $newUser = $this->getNewUser();
+
+        $this->actingAs($newUser)->visit('/')
+            ->visit($book->getUrl() . '/page/create')
+            ->visit($chapter->getUrl() . '/create-page')
+            ->visit($book->getUrl())
+            ->seeInElement('.page-list', 'New Page');
+
+        $this->asAdmin()
+            ->visit($book->getUrl())
+            ->dontSeeInElement('.page-list', 'New Page')
+            ->visit($chapter->getUrl())
+            ->dontSeeInElement('.page-list', 'New Page');
     }
 
 }

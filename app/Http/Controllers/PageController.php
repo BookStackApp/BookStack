@@ -49,33 +49,54 @@ class PageController extends Controller
     public function create($bookSlug, $chapterSlug = false)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : false;
+        $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : null;
         $parent = $chapter ? $chapter : $book;
         $this->checkOwnablePermission('page-create', $parent);
         $this->setPageTitle('Create New Page');
-        return view('pages/create', ['book' => $book, 'chapter' => $chapter]);
+
+        $draft = $this->pageRepo->getDraftPage($book, $chapter);
+        return redirect($draft->getUrl());
     }
 
     /**
-     * Store a newly created page in storage.
+     * Show form to continue editing a draft page.
+     * @param $bookSlug
+     * @param $pageId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editDraft($bookSlug, $pageId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $draft = $this->pageRepo->getById($pageId, true);
+        $this->checkOwnablePermission('page-create', $draft);
+        $this->setPageTitle('Edit Page Draft');
+
+        return view('pages/create', ['draft' => $draft, 'book' => $book]);
+    }
+
+    /**
+     * Store a new page by changing a draft into a page.
      * @param  Request $request
-     * @param          $bookSlug
+     * @param  string $bookSlug
      * @return Response
      */
-    public function store(Request $request, $bookSlug)
+    public function store(Request $request, $bookSlug, $pageId)
     {
         $this->validate($request, [
-            'name'   => 'required|string|max:255'
+            'name' => 'required|string|max:255'
         ]);
 
         $input = $request->all();
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapterId = ($request->has('chapter') && $this->chapterRepo->idExists($request->get('chapter'))) ? $request->get('chapter') : null;
-        $parent = $chapterId !== null ? $this->chapterRepo->getById($chapterId) : $book;
-        $this->checkOwnablePermission('page-create', $parent);
         $input['priority'] = $this->bookRepo->getNewPriority($book);
 
-        $page = $this->pageRepo->saveNew($input, $book, $chapterId);
+        $draftPage = $this->pageRepo->getById($pageId, true);
+
+        $chapterId = $draftPage->chapter_id;
+        $parent = $chapterId !== 0 ? $this->chapterRepo->getById($chapterId) : $book;
+        $this->checkOwnablePermission('page-create', $parent);
+
+        $page = $this->pageRepo->publishDraft($draftPage, $input);
 
         Activity::add($page, 'page_create', $book->id);
         return redirect($page->getUrl());
@@ -132,12 +153,13 @@ class PageController extends Controller
         $this->setPageTitle('Editing Page ' . $page->getShortName());
         $page->isDraft = false;
 
-        // Check for active editing and drafts
+        // Check for active editing
         $warnings = [];
         if ($this->pageRepo->isPageEditingActive($page, 60)) {
             $warnings[] = $this->pageRepo->getPageEditingActiveMessage($page, 60);
         }
 
+        // Check for a current draft version for this user
         if ($this->pageRepo->hasUserGotPageDraft($page, $this->currentUser->id)) {
             $draft = $this->pageRepo->getUserPageDraft($page, $this->currentUser->id);
             $page->name = $draft->name;
@@ -161,7 +183,7 @@ class PageController extends Controller
     public function update(Request $request, $bookSlug, $pageSlug)
     {
         $this->validate($request, [
-            'name'   => 'required|string|max:255'
+            'name' => 'required|string|max:255'
         ]);
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
@@ -177,14 +199,15 @@ class PageController extends Controller
      * @param $pageId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function saveUpdateDraft(Request $request, $pageId)
+    public function saveDraft(Request $request, $pageId)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255'
-        ]);
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId, true);
         $this->checkOwnablePermission('page-update', $page);
-        $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
+        if ($page->draft) {
+            $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html']));
+        } else {
+            $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
+        }
         $updateTime = $draft->updated_at->format('H:i');
         return response()->json(['status' => 'success', 'message' => 'Draft saved at ' . $updateTime]);
     }
@@ -216,9 +239,25 @@ class PageController extends Controller
         return view('pages/delete', ['book' => $book, 'page' => $page, 'current' => $page]);
     }
 
+
+    /**
+     * Show the deletion page for the specified page.
+     * @param $bookSlug
+     * @param $pageId
+     * @return \Illuminate\View\View
+     * @throws NotFoundException
+     */
+    public function showDeleteDraft($bookSlug, $pageId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getById($pageId, true);
+        $this->checkOwnablePermission('page-update', $page);
+        $this->setPageTitle('Delete Draft Page ' . $page->getShortName());
+        return view('pages/delete', ['book' => $book, 'page' => $page, 'current' => $page]);
+    }
+
     /**
      * Remove the specified page from storage.
-     *
      * @param $bookSlug
      * @param $pageSlug
      * @return Response
@@ -230,6 +269,24 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $this->checkOwnablePermission('page-delete', $page);
         Activity::addMessage('page_delete', $book->id, $page->name);
+        session()->flash('success', 'Page deleted');
+        $this->pageRepo->destroy($page);
+        return redirect($book->getUrl());
+    }
+
+    /**
+     * Remove the specified draft page from storage.
+     * @param $bookSlug
+     * @param $pageId
+     * @return Response
+     * @throws NotFoundException
+     */
+    public function destroyDraft($bookSlug, $pageId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getById($pageId, true);
+        $this->checkOwnablePermission('page-update', $page);
+        session()->flash('success', 'Draft deleted');
         $this->pageRepo->destroy($page);
         return redirect($book->getUrl());
     }
@@ -295,8 +352,8 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $pdfContent = $this->exportService->pageToPdf($page);
         return response()->make($pdfContent, 200, [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.pdf'
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.pdf'
         ]);
     }
 
@@ -312,8 +369,8 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $containedHtml = $this->exportService->pageToContainedHtml($page);
         return response()->make($containedHtml, 200, [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.html'
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.html'
         ]);
     }
 
@@ -329,8 +386,8 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $containedHtml = $this->exportService->pageToPlainText($page);
         return response()->make($containedHtml, 200, [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'.$pageSlug.'.txt'
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.txt'
         ]);
     }
 
@@ -373,7 +430,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('restrictions-manage', $page);
         $roles = $this->userRepo->getRestrictableRoles();
         return view('pages/restrictions', [
-            'page' => $page,
+            'page'  => $page,
             'roles' => $roles
         ]);
     }

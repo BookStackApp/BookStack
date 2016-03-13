@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page {{$page->draft ? 'draft' : ''}}">
     <h3>
         <a href="{{ $page->getUrl() }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ $page->name }}</a>
     </h3>

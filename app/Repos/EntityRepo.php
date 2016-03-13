@@ -5,6 +5,7 @@ use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Page;
 use BookStack\Services\RestrictionService;
+use BookStack\User;
 
 class EntityRepo
 {
@@ -79,7 +80,7 @@ class EntityRepo
     public function getRecentlyCreatedPages($count = 20, $page = 0, $additionalQuery = false)
     {
         $query = $this->restrictionService->enforcePageRestrictions($this->page)
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc')->where('draft', '=', false);
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
@@ -112,7 +113,22 @@ class EntityRepo
     public function getRecentlyUpdatedPages($count = 20, $page = 0)
     {
         return $this->restrictionService->enforcePageRestrictions($this->page)
+            ->where('draft', '=', false)
             ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
+    }
+
+    /**
+     * Get draft pages owned by the current user.
+     * @param int $count
+     * @param int $page
+     */
+    public function getUserDraftPages($count = 20, $page = 0)
+    {
+        $user = auth()->user();
+        return $this->page->where('draft', '=', true)
+            ->where('created_by', '=', $user->id)
+            ->orderBy('updated_at', 'desc')
+            ->skip($count * $page)->take($count)->get();
     }
 
     /**

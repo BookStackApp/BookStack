@@ -392,13 +392,27 @@ class RolesTest extends TestCase
 
         $baseUrl = $ownBook->getUrl() . '/page';
 
-        $this->checkAccessPermission('page-create-own', [
-            $baseUrl . '/create',
-            $ownChapter->getUrl() . '/create-page'
-        ], [
+        $createUrl = $baseUrl . '/create';
+        $createUrlChapter = $ownChapter->getUrl() . '/create-page';
+        $accessUrls = [$createUrl, $createUrlChapter];
+
+        foreach ($accessUrls as $url) {
+            $this->actingAs($this->user)->visit('/')->visit($url)
+                ->seePageIs('/');
+        }
+
+        $this->checkAccessPermission('page-create-own', [], [
             $ownBook->getUrl() => 'New Page',
             $ownChapter->getUrl() => 'New Page'
         ]);
+
+        $this->giveUserPermissions($this->user, ['page-create-own']);
+
+        foreach ($accessUrls as $index => $url) {
+            $this->actingAs($this->user)->visit('/')->visit($url);
+            $expectedUrl = \BookStack\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
+            $this->seePageIs($expectedUrl);
+        }
 
         $this->visit($baseUrl . '/create')
             ->type('test page', 'name')
@@ -421,13 +435,28 @@ class RolesTest extends TestCase
         $book = \BookStack\Book::take(1)->get()->first();
         $chapter = \BookStack\Chapter::take(1)->get()->first();
         $baseUrl = $book->getUrl() . '/page';
-        $this->checkAccessPermission('page-create-all', [
-            $baseUrl . '/create',
-            $chapter->getUrl() . '/create-page'
-        ], [
+        $createUrl = $baseUrl . '/create';
+
+        $createUrlChapter = $chapter->getUrl() . '/create-page';
+        $accessUrls = [$createUrl, $createUrlChapter];
+
+        foreach ($accessUrls as $url) {
+            $this->actingAs($this->user)->visit('/')->visit($url)
+                ->seePageIs('/');
+        }
+
+        $this->checkAccessPermission('page-create-all', [], [
             $book->getUrl() => 'New Page',
             $chapter->getUrl() => 'New Page'
         ]);
+
+        $this->giveUserPermissions($this->user, ['page-create-all']);
+
+        foreach ($accessUrls as $index => $url) {
+            $this->actingAs($this->user)->visit('/')->visit($url);
+            $expectedUrl = \BookStack\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
+            $this->seePageIs($expectedUrl);
+        }
 
         $this->visit($baseUrl . '/create')
             ->type('test page', 'name')

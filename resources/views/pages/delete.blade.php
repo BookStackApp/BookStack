@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="container small" ng-non-bindable>
-        <h1>Delete Page</h1>
-        <p class="text-neg">Are you sure you want to delete this page?</p>
+        <h1>Delete {{ $page->draft ? 'Draft' : '' }} Page</h1>
+        <p class="text-neg">Are you sure you want to delete this {{ $page->draft ? 'draft' : '' }} page?</p>
 
         <form action="{{$page->getUrl()}}" method="POST">
             {!! csrf_field() !!}

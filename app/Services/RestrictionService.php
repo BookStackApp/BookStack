@@ -8,15 +8,16 @@ class RestrictionService
     protected $userRoles;
     protected $isAdmin;
     protected $currentAction;
+    protected $currentUser;
 
     /**
      * RestrictionService constructor.
      */
     public function __construct()
     {
-        $user = auth()->user();
-        $this->userRoles = $user ? auth()->user()->roles->pluck('id') : [];
-        $this->isAdmin = $user ? auth()->user()->hasRole('admin') : false;
+        $this->currentUser = auth()->user();
+        $this->userRoles = $this->currentUser ? $this->currentUser->roles->pluck('id') : [];
+        $this->isAdmin = $this->currentUser ? $this->currentUser->hasRole('admin') : false;
     }
 
     /**
@@ -48,6 +49,16 @@ class RestrictionService
      */
     public function enforcePageRestrictions($query, $action = 'view')
     {
+        // Prevent drafts being visible to others.
+        $query = $query->where(function($query) {
+            $query->where('draft', '=', false);
+            if ($this->currentUser) {
+                $query->orWhere(function($query) {
+                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser->id);
+                });
+            }
+        });
+
         if ($this->isAdmin) return $query;
         $this->currentAction = $action;
         return $this->pageRestrictionQuery($query);

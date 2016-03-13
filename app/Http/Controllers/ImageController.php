@@ -32,7 +32,6 @@ class ImageController extends Controller
         parent::__construct();
     }
 
-
     /**
      * Get all images for a specific type, Paginated
      * @param int $page
@@ -54,7 +53,6 @@ class ImageController extends Controller
         $imgData = $this->imageRepo->getPaginatedByType('user', $page, 24, $this->currentUser->id);
         return response()->json($imgData);
     }
-
 
     /**
      * Handles image uploads for use on pages.
@@ -112,7 +110,6 @@ class ImageController extends Controller
         $image = $this->imageRepo->updateImageDetails($image, $request->all());
         return response()->json($image);
     }
-
 
     /**
      * Deletes an image and all thumbnail/image files

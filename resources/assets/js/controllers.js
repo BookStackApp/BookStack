@@ -4,6 +4,7 @@ module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {
+
             $scope.images = [];
             $scope.imageType = $attrs.imageType;
             $scope.selectedImage = false;
@@ -12,6 +13,7 @@ module.exports = function (ngApp, events) {
             $scope.hasMore = false;
             $scope.imageUpdateSuccess = false;
             $scope.imageDeleteSuccess = false;
+
             var page = 0;
             var previousClickTime = 0;
             var dataLoaded = false;
@@ -221,8 +223,13 @@ module.exports = function (ngApp, events) {
         var pageId = Number($attrs.pageId);
         var isEdit = pageId !== 0;
         var autosaveFrequency = 30; // AutoSave interval in seconds.
-        $scope.isDraft = Number($attrs.pageDraft) === 1;
-        if ($scope.isDraft) $scope.draftText = 'Editing Draft';
+        $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
+        $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
+        if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
+            $scope.draftText = 'Editing Draft'
+        } else {
+            $scope.draftText = 'Editing Page'
+        };
 
         var autoSave = false;
 
@@ -254,7 +261,7 @@ module.exports = function (ngApp, events) {
                 if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
                     currentContent.html = newHtml;
                     currentContent.title = newTitle;
-                    saveDraftUpdate(newTitle, newHtml);
+                    saveDraft(newTitle, newHtml);
                 }
             }, 1000 * autosaveFrequency);
         }
@@ -264,15 +271,21 @@ module.exports = function (ngApp, events) {
          * @param title
          * @param html
          */
-        function saveDraftUpdate(title, html) {
+        function saveDraft(title, html) {
             $http.put('/ajax/page/' + pageId + '/save-draft', {
                 name: title,
                 html: html
             }).then((responseData) => {
                 $scope.draftText = responseData.data.message;
-                $scope.isDraft = true;
+                if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
             });
         }
+
+        $scope.forceDraftSave = function() {
+            var newTitle = $('#name').val();
+            var newHtml = $scope.editorHtml;
+            saveDraft(newTitle, newHtml);
+        };
 
         /**
          * Discard the current draft and grab the current page
@@ -281,10 +294,10 @@ module.exports = function (ngApp, events) {
         $scope.discardDraft = function () {
             $http.get('/ajax/page/' + pageId).then((responseData) => {
                 if (autoSave) $interval.cancel(autoSave);
-                $scope.draftText = '';
-                $scope.isDraft = false;
+                $scope.draftText = 'Editing Page';
+                $scope.isUpdateDraft = false;
                 $scope.$broadcast('html-update', responseData.data.html);
-                $('#name').val(currentContent.title);
+                $('#name').val(responseData.data.name);
                 $timeout(() => {
                     startAutoSave();
                 }, 1000);

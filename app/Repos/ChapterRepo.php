@@ -66,7 +66,13 @@ class ChapterRepo extends EntityRepo
      */
     public function getChildren(Chapter $chapter)
     {
-        return $this->restrictionService->enforcePageRestrictions($chapter->pages())->get();
+        $pages = $this->restrictionService->enforcePageRestrictions($chapter->pages())->get();
+        // Sort items with drafts first then by priority.
+        return $pages->sortBy(function($child, $key) {
+            $score = $child->priority;
+            if ($child->draft) $score -= 100;
+            return $score;
+        });
     }
 
     /**

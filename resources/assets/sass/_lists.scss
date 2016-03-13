@@ -26,6 +26,12 @@
   .page {
     border-left: 5px solid $color-page;
   }
+  .page.draft {
+    border-left: 5px solid $color-page-draft;
+    .text-page {
+      color: $color-page-draft;
+    }
+  }
   .chapter {
     border-left: 5px solid $color-chapter;
   }
@@ -182,6 +188,12 @@
       background-color: rgba($color-page, 0.1);
     }
   }
+  .list-item-page.draft {
+    border-left: 5px solid $color-page-draft;
+  }
+  .page.draft .page, .list-item-page.draft a.page {
+    color: $color-page-draft !important;
+  }
   .sub-menu {
     display: none;
     padding-left: 0;
@@ -233,7 +245,6 @@
 .sortable-page-list li.placeholder:before {
   position: absolute;
 }
-
 
 .activity-list-item {
   padding: $-s 0;
@@ -303,6 +314,9 @@ ul.pagination {
     color: #AAA;
     font-size: 0.75em;
     margin-top: $-xs;
+  }
+  .page.draft .text-page {
+    color: $color-page-draft;
   }
 }
 .entity-list.compact {

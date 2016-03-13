@@ -27,17 +27,20 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
-        Route::post('/{bookSlug}/page', 'PageController@store');
+        Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
+        Route::post('/{bookSlug}/page/{pageId}', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
         Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageController@exportPdf');
         Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageController@exportHtml');
         Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageController@exportPlainText');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
+        Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
         Route::get('/{bookSlug}/page/{pageSlug}/restrict', 'PageController@showRestrict');
         Route::put('/{bookSlug}/page/{pageSlug}/restrict', 'PageController@restrict');
         Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
         Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
+        Route::delete('/{bookSlug}/draft/{pageId}', 'PageController@destroyDraft');
 
         // Revisions
         Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
@@ -76,8 +79,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Ajax routes
-    Route::put('/ajax/page/{id}/save-draft', 'PageController@saveUpdateDraft');
+    Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');
     Route::get('/ajax/page/{id}', 'PageController@getPageAjax');
+    Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

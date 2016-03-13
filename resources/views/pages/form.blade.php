@@ -1,7 +1,5 @@
 
-
-
-<div class="page-editor flex-fill flex" ng-controller="PageEditController" page-id="{{ $model->id or 0 }}" page-draft="{{ $page->isDraft or 0 }}">
+<div class="page-editor flex-fill flex" ng-controller="PageEditController" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
 
     {{ csrf_field() }}
     <div class="faded-small toolbar">
@@ -14,11 +12,23 @@
                     </div>
                 </div>
                 <div class="col-sm-4 faded text-center">
-                    <span class="faded-text" ng-bind="draftText"></span>
+
+                    <div dropdown class="dropdown-container">
+                        <a dropdown-toggle class="text-primary text-button"><span class="faded-text" ng-bind="draftText"></span>&nbsp; <i class="zmdi zmdi-more-vert"></i></a>
+                        <ul>
+                            <li>
+                                <a ng-click="forceDraftSave()" class="text-pos"><i class="zmdi zmdi-save"></i>Save Draft</a>
+                            </li>
+                            <li ng-if="isNewPageDraft">
+                                <a href="{{$model->getUrl()}}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete Draft</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-sm-4 faded">
                     <div class="action-buttons" ng-cloak>
-                        <button type="button" ng-if="isDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
+
+                        <button type="button" ng-if="isUpdateDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
                         <button type="submit" id="save-button" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
                     </div>
                 </div>

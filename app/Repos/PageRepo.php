@@ -1,8 +1,8 @@
 <?php namespace BookStack\Repos;
 
-
 use Activity;
 use BookStack\Book;
+use BookStack\Chapter;
 use BookStack\Exceptions\NotFoundException;
 use Carbon\Carbon;
 use DOMDocument;
@@ -12,6 +12,7 @@ use BookStack\PageRevision;
 
 class PageRepo extends EntityRepo
 {
+
     protected $pageRevision;
 
     /**
@@ -26,21 +27,27 @@ class PageRepo extends EntityRepo
 
     /**
      * Base query for getting pages, Takes restrictions into account.
+     * @param bool $allowDrafts
      * @return mixed
      */
-    private function pageQuery()
+    private function pageQuery($allowDrafts = false)
     {
-        return $this->restrictionService->enforcePageRestrictions($this->page, 'view');
+        $query = $this->restrictionService->enforcePageRestrictions($this->page, 'view');
+        if (!$allowDrafts) {
+            $query = $query->where('draft', '=', false);
+        }
+        return $query;
     }
 
     /**
      * Get a page via a specific ID.
      * @param $id
+     * @param bool $allowDrafts
      * @return mixed
      */
-    public function getById($id)
+    public function getById($id, $allowDrafts = false)
     {
-        return $this->pageQuery()->findOrFail($id);
+        return $this->pageQuery($allowDrafts)->findOrFail($id);
     }
 
     /**
@@ -118,6 +125,47 @@ class PageRepo extends EntityRepo
         $page->text = strip_tags($page->html);
         $page->created_by = auth()->user()->id;
         $page->updated_by = auth()->user()->id;
+
+        $book->pages()->save($page);
+        return $page;
+    }
+
+
+    /**
+     * Publish a draft page to make it a normal page.
+     * Sets the slug and updates the content.
+     * @param Page $draftPage
+     * @param array $input
+     * @return Page
+     */
+    public function publishDraft(Page $draftPage, array $input)
+    {
+        $draftPage->fill($input);
+
+        $draftPage->slug = $this->findSuitableSlug($draftPage->name, $draftPage->book->id);
+        $draftPage->html = $this->formatHtml($input['html']);
+        $draftPage->text = strip_tags($draftPage->html);
+        $draftPage->draft = false;
+
+        $draftPage->save();
+        return $draftPage;
+    }
+
+    /**
+     * Get a new draft page instance.
+     * @param Book $book
+     * @param Chapter|null $chapter
+     * @return static
+     */
+    public function getDraftPage(Book $book, $chapter)
+    {
+        $page = $this->page->newInstance();
+        $page->name = 'New Page';
+        $page->created_by = auth()->user()->id;
+        $page->updated_by = auth()->user()->id;
+        $page->draft = true;
+
+        if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
         return $page;
@@ -340,6 +388,24 @@ class PageRepo extends EntityRepo
         $draft->fill($data);
         $draft->save();
         return $draft;
+    }
+
+    /**
+     * Update a draft page.
+     * @param Page $page
+     * @param array $data
+     * @return Page
+     */
+    public function updateDraftPage(Page $page, $data = [])
+    {
+        $page->fill($data);
+
+        if (isset($data['html'])) {
+            $page->text = strip_tags($data['html']);
+        }
+
+        $page->save();
+        return $page;
     }
 
     /**
