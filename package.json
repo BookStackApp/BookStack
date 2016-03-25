@@ -12,6 +12,7 @@
     "bootstrap-sass": "^3.0.0",
     "dropzone": "^4.0.1",
     "laravel-elixir": "^3.4.0",
+    "marked": "^0.3.5",
     "zeroclipboard": "^2.2.0"
   }
 }

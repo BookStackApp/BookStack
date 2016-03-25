@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Entity
 {
-    protected $fillable = ['name', 'html', 'priority'];
+    protected $fillable = ['name', 'html', 'priority', 'markdown'];
 
     protected $simpleAttributes = ['name', 'id', 'slug'];
 

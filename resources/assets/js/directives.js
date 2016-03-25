@@ -1,5 +1,6 @@
 "use strict";
 var DropZone = require('dropzone');
+var markdown = require( "marked" );
 
 var toggleSwitchTemplate = require('./components/toggle-switch.html');
 var imagePickerTemplate = require('./components/image-picker.html');
@@ -202,5 +203,36 @@ module.exports = function (ngApp, events) {
         }
     }])
 
+    ngApp.directive('markdownEditor', ['$timeout', function($timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                mdModel: '=',
+                mdChange: '='
+            },
+            link: function (scope, element, attrs) {
+
+                // Set initial model content
+                var content = element.val();
+                scope.mdModel = content;
+                scope.mdChange(markdown(content));
+
+                element.on('change input', (e) => {
+                    content = element.val();
+                    $timeout(() => {
+                        scope.mdModel = content;
+                        scope.mdChange(markdown(content));
+                    });
+                });
+
+                scope.$on('markdown-update', (event, value) => {
+                    element.val(value);
+                    scope.mdModel= value;
+                    scope.mdChange(markdown(value));
+                });
+
+            }
+        }
+    }])
 
 };
