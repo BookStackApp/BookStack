@@ -68,7 +68,9 @@
                     <div class="editor-toolbar">
                         <div class="">Preview</div>
                     </div>
-                    <div class="markdown-display page-content" ng-bind-html="displayContent"></div>
+                    <div class="markdown-display">
+                        <div class="page-content" ng-bind-html="displayContent"></div>
+                    </div>
                 </div>
 
             </div>

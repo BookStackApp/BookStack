@@ -57,6 +57,9 @@
     padding: 0 $-m 0;
     margin-left: -1px;
     overflow-y: scroll;
+    .page-content {
+      margin: 0 auto;
+    }
   }
 }
 .editor-toolbar {
