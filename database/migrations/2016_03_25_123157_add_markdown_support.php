@@ -13,11 +13,11 @@ class AddMarkdownSupport extends Migration
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->longText('markdown');
+            $table->longText('markdown')->default('');
         });
 
         Schema::table('page_revisions', function (Blueprint $table) {
-            $table->longText('markdown');
+            $table->longText('markdown')->default('');
         });
     }
 

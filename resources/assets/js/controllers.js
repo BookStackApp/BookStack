@@ -258,6 +258,10 @@ module.exports = function (ngApp, events) {
             }
         }
 
+        if (!isMarkdown) {
+            $scope.editorChange = function() {};
+        }
+
         /**
          * Start the AutoSave loop, Checks for content change
          * before performing the costly AJAX request.
@@ -291,8 +295,6 @@ module.exports = function (ngApp, events) {
             };
 
             if (isMarkdown) data.markdown = $scope.editContent;
-
-            console.log(data.markdown);
 
             $http.put('/ajax/page/' + pageId + '/save-draft', data).then((responseData) => {
                 $scope.draftText = responseData.data.message;

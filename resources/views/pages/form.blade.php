@@ -1,5 +1,5 @@
 
-<div class="page-editor flex-fill flex" ng-controller="PageEditController" editor-type="{{ config('app.editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
+<div class="page-editor flex-fill flex" ng-controller="PageEditController" editor-type="{{ setting('app-editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
 
     {{ csrf_field() }}
     <div class="faded-small toolbar">
@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="edit-area flex-fill flex">
-        @if(config('app.editor') === 'html')
+        @if(setting('app-editor') === 'wysiwyg')
             <textarea id="html-editor" tinymce="editorOptions" mce-change="editorChange" mce-model="editContent"  name="html" rows="5"
                       @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
             @if($errors->has('html'))
@@ -50,7 +50,7 @@
             @endif
         @endif
 
-        @if(config('app.editor') === 'markdown')
+        @if(setting('app-editor') === 'markdown')
             <div id="markdown-editor" markdown-editor class="flex-fill flex">
 
                 <div class="markdown-editor-wrap">
