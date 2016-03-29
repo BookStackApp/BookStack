@@ -157,6 +157,12 @@ span.code {
   @extend .code-base;
   padding: 1px $-xs;
 }
+
+pre code {
+  background-color: transparent;
+  border: 0;
+  font-size: 1em;
+}
 /*
  * Text colors
  */

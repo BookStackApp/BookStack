@@ -164,6 +164,7 @@ class PageController extends Controller
             $draft = $this->pageRepo->getUserPageDraft($page, $this->currentUser->id);
             $page->name = $draft->name;
             $page->html = $draft->html;
+            $page->markdown = $draft->markdown;
             $page->isDraft = true;
             $warnings [] = $this->pageRepo->getUserPageDraftMessage($draft);
         }
@@ -204,9 +205,9 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId, true);
         $this->checkOwnablePermission('page-update', $page);
         if ($page->draft) {
-            $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html']));
+            $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html', 'markdown']));
         } else {
-            $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
+            $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html', 'markdown']));
         }
         $updateTime = $draft->updated_at->format('H:i');
         return response()->json(['status' => 'success', 'message' => 'Draft saved at ' . $updateTime]);

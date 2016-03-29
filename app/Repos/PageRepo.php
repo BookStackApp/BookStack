@@ -312,6 +312,7 @@ class PageRepo extends EntityRepo
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
+        if (setting('app-editor') !== 'markdown') $page->markdown = '';
         $page->updated_by = $userId;
         $page->save();
 
@@ -348,6 +349,7 @@ class PageRepo extends EntityRepo
     public function saveRevision(Page $page)
     {
         $revision = $this->pageRevision->fill($page->toArray());
+        if (setting('app-editor') !== 'markdown') $revision->markdown = '';
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
@@ -386,6 +388,8 @@ class PageRepo extends EntityRepo
         }
 
         $draft->fill($data);
+        if (setting('app-editor') !== 'markdown') $draft->markdown = '';
+        
         $draft->save();
         return $draft;
     }

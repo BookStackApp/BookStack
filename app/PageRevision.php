@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PageRevision extends Model
 {
-    protected $fillable = ['name', 'html', 'text'];
+    protected $fillable = ['name', 'html', 'text', 'markdown'];
 
     /**
      * Get the user that created the page revision

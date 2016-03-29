@@ -44,24 +44,35 @@ class SettingService
 
     /**
      * Gets a setting value from the cache or database.
+     * Looks at the system defaults if not cached or in database.
      * @param $key
      * @param $default
      * @return mixed
      */
     protected function getValueFromStore($key, $default)
     {
+        // Check for an overriding value
         $overrideValue = $this->getOverrideValue($key);
         if ($overrideValue !== null) return $overrideValue;
 
+        // Check the cache
         $cacheKey = $this->cachePrefix . $key;
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
 
+        // Check the database
         $settingObject = $this->getSettingObjectByKey($key);
-
         if ($settingObject !== null) {
             $value = $settingObject->value;
+            $this->cache->forever($cacheKey, $value);
+            return $value;
+        }
+
+        // Check the defaults set in the app config.
+        $configPrefix = 'setting-defaults.' . $key;
+        if (config()->has($configPrefix)) {
+            $value = config($configPrefix);
             $this->cache->forever($cacheKey, $value);
             return $value;
         }
