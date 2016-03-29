@@ -1,6 +1,6 @@
 "use strict";
 var DropZone = require('dropzone');
-var markdown = require( "marked" );
+var markdown = require('marked');
 
 var toggleSwitchTemplate = require('./components/toggle-switch.html');
 var imagePickerTemplate = require('./components/image-picker.html');
@@ -201,9 +201,9 @@ module.exports = function (ngApp, events) {
                 tinymce.init(scope.tinymce);
             }
         }
-    }])
+    }]);
 
-    ngApp.directive('markdownEditor', ['$timeout', function($timeout) {
+    ngApp.directive('markdownInput', ['$timeout', function($timeout) {
         return {
             restrict: 'A',
             scope: {
@@ -229,6 +229,50 @@ module.exports = function (ngApp, events) {
                     element.val(value);
                     scope.mdModel= value;
                     scope.mdChange(markdown(value));
+                });
+
+            }
+        }
+    }]);
+
+    ngApp.directive('markdownEditor', ['$timeout', function($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+
+                // Elements
+                var input = element.find('textarea[markdown-input]');
+                var insertImage = element.find('button[data-action="insertImage"]');
+
+                var currentCaretPos = 0;
+
+                input.blur((event) => {
+                    currentCaretPos = input[0].selectionStart;
+                });
+
+                // Insert image shortcut
+                input.keydown((event) => {
+                    if (event.which === 73 && event.ctrlKey && event.shiftKey) {
+                        event.preventDefault();
+                        var caretPos = input[0].selectionStart;
+                        var currentContent = input.val();
+                        var mdImageText = "![](http://)";
+                        input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
+                        input.focus();
+                        input[0].selectionStart = caretPos + ("![](".length);
+                        input[0].selectionEnd = caretPos + ('![](http://'.length);
+                    }
+                });
+
+                // Insert image from image manager
+                insertImage.click((event) => {
+                    window.ImageManager.showExternal((image) => {
+                        var caretPos = currentCaretPos;
+                        var currentContent = input.val();
+                        var mdImageText = "![" + image.name + "](" + image.url + ")";
+                        input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
+                        input.change();
+                    });
                 });
 
             }

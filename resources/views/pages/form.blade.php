@@ -51,14 +51,26 @@
         @endif
 
         @if(config('app.editor') === 'markdown')
-            <div id="markdown-editor" class="flex-fill flex">
+            <div id="markdown-editor" markdown-editor class="flex-fill flex">
 
                 <div class="markdown-editor-wrap">
-                    <textarea markdown-editor md-change="editorChange" md-model="editContent"  name="markdown" rows="5"
+                    <div class="editor-toolbar">
+                        <span class="float left">Editor</span>
+                        <div class="float right buttons">
+                            <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>Insert Image</button>
+                        </div>
+                    </div>
+                    <textarea markdown-input md-change="editorChange" md-model="editContent"  name="markdown" rows="5"
                               @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
                 </div>
 
-                <div class="markdown-display page-content" ng-bind-html="displayContent"></div>
+                <div class="markdown-editor-wrap">
+                    <div class="editor-toolbar">
+                        <div class="">Preview</div>
+                    </div>
+                    <div class="markdown-display page-content" ng-bind-html="displayContent"></div>
+                </div>
+
             </div>
 
             <input type="hidden" name="html" ng-value="displayContent">

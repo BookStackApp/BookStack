@@ -39,44 +39,42 @@
     max-height: 100%;
     flex: 1;
     border: 0;
+    width: 100%;
     &:focus {
       outline: 0;
     }
   }
   .markdown-display, .markdown-editor-wrap {
     flex: 1;
-    padding-top: 28px;
     position: relative;
-    border: 1px solid #DDD;
-    &:before {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: $-xs $-m;
-      font-family: 'Roboto Mono';
-      font-size: 11px;
-      line-height: 1;
-      border-bottom: 1px solid #DDD;
-      background-color: #EEE;
-    }
   }
   .markdown-editor-wrap {
     display: flex;
-    &:before {
-      content: 'Editor';
-    }
+    flex-direction: column;
+    border: 1px solid #DDD;
   }
   .markdown-display {
-    padding: 0 $-m;
-    padding-top: 28px;
+    padding: 0 $-m 0;
     margin-left: -1px;
-    &:before {
-      content: 'Preview';
-    }
+    overflow-y: scroll;
   }
 }
+.editor-toolbar {
+  width: 100%;
+  padding: $-xs $-m;
+  font-family: 'Roboto Mono';
+  font-size: 11px;
+  line-height: 1.6;
+  border-bottom: 1px solid #DDD;
+  background-color: #EEE;
+  flex: none;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
 
 label {
   display: block;
