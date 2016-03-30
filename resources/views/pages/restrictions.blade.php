@@ -24,7 +24,7 @@
     </div>
 
     <div class="container" ng-non-bindable>
-        <h1>Page Restrictions</h1>
+        <h1>Page Permissions</h1>
         @include('form/restriction-form', ['model' => $page])
     </div>
 

@@ -24,7 +24,7 @@
                                         <li><a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a></li>
                                     @endif
                                     @if(userCan('restrictions-manage', $book))
-                                        <li><a href="{{$book->getUrl()}}/restrict" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Restrict</a></li>
+                                        <li><a href="{{$book->getUrl()}}/permissions" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Permissions</a></li>
                                     @endif
                                     @if(userCan('book-delete', $book))
                                         <li><a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a></li>
@@ -90,9 +90,9 @@
                 @if($book->restricted)
                     <p class="text-muted">
                         @if(userCan('restrictions-manage', $book))
-                            <a href="{{ $book->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Book Restricted</a>
+                            <a href="{{ $book->getUrl() }}/permissions"><i class="zmdi zmdi-lock-outline"></i>Book Permissions Active</a>
                         @else
-                            <i class="zmdi zmdi-lock-outline"></i>Book Restricted
+                            <i class="zmdi zmdi-lock-outline"></i>Book Permissions Active
                         @endif
                     </p>
                 @endif

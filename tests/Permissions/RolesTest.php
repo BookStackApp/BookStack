@@ -129,14 +129,14 @@ class RolesTest extends TestCase
     {
         $page = \BookStack\Page::take(1)->get()->first();
         $this->actingAs($this->user)->visit($page->getUrl())
-            ->dontSee('Restrict')
-            ->visit($page->getUrl() . '/restrict')
+            ->dontSee('Permissions')
+            ->visit($page->getUrl() . '/permissions')
             ->seePageIs('/');
         $this->giveUserPermissions($this->user, ['restrictions-manage-all']);
         $this->actingAs($this->user)->visit($page->getUrl())
-            ->see('Restrict')
-            ->click('Restrict')
-            ->see('Page Restrictions')->seePageIs($page->getUrl() . '/restrict');
+            ->see('Permissions')
+            ->click('Permissions')
+            ->see('Page Permissions')->seePageIs($page->getUrl() . '/permissions');
     }
 
     public function test_restrictions_manage_own_permission()
@@ -145,27 +145,27 @@ class RolesTest extends TestCase
         $content = $this->createEntityChainBelongingToUser($this->user);
         // Check can't restrict other's content
         $this->actingAs($this->user)->visit($otherUsersPage->getUrl())
-            ->dontSee('Restrict')
-            ->visit($otherUsersPage->getUrl() . '/restrict')
+            ->dontSee('Permissions')
+            ->visit($otherUsersPage->getUrl() . '/permissions')
             ->seePageIs('/');
         // Check can't restrict own content
         $this->actingAs($this->user)->visit($content['page']->getUrl())
-            ->dontSee('Restrict')
-            ->visit($content['page']->getUrl() . '/restrict')
+            ->dontSee('Permissions')
+            ->visit($content['page']->getUrl() . '/permissions')
             ->seePageIs('/');
 
         $this->giveUserPermissions($this->user, ['restrictions-manage-own']);
 
         // Check can't restrict other's content
         $this->actingAs($this->user)->visit($otherUsersPage->getUrl())
-            ->dontSee('Restrict')
-            ->visit($otherUsersPage->getUrl() . '/restrict')
+            ->dontSee('Permissions')
+            ->visit($otherUsersPage->getUrl() . '/permissions')
             ->seePageIs('/');
         // Check can restrict own content
         $this->actingAs($this->user)->visit($content['page']->getUrl())
-            ->see('Restrict')
-            ->click('Restrict')
-            ->seePageIs($content['page']->getUrl() . '/restrict');
+            ->see('Permissions')
+            ->click('Permissions')
+            ->seePageIs($content['page']->getUrl() . '/permissions');
     }
 
     /**

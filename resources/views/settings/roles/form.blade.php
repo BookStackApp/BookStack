@@ -24,10 +24,10 @@
         <hr class="even">
         <div class="row">
             <div class="col-md-6">
-                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-all']) Manage all restrictions</label>
+                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-all']) Manage all Book, Chapter & Page permissions</label>
             </div>
             <div class="col-md-6">
-                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-own']) Manage restrictions on own content</label>
+                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-own']) Manage permissions on own Book, Chapter & Pages</label>
             </div>
         </div>
         <hr class="even">
@@ -43,7 +43,7 @@
         <h3>Asset Permissions</h3>
         <p>
             These permissions control default access to the assets within the system. <br>
-            Restrictions on Books, Chapters and Pages will override these permissions.
+            Permissions on Books, Chapters and Pages will override these permissions.
         </p>
         <table class="table">
             <tr>
