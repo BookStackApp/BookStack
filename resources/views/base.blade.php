@@ -56,7 +56,7 @@
                             <div class="dropdown-container" dropdown>
                                 <span class="user-name" dropdown-toggle>
                                     <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
-                                    <span class="name" ng-non-bindable>{{ $currentUser->name }}</span> <i class="zmdi zmdi-caret-down"></i>
+                                    <span class="name" ng-non-bindable>{{ $currentUser->getShortName(9) }}</span> <i class="zmdi zmdi-caret-down"></i>
                                 </span>
                                 <ul>
                                     <li>

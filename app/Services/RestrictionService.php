@@ -42,6 +42,25 @@ class RestrictionService
     }
 
     /**
+     * Check if an entity has restrictions set on itself or its
+     * parent tree.
+     * @param Entity $entity
+     * @param $action
+     * @return bool|mixed
+     */
+    public function checkIfRestrictionsSet(Entity $entity, $action)
+    {
+        $this->currentAction = $action;
+        if ($entity->isA('page')) {
+            return $entity->restricted || ($entity->chapter && $entity->chapter->restricted) || $entity->book->restricted;
+        } elseif ($entity->isA('chapter')) {
+            return $entity->restricted || $entity->book->restricted;
+        } elseif ($entity->isA('book')) {
+            return $entity->restricted;
+        }
+    }
+
+    /**
      * Add restrictions for a page query
      * @param $query
      * @param string $action

@@ -52,12 +52,13 @@ function userCan($permission, \BookStack\Ownable $ownable = null)
 
     if (!$ownable instanceof \BookStack\Entity) return $hasPermission;
 
-    // Check restrictions on the entitiy
+    // Check restrictions on the entity
     $restrictionService = app('BookStack\Services\RestrictionService');
     $explodedPermission = explode('-', $permission);
     $action = end($explodedPermission);
     $hasAccess = $restrictionService->checkIfEntityRestricted($ownable, $action);
-    return $hasAccess && $hasPermission;
+    $restrictionsSet = $restrictionService->checkIfRestrictionsSet($ownable, $action);
+    return ($hasAccess && $restrictionsSet) || (!$restrictionsSet && $hasPermission);
 }
 
 /**

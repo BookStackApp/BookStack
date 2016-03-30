@@ -1,10 +1,13 @@
-<form action="{{ $model->getUrl() }}/restrict" method="POST">
+<form action="{{ $model->getUrl() }}/permissions" method="POST">
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 
+    <p>Once enabled, These permissions will take priority over any set role permissions.</p>
+
     <div class="form-group">
-        @include('form/checkbox', ['name' => 'restricted', 'label' => 'Restrict this ' . $model->getClassName()])
+        @include('form/checkbox', ['name' => 'restricted', 'label' => 'Enable custom permissions'])
     </div>
+
 
     <table class="table">
         <tr>
@@ -25,5 +28,5 @@
     </table>
 
     <a href="{{ $model->getUrl() }}" class="button muted">Cancel</a>
-    <button type="submit" class="button pos">Save Restrictions</button>
+    <button type="submit" class="button pos">Save Permissions</button>
 </form>
