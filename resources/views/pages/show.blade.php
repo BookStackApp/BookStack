@@ -32,7 +32,7 @@
                             <a href="{{$page->getUrl()}}/edit" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
                         @if(userCan('restrictions-manage', $page))
-                            <a href="{{$page->getUrl()}}/restrict" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Restrict</a>
+                            <a href="{{$page->getUrl()}}/permissions" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Permissions</a>
                         @endif
                         @if(userCan('page-delete', $page))
                             <a href="{{$page->getUrl()}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
@@ -76,27 +76,27 @@
 
                         @if($book->restricted)
                             @if(userCan('restrictions-manage', $book))
-                                <a href="{{ $book->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Book restricted</a>
+                                <a href="{{ $book->getUrl() }}/permissions"><i class="zmdi zmdi-lock-outline"></i>Book Permissions Active</a>
                             @else
-                                <i class="zmdi zmdi-lock-outline"></i>Book restricted
+                                <i class="zmdi zmdi-lock-outline"></i>Book Permissions Active
                             @endif
                             <br>
                         @endif
 
                         @if($page->chapter && $page->chapter->restricted)
                             @if(userCan('restrictions-manage', $page->chapter))
-                                <a href="{{ $page->chapter->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Chapter restricted</a>
+                                <a href="{{ $page->chapter->getUrl() }}/permissions"><i class="zmdi zmdi-lock-outline"></i>Chapter Permissions Active</a>
                             @else
-                                <i class="zmdi zmdi-lock-outline"></i>Chapter restricted
+                                <i class="zmdi zmdi-lock-outline"></i>Chapter Permissions Active
                             @endif
                             <br>
                         @endif
 
                         @if($page->restricted)
                             @if(userCan('restrictions-manage', $page))
-                                <a href="{{ $page->getUrl() }}/restrict"><i class="zmdi zmdi-lock-outline"></i>Page restricted</a>
+                                <a href="{{ $page->getUrl() }}/permissions"><i class="zmdi zmdi-lock-outline"></i>Page Permissions Active</a>
                             @else
-                                <i class="zmdi zmdi-lock-outline"></i>Page restricted
+                                <i class="zmdi zmdi-lock-outline"></i>Page Permissions Active
                             @endif
                             <br>
                         @endif

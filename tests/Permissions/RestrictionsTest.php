@@ -3,11 +3,21 @@
 class RestrictionsTest extends TestCase
 {
     protected $user;
+    protected $viewer;
 
     public function setUp()
     {
         parent::setUp();
         $this->user = $this->getNewUser();
+        $this->viewer = $this->getViewer();
+    }
+
+    protected function getViewer()
+    {
+        $role = \BookStack\Role::getRole('viewer');
+        $viewer = $this->getNewBlankUser();
+        $viewer->attachRole($role);;
+        return $viewer;
     }
 
     /**
@@ -20,9 +30,14 @@ class RestrictionsTest extends TestCase
         $entity->restricted = true;
         $entity->restrictions()->delete();
         $role = $this->user->roles->first();
+        $viewerRole = $this->viewer->roles->first();
         foreach ($actions as $action) {
             $entity->restrictions()->create([
                 'role_id' => $role->id,
+                'action' => strtolower($action)
+            ]);
+            $entity->restrictions()->create([
+                'role_id' => $viewerRole->id,
                 'action' => strtolower($action)
             ]);
         }
@@ -65,6 +80,10 @@ class RestrictionsTest extends TestCase
         $book = \BookStack\Book::first();
 
         $bookUrl = $book->getUrl();
+        $this->actingAs($this->viewer)
+            ->visit($bookUrl)
+            ->dontSeeInElement('.action-buttons', 'New Page')
+            ->dontSeeInElement('.action-buttons', 'New Chapter');
         $this->actingAs($this->user)
             ->visit($bookUrl)
             ->seeInElement('.action-buttons', 'New Page')
@@ -319,11 +338,11 @@ class RestrictionsTest extends TestCase
     public function test_book_restriction_form()
     {
         $book = \BookStack\Book::first();
-        $this->asAdmin()->visit($book->getUrl() . '/restrict')
-            ->see('Book Restrictions')
+        $this->asAdmin()->visit($book->getUrl() . '/permissions')
+            ->see('Book Permissions')
             ->check('restricted')
             ->check('restrictions[2][view]')
-            ->press('Save Restrictions')
+            ->press('Save Permissions')
             ->seeInDatabase('books', ['id' => $book->id, 'restricted' => true])
             ->seeInDatabase('restrictions', [
                 'restrictable_id' => $book->id,
@@ -336,11 +355,11 @@ class RestrictionsTest extends TestCase
     public function test_chapter_restriction_form()
     {
         $chapter = \BookStack\Chapter::first();
-        $this->asAdmin()->visit($chapter->getUrl() . '/restrict')
-            ->see('Chapter Restrictions')
+        $this->asAdmin()->visit($chapter->getUrl() . '/permissions')
+            ->see('Chapter Permissions')
             ->check('restricted')
             ->check('restrictions[2][update]')
-            ->press('Save Restrictions')
+            ->press('Save Permissions')
             ->seeInDatabase('chapters', ['id' => $chapter->id, 'restricted' => true])
             ->seeInDatabase('restrictions', [
                 'restrictable_id' => $chapter->id,
@@ -353,11 +372,11 @@ class RestrictionsTest extends TestCase
     public function test_page_restriction_form()
     {
         $page = \BookStack\Page::first();
-        $this->asAdmin()->visit($page->getUrl() . '/restrict')
-            ->see('Page Restrictions')
+        $this->asAdmin()->visit($page->getUrl() . '/permissions')
+            ->see('Page Permissions')
             ->check('restricted')
             ->check('restrictions[2][delete]')
-            ->press('Save Restrictions')
+            ->press('Save Permissions')
             ->seeInDatabase('pages', ['id' => $page->id, 'restricted' => true])
             ->seeInDatabase('restrictions', [
                 'restrictable_id' => $page->id,
@@ -402,6 +421,101 @@ class RestrictionsTest extends TestCase
         $this->actingAs($this->user)
             ->visit($chapter->getUrl())
             ->dontSee($page->name);
+    }
+
+    public function test_book_create_restriction_override()
+    {
+        $book = \BookStack\Book::first();
+
+        $bookUrl = $book->getUrl();
+        $this->actingAs($this->viewer)
+            ->visit($bookUrl)
+            ->dontSeeInElement('.action-buttons', 'New Page')
+            ->dontSeeInElement('.action-buttons', 'New Chapter');
+
+        $this->setEntityRestrictions($book, ['view', 'delete', 'update']);
+
+        $this->forceVisit($bookUrl . '/chapter/create')
+            ->see('You do not have permission')->seePageIs('/');
+        $this->forceVisit($bookUrl . '/page/create')
+            ->see('You do not have permission')->seePageIs('/');
+        $this->visit($bookUrl)->dontSeeInElement('.action-buttons', 'New Page')
+            ->dontSeeInElement('.action-buttons', 'New Chapter');
+
+        $this->setEntityRestrictions($book, ['view', 'create']);
+
+        $this->visit($bookUrl . '/chapter/create')
+            ->type('test chapter', 'name')
+            ->type('test description for chapter', 'description')
+            ->press('Save Chapter')
+            ->seePageIs($bookUrl . '/chapter/test-chapter');
+        $this->visit($bookUrl . '/page/create')
+            ->type('test page', 'name')
+            ->type('test content', 'html')
+            ->press('Save Page')
+            ->seePageIs($bookUrl . '/page/test-page');
+        $this->visit($bookUrl)->seeInElement('.action-buttons', 'New Page')
+            ->seeInElement('.action-buttons', 'New Chapter');
+    }
+
+    public function test_book_update_restriction_override()
+    {
+        $book = \BookStack\Book::first();
+        $bookPage = $book->pages->first();
+        $bookChapter = $book->chapters->first();
+
+        $bookUrl = $book->getUrl();
+        $this->actingAs($this->viewer)
+            ->visit($bookUrl . '/edit')
+            ->dontSee('Edit Book');
+
+        $this->setEntityRestrictions($book, ['view', 'delete']);
+
+        $this->forceVisit($bookUrl . '/edit')
+            ->see('You do not have permission')->seePageIs('/');
+        $this->forceVisit($bookPage->getUrl() . '/edit')
+            ->see('You do not have permission')->seePageIs('/');
+        $this->forceVisit($bookChapter->getUrl() . '/edit')
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($book, ['view', 'update']);
+
+        $this->visit($bookUrl . '/edit')
+            ->seePageIs($bookUrl . '/edit');
+        $this->visit($bookPage->getUrl() . '/edit')
+            ->seePageIs($bookPage->getUrl() . '/edit');
+        $this->visit($bookChapter->getUrl() . '/edit')
+            ->see('Edit Chapter');
+    }
+
+    public function test_book_delete_restriction_override()
+    {
+        $book = \BookStack\Book::first();
+        $bookPage = $book->pages->first();
+        $bookChapter = $book->chapters->first();
+
+        $bookUrl = $book->getUrl();
+        $this->actingAs($this->viewer)
+            ->visit($bookUrl . '/delete')
+            ->dontSee('Delete Book');
+
+        $this->setEntityRestrictions($book, ['view', 'update']);
+
+        $this->forceVisit($bookUrl . '/delete')
+            ->see('You do not have permission')->seePageIs('/');
+        $this->forceVisit($bookPage->getUrl() . '/delete')
+            ->see('You do not have permission')->seePageIs('/');
+        $this->forceVisit($bookChapter->getUrl() . '/delete')
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($book, ['view', 'delete']);
+
+        $this->visit($bookUrl . '/delete')
+            ->seePageIs($bookUrl . '/delete')->see('Delete Book');
+        $this->visit($bookPage->getUrl() . '/delete')
+            ->seePageIs($bookPage->getUrl() . '/delete')->see('Delete Page');
+        $this->visit($bookChapter->getUrl() . '/delete')
+            ->see('Delete Chapter');
     }
 
 }

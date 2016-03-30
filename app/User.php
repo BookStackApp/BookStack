@@ -162,4 +162,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return '/settings/users/' . $this->id;
     }
+
+    /**
+     * Get a shortened version of the user's name.
+     * @param int $chars
+     * @return string
+     */
+    public function getShortName($chars = 8)
+    {
+        if (strlen($this->name) <= $chars) return $this->name;
+
+        $splitName = explode(' ', $this->name);
+        if (strlen($splitName[0]) <= $chars) return $splitName[0];
+
+        return '';
+    }
 }

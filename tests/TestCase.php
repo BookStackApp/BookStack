@@ -170,4 +170,12 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $this->visit($link->link()->getUri());
         return $this;
     }
+
+    protected function actingAsUsers($usersArray, $callback)
+    {
+        foreach ($usersArray as $user) {
+            $this->actingAs($user);
+            $callback($user);
+        }
+    }
 }
