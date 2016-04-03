@@ -2,6 +2,8 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Exceptions\AuthException;
+use BookStack\Exceptions\PrettyException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use BookStack\Exceptions\SocialSignInException;
@@ -115,6 +117,7 @@ class AuthController extends Controller
      * @param Request $request
      * @param Authenticatable $user
      * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthException
      */
     protected function authenticated(Request $request, Authenticatable $user)
     {
@@ -132,6 +135,13 @@ class AuthController extends Controller
         }
 
         if (!$user->exists) {
+
+            // Check for users with same email already
+            $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
+            if ($alreadyUser) {
+                throw new AuthException('A user with the email ' . $user->email . ' already exists but with different credentials.');
+            }
+
             $user->save();
             $this->userRepo->attachDefaultRole($user);
             auth()->login($user);
