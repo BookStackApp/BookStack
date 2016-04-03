@@ -194,13 +194,10 @@ class AuthController extends Controller
         }
 
         if (setting('registration-confirmation') || setting('registration-restrict')) {
-            $newUser->email_confirmed = false;
             $newUser->save();
             $this->emailConfirmationService->sendConfirmation($newUser);
             return redirect('/register/confirm');
         }
-
-        $newUser->email_confirmed = true;
 
         auth()->login($newUser);
         session()->flash('success', 'Thanks for signing up! You are now registered and signed in.');

@@ -11,14 +11,12 @@ class Authenticate
 {
     /**
      * The Guard implementation.
-     *
      * @var Guard
      */
     protected $auth;
 
     /**
      * Create a new filter instance.
-     *
      * @param  Guard $auth
      */
     public function __construct(Guard $auth)
@@ -28,14 +26,13 @@ class Authenticate
 
     /**
      * Handle an incoming request.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->check() && auth()->user()->email_confirmed == false) {
+        if ($this->auth->check() && setting('registration-confirmation') && !$this->auth->user()->email_confirmed) {
             return redirect()->guest('/register/confirm/awaiting');
         }
 

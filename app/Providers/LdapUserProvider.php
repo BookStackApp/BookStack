@@ -115,7 +115,7 @@ class LdapUserProvider implements UserProvider
         $model->name = $userDetails['name'];
         $model->external_auth_id = $userDetails['uid'];
         $model->email = $userDetails['email'];
-        $model->email_confirmed = true;
+        $model->email_confirmed = false;
         return $model;
     }
 
