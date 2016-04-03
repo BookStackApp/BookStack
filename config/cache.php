@@ -6,9 +6,8 @@ if (env('CACHE_DRIVER') === 'memcached') {
     $memcachedServers = explode(',', trim(env('MEMCACHED_SERVERS', '127.0.0.1:11211:100'), ','));
     foreach ($memcachedServers as $index => $memcachedServer) {
         $memcachedServerDetails = explode(':', $memcachedServer);
-        $components = count($memcachedServerDetails);
-        if ($components < 2) $memcachedServerDetails[] = '11211';
-        if ($components < 3) $memcachedServerDetails[] = '100';
+        if (count($memcachedServerDetails) < 2) $memcachedServerDetails[] = '11211';
+        if (count($memcachedServerDetails) < 3) $memcachedServerDetails[] = '100';
         $memcachedServers[$index] = array_combine($memcachedServerKeys, $memcachedServerDetails);
     }
 }
@@ -83,6 +82,6 @@ return [
     |
     */
 
-    'prefix' => 'laravel',
+    'prefix' => env('CACHE_PREFIX', 'bookstack'),
 
 ];
