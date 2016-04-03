@@ -187,7 +187,7 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
         $this->chapterRepo->updateRestrictionsFromRequest($request, $chapter);
-        session()->flash('success', 'Page Restrictions Updated');
+        session()->flash('success', 'Chapter Restrictions Updated');
         return redirect($chapter->getUrl());
     }
 }

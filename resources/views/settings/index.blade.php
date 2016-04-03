@@ -29,7 +29,7 @@
                     <toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></toggle-switch>
                 </div>
                 <div class="form-group">
-                    <label for="setting-app-editor">Page Editor</label>
+                    <label for="setting-app-editor">Page editor</label>
                     <p class="small">Select which editor will be used by all users to edit pages.</p>
                     <select name="setting-app-editor" id="setting-app-editor">
                         <option @if(setting('app-editor') === 'wysiwyg') selected @endif value="wysiwyg">WYSIWYG</option>
@@ -39,12 +39,12 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group" id="logo-control">
-                    <label for="setting-app-logo">Application Logo</label>
+                    <label for="setting-app-logo">Application logo</label>
                     <p class="small">This image should be 43px in height. <br>Large images will be scaled down.</p>
                     <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ setting('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
                 <div class="form-group" id="color-control">
-                    <label for="setting-app-color">Application Primary Color</label>
+                    <label for="setting-app-color">Application primary color</label>
                     <p class="small">This should be a hex value. <br> Leave empty to reset to the default color.</p>
                     <input  type="text" value="{{ setting('app-color', '') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
                     <input  type="hidden" value="{{ setting('app-color-light', '') }}" name="setting-app-color-light" id="setting-app-color-light" placeholder="rgba(21, 101, 192, 0.15)">
