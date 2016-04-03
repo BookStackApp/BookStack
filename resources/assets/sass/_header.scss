@@ -189,12 +189,13 @@ form.search-box {
   }
 }
 
-.setting-nav {
+.nav-tabs {
   text-align: center;
-  a {
+  a, .tab-item {
     padding: $-m;
     display: inline-block;
     color: #666;
+    cursor: pointer;
     &.selected {
       border-bottom: 2px solid $primary;
     }

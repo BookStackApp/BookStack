@@ -177,3 +177,28 @@ $btt-size: 40px;
     top: -5px;
   }
 }
+
+.contained-search-box {
+  display: flex;
+  input, button {
+    border-radius: 0;
+    border: 1px solid #DDD;
+    margin-left: -1px;
+  }
+  input {
+    flex: 5;
+    &:focus, &:active {
+      outline: 0;
+    }
+  }
+  button {
+    width: 60px;
+  }
+  button i {
+    padding: 0;
+  }
+  button.cancel.active {
+    background-color: $negative;
+    color: #EEE;
+  }
+}

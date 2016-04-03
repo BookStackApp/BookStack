@@ -3,6 +3,20 @@
         <div class="image-manager-body" ng-click="$event.stopPropagation()">
 
             <div class="image-manager-content">
+                <div ng-if="imageType === 'gallery'" class="container">
+                    <div class="image-manager-header row faded-small nav-tabs">
+                        <div class="col-xs-4 tab-item" title="View all images" ng-class="{selected: (view=='all')}" ng-click="setView('all')"><i class="zmdi zmdi-collection-image"></i> All</div>
+                        <div class="col-xs-4 tab-item" title="View images uploaded to this book" ng-class="{selected: (view=='book')}" ng-click="setView('book')"><i class="zmdi zmdi-book text-book"></i> Book</div>
+                        <div class="col-xs-4 tab-item" title="View images uploaded to this page" ng-class="{selected: (view=='page')}" ng-click="setView('page')"><i class="zmdi zmdi-file-text text-page"></i> Page</div>
+                    </div>
+                </div>
+                <div ng-show="view === 'all'" >
+                    <form ng-submit="searchImages()" class="contained-search-box">
+                        <input type="text" placeholder="Search by image name" ng-model="searchTerm">
+                        <button ng-class="{active: searching}" title="Clear Search" type="button" ng-click="cancelSearch()" class="text-button cancel"><i class="zmdi zmdi-close-circle-o"></i></button>
+                        <button title="Search" class="text-button" type="submit"><i class="zmdi zmdi-search"></i></button>
+                    </form>
+                </div>
                 <div class="image-manager-list">
                     <div ng-repeat="image in images">
                         <div class="image anim fadeIn" ng-style="{animationDelay: ($index > 26) ? '160ms' : ($index * 25) + 'ms'}"

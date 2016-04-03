@@ -14,19 +14,39 @@ module.exports = function (ngApp, events) {
             $scope.imageUpdateSuccess = false;
             $scope.imageDeleteSuccess = false;
             $scope.uploadedTo = $attrs.uploadedTo;
+            $scope.view = 'all';
+            
+            $scope.searching = false;
+            $scope.searchTerm = '';
 
             var page = 0;
             var previousClickTime = 0;
+            var previousClickImage = 0;
             var dataLoaded = false;
             var callback = false;
 
+            var preSearchImages = [];
+            var preSearchHasMore = false;
+
             /**
-             * Simple returns the appropriate upload url depending on the image type set.
+             * Used by dropzone to get the endpoint to upload to.
              * @returns {string}
              */
             $scope.getUploadUrl = function () {
                 return '/images/' + $scope.imageType + '/upload';
             };
+
+            /**
+             * Cancel the current search operation.
+             */
+            function cancelSearch() {
+                $scope.searching = false;
+                $scope.searchTerm = '';
+                $scope.images = preSearchImages;
+                $scope.hasMore = preSearchHasMore;
+            }
+            $scope.cancelSearch = cancelSearch;
+            
 
             /**
              * Runs on image upload, Adds an image to local list of images
@@ -59,7 +79,7 @@ module.exports = function (ngApp, events) {
                 var currentTime = Date.now();
                 var timeDiff = currentTime - previousClickTime;
 
-                if (timeDiff < dblClickTime) {
+                if (timeDiff < dblClickTime && image.id === previousClickImage) {
                     // If double click
                     callbackAndHide(image);
                 } else {
@@ -68,6 +88,7 @@ module.exports = function (ngApp, events) {
                     $scope.dependantPages = false;
                 }
                 previousClickTime = currentTime;
+                previousClickImage = image.id;
             };
 
             /**
@@ -110,19 +131,68 @@ module.exports = function (ngApp, events) {
                 $scope.showing = false;
             };
 
+            var baseUrl = '/images/' + $scope.imageType + '/all/'
+
             /**
              * Fetch the list image data from the server.
              */
             function fetchData() {
-                var url = '/images/' + $scope.imageType + '/all/' + page;
+                var url = baseUrl + page + '?';
+                var components = {};
+                if ($scope.uploadedTo) components['page_id'] = $scope.uploadedTo;
+                if ($scope.searching) components['term'] = $scope.searchTerm;
+
+
+                var urlQueryString = Object.keys(components).map((key) => {
+                    return key + '=' + encodeURIComponent(components[key]);
+                }).join('&');
+                url += urlQueryString;
+
                 $http.get(url).then((response) => {
                     $scope.images = $scope.images.concat(response.data.images);
                     $scope.hasMore = response.data.hasMore;
                     page++;
                 });
             }
-
             $scope.fetchData = fetchData;
+
+            /**
+             * Start a search operation
+             * @param searchTerm
+             */
+            $scope.searchImages = function() {
+
+                if ($scope.searchTerm === '') {
+                    cancelSearch();
+                    return;
+                }
+
+                if (!$scope.searching) {
+                    preSearchImages = $scope.images;
+                    preSearchHasMore = $scope.hasMore;
+                }
+
+                $scope.searching = true;
+                $scope.images = [];
+                $scope.hasMore = false;
+                page = 0;
+                baseUrl = '/images/' + $scope.imageType + '/search/';
+                fetchData();
+            };
+
+            /**
+             * Set the current image listing view.
+             * @param viewName
+             */
+            $scope.setView = function(viewName) {
+                cancelSearch();
+                $scope.images = [];
+                $scope.hasMore = false;
+                page = 0;
+                $scope.view = viewName;
+                baseUrl = '/images/' + $scope.imageType  + '/' + viewName + '/';
+                fetchData();
+            }
 
             /**
              * Save the details of an image.

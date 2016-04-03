@@ -12,7 +12,7 @@
         .button-base:hover, .button:hover, input[type="button"]:hover, input[type="submit"]:hover, .button:focus {
             background-color: {{ Setting::get('app-color') }};
         }
-        .setting-nav a.selected {
+        .nav-tabs a.selected, .nav-tabs .tab-item.selected {
             border-bottom-color: {{ Setting::get('app-color') }};
         }
         p.primary:hover, p .primary:hover, span.primary:hover, .text-primary:hover, a, a:hover, a:focus {
