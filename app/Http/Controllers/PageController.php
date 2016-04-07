@@ -88,13 +88,18 @@ class PageController extends Controller
 
         $input = $request->all();
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $input['priority'] = $this->bookRepo->getNewPriority($book);
 
         $draftPage = $this->pageRepo->getById($pageId, true);
 
         $chapterId = $draftPage->chapter_id;
         $parent = $chapterId !== 0 ? $this->chapterRepo->getById($chapterId) : $book;
         $this->checkOwnablePermission('page-create', $parent);
+
+        if ($parent->isA('chapter')) {
+            $input['priority'] = $this->chapterRepo->getNewPriority($parent);
+        } else {
+            $input['priority'] = $this->bookRepo->getNewPriority($parent);
+        }
 
         $page = $this->pageRepo->publishDraft($draftPage, $input);
 

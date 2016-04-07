@@ -137,6 +137,18 @@ class ChapterRepo extends EntityRepo
     }
 
     /**
+     * Get a new priority value for a new page to be added
+     * to the given chapter.
+     * @param Chapter $chapter
+     * @return int
+     */
+    public function getNewPriority(Chapter $chapter)
+    {
+        $lastPage = $chapter->pages->last();
+        return $lastPage !== null ? $lastPage->priority + 1 : 0;
+    }
+
+    /**
      * Get chapters by the given search term.
      * @param string $term
      * @param array $whereTerms
