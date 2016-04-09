@@ -26,6 +26,59 @@
   display: none;
 }
 
+#markdown-editor {
+  position: relative;
+  z-index: 5;
+  textarea {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 400;
+    padding: $-xs $-m;
+    color: #444;
+    border-radius: 0;
+    max-height: 100%;
+    flex: 1;
+    border: 0;
+    width: 100%;
+    &:focus {
+      outline: 0;
+    }
+  }
+  .markdown-display, .markdown-editor-wrap {
+    flex: 1;
+    position: relative;
+  }
+  .markdown-editor-wrap {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #DDD;
+  }
+  .markdown-display {
+    padding: 0 $-m 0;
+    margin-left: -1px;
+    overflow-y: scroll;
+    .page-content {
+      margin: 0 auto;
+    }
+  }
+}
+.editor-toolbar {
+  width: 100%;
+  padding: $-xs $-m;
+  font-family: 'Roboto Mono';
+  font-size: 11px;
+  line-height: 1.6;
+  border-bottom: 1px solid #DDD;
+  background-color: #EEE;
+  flex: none;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+
 label {
   display: block;
   line-height: 1.4em;
@@ -158,6 +211,10 @@ input:checked + .toggle-switch {
   font-size: $fs-m;
   color: #666;
   width: 100%;
+}
+
+div[editor-type="markdown"] .title-input.page-title input[type="text"] {
+  max-width: 100%;
 }
 
 .search-box {

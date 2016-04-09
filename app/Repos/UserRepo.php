@@ -106,7 +106,8 @@ class UserRepo
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
+            'email_confirmed' => false
         ]);
     }
 

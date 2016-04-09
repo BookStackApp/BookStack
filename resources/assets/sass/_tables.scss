@@ -25,3 +25,12 @@ table {
     font-weight: 500;
   }
 }
+
+table.list-table {
+  margin: 0 -$-xs;
+  td {
+    border: 0;
+    vertical-align: middle;
+    padding: $-xs;
+  }
+}

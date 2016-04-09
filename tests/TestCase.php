@@ -171,11 +171,27 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $this;
     }
 
-    protected function actingAsUsers($usersArray, $callback)
+    /**
+     * Check if the page contains the given element.
+     * @param  string  $selector
+     * @return bool
+     */
+    protected function pageHasElement($selector)
     {
-        foreach ($usersArray as $user) {
-            $this->actingAs($user);
-            $callback($user);
-        }
+        $elements = $this->crawler->filter($selector);
+        $this->assertTrue(count($elements) > 0, "The page does not contain an element matching " . $selector);
+        return $this;
+    }
+
+    /**
+     * Check if the page contains the given element.
+     * @param  string  $selector
+     * @return bool
+     */
+    protected function pageNotHasElement($selector)
+    {
+        $elements = $this->crawler->filter($selector);
+        $this->assertFalse(count($elements) > 0, "The page contains " . count($elements) . " elements matching " . $selector);
+        return $this;
     }
 }

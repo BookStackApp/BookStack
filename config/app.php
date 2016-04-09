@@ -5,6 +5,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'editor' => env('APP_EDITOR', 'html'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

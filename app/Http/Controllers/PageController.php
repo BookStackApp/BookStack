@@ -4,6 +4,7 @@ use Activity;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
@@ -88,13 +89,18 @@ class PageController extends Controller
 
         $input = $request->all();
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $input['priority'] = $this->bookRepo->getNewPriority($book);
 
         $draftPage = $this->pageRepo->getById($pageId, true);
 
         $chapterId = $draftPage->chapter_id;
         $parent = $chapterId !== 0 ? $this->chapterRepo->getById($chapterId) : $book;
         $this->checkOwnablePermission('page-create', $parent);
+
+        if ($parent->isA('chapter')) {
+            $input['priority'] = $this->chapterRepo->getNewPriority($parent);
+        } else {
+            $input['priority'] = $this->bookRepo->getNewPriority($parent);
+        }
 
         $page = $this->pageRepo->publishDraft($draftPage, $input);
 
@@ -164,6 +170,7 @@ class PageController extends Controller
             $draft = $this->pageRepo->getUserPageDraft($page, $this->currentUser->id);
             $page->name = $draft->name;
             $page->html = $draft->html;
+            $page->markdown = $draft->markdown;
             $page->isDraft = true;
             $warnings [] = $this->pageRepo->getUserPageDraftMessage($draft);
         }
@@ -204,12 +211,18 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId, true);
         $this->checkOwnablePermission('page-update', $page);
         if ($page->draft) {
-            $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html']));
+            $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html', 'markdown']));
         } else {
-            $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html']));
+            $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html', 'markdown']));
         }
-        $updateTime = $draft->updated_at->format('H:i');
-        return response()->json(['status' => 'success', 'message' => 'Draft saved at ' . $updateTime]);
+
+        $updateTime = $draft->updated_at->timestamp;
+        $utcUpdateTimestamp = $updateTime + Carbon::createFromTimestamp(0)->offset;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Draft saved at ',
+            'timestamp' => $utcUpdateTimestamp
+        ]);
     }
 
     /**

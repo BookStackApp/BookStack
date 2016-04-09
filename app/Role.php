@@ -44,6 +44,15 @@ class Role extends Model
     }
 
     /**
+     * Detach a single permission from this role.
+     * @param Permission $permission
+     */
+    public function detachPermission(Permission $permission)
+    {
+        $this->permissions()->detach($permission->id);
+    }
+
+    /**
      * Get the role object for the specified role.
      * @param $roleName
      * @return mixed

@@ -120,7 +120,6 @@
 .image-manager-list {
   overflow-y: scroll;
   flex: 1;
-  border-top: 1px solid #ddd;
 }
 
 .image-manager-content {
@@ -128,6 +127,12 @@
   flex-direction: column;
   height: 100%;
   flex: 1;
+  .container {
+    width: 100%;
+  }
+  .full-tab {
+    text-align: center;
+  }
 }
 
 // Dropzone

@@ -1,14 +1,9 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Repos\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image as ImageTool;
-use Illuminate\Support\Facades\DB;
 use BookStack\Image;
 use BookStack\Repos\PageRepo;
 
@@ -45,6 +40,24 @@ class ImageController extends Controller
     }
 
     /**
+     * Search through images within a particular type.
+     * @param $type
+     * @param int $page
+     * @param Request $request
+     * @return mixed
+     */
+    public function searchByType($type, $page = 0, Request $request)
+    {
+        $this->validate($request, [
+            'term' => 'required|string'
+        ]);
+        
+        $searchTerm = $request->get('term');
+        $imgData = $this->imageRepo->searchPaginatedByType($type, $page,24, $searchTerm);
+        return response()->json($imgData);
+    }
+
+    /**
      * Get all images for a user.
      * @param int $page
      * @return \Illuminate\Http\JsonResponse
@@ -52,6 +65,27 @@ class ImageController extends Controller
     public function getAllForUserType($page = 0)
     {
         $imgData = $this->imageRepo->getPaginatedByType('user', $page, 24, $this->currentUser->id);
+        return response()->json($imgData);
+    }
+
+    /**
+     * Get gallery images with a specific filter such as book or page
+     * @param $filter
+     * @param int $page
+     * @param Request $request
+     */
+    public function getGalleryFiltered($filter, $page = 0, Request $request)
+    {
+        $this->validate($request, [
+            'page_id' => 'required|integer'
+        ]);
+
+        $validFilters = collect(['page', 'book']);
+        if (!$validFilters->contains($filter)) return response('Invalid filter', 500);
+
+        $pageId = $request->get('page_id');
+        $imgData = $this->imageRepo->getGalleryFiltered($page, 24, strtolower($filter), $pageId);
+
         return response()->json($imgData);
     }
 

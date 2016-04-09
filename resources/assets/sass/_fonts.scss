@@ -94,3 +94,14 @@
   font-weight: normal;
   font-style: normal;
 }
+
+/* roboto-mono-regular - latin */
+// https://google-webfonts-helper.herokuapp.com
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Mono'), local('RobotoMono-Regular'),
+  url('/fonts/roboto-mono-v4-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+ */
+  url('/fonts/roboto-mono-v4-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}

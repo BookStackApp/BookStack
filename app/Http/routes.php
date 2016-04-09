@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{type}/upload', 'ImageController@uploadByType');
         Route::get('/{type}/all', 'ImageController@getAllByType');
         Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
+        Route::get('/{type}/search/{page}', 'ImageController@searchByType');
+        Route::get('/gallery/{filter}/{page}', 'ImageController@getGalleryFiltered');
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 

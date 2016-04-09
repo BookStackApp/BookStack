@@ -43,7 +43,7 @@ class LdapTest extends \TestCase
             ->press('Sign In')
             ->seePageIs('/')
             ->see($this->mockUser->name)
-            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => 1, 'external_auth_id' => $this->mockUser->name]);
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name]);
     }
 
     public function test_login_works_when_no_uid_provided_by_ldap_server()
@@ -67,7 +67,7 @@ class LdapTest extends \TestCase
             ->press('Sign In')
             ->seePageIs('/')
             ->see($this->mockUser->name)
-            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => 1, 'external_auth_id' => $ldapDn]);
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $ldapDn]);
     }
 
     public function test_initial_incorrect_details()

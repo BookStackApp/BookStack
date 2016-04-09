@@ -1,5 +1,5 @@
 
-<div class="page-editor flex-fill flex" ng-controller="PageEditController" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
+<div class="page-editor flex-fill flex" ng-controller="PageEditController" editor-type="{{ setting('app-editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
 
     {{ csrf_field() }}
     <div class="faded-small toolbar">
@@ -42,10 +42,45 @@
         </div>
     </div>
     <div class="edit-area flex-fill flex">
-        <textarea id="html-editor" tinymce="editorOptions" mce-change="editorChange" mce-model="editorHtml"  name="html" rows="5"
-                  @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
-        @if($errors->has('html'))
-            <div class="text-neg text-small">{{ $errors->first('html') }}</div>
+        @if(setting('app-editor') === 'wysiwyg')
+            <textarea id="html-editor" tinymce="editorOptions" mce-change="editorChange" mce-model="editContent"  name="html" rows="5"
+                      @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
+            @if($errors->has('html'))
+                <div class="text-neg text-small">{{ $errors->first('html') }}</div>
+            @endif
+        @endif
+
+        @if(setting('app-editor') === 'markdown')
+            <div id="markdown-editor" markdown-editor class="flex-fill flex">
+
+                <div class="markdown-editor-wrap">
+                    <div class="editor-toolbar">
+                        <span class="float left">Editor</span>
+                        <div class="float right buttons">
+                            <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>Insert Image</button>
+                        </div>
+                    </div>
+                    <textarea markdown-input md-change="editorChange" md-model="editContent"  name="markdown" rows="5"
+                              @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
+                </div>
+
+                <div class="markdown-editor-wrap">
+                    <div class="editor-toolbar">
+                        <div class="">Preview</div>
+                    </div>
+                    <div class="markdown-display">
+                        <div class="page-content" ng-bind-html="displayContent"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <input type="hidden" name="html" ng-value="displayContent">
+
+            @if($errors->has('markdown'))
+                <div class="text-neg text-small">{{ $errors->first('markdown') }}</div>
+            @endif
+
         @endif
     </div>
 </div>

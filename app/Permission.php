@@ -11,7 +11,7 @@ class Permission extends Model
      */
     public function roles()
     {
-        return $this->belongsToMany('BookStack\Permissions');
+        return $this->belongsToMany('BookStack\Role');
     }
 
     /**

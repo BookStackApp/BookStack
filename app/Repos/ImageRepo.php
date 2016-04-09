@@ -2,6 +2,7 @@
 
 
 use BookStack\Image;
+use BookStack\Page;
 use BookStack\Services\ImageService;
 use BookStack\Services\RestrictionService;
 use Setting;
@@ -13,18 +14,21 @@ class ImageRepo
     protected $image;
     protected $imageService;
     protected $restictionService;
+    protected $page;
 
     /**
      * ImageRepo constructor.
      * @param Image $image
      * @param ImageService $imageService
      * @param RestrictionService $restrictionService
+     * @param Page $page
      */
-    public function __construct(Image $image, ImageService $imageService, RestrictionService $restrictionService)
+    public function __construct(Image $image, ImageService $imageService, RestrictionService $restrictionService, Page $page)
     {
         $this->image = $image;
         $this->imageService = $imageService;
         $this->restictionService = $restrictionService;
+        $this->page = $page;
     }
 
 
@@ -36,6 +40,31 @@ class ImageRepo
     public function getById($id)
     {
         return $this->image->findOrFail($id);
+    }
+
+    /**
+     * Execute a paginated query, returning in a standard format.
+     * Also runs the query through the restriction system.
+     * @param $query
+     * @param int $page
+     * @param int $pageSize
+     * @return array
+     */
+    private function returnPaginated($query, $page = 0, $pageSize = 24)
+    {
+        $images = $this->restictionService->filterRelatedPages($query, 'images', 'uploaded_to');
+        $images = $images->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
+        $hasMore = count($images) > $pageSize;
+
+        $returnImages = $images->take(24);
+        $returnImages->each(function ($image) {
+            $this->loadThumbs($image);
+        });
+
+        return [
+            'images'  => $returnImages,
+            'hasMore' => $hasMore
+        ];
     }
 
     /**
@@ -54,19 +83,46 @@ class ImageRepo
             $images = $images->where('created_by', '=', $userFilter);
         }
 
-        $images = $this->restictionService->filterRelatedPages($images, 'images', 'uploaded_to');
-        $images = $images->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
-        $hasMore = count($images) > $pageSize;
+        return $this->returnPaginated($images, $page, $pageSize);
+    }
 
-        $returnImages = $images->take(24);
-        $returnImages->each(function ($image) {
-            $this->loadThumbs($image);
-        });
+    /**
+     * Search for images by query, of a particular type.
+     * @param string $type
+     * @param int $page
+     * @param int $pageSize
+     * @param string $searchTerm
+     * @return array
+     */
+    public function searchPaginatedByType($type, $page = 0, $pageSize = 24, $searchTerm)
+    {
+        $images = $this->image->where('type', '=', strtolower($type))->where('name', 'LIKE', '%' . $searchTerm . '%');
+        return $this->returnPaginated($images, $page, $pageSize);
+    }
 
-        return [
-            'images'  => $returnImages,
-            'hasMore' => $hasMore
-        ];
+    /**
+     * Get gallery images with a particular filter criteria such as
+     * being within the current book or page.
+     * @param int $pagination
+     * @param int $pageSize
+     * @param $filter
+     * @param $pageId
+     * @return array
+     */
+    public function getGalleryFiltered($pagination = 0, $pageSize = 24, $filter, $pageId)
+    {
+        $images = $this->image->where('type', '=', 'gallery');
+
+        $page = $this->page->findOrFail($pageId);
+
+        if ($filter === 'page') {
+            $images = $images->where('uploaded_to', '=', $page->id);
+        } elseif ($filter === 'book') {
+            $validPageIds = $page->book->pages->pluck('id')->toArray();
+            $images = $images->whereIn('uploaded_to', $validPageIds);
+        }
+
+        return $this->returnPaginated($images, $pagination, $pageSize);
     }
 
     /**

@@ -1,5 +1,7 @@
 "use strict";
 
+var moment = require('moment');
+
 module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
@@ -14,19 +16,39 @@ module.exports = function (ngApp, events) {
             $scope.imageUpdateSuccess = false;
             $scope.imageDeleteSuccess = false;
             $scope.uploadedTo = $attrs.uploadedTo;
+            $scope.view = 'all';
+            
+            $scope.searching = false;
+            $scope.searchTerm = '';
 
             var page = 0;
             var previousClickTime = 0;
+            var previousClickImage = 0;
             var dataLoaded = false;
             var callback = false;
 
+            var preSearchImages = [];
+            var preSearchHasMore = false;
+
             /**
-             * Simple returns the appropriate upload url depending on the image type set.
+             * Used by dropzone to get the endpoint to upload to.
              * @returns {string}
              */
             $scope.getUploadUrl = function () {
                 return '/images/' + $scope.imageType + '/upload';
             };
+
+            /**
+             * Cancel the current search operation.
+             */
+            function cancelSearch() {
+                $scope.searching = false;
+                $scope.searchTerm = '';
+                $scope.images = preSearchImages;
+                $scope.hasMore = preSearchHasMore;
+            }
+            $scope.cancelSearch = cancelSearch;
+            
 
             /**
              * Runs on image upload, Adds an image to local list of images
@@ -59,7 +81,7 @@ module.exports = function (ngApp, events) {
                 var currentTime = Date.now();
                 var timeDiff = currentTime - previousClickTime;
 
-                if (timeDiff < dblClickTime) {
+                if (timeDiff < dblClickTime && image.id === previousClickImage) {
                     // If double click
                     callbackAndHide(image);
                 } else {
@@ -68,6 +90,7 @@ module.exports = function (ngApp, events) {
                     $scope.dependantPages = false;
                 }
                 previousClickTime = currentTime;
+                previousClickImage = image.id;
             };
 
             /**
@@ -110,19 +133,68 @@ module.exports = function (ngApp, events) {
                 $scope.showing = false;
             };
 
+            var baseUrl = '/images/' + $scope.imageType + '/all/'
+
             /**
              * Fetch the list image data from the server.
              */
             function fetchData() {
-                var url = '/images/' + $scope.imageType + '/all/' + page;
+                var url = baseUrl + page + '?';
+                var components = {};
+                if ($scope.uploadedTo) components['page_id'] = $scope.uploadedTo;
+                if ($scope.searching) components['term'] = $scope.searchTerm;
+
+
+                var urlQueryString = Object.keys(components).map((key) => {
+                    return key + '=' + encodeURIComponent(components[key]);
+                }).join('&');
+                url += urlQueryString;
+
                 $http.get(url).then((response) => {
                     $scope.images = $scope.images.concat(response.data.images);
                     $scope.hasMore = response.data.hasMore;
                     page++;
                 });
             }
-
             $scope.fetchData = fetchData;
+
+            /**
+             * Start a search operation
+             * @param searchTerm
+             */
+            $scope.searchImages = function() {
+
+                if ($scope.searchTerm === '') {
+                    cancelSearch();
+                    return;
+                }
+
+                if (!$scope.searching) {
+                    preSearchImages = $scope.images;
+                    preSearchHasMore = $scope.hasMore;
+                }
+
+                $scope.searching = true;
+                $scope.images = [];
+                $scope.hasMore = false;
+                page = 0;
+                baseUrl = '/images/' + $scope.imageType + '/search/';
+                fetchData();
+            };
+
+            /**
+             * Set the current image listing view.
+             * @param viewName
+             */
+            $scope.setView = function(viewName) {
+                cancelSearch();
+                $scope.images = [];
+                $scope.hasMore = false;
+                page = 0;
+                $scope.view = viewName;
+                baseUrl = '/images/' + $scope.imageType  + '/' + viewName + '/';
+                fetchData();
+            }
 
             /**
              * Save the details of an image.
@@ -216,16 +288,20 @@ module.exports = function (ngApp, events) {
     }]);
 
 
-    ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', function ($scope, $http, $attrs, $interval, $timeout) {
+    ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', '$sce',
+        function ($scope, $http, $attrs, $interval, $timeout, $sce) {
 
         $scope.editorOptions = require('./pages/page-form');
-        $scope.editorHtml = '';
+        $scope.editContent = '';
         $scope.draftText = '';
         var pageId = Number($attrs.pageId);
         var isEdit = pageId !== 0;
         var autosaveFrequency = 30; // AutoSave interval in seconds.
+        var isMarkdown = $attrs.editorType === 'markdown';
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
+
+        // Set inital header draft text
         if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
             $scope.draftText = 'Editing Draft'
         } else {
@@ -245,7 +321,18 @@ module.exports = function (ngApp, events) {
             }, 1000);
         }
 
-        $scope.editorChange = function () {}
+        // Actions specifically for the markdown editor
+        if (isMarkdown) {
+            $scope.displayContent = '';
+            // Editor change event
+            $scope.editorChange = function (content) {
+                $scope.displayContent = $sce.trustAsHtml(content);
+            }
+        }
+
+        if (!isMarkdown) {
+            $scope.editorChange = function() {};
+        }
 
         /**
          * Start the AutoSave loop, Checks for content change
@@ -253,17 +340,18 @@ module.exports = function (ngApp, events) {
          */
         function startAutoSave() {
             currentContent.title = $('#name').val();
-            currentContent.html = $scope.editorHtml;
+            currentContent.html = $scope.editContent;
 
             autoSave = $interval(() => {
                 var newTitle = $('#name').val();
-                var newHtml = $scope.editorHtml;
+                var newHtml = $scope.editContent;
 
                 if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
                     currentContent.html = newHtml;
                     currentContent.title = newTitle;
-                    saveDraft(newTitle, newHtml);
+                    saveDraft();
                 }
+
             }, 1000 * autosaveFrequency);
         }
 
@@ -272,20 +360,23 @@ module.exports = function (ngApp, events) {
          * @param title
          * @param html
          */
-        function saveDraft(title, html) {
-            $http.put('/ajax/page/' + pageId + '/save-draft', {
-                name: title,
-                html: html
-            }).then((responseData) => {
-                $scope.draftText = responseData.data.message;
+        function saveDraft() {
+            var data = {
+                name: $('#name').val(),
+                html: isMarkdown ? $sce.getTrustedHtml($scope.displayContent) : $scope.editContent
+            };
+
+            if (isMarkdown) data.markdown = $scope.editContent;
+
+            $http.put('/ajax/page/' + pageId + '/save-draft', data).then((responseData) => {
+                var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
+                $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
             });
         }
 
         $scope.forceDraftSave = function() {
-            var newTitle = $('#name').val();
-            var newHtml = $scope.editorHtml;
-            saveDraft(newTitle, newHtml);
+            saveDraft();
         };
 
         /**
@@ -298,6 +389,7 @@ module.exports = function (ngApp, events) {
                 $scope.draftText = 'Editing Page';
                 $scope.isUpdateDraft = false;
                 $scope.$broadcast('html-update', responseData.data.html);
+                $scope.$broadcast('markdown-update', responseData.data.markdown || responseData.data.html);
                 $('#name').val(responseData.data.name);
                 $timeout(() => {
                     startAutoSave();
