@@ -1,13 +1,9 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use Activity;
 use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
@@ -40,7 +36,6 @@ class BookController extends Controller
 
     /**
      * Display a listing of the book.
-     *
      * @return Response
      */
     public function index()
@@ -54,7 +49,6 @@ class BookController extends Controller
 
     /**
      * Show the form for creating a new book.
-     *
      * @return Response
      */
     public function create()
@@ -88,7 +82,6 @@ class BookController extends Controller
 
     /**
      * Display the specified book.
-     *
      * @param $slug
      * @return Response
      */
@@ -103,7 +96,6 @@ class BookController extends Controller
 
     /**
      * Show the form for editing the specified book.
-     *
      * @param $slug
      * @return Response
      */
@@ -117,7 +109,6 @@ class BookController extends Controller
 
     /**
      * Update the specified book in storage.
-     *
      * @param  Request $request
      * @param          $slug
      * @return Response

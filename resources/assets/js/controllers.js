@@ -370,7 +370,7 @@ module.exports = function (ngApp, events) {
 
             $http.put('/ajax/page/' + pageId + '/save-draft', data).then((responseData) => {
                 var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
-                $scope.draftText = responseData.data.message + moment(updateTime).format('H:m');
+                $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
             });
         }

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 use BookStack\Entity;
 use BookStack\View;
 
@@ -47,7 +46,6 @@ class ViewService
         return 1;
     }
 
-
     /**
      * Get the entities with the most views.
      * @param int $count
@@ -58,17 +56,13 @@ class ViewService
     {
         $skipCount = $count * $page;
         $query = $this->restrictionService->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type')
-            ->select('id', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
+            ->select('*', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');
 
         if ($filterModel) $query->where('viewable_type', '=', get_class($filterModel));
 
-        $views = $query->with('viewable')->skip($skipCount)->take($count)->get();
-        $viewedEntities = $views->map(function ($item) {
-            return $item->viewable()->getResults();
-        });
-        return $viewedEntities;
+        return $query->with('viewable')->skip($skipCount)->take($count)->get()->pluck('viewable');
     }
 
     /**
@@ -81,20 +75,17 @@ class ViewService
     public function getUserRecentlyViewed($count = 10, $page = 0, $filterModel = false)
     {
         if ($this->user === null) return collect();
-        $skipCount = $count * $page;
+
         $query = $this->restrictionService
             ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
 
         if ($filterModel) $query = $query->where('viewable_type', '=', get_class($filterModel));
         $query = $query->where('user_id', '=', auth()->user()->id);
 
-        $views = $query->with('viewable')->orderBy('updated_at', 'desc')->skip($skipCount)->take($count)->get();
-        $viewedEntities = $views->map(function ($item) {
-            return $item->viewable;
-        });
-        return $viewedEntities;
+        $viewables = $query->with('viewable')->orderBy('updated_at', 'desc')
+            ->skip($count * $page)->take($count)->get()->pluck('viewable');
+        return $viewables;
     }
-
 
     /**
      * Reset all view counts by deleting all views.
@@ -103,6 +94,5 @@ class ViewService
     {
         $this->view->truncate();
     }
-
 
 }
