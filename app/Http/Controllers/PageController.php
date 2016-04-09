@@ -4,6 +4,7 @@ use Activity;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
@@ -214,8 +215,14 @@ class PageController extends Controller
         } else {
             $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html', 'markdown']));
         }
-        $updateTime = $draft->updated_at->format('H:i');
-        return response()->json(['status' => 'success', 'message' => 'Draft saved at ' . $updateTime]);
+
+        $updateTime = $draft->updated_at->timestamp;
+        $utcUpdateTimestamp = $updateTime + Carbon::createFromTimestamp(0)->offset;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Draft saved at ',
+            'timestamp' => $utcUpdateTimestamp
+        ]);
     }
 
     /**
