@@ -49,6 +49,7 @@
             <tr>
                 <th></th>
                 <th>Create</th>
+                <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -56,6 +57,10 @@
                 <td>Books</td>
                 <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'book-create-all']) All</label>
+                </td>
+                <td>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'book-view-own']) Own</label>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'book-view-all']) All</label>
                 </td>
                 <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'book-update-own']) Own</label>
@@ -73,6 +78,10 @@
                     <label>@include('settings/roles/checkbox', ['permission' => 'chapter-create-all']) All</label>
                 </td>
                 <td>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'chapter-view-own']) Own</label>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'chapter-view-all']) All</label>
+                </td>
+                <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'chapter-update-own']) Own</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'chapter-update-all']) All</label>
                 </td>
@@ -88,6 +97,10 @@
                     <label>@include('settings/roles/checkbox', ['permission' => 'page-create-all']) All</label>
                 </td>
                 <td>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'page-view-own']) Own</label>
+                    <label>@include('settings/roles/checkbox', ['permission' => 'page-view-all']) All</label>
+                </td>
+                <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'page-update-own']) Own</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'page-update-all']) All</label>
                 </td>
@@ -99,6 +112,7 @@
             <tr>
                 <td>Images</td>
                 <td>@include('settings/roles/checkbox', ['permission' => 'image-create-all'])</td>
+                <td></td>
                 <td>
                     <label>@include('settings/roles/checkbox', ['permission' => 'image-update-own']) Own</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'image-update-all']) All</label>

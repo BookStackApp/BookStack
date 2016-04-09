@@ -1,13 +1,9 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use Activity;
 use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
@@ -95,6 +91,7 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
+        $this->checkOwnablePermission('book-view', $book);
         $bookChildren = $this->bookRepo->getChildren($book);
         Views::add($book);
         $this->setPageTitle($book->getShortName());

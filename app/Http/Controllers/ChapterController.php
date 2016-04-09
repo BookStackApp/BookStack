@@ -77,6 +77,7 @@ class ChapterController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-view', $chapter);
         $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($chapter);
         $this->setPageTitle($chapter->getShortName());

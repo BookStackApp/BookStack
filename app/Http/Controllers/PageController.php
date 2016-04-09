@@ -127,6 +127,8 @@ class PageController extends Controller
             return redirect($page->getUrl());
         }
 
+        $this->checkOwnablePermission('page-view', $page);
+
         $sidebarTree = $this->bookRepo->getChildren($book);
         Views::add($page);
         $this->setPageTitle($page->getShortName());
