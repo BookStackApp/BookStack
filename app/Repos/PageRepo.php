@@ -154,10 +154,10 @@ class PageRepo extends EntityRepo
     /**
      * Get a new draft page instance.
      * @param Book $book
-     * @param Chapter|null $chapter
+     * @param Chapter|bool $chapter
      * @return static
      */
-    public function getDraftPage(Book $book, $chapter)
+    public function getDraftPage(Book $book, $chapter = false)
     {
         $page = $this->page->newInstance();
         $page->name = 'New Page';
