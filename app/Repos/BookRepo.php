@@ -198,16 +198,23 @@ class BookRepo extends EntityRepo
      * Returns a sorted collection of Pages and Chapters.
      * Loads the bookslug onto child elements to prevent access database access for getting the slug.
      * @param Book $book
+     * @param bool $filterDrafts
      * @return mixed
      */
-    public function getChildren(Book $book)
+    public function getChildren(Book $book, $filterDrafts = false)
     {
         $pageQuery = $book->pages()->where('chapter_id', '=', 0);
         $pageQuery = $this->restrictionService->enforcePageRestrictions($pageQuery, 'view');
+
+        if ($filterDrafts) {
+            $pageQuery = $pageQuery->where('draft', '=', false);
+        }
+
         $pages = $pageQuery->get();
 
-        $chapterQuery = $book->chapters()->with(['pages' => function($query) {
+        $chapterQuery = $book->chapters()->with(['pages' => function($query) use ($filterDrafts) {
             $this->restrictionService->enforcePageRestrictions($query, 'view');
+            if ($filterDrafts) $query->where('draft', '=', false);
         }]);
         $chapterQuery = $this->restrictionService->enforceChapterRestrictions($chapterQuery, 'view');
         $chapters = $chapterQuery->get();
