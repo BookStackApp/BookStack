@@ -1,6 +1,13 @@
 <?php namespace BookStack\Services;
 
+use BookStack\Book;
+use BookStack\Chapter;
 use BookStack\Entity;
+use BookStack\EntityPermission;
+use BookStack\Page;
+use BookStack\Permission;
+use BookStack\Role;
+use Illuminate\Database\Eloquent\Collection;
 
 class RestrictionService
 {
@@ -10,14 +17,84 @@ class RestrictionService
     protected $currentAction;
     protected $currentUser;
 
+    public $book;
+    public $chapter;
+    public $page;
+
+    protected $entityPermission;
+    protected $role;
+    protected $permission;
+
     /**
      * RestrictionService constructor.
+     * @param EntityPermission $entityPermission
+     * @param Book $book
+     * @param Chapter $chapter
+     * @param Page $page
+     * @param Role $role
+     * @param Permission $permission
      */
-    public function __construct()
+    public function __construct(EntityPermission $entityPermission, Book $book, Chapter $chapter, Page $page, Role $role, Permission $permission)
     {
         $this->currentUser = auth()->user();
         $this->userRoles = $this->currentUser ? $this->currentUser->roles->pluck('id') : [];
         $this->isAdmin = $this->currentUser ? $this->currentUser->hasRole('admin') : false;
+
+        $this->entityPermission = $entityPermission;
+        $this->role = $role;
+        $this->permission = $permission;
+        $this->book = $book;
+        $this->chapter = $chapter;
+        $this->page = $page;
+    }
+
+
+    /**
+     * Re-generate all entity permission from scratch.
+     */
+    public function buildEntityPermissions()
+    {
+        $this->entityPermission->truncate();
+
+        // Get all roles (Should be the most limited dimension)
+        $roles = $this->role->load('permissions')->all();
+
+        // Chunk through all books
+        $this->book->chunk(500, function ($books) use ($roles) {
+            $this->createManyEntityPermissions($books, $roles);
+        });
+
+        // Chunk through all chapters
+        $this->chapter->chunk(500, function ($books) use ($roles) {
+            $this->createManyEntityPermissions($books, $roles);
+        });
+
+        // Chunk through all pages
+        $this->page->chunk(500, function ($books) use ($roles) {
+            $this->createManyEntityPermissions($books, $roles);
+        });
+    }
+
+    /**
+     * Create & Save entity permissions for many entities and permissions.
+     * @param Collection $entities
+     * @param Collection $roles
+     */
+    protected function createManyEntityPermissions($entities, $roles)
+    {
+        $entityPermissions = [];
+        foreach ($entities as $entity) {
+            foreach ($roles as $role) {
+                $entityPermissions[] = $this->createEntityPermission($entity, $role);
+            }
+        }
+        $this->entityPermission->insert($entityPermissions);
+    }
+
+
+    protected function createEntityPermissionData(Entity $entity, Role $role)
+    {
+        // TODO - Check the permission values and return an EntityPermission
     }
 
     /**
