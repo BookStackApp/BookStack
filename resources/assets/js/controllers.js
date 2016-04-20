@@ -1,5 +1,7 @@
 "use strict";
 
+var moment = require('moment');
+
 module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
@@ -367,7 +369,8 @@ module.exports = function (ngApp, events) {
             if (isMarkdown) data.markdown = $scope.editContent;
 
             $http.put('/ajax/page/' + pageId + '/save-draft', data).then((responseData) => {
-                $scope.draftText = responseData.data.message;
+                var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
+                $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
             });
         }

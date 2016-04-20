@@ -84,7 +84,7 @@ class EntityRepo
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
-        return $query->skip($page * $count)->take($count)->get();
+        return $query->with('book')->skip($page * $count)->take($count)->get();
     }
 
     /**
@@ -114,7 +114,7 @@ class EntityRepo
     {
         return $this->restrictionService->enforcePageRestrictions($this->page)
             ->where('draft', '=', false)
-            ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
+            ->orderBy('updated_at', 'desc')->with('book')->skip($page * $count)->take($count)->get();
     }
 
     /**

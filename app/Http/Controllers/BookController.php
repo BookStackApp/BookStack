@@ -36,7 +36,6 @@ class BookController extends Controller
 
     /**
      * Display a listing of the book.
-     *
      * @return Response
      */
     public function index()
@@ -50,7 +49,6 @@ class BookController extends Controller
 
     /**
      * Show the form for creating a new book.
-     *
      * @return Response
      */
     public function create()
@@ -84,7 +82,6 @@ class BookController extends Controller
 
     /**
      * Display the specified book.
-     *
      * @param $slug
      * @return Response
      */
@@ -100,7 +97,6 @@ class BookController extends Controller
 
     /**
      * Show the form for editing the specified book.
-     *
      * @param $slug
      * @return Response
      */
@@ -114,7 +110,6 @@ class BookController extends Controller
 
     /**
      * Update the specified book in storage.
-     *
      * @param  Request $request
      * @param          $slug
      * @return Response
@@ -157,7 +152,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
-        $bookChildren = $this->bookRepo->getChildren($book);
+        $bookChildren = $this->bookRepo->getChildren($book, true);
         $books = $this->bookRepo->getAll(false);
         $this->setPageTitle('Sort Book ' . $book->getShortName());
         return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
