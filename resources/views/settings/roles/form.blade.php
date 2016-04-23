@@ -33,6 +33,7 @@
                     <tr>
                         <th></th>
                         <th>Create</th>
+                        <th>View</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>

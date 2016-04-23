@@ -5,7 +5,6 @@ use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\EntityPermission;
 use BookStack\Page;
-use BookStack\Permission;
 use BookStack\Role;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -23,18 +22,19 @@ class RestrictionService
 
     protected $entityPermission;
     protected $role;
-    protected $permission;
+
+    protected $actions = ['view', 'create', 'update', 'delete'];
 
     /**
      * RestrictionService constructor.
+     * TODO - Handle events when roles or entities change.
      * @param EntityPermission $entityPermission
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
      * @param Role $role
-     * @param Permission $permission
      */
-    public function __construct(EntityPermission $entityPermission, Book $book, Chapter $chapter, Page $page, Role $role, Permission $permission)
+    public function __construct(EntityPermission $entityPermission, Book $book, Chapter $chapter, Page $page, Role $role)
     {
         $this->currentUser = auth()->user();
         $this->userRoles = $this->currentUser ? $this->currentUser->roles->pluck('id') : [];
@@ -42,12 +42,10 @@ class RestrictionService
 
         $this->entityPermission = $entityPermission;
         $this->role = $role;
-        $this->permission = $permission;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
     }
-
 
     /**
      * Re-generate all entity permission from scratch.
@@ -65,12 +63,12 @@ class RestrictionService
         });
 
         // Chunk through all chapters
-        $this->chapter->chunk(500, function ($books) use ($roles) {
+        $this->chapter->with('book')->chunk(500, function ($books) use ($roles) {
             $this->createManyEntityPermissions($books, $roles);
         });
 
         // Chunk through all pages
-        $this->page->chunk(500, function ($books) use ($roles) {
+        $this->page->with('book', 'chapter')->chunk(500, function ($books) use ($roles) {
             $this->createManyEntityPermissions($books, $roles);
         });
     }
@@ -85,16 +83,69 @@ class RestrictionService
         $entityPermissions = [];
         foreach ($entities as $entity) {
             foreach ($roles as $role) {
-                $entityPermissions[] = $this->createEntityPermission($entity, $role);
+                foreach ($this->actions as $action) {
+                    $entityPermissions[] = $this->createEntityPermissionData($entity, $role, $action);
+                }
             }
         }
         $this->entityPermission->insert($entityPermissions);
     }
 
 
-    protected function createEntityPermissionData(Entity $entity, Role $role)
+    protected function createEntityPermissionData(Entity $entity, Role $role, $action)
     {
-        // TODO - Check the permission values and return an EntityPermission
+        $permissionPrefix = $entity->getType() . '-' . $action;
+        $roleHasPermission = $role->hasPermission($permissionPrefix . '-all');
+        $roleHasPermissionOwn = $role->hasPermission($permissionPrefix . '-own');
+
+        if ($entity->isA('book')) {
+
+            if (!$entity->restricted) {
+                return $this->createEntityPermissionDataArray($entity, $role, $action, $roleHasPermission, $roleHasPermissionOwn);
+            } else {
+                $hasAccess = $entity->hasRestriction($role->id, $action);
+                return $this->createEntityPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
+            }
+
+        } elseif ($entity->isA('chapter')) {
+
+            if (!$entity->restricted) {
+                $hasAccessToBook = $entity->book->hasRestriction($role->id, $action);
+                return $this->createEntityPermissionDataArray($entity, $role, $action,
+                    ($roleHasPermission && $hasAccessToBook), ($roleHasPermissionOwn && $hasAccessToBook));
+            } else {
+                $hasAccess = $entity->hasRestriction($role->id, $action);
+                return $this->createEntityPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
+            }
+
+        } elseif ($entity->isA('page')) {
+
+            if (!$entity->restricted) {
+                $hasAccessToBook = $entity->book->hasRestriction($role->id, $action);
+                $hasAccessToChapter = $entity->chapter ? ($entity->chapter->hasRestriction($role->id, $action)) : true;
+                return $this->createEntityPermissionDataArray($entity, $role, $action,
+                    ($roleHasPermission && $hasAccessToBook && $hasAccessToChapter),
+                    ($roleHasPermissionOwn && $hasAccessToBook && $hasAccessToChapter));
+            } else {
+                $hasAccess = $entity->hasRestriction($role->id, $action);
+                return $this->createEntityPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
+            }
+
+        }
+    }
+
+    protected function createEntityPermissionDataArray(Entity $entity, Role $role, $action, $permissionAll, $permissionOwn)
+    {
+        $entityClass = get_class($entity);
+        return [
+            'role_id'            => $role->id,
+            'entity_id'          => $entity->id,
+            'entity_type'        => $entityClass,
+            'action'             => $action,
+            'has_permission'     => $permissionAll,
+            'has_permission_own' => $permissionOwn,
+            'created_by'         => $entity->created_by
+        ];
     }
 
     /**
@@ -157,86 +208,29 @@ class RestrictionService
 
         if ($this->isAdmin) return $query;
         $this->currentAction = $action;
-        return $this->pageRestrictionQuery($query);
+        return $this->entityRestrictionQuery($query);
     }
 
     /**
-     * The base query for restricting pages.
+     * The general query filter to remove all entities
+     * that the current user does not have access to.
      * @param $query
      * @return mixed
      */
-    private function pageRestrictionQuery($query)
+    protected function entityRestrictionQuery($query)
     {
-        return $query->where(function ($parentWhereQuery) {
-
-            $parentWhereQuery
-                // (Book & chapter & page) or (Book & page & NO CHAPTER) unrestricted
-                ->where(function ($query) {
-                    $query->where(function ($query) {
-                        $query->whereExists(function ($query) {
-                            $query->select('*')->from('chapters')
-                                ->whereRaw('chapters.id=pages.chapter_id')
-                                ->where('restricted', '=', false);
-                        })->whereExists(function ($query) {
-                            $query->select('*')->from('books')
-                                ->whereRaw('books.id=pages.book_id')
-                                ->where('restricted', '=', false);
-                        })->where('restricted', '=', false);
-                    })->orWhere(function ($query) {
-                        $query->where('restricted', '=', false)->where('chapter_id', '=', 0)
-                            ->whereExists(function ($query) {
-                                $query->select('*')->from('books')
-                                    ->whereRaw('books.id=pages.book_id')
-                                    ->where('restricted', '=', false);
+        return $query->where(function ($parentQuery) {
+            $parentQuery->whereHas('permissions', function ($permissionQuery) {
+                $permissionQuery->whereIn('role_id', $this->userRoles)
+                    ->where('action', '=', $this->currentAction)
+                    ->where(function ($query) {
+                        $query->where('has_permission', '=', true)
+                            ->orWhere(function ($query) {
+                                $query->where('has_permission_own', '=', true)
+                                    ->where('created_by', '=', $this->currentUser->id);
                             });
                     });
-                })
-                // Page unrestricted, Has no chapter & book has accepted restrictions
-                ->orWhere(function ($query) {
-                    $query->where('restricted', '=', false)
-                        ->whereExists(function ($query) {
-                            $query->select('*')->from('chapters')
-                                ->whereRaw('chapters.id=pages.chapter_id');
-                        }, 'and', true)
-                        ->whereExists(function ($query) {
-                            $query->select('*')->from('books')
-                                ->whereRaw('books.id=pages.book_id')
-                                ->whereExists(function ($query) {
-                                    $this->checkRestrictionsQuery($query, 'books', 'Book');
-                                });
-                        });
-                })
-                // Page unrestricted, Has an unrestricted chapter & book has accepted restrictions
-                ->orWhere(function ($query) {
-                    $query->where('restricted', '=', false)
-                        ->whereExists(function ($query) {
-                            $query->select('*')->from('chapters')
-                                ->whereRaw('chapters.id=pages.chapter_id')->where('restricted', '=', false);
-                        })
-                        ->whereExists(function ($query) {
-                            $query->select('*')->from('books')
-                                ->whereRaw('books.id=pages.book_id')
-                                ->whereExists(function ($query) {
-                                    $this->checkRestrictionsQuery($query, 'books', 'Book');
-                                });
-                        });
-                })
-                // Page unrestricted, Has a chapter with accepted permissions
-                ->orWhere(function ($query) {
-                    $query->where('restricted', '=', false)
-                        ->whereExists(function ($query) {
-                            $query->select('*')->from('chapters')
-                                ->whereRaw('chapters.id=pages.chapter_id')
-                                ->where('restricted', '=', true)
-                                ->whereExists(function ($query) {
-                                    $this->checkRestrictionsQuery($query, 'chapters', 'Chapter');
-                                });
-                        });
-                })
-                // Page has accepted permissions
-                ->orWhereExists(function ($query) {
-                    $this->checkRestrictionsQuery($query, 'pages', 'Page');
-                });
+            });
         });
     }
 
@@ -250,43 +244,7 @@ class RestrictionService
     {
         if ($this->isAdmin) return $query;
         $this->currentAction = $action;
-        return $this->chapterRestrictionQuery($query);
-    }
-
-    /**
-     * The base query for restricting chapters.
-     * @param $query
-     * @return mixed
-     */
-    private function chapterRestrictionQuery($query)
-    {
-        return $query->where(function ($parentWhereQuery) {
-
-            $parentWhereQuery
-                // Book & chapter unrestricted
-                ->where(function ($query) {
-                    $query->where('restricted', '=', false)->whereExists(function ($query) {
-                        $query->select('*')->from('books')
-                            ->whereRaw('books.id=chapters.book_id')
-                            ->where('restricted', '=', false);
-                    });
-                })
-                // Chapter unrestricted & book has accepted restrictions
-                ->orWhere(function ($query) {
-                    $query->where('restricted', '=', false)
-                        ->whereExists(function ($query) {
-                            $query->select('*')->from('books')
-                                ->whereRaw('books.id=chapters.book_id')
-                                ->whereExists(function ($query) {
-                                    $this->checkRestrictionsQuery($query, 'books', 'Book');
-                                });
-                        });
-                })
-                // Chapter has accepted permissions
-                ->orWhereExists(function ($query) {
-                    $this->checkRestrictionsQuery($query, 'chapters', 'Chapter');
-                });
-        });
+        return $this->entityRestrictionQuery($query);
     }
 
     /**
@@ -299,25 +257,7 @@ class RestrictionService
     {
         if ($this->isAdmin) return $query;
         $this->currentAction = $action;
-        return $this->bookRestrictionQuery($query);
-    }
-
-    /**
-     * The base query for restricting books.
-     * @param $query
-     * @return mixed
-     */
-    private function bookRestrictionQuery($query)
-    {
-        return $query->where(function ($parentWhereQuery) {
-            $parentWhereQuery
-                ->where('restricted', '=', false)
-                ->orWhere(function ($query) {
-                    $query->where('restricted', '=', true)->whereExists(function ($query) {
-                        $this->checkRestrictionsQuery($query, 'books', 'Book');
-                    });
-                });
-        });
+        return $this->entityRestrictionQuery($query);
     }
 
     /**
@@ -333,31 +273,23 @@ class RestrictionService
         if ($this->isAdmin) return $query;
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
+
         return $query->where(function ($query) use ($tableDetails) {
-            $query->where(function ($query) use (&$tableDetails) {
-                $query->where($tableDetails['entityTypeColumn'], '=', 'BookStack\Page')
-                    ->whereExists(function ($query) use (&$tableDetails) {
-                        $query->select('*')->from('pages')->whereRaw('pages.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                            ->where(function ($query) {
-                                $this->pageRestrictionQuery($query);
-                            });
+            $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
+                $permissionQuery->select('id')->from('entity_permissions')
+                    ->whereRaw('entity_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    ->whereRaw('entity_permissions.entity_type=' . $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
+                    ->where('action', '=', $this->currentAction)
+                    ->whereIn('role_id', $this->userRoles)
+                    ->where(function ($query) {
+                        $query->where('has_permission', '=', true)->orWhere(function ($query) {
+                            $query->where('has_permission_own', '=', true)
+                                ->where('created_by', '=', $this->currentUser->id);
+                        });
                     });
-            })->orWhere(function ($query) use (&$tableDetails) {
-                $query->where($tableDetails['entityTypeColumn'], '=', 'BookStack\Book')->whereExists(function ($query) use (&$tableDetails) {
-                    $query->select('*')->from('books')->whereRaw('books.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                        ->where(function ($query) {
-                            $this->bookRestrictionQuery($query);
-                        });
-                });
-            })->orWhere(function ($query) use (&$tableDetails) {
-                $query->where($tableDetails['entityTypeColumn'], '=', 'BookStack\Chapter')->whereExists(function ($query) use (&$tableDetails) {
-                    $query->select('*')->from('chapters')->whereRaw('chapters.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                        ->where(function ($query) {
-                            $this->chapterRestrictionQuery($query);
-                        });
-                });
             });
         });
+
     }
 
     /**
@@ -372,32 +304,24 @@ class RestrictionService
         if ($this->isAdmin) return $query;
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
-        return $query->where(function ($query) use (&$tableDetails) {
+
+        return $query->where(function ($query) use ($tableDetails) {
             $query->where(function ($query) use (&$tableDetails) {
-                $query->whereExists(function ($query) use (&$tableDetails) {
-                    $query->select('*')->from('pages')->whereRaw('pages.id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
+                    $permissionQuery->select('id')->from('entity_permissions')
+                        ->whereRaw('entity_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                        ->where('entity_type', '=', 'Bookstack\\Page')
+                        ->where('action', '=', $this->currentAction)
+                        ->whereIn('role_id', $this->userRoles)
                         ->where(function ($query) {
-                            $this->pageRestrictionQuery($query);
+                            $query->where('has_permission', '=', true)->orWhere(function ($query) {
+                                $query->where('has_permission_own', '=', true)
+                                    ->where('created_by', '=', $this->currentUser->id);
+                            });
                         });
-                })->orWhere($tableDetails['entityIdColumn'], '=', 0);
-            });
+                });
+            })->orWhere($tableDetails['entityIdColumn'], '=', 0);
         });
     }
-
-    /**
-     * The query to check the restrictions on an entity.
-     * @param $query
-     * @param $tableName
-     * @param $modelName
-     */
-    private function checkRestrictionsQuery($query, $tableName, $modelName)
-    {
-        $query->select('*')->from('restrictions')
-            ->whereRaw('restrictions.restrictable_id=' . $tableName . '.id')
-            ->where('restrictions.restrictable_type', '=', 'BookStack\\' . $modelName)
-            ->where('restrictions.action', '=', $this->currentAction)
-            ->whereIn('restrictions.role_id', $this->userRoles);
-    }
-
 
 }

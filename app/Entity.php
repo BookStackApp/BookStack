@@ -74,6 +74,15 @@ abstract class Entity extends Ownable
     }
 
     /**
+     * Get the entity permissions this is connected to.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function permissions()
+    {
+        return $this->morphMany(EntityPermission::class, 'entity');
+    }
+
+    /**
      * Allows checking of the exact class, Used to check entity type.
      * Cleaner method for is_a.
      * @param $type
@@ -81,7 +90,16 @@ abstract class Entity extends Ownable
      */
     public static function isA($type)
     {
-        return static::getClassName() === strtolower($type);
+        return static::getType() === strtolower($type);
+    }
+
+    /**
+     * Get entity type.
+     * @return mixed
+     */
+    public static function getType()
+    {
+        return strtolower(static::getClassName());
     }
 
     /**
