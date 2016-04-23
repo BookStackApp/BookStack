@@ -198,6 +198,30 @@ module.exports = function (ngApp, events) {
                 }
 
                 scope.tinymce.extraSetups.push(tinyMceSetup);
+
+                // Custom tinyMCE plugins
+                tinymce.PluginManager.add('customhr', function(editor) {
+                    editor.addCommand('InsertHorizontalRule', function() {
+                        var hrElem = document.createElement('hr');
+                        var cNode = editor.selection.getNode();
+                        var parentNode = cNode.parentNode;
+                        parentNode.insertBefore(hrElem, cNode);
+                    });
+
+                    editor.addButton('hr', {
+                        icon: 'hr',
+                        tooltip: 'Horizontal line',
+                        cmd: 'InsertHorizontalRule'
+                    });
+
+                    editor.addMenuItem('hr', {
+                        icon: 'hr',
+                        text: 'Horizontal line',
+                        cmd: 'InsertHorizontalRule',
+                        context: 'insert'
+                    });
+                });
+
                 tinymce.init(scope.tinymce);
             }
         }
