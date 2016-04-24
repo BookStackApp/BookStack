@@ -4,12 +4,14 @@ class RestrictionsTest extends TestCase
 {
     protected $user;
     protected $viewer;
+    protected $restrictionService;
 
     public function setUp()
     {
         parent::setUp();
         $this->user = $this->getNewUser();
         $this->viewer = $this->getViewer();
+        $this->restrictionService = $this->app[\BookStack\Services\RestrictionService::class];
     }
 
     protected function getViewer()
@@ -43,6 +45,8 @@ class RestrictionsTest extends TestCase
         }
         $entity->save();
         $entity->load('restrictions');
+        $this->restrictionService->buildEntityPermissionsForEntity($entity);
+        $entity->load('permissions');
     }
 
     public function test_book_view_restriction()

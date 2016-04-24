@@ -151,6 +151,7 @@ class EntityRepo
             }
         }
         $entity->save();
+        $this->restrictionService->buildEntityPermissionsForEntity($entity);
     }
 
     /**

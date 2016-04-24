@@ -2,6 +2,7 @@
 
 
 use Activity;
+use BookStack\Book;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Support\Str;
 use BookStack\Chapter;
@@ -78,11 +79,18 @@ class ChapterRepo extends EntityRepo
     /**
      * Create a new chapter from request input.
      * @param $input
-     * @return $this
+     * @param Book $book
+     * @return Chapter
      */
-    public function newFromInput($input)
+    public function createFromInput($input, Book $book)
     {
-        return $this->chapter->fill($input);
+        $chapter = $this->chapter->newInstance($input);
+        $chapter->slug = $this->findSuitableSlug($chapter->name, $book->id);
+        $chapter->created_by = auth()->user()->id;
+        $chapter->updated_by = auth()->user()->id;
+        $chapter = $book->chapters()->save($chapter);
+        $this->restrictionService->buildEntityPermissionsForEntity($chapter);
+        return $chapter;
     }
 
     /**
@@ -100,6 +108,7 @@ class ChapterRepo extends EntityRepo
         Activity::removeEntity($chapter);
         $chapter->views()->delete();
         $chapter->restrictions()->delete();
+        $this->restrictionService->deleteEntityPermissionsForEntity($chapter);
         $chapter->delete();
     }
 

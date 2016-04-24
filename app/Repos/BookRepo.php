@@ -1,5 +1,6 @@
 <?php namespace BookStack\Repos;
 
+use Alpha\B;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Support\Str;
 use BookStack\Book;
@@ -123,21 +124,43 @@ class BookRepo extends EntityRepo
 
     /**
      * Get a new book instance from request input.
-     * @param $input
+     * @param array $input
      * @return Book
      */
-    public function newFromInput($input)
+    public function createFromInput($input)
     {
-        return $this->book->newInstance($input);
+        $book = $this->book->newInstance($input);
+        $book->slug = $this->findSuitableSlug($book->name);
+        $book->created_by = auth()->user()->id;
+        $book->updated_by = auth()->user()->id;
+        $book->save();
+        $this->restrictionService->buildEntityPermissionsForEntity($book);
+        return $book;
     }
 
     /**
-     * Destroy a book identified by the given slug.
-     * @param $bookSlug
+     * Update the given book from user input.
+     * @param Book $book
+     * @param $input
+     * @return Book
      */
-    public function destroyBySlug($bookSlug)
+    public function updateFromInput(Book $book, $input)
     {
-        $book = $this->getBySlug($bookSlug);
+        $book->fill($input);
+        $book->slug = $this->findSuitableSlug($book->name, $book->id);
+        $book->updated_by = auth()->user()->id;
+        $book->save();
+        $this->restrictionService->buildEntityPermissionsForEntity($book);
+        return $book;
+    }
+
+    /**
+     * Destroy the given book.
+     * @param Book $book
+     * @throws \Exception
+     */
+    public function destroy(Book $book)
+    {
         foreach ($book->pages as $page) {
             $this->pageRepo->destroy($page);
         }
@@ -146,7 +169,17 @@ class BookRepo extends EntityRepo
         }
         $book->views()->delete();
         $book->restrictions()->delete();
+        $this->restrictionService->deleteEntityPermissionsForEntity($book);
         $book->delete();
+    }
+
+    /**
+     * Alias method to update the book permissions in the RestrictionService.
+     * @param Book $book
+     */
+    public function updateBookPermissions(Book $book)
+    {
+        $this->restrictionService->buildEntityPermissionsForEntity($book);
     }
 
     /**

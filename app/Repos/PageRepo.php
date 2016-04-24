@@ -168,6 +168,7 @@ class PageRepo extends EntityRepo
         if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
+        $this->restrictionService->buildEntityPermissionsForEntity($page);
         return $page;
     }
 
@@ -583,6 +584,7 @@ class PageRepo extends EntityRepo
         $page->views()->delete();
         $page->revisions()->delete();
         $page->restrictions()->delete();
+        $this->restrictionService->deleteEntityPermissionsForEntity($page);
         $page->delete();
     }
 

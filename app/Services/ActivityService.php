@@ -105,8 +105,16 @@ class ActivityService
      */
     public function entityActivity($entity, $count = 20, $page = 0)
     {
-        $activity = $entity->hasMany('BookStack\Activity')->orderBy('created_at', 'desc')
-            ->skip($count * $page)->take($count)->get();
+        if ($entity->isA('book')) {
+            $query = $this->activity->where('book_id', '=', $entity->id);
+        } else {
+            $query = $this->activity->where('entity_type', '=', get_class($entity))
+                ->where('entity_id', '=', $entity->id);
+        }
+        
+        $activity = $this->restrictionService
+            ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
+            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
 
         return $this->filterSimilar($activity);
     }

@@ -2,6 +2,7 @@
 
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Repos\PermissionsRepo;
+use BookStack\Services\RestrictionService;
 use Illuminate\Http\Request;
 use BookStack\Http\Requests;
 

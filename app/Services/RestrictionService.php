@@ -23,11 +23,14 @@ class RestrictionService
     protected $entityPermission;
     protected $role;
 
+    /**
+     * The actions that have permissions attached throughout the application.
+     * @var array
+     */
     protected $actions = ['view', 'create', 'update', 'delete'];
 
     /**
      * RestrictionService constructor.
-     * TODO - Handle events when roles or entities change.
      * @param EntityPermission $entityPermission
      * @param Book $book
      * @param Chapter $chapter
@@ -74,6 +77,92 @@ class RestrictionService
     }
 
     /**
+     * Create the entity permissions for a particular entity.
+     * @param Entity $entity
+     */
+    public function buildEntityPermissionsForEntity(Entity $entity)
+    {
+        $roles = $this->role->load('permissions')->all();
+        $entities = collect([$entity]);
+
+        if ($entity->isA('book')) {
+            $entities = $entities->merge($entity->chapters);
+            $entities = $entities->merge($entity->pages);
+        } elseif ($entity->isA('chapter')) {
+            $entities = $entities->merge($entity->pages);
+        }
+
+        $this->deleteManyEntityPermissionsForEntities($entities);
+        $this->createManyEntityPermissions($entities, $roles);
+    }
+
+    /**
+     * Build the entity permissions for a particular role.
+     * @param Role $role
+     */
+    public function buildEntityPermissionForRole(Role $role)
+    {
+        $roles = collect([$role]);
+
+        $this->deleteManyEntityPermissionsForRoles($roles);
+
+        // Chunk through all books
+        $this->book->chunk(500, function ($books) use ($roles) {
+            $this->createManyEntityPermissions($books, $roles);
+        });
+
+        // Chunk through all chapters
+        $this->chapter->with('book')->chunk(500, function ($books) use ($roles) {
+            $this->createManyEntityPermissions($books, $roles);
+        });
+
+        // Chunk through all pages
+        $this->page->with('book', 'chapter')->chunk(500, function ($books) use ($roles) {
+            $this->createManyEntityPermissions($books, $roles);
+        });
+    }
+
+    /**
+     * Delete the entity permissions attached to a particular role.
+     * @param Role $role
+     */
+    public function deleteEntityPermissionsForRole(Role $role)
+    {
+        $this->deleteManyEntityPermissionsForRoles([$role]);
+    }
+
+    /**
+     * Delete all of the entity permissions for a list of entities.
+     * @param Role[] $roles
+     */
+    protected function deleteManyEntityPermissionsForRoles($roles)
+    {
+        foreach ($roles as $role) {
+            $role->entityPermissions()->delete();
+        }
+    }
+
+    /**
+     * Delete the entity permissions for a particular entity.
+     * @param Entity $entity
+     */
+    public function deleteEntityPermissionsForEntity(Entity $entity)
+    {
+        $this->deleteManyEntityPermissionsForEntities([$entity]);
+    }
+
+    /**
+     * Delete all of the entity permissions for a list of entities.
+     * @param Entity[] $entities
+     */
+    protected function deleteManyEntityPermissionsForEntities($entities)
+    {
+        foreach ($entities as $entity) {
+            $entity->permissions()->delete();
+        }
+    }
+
+    /**
      * Create & Save entity permissions for many entities and permissions.
      * @param Collection $entities
      * @param Collection $roles
@@ -88,10 +177,18 @@ class RestrictionService
                 }
             }
         }
+        \Log::info(collect($entityPermissions)->where('entity_id', 1)->where('entity_type', 'BookStack\\Page')->where('role_id', 2)->all());
         $this->entityPermission->insert($entityPermissions);
     }
 
-
+    /**
+     * Create entity permission data for an entity and role
+     * for a particular action.
+     * @param Entity $entity
+     * @param Role $role
+     * @param $action
+     * @return array
+     */
     protected function createEntityPermissionData(Entity $entity, Role $role, $action)
     {
         $permissionPrefix = $entity->getType() . '-' . $action;
@@ -103,29 +200,39 @@ class RestrictionService
             if (!$entity->restricted) {
                 return $this->createEntityPermissionDataArray($entity, $role, $action, $roleHasPermission, $roleHasPermissionOwn);
             } else {
-                $hasAccess = $entity->hasRestriction($role->id, $action);
+                $hasAccess = $entity->hasActiveRestriction($role->id, $action);
                 return $this->createEntityPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
             }
 
         } elseif ($entity->isA('chapter')) {
 
             if (!$entity->restricted) {
-                $hasAccessToBook = $entity->book->hasRestriction($role->id, $action);
+                $hasExplicitAccessToBook = $entity->book->hasActiveRestriction($role->id, $action);
+                $hasPermissiveAccessToBook = !$entity->book->restricted;
                 return $this->createEntityPermissionDataArray($entity, $role, $action,
-                    ($roleHasPermission && $hasAccessToBook), ($roleHasPermissionOwn && $hasAccessToBook));
+                    ($hasExplicitAccessToBook || ($roleHasPermission && $hasPermissiveAccessToBook)),
+                    ($hasExplicitAccessToBook || ($roleHasPermissionOwn && $hasPermissiveAccessToBook)));
             } else {
-                $hasAccess = $entity->hasRestriction($role->id, $action);
+                $hasAccess = $entity->hasActiveRestriction($role->id, $action);
                 return $this->createEntityPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
             }
 
         } elseif ($entity->isA('page')) {
 
             if (!$entity->restricted) {
-                $hasAccessToBook = $entity->book->hasRestriction($role->id, $action);
-                $hasAccessToChapter = $entity->chapter ? ($entity->chapter->hasRestriction($role->id, $action)) : true;
+                $hasExplicitAccessToBook = $entity->book->hasActiveRestriction($role->id, $action);
+                $hasPermissiveAccessToBook = !$entity->book->restricted;
+                $hasExplicitAccessToChapter = $entity->chapter && $entity->chapter->hasActiveRestriction($role->id, $action);
+                $hasPermissiveAccessToChapter = $entity->chapter && !$entity->chapter->restricted;
+                $acknowledgeChapter = ($entity->chapter && $entity->chapter->restricted);
+
+                $hasExplicitAccessToParents = $acknowledgeChapter ? $hasExplicitAccessToChapter : $hasExplicitAccessToBook;
+                $hasPermissiveAccessToParents = $acknowledgeChapter ? $hasPermissiveAccessToChapter : $hasPermissiveAccessToBook;
+
                 return $this->createEntityPermissionDataArray($entity, $role, $action,
-                    ($roleHasPermission && $hasAccessToBook && $hasAccessToChapter),
-                    ($roleHasPermissionOwn && $hasAccessToBook && $hasAccessToChapter));
+                    ($hasExplicitAccessToParents || ($roleHasPermission && $hasPermissiveAccessToParents)),
+                    ($hasExplicitAccessToParents || ($roleHasPermissionOwn && $hasPermissiveAccessToParents))
+                );
             } else {
                 $hasAccess = $entity->hasRestriction($role->id, $action);
                 return $this->createEntityPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
@@ -134,6 +241,16 @@ class RestrictionService
         }
     }
 
+    /**
+     * Create an array of data with the information of an entity permissions.
+     * Used to build data for bulk insertion.
+     * @param Entity $entity
+     * @param Role $role
+     * @param $action
+     * @param $permissionAll
+     * @param $permissionOwn
+     * @return array
+     */
     protected function createEntityPermissionDataArray(Entity $entity, Role $role, $action, $permissionAll, $permissionOwn)
     {
         $entityClass = get_class($entity);
@@ -151,22 +268,30 @@ class RestrictionService
     /**
      * Checks if an entity has a restriction set upon it.
      * @param Entity $entity
-     * @param $action
+     * @param $permission
      * @return bool
      */
-    public function checkIfEntityRestricted(Entity $entity, $action)
+    public function checkEntityUserAccess(Entity $entity, $permission)
     {
         if ($this->isAdmin) return true;
-        $this->currentAction = $action;
+        $explodedPermission = explode('-', $permission);
+
         $baseQuery = $entity->where('id', '=', $entity->id);
-        if ($entity->isA('page')) {
-            return $this->pageRestrictionQuery($baseQuery)->count() > 0;
-        } elseif ($entity->isA('chapter')) {
-            return $this->chapterRestrictionQuery($baseQuery)->count() > 0;
-        } elseif ($entity->isA('book')) {
-            return $this->bookRestrictionQuery($baseQuery)->count() > 0;
+
+        $nonEntityPermissions = ['restrictions'];
+
+        // Handle non entity specific permissions
+        if (in_array($explodedPermission[0], $nonEntityPermissions)) {
+            $allPermission = $this->currentUser && $this->currentUser->can($permission . '-all');
+            $ownPermission = $this->currentUser && $this->currentUser->can($permission . '-own');
+            $this->currentAction = 'view';
+            $isOwner = $this->currentUser && $this->currentUser->id === $entity->created_by;
+            return ($allPermission || ($isOwner && $ownPermission));
         }
-        return false;
+
+        $action = end($explodedPermission);
+        $this->currentAction = $action;
+        return $this->entityRestrictionQuery($baseQuery)->count() > 0;
     }
 
     /**
@@ -186,29 +311,6 @@ class RestrictionService
         } elseif ($entity->isA('book')) {
             return $entity->restricted;
         }
-    }
-
-    /**
-     * Add restrictions for a page query
-     * @param $query
-     * @param string $action
-     * @return mixed
-     */
-    public function enforcePageRestrictions($query, $action = 'view')
-    {
-        // Prevent drafts being visible to others.
-        $query = $query->where(function ($query) {
-            $query->where('draft', '=', false);
-            if ($this->currentUser) {
-                $query->orWhere(function ($query) {
-                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser->id);
-                });
-            }
-        });
-
-        if ($this->isAdmin) return $query;
-        $this->currentAction = $action;
-        return $this->entityRestrictionQuery($query);
     }
 
     /**
@@ -232,6 +334,29 @@ class RestrictionService
                     });
             });
         });
+    }
+
+    /**
+     * Add restrictions for a page query
+     * @param $query
+     * @param string $action
+     * @return mixed
+     */
+    public function enforcePageRestrictions($query, $action = 'view')
+    {
+        // Prevent drafts being visible to others.
+        $query = $query->where(function ($query) {
+            $query->where('draft', '=', false);
+            if ($this->currentUser) {
+                $query->orWhere(function ($query) {
+                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser->id);
+                });
+            }
+        });
+
+        if ($this->isAdmin) return $query;
+        $this->currentAction = $action;
+        return $this->entityRestrictionQuery($query);
     }
 
     /**
@@ -316,7 +441,7 @@ class RestrictionService
                         ->where(function ($query) {
                             $query->where('has_permission', '=', true)->orWhere(function ($query) {
                                 $query->where('has_permission_own', '=', true)
-                                    ->where('created_by', '=', $this->currentUser->id);
+                                    ->where('created_by', '=', $this->currentUser ? $this->currentUser->id : 0);
                             });
                         });
                 });

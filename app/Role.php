@@ -18,6 +18,15 @@ class Role extends Model
     }
 
     /**
+     * Get all related entity permissions.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function entityPermissions()
+    {
+        return $this->hasMany(EntityPermission::class);
+    }
+
+    /**
      * The permissions that belong to the role.
      */
     public function permissions()

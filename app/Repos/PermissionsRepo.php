@@ -4,6 +4,7 @@
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Permission;
 use BookStack\Role;
+use BookStack\Services\RestrictionService;
 use Setting;
 
 class PermissionsRepo
@@ -11,16 +12,19 @@ class PermissionsRepo
 
     protected $permission;
     protected $role;
+    protected $restrictionService;
 
     /**
      * PermissionsRepo constructor.
-     * @param $permission
-     * @param $role
+     * @param Permission $permission
+     * @param Role $role
+     * @param RestrictionService $restrictionService
      */
-    public function __construct(Permission $permission, Role $role)
+    public function __construct(Permission $permission, Role $role, RestrictionService $restrictionService)
     {
         $this->permission = $permission;
         $this->role = $role;
+        $this->restrictionService = $restrictionService;
     }
 
     /**
@@ -69,6 +73,7 @@ class PermissionsRepo
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
+        $this->restrictionService->buildEntityPermissionForRole($role);
         return $role;
     }
 
@@ -91,6 +96,7 @@ class PermissionsRepo
 
         $role->fill($roleData);
         $role->save();
+        $this->restrictionService->buildEntityPermissionForRole($role);
     }
 
     /**
@@ -136,6 +142,7 @@ class PermissionsRepo
             }
         }
 
+        $this->restrictionService->deleteEntityPermissionsForRole($role);
         $role->delete();
     }
 

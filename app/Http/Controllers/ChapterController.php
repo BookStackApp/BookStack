@@ -57,12 +57,9 @@ class ChapterController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('chapter-create', $book);
 
-        $chapter = $this->chapterRepo->newFromInput($request->all());
-        $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id);
-        $chapter->priority = $this->bookRepo->getNewPriority($book);
-        $chapter->created_by = auth()->user()->id;
-        $chapter->updated_by = auth()->user()->id;
-        $book->chapters()->save($chapter);
+        $input = $request->all();
+        $input['priority'] = $this->bookRepo->getNewPriority($book);
+        $chapter = $this->chapterRepo->createFromInput($request->all(), $book);
         Activity::add($chapter, 'chapter_create', $book->id);
         return redirect($chapter->getUrl());
     }

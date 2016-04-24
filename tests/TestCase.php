@@ -65,6 +65,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $page = factory(BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
         $book->chapters()->saveMany([$chapter]);
         $chapter->pages()->saveMany([$page]);
+        $restrictionService = $this->app[\BookStack\Services\RestrictionService::class];
+        $restrictionService->buildEntityPermissionsForEntity($book);
         return [
             'book' => $book,
             'chapter' => $chapter,

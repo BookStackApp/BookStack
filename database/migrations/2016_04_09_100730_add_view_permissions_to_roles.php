@@ -23,6 +23,7 @@ class AddViewPermissionsToRoles extends Migration
                 $newPermission->name = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
                 $newPermission->display_name = $op . ' ' . $entity . 's';
                 $newPermission->save();
+                // Assign view permissions to all current roles
                 foreach ($currentRoles as $role) {
                     $role->attachPermission($newPermission);
                 }

@@ -1,6 +1,4 @@
-<?php
-
-namespace BookStack;
+<?php namespace BookStack;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +14,7 @@ class Permission extends Model
 
     /**
      * Get the permission object by name.
-     * @param $roleName
+     * @param $name
      * @return mixed
      */
     public static function getByName($name)

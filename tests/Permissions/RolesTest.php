@@ -7,7 +7,15 @@ class RolesTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->user = $this->getNewBlankUser();
+        $this->user = $this->getViewer();
+    }
+
+    protected function getViewer()
+    {
+        $role = \BookStack\Role::getRole('viewer');
+        $viewer = $this->getNewBlankUser();
+        $viewer->attachRole($role);;
+        return $viewer;
     }
 
     /**
@@ -141,7 +149,7 @@ class RolesTest extends TestCase
 
     public function test_restrictions_manage_own_permission()
     {
-        $otherUsersPage = \BookStack\Page::take(1)->get()->first();
+        $otherUsersPage = \BookStack\Page::first();
         $content = $this->createEntityChainBelongingToUser($this->user);
         // Check can't restrict other's content
         $this->actingAs($this->user)->visit($otherUsersPage->getUrl())
