@@ -15,7 +15,7 @@ module.exports = function (ngApp, events) {
      */
     ngApp.directive('toggleSwitch', function () {
         return {
-            restrict: 'E',
+            restrict: 'A',
             template: toggleSwitchTemplate,
             scope: true,
             link: function (scope, element, attrs) {

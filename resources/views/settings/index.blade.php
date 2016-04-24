@@ -21,12 +21,12 @@
                 </div>
                 <div class="form-group">
                     <label>Allow public viewing?</label>
-                    <toggle-switch name="setting-app-public" value="{{ setting('app-public') }}"></toggle-switch>
+                    <div toggle-switch name="setting-app-public" value="{{ setting('app-public') }}"></div>
                 </div>
                 <div class="form-group">
                     <label>Enable higher security image uploads?</label>
                     <p class="small">For performance reasons, all images are public by default, This option adds a random, hard-to-guess characters in front of image names. Ensure directory indexes are not enabled to prevent easy access.</p>
-                    <toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></toggle-switch>
+                    <div toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></div>
                 </div>
                 <div class="form-group">
                     <label for="setting-app-editor">Page editor</label>
@@ -61,7 +61,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="setting-registration-enabled">Allow registration?</label>
-                    <toggle-switch name="setting-registration-enabled" value="{{ setting('registration-enabled') }}"></toggle-switch>
+                    <div toggle-switch name="setting-registration-enabled" value="{{ setting('registration-enabled') }}"></div>
                 </div>
                 <div class="form-group">
                     <label for="setting-registration-role">Default user role after registration</label>
@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <label for="setting-registration-confirmation">Require email confirmation?</label>
                     <p class="small">If domain restriction is used then email confirmation will be required and the below value will be ignored.</p>
-                    <toggle-switch name="setting-registration-confirmation" value="{{ setting('registration-confirmation') }}"></toggle-switch>
+                    <div toggle-switch name="setting-registration-confirmation" value="{{ setting('registration-confirmation') }}"></div>
                 </div>
             </div>
             <div class="col-md-6">
