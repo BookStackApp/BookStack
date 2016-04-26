@@ -69,7 +69,7 @@ class PageController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $draft = $this->pageRepo->getById($pageId, true);
-        $this->checkOwnablePermission('page-create', $draft);
+        $this->checkOwnablePermission('page-create', $book);
         $this->setPageTitle('Edit Page Draft');
 
         return view('pages/create', ['draft' => $draft, 'book' => $book]);
