@@ -1,8 +1,5 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
-
-use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
@@ -36,11 +33,16 @@ class Role extends Model
 
     /**
      * Check if this role has a permission.
-     * @param $permission
+     * @param $permissionName
+     * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission($permissionName)
     {
-        return $this->permissions->pluck('name')->contains($permission);
+        $permissions = $this->getRelationValue('permissions');
+        foreach ($permissions as $permission) {
+            if ($permission->getRawAttribute('name') === $permissionName) return true;
+        }
+        return false;
     }
 
     /**

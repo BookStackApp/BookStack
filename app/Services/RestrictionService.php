@@ -54,21 +54,21 @@ class RestrictionService
         $this->entityPermission->truncate();
 
         // Get all roles (Should be the most limited dimension)
-        $roles = $this->role->load('permissions')->all();
+        $roles = $this->role->with('permissions')->get();
 
         // Chunk through all books
-        $this->book->chunk(500, function ($books) use ($roles) {
+        $this->book->with('restrictions')->chunk(500, function ($books) use ($roles) {
             $this->createManyEntityPermissions($books, $roles);
         });
 
         // Chunk through all chapters
-        $this->chapter->with('book')->chunk(500, function ($books) use ($roles) {
-            $this->createManyEntityPermissions($books, $roles);
+        $this->chapter->with('book', 'restrictions')->chunk(500, function ($chapters) use ($roles) {
+            $this->createManyEntityPermissions($chapters, $roles);
         });
 
         // Chunk through all pages
-        $this->page->with('book', 'chapter')->chunk(500, function ($books) use ($roles) {
-            $this->createManyEntityPermissions($books, $roles);
+        $this->page->with('book', 'chapter', 'restrictions')->chunk(500, function ($pages) use ($roles) {
+            $this->createManyEntityPermissions($pages, $roles);
         });
     }
 
@@ -78,7 +78,7 @@ class RestrictionService
      */
     public function buildEntityPermissionsForEntity(Entity $entity)
     {
-        $roles = $this->role->load('permissions')->all();
+        $roles = $this->role->with('permissions')->get();
         $entities = collect([$entity]);
 
         if ($entity->isA('book')) {
@@ -103,17 +103,17 @@ class RestrictionService
         $this->deleteManyEntityPermissionsForRoles($roles);
 
         // Chunk through all books
-        $this->book->chunk(500, function ($books) use ($roles) {
+        $this->book->with('restrictions')->chunk(500, function ($books) use ($roles) {
             $this->createManyEntityPermissions($books, $roles);
         });
 
         // Chunk through all chapters
-        $this->chapter->with('book')->chunk(500, function ($books) use ($roles) {
+        $this->chapter->with('book', 'restrictions')->chunk(500, function ($books) use ($roles) {
             $this->createManyEntityPermissions($books, $roles);
         });
 
         // Chunk through all pages
-        $this->page->with('book', 'chapter')->chunk(500, function ($books) use ($roles) {
+        $this->page->with('book', 'chapter', 'restrictions')->chunk(500, function ($books) use ($roles) {
             $this->createManyEntityPermissions($books, $roles);
         });
     }
@@ -272,13 +272,13 @@ class RestrictionService
     {
         $entityClass = get_class($entity);
         return [
-            'role_id'            => $role->id,
-            'entity_id'          => $entity->id,
+            'role_id'            => $role->getRawAttribute('id'),
+            'entity_id'          => $entity->getRawAttribute('id'),
             'entity_type'        => $entityClass,
             'action'             => $action,
             'has_permission'     => $permissionAll,
             'has_permission_own' => $permissionOwn,
-            'created_by'         => $entity->created_by
+            'created_by'         => $entity->getRawAttribute('created_by')
         ];
     }
 

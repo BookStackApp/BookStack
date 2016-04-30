@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
 
 abstract class Ownable extends Model
 {

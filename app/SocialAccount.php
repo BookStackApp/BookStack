@@ -1,8 +1,5 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
-
-use Illuminate\Database\Eloquent\Model;
 
 class SocialAccount extends Model
 {

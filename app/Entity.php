@@ -82,8 +82,7 @@ abstract class Entity extends Ownable
      */
     public function hasActiveRestriction($role_id, $action)
     {
-        return $this->restricted && $this->restrictions()
-            ->where('role_id', '=', $role_id)->where('action', '=', $action)->count() > 0;
+        return $this->getRawAttribute('restricted') && $this->hasRestriction($role_id, $action);
     }
 
     /**

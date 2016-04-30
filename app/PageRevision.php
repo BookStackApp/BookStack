@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
 
 class PageRevision extends Model
 {

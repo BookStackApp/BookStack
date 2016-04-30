@@ -1,8 +1,4 @@
-<?php
-
-namespace BookStack;
-
-use Illuminate\Database\Eloquent\Model;
+<?php namespace BookStack;
 
 class View extends Model
 {

@@ -2,8 +2,6 @@
 
 namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * @property string  key
  * @property \User   user
