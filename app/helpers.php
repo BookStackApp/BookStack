@@ -39,7 +39,6 @@ if (!function_exists('versioned_asset')) {
  */
 function userCan($permission, \BookStack\Ownable $ownable = null)
 {
-    if (!auth()->check()) return false;
     if ($ownable === null) {
         return auth()->user() && auth()->user()->can($permission);
     }

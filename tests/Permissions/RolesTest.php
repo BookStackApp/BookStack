@@ -544,4 +544,27 @@ class RolesTest extends TestCase
             ->dontSeeInElement('.book-content', $otherPage->name);
     }
 
+    public function test_public_role_not_visible_in_user_edit_screen()
+    {
+        $user = \BookStack\User::first();
+        $this->asAdmin()->visit('/settings/users/' . $user->id)
+            ->seeElement('#roles-admin')
+            ->dontSeeElement('#roles-public');
+    }
+
+    public function test_public_role_not_visible_in_role_listing()
+    {
+        $this->asAdmin()->visit('/settings/roles')
+            ->see('Admin')
+            ->dontSee('Public');
+    }
+
+    public function test_public_role_not_visible_in_default_role_setting()
+    {
+        $this->asAdmin()->visit('/settings')
+            ->seeElement('[data-role-name="admin"]')
+            ->dontSeeElement('[data-role-name="public"]');
+
+    }
+
 }

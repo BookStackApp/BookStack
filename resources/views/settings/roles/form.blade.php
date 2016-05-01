@@ -31,11 +31,11 @@
                 </p>
                 <table class="table">
                     <tr>
-                        <th></th>
-                        <th>Create</th>
-                        <th>View</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th width="20%"></th>
+                        <th width="20%">Create</th>
+                        <th width="20%">View</th>
+                        <th width="20%">Edit</th>
+                        <th width="20%">Delete</th>
                     </tr>
                     <tr>
                         <td>Books</td>
@@ -96,6 +96,7 @@
                     <tr>
                         <td>Images</td>
                         <td>@include('settings/roles/checkbox', ['permission' => 'image-create-all'])</td>
+                        <td style="line-height:1.2;"><small class="faded">Controlled by the asset they are uploaded to</small></td>
                         <td>
                             <label>@include('settings/roles/checkbox', ['permission' => 'image-update-own']) Own</label>
                             <label>@include('settings/roles/checkbox', ['permission' => 'image-update-all']) All</label>

@@ -72,4 +72,24 @@ class Role extends Model
     {
         return static::where('name', '=', $roleName)->first();
     }
+
+    /**
+     * Get the role object for the specified system role.
+     * @param $roleName
+     * @return mixed
+     */
+    public static function getSystemRole($roleName)
+    {
+        return static::where('system_name', '=', $roleName)->first();
+    }
+
+    /**
+     * GEt all visible roles
+     * @return mixed
+     */
+    public static function visible()
+    {
+        return static::where('hidden', '=', false)->orderBy('name')->get();
+    }
+
 }

@@ -14,6 +14,8 @@ class PermissionsRepo
     protected $role;
     protected $restrictionService;
 
+    protected $systemRoles = ['admin', 'public'];
+
     /**
      * PermissionsRepo constructor.
      * @param Permission $permission
@@ -33,7 +35,7 @@ class PermissionsRepo
      */
     public function getAllRoles()
     {
-        return $this->role->all();
+        return $this->role->where('hidden', '=', false)->get();
     }
 
     /**
@@ -43,7 +45,7 @@ class PermissionsRepo
      */
     public function getAllRolesExcept(Role $role)
     {
-        return $this->role->where('id', '!=', $role->id)->get();
+        return $this->role->where('id', '!=', $role->id)->where('hidden', '=', false)->get();
     }
 
     /**
@@ -82,10 +84,14 @@ class PermissionsRepo
      * Ensure Admin role always has all permissions.
      * @param $roleId
      * @param $roleData
+     * @throws PermissionsException
      */
     public function updateRole($roleId, $roleData)
     {
         $role = $this->role->findOrFail($roleId);
+
+        if ($role->hidden) throw new PermissionsException("Cannot update a hidden role");
+
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
 
@@ -128,8 +134,8 @@ class PermissionsRepo
         $role = $this->role->findOrFail($roleId);
 
         // Prevent deleting admin role or default registration role.
-        if ($role->name === 'admin') {
-            throw new PermissionsException('The admin role cannot be deleted');
+        if ($role->system_name && in_array($role->system_name, $this->systemRoles)) {
+            throw new PermissionsException('This role is a system role and cannot be deleted');
         } else if ($role->id == setting('registration-role')) {
             throw new PermissionsException('This role cannot be deleted while set as the default registration role.');
         }

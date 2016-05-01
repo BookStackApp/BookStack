@@ -35,15 +35,38 @@ class RestrictionService
     public function __construct(EntityPermission $entityPermission, Book $book, Chapter $chapter, Page $page, Role $role)
     {
         $this->currentUser = auth()->user();
-        if ($this->currentUser === null) $this->currentUser = new User(['id' => 0]);
-        $this->userRoles = $this->currentUser ? $this->currentUser->roles->pluck('id') : [];
-        $this->isAdmin = $this->currentUser ? $this->currentUser->hasRole('admin') : false;
+        $userSet = $this->currentUser !== null;
+        $this->userRoles = false;
+        $this->isAdmin = $userSet ? $this->currentUser->hasRole('admin') : false;
+        if (!$userSet) $this->currentUser = new User();
 
         $this->entityPermission = $entityPermission;
         $this->role = $role;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
+    }
+
+    /**
+     * Get the roles for the current user;
+     * @return array|bool
+     */
+    protected function getRoles()
+    {
+        if ($this->userRoles !== false) return $this->userRoles;
+
+        $roles = [];
+
+        if (auth()->guest()) {
+            $roles[] = $this->role->getSystemRole('public')->id;
+            return $roles;
+        }
+
+
+        foreach ($this->currentUser->roles as $role) {
+            $roles[] = $role->id;
+        }
+        return $roles;
     }
 
     /**
@@ -346,7 +369,7 @@ class RestrictionService
     {
         return $query->where(function ($parentQuery) {
             $parentQuery->whereHas('permissions', function ($permissionQuery) {
-                $permissionQuery->whereIn('role_id', $this->userRoles)
+                $permissionQuery->whereIn('role_id', $this->getRoles())
                     ->where('action', '=', $this->currentAction)
                     ->where(function ($query) {
                         $query->where('has_permission', '=', true)
@@ -428,7 +451,7 @@ class RestrictionService
                     ->whereRaw('entity_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                     ->whereRaw('entity_permissions.entity_type=' . $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
                     ->where('action', '=', $this->currentAction)
-                    ->whereIn('role_id', $this->userRoles)
+                    ->whereIn('role_id', $this->getRoles())
                     ->where(function ($query) {
                         $query->where('has_permission', '=', true)->orWhere(function ($query) {
                             $query->where('has_permission_own', '=', true)
@@ -460,7 +483,7 @@ class RestrictionService
                         ->whereRaw('entity_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where('entity_type', '=', 'Bookstack\\Page')
                         ->where('action', '=', $this->currentAction)
-                        ->whereIn('role_id', $this->userRoles)
+                        ->whereIn('role_id', $this->getRoles())
                         ->where(function ($query) {
                             $query->where('has_permission', '=', true)->orWhere(function ($query) {
                                 $query->where('has_permission_own', '=', true)
