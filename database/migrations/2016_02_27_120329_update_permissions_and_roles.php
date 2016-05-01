@@ -13,29 +13,31 @@ class UpdatePermissionsAndRoles extends Migration
     public function up()
     {
         // Get roles with permissions we need to change
-        $adminRole = \BookStack\Role::getRole('admin');
-        $editorRole = \BookStack\Role::getRole('editor');
+        $adminRoleId = DB::table('roles')->where('name', '=', 'admin')->first()->id;
+        $editorRole = DB::table('roles')->where('name', '=', 'editor')->first();
 
         // Delete old permissions
-        $permissions = \BookStack\Permission::all();
-        $permissions->each(function ($permission) {
-            $permission->delete();
-        });
+        $permissions = DB::table('permissions')->delete();
 
         // Create & attach new admin permissions
         $permissionsToCreate = [
             'settings-manage' => 'Manage Settings',
             'users-manage' => 'Manage Users',
             'user-roles-manage' => 'Manage Roles & Permissions',
-            'restrictions-manage-all' => 'Manage All Entity Restrictions',
-            'restrictions-manage-own' => 'Manage Entity Restrictions On Own Content'
+            'restrictions-manage-all' => 'Manage All Entity Permissions',
+            'restrictions-manage-own' => 'Manage Entity Permissions On Own Content'
         ];
         foreach ($permissionsToCreate as $name => $displayName) {
-            $newPermission = new \BookStack\Permission();
-            $newPermission->name = $name;
-            $newPermission->display_name = $displayName;
-            $newPermission->save();
-            $adminRole->attachPermission($newPermission);
+            $permissionId = DB::table('permissions')->insertGetId([
+                'name' => $name,
+                'display_name' => $displayName,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => $adminRoleId,
+                'permission_id' => $permissionId
+            ]);
         }
 
         // Create & attach new entity permissions
@@ -43,12 +45,22 @@ class UpdatePermissionsAndRoles extends Migration
         $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \BookStack\Permission();
-                $newPermission->name = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
-                $newPermission->display_name = $op . ' ' . $entity . 's';
-                $newPermission->save();
-                $adminRole->attachPermission($newPermission);
-                if ($editorRole !== null) $editorRole->attachPermission($newPermission);
+                $permissionId = DB::table('permissions')->insertGetId([
+                    'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+                    'display_name' => $op . ' ' . $entity . 's',
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                DB::table('permission_role')->insert([
+                    'role_id' => $adminRoleId,
+                    'permission_id' => $permissionId
+                ]);
+                if ($editorRole !== null) {
+                    DB::table('permission_role')->insert([
+                        'role_id' => $editorRole->id,
+                        'permission_id' => $permissionId
+                    ]);
+                }
             }
         }
 
@@ -62,24 +74,26 @@ class UpdatePermissionsAndRoles extends Migration
     public function down()
     {
         // Get roles with permissions we need to change
-        $adminRole = \BookStack\Role::getRole('admin');
+        $adminRoleId = DB::table('roles')->where('name', '=', 'admin')->first()->id;
 
         // Delete old permissions
-        $permissions = \BookStack\Permission::all();
-        $permissions->each(function ($permission) {
-            $permission->delete();
-        });
+        $permissions = DB::table('permissions')->delete();
 
         // Create default CRUD permissions and allocate to admins and editors
         $entities = ['Book', 'Page', 'Chapter', 'Image'];
         $ops = ['Create', 'Update', 'Delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \BookStack\Permission();
-                $newPermission->name = strtolower($entity) . '-' . strtolower($op);
-                $newPermission->display_name = $op . ' ' . $entity . 's';
-                $newPermission->save();
-                $adminRole->attachPermission($newPermission);
+                $permissionId = DB::table('permissions')->insertGetId([
+                    'name' => strtolower($entity) . '-' . strtolower($op),
+                    'display_name' => $op . ' ' . $entity . 's',
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                DB::table('permission_role')->insert([
+                    'role_id' => $adminRoleId,
+                    'permission_id' => $permissionId
+                ]);
             }
         }
 
@@ -88,11 +102,16 @@ class UpdatePermissionsAndRoles extends Migration
         $ops = ['Create', 'Update', 'Delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \BookStack\Permission();
-                $newPermission->name = strtolower($entity) . '-' . strtolower($op);
-                $newPermission->display_name = $op . ' ' . $entity;
-                $newPermission->save();
-                $adminRole->attachPermission($newPermission);
+                $permissionId = DB::table('permissions')->insertGetId([
+                    'name' => strtolower($entity) . '-' . strtolower($op),
+                    'display_name' => $op . ' ' . $entity,
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                DB::table('permission_role')->insert([
+                    'role_id' => $adminRoleId,
+                    'permission_id' => $permissionId
+                ]);
             }
         }
     }

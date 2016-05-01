@@ -1,24 +1,18 @@
 <?php namespace BookStack;
 
+
 class EntityPermission extends Model
 {
+
+    protected $fillable = ['role_id', 'action'];
     public $timestamps = false;
 
     /**
-     * Get the role that this points to.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get all this restriction's attached entity.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function role()
+    public function restrictable()
     {
-        return $this->belongsTo(Role::class);
-    }
-
-    /**
-     * Get the entity this points to.
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
-     */
-    public function entity()
-    {
-        return $this->morphOne(Entity::class, 'entity');
+        return $this->morphTo('restrictable');
     }
 }

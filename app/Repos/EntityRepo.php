@@ -4,7 +4,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Page;
-use BookStack\Services\RestrictionService;
+use BookStack\Services\PermissionService;
 use BookStack\User;
 
 class EntityRepo
@@ -26,9 +26,9 @@ class EntityRepo
     public $page;
 
     /**
-     * @var RestrictionService
+     * @var PermissionService
      */
-    protected $restrictionService;
+    protected $permissionService;
 
     /**
      * EntityService constructor.
@@ -38,7 +38,7 @@ class EntityRepo
         $this->book = app(Book::class);
         $this->chapter = app(Chapter::class);
         $this->page = app(Page::class);
-        $this->restrictionService = app(RestrictionService::class);
+        $this->permissionService = app(PermissionService::class);
     }
 
     /**
@@ -50,7 +50,7 @@ class EntityRepo
      */
     public function getRecentlyCreatedBooks($count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->restrictionService->enforceBookRestrictions($this->book)
+        $query = $this->permissionService->enforceBookRestrictions($this->book)
             ->orderBy('created_at', 'desc');
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
@@ -66,7 +66,7 @@ class EntityRepo
      */
     public function getRecentlyUpdatedBooks($count = 20, $page = 0)
     {
-        return $this->restrictionService->enforceBookRestrictions($this->book)
+        return $this->permissionService->enforceBookRestrictions($this->book)
             ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
     }
 
@@ -79,7 +79,7 @@ class EntityRepo
      */
     public function getRecentlyCreatedPages($count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->restrictionService->enforcePageRestrictions($this->page)
+        $query = $this->permissionService->enforcePageRestrictions($this->page)
             ->orderBy('created_at', 'desc')->where('draft', '=', false);
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
@@ -96,7 +96,7 @@ class EntityRepo
      */
     public function getRecentlyCreatedChapters($count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->restrictionService->enforceChapterRestrictions($this->chapter)
+        $query = $this->permissionService->enforceChapterRestrictions($this->chapter)
             ->orderBy('created_at', 'desc');
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
@@ -112,7 +112,7 @@ class EntityRepo
      */
     public function getRecentlyUpdatedPages($count = 20, $page = 0)
     {
-        return $this->restrictionService->enforcePageRestrictions($this->page)
+        return $this->permissionService->enforcePageRestrictions($this->page)
             ->where('draft', '=', false)
             ->orderBy('updated_at', 'desc')->with('book')->skip($page * $count)->take($count)->get();
     }
@@ -136,14 +136,14 @@ class EntityRepo
      * @param $request
      * @param Entity $entity
      */
-    public function updateRestrictionsFromRequest($request, Entity $entity)
+    public function updateEntityPermissionsFromRequest($request, Entity $entity)
     {
         $entity->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
-        $entity->restrictions()->delete();
+        $entity->permissions()->delete();
         if ($request->has('restrictions')) {
             foreach ($request->get('restrictions') as $roleId => $restrictions) {
                 foreach ($restrictions as $action => $value) {
-                    $entity->restrictions()->create([
+                    $entity->permissions()->create([
                         'role_id' => $roleId,
                         'action'  => strtolower($action)
                     ]);
@@ -151,7 +151,7 @@ class EntityRepo
             }
         }
         $entity->save();
-        $this->restrictionService->buildEntityPermissionsForEntity($entity);
+        $this->permissionService->buildJointPermissionsForEntity($entity);
     }
 
     /**

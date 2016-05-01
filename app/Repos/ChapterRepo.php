@@ -10,12 +10,12 @@ use BookStack\Chapter;
 class ChapterRepo extends EntityRepo
 {
     /**
-     * Base query for getting chapters, Takes restrictions into account.
+     * Base query for getting chapters, Takes permissions into account.
      * @return mixed
      */
     private function chapterQuery()
     {
-        return $this->restrictionService->enforceChapterRestrictions($this->chapter, 'view');
+        return $this->permissionService->enforceChapterRestrictions($this->chapter, 'view');
     }
 
     /**
@@ -67,7 +67,7 @@ class ChapterRepo extends EntityRepo
      */
     public function getChildren(Chapter $chapter)
     {
-        $pages = $this->restrictionService->enforcePageRestrictions($chapter->pages())->get();
+        $pages = $this->permissionService->enforcePageRestrictions($chapter->pages())->get();
         // Sort items with drafts first then by priority.
         return $pages->sortBy(function($child, $key) {
             $score = $child->priority;
@@ -89,7 +89,7 @@ class ChapterRepo extends EntityRepo
         $chapter->created_by = auth()->user()->id;
         $chapter->updated_by = auth()->user()->id;
         $chapter = $book->chapters()->save($chapter);
-        $this->restrictionService->buildEntityPermissionsForEntity($chapter);
+        $this->permissionService->buildJointPermissionsForEntity($chapter);
         return $chapter;
     }
 
@@ -107,8 +107,8 @@ class ChapterRepo extends EntityRepo
         }
         Activity::removeEntity($chapter);
         $chapter->views()->delete();
-        $chapter->restrictions()->delete();
-        $this->restrictionService->deleteEntityPermissionsForEntity($chapter);
+        $chapter->permissions()->delete();
+        $this->permissionService->deleteJointPermissionsForEntity($chapter);
         $chapter->delete();
     }
 
@@ -168,7 +168,7 @@ class ChapterRepo extends EntityRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $chapters = $this->restrictionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
+        $chapters = $this->permissionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {

@@ -2,9 +2,9 @@
 
 
 use BookStack\Exceptions\PermissionsException;
-use BookStack\Permission;
+use BookStack\RolePermission;
 use BookStack\Role;
-use BookStack\Services\RestrictionService;
+use BookStack\Services\PermissionService;
 use Setting;
 
 class PermissionsRepo
@@ -12,21 +12,21 @@ class PermissionsRepo
 
     protected $permission;
     protected $role;
-    protected $restrictionService;
+    protected $permissionService;
 
     protected $systemRoles = ['admin', 'public'];
 
     /**
      * PermissionsRepo constructor.
-     * @param Permission $permission
+     * @param RolePermission $permission
      * @param Role $role
-     * @param RestrictionService $restrictionService
+     * @param PermissionService $permissionService
      */
-    public function __construct(Permission $permission, Role $role, RestrictionService $restrictionService)
+    public function __construct(RolePermission $permission, Role $role, PermissionService $permissionService)
     {
         $this->permission = $permission;
         $this->role = $role;
-        $this->restrictionService = $restrictionService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -75,7 +75,7 @@ class PermissionsRepo
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
-        $this->restrictionService->buildEntityPermissionForRole($role);
+        $this->permissionService->buildJointPermissionForRole($role);
         return $role;
     }
 
@@ -102,7 +102,7 @@ class PermissionsRepo
 
         $role->fill($roleData);
         $role->save();
-        $this->restrictionService->buildEntityPermissionForRole($role);
+        $this->permissionService->buildJointPermissionForRole($role);
     }
 
     /**
@@ -148,7 +148,7 @@ class PermissionsRepo
             }
         }
 
-        $this->restrictionService->deleteEntityPermissionsForRole($role);
+        $this->permissionService->deleteJointPermissionsForRole($role);
         $role->delete();
     }
 

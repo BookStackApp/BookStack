@@ -1,14 +1,14 @@
 <?php namespace BookStack;
 
 
-class Permission extends Model
+class RolePermission extends Model
 {
     /**
      * The roles that belong to the permission.
      */
     public function roles()
     {
-        return $this->belongsToMany('BookStack\Role');
+        return $this->belongsToMany(Role::class, 'permission_role','permission_id', 'role_id');
     }
 
     /**

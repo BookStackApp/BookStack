@@ -68,35 +68,44 @@ class AddRolesAndPermissions extends Migration
 
 
         // Create default roles
-        $admin = new \BookStack\Role();
-        $admin->name = 'admin';
-        $admin->display_name = 'Admin';
-        $admin->description = 'Administrator of the whole application';
-        $admin->save();
+        $adminId = DB::table('roles')->insertGetId([
+            'name' => 'admin',
+            'display_name' => 'Admin',
+            'description' => 'Administrator of the whole application',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+        $editorId = DB::table('roles')->insertGetId([
+            'name' => 'editor',
+            'display_name' => 'Editor',
+            'description' => 'User can edit Books, Chapters & Pages',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
+        $viewerId = DB::table('roles')->insertGetId([
+            'name' => 'viewer',
+            'display_name' => 'Viewer',
+            'description' => 'User can view books & their content behind authentication',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ]);
 
-        $editor = new \BookStack\Role();
-        $editor->name = 'editor';
-        $editor->display_name = 'Editor';
-        $editor->description = 'User can edit Books, Chapters & Pages';
-        $editor->save();
-
-        $viewer = new \BookStack\Role();
-        $viewer->name = 'viewer';
-        $viewer->display_name = 'Viewer';
-        $viewer->description = 'User can view books & their content behind authentication';
-        $viewer->save();
 
         // Create default CRUD permissions and allocate to admins and editors
         $entities = ['Book', 'Page', 'Chapter', 'Image'];
         $ops = ['Create', 'Update', 'Delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \BookStack\Permission();
-                $newPermission->name = strtolower($entity) . '-' . strtolower($op);
-                $newPermission->display_name = $op . ' ' . $entity . 's';
-                $newPermission->save();
-                $admin->attachPermission($newPermission);
-                $editor->attachPermission($newPermission);
+                $newPermId = DB::table('permissions')->insertGetId([
+                    'name' => strtolower($entity) . '-' . strtolower($op),
+                    'display_name' => $op . ' ' . $entity . 's',
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                DB::table('permission_role')->insert([
+                    ['permission_id' => $newPermId, 'role_id' => $adminId],
+                    ['permission_id' => $newPermId, 'role_id' => $editorId]
+                ]);
             }
         }
 
@@ -105,19 +114,27 @@ class AddRolesAndPermissions extends Migration
         $ops = ['Create', 'Update', 'Delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \BookStack\Permission();
-                $newPermission->name = strtolower($entity) . '-' . strtolower($op);
-                $newPermission->display_name = $op . ' ' . $entity;
-                $newPermission->save();
-                $admin->attachPermission($newPermission);
+                $newPermId = DB::table('permissions')->insertGetId([
+                    'name' => strtolower($entity) . '-' . strtolower($op),
+                    'display_name' => $op . ' ' . $entity,
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                DB::table('permission_role')->insert([
+                    'permission_id' => $newPermId,
+                    'role_id' => $adminId
+                ]);
             }
         }
 
         // Set all current users as admins
         // (At this point only the initially create user should be an admin)
-        $users = \BookStack\User::all();
+        $users = DB::table('users')->get();
         foreach ($users as $user) {
-            $user->attachRole($admin);
+            DB::table('role_user')->insert([
+                'role_id' => $adminId,
+                'user_id' => $user->id
+            ]);
         }
 
     }

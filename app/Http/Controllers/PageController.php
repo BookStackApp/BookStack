@@ -451,7 +451,7 @@ class PageController extends Controller
     }
 
     /**
-     * Set the restrictions for this page.
+     * Set the permissions for this page.
      * @param $bookSlug
      * @param $pageSlug
      * @param Request $request
@@ -462,8 +462,8 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $this->checkOwnablePermission('restrictions-manage', $page);
-        $this->pageRepo->updateRestrictionsFromRequest($request, $page);
-        session()->flash('success', 'Page Restrictions Updated');
+        $this->pageRepo->updateEntityPermissionsFromRequest($request, $page);
+        session()->flash('success', 'Page Permissions Updated');
         return redirect($page->getUrl());
     }
 

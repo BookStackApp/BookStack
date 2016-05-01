@@ -18,7 +18,7 @@
                 <label>@include('settings/roles/checkbox', ['permission' => 'users-manage']) Manage users</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) Manage roles & role permissions</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-all']) Manage all Book, Chapter & Page permissions</label>
-                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-own']) Manage permissions on own Book, Chapter & Pages</label>
+                <label>@include('settings/roles/checkbox', ['permission' => 'permissions']) Manage permissions on own Book, Chapter & Pages</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'settings-manage']) Manage app settings</label>
             </div>
 

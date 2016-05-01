@@ -12,20 +12,25 @@ class AddViewPermissionsToRoles extends Migration
      */
     public function up()
     {
-        $currentRoles = \BookStack\Role::all();
+        $currentRoles = DB::table('roles')->get();
 
-        // Create new view permissions
+        // Create new view permission
         $entities = ['Book', 'Page', 'Chapter'];
         $ops = ['View All', 'View Own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $newPermission = new \BookStack\Permission();
-                $newPermission->name = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
-                $newPermission->display_name = $op . ' ' . $entity . 's';
-                $newPermission->save();
-                // Assign view permissions to all current roles
+                $permId = DB::table('permissions')->insertGetId([
+                    'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+                    'display_name' => $op . ' ' . $entity . 's',
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                ]);
+                // Assign view permission to all current roles
                 foreach ($currentRoles as $role) {
-                    $role->attachPermission($newPermission);
+                    DB::table('permission_role')->insert([
+                        'role_id' => $role->id,
+                        'permission_id' => $permId
+                    ]);
                 }
             }
         }
@@ -38,17 +43,15 @@ class AddViewPermissionsToRoles extends Migration
      */
     public function down()
     {
-        // Delete the new view permissions
+        // Delete the new view permission
         $entities = ['Book', 'Page', 'Chapter'];
         $ops = ['View All', 'View Own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
-                $newPermission = \BookStack\Permission::where('name', '=', $permissionName)->first();
-                foreach ($newPermission->roles as $role) {
-                    $role->detachPermission($newPermission);
-                }
-                $newPermission->delete();
+                $permission = DB::table('permissions')->where('name', '=', $permissionName)->first();
+                DB::table('permission_role')->where('permission_id', '=', $permission->id)->delete();
+                DB::table('permissions')->where('name', '=', $permissionName)->delete();
             }
         }
     }

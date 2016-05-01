@@ -28,7 +28,7 @@ class DummyContentSeeder extends Seeder
                 $book->pages()->saveMany($pages);
             });
 
-        $restrictionService = app(\BookStack\Services\RestrictionService::class);
-        $restrictionService->buildEntityPermissions();
+        $restrictionService = app(\BookStack\Services\PermissionService::class);
+        $restrictionService->buildJointPermissions();
     }
 }

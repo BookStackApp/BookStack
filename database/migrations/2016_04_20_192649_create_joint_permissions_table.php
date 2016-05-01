@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntityPermissionsTable extends Migration
+class CreateJointPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateEntityPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('entity_permissions', function (Blueprint $table) {
+        Schema::create('joint_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id');
             $table->string('entity_type');
@@ -37,18 +37,25 @@ class CreateEntityPermissionsTable extends Migration
             $table->index('system_name');
         });
 
+        Schema::rename('permissions', 'role_permissions');
+        Schema::rename('restrictions', 'entity_permissions');
+
         // Create the new public role
-        $publicRole = new \BookStack\Role();
-        $publicRole->name = 'public';
-        $publicRole->display_name = 'Public';
-        $publicRole->description = 'The role given to public visitors if allowed';
-        $publicRole->system_name = 'public';
-        $publicRole->hidden = true;
+        $publicRoleData = [
+            'name' => 'public',
+            'display_name' => 'Public',
+            'description' => 'The role given to public visitors if allowed',
+            'system_name' => 'public',
+            'hidden' => true,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+        ];
+
         // Ensure unique name
-        while (\BookStack\Role::getRole($publicRole->name) !== null) {
-            $publicRole->name = $publicRole->name . str_random(2);
+        while (DB::table('roles')->where('name', '=', $publicRoleData['display_name'])->count() > 0) {
+            $publicRoleData['display_name'] = $publicRoleData['display_name'] . str_random(2);
         }
-        $publicRole->save();
+        $publicRoleId = DB::table('roles')->insertGetId($publicRoleData);
 
         // Add new view permissions to public role
         $entities = ['Book', 'Page', 'Chapter'];
@@ -56,20 +63,21 @@ class CreateEntityPermissionsTable extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $name = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
-                $permission = \BookStack\Permission::getByName($name);
-                // Assign view permissions to public
-                $publicRole->attachPermission($permission);
+                $permission = DB::table('role_permissions')->where('name', '=', $name)->first();
+                // Assign view permission to public
+                DB::table('permission_role')->insert([
+                    'permission_id' => $permission->id,
+                    'role_id' => $publicRoleId
+                ]);
             }
         }
 
         // Update admin role with system name
-        $admin = \BookStack\Role::getRole('admin');
-        $admin->system_name = 'admin';
-        $admin->save();
+        DB::table('roles')->where('name', '=', 'admin')->update(['system_name' => 'admin']);
 
-        // Generate the new entity permissions
-        $restrictionService = app(\BookStack\Services\RestrictionService::class);
-        $restrictionService->buildEntityPermissions();
+        // Generate the new entity jointPermissions
+        $restrictionService = app(\BookStack\Services\PermissionService::class);
+        $restrictionService->buildJointPermissions();
     }
 
     /**
@@ -79,11 +87,13 @@ class CreateEntityPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('entity_permissions');
+        Schema::drop('joint_permissions');
+
+        Schema::rename('role_permissions', 'permissions');
+        Schema::rename('entity_permissions', 'restrictions');
 
         // Delete the public role
-        $public = \BookStack\Role::getSystemRole('public');
-        $public->delete();
+        DB::table('roles')->where('system_name', '=', 'public')->delete();
 
         Schema::table('roles', function (Blueprint $table) {
             $table->dropColumn('system_name');

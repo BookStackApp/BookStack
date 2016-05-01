@@ -32,7 +32,7 @@ class PageRepo extends EntityRepo
      */
     private function pageQuery($allowDrafts = false)
     {
-        $query = $this->restrictionService->enforcePageRestrictions($this->page, 'view');
+        $query = $this->permissionService->enforcePageRestrictions($this->page, 'view');
         if (!$allowDrafts) {
             $query = $query->where('draft', '=', false);
         }
@@ -76,7 +76,7 @@ class PageRepo extends EntityRepo
     {
         $revision = $this->pageRevision->where('slug', '=', $pageSlug)
             ->whereHas('page', function ($query) {
-                $this->restrictionService->enforcePageRestrictions($query);
+                $this->permissionService->enforcePageRestrictions($query);
             })
             ->where('type', '=', 'version')
             ->where('book_slug', '=', $bookSlug)->orderBy('created_at', 'desc')
@@ -168,7 +168,7 @@ class PageRepo extends EntityRepo
         if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
-        $this->restrictionService->buildEntityPermissionsForEntity($page);
+        $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
     }
 
@@ -242,7 +242,7 @@ class PageRepo extends EntityRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $pages = $this->restrictionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms))
+        $pages = $this->permissionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms))
             ->paginate($count)->appends($paginationAppends);
 
         // Add highlights to page text.
@@ -578,13 +578,13 @@ class PageRepo extends EntityRepo
      * Destroy a given page along with its dependencies.
      * @param $page
      */
-    public function destroy($page)
+    public function destroy(Page $page)
     {
         Activity::removeEntity($page);
         $page->views()->delete();
         $page->revisions()->delete();
-        $page->restrictions()->delete();
-        $this->restrictionService->deleteEntityPermissionsForEntity($page);
+        $page->permissions()->delete();
+        $this->permissionService->deleteJointPermissionsForEntity($page);
         $page->delete();
     }
 

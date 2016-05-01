@@ -1,35 +1,55 @@
-<?php
-
-namespace BookStack;
+<?php namespace BookStack;
 
 class Book extends Entity
 {
 
     protected $fillable = ['name', 'description'];
 
+    /**
+     * Get the url for this book.
+     * @return string
+     */
     public function getUrl()
     {
         return '/books/' . $this->slug;
     }
 
+    /*
+     * Get the edit url for this book.
+     * @return string
+     */
     public function getEditUrl()
     {
         return $this->getUrl() . '/edit';
     }
 
+    /**
+     * Get all pages within this book.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function pages()
     {
-        return $this->hasMany('BookStack\Page');
+        return $this->hasMany(Page::class);
     }
 
+    /**
+     * Get all chapters within this book.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function chapters()
     {
-        return $this->hasMany('BookStack\Chapter');
+        return $this->hasMany(Chapter::class);
     }
 
+    /**
+     * Get an excerpt of this book's description to the specified length or less.
+     * @param int $length
+     * @return string
+     */
     public function getExcerpt($length = 100)
     {
-        return strlen($this->description) > $length ? substr($this->description, 0, $length-3) . '...' : $this->description;
+        $description = $this->description;
+        return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
     }
 
 }

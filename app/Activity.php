@@ -26,7 +26,7 @@ class Activity extends Model
      */
     public function user()
     {
-        return $this->belongsTo('BookStack\User');
+        return $this->belongsTo(User::class);
     }
 
     /**

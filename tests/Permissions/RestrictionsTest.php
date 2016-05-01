@@ -11,7 +11,7 @@ class RestrictionsTest extends TestCase
         parent::setUp();
         $this->user = $this->getNewUser();
         $this->viewer = $this->getViewer();
-        $this->restrictionService = $this->app[\BookStack\Services\RestrictionService::class];
+        $this->restrictionService = $this->app[\BookStack\Services\PermissionService::class];
     }
 
     protected function getViewer()
@@ -23,30 +23,30 @@ class RestrictionsTest extends TestCase
     }
 
     /**
-     * Manually set some restrictions on an entity.
+     * Manually set some permissions on an entity.
      * @param \BookStack\Entity $entity
      * @param $actions
      */
     protected function setEntityRestrictions(\BookStack\Entity $entity, $actions)
     {
         $entity->restricted = true;
-        $entity->restrictions()->delete();
+        $entity->permissions()->delete();
         $role = $this->user->roles->first();
         $viewerRole = $this->viewer->roles->first();
         foreach ($actions as $action) {
-            $entity->restrictions()->create([
+            $entity->permissions()->create([
                 'role_id' => $role->id,
                 'action' => strtolower($action)
             ]);
-            $entity->restrictions()->create([
+            $entity->permissions()->create([
                 'role_id' => $viewerRole->id,
                 'action' => strtolower($action)
             ]);
         }
         $entity->save();
-        $entity->load('restrictions');
-        $this->restrictionService->buildEntityPermissionsForEntity($entity);
         $entity->load('permissions');
+        $this->restrictionService->buildJointPermissionsForEntity($entity);
+        $entity->load('jointPermissions');
     }
 
     public function test_book_view_restriction()
@@ -348,7 +348,7 @@ class RestrictionsTest extends TestCase
             ->check('restrictions[2][view]')
             ->press('Save Permissions')
             ->seeInDatabase('books', ['id' => $book->id, 'restricted' => true])
-            ->seeInDatabase('restrictions', [
+            ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $book->id,
                 'restrictable_type' => 'BookStack\Book',
                 'role_id' => '2',
@@ -365,7 +365,7 @@ class RestrictionsTest extends TestCase
             ->check('restrictions[2][update]')
             ->press('Save Permissions')
             ->seeInDatabase('chapters', ['id' => $chapter->id, 'restricted' => true])
-            ->seeInDatabase('restrictions', [
+            ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $chapter->id,
                 'restrictable_type' => 'BookStack\Chapter',
                 'role_id' => '2',
@@ -382,7 +382,7 @@ class RestrictionsTest extends TestCase
             ->check('restrictions[2][delete]')
             ->press('Save Permissions')
             ->seeInDatabase('pages', ['id' => $page->id, 'restricted' => true])
-            ->seeInDatabase('restrictions', [
+            ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $page->id,
                 'restrictable_type' => 'BookStack\Page',
                 'role_id' => '2',

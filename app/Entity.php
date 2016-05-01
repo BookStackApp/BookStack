@@ -43,7 +43,7 @@ abstract class Entity extends Ownable
      */
     public function activity()
     {
-        return $this->morphMany('BookStack\Activity', 'entity')->orderBy('created_at', 'desc');
+        return $this->morphMany(Activity::class, 'entity')->orderBy('created_at', 'desc');
     }
 
     /**
@@ -51,15 +51,15 @@ abstract class Entity extends Ownable
      */
     public function views()
     {
-        return $this->morphMany('BookStack\View', 'viewable');
+        return $this->morphMany(View::class, 'viewable');
     }
 
     /**
      * Get this entities restrictions.
      */
-    public function restrictions()
+    public function permissions()
     {
-        return $this->morphMany('BookStack\Restriction', 'restrictable');
+        return $this->morphMany(EntityPermission::class, 'restrictable');
     }
 
     /**
@@ -70,7 +70,7 @@ abstract class Entity extends Ownable
      */
     public function hasRestriction($role_id, $action)
     {
-        return $this->restrictions()->where('role_id', '=', $role_id)
+        return $this->permissions()->where('role_id', '=', $role_id)
             ->where('action', '=', $action)->count() > 0;
     }
 
@@ -86,12 +86,12 @@ abstract class Entity extends Ownable
     }
 
     /**
-     * Get the entity permissions this is connected to.
+     * Get the entity jointPermissions this is connected to.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function permissions()
+    public function jointPermissions()
     {
-        return $this->morphMany(EntityPermission::class, 'entity');
+        return $this->morphMany(JointPermission::class, 'entity');
     }
 
     /**

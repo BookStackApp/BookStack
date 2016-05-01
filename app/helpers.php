@@ -31,7 +31,7 @@ if (!function_exists('versioned_asset')) {
 
 /**
  * Check if the current user has a permission.
- * If an ownable element is passed in the permissions are checked against
+ * If an ownable element is passed in the jointPermissions are checked against
  * that particular item.
  * @param $permission
  * @param \BookStack\Ownable $ownable
@@ -44,8 +44,8 @@ function userCan($permission, \BookStack\Ownable $ownable = null)
     }
 
     // Check permission on ownable item
-    $restrictionService = app('BookStack\Services\RestrictionService');
-    return $restrictionService->checkEntityUserAccess($ownable, $permission);
+    $permissionService = app('BookStack\Services\PermissionService');
+    return $permissionService->checkEntityUserAccess($ownable, $permission);
 }
 
 /**

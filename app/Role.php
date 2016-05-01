@@ -11,24 +11,24 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('BookStack\User');
+        return $this->belongsToMany(User::class);
     }
 
     /**
-     * Get all related entity permissions.
+     * Get all related JointPermissions.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function entityPermissions()
+    public function jointPermissions()
     {
-        return $this->hasMany(EntityPermission::class);
+        return $this->hasMany(JointPermission::class);
     }
 
     /**
-     * The permissions that belong to the role.
+     * The RolePermissions that belong to the role.
      */
     public function permissions()
     {
-        return $this->belongsToMany('BookStack\Permission');
+        return $this->belongsToMany(RolePermission::class, 'permission_role', 'role_id', 'permission_id');
     }
 
     /**
@@ -47,18 +47,18 @@ class Role extends Model
 
     /**
      * Add a permission to this role.
-     * @param Permission $permission
+     * @param RolePermission $permission
      */
-    public function attachPermission(Permission $permission)
+    public function attachPermission(RolePermission $permission)
     {
         $this->permissions()->attach($permission->id);
     }
 
     /**
      * Detach a single permission from this role.
-     * @param Permission $permission
+     * @param RolePermission $permission
      */
-    public function detachPermission(Permission $permission)
+    public function detachPermission(RolePermission $permission)
     {
         $this->permissions()->detach($permission->id);
     }
@@ -84,7 +84,7 @@ class Role extends Model
     }
 
     /**
-     * GEt all visible roles
+     * Get all visible roles
      * @return mixed
      */
     public static function visible()

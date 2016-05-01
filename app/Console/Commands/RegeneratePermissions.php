@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Services\RestrictionService;
+use BookStack\Services\PermissionService;
 use Illuminate\Console\Command;
 
 class RegeneratePermissions extends Command
@@ -24,18 +24,18 @@ class RegeneratePermissions extends Command
     /**
      * The service to handle the permission system.
      *
-     * @var RestrictionService
+     * @var PermissionService
      */
-    protected $restrictionService;
+    protected $permissionService;
 
     /**
      * Create a new command instance.
      *
-     * @param RestrictionService $restrictionService
+     * @param PermissionService $permissionService
      */
-    public function __construct(RestrictionService $restrictionService)
+    public function __construct(PermissionService $permissionService)
     {
-        $this->restrictionService = $restrictionService;
+        $this->permissionService = $permissionService;
         parent::__construct();
     }
 
@@ -46,6 +46,6 @@ class RegeneratePermissions extends Command
      */
     public function handle()
     {
-        $this->restrictionService->buildEntityPermissions();
+        $this->permissionService->buildJointPermissions();
     }
 }
