@@ -1,5 +1,6 @@
 <?php namespace BookStack\Repos;
 
+use Alpha\B;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Support\Str;
 use BookStack\Book;
@@ -29,7 +30,7 @@ class BookRepo extends EntityRepo
      */
     private function bookQuery()
     {
-        return $this->restrictionService->enforceBookRestrictions($this->book, 'view');
+        return $this->permissionService->enforceBookRestrictions($this->book, 'view');
     }
 
     /**
@@ -123,21 +124,43 @@ class BookRepo extends EntityRepo
 
     /**
      * Get a new book instance from request input.
-     * @param $input
+     * @param array $input
      * @return Book
      */
-    public function newFromInput($input)
+    public function createFromInput($input)
     {
-        return $this->book->newInstance($input);
+        $book = $this->book->newInstance($input);
+        $book->slug = $this->findSuitableSlug($book->name);
+        $book->created_by = auth()->user()->id;
+        $book->updated_by = auth()->user()->id;
+        $book->save();
+        $this->permissionService->buildJointPermissionsForEntity($book);
+        return $book;
     }
 
     /**
-     * Destroy a book identified by the given slug.
-     * @param $bookSlug
+     * Update the given book from user input.
+     * @param Book $book
+     * @param $input
+     * @return Book
      */
-    public function destroyBySlug($bookSlug)
+    public function updateFromInput(Book $book, $input)
     {
-        $book = $this->getBySlug($bookSlug);
+        $book->fill($input);
+        $book->slug = $this->findSuitableSlug($book->name, $book->id);
+        $book->updated_by = auth()->user()->id;
+        $book->save();
+        $this->permissionService->buildJointPermissionsForEntity($book);
+        return $book;
+    }
+
+    /**
+     * Destroy the given book.
+     * @param Book $book
+     * @throws \Exception
+     */
+    public function destroy(Book $book)
+    {
         foreach ($book->pages as $page) {
             $this->pageRepo->destroy($page);
         }
@@ -145,8 +168,18 @@ class BookRepo extends EntityRepo
             $this->chapterRepo->destroy($chapter);
         }
         $book->views()->delete();
-        $book->restrictions()->delete();
+        $book->permissions()->delete();
+        $this->permissionService->deleteJointPermissionsForEntity($book);
         $book->delete();
+    }
+
+    /**
+     * Alias method to update the book jointPermissions in the PermissionService.
+     * @param Book $book
+     */
+    public function updateBookPermissions(Book $book)
+    {
+        $this->permissionService->buildJointPermissionsForEntity($book);
     }
 
     /**
@@ -204,7 +237,7 @@ class BookRepo extends EntityRepo
     public function getChildren(Book $book, $filterDrafts = false)
     {
         $pageQuery = $book->pages()->where('chapter_id', '=', 0);
-        $pageQuery = $this->restrictionService->enforcePageRestrictions($pageQuery, 'view');
+        $pageQuery = $this->permissionService->enforcePageRestrictions($pageQuery, 'view');
 
         if ($filterDrafts) {
             $pageQuery = $pageQuery->where('draft', '=', false);
@@ -213,10 +246,10 @@ class BookRepo extends EntityRepo
         $pages = $pageQuery->get();
 
         $chapterQuery = $book->chapters()->with(['pages' => function($query) use ($filterDrafts) {
-            $this->restrictionService->enforcePageRestrictions($query, 'view');
+            $this->permissionService->enforcePageRestrictions($query, 'view');
             if ($filterDrafts) $query->where('draft', '=', false);
         }]);
-        $chapterQuery = $this->restrictionService->enforceChapterRestrictions($chapterQuery, 'view');
+        $chapterQuery = $this->permissionService->enforceChapterRestrictions($chapterQuery, 'view');
         $chapters = $chapterQuery->get();
         $children = $pages->merge($chapters);
         $bookSlug = $book->slug;
@@ -253,7 +286,7 @@ class BookRepo extends EntityRepo
     public function getBySearch($term, $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $books = $this->restrictionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms))
+        $books = $this->permissionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms))
             ->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($books as $book) {

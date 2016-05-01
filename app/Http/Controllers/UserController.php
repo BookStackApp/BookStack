@@ -49,7 +49,8 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
-        return view('users/create', ['authMethod' => $authMethod]);
+        $roles = $this->userRepo->getAssignableRoles();
+        return view('users/create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -117,7 +118,8 @@ class UserController extends Controller
         $user = $this->user->findOrFail($id);
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle('User Profile');
-        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod]);
+        $roles = $this->userRepo->getAssignableRoles();
+        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**

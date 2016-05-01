@@ -18,7 +18,7 @@
                 <label>@include('settings/roles/checkbox', ['permission' => 'users-manage']) Manage users</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) Manage roles & role permissions</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-all']) Manage all Book, Chapter & Page permissions</label>
-                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-own']) Manage permissions on own Book, Chapter & Pages</label>
+                <label>@include('settings/roles/checkbox', ['permission' => 'permissions']) Manage permissions on own Book, Chapter & Pages</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'settings-manage']) Manage app settings</label>
             </div>
 
@@ -31,15 +31,20 @@
                 </p>
                 <table class="table">
                     <tr>
-                        <th></th>
-                        <th>Create</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th width="20%"></th>
+                        <th width="20%">Create</th>
+                        <th width="20%">View</th>
+                        <th width="20%">Edit</th>
+                        <th width="20%">Delete</th>
                     </tr>
                     <tr>
                         <td>Books</td>
                         <td>
                             <label>@include('settings/roles/checkbox', ['permission' => 'book-create-all']) All</label>
+                        </td>
+                        <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'book-view-own']) Own</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'book-view-all']) All</label>
                         </td>
                         <td>
                             <label>@include('settings/roles/checkbox', ['permission' => 'book-update-own']) Own</label>
@@ -57,6 +62,10 @@
                             <label>@include('settings/roles/checkbox', ['permission' => 'chapter-create-all']) All</label>
                         </td>
                         <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'chapter-view-own']) Own</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'chapter-view-all']) All</label>
+                        </td>
+                        <td>
                             <label>@include('settings/roles/checkbox', ['permission' => 'chapter-update-own']) Own</label>
                             <label>@include('settings/roles/checkbox', ['permission' => 'chapter-update-all']) All</label>
                         </td>
@@ -72,6 +81,10 @@
                             <label>@include('settings/roles/checkbox', ['permission' => 'page-create-all']) All</label>
                         </td>
                         <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'page-view-own']) Own</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'page-view-all']) All</label>
+                        </td>
+                        <td>
                             <label>@include('settings/roles/checkbox', ['permission' => 'page-update-own']) Own</label>
                             <label>@include('settings/roles/checkbox', ['permission' => 'page-update-all']) All</label>
                         </td>
@@ -83,6 +96,7 @@
                     <tr>
                         <td>Images</td>
                         <td>@include('settings/roles/checkbox', ['permission' => 'image-create-all'])</td>
+                        <td style="line-height:1.2;"><small class="faded">Controlled by the asset they are uploaded to</small></td>
                         <td>
                             <label>@include('settings/roles/checkbox', ['permission' => 'image-update-own']) Own</label>
                             <label>@include('settings/roles/checkbox', ['permission' => 'image-update-all']) All</label>

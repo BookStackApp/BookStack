@@ -43,7 +43,7 @@ abstract class Entity extends Ownable
      */
     public function activity()
     {
-        return $this->morphMany('BookStack\Activity', 'entity')->orderBy('created_at', 'desc');
+        return $this->morphMany(Activity::class, 'entity')->orderBy('created_at', 'desc');
     }
 
     /**
@@ -51,15 +51,15 @@ abstract class Entity extends Ownable
      */
     public function views()
     {
-        return $this->morphMany('BookStack\View', 'viewable');
+        return $this->morphMany(View::class, 'viewable');
     }
 
     /**
      * Get this entities restrictions.
      */
-    public function restrictions()
+    public function permissions()
     {
-        return $this->morphMany('BookStack\Restriction', 'restrictable');
+        return $this->morphMany(EntityPermission::class, 'restrictable');
     }
 
     /**
@@ -70,7 +70,28 @@ abstract class Entity extends Ownable
      */
     public function hasRestriction($role_id, $action)
     {
-        return $this->restrictions->where('role_id', $role_id)->where('action', $action)->count() > 0;
+        return $this->permissions()->where('role_id', '=', $role_id)
+            ->where('action', '=', $action)->count() > 0;
+    }
+
+    /**
+     * Check if this entity has live (active) restrictions in place.
+     * @param $role_id
+     * @param $action
+     * @return bool
+     */
+    public function hasActiveRestriction($role_id, $action)
+    {
+        return $this->getRawAttribute('restricted') && $this->hasRestriction($role_id, $action);
+    }
+
+    /**
+     * Get the entity jointPermissions this is connected to.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function jointPermissions()
+    {
+        return $this->morphMany(JointPermission::class, 'entity');
     }
 
     /**
@@ -81,7 +102,16 @@ abstract class Entity extends Ownable
      */
     public static function isA($type)
     {
-        return static::getClassName() === strtolower($type);
+        return static::getType() === strtolower($type);
+    }
+
+    /**
+     * Get entity type.
+     * @return mixed
+     */
+    public static function getType()
+    {
+        return strtolower(static::getClassName());
     }
 
     /**

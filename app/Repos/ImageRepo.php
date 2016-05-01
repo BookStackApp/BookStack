@@ -4,7 +4,7 @@
 use BookStack\Image;
 use BookStack\Page;
 use BookStack\Services\ImageService;
-use BookStack\Services\RestrictionService;
+use BookStack\Services\PermissionService;
 use Setting;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -20,14 +20,14 @@ class ImageRepo
      * ImageRepo constructor.
      * @param Image $image
      * @param ImageService $imageService
-     * @param RestrictionService $restrictionService
+     * @param PermissionService $permissionService
      * @param Page $page
      */
-    public function __construct(Image $image, ImageService $imageService, RestrictionService $restrictionService, Page $page)
+    public function __construct(Image $image, ImageService $imageService, PermissionService $permissionService, Page $page)
     {
         $this->image = $image;
         $this->imageService = $imageService;
-        $this->restictionService = $restrictionService;
+        $this->restictionService = $permissionService;
         $this->page = $page;
     }
 

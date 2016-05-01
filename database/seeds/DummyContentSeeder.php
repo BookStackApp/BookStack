@@ -20,12 +20,15 @@ class DummyContentSeeder extends Seeder
             ->each(function($book) use ($user) {
                 $chapters = factory(BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])
                     ->each(function($chapter) use ($user, $book){
-                       $pages = factory(\BookStack\Page::class, 10)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id]);
+                       $pages = factory(\BookStack\Page::class, 5)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id]);
                         $chapter->pages()->saveMany($pages);
                     });
                 $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $user->id, 'updated_by' => $user->id]);
                 $book->chapters()->saveMany($chapters);
                 $book->pages()->saveMany($pages);
             });
+
+        $restrictionService = app(\BookStack\Services\PermissionService::class);
+        $restrictionService->buildJointPermissions();
     }
 }

@@ -49,9 +49,15 @@
                     <hr>
                     <p class="text-muted">No pages are currently in this chapter.</p>
                     <p>
-                        <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
-                        &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
-                        <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
+                        @if(userCan('page-create', $chapter))
+                            <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                        @endif
+                        @if(userCan('page-create', $chapter) && userCan('book-update', $book))
+                            &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
+                        @endif
+                        @if(userCan('book-update', $book))
+                            <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
+                        @endif
                     </p>
                     <hr>
                 @endif

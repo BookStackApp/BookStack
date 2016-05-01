@@ -13,7 +13,7 @@
 @if(userCan('users-manage'))
     <div class="form-group">
         <label for="role">User Role</label>
-        @include('form/role-checkboxes', ['name' => 'roles', 'roles' => \BookStack\Role::all()])
+        @include('form/role-checkboxes', ['name' => 'roles', 'roles' => $roles])
     </div>
 @endif
 

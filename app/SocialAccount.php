@@ -1,8 +1,5 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
-
-use Illuminate\Database\Eloquent\Model;
 
 class SocialAccount extends Model
 {
@@ -11,6 +8,6 @@ class SocialAccount extends Model
 
     public function user()
     {
-        return $this->belongsTo('BookStack\User');
+        return $this->belongsTo(User::class);
     }
 }

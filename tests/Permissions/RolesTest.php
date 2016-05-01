@@ -7,7 +7,15 @@ class RolesTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->user = $this->getNewBlankUser();
+        $this->user = $this->getViewer();
+    }
+
+    protected function getViewer()
+    {
+        $role = \BookStack\Role::getRole('viewer');
+        $viewer = $this->getNewBlankUser();
+        $viewer->attachRole($role);;
+        return $viewer;
     }
 
     /**
@@ -141,7 +149,7 @@ class RolesTest extends TestCase
 
     public function test_restrictions_manage_own_permission()
     {
-        $otherUsersPage = \BookStack\Page::take(1)->get()->first();
+        $otherUsersPage = \BookStack\Page::first();
         $content = $this->createEntityChainBelongingToUser($this->user);
         // Check can't restrict other's content
         $this->actingAs($this->user)->visit($otherUsersPage->getUrl())
@@ -534,6 +542,29 @@ class RolesTest extends TestCase
             ->press('Confirm')
             ->seePageIs($bookUrl)
             ->dontSeeInElement('.book-content', $otherPage->name);
+    }
+
+    public function test_public_role_not_visible_in_user_edit_screen()
+    {
+        $user = \BookStack\User::first();
+        $this->asAdmin()->visit('/settings/users/' . $user->id)
+            ->seeElement('#roles-admin')
+            ->dontSeeElement('#roles-public');
+    }
+
+    public function test_public_role_not_visible_in_role_listing()
+    {
+        $this->asAdmin()->visit('/settings/roles')
+            ->see('Admin')
+            ->dontSee('Public');
+    }
+
+    public function test_public_role_not_visible_in_default_role_setting()
+    {
+        $this->asAdmin()->visit('/settings')
+            ->seeElement('[data-role-name="admin"]')
+            ->dontSeeElement('[data-role-name="public"]');
+
     }
 
 }

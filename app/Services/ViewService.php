@@ -8,18 +8,18 @@ class ViewService
 
     protected $view;
     protected $user;
-    protected $restrictionService;
+    protected $permissionService;
 
     /**
      * ViewService constructor.
      * @param View $view
-     * @param RestrictionService $restrictionService
+     * @param PermissionService $permissionService
      */
-    public function __construct(View $view, RestrictionService $restrictionService)
+    public function __construct(View $view, PermissionService $permissionService)
     {
         $this->view = $view;
         $this->user = auth()->user();
-        $this->restrictionService = $restrictionService;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -55,7 +55,7 @@ class ViewService
     public function getPopular($count = 10, $page = 0, $filterModel = false)
     {
         $skipCount = $count * $page;
-        $query = $this->restrictionService->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type')
+        $query = $this->permissionService->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type')
             ->select('*', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');
@@ -76,7 +76,7 @@ class ViewService
     {
         if ($this->user === null) return collect();
 
-        $query = $this->restrictionService
+        $query = $this->permissionService
             ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
 
         if ($filterModel) $query = $query->where('viewable_type', '=', get_class($filterModel));

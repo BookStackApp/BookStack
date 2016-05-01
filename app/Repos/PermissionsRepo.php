@@ -2,8 +2,9 @@
 
 
 use BookStack\Exceptions\PermissionsException;
-use BookStack\Permission;
+use BookStack\RolePermission;
 use BookStack\Role;
+use BookStack\Services\PermissionService;
 use Setting;
 
 class PermissionsRepo
@@ -11,16 +12,21 @@ class PermissionsRepo
 
     protected $permission;
     protected $role;
+    protected $permissionService;
+
+    protected $systemRoles = ['admin', 'public'];
 
     /**
      * PermissionsRepo constructor.
-     * @param $permission
-     * @param $role
+     * @param RolePermission $permission
+     * @param Role $role
+     * @param PermissionService $permissionService
      */
-    public function __construct(Permission $permission, Role $role)
+    public function __construct(RolePermission $permission, Role $role, PermissionService $permissionService)
     {
         $this->permission = $permission;
         $this->role = $role;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -29,7 +35,7 @@ class PermissionsRepo
      */
     public function getAllRoles()
     {
-        return $this->role->all();
+        return $this->role->where('hidden', '=', false)->get();
     }
 
     /**
@@ -39,7 +45,7 @@ class PermissionsRepo
      */
     public function getAllRolesExcept(Role $role)
     {
-        return $this->role->where('id', '!=', $role->id)->get();
+        return $this->role->where('id', '!=', $role->id)->where('hidden', '=', false)->get();
     }
 
     /**
@@ -69,6 +75,7 @@ class PermissionsRepo
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
+        $this->permissionService->buildJointPermissionForRole($role);
         return $role;
     }
 
@@ -77,10 +84,14 @@ class PermissionsRepo
      * Ensure Admin role always has all permissions.
      * @param $roleId
      * @param $roleData
+     * @throws PermissionsException
      */
     public function updateRole($roleId, $roleData)
     {
         $role = $this->role->findOrFail($roleId);
+
+        if ($role->hidden) throw new PermissionsException("Cannot update a hidden role");
+
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
 
@@ -91,6 +102,7 @@ class PermissionsRepo
 
         $role->fill($roleData);
         $role->save();
+        $this->permissionService->buildJointPermissionForRole($role);
     }
 
     /**
@@ -122,8 +134,8 @@ class PermissionsRepo
         $role = $this->role->findOrFail($roleId);
 
         // Prevent deleting admin role or default registration role.
-        if ($role->name === 'admin') {
-            throw new PermissionsException('The admin role cannot be deleted');
+        if ($role->system_name && in_array($role->system_name, $this->systemRoles)) {
+            throw new PermissionsException('This role is a system role and cannot be deleted');
         } else if ($role->id == setting('registration-role')) {
             throw new PermissionsException('This role cannot be deleted while set as the default registration role.');
         }
@@ -136,6 +148,7 @@ class PermissionsRepo
             }
         }
 
+        $this->permissionService->deleteJointPermissionsForRole($role);
         $role->delete();
     }
 

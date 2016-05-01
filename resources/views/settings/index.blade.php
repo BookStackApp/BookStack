@@ -66,8 +66,8 @@
                 <div class="form-group">
                     <label for="setting-registration-role">Default user role after registration</label>
                     <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
-                        @foreach(\BookStack\Role::all() as $role)
-                            <option value="{{$role->id}}"
+                        @foreach(\BookStack\Role::visible() as $role)
+                            <option value="{{$role->id}}" data-role-name="{{ $role->name }}"
                                     @if(setting('registration-role', \BookStack\Role::first()->id) == $role->id) selected @endif
                                     >
                                 {{ $role->display_name }}
