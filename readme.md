@@ -1,5 +1,7 @@
 # BookStack
 
+![CI Status](https://codeship.com/projects/395dbfb0-f274-0133-7932-6ec9db8dac2c/status?branch=master)
+
 A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
 
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
