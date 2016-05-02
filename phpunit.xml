@@ -34,5 +34,6 @@
         <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
         <env name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <env name="APP_URL" value="http://bookstack.dev"/>
     </php>
 </phpunit>
