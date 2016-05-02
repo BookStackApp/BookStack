@@ -22,7 +22,7 @@ class LdapTest extends \TestCase
     public function test_login()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setOption')->once();
+        $this->mockLdap->shouldReceive('setVersion')->once();
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
             ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
@@ -49,7 +49,7 @@ class LdapTest extends \TestCase
     public function test_login_works_when_no_uid_provided_by_ldap_server()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setOption')->once();
+        $this->mockLdap->shouldReceive('setVersion')->once();
         $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
@@ -73,7 +73,7 @@ class LdapTest extends \TestCase
     public function test_initial_incorrect_details()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setOption')->once();
+        $this->mockLdap->shouldReceive('setVersion')->once();
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [

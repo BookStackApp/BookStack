@@ -1,14 +1,11 @@
 <?php namespace BookStack\Services;
 
-use GuzzleHttp\Exception\ClientException;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Http\Controllers\Auth\AuthController;
 use BookStack\Repos\UserRepo;
 use BookStack\SocialAccount;
-use BookStack\User;
 
 class SocialAuthService
 {

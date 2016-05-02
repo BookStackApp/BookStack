@@ -34,6 +34,17 @@ class Ldap
     }
 
     /**
+     * Set the version number for the given ldap connection.
+     * @param $ldapConnection
+     * @param $version
+     * @return bool
+     */
+    public function setVersion($ldapConnection, $version)
+    {
+        return $this->setOption($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, $version);
+    }
+
+    /**
      * Search LDAP tree using the provided filter.
      * @param resource   $ldapConnection
      * @param string     $baseDn

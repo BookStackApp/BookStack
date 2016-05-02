@@ -122,7 +122,7 @@ class LdapService
 
         // Set any required options
         if ($this->config['version']) {
-            $this->ldap->setOption($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, $this->config['version']);
+            $this->ldap->setVersion($ldapConnection, $this->config['version']);
         }
 
         $this->ldapConnection = $ldapConnection;
