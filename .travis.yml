@@ -9,7 +9,7 @@ cache:
     - vendor
 
 addons:
-  mariadb: '10.1'
+  mariadb: '10.0'
 
 before_script:
   - mysql -e 'create database `bookstack-test`;'
