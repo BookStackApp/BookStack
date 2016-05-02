@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 7.0
+
+
+addons:
+  mariadb: '10.1'
+
+before_script:
+  - mysql -e 'create database `bookstack-test`;'
+  - composer config -g github-oauth.github.com $GITHUB_ACCESS_TOKEN
+  - phpenv config-rm xdebug.ini
+  - composer self-update
+  - composer install --prefer-dist --no-interaction
+  - npm install
+  - ./node_modules/.bin/gulp
+  - php artisan migrate --force -n --database=mysql_testing
+  - php artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
+
+script:
+  - vendor/bin/phpunit
