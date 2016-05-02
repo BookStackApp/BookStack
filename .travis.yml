@@ -11,6 +11,9 @@ cache:
 addons:
   mariadb: '10.0'
 
+before_install:
+  - npm install -g npm@latest
+
 before_script:
   - mysql -e 'create database `bookstack-test`;'
   - composer config -g github-oauth.github.com $GITHUB_ACCESS_TOKEN
