@@ -15,7 +15,14 @@ class SettingController extends Controller
     {
         $this->checkPermission('settings-manage');
         $this->setPageTitle('Settings');
-        return view('settings/index');
+
+        // Get application version
+        $version = false;
+        if (function_exists('exec')) {
+            $version = exec('git describe --always --tags ');
+        }
+
+        return view('settings/index', ['version' => $version]);
     }
 
     /**

@@ -4,11 +4,11 @@
 
     @include('settings/navbar', ['selected' => 'settings'])
 
-<div class="container small">
+<div class="container small settings-container">
 
     <h1>Settings</h1>
 
-    <form action="/settings" method="POST">
+    <form action="/settings" method="POST" ng-cloak>
         {!! csrf_field() !!}
 
         <h3>App Settings</h3>
@@ -94,6 +94,9 @@
         <hr class="margin-top">
 
         <div class="form-group">
+            <span class="float right muted">
+                BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
+            </span>
             <button type="submit" class="button pos">Save Settings</button>
         </div>
     </form>
