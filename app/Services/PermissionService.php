@@ -422,7 +422,7 @@ class PermissionService
      */
     public function enforceBookRestrictions($query, $action = 'view')
     {
-        $this->enforceEntityRestrictions($query, $action);
+        return $this->enforceEntityRestrictions($query, $action);
     }
 
     /**
