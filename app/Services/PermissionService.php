@@ -400,9 +400,7 @@ class PermissionService
             }
         });
 
-        if ($this->isAdmin) return $query;
-        $this->currentAction = $action;
-        return $this->entityRestrictionQuery($query);
+        return $this->enforceEntityRestrictions($query, $action);
     }
 
     /**
@@ -413,9 +411,7 @@ class PermissionService
      */
     public function enforceChapterRestrictions($query, $action = 'view')
     {
-        if ($this->isAdmin) return $query;
-        $this->currentAction = $action;
-        return $this->entityRestrictionQuery($query);
+        return $this->enforceEntityRestrictions($query, $action);
     }
 
     /**
@@ -425,6 +421,17 @@ class PermissionService
      * @return mixed
      */
     public function enforceBookRestrictions($query, $action = 'view')
+    {
+        $this->enforceEntityRestrictions($query, $action);
+    }
+
+    /**
+     * Add restrictions for a generic entity
+     * @param $query
+     * @param string $action
+     * @return mixed
+     */
+    public function enforceEntityRestrictions($query, $action = 'view')
     {
         if ($this->isAdmin) return $query;
         $this->currentAction = $action;

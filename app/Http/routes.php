@@ -80,10 +80,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 
-    // Ajax routes
+    // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');
     Route::get('/ajax/page/{id}', 'PageController@getPageAjax');
     Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
+
+    // Attribute routes (AJAX)
+    Route::group(['prefix' => 'ajax/attributes'], function() {
+        Route::get('/get/{entityType}/{entityId}', 'AttributeController@getForEntity');
+    });
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

@@ -55,6 +55,15 @@ abstract class Entity extends Ownable
     }
 
     /**
+     * Get the Attribute models that have been user assigned to this entity.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function attributes()
+    {
+        return $this->morphMany(Attribute::class, 'entity');
+    }
+
+    /**
      * Get this entities restrictions.
      */
     public function permissions()
@@ -112,6 +121,22 @@ abstract class Entity extends Ownable
     public static function getType()
     {
         return strtolower(static::getClassName());
+    }
+
+    /**
+     * Get an instance of an entity of the given type.
+     * @param $type
+     * @return Entity
+     */
+    public static function getEntityInstance($type)
+    {
+        $types = ['Page', 'Book', 'Chapter'];
+        $className = str_replace([' ', '-', '_'], '', ucwords($type));
+        if (!in_array($className, $types)) {
+            return null;
+        }
+
+        return app('BookStack\\' . $className);
     }
 
     /**
