@@ -161,8 +161,8 @@ class EntityTest extends TestCase
     public function test_entities_viewable_after_creator_deletion()
     {
         // Create required assets and revisions
-        $creator = $this->getNewUser();
-        $updater = $this->getNewUser();
+        $creator = $this->getEditor();
+        $updater = $this->getEditor();
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
         app('BookStack\Repos\UserRepo')->destroy($creator);
@@ -174,8 +174,8 @@ class EntityTest extends TestCase
     public function test_entities_viewable_after_updater_deletion()
     {
         // Create required assets and revisions
-        $creator = $this->getNewUser();
-        $updater = $this->getNewUser();
+        $creator = $this->getEditor();
+        $updater = $this->getEditor();
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
         app('BookStack\Repos\UserRepo')->destroy($updater);
@@ -198,7 +198,7 @@ class EntityTest extends TestCase
 
     public function test_recently_created_pages_view()
     {
-        $user = $this->getNewUser();
+        $user = $this->getEditor();
         $content = $this->createEntityChainBelongingToUser($user);
 
         $this->asAdmin()->visit('/pages/recently-created')
@@ -207,7 +207,7 @@ class EntityTest extends TestCase
 
     public function test_recently_updated_pages_view()
     {
-        $user = $this->getNewUser();
+        $user = $this->getEditor();
         $content = $this->createEntityChainBelongingToUser($user);
 
         $this->asAdmin()->visit('/pages/recently-updated')
@@ -241,7 +241,7 @@ class EntityTest extends TestCase
 
     public function test_recently_created_pages_on_home()
     {
-        $entityChain = $this->createEntityChainBelongingToUser($this->getNewUser());
+        $entityChain = $this->createEntityChainBelongingToUser($this->getEditor());
         $this->asAdmin()->visit('/')
             ->seeInElement('#recently-created-pages', $entityChain['page']->name);
     }

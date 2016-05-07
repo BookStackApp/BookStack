@@ -582,6 +582,7 @@ class PageRepo extends EntityRepo
     {
         Activity::removeEntity($page);
         $page->views()->delete();
+        $page->attributes()->delete();
         $page->revisions()->delete();
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);

@@ -1,7 +1,7 @@
 <?php namespace BookStack;
 
 
-abstract class Entity extends Ownable
+class Entity extends Ownable
 {
 
     /**
@@ -200,11 +200,5 @@ abstract class Entity extends Ownable
 
         return $search->orderBy('title_relevance', 'desc');
     }
-
-    /**
-     * Get the url for this item.
-     * @return string
-     */
-    abstract public function getUrl();
-
+    
 }

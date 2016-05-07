@@ -33,7 +33,7 @@ class UserProfileTest extends TestCase
 
     public function test_profile_page_shows_created_content_counts()
     {
-        $newUser = $this->getNewUser();
+        $newUser = $this->getEditor();
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
             ->see($newUser->name)
@@ -52,7 +52,7 @@ class UserProfileTest extends TestCase
 
     public function test_profile_page_shows_recent_activity()
     {
-        $newUser = $this->getNewUser();
+        $newUser = $this->getEditor();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
         Activity::add($entities['book'], 'book_update', $entities['book']->id);
@@ -66,7 +66,7 @@ class UserProfileTest extends TestCase
 
     public function test_clicking_user_name_in_activity_leads_to_profile_page()
     {
-        $newUser = $this->getNewUser();
+        $newUser = $this->getEditor();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
         Activity::add($entities['book'], 'book_update', $entities['book']->id);

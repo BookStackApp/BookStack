@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Attribute routes (AJAX)
     Route::group(['prefix' => 'ajax/attributes'], function() {
         Route::get('/get/{entityType}/{entityId}', 'AttributeController@getForEntity');
+        Route::get('/suggest', 'AttributeController@getNameSuggestions');
+        Route::post('/update/{entityType}/{entityId}', 'AttributeController@updateForEntity');
     });
 
     // Links

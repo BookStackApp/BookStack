@@ -14,7 +14,10 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @var string
      */
     protected $baseUrl = 'http://localhost';
+
+    // Local user instances
     private $admin;
+    private $editor;
 
     /**
      * Creates the application.
@@ -30,6 +33,10 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $app;
     }
 
+    /**
+     * Set the current user context to be an admin.
+     * @return $this
+     */
     public function asAdmin()
     {
         if($this->admin === null) {
@@ -37,6 +44,18 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
             $this->admin = $adminRole->users->first();
         }
         return $this->actingAs($this->admin);
+    }
+
+    /**
+     * Set the current editor context to be an editor.
+     * @return $this
+     */
+    public function asEditor()
+    {
+        if($this->editor === null) {
+            $this->editor = $this->getEditor();
+        }
+        return $this->actingAs($this->editor);
     }
 
     /**
@@ -79,7 +98,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @param array $attributes
      * @return mixed
      */
-    protected function getNewUser($attributes = [])
+    protected function getEditor($attributes = [])
     {
         $user = factory(\BookStack\User::class)->create($attributes);
         $role = \BookStack\Role::getRole('editor');

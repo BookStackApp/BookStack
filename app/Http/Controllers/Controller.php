@@ -110,4 +110,15 @@ abstract class Controller extends BaseController
         return true;
     }
 
+    /**
+     * Send back a json error message.
+     * @param string $messageText
+     * @param int $statusCode
+     * @return mixed
+     */
+    protected function jsonError($messageText = "", $statusCode = 500)
+    {
+        return response()->json(['message' => $messageText], $statusCode);
+    }
+
 }
