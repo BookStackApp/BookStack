@@ -80,6 +80,7 @@ class AttributeRepo
         $entity->attributes()->delete();
         $newAttributes = [];
         foreach ($attributes as $attribute) {
+            if (trim($attribute['name']) === '') continue;
             $newAttributes[] = $this->newInstanceFromInput($attribute);
         }
 

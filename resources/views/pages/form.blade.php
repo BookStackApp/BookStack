@@ -41,6 +41,7 @@
             @include('form/text', ['name' => 'name', 'placeholder' => 'Page Title'])
         </div>
     </div>
+
     <div class="edit-area flex-fill flex">
         @if(setting('app-editor') === 'wysiwyg')
             <textarea id="html-editor" tinymce="editorOptions" mce-change="editorChange" mce-model="editContent"  name="html" rows="5"

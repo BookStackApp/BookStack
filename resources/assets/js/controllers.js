@@ -400,4 +400,96 @@ module.exports = function (ngApp, events) {
 
     }]);
 
+    ngApp.controller('PageAttributeController', ['$scope', '$http', '$attrs',
+        function ($scope, $http, $attrs) {
+
+            const pageId = Number($attrs.pageId);
+            $scope.attributes = [];
+
+            /**
+             * Push an empty attribute to the end of the scope attributes.
+             */
+            function addEmptyAttribute() {
+                $scope.attributes.push({
+                    name: '',
+                    value: ''
+                });
+            }
+
+            /**
+             * Get all attributes for the current book and add into scope.
+             */
+            function getAttributes() {
+                $http.get('/ajax/attributes/get/page/' + pageId).then((responseData) => {
+                    $scope.attributes = responseData.data;
+                    addEmptyAttribute();
+                });
+            }
+            getAttributes();
+
+            /**
+             * Set the order property on all attributes.
+             */
+            function setAttributeOrder() {
+                for (let i = 0; i < $scope.attributes.length; i++) {
+                    $scope.attributes[i].order = i;
+                }
+            }
+
+            /**
+             * When an attribute changes check if another empty editable
+             * field needs to be added onto the end.
+             * @param attribute
+             */
+            $scope.attributeChange = function(attribute) {
+                let cPos = $scope.attributes.indexOf(attribute);
+                if (cPos !== $scope.attributes.length-1) return;
+
+                if (attribute.name !== '' || attribute.value !== '') {
+                    addEmptyAttribute();
+                }
+            };
+
+            /**
+             * When an attribute field loses focus check the attribute to see if its
+             * empty and therefore could be removed from the list.
+             * @param attribute
+             */
+            $scope.attributeBlur = function(attribute) {
+                let isLast = $scope.attributes.length - 1 === $scope.attributes.indexOf(attribute);
+                if (attribute.name === '' && attribute.value === '' && !isLast) {
+                    let cPos = $scope.attributes.indexOf(attribute);
+                    $scope.attributes.splice(cPos, 1);
+                }
+            };
+
+            $scope.saveAttributes = function() {
+                setAttributeOrder();
+                let postData = {attributes: $scope.attributes};
+                $http.post('/ajax/attributes/update/page/' + pageId, postData).then((responseData) => {
+                    $scope.attributes = responseData.data.attributes;
+                    addEmptyAttribute();
+                    events.emit('success', responseData.data.message);
+                })
+            };
+
+        }]);
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

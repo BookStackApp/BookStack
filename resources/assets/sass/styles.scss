@@ -202,3 +202,17 @@ $btt-size: 40px;
     color: #EEE;
   }
 }
+
+// Attribute form
+.floating-toolbox {
+  background-color: #FFF;
+  border: 1px solid #BBB;
+  border-radius: 3px;
+  padding: $-l;
+  position: fixed;
+  right: $-xl*2;
+  top: 100px;
+  z-index: 99;
+  height: 800px;
+  overflow-y: scroll;
+}

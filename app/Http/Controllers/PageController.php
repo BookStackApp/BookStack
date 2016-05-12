@@ -72,7 +72,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-create', $book);
         $this->setPageTitle('Edit Page Draft');
 
-        return view('pages/create', ['draft' => $draft, 'book' => $book]);
+        return view('pages/edit', ['page' => $draft, 'book' => $book, 'isDraft' => true]);
     }
 
     /**

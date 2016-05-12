@@ -18,10 +18,12 @@ class CreateAttributesTable extends Migration
             $table->string('entity_type', 100);
             $table->string('name');
             $table->string('value');
+            $table->integer('order');
             $table->timestamps();
 
             $table->index('name');
             $table->index('value');
+            $table->index('order');
             $table->index(['entity_id', 'entity_type']);
         });
     }

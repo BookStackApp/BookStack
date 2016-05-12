@@ -38,18 +38,15 @@ class AttributeController extends Controller
      */
     public function updateForEntity($entityType, $entityId, Request $request)
     {
-
-        $this->validate($request, [
-            'attributes.*.name' => 'required|min:3|max:250',
-            'attributes.*.value' => 'max:250'
-        ]);
-
         $entity = $this->attributeRepo->getEntity($entityType, $entityId, 'update');
         if ($entity === null) return $this->jsonError("Entity not found", 404);
 
         $inputAttributes = $request->input('attributes');
         $attributes = $this->attributeRepo->saveAttributesToEntity($entity, $inputAttributes);
-        return response()->json($attributes);
+        return response()->json([
+            'attributes' => $attributes,
+            'message' => 'Attributes successfully updated'
+        ]);
     }
 
     /**

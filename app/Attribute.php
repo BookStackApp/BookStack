@@ -6,7 +6,7 @@
  */
 class Attribute extends Model
 {
-    protected $fillable = ['name', 'value'];
+    protected $fillable = ['name', 'value', 'order'];
 
     /**
      * Get the entity that this attribute belongs to

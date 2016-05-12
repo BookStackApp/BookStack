@@ -97,19 +97,32 @@ class AttributeTests extends \TestCase
             ['name' => 'country', 'value' => 'England'],
         ];
 
+        // Do update request
         $this->asAdmin()->json("POST", "/ajax/attributes/update/page/" . $page->id, ['attributes' => $testJsonData]);
-        $this->asAdmin()->get("/ajax/attributes/get/page/" . $page->id);
-        $jsonData = json_decode($this->response->getContent());
-        // Check counts
-        $this->assertTrue(count($jsonData) === count($testJsonData), "The received attribute count is incorrect");
+        $updateData = json_decode($this->response->getContent());
         // Check data is correct
         $testDataCorrect = true;
-        foreach ($jsonData as $data) {
+        foreach ($updateData->attributes as $data) {
             $testItem = ['name' => $data->name, 'value' => $data->value];
             if (!in_array($testItem, $testResponseJsonData)) $testDataCorrect = false;
         }
         $testMessage = "Expected data was not found in the response.\nExpected Data: %s\nRecieved Data: %s";
-        $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($jsonData)));
+        $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($updateData)));
+        $this->assertTrue(isset($updateData->message), "No message returned in attribute update response");
+
+        // Do get request
+        $this->asAdmin()->get("/ajax/attributes/get/page/" . $page->id);
+        $getResponseData = json_decode($this->response->getContent());
+        // Check counts
+        $this->assertTrue(count($getResponseData) === count($testJsonData), "The received attribute count is incorrect");
+        // Check data is correct
+        $testDataCorrect = true;
+        foreach ($getResponseData as $data) {
+            $testItem = ['name' => $data->name, 'value' => $data->value];
+            if (!in_array($testItem, $testResponseJsonData)) $testDataCorrect = false;
+        }
+        $testMessage = "Expected data was not found in the response.\nExpected Data: %s\nRecieved Data: %s";
+        $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($getResponseData)));
     }
 
 }
