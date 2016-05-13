@@ -4,12 +4,12 @@
  * Class Attribute
  * @package BookStack
  */
-class Attribute extends Model
+class Tag extends Model
 {
     protected $fillable = ['name', 'value', 'order'];
 
     /**
-     * Get the entity that this attribute belongs to
+     * Get the entity that this tag belongs to
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function entity()

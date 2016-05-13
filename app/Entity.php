@@ -55,12 +55,12 @@ class Entity extends Ownable
     }
 
     /**
-     * Get the Attribute models that have been user assigned to this entity.
+     * Get the Tag models that have been user assigned to this entity.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function attributes()
+    public function tags()
     {
-        return $this->morphMany(Attribute::class, 'entity');
+        return $this->morphMany(Tag::class, 'entity');
     }
 
     /**

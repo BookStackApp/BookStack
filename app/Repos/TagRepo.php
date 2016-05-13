@@ -1,29 +1,29 @@
 <?php namespace BookStack\Repos;
 
-use BookStack\Attribute;
+use BookStack\Tag;
 use BookStack\Entity;
 use BookStack\Services\PermissionService;
 
 /**
- * Class AttributeRepo
+ * Class TagRepo
  * @package BookStack\Repos
  */
-class AttributeRepo
+class TagRepo
 {
 
-    protected $attribute;
+    protected $tag;
     protected $entity;
     protected $permissionService;
 
     /**
-     * AttributeRepo constructor.
-     * @param Attribute $attr
+     * TagRepo constructor.
+     * @param Tag $attr
      * @param Entity $ent
      * @param PermissionService $ps
      */
-    public function __construct(Attribute $attr, Entity $ent, PermissionService $ps)
+    public function __construct(Tag $attr, Entity $ent, PermissionService $ps)
     {
-        $this->attribute = $attr;
+        $this->tag = $attr;
         $this->entity = $ent;
         $this->permissionService = $ps;
     }
@@ -37,13 +37,13 @@ class AttributeRepo
     public function getEntity($entityType, $entityId, $action = 'view')
     {
         $entityInstance = $this->entity->getEntityInstance($entityType);
-        $searchQuery = $entityInstance->where('id', '=', $entityId)->with('attributes');
+        $searchQuery = $entityInstance->where('id', '=', $entityId)->with('tags');
         $searchQuery = $this->permissionService->enforceEntityRestrictions($searchQuery, $action);
         return $searchQuery->first();
     }
 
     /**
-     * Get all attributes for a particular entity.
+     * Get all tags for a particular entity.
      * @param string $entityType
      * @param int $entityId
      * @return mixed
@@ -53,42 +53,42 @@ class AttributeRepo
         $entity = $this->getEntity($entityType, $entityId);
         if ($entity === null) return collect();
 
-        return $entity->attributes;
+        return $entity->tags;
     }
 
     /**
-     * Get attribute name suggestions from scanning existing attribute names.
+     * Get tag name suggestions from scanning existing tag names.
      * @param $searchTerm
      * @return array
      */
     public function getNameSuggestions($searchTerm)
     {
         if ($searchTerm === '') return [];
-        $query = $this->attribute->where('name', 'LIKE', $searchTerm . '%')->groupBy('name')->orderBy('name', 'desc');
-        $query = $this->permissionService->filterRestrictedEntityRelations($query, 'attributes', 'entity_id', 'entity_type');
+        $query = $this->tag->where('name', 'LIKE', $searchTerm . '%')->groupBy('name')->orderBy('name', 'desc');
+        $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
         return $query->get(['name'])->pluck('name');
     }
 
     /**
-     * Save an array of attributes to an entity
+     * Save an array of tags to an entity
      * @param Entity $entity
-     * @param array $attributes
+     * @param array $tags
      * @return array|\Illuminate\Database\Eloquent\Collection
      */
-    public function saveAttributesToEntity(Entity $entity, $attributes = [])
+    public function saveTagsToEntity(Entity $entity, $tags = [])
     {
-        $entity->attributes()->delete();
-        $newAttributes = [];
-        foreach ($attributes as $attribute) {
-            if (trim($attribute['name']) === '') continue;
-            $newAttributes[] = $this->newInstanceFromInput($attribute);
+        $entity->tags()->delete();
+        $newTags = [];
+        foreach ($tags as $tag) {
+            if (trim($tag['name']) === '') continue;
+            $newTags[] = $this->newInstanceFromInput($tag);
         }
 
-        return $entity->attributes()->saveMany($newAttributes);
+        return $entity->tags()->saveMany($newTags);
     }
 
     /**
-     * Create a new Attribute instance from user input.
+     * Create a new Tag instance from user input.
      * @param $input
      * @return static
      */
@@ -98,7 +98,7 @@ class AttributeRepo
         $value = isset($input['value']) ? trim($input['value']) : '';
         // Any other modification or cleanup required can go here
         $values = ['name' => $name, 'value' => $value];
-        return $this->attribute->newInstance($values);
+        return $this->tag->newInstance($values);
     }
 
 }

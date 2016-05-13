@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttributesTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attributes', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('entity_id');
             $table->string('entity_type', 100);
@@ -35,6 +35,6 @@ class CreateAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('attributes');
+        Schema::drop('tags');
     }
 }

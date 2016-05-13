@@ -208,11 +208,70 @@ $btt-size: 40px;
   background-color: #FFF;
   border: 1px solid #BBB;
   border-radius: 3px;
-  padding: $-l;
   position: fixed;
   right: $-xl*2;
   top: 100px;
   z-index: 99;
   height: 800px;
+  width: 480px;
   overflow-y: scroll;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  > div {
+    flex: 1;
+    position: relative;
+  }
+  .tabs {
+    display: block;
+    border-right: 1px solid #DDD;
+    width: 54px;
+    flex: 0;
+  }
+  .tabs i {
+    padding: 0;
+    margin: 0;
+  }
+  .tabs [tab-button] {
+    display: block;
+    cursor: pointer;
+    color: #666;
+    padding: $-m;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    &.active {
+      color: #444;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+  div[tab-content] .padded {
+    padding: 0 $-m;
+  }
+  h4 {
+    font-size: 24px;
+    margin: $-m 0 0 0;
+    padding: 0 $-m;
+  }
+  .tags input {
+    max-width: 100%;
+    width: 100%;
+    min-width: 50px;
+  }
+  .tags td {
+    padding-right: $-s;
+    padding-top: $-s;
+  }
+  button.pos {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    padding: $-s;
+    border: 0;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    &:hover{
+      box-shadow: none;
+    }
+  }
 }

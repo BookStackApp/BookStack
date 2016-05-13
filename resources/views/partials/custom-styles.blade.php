@@ -1,9 +1,9 @@
 @if(Setting::get('app-color'))
     <style>
-        header, #back-to-top {
+        header, #back-to-top, .primary-background {
             background-color: {{ Setting::get('app-color') }};
         }
-        .faded-small {
+        .faded-small, .primary-background-light {
             background-color: {{ Setting::get('app-color-light') }};
         }
         .button-base, .button, input[type="button"], input[type="submit"] {

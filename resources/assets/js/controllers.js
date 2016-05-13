@@ -400,75 +400,75 @@ module.exports = function (ngApp, events) {
 
     }]);
 
-    ngApp.controller('PageAttributeController', ['$scope', '$http', '$attrs',
+    ngApp.controller('PageTagController', ['$scope', '$http', '$attrs',
         function ($scope, $http, $attrs) {
 
             const pageId = Number($attrs.pageId);
-            $scope.attributes = [];
+            $scope.tags = [];
 
             /**
-             * Push an empty attribute to the end of the scope attributes.
+             * Push an empty tag to the end of the scope tags.
              */
-            function addEmptyAttribute() {
-                $scope.attributes.push({
+            function addEmptyTag() {
+                $scope.tags.push({
                     name: '',
                     value: ''
                 });
             }
 
             /**
-             * Get all attributes for the current book and add into scope.
+             * Get all tags for the current book and add into scope.
              */
-            function getAttributes() {
-                $http.get('/ajax/attributes/get/page/' + pageId).then((responseData) => {
-                    $scope.attributes = responseData.data;
-                    addEmptyAttribute();
+            function getTags() {
+                $http.get('/ajax/tags/get/page/' + pageId).then((responseData) => {
+                    $scope.tags = responseData.data;
+                    addEmptyTag();
                 });
             }
-            getAttributes();
+            getTags();
 
             /**
-             * Set the order property on all attributes.
+             * Set the order property on all tags.
              */
-            function setAttributeOrder() {
-                for (let i = 0; i < $scope.attributes.length; i++) {
-                    $scope.attributes[i].order = i;
+            function setTagOrder() {
+                for (let i = 0; i < $scope.tags.length; i++) {
+                    $scope.tags[i].order = i;
                 }
             }
 
             /**
-             * When an attribute changes check if another empty editable
+             * When an tag changes check if another empty editable
              * field needs to be added onto the end.
-             * @param attribute
+             * @param tag
              */
-            $scope.attributeChange = function(attribute) {
-                let cPos = $scope.attributes.indexOf(attribute);
-                if (cPos !== $scope.attributes.length-1) return;
+            $scope.tagChange = function(tag) {
+                let cPos = $scope.tags.indexOf(tag);
+                if (cPos !== $scope.tags.length-1) return;
 
-                if (attribute.name !== '' || attribute.value !== '') {
-                    addEmptyAttribute();
+                if (tag.name !== '' || tag.value !== '') {
+                    addEmptyTag();
                 }
             };
 
             /**
-             * When an attribute field loses focus check the attribute to see if its
+             * When an tag field loses focus check the tag to see if its
              * empty and therefore could be removed from the list.
-             * @param attribute
+             * @param tag
              */
-            $scope.attributeBlur = function(attribute) {
-                let isLast = $scope.attributes.length - 1 === $scope.attributes.indexOf(attribute);
-                if (attribute.name === '' && attribute.value === '' && !isLast) {
-                    let cPos = $scope.attributes.indexOf(attribute);
-                    $scope.attributes.splice(cPos, 1);
+            $scope.tagBlur = function(tag) {
+                let isLast = $scope.tags.length - 1 === $scope.tags.indexOf(tag);
+                if (tag.name === '' && tag.value === '' && !isLast) {
+                    let cPos = $scope.tags.indexOf(tag);
+                    $scope.tags.splice(cPos, 1);
                 }
             };
 
-            $scope.saveAttributes = function() {
-                setAttributeOrder();
-                let postData = {attributes: $scope.attributes};
-                $http.post('/ajax/attributes/update/page/' + pageId, postData).then((responseData) => {
-                    $scope.attributes = responseData.data.attributes;
-                    addEmptyAttribute();
+            $scope.saveTags = function() {
+                setTagOrder();
+                let postData = {tags: $scope.tags};
+                $http.post('/ajax/tags/update/page/' + pageId, postData).then((responseData) => {
+                    $scope.tags = responseData.data.tags;
+                    addEmptyTag();
                     events.emit('success', responseData.data.message);
                 })
             };

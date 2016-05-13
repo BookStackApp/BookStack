@@ -239,6 +239,17 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   }
 }
 
+input.outline {
+  border: 0;
+  border-bottom: 2px solid #DDD;
+  border-radius: 0;
+  &:focus, &:active {
+    border: 0;
+    border-bottom: 2px solid #AAA;
+    outline: 0;
+  }
+}
+
 #login-form label[for="remember"] {
   margin: 0;
 }
