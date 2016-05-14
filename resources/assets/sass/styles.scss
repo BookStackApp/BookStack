@@ -21,6 +21,11 @@
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+  user-select: none;
+}
+
+[ng-click] {
+  cursor: pointer;
 }
 
 // Jquery Sortable Styles
@@ -206,18 +211,31 @@ $btt-size: 40px;
 // Attribute form
 .floating-toolbox {
   background-color: #FFF;
-  border: 1px solid #BBB;
-  border-radius: 3px;
-  position: fixed;
+  border: 1px solid #DDD;
   right: $-xl*2;
-  top: 100px;
   z-index: 99;
-  height: 800px;
-  width: 480px;
-  overflow-y: scroll;
-  display: flex;
+  width: 48px;
+  overflow: hidden;
   align-items: stretch;
   flex-direction: row;
+  display: flex;
+  transition: width ease-in-out 180ms;
+  margin-top: -1px;
+  &.open {
+    width: 480px;
+  }
+  [toolbox-toggle] i {
+    transition: transform ease-in-out 180ms;
+  }
+  [toolbox-toggle] {
+    transition: background-color ease-in-out 180ms;
+  }
+  &.open [toolbox-toggle] {
+    background-color: rgba(255, 0, 0, 0.29);
+  }
+  &.open [toolbox-toggle] i {
+    transform: rotate(180deg);
+  }
   > div {
     flex: 1;
     position: relative;
@@ -229,27 +247,35 @@ $btt-size: 40px;
     flex: 0;
   }
   .tabs i {
+    color: rgba(0, 0, 0, 0.5);
     padding: 0;
     margin: 0;
   }
-  .tabs [tab-button] {
+  .tabs > span {
     display: block;
     cursor: pointer;
-    color: #666;
-    padding: $-m;
+    padding: $-s $-m;
+    font-size: 13.5px;
+    line-height: 1.6;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    &.active {
-      color: #444;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
+  }
+  &.open .tabs > span.active {
+    color: #444;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  div[tab-content] {
+    padding-bottom: 45px;
+    display: flex;
+    flex: 1;
   }
   div[tab-content] .padded {
-    padding: 0 $-m;
+    flex: 1;
+    padding-top: 0;
   }
   h4 {
     font-size: 24px;
     margin: $-m 0 0 0;
-    padding: 0 $-m;
+    padding: 0 $-l $-s $-l;
   }
   .tags input {
     max-width: 100%;
@@ -266,6 +292,7 @@ $btt-size: 40px;
     display: block;
     width: 100%;
     padding: $-s;
+    height: 45px;
     border: 0;
     margin: 0;
     box-shadow: none;
@@ -274,4 +301,19 @@ $btt-size: 40px;
       box-shadow: none;
     }
   }
+  .handle {
+    user-select: none;
+    cursor: move;
+    color: #999;
+  }
+  form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+}
+
+[tab-content] {
+  display: none;
 }

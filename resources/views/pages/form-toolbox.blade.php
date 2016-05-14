@@ -1,17 +1,34 @@
-<div class="floating-toolbox">
+
+<div toolbox class="floating-toolbox">
     <div class="tabs primary-background-light">
-        <span tab-button class="active"><i class="zmdi zmdi-tag"></i></span>
-        <span tab-button><i class="zmdi zmdi-wrench"></i></span>
+        <span toolbox-toggle><i class="zmdi zmdi-caret-left-circle"></i></span>
+        <span tab-button="tags" title="Page Tags" class="active"><i class="zmdi zmdi-tag"></i></span>
     </div>
-    <div tab-content ng-controller="PageTagController" page-id="{{ $page->id or 0 }}">
+    <div tab-content="tags" ng-controller="PageTagController" page-id="{{ $page->id or 0 }}">
         <form ng-submit="saveTags()" >
             <h4>Page Tags</h4>
             <div class="padded tags">
+                <p class="muted small">Add some tags to better categorise your content. <br> You can assign a value to a tag for more in-depth organisation.</p>
                 <table class="no-style" style="width: 100%;">
-                    <tr ng-repeat="tag in tags">
-                        <td><input class="outline" type="text" ng-model="tag.name" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="Tag"></td>
-                        <td><input class="outline" type="text" ng-model="tag.value" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="Tag Value (Optional)"></td>
+                    <tbody ui-sortable="sortOptions" ng-model="tags" >
+                        <tr ng-repeat="tag in tags">
+                            <td width="20" ><i class="handle zmdi zmdi-menu"></i></td>
+                            <td><input class="outline" type="text" ng-model="tag.name" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="Tag"></td>
+                            <td><input class="outline" type="text" ng-model="tag.value" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="Tag Value (Optional)"></td>
+                            <td width="10" class="text-center text-neg" style="padding: 0;" ng-click="removeTag(tag)"><i class="zmdi zmdi-close"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="no-style" style="width: 100%;">
+                    <tbody>
+                    <tr class="unsortable">
+                        <td  width="34"></td>
+                        <td ng-click="addEmptyTag()">
+                            <button type="button" class="text-button">Add another tag</button>
+                        </td>
+                        <td></td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
             <button class="button pos" type="submit">Save Tags</button>

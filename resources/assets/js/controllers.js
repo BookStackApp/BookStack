@@ -405,6 +405,13 @@ module.exports = function (ngApp, events) {
 
             const pageId = Number($attrs.pageId);
             $scope.tags = [];
+            
+            $scope.sortOptions = {
+                handle: '.handle',
+                items: '> tr',
+                containment: "parent",
+                axis: "y"
+            };
 
             /**
              * Push an empty tag to the end of the scope tags.
@@ -415,6 +422,7 @@ module.exports = function (ngApp, events) {
                     value: ''
                 });
             }
+            $scope.addEmptyTag = addEmptyTag;
 
             /**
              * Get all tags for the current book and add into scope.
@@ -463,6 +471,9 @@ module.exports = function (ngApp, events) {
                 }
             };
 
+            /**
+             * Save the tags to the current page.
+             */
             $scope.saveTags = function() {
                 setTagOrder();
                 let postData = {tags: $scope.tags};
@@ -471,6 +482,15 @@ module.exports = function (ngApp, events) {
                     addEmptyTag();
                     events.emit('success', responseData.data.message);
                 })
+            };
+
+            /**
+             * Remove a tag from the current list.
+             * @param tag
+             */
+            $scope.removeTag = function(tag) {
+                let cIndex = $scope.tags.indexOf(tag);
+                $scope.tags.splice(cIndex, 1);
             };
 
         }]);

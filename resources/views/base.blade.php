@@ -15,6 +15,7 @@
 
     <!-- Scripts -->
     <script src="/libs/jquery/jquery.min.js?version=2.1.4"></script>
+    <script src="/libs/jquery/jquery-ui.min.js?version=1.11.4"></script>
 
     @yield('head')
 

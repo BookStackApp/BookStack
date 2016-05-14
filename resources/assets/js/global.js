@@ -5,9 +5,9 @@ var angular = require('angular');
 var ngResource = require('angular-resource');
 var ngAnimate = require('angular-animate');
 var ngSanitize = require('angular-sanitize');
+require('angular-ui-sortable');
 
-var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize']);
-
+var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
 // Global Event System
 var Events = {

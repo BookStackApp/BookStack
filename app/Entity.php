@@ -60,7 +60,7 @@ class Entity extends Ownable
      */
     public function tags()
     {
-        return $this->morphMany(Tag::class, 'entity');
+        return $this->morphMany(Tag::class, 'entity')->orderBy('order', 'asc');
     }
 
     /**
