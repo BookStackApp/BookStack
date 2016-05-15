@@ -145,6 +145,11 @@ class PageRepo extends EntityRepo
     {
         $draftPage->fill($input);
 
+        // Save page tags if present
+        if(isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
+        }
+
         $draftPage->slug = $this->findSuitableSlug($draftPage->name, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = strip_tags($draftPage->html);

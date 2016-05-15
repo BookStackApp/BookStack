@@ -2,12 +2,8 @@ language: php
 php:
   - 7.0
 
-node_js:
-  - "4.1.2"
-
 cache:
   directories:
-    - node_modules
     - vendor
 
 addons:
