@@ -21,6 +21,11 @@
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+  user-select: none;
+}
+
+[ng-click] {
+  cursor: pointer;
 }
 
 // Jquery Sortable Styles

@@ -1,7 +1,7 @@
 <?php namespace BookStack;
 
 
-abstract class Entity extends Ownable
+class Entity extends Ownable
 {
 
     /**
@@ -52,6 +52,15 @@ abstract class Entity extends Ownable
     public function views()
     {
         return $this->morphMany(View::class, 'viewable');
+    }
+
+    /**
+     * Get the Tag models that have been user assigned to this entity.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function tags()
+    {
+        return $this->morphMany(Tag::class, 'entity')->orderBy('order', 'asc');
     }
 
     /**
@@ -115,6 +124,22 @@ abstract class Entity extends Ownable
     }
 
     /**
+     * Get an instance of an entity of the given type.
+     * @param $type
+     * @return Entity
+     */
+    public static function getEntityInstance($type)
+    {
+        $types = ['Page', 'Book', 'Chapter'];
+        $className = str_replace([' ', '-', '_'], '', ucwords($type));
+        if (!in_array($className, $types)) {
+            return null;
+        }
+
+        return app('BookStack\\' . $className);
+    }
+
+    /**
      * Gets a limited-length version of the entities name.
      * @param int $length
      * @return string
@@ -132,54 +157,54 @@ abstract class Entity extends Ownable
      * @param string[] array $wheres
      * @return mixed
      */
-    public static function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
+    public function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
     {
         $exactTerms = [];
-        foreach ($terms as $key => $term) {
-            $term = htmlentities($term, ENT_QUOTES);
-            $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
-            if (preg_match('/\s/', $term)) {
-                $exactTerms[] = '%' . $term . '%';
-                $term = '"' . $term . '"';
-            } else {
-                $term = '' . $term . '*';
-            }
-            if ($term !== '*') $terms[$key] = $term;
-        }
-        $termString = implode(' ', $terms);
-        $fields = implode(',', $fieldsToSearch);
-        $search = static::selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
-        $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
-
-        // Ensure at least one exact term matches if in search
-        if (count($exactTerms) > 0) {
-            $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
-                foreach ($exactTerms as $exactTerm) {
-                    foreach ($fieldsToSearch as $field) {
-                        $query->orWhere($field, 'like', $exactTerm);
-                    }
+        if (count($terms) === 0) {
+            $search = $this;
+            $orderBy = 'updated_at';
+        } else {
+            foreach ($terms as $key => $term) {
+                $term = htmlentities($term, ENT_QUOTES);
+                $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
+                if (preg_match('/\s/', $term)) {
+                    $exactTerms[] = '%' . $term . '%';
+                    $term = '"' . $term . '"';
+                } else {
+                    $term = '' . $term . '*';
                 }
-            });
-        }
+                if ($term !== '*') $terms[$key] = $term;
+            }
+            $termString = implode(' ', $terms);
+            $fields = implode(',', $fieldsToSearch);
+            $search = static::selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
+            $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+
+            // Ensure at least one exact term matches if in search
+            if (count($exactTerms) > 0) {
+                $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
+                    foreach ($exactTerms as $exactTerm) {
+                        foreach ($fieldsToSearch as $field) {
+                            $query->orWhere($field, 'like', $exactTerm);
+                        }
+                    }
+                });
+            }
+            $orderBy = 'title_relevance';
+        };
 
         // Add additional where terms
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
         // Load in relations
-        if (static::isA('page')) {
+        if ($this->isA('page')) {
             $search = $search->with('book', 'chapter', 'createdBy', 'updatedBy');
-        } else if (static::isA('chapter')) {
+        } else if ($this->isA('chapter')) {
             $search = $search->with('book');
         }
 
-        return $search->orderBy('title_relevance', 'desc');
+        return $search->orderBy($orderBy, 'desc');
     }
-
-    /**
-     * Get the url for this item.
-     * @return string
-     */
-    abstract public function getUrl();
-
+    
 }

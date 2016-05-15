@@ -1,11 +1,9 @@
 language: php
-
 php:
   - 7.0
 
 cache:
   directories:
-    - node_modules
     - vendor
 
 addons:

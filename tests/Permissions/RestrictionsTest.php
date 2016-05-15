@@ -9,7 +9,7 @@ class RestrictionsTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->user = $this->getNewUser();
+        $this->user = $this->getEditor();
         $this->viewer = $this->getViewer();
         $this->restrictionService = $this->app[\BookStack\Services\PermissionService::class];
     }

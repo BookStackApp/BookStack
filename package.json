@@ -4,10 +4,11 @@
     "gulp": "^3.9.0"
   },
   "dependencies": {
-    "angular": "^1.5.0-rc.0",
-    "angular-animate": "^1.5.0-rc.0",
-    "angular-resource": "^1.5.0-rc.0",
-    "angular-sanitize": "^1.5.0-rc.0",
+    "angular": "^1.5.5",
+    "angular-animate": "^1.5.5",
+    "angular-resource": "^1.5.5",
+    "angular-sanitize": "^1.5.5",
+    "angular-ui-sortable": "^0.14.0",
     "babel-runtime": "^5.8.29",
     "bootstrap-sass": "^3.0.0",
     "dropzone": "^4.0.1",

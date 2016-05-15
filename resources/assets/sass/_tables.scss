@@ -26,6 +26,13 @@ table {
   }
 }
 
+table.no-style {
+  td {
+    border: 0;
+    padding: 0;
+  }
+}
+
 table.list-table {
   margin: 0 -$-xs;
   td {
