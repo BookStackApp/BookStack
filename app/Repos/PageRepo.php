@@ -14,14 +14,17 @@ class PageRepo extends EntityRepo
 {
 
     protected $pageRevision;
+    protected $tagRepo;
 
     /**
      * PageRepo constructor.
      * @param PageRevision $pageRevision
+     * @param TagRepo $tagRepo
      */
-    public function __construct(PageRevision $pageRevision)
+    public function __construct(PageRevision $pageRevision, TagRepo $tagRepo)
     {
         $this->pageRevision = $pageRevision;
+        $this->tagRepo = $tagRepo;
         parent::__construct();
     }
 
@@ -306,6 +309,11 @@ class PageRepo extends EntityRepo
         // Prevent slug being updated if no name change
         if ($page->name !== $input['name']) {
             $page->slug = $this->findSuitableSlug($input['name'], $book_id, $page->id);
+        }
+
+        // Save page tags if present
+        if(isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
         // Update with new details
