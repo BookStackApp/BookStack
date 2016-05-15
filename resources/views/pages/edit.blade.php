@@ -9,7 +9,7 @@
 @section('content')
 
     <div class="flex-fill flex">
-        <form action="{{$page->getUrl()}}" data-page-id="{{ $page->id }}" method="POST" class="flex flex-fill">
+        <form action="{{$page->getUrl()}}" autocomplete="off" data-page-id="{{ $page->id }}" method="POST" class="flex flex-fill">
             @if(!isset($isDraft))
                 <input type="hidden" name="_method" value="PUT">
             @endif

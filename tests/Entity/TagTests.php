@@ -52,10 +52,28 @@ class TagTests extends \TestCase
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'plans']));
         $page = $this->getPageWithTags($attrs);
 
-        $this->asAdmin()->get('/ajax/tags/suggest?search=dog')->seeJsonEquals([]);
-        $this->get('/ajax/tags/suggest?search=co')->seeJsonEquals(['color', 'country', 'county']);
-        $this->get('/ajax/tags/suggest?search=cou')->seeJsonEquals(['country', 'county']);
-        $this->get('/ajax/tags/suggest?search=pla')->seeJsonEquals(['planet', 'plans']);
+        $this->asAdmin()->get('/ajax/tags/suggest/names?search=dog')->seeJsonEquals([]);
+        $this->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country', 'county']);
+        $this->get('/ajax/tags/suggest/names?search=cou')->seeJsonEquals(['country', 'county']);
+        $this->get('/ajax/tags/suggest/names?search=pla')->seeJsonEquals(['planet', 'plans']);
+    }
+
+    public function test_tag_value_suggestions()
+    {
+        // Create some tags with similar values to test with
+        $attrs = collect();
+        $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'country', 'value' => 'cats']));
+        $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'color', 'value' => 'cattery']));
+        $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'city', 'value' => 'castle']));
+        $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'county', 'value' => 'dog']));
+        $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'planet', 'value' => 'catapult']));
+        $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'plans', 'value' => 'dodgy']));
+        $page = $this->getPageWithTags($attrs);
+
+        $this->asAdmin()->get('/ajax/tags/suggest/values?search=ora')->seeJsonEquals([]);
+        $this->get('/ajax/tags/suggest/values?search=cat')->seeJsonEquals(['cats', 'cattery', 'catapult']);
+        $this->get('/ajax/tags/suggest/values?search=do')->seeJsonEquals(['dog', 'dodgy']);
+        $this->get('/ajax/tags/suggest/values?search=cas')->seeJsonEquals(['castle']);
     }
 
     public function test_entity_permissions_effect_tag_suggestions()

@@ -339,4 +339,181 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    ngApp.directive('autosuggestions', ['$http', function($http) {
+        return {
+            restrict: 'A',
+            link: function(scope, elem, attrs) {
+                
+                // Local storage for quick caching.
+                const localCache = {};
+
+                // Create suggestion element
+                const suggestionBox = document.createElement('ul');
+                suggestionBox.className = 'suggestion-box';
+                suggestionBox.style.position = 'absolute';
+                suggestionBox.style.display = 'none';
+                const $suggestionBox = $(suggestionBox);
+
+                // General state tracking
+                let isShowing = false;
+                let currentInput = false;
+                let active = 0;
+
+                // Listen to input events on autosuggest fields
+                elem.on('input', '[autosuggest]', function(event) {
+                    let $input = $(this);
+                    let val = $input.val();
+                    let url = $input.attr('autosuggest');
+                    // No suggestions until at least 3 chars
+                    if (val.length < 3) {
+                        if (isShowing) {
+                            $suggestionBox.hide();
+                            isShowing = false;
+                        }
+                        return;
+                    };
+
+                    let suggestionPromise = getSuggestions(val.slice(0, 3), url);
+                    suggestionPromise.then((suggestions) => {
+                       if (val.length > 2) {
+                           suggestions = suggestions.filter((item) => {
+                               return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
+                           }).slice(0, 4);
+                           displaySuggestions($input, suggestions);
+                       }
+                    });
+                });
+
+                // Hide autosuggestions when input loses focus.
+                // Slight delay to allow clicks.
+                elem.on('blur', '[autosuggest]', function(event) {
+                    setTimeout(() => {
+                        $suggestionBox.hide();
+                        isShowing = false;
+                    }, 200)
+                });
+
+                elem.on('keydown', '[autosuggest]', function (event) {
+                    if (!isShowing) return;
+
+                    let suggestionElems = suggestionBox.childNodes;
+                    let suggestCount = suggestionElems.length;
+
+                    // Down arrow
+                    if (event.keyCode === 40) {
+                        let newActive = (active === suggestCount-1) ? 0 : active + 1;
+                        changeActiveTo(newActive, suggestionElems);
+                    }
+                    // Up arrow
+                    else if (event.keyCode === 38) {
+                        let newActive = (active === 0) ? suggestCount-1 : active - 1;
+                        changeActiveTo(newActive, suggestionElems);
+                    }
+                    // Enter key
+                    else if (event.keyCode === 13) {
+                        let text = suggestionElems[active].textContent;
+                        currentInput[0].value = text;
+                        currentInput.focus();
+                        $suggestionBox.hide();
+                        isShowing = false;
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+
+                // Change the active suggestion to the given index
+                function changeActiveTo(index, suggestionElems) {
+                    suggestionElems[active].className = '';
+                    active = index;
+                    suggestionElems[active].className = 'active';
+                }
+
+                // Display suggestions on a field
+                let prevSuggestions = [];
+                function displaySuggestions($input, suggestions) {
+
+                    // Hide if no suggestions
+                    if (suggestions.length === 0) {
+                        $suggestionBox.hide();
+                        isShowing = false;
+                        prevSuggestions = suggestions;
+                        return;
+                    }
+
+                    // Otherwise show and attach to input
+                    if (!isShowing) {
+                        $suggestionBox.show();
+                        isShowing = true;
+                    }
+                    if ($input !== currentInput) {
+                        $suggestionBox.detach();
+                        $input.after($suggestionBox);
+                        currentInput = $input;
+                    }
+
+                    // Return if no change
+                    if (prevSuggestions.join() === suggestions.join()) {
+                        prevSuggestions = suggestions;
+                        return;
+                    }
+
+                    // Build suggestions
+                    $suggestionBox[0].innerHTML = '';
+                    for (let i = 0; i < suggestions.length; i++) {
+                        var suggestion = document.createElement('li');
+                        suggestion.textContent = suggestions[i];
+                        suggestion.onclick = suggestionClick;
+                        if (i === 0) {
+                            suggestion.className = 'active'
+                            active = 0;
+                        };
+                        $suggestionBox[0].appendChild(suggestion);
+                    }
+
+                    prevSuggestions = suggestions;
+                }
+
+                // Suggestion click event
+                function suggestionClick(event) {
+                    let text = this.textContent;
+                    currentInput[0].value = text;
+                    currentInput.focus();
+                    $suggestionBox.hide();
+                    isShowing = false;
+                };
+
+                // Get suggestions & cache
+                function getSuggestions(input, url) {
+                    let searchUrl = url + '?search=' + encodeURIComponent(input);
+
+                    // Get from local cache if exists
+                    if (localCache[searchUrl]) {
+                        return new Promise((resolve, reject) => {
+                            resolve(localCache[input]);
+                        });
+                    }
+
+                    return $http.get(searchUrl).then((response) => {
+                        localCache[input] = response.data;
+                        return response.data;
+                    });
+                }
+
+            }
+        }
+    }]);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+

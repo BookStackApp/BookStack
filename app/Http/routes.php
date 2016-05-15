@@ -88,7 +88,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Tag routes (AJAX)
     Route::group(['prefix' => 'ajax/tags'], function() {
         Route::get('/get/{entityType}/{entityId}', 'TagController@getForEntity');
-        Route::get('/suggest', 'TagController@getNameSuggestions');
+        Route::get('/suggest/names', 'TagController@getNameSuggestions');
+        Route::get('/suggest/values', 'TagController@getValueSuggestions');
         Route::post('/update/{entityType}/{entityId}', 'TagController@updateForEntity');
     });
 

@@ -200,6 +200,7 @@
   .tags td {
     padding-right: $-s;
     padding-top: $-s;
+    position: relative;
   }
   button.pos {
     position: absolute;
@@ -269,6 +270,28 @@
   }
   .tag {
     padding: $-s;
+  }
+}
 
+.suggestion-box {
+  position: absolute;
+  background-color: #FFF;
+  border: 1px solid #BBB;
+  box-shadow: $bs-light;
+  list-style: none;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  border-radius: 3px;
+  li {
+    display: block;
+    padding: $-xs $-s;
+    border-bottom: 1px solid #DDD;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &.active {
+      background-color: #EEE;
+    }
   }
 }

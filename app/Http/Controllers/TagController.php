@@ -60,5 +60,15 @@ class TagController extends Controller
         return response()->json($suggestions);
     }
 
+    /**
+     * Get tag value suggestions from a given search term.
+     * @param Request $request
+     */
+    public function getValueSuggestions(Request $request)
+    {
+        $searchTerm = $request->get('search');
+        $suggestions = $this->tagRepo->getValueSuggestions($searchTerm);
+        return response()->json($suggestions);
+    }
 
 }
