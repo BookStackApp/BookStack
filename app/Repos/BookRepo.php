@@ -286,8 +286,9 @@ class BookRepo extends EntityRepo
     public function getBySearch($term, $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $books = $this->permissionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms))
-            ->paginate($count)->appends($paginationAppends);
+        $bookQuery = $this->permissionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms));
+        $bookQuery = $this->addAdvancedSearchQueries($bookQuery, $term);
+        $books = $bookQuery->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($books as $book) {
             //highlight

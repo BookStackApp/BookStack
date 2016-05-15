@@ -168,8 +168,9 @@ class ChapterRepo extends EntityRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $chapters = $this->permissionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms))
-            ->paginate($count)->appends($paginationAppends);
+        $chapterQuery = $this->permissionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms));
+        $chapterQuery = $this->addAdvancedSearchQueries($chapterQuery, $term);
+        $chapters = $chapterQuery->paginate($count)->appends($paginationAppends);
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
         foreach ($chapters as $chapter) {
             //highlight

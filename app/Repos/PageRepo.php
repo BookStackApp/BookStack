@@ -245,8 +245,9 @@ class PageRepo extends EntityRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $pages = $this->permissionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms))
-            ->paginate($count)->appends($paginationAppends);
+        $pageQuery = $this->permissionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms));
+        $pageQuery = $this->addAdvancedSearchQueries($pageQuery, $term);
+        $pages = $pageQuery->paginate($count)->appends($paginationAppends);
 
         // Add highlights to page text.
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
