@@ -1,7 +1,12 @@
 language: php
-
 php:
   - 7.0
+
+sudo: required
+dist: trusty
+
+node_js:
+  - "4.1.2"
 
 cache:
   directories:
