@@ -62,9 +62,9 @@
                     <hr>
 
                     <p class="text-muted small">
-                        Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
+                        Created {{$page->created_at->diffForHumans()}} @if($page->createdBy) by <a href="/user/{{ $page->createdBy->id }}">{{$page->createdBy->name}}</a> @endif
                         <br>
-                        Last Updated {{$page->updated_at->diffForHumans()}} @if($page->updatedBy) by {{$page->updatedBy->name}} @endif
+                        Last Updated {{$page->updated_at->diffForHumans()}} @if($page->updatedBy) by <a href="/user/{{ $page->updatedBy->id }}">{{$page->updatedBy->name}}</a> @endif
                     </p>
 
                 </div>

@@ -63,9 +63,9 @@
                 @endif
 
                 <p class="text-muted small">
-                    Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->createdBy->name}} @endif
+                    Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by <a href="/user/{{ $chapter->createdBy->id }}">{{ $chapter->createdBy->name}}</a> @endif
                     <br>
-                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->updatedBy) by {{$chapter->updatedBy->name}} @endif
+                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->updatedBy) by <a href="/user/{{ $chapter->updatedBy->id }}">{{  $chapter->updatedBy->name}}</a> @endif
                 </p>
             </div>
             <div class="col-md-3 col-md-offset-1">
