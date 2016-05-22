@@ -1,5 +1,7 @@
 # BookStack
 
+[![Build Status](https://travis-ci.org/ssddanbrown/BookStack.svg)](https://travis-ci.org/ssddanbrown/BookStack)
+
 A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
 
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)

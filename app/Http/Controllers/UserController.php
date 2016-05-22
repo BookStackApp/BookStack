@@ -31,14 +31,21 @@ class UserController extends Controller
 
     /**
      * Display a listing of the users.
+     * @param Request $request
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->checkPermission('users-manage');
-        $users = $this->userRepo->getAllUsers();
+        $listDetails = [
+            'order' => $request->has('order') ? $request->get('order') : 'asc',
+            'search' => $request->has('search') ? $request->get('search') : '',
+            'sort' => $request->has('sort') ? $request->get('sort') : 'name',
+        ];
+        $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
         $this->setPageTitle('Users');
-        return view('users/index', ['users' => $users]);
+        $users->appends($listDetails);
+        return view('users/index', ['users' => $users, 'listDetails' => $listDetails]);
     }
 
     /**
@@ -49,7 +56,8 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
-        return view('users/create', ['authMethod' => $authMethod]);
+        $roles = $this->userRepo->getAssignableRoles();
+        return view('users/create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -117,7 +125,8 @@ class UserController extends Controller
         $user = $this->user->findOrFail($id);
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle('User Profile');
-        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod]);
+        $roles = $this->userRepo->getAssignableRoles();
+        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -198,11 +207,14 @@ class UserController extends Controller
         });
 
         $user = $this->userRepo->getById($id);
+
         if ($this->userRepo->isOnlyAdmin($user)) {
             session()->flash('error', 'You cannot delete the only admin');
             return redirect($user->getEditUrl());
         }
+
         $this->userRepo->destroy($user);
+        session()->flash('success', 'User successfully removed');
 
         return redirect('/settings/users');
     }

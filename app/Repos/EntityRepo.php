@@ -4,8 +4,9 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Page;
-use BookStack\Services\RestrictionService;
+use BookStack\Services\PermissionService;
 use BookStack\User;
+use Illuminate\Support\Facades\Log;
 
 class EntityRepo
 {
@@ -26,9 +27,15 @@ class EntityRepo
     public $page;
 
     /**
-     * @var RestrictionService
+     * @var PermissionService
      */
-    protected $restrictionService;
+    protected $permissionService;
+
+    /**
+     * Acceptable operators to be used in a query
+     * @var array
+     */
+    protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
     /**
      * EntityService constructor.
@@ -38,7 +45,7 @@ class EntityRepo
         $this->book = app(Book::class);
         $this->chapter = app(Chapter::class);
         $this->page = app(Page::class);
-        $this->restrictionService = app(RestrictionService::class);
+        $this->permissionService = app(PermissionService::class);
     }
 
     /**
@@ -50,7 +57,7 @@ class EntityRepo
      */
     public function getRecentlyCreatedBooks($count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->restrictionService->enforceBookRestrictions($this->book)
+        $query = $this->permissionService->enforceBookRestrictions($this->book)
             ->orderBy('created_at', 'desc');
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
@@ -66,7 +73,7 @@ class EntityRepo
      */
     public function getRecentlyUpdatedBooks($count = 20, $page = 0)
     {
-        return $this->restrictionService->enforceBookRestrictions($this->book)
+        return $this->permissionService->enforceBookRestrictions($this->book)
             ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
     }
 
@@ -79,7 +86,7 @@ class EntityRepo
      */
     public function getRecentlyCreatedPages($count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->restrictionService->enforcePageRestrictions($this->page)
+        $query = $this->permissionService->enforcePageRestrictions($this->page)
             ->orderBy('created_at', 'desc')->where('draft', '=', false);
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
@@ -96,7 +103,7 @@ class EntityRepo
      */
     public function getRecentlyCreatedChapters($count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->restrictionService->enforceChapterRestrictions($this->chapter)
+        $query = $this->permissionService->enforceChapterRestrictions($this->chapter)
             ->orderBy('created_at', 'desc');
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
@@ -112,7 +119,7 @@ class EntityRepo
      */
     public function getRecentlyUpdatedPages($count = 20, $page = 0)
     {
-        return $this->restrictionService->enforcePageRestrictions($this->page)
+        return $this->permissionService->enforcePageRestrictions($this->page)
             ->where('draft', '=', false)
             ->orderBy('updated_at', 'desc')->with('book')->skip($page * $count)->take($count)->get();
     }
@@ -136,14 +143,14 @@ class EntityRepo
      * @param $request
      * @param Entity $entity
      */
-    public function updateRestrictionsFromRequest($request, Entity $entity)
+    public function updateEntityPermissionsFromRequest($request, Entity $entity)
     {
         $entity->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
-        $entity->restrictions()->delete();
+        $entity->permissions()->delete();
         if ($request->has('restrictions')) {
             foreach ($request->get('restrictions') as $roleId => $restrictions) {
                 foreach ($restrictions as $action => $value) {
-                    $entity->restrictions()->create([
+                    $entity->permissions()->create([
                         'role_id' => $roleId,
                         'action'  => strtolower($action)
                     ]);
@@ -151,6 +158,7 @@ class EntityRepo
             }
         }
         $entity->save();
+        $this->permissionService->buildJointPermissionsForEntity($entity);
     }
 
     /**
@@ -162,6 +170,7 @@ class EntityRepo
      */
     protected function prepareSearchTerms($termString)
     {
+        $termString = $this->cleanSearchTermString($termString);
         preg_match_all('/"(.*?)"/', $termString, $matches);
         if (count($matches[1]) > 0) {
             $terms = $matches[1];
@@ -173,5 +182,93 @@ class EntityRepo
         return $terms;
     }
 
+    /**
+     * Removes any special search notation that should not
+     * be used in a full-text search.
+     * @param $termString
+     * @return mixed
+     */
+    protected function cleanSearchTermString($termString)
+    {
+        // Strip tag searches
+        $termString = preg_replace('/\[.*?\]/', '', $termString);
+        // Reduced multiple spacing into single spacing
+        $termString = preg_replace("/\s{2,}/", " ", $termString);
+        return $termString;
+    }
+
+    /**
+     * Get the available query operators as a regex escaped list.
+     * @return mixed
+     */
+    protected function getRegexEscapedOperators()
+    {
+        $escapedOperators = [];
+        foreach ($this->queryOperators as $operator) {
+            $escapedOperators[] = preg_quote($operator);
+        }
+        return join('|', $escapedOperators);
+    }
+
+    /**
+     * Parses advanced search notations and adds them to the db query.
+     * @param $query
+     * @param $termString
+     * @return mixed
+     */
+    protected function addAdvancedSearchQueries($query, $termString)
+    {
+        $escapedOperators = $this->getRegexEscapedOperators();
+        // Look for tag searches
+        preg_match_all("/\[(.*?)((${escapedOperators})(.*?))?\]/", $termString, $tags);
+        if (count($tags[0]) > 0) {
+            $this->applyTagSearches($query, $tags);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Apply extracted tag search terms onto a entity query.
+     * @param $query
+     * @param $tags
+     * @return mixed
+     */
+    protected function applyTagSearches($query, $tags) {
+        $query->where(function($query) use ($tags) {
+            foreach ($tags[1] as $index => $tagName) {
+                $query->whereHas('tags', function($query) use ($tags, $index, $tagName) {
+                    $tagOperator = $tags[3][$index];
+                    $tagValue = $tags[4][$index];
+                    if (!empty($tagOperator) && !empty($tagValue) && in_array($tagOperator, $this->queryOperators)) {
+                        if (is_numeric($tagValue) && $tagOperator !== 'like') {
+                            // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
+                            // search the value as a string which prevents being able to do number-based operations
+                            // on the tag values. We ensure it has a numeric value and then cast it just to be sure.
+                            $tagValue = (float) trim($query->getConnection()->getPdo()->quote($tagValue), "'");
+                            $query->where('name', '=', $tagName)->whereRaw("value ${tagOperator} ${tagValue}");
+                        } else {
+                            $query->where('name', '=', $tagName)->where('value', $tagOperator, $tagValue);
+                        }
+                    } else {
+                        $query->where('name', '=', $tagName);
+                    }
+                });
+            }
+        });
+        return $query;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

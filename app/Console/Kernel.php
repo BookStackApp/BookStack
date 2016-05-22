@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \BookStack\Console\Commands\Inspire::class,
         \BookStack\Console\Commands\ResetViews::class,
+        \BookStack\Console\Commands\RegeneratePermissions::class,
     ];
 
     /**

@@ -11,13 +11,16 @@ body.flexbox {
   #content {
     flex: 1;
     display: flex;
+    min-height: 0px;
   }
 }
 
 .flex-fill {
   display: flex;
   align-items: stretch;
+  min-height: 0px;
   .flex, &.flex {
+    min-height: 0px;
     flex: 1;
   }
 }

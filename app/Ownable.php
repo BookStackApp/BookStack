@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
 
 abstract class Ownable extends Model
 {
@@ -10,7 +9,7 @@ abstract class Ownable extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('BookStack\User', 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
@@ -19,7 +18,7 @@ abstract class Ownable extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('BookStack\User', 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     /**

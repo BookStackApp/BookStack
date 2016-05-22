@@ -266,6 +266,7 @@ ul.pagination {
   display: inline-block;
   list-style: none;
   margin: $-m 0;
+  padding-left: 1px;
   li {
     float: left;
   }
@@ -298,6 +299,10 @@ ul.pagination {
   a {
     color: $primary;
   }
+}
+
+.compact ul.pagination {
+  margin: 0;
 }
 
 .entity-list {

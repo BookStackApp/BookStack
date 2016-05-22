@@ -3,33 +3,29 @@
 
 @section('content')
 
-    <div class="faded-small toolbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6 faded">
-                    <div class="action-buttons">
-                        <a href="/settings/users/{{$user->id}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete User</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('settings/navbar', ['selected' => 'users'])
 
 
 
     <div class="container small">
         <form action="/settings/users/{{$user->id}}" method="post">
-        <div class="row">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
+                </div>
+                <div class="col-sm-4">
+                    <p></p>
+                    <a href="/settings/users/{{$user->id}}/delete" class="neg button float right">Delete User</a>
+                </div>
+            </div>
+            <div class="row">
             <div class="col-md-6" ng-non-bindable>
-                <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="put">
                 @include('users.forms.' . $authMethod, ['model' => $user])
 
             </div>
             <div class="col-md-6">
-                <h1>&nbsp;</h1>
                 <div class="form-group" id="logo-control">
                     <label for="user-avatar">User Avatar</label>
                     <p class="small">This image should be approx 256px square.</p>

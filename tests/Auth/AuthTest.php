@@ -181,7 +181,7 @@ class AuthTest extends TestCase
     public function test_user_deletion()
     {
         $userDetails = factory(\BookStack\User::class)->make();
-        $user = $this->getNewUser($userDetails->toArray());
+        $user = $this->getEditor($userDetails->toArray());
 
         $this->asAdmin()
             ->visit('/settings/users/' . $user->id)

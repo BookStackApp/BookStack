@@ -71,11 +71,7 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $book = $this->bookRepo->newFromInput($request->all());
-        $book->slug = $this->bookRepo->findSuitableSlug($book->name);
-        $book->created_by = Auth::user()->id;
-        $book->updated_by = Auth::user()->id;
-        $book->save();
+        $book = $this->bookRepo->createFromInput($request->all());
         Activity::add($book, 'book_create', $book->id);
         return redirect($book->getUrl());
     }
@@ -88,6 +84,7 @@ class BookController extends Controller
     public function show($slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
+        $this->checkOwnablePermission('book-view', $book);
         $bookChildren = $this->bookRepo->getChildren($book);
         Views::add($book);
         $this->setPageTitle($book->getShortName());
@@ -121,10 +118,7 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $book->fill($request->all());
-        $book->slug = $this->bookRepo->findSuitableSlug($book->name, $book->id);
-        $book->updated_by = Auth::user()->id;
-        $book->save();
+        $book = $this->bookRepo->updateFromInput($book, $request->all());
         Activity::add($book, 'book_update', $book->id);
         return redirect($book->getUrl());
     }
@@ -209,6 +203,7 @@ class BookController extends Controller
         // Add activity for books
         foreach ($sortedBooks as $bookId) {
             $updatedBook = $this->bookRepo->getById($bookId);
+            $this->bookRepo->updateBookPermissions($updatedBook);
             Activity::add($updatedBook, 'book_sort', $updatedBook->id);
         }
 
@@ -226,7 +221,7 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-delete', $book);
         Activity::addMessage('book_delete', 0, $book->name);
         Activity::removeEntity($book);
-        $this->bookRepo->destroyBySlug($bookSlug);
+        $this->bookRepo->destroy($book);
         return redirect('/books');
     }
 
@@ -257,7 +252,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
-        $this->bookRepo->updateRestrictionsFromRequest($request, $book);
+        $this->bookRepo->updateEntityPermissionsFromRequest($request, $book);
         session()->flash('success', 'Book Restrictions Updated');
         return redirect($book->getUrl());
     }

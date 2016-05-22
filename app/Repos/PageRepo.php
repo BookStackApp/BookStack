@@ -14,14 +14,17 @@ class PageRepo extends EntityRepo
 {
 
     protected $pageRevision;
+    protected $tagRepo;
 
     /**
      * PageRepo constructor.
      * @param PageRevision $pageRevision
+     * @param TagRepo $tagRepo
      */
-    public function __construct(PageRevision $pageRevision)
+    public function __construct(PageRevision $pageRevision, TagRepo $tagRepo)
     {
         $this->pageRevision = $pageRevision;
+        $this->tagRepo = $tagRepo;
         parent::__construct();
     }
 
@@ -32,7 +35,7 @@ class PageRepo extends EntityRepo
      */
     private function pageQuery($allowDrafts = false)
     {
-        $query = $this->restrictionService->enforcePageRestrictions($this->page, 'view');
+        $query = $this->permissionService->enforcePageRestrictions($this->page, 'view');
         if (!$allowDrafts) {
             $query = $query->where('draft', '=', false);
         }
@@ -76,7 +79,7 @@ class PageRepo extends EntityRepo
     {
         $revision = $this->pageRevision->where('slug', '=', $pageSlug)
             ->whereHas('page', function ($query) {
-                $this->restrictionService->enforcePageRestrictions($query);
+                $this->permissionService->enforcePageRestrictions($query);
             })
             ->where('type', '=', 'version')
             ->where('book_slug', '=', $bookSlug)->orderBy('created_at', 'desc')
@@ -142,6 +145,11 @@ class PageRepo extends EntityRepo
     {
         $draftPage->fill($input);
 
+        // Save page tags if present
+        if(isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
+        }
+
         $draftPage->slug = $this->findSuitableSlug($draftPage->name, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = strip_tags($draftPage->html);
@@ -168,6 +176,7 @@ class PageRepo extends EntityRepo
         if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
+        $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
     }
 
@@ -241,8 +250,9 @@ class PageRepo extends EntityRepo
     public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
     {
         $terms = $this->prepareSearchTerms($term);
-        $pages = $this->restrictionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms))
-            ->paginate($count)->appends($paginationAppends);
+        $pageQuery = $this->permissionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms));
+        $pageQuery = $this->addAdvancedSearchQueries($pageQuery, $term);
+        $pages = $pageQuery->paginate($count)->appends($paginationAppends);
 
         // Add highlights to page text.
         $words = join('|', explode(' ', preg_quote(trim($term), '/')));
@@ -305,6 +315,11 @@ class PageRepo extends EntityRepo
         // Prevent slug being updated if no name change
         if ($page->name !== $input['name']) {
             $page->slug = $this->findSuitableSlug($input['name'], $book_id, $page->id);
+        }
+
+        // Save page tags if present
+        if(isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
         // Update with new details
@@ -577,12 +592,14 @@ class PageRepo extends EntityRepo
      * Destroy a given page along with its dependencies.
      * @param $page
      */
-    public function destroy($page)
+    public function destroy(Page $page)
     {
         Activity::removeEntity($page);
         $page->views()->delete();
+        $page->tags()->delete();
         $page->revisions()->delete();
-        $page->restrictions()->delete();
+        $page->permissions()->delete();
+        $this->permissionService->deleteJointPermissionsForEntity($page);
         $page->delete();
     }
 

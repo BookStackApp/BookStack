@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
 
 class PageRevision extends Model
 {
@@ -12,7 +11,7 @@ class PageRevision extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('BookStack\User', 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
@@ -21,7 +20,7 @@ class PageRevision extends Model
      */
     public function page()
     {
-        return $this->belongsTo('BookStack\Page');
+        return $this->belongsTo(Page::class);
     }
 
     /**

@@ -154,6 +154,11 @@ input:checked + .toggle-switch {
 
 .form-group {
   margin-bottom: $-s;
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 64px;
+  }
 }
 
 .form-group {
@@ -236,6 +241,17 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     padding-right: $-l;
     width: 300px;
     max-width: 100%;
+  }
+}
+
+input.outline {
+  border: 0;
+  border-bottom: 2px solid #DDD;
+  border-radius: 0;
+  &:focus, &:active {
+    border: 0;
+    border-bottom: 2px solid #AAA;
+    outline: 0;
   }
 }
 

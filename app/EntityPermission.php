@@ -1,10 +1,7 @@
-<?php
+<?php namespace BookStack;
 
-namespace BookStack;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Restriction extends Model
+class EntityPermission extends Model
 {
 
     protected $fillable = ['role_id', 'action'];
@@ -16,6 +13,6 @@ class Restriction extends Model
      */
     public function restrictable()
     {
-        return $this->morphTo();
+        return $this->morphTo('restrictable');
     }
 }

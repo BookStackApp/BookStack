@@ -32,7 +32,7 @@ class PageDraftTest extends TestCase
             ->dontSeeInField('html', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
-        $newUser = $this->getNewUser();
+        $newUser = $this->getEditor();
         $this->pageRepo->saveUpdateDraft($this->page, ['html' => $newContent]);
         $this->actingAs($newUser)->visit($this->page->getUrl() . '/edit')
             ->dontSeeInField('html', $newContent);
@@ -54,7 +54,7 @@ class PageDraftTest extends TestCase
             ->dontSeeInField('html', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
-        $newUser = $this->getNewUser();
+        $newUser = $this->getEditor();
         $this->pageRepo->saveUpdateDraft($this->page, ['html' => $newContent]);
 
         $this->actingAs($newUser)
@@ -79,7 +79,7 @@ class PageDraftTest extends TestCase
     {
         $book = \BookStack\Book::first();
         $chapter = $book->chapters->first();
-        $newUser = $this->getNewUser();
+        $newUser = $this->getEditor();
 
         $this->actingAs($newUser)->visit('/')
             ->visit($book->getUrl() . '/page/create')

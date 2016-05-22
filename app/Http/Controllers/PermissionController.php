@@ -2,6 +2,7 @@
 
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Repos\PermissionsRepo;
+use BookStack\Services\PermissionService;
 use Illuminate\Http\Request;
 use BookStack\Http\Requests;
 
@@ -62,11 +63,13 @@ class PermissionController extends Controller
      * Show the form for editing a user role.
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws PermissionsException
      */
     public function editRole($id)
     {
         $this->checkPermission('user-roles-manage');
         $role = $this->permissionsRepo->getRoleById($id);
+        if ($role->hidden) throw new PermissionsException('This role cannot be edited');
         return view('settings/roles/edit', ['role' => $role]);
     }
 

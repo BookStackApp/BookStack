@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
-        Route::post('/{bookSlug}/page/{pageId}', 'PageController@store');
+        Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
         Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageController@exportPdf');
         Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageController@exportHtml');
@@ -80,10 +80,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 
-    // Ajax routes
+    // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');
     Route::get('/ajax/page/{id}', 'PageController@getPageAjax');
     Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
+
+    // Tag routes (AJAX)
+    Route::group(['prefix' => 'ajax/tags'], function() {
+        Route::get('/get/{entityType}/{entityId}', 'TagController@getForEntity');
+        Route::get('/suggest/names', 'TagController@getNameSuggestions');
+        Route::get('/suggest/values', 'TagController@getValueSuggestions');
+        Route::post('/update/{entityType}/{entityId}', 'TagController@updateForEntity');
+    });
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

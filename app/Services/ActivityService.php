@@ -8,17 +8,17 @@ class ActivityService
 {
     protected $activity;
     protected $user;
-    protected $restrictionService;
+    protected $permissionService;
 
     /**
      * ActivityService constructor.
      * @param Activity $activity
-     * @param RestrictionService $restrictionService
+     * @param PermissionService $permissionService
      */
-    public function __construct(Activity $activity, RestrictionService $restrictionService)
+    public function __construct(Activity $activity, PermissionService $permissionService)
     {
         $this->activity = $activity;
-        $this->restrictionService = $restrictionService;
+        $this->permissionService = $permissionService;
         $this->user = auth()->user();
     }
 
@@ -88,7 +88,7 @@ class ActivityService
      */
     public function latest($count = 20, $page = 0)
     {
-        $activityList = $this->restrictionService
+        $activityList = $this->permissionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
 
@@ -105,8 +105,16 @@ class ActivityService
      */
     public function entityActivity($entity, $count = 20, $page = 0)
     {
-        $activity = $entity->hasMany('BookStack\Activity')->orderBy('created_at', 'desc')
-            ->skip($count * $page)->take($count)->get();
+        if ($entity->isA('book')) {
+            $query = $this->activity->where('book_id', '=', $entity->id);
+        } else {
+            $query = $this->activity->where('entity_type', '=', get_class($entity))
+                ->where('entity_id', '=', $entity->id);
+        }
+        
+        $activity = $this->permissionService
+            ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
+            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
 
         return $this->filterSimilar($activity);
     }
@@ -121,7 +129,7 @@ class ActivityService
      */
     public function userActivity($user, $count = 20, $page = 0)
     {
-        $activityList = $this->restrictionService
+        $activityList = $this->permissionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')->where('user_id', '=', $user->id)->skip($count * $page)->take($count)->get();
         return $this->filterSimilar($activityList);

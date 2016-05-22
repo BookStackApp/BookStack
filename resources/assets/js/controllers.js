@@ -400,4 +400,116 @@ module.exports = function (ngApp, events) {
 
     }]);
 
+    ngApp.controller('PageTagController', ['$scope', '$http', '$attrs',
+        function ($scope, $http, $attrs) {
+
+            const pageId = Number($attrs.pageId);
+            $scope.tags = [];
+            
+            $scope.sortOptions = {
+                handle: '.handle',
+                items: '> tr',
+                containment: "parent",
+                axis: "y"
+            };
+
+            /**
+             * Push an empty tag to the end of the scope tags.
+             */
+            function addEmptyTag() {
+                $scope.tags.push({
+                    name: '',
+                    value: ''
+                });
+            }
+            $scope.addEmptyTag = addEmptyTag;
+
+            /**
+             * Get all tags for the current book and add into scope.
+             */
+            function getTags() {
+                $http.get('/ajax/tags/get/page/' + pageId).then((responseData) => {
+                    $scope.tags = responseData.data;
+                    addEmptyTag();
+                });
+            }
+            getTags();
+
+            /**
+             * Set the order property on all tags.
+             */
+            function setTagOrder() {
+                for (let i = 0; i < $scope.tags.length; i++) {
+                    $scope.tags[i].order = i;
+                }
+            }
+
+            /**
+             * When an tag changes check if another empty editable
+             * field needs to be added onto the end.
+             * @param tag
+             */
+            $scope.tagChange = function(tag) {
+                let cPos = $scope.tags.indexOf(tag);
+                if (cPos !== $scope.tags.length-1) return;
+
+                if (tag.name !== '' || tag.value !== '') {
+                    addEmptyTag();
+                }
+            };
+
+            /**
+             * When an tag field loses focus check the tag to see if its
+             * empty and therefore could be removed from the list.
+             * @param tag
+             */
+            $scope.tagBlur = function(tag) {
+                let isLast = $scope.tags.length - 1 === $scope.tags.indexOf(tag);
+                if (tag.name === '' && tag.value === '' && !isLast) {
+                    let cPos = $scope.tags.indexOf(tag);
+                    $scope.tags.splice(cPos, 1);
+                }
+            };
+
+            /**
+             * Save the tags to the current page.
+             */
+            $scope.saveTags = function() {
+                setTagOrder();
+                let postData = {tags: $scope.tags};
+                $http.post('/ajax/tags/update/page/' + pageId, postData).then((responseData) => {
+                    $scope.tags = responseData.data.tags;
+                    addEmptyTag();
+                    events.emit('success', responseData.data.message);
+                })
+            };
+
+            /**
+             * Remove a tag from the current list.
+             * @param tag
+             */
+            $scope.removeTag = function(tag) {
+                let cIndex = $scope.tags.indexOf(tag);
+                $scope.tags.splice(cIndex, 1);
+            };
+
+        }]);
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

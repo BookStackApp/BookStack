@@ -53,3 +53,10 @@ $factory->define(BookStack\Role::class, function ($faker) {
         'description' => $faker->sentence(10)
     ];
 });
+
+$factory->define(BookStack\Tag::class, function ($faker) {
+    return [
+        'name' => $faker->city,
+        'value' => $faker->sentence(3)
+    ];
+});

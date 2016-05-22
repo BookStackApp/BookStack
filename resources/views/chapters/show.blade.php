@@ -49,17 +49,23 @@
                     <hr>
                     <p class="text-muted">No pages are currently in this chapter.</p>
                     <p>
-                        <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
-                        &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
-                        <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
+                        @if(userCan('page-create', $chapter))
+                            <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                        @endif
+                        @if(userCan('page-create', $chapter) && userCan('book-update', $book))
+                            &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
+                        @endif
+                        @if(userCan('book-update', $book))
+                            <a href="{{$book->getUrl() . '/sort'}}" class="text-book"><i class="zmdi zmdi-book"></i>Sort the current book</a>
+                        @endif
                     </p>
                     <hr>
                 @endif
 
                 <p class="text-muted small">
-                    Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by {{$chapter->createdBy->name}} @endif
+                    Created {{$chapter->created_at->diffForHumans()}} @if($chapter->createdBy) by <a href="/user/{{ $chapter->createdBy->id }}">{{ $chapter->createdBy->name}}</a> @endif
                     <br>
-                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->updatedBy) by {{$chapter->updatedBy->name}} @endif
+                    Last Updated {{$chapter->updated_at->diffForHumans()}} @if($chapter->updatedBy) by <a href="/user/{{ $chapter->updatedBy->id }}">{{  $chapter->updatedBy->name}}</a> @endif
                 </p>
             </div>
             <div class="col-md-3 col-md-offset-1">

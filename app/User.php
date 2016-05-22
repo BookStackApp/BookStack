@@ -1,9 +1,6 @@
-<?php
-
-namespace BookStack;
+<?php namespace BookStack;
 
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -52,7 +49,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        return $this->belongsToMany('BookStack\Role');
+        return $this->belongsToMany(Role::class);
     }
 
     /**
@@ -116,7 +113,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function socialAccounts()
     {
-        return $this->hasMany('BookStack\SocialAccount');
+        return $this->hasMany(SocialAccount::class);
     }
 
     /**
@@ -151,7 +148,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function avatar()
     {
-        return $this->belongsTo('BookStack\Image', 'image_id');
+        return $this->belongsTo(Image::class, 'image_id');
     }
 
     /**

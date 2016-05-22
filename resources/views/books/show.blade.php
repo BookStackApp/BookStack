@@ -68,9 +68,9 @@
                             <hr>
                         @endif
                         <p class="text-muted small">
-                            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by {{$book->createdBy->name}} @endif
+                            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by <a href="/user/{{ $book->createdBy->id }}">{{$book->createdBy->name}}</a> @endif
                             <br>
-                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->updatedBy) by {{$book->updatedBy->name}} @endif
+                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->updatedBy) by <a href="/user/{{ $book->updatedBy->id }}">{{$book->updatedBy->name}}</a> @endif
                         </p>
                     </div>
                 </div>
