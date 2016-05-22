@@ -20,6 +20,11 @@
     @yield('head')
 
     @include('partials/custom-styles')
+
+    <!-- Custom user content -->
+    @if(setting('app-custom-head', false))
+        {!! setting('app-custom-head') !!}
+    @endif
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 

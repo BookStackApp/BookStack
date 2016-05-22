@@ -154,6 +154,11 @@ input:checked + .toggle-switch {
 
 .form-group {
   margin-bottom: $-s;
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 64px;
+  }
 }
 
 .form-group {

@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label>Enable higher security image uploads?</label>
-                    <p class="small">For performance reasons, all images are public by default, This option adds a random, hard-to-guess characters in front of image names. Ensure directory indexes are not enabled to prevent easy access.</p>
+                    <p class="small">For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.</p>
                     <div toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></div>
                 </div>
                 <div class="form-group">
@@ -51,12 +51,16 @@
                 </div>
             </div>
         </div>
-
-
+        <div class="form-group">
+            <label for="setting-app-custom-head">Custom HTML head content</label>
+            <p class="small">Any content added here will be inserted into the bottom of the &lt;head&gt; section of every page. This is handy for overriding styles or adding analytics code.</p>
+            <textarea name="setting-app-custom-head" id="setting-app-custom-head">{{ setting('app-custom-head', '') }}</textarea>
+        </div>
 
         <hr class="margin-top">
 
         <h3>Registration Settings</h3>
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
