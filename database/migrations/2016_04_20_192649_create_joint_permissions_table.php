@@ -97,6 +97,7 @@ class CreateJointPermissionsTable extends Migration
 
         Schema::table('roles', function (Blueprint $table) {
             $table->dropColumn('system_name');
+            $table->dropColumn('hidden');
         });
     }
 }
