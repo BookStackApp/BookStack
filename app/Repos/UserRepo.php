@@ -52,6 +52,27 @@ class UserRepo
     }
 
     /**
+     * Get all the users with their permissions in a paginated format.
+     * @param int $count
+     * @param $sortData
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function getAllUsersPaginatedAndSorted($count = 20, $sortData)
+    {
+        $query = $this->user->with('roles', 'avatar')->orderBy($sortData['sort'], $sortData['order']);
+
+        if ($sortData['search']) {
+            $term = '%' . $sortData['search'] . '%';
+            $query->where(function($query) use ($term) {
+                $query->where('name', 'like', $term)
+                    ->orWhere('email', 'like', $term);
+            });
+        }
+
+        return $query->paginate($count);
+    }
+
+    /**
      * Creates a new user and attaches a role to them.
      * @param array $data
      * @return User

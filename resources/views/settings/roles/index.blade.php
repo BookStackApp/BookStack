@@ -6,11 +6,15 @@
 
     <div class="container small">
 
-        <h1>User Roles</h1>
-
-        <p>
-            <a href="/settings/roles/new" class="text-pos"><i class="zmdi zmdi-lock-open"></i>Add new role</a>
-        </p>
+        <div class="row action-header">
+            <div class="col-sm-8">
+                <h1>User Roles</h1>
+            </div>
+            <div class="col-sm-4">
+                <p></p>
+                <a href="/settings/roles/new" class="button float right pos"><i class="zmdi zmdi-lock-open"></i>Add new role</a>
+            </div>
+        </div>
 
         <table class="table">
             <tr>

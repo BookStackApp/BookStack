@@ -31,14 +31,21 @@ class UserController extends Controller
 
     /**
      * Display a listing of the users.
+     * @param Request $request
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->checkPermission('users-manage');
-        $users = $this->userRepo->getAllUsers();
+        $listDetails = [
+            'order' => $request->has('order') ? $request->get('order') : 'asc',
+            'search' => $request->has('search') ? $request->get('search') : '',
+            'sort' => $request->has('sort') ? $request->get('sort') : 'name',
+        ];
+        $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
         $this->setPageTitle('Users');
-        return view('users/index', ['users' => $users]);
+        $users->appends($listDetails);
+        return view('users/index', ['users' => $users, 'listDetails' => $listDetails]);
     }
 
     /**

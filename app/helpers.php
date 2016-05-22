@@ -59,3 +59,35 @@ function setting($key, $default = false)
     $settingService = app('BookStack\Services\SettingService');
     return $settingService->get($key, $default);
 }
+
+/**
+ * Generate a url with multiple parameters for sorting purposes.
+ * Works out the logic to set the correct sorting direction
+ * Discards empty parameters and allows overriding.
+ * @param $path
+ * @param array $data
+ * @param array $overrideData
+ * @return string
+ */
+function sortUrl($path, $data, $overrideData = [])
+{
+    $queryStringSections = [];
+    $queryData = array_merge($data, $overrideData);
+    
+    // Change sorting direction is already sorted on current attribute
+    if (isset($overrideData['sort']) && $overrideData['sort'] === $data['sort']) {
+        $queryData['order'] = ($data['order'] === 'asc') ? 'desc' : 'asc';
+    } else {
+        $queryData['order'] = 'asc';
+    }
+    
+    foreach ($queryData as $name => $value) {
+        $trimmedVal = trim($value);
+        if ($trimmedVal === '') continue;
+        $queryStringSections[] = urlencode($name) . '=' . urlencode($trimmedVal);
+    }
+
+    if (count($queryStringSections) === 0) return $path;
+
+    return $path . '?' . implode('&', $queryStringSections);
+}
