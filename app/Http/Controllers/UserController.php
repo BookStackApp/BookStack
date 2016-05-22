@@ -200,11 +200,14 @@ class UserController extends Controller
         });
 
         $user = $this->userRepo->getById($id);
+
         if ($this->userRepo->isOnlyAdmin($user)) {
             session()->flash('error', 'You cannot delete the only admin');
             return redirect($user->getEditUrl());
         }
+
         $this->userRepo->destroy($user);
+        session()->flash('success', 'User successfully removed');
 
         return redirect('/settings/users');
     }
