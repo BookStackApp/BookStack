@@ -13,6 +13,7 @@ class CreateChaptersTable extends Migration
     public function up()
     {
         Schema::create('chapters', function (Blueprint $table) {
+	    $table->engine = 'MyISAM';
             $table->increments('id');
             $table->integer('book_id');
             $table->string('slug')->indexed();

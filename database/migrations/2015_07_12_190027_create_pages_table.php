@@ -13,6 +13,7 @@ class CreatePagesTable extends Migration
     public function up()
     {
         Schema::create('pages', function (Blueprint $table) {
+	    $table->engine = 'MyISAM';
             $table->increments('id');
             $table->integer('book_id');
             $table->integer('chapter_id');
