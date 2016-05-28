@@ -185,6 +185,10 @@ module.exports = function (ngApp, events) {
                         scope.mceChange(content);
                     });
 
+                    editor.on('keydown', (event) => {
+                        scope.$emit('editor-keydown', event);
+                    });
+
                     editor.on('init', (e) => {
                         scope.mceModel = editor.getContent();
                     });
@@ -305,8 +309,9 @@ module.exports = function (ngApp, events) {
                     lastScroll = now;
                 });
 
-                // Insert image shortcut
+                // Editor key-presses
                 input.keydown(event => {
+                    // Insert image shortcut
                     if (event.which === 73 && event.ctrlKey && event.shiftKey) {
                         event.preventDefault();
                         var caretPos = input[0].selectionStart;
@@ -316,7 +321,10 @@ module.exports = function (ngApp, events) {
                         input.focus();
                         input[0].selectionStart = caretPos + ("![](".length);
                         input[0].selectionEnd = caretPos + ('![](http://'.length);
+                        return;
                     }
+                    // Pass key presses to controller via event
+                    scope.$emit('editor-keydown', event);
                 });
 
                 // Insert image from image manager
