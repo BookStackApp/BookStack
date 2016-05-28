@@ -265,17 +265,48 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 // Elements
-                var input = element.find('textarea[markdown-input]');
-                var insertImage = element.find('button[data-action="insertImage"]');
+                const input = element.find('textarea[markdown-input]');
+                const display = element.find('.markdown-display').first();
+                const insertImage = element.find('button[data-action="insertImage"]');
 
-                var currentCaretPos = 0;
+                let currentCaretPos = 0;
 
-                input.blur((event) => {
+                input.blur(event => {
                     currentCaretPos = input[0].selectionStart;
                 });
 
+                // Scroll sync
+                let inputScrollHeight,
+                    inputHeight,
+                    displayScrollHeight,
+                    displayHeight;
+
+                function setScrollHeights() {
+                    inputScrollHeight = input[0].scrollHeight;
+                    inputHeight = input.height();
+                    displayScrollHeight = display[0].scrollHeight;
+                    displayHeight = display.height();
+                }
+
+                setTimeout(() => {
+                    setScrollHeights();
+                }, 200);
+                window.addEventListener('resize', setScrollHeights);
+                let scrollDebounceTime = 800;
+                let lastScroll = 0;
+                input.on('scroll', event => {
+                    let now = Date.now();
+                    if (now - lastScroll > scrollDebounceTime) {
+                        setScrollHeights()
+                    }
+                    let scrollPercent = (input.scrollTop() / (inputScrollHeight-inputHeight));
+                    let displayScrollY = (displayScrollHeight - displayHeight) * scrollPercent;
+                    display.scrollTop(displayScrollY);
+                    lastScroll = now;
+                });
+
                 // Insert image shortcut
-                input.keydown((event) => {
+                input.keydown(event => {
                     if (event.which === 73 && event.ctrlKey && event.shiftKey) {
                         event.preventDefault();
                         var caretPos = input[0].selectionStart;
@@ -289,8 +320,8 @@ module.exports = function (ngApp, events) {
                 });
 
                 // Insert image from image manager
-                insertImage.click((event) => {
-                    window.ImageManager.showExternal((image) => {
+                insertImage.click(event => {
+                    window.ImageManager.showExternal(image => {
                         var caretPos = currentCaretPos;
                         var currentContent = input.val();
                         var mdImageText = "![" + image.name + "](" + image.url + ")";

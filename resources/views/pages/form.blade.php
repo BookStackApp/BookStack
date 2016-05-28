@@ -61,7 +61,7 @@
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>Insert Image</button>
                         </div>
                     </div>
-                    <textarea markdown-input md-change="editorChange" md-model="editContent"  name="markdown" rows="5"
+                    <textarea markdown-input md-change="editorChange" id="markdown-editor-input" md-model="editContent"  name="markdown" rows="5"
                               @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
                 </div>
 
