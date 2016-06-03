@@ -1,7 +1,7 @@
 # BookStack
 
 [![GitHub release](https://img.shields.io/github/release/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/releases/latest)
-[![license](https://img.shields.io/github/license/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/blob/master/LICENCE)
+[![license](https://img.shields.io/github/license/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/ssddanbrown/BookStack.svg)](https://travis-ci.org/ssddanbrown/BookStack)
 
 A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
