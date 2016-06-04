@@ -12,8 +12,12 @@ class CreateChaptersTable extends Migration
      */
     public function up()
     {
-        Schema::create('chapters', function (Blueprint $table) {
-	    $table->engine = 'MyISAM';
+        $pdo = \DB::connection()->getPdo();
+        $mysqlVersion = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $requiresISAM = strpos($mysqlVersion, '5.5') === 0;
+
+        Schema::create('chapters', function (Blueprint $table) use ($requiresISAM) {
+            if($requiresISAM) $table->engine = 'MyISAM';
             $table->increments('id');
             $table->integer('book_id');
             $table->string('slug')->indexed();
