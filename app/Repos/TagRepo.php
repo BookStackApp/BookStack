@@ -72,15 +72,20 @@ class TagRepo
     /**
      * Get tag value suggestions from scanning existing tag values.
      * @param $searchTerm
+     * @param $tagName
      * @return array
      */
-    public function getValueSuggestions($searchTerm)
+    public function getValueSuggestions($searchTerm, $tagName = false)
     {
         if ($searchTerm === '') return [];
         $query = $this->tag->where('value', 'LIKE', $searchTerm . '%')->groupBy('value')->orderBy('value', 'desc');
+        if ($tagName !== false) {
+            $query = $query->where('name', '=', $tagName);
+        }
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
         return $query->get(['value'])->pluck('value');
     }
+    
     /**
      * Save an array of tags to an entity
      * @param Entity $entity

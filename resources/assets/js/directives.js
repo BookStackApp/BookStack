@@ -378,7 +378,7 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('autosuggestions', ['$http', function($http) {
+    ngApp.directive('tagAutosuggestions', ['$http', function($http) {
         return {
             restrict: 'A',
             link: function(scope, elem, attrs) {
@@ -403,6 +403,8 @@ module.exports = function (ngApp, events) {
                     let $input = $(this);
                     let val = $input.val();
                     let url = $input.attr('autosuggest');
+                    let type = $input.attr('autosuggest-type');
+                    
                     // No suggestions until at least 3 chars
                     if (val.length < 3) {
                         if (isShowing) {
@@ -410,12 +412,21 @@ module.exports = function (ngApp, events) {
                             isShowing = false;
                         }
                         return;
-                    };
+                    }
+
+                    // Add name param to request if for a value
+                    if (type.toLowerCase() === 'value') {
+                        let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
+                        let nameVal = $nameInput.val();
+                        if (nameVal === '') return;
+                        url += '?name=' + encodeURIComponent(nameVal);
+                        console.log(url);
+                    }
 
                     let suggestionPromise = getSuggestions(val.slice(0, 3), url);
-                    suggestionPromise.then((suggestions) => {
+                    suggestionPromise.then(suggestions => {
                        if (val.length > 2) {
-                           suggestions = suggestions.filter((item) => {
+                           suggestions = suggestions.filter(item => {
                                return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
                            }).slice(0, 4);
                            displaySuggestions($input, suggestions);
@@ -448,15 +459,17 @@ module.exports = function (ngApp, events) {
                         let newActive = (active === 0) ? suggestCount-1 : active - 1;
                         changeActiveTo(newActive, suggestionElems);
                     }
-                    // Enter key
-                    else if (event.keyCode === 13) {
+                    // Enter or tab key
+                    else if (event.keyCode === 13 || event.keyCode === 9) {
                         let text = suggestionElems[active].textContent;
                         currentInput[0].value = text;
                         currentInput.focus();
                         $suggestionBox.hide();
                         isShowing = false;
-                        event.preventDefault();
-                        return false;
+                        if (event.keyCode === 13) {
+                            event.preventDefault();
+                            return false;
+                        }
                     }
                 });
 
@@ -523,7 +536,8 @@ module.exports = function (ngApp, events) {
 
                 // Get suggestions & cache
                 function getSuggestions(input, url) {
-                    let searchUrl = url + '?search=' + encodeURIComponent(input);
+                    let hasQuery = url.indexOf('?') !== -1;
+                    let searchUrl = url + (hasQuery?'&':'?') + 'search=' + encodeURIComponent(input);
 
                     // Get from local cache if exists
                     if (localCache[searchUrl]) {
