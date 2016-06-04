@@ -58,34 +58,48 @@ class TagRepo
 
     /**
      * Get tag name suggestions from scanning existing tag names.
+     * If no search term is given the 50 most popular tag names are provided.
      * @param $searchTerm
      * @return array
      */
-    public function getNameSuggestions($searchTerm)
+    public function getNameSuggestions($searchTerm = false)
     {
-        if ($searchTerm === '') return [];
-        $query = $this->tag->where('name', 'LIKE', $searchTerm . '%')->groupBy('name')->orderBy('name', 'desc');
+        $query = $this->tag->select('*', \DB::raw('count(*) as count'))->groupBy('name');
+
+        if ($searchTerm) {
+            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'desc');
+        } else {
+            $query = $query->orderBy('count', 'desc')->take(50);
+        }
+
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
         return $query->get(['name'])->pluck('name');
     }
 
     /**
      * Get tag value suggestions from scanning existing tag values.
+     * If no search is given the 50 most popular values are provided.
+     * Passing a tagName will only find values for a tags with a particular name.
      * @param $searchTerm
      * @param $tagName
      * @return array
      */
-    public function getValueSuggestions($searchTerm, $tagName = false)
+    public function getValueSuggestions($searchTerm = false, $tagName = false)
     {
-        if ($searchTerm === '') return [];
-        $query = $this->tag->where('value', 'LIKE', $searchTerm . '%')->groupBy('value')->orderBy('value', 'desc');
-        if ($tagName !== false) {
-            $query = $query->where('name', '=', $tagName);
+        $query = $this->tag->select('*', \DB::raw('count(*) as count'))->groupBy('value');
+
+        if ($searchTerm) {
+            $query = $query->where('value', 'LIKE', $searchTerm . '%')->orderBy('value', 'desc');
+        } else {
+            $query = $query->orderBy('count', 'desc')->take(50);
         }
+
+        if ($tagName !== false) $query = $query->where('name', '=', $tagName);
+
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
         return $query->get(['value'])->pluck('value');
     }
-    
+
     /**
      * Save an array of tags to an entity
      * @param Entity $entity

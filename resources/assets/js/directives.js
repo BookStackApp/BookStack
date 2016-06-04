@@ -166,7 +166,7 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
-    ngApp.directive('tinymce', ['$timeout', function($timeout) {
+    ngApp.directive('tinymce', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             scope: {
@@ -204,8 +204,8 @@ module.exports = function (ngApp, events) {
                 scope.tinymce.extraSetups.push(tinyMceSetup);
 
                 // Custom tinyMCE plugins
-                tinymce.PluginManager.add('customhr', function(editor) {
-                    editor.addCommand('InsertHorizontalRule', function() {
+                tinymce.PluginManager.add('customhr', function (editor) {
+                    editor.addCommand('InsertHorizontalRule', function () {
                         var hrElem = document.createElement('hr');
                         var cNode = editor.selection.getNode();
                         var parentNode = cNode.parentNode;
@@ -231,7 +231,7 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('markdownInput', ['$timeout', function($timeout) {
+    ngApp.directive('markdownInput', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             scope: {
@@ -255,7 +255,7 @@ module.exports = function (ngApp, events) {
 
                 scope.$on('markdown-update', (event, value) => {
                     element.val(value);
-                    scope.mdModel= value;
+                    scope.mdModel = value;
                     scope.mdChange(markdown(value));
                 });
 
@@ -263,7 +263,7 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('markdownEditor', ['$timeout', function($timeout) {
+    ngApp.directive('markdownEditor', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -303,7 +303,7 @@ module.exports = function (ngApp, events) {
                     if (now - lastScroll > scrollDebounceTime) {
                         setScrollHeights()
                     }
-                    let scrollPercent = (input.scrollTop() / (inputScrollHeight-inputHeight));
+                    let scrollPercent = (input.scrollTop() / (inputScrollHeight - inputHeight));
                     let displayScrollY = (displayScrollHeight - displayHeight) * scrollPercent;
                     display.scrollTop(displayScrollY);
                     lastScroll = now;
@@ -341,11 +341,11 @@ module.exports = function (ngApp, events) {
             }
         }
     }]);
-    
-    ngApp.directive('toolbox', [function() {
+
+    ngApp.directive('toolbox', [function () {
         return {
             restrict: 'A',
-            link: function(scope, elem, attrs) {
+            link: function (scope, elem, attrs) {
 
                 // Get common elements
                 const $buttons = elem.find('[tab-button]');
@@ -356,7 +356,7 @@ module.exports = function (ngApp, events) {
                 $toggle.click((e) => {
                     elem.toggleClass('open');
                 });
-                
+
                 // Set an active tab/content by name
                 function setActive(tabName, openToolbox) {
                     $buttons.removeClass('active');
@@ -370,7 +370,7 @@ module.exports = function (ngApp, events) {
                 setActive($content.first().attr('tab-content'), false);
 
                 // Handle tab button click
-                $buttons.click(function(e) {
+                $buttons.click(function (e) {
                     let name = $(this).attr('tab-button');
                     setActive(name, true);
                 });
@@ -378,11 +378,11 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('tagAutosuggestions', ['$http', function($http) {
+    ngApp.directive('tagAutosuggestions', ['$http', function ($http) {
         return {
             restrict: 'A',
-            link: function(scope, elem, attrs) {
-                
+            link: function (scope, elem, attrs) {
+
                 // Local storage for quick caching.
                 const localCache = {};
 
@@ -399,48 +399,48 @@ module.exports = function (ngApp, events) {
                 let active = 0;
 
                 // Listen to input events on autosuggest fields
-                elem.on('input', '[autosuggest]', function(event) {
+                elem.on('input focus', '[autosuggest]', function (event) {
                     let $input = $(this);
                     let val = $input.val();
                     let url = $input.attr('autosuggest');
                     let type = $input.attr('autosuggest-type');
                     
-                    // No suggestions until at least 3 chars
-                    if (val.length < 3) {
-                        if (isShowing) {
-                            $suggestionBox.hide();
-                            isShowing = false;
-                        }
-                        return;
-                    }
-
                     // Add name param to request if for a value
                     if (type.toLowerCase() === 'value') {
                         let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
                         let nameVal = $nameInput.val();
-                        if (nameVal === '') return;
-                        url += '?name=' + encodeURIComponent(nameVal);
-                        console.log(url);
+                        if (nameVal !== '') {
+                            url += '?name=' + encodeURIComponent(nameVal);
+                        }
                     }
 
                     let suggestionPromise = getSuggestions(val.slice(0, 3), url);
                     suggestionPromise.then(suggestions => {
-                       if (val.length > 2) {
-                           suggestions = suggestions.filter(item => {
-                               return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
-                           }).slice(0, 4);
-                           displaySuggestions($input, suggestions);
-                       }
+                        if (val.length === 0) {
+                            displaySuggestions($input, suggestions.slice(0, 6));
+                        } else  {
+                            suggestions = suggestions.filter(item => {
+                                return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
+                            }).slice(0, 4);
+                            displaySuggestions($input, suggestions);
+                        }
                     });
                 });
 
                 // Hide autosuggestions when input loses focus.
                 // Slight delay to allow clicks.
-                elem.on('blur', '[autosuggest]', function(event) {
+                let lastFocusTime = 0;
+                elem.on('blur', '[autosuggest]', function (event) {
+                    let startTime = Date.now();
                     setTimeout(() => {
-                        $suggestionBox.hide();
-                        isShowing = false;
+                        if (lastFocusTime < startTime) {
+                            $suggestionBox.hide();
+                            isShowing = false;
+                        }
                     }, 200)
+                });
+                elem.on('focus', '[autosuggest]', function (event) {
+                    lastFocusTime = Date.now();
                 });
 
                 elem.on('keydown', '[autosuggest]', function (event) {
@@ -451,12 +451,12 @@ module.exports = function (ngApp, events) {
 
                     // Down arrow
                     if (event.keyCode === 40) {
-                        let newActive = (active === suggestCount-1) ? 0 : active + 1;
+                        let newActive = (active === suggestCount - 1) ? 0 : active + 1;
                         changeActiveTo(newActive, suggestionElems);
                     }
                     // Up arrow
                     else if (event.keyCode === 38) {
-                        let newActive = (active === 0) ? suggestCount-1 : active - 1;
+                        let newActive = (active === 0) ? suggestCount - 1 : active - 1;
                         changeActiveTo(newActive, suggestionElems);
                     }
                     // Enter or tab key
@@ -482,6 +482,7 @@ module.exports = function (ngApp, events) {
 
                 // Display suggestions on a field
                 let prevSuggestions = [];
+
                 function displaySuggestions($input, suggestions) {
 
                     // Hide if no suggestions
@@ -518,7 +519,8 @@ module.exports = function (ngApp, events) {
                         if (i === 0) {
                             suggestion.className = 'active'
                             active = 0;
-                        };
+                        }
+                        ;
                         $suggestionBox[0].appendChild(suggestion);
                     }
 
@@ -537,17 +539,17 @@ module.exports = function (ngApp, events) {
                 // Get suggestions & cache
                 function getSuggestions(input, url) {
                     let hasQuery = url.indexOf('?') !== -1;
-                    let searchUrl = url + (hasQuery?'&':'?') + 'search=' + encodeURIComponent(input);
+                    let searchUrl = url + (hasQuery ? '&' : '?') + 'search=' + encodeURIComponent(input);
 
                     // Get from local cache if exists
-                    if (localCache[searchUrl]) {
+                    if (typeof localCache[searchUrl] !== 'undefined') {
                         return new Promise((resolve, reject) => {
-                            resolve(localCache[input]);
+                            resolve(localCache[searchUrl]);
                         });
                     }
 
-                    return $http.get(searchUrl).then((response) => {
-                        localCache[input] = response.data;
+                    return $http.get(searchUrl).then(response => {
+                        localCache[searchUrl] = response.data;
                         return response.data;
                     });
                 }

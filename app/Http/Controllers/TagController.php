@@ -55,7 +55,7 @@ class TagController extends Controller
      */
     public function getNameSuggestions(Request $request)
     {
-        $searchTerm = $request->get('search');
+        $searchTerm = $request->has('search') ? $request->get('search') : false;
         $suggestions = $this->tagRepo->getNameSuggestions($searchTerm);
         return response()->json($suggestions);
     }
@@ -66,7 +66,7 @@ class TagController extends Controller
      */
     public function getValueSuggestions(Request $request)
     {
-        $searchTerm = $request->get('search');
+        $searchTerm = $request->has('search') ? $request->get('search') : false;
         $tagName = $request->has('name') ? $request->get('name') : false;
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
         return response()->json($suggestions);
