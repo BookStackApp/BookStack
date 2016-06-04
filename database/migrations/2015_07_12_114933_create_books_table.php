@@ -13,6 +13,7 @@ class CreateBooksTable extends Migration
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
+	    $table->engine = 'MyISAM';
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->indexed();
