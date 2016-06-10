@@ -92,7 +92,7 @@ class PageController extends Controller
 
         $draftPage = $this->pageRepo->getById($pageId, true);
 
-        $chapterId = $draftPage->chapter_id;
+        $chapterId = intval($draftPage->chapter_id);
         $parent = $chapterId !== 0 ? $this->chapterRepo->getById($chapterId) : $book;
         $this->checkOwnablePermission('page-create', $parent);
 
