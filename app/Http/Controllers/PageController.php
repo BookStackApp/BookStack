@@ -451,6 +451,24 @@ class PageController extends Controller
     }
 
     /**
+     * Show the view to choose a new parent to move a page into.
+     * @param $bookSlug
+     * @param $pageSlug
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function showMove($bookSlug, $pageSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-update', $page);
+        return view('pages/move', [
+            'book' => $book,
+            'page' => $page
+        ]);
+    }
+
+    /**
      * Set the permissions for this page.
      * @param $bookSlug
      * @param $pageSlug

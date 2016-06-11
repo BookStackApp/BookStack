@@ -1,4 +1,4 @@
-<div class="chapter">
+<div class="chapter" data-entity-type="chapter" data-entity-id="{{$chapter->id}}">
     <h3>
         <a href="{{ $chapter->getUrl() }}" class="text-chapter">
             <i class="zmdi zmdi-collection-bookmark"></i>{{ $chapter->name }}

@@ -149,7 +149,10 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
-
+    /**
+     * Dropdown
+     * Provides some simple logic to create small dropdown menus
+     */
     ngApp.directive('dropdown', [function () {
         return {
             restrict: 'A',
@@ -166,6 +169,10 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
+    /**
+     * TinyMCE
+     * An angular wrapper around the tinyMCE editor.
+     */
     ngApp.directive('tinymce', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
@@ -231,6 +238,10 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    /**
+     * Markdown input
+     * Handles the logic for just the editor input field.
+     */
     ngApp.directive('markdownInput', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
@@ -263,6 +274,10 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    /**
+     * Markdown Editor
+     * Handles all functionality of the markdown editor.
+     */
     ngApp.directive('markdownEditor', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
@@ -342,6 +357,11 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    /**
+     * Page Editor Toolbox
+     * Controls all functionality for the sliding toolbox
+     * on the page edit view.
+     */
     ngApp.directive('toolbox', [function () {
         return {
             restrict: 'A',
@@ -378,6 +398,11 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    /**
+     * Tag Autosuggestions
+     * Listens to child inputs and provides autosuggestions depending on field type
+     * and input. Suggestions provided by server.
+     */
     ngApp.directive('tagAutosuggestions', ['$http', function ($http) {
         return {
             restrict: 'A',
@@ -556,6 +581,17 @@ module.exports = function (ngApp, events) {
 
             }
         }
+    }]);
+
+
+    ngApp.directive('entitySelector', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                scope.loading = true;
+                
+            }
+        };
     }]);
 };
 

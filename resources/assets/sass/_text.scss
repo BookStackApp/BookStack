@@ -3,7 +3,7 @@
  */
 
 h1 {
-  font-size: 3.625em;
+  font-size: 3.425em;
   line-height: 1.22222222em;
   margin-top: 0.48888889em;
   margin-bottom: 0.48888889em;
@@ -33,10 +33,10 @@ h1, h2, h3, h4 {
   display: block;
   color: #555;
   .subheader {
-    display: block;
+    //display: block;
     font-size: 0.5em;
     line-height: 1em;
-    color: lighten($text-dark, 16%);
+    color: lighten($text-dark, 32%);
   }
 }
 

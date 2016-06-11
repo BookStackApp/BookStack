@@ -1,4 +1,4 @@
-<div class="page {{$page->draft ? 'draft' : ''}}">
+<div class="page {{$page->draft ? 'draft' : ''}}" data-entity-type="page" data-entity-id="{{$page->id}}">
     <h3>
         <a href="{{ $page->getUrl() }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ $page->name }}</a>
     </h3>
@@ -11,11 +11,11 @@
 
     @if(isset($style) && $style === 'detailed')
         <div class="row meta text-muted text-small">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 Created {{$page->created_at->diffForHumans()}} @if($page->createdBy)by {{$page->createdBy->name}}@endif <br>
                 Last updated {{ $page->updated_at->diffForHumans() }} @if($page->updatedBy)by {{$page->updatedBy->name}} @endif
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <a class="text-book" href="{{ $page->book->getUrl() }}"><i class="zmdi zmdi-book"></i>{{ $page->book->getShortName(30) }}</a>
                 <br>
                 @if($page->chapter)

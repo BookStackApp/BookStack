@@ -30,6 +30,7 @@
                         @if(userCan('page-update', $page))
                             <a href="{{$page->getUrl()}}/revisions" class="text-primary text-button"><i class="zmdi zmdi-replay"></i>Revisions</a>
                             <a href="{{$page->getUrl()}}/edit" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>Edit</a>
+                            <a href="{{$page->getUrl()}}/move" class="text-primary text-button" ><i class="zmdi zmdi-folder"></i>Move</a>
                         @endif
                         @if(userCan('restrictions-manage', $page))
                             <a href="{{$page->getUrl()}}/permissions" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Permissions</a>
