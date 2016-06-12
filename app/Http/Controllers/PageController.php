@@ -221,8 +221,8 @@ class PageController extends Controller
         $updateTime = $draft->updated_at->timestamp;
         $utcUpdateTimestamp = $updateTime + Carbon::createFromTimestamp(0)->offset;
         return response()->json([
-            'status' => 'success',
-            'message' => 'Draft saved at ',
+            'status'    => 'success',
+            'message'   => 'Draft saved at ',
             'timestamp' => $utcUpdateTimestamp
         ]);
     }
@@ -466,6 +466,41 @@ class PageController extends Controller
             'book' => $book,
             'page' => $page
         ]);
+    }
+
+    public function move($bookSlug, $pageSlug, Request $request)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $this->checkOwnablePermission('page-update', $page);
+
+        $entitySelection = $request->get('entity_selection', null);
+        if ($entitySelection === null || $entitySelection === '') {
+            return redirect($page->getUrl());
+        }
+
+        $stringExploded = explode(':', $entitySelection);
+        $entityType = $stringExploded[0];
+        $entityId = intval($stringExploded[1]);
+
+        $parent = false;
+
+        if ($entityType == 'chapter') {
+            $parent = $this->chapterRepo->getById($entityId);
+        } else if ($entityType == 'book') {
+            $parent = $this->bookRepo->getById($entityId);
+        }
+
+        if ($parent === false || $parent === null) {
+            session()->flash('The selected Book or Chapter was not found');
+            return redirect()->back();
+        }
+
+        $this->pageRepo->changePageParent($page, $parent);
+        Activity::add($page, 'page_move', $page->book->id);
+        session()->flash('success', sprintf('Page moved to "%s"', $parent->name));
+
+        return redirect($page->getUrl());
     }
 
     /**

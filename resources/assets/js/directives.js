@@ -584,12 +584,62 @@ module.exports = function (ngApp, events) {
     }]);
 
 
-    ngApp.directive('entitySelector', ['$http', function ($http) {
+    ngApp.directive('entitySelector', ['$http', '$sce', function ($http, $sce) {
         return {
             restrict: 'A',
+            scope: true,
             link: function (scope, element, attrs) {
                 scope.loading = true;
-                
+                scope.entityResults = false;
+                scope.search = '';
+
+                // Add input for forms
+                const input = element.find('[entity-selector-input]').first();
+
+                // Listen to entity item clicks
+                element.on('click', '.entity-list a', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    let item = $(this).closest('[data-entity-type]');
+                    itemSelect(item);
+                });
+                element.on('click', '[data-entity-type]', function(event) {
+                    itemSelect($(this));
+                });
+
+                // Select entity action
+                function itemSelect(item) {
+                    let entityType = item.attr('data-entity-type');
+                    let entityId = item.attr('data-entity-id');
+                    let isSelected = !item.hasClass('selected');
+                    element.find('.selected').removeClass('selected').removeClass('primary-background');
+                    if (isSelected) item.addClass('selected').addClass('primary-background');
+                    let newVal = isSelected ? `${entityType}:${entityId}` : '';
+                    input.val(newVal);
+                }
+
+                // Get search url with correct types
+                function getSearchUrl() {
+                    let types = (attrs.entityTypes) ? encodeURIComponent(attrs.entityTypes) : encodeURIComponent('page,book,chapter');
+                    return `/ajax/search/entities?types=${types}`;
+                }
+
+                // Get initial contents
+                $http.get(getSearchUrl()).then(resp => {
+                    scope.entityResults = $sce.trustAsHtml(resp.data);
+                    scope.loading = false;
+                });
+
+                // Search when typing
+                scope.searchEntities = function() {
+                    scope.loading = true;
+                    input.val('');
+                    let url = getSearchUrl() + '&term=' + encodeURIComponent(scope.search);
+                    $http.get(url).then(resp => {
+                        scope.entityResults = $sce.trustAsHtml(resp.data);
+                        scope.loading = false;
+                    });
+                };
             }
         };
     }]);

@@ -50,7 +50,7 @@ class ViewService
      * Get the entities with the most views.
      * @param int $count
      * @param int $page
-     * @param bool|false $filterModel
+     * @param bool|false|array $filterModel
      */
     public function getPopular($count = 10, $page = 0, $filterModel = false)
     {
@@ -60,7 +60,11 @@ class ViewService
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');
 
-        if ($filterModel) $query->where('viewable_type', '=', get_class($filterModel));
+        if ($filterModel && is_array($filterModel)) {
+            $query->whereIn('viewable_type', $filterModel);
+        } else if ($filterModel) {
+            $query->where('viewable_type', '=', get_class($filterModel));
+        };
 
         return $query->with('viewable')->skip($skipCount)->take($count)->get()->pluck('viewable');
     }

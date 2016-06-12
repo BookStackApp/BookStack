@@ -1,7 +1,7 @@
 @if(Setting::get('app-color'))
     <style>
         header, #back-to-top, .primary-background {
-            background-color: {{ Setting::get('app-color') }};
+            background-color: {{ Setting::get('app-color') }} !important;
         }
         .faded-small, .primary-background-light {
             background-color: {{ Setting::get('app-color-light') }};

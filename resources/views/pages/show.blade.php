@@ -28,16 +28,26 @@
                             </ul>
                         </span>
                         @if(userCan('page-update', $page))
-                            <a href="{{$page->getUrl()}}/revisions" class="text-primary text-button"><i class="zmdi zmdi-replay"></i>Revisions</a>
                             <a href="{{$page->getUrl()}}/edit" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>Edit</a>
-                            <a href="{{$page->getUrl()}}/move" class="text-primary text-button" ><i class="zmdi zmdi-folder"></i>Move</a>
                         @endif
-                        @if(userCan('restrictions-manage', $page))
-                            <a href="{{$page->getUrl()}}/permissions" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Permissions</a>
+                        @if(userCan('page-update', $page) || userCan('restrictions-manage', $page) || userCan('page-delete', $page))
+                            <div dropdown class="dropdown-container">
+                                <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul>
+                                    @if(userCan('page-update', $page))
+                                        <li><a href="{{$page->getUrl()}}/move" class="text-primary" ><i class="zmdi zmdi-folder"></i>Move</a></li>
+                                        <li><a href="{{$page->getUrl()}}/revisions" class="text-primary"><i class="zmdi zmdi-replay"></i>Revisions</a></li>
+                                    @endif
+                                    @if(userCan('restrictions-manage', $page))
+                                        <li><a href="{{$page->getUrl()}}/permissions" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Permissions</a></li>
+                                    @endif
+                                    @if(userCan('page-delete', $page))
+                                        <li><a href="{{$page->getUrl()}}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a></li>
+                                    @endif
+                                </ul>
+                            </div>
                         @endif
-                        @if(userCan('page-delete', $page))
-                            <a href="{{$page->getUrl()}}/delete" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
-                        @endif
+
                     </div>
                 </div>
             </div>

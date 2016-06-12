@@ -16,6 +16,7 @@ return [
     'page_delete_notification'    => 'Page Successfully Deleted',
     'page_restore'                => 'restored page',
     'page_restore_notification'   => 'Page Successfully Restored',
+    'page_move'                   => 'moved page',
 
     // Chapters
     'chapter_create'              => 'created chapter',

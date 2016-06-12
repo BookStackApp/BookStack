@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageController@exportPlainText');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
+        Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
         Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showRestrict');
@@ -93,6 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
         Route::post('/update/{entityType}/{entityId}', 'TagController@updateForEntity');
     });
+
+    Route::get('/ajax/search/entities', 'SearchController@searchEntitiesAjax');
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

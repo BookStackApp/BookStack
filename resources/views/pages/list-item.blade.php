@@ -1,4 +1,4 @@
-<div class="page {{$page->draft ? 'draft' : ''}}" data-entity-type="page" data-entity-id="{{$page->id}}">
+<div class="page {{$page->draft ? 'draft' : ''}} entity-list-item" data-entity-type="page" data-entity-id="{{$page->id}}">
     <h3>
         <a href="{{ $page->getUrl() }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ $page->name }}</a>
     </h3>
