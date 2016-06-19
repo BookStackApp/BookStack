@@ -1,3 +1,5 @@
+dist: trusty
+sudo: required
 language: php
 php:
   - 7.0
@@ -5,15 +7,21 @@ php:
 cache:
   directories:
     - vendor
+    - node_modules
+    - $HOME/.composer/cache
 
 addons:
-  mariadb: '10.0'
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
 
 before_install:
   - npm install -g npm@latest
 
 before_script:
-  - mysql -e 'create database `bookstack-test`;'
+  - mysql -u root -e 'create database `bookstack-test`;'
   - composer config -g github-oauth.github.com $GITHUB_ACCESS_TOKEN
   - phpenv config-rm xdebug.ini
   - composer self-update
