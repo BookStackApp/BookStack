@@ -8,6 +8,7 @@ cache:
   directories:
     - vendor
     - node_modules
+    - $HOME/.composer/cache
 
 addons:
   apt:
