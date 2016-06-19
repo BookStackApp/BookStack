@@ -1,7 +1,8 @@
 var mceOptions = module.exports = {
     selector: '#html-editor',
     content_css: [
-        '/css/styles.css'
+        '/css/styles.css',
+        '/libs/material-design-iconic-font/css/material-design-iconic-font.min.css'
     ],
     body_class: 'page-content',
     relative_urls: false,
@@ -19,11 +20,18 @@ var mceOptions = module.exports = {
         {title: "Header 1", format: "h1"},
         {title: "Header 2", format: "h2"},
         {title: "Header 3", format: "h3"},
-        {title: "Paragraph", format: "p"},
+        {title: "Paragraph", format: "p", exact: true, classes: ''},
         {title: "Blockquote", format: "blockquote"},
         {title: "Code Block", icon: "code", format: "pre"},
-        {title: "Inline Code", icon: "code", inline: "code"}
+        {title: "Inline Code", icon: "code", inline: "code"},
+        {title: "Callouts", items: [
+            {title: "Success", block: 'p', exact: true, attributes : {'class' : 'callout success'}},
+            {title: "Info", block: 'p', exact: true, attributes : {'class' : 'callout info'}},
+            {title: "Warning", block: 'p', exact: true, attributes : {'class' : 'callout warning'}},
+            {title: "Danger", block: 'p', exact: true, attributes : {'class' : 'callout danger'}}
+        ]}
     ],
+    style_formats_merge: false,
     formats: {
         alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
         aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
