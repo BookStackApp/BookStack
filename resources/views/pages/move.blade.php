@@ -30,14 +30,7 @@
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="PUT">
 
-            <div class="form-group">
-                <div entity-selector class="entity-selector large" entity-types="book,chapter">
-                    <input type="hidden" entity-selector-input name="entity_selection" value="">
-                    <input type="text" placeholder="Search" ng-model="search" ng-model-options="{debounce: 200}" ng-change="searchEntities()">
-                    <div class="text-center loading" ng-show="loading">@include('partials/loading-icon')</div>
-                    <div ng-show="!loading" ng-bind-html="entityResults"></div>
-                </div>
-            </div>
+            @include('partials/entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter'])
 
             <a href="{{ $page->getUrl() }}" class="button muted">Cancel</a>
             <button type="submit" class="button pos">Move Page</button>

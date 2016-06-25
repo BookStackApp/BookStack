@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
         Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@showMove');
+        Route::put('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@move');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@showRestrict');
         Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@restrict');

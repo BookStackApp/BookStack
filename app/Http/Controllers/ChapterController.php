@@ -155,6 +155,55 @@ class ChapterController extends Controller
     }
 
     /**
+     * Show the page for moving a chapter.
+     * @param $bookSlug
+     * @param $chapterSlug
+     * @return mixed
+     * @throws \BookStack\Exceptions\NotFoundException
+     */
+    public function showMove($bookSlug, $chapterSlug) {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-update', $chapter);
+        return view('chapters/move', [
+            'chapter' => $chapter,
+            'book' => $book
+        ]);
+    }
+
+    public function move($bookSlug, $chapterSlug, Request $request) {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $this->checkOwnablePermission('chapter-update', $chapter);
+
+        $entitySelection = $request->get('entity_selection', null);
+        if ($entitySelection === null || $entitySelection === '') {
+            return redirect($chapter->getUrl());
+        }
+
+        $stringExploded = explode(':', $entitySelection);
+        $entityType = $stringExploded[0];
+        $entityId = intval($stringExploded[1]);
+
+        $parent = false;
+
+        if ($entityType == 'book') {
+            $parent = $this->bookRepo->getById($entityId);
+        }
+
+        if ($parent === false || $parent === null) {
+            session()->flash('The selected Book was not found');
+            return redirect()->back();
+        }
+
+        $this->chapterRepo->changeBook($parent->id, $chapter);
+        Activity::add($chapter, 'chapter_move', $chapter->book->id);
+        session()->flash('success', sprintf('Chapter moved to "%s"', $parent->name));
+
+        return redirect($chapter->getUrl());
+    }
+
+    /**
      * Show the Restrictions view.
      * @param $bookSlug
      * @param $chapterSlug

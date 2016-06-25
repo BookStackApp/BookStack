@@ -2,15 +2,15 @@
 
 @section('content')
 
-    <div class="faded-small toolbar" ng-non-bindable>
+    <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 faded">
+                <div class="col-sm-8 faded" ng-non-bindable>
                     <div class="breadcrumbs">
                         <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
                     </div>
                 </div>
-                <div class="col-md-8 faded">
+                <div class="col-sm-4 faded">
                     <div class="action-buttons">
                         @if(userCan('page-create', $chapter))
                             <a href="{{$chapter->getUrl() . '/create-page'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>New Page</a>
@@ -18,11 +18,21 @@
                         @if(userCan('chapter-update', $chapter))
                             <a href="{{$chapter->getUrl() . '/edit'}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
                         @endif
-                        @if(userCan('restrictions-manage', $chapter))
-                            <a href="{{$chapter->getUrl()}}/permissions" class="text-primary text-button"><i class="zmdi zmdi-lock-outline"></i>Permissions</a>
-                        @endif
-                        @if(userCan('chapter-delete', $chapter))
-                            <a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg text-button"><i class="zmdi zmdi-delete"></i>Delete</a>
+                        @if(userCan('chapter-update', $chapter) || userCan('restrictions-manage', $chapter) || userCan('chapter-delete', $chapter))
+                            <div dropdown class="dropdown-container">
+                                <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul>
+                                    @if(userCan('chapter-update', $chapter))
+                                        <li><a href="{{$chapter->getUrl() . '/move'}}" class="text-primary"><i class="zmdi zmdi-folder"></i>Move</a></li>
+                                    @endif
+                                    @if(userCan('restrictions-manage', $chapter))
+                                        <li><a href="{{$chapter->getUrl()}}/permissions" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Permissions</a></li>
+                                    @endif
+                                    @if(userCan('chapter-delete', $chapter))
+                                        <li><a href="{{$chapter->getUrl() . '/delete'}}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a></li>
+                                    @endif
+                                </ul>
+                            </div>
                         @endif
                     </div>
                 </div>

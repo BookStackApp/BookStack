@@ -468,6 +468,14 @@ class PageController extends Controller
         ]);
     }
 
+    /**
+     * Does the action of moving the location of a page
+     * @param $bookSlug
+     * @param $pageSlug
+     * @param Request $request
+     * @return mixed
+     * @throws NotFoundException
+     */
     public function move($bookSlug, $pageSlug, Request $request)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);

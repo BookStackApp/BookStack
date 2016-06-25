@@ -40,4 +40,29 @@ class SortTest extends TestCase
             ->seeInNthElement('.activity-list-item', 0, $page->name);
     }
 
+    public function test_chapter_move()
+    {
+        $chapter = \BookStack\Chapter::first();
+        $currentBook = $chapter->book;
+        $pageToCheck = $chapter->pages->first();
+        $newBook = \BookStack\Book::where('id', '!=', $currentBook->id)->first();
+
+        $this->asAdmin()->visit($chapter->getUrl() . '/move')
+            ->see('Move Chapter')->see($chapter->name)
+            ->type('book:' . $newBook->id, 'entity_selection')->press('Move Chapter');
+
+        $chapter = \BookStack\Chapter::find($chapter->id);
+        $this->seePageIs($chapter->getUrl());
+        $this->assertTrue($chapter->book->id === $newBook->id, 'Chapter Book is now the new book');
+
+        $this->visit($newBook->getUrl())
+            ->seeInNthElement('.activity-list-item', 0, 'moved chapter')
+            ->seeInNthElement('.activity-list-item', 0, $chapter->name);
+
+        $pageToCheck = \BookStack\Page::find($pageToCheck->id);
+        $this->assertTrue($pageToCheck->book_id === $newBook->id, 'Chapter child page\'s book id has changed to the new book');
+        $this->visit($pageToCheck->getUrl())
+            ->see($newBook->name);
+    }
+
 }
