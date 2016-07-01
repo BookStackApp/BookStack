@@ -39,11 +39,19 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function asAdmin()
     {
+        return $this->actingAs($this->getAdmin());
+    }
+
+    /**
+     * Get the current admin user.
+     * @return mixed
+     */
+    public function getAdmin() {
         if($this->admin === null) {
             $adminRole = \BookStack\Role::getRole('admin');
             $this->admin = $adminRole->users->first();
         }
-        return $this->actingAs($this->admin);
+        return $this->admin;
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+use BookStack\Ownable;
+
 if (!function_exists('versioned_asset')) {
     /**
      * Get the path to a versioned file.
@@ -34,18 +36,18 @@ if (!function_exists('versioned_asset')) {
  * If an ownable element is passed in the jointPermissions are checked against
  * that particular item.
  * @param $permission
- * @param \BookStack\Ownable $ownable
+ * @param Ownable $ownable
  * @return mixed
  */
-function userCan($permission, \BookStack\Ownable $ownable = null)
+function userCan($permission, Ownable $ownable = null)
 {
     if ($ownable === null) {
         return auth()->user() && auth()->user()->can($permission);
     }
 
     // Check permission on ownable item
-    $permissionService = app('BookStack\Services\PermissionService');
-    return $permissionService->checkEntityUserAccess($ownable, $permission);
+    $permissionService = app(\BookStack\Services\PermissionService::class);
+    return $permissionService->checkOwnableUserAccess($ownable, $permission);
 }
 
 /**

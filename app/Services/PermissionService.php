@@ -4,6 +4,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\JointPermission;
+use BookStack\Ownable;
 use BookStack\Page;
 use BookStack\Role;
 use BookStack\User;
@@ -307,16 +308,16 @@ class PermissionService
 
     /**
      * Checks if an entity has a restriction set upon it.
-     * @param Entity $entity
+     * @param Ownable $ownable
      * @param $permission
      * @return bool
      */
-    public function checkEntityUserAccess(Entity $entity, $permission)
+    public function checkOwnableUserAccess(Ownable $ownable, $permission)
     {
         if ($this->isAdmin) return true;
         $explodedPermission = explode('-', $permission);
 
-        $baseQuery = $entity->where('id', '=', $entity->id);
+        $baseQuery = $ownable->where('id', '=', $ownable->id);
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
@@ -327,7 +328,7 @@ class PermissionService
             $allPermission = $this->currentUser && $this->currentUser->can($permission . '-all');
             $ownPermission = $this->currentUser && $this->currentUser->can($permission . '-own');
             $this->currentAction = 'view';
-            $isOwner = $this->currentUser && $this->currentUser->id === $entity->created_by;
+            $isOwner = $this->currentUser && $this->currentUser->id === $ownable->created_by;
             return ($allPermission || ($isOwner && $ownPermission));
         }
 
