@@ -1,5 +1,11 @@
 <div class="chapter entity-list-item" data-entity-type="chapter" data-entity-id="{{$chapter->id}}">
     <h3>
+        @if (isset($showPath) && $showPath)
+            <a href="{{ $chapter->book->getUrl() }}" class="text-book">
+                <i class="zmdi zmdi-book"></i>{{ $chapter->book->name }}
+            </a>
+            <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
+        @endif
         <a href="{{ $chapter->getUrl() }}" class="text-chapter">
             <i class="zmdi zmdi-collection-bookmark"></i>{{ $chapter->name }}
         </a>

@@ -163,7 +163,7 @@ class SearchController extends Controller
             $entities = $this->viewService->getPopular(20, 0, $entityNames);
         }
 
-        return view('partials/entity-list', ['entities' => $entities]);
+        return view('search/entity-ajax-list', ['entities' => $entities]);
     }
 
 }

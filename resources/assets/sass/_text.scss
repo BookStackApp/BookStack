@@ -225,6 +225,15 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
     color: $color-chapter;
   }
 }
+.faded .text-book:hover {
+  color: $color-book !important;
+}
+.faded .text-chapter:hover {
+  color: $color-chapter !important;
+}
+.faded .text-page:hover {
+  color: $color-page !important;
+}
 
 span.highlight {
   //background-color: rgba($primary, 0.2);

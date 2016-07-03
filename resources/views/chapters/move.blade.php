@@ -9,7 +9,7 @@
                     <div class="breadcrumbs">
                         <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
                         <span class="sep">&raquo;</span>
-                        <a href="{{$chapter->getUrl()}}" class="text-page text-button"><i class="zmdi zmdi-file-text"></i>{{ $chapter->getShortName() }}</a>
+                        <a href="{{$chapter->getUrl()}}" class="text-chapter text-button"><i class="zmdi zmdi-collection-bookmark"></i>{{ $chapter->getShortName() }}</a>
                     </div>
                 </div>
             </div>

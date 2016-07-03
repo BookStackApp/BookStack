@@ -1,6 +1,7 @@
 .page-list {
   h3 {
-    margin: $-l 0 $-m 0;
+    margin: $-l 0 $-xs 0;
+    font-size: 1.666em;
   }
   a.chapter {
     color: $color-chapter;
@@ -8,7 +9,6 @@
   .inset-list {
     display: none;
     overflow: hidden;
-    // padding-left: $-m;
     margin-bottom: $-l;
   }
   h4 {

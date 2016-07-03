@@ -118,10 +118,5 @@ $(function () {
 
 });
 
-
-function elemExists(selector) {
-    return document.querySelector(selector) !== null;
-}
-
 // Page specific items
 require('./pages/page-show');
