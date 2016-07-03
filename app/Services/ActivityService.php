@@ -90,7 +90,7 @@ class ActivityService
     {
         $activityList = $this->permissionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
+            ->orderBy('created_at', 'desc')->with('user', 'entity')->skip($count * $page)->take($count)->get();
 
         return $this->filterSimilar($activityList);
     }
