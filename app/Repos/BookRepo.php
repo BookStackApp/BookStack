@@ -251,7 +251,10 @@ class BookRepo extends EntityRepo
         }]);
         $chapterQuery = $this->permissionService->enforceChapterRestrictions($chapterQuery, 'view');
         $chapters = $chapterQuery->get();
-        $children = $pages->merge($chapters);
+        $children = $pages->values();
+        foreach ($chapters as $chapter) {
+            $children->push($chapter);
+        }
         $bookSlug = $book->slug;
 
         $children->each(function ($child) use ($bookSlug) {

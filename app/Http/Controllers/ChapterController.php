@@ -59,7 +59,7 @@ class ChapterController extends Controller
 
         $input = $request->all();
         $input['priority'] = $this->bookRepo->getNewPriority($book);
-        $chapter = $this->chapterRepo->createFromInput($request->all(), $book);
+        $chapter = $this->chapterRepo->createFromInput($input, $book);
         Activity::add($chapter, 'chapter_create', $book->id);
         return redirect($chapter->getUrl());
     }
@@ -171,6 +171,14 @@ class ChapterController extends Controller
         ]);
     }
 
+    /**
+     * Perform the move action for a chapter.
+     * @param $bookSlug
+     * @param $chapterSlug
+     * @param Request $request
+     * @return mixed
+     * @throws \BookStack\Exceptions\NotFoundException
+     */
     public function move($bookSlug, $chapterSlug, Request $request) {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
