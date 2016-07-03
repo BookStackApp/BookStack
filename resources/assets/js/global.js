@@ -112,7 +112,7 @@ $(function () {
 
     // Common jQuery actions
     $('[data-action="expand-entity-list-details"]').click(function() {
-        $('.entity-list.compact').find('p').slideToggle(240);
+        $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
     });
 
 

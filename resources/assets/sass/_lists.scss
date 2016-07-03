@@ -338,6 +338,10 @@ ul.pagination {
     padding-top: $-xs;
     margin: 0;
   }
+  > p.empty-text {
+    display: block;
+    font-size: $fs-m;
+  }
   hr {
     margin: 0;
   }

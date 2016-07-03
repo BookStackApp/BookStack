@@ -16,8 +16,8 @@
 
         @endforeach
     @else
-        <p class="text-muted">
-            No items available
+        <p class="text-muted empty-text">
+            {{ $emptyText or 'No items available' }}
         </p>
     @endif
 </div>

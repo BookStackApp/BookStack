@@ -1,6 +1,4 @@
 
-{{--Requires an entity to be passed with the name $entity--}}
-
 @if(count($activity) > 0)
     <div class="activity-list">
         @foreach($activity as $activityItem)
@@ -10,5 +8,5 @@
         @endforeach
     </div>
 @else
-    <p class="text-muted">New activity will show up here.</p>
+    <p class="text-muted">No activity to show</p>
 @endif
