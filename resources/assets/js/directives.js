@@ -485,7 +485,7 @@ module.exports = function (ngApp, events) {
                         changeActiveTo(newActive, suggestionElems);
                     }
                     // Enter or tab key
-                    else if (event.keyCode === 13 || event.keyCode === 9) {
+                    else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
                         let text = suggestionElems[active].textContent;
                         currentInput[0].value = text;
                         currentInput.focus();
