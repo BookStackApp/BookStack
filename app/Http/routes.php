@@ -34,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageController@exportHtml');
         Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageController@exportPlainText');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
+        Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
+        Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
         Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showRestrict');
@@ -53,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
         Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@showMove');
+        Route::put('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@move');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@showRestrict');
         Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@restrict');
@@ -92,6 +96,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
         Route::post('/update/{entityType}/{entityId}', 'TagController@updateForEntity');
     });
+
+    Route::get('/ajax/search/entities', 'SearchController@searchEntitiesAjax');
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');

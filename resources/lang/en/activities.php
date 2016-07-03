@@ -4,7 +4,7 @@ return [
 
     /**
      * Activity text strings.
-     * Is used for all the text within activity logs.
+     * Is used for all the text within activity logs & notifications.
      */
 
     // Pages
@@ -16,6 +16,7 @@ return [
     'page_delete_notification'    => 'Page Successfully Deleted',
     'page_restore'                => 'restored page',
     'page_restore_notification'   => 'Page Successfully Restored',
+    'page_move'                   => 'moved page',
 
     // Chapters
     'chapter_create'              => 'created chapter',
@@ -24,6 +25,7 @@ return [
     'chapter_update_notification' => 'Chapter Successfully Updated',
     'chapter_delete'              => 'deleted chapter',
     'chapter_delete_notification' => 'Chapter Successfully Deleted',
+    'chapter_move'                => 'moved chapter',
 
     // Books
     'book_create'                 => 'created book',

@@ -51,9 +51,9 @@ class ImageController extends Controller
         $this->validate($request, [
             'term' => 'required|string'
         ]);
-        
+
         $searchTerm = $request->get('term');
-        $imgData = $this->imageRepo->searchPaginatedByType($type, $page,24, $searchTerm);
+        $imgData = $this->imageRepo->searchPaginatedByType($type, $page, 24, $searchTerm);
         return response()->json($imgData);
     }
 
@@ -99,7 +99,7 @@ class ImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => 'image|mimes:jpeg,gif,png'
+            'file' => 'is_image'
         ]);
 
         $imageUpload = $request->file('file');

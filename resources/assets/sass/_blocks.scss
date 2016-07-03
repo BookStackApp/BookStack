@@ -125,3 +125,51 @@
     margin-right: $-xl;
   }
 }
+
+
+/**
+ * Callouts
+ */
+
+.callout {
+  border-left: 3px solid #BBB;
+  background-color: #EEE;
+  padding: $-s;
+  &:before {
+    font-family: 'Material-Design-Iconic-Font';
+    padding-right: $-s;
+    display: inline-block;
+  }
+  &.success {
+    border-left-color: $positive;
+    background-color: lighten($positive, 45%);
+    color: darken($positive, 16%);
+  }
+  &.success:before {
+    content: '\f269';
+  }
+  &.danger {
+    border-left-color: $negative;
+    background-color: lighten($negative, 34%);
+    color: darken($negative, 20%);
+  }
+  &.danger:before {
+    content: '\f1f2';
+  }
+  &.info {
+    border-left-color: $info;
+    background-color: lighten($info, 50%);
+    color: darken($info, 16%);
+  }
+  &.info:before {
+    content: '\f1f8';
+  }
+  &.warning {
+    border-left-color: $warning;
+    background-color: lighten($warning, 36%);
+    color: darken($warning, 16%);
+  }
+  &.warning:before {
+    content: '\f1f1';
+  }
+}

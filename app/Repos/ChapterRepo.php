@@ -9,6 +9,18 @@ use BookStack\Chapter;
 
 class ChapterRepo extends EntityRepo
 {
+    protected $pageRepo;
+
+    /**
+     * ChapterRepo constructor.
+     * @param $pageRepo
+     */
+    public function __construct(PageRepo $pageRepo)
+    {
+        $this->pageRepo = $pageRepo;
+        parent::__construct();
+    }
+
     /**
      * Base query for getting chapters, Takes permissions into account.
      * @return mixed
@@ -189,12 +201,21 @@ class ChapterRepo extends EntityRepo
     public function changeBook($bookId, Chapter $chapter)
     {
         $chapter->book_id = $bookId;
+        // Update related activity
         foreach ($chapter->activity as $activity) {
             $activity->book_id = $bookId;
             $activity->save();
         }
         $chapter->slug = $this->findSuitableSlug($chapter->name, $bookId, $chapter->id);
         $chapter->save();
+        // Update all child pages
+        foreach ($chapter->pages as $page) {
+            $this->pageRepo->changeBook($bookId, $page);
+        }
+        // Update permissions
+        $chapter->load('book');
+        $this->permissionService->buildJointPermissionsForEntity($chapter->book);
+
         return $chapter;
     }
 

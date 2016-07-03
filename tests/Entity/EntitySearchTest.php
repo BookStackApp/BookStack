@@ -82,4 +82,14 @@ class EntitySearchTest extends TestCase
         $this->asAdmin()->visit('/search/books?term=' . $book->name)
             ->see('Book Search Results')->see('.entity-list', $book->name);
     }
+
+    public function test_ajax_entity_search()
+    {
+        $page = \BookStack\Page::all()->last();
+        $notVisitedPage = \BookStack\Page::first();
+        $this->visit($page->getUrl());
+        $this->asAdmin()->visit('/ajax/search/entities?term=' . $page->name)->see('.entity-list', $page->name);
+        $this->asAdmin()->visit('/ajax/search/entities?types=book&term=' . $page->name)->dontSee('.entity-list', $page->name);
+        $this->asAdmin()->visit('/ajax/search/entities')->see('.entity-list', $page->name)->dontSee($notVisitedPage->name);
+    }
 }

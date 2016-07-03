@@ -74,15 +74,15 @@ window.setupPageShow = module.exports = function (pageId) {
     // Make the book-tree sidebar stick in view on scroll
     var $window = $(window);
     var $bookTree = $(".book-tree");
+    var $bookTreeParent = $bookTree.parent();
     // Check the page is scrollable and the content is taller than the tree
     var pageScrollable = ($(document).height() > $window.height()) && ($bookTree.height() < $('.page-content').height());
     // Get current tree's width and header height
     var headerHeight = $("#header").height() + $(".toolbar").height();
     var isFixed = $window.scrollTop() > headerHeight;
-    var bookTreeWidth = $bookTree.width();
     // Function to fix the tree as a sidebar
     function stickTree() {
-        $bookTree.width(bookTreeWidth + 48 + 15);
+        $bookTree.width($bookTreeParent.width() + 15);
         $bookTree.addClass("fixed");
         isFixed = true;
     }
@@ -101,13 +101,27 @@ window.setupPageShow = module.exports = function (pageId) {
             unstickTree();
         }
     }
+    // The event ran when the window scrolls
+    function windowScrollEvent() {
+        checkTreeStickiness(false);
+    }
+
     // If the page is scrollable and the window is wide enough listen to scroll events
     // and evaluate tree stickiness.
     if (pageScrollable && $window.width() > 1000) {
-        $window.scroll(function() {
-            checkTreeStickiness(false);
-        });
+        $window.on('scroll', windowScrollEvent);
         checkTreeStickiness(true);
     }
+
+    // Handle window resizing and switch between desktop/mobile views
+    $window.on('resize', event => {
+        if (pageScrollable && $window.width() > 1000) {
+            $window.on('scroll', windowScrollEvent);
+            checkTreeStickiness(true);
+        } else {
+            $window.off('scroll', windowScrollEvent);
+            unstickTree();
+        }
+    });
 
 };

@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Book;
 use BookStack\Chapter;
+use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
 use Carbon\Carbon;
 use DOMDocument;
@@ -570,6 +571,22 @@ class PageRepo extends EntityRepo
         $page->slug = $this->findSuitableSlug($page->name, $bookId, $page->id);
         $page->save();
         return $page;
+    }
+
+
+    /**
+     * Change the page's parent to the given entity.
+     * @param Page $page
+     * @param Entity $parent
+     */
+    public function changePageParent(Page $page, Entity $parent)
+    {
+        $book = $parent->isA('book') ? $parent : $parent->book;
+        $page->chapter_id = $parent->isA('chapter') ? $parent->id : 0;
+        $page->save();
+        $page = $this->changeBook($book->id, $page);
+        $page->load('book');
+        $this->permissionService->buildJointPermissionsForEntity($book);
     }
 
     /**

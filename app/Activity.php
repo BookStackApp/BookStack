@@ -44,7 +44,7 @@ class Activity extends Model
      * @return bool
      */
     public function isSimilarTo($activityB) {
-        return [$this->key, $this->entitiy_type, $this->entitiy_id] === [$activityB->key, $activityB->entitiy_type, $activityB->entitiy_id];
+        return [$this->key, $this->entity_type, $this->entity_id] === [$activityB->key, $activityB->entity_type, $activityB->entity_id];
     }
 
 }

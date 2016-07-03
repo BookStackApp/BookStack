@@ -149,7 +149,10 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
-
+    /**
+     * Dropdown
+     * Provides some simple logic to create small dropdown menus
+     */
     ngApp.directive('dropdown', [function () {
         return {
             restrict: 'A',
@@ -166,7 +169,11 @@ module.exports = function (ngApp, events) {
         };
     }]);
 
-    ngApp.directive('tinymce', ['$timeout', function($timeout) {
+    /**
+     * TinyMCE
+     * An angular wrapper around the tinyMCE editor.
+     */
+    ngApp.directive('tinymce', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             scope: {
@@ -185,6 +192,10 @@ module.exports = function (ngApp, events) {
                         scope.mceChange(content);
                     });
 
+                    editor.on('keydown', (event) => {
+                        scope.$emit('editor-keydown', event);
+                    });
+
                     editor.on('init', (e) => {
                         scope.mceModel = editor.getContent();
                     });
@@ -200,8 +211,8 @@ module.exports = function (ngApp, events) {
                 scope.tinymce.extraSetups.push(tinyMceSetup);
 
                 // Custom tinyMCE plugins
-                tinymce.PluginManager.add('customhr', function(editor) {
-                    editor.addCommand('InsertHorizontalRule', function() {
+                tinymce.PluginManager.add('customhr', function (editor) {
+                    editor.addCommand('InsertHorizontalRule', function () {
                         var hrElem = document.createElement('hr');
                         var cNode = editor.selection.getNode();
                         var parentNode = cNode.parentNode;
@@ -227,7 +238,11 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('markdownInput', ['$timeout', function($timeout) {
+    /**
+     * Markdown input
+     * Handles the logic for just the editor input field.
+     */
+    ngApp.directive('markdownInput', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             scope: {
@@ -251,7 +266,7 @@ module.exports = function (ngApp, events) {
 
                 scope.$on('markdown-update', (event, value) => {
                     element.val(value);
-                    scope.mdModel= value;
+                    scope.mdModel = value;
                     scope.mdChange(markdown(value));
                 });
 
@@ -259,23 +274,59 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('markdownEditor', ['$timeout', function($timeout) {
+    /**
+     * Markdown Editor
+     * Handles all functionality of the markdown editor.
+     */
+    ngApp.directive('markdownEditor', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
 
                 // Elements
-                var input = element.find('textarea[markdown-input]');
-                var insertImage = element.find('button[data-action="insertImage"]');
+                const input = element.find('textarea[markdown-input]');
+                const display = element.find('.markdown-display').first();
+                const insertImage = element.find('button[data-action="insertImage"]');
 
-                var currentCaretPos = 0;
+                let currentCaretPos = 0;
 
-                input.blur((event) => {
+                input.blur(event => {
                     currentCaretPos = input[0].selectionStart;
                 });
 
-                // Insert image shortcut
-                input.keydown((event) => {
+                // Scroll sync
+                let inputScrollHeight,
+                    inputHeight,
+                    displayScrollHeight,
+                    displayHeight;
+
+                function setScrollHeights() {
+                    inputScrollHeight = input[0].scrollHeight;
+                    inputHeight = input.height();
+                    displayScrollHeight = display[0].scrollHeight;
+                    displayHeight = display.height();
+                }
+
+                setTimeout(() => {
+                    setScrollHeights();
+                }, 200);
+                window.addEventListener('resize', setScrollHeights);
+                let scrollDebounceTime = 800;
+                let lastScroll = 0;
+                input.on('scroll', event => {
+                    let now = Date.now();
+                    if (now - lastScroll > scrollDebounceTime) {
+                        setScrollHeights()
+                    }
+                    let scrollPercent = (input.scrollTop() / (inputScrollHeight - inputHeight));
+                    let displayScrollY = (displayScrollHeight - displayHeight) * scrollPercent;
+                    display.scrollTop(displayScrollY);
+                    lastScroll = now;
+                });
+
+                // Editor key-presses
+                input.keydown(event => {
+                    // Insert image shortcut
                     if (event.which === 73 && event.ctrlKey && event.shiftKey) {
                         event.preventDefault();
                         var caretPos = input[0].selectionStart;
@@ -285,12 +336,15 @@ module.exports = function (ngApp, events) {
                         input.focus();
                         input[0].selectionStart = caretPos + ("![](".length);
                         input[0].selectionEnd = caretPos + ('![](http://'.length);
+                        return;
                     }
+                    // Pass key presses to controller via event
+                    scope.$emit('editor-keydown', event);
                 });
 
                 // Insert image from image manager
-                insertImage.click((event) => {
-                    window.ImageManager.showExternal((image) => {
+                insertImage.click(event => {
+                    window.ImageManager.showExternal(image => {
                         var caretPos = currentCaretPos;
                         var currentContent = input.val();
                         var mdImageText = "![" + image.name + "](" + image.url + ")";
@@ -302,11 +356,16 @@ module.exports = function (ngApp, events) {
             }
         }
     }]);
-    
-    ngApp.directive('toolbox', [function() {
+
+    /**
+     * Page Editor Toolbox
+     * Controls all functionality for the sliding toolbox
+     * on the page edit view.
+     */
+    ngApp.directive('toolbox', [function () {
         return {
             restrict: 'A',
-            link: function(scope, elem, attrs) {
+            link: function (scope, elem, attrs) {
 
                 // Get common elements
                 const $buttons = elem.find('[tab-button]');
@@ -317,7 +376,7 @@ module.exports = function (ngApp, events) {
                 $toggle.click((e) => {
                     elem.toggleClass('open');
                 });
-                
+
                 // Set an active tab/content by name
                 function setActive(tabName, openToolbox) {
                     $buttons.removeClass('active');
@@ -331,7 +390,7 @@ module.exports = function (ngApp, events) {
                 setActive($content.first().attr('tab-content'), false);
 
                 // Handle tab button click
-                $buttons.click(function(e) {
+                $buttons.click(function (e) {
                     let name = $(this).attr('tab-button');
                     setActive(name, true);
                 });
@@ -339,11 +398,16 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    ngApp.directive('autosuggestions', ['$http', function($http) {
+    /**
+     * Tag Autosuggestions
+     * Listens to child inputs and provides autosuggestions depending on field type
+     * and input. Suggestions provided by server.
+     */
+    ngApp.directive('tagAutosuggestions', ['$http', function ($http) {
         return {
             restrict: 'A',
-            link: function(scope, elem, attrs) {
-                
+            link: function (scope, elem, attrs) {
+
                 // Local storage for quick caching.
                 const localCache = {};
 
@@ -360,37 +424,48 @@ module.exports = function (ngApp, events) {
                 let active = 0;
 
                 // Listen to input events on autosuggest fields
-                elem.on('input', '[autosuggest]', function(event) {
+                elem.on('input focus', '[autosuggest]', function (event) {
                     let $input = $(this);
                     let val = $input.val();
                     let url = $input.attr('autosuggest');
-                    // No suggestions until at least 3 chars
-                    if (val.length < 3) {
-                        if (isShowing) {
-                            $suggestionBox.hide();
-                            isShowing = false;
+                    let type = $input.attr('autosuggest-type');
+                    
+                    // Add name param to request if for a value
+                    if (type.toLowerCase() === 'value') {
+                        let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
+                        let nameVal = $nameInput.val();
+                        if (nameVal !== '') {
+                            url += '?name=' + encodeURIComponent(nameVal);
                         }
-                        return;
-                    };
+                    }
 
                     let suggestionPromise = getSuggestions(val.slice(0, 3), url);
-                    suggestionPromise.then((suggestions) => {
-                       if (val.length > 2) {
-                           suggestions = suggestions.filter((item) => {
-                               return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
-                           }).slice(0, 4);
-                           displaySuggestions($input, suggestions);
-                       }
+                    suggestionPromise.then(suggestions => {
+                        if (val.length === 0) {
+                            displaySuggestions($input, suggestions.slice(0, 6));
+                        } else  {
+                            suggestions = suggestions.filter(item => {
+                                return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
+                            }).slice(0, 4);
+                            displaySuggestions($input, suggestions);
+                        }
                     });
                 });
 
                 // Hide autosuggestions when input loses focus.
                 // Slight delay to allow clicks.
-                elem.on('blur', '[autosuggest]', function(event) {
+                let lastFocusTime = 0;
+                elem.on('blur', '[autosuggest]', function (event) {
+                    let startTime = Date.now();
                     setTimeout(() => {
-                        $suggestionBox.hide();
-                        isShowing = false;
+                        if (lastFocusTime < startTime) {
+                            $suggestionBox.hide();
+                            isShowing = false;
+                        }
                     }, 200)
+                });
+                elem.on('focus', '[autosuggest]', function (event) {
+                    lastFocusTime = Date.now();
                 });
 
                 elem.on('keydown', '[autosuggest]', function (event) {
@@ -401,23 +476,25 @@ module.exports = function (ngApp, events) {
 
                     // Down arrow
                     if (event.keyCode === 40) {
-                        let newActive = (active === suggestCount-1) ? 0 : active + 1;
+                        let newActive = (active === suggestCount - 1) ? 0 : active + 1;
                         changeActiveTo(newActive, suggestionElems);
                     }
                     // Up arrow
                     else if (event.keyCode === 38) {
-                        let newActive = (active === 0) ? suggestCount-1 : active - 1;
+                        let newActive = (active === 0) ? suggestCount - 1 : active - 1;
                         changeActiveTo(newActive, suggestionElems);
                     }
-                    // Enter key
-                    else if (event.keyCode === 13) {
+                    // Enter or tab key
+                    else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
                         let text = suggestionElems[active].textContent;
                         currentInput[0].value = text;
                         currentInput.focus();
                         $suggestionBox.hide();
                         isShowing = false;
-                        event.preventDefault();
-                        return false;
+                        if (event.keyCode === 13) {
+                            event.preventDefault();
+                            return false;
+                        }
                     }
                 });
 
@@ -430,6 +507,7 @@ module.exports = function (ngApp, events) {
 
                 // Display suggestions on a field
                 let prevSuggestions = [];
+
                 function displaySuggestions($input, suggestions) {
 
                     // Hide if no suggestions
@@ -466,7 +544,8 @@ module.exports = function (ngApp, events) {
                         if (i === 0) {
                             suggestion.className = 'active'
                             active = 0;
-                        };
+                        }
+                        ;
                         $suggestionBox[0].appendChild(suggestion);
                     }
 
@@ -484,23 +563,85 @@ module.exports = function (ngApp, events) {
 
                 // Get suggestions & cache
                 function getSuggestions(input, url) {
-                    let searchUrl = url + '?search=' + encodeURIComponent(input);
+                    let hasQuery = url.indexOf('?') !== -1;
+                    let searchUrl = url + (hasQuery ? '&' : '?') + 'search=' + encodeURIComponent(input);
 
                     // Get from local cache if exists
-                    if (localCache[searchUrl]) {
+                    if (typeof localCache[searchUrl] !== 'undefined') {
                         return new Promise((resolve, reject) => {
-                            resolve(localCache[input]);
+                            resolve(localCache[searchUrl]);
                         });
                     }
 
-                    return $http.get(searchUrl).then((response) => {
-                        localCache[input] = response.data;
+                    return $http.get(searchUrl).then(response => {
+                        localCache[searchUrl] = response.data;
                         return response.data;
                     });
                 }
 
             }
         }
+    }]);
+
+
+    ngApp.directive('entitySelector', ['$http', '$sce', function ($http, $sce) {
+        return {
+            restrict: 'A',
+            scope: true,
+            link: function (scope, element, attrs) {
+                scope.loading = true;
+                scope.entityResults = false;
+                scope.search = '';
+
+                // Add input for forms
+                const input = element.find('[entity-selector-input]').first();
+
+                // Listen to entity item clicks
+                element.on('click', '.entity-list a', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    let item = $(this).closest('[data-entity-type]');
+                    itemSelect(item);
+                });
+                element.on('click', '[data-entity-type]', function(event) {
+                    itemSelect($(this));
+                });
+
+                // Select entity action
+                function itemSelect(item) {
+                    let entityType = item.attr('data-entity-type');
+                    let entityId = item.attr('data-entity-id');
+                    let isSelected = !item.hasClass('selected');
+                    element.find('.selected').removeClass('selected').removeClass('primary-background');
+                    if (isSelected) item.addClass('selected').addClass('primary-background');
+                    let newVal = isSelected ? `${entityType}:${entityId}` : '';
+                    input.val(newVal);
+                }
+
+                // Get search url with correct types
+                function getSearchUrl() {
+                    let types = (attrs.entityTypes) ? encodeURIComponent(attrs.entityTypes) : encodeURIComponent('page,book,chapter');
+                    return `/ajax/search/entities?types=${types}`;
+                }
+
+                // Get initial contents
+                $http.get(getSearchUrl()).then(resp => {
+                    scope.entityResults = $sce.trustAsHtml(resp.data);
+                    scope.loading = false;
+                });
+
+                // Search when typing
+                scope.searchEntities = function() {
+                    scope.loading = true;
+                    input.val('');
+                    let url = getSearchUrl() + '&term=' + encodeURIComponent(scope.search);
+                    $http.get(url).then(resp => {
+                        scope.entityResults = $sce.trustAsHtml(resp.data);
+                        scope.loading = false;
+                    });
+                };
+            }
+        };
     }]);
 };
 
