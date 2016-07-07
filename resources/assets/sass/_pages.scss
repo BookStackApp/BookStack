@@ -60,6 +60,18 @@
     word-break: break-word;
     hyphens: auto;
   }
+
+  // diffs
+  .diff-html-removed,
+  .diff-html-added {
+    text-decoration: none;
+  }
+  .diff-html-added {
+    background: rgba(45, 255, 0, 0.2);
+  }
+  .diff-html-removed {
+    background: rgba(255, 0, 0, 0.2);
+  }
 }
 
 // Page content pointers
