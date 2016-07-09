@@ -95,6 +95,7 @@ class ImageService
 
         try {
             $storage->put($fullPath, $imageData);
+            $storage->setVisibility($fullPath, 'public');
         } catch (Exception $e) {
             throw new ImageUploadException('Image Path ' . $fullPath . ' is not writable by the server.');
         }
@@ -167,6 +168,7 @@ class ImageService
 
         $thumbData = (string)$thumb->encode();
         $storage->put($thumbFilePath, $thumbData);
+        $storage->setVisibility($thumbFilePath, 'public');
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
