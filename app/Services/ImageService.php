@@ -259,7 +259,7 @@ class ImageService
             // Get the standard public s3 url if s3 is set as storage type
             if ($storageUrl == false && config('filesystems.default') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
-                $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
+                $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
             }
 
             $this->storageUrl = $storageUrl;
