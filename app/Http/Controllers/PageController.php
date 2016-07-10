@@ -12,7 +12,7 @@ use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Views;
-use Icap\HtmlDiff\HtmlDiff;
+use GatherContent\Htmldiff\Htmldiff;
 
 class PageController extends Controller
 {
@@ -334,9 +334,8 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $revision = $this->pageRepo->getRevisionById($revisionId);
         
-        $next     = $revision->getNext() ?: $page;
-        $htmlDiff = new HtmlDiff($revision->html, $next->html, true);
-        $diff     = $htmlDiff->outputDiff()->toString();
+        $next = $revision->getNext() ?: $page;
+        $diff = (new Htmldiff)->diff($revision->html, $next->html);
 
         $page->fill($revision->toArray());
         $this->setPageTitle('Page Revision For ' . $page->getShortName());

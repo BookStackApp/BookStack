@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3d8e2dfddefb412055d28ffc922969fd",
-    "content-hash": "7658fea0b4df71cf7b97bcdf8a29b9eb",
+    "hash": "097beaeb7ce90384b824d65d9dd36520",
+    "content-hash": "233ce3d93ee0c9b005c263ff1449ae0f",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -359,6 +359,57 @@
             "time": "2015-11-09 22:51:51"
         },
         {
+            "name": "cogpowered/finediff",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cogpowered/FineDiff.git",
+                "reference": "339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cogpowered/FineDiff/zipball/339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8",
+                "reference": "339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "cogpowered\\FineDiff": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Crowe",
+                    "email": "rob@cogpowered.com"
+                },
+                {
+                    "name": "Raymond Hill"
+                }
+            ],
+            "description": "PHP implementation of a Fine granularity Diff engine",
+            "homepage": "https://github.com/cogpowered/FineDiff",
+            "keywords": [
+                "diff",
+                "finediff",
+                "opcode",
+                "string",
+                "text"
+            ],
+            "time": "2014-05-19 10:25:02"
+        },
+        {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
             "source": {
@@ -498,6 +549,55 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2015-12-07 04:07:13"
+        },
+        {
+            "name": "gathercontent/htmldiff",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gathercontent/htmldiff.git",
+                "reference": "24674a62315f64330134b4a4c5b01a7b59193c93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gathercontent/htmldiff/zipball/24674a62315f64330134b4a4c5b01a7b59193c93",
+                "reference": "24674a62315f64330134b4a4c5b01a7b59193c93",
+                "shasum": ""
+            },
+            "require": {
+                "cogpowered/finediff": "0.3.1",
+                "ext-tidy": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "GatherContent\\Htmldiff": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Cairns",
+                    "email": "andrew@gathercontent.com"
+                },
+                {
+                    "name": "Mathew Chapman",
+                    "email": "mat@gathercontent.com"
+                },
+                {
+                    "name": "Peter Legierski",
+                    "email": "peter@gathercontent.com"
+                }
+            ],
+            "description": "Compare two HTML strings",
+            "time": "2015-04-15 15:39:46"
         },
         {
             "name": "guzzle/guzzle",
@@ -762,50 +862,6 @@
                 "uri"
             ],
             "time": "2016-06-24 23:00:38"
-        },
-        {
-            "name": "icap/html-diff",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/iCAPLyon1/HtmlDiff.git",
-                "reference": "f58ddb196292ae585a2efb7692653d015ecc436f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/iCAPLyon1/HtmlDiff/zipball/f58ddb196292ae585a2efb7692653d015ecc436f",
-                "reference": "f58ddb196292ae585a2efb7692653d015ecc436f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Icap\\HtmlDiff\\": "src/Icap/HtmlDiff"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Panagiotis Tsavdaris",
-                    "email": "ptsavdar@gmail.com"
-                },
-                {
-                    "name": "ICAP development team",
-                    "homepage": "https://github.com/iCAPLyon1"
-                }
-            ],
-            "description": "A PHP5 library that diffs (compares) HTML files.",
-            "keywords": [
-                "daisy diff",
-                "html diff"
-            ],
-            "time": "2016-02-17 16:35:09"
         },
         {
             "name": "intervention/image",
@@ -3103,6 +3159,50 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
+        },
+        {
+            "name": "icap/html-diff",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iCAPLyon1/HtmlDiff.git",
+                "reference": "f58ddb196292ae585a2efb7692653d015ecc436f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iCAPLyon1/HtmlDiff/zipball/f58ddb196292ae585a2efb7692653d015ecc436f",
+                "reference": "f58ddb196292ae585a2efb7692653d015ecc436f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Icap\\HtmlDiff\\": "src/Icap/HtmlDiff"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Panagiotis Tsavdaris",
+                    "email": "ptsavdar@gmail.com"
+                },
+                {
+                    "name": "ICAP development team",
+                    "homepage": "https://github.com/iCAPLyon1"
+                }
+            ],
+            "description": "A PHP5 library that diffs (compares) HTML files.",
+            "keywords": [
+                "daisy diff",
+                "html diff"
+            ],
+            "time": "2016-02-17 16:35:09"
         },
         {
             "name": "mockery/mockery",

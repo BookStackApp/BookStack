@@ -62,15 +62,15 @@
   }
 
   // diffs
-  .diff-html-removed,
-  .diff-html-added {
+  ins,
+  del {
     text-decoration: none;
   }
-  .diff-html-added {
-    background: rgba(45, 255, 0, 0.2);
+  ins {
+    background: #dbffdb;
   }
-  .diff-html-removed {
-    background: rgba(255, 0, 0, 0.2);
+  del {
+    background: #FFECEC;
   }
 }
 

@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
+        "ext-tidy": "*",
+
         "laravel/framework": "5.2.*",
         "intervention/image": "^2.3",
         "laravel/socialite": "^2.0",
@@ -14,7 +16,7 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "barryvdh/laravel-dompdf": "0.6.*",
         "predis/predis": "^1.0",
-        "icap/html-diff": "^1.1"
+        "gathercontent/htmldiff": "^0.2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
