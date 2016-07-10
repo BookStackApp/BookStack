@@ -259,9 +259,15 @@ class ImageService
             $storageUrl = config('filesystems.url');
 
             // Get the standard public s3 url if s3 is set as storage type
+            // Uses the nice, short URL if bucket name has no periods in otherwise the longer
+            // region-based url will be used to prevent http issues.
             if ($storageUrl == false && config('filesystems.default') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
-                $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
+                if (strpos($storageDetails['bucket'], '.') === false) {
+                    $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
+                } else {
+                    $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
+                }
             }
 
             $this->storageUrl = $storageUrl;
