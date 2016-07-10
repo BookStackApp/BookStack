@@ -157,9 +157,22 @@ module.exports = function (ngApp, events) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var menu = element.find('ul');
+                const menu = element.find('ul');
                 element.find('[dropdown-toggle]').on('click', function () {
                     menu.show().addClass('anim menuIn');
+                    let inputs = menu.find('input');
+                    let hasInput = inputs.length > 0;
+                    if (hasInput) {
+                        inputs.first().focus();
+                        element.on('keypress', 'input', event => {
+                            if (event.keyCode === 13) {
+                                event.preventDefault();
+                                menu.hide();
+                                menu.removeClass('anim menuIn');
+                                return false;
+                            }
+                        });
+                    }
                     element.mouseleave(function () {
                         menu.hide();
                         menu.removeClass('anim menuIn');

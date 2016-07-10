@@ -147,7 +147,7 @@ class PageRepo extends EntityRepo
         $draftPage->fill($input);
 
         // Save page tags if present
-        if(isset($input['tags'])) {
+        if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
         }
 
@@ -308,10 +308,9 @@ class PageRepo extends EntityRepo
      */
     public function updatePage(Page $page, $book_id, $input)
     {
-        // Save a revision before updating
-        if ($page->html !== $input['html'] || $page->name !== $input['name']) {
-            $this->saveRevision($page, $input['summary']);
-        }
+        // Hold the old details to compare later
+        $oldHtml = $page->html;
+        $oldName = $page->name;
 
         // Prevent slug being updated if no name change
         if ($page->name !== $input['name']) {
@@ -319,7 +318,7 @@ class PageRepo extends EntityRepo
         }
 
         // Save page tags if present
-        if(isset($input['tags'])) {
+        if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
@@ -334,6 +333,11 @@ class PageRepo extends EntityRepo
 
         // Remove all update drafts for this user & page.
         $this->userUpdateDraftsQuery($page, $userId)->delete();
+
+        // Save a revision after updating
+        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $input['summary'] !== null) {
+            $this->saveRevision($page, $input['summary']);
+        }
 
         return $page;
     }
@@ -360,6 +364,7 @@ class PageRepo extends EntityRepo
     /**
      * Saves a page revision into the system.
      * @param Page $page
+     * @param null|string $summary
      * @return $this
      */
     public function saveRevision(Page $page, $summary = null)
@@ -406,7 +411,7 @@ class PageRepo extends EntityRepo
 
         $draft->fill($data);
         if (setting('app-editor') !== 'markdown') $draft->markdown = '';
-        
+
         $draft->save();
         return $draft;
     }

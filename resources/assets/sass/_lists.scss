@@ -375,6 +375,9 @@ ul.pagination {
   .text-muted {
     color: #999;
   }
+  li.padded {
+    padding: $-xs $-m;
+  }
   a {
     display: block;
     padding: $-xs $-m;
@@ -384,10 +387,10 @@ ul.pagination {
       background-color: #EEE;
     }
     i {
-      margin-right: $-m;
+      margin-right: $-s;
       padding-right: 0;
-      display: inline;
-      width: 22px;
+      display: inline-block;
+      width: 16px;
     }
   }
   li.border-bottom {
