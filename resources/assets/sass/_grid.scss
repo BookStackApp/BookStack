@@ -39,6 +39,9 @@ div[class^="col-"] img {
   &.fluid {
     max-width: 100%;
   }
+  &.medium {
+    max-width: 992px;
+  }
   &.small {
     max-width: 840px;
   }

@@ -310,7 +310,7 @@ class PageRepo extends EntityRepo
     {
         // Save a revision before updating
         if ($page->html !== $input['html'] || $page->name !== $input['name']) {
-            $this->saveRevision($page);
+            $this->saveRevision($page, $input['summary']);
         }
 
         // Prevent slug being updated if no name change
@@ -362,7 +362,7 @@ class PageRepo extends EntityRepo
      * @param Page $page
      * @return $this
      */
-    public function saveRevision(Page $page)
+    public function saveRevision(Page $page, $summary = null)
     {
         $revision = $this->pageRevision->fill($page->toArray());
         if (setting('app-editor') !== 'markdown') $revision->markdown = '';
@@ -372,6 +372,7 @@ class PageRepo extends EntityRepo
         $revision->created_by = auth()->user()->id;
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
+        $revision->summary = $summary;
         $revision->save();
         // Clear old revisions
         if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {

@@ -17,17 +17,18 @@
     </div>
 
 
-    <div class="container small" ng-non-bindable>
+    <div class="container medium" ng-non-bindable>
         <h1>Page Revisions <span class="subheader">For "{{ $page->name }}"</span></h1>
 
         @if(count($page->revisions) > 0)
 
             <table class="table">
                 <tr>
-                    <th width="40%">Name</th>
-                    <th colspan="2" width="20%">Created By</th>
-                    <th width="20%">Revision Date</th>
-                    <th width="20%">Actions</th>
+                    <th width="30%">Name</th>
+                    <th colspan="2" width="10%">Created By</th>
+                    <th width="15%">Revision Date</th>
+                    <th width="20%">Summary</th>
+                    <th width="15%">Actions</th>
                 </tr>
                 @foreach($page->revisions as $revision)
                     <tr>
@@ -39,6 +40,7 @@
                         </td>
                         <td> @if($revision->createdBy) {{$revision->createdBy->name}} @else Deleted User @endif</td>
                         <td><small>{{$revision->created_at->format('jS F, Y H:i:s')}} <br> ({{$revision->created_at->diffForHumans()}})</small></td>
+                        <td>{{$revision->summary}}</td>
                         <td>
                             <a href="{{$revision->getUrl()}}" target="_blank">Preview</a>
                             <span class="text-muted">&nbsp;|&nbsp;</span>

@@ -27,8 +27,8 @@
                 </div>
                 <div class="col-sm-4 faded">
                     <div class="action-buttons" ng-cloak>
-
                         <button type="button" ng-if="isUpdateDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
+                        <input name="summary" id="summary-input" type="text" placeholder="edit summary" />
                         <button type="submit" id="save-button" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 
 class PageRevision extends Model
 {
-    protected $fillable = ['name', 'html', 'text', 'markdown'];
+    protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
 
     /**
      * Get the user that created the page revision
