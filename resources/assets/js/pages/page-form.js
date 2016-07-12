@@ -1,3 +1,60 @@
+"use strict";
+
+function editorPaste(e) {
+    if (!e.clipboardData) return
+    var items = e.clipboardData.items;
+    if (!items) return;
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf("image") !== -1) {
+
+            var file = items[i].getAsFile();
+            var formData = new FormData();
+            var ext = 'png';
+            var xhr = new XMLHttpRequest();
+
+            if (file.name) {
+                var fileNameMatches = file.name.match(/\.(.+)$/);
+                if (fileNameMatches) {
+                    ext = fileNameMatches[1];
+                }
+            }
+
+            var id = "image-" + Math.random().toString(16).slice(2);
+            editor.execCommand('mceInsertContent', false, '<img src="/loading.gif" id="' + id + '">');
+
+            var remoteFilename = "image-" + Date.now() + "." + ext;
+            formData.append('file', file, remoteFilename);
+            formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
+
+            xhr.open('POST', '/images/gallery/upload');
+            xhr.onload = function () {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    var result = JSON.parse(xhr.responseText);
+                    editor.dom.setAttrib(id, 'src', result.url);
+                } else {
+                    console.log('An error occured uploading the image');
+                    console.log(xhr.responseText);
+                    editor.dom.remove(id);
+                }
+            };
+            xhr.send(formData);
+        }
+    }
+}
+
+function registerEditorShortcuts(editor) {
+    // Headers
+    for (let i = 1; i < 5; i++) {
+        editor.addShortcut('ctrl+' + i, '', ['FormatBlock', false, 'h' + i]);
+    }
+
+    // Other block shortcuts
+    editor.addShortcut('ctrl+q', '', ['FormatBlock', false, 'blockquote']);
+    editor.addShortcut('ctrl+d', '', ['FormatBlock', false, 'p']);
+    editor.addShortcut('ctrl+e', '', ['FormatBlock', false, 'pre']);
+    editor.addShortcut('ctrl+s', '', ['FormatBlock', false, 'code']);
+}
+
 var mceOptions = module.exports = {
     selector: '#html-editor',
     content_css: [
@@ -66,6 +123,8 @@ var mceOptions = module.exports = {
             mceOptions.extraSetups[i](editor);
         }
 
+        registerEditorShortcuts(editor);
+
         (function () {
             var wrap;
 
@@ -122,49 +181,6 @@ var mceOptions = module.exports = {
         });
 
         // Paste image-uploads
-        editor.on('paste', function (e) {
-            if (e.clipboardData) {
-                var items = e.clipboardData.items;
-                if (items) {
-                    for (var i = 0; i < items.length; i++) {
-                        if (items[i].type.indexOf("image") !== -1) {
-
-                            var file = items[i].getAsFile();
-                            var formData = new FormData();
-                            var ext = 'png';
-                            var xhr = new XMLHttpRequest();
-
-                            if (file.name) {
-                                var fileNameMatches = file.name.match(/\.(.+)$/);
-                                if (fileNameMatches) {
-                                    ext = fileNameMatches[1];
-                                }
-                            }
-
-                            var id = "image-" + Math.random().toString(16).slice(2);
-                            editor.execCommand('mceInsertContent', false, '<img src="/loading.gif" id="' + id + '">');
-
-                            var remoteFilename = "image-" + Date.now() + "." + ext;
-                            formData.append('file', file, remoteFilename);
-                            formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
-
-                            xhr.open('POST', '/images/gallery/upload');
-                            xhr.onload = function () {
-                                if (xhr.status === 200 || xhr.status === 201) {
-                                    var result = JSON.parse(xhr.responseText);
-                                    editor.dom.setAttrib(id, 'src', result.url);
-                                } else {
-                                    console.log('An error occured uploading the image');
-                                    console.log(xhr.responseText);
-                                    editor.dom.remove(id);
-                                }
-                            };
-                            xhr.send(formData);
-                        }
-                    }
-                }
-
-            }
-        });
+        editor.on('paste', editorPaste);
     }
 };
