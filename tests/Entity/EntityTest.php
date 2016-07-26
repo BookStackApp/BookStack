@@ -216,13 +216,24 @@ class EntityTest extends TestCase
 
     public function test_old_page_slugs_redirect_to_new_pages()
     {
-        $page = \BookStack\Page::all()->first();
+        $page = \BookStack\Page::first();
         $pageUrl = $page->getUrl();
         $newPageUrl = '/books/' . $page->book->slug . '/page/super-test-page';
+        // Need to save twice since revisions are not generated in seeder.
         $this->asAdmin()->visit($pageUrl)
+            ->clickInElement('#content', 'Edit')
+            ->type('super test', '#name')
+            ->press('Save Page');
+
+        $page = \BookStack\Page::first();
+        $pageUrl = $page->getUrl();
+
+        // Second Save
+        $this->visit($pageUrl)
             ->clickInElement('#content', 'Edit')
             ->type('super test page', '#name')
             ->press('Save Page')
+            // Check redirect
             ->seePageIs($newPageUrl)
             ->visit($pageUrl)
             ->seePageIs($newPageUrl);
