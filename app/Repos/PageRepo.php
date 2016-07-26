@@ -157,6 +157,8 @@ class PageRepo extends EntityRepo
         $draftPage->draft = false;
 
         $draftPage->save();
+        $this->saveRevision($draftPage, 'Initial Publish');
+        
         return $draftPage;
     }
 
