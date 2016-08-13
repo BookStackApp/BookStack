@@ -11,7 +11,7 @@ class Book extends Entity
      */
     public function getUrl()
     {
-        return '/books/' . $this->slug;
+        return baseUrl('/books/' . $this->slug);
     }
 
     /*

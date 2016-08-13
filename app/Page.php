@@ -63,7 +63,7 @@ class Page extends Entity
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
         $midText = $this->draft ? '/draft/' : '/page/';
         $idComponent = $this->draft ? $this->id : $this->slug;
-        return '/books/' . $bookSlug . $midText . $idComponent;
+        return baseUrl('/books/' . $bookSlug . $midText . $idComponent);
     }
 
     /**

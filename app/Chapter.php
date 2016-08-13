@@ -30,7 +30,7 @@ class Chapter extends Entity
     public function getUrl()
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
-        return '/books/' . $bookSlug. '/chapter/' . $this->slug;
+        return baseUrl('/books/' . $bookSlug. '/chapter/' . $this->slug);
     }
 
     /**

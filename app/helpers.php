@@ -20,11 +20,11 @@ if (!function_exists('versioned_asset')) {
         }
 
         if (isset($manifest[$file])) {
-            return '/' . $manifest[$file];
+            return baseUrl($manifest[$file]);
         }
 
         if (file_exists(public_path($file))) {
-            return '/' . $file;
+            return baseUrl($file);
         }
 
         throw new InvalidArgumentException("File {$file} not defined in asset manifest.");
@@ -60,6 +60,17 @@ function setting($key, $default = false)
 {
     $settingService = app('BookStack\Services\SettingService');
     return $settingService->get($key, $default);
+}
+
+/**
+ * Helper to create url's relative to the applications root path.
+ * @param $path
+ * @return string
+ */
+function baseUrl($path)
+{
+    $path = trim($path, '/');
+    return rtrim(config('app.url'), '/') . '/' . $path;
 }
 
 /**
