@@ -252,11 +252,14 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 // Set initial model content
-                var content = element.val();
+                element = element.find('textarea').first();
+                let content = element.val();
                 scope.mdModel = content;
                 scope.mdChange(markdown(content));
 
-                element.on('change input', (e) => {
+                console.log('test');
+
+                element.on('change input', (event) => {
                     content = element.val();
                     $timeout(() => {
                         scope.mdModel = content;
@@ -284,7 +287,7 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 // Elements
-                const input = element.find('textarea[markdown-input]');
+                const input = element.find('[markdown-input] textarea').first();
                 const display = element.find('.markdown-display').first();
                 const insertImage = element.find('button[data-action="insertImage"]');
 
