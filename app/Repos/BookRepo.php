@@ -216,12 +216,10 @@ class BookRepo extends EntityRepo
      */
     public function findSuitableSlug($name, $currentId = false)
     {
-        $originalSlug = Str::slug($name);
-        $slug = $originalSlug;
-        $count = 2;
+        $slug = Str::slug($name);
+        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
         while ($this->doesSlugExist($slug, $currentId)) {
-            $slug = $originalSlug . '-' . $count;
-            $count++;
+            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
         return $slug;
     }
@@ -229,7 +227,7 @@ class BookRepo extends EntityRepo
     /**
      * Get all child objects of a book.
      * Returns a sorted collection of Pages and Chapters.
-     * Loads the bookslug onto child elements to prevent access database access for getting the slug.
+     * Loads the book slug onto child elements to prevent access database access for getting the slug.
      * @param Book $book
      * @param bool $filterDrafts
      * @return mixed
@@ -245,7 +243,7 @@ class BookRepo extends EntityRepo
 
         $pages = $pageQuery->get();
 
-        $chapterQuery = $book->chapters()->with(['pages' => function($query) use ($filterDrafts) {
+        $chapterQuery = $book->chapters()->with(['pages' => function ($query) use ($filterDrafts) {
             $this->permissionService->enforcePageRestrictions($query, 'view');
             if ($filterDrafts) $query->where('draft', '=', false);
         }]);
@@ -263,7 +261,7 @@ class BookRepo extends EntityRepo
                 $child->pages->each(function ($page) use ($bookSlug) {
                     $page->setAttribute('bookSlug', $bookSlug);
                 });
-                $child->pages = $child->pages->sortBy(function($child, $key) {
+                $child->pages = $child->pages->sortBy(function ($child, $key) {
                     $score = $child->priority;
                     if ($child->draft) $score -= 100;
                     return $score;
@@ -272,7 +270,7 @@ class BookRepo extends EntityRepo
         });
 
         // Sort items with drafts first then by priority.
-        return $children->sortBy(function($child, $key) {
+        return $children->sortBy(function ($child, $key) {
             $score = $child->priority;
             if ($child->isA('page') && $child->draft) $score -= 100;
             return $score;

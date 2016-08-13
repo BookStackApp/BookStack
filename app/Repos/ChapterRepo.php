@@ -81,7 +81,7 @@ class ChapterRepo extends EntityRepo
     {
         $pages = $this->permissionService->enforcePageRestrictions($chapter->pages())->get();
         // Sort items with drafts first then by priority.
-        return $pages->sortBy(function($child, $key) {
+        return $pages->sortBy(function ($child, $key) {
             $score = $child->priority;
             if ($child->draft) $score -= 100;
             return $score;
@@ -151,6 +151,7 @@ class ChapterRepo extends EntityRepo
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
         $slug = Str::slug($name);
+        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
         while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
