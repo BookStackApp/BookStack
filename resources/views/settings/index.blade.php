@@ -8,7 +8,7 @@
 
     <h1>Settings</h1>
 
-    <form action="/settings" method="POST" ng-cloak>
+    <form action="{{ baseUrl("/settings") }}" method="POST" ng-cloak>
         {!! csrf_field() !!}
 
         <h3>App Settings</h3>
@@ -41,7 +41,7 @@
                 <div class="form-group" id="logo-control">
                     <label for="setting-app-logo">Application logo</label>
                     <p class="small">This image should be 43px in height. <br>Large images will be scaled down.</p>
-                    <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ setting('app-logo', '') }}" default-image="/logo.png" name="setting-app-logo" image-class="logo-image"></image-picker>
+                    <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ setting('app-logo', '') }}" default-image="{{ baseUrl('/logo.png') }}" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
                 <div class="form-group" id="color-control">
                     <label for="setting-app-color">Application primary color</label>
@@ -112,7 +112,7 @@
 @stop
 
 @section('scripts')
-    <script src="/libs/jq-color-picker/tiny-color-picker.min.js?version=1.0.0"></script>
+    <script src="{{ baseUrl("/libs/jq-color-picker/tiny-color-picker.min.js?version=1.0.0") }}"></script>
     <script type="text/javascript">
         $('#setting-app-color').colorPicker({
             opacity: false,
@@ -125,9 +125,9 @@
                 if (!isEmpty) $elm.val(hexVal);
                 $('#setting-app-color-light').val(isEmpty ? '' : rgbLightVal);
                 // Set page elements to provide preview
-                $('#header, .image-picker .button').css('background-color', hexVal);
+                $('#header, .image-picker .button').attr('style', 'background-color:'+ hexVal+'!important;');
                 $('.faded-small').css('background-color', rgbLightVal);
-                $('.setting-nav a.selected').css('border-bottom-color', hexVal);
+                $('.setting-nav a.selected').css('border-bottom-color', hexVal  + '!important');
             }
         });
     </script>

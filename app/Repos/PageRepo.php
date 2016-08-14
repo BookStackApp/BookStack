@@ -147,7 +147,7 @@ class PageRepo extends EntityRepo
         $draftPage->fill($input);
 
         // Save page tags if present
-        if(isset($input['tags'])) {
+        if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
         }
 
@@ -319,7 +319,7 @@ class PageRepo extends EntityRepo
         }
 
         // Save page tags if present
-        if(isset($input['tags'])) {
+        if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
@@ -405,7 +405,7 @@ class PageRepo extends EntityRepo
 
         $draft->fill($data);
         if (setting('app-editor') !== 'markdown') $draft->markdown = '';
-        
+
         $draft->save();
         return $draft;
     }
@@ -591,14 +591,15 @@ class PageRepo extends EntityRepo
 
     /**
      * Gets a suitable slug for the resource
-     * @param            $name
-     * @param            $bookId
+     * @param string $name
+     * @param int $bookId
      * @param bool|false $currentId
      * @return string
      */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
         $slug = Str::slug($name);
+        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
         while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }

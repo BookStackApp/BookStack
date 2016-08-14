@@ -7,11 +7,15 @@ class Book extends Entity
 
     /**
      * Get the url for this book.
+     * @param string|bool $path
      * @return string
      */
-    public function getUrl()
+    public function getUrl($path = false)
     {
-        return '/books/' . $this->slug;
+        if ($path !== false) {
+            return baseUrl('/books/' . $this->slug . '/' . trim($path, '/'));
+        }
+        return baseUrl('/books/' . $this->slug);
     }
 
     /*

@@ -25,12 +25,16 @@ class Chapter extends Entity
 
     /**
      * Get the url of this chapter.
+     * @param string|bool $path
      * @return string
      */
-    public function getUrl()
+    public function getUrl($path = false)
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
-        return '/books/' . $bookSlug. '/chapter/' . $this->slug;
+        if ($path !== false) {
+            return baseUrl('/books/' . $bookSlug. '/chapter/' . $this->slug . '/' . trim($path, '/'));
+        }
+        return baseUrl('/books/' . $bookSlug. '/chapter/' . $this->slug);
     }
 
     /**

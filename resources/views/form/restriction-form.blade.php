@@ -1,4 +1,4 @@
-<form action="{{ $model->getUrl() }}/permissions" method="POST">
+<form action="{{ $model->getUrl('/permissions') }}" method="POST">
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 

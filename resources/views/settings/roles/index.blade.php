@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-4">
                 <p></p>
-                <a href="/settings/roles/new" class="button float right pos"><i class="zmdi zmdi-lock-open"></i>Add new role</a>
+                <a href="{{ baseUrl("/settings/roles/new") }}" class="button float right pos"><i class="zmdi zmdi-lock-open"></i>Add new role</a>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
             </tr>
             @foreach($roles as $role)
                 <tr>
-                    <td><a href="/settings/roles/{{ $role->id }}">{{ $role->display_name }}</a></td>
+                    <td><a href="{{ baseUrl("/settings/roles/{$role->id}") }}">{{ $role->display_name }}</a></td>
                     <td>{{ $role->description }}</td>
                     <td class="text-right">{{ $role->users->count() }}</td>
                 </tr>

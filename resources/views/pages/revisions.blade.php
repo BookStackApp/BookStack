@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6 faded">
                     <div class="breadcrumbs">
-                        <a href="{{$page->getUrl()}}" class="text-primary text-button"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
+                        <a href="{{ $page->getUrl() }}" class="text-primary text-button"><i class="zmdi zmdi-arrow-left"></i>Back to page</a>
                     </div>
                 </div>
                 <div class="col-md-6 faded">
@@ -40,9 +40,9 @@
                         <td> @if($revision->createdBy) {{$revision->createdBy->name}} @else Deleted User @endif</td>
                         <td><small>{{$revision->created_at->format('jS F, Y H:i:s')}} <br> ({{$revision->created_at->diffForHumans()}})</small></td>
                         <td>
-                            <a href="{{$revision->getUrl()}}" target="_blank">Preview</a>
+                            <a href="{{ $revision->getUrl() }}" target="_blank">Preview</a>
                             <span class="text-muted">&nbsp;|&nbsp;</span>
-                            <a href="{{$revision->getUrl()}}/restore">Restore</a>
+                            <a href="{{ $revision->getUrl('/restore') }}">Restore</a>
                         </td>
                     </tr>
                 @endforeach

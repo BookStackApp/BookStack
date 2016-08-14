@@ -412,7 +412,7 @@ class PageController extends Controller
      */
     public function showRecentlyCreated()
     {
-        $pages = $this->pageRepo->getRecentlyCreatedPaginated(20);
+        $pages = $this->pageRepo->getRecentlyCreatedPaginated(20)->setPath(baseUrl('/pages/recently-created'));
         return view('pages/detailed-listing', [
             'title' => 'Recently Created Pages',
             'pages' => $pages
@@ -425,7 +425,7 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $pages = $this->pageRepo->getRecentlyUpdatedPaginated(20);
+        $pages = $this->pageRepo->getRecentlyUpdatedPaginated(20)->setPath(baseUrl('/pages/recently-updated'));
         return view('pages/detailed-listing', [
             'title' => 'Recently Updated Pages',
             'pages' => $pages

@@ -29,10 +29,7 @@
         ],
         "psr-4": {
             "BookStack\\": "app/"
-        },
-        "files": [
-            "app/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "classmap": [

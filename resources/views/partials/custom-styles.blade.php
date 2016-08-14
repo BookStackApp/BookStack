@@ -1,20 +1,20 @@
 <style>
     header, #back-to-top, .primary-background {
-        background-color: {{ Setting::get('app-color') }} !important;
+        background-color: {{ setting('app-color') }} !important;
     }
     .faded-small, .primary-background-light {
-        background-color: {{ Setting::get('app-color-light') }};
+        background-color: {{ setting('app-color-light') }};
     }
     .button-base, .button, input[type="button"], input[type="submit"] {
-        background-color: {{ Setting::get('app-color') }};
+        background-color: {{ setting('app-color') }};
     }
     .button-base:hover, .button:hover, input[type="button"]:hover, input[type="submit"]:hover, .button:focus {
-        background-color: {{ Setting::get('app-color') }};
+        background-color: {{ setting('app-color') }};
     }
     .nav-tabs a.selected, .nav-tabs .tab-item.selected {
-        border-bottom-color: {{ Setting::get('app-color') }};
+        border-bottom-color: {{ setting('app-color') }};
     }
     p.primary:hover, p .primary:hover, span.primary:hover, .text-primary:hover, a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
-        color: {{ Setting::get('app-color') }};
+        color: {{ setting('app-color') }};
     }
 </style>
