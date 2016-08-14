@@ -34,7 +34,7 @@
 </div>
 
 <div class="form-group">
-    <a href="/settings/users" class="button muted">Cancel</a>
+    <a href="{{ baseUrl("/settings/users") }}" class="button muted">Cancel</a>
     <button class="button pos" type="submit">Save</button>
 </div>
 

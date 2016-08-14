@@ -10,7 +10,7 @@
                 If you cannot find the email you can re-send the confirmation email by submitting the form below.
             </p>
             <hr>
-            <form action="/register/confirm/resend" method="POST">
+            <form action="{{ baseUrl("/register/confirm/resend") }}" method="POST">
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="email">Email Address</label>

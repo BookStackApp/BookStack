@@ -14,7 +14,7 @@
             <div class="col-sm-4">
                 <p></p>
                 @if(userCan('users-manage'))
-                    <a href="/settings/users/create" class="pos button float right"><i class="zmdi zmdi-account-add"></i>Add new user</a>
+                    <a href="{{ baseUrl("/settings/users/create") }}" class="pos button float right"><i class="zmdi zmdi-account-add"></i>Add new user</a>
                 @endif
             </div>
         </div>
@@ -26,9 +26,9 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <form method="get" class="float right" action="/settings/users">
+                <form method="get" class="float right" action="{{ baseUrl("/settings/users") }}">
                     @foreach(collect($listDetails)->except('search') as $name => $val)
-                        <input type="hidden" name="{{$name}}" value="{{$val}}">
+                        <input type="hidden" name="{{ $name }}" value="{{ $val }}">
                     @endforeach
                     <input type="text" name="search" placeholder="Search Users" @if($listDetails['search']) value="{{$listDetails['search']}}" @endif>
                 </form>
@@ -47,10 +47,10 @@
             </tr>
             @foreach($users as $user)
                 <tr>
-                    <td style="line-height: 0;"><img class="avatar med" src="{{$user->getAvatar(40)}}" alt="{{$user->name}}"></td>
+                    <td style="line-height: 0;"><img class="avatar med" src="{{ $user->getAvatar(40)}}" alt="{{ $user->name }}"></td>
                     <td>
                         @if(userCan('users-manage') || $currentUser->id == $user->id)
-                            <a href="/settings/users/{{$user->id}}">
+                            <a href="{{ baseUrl("/settings/users/{$user->id}") }}">
                                 @endif
                                 {{ $user->name }}
                                 @if(userCan('users-manage') || $currentUser->id == $user->id)
@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         @if(userCan('users-manage') || $currentUser->id == $user->id)
-                            <a href="/settings/users/{{$user->id}}">
+                            <a href="{{ baseUrl("/settings/users/{$user->id}") }}">
                                 @endif
                                 {{ $user->email }}
                                 @if(userCan('users-manage') || $currentUser->id == $user->id)
@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         @foreach($user->roles as $index => $role)
-                            <small><a href="/settings/roles/{{$role->id}}">{{$role->display_name}}</a>@if($index !== count($user->roles) -1),@endif</small>
+                            <small><a href="{{ baseUrl("/settings/roles/{$role->id}") }}">{{$role->display_name}}</a>@if($index !== count($user->roles) -1),@endif</small>
                         @endforeach
                     </td>
                 </tr>

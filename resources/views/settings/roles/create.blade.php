@@ -7,7 +7,7 @@
     <div class="container">
         <h1>Create New Role</h1>
 
-        <form action="/settings/roles/new" method="POST">
+        <form action="{{ baseUrl("/settings/roles/new") }}" method="POST">
             @include('settings/roles/form')
         </form>
     </div>

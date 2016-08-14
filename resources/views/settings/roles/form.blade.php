@@ -109,7 +109,7 @@
                 </table>
             </div>
         </div>
-        <a href="/settings/roles" class="button muted">Cancel</a>
+        <a href="{{ baseUrl("/settings/roles") }}" class="button muted">Cancel</a>
         <button type="submit" class="button pos">Save Role</button>
     </div>
     <div class="col-md-3">
@@ -119,10 +119,10 @@
         <table class="list-table">
             @foreach($role->users as $user)
                 <tr>
-                    <td style="line-height: 0;"><img class="avatar small" src="{{$user->getAvatar(40)}}" alt="{{$user->name}}"></td>
+                    <td style="line-height: 0;"><img class="avatar small" src="{{ $user->getAvatar(40) }}" alt="{{ $user->name }}"></td>
                     <td>
                         @if(userCan('users-manage') || $currentUser->id == $user->id)
-                            <a href="/settings/users/{{$user->id}}">
+                            <a href="{{ baseUrl("/settings/users/{$user->id}") }}">
                                 @endif
                                 {{ $user->name }}
                                 @if(userCan('users-manage') || $currentUser->id == $user->id)

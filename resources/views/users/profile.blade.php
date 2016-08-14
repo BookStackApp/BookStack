@@ -12,7 +12,7 @@
                     <div class="col-md-7">
                         <div class="clearfix">
                             <div class="padded-right float left">
-                                <img class="avatar square huge" src="{{$user->getAvatar(120)}}" alt="{{ $user->name }}">
+                                <img class="avatar square huge" src="{{ $user->getAvatar(120) }}" alt="{{ $user->name }}">
                             </div>
                             <div>
                                 <h3 style="margin-top: 0;">{{ $user->name }}</h3>

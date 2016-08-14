@@ -13,7 +13,7 @@ class ImageRepo
 
     protected $image;
     protected $imageService;
-    protected $restictionService;
+    protected $restrictionService;
     protected $page;
 
     /**
@@ -27,7 +27,7 @@ class ImageRepo
     {
         $this->image = $image;
         $this->imageService = $imageService;
-        $this->restictionService = $permissionService;
+        $this->restrictionService = $permissionService;
         $this->page = $page;
     }
 
@@ -52,7 +52,7 @@ class ImageRepo
      */
     private function returnPaginated($query, $page = 0, $pageSize = 24)
     {
-        $images = $this->restictionService->filterRelatedPages($query, 'images', 'uploaded_to');
+        $images = $this->restrictionService->filterRelatedPages($query, 'images', 'uploaded_to');
         $images = $images->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 

@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('head')
-    <script src="/libs/jquery-sortable/jquery-sortable.min.js"></script>
+    <script src="{{ baseUrl("/libs/jquery-sortable/jquery-sortable.min.js") }}"></script>
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
                     @foreach($books as $otherBook)
                         @if($otherBook->id !== $book->id)
                         <div>
-                            <a href="/books/{{ $otherBook->slug }}/sort-item" class="text-book"><i class="zmdi zmdi-book"></i>{{ $otherBook->name }}</a>
+                            <a href="{{ $otherBook->getUrl('/sort-item') }}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $otherBook->name }}</a>
                         </div>
                         @endif
                     @endforeach
@@ -32,12 +32,12 @@
 
         </div>
 
-        <form action="{{$book->getUrl()}}/sort" method="POST">
+        <form action="{{ $book->getUrl('/sort') }}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="sort-tree-input" name="sort-tree">
             <div class="list">
-                <a href="{{$book->getUrl()}}" class="button muted">Cancel</a>
+                <a href="{{ $book->getUrl() }}" class="button muted">Cancel</a>
                 <button class="button pos" type="submit">Save Order</button>
             </div>
         </form>

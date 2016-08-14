@@ -9,7 +9,7 @@
         <div class="center-box text-left">
             <h1>Reset Password</h1>
 
-            <form action="/password/reset" method="POST">
+            <form action="{{ baseUrl("/password/reset") }}" method="POST">
                 {!! csrf_field() !!}
                 <input type="hidden" name="token" value="{{ $token }}">
 

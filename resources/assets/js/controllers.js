@@ -1,6 +1,6 @@
 "use strict";
 
-var moment = require('moment');
+const moment = require('moment');
 
 module.exports = function (ngApp, events) {
 
@@ -35,7 +35,7 @@ module.exports = function (ngApp, events) {
              * @returns {string}
              */
             $scope.getUploadUrl = function () {
-                return '/images/' + $scope.imageType + '/upload';
+                return window.baseUrl('/images/' + $scope.imageType + '/upload');
             };
 
             /**
@@ -133,7 +133,7 @@ module.exports = function (ngApp, events) {
                 $scope.showing = false;
             };
 
-            var baseUrl = '/images/' + $scope.imageType + '/all/'
+            var baseUrl = window.baseUrl('/images/' + $scope.imageType + '/all/');
 
             /**
              * Fetch the list image data from the server.
@@ -178,7 +178,7 @@ module.exports = function (ngApp, events) {
                 $scope.images = [];
                 $scope.hasMore = false;
                 page = 0;
-                baseUrl = '/images/' + $scope.imageType + '/search/';
+                baseUrl = window.baseUrl('/images/' + $scope.imageType + '/search/');
                 fetchData();
             };
 
@@ -192,7 +192,7 @@ module.exports = function (ngApp, events) {
                 $scope.hasMore = false;
                 page = 0;
                 $scope.view = viewName;
-                baseUrl = '/images/' + $scope.imageType  + '/' + viewName + '/';
+                baseUrl = window.baseUrl('/images/' + $scope.imageType  + '/' + viewName + '/');
                 fetchData();
             }
 
@@ -202,7 +202,7 @@ module.exports = function (ngApp, events) {
              */
             $scope.saveImageDetails = function (event) {
                 event.preventDefault();
-                var url = '/images/update/' + $scope.selectedImage.id;
+                var url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
                 $http.put(url, this.selectedImage).then((response) => {
                     events.emit('success', 'Image details updated');
                 }, (response) => {
@@ -228,7 +228,7 @@ module.exports = function (ngApp, events) {
             $scope.deleteImage = function (event) {
                 event.preventDefault();
                 var force = $scope.dependantPages !== false;
-                var url = '/images/' + $scope.selectedImage.id;
+                var url = window.baseUrl('/images/' + $scope.selectedImage.id);
                 if (force) url += '?force=true';
                 $http.delete(url).then((response) => {
                     $scope.images.splice($scope.images.indexOf($scope.selectedImage), 1);
@@ -267,7 +267,7 @@ module.exports = function (ngApp, events) {
             if (term.length == 0) return;
             $scope.searching = true;
             $scope.searchResults = '';
-            var searchUrl = '/search/book/' + $attrs.bookId;
+            var searchUrl = window.baseUrl('/search/book/' + $attrs.bookId);
             searchUrl += '?term=' + encodeURIComponent(term);
             $http.get(searchUrl).then((response) => {
                 $scope.searchResults = $sce.trustAsHtml(response.data);
@@ -368,7 +368,8 @@ module.exports = function (ngApp, events) {
 
             if (isMarkdown) data.markdown = $scope.editContent;
 
-            $http.put('/ajax/page/' + pageId + '/save-draft', data).then((responseData) => {
+            let url = window.baseUrl('/ajax/page/' + pageId + '/save-draft');
+            $http.put(url, data).then((responseData) => {
                 var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
                 $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
@@ -393,7 +394,8 @@ module.exports = function (ngApp, events) {
          * content from the system via an AJAX request.
          */
         $scope.discardDraft = function () {
-            $http.get('/ajax/page/' + pageId).then((responseData) => {
+            let url = window.baseUrl('/ajax/page/' + pageId);
+            $http.get(url).then((responseData) => {
                 if (autoSave) $interval.cancel(autoSave);
                 $scope.draftText = 'Editing Page';
                 $scope.isUpdateDraft = false;
@@ -437,7 +439,8 @@ module.exports = function (ngApp, events) {
              * Get all tags for the current book and add into scope.
              */
             function getTags() {
-                $http.get('/ajax/tags/get/page/' + pageId).then((responseData) => {
+                let url = window.baseUrl('/ajax/tags/get/page/' + pageId);
+                $http.get(url).then((responseData) => {
                     $scope.tags = responseData.data;
                     addEmptyTag();
                 });
@@ -486,7 +489,8 @@ module.exports = function (ngApp, events) {
             $scope.saveTags = function() {
                 setTagOrder();
                 let postData = {tags: $scope.tags};
-                $http.post('/ajax/tags/update/page/' + pageId, postData).then((responseData) => {
+                let url = window.baseUrl('/ajax/tags/update/page/' + pageId);
+                $http.post(url, postData).then((responseData) => {
                     $scope.tags = responseData.data.tags;
                     addEmptyTag();
                     events.emit('success', responseData.data.message);

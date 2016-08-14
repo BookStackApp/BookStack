@@ -1,7 +1,5 @@
 @extends('public')
 
-@section('body-class', 'image-cover login')
-
 @section('content')
 
 
@@ -11,7 +9,7 @@
 
             <p class="muted small">Enter your email below and you will be sent an email with a password reset link.</p>
 
-            <form action="/password/email" method="POST">
+            <form action="{{ baseUrl("/password/email") }}" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="form-group">

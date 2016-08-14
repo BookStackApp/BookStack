@@ -151,8 +151,10 @@ class EntityTest extends TestCase
             ->visit('/books/create')
             ->type($book->name, '#name')
             ->type($book->description, '#description')
-            ->press('Save Book')
-            ->seePageIs('/books/my-first-book-2');
+            ->press('Save Book');
+        
+        $expectedPattern = '/\/books\/my-first-book-[0-9a-zA-Z]{3}/';
+        $this->assertRegExp($expectedPattern, $this->currentUri, "Did not land on expected page [$expectedPattern].\n");
 
         $book = \BookStack\Book::where('slug', '=', 'my-first-book')->first();
         return $book;

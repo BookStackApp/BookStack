@@ -48,8 +48,8 @@ class Handler extends ExceptionHandler
         // Handle notify exceptions which will redirect to the
         // specified location then show a notification message.
         if ($e instanceof NotifyException) {
-            \Session::flash('error', $e->message);
-            return response()->redirectTo($e->redirectLocation);
+            session()->flash('error', $e->message);
+            return redirect($e->redirectLocation);
         }
 
         // Handle pretty exceptions which will show a friendly application-fitting page

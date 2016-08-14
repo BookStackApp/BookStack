@@ -8,10 +8,10 @@
                 <div class="col-md-12">
                     <div class="action-buttons faded">
                         @if(userCan('page-create', $book))
-                            <a href="{{$book->getUrl() . '/page/create'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Page</a>
+                            <a href="{{ $book->getUrl('/page/create') }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Page</a>
                         @endif
                         @if(userCan('chapter-create', $book))
-                            <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Chapter</a>
+                            <a href="{{ $book->getUrl('/chapter/create') }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i> New Chapter</a>
                         @endif
                         @if(userCan('book-update', $book))
                             <a href="{{$book->getEditUrl()}}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>Edit</a>
@@ -21,13 +21,13 @@
                                 <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i></a>
                                 <ul>
                                     @if(userCan('book-update', $book))
-                                        <li><a href="{{ $book->getUrl() }}/sort" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a></li>
+                                        <li><a href="{{ $book->getUrl('/sort') }}" class="text-primary"><i class="zmdi zmdi-sort"></i>Sort</a></li>
                                     @endif
                                     @if(userCan('restrictions-manage', $book))
-                                        <li><a href="{{$book->getUrl()}}/permissions" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Permissions</a></li>
+                                        <li><a href="{{ $book->getUrl('/permissions') }}" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>Permissions</a></li>
                                     @endif
                                     @if(userCan('book-delete', $book))
-                                        <li><a href="{{ $book->getUrl() }}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a></li>
+                                        <li><a href="{{ $book->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete</a></li>
                                     @endif
                                 </ul>
                             </div>
@@ -61,16 +61,16 @@
                         @else
                             <p class="text-muted">No pages or chapters have been created for this book.</p>
                             <p>
-                                <a href="{{$book->getUrl() . '/page/create'}}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
+                                <a href="{{ $book->getUrl('/page/create') }}" class="text-page"><i class="zmdi zmdi-file-text"></i>Create a new page</a>
                                 &nbsp;&nbsp;<em class="text-muted">-or-</em>&nbsp;&nbsp;&nbsp;
-                                <a href="{{$book->getUrl() . '/chapter/create'}}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>Add a chapter</a>
+                                <a href="{{ $book->getUrl('/chapter/create') }}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>Add a chapter</a>
                             </p>
                             <hr>
                         @endif
                         <p class="text-muted small">
-                            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by <a href="/user/{{ $book->createdBy->id }}">{{$book->createdBy->name}}</a> @endif
+                            Created {{$book->created_at->diffForHumans()}} @if($book->createdBy) by <a href="{{ $book->createdBy->getProfileUrl() }}">{{$book->createdBy->name}}</a> @endif
                             <br>
-                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->updatedBy) by <a href="/user/{{ $book->updatedBy->id }}">{{$book->updatedBy->name}}</a> @endif
+                            Last Updated {{$book->updated_at->diffForHumans()}} @if($book->updatedBy) by <a href="{{ $book->updatedBy->getProfileUrl() }}">{{$book->updatedBy->name}}</a> @endif
                         </p>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                 @if($book->restricted)
                     <p class="text-muted">
                         @if(userCan('restrictions-manage', $book))
-                            <a href="{{ $book->getUrl() }}/permissions"><i class="zmdi zmdi-lock-outline"></i>Book Permissions Active</a>
+                            <a href="{{ $book->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>Book Permissions Active</a>
                         @else
                             <i class="zmdi zmdi-lock-outline"></i>Book Permissions Active
                         @endif
