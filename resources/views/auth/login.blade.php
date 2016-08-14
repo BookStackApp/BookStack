@@ -1,8 +1,8 @@
 @extends('public')
 
 @section('header-buttons')
-    @if(Setting::get('registration-enabled'))
-        <a href="/register"><i class="zmdi zmdi-account-add"></i>Sign up</a>
+    @if(setting('registration-enabled', false))
+        <a href="{{ baseUrl("/register") }}"><i class="zmdi zmdi-account-add"></i>Sign up</a>
     @endif
 @stop
 
@@ -12,7 +12,7 @@
         <div class="center-box">
             <h1>Log In</h1>
 
-            <form action="/login" method="POST" id="login-form">
+            <form action="{{ baseUrl("/login") }}" method="POST" id="login-form">
                 {!! csrf_field() !!}
 
 
@@ -34,10 +34,10 @@
                 <hr class="margin-top">
                 <h3 class="text-muted">Social Login</h3>
                 @if(isset($socialDrivers['google']))
-                    <a href="/login/service/google" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
+                    <a href="{{ baseUrl("/login/service/google") }}" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
                 @endif
                 @if(isset($socialDrivers['github']))
-                    <a href="/login/service/github" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
+                    <a href="{{ baseUrl("/login/service/github") }}" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
                 @endif
             @endif
         </div>

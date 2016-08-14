@@ -20,7 +20,7 @@
                                 <a ng-click="forceDraftSave()" class="text-pos"><i class="zmdi zmdi-save"></i>Save Draft</a>
                             </li>
                             <li ng-if="isNewPageDraft">
-                                <a href="{{$model->getUrl()}}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete Draft</a>
+                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete Draft</a>
                             </li>
                             <li>
                                 <a type="button" ng-if="isUpdateDraft" ng-click="discardDraft()" class="text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</a>
@@ -55,8 +55,11 @@
 
     <div class="edit-area flex-fill flex">
         @if(setting('app-editor') === 'wysiwyg')
-            <textarea id="html-editor" tinymce="editorOptions" mce-change="editorChange" mce-model="editContent"  name="html" rows="5"
-                      @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
+            <div tinymce="editorOptions" mce-change="editorChange" mce-model="editContent" class="flex-fill flex">
+                <textarea id="html-editor"   name="html" rows="5" ng-non-bindable
+                          @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
+            </div>
+
             @if($errors->has('html'))
                 <div class="text-neg text-small">{{ $errors->first('html') }}</div>
             @endif
@@ -72,8 +75,12 @@
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>Insert Image</button>
                         </div>
                     </div>
-                    <textarea markdown-input md-change="editorChange" id="markdown-editor-input" md-model="editContent"  name="markdown" rows="5"
-                              @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
+
+                    <div markdown-input md-change="editorChange" md-model="editContent" class="flex flex-fill">
+                        <textarea ng-non-bindable id="markdown-editor-input"  name="markdown" rows="5"
+                                  @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
+                    </div>
+
                 </div>
 
                 <div class="markdown-editor-wrap">

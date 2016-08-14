@@ -50,3 +50,4 @@ These are the great projects used to help build BookStack:
 * [ZeroClipboard](http://zeroclipboard.org/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [Marked](https://github.com/chjj/marked)
+* [Moment.js](http://momentjs.com/)

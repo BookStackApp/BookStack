@@ -1,9 +1,6 @@
-<?php
-
-namespace BookStack\Http\Controllers\Auth;
+<?php namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Exceptions\AuthException;
-use BookStack\Exceptions\PrettyException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use BookStack\Exceptions\SocialSignInException;
@@ -36,7 +33,6 @@ class AuthController extends Controller
     protected $redirectAfterLogout = '/login';
     protected $username = 'email';
 
-
     protected $socialAuthService;
     protected $emailConfirmationService;
     protected $userRepo;
@@ -53,6 +49,8 @@ class AuthController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
+        $this->redirectPath = baseUrl('/');
+        $this->redirectAfterLogout = baseUrl('/login');
         $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
     }

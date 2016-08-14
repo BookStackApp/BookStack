@@ -273,7 +273,7 @@ class ImageService
             $this->storageUrl = $storageUrl;
         }
 
-        return ($this->storageUrl == false ? '' : rtrim($this->storageUrl, '/')) . $filePath;
+        return ($this->storageUrl == false ? rtrim(baseUrl(''), '/') : rtrim($this->storageUrl, '/')) . $filePath;
     }
 
 

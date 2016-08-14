@@ -25,6 +25,7 @@ before_script:
   - composer config -g github-oauth.github.com $GITHUB_ACCESS_TOKEN
   - phpenv config-rm xdebug.ini
   - composer self-update
+  - composer dump-autoload --no-interaction
   - composer install --prefer-dist --no-interaction
   - npm install
   - ./node_modules/.bin/gulp

@@ -42,7 +42,7 @@
             </div>
 
             <div class="col-sm-4">
-                <h3><a class="no-color" href="/pages/recently-created">Recently Created Pages</a></h3>
+                <h3><a class="no-color" href="{{ baseUrl("/pages/recently-created") }}">Recently Created Pages</a></h3>
                 <div id="recently-created-pages">
                     @include('partials/entity-list', [
                     'entities' => $recentlyCreatedPages,
@@ -51,7 +51,7 @@
                     ])
                 </div>
 
-                <h3><a class="no-color" href="/pages/recently-updated">Recently Updated Pages</a></h3>
+                <h3><a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">Recently Updated Pages</a></h3>
                 <div id="recently-updated-pages">
                     @include('partials/entity-list', [
                     'entities' => $recentlyUpdatedPages,

@@ -113,20 +113,20 @@ class SocialAuthService
         if ($isLoggedIn && $socialAccount === null) {
             $this->fillSocialAccount($socialDriver, $socialUser);
             $currentUser->socialAccounts()->save($this->socialAccount);
-            \Session::flash('success', title_case($socialDriver) . ' account was successfully attached to your profile.');
+            session()->flash('success', title_case($socialDriver) . ' account was successfully attached to your profile.');
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in and the social account exists and is already linked to the current user.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id === $currentUser->id) {
-            \Session::flash('error', 'This ' . title_case($socialDriver) . ' account is already attached to your profile.');
+            session()->flash('error', 'This ' . title_case($socialDriver) . ' account is already attached to your profile.');
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in, A social account exists but the users do not match.
         // Change the user that the social account is assigned to.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
-            \Session::flash('success', 'This ' . title_case($socialDriver) . ' account is already used by another user.');
+            session()->flash('success', 'This ' . title_case($socialDriver) . ' account is already used by another user.');
             return redirect($currentUser->getEditUrl());
         }
 
@@ -135,6 +135,7 @@ class SocialAuthService
         if (setting('registration-enabled')) {
             $message .= ' or, If you do not yet have an account, You can register an account using the ' . $socialDriver . ' option';
         }
+        
         throw new SocialSignInException($message . '.', '/login');
     }
 

@@ -26,7 +26,7 @@ function editorPaste(e) {
             formData.append('file', file, remoteFilename);
             formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
 
-            xhr.open('POST', '/images/gallery/upload');
+            xhr.open('POST', window.baseUrl('/images/gallery/upload'));
             xhr.onload = function () {
                 if (xhr.status === 200 || xhr.status === 201) {
                     var result = JSON.parse(xhr.responseText);
@@ -58,8 +58,8 @@ function registerEditorShortcuts(editor) {
 var mceOptions = module.exports = {
     selector: '#html-editor',
     content_css: [
-        '/css/styles.css',
-        '/libs/material-design-iconic-font/css/material-design-iconic-font.min.css'
+        window.baseUrl('/css/styles.css'),
+        window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
     ],
     body_class: 'page-content',
     relative_urls: false,

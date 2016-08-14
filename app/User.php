@@ -138,8 +138,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getAvatar($size = 50)
     {
-        if ($this->image_id === 0 || $this->image_id === '0' || $this->image_id === null) return '/user_avatar.png';
-        return $this->avatar->getThumb($size, $size, false);
+        if ($this->image_id === 0 || $this->image_id === '0' || $this->image_id === null) return baseUrl('/user_avatar.png');
+        return baseUrl($this->avatar->getThumb($size, $size, false));
     }
 
     /**
@@ -157,7 +157,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getEditUrl()
     {
-        return '/settings/users/' . $this->id;
+        return baseUrl('/settings/users/' . $this->id);
+    }
+
+    /**
+     * Get the url that links to this user's profile.
+     * @return mixed
+     */
+    public function getProfileUrl()
+    {
+        return baseUrl('/user/' . $this->id);
     }
 
     /**

@@ -3,13 +3,13 @@
 
 @if($activity->user)
     <div class="left">
-        <img class="avatar" src="{{ $activity->user->getAvatar(30) }}" alt="{{$activity->user->name}}">
+        <img class="avatar" src="{{ $activity->user->getAvatar(30) }}" alt="{{ $activity->user->name }}">
     </div>
 @endif
 
 <div class="right" ng-non-bindable>
     @if($activity->user)
-        <a href="/user/{{ $activity->user->id }}">{{$activity->user->name}}</a>
+        <a href="{{ $activity->user->getProfileUrl() }}">{{ $activity->user->name }}</a>
     @else
         A deleted user
     @endif
@@ -20,7 +20,7 @@
         <a href="{{ $activity->entity->getUrl() }}">{{ $activity->entity->name }}</a>
     @endif
 
-    @if($activity->extra) "{{$activity->extra}}" @endif
+    @if($activity->extra) "{{ $activity->extra }}" @endif
 
     <br>
 
