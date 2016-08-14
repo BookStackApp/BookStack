@@ -69,8 +69,31 @@ function setting($key, $default = false)
  */
 function baseUrl($path)
 {
+    if (strpos($path, 'http') === 0) return $path;
     $path = trim($path, '/');
     return rtrim(config('app.url'), '/') . '/' . $path;
+}
+
+/**
+ * Get an instance of the redirector.
+ * Overrides the default laravel redirect helper.
+ * Ensures it redirects even when the app is in a subdirectory.
+ *
+ * @param  string|null  $to
+ * @param  int     $status
+ * @param  array   $headers
+ * @param  bool    $secure
+ * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+ */
+function redirect($to = null, $status = 302, $headers = [], $secure = null)
+{
+    if (is_null($to)) {
+        return app('redirect');
+    }
+
+    $to = baseUrl($to);
+
+    return app('redirect')->to($to, $status, $headers, $secure);
 }
 
 /**
@@ -102,5 +125,5 @@ function sortUrl($path, $data, $overrideData = [])
 
     if (count($queryStringSections) === 0) return $path;
 
-    return $path . '?' . implode('&', $queryStringSections);
+    return baseUrl($path . '?' . implode('&', $queryStringSections));
 }

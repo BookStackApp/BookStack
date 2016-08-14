@@ -1,10 +1,10 @@
 "use strict";
-var DropZone = require('dropzone');
-var markdown = require('marked');
+const DropZone = require('dropzone');
+const markdown = require('marked');
 
-var toggleSwitchTemplate = require('./components/toggle-switch.html');
-var imagePickerTemplate = require('./components/image-picker.html');
-var dropZoneTemplate = require('./components/drop-zone.html');
+const toggleSwitchTemplate = require('./components/toggle-switch.html');
+const imagePickerTemplate = require('./components/image-picker.html');
+const dropZoneTemplate = require('./components/drop-zone.html');
 
 module.exports = function (ngApp, events) {
 
@@ -54,7 +54,7 @@ module.exports = function (ngApp, events) {
                 imageClass: '@'
             },
             link: function (scope, element, attrs) {
-                var usingIds = typeof scope.currentId !== 'undefined' || scope.currentId === 'false';
+                let usingIds = typeof scope.currentId !== 'undefined' || scope.currentId === 'false';
                 scope.image = scope.currentImage;
                 scope.value = scope.currentImage || '';
                 if (usingIds) scope.value = scope.currentId;
@@ -80,7 +80,7 @@ module.exports = function (ngApp, events) {
                 };
 
                 scope.updateImageFromModel = function (model) {
-                    var isResized = scope.resizeWidth && scope.resizeHeight;
+                    let isResized = scope.resizeWidth && scope.resizeHeight;
 
                     if (!isResized) {
                         scope.$apply(() => {
@@ -89,8 +89,9 @@ module.exports = function (ngApp, events) {
                         return;
                     }
 
-                    var cropped = scope.resizeCrop ? 'true' : 'false';
-                    var requestString = '/images/thumb/' + model.id + '/' + scope.resizeWidth + '/' + scope.resizeHeight + '/' + cropped;
+                    let cropped = scope.resizeCrop ? 'true' : 'false';
+                    let requestString = '/images/thumb/' + model.id + '/' + scope.resizeWidth + '/' + scope.resizeHeight + '/' + cropped;
+                    requestString = window.baseUrl(requestString);
                     $http.get(requestString).then((response) => {
                         setImage(model, response.data.url);
                     });
@@ -332,9 +333,9 @@ module.exports = function (ngApp, events) {
                     // Insert image shortcut
                     if (event.which === 73 && event.ctrlKey && event.shiftKey) {
                         event.preventDefault();
-                        var caretPos = input[0].selectionStart;
-                        var currentContent = input.val();
-                        var mdImageText = "![](http://)";
+                        let caretPos = input[0].selectionStart;
+                        let currentContent = input.val();
+                        const mdImageText = "![](http://)";
                         input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
                         input.focus();
                         input[0].selectionStart = caretPos + ("![](".length);
@@ -348,9 +349,9 @@ module.exports = function (ngApp, events) {
                 // Insert image from image manager
                 insertImage.click(event => {
                     window.ImageManager.showExternal(image => {
-                        var caretPos = currentCaretPos;
-                        var currentContent = input.val();
-                        var mdImageText = "![" + image.name + "](" + image.url + ")";
+                        let caretPos = currentCaretPos;
+                        let currentContent = input.val();
+                        let mdImageText = "![" + image.name + "](" + image.url + ")";
                         input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
                         input.change();
                     });
@@ -624,7 +625,7 @@ module.exports = function (ngApp, events) {
                 // Get search url with correct types
                 function getSearchUrl() {
                     let types = (attrs.entityTypes) ? encodeURIComponent(attrs.entityTypes) : encodeURIComponent('page,book,chapter');
-                    return `/ajax/search/entities?types=${types}`;
+                    return window.baseUrl(`/ajax/search/entities?types=${types}`);
                 }
 
                 // Get initial contents

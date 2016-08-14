@@ -9,7 +9,7 @@
                 <div class="col-xs-11 faded">
                     <div class="action-buttons">
                         @if($currentUser->can('book-create-all'))
-                            <a href="/books/create" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>Add new book</a>
+                            <a href="{{ baseUrl("/books/create") }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>Add new book</a>
                         @endif
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 @else
                     <p class="text-muted">No books have been created.</p>
                     @if(userCan('books-create-all'))
-                        <a href="/books/create" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>
+                        <a href="{{ baseUrl("/books/create") }}" class="text-pos"><i class="zmdi zmdi-edit"></i>Create one now</a>
                     @endif
                 @endif
             </div>

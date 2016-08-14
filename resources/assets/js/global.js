@@ -7,6 +7,14 @@ var ngAnimate = require('angular-animate');
 var ngSanitize = require('angular-sanitize');
 require('angular-ui-sortable');
 
+// Url retrieval function
+window.baseUrl = function(path) {
+    let basePath = document.querySelector('meta[name="base-url"]').getAttribute('content');
+    if (basePath[basePath.length-1] === '/') basePath = basePath.slice(0, basePath.length-1);
+    if (path[0] === '/') path = path.slice(1);
+    return basePath + '/' + path;
+};
+
 var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
 // Global Event System
@@ -28,6 +36,7 @@ var Events = {
     }
 };
 window.Events = Events;
+
 
 var services = require('./services')(ngApp, Events);
 var directives = require('./directives')(ngApp, Events);

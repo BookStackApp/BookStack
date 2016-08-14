@@ -56,13 +56,19 @@ class Page extends Entity
 
     /**
      * Get the url for this page.
+     * @param string|bool $path
      * @return string
      */
-    public function getUrl()
+    public function getUrl($path = false)
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
         $midText = $this->draft ? '/draft/' : '/page/';
         $idComponent = $this->draft ? $this->id : $this->slug;
+
+        if ($path !== false) {
+            return baseUrl('/books/' . $bookSlug . $midText . $idComponent . '/' . trim($path, '/'));
+        }
+
         return baseUrl('/books/' . $bookSlug . $midText . $idComponent);
     }
 

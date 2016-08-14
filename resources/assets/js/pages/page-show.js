@@ -2,7 +2,7 @@
 // Configure ZeroClipboard
 var zeroClipBoard = require('zeroclipboard');
 zeroClipBoard.config({
-    swfPath: '/ZeroClipboard.swf'
+    swfPath: window.baseUrl('/ZeroClipboard.swf')
 });
 
 window.setupPageShow = module.exports = function (pageId) {
@@ -36,7 +36,8 @@ window.setupPageShow = module.exports = function (pageId) {
 
         // Show pointer and set link
         var $elem = $(this);
-        var link = window.location.protocol + "//" + window.location.host + '/link/' + pageId + '#' + $elem.attr('id');
+        let link = window.baseUrl('/link/' + pageId + '#' + $elem.attr('id'));
+        if (link.indexOf('http') !== 0) link = window.location.protocol + "//" + window.location.host + link;
         $pointer.find('input').val(link);
         $pointer.find('button').first().attr('data-clipboard-text', link);
         $elem.before($pointer);

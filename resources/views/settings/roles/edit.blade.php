@@ -11,11 +11,11 @@
             </div>
             <div class="col-sm-6">
                 <p></p>
-                <a href="/settings/roles/delete/{{ $role->id }}" class="button neg float right">Delete Role</a>
+                <a href="{{ baseUrl("/settings/roles/delete/{$role->id}") }}" class="button neg float right">Delete Role</a>
             </div>
         </div>
 
-        <form action="/settings/roles/{{ $role->id }}" method="POST">
+        <form action="{{ baseUrl("/settings/roles/{$role->id}") }}" method="POST">
             <input type="hidden" name="_method" value="PUT">
             @include('settings/roles/form', ['model' => $role])
         </form>

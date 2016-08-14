@@ -20,7 +20,7 @@
                                 <a ng-click="forceDraftSave()" class="text-pos"><i class="zmdi zmdi-save"></i>Save Draft</a>
                             </li>
                             <li ng-if="isNewPageDraft">
-                                <a href="{{$model->getUrl()}}/delete" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete Draft</a>
+                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete Draft</a>
                             </li>
                         </ul>
                     </div>

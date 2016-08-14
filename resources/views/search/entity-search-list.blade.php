@@ -6,7 +6,7 @@
         <div class="row">
 
             <div class="col-sm-7">
-                <h1>{{ $title }} <small>{{$searchTerm}}</small></h1>
+                <h1>{{ $title }} <small>{{ $searchTerm }}</small></h1>
                 @include('partials.entity-list', ['entities' => $entities, 'style' => 'detailed'])
                 {!! $entities->links() !!}
             </div>

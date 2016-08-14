@@ -161,6 +161,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Get the url that links to this user's profile.
+     * @return mixed
+     */
+    public function getProfileUrl()
+    {
+        return baseUrl('/user/' . $this->id);
+    }
+
+    /**
      * Get a shortened version of the user's name.
      * @param int $chars
      * @return string

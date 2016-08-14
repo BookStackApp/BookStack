@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html class="@yield('body-class')">
 <head>
-    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name', 'BookStack') }}</title>
+    <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
     <!-- Meta -->
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
+    <meta name="base-url" content="{{ baseUrl('/') }}">
     <meta charset="utf-8">
 
     <!-- Styles and Fonts -->
@@ -38,7 +39,7 @@
                         @if(setting('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ setting('app-logo', '') === '' ? baseUrl('/logo.png') : baseUrl(setting('app-logo', '')) }}" alt="Logo">
                         @endif
-                        <span class="logo-text">{{ setting('app-name', 'BookStack') }}</span>
+                        <span class="logo-text">{{ setting('app-name') }}</span>
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-3 text-center">

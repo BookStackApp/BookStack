@@ -1,5 +1,5 @@
 
-<script src="/libs/highlightjs/highlight.min.js"></script>
+<script src="{{ baseUrl('/libs/highlightjs/highlight.min.js') }}"></script>
 <script>
     $(function() {
         var aCodes = document.getElementsByTagName('pre');
