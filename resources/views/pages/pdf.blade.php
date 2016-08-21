@@ -3,12 +3,12 @@
 @section('head')
     <style>
         body {
-            font-size: 15px;
-            line-height: 1;
+            font-size: 14px;
+            line-height: 1.2;
         }
 
         h1, h2, h3, h4, h5, h6 {
-            line-height: 1;
+            line-height: 1.2;
         }
 
         table {
@@ -21,10 +21,21 @@
             width: auto !important;
         }
 
+        .page-content .float {
+            float: none !important;
+        }
+
         .page-content img.align-left, .page-content img.align-right  {
             float: none !important;
             clear: both;
             display: block;
         }
+
+        .tag-display {
+            min-width: 0;
+            max-width: none;
+            display: none;
+        }
+
     </style>
 @stop
