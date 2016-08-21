@@ -64,13 +64,21 @@ function setting($key, $default = false)
 
 /**
  * Helper to create url's relative to the applications root path.
- * @param $path
+ * @param string $path
+ * @param bool $forceAppDomain
  * @return string
  */
-function baseUrl($path)
+function baseUrl($path, $forceAppDomain = false)
 {
-    if (strpos($path, 'http') === 0) return $path;
+    $isFullUrl = strpos($path, 'http') === 0;
+    if ($isFullUrl && !$forceAppDomain) return $path;
     $path = trim($path, '/');
+
+    if ($isFullUrl && $forceAppDomain) {
+        $explodedPath = explode('/', $path);
+        $path = implode('/', array_splice($explodedPath, 3));
+    }
+
     return rtrim(config('app.url'), '/') . '/' . $path;
 }
 

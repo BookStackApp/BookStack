@@ -145,7 +145,9 @@ class AuthController extends Controller
             auth()->login($user);
         }
 
-        return redirect()->intended($this->redirectPath());
+        $path = session()->pull('url.intended', '/');
+        $path = baseUrl($path, true);
+        return redirect($path);
     }
 
     /**
