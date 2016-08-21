@@ -250,13 +250,10 @@
     margin: 0;
     padding: 0;
   }
-  span {
-    color: #666;
-    margin-left: $-s;
-  }
-  .heading {
+  .heading th {
     padding: $-xs $-s;
-    color: #444;
+    color: #333;
+    font-weight: 400;
   }
   td {
     border: 0;
@@ -265,9 +262,6 @@
     color: #444;
   }
   .tag-value {
-    color: #888;
-  }
-  td i {
     color: #888;
   }
   tr:last-child td {
