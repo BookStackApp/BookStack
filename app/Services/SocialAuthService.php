@@ -215,7 +215,7 @@ class SocialAuthService
     {
         session();
         auth()->user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
-        \Session::flash('success', $socialDriver . ' account successfully detached');
+        session()->flash('success', title_case($socialDriver) . ' account successfully detached');
         return redirect(auth()->user()->getEditUrl());
     }
 
