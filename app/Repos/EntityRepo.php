@@ -168,15 +168,16 @@ class EntityRepo
      * @param $termString
      * @return array
      */
-    protected function prepareSearchTerms($termString)
+    public function prepareSearchTerms($termString)
     {
         $termString = $this->cleanSearchTermString($termString);
-        preg_match_all('/"(.*?)"/', $termString, $matches);
+        preg_match_all('/(".*?")/', $termString, $matches);
+        $terms = [];
         if (count($matches[1]) > 0) {
-            $terms = $matches[1];
+            foreach ($matches[1] as $match) {
+                $terms[] = $match;
+            }
             $termString = trim(preg_replace('/"(.*?)"/', '', $termString));
-        } else {
-            $terms = [];
         }
         if (!empty($termString)) $terms = array_merge($terms, explode(' ', $termString));
         return $terms;
