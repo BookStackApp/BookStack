@@ -204,7 +204,7 @@ class ChapterController extends Controller
             return redirect()->back();
         }
 
-        $this->chapterRepo->changeBook($parent->id, $chapter);
+        $this->chapterRepo->changeBook($parent->id, $chapter, true);
         Activity::add($chapter, 'chapter_move', $chapter->book->id);
         session()->flash('success', sprintf('Chapter moved to "%s"', $parent->name));
 

@@ -3,7 +3,6 @@
 use Activity;
 use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
@@ -180,21 +179,31 @@ class BookController extends Controller
             return redirect($book->getUrl());
         }
 
-        $sortedBooks = [];
         // Sort pages and chapters
+        $sortedBooks = [];
+        $updatedModels = collect();
         $sortMap = json_decode($request->get('sort-tree'));
         $defaultBookId = $book->id;
-        foreach ($sortMap as $index => $bookChild) {
-            $id = $bookChild->id;
+
+        // Loop through contents of provided map and update entities accordingly
+        foreach ($sortMap as $bookChild) {
+            $priority = $bookChild->sort;
+            $id = intval($bookChild->id);
             $isPage = $bookChild->type == 'page';
-            $bookId = $this->bookRepo->exists($bookChild->book) ? $bookChild->book : $defaultBookId;
+            $bookId = $this->bookRepo->exists($bookChild->book) ? intval($bookChild->book) : $defaultBookId;
+            $chapterId = ($isPage && $bookChild->parentChapter === false) ? 0 : intval($bookChild->parentChapter);
             $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
-            $isPage ? $this->pageRepo->changeBook($bookId, $model) : $this->chapterRepo->changeBook($bookId, $model);
-            $model->priority = $index;
-            if ($isPage) {
-                $model->chapter_id = ($bookChild->parentChapter === false) ? 0 : $bookChild->parentChapter;
+
+            // Update models only if there's a change in parent chain or ordering.
+            if ($model->priority !== $priority || $model->book_id !== $bookId || ($isPage && $model->chapter_id !== $chapterId)) {
+                $isPage ? $this->pageRepo->changeBook($bookId, $model) : $this->chapterRepo->changeBook($bookId, $model);
+                $model->priority = $priority;
+                if ($isPage) $model->chapter_id = $chapterId;
+                $model->save();
+                $updatedModels->push($model);
             }
-            $model->save();
+
+            // Store involved books to be sorted later
             if (!in_array($bookId, $sortedBooks)) {
                 $sortedBooks[] = $bookId;
             }
@@ -203,9 +212,11 @@ class BookController extends Controller
         // Add activity for books
         foreach ($sortedBooks as $bookId) {
             $updatedBook = $this->bookRepo->getById($bookId);
-            $this->bookRepo->updateBookPermissions($updatedBook);
             Activity::add($updatedBook, 'book_sort', $updatedBook->id);
         }
+
+        // Update permissions on changed models
+        $this->bookRepo->buildJointPermissions($updatedModels);
 
         return redirect($book->getUrl());
     }

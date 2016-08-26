@@ -195,11 +195,12 @@ class ChapterRepo extends EntityRepo
 
     /**
      * Changes the book relation of this chapter.
-     * @param         $bookId
+     * @param $bookId
      * @param Chapter $chapter
+     * @param bool $rebuildPermissions
      * @return Chapter
      */
-    public function changeBook($bookId, Chapter $chapter)
+    public function changeBook($bookId, Chapter $chapter, $rebuildPermissions = false)
     {
         $chapter->book_id = $bookId;
         // Update related activity
@@ -213,9 +214,12 @@ class ChapterRepo extends EntityRepo
         foreach ($chapter->pages as $page) {
             $this->pageRepo->changeBook($bookId, $page);
         }
-        // Update permissions
-        $chapter->load('book');
-        $this->permissionService->buildJointPermissionsForEntity($chapter->book);
+
+        // Update permissions if applicable
+        if ($rebuildPermissions) {
+            $chapter->load('book');
+            $this->permissionService->buildJointPermissionsForEntity($chapter->book);
+        }
 
         return $chapter;
     }

@@ -8,7 +8,7 @@ use BookStack\Ownable;
 use BookStack\Page;
 use BookStack\Role;
 use BookStack\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class PermissionService
 {
@@ -24,6 +24,8 @@ class PermissionService
 
     protected $jointPermission;
     protected $role;
+
+    protected $entityCache;
 
     /**
      * PermissionService constructor.
@@ -46,6 +48,57 @@ class PermissionService
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
+    }
+
+    /**
+     * Prepare the local entity cache and ensure it's empty
+     */
+    protected function readyEntityCache()
+    {
+        $this->entityCache = [
+            'books' => collect(),
+            'chapters' => collect()
+        ];
+    }
+
+    /**
+     * Get a book via ID, Checks local cache
+     * @param $bookId
+     * @return Book
+     */
+    protected function getBook($bookId)
+    {
+        if (isset($this->entityCache['books']) && $this->entityCache['books']->has($bookId)) {
+            return $this->entityCache['books']->get($bookId);
+        }
+
+        $book = $this->book->find($bookId);
+        if ($book === null) $book = false;
+        if (isset($this->entityCache['books'])) {
+            $this->entityCache['books']->put($bookId, $book);
+        }
+
+        return $book;
+    }
+
+    /**
+     * Get a chapter via ID, Checks local cache
+     * @param $chapterId
+     * @return Book
+     */
+    protected function getChapter($chapterId)
+    {
+        if (isset($this->entityCache['chapters']) && $this->entityCache['chapters']->has($chapterId)) {
+            return $this->entityCache['chapters']->get($chapterId);
+        }
+
+        $chapter = $this->chapter->find($chapterId);
+        if ($chapter === null) $chapter = false;
+        if (isset($this->entityCache['chapters'])) {
+            $this->entityCache['chapters']->put($chapterId, $chapter);
+        }
+
+        return $chapter;
     }
 
     /**
@@ -76,6 +129,7 @@ class PermissionService
     public function buildJointPermissions()
     {
         $this->jointPermission->truncate();
+        $this->readyEntityCache();
 
         // Get all roles (Should be the most limited dimension)
         $roles = $this->role->with('permissions')->get();
@@ -97,7 +151,7 @@ class PermissionService
     }
 
     /**
-     * Create the entity jointPermissions for a particular entity.
+     * Rebuild the entity jointPermissions for a particular entity.
      * @param Entity $entity
      */
     public function buildJointPermissionsForEntity(Entity $entity)
@@ -112,6 +166,17 @@ class PermissionService
             $entities = $entities->merge($entity->pages);
         }
 
+        $this->deleteManyJointPermissionsForEntities($entities);
+        $this->createManyJointPermissions($entities, $roles);
+    }
+
+    /**
+     * Rebuild the entity jointPermissions for a collection of entities.
+     * @param Collection $entities
+     */
+    public function buildJointPermissionsForEntities(Collection $entities)
+    {
+        $roles = $this->role->with('jointPermissions')->get();
         $this->deleteManyJointPermissionsForEntities($entities);
         $this->createManyJointPermissions($entities, $roles);
     }
@@ -177,9 +242,14 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForEntities($entities)
     {
+        $query = $this->jointPermission->newQuery();
         foreach ($entities as $entity) {
-            $entity->jointPermissions()->delete();
+            $query->orWhere(function($query) use ($entity) {
+                $query->where('entity_id', '=', $entity->id)
+                    ->where('entity_type', '=', $entity->getMorphClass());
+            });
         }
+        $query->delete();
     }
 
     /**
@@ -189,6 +259,7 @@ class PermissionService
      */
     protected function createManyJointPermissions($entities, $roles)
     {
+        $this->readyEntityCache();
         $jointPermissions = [];
         foreach ($entities as $entity) {
             foreach ($roles as $role) {
@@ -248,8 +319,9 @@ class PermissionService
         } elseif ($entity->isA('chapter')) {
 
             if (!$entity->restricted) {
-                $hasExplicitAccessToBook = $entity->book->hasActiveRestriction($role->id, $restrictionAction);
-                $hasPermissiveAccessToBook = !$entity->book->restricted;
+                $book = $this->getBook($entity->book_id);
+                $hasExplicitAccessToBook = $book->hasActiveRestriction($role->id, $restrictionAction);
+                $hasPermissiveAccessToBook = !$book->restricted;
                 return $this->createJointPermissionDataArray($entity, $role, $action,
                     ($hasExplicitAccessToBook || ($roleHasPermission && $hasPermissiveAccessToBook)),
                     ($hasExplicitAccessToBook || ($roleHasPermissionOwn && $hasPermissiveAccessToBook)));
@@ -261,11 +333,14 @@ class PermissionService
         } elseif ($entity->isA('page')) {
 
             if (!$entity->restricted) {
-                $hasExplicitAccessToBook = $entity->book->hasActiveRestriction($role->id, $restrictionAction);
-                $hasPermissiveAccessToBook = !$entity->book->restricted;
-                $hasExplicitAccessToChapter = $entity->chapter && $entity->chapter->hasActiveRestriction($role->id, $restrictionAction);
-                $hasPermissiveAccessToChapter = $entity->chapter && !$entity->chapter->restricted;
-                $acknowledgeChapter = ($entity->chapter && $entity->chapter->restricted);
+                $book = $this->getBook($entity->book_id);
+                $hasExplicitAccessToBook = $book->hasActiveRestriction($role->id, $restrictionAction);
+                $hasPermissiveAccessToBook = !$book->restricted;
+
+                $chapter = $this->getChapter($entity->chapter_id);
+                $hasExplicitAccessToChapter = $chapter && $chapter->hasActiveRestriction($role->id, $restrictionAction);
+                $hasPermissiveAccessToChapter = $chapter && !$chapter->restricted;
+                $acknowledgeChapter = ($chapter && $chapter->restricted);
 
                 $hasExplicitAccessToParents = $acknowledgeChapter ? $hasExplicitAccessToChapter : $hasExplicitAccessToBook;
                 $hasPermissiveAccessToParents = $acknowledgeChapter ? $hasPermissiveAccessToChapter : $hasPermissiveAccessToBook;

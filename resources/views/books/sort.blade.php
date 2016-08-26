@@ -50,7 +50,7 @@
             var sortableOptions = {
                 group: 'serialization',
                 onDrop: function($item, container, _super) {
-                    var pageMap = buildPageMap();
+                    var pageMap = buildEntityMap();
                     $('#sort-tree-input').val(JSON.stringify(pageMap));
                     _super($item, container);
                 },
@@ -74,29 +74,42 @@
                 $link.remove();
             });
 
-            function buildPageMap() {
-                var pageMap = [];
+            /**
+             * Build up a mapping of entities with their ordering and nesting.
+             * @returns {Array}
+             */
+            function buildEntityMap() {
+                var entityMap = [];
                 var $lists = $('.sort-list');
                 $lists.each(function(listIndex) {
                     var list = $(this);
                     var bookId = list.closest('[data-type="book"]').attr('data-id');
-                    var $childElements = list.find('[data-type="page"], [data-type="chapter"]');
-                    $childElements.each(function(childIndex) {
+                    var $directChildren = list.find('> [data-type="page"], > [data-type="chapter"]');
+                    $directChildren.each(function(directChildIndex) {
                         var $childElem = $(this);
                         var type = $childElem.attr('data-type');
                         var parentChapter = false;
-                        if(type === 'page' && $childElem.closest('[data-type="chapter"]').length === 1) {
-                            parentChapter = $childElem.closest('[data-type="chapter"]').attr('data-id');
-                        }
-                        pageMap.push({
-                            id: $childElem.attr('data-id'),
+                        var childId = $childElem.attr('data-id');
+                        entityMap.push({
+                            id: childId,
+                            sort: directChildIndex,
                             parentChapter: parentChapter,
                             type: type,
                             book: bookId
                         });
+                        $chapterChildren = $childElem.find('[data-type="page"]').each(function(pageIndex) {
+                            var $chapterChild = $(this);
+                            entityMap.push({
+                                id: $chapterChild.attr('data-id'),
+                                sort: pageIndex,
+                                parentChapter: childId,
+                                type: 'page',
+                                book: bookId
+                            });
+                        });
                     });
                 });
-                return pageMap;
+                return entityMap;
             }
 
         });
