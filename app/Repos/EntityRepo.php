@@ -6,6 +6,7 @@ use BookStack\Entity;
 use BookStack\Page;
 use BookStack\Services\PermissionService;
 use BookStack\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class EntityRepo
@@ -258,6 +259,15 @@ class EntityRepo
             }
         });
         return $query;
+    }
+
+    /**
+     * Alias method to update the book jointPermissions in the PermissionService.
+     * @param Collection $collection collection on entities
+     */
+    public function buildJointPermissions(Collection $collection)
+    {
+        $this->permissionService->buildJointPermissionsForEntities($collection);
     }
 
 }
