@@ -34,4 +34,4 @@ before_script:
   - php artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
 
 script:
-  - vendor/bin/phpunit
+  - phpunit
