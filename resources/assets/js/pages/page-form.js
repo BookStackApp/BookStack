@@ -95,7 +95,12 @@ var mceOptions = module.exports = {
         alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
     },
     file_browser_callback: function (field_name, url, type, win) {
+
+        // Show image manager
         window.ImageManager.showExternal(function (image) {
+
+            // Set popover link input to image url then fire change event
+            // to ensure the new value sticks
             win.document.getElementById(field_name).value = image.url;
             if ("createEvent" in document) {
                 var evt = document.createEvent("HTMLEvents");
@@ -104,6 +109,8 @@ var mceOptions = module.exports = {
             } else {
                 win.document.getElementById(field_name).fireEvent("onchange");
             }
+
+            // Replace the actively selected content with the linked image
             var html = '<a href="' + image.url + '" target="_blank">';
             html += '<img src="' + image.thumbs.display + '" alt="' + image.name + '">';
             html += '</a>';
@@ -119,6 +126,8 @@ var mceOptions = module.exports = {
     extraSetups: [],
     setup: function (editor) {
 
+        // Run additional setup actions
+        // Used by the angular side of things
         for (var i = 0; i < mceOptions.extraSetups.length; i++) {
             mceOptions.extraSetups[i](editor);
         }

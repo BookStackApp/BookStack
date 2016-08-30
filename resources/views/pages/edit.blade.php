@@ -21,4 +21,16 @@
     </div>
     @include('partials/image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
 
+    <div id="entity-selector-wrap">
+        <div class="overlay">
+            <div class="popup-body small flex-child">
+                <div class="popup-header primary-background">
+                    <div class="popup-title">Entity Select</div>
+                    <button class="popup-close neg button">x</button>
+                </div>
+                @include('partials/entity-selector', ['name' => 'entity-selector'])
+            </div>
+        </div>
+    </div>
+
 @stop
