@@ -1,5 +1,5 @@
 .overlay {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.333);
   position: fixed;
   z-index: 95536;
   width: 100%;
@@ -10,37 +10,61 @@
   left: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
 }
 
-.image-manager-body {
+.popup-body {
   background-color: #FFF;
   max-height: 90%;
-  width: 90%;
-  height: 90%;
+  width: 1200px;
+  height: auto;
   margin: 2% 5%;
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
   z-index: 999;
   display: flex;
-  h1, h2, h3 {
-    font-weight: 300;
+  flex-direction: column;
+  &.small {
+    margin: 2% auto;
+    width: 800px;
+    max-width: 90%;
   }
+  &:before {
+    display: flex;
+    align-self: flex-start;
+  }
+}
+
+.popup-header {
+  display: block;
+  position: relative;
+  height: 40px;
+  .popup-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 40px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .popup-title {
+    color: #FFF;
+    padding: 8px $-m;
+  }
+}
+
+.image-manager-body {
+  min-height: 60vh;
 }
 
 #image-manager .dropzone-container {
   position: relative;
   border: 3px dashed #DDD;
-}
-
-.image-manager-bottom {
-  position: absolute;
-  bottom: 0;
-  right: 0;
 }
 
 .image-manager-list .image {
@@ -103,18 +127,13 @@
 
 .image-manager-sidebar {
   width: 300px;
-  height: 100%;
   margin-left: 1px;
-  padding: 0 $-l;
+  padding: $-m $-l;
+  overflow-y: auto;
   border-left: 1px solid #DDD;
-}
-
-.image-manager-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-  border-radius: 0;
+  .dropzone-container {
+    margin-top: $-m;
+  }
 }
 
 .image-manager-list {
@@ -125,7 +144,6 @@
 .image-manager-content {
   display: flex;
   flex-direction: column;
-  height: 100%;
   flex: 1;
   .container {
     width: 100%;
@@ -141,12 +159,13 @@
  * Copyright (c) 2012 Matias Meno <m@tias.me>
  */
 .dz-message {
-  font-size: 1.4em;
+  font-size: 1.2em;
+  line-height: 1.1;
   font-style: italic;
   color: #aaa;
   text-align: center;
   cursor: pointer;
-  padding: $-xl $-m;
+  padding: $-l $-m;
   transition: all ease-in-out 120ms;
 }
 
