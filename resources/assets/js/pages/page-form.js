@@ -96,26 +96,37 @@ var mceOptions = module.exports = {
     },
     file_browser_callback: function (field_name, url, type, win) {
 
-        // Show image manager
-        window.ImageManager.showExternal(function (image) {
+        if (type === 'file') {
+            window.showEntityLinkSelector(function(entity) {
+                var originalField = win.document.getElementById(field_name);
+                originalField.value = entity.link;
+                $(originalField).closest('.mce-form').find('input').eq(2).val(entity.name);
+            });
+        }
 
-            // Set popover link input to image url then fire change event
-            // to ensure the new value sticks
-            win.document.getElementById(field_name).value = image.url;
-            if ("createEvent" in document) {
-                var evt = document.createEvent("HTMLEvents");
-                evt.initEvent("change", false, true);
-                win.document.getElementById(field_name).dispatchEvent(evt);
-            } else {
-                win.document.getElementById(field_name).fireEvent("onchange");
-            }
+        if (type === 'image') {
+            // Show image manager
+            window.ImageManager.showExternal(function (image) {
 
-            // Replace the actively selected content with the linked image
-            var html = '<a href="' + image.url + '" target="_blank">';
-            html += '<img src="' + image.thumbs.display + '" alt="' + image.name + '">';
-            html += '</a>';
-            win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-        });
+                // Set popover link input to image url then fire change event
+                // to ensure the new value sticks
+                win.document.getElementById(field_name).value = image.url;
+                if ("createEvent" in document) {
+                    var evt = document.createEvent("HTMLEvents");
+                    evt.initEvent("change", false, true);
+                    win.document.getElementById(field_name).dispatchEvent(evt);
+                } else {
+                    win.document.getElementById(field_name).fireEvent("onchange");
+                }
+
+                // Replace the actively selected content with the linked image
+                var html = '<a href="' + image.url + '" target="_blank">';
+                html += '<img src="' + image.thumbs.display + '" alt="' + image.name + '">';
+                html += '</a>';
+                win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+            });
+        }
+
     },
     paste_preprocess: function (plugin, args) {
         var content = args.content;

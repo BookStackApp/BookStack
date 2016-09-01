@@ -600,6 +600,58 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    ngApp.directive('entityLinkSelector', [function($http) {
+        return {
+            restict: 'A',
+            link: function(scope, element, attrs) {
+
+                const selectButton = element.find('.entity-link-selector-confirm');
+                let callback = false;
+                let entitySelection = null;
+
+                // Handle entity selection change, Stores the selected entity locally
+                function entitySelectionChange(entity) {
+                    entitySelection = entity;
+                    if (entity === null) {
+                        selectButton.attr('disabled', 'true');
+                    } else {
+                        selectButton.removeAttr('disabled');
+                    }
+                }
+                events.listen('entity-select-change', entitySelectionChange);
+
+                // Handle selection confirm button click
+                selectButton.click(event => {
+                    hide();
+                    if (entitySelection !== null) callback(entitySelection);
+                });
+
+                // Show selector interface
+                function show() {
+                    element.fadeIn(240);
+                }
+
+                // Hide selector interface
+                function hide() {
+                    element.fadeOut(240);
+                }
+
+                // Listen to confirmation of entity selections (doubleclick)
+                events.listen('entity-select-confirm', entity => {
+                    hide();
+                    callback(entity);
+                });
+
+                // Show entity selector, Accessible globally, and store the callback
+                window.showEntityLinkSelector = function(passedCallback) {
+                    show();
+                    callback = passedCallback;
+                };
+
+            }
+        };
+    }]);
+
 
     ngApp.directive('entitySelector', ['$http', '$sce', function ($http, $sce) {
         return {
@@ -613,26 +665,60 @@ module.exports = function (ngApp, events) {
                 // Add input for forms
                 const input = element.find('[entity-selector-input]').first();
 
+                // Detect double click events
+                var lastClick = 0;
+                function isDoubleClick() {
+                    let now = Date.now();
+                    let answer = now - lastClick < 300;
+                    lastClick = now;
+                    return answer;
+                }
+
                 // Listen to entity item clicks
                 element.on('click', '.entity-list a', function(event) {
                     event.preventDefault();
                     event.stopPropagation();
                     let item = $(this).closest('[data-entity-type]');
-                    itemSelect(item);
+                    itemSelect(item, isDoubleClick());
                 });
                 element.on('click', '[data-entity-type]', function(event) {
-                    itemSelect($(this));
+                    itemSelect($(this), isDoubleClick());
                 });
 
                 // Select entity action
-                function itemSelect(item) {
+                function itemSelect(item, doubleClick) {
                     let entityType = item.attr('data-entity-type');
                     let entityId = item.attr('data-entity-id');
-                    let isSelected = !item.hasClass('selected');
+                    let isSelected = !item.hasClass('selected') || doubleClick;
                     element.find('.selected').removeClass('selected').removeClass('primary-background');
                     if (isSelected) item.addClass('selected').addClass('primary-background');
                     let newVal = isSelected ? `${entityType}:${entityId}` : '';
                     input.val(newVal);
+
+                    if (!isSelected) {
+                        events.emit('entity-select-change', null);
+                    }
+
+                    if (!doubleClick && !isSelected) return;
+
+                    let link = item.find('.entity-list-item-link').attr('href');
+                    let name = item.find('.entity-list-item-name').text();
+
+                    if (doubleClick) {
+                        events.emit('entity-select-confirm', {
+                            id: Number(entityId),
+                            name: name,
+                            link: link
+                        });
+                    }
+
+                    if (isSelected) {
+                        events.emit('entity-select-change', {
+                            id: Number(entityId),
+                            name: name,
+                            link: link
+                        });
+                    }
                 }
 
                 // Get search url with correct types
