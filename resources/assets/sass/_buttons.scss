@@ -100,3 +100,13 @@ $button-border-radius: 2px;
   }
 }
 
+.button[disabled] {
+  background-color: #BBB;
+  cursor: default;
+  &:hover {
+    background-color: #BBB;
+    cursor: default;
+    box-shadow: none;
+  }
+}
+

@@ -39,25 +39,28 @@
   }
 }
 
-.popup-header {
+.corner-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  height: 40px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.popup-header, .popup-footer {
   display: block;
   position: relative;
   height: 40px;
-  .popup-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    height: 40px;
-    border-radius: 0;
-    box-shadow: none;
-  }
   .popup-title {
     color: #FFF;
     padding: 8px $-m;
   }
 }
-
+#entity-selector-wrap .popup-body .form-group {
+  margin: 0;
+}
 .image-manager-body {
   min-height: 60vh;
 }

@@ -135,6 +135,11 @@ $(function () {
         $(this).closest('.overlay').fadeOut(240);
     });
 
+    $('.overlay').click(function(event) {
+        if (!$(event.target).hasClass('overlay')) return;
+        $(this).fadeOut(240);
+    });
+
 });
 
 // Page specific items
