@@ -1,6 +1,6 @@
 "use strict";
 
-function editorPaste(e) {
+function editorPaste(e, editor) {
     if (!e.clipboardData) return
     var items = e.clipboardData.items;
     if (!items) return;
@@ -32,7 +32,7 @@ function editorPaste(e) {
                     var result = JSON.parse(xhr.responseText);
                     editor.dom.setAttrib(id, 'src', result.url);
                 } else {
-                    console.log('An error occured uploading the image');
+                    console.log('An error occurred uploading the image');
                     console.log(xhr.responseText);
                     editor.dom.remove(id);
                 }
@@ -181,6 +181,8 @@ var mceOptions = module.exports = {
         });
 
         // Paste image-uploads
-        editor.on('paste', editorPaste);
+        editor.on('paste', function(event) {
+            editorPaste(event, editor);
+        });
     }
 };

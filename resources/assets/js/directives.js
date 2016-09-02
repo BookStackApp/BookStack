@@ -370,6 +370,83 @@ module.exports = function (ngApp, events) {
                     });
                 });
 
+                // Upload and insert image on paste
+                function editorPaste(e) {
+                    e = e.originalEvent;
+                    if (!e.clipboardData) return
+                    var items = e.clipboardData.items;
+                    if (!items) return;
+                    for (var i = 0; i < items.length; i++) {
+                        uploadImage(items[i].getAsFile());
+                    }
+                }
+
+                input.on('paste', editorPaste);
+
+                // Handle image drop, Uploads images to BookStack.
+                function handleImageDrop(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    let files = event.originalEvent.dataTransfer.files;
+                    for (let i = 0; i < files.length; i++) {
+                        uploadImage(files[i]);
+                    }
+                }
+
+                input.on('drop', handleImageDrop);
+
+                // Handle image upload and add image into markdown content
+                function uploadImage(file) {
+                    if (file.type.indexOf('image') !== 0) return;
+                    var formData = new FormData();
+                    var ext = 'png';
+                    var xhr = new XMLHttpRequest();
+
+                    if (file.name) {
+                        var fileNameMatches = file.name.match(/\.(.+)$/);
+                        if (fileNameMatches) {
+                            ext = fileNameMatches[1];
+                        }
+                    }
+
+                    // Insert image into markdown
+                    let id = "image-" + Math.random().toString(16).slice(2);
+                    let selectStart = input[0].selectionStart;
+                    let selectEnd = input[0].selectionEnd;
+                    let content = input[0].value;
+                    let selectText = content.substring(selectStart, selectEnd);
+                    let placeholderImage = `/loading.gif#upload${id}`;
+                    let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
+                    input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
+
+                    input.focus();
+                    input[0].selectionStart = selectStart;
+                    input[0].selectionEnd = selectStart;
+
+                    let remoteFilename = "image-" + Date.now() + "." + ext;
+                    formData.append('file', file, remoteFilename);
+                    formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
+
+                    xhr.open('POST', window.baseUrl('/images/gallery/upload'));
+                    xhr.onload = function () {
+                        let selectStart = input[0].selectionStart;
+                        if (xhr.status === 200 || xhr.status === 201) {
+                            var result = JSON.parse(xhr.responseText);
+                            input[0].value = input[0].value.replace(placeholderImage, result.url);
+                            input.change();
+                        } else {
+                            console.log('An error occurred uploading the image');
+                            console.log(xhr.responseText);
+                            input[0].value = input[0].value.replace(innerContent, '');
+                            input.change();
+                        }
+                        input.focus();
+                        input[0].selectionStart = selectStart;
+                        input[0].selectionEnd = selectStart;
+                    };
+                    xhr.send(formData);
+                }
+
             }
         }
     }]);
