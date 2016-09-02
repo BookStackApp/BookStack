@@ -140,6 +140,11 @@ $(function () {
         $(this).fadeOut(240);
     });
 
+    $('.markdown-display').on('click', 'a', function(event) {
+        event.preventDefault();
+        window.open($(this).attr('href'));
+    });
+
 });
 
 // Page specific items

@@ -271,8 +271,6 @@ module.exports = function (ngApp, events) {
                 scope.mdModel = content;
                 scope.mdChange(markdown(content));
 
-                console.log('test');
-
                 element.on('change input', (event) => {
                     content = element.val();
                     $timeout(() => {
@@ -304,6 +302,7 @@ module.exports = function (ngApp, events) {
                 const input = element.find('[markdown-input] textarea').first();
                 const display = element.find('.markdown-display').first();
                 const insertImage = element.find('button[data-action="insertImage"]');
+                const insertEntityLink = element.find('button[data-action="insertEntityLink"]')
 
                 let currentCaretPos = 0;
 
@@ -355,6 +354,13 @@ module.exports = function (ngApp, events) {
                         input[0].selectionEnd = caretPos + ('![](http://'.length);
                         return;
                     }
+
+                    // Insert entity link shortcut
+                    if (event.which === 75 && event.ctrlKey && event.shiftKey) {
+                        showLinkSelector();
+                        return;
+                    }
+
                     // Pass key presses to controller via event
                     scope.$emit('editor-keydown', event);
                 });
@@ -369,6 +375,26 @@ module.exports = function (ngApp, events) {
                         input.change();
                     });
                 });
+
+                function showLinkSelector() {
+                    window.showEntityLinkSelector((entity) => {
+                        let selectionStart = currentCaretPos;
+                        let selectionEnd = input[0].selectionEnd;
+                        let textSelected = (selectionEnd !== selectionStart);
+                        let currentContent = input.val();
+
+                        if (textSelected) {
+                            let selectedText = currentContent.substring(selectionStart, selectionEnd);
+                            let linkText = `[${selectedText}](${entity.link})`;
+                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
+                        } else {
+                            let linkText = ` [${entity.name}](${entity.link}) `;
+                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
+                        }
+                        input.change();
+                    });
+                }
+                insertEntityLink.click(showLinkSelector);
 
             }
         }
