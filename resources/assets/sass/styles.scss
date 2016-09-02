@@ -72,7 +72,7 @@ body.dragging, body.dragging * {
   border-radius: 3px;
   box-shadow: $bs-med;
   z-index: 999999;
-  display: table;
+  display: block;
   cursor: pointer;
   max-width: 480px;
   i, span {

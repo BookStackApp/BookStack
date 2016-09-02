@@ -357,8 +357,6 @@ module.exports = function (ngApp, events) {
 
         /**
          * Save a draft update into the system via an AJAX request.
-         * @param title
-         * @param html
          */
         function saveDraft() {
             var data = {
@@ -373,7 +371,15 @@ module.exports = function (ngApp, events) {
                 var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
                 $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
+                showDraftSaveNotification();
             });
+        }
+
+        function showDraftSaveNotification() {
+            $scope.draftUpdated = true;
+            $timeout(() => {
+                $scope.draftUpdated = false;
+            }, 2000)
         }
 
         $scope.forceDraftSave = function() {

@@ -13,8 +13,9 @@
                 </div>
                 <div class="col-sm-4 faded text-center">
 
-                    <div dropdown class="dropdown-container">
+                    <div dropdown class="dropdown-container draft-display">
                         <a dropdown-toggle class="text-primary text-button"><span class="faded-text" ng-bind="draftText"></span>&nbsp; <i class="zmdi zmdi-more-vert"></i></a>
+                        <i class="zmdi zmdi-check-circle text-pos draft-notification" ng-class="{visible: draftUpdated}"></i>
                         <ul>
                             <li>
                                 <a ng-click="forceDraftSave()" class="text-pos"><i class="zmdi zmdi-save"></i>Save Draft</a>
