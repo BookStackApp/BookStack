@@ -4,7 +4,7 @@
 
             <div class="popup-header primary-background">
                 <div class="popup-title">Image Select</div>
-                <button class="popup-close neg button">x</button>
+                <button class="popup-close neg corner-button button">x</button>
             </div>
 
             <div class="flex-fill image-manager-body">
@@ -31,7 +31,7 @@
                                 <img ng-src="@{{image.thumbs.gallery}}" ng-attr-alt="@{{image.title}}" ng-attr-title="@{{image.name}}">
                                 <div class="image-meta">
                                     <span class="name" ng-bind="image.name"></span>
-                                    <span class="date">Uploaded @{{ getDate(image.created_at) | date:'mediumDate' }}</span>
+                                    <span class="date">Uploaded @{{ getDate(image.created_at)  }}</span>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
 
                             <div class="clearfix">
                                 <form class="float left" ng-submit="deleteImage($event)">
-                                    <button class="button neg"><i class="zmdi zmdi-delete"></i></button>
+                                    <button class="button icon neg"><i class="zmdi zmdi-delete"></i></button>
                                 </form>
                                 <button class="button pos anim fadeIn float right" ng-show="selectedImage" ng-click="selectButtonClick()">
                                     <i class="zmdi zmdi-square-right"></i>Select Image

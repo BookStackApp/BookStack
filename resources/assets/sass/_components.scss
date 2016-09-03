@@ -16,6 +16,10 @@
   display: none;
 }
 
+.popup-body-wrap {
+  display: flex;
+}
+
 .popup-body {
   background-color: #FFF;
   max-height: 90%;
@@ -39,6 +43,10 @@
   }
 }
 
+//body.ie .popup-body {
+//  min-height: 100%;
+//}
+
 .corner-button {
   position: absolute;
   top: 0;
@@ -50,19 +58,28 @@
 }
 
 .popup-header, .popup-footer {
-  display: block;
+  display: block !important;
   position: relative;
   height: 40px;
+  flex: none !important;
   .popup-title {
     color: #FFF;
     padding: 8px $-m;
   }
 }
+body.flexbox-support #entity-selector-wrap .popup-body .form-group {
+  height: 444px;
+  min-height: 444px;
+}
 #entity-selector-wrap .popup-body .form-group {
   margin: 0;
 }
+//body.ie #entity-selector-wrap .popup-body .form-group {
+//  min-height: 60vh;
+//}
+
 .image-manager-body {
-  min-height: 60vh;
+  min-height: 70vh;
 }
 
 #image-manager .dropzone-container {
