@@ -134,16 +134,23 @@ $(function () {
     $('.popup-close').click(function() {
         $(this).closest('.overlay').fadeOut(240);
     });
-
     $('.overlay').click(function(event) {
         if (!$(event.target).hasClass('overlay')) return;
         $(this).fadeOut(240);
     });
 
+    // Prevent markdown display link click redirect
     $('.markdown-display').on('click', 'a', function(event) {
         event.preventDefault();
         window.open($(this).attr('href'));
     });
+
+    // Detect IE for css
+    if(navigator.userAgent.indexOf('MSIE')!==-1
+        || navigator.appVersion.indexOf('Trident/') > 0
+        || navigator.userAgent.indexOf('Safari') !== -1){
+        $('body').addClass('flexbox-support');
+    }
 
 });
 
