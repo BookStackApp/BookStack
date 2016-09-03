@@ -18,7 +18,7 @@ window.baseUrl = function(path) {
 var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
 // Global Event System
-class Events {
+class EventManager {
     constructor() {
         this.listeners = {};
     }
@@ -39,12 +39,12 @@ class Events {
         return this;
     }
 };
-window.Events = new Events();
+window.Events = new EventManager();
 
 
-var services = require('./services')(ngApp, Events);
-var directives = require('./directives')(ngApp, Events);
-var controllers = require('./controllers')(ngApp, Events);
+var services = require('./services')(ngApp, window.Events);
+var directives = require('./directives')(ngApp, window.Events);
+var controllers = require('./controllers')(ngApp, window.Events);
 
 //Global jQuery Config & Extensions
 
@@ -130,6 +130,27 @@ $(function () {
         $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
     });
 
+    // Popup close
+    $('.popup-close').click(function() {
+        $(this).closest('.overlay').fadeOut(240);
+    });
+    $('.overlay').click(function(event) {
+        if (!$(event.target).hasClass('overlay')) return;
+        $(this).fadeOut(240);
+    });
+
+    // Prevent markdown display link click redirect
+    $('.markdown-display').on('click', 'a', function(event) {
+        event.preventDefault();
+        window.open($(this).attr('href'));
+    });
+
+    // Detect IE for css
+    if(navigator.userAgent.indexOf('MSIE')!==-1
+        || navigator.appVersion.indexOf('Trident/') > 0
+        || navigator.userAgent.indexOf('Safari') !== -1){
+        $('body').addClass('flexbox-support');
+    }
 
 });
 

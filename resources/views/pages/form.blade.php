@@ -74,6 +74,8 @@
                         <span class="float left">Editor</span>
                         <div class="float right buttons">
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>Insert Image</button>
+                            &nbsp;|&nbsp;
+                            <button class="text-button" type="button" data-action="insertEntityLink"><i class="zmdi zmdi-link"></i>Insert Entity Link</button>
                         </div>
                     </div>
 

@@ -69,7 +69,7 @@ module.exports = function (ngApp, events) {
              */
             function callbackAndHide(returnData) {
                 if (callback) callback(returnData);
-                $scope.showing = false;
+                $scope.hide();
             }
 
             /**
@@ -109,6 +109,7 @@ module.exports = function (ngApp, events) {
             function show(doneCallback) {
                 callback = doneCallback;
                 $scope.showing = true;
+                $('#image-manager').find('.overlay').css('display', 'flex').hide().fadeIn(240);
                 // Get initial images if they have not yet been loaded in.
                 if (!dataLoaded) {
                     fetchData();
@@ -131,6 +132,7 @@ module.exports = function (ngApp, events) {
              */
             $scope.hide = function () {
                 $scope.showing = false;
+                $('#image-manager').find('.overlay').fadeOut(240);
             };
 
             var baseUrl = window.baseUrl('/images/' + $scope.imageType + '/all/');

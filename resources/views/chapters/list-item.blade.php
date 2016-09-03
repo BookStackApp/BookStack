@@ -6,8 +6,8 @@
             </a>
             <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
         @endif
-        <a href="{{ $chapter->getUrl() }}" class="text-chapter">
-            <i class="zmdi zmdi-collection-bookmark"></i>{{ $chapter->name }}
+        <a href="{{ $chapter->getUrl() }}" class="text-chapter entity-list-item-link">
+            <i class="zmdi zmdi-collection-bookmark"></i><span class="entity-list-item-name">{{ $chapter->name }}</span>
         </a>
     </h3>
     @if(isset($chapter->searchSnippet))
