@@ -20,7 +20,8 @@ function editorPaste(e, editor) {
             }
 
             var id = "image-" + Math.random().toString(16).slice(2);
-            editor.execCommand('mceInsertContent', false, '<img src="/loading.gif" id="' + id + '">');
+            var loadingImage = window.baseUrl('/loading.gif');
+            editor.execCommand('mceInsertContent', false, '<img src="'+ loadingImage +'" id="' + id + '">');
 
             var remoteFilename = "image-" + Date.now() + "." + ext;
             formData.append('file', file, remoteFilename);
@@ -30,7 +31,7 @@ function editorPaste(e, editor) {
             xhr.onload = function () {
                 if (xhr.status === 200 || xhr.status === 201) {
                     var result = JSON.parse(xhr.responseText);
-                    editor.dom.setAttrib(id, 'src', result.url);
+                    editor.dom.setAttrib(id, 'src', result.thumbs.display);
                 } else {
                     console.log('An error occurred uploading the image');
                     console.log(xhr.responseText);
@@ -63,6 +64,8 @@ var mceOptions = module.exports = {
     ],
     body_class: 'page-content',
     relative_urls: false,
+    remove_script_host: false,
+    document_base_url: window.baseUrl('/'),
     statusbar: false,
     menubar: false,
     paste_data_images: false,

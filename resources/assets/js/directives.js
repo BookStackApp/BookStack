@@ -370,7 +370,7 @@ module.exports = function (ngApp, events) {
                     window.ImageManager.showExternal(image => {
                         let caretPos = currentCaretPos;
                         let currentContent = input.val();
-                        let mdImageText = "![" + image.name + "](" + image.url + ")";
+                        let mdImageText = "![" + image.name + "](" + image.thumbs.display + ")";
                         input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
                         input.change();
                     });
@@ -441,7 +441,7 @@ module.exports = function (ngApp, events) {
                     let selectEnd = input[0].selectionEnd;
                     let content = input[0].value;
                     let selectText = content.substring(selectStart, selectEnd);
-                    let placeholderImage = `/loading.gif#upload${id}`;
+                    let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
                     let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
                     input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
 
@@ -458,7 +458,7 @@ module.exports = function (ngApp, events) {
                         let selectStart = input[0].selectionStart;
                         if (xhr.status === 200 || xhr.status === 201) {
                             var result = JSON.parse(xhr.responseText);
-                            input[0].value = input[0].value.replace(placeholderImage, result.url);
+                            input[0].value = input[0].value.replace(placeholderImage, result.thumbs.display);
                             input.change();
                         } else {
                             console.log('An error occurred uploading the image');
