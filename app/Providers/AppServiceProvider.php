@@ -1,10 +1,6 @@
-<?php
+<?php namespace BookStack\Providers;
 
-namespace BookStack\Providers;
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use BookStack\User;
 
 class AppServiceProvider extends ServiceProvider
 {

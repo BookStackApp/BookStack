@@ -158,7 +158,7 @@ class SocialAuthService
         $driver = trim(strtolower($socialDriver));
 
         if (!in_array($driver, $this->validSocialDrivers)) abort(404, 'Social Driver Not Found');
-        if (!$this->checkDriverConfigured($driver)) throw new SocialDriverNotConfigured;
+        if (!$this->checkDriverConfigured($driver)) throw new SocialDriverNotConfigured("Your {$driver} social settings are not configured correctly.");
 
         return $driver;
     }

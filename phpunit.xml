@@ -28,7 +28,7 @@
         <env name="DB_CONNECTION" value="mysql_testing"/>
         <env name="MAIL_DRIVER" value="log"/>
         <env name="AUTH_METHOD" value="standard"/>
-        <env name="DISABLE_EXTERNAL_SERVICES" value="false"/>
+        <env name="DISABLE_EXTERNAL_SERVICES" value="true"/>
         <env name="LDAP_VERSION" value="3"/>
         <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
