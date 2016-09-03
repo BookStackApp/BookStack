@@ -48,11 +48,13 @@ class ExportService
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
                 $oldImgString = $imgMatch;
                 $srcString = $imageTagsOutput[2][$index];
-                if (strpos(trim($srcString), 'http') !== 0) {
-                    $pathString = public_path($srcString);
+                $isLocal = strpos(trim($srcString), 'http') !== 0;
+                if ($isLocal) {
+                    $pathString = public_path(trim($srcString, '/'));
                 } else {
                     $pathString = $srcString;
                 }
+                if ($isLocal && !file_exists($pathString)) continue;
                 $imageContent = file_get_contents($pathString);
                 $imageEncoded = 'data:image/' . pathinfo($pathString, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageContent);
                 $newImageString = str_replace($srcString, $imageEncoded, $oldImgString);
