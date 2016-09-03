@@ -7,23 +7,30 @@ use BookStack\Ownable;
  *
  * @param  string $file
  * @return string
- *
- * @throws \InvalidArgumentException
+ * @throws Exception
  */
-function versioned_asset($file)
+function versioned_asset($file = '')
 {
-    static $manifest = null;
+    // Don't require css and JS assets for testing
+    if (config('app.env') === 'testing') return '';
 
-    if (is_null($manifest)) {
-        $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+    static $manifest = null;
+    $manifestPath = 'build/manifest.json';
+
+    if (is_null($manifest) && file_exists($manifestPath)) {
+        $manifest = json_decode(file_get_contents(public_path($manifestPath)), true);
+    } else if (!file_exists($manifestPath)) {
+        if (config('app.env') !== 'production') {
+            $path = public_path($manifestPath);
+            $error = "No {$path} file found, Ensure you have built the css/js assets using gulp.";
+        } else {
+            $error = "No {$manifestPath} file found, Ensure you are using the release version of BookStack";
+        }
+        throw new \Exception($error);
     }
 
     if (isset($manifest[$file])) {
         return baseUrl($manifest[$file]);
-    }
-
-    if (file_exists(public_path($file))) {
-        return baseUrl($file);
     }
 
     throw new InvalidArgumentException("File {$file} not defined in asset manifest.");

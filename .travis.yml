@@ -6,7 +6,6 @@ php:
 
 cache:
   directories:
-    - node_modules
     - $HOME/.composer/cache
 
 addons:
@@ -16,9 +15,6 @@ addons:
     - mysql-client-core-5.6
     - mysql-client-5.6
 
-before_install:
-  - npm install -g npm@latest
-
 before_script:
   - mysql -u root -e 'create database `bookstack-test`;'
   - composer config -g github-oauth.github.com $GITHUB_ACCESS_TOKEN
@@ -26,8 +22,6 @@ before_script:
   - composer self-update
   - composer dump-autoload --no-interaction
   - composer install --prefer-dist --no-interaction
-  - npm install
-  - ./node_modules/.bin/gulp
   - php artisan clear-compiled -n
   - php artisan optimize -n
   - php artisan migrate --force -n --database=mysql_testing
