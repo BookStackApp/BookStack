@@ -25,6 +25,14 @@ body.flexbox {
   }
 }
 
+.flex-child > div {
+  flex: 1;
+}
+
+//body.ie .flex-child > div {
+//  flex: 1 0 0px;
+//}
+
 /** Rules for all columns */
 div[class^="col-"] img {
   max-width: 100%;
