@@ -167,7 +167,8 @@ class Entity extends Ownable
             foreach ($terms as $key => $term) {
                 $term = htmlentities($term, ENT_QUOTES);
                 $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
-                if (preg_match('/\s/', $term)) {
+                if (preg_match('/&quot;.*?&quot;/', $term)) {
+                    $term = str_replace('&quot;', '', $term);
                     $exactTerms[] = '%' . $term . '%';
                     $term = '"' . $term . '"';
                 } else {
@@ -206,5 +207,5 @@ class Entity extends Ownable
 
         return $search->orderBy($orderBy, 'desc');
     }
-    
+
 }

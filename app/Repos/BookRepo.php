@@ -2,6 +2,7 @@
 
 use Alpha\B;
 use BookStack\Exceptions\NotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use BookStack\Book;
 use Views;
@@ -171,15 +172,6 @@ class BookRepo extends EntityRepo
         $book->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($book);
         $book->delete();
-    }
-
-    /**
-     * Alias method to update the book jointPermissions in the PermissionService.
-     * @param Book $book
-     */
-    public function updateBookPermissions(Book $book)
-    {
-        $this->permissionService->buildJointPermissionsForEntity($book);
     }
 
     /**

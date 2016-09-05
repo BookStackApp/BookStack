@@ -95,6 +95,7 @@ class ImageService
 
         try {
             $storage->put($fullPath, $imageData);
+            $storage->setVisibility($fullPath, 'public');
         } catch (Exception $e) {
             throw new ImageUploadException('Image Path ' . $fullPath . ' is not writable by the server.');
         }
@@ -167,6 +168,7 @@ class ImageService
 
         $thumbData = (string)$thumb->encode();
         $storage->put($thumbFilePath, $thumbData);
+        $storage->setVisibility($thumbFilePath, 'public');
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
@@ -257,9 +259,15 @@ class ImageService
             $storageUrl = config('filesystems.url');
 
             // Get the standard public s3 url if s3 is set as storage type
+            // Uses the nice, short URL if bucket name has no periods in otherwise the longer
+            // region-based url will be used to prevent http issues.
             if ($storageUrl == false && config('filesystems.default') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
-                $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
+                if (strpos($storageDetails['bucket'], '.') === false) {
+                    $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
+                } else {
+                    $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
+                }
             }
 
             $this->storageUrl = $storageUrl;

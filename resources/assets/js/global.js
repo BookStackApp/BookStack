@@ -18,9 +18,12 @@ window.baseUrl = function(path) {
 var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
 // Global Event System
-var Events = {
-    listeners: {},
-    emit: function (eventName, eventData) {
+class EventManager {
+    constructor() {
+        this.listeners = {};
+    }
+
+    emit(eventName, eventData) {
         if (typeof this.listeners[eventName] === 'undefined') return this;
         var eventsToStart = this.listeners[eventName];
         for (let i = 0; i < eventsToStart.length; i++) {
@@ -28,33 +31,35 @@ var Events = {
             event(eventData);
         }
         return this;
-    },
-    listen: function (eventName, callback) {
+    }
+
+    listen(eventName, callback) {
         if (typeof this.listeners[eventName] === 'undefined') this.listeners[eventName] = [];
         this.listeners[eventName].push(callback);
         return this;
     }
 };
-window.Events = Events;
+window.Events = new EventManager();
 
 
-var services = require('./services')(ngApp, Events);
-var directives = require('./directives')(ngApp, Events);
-var controllers = require('./controllers')(ngApp, Events);
+var services = require('./services')(ngApp, window.Events);
+var directives = require('./directives')(ngApp, window.Events);
+var controllers = require('./controllers')(ngApp, window.Events);
 
 //Global jQuery Config & Extensions
 
 // Smooth scrolling
 jQuery.fn.smoothScrollTo = function () {
     if (this.length === 0) return;
-    $('body').animate({
+    let scrollElem = document.documentElement.scrollTop === 0 ?  document.body : document.documentElement;
+    $(scrollElem).animate({
         scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
     }, 800); // Adjust to change animations speed (ms)
     return this;
 };
 
 // Making contains text expression not worry about casing
-$.expr[":"].contains = $.expr.createPseudo(function (arg) {
+jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
     return function (elem) {
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
@@ -104,13 +109,14 @@ $(function () {
     var scrollTop = document.getElementById('back-to-top');
     var scrollTopBreakpoint = 1200;
     window.addEventListener('scroll', function() {
-        if (!scrollTopShowing && document.body.scrollTop > scrollTopBreakpoint) {
+        let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (!scrollTopShowing && scrollTopPos > scrollTopBreakpoint) {
             scrollTop.style.display = 'block';
             scrollTopShowing = true;
             setTimeout(() => {
                 scrollTop.style.opacity = 0.4;
             }, 1);
-        } else if (scrollTopShowing && document.body.scrollTop < scrollTopBreakpoint) {
+        } else if (scrollTopShowing && scrollTopPos < scrollTopBreakpoint) {
             scrollTop.style.opacity = 0;
             scrollTopShowing = false;
             setTimeout(() => {
@@ -124,6 +130,27 @@ $(function () {
         $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
     });
 
+    // Popup close
+    $('.popup-close').click(function() {
+        $(this).closest('.overlay').fadeOut(240);
+    });
+    $('.overlay').click(function(event) {
+        if (!$(event.target).hasClass('overlay')) return;
+        $(this).fadeOut(240);
+    });
+
+    // Prevent markdown display link click redirect
+    $('.markdown-display').on('click', 'a', function(event) {
+        event.preventDefault();
+        window.open($(this).attr('href'));
+    });
+
+    // Detect IE for css
+    if(navigator.userAgent.indexOf('MSIE')!==-1
+        || navigator.appVersion.indexOf('Trident/') > 0
+        || navigator.userAgent.indexOf('Safari') !== -1){
+        $('body').addClass('flexbox-support');
+    }
 
 });
 

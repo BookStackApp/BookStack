@@ -69,7 +69,7 @@ module.exports = function (ngApp, events) {
              */
             function callbackAndHide(returnData) {
                 if (callback) callback(returnData);
-                $scope.showing = false;
+                $scope.hide();
             }
 
             /**
@@ -109,6 +109,7 @@ module.exports = function (ngApp, events) {
             function show(doneCallback) {
                 callback = doneCallback;
                 $scope.showing = true;
+                $('#image-manager').find('.overlay').css('display', 'flex').hide().fadeIn(240);
                 // Get initial images if they have not yet been loaded in.
                 if (!dataLoaded) {
                     fetchData();
@@ -131,6 +132,7 @@ module.exports = function (ngApp, events) {
              */
             $scope.hide = function () {
                 $scope.showing = false;
+                $('#image-manager').find('.overlay').fadeOut(240);
             };
 
             var baseUrl = window.baseUrl('/images/' + $scope.imageType + '/all/');
@@ -357,8 +359,6 @@ module.exports = function (ngApp, events) {
 
         /**
          * Save a draft update into the system via an AJAX request.
-         * @param title
-         * @param html
          */
         function saveDraft() {
             var data = {
@@ -373,7 +373,15 @@ module.exports = function (ngApp, events) {
                 var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
                 $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
+                showDraftSaveNotification();
             });
+        }
+
+        function showDraftSaveNotification() {
+            $scope.draftUpdated = true;
+            $timeout(() => {
+                $scope.draftUpdated = false;
+            }, 2000)
         }
 
         $scope.forceDraftSave = function() {

@@ -13,8 +13,9 @@
                 </div>
                 <div class="col-sm-4 faded text-center">
 
-                    <div dropdown class="dropdown-container">
+                    <div dropdown class="dropdown-container draft-display">
                         <a dropdown-toggle class="text-primary text-button"><span class="faded-text" ng-bind="draftText"></span>&nbsp; <i class="zmdi zmdi-more-vert"></i></a>
+                        <i class="zmdi zmdi-check-circle text-pos draft-notification" ng-class="{visible: draftUpdated}"></i>
                         <ul>
                             <li>
                                 <a ng-click="forceDraftSave()" class="text-pos"><i class="zmdi zmdi-save"></i>Save Draft</a>
@@ -22,14 +23,25 @@
                             <li ng-if="isNewPageDraft">
                                 <a href="{{ $model->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>Delete Draft</a>
                             </li>
+                            <li>
+                                <a type="button" ng-if="isUpdateDraft" ng-click="discardDraft()" class="text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-4 faded">
                     <div class="action-buttons" ng-cloak>
+                        <div dropdown class="dropdown-container">
+                            <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-edit"></i> @{{(changeSummary | limitTo:16) + (changeSummary.length>16?'...':'') || 'Set Changelog'}}</a>
+                            <ul class="wide">
+                                <li class="padded">
+                                    <p class="text-muted">Enter a brief description of the changes you've made</p>
+                                    <input name="summary" id="summary-input" type="text" placeholder="Enter Changelog" ng-model="changeSummary" />
+                                </li>
+                            </ul>
+                        </div>
 
-                        <button type="button" ng-if="isUpdateDraft" ng-click="discardDraft()" class="text-button text-neg"><i class="zmdi zmdi-close-circle"></i>Discard Draft</button>
-                        <button type="submit" id="save-button" class="text-button  text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
+                        <button type="submit" id="save-button" class="text-button text-pos"><i class="zmdi zmdi-floppy"></i>Save Page</button>
                     </div>
                 </div>
             </div>
@@ -62,6 +74,8 @@
                         <span class="float left">Editor</span>
                         <div class="float right buttons">
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>Insert Image</button>
+                            &nbsp;|&nbsp;
+                            <button class="text-button" type="button" data-action="insertEntityLink"><i class="zmdi zmdi-link"></i>Insert Entity Link</button>
                         </div>
                     </div>
 

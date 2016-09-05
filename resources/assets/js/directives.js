@@ -158,9 +158,22 @@ module.exports = function (ngApp, events) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var menu = element.find('ul');
+                const menu = element.find('ul');
                 element.find('[dropdown-toggle]').on('click', function () {
                     menu.show().addClass('anim menuIn');
+                    let inputs = menu.find('input');
+                    let hasInput = inputs.length > 0;
+                    if (hasInput) {
+                        inputs.first().focus();
+                        element.on('keypress', 'input', event => {
+                            if (event.keyCode === 13) {
+                                event.preventDefault();
+                                menu.hide();
+                                menu.removeClass('anim menuIn');
+                                return false;
+                            }
+                        });
+                    }
                     element.mouseleave(function () {
                         menu.hide();
                         menu.removeClass('anim menuIn');
@@ -258,8 +271,6 @@ module.exports = function (ngApp, events) {
                 scope.mdModel = content;
                 scope.mdChange(markdown(content));
 
-                console.log('test');
-
                 element.on('change input', (event) => {
                     content = element.val();
                     $timeout(() => {
@@ -291,6 +302,7 @@ module.exports = function (ngApp, events) {
                 const input = element.find('[markdown-input] textarea').first();
                 const display = element.find('.markdown-display').first();
                 const insertImage = element.find('button[data-action="insertImage"]');
+                const insertEntityLink = element.find('button[data-action="insertEntityLink"]')
 
                 let currentCaretPos = 0;
 
@@ -342,6 +354,13 @@ module.exports = function (ngApp, events) {
                         input[0].selectionEnd = caretPos + ('![](http://'.length);
                         return;
                     }
+
+                    // Insert entity link shortcut
+                    if (event.which === 75 && event.ctrlKey && event.shiftKey) {
+                        showLinkSelector();
+                        return;
+                    }
+
                     // Pass key presses to controller via event
                     scope.$emit('editor-keydown', event);
                 });
@@ -351,11 +370,108 @@ module.exports = function (ngApp, events) {
                     window.ImageManager.showExternal(image => {
                         let caretPos = currentCaretPos;
                         let currentContent = input.val();
-                        let mdImageText = "![" + image.name + "](" + image.url + ")";
+                        let mdImageText = "![" + image.name + "](" + image.thumbs.display + ")";
                         input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
                         input.change();
                     });
                 });
+
+                function showLinkSelector() {
+                    window.showEntityLinkSelector((entity) => {
+                        let selectionStart = currentCaretPos;
+                        let selectionEnd = input[0].selectionEnd;
+                        let textSelected = (selectionEnd !== selectionStart);
+                        let currentContent = input.val();
+
+                        if (textSelected) {
+                            let selectedText = currentContent.substring(selectionStart, selectionEnd);
+                            let linkText = `[${selectedText}](${entity.link})`;
+                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
+                        } else {
+                            let linkText = ` [${entity.name}](${entity.link}) `;
+                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
+                        }
+                        input.change();
+                    });
+                }
+                insertEntityLink.click(showLinkSelector);
+
+                // Upload and insert image on paste
+                function editorPaste(e) {
+                    e = e.originalEvent;
+                    if (!e.clipboardData) return
+                    var items = e.clipboardData.items;
+                    if (!items) return;
+                    for (var i = 0; i < items.length; i++) {
+                        uploadImage(items[i].getAsFile());
+                    }
+                }
+
+                input.on('paste', editorPaste);
+
+                // Handle image drop, Uploads images to BookStack.
+                function handleImageDrop(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    let files = event.originalEvent.dataTransfer.files;
+                    for (let i = 0; i < files.length; i++) {
+                        uploadImage(files[i]);
+                    }
+                }
+
+                input.on('drop', handleImageDrop);
+
+                // Handle image upload and add image into markdown content
+                function uploadImage(file) {
+                    if (file.type.indexOf('image') !== 0) return;
+                    var formData = new FormData();
+                    var ext = 'png';
+                    var xhr = new XMLHttpRequest();
+
+                    if (file.name) {
+                        var fileNameMatches = file.name.match(/\.(.+)$/);
+                        if (fileNameMatches) {
+                            ext = fileNameMatches[1];
+                        }
+                    }
+
+                    // Insert image into markdown
+                    let id = "image-" + Math.random().toString(16).slice(2);
+                    let selectStart = input[0].selectionStart;
+                    let selectEnd = input[0].selectionEnd;
+                    let content = input[0].value;
+                    let selectText = content.substring(selectStart, selectEnd);
+                    let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
+                    let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
+                    input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
+
+                    input.focus();
+                    input[0].selectionStart = selectStart;
+                    input[0].selectionEnd = selectStart;
+
+                    let remoteFilename = "image-" + Date.now() + "." + ext;
+                    formData.append('file', file, remoteFilename);
+                    formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
+
+                    xhr.open('POST', window.baseUrl('/images/gallery/upload'));
+                    xhr.onload = function () {
+                        let selectStart = input[0].selectionStart;
+                        if (xhr.status === 200 || xhr.status === 201) {
+                            var result = JSON.parse(xhr.responseText);
+                            input[0].value = input[0].value.replace(placeholderImage, result.thumbs.display);
+                            input.change();
+                        } else {
+                            console.log('An error occurred uploading the image');
+                            console.log(xhr.responseText);
+                            input[0].value = input[0].value.replace(innerContent, '');
+                            input.change();
+                        }
+                        input.focus();
+                        input[0].selectionStart = selectStart;
+                        input[0].selectionEnd = selectStart;
+                    };
+                    xhr.send(formData);
+                }
 
             }
         }
@@ -587,6 +703,58 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    ngApp.directive('entityLinkSelector', [function($http) {
+        return {
+            restict: 'A',
+            link: function(scope, element, attrs) {
+
+                const selectButton = element.find('.entity-link-selector-confirm');
+                let callback = false;
+                let entitySelection = null;
+
+                // Handle entity selection change, Stores the selected entity locally
+                function entitySelectionChange(entity) {
+                    entitySelection = entity;
+                    if (entity === null) {
+                        selectButton.attr('disabled', 'true');
+                    } else {
+                        selectButton.removeAttr('disabled');
+                    }
+                }
+                events.listen('entity-select-change', entitySelectionChange);
+
+                // Handle selection confirm button click
+                selectButton.click(event => {
+                    hide();
+                    if (entitySelection !== null) callback(entitySelection);
+                });
+
+                // Show selector interface
+                function show() {
+                    element.fadeIn(240);
+                }
+
+                // Hide selector interface
+                function hide() {
+                    element.fadeOut(240);
+                }
+
+                // Listen to confirmation of entity selections (doubleclick)
+                events.listen('entity-select-confirm', entity => {
+                    hide();
+                    callback(entity);
+                });
+
+                // Show entity selector, Accessible globally, and store the callback
+                window.showEntityLinkSelector = function(passedCallback) {
+                    show();
+                    callback = passedCallback;
+                };
+
+            }
+        };
+    }]);
+
 
     ngApp.directive('entitySelector', ['$http', '$sce', function ($http, $sce) {
         return {
@@ -600,26 +768,60 @@ module.exports = function (ngApp, events) {
                 // Add input for forms
                 const input = element.find('[entity-selector-input]').first();
 
+                // Detect double click events
+                var lastClick = 0;
+                function isDoubleClick() {
+                    let now = Date.now();
+                    let answer = now - lastClick < 300;
+                    lastClick = now;
+                    return answer;
+                }
+
                 // Listen to entity item clicks
                 element.on('click', '.entity-list a', function(event) {
                     event.preventDefault();
                     event.stopPropagation();
                     let item = $(this).closest('[data-entity-type]');
-                    itemSelect(item);
+                    itemSelect(item, isDoubleClick());
                 });
                 element.on('click', '[data-entity-type]', function(event) {
-                    itemSelect($(this));
+                    itemSelect($(this), isDoubleClick());
                 });
 
                 // Select entity action
-                function itemSelect(item) {
+                function itemSelect(item, doubleClick) {
                     let entityType = item.attr('data-entity-type');
                     let entityId = item.attr('data-entity-id');
-                    let isSelected = !item.hasClass('selected');
+                    let isSelected = !item.hasClass('selected') || doubleClick;
                     element.find('.selected').removeClass('selected').removeClass('primary-background');
                     if (isSelected) item.addClass('selected').addClass('primary-background');
                     let newVal = isSelected ? `${entityType}:${entityId}` : '';
                     input.val(newVal);
+
+                    if (!isSelected) {
+                        events.emit('entity-select-change', null);
+                    }
+
+                    if (!doubleClick && !isSelected) return;
+
+                    let link = item.find('.entity-list-item-link').attr('href');
+                    let name = item.find('.entity-list-item-name').text();
+
+                    if (doubleClick) {
+                        events.emit('entity-select-confirm', {
+                            id: Number(entityId),
+                            name: name,
+                            link: link
+                        });
+                    }
+
+                    if (isSelected) {
+                        events.emit('entity-select-change', {
+                            id: Number(entityId),
+                            name: name,
+                            link: link
+                        });
+                    }
                 }
 
                 // Get search url with correct types

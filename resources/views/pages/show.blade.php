@@ -58,7 +58,7 @@
     <div class="container" id="page-show" ng-non-bindable>
         <div class="row">
             <div class="col-md-9 print-full-width">
-                <div class="page-content anim fadeIn">
+                <div class="page-content">
 
                     <div class="pointer-container" id="pointer">
                         <div class="pointer anim">

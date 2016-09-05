@@ -76,6 +76,14 @@ class EntitySearchTest extends TestCase
             ->see('Chapter Search Results')->seeInElement('.entity-list', $chapter->name);
     }
 
+    public function test_search_quote_term_preparation()
+    {
+        $termString = '"192" cat "dog hat"';
+        $repo = $this->app[\BookStack\Repos\EntityRepo::class];
+        $preparedTerms = $repo->prepareSearchTerms($termString);
+        $this->assertTrue($preparedTerms === ['"192"','"dog hat"', 'cat']);
+    }
+
     public function test_books_search_listing()
     {
         $book = \BookStack\Book::all()->last();

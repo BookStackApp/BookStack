@@ -20,6 +20,16 @@
   }
 }
 
+.draft-notification {
+  pointer-events: none;
+  transform: scale(0);
+  transition: transform ease-in-out 120ms;
+  transform-origin: 50% 50%;
+  &.visible {
+    transform: scale(1);
+  }
+}
+
 .page-style.editor {
   padding: 0 !important;
 }
@@ -238,7 +248,7 @@
 }
 
 .tag-display {
-  margin: $-xl $-xs;
+  margin: $-xl $-m;
   border: 1px solid #DDD;
   min-width: 180px;
   max-width: 320px;

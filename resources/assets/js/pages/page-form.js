@@ -1,3 +1,65 @@
+"use strict";
+
+/**
+ * Handle pasting images from clipboard.
+ * @param e  - event
+ * @param editor - editor instance
+ */
+function editorPaste(e, editor) {
+    if (!e.clipboardData) return
+    let items = e.clipboardData.items;
+    if (!items) return;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf("image") === -1) return
+
+        let file = items[i].getAsFile();
+        let formData = new FormData();
+        let ext = 'png';
+        let xhr = new XMLHttpRequest();
+
+        if (file.name) {
+            let fileNameMatches = file.name.match(/\.(.+)$/);
+            if (fileNameMatches) {
+                ext = fileNameMatches[1];
+            }
+        }
+
+        let id = "image-" + Math.random().toString(16).slice(2);
+        let loadingImage = window.baseUrl('/loading.gif');
+        editor.execCommand('mceInsertContent', false, `<img src="${loadingImage}" id="${id}">`);
+
+        let remoteFilename = "image-" + Date.now() + "." + ext;
+        formData.append('file', file, remoteFilename);
+        formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
+
+        xhr.open('POST', window.baseUrl('/images/gallery/upload'));
+        xhr.onload = function () {
+            if (xhr.status === 200 || xhr.status === 201) {
+                let result = JSON.parse(xhr.responseText);
+                editor.dom.setAttrib(id, 'src', result.thumbs.display);
+            } else {
+                console.log('An error occurred uploading the image', xhr.responseText);
+                editor.dom.remove(id);
+            }
+        };
+        xhr.send(formData);
+        
+    }
+}
+
+function registerEditorShortcuts(editor) {
+    // Headers
+    for (let i = 1; i < 5; i++) {
+        editor.addShortcut('ctrl+' + i, '', ['FormatBlock', false, 'h' + i]);
+    }
+
+    // Other block shortcuts
+    editor.addShortcut('ctrl+q', '', ['FormatBlock', false, 'blockquote']);
+    editor.addShortcut('ctrl+d', '', ['FormatBlock', false, 'p']);
+    editor.addShortcut('ctrl+e', '', ['FormatBlock', false, 'pre']);
+    editor.addShortcut('ctrl+s', '', ['FormatBlock', false, 'code']);
+}
+
 var mceOptions = module.exports = {
     selector: '#html-editor',
     content_css: [
@@ -6,6 +68,8 @@ var mceOptions = module.exports = {
     ],
     body_class: 'page-content',
     relative_urls: false,
+    remove_script_host: false,
+    document_base_url: window.baseUrl('/'),
     statusbar: false,
     menubar: false,
     paste_data_images: false,
@@ -38,23 +102,41 @@ var mceOptions = module.exports = {
         alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
     },
     file_browser_callback: function (field_name, url, type, win) {
-        window.ImageManager.showExternal(function (image) {
-            win.document.getElementById(field_name).value = image.url;
-            if ("createEvent" in document) {
-                var evt = document.createEvent("HTMLEvents");
-                evt.initEvent("change", false, true);
-                win.document.getElementById(field_name).dispatchEvent(evt);
-            } else {
-                win.document.getElementById(field_name).fireEvent("onchange");
-            }
-            var html = '<a href="' + image.url + '" target="_blank">';
-            html += '<img src="' + image.thumbs.display + '" alt="' + image.name + '">';
-            html += '</a>';
-            win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-        });
+
+        if (type === 'file') {
+            window.showEntityLinkSelector(function(entity) {
+                let originalField = win.document.getElementById(field_name);
+                originalField.value = entity.link;
+                $(originalField).closest('.mce-form').find('input').eq(2).val(entity.name);
+            });
+        }
+
+        if (type === 'image') {
+            // Show image manager
+            window.ImageManager.showExternal(function (image) {
+
+                // Set popover link input to image url then fire change event
+                // to ensure the new value sticks
+                win.document.getElementById(field_name).value = image.url;
+                if ("createEvent" in document) {
+                    let evt = document.createEvent("HTMLEvents");
+                    evt.initEvent("change", false, true);
+                    win.document.getElementById(field_name).dispatchEvent(evt);
+                } else {
+                    win.document.getElementById(field_name).fireEvent("onchange");
+                }
+
+                // Replace the actively selected content with the linked image
+                let html = `<a href="${image.url}" target="_blank">`;
+                html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
+                html += '</a>';
+                win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+            });
+        }
+
     },
     paste_preprocess: function (plugin, args) {
-        var content = args.content;
+        let content = args.content;
         if (content.indexOf('<img src="file://') !== -1) {
             args.content = '';
         }
@@ -62,9 +144,13 @@ var mceOptions = module.exports = {
     extraSetups: [],
     setup: function (editor) {
 
-        for (var i = 0; i < mceOptions.extraSetups.length; i++) {
+        // Run additional setup actions
+        // Used by the angular side of things
+        for (let i = 0; i < mceOptions.extraSetups.length; i++) {
             mceOptions.extraSetups[i](editor);
         }
+
+        registerEditorShortcuts(editor);
 
         (function () {
             var wrap;
@@ -76,12 +162,11 @@ var mceOptions = module.exports = {
             editor.on('dragstart', function () {
                 var node = editor.selection.getNode();
 
-                if (node.nodeName === 'IMG') {
-                    wrap = editor.dom.getParent(node, '.mceTemp');
+                if (node.nodeName !== 'IMG') return;
+                wrap = editor.dom.getParent(node, '.mceTemp');
 
-                    if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
-                        wrap = node.parentNode;
-                    }
+                if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
+                    wrap = node.parentNode;
                 }
             });
 
@@ -106,15 +191,15 @@ var mceOptions = module.exports = {
             });
         })();
 
-        // Image picker button
+        // Custom Image picker button
         editor.addButton('image-insert', {
             title: 'My title',
             icon: 'image',
             tooltip: 'Insert an image',
             onclick: function () {
                 window.ImageManager.showExternal(function (image) {
-                    var html = '<a href="' + image.url + '" target="_blank">';
-                    html += '<img src="' + image.thumbs.display + '" alt="' + image.name + '">';
+                    let html = `<a href="${image.url}" target="_blank">`;
+                    html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                     html += '</a>';
                     editor.execCommand('mceInsertContent', false, html);
                 });
@@ -122,49 +207,8 @@ var mceOptions = module.exports = {
         });
 
         // Paste image-uploads
-        editor.on('paste', function (e) {
-            if (e.clipboardData) {
-                var items = e.clipboardData.items;
-                if (items) {
-                    for (var i = 0; i < items.length; i++) {
-                        if (items[i].type.indexOf("image") !== -1) {
-
-                            var file = items[i].getAsFile();
-                            var formData = new FormData();
-                            var ext = 'png';
-                            var xhr = new XMLHttpRequest();
-
-                            if (file.name) {
-                                var fileNameMatches = file.name.match(/\.(.+)$/);
-                                if (fileNameMatches) {
-                                    ext = fileNameMatches[1];
-                                }
-                            }
-
-                            var id = "image-" + Math.random().toString(16).slice(2);
-                            editor.execCommand('mceInsertContent', false, '<img src="/loading.gif" id="' + id + '">');
-
-                            var remoteFilename = "image-" + Date.now() + "." + ext;
-                            formData.append('file', file, remoteFilename);
-                            formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
-
-                            xhr.open('POST', window.baseUrl('/images/gallery/upload'));
-                            xhr.onload = function () {
-                                if (xhr.status === 200 || xhr.status === 201) {
-                                    var result = JSON.parse(xhr.responseText);
-                                    editor.dom.setAttrib(id, 'src', result.url);
-                                } else {
-                                    console.log('An error occured uploading the image');
-                                    console.log(xhr.responseText);
-                                    editor.dom.remove(id);
-                                }
-                            };
-                            xhr.send(formData);
-                        }
-                    }
-                }
-
-            }
+        editor.on('paste', function(event) {
+            editorPaste(event, editor);
         });
     }
 };

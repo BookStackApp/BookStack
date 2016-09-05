@@ -47,19 +47,44 @@ class Handler extends ExceptionHandler
     {
         // Handle notify exceptions which will redirect to the
         // specified location then show a notification message.
-        if ($e instanceof NotifyException) {
-            session()->flash('error', $e->message);
+        if ($this->isExceptionType($e, NotifyException::class)) {
+            session()->flash('error', $this->getOriginalMessage($e));
             return redirect($e->redirectLocation);
         }
 
         // Handle pretty exceptions which will show a friendly application-fitting page
         // Which will include the basic message to point the user roughly to the cause.
-        if (($e instanceof PrettyException || $e->getPrevious() instanceof PrettyException)  && !config('app.debug')) {
-            $message = ($e instanceof PrettyException) ? $e->getMessage() : $e->getPrevious()->getMessage();
+        if ($this->isExceptionType($e, PrettyException::class)  && !config('app.debug')) {
+            $message = $this->getOriginalMessage($e);
             $code = ($e->getCode() === 0) ? 500 : $e->getCode();
             return response()->view('errors/' . $code, ['message' => $message], $code);
         }
 
         return parent::render($request, $e);
+    }
+
+    /**
+     * Check the exception chain to compare against the original exception type.
+     * @param Exception $e
+     * @param $type
+     * @return bool
+     */
+    protected function isExceptionType(Exception $e, $type) {
+        do {
+            if (is_a($e, $type)) return true;
+        } while ($e = $e->getPrevious());
+        return false;
+    }
+
+    /**
+     * Get original exception message.
+     * @param Exception $e
+     * @return string
+     */
+    protected function getOriginalMessage(Exception $e) {
+        do {
+            $message = $e->getMessage();
+        } while ($e = $e->getPrevious());
+        return $message;
     }
 }
