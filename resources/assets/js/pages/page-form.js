@@ -50,7 +50,7 @@ function editorPaste(e, editor) {
 function registerEditorShortcuts(editor) {
     // Headers
     for (let i = 1; i < 5; i++) {
-        editor.addShortcut('ctrl+' + i, '', ['FormatBlock', false, 'h' + i]);
+        editor.addShortcut('meta+' + i, '', ['FormatBlock', false, 'h' + i]);
     }
 
     // Other block shortcuts

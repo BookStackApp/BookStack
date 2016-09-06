@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 html {
   background-color: #FFFFFF;
   height: 100%;
@@ -9,6 +10,7 @@ html {
     overflow-y: hidden;
   }
 }
+
 body {
   font-family: $text;
   font-size: $fs-m;
@@ -19,16 +21,4 @@ body {
 
 button {
   font-size: 100%;
-}
-
-table {
-  min-width: 100px;
-  td, th {
-	min-width: 10px;
-	padding: 4px 6px;
-	border: 1px solid #DDD;
-  }
-  td p, th p {
-    margin: 0;
-  }
 }

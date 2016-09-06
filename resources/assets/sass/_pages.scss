@@ -66,9 +66,10 @@
     margin: $-m 0;
   }
   table {
-    word-break: break-all;
-    word-break: break-word;
     hyphens: auto;
+    table-layout: fixed;
+    max-width: 100%;
+    height: auto !important;
   }
 }
 
