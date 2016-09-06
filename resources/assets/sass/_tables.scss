@@ -1,3 +1,21 @@
+table {
+  min-width: 100px;
+  max-width: 100%;
+  thead {
+    background-color: #F8F8F8;
+    font-weight: 500;
+  }
+  td, th {
+    min-width: 10px;
+    padding: 6px 8px;
+    border: 1px solid #DDD;
+    overflow: auto;
+    line-height: 1.2;
+  }
+  td p, th p {
+    margin: 0;
+  }
+}
 
 table.table {
   width: 100%;
@@ -9,20 +27,13 @@ table.table {
     border: none;
     padding: $-xs $-xs;
     vertical-align: middle;
+    margin: 0;
   }
   th {
     font-weight: bold;
   }
   tr:hover {
     background-color: #EEE;
-  }
-}
-
-table {
-  max-width: 100%;
-  thead {
-    background-color: #F8F8F8;
-    font-weight: 500;
   }
 }
 
