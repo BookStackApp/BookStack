@@ -50,14 +50,14 @@ function editorPaste(e, editor) {
 function registerEditorShortcuts(editor) {
     // Headers
     for (let i = 1; i < 5; i++) {
-        editor.addShortcut('ctrl+' + i, '', ['FormatBlock', false, 'h' + i]);
+        editor.addShortcut('meta+' + i, '', ['FormatBlock', false, 'h' + i]);
     }
 
     // Other block shortcuts
-    editor.addShortcut('ctrl+q', '', ['FormatBlock', false, 'blockquote']);
-    editor.addShortcut('ctrl+d', '', ['FormatBlock', false, 'p']);
-    editor.addShortcut('ctrl+e', '', ['FormatBlock', false, 'pre']);
-    editor.addShortcut('ctrl+s', '', ['FormatBlock', false, 'code']);
+    editor.addShortcut('meta+q', '', ['FormatBlock', false, 'blockquote']);
+    editor.addShortcut('meta+d', '', ['FormatBlock', false, 'p']);
+    editor.addShortcut('meta+e', '', ['FormatBlock', false, 'pre']);
+    editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
 var mceOptions = module.exports = {
