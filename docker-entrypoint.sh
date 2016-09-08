@@ -1,5 +1,7 @@
 #!/bin/bash
 if [ -f ./.env.example ]; then
+  echo "Waiting for database (20s)..."
+  sleep 20
   echo 'Creating config file...'
   mv ./.env.example ./.env
   sed -i s/DB_HOST=localhost/DB_HOST=$MYSQL_PORT_3306_TCP_ADDR/ .env
@@ -11,7 +13,7 @@ if [ -f ./.env.example ]; then
   echo 'Configuring web and database servers...'
   rm /etc/apache2/sites-available/000-default.conf && mv /var/www/html/000-default.conf /etc/apache2/sites-available && cd /etc/apache2/sites-enabled && ls -s /etc/apache2/sites-available/000-default.conf
   mysql -h $MYSQL_PORT_3306_TCP_ADDR -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -e "CREATE DATABASE $DBNAME;"
-  php artisan migrate --force
+  cd /var/www/html && php artisan migrate --force
   a2enmod rewrite
   chown -R www-data:www-data /var/www/html
 fi

@@ -1,0 +1,15 @@
+version: '2'
+services:
+  bookstack:
+    build: ./
+    ports: ["80:80"]
+    links: ["mysql:mysql"]
+    environment:
+      MYSQL_PORT_3306_TCP_ADDR: mysql
+      MYSQL_ENV_MYSQL_ROOT_PASSWORD: root
+      DBNAME: bookstack
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookstack
