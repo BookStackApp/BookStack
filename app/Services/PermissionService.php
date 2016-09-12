@@ -14,9 +14,9 @@ class PermissionService
 {
 
     protected $userRoles;
-    protected $isAdmin;
     protected $currentAction;
-    protected $currentUser;
+    protected $isAdminUser;
+    protected $currentUserModel = false;
 
     public $book;
     public $chapter;
@@ -37,12 +37,6 @@ class PermissionService
      */
     public function __construct(JointPermission $jointPermission, Book $book, Chapter $chapter, Page $page, Role $role)
     {
-        $this->currentUser = auth()->user();
-        $userSet = $this->currentUser !== null;
-        $this->userRoles = false;
-        $this->isAdmin = $userSet ? $this->currentUser->hasRole('admin') : false;
-        if (!$userSet) $this->currentUser = new User();
-
         $this->jointPermission = $jointPermission;
         $this->role = $role;
         $this->book = $book;
@@ -117,7 +111,7 @@ class PermissionService
         }
 
 
-        foreach ($this->currentUser->roles as $role) {
+        foreach ($this->currentUser()->roles as $role) {
             $roles[] = $role->id;
         }
         return $roles;
@@ -389,7 +383,7 @@ class PermissionService
      */
     public function checkOwnableUserAccess(Ownable $ownable, $permission)
     {
-        if ($this->isAdmin) return true;
+        if ($this->isAdmin()) return true;
         $explodedPermission = explode('-', $permission);
 
         $baseQuery = $ownable->where('id', '=', $ownable->id);
@@ -400,10 +394,10 @@ class PermissionService
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
-            $allPermission = $this->currentUser && $this->currentUser->can($permission . '-all');
-            $ownPermission = $this->currentUser && $this->currentUser->can($permission . '-own');
+            $allPermission = $this->currentUser() && $this->currentUser()->can($permission . '-all');
+            $ownPermission = $this->currentUser() && $this->currentUser()->can($permission . '-own');
             $this->currentAction = 'view';
-            $isOwner = $this->currentUser && $this->currentUser->id === $ownable->created_by;
+            $isOwner = $this->currentUser() && $this->currentUser()->id === $ownable->created_by;
             return ($allPermission || ($isOwner && $ownPermission));
         }
 
@@ -451,7 +445,7 @@ class PermissionService
                         $query->where('has_permission', '=', true)
                             ->orWhere(function ($query) {
                                 $query->where('has_permission_own', '=', true)
-                                    ->where('created_by', '=', $this->currentUser->id);
+                                    ->where('created_by', '=', $this->currentUser()->id);
                             });
                     });
             });
@@ -469,9 +463,9 @@ class PermissionService
         // Prevent drafts being visible to others.
         $query = $query->where(function ($query) {
             $query->where('draft', '=', false);
-            if ($this->currentUser) {
+            if ($this->currentUser()) {
                 $query->orWhere(function ($query) {
-                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser->id);
+                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser()->id);
                 });
             }
         });
@@ -509,7 +503,7 @@ class PermissionService
      */
     public function enforceEntityRestrictions($query, $action = 'view')
     {
-        if ($this->isAdmin) return $query;
+        if ($this->isAdmin()) return $query;
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }
@@ -524,7 +518,7 @@ class PermissionService
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn)
     {
-        if ($this->isAdmin) return $query;
+        if ($this->isAdmin()) return $query;
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
 
@@ -538,7 +532,7 @@ class PermissionService
                     ->where(function ($query) {
                         $query->where('has_permission', '=', true)->orWhere(function ($query) {
                             $query->where('has_permission_own', '=', true)
-                                ->where('created_by', '=', $this->currentUser->id);
+                                ->where('created_by', '=', $this->currentUser()->id);
                         });
                     });
             });
@@ -555,7 +549,7 @@ class PermissionService
      */
     public function filterRelatedPages($query, $tableName, $entityIdColumn)
     {
-        if ($this->isAdmin) return $query;
+        if ($this->isAdmin()) return $query;
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
@@ -570,12 +564,38 @@ class PermissionService
                         ->where(function ($query) {
                             $query->where('has_permission', '=', true)->orWhere(function ($query) {
                                 $query->where('has_permission_own', '=', true)
-                                    ->where('created_by', '=', $this->currentUser->id);
+                                    ->where('created_by', '=', $this->currentUser()->id);
                             });
                         });
                 });
             })->orWhere($tableDetails['entityIdColumn'], '=', 0);
         });
+    }
+
+    /**
+     * Check if the current user is an admin.
+     * @return bool
+     */
+    private function isAdmin()
+    {
+        if ($this->isAdminUser === null) {
+            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasRole('admin') : false;
+        }
+
+        return $this->isAdminUser;
+    }
+
+    /**
+     * Get the current user
+     * @return User
+     */
+    private function currentUser()
+    {
+        if ($this->currentUserModel === false) {
+            $this->currentUserModel = auth()->user() ? auth()->user() : new User();
+        }
+
+        return $this->currentUserModel;
     }
 
 }
