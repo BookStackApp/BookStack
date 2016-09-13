@@ -147,7 +147,7 @@ Route::get('/login/service/{socialDriver}/detach', 'Auth\LoginController@detachS
 // Login/Logout routes
 Route::get('/login', 'Auth\LoginController@getLogin');
 Route::post('/login', 'Auth\LoginController@login');
-Route::get('/logout', 'Auth\LoginController@getLogout');
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/register', 'Auth\RegisterController@getRegister');
 Route::get('/register/confirm', 'Auth\RegisterController@getRegisterConfirmation');
 Route::get('/register/confirm/awaiting', 'Auth\RegisterController@showAwaitingConfirmation');
@@ -158,8 +158,9 @@ Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRe
 Route::post('/register', 'Auth\RegisterController@postRegister');
 
 // Password reset link request routes...
-Route::get('/password/email', 'Auth\ForgotPasswordController@getEmail');
-Route::post('/password/email', 'Auth\ForgotPasswordController@postEmail');
+Route::get('/password/email', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
 // Password reset routes...
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@getReset');
 Route::post('/password/reset', 'Auth\ResetPasswordController@postReset');

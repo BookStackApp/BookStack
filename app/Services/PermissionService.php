@@ -13,9 +13,9 @@ use Illuminate\Support\Collection;
 class PermissionService
 {
 
-    protected $userRoles;
     protected $currentAction;
     protected $isAdminUser;
+    protected $userRoles = false;
     protected $currentUserModel = false;
 
     public $book;

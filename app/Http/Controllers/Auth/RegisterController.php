@@ -6,6 +6,7 @@ use BookStack\Repos\UserRepo;
 use BookStack\Services\EmailConfirmationService;
 use BookStack\Services\SocialAuthService;
 use BookStack\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
 use BookStack\Http\Controllers\Controller;
@@ -36,6 +37,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $redirectPath = '/';
 
     /**
      * Create a new controller instance.
@@ -51,6 +53,7 @@ class RegisterController extends Controller
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
         $this->redirectTo = baseUrl('/');
+        $this->redirectPath = baseUrl('/');
         $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
     }
