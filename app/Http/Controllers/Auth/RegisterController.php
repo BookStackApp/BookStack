@@ -8,6 +8,7 @@ use BookStack\Repos\UserRepo;
 use BookStack\Services\EmailConfirmationService;
 use BookStack\Services\SocialAuthService;
 use BookStack\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
@@ -56,7 +57,6 @@ class RegisterController extends Controller
         $this->userRepo = $userRepo;
         $this->redirectTo = baseUrl('/');
         $this->redirectPath = baseUrl('/');
-        $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
     }
 
@@ -158,7 +158,13 @@ class RegisterController extends Controller
 
         if (setting('registration-confirmation') || setting('registration-restrict')) {
             $newUser->save();
-            $this->emailConfirmationService->sendConfirmation($newUser);
+
+            try {
+                $this->emailConfirmationService->sendConfirmation($newUser);
+            } catch (Exception $e) {
+                session()->flash('error', trans('auth.email_confirm_send_error'));
+            }
+
             return redirect('/register/confirm');
         }
 
@@ -189,7 +195,7 @@ class RegisterController extends Controller
         $user->email_confirmed = true;
         $user->save();
         auth()->login($user);
-        session()->flash('success', 'Your email has been confirmed!');
+        session()->flash('success', trans('auth.email_confirm_success'));
         $this->emailConfirmationService->deleteConfirmationsByUser($user);
         return redirect($this->redirectPath);
     }
@@ -215,8 +221,16 @@ class RegisterController extends Controller
             'email' => 'required|email|exists:users,email'
         ]);
         $user = $this->userRepo->getByEmail($request->get('email'));
+
+        try {
+            $this->emailConfirmationService->sendConfirmation($user);
+        } catch (Exception $e) {
+            session()->flash('error', trans('auth.email_confirm_send_error'));
+            return redirect('/register/confirm');
+        }
+
         $this->emailConfirmationService->sendConfirmation($user);
-        session()->flash('success', 'Confirmation email resent, Please check your inbox.');
+        session()->flash('success', trans('auth.email_confirm_resent'));
         return redirect('/register/confirm');
     }
 
