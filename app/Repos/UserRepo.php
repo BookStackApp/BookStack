@@ -2,6 +2,7 @@
 
 use BookStack\Role;
 use BookStack\User;
+use Exception;
 use Setting;
 
 class UserRepo
@@ -84,9 +85,14 @@ class UserRepo
 
         // Get avatar from gravatar and save
         if (!config('services.disable_services')) {
-            $avatar = \Images::saveUserGravatar($user);
-            $user->avatar()->associate($avatar);
-            $user->save();
+            try {
+                $avatar = \Images::saveUserGravatar($user);
+                $user->avatar()->associate($avatar);
+                $user->save();
+            } catch (Exception $e) {
+                $user->save();
+                \Log::error('Failed to save user gravatar image');
+            }
         }
 
         return $user;
