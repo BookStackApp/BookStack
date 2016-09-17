@@ -1,29 +1,22 @@
 <?php namespace BookStack\Services;
 
-
+use BookStack\Notifications\ConfirmEmail;
 use Carbon\Carbon;
-use Illuminate\Contracts\Mail\Mailer;
-use Illuminate\Mail\Message;
 use BookStack\EmailConfirmation;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Repos\UserRepo;
-use BookStack\Setting;
 use BookStack\User;
 
 class EmailConfirmationService
 {
-    protected $mailer;
     protected $emailConfirmation;
 
     /**
      * EmailConfirmationService constructor.
-     * @param Mailer            $mailer
      * @param EmailConfirmation $emailConfirmation
      */
-    public function __construct(Mailer $mailer, EmailConfirmation $emailConfirmation)
+    public function __construct(EmailConfirmation $emailConfirmation)
     {
-        $this->mailer = $mailer;
         $this->emailConfirmation = $emailConfirmation;
     }
 
@@ -38,16 +31,15 @@ class EmailConfirmationService
         if ($user->email_confirmed) {
             throw new ConfirmationEmailException('Email has already been confirmed, Try logging in.', '/login');
         }
+
         $this->deleteConfirmationsByUser($user);
         $token = $this->getToken();
-        $this->emailConfirmation->create([
+        $confirmation = $this->emailConfirmation->create([
             'user_id' => $user->id,
             'token'   => $token,
         ]);
-        $this->mailer->send('emails/email-confirmation', ['token' => $token], function (Message $message) use ($user) {
-            $appName = setting('app-name', 'BookStack');
-            $message->to($user->email, $user->name)->subject('Confirm your email on ' . $appName . '.');
-        });
+
+        $confirmation->notify(new ConfirmEmail());
     }
 
     /**

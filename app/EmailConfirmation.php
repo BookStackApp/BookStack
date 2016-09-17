@@ -1,7 +1,11 @@
 <?php namespace BookStack;
 
+use Illuminate\Notifications\Notifiable;
+
 class EmailConfirmation extends Model
 {
+    use Notifiable;
+
     protected $fillable = ['user_id', 'token'];
 
     /**
@@ -11,6 +15,15 @@ class EmailConfirmation extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Set the routing for mail notifications.
+     * @return mixed
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->user->email;
     }
     
 }
