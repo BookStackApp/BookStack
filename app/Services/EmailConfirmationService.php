@@ -1,30 +1,27 @@
 <?php namespace BookStack\Services;
 
-
+use BookStack\Notifications\ConfirmEmail;
+use BookStack\Repos\UserRepo;
 use Carbon\Carbon;
-use Illuminate\Contracts\Mail\Mailer;
-use Illuminate\Mail\Message;
-use BookStack\EmailConfirmation;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Repos\UserRepo;
-use BookStack\Setting;
 use BookStack\User;
+use Illuminate\Database\Connection as Database;
 
 class EmailConfirmationService
 {
-    protected $mailer;
-    protected $emailConfirmation;
+    protected $db;
+    protected $users;
 
     /**
      * EmailConfirmationService constructor.
-     * @param Mailer            $mailer
-     * @param EmailConfirmation $emailConfirmation
+     * @param Database $db
+     * @param UserRepo $users
      */
-    public function __construct(Mailer $mailer, EmailConfirmation $emailConfirmation)
+    public function __construct(Database $db, UserRepo $users)
     {
-        $this->mailer = $mailer;
-        $this->emailConfirmation = $emailConfirmation;
+        $this->db = $db;
+        $this->users = $users;
     }
 
     /**
@@ -38,16 +35,28 @@ class EmailConfirmationService
         if ($user->email_confirmed) {
             throw new ConfirmationEmailException('Email has already been confirmed, Try logging in.', '/login');
         }
+
         $this->deleteConfirmationsByUser($user);
+        $token = $this->createEmailConfirmation($user);
+
+        $user->notify(new ConfirmEmail($token));
+    }
+
+    /**
+     * Creates a new email confirmation in the database and returns the token.
+     * @param User $user
+     * @return string
+     */
+    public function createEmailConfirmation(User $user)
+    {
         $token = $this->getToken();
-        $this->emailConfirmation->create([
+        $this->db->table('email_confirmations')->insert([
             'user_id' => $user->id,
-            'token'   => $token,
+            'token' => $token,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
-        $this->mailer->send('emails/email-confirmation', ['token' => $token], function (Message $message) use ($user) {
-            $appName = setting('app-name', 'BookStack');
-            $message->to($user->email, $user->name)->subject('Confirm your email on ' . $appName . '.');
-        });
+        return $token;
     }
 
     /**
@@ -59,21 +68,23 @@ class EmailConfirmationService
      */
     public function getEmailConfirmationFromToken($token)
     {
-        $emailConfirmation = $this->emailConfirmation->where('token', '=', $token)->first();
-        // If not found
+        $emailConfirmation = $this->db->table('email_confirmations')->where('token', '=', $token)->first();
+
+        // If not found show error
         if ($emailConfirmation === null) {
             throw new UserRegistrationException('This confirmation token is not valid or has already been used, Please try registering again.', '/register');
         }
 
         // If more than a day old
-        if (Carbon::now()->subDay()->gt($emailConfirmation->created_at)) {
-            $this->sendConfirmation($emailConfirmation->user);
+        if (Carbon::now()->subDay()->gt(new Carbon($emailConfirmation->created_at))) {
+            $user = $this->users->getById($emailConfirmation->user_id);
+            $this->sendConfirmation($user);
             throw new UserRegistrationException('The confirmation token has expired, A new confirmation email has been sent.', '/register/confirm');
         }
 
+        $emailConfirmation->user = $this->users->getById($emailConfirmation->user_id);
         return $emailConfirmation;
     }
-
 
     /**
      * Delete all email confirmations that belong to a user.
@@ -82,7 +93,7 @@ class EmailConfirmationService
      */
     public function deleteConfirmationsByUser(User $user)
     {
-        return $this->emailConfirmation->where('user_id', '=', $user->id)->delete();
+        return $this->db->table('email_confirmations')->where('user_id', '=', $user->id)->delete();
     }
 
     /**
@@ -92,7 +103,7 @@ class EmailConfirmationService
     protected function getToken()
     {
         $token = str_random(24);
-        while ($this->emailConfirmation->where('token', '=', $token)->exists()) {
+        while ($this->db->table('email_confirmations')->where('token', '=', $token)->exists()) {
             $token = str_random(25);
         }
         return $token;

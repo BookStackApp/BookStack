@@ -1,62 +1,68 @@
-<?php namespace BookStack\Http\Controllers\Auth;
+<?php
 
-use BookStack\Exceptions\AuthException;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\Request;
-use BookStack\Exceptions\SocialSignInException;
+namespace BookStack\Http\Controllers\Auth;
+
+use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\EmailConfirmationService;
 use BookStack\Services\SocialAuthService;
-use BookStack\SocialAccount;
+use BookStack\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Validator;
 use BookStack\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
-class AuthController extends Controller
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Registration & Login Controller
+    | Register Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    protected $redirectPath = '/';
-    protected $redirectAfterLogout = '/login';
-    protected $username = 'email';
+    use RegistersUsers;
 
     protected $socialAuthService;
     protected $emailConfirmationService;
     protected $userRepo;
 
     /**
-     * Create a new authentication controller instance.
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+    protected $redirectPath = '/';
+
+    /**
+     * Create a new controller instance.
+     *
      * @param SocialAuthService $socialAuthService
      * @param EmailConfirmationService $emailConfirmationService
      * @param UserRepo $userRepo
      */
     public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
-        $this->middleware('guest', ['only' => ['getLogin', 'postLogin', 'getRegister', 'postRegister']]);
+        $this->middleware('guest');
         $this->socialAuthService = $socialAuthService;
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
+        $this->redirectTo = baseUrl('/');
         $this->redirectPath = baseUrl('/');
-        $this->redirectAfterLogout = baseUrl('/login');
         $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
     }
 
     /**
      * Get a validator for an incoming registration request.
+     *
      * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -69,6 +75,10 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Check whether or not registrations are allowed in the app settings.
+     * @throws UserRegistrationException
+     */
     protected function checkRegistrationAllowed()
     {
         if (!setting('registration-enabled')) {
@@ -78,7 +88,7 @@ class AuthController extends Controller
 
     /**
      * Show the application registration form.
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getRegister()
     {
@@ -89,9 +99,10 @@ class AuthController extends Controller
 
     /**
      * Handle a registration request for the application.
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request|\Illuminate\Http\Request $request
+     * @return Response
      * @throws UserRegistrationException
+     * @throws \Illuminate\Foundation\Validation\ValidationException
      */
     public function postRegister(Request $request)
     {
@@ -108,66 +119,18 @@ class AuthController extends Controller
         return $this->registerUser($userData);
     }
 
-
     /**
-     * Overrides the action when a user is authenticated.
-     * If the user authenticated but does not exist in the user table we create them.
-     * @param Request $request
-     * @param Authenticatable $user
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws AuthException
+     * Create a new user instance after a valid registration.
+     * @param  array  $data
+     * @return User
      */
-    protected function authenticated(Request $request, Authenticatable $user)
+    protected function create(array $data)
     {
-        // Explicitly log them out for now if they do no exist.
-        if (!$user->exists) auth()->logout($user);
-
-        if (!$user->exists && $user->email === null && !$request->has('email')) {
-            $request->flash();
-            session()->flash('request-email', true);
-            return redirect('/login');
-        }
-
-        if (!$user->exists && $user->email === null && $request->has('email')) {
-            $user->email = $request->get('email');
-        }
-
-        if (!$user->exists) {
-
-            // Check for users with same email already
-            $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
-            if ($alreadyUser) {
-                throw new AuthException('A user with the email ' . $user->email . ' already exists but with different credentials.');
-            }
-
-            $user->save();
-            $this->userRepo->attachDefaultRole($user);
-            auth()->login($user);
-        }
-
-        $path = session()->pull('url.intended', '/');
-        $path = baseUrl($path, true);
-        return redirect($path);
-    }
-
-    /**
-     * Register a new user after a registration callback.
-     * @param $socialDriver
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws UserRegistrationException
-     */
-    protected function socialRegisterCallback($socialDriver)
-    {
-        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver);
-        $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
-
-        // Create an array of the user data to create a new user instance
-        $userData = [
-            'name' => $socialUser->getName(),
-            'email' => $socialUser->getEmail(),
-            'password' => str_random(30)
-        ];
-        return $this->registerUser($userData, $socialAccount);
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
     }
 
     /**
@@ -176,7 +139,7 @@ class AuthController extends Controller
      * @param bool|false|SocialAccount $socialAccount
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
-     * @throws \BookStack\Exceptions\ConfirmationEmailException
+     * @throws ConfirmationEmailException
      */
     protected function registerUser(array $userData, $socialAccount = false)
     {
@@ -214,18 +177,6 @@ class AuthController extends Controller
     }
 
     /**
-     * View the confirmation email as a standard web page.
-     * @param $token
-     * @return \Illuminate\View\View
-     * @throws UserRegistrationException
-     */
-    public function viewConfirmEmail($token)
-    {
-        $confirmation = $this->emailConfirmationService->getEmailConfirmationFromToken($token);
-        return view('emails/email-confirmation', ['token' => $confirmation->token]);
-    }
-
-    /**
      * Confirms an email via a token and logs the user into the system.
      * @param $token
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -237,7 +188,7 @@ class AuthController extends Controller
         $user = $confirmation->user;
         $user->email_confirmed = true;
         $user->save();
-        auth()->login($confirmation->user);
+        auth()->login($user);
         session()->flash('success', 'Your email has been confirmed!');
         $this->emailConfirmationService->deleteConfirmationsByUser($user);
         return redirect($this->redirectPath);
@@ -267,28 +218,6 @@ class AuthController extends Controller
         $this->emailConfirmationService->sendConfirmation($user);
         session()->flash('success', 'Confirmation email resent, Please check your inbox.');
         return redirect('/register/confirm');
-    }
-
-    /**
-     * Show the application login form.
-     * @return \Illuminate\Http\Response
-     */
-    public function getLogin()
-    {
-        $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $authMethod = config('auth.method');
-        return view('auth/login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
-    }
-
-    /**
-     * Redirect to the relevant social site.
-     * @param $socialDriver
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function getSocialLogin($socialDriver)
-    {
-        session()->put('social-callback', 'login');
-        return $this->socialAuthService->startLogIn($socialDriver);
     }
 
     /**
@@ -333,5 +262,26 @@ class AuthController extends Controller
     {
         return $this->socialAuthService->detachSocialAccount($socialDriver);
     }
+
+    /**
+     * Register a new user after a registration callback.
+     * @param $socialDriver
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws UserRegistrationException
+     */
+    protected function socialRegisterCallback($socialDriver)
+    {
+        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver);
+        $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
+
+        // Create an array of the user data to create a new user instance
+        $userData = [
+            'name' => $socialUser->getName(),
+            'email' => $socialUser->getEmail(),
+            'password' => str_random(30)
+        ];
+        return $this->registerUser($userData, $socialAccount);
+    }
+
 
 }
