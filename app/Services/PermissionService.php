@@ -9,6 +9,7 @@ use BookStack\Page;
 use BookStack\Role;
 use BookStack\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class PermissionService
 {
@@ -383,7 +384,11 @@ class PermissionService
      */
     public function checkOwnableUserAccess(Ownable $ownable, $permission)
     {
-        if ($this->isAdmin()) return true;
+        if ($this->isAdmin()) {
+            $this->clean();
+            return true;
+        }
+
         $explodedPermission = explode('-', $permission);
 
         $baseQuery = $ownable->where('id', '=', $ownable->id);
@@ -407,7 +412,9 @@ class PermissionService
         }
 
 
-        return $this->entityRestrictionQuery($baseQuery)->count() > 0;
+        $q = $this->entityRestrictionQuery($baseQuery)->count() > 0;
+        $this->clean();
+        return $q;
     }
 
     /**
@@ -437,7 +444,7 @@ class PermissionService
      */
     protected function entityRestrictionQuery($query)
     {
-        return $query->where(function ($parentQuery) {
+        $q = $query->where(function ($parentQuery) {
             $parentQuery->whereHas('jointPermissions', function ($permissionQuery) {
                 $permissionQuery->whereIn('role_id', $this->getRoles())
                     ->where('action', '=', $this->currentAction)
@@ -450,6 +457,8 @@ class PermissionService
                     });
             });
         });
+        $this->clean();
+        return $q;
     }
 
     /**
@@ -503,7 +512,10 @@ class PermissionService
      */
     public function enforceEntityRestrictions($query, $action = 'view')
     {
-        if ($this->isAdmin()) return $query;
+        if ($this->isAdmin()) {
+            $this->clean();
+            return $query;
+        }
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }
@@ -518,11 +530,15 @@ class PermissionService
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn)
     {
-        if ($this->isAdmin()) return $query;
+        if ($this->isAdmin()) {
+            $this->clean();
+            return $query;
+        }
+
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
 
-        return $query->where(function ($query) use ($tableDetails) {
+        $q = $query->where(function ($query) use ($tableDetails) {
             $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
                 $permissionQuery->select('id')->from('joint_permissions')
                     ->whereRaw('joint_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
@@ -537,7 +553,7 @@ class PermissionService
                     });
             });
         });
-
+        return $q;
     }
 
     /**
@@ -549,11 +565,15 @@ class PermissionService
      */
     public function filterRelatedPages($query, $tableName, $entityIdColumn)
     {
-        if ($this->isAdmin()) return $query;
+        if ($this->isAdmin()) {
+            $this->clean();
+            return $query;
+        }
+
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
-        return $query->where(function ($query) use ($tableDetails) {
+        $q = $query->where(function ($query) use ($tableDetails) {
             $query->where(function ($query) use (&$tableDetails) {
                 $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
                     $permissionQuery->select('id')->from('joint_permissions')
@@ -570,6 +590,8 @@ class PermissionService
                 });
             })->orWhere($tableDetails['entityIdColumn'], '=', 0);
         });
+        $this->clean();
+        return $q;
     }
 
     /**
@@ -596,6 +618,16 @@ class PermissionService
         }
 
         return $this->currentUserModel;
+    }
+
+    /**
+     * Clean the cached user elements.
+     */
+    private function clean()
+    {
+        $this->currentUserModel = false;
+        $this->userRoles = false;
+        $this->isAdminUser = null;
     }
 
 }

@@ -97,7 +97,6 @@ class RegisterController extends Controller
         return view('auth.register', ['socialDrivers' => $socialDrivers]);
     }
 
-
     /**
      * Handle a registration request for the application.
      * @param Request|\Illuminate\Http\Request $request
@@ -132,26 +131,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-    }
-
-    /**
-     * Register a new user after a registration callback.
-     * @param $socialDriver
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws UserRegistrationException
-     */
-    protected function socialRegisterCallback($socialDriver)
-    {
-        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver);
-        $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
-
-        // Create an array of the user data to create a new user instance
-        $userData = [
-            'name' => $socialUser->getName(),
-            'email' => $socialUser->getEmail(),
-            'password' => str_random(30)
-        ];
-        return $this->registerUser($userData, $socialAccount);
     }
 
     /**
@@ -241,7 +220,6 @@ class RegisterController extends Controller
         return redirect('/register/confirm');
     }
 
-
     /**
      * Redirect to the social site for authentication intended to register.
      * @param $socialDriver
@@ -284,4 +262,26 @@ class RegisterController extends Controller
     {
         return $this->socialAuthService->detachSocialAccount($socialDriver);
     }
+
+    /**
+     * Register a new user after a registration callback.
+     * @param $socialDriver
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws UserRegistrationException
+     */
+    protected function socialRegisterCallback($socialDriver)
+    {
+        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver);
+        $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
+
+        // Create an array of the user data to create a new user instance
+        $userData = [
+            'name' => $socialUser->getName(),
+            'email' => $socialUser->getEmail(),
+            'password' => str_random(30)
+        ];
+        return $this->registerUser($userData, $socialAccount);
+    }
+
+
 }

@@ -139,10 +139,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-// Login using social authentication
-Route::get('/login/service/{socialDriver}', 'Auth\LoginController@getSocialLogin');
-Route::get('/login/service/{socialDriver}/callback', 'Auth\LoginController@socialCallback');
-Route::get('/login/service/{socialDriver}/detach', 'Auth\LoginController@detachSocialAccount');
+// Social auth routes
+Route::get('/login/service/{socialDriver}', 'Auth\RegisterController@getSocialLogin');
+Route::get('/login/service/{socialDriver}/callback', 'Auth\RegisterController@socialCallback');
+Route::get('/login/service/{socialDriver}/detach', 'Auth\RegisterController@detachSocialAccount');
+Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRegister');
 
 // Login/Logout routes
 Route::get('/login', 'Auth\LoginController@getLogin');
@@ -153,7 +154,6 @@ Route::get('/register/confirm', 'Auth\RegisterController@getRegisterConfirmation
 Route::get('/register/confirm/awaiting', 'Auth\RegisterController@showAwaitingConfirmation');
 Route::post('/register/confirm/resend', 'Auth\RegisterController@resendConfirmation');
 Route::get('/register/confirm/{token}', 'Auth\RegisterController@confirmEmail');
-Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRegister');
 Route::post('/register', 'Auth\RegisterController@postRegister');
 
 // Password reset link request routes...
