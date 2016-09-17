@@ -8,13 +8,15 @@ use Illuminate\Notifications\Messages\MailMessage;
 class ConfirmEmail extends Notification
 {
 
+    public $token;
+
     /**
      * Create a new notification instance.
-     *
+     * @param string $token
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -40,7 +42,7 @@ class ConfirmEmail extends Notification
                     ->subject('Confirm your email on ' . session('app-name'))
                     ->greeting('Thanks for joining ' . setting('app-name') . '!')
                     ->line('Please confirm your email address by clicking the button below:')
-                    ->action('Confirm Email', baseUrl('/register/confirm/' . $notifiable->token));
+                    ->action('Confirm Email', baseUrl('/register/confirm/' . $this->token));
     }
 
 }

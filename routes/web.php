@@ -153,7 +153,6 @@ Route::get('/register/confirm', 'Auth\RegisterController@getRegisterConfirmation
 Route::get('/register/confirm/awaiting', 'Auth\RegisterController@showAwaitingConfirmation');
 Route::post('/register/confirm/resend', 'Auth\RegisterController@resendConfirmation');
 Route::get('/register/confirm/{token}', 'Auth\RegisterController@confirmEmail');
-Route::get('/register/confirm/{token}/email', 'Auth\RegisterController@viewConfirmEmail');
 Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRegister');
 Route::post('/register', 'Auth\RegisterController@postRegister');
 
@@ -162,5 +161,5 @@ Route::get('/password/email', 'Auth\ForgotPasswordController@showLinkRequestForm
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
 // Password reset routes...
-Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@getReset');
-Route::post('/password/reset', 'Auth\ResetPasswordController@postReset');
+Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');

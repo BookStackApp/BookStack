@@ -2,6 +2,8 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Exceptions\ConfirmationEmailException;
+use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\EmailConfirmationService;
 use BookStack\Services\SocialAuthService;
@@ -158,7 +160,7 @@ class RegisterController extends Controller
      * @param bool|false|SocialAccount $socialAccount
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
-     * @throws \BookStack\Exceptions\ConfirmationEmailException
+     * @throws ConfirmationEmailException
      */
     protected function registerUser(array $userData, $socialAccount = false)
     {
@@ -196,18 +198,6 @@ class RegisterController extends Controller
     }
 
     /**
-     * View the confirmation email as a standard web page.
-     * @param $token
-     * @return \Illuminate\View\View
-     * @throws UserRegistrationException
-     */
-    public function viewConfirmEmail($token)
-    {
-        $confirmation = $this->emailConfirmationService->getEmailConfirmationFromToken($token);
-        return view('emails/email-confirmation', ['token' => $confirmation->token]);
-    }
-
-    /**
      * Confirms an email via a token and logs the user into the system.
      * @param $token
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -219,7 +209,7 @@ class RegisterController extends Controller
         $user = $confirmation->user;
         $user->email_confirmed = true;
         $user->save();
-        auth()->login($confirmation->user);
+        auth()->login($user);
         session()->flash('success', 'Your email has been confirmed!');
         $this->emailConfirmationService->deleteConfirmationsByUser($user);
         return redirect($this->redirectPath);

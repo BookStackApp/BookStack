@@ -1,5 +1,6 @@
 <?php namespace BookStack;
 
+use BookStack\Notifications\ResetPassword;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -183,5 +184,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (strlen($splitName[0]) <= $chars) return $splitName[0];
 
         return '';
+    }
+
+    /**
+     * Send the password reset notification.
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

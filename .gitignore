@@ -11,3 +11,4 @@ Homestead.yaml
 /storage/images
 _ide_helper.php
 /storage/debugbar
+.phpstorm.meta.php

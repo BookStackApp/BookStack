@@ -1,6 +1,7 @@
 <?php
 
-use BookStack\EmailConfirmation;
+use BookStack\Notifications\ConfirmEmail;
+use Illuminate\Support\Facades\Notification;
 
 class AuthTest extends TestCase
 {
@@ -57,14 +58,12 @@ class AuthTest extends TestCase
 
     public function test_confirmed_registration()
     {
+        // Fake notifications
+        Notification::fake();
+
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
         $user = factory(\BookStack\User::class)->make();
-
-        // Mock Mailer to ensure mail is being sent
-        $mockMailer = Mockery::mock('Illuminate\Contracts\Mail\Mailer');
-        $mockMailer->shouldReceive('send')->with('emails/email-confirmation', Mockery::type('array'), Mockery::type('callable'))->twice();
-        $this->app->instance('mailer', $mockMailer);
 
         // Go through registration process
         $this->visit('/register')
@@ -76,6 +75,10 @@ class AuthTest extends TestCase
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
+        // Ensure notification sent
+        $dbUser = \BookStack\User::where('email', '=', $user->email)->first();
+        Notification::assertSentTo($dbUser, ConfirmEmail::class);
+
         // Test access and resend confirmation email
         $this->login($user->email, $user->password)
             ->seePageIs('/register/confirm/awaiting')
@@ -84,19 +87,18 @@ class AuthTest extends TestCase
             ->seePageIs('/register/confirm/awaiting')
             ->press('Resend Confirmation Email');
 
-        // Get confirmation
-        $user = $user->where('email', '=', $user->email)->first();
-        $emailConfirmation = EmailConfirmation::where('user_id', '=', $user->id)->first();
-
-
-        // Check confirmation email button and confirmation activation.
-        $this->visit('/register/confirm/' . $emailConfirmation->token . '/email')
-            ->see('Email Confirmation')
-            ->click('Confirm Email')
+        // Get confirmation and confirm notification matches
+        $emailConfirmation = DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
+        Notification::assertSentTo($dbUser, ConfirmEmail::class, function($notification, $channels) use ($emailConfirmation) {
+            return $notification->token === $emailConfirmation->token;
+        });
+        
+        // Check confirmation email confirmation activation.
+        $this->visit('/register/confirm/' . $emailConfirmation->token)
             ->seePageIs('/')
             ->see($user->name)
             ->notSeeInDatabase('email_confirmations', ['token' => $emailConfirmation->token])
-            ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => true]);
+            ->seeInDatabase('users', ['name' => $dbUser->name, 'email' => $dbUser->email, 'email_confirmed' => true]);
     }
 
     public function test_restricted_registration()
