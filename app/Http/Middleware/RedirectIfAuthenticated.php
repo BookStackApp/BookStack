@@ -34,7 +34,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
+        $requireConfirmation = setting('registration-confirmation');
+        if ($this->auth->check() && (!$requireConfirmation || ($requireConfirmation && $this->auth->user()->email_confirmed))) {
             return redirect('/');
         }
 

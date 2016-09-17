@@ -1,11 +1,12 @@
 <?php namespace BookStack\Providers;
 
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\PaginationServiceProvider as IlluminatePaginationServiceProvider;
 use Illuminate\Pagination\Paginator;
 
-class PaginationServiceProvider extends ServiceProvider
+class PaginationServiceProvider extends IlluminatePaginationServiceProvider
 {
+
     /**
      * Register the service provider.
      *
@@ -13,6 +14,10 @@ class PaginationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Paginator::viewFactoryResolver(function () {
+            return $this->app['view'];
+        });
+
         Paginator::currentPathResolver(function () {
             return baseUrl($this->app['request']->path());
         });

@@ -59,8 +59,10 @@ class ImageTest extends TestCase
 
         $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image exists');
 
+        $this->deleteImage($relPath);
+
         $this->seeInDatabase('images', [
-            'url' => $relPath,
+            'url' => $this->baseUrl . $relPath,
             'type' => 'gallery',
             'uploaded_to' => $page->id,
             'path' => $relPath,
@@ -69,7 +71,7 @@ class ImageTest extends TestCase
             'name' => $imageName
         ]);
         
-        $this->deleteImage($relPath);
+
     }
 
     public function test_image_delete()
@@ -85,7 +87,7 @@ class ImageTest extends TestCase
         $this->assertResponseOk();
 
         $this->dontSeeInDatabase('images', [
-            'url' => $relPath,
+            'url' => $this->baseUrl . $relPath,
             'type' => 'gallery'
         ]);
 

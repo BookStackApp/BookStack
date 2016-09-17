@@ -111,31 +111,6 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Save a new page into the system.
-     * Input validation must be done beforehand.
-     * @param array $input
-     * @param Book $book
-     * @param int $chapterId
-     * @return Page
-     */
-    public function saveNew(array $input, Book $book, $chapterId = null)
-    {
-        $page = $this->newFromInput($input);
-        $page->slug = $this->findSuitableSlug($page->name, $book->id);
-
-        if ($chapterId) $page->chapter_id = $chapterId;
-
-        $page->html = $this->formatHtml($input['html']);
-        $page->text = strip_tags($page->html);
-        $page->created_by = auth()->user()->id;
-        $page->updated_by = auth()->user()->id;
-
-        $book->pages()->save($page);
-        return $page;
-    }
-
-
-    /**
      * Publish a draft page to make it a normal page.
      * Sets the slug and updates the content.
      * @param Page $draftPage
@@ -371,7 +346,7 @@ class PageRepo extends EntityRepo
      */
     public function saveRevision(Page $page, $summary = null)
     {
-        $revision = $this->pageRevision->fill($page->toArray());
+        $revision = $this->pageRevision->newInstance($page->toArray());
         if (setting('app-editor') !== 'markdown') $revision->markdown = '';
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
@@ -381,11 +356,13 @@ class PageRepo extends EntityRepo
         $revision->type = 'version';
         $revision->summary = $summary;
         $revision->save();
+
         // Clear old revisions
         if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
             $this->pageRevision->where('page_id', '=', $page->id)
                 ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
         }
+
         return $revision;
     }
 

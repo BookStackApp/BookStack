@@ -86,7 +86,7 @@ class PageDraftTest extends TestCase
             ->visit($chapter->getUrl() . '/create-page')
             ->visit($book->getUrl())
             ->seeInElement('.page-list', 'New Page');
-
+        
         $this->asAdmin()
             ->visit($book->getUrl())
             ->dontSeeInElement('.page-list', 'New Page')
