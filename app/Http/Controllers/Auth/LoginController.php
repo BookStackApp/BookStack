@@ -33,7 +33,6 @@ class LoginController extends Controller
 
     protected $redirectPath = '/';
     protected $redirectAfterLogout = '/login';
-    protected $username = 'email';
 
     protected $socialAuthService;
     protected $userRepo;
@@ -51,8 +50,12 @@ class LoginController extends Controller
         $this->userRepo = $userRepo;
         $this->redirectPath = baseUrl('/');
         $this->redirectAfterLogout = baseUrl('/login');
-        $this->username = config('auth.method') === 'standard' ? 'email' : 'username';
         parent::__construct();
+    }
+
+    public function username()
+    {
+        return config('auth.method') === 'standard' ? 'email' : 'username';
     }
 
     /**
