@@ -25,14 +25,14 @@
             <div class="col-sm-4">
                 <div id="recent-drafts">
                     @if(count($draftPages) > 0)
-                        <h3>My Recent Drafts</h3>
+                        <h4>My Recent Drafts</h4>
                         @include('partials/entity-list', ['entities' => $draftPages, 'style' => 'compact'])
                     @endif
                 </div>
                 @if($signedIn)
-                    <h3>My Recently Viewed</h3>
+                    <h4>My Recently Viewed</h4>
                 @else
-                    <h3>Recent Books</h3>
+                    <h4>Recent Books</h4>
                 @endif
                 @include('partials/entity-list', [
                 'entities' => $recents,
@@ -42,7 +42,7 @@
             </div>
 
             <div class="col-sm-4">
-                <h3><a class="no-color" href="{{ baseUrl("/pages/recently-created") }}">Recently Created Pages</a></h3>
+                <h4><a class="no-color" href="{{ baseUrl("/pages/recently-created") }}">Recently Created Pages</a></h4>
                 <div id="recently-created-pages">
                     @include('partials/entity-list', [
                     'entities' => $recentlyCreatedPages,
@@ -51,7 +51,7 @@
                     ])
                 </div>
 
-                <h3><a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">Recently Updated Pages</a></h3>
+                <h4><a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">Recently Updated Pages</a></h4>
                 <div id="recently-updated-pages">
                     @include('partials/entity-list', [
                     'entities' => $recentlyUpdatedPages,
@@ -62,7 +62,7 @@
             </div>
 
             <div class="col-sm-4" id="recent-activity">
-                <h3>Recent Activity</h3>
+                <h4>Recent Activity</h4>
                 @include('partials/activity-list', ['activity' => $activity])
             </div>
 

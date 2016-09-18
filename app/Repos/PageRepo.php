@@ -7,6 +7,7 @@ use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
 use Carbon\Carbon;
 use DOMDocument;
+use DOMXPath;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
@@ -156,6 +157,35 @@ class PageRepo extends EntityRepo
         $book->pages()->save($page);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
+    }
+
+    /**
+     * Parse te headers on the page to get a navigation menu
+     * @param Page $page
+     * @return array
+     */
+    public function getPageNav(Page $page)
+    {
+        if ($page->html == '') return null;
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($page->html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+        $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
+
+        if (is_null($headers)) return null;
+
+        $tree = [];
+        foreach ($headers as $header) {
+            $text = $header->nodeValue;
+            $tree[] = [
+                'nodeName' => strtolower($header->nodeName),
+                'level' => intval(str_replace('h', '', $header->nodeName)),
+                'link' => '#' . $header->getAttribute('id'),
+                'text' => strlen($text) > 30 ? substr($text, 0, 27) . '...' : $text
+            ];
+        }
+        return $tree;
     }
 
     /**
