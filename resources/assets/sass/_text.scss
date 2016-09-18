@@ -15,29 +15,39 @@ h2 {
   margin-bottom: 0.43137255em;
 }
 h3 {
-  font-size: 1.75em;
+  font-size: 2.333em;
   line-height: 1.571428572em;
   margin-top: 0.78571429em;
   margin-bottom: 0.43137255em;
 }
 h4 {
-  font-size: 1em;
+  font-size: 1.666em;
   line-height: 1.375em;
   margin-top: 0.78571429em;
   margin-bottom: 0.43137255em;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
   color: #555;
   .subheader {
-    //display: block;
     font-size: 0.5em;
     line-height: 1em;
     color: lighten($text-dark, 32%);
   }
+}
+
+h5 {
+  font-size: 1.4em;
+}
+
+h5, h6 {
+  font-weight: 500;
+  line-height: 1.2em;
+  margin-top: 0.78571429em;
+  margin-bottom: 0.66em;
 }
 
 /*

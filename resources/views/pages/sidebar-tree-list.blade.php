@@ -1,5 +1,19 @@
 
 <div class="book-tree" ng-non-bindable>
+
+    @if (isset($pageNav) && $pageNav)
+        <h6 class="text-muted">Page Navigation</h6>
+        <div class="sidebar-page-nav menu">
+            @foreach($pageNav as $navItem)
+                <li class="page-nav-item {{ $navItem['nodeName'] }}">
+                    <a href="{{ $navItem['link'] }}">{{ $navItem['text'] }}</a>
+                </li>
+            @endforeach
+        </div>
+
+
+    @endif
+
     <h6 class="text-muted">Book Navigation</h6>
     <ul class="sidebar-page-list menu">
         <li class="book-header"><a href="{{ $book->getUrl() }}" class="book {{ $current->matches($book)? 'selected' : '' }}"><i class="zmdi zmdi-book"></i>{{$book->name}}</a></li>
