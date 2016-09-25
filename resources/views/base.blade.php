@@ -39,7 +39,9 @@
                         @if(setting('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ setting('app-logo', '') === '' ? baseUrl('/logo.png') : baseUrl(setting('app-logo', '')) }}" alt="Logo">
                         @endif
-                        <span class="logo-text">{{ setting('app-name') }}</span>
+                        @if (setting('app-name-header'))
+                            <span class="logo-text">{{ setting('app-name') }}</span>
+                        @endif
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-3 text-center">

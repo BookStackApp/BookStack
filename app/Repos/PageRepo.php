@@ -7,6 +7,7 @@ use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
 use Carbon\Carbon;
 use DOMDocument;
+use DOMXPath;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
@@ -111,31 +112,6 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Save a new page into the system.
-     * Input validation must be done beforehand.
-     * @param array $input
-     * @param Book $book
-     * @param int $chapterId
-     * @return Page
-     */
-    public function saveNew(array $input, Book $book, $chapterId = null)
-    {
-        $page = $this->newFromInput($input);
-        $page->slug = $this->findSuitableSlug($page->name, $book->id);
-
-        if ($chapterId) $page->chapter_id = $chapterId;
-
-        $page->html = $this->formatHtml($input['html']);
-        $page->text = strip_tags($page->html);
-        $page->created_by = auth()->user()->id;
-        $page->updated_by = auth()->user()->id;
-
-        $book->pages()->save($page);
-        return $page;
-    }
-
-
-    /**
      * Publish a draft page to make it a normal page.
      * Sets the slug and updates the content.
      * @param Page $draftPage
@@ -181,6 +157,35 @@ class PageRepo extends EntityRepo
         $book->pages()->save($page);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
+    }
+
+    /**
+     * Parse te headers on the page to get a navigation menu
+     * @param Page $page
+     * @return array
+     */
+    public function getPageNav(Page $page)
+    {
+        if ($page->html == '') return null;
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($page->html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+        $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
+
+        if (is_null($headers)) return null;
+
+        $tree = [];
+        foreach ($headers as $header) {
+            $text = $header->nodeValue;
+            $tree[] = [
+                'nodeName' => strtolower($header->nodeName),
+                'level' => intval(str_replace('h', '', $header->nodeName)),
+                'link' => '#' . $header->getAttribute('id'),
+                'text' => strlen($text) > 30 ? substr($text, 0, 27) . '...' : $text
+            ];
+        }
+        return $tree;
     }
 
     /**
@@ -371,7 +376,7 @@ class PageRepo extends EntityRepo
      */
     public function saveRevision(Page $page, $summary = null)
     {
-        $revision = $this->pageRevision->fill($page->toArray());
+        $revision = $this->pageRevision->newInstance($page->toArray());
         if (setting('app-editor') !== 'markdown') $revision->markdown = '';
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
@@ -381,11 +386,13 @@ class PageRepo extends EntityRepo
         $revision->type = 'version';
         $revision->summary = $summary;
         $revision->save();
+
         // Clear old revisions
         if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
             $this->pageRevision->where('page_id', '=', $page->id)
                 ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
         }
+
         return $revision;
     }
 

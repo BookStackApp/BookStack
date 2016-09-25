@@ -6,7 +6,7 @@
 
 <div class="container small settings-container">
 
-    <h1>Settings</h1>
+    <h1>{{ trans('settings.settings') }}</h1>
 
     <form action="{{ baseUrl("/settings") }}" method="POST" ng-cloak>
         {!! csrf_field() !!}
@@ -14,61 +14,70 @@
         <h3>App Settings</h3>
 
         <div class="row">
+
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="setting-app-name">Application name</label>
+                    <label for="setting-app-name">{{ trans('settings.app_name') }}</label>
+                    <p class="small">{{ trans('settings.app_name_desc') }}</p>
                     <input type="text" value="{{ setting('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
                 </div>
                 <div class="form-group">
-                    <label>Allow public viewing?</label>
+                    <label>{{ trans('settings.app_name_header') }}</label>
+                    <div toggle-switch name="setting-app-name-header" value="{{ setting('app-name-header') }}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="setting-app-public">{{ trans('settings.app_public_viewing') }}</label>
                     <div toggle-switch name="setting-app-public" value="{{ setting('app-public') }}"></div>
                 </div>
                 <div class="form-group">
-                    <label>Enable higher security image uploads?</label>
-                    <p class="small">For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.</p>
+                    <label>{{ trans('settings.app_secure_images') }}</label>
+                    <p class="small">{{ trans('settings.app_secure_images_desc') }}</p>
                     <div toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></div>
                 </div>
                 <div class="form-group">
-                    <label for="setting-app-editor">Page editor</label>
-                    <p class="small">Select which editor will be used by all users to edit pages.</p>
+                    <label for="setting-app-editor">{{ trans('settings.app_editor') }}</label>
+                    <p class="small">{{ trans('settings.app_editor_desc') }}</p>
                     <select name="setting-app-editor" id="setting-app-editor">
                         <option @if(setting('app-editor') === 'wysiwyg') selected @endif value="wysiwyg">WYSIWYG</option>
                         <option @if(setting('app-editor') === 'markdown') selected @endif value="markdown">Markdown</option>
                     </select>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="form-group" id="logo-control">
-                    <label for="setting-app-logo">Application logo</label>
-                    <p class="small">This image should be 43px in height. <br>Large images will be scaled down.</p>
+                    <label for="setting-app-logo">{{ trans('settings.app_logo') }}</label>
+                    <p class="small">{!! trans('settings.app_logo_desc') !!}</p>
                     <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ setting('app-logo', '') }}" default-image="{{ baseUrl('/logo.png') }}" name="setting-app-logo" image-class="logo-image"></image-picker>
                 </div>
                 <div class="form-group" id="color-control">
-                    <label for="setting-app-color">Application primary color</label>
-                    <p class="small">This should be a hex value. <br> Leave empty to reset to the default color.</p>
+                    <label for="setting-app-color">{{ trans('settings.app_primary_color') }}</label>
+                    <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
                     <input  type="text" value="{{ setting('app-color', '') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
                     <input  type="hidden" value="{{ setting('app-color-light', '') }}" name="setting-app-color-light" id="setting-app-color-light" placeholder="rgba(21, 101, 192, 0.15)">
                 </div>
             </div>
+
         </div>
+
         <div class="form-group">
-            <label for="setting-app-custom-head">Custom HTML head content</label>
-            <p class="small">Any content added here will be inserted into the bottom of the &lt;head&gt; section of every page. This is handy for overriding styles or adding analytics code.</p>
+            <label for="setting-app-custom-head">{{ trans('settings.app_custom_html') }}</label>
+            <p class="small">{{ trans('settings.app_custom_html_desc') }}</p>
             <textarea name="setting-app-custom-head" id="setting-app-custom-head">{{ setting('app-custom-head', '') }}</textarea>
         </div>
 
         <hr class="margin-top">
 
-        <h3>Registration Settings</h3>
+        <h3>{{ trans('settings.reg_settings') }}</h3>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="setting-registration-enabled">Allow registration?</label>
+                    <label for="setting-registration-enabled">{{ trans('settings.reg_allow') }}</label>
                     <div toggle-switch name="setting-registration-enabled" value="{{ setting('registration-enabled') }}"></div>
                 </div>
                 <div class="form-group">
-                    <label for="setting-registration-role">Default user role after registration</label>
+                    <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
                     <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
                         @foreach(\BookStack\Role::visible() as $role)
                             <option value="{{$role->id}}" data-role-name="{{ $role->name }}"
@@ -80,17 +89,16 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="setting-registration-confirmation">Require email confirmation?</label>
-                    <p class="small">If domain restriction is used then email confirmation will be required and the below value will be ignored.</p>
+                    <label for="setting-registration-confirmation">{{ trans('settings.reg_confirm_email') }}</label>
+                    <p class="small">{{ trans('settings.reg_confirm_email_desc') }}</p>
                     <div toggle-switch name="setting-registration-confirmation" value="{{ setting('registration-confirmation') }}"></div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="setting-registration-restrict">Restrict registration to domain</label>
-                    <p class="small">Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application.
-                        <br> Note that users will be able to change their email addresses after successful registration.</p>
-                    <input type="text" id="setting-registration-restrict" name="setting-registration-restrict" placeholder="No restriction set" value="{{ setting('registration-restrict', '') }}">
+                    <label for="setting-registration-restrict">{{ trans('settings.reg_confirm_restrict_domain') }}</label>
+                    <p class="small">{!! trans('settings.reg_confirm_restrict_domain_desc') !!}</p>
+                    <input type="text" id="setting-registration-restrict" name="setting-registration-restrict" placeholder="{{ trans('settings.reg_confirm_restrict_domain_placeholder') }}" value="{{ setting('registration-restrict', '') }}">
                 </div>
             </div>
         </div>
@@ -101,7 +109,7 @@
             <span class="float right muted">
                 BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
             </span>
-            <button type="submit" class="button pos">Save Settings</button>
+            <button type="submit" class="button pos">{{ trans('settings.settings_save') }}</button>
         </div>
     </form>
 

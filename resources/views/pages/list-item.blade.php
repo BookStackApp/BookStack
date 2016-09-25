@@ -1,7 +1,7 @@
 <div class="page {{$page->draft ? 'draft' : ''}} entity-list-item" data-entity-type="page" data-entity-id="{{$page->id}}">
-    <h3>
+    <h4>
         <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name">{{ $page->name }}</span></a>
-    </h3>
+    </h4>
 
     @if(isset($page->searchSnippet))
         <p class="text-muted">{!! $page->searchSnippet !!}</p>

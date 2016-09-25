@@ -114,7 +114,8 @@
                         @endif
                     </div>
                 @endif
-                @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree])
+
+                @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree, 'pageNav' => $pageNav])
             </div>
 
         </div>

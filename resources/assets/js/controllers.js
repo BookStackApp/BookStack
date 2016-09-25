@@ -336,6 +336,8 @@ module.exports = function (ngApp, events) {
             $scope.editorChange = function() {};
         }
 
+        let lastSave = 0;
+
         /**
          * Start the AutoSave loop, Checks for content change
          * before performing the costly AJAX request.
@@ -345,6 +347,8 @@ module.exports = function (ngApp, events) {
             currentContent.html = $scope.editContent;
 
             autoSave = $interval(() => {
+                // Return if manually saved recently to prevent bombarding the server
+                if (Date.now() - lastSave < (1000*autosaveFrequency)/2) return;
                 var newTitle = $('#name').val();
                 var newHtml = $scope.editContent;
 
@@ -357,6 +361,7 @@ module.exports = function (ngApp, events) {
             }, 1000 * autosaveFrequency);
         }
 
+        let draftErroring = false;
         /**
          * Save a draft update into the system via an AJAX request.
          */
@@ -369,11 +374,17 @@ module.exports = function (ngApp, events) {
             if (isMarkdown) data.markdown = $scope.editContent;
 
             let url = window.baseUrl('/ajax/page/' + pageId + '/save-draft');
-            $http.put(url, data).then((responseData) => {
+            $http.put(url, data).then(responseData => {
+                draftErroring = false;
                 var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
                 $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
                 showDraftSaveNotification();
+                lastSave = Date.now();
+            }, errorRes => {
+                if (draftErroring) return;
+                events.emit('error', 'Failed to save draft. Ensure you have internet connection before saving this page.')
+                draftErroring = true;
             });
         }
 

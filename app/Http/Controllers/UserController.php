@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Activity;
+use Exception;
 use Illuminate\Http\Request;
 
 use Illuminate\Http\Response;
@@ -100,9 +101,14 @@ class UserController extends Controller
 
         // Get avatar from gravatar and save
         if (!config('services.disable_services')) {
-            $avatar = \Images::saveUserGravatar($user);
-            $user->avatar()->associate($avatar);
-            $user->save();
+            try {
+                $avatar = \Images::saveUserGravatar($user);
+                $user->avatar()->associate($avatar);
+                $user->save();
+            } catch (Exception $e) {
+                \Log::error('Failed to save user gravatar image');
+            }
+
         }
 
         return redirect('/settings/users');

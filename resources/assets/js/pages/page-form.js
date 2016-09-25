@@ -81,9 +81,10 @@ var mceOptions = module.exports = {
     toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
     content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
     style_formats: [
-        {title: "Header 1", format: "h1"},
-        {title: "Header 2", format: "h2"},
-        {title: "Header 3", format: "h3"},
+        {title: "Header Large", format: "h2"},
+        {title: "Header Medium", format: "h3"},
+        {title: "Header Small", format: "h4"},
+        {title: "Header Tiny", format: "h5"},
         {title: "Paragraph", format: "p", exact: true, classes: ''},
         {title: "Blockquote", format: "blockquote"},
         {title: "Code Block", icon: "code", format: "pre"},
