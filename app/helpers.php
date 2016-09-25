@@ -63,7 +63,7 @@ function userCan($permission, Ownable $ownable = null)
  */
 function setting($key, $default = false)
 {
-    $settingService = app('BookStack\Services\SettingService');
+    $settingService = app(\BookStack\Services\SettingService::class);
     return $settingService->get($key, $default);
 }
 
@@ -79,9 +79,15 @@ function baseUrl($path, $forceAppDomain = false)
     if ($isFullUrl && !$forceAppDomain) return $path;
     $path = trim($path, '/');
 
+    // Remove non-specified domain if forced and we have a domain
     if ($isFullUrl && $forceAppDomain) {
         $explodedPath = explode('/', $path);
         $path = implode('/', array_splice($explodedPath, 3));
+    }
+
+    // Return normal url path if not specified in config
+    if (config('app.url') === '') {
+        return url($path);
     }
 
     return rtrim(config('app.url'), '/') . '/' . $path;

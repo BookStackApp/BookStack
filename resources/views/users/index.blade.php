@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="compact">
-                    {!! $users->links() !!}
+                    {{ $users->links() }}
                 </div>
             </div>
             <div class="col-sm-4">
@@ -76,7 +76,7 @@
         </table>
 
         <div>
-            {!! $users->links() !!}
+            {{ $users->links() }}
         </div>
     </div>
 

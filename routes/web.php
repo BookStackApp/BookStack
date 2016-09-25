@@ -139,27 +139,27 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-// Login using social authentication
-Route::get('/login/service/{socialDriver}', 'Auth\AuthController@getSocialLogin');
-Route::get('/login/service/{socialDriver}/callback', 'Auth\AuthController@socialCallback');
-Route::get('/login/service/{socialDriver}/detach', 'Auth\AuthController@detachSocialAccount');
+// Social auth routes
+Route::get('/login/service/{socialDriver}', 'Auth\RegisterController@getSocialLogin');
+Route::get('/login/service/{socialDriver}/callback', 'Auth\RegisterController@socialCallback');
+Route::get('/login/service/{socialDriver}/detach', 'Auth\RegisterController@detachSocialAccount');
+Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRegister');
 
 // Login/Logout routes
-Route::get('/login', 'Auth\AuthController@getLogin');
-Route::post('/login', 'Auth\AuthController@postLogin');
-Route::get('/logout', 'Auth\AuthController@getLogout');
-Route::get('/register', 'Auth\AuthController@getRegister');
-Route::get('/register/confirm', 'Auth\AuthController@getRegisterConfirmation');
-Route::get('/register/confirm/awaiting', 'Auth\AuthController@showAwaitingConfirmation');
-Route::post('/register/confirm/resend', 'Auth\AuthController@resendConfirmation');
-Route::get('/register/confirm/{token}', 'Auth\AuthController@confirmEmail');
-Route::get('/register/confirm/{token}/email', 'Auth\AuthController@viewConfirmEmail');
-Route::get('/register/service/{socialDriver}', 'Auth\AuthController@socialRegister');
-Route::post('/register', 'Auth\AuthController@postRegister');
+Route::get('/login', 'Auth\LoginController@getLogin');
+Route::post('/login', 'Auth\LoginController@login');
+Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/register', 'Auth\RegisterController@getRegister');
+Route::get('/register/confirm', 'Auth\RegisterController@getRegisterConfirmation');
+Route::get('/register/confirm/awaiting', 'Auth\RegisterController@showAwaitingConfirmation');
+Route::post('/register/confirm/resend', 'Auth\RegisterController@resendConfirmation');
+Route::get('/register/confirm/{token}', 'Auth\RegisterController@confirmEmail');
+Route::post('/register', 'Auth\RegisterController@postRegister');
 
 // Password reset link request routes...
-Route::get('/password/email', 'Auth\PasswordController@getEmail');
-Route::post('/password/email', 'Auth\PasswordController@postEmail');
+Route::get('/password/email', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
 // Password reset routes...
-Route::get('/password/reset/{token}', 'Auth\PasswordController@getReset');
-Route::post('/password/reset', 'Auth\PasswordController@postReset');
+Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');

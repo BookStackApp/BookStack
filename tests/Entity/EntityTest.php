@@ -236,8 +236,9 @@ class EntityTest extends TestCase
             ->type('super test page', '#name')
             ->press('Save Page')
             // Check redirect
-            ->seePageIs($newPageUrl)
-            ->visit($pageUrl)
+            ->seePageIs($newPageUrl);
+
+        $this->visit($pageUrl)
             ->seePageIs($newPageUrl);
     }
 
