@@ -187,7 +187,7 @@ class UserController extends Controller
 
     /**
      * Show the user delete page.
-     * @param $id
+     * @param int $id
      * @return \Illuminate\View\View
      */
     public function delete($id)
@@ -217,6 +217,11 @@ class UserController extends Controller
 
         if ($this->userRepo->isOnlyAdmin($user)) {
             session()->flash('error', 'You cannot delete the only admin');
+            return redirect($user->getEditUrl());
+        }
+
+        if ($user->system_name === 'public') {
+            session()->flash('error', 'You cannot delete the guest user');
             return redirect($user->getEditUrl());
         }
 

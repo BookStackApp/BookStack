@@ -146,7 +146,7 @@ class AuthTest extends TestCase
 
     public function test_user_updating()
     {
-        $user = \BookStack\User::all()->last();
+        $user = $this->getNormalUser();
         $password = $user->password;
         $this->asAdmin()
             ->visit('/settings/users')
@@ -162,7 +162,7 @@ class AuthTest extends TestCase
 
     public function test_user_password_update()
     {
-        $user = \BookStack\User::all()->last();
+        $user = $this->getNormalUser();
         $userProfilePage = '/settings/users/' . $user->id;
         $this->asAdmin()
             ->visit($userProfilePage)
