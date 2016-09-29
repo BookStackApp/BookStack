@@ -614,7 +614,7 @@ class PermissionService
     private function currentUser()
     {
         if ($this->currentUserModel === false) {
-            $this->currentUserModel = auth()->user() ? auth()->user() : new User();
+            $this->currentUserModel = user();
         }
 
         return $this->currentUserModel;

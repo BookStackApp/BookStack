@@ -35,7 +35,7 @@ class PermissionsRepo
      */
     public function getAllRoles()
     {
-        return $this->role->where('hidden', '=', false)->get();
+        return $this->role->all();
     }
 
     /**
@@ -45,7 +45,7 @@ class PermissionsRepo
      */
     public function getAllRolesExcept(Role $role)
     {
-        return $this->role->where('id', '!=', $role->id)->where('hidden', '=', false)->get();
+        return $this->role->where('id', '!=', $role->id)->get();
     }
 
     /**
@@ -89,8 +89,6 @@ class PermissionsRepo
     public function updateRole($roleId, $roleData)
     {
         $role = $this->role->findOrFail($roleId);
-
-        if ($role->hidden) throw new PermissionsException("Cannot update a hidden role");
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);

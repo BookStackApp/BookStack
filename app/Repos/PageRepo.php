@@ -148,8 +148,8 @@ class PageRepo extends EntityRepo
     {
         $page = $this->page->newInstance();
         $page->name = 'New Page';
-        $page->created_by = auth()->user()->id;
-        $page->updated_by = auth()->user()->id;
+        $page->created_by = user()->id;
+        $page->updated_by = user()->id;
         $page->draft = true;
 
         if ($chapter) $page->chapter_id = $chapter->id;
@@ -330,7 +330,7 @@ class PageRepo extends EntityRepo
         }
 
         // Update with new details
-        $userId = auth()->user()->id;
+        $userId = user()->id;
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
@@ -363,7 +363,7 @@ class PageRepo extends EntityRepo
         $page->fill($revision->toArray());
         $page->slug = $this->findSuitableSlug($page->name, $book->id, $page->id);
         $page->text = strip_tags($page->html);
-        $page->updated_by = auth()->user()->id;
+        $page->updated_by = user()->id;
         $page->save();
         return $page;
     }
@@ -381,7 +381,7 @@ class PageRepo extends EntityRepo
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
-        $revision->created_by = auth()->user()->id;
+        $revision->created_by = user()->id;
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
@@ -404,7 +404,7 @@ class PageRepo extends EntityRepo
      */
     public function saveUpdateDraft(Page $page, $data = [])
     {
-        $userId = auth()->user()->id;
+        $userId = user()->id;
         $drafts = $this->userUpdateDraftsQuery($page, $userId)->get();
 
         if ($drafts->count() > 0) {
@@ -535,7 +535,7 @@ class PageRepo extends EntityRepo
         $query = $this->pageRevision->where('type', '=', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->where('updated_at', '>', $page->updated_at)
-            ->where('created_by', '!=', auth()->user()->id)
+            ->where('created_by', '!=', user()->id)
             ->with('createdBy');
 
         if ($minRange !== null) {

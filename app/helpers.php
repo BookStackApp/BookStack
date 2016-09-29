@@ -37,6 +37,16 @@ function versioned_asset($file = '')
 }
 
 /**
+ * Helper method to get the current User.
+ * Defaults to public 'Guest' user if not logged in.
+ * @return \BookStack\User
+ */
+function user()
+{
+    return auth()->user() ?: \BookStack\User::getDefault();
+}
+
+/**
  * Check if the current user has a permission.
  * If an ownable element is passed in the jointPermissions are checked against
  * that particular item.
@@ -47,7 +57,7 @@ function versioned_asset($file = '')
 function userCan($permission, Ownable $ownable = null)
 {
     if ($ownable === null) {
-        return auth()->user() && auth()->user()->can($permission);
+        return user() && user()->can($permission);
     }
 
     // Check permission on ownable item
