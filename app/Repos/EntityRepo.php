@@ -132,9 +132,8 @@ class EntityRepo
      */
     public function getUserDraftPages($count = 20, $page = 0)
     {
-        $user = auth()->user();
         return $this->page->where('draft', '=', true)
-            ->where('created_by', '=', $user->id)
+            ->where('created_by', '=', user()->id)
             ->orderBy('updated_at', 'desc')
             ->skip($count * $page)->take($count)->get();
     }

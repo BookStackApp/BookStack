@@ -132,8 +132,8 @@ class BookRepo extends EntityRepo
     {
         $book = $this->book->newInstance($input);
         $book->slug = $this->findSuitableSlug($book->name);
-        $book->created_by = auth()->user()->id;
-        $book->updated_by = auth()->user()->id;
+        $book->created_by = user()->id;
+        $book->updated_by = user()->id;
         $book->save();
         $this->permissionService->buildJointPermissionsForEntity($book);
         return $book;
@@ -149,7 +149,7 @@ class BookRepo extends EntityRepo
     {
         $book->fill($input);
         $book->slug = $this->findSuitableSlug($book->name, $book->id);
-        $book->updated_by = auth()->user()->id;
+        $book->updated_by = user()->id;
         $book->save();
         $this->permissionService->buildJointPermissionsForEntity($book);
         return $book;

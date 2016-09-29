@@ -108,8 +108,8 @@ class ImageService
             'uploaded_to' => $uploadedTo
         ];
 
-        if (auth()->user() && auth()->user()->id !== 0) {
-            $userId = auth()->user()->id;
+        if (user()->id !== 0) {
+            $userId = user()->id;
             $imageDetails['created_by'] = $userId;
             $imageDetails['updated_by'] = $userId;
         }

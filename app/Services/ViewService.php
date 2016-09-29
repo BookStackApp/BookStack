@@ -18,7 +18,7 @@ class ViewService
     public function __construct(View $view, PermissionService $permissionService)
     {
         $this->view = $view;
-        $this->user = auth()->user();
+        $this->user = user();
         $this->permissionService = $permissionService;
     }
 
@@ -84,7 +84,7 @@ class ViewService
             ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
 
         if ($filterModel) $query = $query->where('viewable_type', '=', get_class($filterModel));
-        $query = $query->where('user_id', '=', auth()->user()->id);
+        $query = $query->where('user_id', '=', user()->id);
 
         $viewables = $query->with('viewable')->orderBy('updated_at', 'desc')
             ->skip($count * $page)->take($count)->get()->pluck('viewable');

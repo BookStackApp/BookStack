@@ -98,8 +98,8 @@ class ChapterRepo extends EntityRepo
     {
         $chapter = $this->chapter->newInstance($input);
         $chapter->slug = $this->findSuitableSlug($chapter->name, $book->id);
-        $chapter->created_by = auth()->user()->id;
-        $chapter->updated_by = auth()->user()->id;
+        $chapter->created_by = user()->id;
+        $chapter->updated_by = user()->id;
         $chapter = $book->chapters()->save($chapter);
         $this->permissionService->buildJointPermissionsForEntity($chapter);
         return $chapter;

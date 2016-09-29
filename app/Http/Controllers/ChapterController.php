@@ -117,7 +117,7 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-update', $chapter);
         $chapter->fill($request->all());
         $chapter->slug = $this->chapterRepo->findSuitableSlug($chapter->name, $book->id, $chapter->id);
-        $chapter->updated_by = auth()->user()->id;
+        $chapter->updated_by = user()->id;
         $chapter->save();
         Activity::add($chapter, 'chapter_update', $book->id);
         return redirect($chapter->getUrl());
