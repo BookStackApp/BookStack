@@ -44,20 +44,53 @@ class PageController extends Controller
     /**
      * Show the form for creating a new page.
      * @param string $bookSlug
-     * @param bool $chapterSlug
+     * @param string $chapterSlug
      * @return Response
      * @internal param bool $pageSlug
      */
-    public function create($bookSlug, $chapterSlug = false)
+    public function create($bookSlug, $chapterSlug = null)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : null;
         $parent = $chapter ? $chapter : $book;
         $this->checkOwnablePermission('page-create', $parent);
-        $this->setPageTitle('Create New Page');
 
-        $draft = $this->pageRepo->getDraftPage($book, $chapter);
-        return redirect($draft->getUrl());
+        // Redirect to draft edit screen if signed in
+        if ($this->signedIn) {
+            $draft = $this->pageRepo->getDraftPage($book, $chapter);
+            return redirect($draft->getUrl());
+        }
+
+        // Otherwise show edit view
+        $this->setPageTitle('Create New Page');
+        return view('pages/guest-create', ['parent' => $parent]);
+    }
+
+    /**
+     * Create a new page as a guest user.
+     * @param Request $request
+     * @param string $bookSlug
+     * @param string|null $chapterSlug
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function createAsGuest(Request $request, $bookSlug, $chapterSlug = null)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255'
+        ]);
+
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : null;
+        $parent = $chapter ? $chapter : $book;
+        $this->checkOwnablePermission('page-create', $parent);
+
+        $page = $this->pageRepo->getDraftPage($book, $chapter);
+        $this->pageRepo->publishDraft($page, [
+            'name' => $request->get('name'),
+            'html' => ''
+        ]);
+        return redirect($page->getUrl('/edit'));
     }
 
     /**
@@ -183,7 +216,13 @@ class PageController extends Controller
 
         if (count($warnings) > 0) session()->flash('warning', implode("\n", $warnings));
 
-        return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
+        $draftsEnabled = $this->signedIn;
+        return view('pages/edit', [
+            'page' => $page,
+            'book' => $book,
+            'current' => $page,
+            'draftsEnabled' => $draftsEnabled
+        ]);
     }
 
     /**
@@ -216,6 +255,14 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getById($pageId, true);
         $this->checkOwnablePermission('page-update', $page);
+
+        if (!$this->signedIn) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Guests cannot save drafts',
+            ], 500);
+        }
+
         if ($page->draft) {
             $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html', 'markdown']));
         } else {

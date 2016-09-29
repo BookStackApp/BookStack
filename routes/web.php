@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
+        Route::post('/{bookSlug}/page/create/guest', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
         Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
@@ -52,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
+        Route::post('/{bookSlug}/chapter/{chapterSlug}/page/create/guest', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
         Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
