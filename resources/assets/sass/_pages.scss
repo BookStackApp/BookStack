@@ -71,6 +71,18 @@
     max-width: 100%;
     height: auto !important;
   }
+
+  // diffs
+  ins,
+  del {
+    text-decoration: none;
+  }
+  ins {
+    background: #dbffdb;
+  }
+  del {
+    background: #FFECEC;
+  }
 }
 
 // Page content pointers

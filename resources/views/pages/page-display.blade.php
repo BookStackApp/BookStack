@@ -24,5 +24,9 @@
 
     <div style="clear:left;"></div>
 
-    {!! $page->html !!}
+    @if (isset($diff) && $diff)
+        {!! $diff !!}
+    @else
+        {!! $page->html !!}
+    @endif
 </div>
