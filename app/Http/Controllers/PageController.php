@@ -336,13 +336,36 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $revision = $this->pageRepo->getRevisionById($revisionId);
-        
-        $next = $revision->getNext() ?: $page;
-        $diff = (new Htmldiff)->diff($revision->html, $next->html);
 
         $page->fill($revision->toArray());
         $this->setPageTitle('Page Revision For ' . $page->getShortName());
         
+        return view('pages/revision', [
+            'page' => $page,
+            'book' => $book,
+        ]);
+    }
+
+    /**
+     * Shows the changes of a single revision
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param int $revisionId
+     * @return \Illuminate\View\View
+     */
+    public function showRevisionChanges($bookSlug, $pageSlug, $revisionId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $revision = $this->pageRepo->getRevisionById($revisionId);
+
+        $prev = $revision->getPrevious();
+        $prevContent = ($prev === null) ? '' : $prev->html;
+        $diff = (new Htmldiff)->diff($prevContent, $revision->html);
+
+        $page->fill($revision->toArray());
+        $this->setPageTitle('Page Revision For ' . $page->getShortName());
+
         return view('pages/revision', [
             'page' => $page,
             'book' => $book,
