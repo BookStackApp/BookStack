@@ -15,7 +15,9 @@
                 </div>
                 <div class="col-sm-4">
                     <p></p>
-                    <a href="{{ baseUrl("/settings/users/{$user->id}/delete") }}" class="neg button float right">Delete User</a>
+                    @if($authMethod !== 'system')
+                        <a href="{{ baseUrl("/settings/users/{$user->id}/delete") }}" class="neg button float right">Delete User</a>
+                    @endif
                 </div>
             </div>
             <div class="row">
