@@ -300,6 +300,7 @@ module.exports = function (ngApp, events) {
         var isEdit = pageId !== 0;
         var autosaveFrequency = 30; // AutoSave interval in seconds.
         var isMarkdown = $attrs.editorType === 'markdown';
+        $scope.draftsEnabled = $attrs.draftsEnabled === 'true';
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
 
@@ -317,7 +318,7 @@ module.exports = function (ngApp, events) {
             html: false
         };
 
-        if (isEdit) {
+        if (isEdit && $scope.draftsEnabled) {
             setTimeout(() => {
                 startAutoSave();
             }, 1000);
@@ -366,6 +367,7 @@ module.exports = function (ngApp, events) {
          * Save a draft update into the system via an AJAX request.
          */
         function saveDraft() {
+            if (!$scope.draftsEnabled) return;
             var data = {
                 name: $('#name').val(),
                 html: isMarkdown ? $sce.getTrustedHtml($scope.displayContent) : $scope.editContent

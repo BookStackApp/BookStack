@@ -1,7 +1,9 @@
 
-<div class="page-editor flex-fill flex" ng-controller="PageEditController" editor-type="{{ setting('app-editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
+<div class="page-editor flex-fill flex" ng-controller="PageEditController" drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}" editor-type="{{ setting('app-editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
 
     {{ csrf_field() }}
+
+    {{--Header Bar--}}
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
@@ -13,7 +15,7 @@
                 </div>
                 <div class="col-sm-4 faded text-center">
 
-                    <div dropdown class="dropdown-container draft-display">
+                    <div ng-show="draftsEnabled" dropdown class="dropdown-container draft-display">
                         <a dropdown-toggle class="text-primary text-button"><span class="faded-text" ng-bind="draftText"></span>&nbsp; <i class="zmdi zmdi-more-vert"></i></a>
                         <i class="zmdi zmdi-check-circle text-pos draft-notification" ng-class="{visible: draftUpdated}"></i>
                         <ul>
@@ -48,13 +50,17 @@
         </div>
     </div>
 
+    {{--Title input--}}
     <div class="title-input page-title clearfix" ng-non-bindable>
         <div class="input">
             @include('form/text', ['name' => 'name', 'placeholder' => 'Page Title'])
         </div>
     </div>
 
+    {{--Editors--}}
     <div class="edit-area flex-fill flex">
+
+        {{--WYSIWYG Editor--}}
         @if(setting('app-editor') === 'wysiwyg')
             <div tinymce="editorOptions" mce-change="editorChange" mce-model="editContent" class="flex-fill flex">
                 <textarea id="html-editor"   name="html" rows="5" ng-non-bindable
@@ -66,6 +72,7 @@
             @endif
         @endif
 
+        {{--Markdown Editor--}}
         @if(setting('app-editor') === 'markdown')
             <div id="markdown-editor" markdown-editor class="flex-fill flex">
 
@@ -102,7 +109,7 @@
             @if($errors->has('markdown'))
                 <div class="text-neg text-small">{{ $errors->first('markdown') }}</div>
             @endif
-
         @endif
+
     </div>
 </div>

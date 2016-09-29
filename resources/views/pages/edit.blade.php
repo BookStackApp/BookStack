@@ -23,10 +23,4 @@
     @include('partials/image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
     @include('partials/entity-selector-popup')
 
-    <script>
-        (function() {
-
-        })();
-    </script>
-
 @stop
