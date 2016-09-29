@@ -25,32 +25,26 @@ class PageRevision extends Model
 
     /**
      * Get the url for this revision.
+     * @param null|string $path
      * @return string
      */
-    public function getUrl()
+    public function getUrl($path = null)
     {
-        return $this->page->getUrl() . '/revisions/' . $this->id;
+        $url = $this->page->getUrl() . '/revisions/' . $this->id;
+        if ($path) return $url . '/' . trim($path, '/');
+        return $url;
     }
 
     /**
-     * Get previous revision
-     * @return \BookStack\PageRevision
+     * Get the previous revision for the same page if existing
+     * @return \BookStack\PageRevision|null
      */
     public function getPrevious()
     {
-        if ($id = PageRevision::where('id', '<', $this->id)->max('id')) {
-            return PageRevision::find($id);
+        if ($id = static::where('page_id', '=', $this->page_id)->where('id', '<', $this->id)->max('id')) {
+            return static::find($id);
         }
+        return null;
     }
 
-    /**
-     * Get next revision
-     * @return \BookStack\PageRevision
-     */
-    public function getNext()
-    {
-        if ($id = PageRevision::where('id', '>', $this->id)->min('id')) {
-            return PageRevision::find($id);
-        }
-    }
 }

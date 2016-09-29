@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Revisions
         Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageController@showRevisionChanges');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
 
         // Chapters

@@ -548,7 +548,7 @@ class PageRepo extends EntityRepo
     /**
      * Gets a single revision via it's id.
      * @param $id
-     * @return mixed
+     * @return PageRevision
      */
     public function getRevisionById($id)
     {

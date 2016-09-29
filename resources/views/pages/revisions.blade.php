@@ -32,11 +32,11 @@
 
             <table class="table">
                 <tr>
-                    <th width="25%">Name</th>
-                    <th colspan="2" width="10%">Created By</th>
+                    <th width="23%">Name</th>
+                    <th colspan="2" width="8%">Created By</th>
                     <th width="15%">Revision Date</th>
                     <th width="25%">Changelog</th>
-                    <th width="15%">Actions</th>
+                    <th width="20%">Actions</th>
                 </tr>
                 @foreach($page->revisions as $index => $revision)
                     <tr>
@@ -49,15 +49,18 @@
                         <td> @if($revision->createdBy) {{ $revision->createdBy->name }} @else Deleted User @endif</td>
                         <td><small>{{ $revision->created_at->format('jS F, Y H:i:s') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
                         <td>{{ $revision->summary }}</td>
-                        @if ($index !== 0)
-                            <td>
+                        <td>
+                            <a href="{{ $revision->getUrl('changes') }}" target="_blank">Changes</a>
+                            <span class="text-muted">&nbsp;|&nbsp;</span>
+
+                            @if ($index === 0)
+                                <a target="_blank" href="{{ $page->getUrl() }}"><i>Current Version</i></a>
+                            @else
                                 <a href="{{ $revision->getUrl() }}" target="_blank">Preview</a>
                                 <span class="text-muted">&nbsp;|&nbsp;</span>
-                                <a href="{{ $revision->getUrl() }}/restore">Restore</a>
-                            </td>
-                        @else
-                            <td><a target="_blank" href="{{ $page->getUrl() }}"><i>Current Version</i></a></td>
-                        @endif
+                                <a href="{{ $revision->getUrl('restore') }}" target="_blank">Restore</a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </table>
