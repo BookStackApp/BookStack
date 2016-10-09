@@ -4,6 +4,7 @@
     <div class="tabs primary-background-light">
         <span toolbox-toggle><i class="zmdi zmdi-caret-left-circle"></i></span>
         <span tab-button="tags" title="Page Tags" class="active"><i class="zmdi zmdi-tag"></i></span>
+        <span tab-button="files" title="Attachments"><i class="zmdi zmdi-attachment"></i></span>
     </div>
 
     <div tab-content="tags" ng-controller="PageTagController" page-id="{{ $page->id or 0 }}">
@@ -28,6 +29,24 @@
                         <button type="button" class="text-button">Add another tag</button>
                     </td>
                     <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div tab-content="files" ng-controller="PageAttachmentController" page-id="{{ $page->id or 0 }}">
+        <h4>Attached Files</h4>
+        <div class="padded files">
+            <p class="muted small">Upload some files to display on your page. This are visible in the page sidebar.</p>
+            <drop-zone upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
+
+            <table class="no-style" tag-autosuggestions style="width: 100%;">
+                <tbody ui-sortable="sortOptions" ng-model="files" >
+                <tr ng-repeat="file in files track by $index">
+                    <td width="20" ><i class="handle zmdi zmdi-menu"></i></td>
+                    <td ng-bind="file.name"></td>
+                    <td width="10" class="text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></td>
                 </tr>
                 </tbody>
             </table>

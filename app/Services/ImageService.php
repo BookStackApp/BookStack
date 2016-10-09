@@ -9,20 +9,13 @@ use Intervention\Image\ImageManager;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Setting;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ImageService
+class ImageService extends UploadService
 {
 
     protected $imageTool;
-    protected $fileSystem;
     protected $cache;
-
-    /**
-     * @var FileSystemInstance
-     */
-    protected $storageInstance;
     protected $storageUrl;
 
     /**
@@ -34,8 +27,8 @@ class ImageService
     public function __construct(ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
     {
         $this->imageTool = $imageTool;
-        $this->fileSystem = $fileSystem;
         $this->cache = $cache;
+        parent::__construct($fileSystem);
     }
 
     /**
@@ -88,6 +81,9 @@ class ImageService
         if ($secureUploads) $imageName = str_random(16) . '-' . $imageName;
 
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
+
+        if ($this->isLocal()) $imagePath = '/public' . $imagePath;
+
         while ($storage->exists($imagePath . $imageName)) {
             $imageName = str_random(3) . $imageName;
         }
@@ -99,6 +95,8 @@ class ImageService
         } catch (Exception $e) {
             throw new ImageUploadException('Image Path ' . $fullPath . ' is not writable by the server.');
         }
+
+        if ($this->isLocal()) $fullPath = str_replace_first('/public', '', $fullPath);
 
         $imageDetails = [
             'name'       => $imageName,
@@ -120,6 +118,16 @@ class ImageService
     }
 
     /**
+     * Get the storage path, Dependant of storage type.
+     * @param Image $image
+     * @return mixed|string
+     */
+    protected function getPath(Image $image)
+    {
+        return ($this->isLocal()) ? ('public/' . $image->path) : $image->path;
+    }
+
+    /**
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
@@ -135,7 +143,8 @@ class ImageService
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
-        $thumbFilePath = dirname($image->path) . $thumbDirName . basename($image->path);
+        $imagePath = $this->getPath($image);
+        $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
 
         if ($this->cache->has('images-' . $image->id . '-' . $thumbFilePath) && $this->cache->get('images-' . $thumbFilePath)) {
             return $this->getPublicUrl($thumbFilePath);
@@ -148,7 +157,7 @@ class ImageService
         }
 
         try {
-            $thumb = $this->imageTool->make($storage->get($image->path));
+            $thumb = $this->imageTool->make($storage->get($imagePath));
         } catch (Exception $e) {
             if ($e instanceof \ErrorException || $e instanceof NotSupportedException) {
                 throw new ImageUploadException('The server cannot create thumbnails. Please check you have the GD PHP extension installed.');
@@ -183,8 +192,8 @@ class ImageService
     {
         $storage = $this->getStorage();
 
-        $imageFolder = dirname($image->path);
-        $imageFileName = basename($image->path);
+        $imageFolder = dirname($this->getPath($image));
+        $imageFileName = basename($this->getPath($image));
         $allImages = collect($storage->allFiles($imageFolder));
 
         $imagesToDelete = $allImages->filter(function ($imagePath) use ($imageFileName) {
@@ -223,34 +232,8 @@ class ImageService
     }
 
     /**
-     * Get the storage that will be used for storing images.
-     * @return FileSystemInstance
-     */
-    private function getStorage()
-    {
-        if ($this->storageInstance !== null) return $this->storageInstance;
-
-        $storageType = config('filesystems.default');
-        $this->storageInstance = $this->fileSystem->disk($storageType);
-
-        return $this->storageInstance;
-    }
-
-    /**
-     * Check whether or not a folder is empty.
-     * @param $path
-     * @return int
-     */
-    private function isFolderEmpty($path)
-    {
-        $files = $this->getStorage()->files($path);
-        $folders = $this->getStorage()->directories($path);
-        return count($files) === 0 && count($folders) === 0;
-    }
-
-    /**
      * Gets a public facing url for an image by checking relevant environment variables.
-     * @param $filePath
+     * @param string $filePath
      * @return string
      */
     private function getPublicUrl($filePath)
@@ -272,6 +255,8 @@ class ImageService
 
             $this->storageUrl = $storageUrl;
         }
+
+        if ($this->isLocal()) $filePath = str_replace_first('public/', '', $filePath);
 
         return ($this->storageUrl == false ? rtrim(baseUrl(''), '/') : rtrim($this->storageUrl, '/')) . $filePath;
     }

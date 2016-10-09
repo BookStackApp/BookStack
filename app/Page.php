@@ -55,6 +55,15 @@ class Page extends Entity
     }
 
     /**
+     * Get the files attached to this page.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class, 'uploaded_to')->orderBy('order', 'asc');
+    }
+
+    /**
      * Get the url for this page.
      * @param string|bool $path
      * @return string

@@ -43,10 +43,6 @@
   }
 }
 
-//body.ie .popup-body {
-//  min-height: 100%;
-//}
-
 .corner-button {
   position: absolute;
   top: 0;
@@ -82,7 +78,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   min-height: 70vh;
 }
 
-#image-manager .dropzone-container {
+.dropzone-container {
   position: relative;
   border: 3px dashed #DDD;
 }

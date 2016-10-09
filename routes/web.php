@@ -87,6 +87,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 
+    // File routes
+    Route::post('/files/upload', 'FileController@upload');
+    Route::get('/files/get/page/{pageId}', 'FileController@getFilesForPage');
+    Route::put('/files/sort/page/{pageId}', 'FileController@sortFilesForPage');
+
     // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');
     Route::get('/ajax/page/{id}', 'PageController@getPageAjax');
