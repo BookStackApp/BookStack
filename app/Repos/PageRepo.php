@@ -48,7 +48,7 @@ class PageRepo extends EntityRepo
      * Get a page via a specific ID.
      * @param $id
      * @param bool $allowDrafts
-     * @return mixed
+     * @return Page
      */
     public function getById($id, $allowDrafts = false)
     {

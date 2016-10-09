@@ -56,7 +56,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => public_path(),
+            'root'   => base_path(),
         ],
 
         'ftp' => [

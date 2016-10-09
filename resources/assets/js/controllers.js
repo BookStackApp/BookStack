@@ -460,7 +460,7 @@ module.exports = function (ngApp, events) {
              * Get all tags for the current book and add into scope.
              */
             function getTags() {
-                let url = window.baseUrl('/ajax/tags/get/page/' + pageId);
+                let url = window.baseUrl(`/ajax/tags/get/page/${pageId}`);
                 $http.get(url).then((responseData) => {
                     $scope.tags = responseData.data;
                     addEmptyTag();
@@ -525,6 +525,74 @@ module.exports = function (ngApp, events) {
             $scope.removeTag = function(tag) {
                 let cIndex = $scope.tags.indexOf(tag);
                 $scope.tags.splice(cIndex, 1);
+            };
+
+        }]);
+
+
+    ngApp.controller('PageAttachmentController', ['$scope', '$http', '$attrs',
+        function ($scope, $http, $attrs) {
+
+            const pageId = $scope.uploadedTo = $attrs.pageId;
+            let currentOrder = '';
+            $scope.files = [];
+
+            // Angular-UI-Sort options
+            $scope.sortOptions = {
+                handle: '.handle',
+                items: '> tr',
+                containment: "parent",
+                axis: "y",
+                stop: sortUpdate,
+            };
+
+            /**
+             * Event listener for sort changes.
+             * Updates the file ordering on the server.
+             * @param event
+             * @param ui
+             */
+            function sortUpdate(event, ui) {
+                let newOrder = $scope.files.map(file => {return file.id}).join(':');
+                if (newOrder === currentOrder) return;
+
+                currentOrder = newOrder;
+                $http.put(`/files/sort/page/${pageId}`, {files: $scope.files}).then(resp => {
+                    events.emit('success', resp.data.message);
+                });
+            }
+
+            /**
+             * Used by dropzone to get the endpoint to upload to.
+             * @returns {string}
+             */
+            $scope.getUploadUrl = function () {
+                return window.baseUrl('/files/upload');
+            };
+
+            /**
+             * Get files for the current page from the server.
+             */
+            function getFiles() {
+                let url = window.baseUrl(`/files/get/page/${pageId}`)
+                $http.get(url).then(responseData => {
+                    $scope.files = responseData.data;
+                    currentOrder = responseData.data.map(file => {return file.id}).join(':');
+                });
+            }
+            getFiles();
+
+            /**
+             * Runs on file upload, Adds an file to local file list
+             * and shows a success message to the user.
+             * @param file
+             * @param data
+             */
+            $scope.uploadSuccess = function (file, data) {
+                $scope.$apply(() => {
+                    $scope.files.unshift(data);
+                });
+                events.emit('success', 'File uploaded');
             };
 
         }]);
