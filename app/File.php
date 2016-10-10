@@ -7,12 +7,20 @@ class File extends Ownable
 
     /**
      * Get the page this file was uploaded to.
-     * @return mixed
+     * @return Page
      */
     public function page()
     {
         return $this->belongsTo(Page::class, 'uploaded_to');
     }
 
+    /**
+     * Get the url of this file.
+     * @return string
+     */
+    public function getUrl()
+    {
+        return '/files/' . $this->id;
+    }
 
 }

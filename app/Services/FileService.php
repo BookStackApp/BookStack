@@ -4,11 +4,23 @@
 use BookStack\Exceptions\FileUploadException;
 use BookStack\File;
 use Exception;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileService extends UploadService
 {
+
+    /**
+     * Get a file from storage.
+     * @param File $file
+     * @return string
+     */
+    public function getFile(File $file)
+    {
+        $filePath = $this->getStorageBasePath() . $file->path;
+        return $this->getStorage()->get($filePath);
+    }
 
     /**
      * Store a new file upon user upload.
@@ -74,6 +86,24 @@ class FileService extends UploadService
         foreach ($fileList as $index => $file) {
             File::where('uploaded_to', '=', $pageId)->where('id', '=', $file['id'])->update(['order' => $index]);
         }
+    }
+
+    /**
+     * Delete a file and any empty folders the deletion leaves.
+     * @param File $file
+     */
+    public function deleteFile(File $file)
+    {
+        $storedFilePath = $this->getStorageBasePath() . $file->path;
+        $storage = $this->getStorage();
+        $dirPath = dirname($storedFilePath);
+
+        $storage->delete($storedFilePath);
+        if (count($storage->allFiles($dirPath)) === 0) {
+            $storage->deleteDirectory($dirPath);
+        }
+
+        $file->delete();
     }
 
 }

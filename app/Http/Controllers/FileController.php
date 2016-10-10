@@ -1,10 +1,7 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use BookStack\Exceptions\FileUploadException;
 use BookStack\File;
-use BookStack\Page;
 use BookStack\Repos\PageRepo;
 use BookStack\Services\FileService;
 use Illuminate\Http\Request;
@@ -37,16 +34,18 @@ class FileController extends Controller
      */
     public function upload(Request $request)
     {
-        // TODO - Add file upload permission check
-        // TODO - ensure user has permission to edit relevant page.
         // TODO - ensure uploads are deleted on page delete.
-
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id'
         ]);
 
-        $uploadedFile = $request->file('file');
         $pageId = $request->get('uploaded_to');
+        $page = $this->pageRepo->getById($pageId);
+
+        $this->checkPermission('file-create-all');
+        $this->checkOwnablePermission('page-update', $page);
+
+        $uploadedFile = $request->file('file');
 
         try {
             $file = $this->fileService->saveNewUpload($uploadedFile, $pageId);
@@ -62,10 +61,10 @@ class FileController extends Controller
      * @param $pageId
      * @return mixed
      */
-    public function getFilesForPage($pageId)
+    public function listForPage($pageId)
     {
-        // TODO - check view permission on page?
         $page = $this->pageRepo->getById($pageId);
+        $this->checkOwnablePermission('page-view', $page);
         return response()->json($page->files);
     }
 
@@ -75,17 +74,47 @@ class FileController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function sortFilesForPage($pageId, Request $request)
+    public function sortForPage($pageId, Request $request)
     {
         $this->validate($request, [
             'files' => 'required|array',
             'files.*.id' => 'required|integer',
         ]);
         $page = $this->pageRepo->getById($pageId);
+        $this->checkOwnablePermission('page-update', $page);
+
         $files = $request->get('files');
         $this->fileService->updateFileOrderWithinPage($files, $pageId);
         return response()->json(['message' => 'File order updated']);
     }
 
+    /**
+     * Get a file from storage.
+     * @param $fileId
+     */
+    public function get($fileId)
+    {
+        $file = $this->file->findOrFail($fileId);
+        $page = $this->pageRepo->getById($file->uploaded_to);
+        $this->checkOwnablePermission('page-view', $page);
 
+        $fileContents = $this->fileService->getFile($file);
+        return response($fileContents, 200, [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="'. $file->name .'"'
+        ]);
+    }
+
+    /**
+     * Delete a specific file in the system.
+     * @param $fileId
+     * @return mixed
+     */
+    public function delete($fileId)
+    {
+        $file = $this->file->findOrFail($fileId);
+        $this->checkOwnablePermission($file, 'file-delete');
+        $this->fileService->deleteFile($file);
+        return response()->json(['message' => 'File deleted']);
+    }
 }

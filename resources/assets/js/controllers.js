@@ -575,9 +575,9 @@ module.exports = function (ngApp, events) {
              */
             function getFiles() {
                 let url = window.baseUrl(`/files/get/page/${pageId}`)
-                $http.get(url).then(responseData => {
-                    $scope.files = responseData.data;
-                    currentOrder = responseData.data.map(file => {return file.id}).join(':');
+                $http.get(url).then(resp => {
+                    $scope.files = resp.data;
+                    currentOrder = resp.data.map(file => {return file.id}).join(':');
                 });
             }
             getFiles();
@@ -593,6 +593,17 @@ module.exports = function (ngApp, events) {
                     $scope.files.unshift(data);
                 });
                 events.emit('success', 'File uploaded');
+            };
+
+            /**
+             * Delete a file from the server and, on success, the local listing.
+             * @param file
+             */
+            $scope.deleteFile = function(file) {
+                  $http.delete(`/files/${file.id}`).then(resp => {
+                      events.emit('success', resp.data.message);
+                      $scope.files.splice($scope.files.indexOf(file), 1);
+                  });
             };
 
         }]);
