@@ -1,6 +1,15 @@
 
 <div class="book-tree" ng-non-bindable>
 
+    @if ($page->files->count() > 0)
+        <h6 class="text-muted">Attachments</h6>
+        @foreach($page->files as $file)
+            <div class="attachment">
+                <a href="{{ $file->getUrl() }}"><i class="zmdi zmdi-file"></i> {{ $file->name }}</a>
+            </div>
+        @endforeach
+    @endif
+
     @if (isset($pageNav) && $pageNav)
         <h6 class="text-muted">Page Navigation</h6>
         <div class="sidebar-page-nav menu">
@@ -10,8 +19,6 @@
                 </li>
             @endforeach
         </div>
-
-
     @endif
 
     <h6 class="text-muted">Book Navigation</h6>

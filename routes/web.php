@@ -88,9 +88,11 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // File routes
+    Route::get('/files/{id}', 'FileController@get');
     Route::post('/files/upload', 'FileController@upload');
-    Route::get('/files/get/page/{pageId}', 'FileController@getFilesForPage');
-    Route::put('/files/sort/page/{pageId}', 'FileController@sortFilesForPage');
+    Route::get('/files/get/page/{pageId}', 'FileController@listForPage');
+    Route::put('/files/sort/page/{pageId}', 'FileController@sortForPage');
+    Route::delete('/files/{id}', 'FileController@delete');
 
     // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');

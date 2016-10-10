@@ -46,7 +46,7 @@
                 <tr ng-repeat="file in files track by $index">
                     <td width="20" ><i class="handle zmdi zmdi-menu"></i></td>
                     <td ng-bind="file.name"></td>
-                    <td width="10" class="text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></td>
+                    <td width="10" ng-click="deleteFile(file)" class="text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></td>
                 </tr>
                 </tbody>
             </table>

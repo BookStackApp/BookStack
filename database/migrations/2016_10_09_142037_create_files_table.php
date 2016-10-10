@@ -28,6 +28,26 @@ class CreateFilesTable extends Migration
             $table->index('uploaded_to');
             $table->timestamps();
         });
+
+        // Get roles with permissions we need to change
+        $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
+
+        // Create & attach new entity permissions
+        $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
+        $entity = 'File';
+        foreach ($ops as $op) {
+            $permissionId = DB::table('role_permissions')->insertGetId([
+                'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+                'display_name' => $op . ' ' . $entity . 's',
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+            ]);
+            DB::table('permission_role')->insert([
+                'role_id' => $adminRoleId,
+                'permission_id' => $permissionId
+            ]);
+        }
+
     }
 
     /**
@@ -38,5 +58,17 @@ class CreateFilesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('files');
+
+        // Get roles with permissions we need to change
+        $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
+
+        // Create & attach new entity permissions
+        $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
+        $entity = 'File';
+        foreach ($ops as $op) {
+            $permName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
+            $permission = DB::table('role_permissions')->where('name', '=', $permName)->get();
+            DB::table('permission_role')->where('permission_id', '=', $permission->id)->delete();
+        }
     }
 }
