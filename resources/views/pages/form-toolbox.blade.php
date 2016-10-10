@@ -41,6 +41,19 @@
             <p class="muted small">Upload some files to display on your page. This are visible in the page sidebar.</p>
             <drop-zone upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
 
+            <hr class="even">
+
+            <div class="form-group">
+                <label for="attachment-via-link">File Name</label>
+                <input type="text" placeholder="File name" ng-model="fileName">
+            </div>
+            <div class="form-group">
+                <label for="attachment-via-link">Link to file</label>
+                <input type="text" placeholder="File url" ng-model="fileLink">
+            </div>
+            <button type="button" ng-click="attachLinkSubmit(fileName, fileLink)" class="button pos">Attach</button>
+
+
             <table class="no-style" tag-autosuggestions style="width: 100%;">
                 <tbody ui-sortable="sortOptions" ng-model="files" >
                 <tr ng-repeat="file in files track by $index">

@@ -606,6 +606,18 @@ module.exports = function (ngApp, events) {
                   });
             };
 
+            $scope.attachLinkSubmit = function(fileName, fileLink) {
+                $http.post('/files/link', {
+                    uploaded_to: pageId,
+                    name: fileName,
+                    link: fileLink
+                }).then(resp => {
+                    $scope.files.unshift(resp.data);
+                    events.emit('success', 'Link attached');
+                });
+                $scope.fileName = $scope.fileLink = '';
+            };
+
         }]);
 
 };
