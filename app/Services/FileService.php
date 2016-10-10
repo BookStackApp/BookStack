@@ -67,6 +67,27 @@ class FileService extends UploadService
     }
 
     /**
+     * Save a new File attachment from a given link and name.
+     * @param string $name
+     * @param string $link
+     * @param int $page_id
+     * @return File
+     */
+    public function saveNewFromLink($name, $link, $page_id)
+    {
+        $largestExistingOrder = File::where('uploaded_to', '=', $page_id)->max('order');
+        return File::forceCreate([
+            'name' => $name,
+            'path' => $link,
+            'external' => true,
+            'uploaded_to' => $page_id,
+            'created_by' => user()->id,
+            'updated_by' => user()->id,
+            'order' => $largestExistingOrder + 1
+        ]);
+    }
+
+    /**
      * Get the file storage base path, amended for storage type.
      * This allows us to keep a generic path in the database.
      * @return string
@@ -94,6 +115,11 @@ class FileService extends UploadService
      */
     public function deleteFile(File $file)
     {
+        if ($file->external) {
+            $file->delete();
+            return;
+        }
+        
         $storedFilePath = $this->getStorageBasePath() . $file->path;
         $storage = $this->getStorage();
         $dirPath = dirname($storedFilePath);

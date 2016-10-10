@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     // File routes
     Route::get('/files/{id}', 'FileController@get');
     Route::post('/files/upload', 'FileController@upload');
+    Route::post('/files/link', 'FileController@attachLink');
     Route::get('/files/get/page/{pageId}', 'FileController@listForPage');
     Route::put('/files/sort/page/{pageId}', 'FileController@sortForPage');
     Route::delete('/files/{id}', 'FileController@delete');

@@ -71,8 +71,13 @@ abstract class Controller extends BaseController
      */
     protected function showPermissionError()
     {
-        Session::flash('error', trans('errors.permission'));
-        $response = request()->wantsJson() ? response()->json(['error' => trans('errors.permissionJson')], 403) : redirect('/');
+        if (request()->wantsJson()) {
+            $response = response()->json(['error' => trans('errors.permissionJson')], 403);
+        } else {
+            $response = redirect('/');
+            session()->flash('error', trans('errors.permission'));
+        }
+
         throw new HttpResponseException($response);
     }
 
@@ -83,7 +88,7 @@ abstract class Controller extends BaseController
      */
     protected function checkPermission($permissionName)
     {
-        if (!$this->currentUser || !$this->currentUser->can($permissionName)) {
+        if (!user() || !user()->can($permissionName)) {
             $this->showPermissionError();
         }
         return true;

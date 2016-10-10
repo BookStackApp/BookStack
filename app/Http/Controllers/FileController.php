@@ -36,7 +36,8 @@ class FileController extends Controller
     {
         // TODO - ensure uploads are deleted on page delete.
         $this->validate($request, [
-            'uploaded_to' => 'required|integer|exists:pages,id'
+            'uploaded_to' => 'required|integer|exists:pages,id',
+            'file' => 'required|file'
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -52,6 +53,32 @@ class FileController extends Controller
         } catch (FileUploadException $e) {
             return response($e->getMessage(), 500);
         }
+
+        return response()->json($file);
+    }
+
+    /**
+     * Attach a link to a page as a file.
+     * @param Request $request
+     * @return mixed
+     */
+    public function attachLink(Request $request)
+    {
+        $this->validate($request, [
+            'uploaded_to' => 'required|integer|exists:pages,id',
+            'name' => 'string',
+            'link' =>  'url'
+        ]);
+
+        $pageId = $request->get('uploaded_to');
+        $page = $this->pageRepo->getById($pageId);
+
+        $this->checkPermission('file-create-all');
+        $this->checkOwnablePermission('page-update', $page);
+
+        $fileName = $request->get('name');
+        $link = $request->get('link');
+        $file = $this->fileService->saveNewFromLink($fileName, $link, $pageId);
 
         return response()->json($file);
     }
@@ -85,7 +112,7 @@ class FileController extends Controller
 
         $files = $request->get('files');
         $this->fileService->updateFileOrderWithinPage($files, $pageId);
-        return response()->json(['message' => 'File order updated']);
+        return response()->json(['message' => 'Attachment order updated']);
     }
 
     /**
@@ -97,6 +124,10 @@ class FileController extends Controller
         $file = $this->file->findOrFail($fileId);
         $page = $this->pageRepo->getById($file->uploaded_to);
         $this->checkOwnablePermission('page-view', $page);
+
+        if ($file->external) {
+            return redirect($file->path);
+        }
 
         $fileContents = $this->fileService->getFile($file);
         return response($fileContents, 200, [
@@ -113,8 +144,8 @@ class FileController extends Controller
     public function delete($fileId)
     {
         $file = $this->file->findOrFail($fileId);
-        $this->checkOwnablePermission($file, 'file-delete');
+        $this->checkOwnablePermission('file-delete', $file);
         $this->fileService->deleteFile($file);
-        return response()->json(['message' => 'File deleted']);
+        return response()->json(['message' => 'Attachment deleted']);
     }
 }
