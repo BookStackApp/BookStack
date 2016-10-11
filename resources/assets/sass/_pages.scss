@@ -228,21 +228,6 @@
     padding-top: $-s;
     position: relative;
   }
-  button.pos {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    width: 100%;
-    padding: $-s;
-    height: 45px;
-    border: 0;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    &:hover{
-      box-shadow: none;
-    }
-  }
   .handle {
     user-select: none;
     cursor: move;
