@@ -58,6 +58,70 @@ class FileController extends Controller
     }
 
     /**
+     * Update an uploaded file.
+     * @param int $fileId
+     * @param Request $request
+     * @return mixed
+     */
+    public function uploadUpdate($fileId, Request $request)
+    {
+        $this->validate($request, [
+            'uploaded_to' => 'required|integer|exists:pages,id',
+            'file' => 'required|file'
+        ]);
+
+        $pageId = $request->get('uploaded_to');
+        $page = $this->pageRepo->getById($pageId);
+        $file = $this->file->findOrFail($fileId);
+
+        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('file-create', $file);
+        
+        if (intval($pageId) !== intval($file->uploaded_to)) {
+            return $this->jsonError('Page mismatch during attached file update');
+        }
+
+        $uploadedFile = $request->file('file');
+
+        try {
+            $file = $this->fileService->saveUpdatedUpload($uploadedFile, $file);
+        } catch (FileUploadException $e) {
+            return response($e->getMessage(), 500);
+        }
+
+        return response()->json($file);
+    }
+
+    /**
+     * Update the details of an existing file.
+     * @param $fileId
+     * @param Request $request
+     * @return File|mixed
+     */
+    public function update($fileId, Request $request)
+    {
+        $this->validate($request, [
+            'uploaded_to' => 'required|integer|exists:pages,id',
+            'name' => 'string|max:255',
+            'link' =>  'url'
+        ]);
+
+        $pageId = $request->get('uploaded_to');
+        $page = $this->pageRepo->getById($pageId);
+        $file = $this->file->findOrFail($fileId);
+
+        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('file-create', $file);
+
+        if (intval($pageId) !== intval($file->uploaded_to)) {
+            return $this->jsonError('Page mismatch during attachment update');
+        }
+
+        $file = $this->fileService->updateFile($file, $request->all());
+        return $file;
+    }
+
+    /**
      * Attach a link to a page as a file.
      * @param Request $request
      * @return mixed
@@ -66,8 +130,8 @@ class FileController extends Controller
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
-            'name' => 'string',
-            'link' =>  'url'
+            'name' => 'string|max:255',
+            'link' =>  'url|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');

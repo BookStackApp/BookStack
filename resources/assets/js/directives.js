@@ -116,6 +116,7 @@ module.exports = function (ngApp, events) {
                 uploadedTo: '@'
             },
             link: function (scope, element, attrs) {
+                if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
                 var dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
                     url: scope.uploadUrl,
                     init: function () {
