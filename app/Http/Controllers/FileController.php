@@ -34,7 +34,6 @@ class FileController extends Controller
      */
     public function upload(Request $request)
     {
-        // TODO - ensure uploads are deleted on page delete.
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
             'file' => 'required|file'
