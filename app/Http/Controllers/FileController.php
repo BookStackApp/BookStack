@@ -101,8 +101,8 @@ class FileController extends Controller
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
-            'name' => 'string|max:255',
-            'link' =>  'url'
+            'name' => 'required|string|min:1|max:255',
+            'link' =>  'url|min:1|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -129,8 +129,8 @@ class FileController extends Controller
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
-            'name' => 'string|max:255',
-            'link' =>  'url|max:255'
+            'name' => 'required|string|min:1|max:255',
+            'link' =>  'required|url|min:1|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');

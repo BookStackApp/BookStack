@@ -5,7 +5,7 @@
         <h6 class="text-muted">Attachments</h6>
         @foreach($page->files as $file)
             <div class="attachment">
-                <a href="{{ $file->getUrl() }}" @if($file->external) target="_blank" @endif><i class="zmdi zmdi-file"></i> {{ $file->name }}</a>
+                <a href="{{ $file->getUrl() }}" @if($file->external) target="_blank" @endif><i class="zmdi zmdi-{{ $file->external ? 'open-in-new' : 'file' }}"></i> {{ $file->name }}</a>
             </div>
         @endforeach
     @endif

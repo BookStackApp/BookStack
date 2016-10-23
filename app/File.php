@@ -30,7 +30,7 @@ class File extends Ownable
      */
     public function getUrl()
     {
-        return '/files/' . $this->id;
+        return baseUrl('/files/' . $this->id);
     }
 
 }
