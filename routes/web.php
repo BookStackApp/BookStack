@@ -87,6 +87,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 
+    // File routes
+    Route::get('/files/{id}', 'FileController@get');
+    Route::post('/files/upload', 'FileController@upload');
+    Route::post('/files/upload/{id}', 'FileController@uploadUpdate');
+    Route::post('/files/link', 'FileController@attachLink');
+    Route::put('/files/{id}', 'FileController@update');
+    Route::get('/files/get/page/{pageId}', 'FileController@listForPage');
+    Route::put('/files/sort/page/{pageId}', 'FileController@sortForPage');
+    Route::delete('/files/{id}', 'FileController@delete');
+
     // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');
     Route::get('/ajax/page/{id}', 'PageController@getPageAjax');

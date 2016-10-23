@@ -5,6 +5,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Services\FileService;
 use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;
@@ -48,7 +49,7 @@ class PageRepo extends EntityRepo
      * Get a page via a specific ID.
      * @param $id
      * @param bool $allowDrafts
-     * @return mixed
+     * @return Page
      */
     public function getById($id, $allowDrafts = false)
     {
@@ -633,6 +634,13 @@ class PageRepo extends EntityRepo
         $page->revisions()->delete();
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);
+
+        // Delete AttachedFiles
+        $fileService = app(FileService::class);
+        foreach ($page->files as $file) {
+            $fileService->deleteFile($file);
+        }
+
         $page->delete();
     }
 
