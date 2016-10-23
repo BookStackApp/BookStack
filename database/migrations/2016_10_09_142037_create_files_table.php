@@ -17,6 +17,7 @@ class CreateFilesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('path');
+            $table->string('extension', 20);
             $table->integer('uploaded_to');
 
             $table->boolean('external');
@@ -59,16 +60,12 @@ class CreateFilesTable extends Migration
     {
         Schema::dropIfExists('files');
 
-        // Get roles with permissions we need to change
-        $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
-
         // Create & attach new entity permissions
         $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
         $entity = 'File';
         foreach ($ops as $op) {
             $permName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
-            $permission = DB::table('role_permissions')->where('name', '=', $permName)->get();
-            DB::table('permission_role')->where('permission_id', '=', $permission->id)->delete();
+            DB::table('role_permissions')->where('name', '=', $permName)->delete();
         }
     }
 }
