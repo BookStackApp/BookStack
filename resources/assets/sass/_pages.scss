@@ -150,7 +150,6 @@
   background-color: #FFF;
   border: 1px solid #DDD;
   right: $-xl*2;
-  z-index: 99;
   width: 48px;
   overflow: hidden;
   align-items: stretch;
@@ -201,7 +200,7 @@
     color: #444;
     background-color: rgba(0, 0, 0, 0.1);
   }
-  div[tab-content] {
+  div[toolbox-tab-content] {
     padding-bottom: 45px;
     display: flex;
     flex: 1;
@@ -209,7 +208,7 @@
     min-height: 0px;
     overflow-y: scroll;
   }
-  div[tab-content] .padded {
+  div[toolbox-tab-content] .padded {
     flex: 1;
     padding-top: 0;
   }
@@ -228,21 +227,6 @@
     padding-top: $-s;
     position: relative;
   }
-  button.pos {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    width: 100%;
-    padding: $-s;
-    height: 45px;
-    border: 0;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    &:hover{
-      box-shadow: none;
-    }
-  }
   .handle {
     user-select: none;
     cursor: move;
@@ -256,7 +240,7 @@
   }
 }
 
-[tab-content] {
+[toolbox-tab-content] {
   display: none;
 }
 
