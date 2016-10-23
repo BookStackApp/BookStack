@@ -674,6 +674,7 @@ module.exports = function (ngApp, events) {
                     if ($scope.editFile && !file.external) {
                         $scope.editFile.link = '';
                     }
+                    $scope.editFile = false;
                     events.emit('success', 'Attachment details updated');
                 });
             };
@@ -686,7 +687,7 @@ module.exports = function (ngApp, events) {
              */
             function filesIndexOf(file) {
                 for (let i = 0; i < $scope.files.length; i++) {
-                    if ($scope.files[i].id == file.id) return file.id;
+                    if ($scope.files[i].id == file.id) return i;
                 }
                 return -1;
             }

@@ -6,6 +6,16 @@ class File extends Ownable
     protected $fillable = ['name', 'order'];
 
     /**
+     * Get the downloadable file name for this upload.
+     * @return mixed|string
+     */
+    public function getFileName()
+    {
+        if (str_contains($this->name, '.')) return $this->name;
+        return $this->name . '.' . $this->extension;
+    }
+
+    /**
      * Get the page this file was uploaded to.
      * @return Page
      */

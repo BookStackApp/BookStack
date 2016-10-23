@@ -38,6 +38,7 @@ class FileService extends UploadService
         $file = File::forceCreate([
             'name' => $fileName,
             'path' => $filePath,
+            'extension' => $uploadedFile->getClientOriginalExtension(),
             'uploaded_to' => $page_id,
             'created_by' => user()->id,
             'updated_by' => user()->id,
@@ -67,6 +68,7 @@ class FileService extends UploadService
         $file->name = $fileName;
         $file->path = $filePath;
         $file->external = false;
+        $file->extension = $uploadedFile->getClientOriginalExtension();
         $file->save();
         return $file;
     }
@@ -85,6 +87,7 @@ class FileService extends UploadService
             'name' => $name,
             'path' => $link,
             'external' => true,
+            'extension' => '',
             'uploaded_to' => $page_id,
             'created_by' => user()->id,
             'updated_by' => user()->id,

@@ -196,7 +196,7 @@ class FileController extends Controller
         $fileContents = $this->fileService->getFile($file);
         return response($fileContents, 200, [
             'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'. $file->name .'"'
+            'Content-Disposition' => 'attachment; filename="'. $file->getFileName() .'"'
         ]);
     }
 
