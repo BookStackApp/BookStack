@@ -52,3 +52,13 @@ table.list-table {
     padding: $-xs;
   }
 }
+
+table.file-table {
+  @extend .no-style;
+  td {
+    padding: $-xs;
+  }
+  .ui-sortable-helper {
+    display: table;
+  }
+}

@@ -538,6 +538,10 @@ module.exports = function (ngApp, events) {
             $scope.files = [];
             $scope.editFile = false;
             $scope.file = getCleanFile();
+            $scope.errors = {
+                link: {},
+                edit: {}
+            };
 
             function getCleanFile() {
                 return {
@@ -567,7 +571,7 @@ module.exports = function (ngApp, events) {
                 currentOrder = newOrder;
                 $http.put(`/files/sort/page/${pageId}`, {files: $scope.files}).then(resp => {
                     events.emit('success', resp.data.message);
-                }, checkError);
+                }, checkError('sort'));
             }
 
             /**
@@ -587,7 +591,7 @@ module.exports = function (ngApp, events) {
                 $http.get(url).then(resp => {
                     $scope.files = resp.data;
                     currentOrder = resp.data.map(file => {return file.id}).join(':');
-                }, checkError);
+                }, checkError('get'));
             }
             getFiles();
 
@@ -599,7 +603,7 @@ module.exports = function (ngApp, events) {
              */
             $scope.uploadSuccess = function (file, data) {
                 $scope.$apply(() => {
-                    $scope.files.unshift(data);
+                    $scope.files.push(data);
                 });
                 events.emit('success', 'File uploaded');
             };
@@ -612,10 +616,10 @@ module.exports = function (ngApp, events) {
             $scope.uploadSuccessUpdate = function (file, data) {
                 $scope.$apply(() => {
                     let search = filesIndexOf(data);
-                    if (search !== -1) $scope.files[search] = file;
+                    if (search !== -1) $scope.files[search] = data;
 
                     if ($scope.editFile) {
-                        $scope.editFile = data;
+                        $scope.editFile = angular.copy(data);
                         data.link = '';
                     }
                 });
@@ -627,10 +631,14 @@ module.exports = function (ngApp, events) {
              * @param file
              */
             $scope.deleteFile = function(file) {
+                if (!file.deleting) {
+                    file.deleting = true;
+                    return;
+                }
                   $http.delete(`/files/${file.id}`).then(resp => {
                       events.emit('success', resp.data.message);
                       $scope.files.splice($scope.files.indexOf(file), 1);
-                  }, checkError);
+                  }, checkError('delete'));
             };
 
             /**
@@ -641,10 +649,10 @@ module.exports = function (ngApp, events) {
             $scope.attachLinkSubmit = function(file) {
                 file.uploaded_to = pageId;
                 $http.post('/files/link', file).then(resp => {
-                    $scope.files.unshift(resp.data);
+                    $scope.files.push(resp.data);
                     events.emit('success', 'Link attached');
                     $scope.file = getCleanFile();
-                }, checkError);
+                }, checkError('link'));
             };
 
             /**
@@ -652,8 +660,9 @@ module.exports = function (ngApp, events) {
              * @param fileId
              */
             $scope.startEdit = function(file) {
+                console.log(file);
                 $scope.editFile = angular.copy(file);
-                if (!file.external) $scope.editFile.link = '';
+                $scope.editFile.link = (file.external) ? file.path : '';
             };
 
             /**
@@ -670,15 +679,22 @@ module.exports = function (ngApp, events) {
             $scope.updateFile = function(file) {
                 $http.put(`/files/${file.id}`, file).then(resp => {
                     let search = filesIndexOf(resp.data);
-                    if (search !== -1) $scope.files[search] = file;
+                    if (search !== -1) $scope.files[search] = resp.data;
 
                     if ($scope.editFile && !file.external) {
                         $scope.editFile.link = '';
                     }
                     $scope.editFile = false;
                     events.emit('success', 'Attachment details updated');
-                });
+                }, checkError('edit'));
             };
+
+            /**
+             * Get the url of a file.
+             */
+            $scope.getFileUrl = function(file) {
+                return window.baseUrl('/files/' + file.id);
+            }
 
             /**
              * Search the local files via another file object.
@@ -697,9 +713,16 @@ module.exports = function (ngApp, events) {
              * Check for an error response in a ajax request.
              * @param response
              */
-            function checkError(response) {
-                if (typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined') {
-                    events.emit('error', response.data.error);
+            function checkError(errorGroupName) {
+                $scope.errors[errorGroupName] = {};
+                return function(response) {
+                    if (typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined') {
+                        events.emit('error', response.data.error);
+                    }
+                    if (typeof response.data !== 'undefined' && typeof response.data.validation !== 'undefined') {
+                        $scope.errors[errorGroupName] = response.data.validation;
+                        console.log($scope.errors[errorGroupName])
+                    }
                 }
             }
 

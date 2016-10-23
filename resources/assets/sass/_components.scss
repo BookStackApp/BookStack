@@ -452,3 +452,17 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-right: 6px solid transparent;
   border-bottom: 6px solid $negative;
 }
+
+
+[tab-container] .nav-tabs {
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+  margin-bottom: $-m;
+  .tab-item {
+    padding: $-s;
+    color: #666;
+    &.selected {
+      border-bottom-width: 3px;
+    }
+  }
+}

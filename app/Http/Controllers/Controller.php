@@ -3,13 +3,11 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Ownable;
-use HttpRequestException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use BookStack\User;
 
 abstract class Controller extends BaseController
@@ -128,6 +126,24 @@ abstract class Controller extends BaseController
     protected function jsonError($messageText = "", $statusCode = 500)
     {
         return response()->json(['message' => $messageText], $statusCode);
+    }
+
+    /**
+     * Create the response for when a request fails validation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $errors
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function buildFailedValidationResponse(Request $request, array $errors)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['validation' => $errors], 422);
+        }
+
+        return redirect()->to($this->getRedirectUrl())
+            ->withInput($request->input())
+            ->withErrors($errors, $this->errorBag());
     }
 
 }
