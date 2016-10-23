@@ -639,6 +639,7 @@ module.exports = function (ngApp, events) {
              * @param fileLink
              */
             $scope.attachLinkSubmit = function(file) {
+                file.uploaded_to = pageId;
                 $http.post('/files/link', file).then(resp => {
                     $scope.files.unshift(resp.data);
                     events.emit('success', 'Link attached');

@@ -1,7 +1,7 @@
 
 <div class="book-tree" ng-non-bindable>
 
-    @if ($page->files->count() > 0)
+    @if (isset($page) && $page->files->count() > 0)
         <h6 class="text-muted">Attachments</h6>
         @foreach($page->files as $file)
             <div class="attachment">
