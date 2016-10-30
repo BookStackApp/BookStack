@@ -30,6 +30,7 @@
         <env name="AUTH_METHOD" value="standard"/>
         <env name="DISABLE_EXTERNAL_SERVICES" value="true"/>
         <env name="LDAP_VERSION" value="3"/>
+        <env name="STORAGE_TYPE" value="local"/>
         <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
         <env name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>

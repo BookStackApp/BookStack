@@ -11,29 +11,20 @@ use BookStack\Ownable;
  */
 function versioned_asset($file = '')
 {
-    // Don't require css and JS assets for testing
-    if (config('app.env') === 'testing') return '';
+    static $version = null;
 
-    static $manifest = null;
-    $manifestPath = 'build/manifest.json';
-
-    if (is_null($manifest) && file_exists($manifestPath)) {
-        $manifest = json_decode(file_get_contents(public_path($manifestPath)), true);
-    } else if (!file_exists($manifestPath)) {
-        if (config('app.env') !== 'production') {
-            $path = public_path($manifestPath);
-            $error = "No {$path} file found, Ensure you have built the css/js assets using gulp.";
-        } else {
-            $error = "No {$manifestPath} file found, Ensure you are using the release version of BookStack";
-        }
-        throw new \Exception($error);
+    if (is_null($version)) {
+        $versionFile = base_path('version');
+        $version = trim(file_get_contents($versionFile));
     }
 
-    if (isset($manifest[$file])) {
-        return baseUrl($manifest[$file]);
+    $additional = '';
+    if (config('app.env') === 'development') {
+        $additional = sha1_file(public_path($file));
     }
 
-    throw new InvalidArgumentException("File {$file} not defined in asset manifest.");
+    $path = $file . '?version=' . urlencode($version) . $additional;
+    return baseUrl($path);
 }
 
 /**
@@ -138,14 +129,14 @@ function sortUrl($path, $data, $overrideData = [])
 {
     $queryStringSections = [];
     $queryData = array_merge($data, $overrideData);
-    
+
     // Change sorting direction is already sorted on current attribute
     if (isset($overrideData['sort']) && $overrideData['sort'] === $data['sort']) {
         $queryData['order'] = ($data['order'] === 'asc') ? 'desc' : 'asc';
     } else {
         $queryData['order'] = 'asc';
     }
-    
+
     foreach ($queryData as $name => $value) {
         $trimmedVal = trim($value);
         if ($trimmedVal === '') continue;
