@@ -1,6 +1,8 @@
 "use strict";
 
-const moment = require('moment');
+import moment from 'moment';
+import 'moment/locale/en-gb';
+moment.locale('en-gb');
 
 module.exports = function (ngApp, events) {
 
@@ -17,7 +19,7 @@ module.exports = function (ngApp, events) {
             $scope.imageDeleteSuccess = false;
             $scope.uploadedTo = $attrs.uploadedTo;
             $scope.view = 'all';
-            
+
             $scope.searching = false;
             $scope.searchTerm = '';
 
@@ -48,7 +50,7 @@ module.exports = function (ngApp, events) {
                 $scope.hasMore = preSearchHasMore;
             }
             $scope.cancelSearch = cancelSearch;
-            
+
 
             /**
              * Runs on image upload, Adds an image to local list of images
@@ -437,7 +439,7 @@ module.exports = function (ngApp, events) {
 
             const pageId = Number($attrs.pageId);
             $scope.tags = [];
-            
+
             $scope.sortOptions = {
                 handle: '.handle',
                 items: '> tr',
@@ -729,20 +731,3 @@ module.exports = function (ngApp, events) {
         }]);
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,10 +2,6 @@
 const DropZone = require('dropzone');
 const markdown = require('marked');
 
-const toggleSwitchTemplate = require('./components/toggle-switch.html');
-const imagePickerTemplate = require('./components/image-picker.html');
-const dropZoneTemplate = require('./components/drop-zone.html');
-
 module.exports = function (ngApp, events) {
 
     /**
@@ -16,7 +12,12 @@ module.exports = function (ngApp, events) {
     ngApp.directive('toggleSwitch', function () {
         return {
             restrict: 'A',
-            template: toggleSwitchTemplate,
+            template: `
+            <div class="toggle-switch" ng-click="switch()" ng-class="{'active': isActive}">
+                <input type="hidden" ng-attr-name="{{name}}" ng-attr-value="{{value}}"/>
+                <div class="switch-handle"></div>
+            </div>
+            `,
             scope: true,
             link: function (scope, element, attrs) {
                 scope.name = attrs.name;
@@ -77,7 +78,7 @@ module.exports = function (ngApp, events) {
                 });
 
                 element.find('button[type="submit"]').click(submitEvent);
-                
+
                 function submitEvent(e) {
                     e.preventDefault()
                     if (attrs.subForm) scope.$eval(attrs.subForm);
@@ -94,7 +95,22 @@ module.exports = function (ngApp, events) {
     ngApp.directive('imagePicker', ['$http', 'imageManagerService', function ($http, imageManagerService) {
         return {
             restrict: 'E',
-            template: imagePickerTemplate,
+            template: `
+            <div class="image-picker">
+                <div>
+                    <img ng-if="image && image !== 'none'" ng-src="{{image}}" ng-class="{{imageClass}}" alt="Image Preview">
+                    <img ng-if="image === '' && defaultImage" ng-src="{{defaultImage}}" ng-class="{{imageClass}}" alt="Image Preview">
+                </div>
+                <button class="button" type="button" ng-click="showImageManager()">Select Image</button>
+                <br>
+
+                <button class="text-button" ng-click="reset()" type="button">Reset</button>
+                <span ng-show="showRemove" class="sep">|</span>
+                <button ng-show="showRemove" class="text-button neg" ng-click="remove()" type="button">Remove</button>
+
+                <input type="hidden" ng-attr-name="{{name}}" ng-attr-id="{{name}}" ng-attr-value="{{value}}">
+            </div>
+            `,
             scope: {
                 name: '@',
                 resizeHeight: '@',
@@ -161,7 +177,11 @@ module.exports = function (ngApp, events) {
     ngApp.directive('dropZone', [function () {
         return {
             restrict: 'E',
-            template: dropZoneTemplate,
+            template: `
+            <div class="dropzone-container">
+                <div class="dz-message">Drop files or click here to upload</div>
+            </div>
+            `,
             scope: {
                 uploadUrl: '@',
                 eventSuccess: '=',
@@ -603,7 +623,7 @@ module.exports = function (ngApp, events) {
                     let val = $input.val();
                     let url = $input.attr('autosuggest');
                     let type = $input.attr('autosuggest-type');
-                    
+
                     // Add name param to request if for a value
                     if (type.toLowerCase() === 'value') {
                         let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
@@ -904,17 +924,3 @@ module.exports = function (ngApp, events) {
         };
     }]);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-

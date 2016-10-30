@@ -2,13 +2,15 @@
 
 [![GitHub release](https://img.shields.io/github/release/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/releases/latest)
 [![license](https://img.shields.io/github/license/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/ssddanbrown/BookStack.svg)](https://travis-ci.org/ssddanbrown/BookStack)
+[![Build Status](https://travis-ci.org/BookStackApp/BookStack.svg)](https://travis-ci.org/BookStackApp/BookStack)
 
 A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
 
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
 * [Documentation](https://www.bookstackapp.com/docs)
-* [Demo Instance](https://demo.bookstackapp.com) *(Login username: `admin@example.com`. Password: `password`)*
+* [Demo Instance](https://demo.bookstackapp.com)
+  * *Username: `admin@example.com`*
+  * *Password: `password`*
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 
 ## Development & Testing
@@ -29,7 +31,7 @@ php artisan migrate --database=mysql_testing
 php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
 ```
 
-Once done you can run `phpunit` (or `./vendor/bin/phpunit` if `phpunit` is not found) in the application root directory to run all tests.
+Once done you can run `phpunit` in the application root directory to run all tests.
 
 ## License
 
@@ -51,3 +53,5 @@ These are the great projects used to help build BookStack:
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [Marked](https://github.com/chjj/marked)
 * [Moment.js](http://momentjs.com/)
+
+Additionally, Thank you [BrowserStack](https://www.browserstack.com/) for supporting us and making cross-browser testing easy.
