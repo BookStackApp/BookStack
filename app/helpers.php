@@ -84,6 +84,11 @@ function baseUrl($path, $forceAppDomain = false)
         $path = implode('/', array_splice($explodedPath, 3));
     }
 
+    // Return normal url path if not specified in config
+    if (config('app.url') === '') {
+        return url($path);
+    }
+
     return rtrim(config('app.url'), '/') . '/' . $path;
 }
 
