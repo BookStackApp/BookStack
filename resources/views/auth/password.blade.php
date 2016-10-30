@@ -1,5 +1,12 @@
 @extends('public')
 
+@section('header-buttons')
+    <a href="{{ baseUrl("/login") }}"><i class="zmdi zmdi-sign-in"></i>Sign in</a>
+    @if(setting('registration-enabled'))
+        <a href="{{ baseUrl("/register") }}"><i class="zmdi zmdi-account-add"></i>Sign up</a>
+    @endif
+@stop
+
 @section('content')
 
 

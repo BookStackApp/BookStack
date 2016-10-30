@@ -91,6 +91,12 @@ class EntitySearchTest extends TestCase
             ->see('Book Search Results')->see('.entity-list', $book->name);
     }
 
+    public function test_searching_hypen_doesnt_break()
+    {
+        $this->visit('/search/all?term=cat+-')
+            ->seeStatusCode(200);
+    }
+
     public function test_ajax_entity_search()
     {
         $page = \BookStack\Page::all()->last();
