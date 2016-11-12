@@ -97,6 +97,39 @@ class EntitySearchTest extends TestCase
             ->seeStatusCode(200);
     }
 
+    public function test_tag_search()
+    {
+        $newTags = [
+            new \BookStack\Tag([
+                'name' => 'animal',
+                'value' => 'cat'
+            ]),
+            new \BookStack\Tag([
+                'name' => 'color',
+                'value' => 'red'
+            ])
+        ];
+
+        $pageA = \BookStack\Page::first();
+        $pageA->tags()->saveMany($newTags);
+
+        $pageB = \BookStack\Page::all()->last();
+        $pageB->tags()->create(['name' => 'animal', 'value' => 'dog']);
+
+        $this->asAdmin()->visit('/search/all?term=%5Banimal%5D')
+            ->seeLink($pageA->name)
+            ->seeLink($pageB->name);
+
+        $this->visit('/search/all?term=%5Bcolor%5D')
+            ->seeLink($pageA->name)
+            ->dontSeeLink($pageB->name);
+
+        $this->visit('/search/all?term=%5Banimal%3Dcat%5D')
+            ->seeLink($pageA->name)
+            ->dontSeeLink($pageB->name);
+
+    }
+
     public function test_ajax_entity_search()
     {
         $page = \BookStack\Page::all()->last();

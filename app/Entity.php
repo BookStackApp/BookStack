@@ -175,7 +175,8 @@ class Entity extends Ownable
             }
         }
 
-        $isFuzzy = count($exactTerms) === 0 || count($fuzzyTerms) > 0;
+        $isFuzzy = count($exactTerms) === 0 && count($fuzzyTerms) > 0;
+
 
         // Perform fulltext search if relevant terms exist.
         if ($isFuzzy) {
