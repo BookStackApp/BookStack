@@ -87,15 +87,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
 
-    // File routes
-    Route::get('/files/{id}', 'FileController@get');
-    Route::post('/files/upload', 'FileController@upload');
-    Route::post('/files/upload/{id}', 'FileController@uploadUpdate');
-    Route::post('/files/link', 'FileController@attachLink');
-    Route::put('/files/{id}', 'FileController@update');
-    Route::get('/files/get/page/{pageId}', 'FileController@listForPage');
-    Route::put('/files/sort/page/{pageId}', 'FileController@sortForPage');
-    Route::delete('/files/{id}', 'FileController@delete');
+    // Attachments routes
+    Route::get('/attachments/{id}', 'AttachmentController@get');
+    Route::post('/attachments/upload', 'AttachmentController@upload');
+    Route::post('/attachments/upload/{id}', 'AttachmentController@uploadUpdate');
+    Route::post('/attachments/link', 'AttachmentController@attachLink');
+    Route::put('/attachments/{id}', 'AttachmentController@update');
+    Route::get('/attachments/get/page/{pageId}', 'AttachmentController@listForPage');
+    Route::put('/attachments/sort/page/{pageId}', 'AttachmentController@sortForPage');
+    Route::delete('/attachments/{id}', 'AttachmentController@delete');
 
     // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');

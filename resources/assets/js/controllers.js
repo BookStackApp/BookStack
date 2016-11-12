@@ -570,7 +570,7 @@ export default function (ngApp, events) {
                 if (newOrder === currentOrder) return;
 
                 currentOrder = newOrder;
-                $http.put(window.baseUrl(`/files/sort/page/${pageId}`), {files: $scope.files}).then(resp => {
+                $http.put(window.baseUrl(`/attachments/sort/page/${pageId}`), {files: $scope.files}).then(resp => {
                     events.emit('success', resp.data.message);
                 }, checkError('sort'));
             }
@@ -581,14 +581,14 @@ export default function (ngApp, events) {
              */
             $scope.getUploadUrl = function (file) {
                 let suffix = (typeof file !== 'undefined') ? `/${file.id}` : '';
-                return window.baseUrl(`/files/upload${suffix}`);
+                return window.baseUrl(`/attachments/upload${suffix}`);
             };
 
             /**
              * Get files for the current page from the server.
              */
             function getFiles() {
-                let url = window.baseUrl(`/files/get/page/${pageId}`)
+                let url = window.baseUrl(`/attachments/get/page/${pageId}`)
                 $http.get(url).then(resp => {
                     $scope.files = resp.data;
                     currentOrder = resp.data.map(file => {return file.id}).join(':');
@@ -636,7 +636,7 @@ export default function (ngApp, events) {
                     file.deleting = true;
                     return;
                 }
-                  $http.delete(window.baseUrl(`/files/${file.id}`)).then(resp => {
+                  $http.delete(window.baseUrl(`/attachments/${file.id}`)).then(resp => {
                       events.emit('success', resp.data.message);
                       $scope.files.splice($scope.files.indexOf(file), 1);
                   }, checkError('delete'));
@@ -648,7 +648,7 @@ export default function (ngApp, events) {
              */
             $scope.attachLinkSubmit = function(file) {
                 file.uploaded_to = pageId;
-                $http.post(window.baseUrl('/files/link'), file).then(resp => {
+                $http.post(window.baseUrl('/attachments/link'), file).then(resp => {
                     $scope.files.push(resp.data);
                     events.emit('success', 'Link attached');
                     $scope.file = getCleanFile();
@@ -676,7 +676,7 @@ export default function (ngApp, events) {
              * @param file
              */
             $scope.updateFile = function(file) {
-                $http.put(window.baseUrl(`/files/${file.id}`), file).then(resp => {
+                $http.put(window.baseUrl(`/attachments/${file.id}`), file).then(resp => {
                     let search = filesIndexOf(resp.data);
                     if (search !== -1) $scope.files[search] = resp.data;
 
@@ -692,7 +692,7 @@ export default function (ngApp, events) {
              * Get the url of a file.
              */
             $scope.getFileUrl = function(file) {
-                return window.baseUrl('/files/' + file.id);
+                return window.baseUrl('/attachments/' + file.id);
             };
 
             /**

@@ -4,7 +4,7 @@
     <div class="tabs primary-background-light">
         <span toolbox-toggle><i class="zmdi zmdi-caret-left-circle"></i></span>
         <span toolbox-tab-button="tags" title="Page Tags" class="active"><i class="zmdi zmdi-tag"></i></span>
-        @if(userCan('file-create-all'))
+        @if(userCan('attachment-create-all'))
             <span toolbox-tab-button="files" title="Attachments"><i class="zmdi zmdi-attachment"></i></span>
         @endif
     </div>
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    @if(userCan('file-create-all'))
+    @if(userCan('attachment-create-all'))
         <div toolbox-tab-content="files" ng-controller="PageAttachmentController" page-id="{{ $page->id or 0 }}">
             <h4>Attachments</h4>
             <div class="padded files">

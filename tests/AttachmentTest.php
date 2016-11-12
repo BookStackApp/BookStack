@@ -21,7 +21,7 @@ class AttachmentTest extends TestCase
     protected function uploadFile($name, $uploadedTo = 0)
     {
         $file = $this->getTestFile($name);
-        return $this->call('POST', '/files/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+        return $this->call('POST', '/attachments/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
     }
 
     /**
@@ -40,8 +40,8 @@ class AttachmentTest extends TestCase
      */
     protected function deleteUploads()
     {
-        $fileService = $this->app->make(\BookStack\Services\FileService::class);
-        foreach (\BookStack\File::all() as $file) {
+        $fileService = $this->app->make(\BookStack\Services\AttachmentService::class);
+        foreach (\BookStack\Attachment::all() as $file) {
             $fileService->deleteFile($file);
         }
     }
@@ -66,7 +66,7 @@ class AttachmentTest extends TestCase
         $this->uploadFile($fileName, $page->id);
         $this->assertResponseOk();
         $this->seeJsonContains($expectedResp);
-        $this->seeInDatabase('files', $expectedResp);
+        $this->seeInDatabase('attachments', $expectedResp);
 
         $this->deleteUploads();
     }
@@ -94,7 +94,7 @@ class AttachmentTest extends TestCase
         $admin = $this->getAdmin();
         $this->asAdmin();
 
-        $this->call('POST', 'files/link', [
+        $this->call('POST', 'attachments/link', [
             'link' => 'https://example.com',
             'name' => 'Example Attachment Link',
             'uploaded_to' => $page->id,
@@ -113,7 +113,7 @@ class AttachmentTest extends TestCase
 
         $this->assertResponseOk();
         $this->seeJsonContains($expectedResp);
-        $this->seeInDatabase('files', $expectedResp);
+        $this->seeInDatabase('attachments', $expectedResp);
 
         $this->visit($page->getUrl())->seeLink('Example Attachment Link')
             ->click('Example Attachment Link')->seePageIs('https://example.com');
@@ -126,15 +126,15 @@ class AttachmentTest extends TestCase
         $page = \BookStack\Page::first();
         $this->asAdmin();
 
-        $this->call('POST', 'files/link', [
+        $this->call('POST', 'attachments/link', [
             'link' => 'https://example.com',
             'name' => 'Example Attachment Link',
             'uploaded_to' => $page->id,
         ]);
 
-        $attachmentId = \BookStack\File::first()->id;
+        $attachmentId = \BookStack\Attachment::first()->id;
 
-        $this->call('PUT', 'files/' . $attachmentId, [
+        $this->call('PUT', 'attachments/' . $attachmentId, [
             'uploaded_to' => $page->id,
             'name' => 'My new attachment name',
             'link' => 'https://test.example.com'
@@ -148,7 +148,7 @@ class AttachmentTest extends TestCase
 
         $this->assertResponseOk();
         $this->seeJsonContains($expectedResp);
-        $this->seeInDatabase('files', $expectedResp);
+        $this->seeInDatabase('attachments', $expectedResp);
 
         $this->deleteUploads();
     }
@@ -164,10 +164,10 @@ class AttachmentTest extends TestCase
 
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
 
-        $attachmentId = \BookStack\File::first()->id;
-        $this->call('DELETE', 'files/' . $attachmentId);
+        $attachmentId = \BookStack\Attachment::first()->id;
+        $this->call('DELETE', 'attachments/' . $attachmentId);
 
-        $this->dontSeeInDatabase('files', [
+        $this->dontSeeInDatabase('attachments', [
             'name' => $fileName
         ]);
         $this->assertFalse(file_exists($filePath), 'File at path ' . $filePath . ' was not deleted as expected');
@@ -185,13 +185,13 @@ class AttachmentTest extends TestCase
         $filePath = base_path('storage/' . $this->getUploadPath($fileName));
 
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
-        $this->seeInDatabase('files', [
+        $this->seeInDatabase('attachments', [
             'name' => $fileName
         ]);
 
         $this->call('DELETE', $page->getUrl());
 
-        $this->dontSeeInDatabase('files', [
+        $this->dontSeeInDatabase('attachments', [
             'name' => $fileName
         ]);
         $this->assertFalse(file_exists($filePath), 'File at path ' . $filePath . ' was not deleted as expected');

@@ -5,7 +5,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Services\FileService;
+use BookStack\Services\AttachmentService;
 use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;
@@ -636,9 +636,9 @@ class PageRepo extends EntityRepo
         $this->permissionService->deleteJointPermissionsForEntity($page);
 
         // Delete AttachedFiles
-        $fileService = app(FileService::class);
-        foreach ($page->files as $file) {
-            $fileService->deleteFile($file);
+        $attachmentService = app(AttachmentService::class);
+        foreach ($page->attachments as $attachment) {
+            $attachmentService->deleteFile($attachment);
         }
 
         $page->delete();
@@ -647,6 +647,7 @@ class PageRepo extends EntityRepo
     /**
      * Get the latest pages added to the system.
      * @param $count
+     * @return mixed
      */
     public function getRecentlyCreatedPaginated($count = 20)
     {
@@ -656,6 +657,7 @@ class PageRepo extends EntityRepo
     /**
      * Get the latest pages added to the system.
      * @param $count
+     * @return mixed
      */
     public function getRecentlyUpdatedPaginated($count = 20)
     {

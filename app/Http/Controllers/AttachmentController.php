@@ -1,36 +1,36 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Exceptions\FileUploadException;
-use BookStack\File;
+use BookStack\Attachment;
 use BookStack\Repos\PageRepo;
-use BookStack\Services\FileService;
+use BookStack\Services\AttachmentService;
 use Illuminate\Http\Request;
 
-use BookStack\Http\Requests;
-
-class FileController extends Controller
+class AttachmentController extends Controller
 {
-    protected $fileService;
-    protected $file;
+    protected $attachmentService;
+    protected $attachment;
     protected $pageRepo;
 
     /**
-     * FileController constructor.
-     * @param FileService $fileService
-     * @param File $file
+     * AttachmentController constructor.
+     * @param AttachmentService $attachmentService
+     * @param Attachment $attachment
      * @param PageRepo $pageRepo
      */
-    public function __construct(FileService $fileService, File $file, PageRepo $pageRepo)
+    public function __construct(AttachmentService $attachmentService, Attachment $attachment, PageRepo $pageRepo)
     {
-        $this->fileService = $fileService;
-        $this->file = $file;
+        $this->attachmentService = $attachmentService;
+        $this->attachment = $attachment;
         $this->pageRepo = $pageRepo;
+        parent::__construct();
     }
 
 
     /**
-     * Endpoint at which files are uploaded to.
+     * Endpoint at which attachments are uploaded to.
      * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function upload(Request $request)
     {
@@ -42,27 +42,27 @@ class FileController extends Controller
         $pageId = $request->get('uploaded_to');
         $page = $this->pageRepo->getById($pageId);
 
-        $this->checkPermission('file-create-all');
+        $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
 
         $uploadedFile = $request->file('file');
 
         try {
-            $file = $this->fileService->saveNewUpload($uploadedFile, $pageId);
+            $attachment = $this->attachmentService->saveNewUpload($uploadedFile, $pageId);
         } catch (FileUploadException $e) {
             return response($e->getMessage(), 500);
         }
 
-        return response()->json($file);
+        return response()->json($attachment);
     }
 
     /**
-     * Update an uploaded file.
-     * @param int $fileId
+     * Update an uploaded attachment.
+     * @param int $attachmentId
      * @param Request $request
      * @return mixed
      */
-    public function uploadUpdate($fileId, Request $request)
+    public function uploadUpdate($attachmentId, Request $request)
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
@@ -71,33 +71,33 @@ class FileController extends Controller
 
         $pageId = $request->get('uploaded_to');
         $page = $this->pageRepo->getById($pageId);
-        $file = $this->file->findOrFail($fileId);
+        $attachment = $this->attachment->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $page);
-        $this->checkOwnablePermission('file-create', $file);
+        $this->checkOwnablePermission('attachment-create', $attachment);
         
-        if (intval($pageId) !== intval($file->uploaded_to)) {
+        if (intval($pageId) !== intval($attachment->uploaded_to)) {
             return $this->jsonError('Page mismatch during attached file update');
         }
 
         $uploadedFile = $request->file('file');
 
         try {
-            $file = $this->fileService->saveUpdatedUpload($uploadedFile, $file);
+            $attachment = $this->attachmentService->saveUpdatedUpload($uploadedFile, $attachment);
         } catch (FileUploadException $e) {
             return response($e->getMessage(), 500);
         }
 
-        return response()->json($file);
+        return response()->json($attachment);
     }
 
     /**
      * Update the details of an existing file.
-     * @param $fileId
+     * @param $attachmentId
      * @param Request $request
-     * @return File|mixed
+     * @return Attachment|mixed
      */
-    public function update($fileId, Request $request)
+    public function update($attachmentId, Request $request)
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
@@ -107,21 +107,21 @@ class FileController extends Controller
 
         $pageId = $request->get('uploaded_to');
         $page = $this->pageRepo->getById($pageId);
-        $file = $this->file->findOrFail($fileId);
+        $attachment = $this->attachment->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $page);
-        $this->checkOwnablePermission('file-create', $file);
+        $this->checkOwnablePermission('attachment-create', $attachment);
 
-        if (intval($pageId) !== intval($file->uploaded_to)) {
+        if (intval($pageId) !== intval($attachment->uploaded_to)) {
             return $this->jsonError('Page mismatch during attachment update');
         }
 
-        $file = $this->fileService->updateFile($file, $request->all());
-        return $file;
+        $attachment = $this->attachmentService->updateFile($attachment, $request->all());
+        return $attachment;
     }
 
     /**
-     * Attach a link to a page as a file.
+     * Attach a link to a page.
      * @param Request $request
      * @return mixed
      */
@@ -136,18 +136,18 @@ class FileController extends Controller
         $pageId = $request->get('uploaded_to');
         $page = $this->pageRepo->getById($pageId);
 
-        $this->checkPermission('file-create-all');
+        $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
 
-        $fileName = $request->get('name');
+        $attachmentName = $request->get('name');
         $link = $request->get('link');
-        $file = $this->fileService->saveNewFromLink($fileName, $link, $pageId);
+        $attachment = $this->attachmentService->saveNewFromLink($attachmentName, $link, $pageId);
 
-        return response()->json($file);
+        return response()->json($attachment);
     }
 
     /**
-     * Get the files for a specific page.
+     * Get the attachments for a specific page.
      * @param $pageId
      * @return mixed
      */
@@ -159,7 +159,7 @@ class FileController extends Controller
     }
 
     /**
-     * Update the file sorting.
+     * Update the attachment sorting.
      * @param $pageId
      * @param Request $request
      * @return mixed
@@ -173,42 +173,43 @@ class FileController extends Controller
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
-        $files = $request->get('files');
-        $this->fileService->updateFileOrderWithinPage($files, $pageId);
+        $attachments = $request->get('files');
+        $this->attachmentService->updateFileOrderWithinPage($attachments, $pageId);
         return response()->json(['message' => 'Attachment order updated']);
     }
 
     /**
-     * Get a file from storage.
-     * @param $fileId
+     * Get an attachment from storage.
+     * @param $attachmentId
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Symfony\Component\HttpFoundation\Response
      */
-    public function get($fileId)
+    public function get($attachmentId)
     {
-        $file = $this->file->findOrFail($fileId);
-        $page = $this->pageRepo->getById($file->uploaded_to);
+        $attachment = $this->attachment->findOrFail($attachmentId);
+        $page = $this->pageRepo->getById($attachment->uploaded_to);
         $this->checkOwnablePermission('page-view', $page);
 
-        if ($file->external) {
-            return redirect($file->path);
+        if ($attachment->external) {
+            return redirect($attachment->path);
         }
 
-        $fileContents = $this->fileService->getFile($file);
-        return response($fileContents, 200, [
+        $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
+        return response($attachmentContents, 200, [
             'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'. $file->getFileName() .'"'
+            'Content-Disposition' => 'attachment; filename="'. $attachment->getFileName() .'"'
         ]);
     }
 
     /**
-     * Delete a specific file in the system.
-     * @param $fileId
+     * Delete a specific attachment in the system.
+     * @param $attachmentId
      * @return mixed
      */
-    public function delete($fileId)
+    public function delete($attachmentId)
     {
-        $file = $this->file->findOrFail($fileId);
-        $this->checkOwnablePermission('file-delete', $file);
-        $this->fileService->deleteFile($file);
+        $attachment = $this->attachment->findOrFail($attachmentId);
+        $this->checkOwnablePermission('attachment-delete', $attachment);
+        $this->attachmentService->deleteFile($attachment);
         return response()->json(['message' => 'Attachment deleted']);
     }
 }

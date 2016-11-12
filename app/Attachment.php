@@ -1,7 +1,7 @@
 <?php namespace BookStack;
 
 
-class File extends Ownable
+class Attachment extends Ownable
 {
     protected $fillable = ['name', 'order'];
 
@@ -30,7 +30,7 @@ class File extends Ownable
      */
     public function getUrl()
     {
-        return baseUrl('/files/' . $this->id);
+        return baseUrl('/attachments/' . $this->id);
     }
 
 }

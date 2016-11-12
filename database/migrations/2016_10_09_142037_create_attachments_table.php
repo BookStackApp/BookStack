@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilesTable extends Migration
+class CreateAttachmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('path');
@@ -35,7 +35,7 @@ class CreateFilesTable extends Migration
 
         // Create & attach new entity permissions
         $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
-        $entity = 'File';
+        $entity = 'Attachment';
         foreach ($ops as $op) {
             $permissionId = DB::table('role_permissions')->insertGetId([
                 'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
@@ -58,11 +58,11 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('attachments');
 
         // Create & attach new entity permissions
         $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
-        $entity = 'File';
+        $entity = 'Attachment';
         foreach ($ops as $op) {
             $permName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
             DB::table('role_permissions')->where('name', '=', $permName)->delete();

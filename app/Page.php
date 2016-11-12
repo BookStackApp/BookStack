@@ -55,12 +55,12 @@ class Page extends Entity
     }
 
     /**
-     * Get the files attached to this page.
+     * Get the attachments assigned to this page.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function files()
+    public function attachments()
     {
-        return $this->hasMany(File::class, 'uploaded_to')->orderBy('order', 'asc');
+        return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
     }
 
     /**
