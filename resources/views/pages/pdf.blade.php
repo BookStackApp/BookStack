@@ -14,7 +14,7 @@
         table {
             max-width: 800px !important;
             font-size: 0.8em;
-            width: auto !important;
+            width: 100% !important;
         }
 
         table td {

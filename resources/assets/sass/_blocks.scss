@@ -135,6 +135,7 @@
   border-left: 3px solid #BBB;
   background-color: #EEE;
   padding: $-s;
+  display: flex;
   &:before {
     font-family: 'Material-Design-Iconic-Font';
     padding-right: $-s;
