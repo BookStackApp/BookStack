@@ -269,6 +269,19 @@ class EntityRepo
         $this->permissionService->buildJointPermissionsForEntities($collection);
     }
 
+    /**
+     * Format a name as a url slug.
+     * @param $name
+     * @return string
+     */
+    protected function nameToSlug($name)
+    {
+        $slug = str_replace(' ', '-', strtolower($name));
+        $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', $slug);
+        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        return $slug;
+    }
+
 }
 
 
