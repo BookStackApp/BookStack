@@ -238,6 +238,9 @@
     flex-direction: column;
     overflow-y: scroll;
   }
+  table td, table th {
+    overflow: visible;
+  }
 }
 
 [toolbox-tab-content] {
