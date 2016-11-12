@@ -614,8 +614,7 @@ class PageRepo extends EntityRepo
      */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
-        $slug = Str::slug($name);
-        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        $slug = $this->nameToSlug($name);
         while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
