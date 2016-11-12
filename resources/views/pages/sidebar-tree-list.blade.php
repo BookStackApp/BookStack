@@ -1,11 +1,11 @@
 
 <div class="book-tree" ng-non-bindable>
 
-    @if (isset($page) && $page->files->count() > 0)
+    @if (isset($page) && $page->attachments->count() > 0)
         <h6 class="text-muted">Attachments</h6>
-        @foreach($page->files as $file)
+        @foreach($page->attachments as $attachment)
             <div class="attachment">
-                <a href="{{ $file->getUrl() }}" @if($file->external) target="_blank" @endif><i class="zmdi zmdi-{{ $file->external ? 'open-in-new' : 'file' }}"></i> {{ $file->name }}</a>
+                <a href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif><i class="zmdi zmdi-{{ $attachment->external ? 'open-in-new' : 'file' }}"></i> {{ $attachment->name }}</a>
             </div>
         @endforeach
     @endif
