@@ -43,11 +43,11 @@
             <div class="padded files">
 
                 <div id="file-list" ng-show="!editFile">
-                    <p class="muted small">Upload some files or attach some link to display on your page. This are visible in the page sidebar.</p>
+                    <p class="muted small">Upload some files or attach some link to display on your page. These are visible in the page sidebar. <span class="secondary">Changes here are saved instantly.</span></p>
 
                     <div tab-container>
                         <div class="nav-tabs">
-                            <div tab-button="list" class="tab-item">File List</div>
+                            <div tab-button="list" class="tab-item">Attached Items</div>
                             <div tab-button="file" class="tab-item">Upload File</div>
                             <div tab-button="link" class="tab-item">Attach Link</div>
                         </div>
