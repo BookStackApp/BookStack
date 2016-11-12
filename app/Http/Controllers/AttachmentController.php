@@ -40,7 +40,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId, true);
 
         $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
@@ -70,7 +70,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId, true);
         $attachment = $this->attachment->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $page);
@@ -106,7 +106,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId, true);
         $attachment = $this->attachment->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $page);
@@ -134,7 +134,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId, true);
 
         $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
@@ -153,9 +153,9 @@ class AttachmentController extends Controller
      */
     public function listForPage($pageId)
     {
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId, true);
         $this->checkOwnablePermission('page-view', $page);
-        return response()->json($page->files);
+        return response()->json($page->attachments);
     }
 
     /**
