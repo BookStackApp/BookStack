@@ -4,7 +4,7 @@ import moment from 'moment';
 import 'moment/locale/en-gb';
 moment.locale('en-gb');
 
-module.exports = function (ngApp, events) {
+export default function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {
@@ -164,7 +164,6 @@ module.exports = function (ngApp, events) {
 
             /**
              * Start a search operation
-             * @param searchTerm
              */
             $scope.searchImages = function() {
 
@@ -198,7 +197,7 @@ module.exports = function (ngApp, events) {
                 $scope.view = viewName;
                 baseUrl = window.baseUrl('/images/' + $scope.imageType  + '/' + viewName + '/');
                 fetchData();
-            }
+            };
 
             /**
              * Save the details of an image.
@@ -207,7 +206,7 @@ module.exports = function (ngApp, events) {
             $scope.saveImageDetails = function (event) {
                 event.preventDefault();
                 var url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
-                $http.put(url, this.selectedImage).then((response) => {
+                $http.put(url, this.selectedImage).then(response => {
                     events.emit('success', 'Image details updated');
                 }, (response) => {
                     if (response.status === 422) {
@@ -306,12 +305,12 @@ module.exports = function (ngApp, events) {
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
 
-        // Set inital header draft text
+        // Set initial header draft text
         if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
             $scope.draftText = 'Editing Draft'
         } else {
             $scope.draftText = 'Editing Page'
-        };
+        }
 
         var autoSave = false;
 
@@ -571,7 +570,7 @@ module.exports = function (ngApp, events) {
                 if (newOrder === currentOrder) return;
 
                 currentOrder = newOrder;
-                $http.put(`/files/sort/page/${pageId}`, {files: $scope.files}).then(resp => {
+                $http.put(window.baseUrl(`/files/sort/page/${pageId}`), {files: $scope.files}).then(resp => {
                     events.emit('success', resp.data.message);
                 }, checkError('sort'));
             }
@@ -637,7 +636,7 @@ module.exports = function (ngApp, events) {
                     file.deleting = true;
                     return;
                 }
-                  $http.delete(`/files/${file.id}`).then(resp => {
+                  $http.delete(window.baseUrl(`/files/${file.id}`)).then(resp => {
                       events.emit('success', resp.data.message);
                       $scope.files.splice($scope.files.indexOf(file), 1);
                   }, checkError('delete'));
@@ -645,12 +644,11 @@ module.exports = function (ngApp, events) {
 
             /**
              * Attach a link to a page.
-             * @param fileName
-             * @param fileLink
+             * @param file
              */
             $scope.attachLinkSubmit = function(file) {
                 file.uploaded_to = pageId;
-                $http.post('/files/link', file).then(resp => {
+                $http.post(window.baseUrl('/files/link'), file).then(resp => {
                     $scope.files.push(resp.data);
                     events.emit('success', 'Link attached');
                     $scope.file = getCleanFile();
@@ -659,10 +657,9 @@ module.exports = function (ngApp, events) {
 
             /**
              * Start the edit mode for a file.
-             * @param fileId
+             * @param file
              */
             $scope.startEdit = function(file) {
-                console.log(file);
                 $scope.editFile = angular.copy(file);
                 $scope.editFile.link = (file.external) ? file.path : '';
             };
@@ -679,7 +676,7 @@ module.exports = function (ngApp, events) {
              * @param file
              */
             $scope.updateFile = function(file) {
-                $http.put(`/files/${file.id}`, file).then(resp => {
+                $http.put(window.baseUrl(`/files/${file.id}`), file).then(resp => {
                     let search = filesIndexOf(resp.data);
                     if (search !== -1) $scope.files[search] = resp.data;
 
@@ -696,7 +693,7 @@ module.exports = function (ngApp, events) {
              */
             $scope.getFileUrl = function(file) {
                 return window.baseUrl('/files/' + file.id);
-            }
+            };
 
             /**
              * Search the local files via another file object.
@@ -713,7 +710,7 @@ module.exports = function (ngApp, events) {
 
             /**
              * Check for an error response in a ajax request.
-             * @param response
+             * @param errorGroupName
              */
             function checkError(errorGroupName) {
                 $scope.errors[errorGroupName] = {};
