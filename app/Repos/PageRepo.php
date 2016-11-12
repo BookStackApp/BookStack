@@ -60,7 +60,7 @@ class PageRepo extends EntityRepo
      * Get a page identified by the given slug.
      * @param $slug
      * @param $bookId
-     * @return mixed
+     * @return Page
      * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
