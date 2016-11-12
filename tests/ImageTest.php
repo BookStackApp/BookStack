@@ -57,7 +57,7 @@ class ImageTest extends TestCase
         $relPath = $this->uploadImage($imageName, $page->id);
         $this->assertResponseOk();
 
-        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image exists');
+        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image not found at path: '. public_path($relPath));
 
         $this->deleteImage($relPath);
 
@@ -70,7 +70,6 @@ class ImageTest extends TestCase
             'updated_by' => $admin->id,
             'name' => $imageName
         ]);
-        
 
     }
 

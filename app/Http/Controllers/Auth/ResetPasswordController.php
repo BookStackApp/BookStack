@@ -20,6 +20,8 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
+    protected $redirectTo = '/';
+
     /**
      * Create a new controller instance.
      *
@@ -29,5 +31,19 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
         parent::__construct();
+    }
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * @param  string  $response
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendResetResponse($response)
+    {
+        $message = 'Your password has been successfully reset.';
+        session()->flash('success', $message);
+        return redirect($this->redirectPath())
+            ->with('status', trans($response));
     }
 }
