@@ -4,16 +4,16 @@
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h2>Email Address not confirmed</h2>
-            <p class="text-muted">Your email address has not yet been confirmed. <br>
-                Please click the link in the email that was sent shortly after you registered. <br>
-                If you cannot find the email you can re-send the confirmation email by submitting the form below.
+            <h2>{{ trans('auth.email_not_confirmed') }}</h2>
+            <p class="text-muted">{{ trans('auth.email_not_confirmed_text') }}<br>
+                {{ trans('auth.email_not_confirmed_click_link') }} <br>
+                {{ trans('auth.email_not_confirmed_resend') }}
             </p>
             <hr>
             <form action="{{ baseUrl("/register/confirm/resend") }}" method="POST">
                 {!! csrf_field() !!}
                 <div class="form-group">
-                    <label for="email">Email Address</label>
+                    <label for="email">{{ trans('auth.email') }}</label>
                     @if(auth()->check())
                         @include('form/text', ['name' => 'email', 'model' => auth()->user()])
                     @else
@@ -21,7 +21,7 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="button pos">Resend Confirmation Email</button>
+                    <button type="submit" class="button pos">{{ trans('auth.email_not_confirmed_resend_button') }}</button>
                 </div>
             </form>
         </div>
