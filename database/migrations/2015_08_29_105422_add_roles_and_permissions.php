@@ -129,7 +129,7 @@ class AddRolesAndPermissions extends Migration
 
         // Set all current users as admins
         // (At this point only the initially create user should be an admin)
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->get()->all();
         foreach ($users as $user) {
             DB::table('role_user')->insert([
                 'role_id' => $adminId,

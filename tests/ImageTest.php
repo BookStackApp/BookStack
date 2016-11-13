@@ -10,7 +10,7 @@ class ImageTest extends TestCase
      */
     protected function getTestImage($fileName)
     {
-        return new \Illuminate\Http\UploadedFile(base_path('tests/test-image.jpg'), $fileName, 'image/jpeg', 5238);
+        return new \Illuminate\Http\UploadedFile(base_path('tests/test-data/test-image.jpg'), $fileName, 'image/jpeg', 5238);
     }
 
     /**
@@ -62,7 +62,7 @@ class ImageTest extends TestCase
         $this->deleteImage($relPath);
 
         $this->seeInDatabase('images', [
-            'url' => url($relPath),
+            'url' => $this->baseUrl . $relPath,
             'type' => 'gallery',
             'uploaded_to' => $page->id,
             'path' => $relPath,
@@ -86,7 +86,7 @@ class ImageTest extends TestCase
         $this->assertResponseOk();
 
         $this->dontSeeInDatabase('images', [
-            'url' => $relPath,
+            'url' => $this->baseUrl . $relPath,
             'type' => 'gallery'
         ]);
 

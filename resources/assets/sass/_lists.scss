@@ -1,5 +1,5 @@
 .page-list {
-  h3 {
+  h4 {
     margin: $-l 0 $-xs 0;
     font-size: 1.666em;
   }
@@ -11,11 +11,13 @@
     overflow: hidden;
     margin-bottom: $-l;
   }
-  h4 {
+  h5 {
     display: block;
     margin: $-s 0 0 0;
     border-left: 5px solid $color-page;
     padding: $-xs 0 $-xs $-m;
+    font-size: 1.1em;
+    font-weight: normal;
     &.draft {
       border-left-color: $color-page-draft;
     }
@@ -67,44 +69,39 @@
   }
 }
 
-.page-nav-list {
+.sidebar-page-nav {
   $nav-indent: $-s;
-  margin-left: 2px;
   list-style: none;
+  margin: $-s 0 $-m 2px;
+  border-left: 2px dotted #BBB;
   li {
-    //border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-left: $-xs;
-    border-left: 2px solid #888;
+    padding-left: $-s;
     margin-bottom: 4px;
-  }
-  li a {
-    color: #555;
-  }
-  .nav-H2 {
-    margin-left: $nav-indent;
     font-size: 0.95em;
   }
-  .nav-H3 {
+  .h1 {
+    margin-left: -2px;
+  }
+  .h2 {
+    margin-left: -2px;
+  }
+  .h3 {
+    margin-left: $nav-indent;
+  }
+  .h4 {
     margin-left: $nav-indent*2;
-    font-size: 0.90em
   }
-  .nav-H4 {
+  .h5 {
     margin-left: $nav-indent*3;
-    font-size: 0.85em
   }
-  .nav-H5 {
+  .h6 {
     margin-left: $nav-indent*4;
-    font-size: 0.80em
-  }
-  .nav-H6 {
-    margin-left: $nav-indent*5;
-    font-size: 0.75em
   }
 }
 
 // Sidebar list
 .book-tree {
-  padding: $-l 0 0 0;
+  padding: $-xs 0 0 0;
   position: relative;
   right: 0;
   top: 0;
@@ -306,10 +303,10 @@ ul.pagination {
 }
 
 .entity-list {
-  >div {
+  > div {
     padding: $-m 0;
   }
-  h3 {
+  h4 {
     margin: 0;
   }
   p {
@@ -327,9 +324,10 @@ ul.pagination {
     color: $color-page-draft;
   }
 }
+
 .entity-list.compact {
   font-size: 0.6em;
-  h3, a {
+  h4, a {
     line-height: 1.2;
   }
   p {

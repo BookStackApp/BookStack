@@ -5,8 +5,10 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Services\AttachmentService;
 use Carbon\Carbon;
 use DOMDocument;
+use DOMXPath;
 use Illuminate\Support\Str;
 use BookStack\Page;
 use BookStack\PageRevision;
@@ -47,7 +49,7 @@ class PageRepo extends EntityRepo
      * Get a page via a specific ID.
      * @param $id
      * @param bool $allowDrafts
-     * @return mixed
+     * @return Page
      */
     public function getById($id, $allowDrafts = false)
     {
@@ -58,7 +60,7 @@ class PageRepo extends EntityRepo
      * Get a page identified by the given slug.
      * @param $slug
      * @param $bookId
-     * @return mixed
+     * @return Page
      * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
@@ -111,31 +113,6 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Save a new page into the system.
-     * Input validation must be done beforehand.
-     * @param array $input
-     * @param Book $book
-     * @param int $chapterId
-     * @return Page
-     */
-    public function saveNew(array $input, Book $book, $chapterId = null)
-    {
-        $page = $this->newFromInput($input);
-        $page->slug = $this->findSuitableSlug($page->name, $book->id);
-
-        if ($chapterId) $page->chapter_id = $chapterId;
-
-        $page->html = $this->formatHtml($input['html']);
-        $page->text = strip_tags($page->html);
-        $page->created_by = auth()->user()->id;
-        $page->updated_by = auth()->user()->id;
-
-        $book->pages()->save($page);
-        return $page;
-    }
-
-
-    /**
      * Publish a draft page to make it a normal page.
      * Sets the slug and updates the content.
      * @param Page $draftPage
@@ -172,8 +149,8 @@ class PageRepo extends EntityRepo
     {
         $page = $this->page->newInstance();
         $page->name = 'New Page';
-        $page->created_by = auth()->user()->id;
-        $page->updated_by = auth()->user()->id;
+        $page->created_by = user()->id;
+        $page->updated_by = user()->id;
         $page->draft = true;
 
         if ($chapter) $page->chapter_id = $chapter->id;
@@ -181,6 +158,35 @@ class PageRepo extends EntityRepo
         $book->pages()->save($page);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
+    }
+
+    /**
+     * Parse te headers on the page to get a navigation menu
+     * @param Page $page
+     * @return array
+     */
+    public function getPageNav(Page $page)
+    {
+        if ($page->html == '') return null;
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($page->html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+        $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
+
+        if (is_null($headers)) return null;
+
+        $tree = [];
+        foreach ($headers as $header) {
+            $text = $header->nodeValue;
+            $tree[] = [
+                'nodeName' => strtolower($header->nodeName),
+                'level' => intval(str_replace('h', '', $header->nodeName)),
+                'link' => '#' . $header->getAttribute('id'),
+                'text' => strlen($text) > 30 ? substr($text, 0, 27) . '...' : $text
+            ];
+        }
+        return $tree;
     }
 
     /**
@@ -325,7 +331,7 @@ class PageRepo extends EntityRepo
         }
 
         // Update with new details
-        $userId = auth()->user()->id;
+        $userId = user()->id;
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
@@ -358,7 +364,7 @@ class PageRepo extends EntityRepo
         $page->fill($revision->toArray());
         $page->slug = $this->findSuitableSlug($page->name, $book->id, $page->id);
         $page->text = strip_tags($page->html);
-        $page->updated_by = auth()->user()->id;
+        $page->updated_by = user()->id;
         $page->save();
         return $page;
     }
@@ -371,21 +377,23 @@ class PageRepo extends EntityRepo
      */
     public function saveRevision(Page $page, $summary = null)
     {
-        $revision = $this->pageRevision->fill($page->toArray());
+        $revision = $this->pageRevision->newInstance($page->toArray());
         if (setting('app-editor') !== 'markdown') $revision->markdown = '';
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
-        $revision->created_by = auth()->user()->id;
+        $revision->created_by = user()->id;
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
         $revision->save();
+
         // Clear old revisions
         if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
             $this->pageRevision->where('page_id', '=', $page->id)
                 ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
         }
+
         return $revision;
     }
 
@@ -397,7 +405,7 @@ class PageRepo extends EntityRepo
      */
     public function saveUpdateDraft(Page $page, $data = [])
     {
-        $userId = auth()->user()->id;
+        $userId = user()->id;
         $drafts = $this->userUpdateDraftsQuery($page, $userId)->get();
 
         if ($drafts->count() > 0) {
@@ -528,7 +536,7 @@ class PageRepo extends EntityRepo
         $query = $this->pageRevision->where('type', '=', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->where('updated_at', '>', $page->updated_at)
-            ->where('created_by', '!=', auth()->user()->id)
+            ->where('created_by', '!=', user()->id)
             ->with('createdBy');
 
         if ($minRange !== null) {
@@ -541,7 +549,7 @@ class PageRepo extends EntityRepo
     /**
      * Gets a single revision via it's id.
      * @param $id
-     * @return mixed
+     * @return PageRevision
      */
     public function getRevisionById($id)
     {
@@ -606,8 +614,7 @@ class PageRepo extends EntityRepo
      */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
-        $slug = Str::slug($name);
-        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        $slug = $this->nameToSlug($name);
         while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
@@ -626,12 +633,20 @@ class PageRepo extends EntityRepo
         $page->revisions()->delete();
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);
+
+        // Delete AttachedFiles
+        $attachmentService = app(AttachmentService::class);
+        foreach ($page->attachments as $attachment) {
+            $attachmentService->deleteFile($attachment);
+        }
+
         $page->delete();
     }
 
     /**
      * Get the latest pages added to the system.
      * @param $count
+     * @return mixed
      */
     public function getRecentlyCreatedPaginated($count = 20)
     {
@@ -641,6 +656,7 @@ class PageRepo extends EntityRepo
     /**
      * Get the latest pages added to the system.
      * @param $count
+     * @return mixed
      */
     public function getRecentlyUpdatedPaginated($count = 20)
     {

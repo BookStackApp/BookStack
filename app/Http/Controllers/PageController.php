@@ -12,6 +12,7 @@ use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Views;
+use GatherContent\Htmldiff\Htmldiff;
 
 class PageController extends Controller
 {
@@ -42,27 +43,60 @@ class PageController extends Controller
 
     /**
      * Show the form for creating a new page.
-     * @param      $bookSlug
-     * @param bool $chapterSlug
+     * @param string $bookSlug
+     * @param string $chapterSlug
      * @return Response
      * @internal param bool $pageSlug
      */
-    public function create($bookSlug, $chapterSlug = false)
+    public function create($bookSlug, $chapterSlug = null)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : null;
         $parent = $chapter ? $chapter : $book;
         $this->checkOwnablePermission('page-create', $parent);
-        $this->setPageTitle('Create New Page');
 
-        $draft = $this->pageRepo->getDraftPage($book, $chapter);
-        return redirect($draft->getUrl());
+        // Redirect to draft edit screen if signed in
+        if ($this->signedIn) {
+            $draft = $this->pageRepo->getDraftPage($book, $chapter);
+            return redirect($draft->getUrl());
+        }
+
+        // Otherwise show edit view
+        $this->setPageTitle('Create New Page');
+        return view('pages/guest-create', ['parent' => $parent]);
+    }
+
+    /**
+     * Create a new page as a guest user.
+     * @param Request $request
+     * @param string $bookSlug
+     * @param string|null $chapterSlug
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function createAsGuest(Request $request, $bookSlug, $chapterSlug = null)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255'
+        ]);
+
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $chapter = $chapterSlug ? $this->chapterRepo->getBySlug($chapterSlug, $book->id) : null;
+        $parent = $chapter ? $chapter : $book;
+        $this->checkOwnablePermission('page-create', $parent);
+
+        $page = $this->pageRepo->getDraftPage($book, $chapter);
+        $this->pageRepo->publishDraft($page, [
+            'name' => $request->get('name'),
+            'html' => ''
+        ]);
+        return redirect($page->getUrl('/edit'));
     }
 
     /**
      * Show form to continue editing a draft page.
-     * @param $bookSlug
-     * @param $pageId
+     * @param string $bookSlug
+     * @param int $pageId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function editDraft($bookSlug, $pageId)
@@ -72,7 +106,13 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-create', $book);
         $this->setPageTitle('Edit Page Draft');
 
-        return view('pages/edit', ['page' => $draft, 'book' => $book, 'isDraft' => true]);
+        $draftsEnabled = $this->signedIn;
+        return view('pages/edit', [
+            'page' => $draft,
+            'book' => $book,
+            'isDraft' => true,
+            'draftsEnabled' => $draftsEnabled
+        ]);
     }
 
     /**
@@ -112,8 +152,8 @@ class PageController extends Controller
      * Display the specified page.
      * If the page is not found via the slug the
      * revisions are searched for a match.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return Response
      */
     public function show($bookSlug, $pageSlug)
@@ -131,14 +171,17 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-view', $page);
 
         $sidebarTree = $this->bookRepo->getChildren($book);
+        $pageNav = $this->pageRepo->getPageNav($page);
+        
         Views::add($page);
         $this->setPageTitle($page->getShortName());
-        return view('pages/show', ['page' => $page, 'book' => $book, 'current' => $page, 'sidebarTree' => $sidebarTree]);
+        return view('pages/show', ['page' => $page, 'book' => $book,
+                                   'current' => $page, 'sidebarTree' => $sidebarTree, 'pageNav' => $pageNav]);
     }
 
     /**
      * Get page from an ajax request.
-     * @param $pageId
+     * @param int $pageId
      * @return \Illuminate\Http\JsonResponse
      */
     public function getPageAjax($pageId)
@@ -149,8 +192,8 @@ class PageController extends Controller
 
     /**
      * Show the form for editing the specified page.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return Response
      */
     public function edit($bookSlug, $pageSlug)
@@ -179,14 +222,20 @@ class PageController extends Controller
 
         if (count($warnings) > 0) session()->flash('warning', implode("\n", $warnings));
 
-        return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
+        $draftsEnabled = $this->signedIn;
+        return view('pages/edit', [
+            'page' => $page,
+            'book' => $book,
+            'current' => $page,
+            'draftsEnabled' => $draftsEnabled
+        ]);
     }
 
     /**
      * Update the specified page in storage.
      * @param  Request $request
-     * @param          $bookSlug
-     * @param          $pageSlug
+     * @param  string $bookSlug
+     * @param  string $pageSlug
      * @return Response
      */
     public function update(Request $request, $bookSlug, $pageSlug)
@@ -205,13 +254,21 @@ class PageController extends Controller
     /**
      * Save a draft update as a revision.
      * @param Request $request
-     * @param $pageId
+     * @param int $pageId
      * @return \Illuminate\Http\JsonResponse
      */
     public function saveDraft(Request $request, $pageId)
     {
         $page = $this->pageRepo->getById($pageId, true);
         $this->checkOwnablePermission('page-update', $page);
+
+        if (!$this->signedIn) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Guests cannot save drafts',
+            ], 500);
+        }
+
         if ($page->draft) {
             $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html', 'markdown']));
         } else {
@@ -230,7 +287,7 @@ class PageController extends Controller
     /**
      * Redirect from a special link url which
      * uses the page id rather than the name.
-     * @param $pageId
+     * @param int $pageId
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirectFromLink($pageId)
@@ -241,8 +298,8 @@ class PageController extends Controller
 
     /**
      * Show the deletion page for the specified page.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return \Illuminate\View\View
      */
     public function showDelete($bookSlug, $pageSlug)
@@ -257,8 +314,8 @@ class PageController extends Controller
 
     /**
      * Show the deletion page for the specified page.
-     * @param $bookSlug
-     * @param $pageId
+     * @param string $bookSlug
+     * @param int $pageId
      * @return \Illuminate\View\View
      * @throws NotFoundException
      */
@@ -273,8 +330,8 @@ class PageController extends Controller
 
     /**
      * Remove the specified page from storage.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return Response
      * @internal param int $id
      */
@@ -291,8 +348,8 @@ class PageController extends Controller
 
     /**
      * Remove the specified draft page from storage.
-     * @param $bookSlug
-     * @param $pageId
+     * @param string $bookSlug
+     * @param int $pageId
      * @return Response
      * @throws NotFoundException
      */
@@ -308,8 +365,8 @@ class PageController extends Controller
 
     /**
      * Shows the last revisions for this page.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return \Illuminate\View\View
      */
     public function showRevisions($bookSlug, $pageSlug)
@@ -322,9 +379,9 @@ class PageController extends Controller
 
     /**
      * Shows a preview of a single revision
-     * @param $bookSlug
-     * @param $pageSlug
-     * @param $revisionId
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param int $revisionId
      * @return \Illuminate\View\View
      */
     public function showRevision($bookSlug, $pageSlug, $revisionId)
@@ -332,16 +389,48 @@ class PageController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         $revision = $this->pageRepo->getRevisionById($revisionId);
+
         $page->fill($revision->toArray());
         $this->setPageTitle('Page Revision For ' . $page->getShortName());
-        return view('pages/revision', ['page' => $page, 'book' => $book]);
+        
+        return view('pages/revision', [
+            'page' => $page,
+            'book' => $book,
+        ]);
+    }
+
+    /**
+     * Shows the changes of a single revision
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param int $revisionId
+     * @return \Illuminate\View\View
+     */
+    public function showRevisionChanges($bookSlug, $pageSlug, $revisionId)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
+        $revision = $this->pageRepo->getRevisionById($revisionId);
+
+        $prev = $revision->getPrevious();
+        $prevContent = ($prev === null) ? '' : $prev->html;
+        $diff = (new Htmldiff)->diff($prevContent, $revision->html);
+
+        $page->fill($revision->toArray());
+        $this->setPageTitle('Page Revision For ' . $page->getShortName());
+
+        return view('pages/revision', [
+            'page' => $page,
+            'book' => $book,
+            'diff' => $diff,
+        ]);
     }
 
     /**
      * Restores a page using the content of the specified revision.
-     * @param $bookSlug
-     * @param $pageSlug
-     * @param $revisionId
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param int $revisionId
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function restoreRevision($bookSlug, $pageSlug, $revisionId)
@@ -357,8 +446,8 @@ class PageController extends Controller
     /**
      * Exports a page to pdf format using barryvdh/laravel-dompdf wrapper.
      * https://github.com/barryvdh/laravel-dompdf
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return \Illuminate\Http\Response
      */
     public function exportPdf($bookSlug, $pageSlug)
@@ -374,8 +463,8 @@ class PageController extends Controller
 
     /**
      * Export a page to a self-contained HTML file.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return \Illuminate\Http\Response
      */
     public function exportHtml($bookSlug, $pageSlug)
@@ -391,8 +480,8 @@ class PageController extends Controller
 
     /**
      * Export a page to a simple plaintext .txt file.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return \Illuminate\Http\Response
      */
     public function exportPlainText($bookSlug, $pageSlug)
@@ -434,8 +523,8 @@ class PageController extends Controller
 
     /**
      * Show the Restrictions view.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showRestrict($bookSlug, $pageSlug)
@@ -452,8 +541,8 @@ class PageController extends Controller
 
     /**
      * Show the view to choose a new parent to move a page into.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @return mixed
      * @throws NotFoundException
      */
@@ -470,8 +559,8 @@ class PageController extends Controller
 
     /**
      * Does the action of moving the location of a page
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @param Request $request
      * @return mixed
      * @throws NotFoundException
@@ -513,8 +602,8 @@ class PageController extends Controller
 
     /**
      * Set the permissions for this page.
-     * @param $bookSlug
-     * @param $pageSlug
+     * @param string $bookSlug
+     * @param string $pageSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */

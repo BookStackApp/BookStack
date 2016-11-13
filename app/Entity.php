@@ -162,18 +162,21 @@ class Entity extends Ownable
         $exactTerms = [];
         $fuzzyTerms = [];
         $search = static::newQuery();
+
         foreach ($terms as $key => $term) {
-            $safeTerm = htmlentities($term, ENT_QUOTES);
-            $safeTerm = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $safeTerm);
-            if (preg_match('/&quot;.*?&quot;/', $safeTerm) || is_numeric($safeTerm)) {
-                $safeTerm = preg_replace('/^"(.*?)"$/', '$1', $term);
-                $exactTerms[] = '%' . $safeTerm . '%';
+            $term = htmlentities($term, ENT_QUOTES);
+            $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
+            if (preg_match('/&quot;.*?&quot;/', $term) || is_numeric($term)) {
+                $term = str_replace('&quot;', '', $term);
+                $exactTerms[] = '%' . $term . '%';
             } else {
-                $safeTerm = '' . $safeTerm . '*';
-                if (trim($safeTerm) !== '*') $fuzzyTerms[] = $safeTerm;
+                $term = '' . $term . '*';
+                if ($term !== '*') $fuzzyTerms[] = $term;
             }
         }
-        $isFuzzy = count($exactTerms) === 0 || count($fuzzyTerms) > 0;
+
+        $isFuzzy = count($exactTerms) === 0 && count($fuzzyTerms) > 0;
+
 
         // Perform fulltext search if relevant terms exist.
         if ($isFuzzy) {
@@ -193,6 +196,7 @@ class Entity extends Ownable
                 }
             });
         }
+
         $orderBy = $isFuzzy ? 'title_relevance' : 'updated_at';
 
         // Add additional where terms
