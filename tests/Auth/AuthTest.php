@@ -245,7 +245,7 @@ class AuthTest extends TestCase
     {
         $this->setSettings(['registration-enabled' => 'true']);
         $this->visit('/password/email')
-            ->seeLink('Sign in')
+            ->seeLink('Log in')
             ->seeLink('Sign up');
     }
 
@@ -260,6 +260,6 @@ class AuthTest extends TestCase
         return $this->visit('/login')
             ->type($email, '#email')
             ->type($password, '#password')
-            ->press('Sign In');
+            ->press('Log In');
     }
 }

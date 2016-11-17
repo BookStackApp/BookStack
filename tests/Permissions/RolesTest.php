@@ -211,7 +211,7 @@ class RolesTest extends TestCase
         $this->checkAccessPermission('book-create-all', [
             '/books/create'
         ], [
-            '/books' => 'Add new book'
+            '/books' => 'Create New Book'
         ]);
 
         $this->visit('/books/create')
