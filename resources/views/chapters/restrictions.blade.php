@@ -17,7 +17,7 @@
     </div>
 
     <div class="container" ng-non-bindable>
-        <h1>Chapter Permissions</h1>
+        <h1>{{ trans('entities.chapters_permissions') }}</h1>
         @include('form/restriction-form', ['model' => $chapter])
     </div>
 

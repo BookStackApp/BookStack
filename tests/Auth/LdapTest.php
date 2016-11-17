@@ -36,11 +36,11 @@ class LdapTest extends \TestCase
             ->see('Username')
             ->type($this->mockUser->name, '#username')
             ->type($this->mockUser->password, '#password')
-            ->press('Sign In')
+            ->press('Log In')
             ->seePageIs('/login')->see('Please enter an email to use for this account.');
 
         $this->type($this->mockUser->email, '#email')
-            ->press('Sign In')
+            ->press('Log In')
             ->seePageIs('/')
             ->see($this->mockUser->name)
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name]);
@@ -64,7 +64,7 @@ class LdapTest extends \TestCase
             ->see('Username')
             ->type($this->mockUser->name, '#username')
             ->type($this->mockUser->password, '#password')
-            ->press('Sign In')
+            ->press('Log In')
             ->seePageIs('/')
             ->see($this->mockUser->name)
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $ldapDn]);
@@ -87,7 +87,7 @@ class LdapTest extends \TestCase
             ->see('Username')
             ->type($this->mockUser->name, '#username')
             ->type($this->mockUser->password, '#password')
-            ->press('Sign In')
+            ->press('Log In')
             ->seePageIs('/login')->see('These credentials do not match our records.')
             ->dontSeeInDatabase('users', ['external_auth_id' => $this->mockUser->name]);
     }

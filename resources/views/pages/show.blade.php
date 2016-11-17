@@ -72,11 +72,7 @@
 
                     <hr>
 
-                    <p class="text-muted small">
-                        Created {{ $page->created_at->diffForHumans() }} @if($page->createdBy) by <a href="{{ $page->createdBy->getProfileUrl() }}">{{$page->createdBy->name}}</a> @endif
-                        <br>
-                        Last Updated {{ $page->updated_at->diffForHumans() }} @if($page->updatedBy) by <a href="{{ $page->updatedBy->getProfileUrl() }}">{{$page->updatedBy->name}}</a> @endif
-                    </p>
+                    @include('partials.entity-meta', ['entity' => $page])
 
                 </div>
             </div>

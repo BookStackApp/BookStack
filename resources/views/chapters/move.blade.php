@@ -17,7 +17,7 @@
     </div>
 
     <div class="container">
-        <h1>Move Chapter <small class="subheader">{{$chapter->name}}</small></h1>
+        <h1>{{ trans('entities.chapters_move') }} <small class="subheader">{{$chapter->name}}</small></h1>
 
         <form action="{{ $chapter->getUrl('/move') }}" method="POST">
             {!! csrf_field() !!}
@@ -25,8 +25,8 @@
 
             @include('partials/entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book'])
 
-            <a href="{{ $chapter->getUrl() }}" class="button muted">Cancel</a>
-            <button type="submit" class="button pos">Move Chapter</button>
+            <a href="{{ $chapter->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
+            <button type="submit" class="button pos">{{ trans('entities.chapters_move') }}</button>
         </form>
     </div>
 
