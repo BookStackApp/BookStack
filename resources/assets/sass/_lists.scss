@@ -110,6 +110,8 @@
   border-left: 0px solid #FFF;
   background-color: #FFF;
   &.fixed {
+    background-color: #FFF;
+    z-index: 5;
     position: fixed;
     top: 0;
     padding-left: $-l;

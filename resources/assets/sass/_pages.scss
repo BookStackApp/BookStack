@@ -248,28 +248,31 @@
 }
 
 .tag-display {
-  margin: $-xl $-m;
-  border: 1px solid #DDD;
-  min-width: 180px;
-  max-width: 320px;
-  opacity: 0.7;
-  z-index: 5;
+  width: 100%;
+  //opacity: 0.7;
   position: relative;
   table {
     width: 100%;
     margin: 0;
     padding: 0;
   }
+  tr:first-child td {
+    padding-top: 0;
+  }
   .heading th {
     padding: $-xs $-s;
-    color: #333;
+    color: rgba(100, 100, 100, 0.7);
+    border: 0;
     font-weight: 400;
   }
   td {
     border: 0;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 1px solid #EEE;
     padding: $-xs $-s;
     color: #444;
+  }
+  tr td:first-child {
+    padding-left:0;
   }
   .tag-value {
     color: #888;
