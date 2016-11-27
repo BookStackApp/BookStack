@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Exceptions\AuthException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\SocialAuthService;

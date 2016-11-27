@@ -135,7 +135,10 @@
   border-left: 3px solid #BBB;
   background-color: #EEE;
   padding: $-s;
-  display: flex;
+  display: block;
+  > * {
+    display: inline-block;
+  }
   &:before {
     font-family: 'Material-Design-Iconic-Font';
     padding-right: $-s;
