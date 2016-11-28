@@ -160,44 +160,50 @@ class Entity extends Ownable
     public function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
     {
         $exactTerms = [];
-        if (count($terms) === 0) {
-            $search = $this;
-            $orderBy = 'updated_at';
-        } else {
-            foreach ($terms as $key => $term) {
-                $term = htmlentities($term, ENT_QUOTES);
-                $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
-                if (preg_match('/&quot;.*?&quot;/', $term)) {
-                    $term = str_replace('&quot;', '', $term);
-                    $exactTerms[] = '%' . $term . '%';
-                    $term = '"' . $term . '"';
-                } else {
-                    $term = '' . $term . '*';
-                }
-                if ($term !== '*') $terms[$key] = $term;
-            }
-            $termString = implode(' ', $terms);
-            $fields = implode(',', $fieldsToSearch);
-            $search = static::selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
-            $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+        $fuzzyTerms = [];
+        $search = static::newQuery();
 
-            // Ensure at least one exact term matches if in search
-            if (count($exactTerms) > 0) {
-                $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
-                    foreach ($exactTerms as $exactTerm) {
-                        foreach ($fieldsToSearch as $field) {
-                            $query->orWhere($field, 'like', $exactTerm);
-                        }
-                    }
-                });
+        foreach ($terms as $key => $term) {
+            $term = htmlentities($term, ENT_QUOTES);
+            $term = preg_replace('/[+\-><\(\)~*\"@]+/', ' ', $term);
+            if (preg_match('/&quot;.*?&quot;/', $term) || is_numeric($term)) {
+                $term = str_replace('&quot;', '', $term);
+                $exactTerms[] = '%' . $term . '%';
+            } else {
+                $term = '' . $term . '*';
+                if ($term !== '*') $fuzzyTerms[] = $term;
             }
-            $orderBy = 'title_relevance';
-        };
+        }
+
+        $isFuzzy = count($exactTerms) === 0 && count($fuzzyTerms) > 0;
+
+
+        // Perform fulltext search if relevant terms exist.
+        if ($isFuzzy) {
+            $termString = implode(' ', $fuzzyTerms);
+            $fields = implode(',', $fieldsToSearch);
+            $search = $search->selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
+            $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+        }
+
+        // Ensure at least one exact term matches if in search
+        if (count($exactTerms) > 0) {
+            $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
+                foreach ($exactTerms as $exactTerm) {
+                    foreach ($fieldsToSearch as $field) {
+                        $query->orWhere($field, 'like', $exactTerm);
+                    }
+                }
+            });
+        }
+
+        $orderBy = $isFuzzy ? 'title_relevance' : 'updated_at';
 
         // Add additional where terms
         foreach ($wheres as $whereTerm) {
             $search->where($whereTerm[0], $whereTerm[1], $whereTerm[2]);
         }
+
         // Load in relations
         if ($this->isA('page')) {
             $search = $search->with('book', 'chapter', 'createdBy', 'updatedBy');

@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
-        $roles = $this->userRepo->getAssignableRoles();
+        $roles = $this->userRepo->getAllRoles();
         return view('users/create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
 
@@ -126,12 +126,13 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
-        $authMethod = config('auth.method');
-
         $user = $this->user->findOrFail($id);
+
+        $authMethod = ($user->system_name) ? 'system' : config('auth.method');
+
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle('User Profile');
-        $roles = $this->userRepo->getAssignableRoles();
+        $roles = $this->userRepo->getAllRoles();
         return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
     }
 
@@ -186,7 +187,7 @@ class UserController extends Controller
 
     /**
      * Show the user delete page.
-     * @param $id
+     * @param int $id
      * @return \Illuminate\View\View
      */
     public function delete($id)
@@ -216,6 +217,11 @@ class UserController extends Controller
 
         if ($this->userRepo->isOnlyAdmin($user)) {
             session()->flash('error', 'You cannot delete the only admin');
+            return redirect($user->getEditUrl());
+        }
+
+        if ($user->system_name === 'public') {
+            session()->flash('error', 'You cannot delete the guest user');
             return redirect($user->getEditUrl());
         }
 

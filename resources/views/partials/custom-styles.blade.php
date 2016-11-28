@@ -14,7 +14,7 @@
     .nav-tabs a.selected, .nav-tabs .tab-item.selected {
         border-bottom-color: {{ setting('app-color') }};
     }
-    p.primary:hover, p .primary:hover, span.primary:hover, .text-primary:hover, a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
+    .text-primary, p.primary, p .primary, span.primary:hover, .text-primary:hover, a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
         color: {{ setting('app-color') }};
     }
 </style>

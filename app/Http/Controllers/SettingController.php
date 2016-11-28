@@ -17,10 +17,7 @@ class SettingController extends Controller
         $this->setPageTitle('Settings');
 
         // Get application version
-        $version = false;
-        if (function_exists('exec')) {
-            $version = exec('git describe --always --tags ');
-        }
+        $version = trim(file_get_contents(base_path('version')));
 
         return view('settings/index', ['version' => $version]);
     }

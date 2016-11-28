@@ -38,13 +38,17 @@ class EventManager {
         this.listeners[eventName].push(callback);
         return this;
     }
-};
+}
+
 window.Events = new EventManager();
 
-
-var services = require('./services')(ngApp, window.Events);
-var directives = require('./directives')(ngApp, window.Events);
-var controllers = require('./controllers')(ngApp, window.Events);
+// Load in angular specific items
+import Services from './services';
+import Directives from './directives';
+import Controllers from './controllers';
+Services(ngApp, window.Events);
+Directives(ngApp, window.Events);
+Controllers(ngApp, window.Events);
 
 //Global jQuery Config & Extensions
 

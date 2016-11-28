@@ -199,9 +199,9 @@ class UserRepo
      * Get the roles in the system that are assignable to a user.
      * @return mixed
      */
-    public function getAssignableRoles()
+    public function getAllRoles()
     {
-        return $this->role->visible();
+        return $this->role->all();
     }
 
     /**
@@ -211,7 +211,7 @@ class UserRepo
      */
     public function getRestrictableRoles()
     {
-        return $this->role->where('hidden', '=', false)->where('system_name', '=', '')->get();
+        return $this->role->where('system_name', '!=', 'admin')->get();
     }
 
 }

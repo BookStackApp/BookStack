@@ -193,7 +193,7 @@ p.neg, p .neg, span.neg, .text-neg {
 p.muted, p .muted, span.muted, .text-muted {
 	color: lighten($text-dark, 26%);
     &.small, .small {
-      color: lighten($text-dark, 42%);
+      color: lighten($text-dark, 32%);
     }
 }
 
@@ -262,7 +262,7 @@ ul {
 
 ol {
   list-style: decimal;
-  padding-left: $-m * 1.3;
+  padding-left: $-m * 2;
   overflow: hidden;
 }
 

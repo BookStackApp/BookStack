@@ -100,7 +100,7 @@ class SocialAuthService
         $socialAccount = $this->socialAccount->where('driver_id', '=', $socialId)->first();
         $user = $this->userRepo->getByEmail($socialUser->getEmail());
         $isLoggedIn = auth()->check();
-        $currentUser = auth()->user();
+        $currentUser = user();
 
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
@@ -214,9 +214,9 @@ class SocialAuthService
     public function detachSocialAccount($socialDriver)
     {
         session();
-        auth()->user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
+        user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
         session()->flash('success', title_case($socialDriver) . ' account successfully detached');
-        return redirect(auth()->user()->getEditUrl());
+        return redirect(user()->getEditUrl());
     }
 
 }

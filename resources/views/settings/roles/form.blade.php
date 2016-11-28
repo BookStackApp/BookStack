@@ -106,6 +106,19 @@
                             <label>@include('settings/roles/checkbox', ['permission' => 'image-delete-all']) All</label>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Attachments</td>
+                        <td>@include('settings/roles/checkbox', ['permission' => 'attachment-create-all'])</td>
+                        <td style="line-height:1.2;"><small class="faded">Controlled by the asset they are uploaded to</small></td>
+                        <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'attachment-update-own']) Own</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'attachment-update-all']) All</label>
+                        </td>
+                        <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'attachment-delete-own']) Own</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'attachment-delete-all']) All</label>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

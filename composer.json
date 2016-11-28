@@ -7,13 +7,15 @@
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "^5.3.4",
+        "ext-tidy": "*",
         "intervention/image": "^2.3",
         "laravel/socialite": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.1",
         "barryvdh/laravel-debugbar": "^2.2.3",
         "league/flysystem-aws-s3-v3": "^1.0",
         "barryvdh/laravel-dompdf": "^0.7",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "gathercontent/htmldiff": "^0.2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

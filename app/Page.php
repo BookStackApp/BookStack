@@ -55,6 +55,15 @@ class Page extends Entity
     }
 
     /**
+     * Get the attachments assigned to this page.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
+    }
+
+    /**
      * Get the url for this page.
      * @param string|bool $path
      * @return string
@@ -63,13 +72,13 @@ class Page extends Entity
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
         $midText = $this->draft ? '/draft/' : '/page/';
-        $idComponent = $this->draft ? $this->id : $this->slug;
+        $idComponent = $this->draft ? $this->id : urlencode($this->slug);
 
         if ($path !== false) {
-            return baseUrl('/books/' . $bookSlug . $midText . $idComponent . '/' . trim($path, '/'));
+            return baseUrl('/books/' . urlencode($bookSlug) . $midText . $idComponent . '/' . trim($path, '/'));
         }
 
-        return baseUrl('/books/' . $bookSlug . $midText . $idComponent);
+        return baseUrl('/books/' . urlencode($bookSlug) . $midText . $idComponent);
     }
 
     /**

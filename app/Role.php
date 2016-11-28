@@ -66,7 +66,7 @@ class Role extends Model
     /**
      * Get the role object for the specified role.
      * @param $roleName
-     * @return mixed
+     * @return Role
      */
     public static function getRole($roleName)
     {
@@ -76,7 +76,7 @@ class Role extends Model
     /**
      * Get the role object for the specified system role.
      * @param $roleName
-     * @return mixed
+     * @return Role
      */
     public static function getSystemRole($roleName)
     {

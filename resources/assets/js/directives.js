@@ -2,10 +2,6 @@
 const DropZone = require('dropzone');
 const markdown = require('marked');
 
-const toggleSwitchTemplate = require('./components/toggle-switch.html');
-const imagePickerTemplate = require('./components/image-picker.html');
-const dropZoneTemplate = require('./components/drop-zone.html');
-
 module.exports = function (ngApp, events) {
 
     /**
@@ -16,7 +12,12 @@ module.exports = function (ngApp, events) {
     ngApp.directive('toggleSwitch', function () {
         return {
             restrict: 'A',
-            template: toggleSwitchTemplate,
+            template: `
+            <div class="toggle-switch" ng-click="switch()" ng-class="{'active': isActive}">
+                <input type="hidden" ng-attr-name="{{name}}" ng-attr-value="{{value}}"/>
+                <div class="switch-handle"></div>
+            </div>
+            `,
             scope: true,
             link: function (scope, element, attrs) {
                 scope.name = attrs.name;
@@ -33,6 +34,59 @@ module.exports = function (ngApp, events) {
         };
     });
 
+    /**
+     * Common tab controls using simple jQuery functions.
+     */
+    ngApp.directive('tabContainer', function() {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                const $content = element.find('[tab-content]');
+                const $buttons = element.find('[tab-button]');
+
+                if (attrs.tabContainer) {
+                    let initial = attrs.tabContainer;
+                    $buttons.filter(`[tab-button="${initial}"]`).addClass('selected');
+                    $content.hide().filter(`[tab-content="${initial}"]`).show();
+                } else {
+                    $content.hide().first().show();
+                    $buttons.first().addClass('selected');
+                }
+
+                $buttons.click(function() {
+                    let clickedTab = $(this);
+                    $buttons.removeClass('selected');
+                    $content.hide();
+                    let name = clickedTab.addClass('selected').attr('tab-button');
+                    $content.filter(`[tab-content="${name}"]`).show();
+                });
+            }
+        };
+    });
+
+    /**
+     * Sub form component to allow inner-form sections to act like thier own forms.
+     */
+    ngApp.directive('subForm', function() {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.on('keypress', e => {
+                    if (e.keyCode === 13) {
+                        submitEvent(e);
+                    }
+                });
+
+                element.find('button[type="submit"]').click(submitEvent);
+
+                function submitEvent(e) {
+                    e.preventDefault()
+                    if (attrs.subForm) scope.$eval(attrs.subForm);
+                }
+            }
+        };
+    });
+
 
     /**
      * Image Picker
@@ -41,7 +95,22 @@ module.exports = function (ngApp, events) {
     ngApp.directive('imagePicker', ['$http', 'imageManagerService', function ($http, imageManagerService) {
         return {
             restrict: 'E',
-            template: imagePickerTemplate,
+            template: `
+            <div class="image-picker">
+                <div>
+                    <img ng-if="image && image !== 'none'" ng-src="{{image}}" ng-class="{{imageClass}}" alt="Image Preview">
+                    <img ng-if="image === '' && defaultImage" ng-src="{{defaultImage}}" ng-class="{{imageClass}}" alt="Image Preview">
+                </div>
+                <button class="button" type="button" ng-click="showImageManager()">Select Image</button>
+                <br>
+
+                <button class="text-button" ng-click="reset()" type="button">Reset</button>
+                <span ng-show="showRemove" class="sep">|</span>
+                <button ng-show="showRemove" class="text-button neg" ng-click="remove()" type="button">Remove</button>
+
+                <input type="hidden" ng-attr-name="{{name}}" ng-attr-id="{{name}}" ng-attr-value="{{value}}">
+            </div>
+            `,
             scope: {
                 name: '@',
                 resizeHeight: '@',
@@ -108,7 +177,11 @@ module.exports = function (ngApp, events) {
     ngApp.directive('dropZone', [function () {
         return {
             restrict: 'E',
-            template: dropZoneTemplate,
+            template: `
+            <div class="dropzone-container">
+                <div class="dz-message">Drop files or click here to upload</div>
+            </div>
+            `,
             scope: {
                 uploadUrl: '@',
                 eventSuccess: '=',
@@ -116,6 +189,7 @@ module.exports = function (ngApp, events) {
                 uploadedTo: '@'
             },
             link: function (scope, element, attrs) {
+                if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
                 var dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
                     url: scope.uploadUrl,
                     init: function () {
@@ -488,8 +562,8 @@ module.exports = function (ngApp, events) {
             link: function (scope, elem, attrs) {
 
                 // Get common elements
-                const $buttons = elem.find('[tab-button]');
-                const $content = elem.find('[tab-content]');
+                const $buttons = elem.find('[toolbox-tab-button]');
+                const $content = elem.find('[toolbox-tab-content]');
                 const $toggle = elem.find('[toolbox-toggle]');
 
                 // Handle toolbox toggle click
@@ -501,17 +575,17 @@ module.exports = function (ngApp, events) {
                 function setActive(tabName, openToolbox) {
                     $buttons.removeClass('active');
                     $content.hide();
-                    $buttons.filter(`[tab-button="${tabName}"]`).addClass('active');
-                    $content.filter(`[tab-content="${tabName}"]`).show();
+                    $buttons.filter(`[toolbox-tab-button="${tabName}"]`).addClass('active');
+                    $content.filter(`[toolbox-tab-content="${tabName}"]`).show();
                     if (openToolbox) elem.addClass('open');
                 }
 
                 // Set the first tab content active on load
-                setActive($content.first().attr('tab-content'), false);
+                setActive($content.first().attr('toolbox-tab-content'), false);
 
                 // Handle tab button click
                 $buttons.click(function (e) {
-                    let name = $(this).attr('tab-button');
+                    let name = $(this).attr('toolbox-tab-button');
                     setActive(name, true);
                 });
             }
@@ -549,7 +623,7 @@ module.exports = function (ngApp, events) {
                     let val = $input.val();
                     let url = $input.attr('autosuggest');
                     let type = $input.attr('autosuggest-type');
-                    
+
                     // Add name param to request if for a value
                     if (type.toLowerCase() === 'value') {
                         let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
@@ -850,17 +924,3 @@ module.exports = function (ngApp, events) {
         };
     }]);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-

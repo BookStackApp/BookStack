@@ -19,7 +19,7 @@ class ActivityService
     {
         $this->activity = $activity;
         $this->permissionService = $permissionService;
-        $this->user = auth()->user();
+        $this->user = user();
     }
 
     /**

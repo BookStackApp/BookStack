@@ -5,6 +5,7 @@ use BookStack\Image;
 use BookStack\Page;
 use BookStack\Services\ImageService;
 use BookStack\Services\PermissionService;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Setting;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -191,7 +192,12 @@ class ImageRepo
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
-        return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
+        try {
+            return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
+        } catch (FileNotFoundException $exception) {
+            $image->delete();
+            return [];
+        }
     }
 
 

@@ -544,27 +544,38 @@ class RolesTest extends TestCase
             ->dontSeeInElement('.book-content', $otherPage->name);
     }
 
-    public function test_public_role_not_visible_in_user_edit_screen()
+    public function test_public_role_visible_in_user_edit_screen()
     {
         $user = \BookStack\User::first();
         $this->asAdmin()->visit('/settings/users/' . $user->id)
             ->seeElement('#roles-admin')
-            ->dontSeeElement('#roles-public');
+            ->seeElement('#roles-public');
     }
 
-    public function test_public_role_not_visible_in_role_listing()
+    public function test_public_role_visible_in_role_listing()
     {
         $this->asAdmin()->visit('/settings/roles')
             ->see('Admin')
-            ->dontSee('Public');
+            ->see('Public');
     }
 
-    public function test_public_role_not_visible_in_default_role_setting()
+    public function test_public_role_visible_in_default_role_setting()
     {
         $this->asAdmin()->visit('/settings')
             ->seeElement('[data-role-name="admin"]')
-            ->dontSeeElement('[data-role-name="public"]');
+            ->seeElement('[data-role-name="public"]');
 
+    }
+
+    public function test_public_role_not_deleteable()
+    {
+        $this->asAdmin()->visit('/settings/roles')
+            ->click('Public')
+            ->see('Edit Role')
+            ->click('Delete Role')
+            ->press('Confirm')
+            ->see('Delete Role')
+            ->see('Cannot be deleted');
     }
 
 }

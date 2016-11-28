@@ -1,6 +1,31 @@
 
 <div class="book-tree" ng-non-bindable>
 
+    @if(isset($page) && $page->tags->count() > 0)
+        <div class="tag-display">
+            <h6 class="text-muted">Page Tags</h6>
+            <table>
+                <tbody>
+                @foreach($page->tags as $tag)
+                    <tr class="tag">
+                        <td @if(!$tag->value) colspan="2" @endif><a href="{{ baseUrl('/search/all?term=%5B' . urlencode($tag->name) .'%5D') }}">{{ $tag->name }}</a></td>
+                        @if($tag->value) <td class="tag-value"><a href="{{ baseUrl('/search/all?term=%5B' . urlencode($tag->name) .'%3D' . urlencode($tag->value) . '%5D') }}">{{$tag->value}}</a></td> @endif
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
+    @if (isset($page) && $page->attachments->count() > 0)
+        <h6 class="text-muted">Attachments</h6>
+        @foreach($page->attachments as $attachment)
+            <div class="attachment">
+                <a href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif><i class="zmdi zmdi-{{ $attachment->external ? 'open-in-new' : 'file' }}"></i> {{ $attachment->name }}</a>
+            </div>
+        @endforeach
+    @endif
+
     @if (isset($pageNav) && $pageNav)
         <h6 class="text-muted">Page Navigation</h6>
         <div class="sidebar-page-nav menu">
@@ -10,8 +35,6 @@
                 </li>
             @endforeach
         </div>
-
-
     @endif
 
     <h6 class="text-muted">Book Navigation</h6>

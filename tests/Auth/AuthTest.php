@@ -146,7 +146,7 @@ class AuthTest extends TestCase
 
     public function test_user_updating()
     {
-        $user = \BookStack\User::all()->last();
+        $user = $this->getNormalUser();
         $password = $user->password;
         $this->asAdmin()
             ->visit('/settings/users')
@@ -162,7 +162,7 @@ class AuthTest extends TestCase
 
     public function test_user_password_update()
     {
-        $user = \BookStack\User::all()->last();
+        $user = $this->getNormalUser();
         $userProfilePage = '/settings/users/' . $user->id;
         $this->asAdmin()
             ->visit($userProfilePage)
@@ -216,6 +216,37 @@ class AuthTest extends TestCase
             ->visit('/logout')
             ->visit('/')
             ->seePageIs('/login');
+    }
+
+    public function test_reset_password_flow()
+    {
+        $this->visit('/login')->click('Forgot Password?')
+            ->seePageIs('/password/email')
+            ->type('admin@admin.com', 'email')
+            ->press('Send Reset Link')
+            ->see('A password reset link has been sent to admin@admin.com');
+
+        $this->seeInDatabase('password_resets', [
+            'email' => 'admin@admin.com'
+        ]);
+
+        $reset = DB::table('password_resets')->where('email', '=', 'admin@admin.com')->first();
+        $this->visit('/password/reset/' . $reset->token)
+            ->see('Reset Password')
+            ->submitForm('Reset Password', [
+                'email' => 'admin@admin.com',
+                'password' => 'randompass',
+                'password_confirmation' => 'randompass'
+            ])->seePageIs('/')
+            ->see('Your password has been successfully reset');
+    }
+
+    public function test_reset_password_page_shows_sign_links()
+    {
+        $this->setSettings(['registration-enabled' => 'true']);
+        $this->visit('/password/email')
+            ->seeLink('Sign in')
+            ->seeLink('Sign up');
     }
 
     /**

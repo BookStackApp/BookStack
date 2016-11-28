@@ -6,11 +6,11 @@
  * @param editor - editor instance
  */
 function editorPaste(e, editor) {
-    if (!e.clipboardData) return
+    if (!e.clipboardData) return;
     let items = e.clipboardData.items;
     if (!items) return;
     for (let i = 0; i < items.length; i++) {
-        if (items[i].type.indexOf("image") === -1) return
+        if (items[i].type.indexOf("image") === -1) return;
 
         let file = items[i].getAsFile();
         let formData = new FormData();
