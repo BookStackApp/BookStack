@@ -76,5 +76,23 @@ class UserProfileTest extends TestCase
             ->seePageIs('/user/' . $newUser->id)
             ->see($newUser->name);
     }
+
+    public function test_guest_profile_shows_limited_form()
+    {
+        $this->asAdmin()
+            ->visit('/settings/users')
+            ->click('Guest')
+            ->dontSeeElement('#password');
+    }
+
+    public function test_guest_profile_cannot_be_deleted()
+    {
+        $guestUser = \BookStack\User::getDefault();
+        $this->asAdmin()->visit('/settings/users/' . $guestUser->id . '/delete')
+            ->see('Delete User')->see('Guest')
+            ->press('Confirm')
+            ->seePageIs('/settings/users/' . $guestUser->id)
+            ->see('cannot delete the guest user');
+    }
     
 }

@@ -5,6 +5,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Services\AttachmentService;
 use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;
@@ -48,7 +49,7 @@ class PageRepo extends EntityRepo
      * Get a page via a specific ID.
      * @param $id
      * @param bool $allowDrafts
-     * @return mixed
+     * @return Page
      */
     public function getById($id, $allowDrafts = false)
     {
@@ -59,7 +60,7 @@ class PageRepo extends EntityRepo
      * Get a page identified by the given slug.
      * @param $slug
      * @param $bookId
-     * @return mixed
+     * @return Page
      * @throws NotFoundException
      */
     public function getBySlug($slug, $bookId)
@@ -148,8 +149,8 @@ class PageRepo extends EntityRepo
     {
         $page = $this->page->newInstance();
         $page->name = 'New Page';
-        $page->created_by = auth()->user()->id;
-        $page->updated_by = auth()->user()->id;
+        $page->created_by = user()->id;
+        $page->updated_by = user()->id;
         $page->draft = true;
 
         if ($chapter) $page->chapter_id = $chapter->id;
@@ -330,7 +331,7 @@ class PageRepo extends EntityRepo
         }
 
         // Update with new details
-        $userId = auth()->user()->id;
+        $userId = user()->id;
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
@@ -363,7 +364,7 @@ class PageRepo extends EntityRepo
         $page->fill($revision->toArray());
         $page->slug = $this->findSuitableSlug($page->name, $book->id, $page->id);
         $page->text = strip_tags($page->html);
-        $page->updated_by = auth()->user()->id;
+        $page->updated_by = user()->id;
         $page->save();
         return $page;
     }
@@ -381,7 +382,7 @@ class PageRepo extends EntityRepo
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
-        $revision->created_by = auth()->user()->id;
+        $revision->created_by = user()->id;
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
@@ -404,7 +405,7 @@ class PageRepo extends EntityRepo
      */
     public function saveUpdateDraft(Page $page, $data = [])
     {
-        $userId = auth()->user()->id;
+        $userId = user()->id;
         $drafts = $this->userUpdateDraftsQuery($page, $userId)->get();
 
         if ($drafts->count() > 0) {
@@ -535,7 +536,7 @@ class PageRepo extends EntityRepo
         $query = $this->pageRevision->where('type', '=', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->where('updated_at', '>', $page->updated_at)
-            ->where('created_by', '!=', auth()->user()->id)
+            ->where('created_by', '!=', user()->id)
             ->with('createdBy');
 
         if ($minRange !== null) {
@@ -548,7 +549,7 @@ class PageRepo extends EntityRepo
     /**
      * Gets a single revision via it's id.
      * @param $id
-     * @return mixed
+     * @return PageRevision
      */
     public function getRevisionById($id)
     {
@@ -613,8 +614,7 @@ class PageRepo extends EntityRepo
      */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
-        $slug = Str::slug($name);
-        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        $slug = $this->nameToSlug($name);
         while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
@@ -633,12 +633,20 @@ class PageRepo extends EntityRepo
         $page->revisions()->delete();
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);
+
+        // Delete AttachedFiles
+        $attachmentService = app(AttachmentService::class);
+        foreach ($page->attachments as $attachment) {
+            $attachmentService->deleteFile($attachment);
+        }
+
         $page->delete();
     }
 
     /**
      * Get the latest pages added to the system.
      * @param $count
+     * @return mixed
      */
     public function getRecentlyCreatedPaginated($count = 20)
     {
@@ -648,6 +656,7 @@ class PageRepo extends EntityRepo
     /**
      * Get the latest pages added to the system.
      * @param $count
+     * @return mixed
      */
     public function getRecentlyUpdatedPaginated($count = 20)
     {

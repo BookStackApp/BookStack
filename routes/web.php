@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
+        Route::post('/{bookSlug}/page/create/guest', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
         Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
@@ -47,10 +48,12 @@ Route::group(['middleware' => 'auth'], function () {
         // Revisions
         Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageController@showRevisionChanges');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
+        Route::post('/{bookSlug}/chapter/{chapterSlug}/page/create/guest', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
         Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
@@ -83,6 +86,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/gallery/{filter}/{page}', 'ImageController@getGalleryFiltered');
         Route::delete('/{imageId}', 'ImageController@destroy');
     });
+
+    // Attachments routes
+    Route::get('/attachments/{id}', 'AttachmentController@get');
+    Route::post('/attachments/upload', 'AttachmentController@upload');
+    Route::post('/attachments/upload/{id}', 'AttachmentController@uploadUpdate');
+    Route::post('/attachments/link', 'AttachmentController@attachLink');
+    Route::put('/attachments/{id}', 'AttachmentController@update');
+    Route::get('/attachments/get/page/{pageId}', 'AttachmentController@listForPage');
+    Route::put('/attachments/sort/page/{pageId}', 'AttachmentController@sortForPage');
+    Route::delete('/attachments/{id}', 'AttachmentController@delete');
 
     // AJAX routes
     Route::put('/ajax/page/{id}/save-draft', 'PageController@saveDraft');
@@ -140,7 +153,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Social auth routes
-Route::get('/login/service/{socialDriver}', 'Auth\RegisterController@getSocialLogin');
+Route::get('/login/service/{socialDriver}', 'Auth\LoginController@getSocialLogin');
 Route::get('/login/service/{socialDriver}/callback', 'Auth\RegisterController@socialCallback');
 Route::get('/login/service/{socialDriver}/detach', 'Auth\RegisterController@detachSocialAccount');
 Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRegister');

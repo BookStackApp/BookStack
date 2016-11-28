@@ -1,8 +1,10 @@
 "use strict";
 
-const moment = require('moment');
+import moment from 'moment';
+import 'moment/locale/en-gb';
+moment.locale('en-gb');
 
-module.exports = function (ngApp, events) {
+export default function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {
@@ -17,7 +19,7 @@ module.exports = function (ngApp, events) {
             $scope.imageDeleteSuccess = false;
             $scope.uploadedTo = $attrs.uploadedTo;
             $scope.view = 'all';
-            
+
             $scope.searching = false;
             $scope.searchTerm = '';
 
@@ -48,7 +50,7 @@ module.exports = function (ngApp, events) {
                 $scope.hasMore = preSearchHasMore;
             }
             $scope.cancelSearch = cancelSearch;
-            
+
 
             /**
              * Runs on image upload, Adds an image to local list of images
@@ -162,7 +164,6 @@ module.exports = function (ngApp, events) {
 
             /**
              * Start a search operation
-             * @param searchTerm
              */
             $scope.searchImages = function() {
 
@@ -196,7 +197,7 @@ module.exports = function (ngApp, events) {
                 $scope.view = viewName;
                 baseUrl = window.baseUrl('/images/' + $scope.imageType  + '/' + viewName + '/');
                 fetchData();
-            }
+            };
 
             /**
              * Save the details of an image.
@@ -205,7 +206,7 @@ module.exports = function (ngApp, events) {
             $scope.saveImageDetails = function (event) {
                 event.preventDefault();
                 var url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
-                $http.put(url, this.selectedImage).then((response) => {
+                $http.put(url, this.selectedImage).then(response => {
                     events.emit('success', 'Image details updated');
                 }, (response) => {
                     if (response.status === 422) {
@@ -300,15 +301,16 @@ module.exports = function (ngApp, events) {
         var isEdit = pageId !== 0;
         var autosaveFrequency = 30; // AutoSave interval in seconds.
         var isMarkdown = $attrs.editorType === 'markdown';
+        $scope.draftsEnabled = $attrs.draftsEnabled === 'true';
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
 
-        // Set inital header draft text
+        // Set initial header draft text
         if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
             $scope.draftText = 'Editing Draft'
         } else {
             $scope.draftText = 'Editing Page'
-        };
+        }
 
         var autoSave = false;
 
@@ -317,7 +319,7 @@ module.exports = function (ngApp, events) {
             html: false
         };
 
-        if (isEdit) {
+        if (isEdit && $scope.draftsEnabled) {
             setTimeout(() => {
                 startAutoSave();
             }, 1000);
@@ -366,6 +368,7 @@ module.exports = function (ngApp, events) {
          * Save a draft update into the system via an AJAX request.
          */
         function saveDraft() {
+            if (!$scope.draftsEnabled) return;
             var data = {
                 name: $('#name').val(),
                 html: isMarkdown ? $sce.getTrustedHtml($scope.displayContent) : $scope.editContent
@@ -435,7 +438,7 @@ module.exports = function (ngApp, events) {
 
             const pageId = Number($attrs.pageId);
             $scope.tags = [];
-            
+
             $scope.sortOptions = {
                 handle: '.handle',
                 items: '> tr',
@@ -458,7 +461,7 @@ module.exports = function (ngApp, events) {
              * Get all tags for the current book and add into scope.
              */
             function getTags() {
-                let url = window.baseUrl('/ajax/tags/get/page/' + pageId);
+                let url = window.baseUrl(`/ajax/tags/get/page/${pageId}`);
                 $http.get(url).then((responseData) => {
                     $scope.tags = responseData.data;
                     addEmptyTag();
@@ -527,21 +530,201 @@ module.exports = function (ngApp, events) {
 
         }]);
 
+
+    ngApp.controller('PageAttachmentController', ['$scope', '$http', '$attrs',
+        function ($scope, $http, $attrs) {
+
+            const pageId = $scope.uploadedTo = $attrs.pageId;
+            let currentOrder = '';
+            $scope.files = [];
+            $scope.editFile = false;
+            $scope.file = getCleanFile();
+            $scope.errors = {
+                link: {},
+                edit: {}
+            };
+
+            function getCleanFile() {
+                return {
+                    page_id: pageId
+                };
+            }
+
+            // Angular-UI-Sort options
+            $scope.sortOptions = {
+                handle: '.handle',
+                items: '> tr',
+                containment: "parent",
+                axis: "y",
+                stop: sortUpdate,
+            };
+
+            /**
+             * Event listener for sort changes.
+             * Updates the file ordering on the server.
+             * @param event
+             * @param ui
+             */
+            function sortUpdate(event, ui) {
+                let newOrder = $scope.files.map(file => {return file.id}).join(':');
+                if (newOrder === currentOrder) return;
+
+                currentOrder = newOrder;
+                $http.put(window.baseUrl(`/attachments/sort/page/${pageId}`), {files: $scope.files}).then(resp => {
+                    events.emit('success', resp.data.message);
+                }, checkError('sort'));
+            }
+
+            /**
+             * Used by dropzone to get the endpoint to upload to.
+             * @returns {string}
+             */
+            $scope.getUploadUrl = function (file) {
+                let suffix = (typeof file !== 'undefined') ? `/${file.id}` : '';
+                return window.baseUrl(`/attachments/upload${suffix}`);
+            };
+
+            /**
+             * Get files for the current page from the server.
+             */
+            function getFiles() {
+                let url = window.baseUrl(`/attachments/get/page/${pageId}`)
+                $http.get(url).then(resp => {
+                    $scope.files = resp.data;
+                    currentOrder = resp.data.map(file => {return file.id}).join(':');
+                }, checkError('get'));
+            }
+            getFiles();
+
+            /**
+             * Runs on file upload, Adds an file to local file list
+             * and shows a success message to the user.
+             * @param file
+             * @param data
+             */
+            $scope.uploadSuccess = function (file, data) {
+                $scope.$apply(() => {
+                    $scope.files.push(data);
+                });
+                events.emit('success', 'File uploaded');
+            };
+
+            /**
+             * Upload and overwrite an existing file.
+             * @param file
+             * @param data
+             */
+            $scope.uploadSuccessUpdate = function (file, data) {
+                $scope.$apply(() => {
+                    let search = filesIndexOf(data);
+                    if (search !== -1) $scope.files[search] = data;
+
+                    if ($scope.editFile) {
+                        $scope.editFile = angular.copy(data);
+                        data.link = '';
+                    }
+                });
+                events.emit('success', 'File updated');
+            };
+
+            /**
+             * Delete a file from the server and, on success, the local listing.
+             * @param file
+             */
+            $scope.deleteFile = function(file) {
+                if (!file.deleting) {
+                    file.deleting = true;
+                    return;
+                }
+                  $http.delete(window.baseUrl(`/attachments/${file.id}`)).then(resp => {
+                      events.emit('success', resp.data.message);
+                      $scope.files.splice($scope.files.indexOf(file), 1);
+                  }, checkError('delete'));
+            };
+
+            /**
+             * Attach a link to a page.
+             * @param file
+             */
+            $scope.attachLinkSubmit = function(file) {
+                file.uploaded_to = pageId;
+                $http.post(window.baseUrl('/attachments/link'), file).then(resp => {
+                    $scope.files.push(resp.data);
+                    events.emit('success', 'Link attached');
+                    $scope.file = getCleanFile();
+                }, checkError('link'));
+            };
+
+            /**
+             * Start the edit mode for a file.
+             * @param file
+             */
+            $scope.startEdit = function(file) {
+                $scope.editFile = angular.copy(file);
+                $scope.editFile.link = (file.external) ? file.path : '';
+            };
+
+            /**
+             * Cancel edit mode
+             */
+            $scope.cancelEdit = function() {
+                $scope.editFile = false;
+            };
+
+            /**
+             * Update the name and link of a file.
+             * @param file
+             */
+            $scope.updateFile = function(file) {
+                $http.put(window.baseUrl(`/attachments/${file.id}`), file).then(resp => {
+                    let search = filesIndexOf(resp.data);
+                    if (search !== -1) $scope.files[search] = resp.data;
+
+                    if ($scope.editFile && !file.external) {
+                        $scope.editFile.link = '';
+                    }
+                    $scope.editFile = false;
+                    events.emit('success', 'Attachment details updated');
+                }, checkError('edit'));
+            };
+
+            /**
+             * Get the url of a file.
+             */
+            $scope.getFileUrl = function(file) {
+                return window.baseUrl('/attachments/' + file.id);
+            };
+
+            /**
+             * Search the local files via another file object.
+             * Used to search via object copies.
+             * @param file
+             * @returns int
+             */
+            function filesIndexOf(file) {
+                for (let i = 0; i < $scope.files.length; i++) {
+                    if ($scope.files[i].id == file.id) return i;
+                }
+                return -1;
+            }
+
+            /**
+             * Check for an error response in a ajax request.
+             * @param errorGroupName
+             */
+            function checkError(errorGroupName) {
+                $scope.errors[errorGroupName] = {};
+                return function(response) {
+                    if (typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined') {
+                        events.emit('error', response.data.error);
+                    }
+                    if (typeof response.data !== 'undefined' && typeof response.data.validation !== 'undefined') {
+                        $scope.errors[errorGroupName] = response.data.validation;
+                        console.log($scope.errors[errorGroupName])
+                    }
+                }
+            }
+
+        }]);
+
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

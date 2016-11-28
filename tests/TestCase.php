@@ -67,6 +67,14 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
+     * Get a user that's not a system user such as the guest user.
+     */
+    public function getNormalUser()
+    {
+        return \BookStack\User::where('system_name', '=', null)->get()->last();
+    }
+
+    /**
      * Quickly sets an array of settings.
      * @param $settingsArray
      */

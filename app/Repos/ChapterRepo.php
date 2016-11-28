@@ -98,8 +98,8 @@ class ChapterRepo extends EntityRepo
     {
         $chapter = $this->chapter->newInstance($input);
         $chapter->slug = $this->findSuitableSlug($chapter->name, $book->id);
-        $chapter->created_by = auth()->user()->id;
-        $chapter->updated_by = auth()->user()->id;
+        $chapter->created_by = user()->id;
+        $chapter->updated_by = user()->id;
         $chapter = $book->chapters()->save($chapter);
         $this->permissionService->buildJointPermissionsForEntity($chapter);
         return $chapter;
@@ -150,8 +150,7 @@ class ChapterRepo extends EntityRepo
      */
     public function findSuitableSlug($name, $bookId, $currentId = false)
     {
-        $slug = Str::slug($name);
-        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        $slug = $this->nameToSlug($name);
         while ($this->doesSlugExist($slug, $bookId, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }

@@ -3,13 +3,11 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Ownable;
-use HttpRequestException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use BookStack\User;
 
 abstract class Controller extends BaseController
@@ -33,16 +31,15 @@ abstract class Controller extends BaseController
         $this->middleware(function ($request, $next) {
 
             // Get a user instance for the current user
-            $user = auth()->user();
-            if (!$user) $user = User::getDefault();
-
-            // Share variables with views
-            view()->share('signedIn', auth()->check());
-            view()->share('currentUser', $user);
+            $user = user();
 
             // Share variables with controllers
             $this->currentUser = $user;
             $this->signedIn = auth()->check();
+
+            // Share variables with views
+            view()->share('signedIn', $this->signedIn);
+            view()->share('currentUser', $user);
 
             return $next($request);
         });
@@ -72,8 +69,13 @@ abstract class Controller extends BaseController
      */
     protected function showPermissionError()
     {
-        Session::flash('error', trans('errors.permission'));
-        $response = request()->wantsJson() ? response()->json(['error' => trans('errors.permissionJson')], 403) : redirect('/');
+        if (request()->wantsJson()) {
+            $response = response()->json(['error' => trans('errors.permissionJson')], 403);
+        } else {
+            $response = redirect('/');
+            session()->flash('error', trans('errors.permission'));
+        }
+
         throw new HttpResponseException($response);
     }
 
@@ -84,7 +86,7 @@ abstract class Controller extends BaseController
      */
     protected function checkPermission($permissionName)
     {
-        if (!$this->currentUser || !$this->currentUser->can($permissionName)) {
+        if (!user() || !user()->can($permissionName)) {
             $this->showPermissionError();
         }
         return true;
@@ -124,6 +126,24 @@ abstract class Controller extends BaseController
     protected function jsonError($messageText = "", $statusCode = 500)
     {
         return response()->json(['message' => $messageText], $statusCode);
+    }
+
+    /**
+     * Create the response for when a request fails validation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $errors
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function buildFailedValidationResponse(Request $request, array $errors)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['validation' => $errors], 422);
+        }
+
+        return redirect()->to($this->getRedirectUrl())
+            ->withInput($request->input())
+            ->withErrors($errors, $this->errorBag());
     }
 
 }

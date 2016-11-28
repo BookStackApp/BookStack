@@ -132,8 +132,8 @@ class BookRepo extends EntityRepo
     {
         $book = $this->book->newInstance($input);
         $book->slug = $this->findSuitableSlug($book->name);
-        $book->created_by = auth()->user()->id;
-        $book->updated_by = auth()->user()->id;
+        $book->created_by = user()->id;
+        $book->updated_by = user()->id;
         $book->save();
         $this->permissionService->buildJointPermissionsForEntity($book);
         return $book;
@@ -147,9 +147,11 @@ class BookRepo extends EntityRepo
      */
     public function updateFromInput(Book $book, $input)
     {
+        if ($book->name !== $input['name']) {
+            $book->slug = $this->findSuitableSlug($input['name'], $book->id);
+        }
         $book->fill($input);
-        $book->slug = $this->findSuitableSlug($book->name, $book->id);
-        $book->updated_by = auth()->user()->id;
+        $book->updated_by = user()->id;
         $book->save();
         $this->permissionService->buildJointPermissionsForEntity($book);
         return $book;
@@ -208,8 +210,7 @@ class BookRepo extends EntityRepo
      */
     public function findSuitableSlug($name, $currentId = false)
     {
-        $slug = Str::slug($name);
-        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        $slug = $this->nameToSlug($name);
         while ($this->doesSlugExist($slug, $currentId)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }

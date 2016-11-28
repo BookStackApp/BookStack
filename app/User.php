@@ -5,6 +5,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
@@ -36,21 +37,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $permissions;
 
     /**
-     * Returns a default guest user.
+     * Returns the default public user.
+     * @return User
      */
     public static function getDefault()
     {
-        return new static([
-            'email' => 'guest',
-            'name' => 'Guest'
-        ]);
+        return static::where('system_name', '=', 'public')->first();
+    }
+
+    /**
+     * Check if the user is the default public user.
+     * @return bool
+     */
+    public function isDefault()
+    {
+        return $this->system_name === 'public';
     }
 
     /**
      * The roles that belong to the user.
+     * @return BelongsToMany
      */
     public function roles()
     {
+        if ($this->id === 0) return ;
         return $this->belongsToMany(Role::class);
     }
 
