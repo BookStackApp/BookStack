@@ -3,7 +3,7 @@
 return [
 
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'development'),
 
     'editor' => env('APP_EDITOR', 'html'),
 
@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
