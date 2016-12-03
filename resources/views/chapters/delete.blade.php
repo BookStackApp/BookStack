@@ -2,6 +2,16 @@
 
 @section('content')
 
+    <div class="faded-small toolbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 faded">
+                    @include('chapters._breadcrumbs', ['chapter' => $chapter])
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container small" ng-non-bindable>
         <h1>{{ trans('entities.chapters_delete') }}</h1>
         <p>{{ trans('entities.chapters_delete_explain', ['chapterName' => $chapter->name]) }}</p>

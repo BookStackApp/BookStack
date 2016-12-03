@@ -6,8 +6,18 @@
 
 @section('content')
 
+    <div class="faded-small toolbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 faded">
+                    @include('books._breadcrumbs', ['book' => $book])
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container" ng-non-bindable>
-        <h1>Sorting Pages & Chapters<span class="subheader">For {{ $book->name }}</span></h1>
+        <h1>{{ trans('entities.books_sort') }}</h1>
         <div class="row">
             <div class="col-md-8" id="sort-boxes">
 
@@ -17,7 +27,7 @@
 
             @if(count($books) > 1)
                 <div class="col-md-4">
-                    <h3>Show Other Books</h3>
+                    <h3>{{ trans('entities.books_sort_show_other') }}</h3>
                     <div id="additional-books">
                     @foreach($books as $otherBook)
                         @if($otherBook->id !== $book->id)
@@ -37,8 +47,8 @@
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="sort-tree-input" name="sort-tree">
             <div class="list">
-                <a href="{{ $book->getUrl() }}" class="button muted">Cancel</a>
-                <button class="button pos" type="submit">Save Order</button>
+                <a href="{{ $book->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
+                <button class="button pos" type="submit">{{ trans('entities.books_sort_save') }}</button>
             </div>
         </form>
 
