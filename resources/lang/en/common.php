@@ -6,7 +6,9 @@ return [
      */
     'cancel' => 'Cancel',
     'confirm' => 'Confirm',
-
+    'back' => 'Back',
+    'save' => 'Save',
+    'continue' => 'Continue',
 
     /**
      * Form Labels
@@ -23,4 +25,10 @@ return [
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
+
+
+    /**
+     * Misc
+     */
+    'deleted_user' => 'Deleted User',
 ];

@@ -7,7 +7,7 @@
             <table>
                 <thead>
                     <tr class="text-left heading primary-background-light">
-                        <th colspan="2">Page Tags</th>
+                        <th colspan="2">{{ trans('entities.page_tags') }}</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -6,9 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 faded" ng-non-bindable>
-                    <div class="breadcrumbs">
-                        <a href="{{ $book->getUrl() }}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
-                    </div>
+                    @include('chapters._breadcrumbs', ['chapter' => $chapter])
                 </div>
                 <div class="col-sm-4 faded">
                     <div class="action-buttons">

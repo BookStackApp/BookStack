@@ -28,7 +28,7 @@ class SortTest extends TestCase
         $currentBook = $page->book;
         $newBook = \BookStack\Book::where('id', '!=', $currentBook->id)->first();
         $this->asAdmin()->visit($page->getUrl() . '/move')
-            ->see('Move Page')->see($page->name)
+            ->see('Move Page')
             ->type('book:' . $newBook->id, 'entity_selection')->press('Move Page');
 
         $page = \BookStack\Page::find($page->id);

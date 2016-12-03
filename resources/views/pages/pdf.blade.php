@@ -36,6 +36,5 @@
             max-width: none;
             display: none;
         }
-
     </style>
 @stop

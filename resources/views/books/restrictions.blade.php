@@ -6,9 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 faded">
-                    <div class="breadcrumbs">
-                        <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
-                    </div>
+                    @include('books._breadcrumbs', ['book' => $book])
                 </div>
             </div>
         </div>
