@@ -12,13 +12,20 @@ return [
     'edit' => 'Edit',
     'sort' => 'Sort',
     'move' => 'Move',
-    'permissions' => 'Permissions',
     'delete' => 'Delete',
     'meta_created' => 'Created :timeLength',
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
     'x_pages' => ':count Pages',
+
+    /**
+     * Permissions and restrictions
+     */
+    'permissions' => 'Permissions',
+    'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
+    'permissions_enable' => 'Enable Custom Permissions',
+    'permissions_save' => 'Save Permissions',
 
     /**
      * Search
@@ -53,6 +60,7 @@ return [
     /**
      * Chapters
      */
+    'chapters_popular' => 'Popular Chapters',
     'chapters_new' => 'New Chapter',
     'chapters_create' => 'Create New Chapter',
     'chapters_delete' => 'Delete Chapter',
@@ -69,6 +77,7 @@ return [
     /**
      * Pages
      */
+    'pages_popular' => 'Popular Pages',
     'pages_new' => 'New Page',
     'pages_attachments' => 'Attachments',
     'pages_navigation' => 'Page Navigation',

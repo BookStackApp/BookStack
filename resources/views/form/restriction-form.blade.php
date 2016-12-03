@@ -2,31 +2,31 @@
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 
-    <p>Once enabled, These permissions will take priority over any set role permissions.</p>
+    <p>{{ trans('entities.permissions_intro') }}</p>
 
     <div class="form-group">
-        @include('form/checkbox', ['name' => 'restricted', 'label' => 'Enable custom permissions'])
+        @include('form/checkbox', ['name' => 'restricted', 'label' => trans('entities.permissions_enable')])
     </div>
 
 
     <table class="table">
         <tr>
-            <th>Role</th>
-            <th @if($model->isA('page')) colspan="3" @else colspan="4" @endif>Actions</th>
+            <th>{{ trans('common.role') }}</th>
+            <th @if($model->isA('page')) colspan="3" @else colspan="4" @endif>{{ trans('common.actions') }}</th>
         </tr>
         @foreach($roles as $role)
             <tr>
                 <td>{{ $role->display_name }}</td>
-                <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => 'View', 'action' => 'view'])</td>
+                <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.view'), 'action' => 'view'])</td>
                 @if(!$model->isA('page'))
-                    <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => 'Create', 'action' => 'create'])</td>
+                    <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.create'), 'action' => 'create'])</td>
                 @endif
-                <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => 'Update', 'action' => 'update'])</td>
-                <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => 'Delete', 'action' => 'delete'])</td>
+                <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.update'), 'action' => 'update'])</td>
+                <td>@include('form/restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.delete'), 'action' => 'delete'])</td>
             </tr>
         @endforeach
     </table>
 
-    <a href="{{ $model->getUrl() }}" class="button muted">Cancel</a>
-    <button type="submit" class="button pos">Save Permissions</button>
+    <a href="{{ $model->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
+    <button type="submit" class="button pos">{{ trans('entities.permissions_save') }}</button>
 </form>
