@@ -26,6 +26,8 @@ return [
     'create' => 'Create',
     'update' => 'Update',
     'edit' => 'Edit',
+    'sort' => 'Sort',
+    'move' => 'Move',
     'delete' => 'Delete',
     'search' => 'Search',
     'search_clear' => 'Clear Search',

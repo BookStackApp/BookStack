@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Exceptions\ConfirmationEmailException;
+use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\EmailConfirmationService;
@@ -82,7 +83,7 @@ class RegisterController extends Controller
     protected function checkRegistrationAllowed()
     {
         if (!setting('registration-enabled')) {
-            throw new UserRegistrationException('Registrations are currently disabled.', '/login');
+            throw new UserRegistrationException(trans('auth.registrations_disabled'), '/login');
         }
     }
 
@@ -147,7 +148,7 @@ class RegisterController extends Controller
             $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
             $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
             if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
-                throw new UserRegistrationException('That email domain does not have access to this application', '/register');
+                throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/register');
             }
         }
 
@@ -169,7 +170,7 @@ class RegisterController extends Controller
         }
 
         auth()->login($newUser);
-        session()->flash('success', 'Thanks for signing up! You are now registered and signed in.');
+        session()->flash('success', trans('auth.register_success'));
         return redirect($this->redirectPath());
     }
 
@@ -262,7 +263,7 @@ class RegisterController extends Controller
                 return $this->socialRegisterCallback($socialDriver);
             }
         } else {
-            throw new SocialSignInException('No action defined', '/login');
+            throw new SocialSignInException(trans('errors.social_no_action_defined'), '/login');
         }
         return redirect()->back();
     }

@@ -19,21 +19,21 @@
                             </ul>
                         </span>
                         @if(userCan('page-update', $page))
-                            <a href="{{ $page->getUrl('/edit') }}" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>{{ trans('entities.edit') }}</a>
+                            <a href="{{ $page->getUrl('/edit') }}" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>{{ trans('common.edit') }}</a>
                         @endif
                         @if(userCan('page-update', $page) || userCan('restrictions-manage', $page) || userCan('page-delete', $page))
                             <div dropdown class="dropdown-container">
                                 <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i></a>
                                 <ul>
                                     @if(userCan('page-update', $page))
-                                        <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" ><i class="zmdi zmdi-folder"></i>{{ trans('entities.move') }}</a></li>
+                                        <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" ><i class="zmdi zmdi-folder"></i>{{ trans('common.move') }}</a></li>
                                         <li><a href="{{ $page->getUrl('/revisions') }}" class="text-primary"><i class="zmdi zmdi-replay"></i>{{ trans('entities.revisions') }}</a></li>
                                     @endif
                                     @if(userCan('restrictions-manage', $page))
                                         <li><a href="{{ $page->getUrl('/permissions') }}" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.permissions') }}</a></li>
                                     @endif
                                     @if(userCan('page-delete', $page))
-                                        <li><a href="{{ $page->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>{{ trans('entities.delete') }}</a></li>
+                                        <li><a href="{{ $page->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>{{ trans('common.delete') }}</a></li>
                                     @endif
                                 </ul>
                             </div>

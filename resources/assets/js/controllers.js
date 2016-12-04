@@ -506,20 +506,6 @@ export default function (ngApp, events) {
             };
 
             /**
-             * Save the tags to the current page.
-             */
-            $scope.saveTags = function() {
-                setTagOrder();
-                let postData = {tags: $scope.tags};
-                let url = window.baseUrl('/ajax/tags/update/page/' + pageId);
-                $http.post(url, postData).then((responseData) => {
-                    $scope.tags = responseData.data.tags;
-                    addEmptyTag();
-                    events.emit('success', responseData.data.message);
-                })
-            };
-
-            /**
              * Remove a tag from the current list.
              * @param tag
              */

@@ -66,7 +66,7 @@ class PageRepo extends EntityRepo
     public function getBySlug($slug, $bookId)
     {
         $page = $this->pageQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($page === null) throw new NotFoundException('Page not found');
+        if ($page === null) throw new NotFoundException(trans('errors.page_not_found'));
         return $page;
     }
 
@@ -134,7 +134,7 @@ class PageRepo extends EntityRepo
         $draftPage->draft = false;
 
         $draftPage->save();
-        $this->saveRevision($draftPage, 'Initial Publish');
+        $this->saveRevision($draftPage, trans('entities.pages_initial_revision'));
         
         return $draftPage;
     }
@@ -143,12 +143,12 @@ class PageRepo extends EntityRepo
      * Get a new draft page instance.
      * @param Book $book
      * @param Chapter|bool $chapter
-     * @return static
+     * @return Page
      */
     public function getDraftPage(Book $book, $chapter = false)
     {
         $page = $this->page->newInstance();
-        $page->name = 'New Page';
+        $page->name = trans('entities.pages_initial_name');
         $page->created_by = user()->id;
         $page->updated_by = user()->id;
         $page->draft = true;
@@ -487,11 +487,9 @@ class PageRepo extends EntityRepo
      */
     public function getUserPageDraftMessage(PageRevision $draft)
     {
-        $message = 'You are currently editing a draft that was last saved ' . $draft->updated_at->diffForHumans() . '.';
-        if ($draft->page->updated_at->timestamp > $draft->updated_at->timestamp) {
-            $message .= "\n This page has been updated by since that time. It is recommended that you discard this draft.";
-        }
-        return $message;
+        $message = trans('entities.pages_editing_draft_notification', ['timeDiff' => $draft->updated_at->diffForHumans()]);
+        if ($draft->page->updated_at->timestamp <= $draft->updated_at->timestamp) return $message;
+        return $message . "\n" . trans('entities.pages_draft_edited_notification');
     }
 
     /**
@@ -519,10 +517,10 @@ class PageRepo extends EntityRepo
     public function getPageEditingActiveMessage(Page $page, $minRange = null)
     {
         $pageDraftEdits = $this->activePageEditingQuery($page, $minRange)->get();
-        $userMessage = $pageDraftEdits->count() > 1 ? $pageDraftEdits->count() . ' users have' : $pageDraftEdits->first()->createdBy->name . ' has';
-        $timeMessage = $minRange === null ? 'since the page was last updated' : 'in the last ' . $minRange . ' minutes';
-        $message = '%s started editing this page %s. Take care not to overwrite each other\'s updates!';
-        return sprintf($message, $userMessage, $timeMessage);
+
+        $userMessage = $pageDraftEdits->count() > 1 ? trans('entities.pages_draft_edit_active.start_a', ['count' => $pageDraftEdits->count()]): trans('entities.pages_draft_edit_active.start_b', ['userName' => $pageDraftEdits->first()->createdBy->name]);
+        $timeMessage = $minRange === null ? trans('entities.pages_draft_edit_active.time_a') : trans('entities.pages_draft_edit_active.time_b', ['minCount'=>$minRange]);
+        return trans('entities.pages_draft_edit_active.message', ['start' => $userMessage, 'time' => $timeMessage]);
     }
 
     /**

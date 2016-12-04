@@ -77,7 +77,7 @@ class AttachmentController extends Controller
         $this->checkOwnablePermission('attachment-create', $attachment);
         
         if (intval($pageId) !== intval($attachment->uploaded_to)) {
-            return $this->jsonError('Page mismatch during attached file update');
+            return $this->jsonError(trans('errors.attachment_page_mismatch'));
         }
 
         $uploadedFile = $request->file('file');
@@ -113,7 +113,7 @@ class AttachmentController extends Controller
         $this->checkOwnablePermission('attachment-create', $attachment);
 
         if (intval($pageId) !== intval($attachment->uploaded_to)) {
-            return $this->jsonError('Page mismatch during attachment update');
+            return $this->jsonError(trans('errors.attachment_page_mismatch'));
         }
 
         $attachment = $this->attachmentService->updateFile($attachment, $request->all());
@@ -175,7 +175,7 @@ class AttachmentController extends Controller
 
         $attachments = $request->get('files');
         $this->attachmentService->updateFileOrderWithinPage($attachments, $pageId);
-        return response()->json(['message' => 'Attachment order updated']);
+        return response()->json(['message' => trans('entities.attachments_order_updated')]);
     }
 
     /**
@@ -210,6 +210,6 @@ class AttachmentController extends Controller
         $attachment = $this->attachment->findOrFail($attachmentId);
         $this->checkOwnablePermission('attachment-delete', $attachment);
         $this->attachmentService->deleteFile($attachment);
-        return response()->json(['message' => 'Attachment deleted']);
+        return response()->json(['message' => trans('entities.attachments_deleted')]);
     }
 }

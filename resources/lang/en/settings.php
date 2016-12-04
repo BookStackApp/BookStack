@@ -10,6 +10,7 @@ return [
     
     'settings' => 'Settings',
     'settings_save' => 'Save Settings',
+    'settings_save_success' => 'Settings saved',
 
     /**
      * App settings
@@ -51,10 +52,13 @@ return [
     'roles' => 'Roles',
     'role_user_roles' => 'User Roles',
     'role_create' => 'Create New Role',
+    'role_create_success' => 'Role successfully created',
     'role_delete' => 'Delete Role',
     'role_delete_confirm' => 'This will delete the role with the name \':roleName\'.',
     'role_delete_users_assigned' => 'This role has :userCount users assigned to it. If you would like to migrate the users from this role select a new role below.',
+    'role_delete_no_migration' => "Don't migrate users",
     'role_delete_sure' => 'Are you sure you want to delete this role?',
+    'role_delete_success' => 'Role successfully deleted',
     'role_edit' => 'Edit Role',
     'role_details' => 'Role Details',
     'role_name' => 'Role Name',
@@ -71,6 +75,7 @@ return [
     'role_own' => 'Own',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
     'role_save' => 'Save Role',
+    'role_update_success' => 'Role successfully updated',
     'role_users' => 'Users in this role',
     'role_users_none' => 'No users are currently assigned to this role',
 
@@ -79,6 +84,7 @@ return [
      */
 
     'users' => 'Users',
+    'user_profile' => 'User Profile',
     'users_add_new' => 'Add New User',
     'users_search' => 'Search Users',
     'users_role' => 'User Roles',
@@ -86,16 +92,21 @@ return [
     'users_password_warning' => 'Only fill the below if you would like to change your password:',
     'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
     'users_delete' => 'Delete User',
+    'users_delete_named' => 'Delete ser :userName',
     'users_delete_warning' => 'This will fully delete this user with the name \':userName\' from the system.',
     'users_delete_confirm' => 'Are you sure you want to delete this user?',
+    'users_delete_success' => 'Users successfully removed',
     'users_edit' => 'Edit User',
     'users_edit_profile' => 'Edit Profile',
+    'users_edit_success' => 'User successfully updated',
     'users_avatar' => 'User Avatar',
     'users_avatar_desc' => 'This image should be approx 256px square.',
     'users_social_accounts' => 'Social Accounts',
     'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Connect Account',
     'users_social_disconnect' => 'Disconnect Account',
+    'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
+    'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
 ];
 
 

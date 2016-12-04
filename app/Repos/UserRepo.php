@@ -3,7 +3,6 @@
 use BookStack\Role;
 use BookStack\User;
 use Exception;
-use Setting;
 
 class UserRepo
 {

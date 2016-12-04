@@ -109,7 +109,7 @@ class BookRepo extends EntityRepo
     public function getBySlug($slug)
     {
         $book = $this->bookQuery()->where('slug', '=', $slug)->first();
-        if ($book === null) throw new NotFoundException('Book not found');
+        if ($book === null) throw new NotFoundException(trans('errors.book_not_found'));
         return $book;
     }
 

@@ -193,7 +193,7 @@ class AttachmentService extends UploadService
         try {
             $storage->put($attachmentStoragePath, $attachmentData);
         } catch (Exception $e) {
-            throw new FileUploadException('File path ' . $attachmentStoragePath . ' could not be uploaded to. Ensure it is writable to the server.');
+            throw new FileUploadException(trans('errors.path_not_writable', ['filePath' => $attachmentStoragePath]));
         }
         return $attachmentPath;
     }
