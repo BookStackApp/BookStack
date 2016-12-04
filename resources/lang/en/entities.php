@@ -5,6 +5,10 @@ return [
      * Shared
      */
     'recently_created' => 'Recently Created',
+    'recently_created_pages' => 'Recently Created Pages',
+    'recently_updated_pages' => 'Recently Updated Pages',
+    'recently_created_chapters' => 'Recently Created Chapters',
+    'recently_created_books' => 'Recently Created Books',
     'recently_update' => 'Recently Updated',
     'recently_viewed' => 'Recently Viewed',
     'recent_activity' => 'Recent Activity',
@@ -19,6 +23,13 @@ return [
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
     'x_pages' => ':count Pages',
+    'entity_select' => 'Entity Select',
+    'images' => 'Images',
+    'my_recent_drafts' => 'My Recent Drafts',
+    'my_recently_viewed' => 'My Recently Viewed',
+    'no_pages_viewed' => 'You have not viewed any pages',
+    'no_pages_recently_created' => 'No pages have been recently created',
+    'no_pages_recently_updated' => 'No pages have been recently updated',
 
     /**
      * Permissions and restrictions
@@ -33,13 +44,19 @@ return [
      */
     'search_results' => 'Search Results',
     'search_clear' => 'Clear Search',
+    'search_view_pages' => 'View all matches pages',
+    'search_view_chapters' => 'View all matches chapters',
+    'search_view_books' => 'View all matches books',
+    'search_no_pages' => 'No pages matched this search',
 
     /**
      * Books
      */
+    'book' => 'Book',
     'books' => 'Books',
     'books_empty' => 'No books have been created',
     'books_popular' => 'Popular Books',
+    'books_recent' => 'Recent Books',
     'books_popular_empty' => 'The most popular books will appear here.',
     'books_create' => 'Create New Book',
     'books_delete' => 'Delete Book',
@@ -64,6 +81,7 @@ return [
     /**
      * Chapters
      */
+    'chapter' => 'Chapter',
     'chapters_popular' => 'Popular Chapters',
     'chapters_new' => 'New Chapter',
     'chapters_create' => 'Create New Chapter',
@@ -81,6 +99,8 @@ return [
     /**
      * Pages
      */
+    'page' => 'Page',
+    'pages' => 'Pages',
     'pages_popular' => 'Popular Pages',
     'pages_new' => 'New Page',
     'pages_attachments' => 'Attachments',
@@ -149,4 +169,12 @@ return [
     'attachments_edit_file_name' => 'File Name',
     'attachments_edit_drop_upload' => 'Drop files or click here to upload and overwrite',
 
+    /**
+     * Profile View
+     */
+    'profile_user_for_x' => 'User for :time',
+    'profile_created_content' => 'Created Content',
+    'profile_not_created_pages' => ':userName has not created any pages',
+    'profile_not_created_chapters' => ':userName has not created any chapters',
+    'profile_not_created_books' => ':userName has not created any books',
 ];

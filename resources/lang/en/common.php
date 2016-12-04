@@ -9,6 +9,7 @@ return [
     'back' => 'Back',
     'save' => 'Save',
     'continue' => 'Continue',
+    'select' => 'Select',
 
     /**
      * Form Labels
@@ -24,11 +25,30 @@ return [
     'view' => 'View',
     'create' => 'Create',
     'update' => 'Update',
+    'edit' => 'Edit',
     'delete' => 'Delete',
+    'search' => 'Search',
+    'search_clear' => 'Clear Search',
 
 
     /**
      * Misc
      */
     'deleted_user' => 'Deleted User',
+    'no_activity' => 'No activity to show',
+    'no_items' => 'No items available',
+    'back_to_top' => 'Back to top',
+    'toggle_details' => 'Toggle Details',
+
+    /**
+     * Header
+     */
+    'view_profile' => 'View Profile',
+    'edit_profile' => 'Edit Profile',
+
+    /**
+     * Email Content
+     */
+    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
+    'email_rights' => 'All rights reserved',
 ];
