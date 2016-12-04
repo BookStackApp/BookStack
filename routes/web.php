@@ -107,7 +107,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/get/{entityType}/{entityId}', 'TagController@getForEntity');
         Route::get('/suggest/names', 'TagController@getNameSuggestions');
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
-        Route::post('/update/{entityType}/{entityId}', 'TagController@updateForEntity');
     });
 
     Route::get('/ajax/search/entities', 'SearchController@searchEntitiesAjax');

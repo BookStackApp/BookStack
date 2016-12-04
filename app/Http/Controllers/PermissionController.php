@@ -2,9 +2,7 @@
 
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Repos\PermissionsRepo;
-use BookStack\Services\PermissionService;
 use Illuminate\Http\Request;
-use BookStack\Http\Requests;
 
 class PermissionController extends Controller
 {
@@ -55,7 +53,7 @@ class PermissionController extends Controller
         ]);
 
         $this->permissionsRepo->saveNewRole($request->all());
-        session()->flash('success', 'Role successfully created');
+        session()->flash('success', trans('settings.role_create_success'));
         return redirect('/settings/roles');
     }
 
@@ -69,7 +67,7 @@ class PermissionController extends Controller
     {
         $this->checkPermission('user-roles-manage');
         $role = $this->permissionsRepo->getRoleById($id);
-        if ($role->hidden) throw new PermissionsException('This role cannot be edited');
+        if ($role->hidden) throw new PermissionsException(trans('errors.role_cannot_be_edited'));
         return view('settings/roles/edit', ['role' => $role]);
     }
 
@@ -88,7 +86,7 @@ class PermissionController extends Controller
         ]);
 
         $this->permissionsRepo->updateRole($id, $request->all());
-        session()->flash('success', 'Role successfully updated');
+        session()->flash('success', trans('settings.role_update_success'));
         return redirect('/settings/roles');
     }
 
@@ -103,7 +101,7 @@ class PermissionController extends Controller
         $this->checkPermission('user-roles-manage');
         $role = $this->permissionsRepo->getRoleById($id);
         $roles = $this->permissionsRepo->getAllRolesExcept($role);
-        $blankRole = $role->newInstance(['display_name' => 'Don\'t migrate users']);
+        $blankRole = $role->newInstance(['display_name' => trans('settings.role_delete_no_migration')]);
         $roles->prepend($blankRole);
         return view('settings/roles/delete', ['role' => $role, 'roles' => $roles]);
     }
@@ -126,7 +124,7 @@ class PermissionController extends Controller
             return redirect()->back();
         }
 
-        session()->flash('success', 'Role successfully deleted');
+        session()->flash('success', trans('settings.role_delete_success'));
         return redirect('/settings/roles');
     }
 }

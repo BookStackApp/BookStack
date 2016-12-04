@@ -7,6 +7,7 @@ use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
+use Illuminate\Http\Response;
 use Views;
 
 class BookController extends Controller
@@ -53,7 +54,7 @@ class BookController extends Controller
     public function create()
     {
         $this->checkPermission('book-create-all');
-        $this->setPageTitle('Create New Book');
+        $this->setPageTitle(trans('entities.books_create'));
         return view('books/create');
     }
 
@@ -99,7 +100,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
-        $this->setPageTitle('Edit Book ' . $book->getShortName());
+        $this->setPageTitle(trans('entities.books_edit_named',['bookName'=>$book->getShortName()]));
         return view('books/edit', ['book' => $book, 'current' => $book]);
     }
 
@@ -131,7 +132,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
-        $this->setPageTitle('Delete Book ' . $book->getShortName());
+        $this->setPageTitle(trans('entities.books_delete_named', ['bookName'=>$book->getShortName()]));
         return view('books/delete', ['book' => $book, 'current' => $book]);
     }
 
@@ -146,7 +147,7 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-update', $book);
         $bookChildren = $this->bookRepo->getChildren($book, true);
         $books = $this->bookRepo->getAll(false);
-        $this->setPageTitle('Sort Book ' . $book->getShortName());
+        $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
         return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
     }
 
@@ -264,7 +265,7 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
         $this->bookRepo->updateEntityPermissionsFromRequest($request, $book);
-        session()->flash('success', 'Book Restrictions Updated');
+        session()->flash('success', trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());
     }
 }

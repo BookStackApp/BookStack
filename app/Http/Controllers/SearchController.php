@@ -1,11 +1,7 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use BookStack\Services\ViewService;
 use Illuminate\Http\Request;
-
-use BookStack\Http\Requests;
 use BookStack\Repos\BookRepo;
 use BookStack\Repos\ChapterRepo;
 use BookStack\Repos\PageRepo;
@@ -49,7 +45,7 @@ class SearchController extends Controller
         $pages = $this->pageRepo->getBySearch($searchTerm, [], 20, $paginationAppends);
         $books = $this->bookRepo->getBySearch($searchTerm, 10, $paginationAppends);
         $chapters = $this->chapterRepo->getBySearch($searchTerm, [], 10, $paginationAppends);
-        $this->setPageTitle('Search For ' . $searchTerm);
+        $this->setPageTitle(trans('entities.search_for_term', ['term' => $searchTerm]));
         return view('search/all', [
             'pages'      => $pages,
             'books'      => $books,
@@ -70,10 +66,10 @@ class SearchController extends Controller
         $searchTerm = $request->get('term');
         $paginationAppends = $request->only('term');
         $pages = $this->pageRepo->getBySearch($searchTerm, [], 20, $paginationAppends);
-        $this->setPageTitle('Page Search For ' . $searchTerm);
+        $this->setPageTitle(trans('entities.search_page_for_term', ['term' => $searchTerm]));
         return view('search/entity-search-list', [
             'entities'   => $pages,
-            'title'      => 'Page Search Results',
+            'title'      => trans('entities.search_results_page'),
             'searchTerm' => $searchTerm
         ]);
     }
@@ -90,10 +86,10 @@ class SearchController extends Controller
         $searchTerm = $request->get('term');
         $paginationAppends = $request->only('term');
         $chapters = $this->chapterRepo->getBySearch($searchTerm, [], 20, $paginationAppends);
-        $this->setPageTitle('Chapter Search For ' . $searchTerm);
+        $this->setPageTitle(trans('entities.search_chapter_for_term', ['term' => $searchTerm]));
         return view('search/entity-search-list', [
             'entities'   => $chapters,
-            'title'      => 'Chapter Search Results',
+            'title'      => trans('entities.search_results_chapter'),
             'searchTerm' => $searchTerm
         ]);
     }
@@ -110,10 +106,10 @@ class SearchController extends Controller
         $searchTerm = $request->get('term');
         $paginationAppends = $request->only('term');
         $books = $this->bookRepo->getBySearch($searchTerm, 20, $paginationAppends);
-        $this->setPageTitle('Book Search For ' . $searchTerm);
+        $this->setPageTitle(trans('entities.search_book_for_term', ['term' => $searchTerm]));
         return view('search/entity-search-list', [
             'entities'   => $books,
-            'title'      => 'Book Search Results',
+            'title'      => trans('entities.search_results_book'),
             'searchTerm' => $searchTerm
         ]);
     }

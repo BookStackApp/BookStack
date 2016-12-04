@@ -6,7 +6,7 @@
 <div class="container">
 
 
-    <h1>{{ $message or trans('errors.page_not_found') }}</h1>
+    <h1>{{ $message or trans('errors.404_page_not_found') }}</h1>
     <p>{{ trans('errors.sorry_page_not_found') }}</p>
     <p><a href="{{ baseUrl('/') }}" class="button">{{ trans('errors.return_home') }}</a></p>
 

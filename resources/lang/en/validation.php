@@ -87,8 +87,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password-confirm' => [
+            'required_with' => 'Password confirmation required',
         ],
     ],
 
