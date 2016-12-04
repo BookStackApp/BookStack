@@ -18,6 +18,7 @@ return [
      */
     'sign_up' => 'Sign up',
     'log_in' => 'Log in',
+    'logout' => 'Logout',
 
     'name' => 'Name',
     'username' => 'Username',

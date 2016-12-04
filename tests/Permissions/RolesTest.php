@@ -81,7 +81,7 @@ class RolesTest extends TestCase
         $this->asAdmin()->visit('/settings')
             ->click('Roles')
             ->seePageIs('/settings/roles')
-            ->click('Add new role')
+            ->click('Create New Role')
             ->type('Test Role', 'display_name')
             ->type('A little test description', 'description')
             ->press('Save Role')

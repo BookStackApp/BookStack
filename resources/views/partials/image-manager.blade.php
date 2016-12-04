@@ -3,7 +3,7 @@
         <div class="popup-body" ng-click="$event.stopPropagation()">
 
             <div class="popup-header primary-background">
-                <div class="popup-title">Image Select</div>
+                <div class="popup-title">{{ trans('components.imagem_select') }}</div>
                 <button class="popup-close neg corner-button button">x</button>
             </div>
 
@@ -12,16 +12,16 @@
                 <div class="image-manager-content">
                     <div ng-if="imageType === 'gallery'" class="container">
                         <div class="image-manager-header row faded-small nav-tabs">
-                            <div class="col-xs-4 tab-item" title="View all images" ng-class="{selected: (view=='all')}" ng-click="setView('all')"><i class="zmdi zmdi-collection-image"></i> All</div>
-                            <div class="col-xs-4 tab-item" title="View images uploaded to this book" ng-class="{selected: (view=='book')}" ng-click="setView('book')"><i class="zmdi zmdi-book text-book"></i> Book</div>
-                            <div class="col-xs-4 tab-item" title="View images uploaded to this page" ng-class="{selected: (view=='page')}" ng-click="setView('page')"><i class="zmdi zmdi-file-text text-page"></i> Page</div>
+                            <div class="col-xs-4 tab-item" title="{{ trans('components.imagem_all_title') }}" ng-class="{selected: (view=='all')}" ng-click="setView('all')"><i class="zmdi zmdi-collection-image"></i> {{ trans('components.imagem_all') }}</div>
+                            <div class="col-xs-4 tab-item" title="{{ trans('components.imagem_book_title') }}" ng-class="{selected: (view=='book')}" ng-click="setView('book')"><i class="zmdi zmdi-book text-book"></i> {{ trans('entities.book') }}</div>
+                            <div class="col-xs-4 tab-item" title="{{ trans('components.imagem_page_title') }}" ng-class="{selected: (view=='page')}" ng-click="setView('page')"><i class="zmdi zmdi-file-text text-page"></i> {{ trans('entities.page') }}</div>
                         </div>
                     </div>
                     <div ng-show="view === 'all'" >
                         <form ng-submit="searchImages()" class="contained-search-box">
-                            <input type="text" placeholder="Search by image name" ng-model="searchTerm">
-                            <button ng-class="{active: searching}" title="Clear Search" type="button" ng-click="cancelSearch()" class="text-button cancel"><i class="zmdi zmdi-close-circle-o"></i></button>
-                            <button title="Search" class="text-button" type="submit"><i class="zmdi zmdi-search"></i></button>
+                            <input type="text" placeholder="{{ trans('components.imagem_search_hint') }}" ng-model="searchTerm">
+                            <button ng-class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" ng-click="cancelSearch()" class="text-button cancel"><i class="zmdi zmdi-close-circle-o"></i></button>
+                            <button title="{{ trans('common.search') }}" class="text-button" type="submit"><i class="zmdi zmdi-search"></i></button>
                         </form>
                     </div>
                     <div class="image-manager-list">
@@ -31,11 +31,11 @@
                                 <img ng-src="@{{image.thumbs.gallery}}" ng-attr-alt="@{{image.title}}" ng-attr-title="@{{image.name}}">
                                 <div class="image-meta">
                                     <span class="name" ng-bind="image.name"></span>
-                                    <span class="date">Uploaded @{{ getDate(image.created_at)  }}</span>
+                                    <span class="date">{{ trans('components.imagem_uploaded', ['uploadedDate' => "{{ getDate(image.created_at) }" . "}"]) }}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="load-more" ng-show="hasMore" ng-click="fetchData()">Load More</div>
+                        <div class="load-more" ng-show="hasMore" ng-click="fetchData()">{{ trans('components.imagem_load_more') }}</div>
                     </div>
                 </div>
 
@@ -51,15 +51,14 @@
                                     </a>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Image Name</label>
+                                    <label for="name">{{ trans('components.imagem_image_name') }}</label>
                                     <input type="text" id="name" name="name" ng-model="selectedImage.name">
                                 </div>
                             </form>
 
                             <div ng-show="dependantPages">
                                 <p class="text-neg text-small">
-                                    This image is used in the pages below, Click delete again to confirm you want to delete
-                                    this image.
+                                    {{ trans('components.imagem_delete_confirm') }}
                                 </p>
                                 <ul class="text-neg">
                                     <li ng-repeat="page in dependantPages">
@@ -73,7 +72,7 @@
                                     <button class="button icon neg"><i class="zmdi zmdi-delete"></i></button>
                                 </form>
                                 <button class="button pos anim fadeIn float right" ng-show="selectedImage" ng-click="selectButtonClick()">
-                                    <i class="zmdi zmdi-square-right"></i>Select Image
+                                    <i class="zmdi zmdi-square-right"></i>{{ trans('components.imagem_select_image') }}
                                 </button>
                             </div>
 

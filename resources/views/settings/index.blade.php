@@ -11,7 +11,7 @@
     <form action="{{ baseUrl("/settings") }}" method="POST" ng-cloak>
         {!! csrf_field() !!}
 
-        <h3>App Settings</h3>
+        <h3>{{ trans('settings.app_settings') }}</h3>
 
         <div class="row">
 

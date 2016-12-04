@@ -1,25 +1,26 @@
 @if($user->system_name == 'public')
-    <p>This user represents any guest users that visit your instance. It cannot be used for logins but is assigned&nbsp;automatically.</p>
+    <p>{{ trans('settings.users_system_public') }}</p>
 @endif
 
 <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">{{ trans('auth.name') }}</label>
     @include('form.text', ['name' => 'name'])
 </div>
 
 <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email">{{ trans('auth.email') }}</label>
     @include('form.text', ['name' => 'email'])
 </div>
 
 @if(userCan('users-manage'))
     <div class="form-group">
-        <label for="role">User Role</label>
+        <label for="role">{{ trans('settings.users_role') }}</label>
         @include('form/role-checkboxes', ['name' => 'roles', 'roles' => $roles])
     </div>
 @endif
 
 <div class="form-group">
-    <a href="{{ baseUrl("/settings/users") }}" class="button muted">Cancel</a>
-    <button class="button pos" type="submit">Save</button>
+    <a href="{{ baseUrl("/settings/users") }}" class="button muted">{{ trans('common.cancel') }}</a>
+    <button class="button pos" type="submit">{{ trans('common.save') }}</button>
 </div>
+
