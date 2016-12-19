@@ -1,11 +1,11 @@
 "use strict";
 
 // AngularJS - Create application and load components
-var angular = require('angular');
-var ngResource = require('angular-resource');
-var ngAnimate = require('angular-animate');
-var ngSanitize = require('angular-sanitize');
-require('angular-ui-sortable');
+import angular from "angular";
+import "angular-resource";
+import "angular-animate";
+import "angular-sanitize";
+import "angular-ui-sortable";
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -15,7 +15,7 @@ window.baseUrl = function(path) {
     return basePath + '/' + path;
 };
 
-var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
+let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
 // Global Event System
 class EventManager {
@@ -25,9 +25,9 @@ class EventManager {
 
     emit(eventName, eventData) {
         if (typeof this.listeners[eventName] === 'undefined') return this;
-        var eventsToStart = this.listeners[eventName];
+        let eventsToStart = this.listeners[eventName];
         for (let i = 0; i < eventsToStart.length; i++) {
-            var event = eventsToStart[i];
+            let event = eventsToStart[i];
             event(eventData);
         }
         return this;
@@ -72,10 +72,10 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
 // Global jQuery Elements
 $(function () {
 
-    var notifications = $('.notification');
-    var successNotification = notifications.filter('.pos');
-    var errorNotification = notifications.filter('.neg');
-    var warningNotification = notifications.filter('.warning');
+    let notifications = $('.notification');
+    let successNotification = notifications.filter('.pos');
+    let errorNotification = notifications.filter('.neg');
+    let warningNotification = notifications.filter('.warning');
     // Notification Events
     window.Events.listen('success', function (text) {
         successNotification.hide();
@@ -109,9 +109,9 @@ $(function () {
     $('#back-to-top').click(function() {
          $('#header').smoothScrollTo();
     });
-    var scrollTopShowing = false;
-    var scrollTop = document.getElementById('back-to-top');
-    var scrollTopBreakpoint = 1200;
+    let scrollTopShowing = false;
+    let scrollTop = document.getElementById('back-to-top');
+    let scrollTopBreakpoint = 1200;
     window.addEventListener('scroll', function() {
         let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (!scrollTopShowing && scrollTopPos > scrollTopBreakpoint) {
@@ -159,4 +159,4 @@ $(function () {
 });
 
 // Page specific items
-require('./pages/page-show');
+import "./pages/page-show";
