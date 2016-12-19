@@ -2,6 +2,8 @@
 
 import moment from 'moment';
 import 'moment/locale/en-gb';
+import editorOptions from "./pages/page-form";
+
 moment.locale('en-gb');
 
 export default function (ngApp, events) {
@@ -23,14 +25,14 @@ export default function (ngApp, events) {
             $scope.searching = false;
             $scope.searchTerm = '';
 
-            var page = 0;
-            var previousClickTime = 0;
-            var previousClickImage = 0;
-            var dataLoaded = false;
-            var callback = false;
+            let page = 0;
+            let previousClickTime = 0;
+            let previousClickImage = 0;
+            let dataLoaded = false;
+            let callback = false;
 
-            var preSearchImages = [];
-            var preSearchHasMore = false;
+            let preSearchImages = [];
+            let preSearchHasMore = false;
 
             /**
              * Used by dropzone to get the endpoint to upload to.
@@ -79,9 +81,9 @@ export default function (ngApp, events) {
              * @param image
              */
             $scope.imageSelect = function (image) {
-                var dblClickTime = 300;
-                var currentTime = Date.now();
-                var timeDiff = currentTime - previousClickTime;
+                let dblClickTime = 300;
+                let currentTime = Date.now();
+                let timeDiff = currentTime - previousClickTime;
 
                 if (timeDiff < dblClickTime && image.id === previousClickImage) {
                     // If double click
@@ -137,19 +139,19 @@ export default function (ngApp, events) {
                 $('#image-manager').find('.overlay').fadeOut(240);
             };
 
-            var baseUrl = window.baseUrl('/images/' + $scope.imageType + '/all/');
+            let baseUrl = window.baseUrl('/images/' + $scope.imageType + '/all/');
 
             /**
              * Fetch the list image data from the server.
              */
             function fetchData() {
-                var url = baseUrl + page + '?';
-                var components = {};
+                let url = baseUrl + page + '?';
+                let components = {};
                 if ($scope.uploadedTo) components['page_id'] = $scope.uploadedTo;
                 if ($scope.searching) components['term'] = $scope.searchTerm;
 
 
-                var urlQueryString = Object.keys(components).map((key) => {
+                let urlQueryString = Object.keys(components).map((key) => {
                     return key + '=' + encodeURIComponent(components[key]);
                 }).join('&');
                 url += urlQueryString;
@@ -205,13 +207,13 @@ export default function (ngApp, events) {
              */
             $scope.saveImageDetails = function (event) {
                 event.preventDefault();
-                var url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
+                let url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
                 $http.put(url, this.selectedImage).then(response => {
                     events.emit('success', 'Image details updated');
                 }, (response) => {
                     if (response.status === 422) {
-                        var errors = response.data;
-                        var message = '';
+                        let errors = response.data;
+                        let message = '';
                         Object.keys(errors).forEach((key) => {
                             message += errors[key].join('\n');
                         });
@@ -230,8 +232,8 @@ export default function (ngApp, events) {
              */
             $scope.deleteImage = function (event) {
                 event.preventDefault();
-                var force = $scope.dependantPages !== false;
-                var url = window.baseUrl('/images/' + $scope.selectedImage.id);
+                let force = $scope.dependantPages !== false;
+                let url = window.baseUrl('/images/' + $scope.selectedImage.id);
                 if (force) url += '?force=true';
                 $http.delete(url).then((response) => {
                     $scope.images.splice($scope.images.indexOf($scope.selectedImage), 1);
@@ -266,11 +268,11 @@ export default function (ngApp, events) {
 
         $scope.searchBook = function (e) {
             e.preventDefault();
-            var term = $scope.searchTerm;
+            let term = $scope.searchTerm;
             if (term.length == 0) return;
             $scope.searching = true;
             $scope.searchResults = '';
-            var searchUrl = window.baseUrl('/search/book/' + $attrs.bookId);
+            let searchUrl = window.baseUrl('/search/book/' + $attrs.bookId);
             searchUrl += '?term=' + encodeURIComponent(term);
             $http.get(searchUrl).then((response) => {
                 $scope.searchResults = $sce.trustAsHtml(response.data);
@@ -294,13 +296,13 @@ export default function (ngApp, events) {
     ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', '$sce',
         function ($scope, $http, $attrs, $interval, $timeout, $sce) {
 
-        $scope.editorOptions = require('./pages/page-form');
+        $scope.editorOptions = editorOptions();
         $scope.editContent = '';
         $scope.draftText = '';
-        var pageId = Number($attrs.pageId);
-        var isEdit = pageId !== 0;
-        var autosaveFrequency = 30; // AutoSave interval in seconds.
-        var isMarkdown = $attrs.editorType === 'markdown';
+        let pageId = Number($attrs.pageId);
+        let isEdit = pageId !== 0;
+        let autosaveFrequency = 30; // AutoSave interval in seconds.
+        let isMarkdown = $attrs.editorType === 'markdown';
         $scope.draftsEnabled = $attrs.draftsEnabled === 'true';
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
@@ -312,9 +314,9 @@ export default function (ngApp, events) {
             $scope.draftText = 'Editing Page'
         }
 
-        var autoSave = false;
+        let autoSave = false;
 
-        var currentContent = {
+        let currentContent = {
             title: false,
             html: false
         };
@@ -351,8 +353,8 @@ export default function (ngApp, events) {
             autoSave = $interval(() => {
                 // Return if manually saved recently to prevent bombarding the server
                 if (Date.now() - lastSave < (1000*autosaveFrequency)/2) return;
-                var newTitle = $('#name').val();
-                var newHtml = $scope.editContent;
+                let newTitle = $('#name').val();
+                let newHtml = $scope.editContent;
 
                 if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
                     currentContent.html = newHtml;
@@ -369,7 +371,7 @@ export default function (ngApp, events) {
          */
         function saveDraft() {
             if (!$scope.draftsEnabled) return;
-            var data = {
+            let data = {
                 name: $('#name').val(),
                 html: isMarkdown ? $sce.getTrustedHtml($scope.displayContent) : $scope.editContent
             };
@@ -379,7 +381,7 @@ export default function (ngApp, events) {
             let url = window.baseUrl('/ajax/page/' + pageId + '/save-draft');
             $http.put(url, data).then(responseData => {
                 draftErroring = false;
-                var updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
+                let updateTime = moment.utc(moment.unix(responseData.data.timestamp)).toDate();
                 $scope.draftText = responseData.data.message + moment(updateTime).format('HH:mm');
                 if (!$scope.isNewPageDraft) $scope.isUpdateDraft = true;
                 showDraftSaveNotification();

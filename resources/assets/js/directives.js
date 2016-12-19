@@ -1,8 +1,8 @@
 "use strict";
-const DropZone = require('dropzone');
-const markdown = require('marked');
+import DropZone from "dropzone";
+import markdown from "marked";
 
-module.exports = function (ngApp, events) {
+export default function (ngApp, events) {
 
     /**
      * Toggle Switches
@@ -190,14 +190,14 @@ module.exports = function (ngApp, events) {
             },
             link: function (scope, element, attrs) {
                 if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
-                var dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
+                let dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
                     url: scope.uploadUrl,
                     init: function () {
-                        var dz = this;
+                        let dz = this;
                         dz.on('sending', function (file, xhr, data) {
-                            var token = window.document.querySelector('meta[name=token]').getAttribute('content');
+                            let token = window.document.querySelector('meta[name=token]').getAttribute('content');
                             data.append('_token', token);
-                            var uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
+                            let uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
                             data.append('uploaded_to', uploadedTo);
                         });
                         if (typeof scope.eventSuccess !== 'undefined') dz.on('success', scope.eventSuccess);
@@ -273,7 +273,7 @@ module.exports = function (ngApp, events) {
 
                 function tinyMceSetup(editor) {
                     editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
-                        var content = editor.getContent();
+                        let content = editor.getContent();
                         $timeout(() => {
                             scope.mceModel = content;
                         });
@@ -301,9 +301,9 @@ module.exports = function (ngApp, events) {
                 // Custom tinyMCE plugins
                 tinymce.PluginManager.add('customhr', function (editor) {
                     editor.addCommand('InsertHorizontalRule', function () {
-                        var hrElem = document.createElement('hr');
-                        var cNode = editor.selection.getNode();
-                        var parentNode = cNode.parentNode;
+                        let hrElem = document.createElement('hr');
+                        let cNode = editor.selection.getNode();
+                        let parentNode = cNode.parentNode;
                         parentNode.insertBefore(hrElem, cNode);
                     });
 
@@ -474,9 +474,9 @@ module.exports = function (ngApp, events) {
                 function editorPaste(e) {
                     e = e.originalEvent;
                     if (!e.clipboardData) return
-                    var items = e.clipboardData.items;
+                    let items = e.clipboardData.items;
                     if (!items) return;
-                    for (var i = 0; i < items.length; i++) {
+                    for (let i = 0; i < items.length; i++) {
                         uploadImage(items[i].getAsFile());
                     }
                 }
@@ -498,12 +498,12 @@ module.exports = function (ngApp, events) {
                 // Handle image upload and add image into markdown content
                 function uploadImage(file) {
                     if (file.type.indexOf('image') !== 0) return;
-                    var formData = new FormData();
-                    var ext = 'png';
-                    var xhr = new XMLHttpRequest();
+                    let formData = new FormData();
+                    let ext = 'png';
+                    let xhr = new XMLHttpRequest();
 
                     if (file.name) {
-                        var fileNameMatches = file.name.match(/\.(.+)$/);
+                        let fileNameMatches = file.name.match(/\.(.+)$/);
                         if (fileNameMatches) {
                             ext = fileNameMatches[1];
                         }
@@ -531,7 +531,7 @@ module.exports = function (ngApp, events) {
                     xhr.onload = function () {
                         let selectStart = input[0].selectionStart;
                         if (xhr.status === 200 || xhr.status === 201) {
-                            var result = JSON.parse(xhr.responseText);
+                            let result = JSON.parse(xhr.responseText);
                             input[0].value = input[0].value.replace(placeholderImage, result.thumbs.display);
                             input.change();
                         } else {
@@ -732,14 +732,13 @@ module.exports = function (ngApp, events) {
                     // Build suggestions
                     $suggestionBox[0].innerHTML = '';
                     for (let i = 0; i < suggestions.length; i++) {
-                        var suggestion = document.createElement('li');
+                        let suggestion = document.createElement('li');
                         suggestion.textContent = suggestions[i];
                         suggestion.onclick = suggestionClick;
                         if (i === 0) {
-                            suggestion.className = 'active'
+                            suggestion.className = 'active';
                             active = 0;
                         }
-                        ;
                         $suggestionBox[0].appendChild(suggestion);
                     }
 
@@ -748,12 +747,11 @@ module.exports = function (ngApp, events) {
 
                 // Suggestion click event
                 function suggestionClick(event) {
-                    let text = this.textContent;
-                    currentInput[0].value = text;
+                    currentInput[0].value = this.textContent;
                     currentInput.focus();
                     $suggestionBox.hide();
                     isShowing = false;
-                };
+                }
 
                 // Get suggestions & cache
                 function getSuggestions(input, url) {
@@ -843,7 +841,7 @@ module.exports = function (ngApp, events) {
                 const input = element.find('[entity-selector-input]').first();
 
                 // Detect double click events
-                var lastClick = 0;
+                let lastClick = 0;
                 function isDoubleClick() {
                     let now = Date.now();
                     let answer = now - lastClick < 300;
