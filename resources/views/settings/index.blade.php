@@ -23,16 +23,16 @@
                 </div>
                 <div class="form-group">
                     <label>{{ trans('settings.app_name_header') }}</label>
-                    <div toggle-switch name="setting-app-name-header" value="{{ setting('app-name-header') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-app-name-header', 'value' => setting('app-name-header')])
                 </div>
                 <div class="form-group">
                     <label for="setting-app-public">{{ trans('settings.app_public_viewing') }}</label>
-                    <div toggle-switch name="setting-app-public" value="{{ setting('app-public') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-app-public', 'value' => setting('app-public')])
                 </div>
                 <div class="form-group">
                     <label>{{ trans('settings.app_secure_images') }}</label>
                     <p class="small">{{ trans('settings.app_secure_images_desc') }}</p>
-                    <div toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-app-secure-images', 'value' => setting('app-secure-images')])
                 </div>
                 <div class="form-group">
                     <label for="setting-app-editor">{{ trans('settings.app_editor') }}</label>
@@ -74,7 +74,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="setting-registration-enabled">{{ trans('settings.reg_allow') }}</label>
-                    <div toggle-switch name="setting-registration-enabled" value="{{ setting('registration-enabled') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-registration-enabled', 'value' => setting('registration-enabled')])
                 </div>
                 <div class="form-group">
                     <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label for="setting-registration-confirmation">{{ trans('settings.reg_confirm_email') }}</label>
                     <p class="small">{{ trans('settings.reg_confirm_email_desc') }}</p>
-                    <div toggle-switch name="setting-registration-confirmation" value="{{ setting('registration-confirmation') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-registration-confirmation', 'value' => setting('registration-confirmation')])
                 </div>
             </div>
             <div class="col-md-6">
