@@ -5,36 +5,6 @@ import markdown from "marked";
 export default function (ngApp, events) {
 
     /**
-     * Toggle Switches
-     * Has basic on/off functionality.
-     * Use string values of 'true' & 'false' to dictate the current state.
-     */
-    ngApp.directive('toggleSwitch', function () {
-        return {
-            restrict: 'A',
-            template: `
-            <div class="toggle-switch" ng-click="switch()" ng-class="{'active': isActive}">
-                <input type="hidden" ng-attr-name="{{name}}" ng-attr-value="{{value}}"/>
-                <div class="switch-handle"></div>
-            </div>
-            `,
-            scope: true,
-            link: function (scope, element, attrs) {
-                scope.name = attrs.name;
-                scope.value = attrs.value;
-                scope.isActive = scope.value == true && scope.value != 'false';
-                scope.value = (scope.value == true && scope.value != 'false') ? 'true' : 'false';
-
-                scope.switch = function () {
-                    scope.isActive = !scope.isActive;
-                    scope.value = scope.isActive ? 'true' : 'false';
-                }
-
-            }
-        };
-    });
-
-    /**
      * Common tab controls using simple jQuery functions.
      */
     ngApp.directive('tabContainer', function() {

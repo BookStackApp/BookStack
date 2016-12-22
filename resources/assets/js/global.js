@@ -149,6 +149,18 @@ $(function () {
         window.open($(this).attr('href'));
     });
 
+    // Toggle Switches
+    let $switches = $('[toggle-switch]');
+    if ($switches.length > 0) {
+        $switches.click(event => {
+           let $switch = $(event.target);
+           let input = $switch.find('input').first()[0];
+           let checked = input.value !== 'true';
+           input.value = checked ? 'true' : 'false';
+           $switch.toggleClass('active', checked);
+        });
+    }
+
     // Detect IE for css
     if(navigator.userAgent.indexOf('MSIE')!==-1
         || navigator.appVersion.indexOf('Trident/') > 0
