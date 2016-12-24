@@ -31,7 +31,18 @@
                 <div class="form-group" id="logo-control">
                     <label for="user-avatar">{{ trans('settings.users_avatar') }}</label>
                     <p class="small">{{ trans('settings.users_avatar_desc') }}</p>
-                    <image-picker resize-height="512" resize-width="512" current-image="{{ $user->getAvatar(80) }}" current-id="{{ $user->image_id }}" default-image="{{ baseUrl("/user_avatar.png") }}" name="image_id" show-remove="false" image-class="['avatar' ,'large']"></image-picker>
+
+                    @include('components.image-picker', [
+                          'resizeHeight' => '512',
+                          'resizeWidth' => '512',
+                          'showRemove' => false,
+                          'defaultImage' => baseUrl('/user_avatar.png'),
+                          'currentImage' => $user->getAvatar(80),
+                          'currentId' => $user->image_id,
+                          'name' => 'image_id',
+                          'imageClass' => 'avatar large'
+                      ])
+
                 </div>
             </div>
         </div>

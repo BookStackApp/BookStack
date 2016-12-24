@@ -193,6 +193,7 @@ return [
     'attachments_link' => 'Attach Link',
     'attachments_set_link' => 'Set Link',
     'attachments_delete_confirm' => 'Click delete again to confirm you want to delete this attachment.',
+    'attachments_dropzone' => 'Drop files or click here to attach a file',
     'attachments_no_files' => 'No files have been uploaded',
     'attachments_explain_link' => 'You can attach a link if you\'d prefer not to upload a file. This can be a link to another page or a link to a file in the cloud.',
     'attachments_link_name' => 'Link Name',
@@ -204,6 +205,7 @@ return [
     'attachments_edit_file_name' => 'File Name',
     'attachments_edit_drop_upload' => 'Drop files or click here to upload and overwrite',
     'attachments_order_updated' => 'Attachment order updated',
+    'attachments_updated_success' => 'Attachment details updated',
     'attachments_deleted' => 'Attachment deleted',
 
     /**

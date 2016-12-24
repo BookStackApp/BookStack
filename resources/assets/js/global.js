@@ -161,6 +161,51 @@ $(function () {
         });
     }
 
+    // Image pickers
+    $('.image-picker').on('click', 'button', event => {
+        let button = event.target;
+        let picker = $(button).closest('.image-picker')[0];
+        let action = button.getAttribute('data-action');
+        let resize = picker.getAttribute('data-resize-height') && picker.getAttribute('data-resize-width');
+        let usingIds = picker.getAttribute('data-current-id') !== '';
+        let resizeCrop = picker.getAttribute('data-resize-crop') !== '';
+        let imageElem = picker.querySelector('img');
+        let input = picker.querySelector('input');
+
+        function setImage(image) {
+
+            if (image === 'none') {
+                imageElem.src = picker.getAttribute('data-default-image');
+                imageElem.classList.add('none');
+                input.value = 'none';
+                return;
+            }
+
+            imageElem.src = image.url;
+            input.value = usingIds ? image.id : image.url;
+            imageElem.classList.remove('none');
+        }
+
+        if (action === 'show-image-manager') {
+            window.ImageManager.showExternal((image) => {
+                if (!resize) {
+                    setImage(image);
+                    return;
+                }
+                let requestString = '/images/thumb/' + image.id + '/' + picker.getAttribute('data-resize-width') + '/' + picker.getAttribute('data-resize-height') + '/' + (resizeCrop ? 'true' : 'false');
+                $.get(window.baseUrl(requestString), resp => {
+                    image.url = resp.url;
+                    setImage(image);
+                });
+            });
+        } else if (action === 'reset-image') {
+            setImage({id: 0, url: picker.getAttribute('data-default-image')});
+        } else if (action === 'remove-image') {
+            setImage('none');
+        }
+
+    });
+
     // Detect IE for css
     if(navigator.userAgent.indexOf('MSIE')!==-1
         || navigator.appVersion.indexOf('Trident/') > 0

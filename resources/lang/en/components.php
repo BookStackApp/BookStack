@@ -15,5 +15,7 @@ return [
     'imagem_image_name' => 'Image Name',
     'imagem_delete_confirm' => 'This image is used in the pages below, Click delete again to confirm you want to delete this image.',
     'imagem_select_image' => 'Select Image',
+    'imagem_dropzone' => 'Drop images or click here to upload',
     'images_deleted' => 'Images Deleted',
+    'image_preview' => 'Image Preview',
 ];

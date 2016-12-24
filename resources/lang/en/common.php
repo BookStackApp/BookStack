@@ -31,6 +31,8 @@ return [
     'delete' => 'Delete',
     'search' => 'Search',
     'search_clear' => 'Clear Search',
+    'reset' => 'Reset',
+    'remove' => 'Remove',
 
 
     /**

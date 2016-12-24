@@ -8,7 +8,7 @@
 
     <h1>{{ trans('settings.settings') }}</h1>
 
-    <form action="{{ baseUrl("/settings") }}" method="POST" ng-cloak>
+    <form action="{{ baseUrl("/settings") }}" method="POST">
         {!! csrf_field() !!}
 
         <h3>{{ trans('settings.app_settings') }}</h3>
@@ -48,7 +48,17 @@
                 <div class="form-group" id="logo-control">
                     <label for="setting-app-logo">{{ trans('settings.app_logo') }}</label>
                     <p class="small">{!! trans('settings.app_logo_desc') !!}</p>
-                    <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ setting('app-logo', '') }}" default-image="{{ baseUrl('/logo.png') }}" name="setting-app-logo" image-class="logo-image"></image-picker>
+
+                    @include('components.image-picker', [
+                        'resizeHeight' => '43',
+                        'resizeWidth' => '200',
+                        'showRemove' => true,
+                        'defaultImage' => baseUrl('/logo.png'),
+                        'currentImage' => setting('app-logo'),
+                        'name' => 'setting-app-logo',
+                        'imageClass' => 'logo-image'
+                    ])
+
                 </div>
                 <div class="form-group" id="color-control">
                     <label for="setting-app-color">{{ trans('settings.app_primary_color') }}</label>
