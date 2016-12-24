@@ -78,7 +78,7 @@
 
                         </div>
 
-                        <drop-zone upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
+                        <drop-zone message="{{ trans('components.imagem_dropzone') }}" upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
 
 
                     </div>

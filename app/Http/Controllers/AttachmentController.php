@@ -117,7 +117,7 @@ class AttachmentController extends Controller
         }
 
         $attachment = $this->attachmentService->updateFile($attachment, $request->all());
-        return $attachment;
+        return $this->jsonSuccess($attachment, trans('entities.attachments_updated_success'));
     }
 
     /**

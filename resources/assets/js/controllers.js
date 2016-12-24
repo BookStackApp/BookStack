@@ -576,7 +576,7 @@ export default function (ngApp, events) {
              * Get files for the current page from the server.
              */
             function getFiles() {
-                let url = window.baseUrl(`/attachments/get/page/${pageId}`)
+                let url = window.baseUrl(`/attachments/get/page/${pageId}`);
                 $http.get(url).then(resp => {
                     $scope.files = resp.data;
                     currentOrder = resp.data.map(file => {return file.id}).join(':');
@@ -672,7 +672,7 @@ export default function (ngApp, events) {
                         $scope.editFile.link = '';
                     }
                     $scope.editFile = false;
-                    events.emit('success', 'Attachment details updated');
+                    events.emit('success', resp.headers('message-success'));
                 }, checkError('edit'));
             };
 

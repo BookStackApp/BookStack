@@ -75,7 +75,7 @@
                             </p>
                         </div>
                         <div tab-content="file">
-                            <drop-zone upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
+                            <drop-zone message="{{ trans('entities.attachments_dropzone') }}" upload-url="@{{getUploadUrl()}}" uploaded-to="@{{uploadedTo}}" event-success="uploadSuccess"></drop-zone>
                         </div>
                         <div tab-content="link" sub-form="attachLinkSubmit(file)">
                             <p class="muted small">{{ trans('entities.attachments_explain_link') }}</p>
@@ -123,8 +123,8 @@
                         </div>
                     </div>
 
-                    <button type="button" class="button" ng-click="cancelEdit()">{{ trans('entities.back') }}</button>
-                    <button type="submit" class="button pos">{{ trans('entities.save') }}</button>
+                    <button type="button" class="button" ng-click="cancelEdit()">{{ trans('common.back') }}</button>
+                    <button type="submit" class="button pos">{{ trans('common.save') }}</button>
                 </div>
 
             </div>

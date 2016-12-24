@@ -35,7 +35,7 @@ export default function (ngApp, events) {
     });
 
     /**
-     * Sub form component to allow inner-form sections to act like thier own forms.
+     * Sub form component to allow inner-form sections to act like their own forms.
      */
     ngApp.directive('subForm', function() {
         return {
@@ -50,95 +50,12 @@ export default function (ngApp, events) {
                 element.find('button[type="submit"]').click(submitEvent);
 
                 function submitEvent(e) {
-                    e.preventDefault()
+                    e.preventDefault();
                     if (attrs.subForm) scope.$eval(attrs.subForm);
                 }
             }
         };
     });
-
-
-    /**
-     * Image Picker
-     * Is a simple front-end interface that connects to an ImageManager if present.
-     */
-    ngApp.directive('imagePicker', ['$http', 'imageManagerService', function ($http, imageManagerService) {
-        return {
-            restrict: 'E',
-            template: `
-            <div class="image-picker">
-                <div>
-                    <img ng-if="image && image !== 'none'" ng-src="{{image}}" ng-class="{{imageClass}}" alt="Image Preview">
-                    <img ng-if="image === '' && defaultImage" ng-src="{{defaultImage}}" ng-class="{{imageClass}}" alt="Image Preview">
-                </div>
-                <button class="button" type="button" ng-click="showImageManager()">Select Image</button>
-                <br>
-
-                <button class="text-button" ng-click="reset()" type="button">Reset</button>
-                <span ng-show="showRemove" class="sep">|</span>
-                <button ng-show="showRemove" class="text-button neg" ng-click="remove()" type="button">Remove</button>
-
-                <input type="hidden" ng-attr-name="{{name}}" ng-attr-id="{{name}}" ng-attr-value="{{value}}">
-            </div>
-            `,
-            scope: {
-                name: '@',
-                resizeHeight: '@',
-                resizeWidth: '@',
-                resizeCrop: '@',
-                showRemove: '=',
-                currentImage: '@',
-                currentId: '@',
-                defaultImage: '@',
-                imageClass: '@'
-            },
-            link: function (scope, element, attrs) {
-                let usingIds = typeof scope.currentId !== 'undefined' || scope.currentId === 'false';
-                scope.image = scope.currentImage;
-                scope.value = scope.currentImage || '';
-                if (usingIds) scope.value = scope.currentId;
-
-                function setImage(imageModel, imageUrl) {
-                    scope.image = imageUrl;
-                    scope.value = usingIds ? imageModel.id : imageUrl;
-                }
-
-                scope.reset = function () {
-                    setImage({id: 0}, scope.defaultImage);
-                };
-
-                scope.remove = function () {
-                    scope.image = 'none';
-                    scope.value = 'none';
-                };
-
-                scope.showImageManager = function () {
-                    imageManagerService.show((image) => {
-                        scope.updateImageFromModel(image);
-                    });
-                };
-
-                scope.updateImageFromModel = function (model) {
-                    let isResized = scope.resizeWidth && scope.resizeHeight;
-
-                    if (!isResized) {
-                        scope.$apply(() => {
-                            setImage(model, model.url);
-                        });
-                        return;
-                    }
-
-                    let cropped = scope.resizeCrop ? 'true' : 'false';
-                    let requestString = '/images/thumb/' + model.id + '/' + scope.resizeWidth + '/' + scope.resizeHeight + '/' + cropped;
-                    requestString = window.baseUrl(requestString);
-                    $http.get(requestString).then((response) => {
-                        setImage(model, response.data.url);
-                    });
-                };
-
-            }
-        };
-    }]);
 
     /**
      * DropZone
@@ -149,16 +66,17 @@ export default function (ngApp, events) {
             restrict: 'E',
             template: `
             <div class="dropzone-container">
-                <div class="dz-message">Drop files or click here to upload</div>
+                <div class="dz-message">{{message}}</div>
             </div>
             `,
             scope: {
                 uploadUrl: '@',
                 eventSuccess: '=',
                 eventError: '=',
-                uploadedTo: '@'
+                uploadedTo: '@',
             },
             link: function (scope, element, attrs) {
+                scope.message = attrs.message;
                 if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
                 let dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
                     url: scope.uploadUrl,
