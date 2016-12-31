@@ -136,7 +136,7 @@ class EntityTest extends TestCase
         $this->asAdmin()
             ->visit('/books')
             // Choose to create a book
-            ->click('Add new book')
+            ->click('Create New Book')
             ->seePageIs('/books/create')
             // Fill out form & save
             ->type($book->name, '#name')

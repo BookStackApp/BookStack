@@ -69,7 +69,7 @@ class ChapterRepo extends EntityRepo
     public function getBySlug($slug, $bookId)
     {
         $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($chapter === null) throw new NotFoundException('Chapter not found');
+        if ($chapter === null) throw new NotFoundException(trans('errors.chapter_not_found'));
         return $chapter;
     }
 

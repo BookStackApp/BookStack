@@ -8,5 +8,5 @@
         @endforeach
     </div>
 @else
-    <p class="text-muted">No activity to show</p>
+    <p class="text-muted">{{ trans('common.no_activity') }}</p>
 @endif

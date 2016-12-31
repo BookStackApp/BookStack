@@ -44,7 +44,7 @@ class UserController extends Controller
             'sort' => $request->has('sort') ? $request->get('sort') : 'name',
         ];
         $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
-        $this->setPageTitle('Users');
+        $this->setPageTitle(trans('settings.users'));
         $users->appends($listDetails);
         return view('users/index', ['users' => $users, 'listDetails' => $listDetails]);
     }
@@ -82,7 +82,6 @@ class UserController extends Controller
             $validationRules['external_auth_id'] = 'required';
         }
         $this->validate($request, $validationRules);
-
 
         $user = $this->user->fill($request->all());
 
@@ -131,7 +130,7 @@ class UserController extends Controller
         $authMethod = ($user->system_name) ? 'system' : config('auth.method');
 
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
-        $this->setPageTitle('User Profile');
+        $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
         return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
     }
@@ -154,8 +153,6 @@ class UserController extends Controller
             'email'            => 'min:2|email|unique:users,email,' . $id,
             'password'         => 'min:5|required_with:password_confirm',
             'password-confirm' => 'same:password|required_with:password'
-        ], [
-            'password-confirm.required_with' => 'Password confirmation required'
         ]);
 
         $user = $this->user->findOrFail($id);
@@ -179,7 +176,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        session()->flash('success', 'User successfully updated');
+        session()->flash('success', trans('settings.users_edit_success'));
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : '/settings/users/' . $user->id;
         return redirect($redirectUrl);
@@ -197,7 +194,7 @@ class UserController extends Controller
         });
 
         $user = $this->user->findOrFail($id);
-        $this->setPageTitle('Delete User ' . $user->name);
+        $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
         return view('users/delete', ['user' => $user]);
     }
 
@@ -216,17 +213,17 @@ class UserController extends Controller
         $user = $this->userRepo->getById($id);
 
         if ($this->userRepo->isOnlyAdmin($user)) {
-            session()->flash('error', 'You cannot delete the only admin');
+            session()->flash('error', trans('errors.users_cannot_delete_only_admin'));
             return redirect($user->getEditUrl());
         }
 
         if ($user->system_name === 'public') {
-            session()->flash('error', 'You cannot delete the guest user');
+            session()->flash('error', trans('errors.users_cannot_delete_guest'));
             return redirect($user->getEditUrl());
         }
 
         $this->userRepo->destroy($user);
-        session()->flash('success', 'User successfully removed');
+        session()->flash('success', trans('settings.users_delete_success'));
 
         return redirect('/settings/users');
     }

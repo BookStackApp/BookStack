@@ -16,7 +16,7 @@
         @endforeach
     @else
         <p class="text-muted">
-            No items available
+            {{ trans('common.no_items') }}
         </p>
     @endif
 </div>

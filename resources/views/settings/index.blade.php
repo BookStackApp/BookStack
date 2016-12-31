@@ -8,10 +8,10 @@
 
     <h1>{{ trans('settings.settings') }}</h1>
 
-    <form action="{{ baseUrl("/settings") }}" method="POST" ng-cloak>
+    <form action="{{ baseUrl("/settings") }}" method="POST">
         {!! csrf_field() !!}
 
-        <h3>App Settings</h3>
+        <h3>{{ trans('settings.app_settings') }}</h3>
 
         <div class="row">
 
@@ -23,16 +23,16 @@
                 </div>
                 <div class="form-group">
                     <label>{{ trans('settings.app_name_header') }}</label>
-                    <div toggle-switch name="setting-app-name-header" value="{{ setting('app-name-header') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-app-name-header', 'value' => setting('app-name-header')])
                 </div>
                 <div class="form-group">
                     <label for="setting-app-public">{{ trans('settings.app_public_viewing') }}</label>
-                    <div toggle-switch name="setting-app-public" value="{{ setting('app-public') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-app-public', 'value' => setting('app-public')])
                 </div>
                 <div class="form-group">
                     <label>{{ trans('settings.app_secure_images') }}</label>
                     <p class="small">{{ trans('settings.app_secure_images_desc') }}</p>
-                    <div toggle-switch name="setting-app-secure-images" value="{{ setting('app-secure-images') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-app-secure-images', 'value' => setting('app-secure-images')])
                 </div>
                 <div class="form-group">
                     <label for="setting-app-editor">{{ trans('settings.app_editor') }}</label>
@@ -48,7 +48,18 @@
                 <div class="form-group" id="logo-control">
                     <label for="setting-app-logo">{{ trans('settings.app_logo') }}</label>
                     <p class="small">{!! trans('settings.app_logo_desc') !!}</p>
-                    <image-picker resize-height="43" show-remove="true" resize-width="200" current-image="{{ setting('app-logo', '') }}" default-image="{{ baseUrl('/logo.png') }}" name="setting-app-logo" image-class="logo-image"></image-picker>
+
+                    @include('components.image-picker', [
+                        'resizeHeight' => '43',
+                        'resizeWidth' => '200',
+                        'showRemove' => true,
+                        'defaultImage' => baseUrl('/logo.png'),
+                        'currentImage' => setting('app-logo'),
+                        'name' => 'setting-app-logo',
+                        'imageClass' => 'logo-image',
+                        'currentId' => false
+                    ])
+
                 </div>
                 <div class="form-group" id="color-control">
                     <label for="setting-app-color">{{ trans('settings.app_primary_color') }}</label>
@@ -74,7 +85,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="setting-registration-enabled">{{ trans('settings.reg_allow') }}</label>
-                    <div toggle-switch name="setting-registration-enabled" value="{{ setting('registration-enabled') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-registration-enabled', 'value' => setting('registration-enabled')])
                 </div>
                 <div class="form-group">
                     <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
@@ -91,7 +102,7 @@
                 <div class="form-group">
                     <label for="setting-registration-confirmation">{{ trans('settings.reg_confirm_email') }}</label>
                     <p class="small">{{ trans('settings.reg_confirm_email_desc') }}</p>
-                    <div toggle-switch name="setting-registration-confirmation" value="{{ setting('registration-confirmation') }}"></div>
+                    @include('components.toggle-switch', ['name' => 'setting-registration-confirmation', 'value' => setting('registration-confirmation')])
                 </div>
             </div>
             <div class="col-md-6">
@@ -115,7 +126,7 @@
 
 </div>
 
-@include('partials/image-manager', ['imageType' => 'system'])
+@include('components.image-manager', ['imageType' => 'system'])
 
 @stop
 
@@ -132,10 +143,16 @@
                 var isEmpty = $.trim($elm.val()).length === 0;
                 if (!isEmpty) $elm.val(hexVal);
                 $('#setting-app-color-light').val(isEmpty ? '' : rgbLightVal);
-                // Set page elements to provide preview
-                $('#header, .image-picker .button').attr('style', 'background-color:'+ hexVal+'!important;');
-                $('.faded-small').css('background-color', rgbLightVal);
-                $('.setting-nav a.selected').css('border-bottom-color', hexVal  + '!important');
+
+                var customStyles = document.getElementById('custom-styles');
+                var oldColor = customStyles.getAttribute('data-color');
+                var oldColorLight = customStyles.getAttribute('data-color-light');
+
+                customStyles.innerHTML = customStyles.innerHTML.split(oldColor).join(hexVal);
+                customStyles.innerHTML = customStyles.innerHTML.split(oldColorLight).join(rgbLightVal);
+
+                customStyles.setAttribute('data-color', hexVal);
+                customStyles.setAttribute('data-color-light', rgbLightVal);
             }
         });
     </script>

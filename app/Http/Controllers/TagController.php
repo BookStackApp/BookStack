@@ -2,7 +2,6 @@
 
 use BookStack\Repos\TagRepo;
 use Illuminate\Http\Request;
-use BookStack\Http\Requests;
 
 class TagController extends Controller
 {
@@ -16,12 +15,14 @@ class TagController extends Controller
     public function __construct(TagRepo $tagRepo)
     {
         $this->tagRepo = $tagRepo;
+        parent::__construct();
     }
 
     /**
      * Get all the Tags for a particular entity
      * @param $entityType
      * @param $entityId
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getForEntity($entityType, $entityId)
     {
@@ -30,28 +31,9 @@ class TagController extends Controller
     }
 
     /**
-     * Update the tags for a particular entity.
-     * @param $entityType
-     * @param $entityId
-     * @param Request $request
-     * @return mixed
-     */
-    public function updateForEntity($entityType, $entityId, Request $request)
-    {
-        $entity = $this->tagRepo->getEntity($entityType, $entityId, 'update');
-        if ($entity === null) return $this->jsonError("Entity not found", 404);
-
-        $inputTags = $request->input('tags');
-        $tags = $this->tagRepo->saveTagsToEntity($entity, $inputTags);
-        return response()->json([
-            'tags' => $tags,
-            'message' => 'Tags successfully updated'
-        ]);
-    }
-
-    /**
      * Get tag name suggestions from a given search term.
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getNameSuggestions(Request $request)
     {
@@ -63,6 +45,7 @@ class TagController extends Controller
     /**
      * Get tag value suggestions from a given search term.
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getValueSuggestions(Request $request)
     {

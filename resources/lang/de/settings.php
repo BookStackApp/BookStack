@@ -16,7 +16,7 @@ return [
     'app_name_desc' => 'Dieser Name wird im Header und E-Mails angezeigt.',
     'app_name_header' => 'Anwendungsname im Header anzeigen?',
     'app_public_viewing' => '&Ouml;ffentliche Ansicht erlauben?',
-    'app_secure_images' => 'Erh&oml;hte Sicherheit f&uuml;r Bilduploads aktivieren?',
+    'app_secure_images' => 'Erh&ouml;hte Sicherheit f&uuml;r Bilduploads aktivieren?',
     'app_secure_images_desc' => 'Aus Leistungsgr&uuml;nden sind alle Bilder &ouml;ffentlich sichtbar. Diese Option f&uuml;gt zuf&auml;llige, schwer zu eratene, Zeichenketten vor die Bild-URLs hinzu. Stellen sie sicher, dass Verzeichnindexes deaktiviert sind, um einen einfachen Zugrif zu verhindern.',
     'app_editor' => 'Seiteneditor',
     'app_editor_desc' => 'W&auml;hlen sie den Editor aus, der von allen Benutzern genutzt werden soll, um Seiten zu editieren.',
