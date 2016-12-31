@@ -1,16 +1,16 @@
 <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">{{ trans('auth.name') }}</label>
     @include('form.text', ['name' => 'name'])
 </div>
 
 <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email">{{ trans('auth.email') }}</label>
     @include('form.text', ['name' => 'email'])
 </div>
 
 @if(userCan('users-manage'))
     <div class="form-group">
-        <label for="role">User Role</label>
+        <label for="role">{{ trans('settings.users_role') }}</label>
         @include('form/role-checkboxes', ['name' => 'roles', 'roles' => $roles])
     </div>
 @endif
@@ -18,23 +18,23 @@
 @if(isset($model))
     <div class="form-group">
         <span class="text-muted">
-            Only fill the below if you would like <br>to change your password:
+            {{ trans('settings.users_password_warning') }}
         </span>
     </div>
 @endif
 
 <div class="form-group">
-    <label for="password">Password</label>
+    <label for="password">{{ trans('auth.password') }}</label>
     @include('form.password', ['name' => 'password'])
 </div>
 
 <div class="form-group">
-    <label for="password-confirm">Confirm Password</label>
+    <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
     @include('form.password', ['name' => 'password-confirm'])
 </div>
 
 <div class="form-group">
-    <a href="{{ baseUrl("/settings/users") }}" class="button muted">Cancel</a>
-    <button class="button pos" type="submit">Save</button>
+    <a href="{{ baseUrl("/settings/users") }}" class="button muted">{{ trans('common.cancel') }}</a>
+    <button class="button pos" type="submit">{{ trans('common.save') }}</button>
 </div>
 

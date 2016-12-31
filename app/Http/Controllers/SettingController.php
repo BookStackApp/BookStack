@@ -1,8 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use BookStack\Http\Requests;
+use Illuminate\Http\Response;
 use Setting;
 
 class SettingController extends Controller
@@ -39,7 +38,7 @@ class SettingController extends Controller
             Setting::put($key, $value);
         }
 
-        session()->flash('success', 'Settings Saved');
+        session()->flash('success', trans('settings.settings_save_success'));
         return redirect('/settings');
     }
 

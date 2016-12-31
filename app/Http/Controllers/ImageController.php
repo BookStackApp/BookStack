@@ -73,6 +73,7 @@ class ImageController extends Controller
      * @param $filter
      * @param int $page
      * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function getGalleryFiltered($filter, $page = 0, Request $request)
     {
@@ -169,7 +170,7 @@ class ImageController extends Controller
         }
 
         $this->imageRepo->destroyImage($image);
-        return response()->json('Image Deleted');
+        return response()->json(trans('components.images_deleted'));
     }
 
 

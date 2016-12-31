@@ -20,7 +20,7 @@
 
     </div>
     
-    @include('partials/image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
-    @include('partials/entity-selector-popup')
+    @include('components.image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
+    @include('components.entity-selector-popup')
 
 @stop

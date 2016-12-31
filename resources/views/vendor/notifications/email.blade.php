@@ -159,8 +159,7 @@ $style = [
                                                             <tr>
                                                                 <td style="{{ $fontFamily }}">
                                                                     <p style="{{ $style['paragraph-sub'] }}">
-                                                                        If you’re having trouble clicking the "{{ $actionText }}" button,
-                                                                        copy and paste the URL below into your web browser:
+                                                                        {{ trans('common.email_action_help', ['actionText' => $actionText]) }}
                                                                     </p>
 
                                                                     <p style="{{ $style['paragraph-sub'] }}">
@@ -188,7 +187,7 @@ $style = [
                                                     <p style="{{ $style['paragraph-sub'] }}">
                                                         &copy; {{ date('Y') }}
                                                         <a style="{{ $style['anchor'] }}" href="{{ baseUrl('/') }}" target="_blank">{{ setting('app-name') }}</a>.
-                                                        All rights reserved.
+                                                        {{ trans('common.email_rights') }}
                                                     </p>
                                                 </td>
                                             </tr>

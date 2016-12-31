@@ -121,7 +121,7 @@ class TagRepo
     /**
      * Create a new Tag instance from user input.
      * @param $input
-     * @return static
+     * @return Tag
      */
     protected function newInstanceFromInput($input)
     {

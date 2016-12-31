@@ -133,9 +133,9 @@ class PermissionsRepo
 
         // Prevent deleting admin role or default registration role.
         if ($role->system_name && in_array($role->system_name, $this->systemRoles)) {
-            throw new PermissionsException('This role is a system role and cannot be deleted');
+            throw new PermissionsException(trans('errors.role_system_cannot_be_deleted'));
         } else if ($role->id == setting('registration-role')) {
-            throw new PermissionsException('This role cannot be deleted while set as the default registration role.');
+            throw new PermissionsException(trans('errors.role_registration_default_cannot_delete'));
         }
 
         if ($migrateRoleId) {
