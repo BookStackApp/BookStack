@@ -19,7 +19,7 @@
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="PUT">
 
-            @include('partials/entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book'])
+            @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book'])
 
             <a href="{{ $chapter->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
             <button type="submit" class="button pos">{{ trans('entities.chapters_move') }}</button>

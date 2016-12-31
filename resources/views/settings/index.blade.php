@@ -56,7 +56,8 @@
                         'defaultImage' => baseUrl('/logo.png'),
                         'currentImage' => setting('app-logo'),
                         'name' => 'setting-app-logo',
-                        'imageClass' => 'logo-image'
+                        'imageClass' => 'logo-image',
+                        'currentId' => false
                     ])
 
                 </div>
@@ -125,7 +126,7 @@
 
 </div>
 
-@include('partials/image-manager', ['imageType' => 'system'])
+@include('components.image-manager', ['imageType' => 'system'])
 
 @stop
 
@@ -142,10 +143,16 @@
                 var isEmpty = $.trim($elm.val()).length === 0;
                 if (!isEmpty) $elm.val(hexVal);
                 $('#setting-app-color-light').val(isEmpty ? '' : rgbLightVal);
-                // Set page elements to provide preview
-                $('#header, .image-picker .button').attr('style', 'background-color:'+ hexVal+'!important;');
-                $('.faded-small').css('background-color', rgbLightVal);
-                $('.setting-nav a.selected').css('border-bottom-color', hexVal  + '!important');
+
+                var customStyles = document.getElementById('custom-styles');
+                var oldColor = customStyles.getAttribute('data-color');
+                var oldColorLight = customStyles.getAttribute('data-color-light');
+
+                customStyles.innerHTML = customStyles.innerHTML.split(oldColor).join(hexVal);
+                customStyles.innerHTML = customStyles.innerHTML.split(oldColorLight).join(rgbLightVal);
+
+                customStyles.setAttribute('data-color', hexVal);
+                customStyles.setAttribute('data-color-light', rgbLightVal);
             }
         });
     </script>

@@ -20,13 +20,13 @@
             <tr>
                 <th>{{ trans('settings.role_name') }}</th>
                 <th></th>
-                <th class="text-right">{{ trans('settings.users') }}</th>
+                <th class="text-center">{{ trans('settings.users') }}</th>
             </tr>
             @foreach($roles as $role)
                 <tr>
                     <td><a href="{{ baseUrl("/settings/roles/{$role->id}") }}">{{ $role->display_name }}</a></td>
                     <td>{{ $role->description }}</td>
-                    <td class="text-right">{{ $role->users->count() }}</td>
+                    <td class="text-center">{{ $role->users->count() }}</td>
                 </tr>
             @endforeach
         </table>

@@ -129,6 +129,8 @@ return [
     'pages_edit_toggle_header' => 'Toggle header',
     'pages_edit_save_draft' => 'Save Draft',
     'pages_edit_draft' => 'Edit Page Draft',
+    'pages_editing_draft' => 'Editing Draft',
+    'pages_editing_page' => 'Editing Page',
     'pages_edit_draft_save_at' => 'Draft saved at ',
     'pages_edit_delete_draft' => 'Delete Draft',
     'pages_edit_discard_draft' => 'Discard Draft',
@@ -175,6 +177,7 @@ return [
         'time_b' => 'in the last :minCount minutes',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
+    'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
 
     /**
      * Editor sidebar
@@ -207,6 +210,9 @@ return [
     'attachments_order_updated' => 'Attachment order updated',
     'attachments_updated_success' => 'Attachment details updated',
     'attachments_deleted' => 'Attachment deleted',
+    'attachments_file_uploaded' => 'File successfully uploaded',
+    'attachments_file_updated' => 'File successfully updated',
+    'attachments_link_attached' => 'Link successfully attached to page',
 
     /**
      * Profile View
