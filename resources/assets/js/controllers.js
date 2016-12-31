@@ -64,7 +64,7 @@ export default function (ngApp, events) {
                 $scope.$apply(() => {
                     $scope.images.unshift(data);
                 });
-                events.emit('success', 'Image uploaded');
+                events.emit('success', trans('components.image_upload_success'));
             };
 
             /**
@@ -151,10 +151,9 @@ export default function (ngApp, events) {
                 if ($scope.searching) components['term'] = $scope.searchTerm;
 
 
-                let urlQueryString = Object.keys(components).map((key) => {
+                url += Object.keys(components).map((key) => {
                     return key + '=' + encodeURIComponent(components[key]);
                 }).join('&');
-                url += urlQueryString;
 
                 $http.get(url).then((response) => {
                     $scope.images = $scope.images.concat(response.data.images);
@@ -209,7 +208,7 @@ export default function (ngApp, events) {
                 event.preventDefault();
                 let url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
                 $http.put(url, this.selectedImage).then(response => {
-                    events.emit('success', 'Image details updated');
+                    events.emit('success', trans('components.image_update_success'));
                 }, (response) => {
                     if (response.status === 422) {
                         let errors = response.data;
@@ -238,7 +237,7 @@ export default function (ngApp, events) {
                 $http.delete(url).then((response) => {
                     $scope.images.splice($scope.images.indexOf($scope.selectedImage), 1);
                     $scope.selectedImage = false;
-                    events.emit('success', 'Image successfully deleted');
+                    events.emit('success', trans('components.image_delete_success'));
                 }, (response) => {
                     // Pages failure
                     if (response.status === 400) {
@@ -309,9 +308,9 @@ export default function (ngApp, events) {
 
         // Set initial header draft text
         if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
-            $scope.draftText = 'Editing Draft'
+            $scope.draftText = trans('entities.pages_editing_draft');
         } else {
-            $scope.draftText = 'Editing Page'
+            $scope.draftText = trans('entities.pages_editing_page');
         }
 
         let autoSave = false;
@@ -388,7 +387,7 @@ export default function (ngApp, events) {
                 lastSave = Date.now();
             }, errorRes => {
                 if (draftErroring) return;
-                events.emit('error', 'Failed to save draft. Ensure you have internet connection before saving this page.')
+                events.emit('error', trans('errors.page_draft_autosave_fail'));
                 draftErroring = true;
             });
         }
@@ -421,7 +420,7 @@ export default function (ngApp, events) {
             let url = window.baseUrl('/ajax/page/' + pageId);
             $http.get(url).then((responseData) => {
                 if (autoSave) $interval.cancel(autoSave);
-                $scope.draftText = 'Editing Page';
+                $scope.draftText = trans('entities.pages_editing_page');
                 $scope.isUpdateDraft = false;
                 $scope.$broadcast('html-update', responseData.data.html);
                 $scope.$broadcast('markdown-update', responseData.data.markdown || responseData.data.html);
@@ -429,7 +428,7 @@ export default function (ngApp, events) {
                 $timeout(() => {
                     startAutoSave();
                 }, 1000);
-                events.emit('success', 'Draft discarded, The editor has been updated with the current page content');
+                events.emit('success', trans('entities.pages_draft_discarded'));
             });
         };
 
@@ -594,7 +593,7 @@ export default function (ngApp, events) {
                 $scope.$apply(() => {
                     $scope.files.push(data);
                 });
-                events.emit('success', 'File uploaded');
+                events.emit('success', trans('entities.attachments_file_uploaded'));
             };
 
             /**
@@ -612,7 +611,7 @@ export default function (ngApp, events) {
                         data.link = '';
                     }
                 });
-                events.emit('success', 'File updated');
+                events.emit('success', trans('entities.attachments_file_updated'));
             };
 
             /**
@@ -638,7 +637,7 @@ export default function (ngApp, events) {
                 file.uploaded_to = pageId;
                 $http.post(window.baseUrl('/attachments/link'), file).then(resp => {
                     $scope.files.push(resp.data);
-                    events.emit('success', 'Link attached');
+                    events.emit('success', trans('entities.attachments_link_attached'));
                     $scope.file = getCleanFile();
                 }, checkError('link'));
             };
@@ -672,7 +671,7 @@ export default function (ngApp, events) {
                         $scope.editFile.link = '';
                     }
                     $scope.editFile = false;
-                    events.emit('success', resp.headers('message-success'));
+                    events.emit('success', trans('entities.attachments_updated_success'));
                 }, checkError('edit'));
             };
 

@@ -102,7 +102,7 @@ export default function (ngApp, events) {
                                 $(file.previewElement).find('[data-dz-errormessage]').text(message);
                             }
 
-                            if (xhr.status === 413) setMessage('The server does not allow uploads of this size. Please try a smaller file.');
+                            if (xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
                             if (errorMessage.file) setMessage(errorMessage.file[0]);
 
                         });
@@ -261,15 +261,21 @@ export default function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 // Elements
-                const input = element.find('[markdown-input] textarea').first();
-                const display = element.find('.markdown-display').first();
-                const insertImage = element.find('button[data-action="insertImage"]');
-                const insertEntityLink = element.find('button[data-action="insertEntityLink"]')
+                const $input = element.find('[markdown-input] textarea').first();
+                const $display = element.find('.markdown-display').first();
+                const $insertImage = element.find('button[data-action="insertImage"]');
+                const $insertEntityLink = element.find('button[data-action="insertEntityLink"]');
+
+                // Prevent markdown display link click redirect
+                $display.on('click', 'a', function(event) {
+                    event.preventDefault();
+                    window.open(this.getAttribute('href'));
+                });
 
                 let currentCaretPos = 0;
 
-                input.blur(event => {
-                    currentCaretPos = input[0].selectionStart;
+                $input.blur(event => {
+                    currentCaretPos = $input[0].selectionStart;
                 });
 
                 // Scroll sync
@@ -279,10 +285,10 @@ export default function (ngApp, events) {
                     displayHeight;
 
                 function setScrollHeights() {
-                    inputScrollHeight = input[0].scrollHeight;
-                    inputHeight = input.height();
-                    displayScrollHeight = display[0].scrollHeight;
-                    displayHeight = display.height();
+                    inputScrollHeight = $input[0].scrollHeight;
+                    inputHeight = $input.height();
+                    displayScrollHeight = $display[0].scrollHeight;
+                    displayHeight = $display.height();
                 }
 
                 setTimeout(() => {
@@ -291,29 +297,29 @@ export default function (ngApp, events) {
                 window.addEventListener('resize', setScrollHeights);
                 let scrollDebounceTime = 800;
                 let lastScroll = 0;
-                input.on('scroll', event => {
+                $input.on('scroll', event => {
                     let now = Date.now();
                     if (now - lastScroll > scrollDebounceTime) {
                         setScrollHeights()
                     }
-                    let scrollPercent = (input.scrollTop() / (inputScrollHeight - inputHeight));
+                    let scrollPercent = ($input.scrollTop() / (inputScrollHeight - inputHeight));
                     let displayScrollY = (displayScrollHeight - displayHeight) * scrollPercent;
-                    display.scrollTop(displayScrollY);
+                    $display.scrollTop(displayScrollY);
                     lastScroll = now;
                 });
 
                 // Editor key-presses
-                input.keydown(event => {
+                $input.keydown(event => {
                     // Insert image shortcut
                     if (event.which === 73 && event.ctrlKey && event.shiftKey) {
                         event.preventDefault();
-                        let caretPos = input[0].selectionStart;
-                        let currentContent = input.val();
+                        let caretPos = $input[0].selectionStart;
+                        let currentContent = $input.val();
                         const mdImageText = "![](http://)";
-                        input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        input.focus();
-                        input[0].selectionStart = caretPos + ("![](".length);
-                        input[0].selectionEnd = caretPos + ('![](http://'.length);
+                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
+                        $input.focus();
+                        $input[0].selectionStart = caretPos + ("![](".length);
+                        $input[0].selectionEnd = caretPos + ('![](http://'.length);
                         return;
                     }
 
@@ -328,35 +334,35 @@ export default function (ngApp, events) {
                 });
 
                 // Insert image from image manager
-                insertImage.click(event => {
+                $insertImage.click(event => {
                     window.ImageManager.showExternal(image => {
                         let caretPos = currentCaretPos;
-                        let currentContent = input.val();
+                        let currentContent = $input.val();
                         let mdImageText = "![" + image.name + "](" + image.thumbs.display + ")";
-                        input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        input.change();
+                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
+                        $input.change();
                     });
                 });
 
                 function showLinkSelector() {
                     window.showEntityLinkSelector((entity) => {
                         let selectionStart = currentCaretPos;
-                        let selectionEnd = input[0].selectionEnd;
+                        let selectionEnd = $input[0].selectionEnd;
                         let textSelected = (selectionEnd !== selectionStart);
-                        let currentContent = input.val();
+                        let currentContent = $input.val();
 
                         if (textSelected) {
                             let selectedText = currentContent.substring(selectionStart, selectionEnd);
                             let linkText = `[${selectedText}](${entity.link})`;
-                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
+                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
                         } else {
                             let linkText = ` [${entity.name}](${entity.link}) `;
-                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
+                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
                         }
-                        input.change();
+                        $input.change();
                     });
                 }
-                insertEntityLink.click(showLinkSelector);
+                $insertEntityLink.click(showLinkSelector);
 
                 // Upload and insert image on paste
                 function editorPaste(e) {
@@ -369,7 +375,7 @@ export default function (ngApp, events) {
                     }
                 }
 
-                input.on('paste', editorPaste);
+                $input.on('paste', editorPaste);
 
                 // Handle image drop, Uploads images to BookStack.
                 function handleImageDrop(event) {
@@ -381,7 +387,7 @@ export default function (ngApp, events) {
                     }
                 }
 
-                input.on('drop', handleImageDrop);
+                $input.on('drop', handleImageDrop);
 
                 // Handle image upload and add image into markdown content
                 function uploadImage(file) {
@@ -399,17 +405,17 @@ export default function (ngApp, events) {
 
                     // Insert image into markdown
                     let id = "image-" + Math.random().toString(16).slice(2);
-                    let selectStart = input[0].selectionStart;
-                    let selectEnd = input[0].selectionEnd;
-                    let content = input[0].value;
+                    let selectStart = $input[0].selectionStart;
+                    let selectEnd = $input[0].selectionEnd;
+                    let content = $input[0].value;
                     let selectText = content.substring(selectStart, selectEnd);
                     let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
                     let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
-                    input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
+                    $input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
 
-                    input.focus();
-                    input[0].selectionStart = selectStart;
-                    input[0].selectionEnd = selectStart;
+                    $input.focus();
+                    $input[0].selectionStart = selectStart;
+                    $input[0].selectionEnd = selectStart;
 
                     let remoteFilename = "image-" + Date.now() + "." + ext;
                     formData.append('file', file, remoteFilename);
@@ -417,20 +423,20 @@ export default function (ngApp, events) {
 
                     xhr.open('POST', window.baseUrl('/images/gallery/upload'));
                     xhr.onload = function () {
-                        let selectStart = input[0].selectionStart;
+                        let selectStart = $input[0].selectionStart;
                         if (xhr.status === 200 || xhr.status === 201) {
                             let result = JSON.parse(xhr.responseText);
-                            input[0].value = input[0].value.replace(placeholderImage, result.thumbs.display);
-                            input.change();
+                            $input[0].value = $input[0].value.replace(placeholderImage, result.thumbs.display);
+                            $input.change();
                         } else {
-                            console.log('An error occurred uploading the image');
+                            console.log(trans('errors.image_upload_error'));
                             console.log(xhr.responseText);
-                            input[0].value = input[0].value.replace(innerContent, '');
-                            input.change();
+                            $input[0].value = $input[0].value.replace(innerContent, '');
+                            $input.change();
                         }
-                        input.focus();
-                        input[0].selectionStart = selectStart;
-                        input[0].selectionEnd = selectStart;
+                        $input.focus();
+                        $input[0].selectionStart = selectStart;
+                        $input[0].selectionEnd = selectStart;
                     };
                     xhr.send(formData);
                 }
@@ -568,8 +574,7 @@ export default function (ngApp, events) {
                     }
                     // Enter or tab key
                     else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
-                        let text = suggestionElems[active].textContent;
-                        currentInput[0].value = text;
+                        currentInput[0].value = suggestionElems[active].textContent;
                         currentInput.focus();
                         $suggestionBox.hide();
                         isShowing = false;
@@ -665,7 +670,7 @@ export default function (ngApp, events) {
 
     ngApp.directive('entityLinkSelector', [function($http) {
         return {
-            restict: 'A',
+            restrict: 'A',
             link: function(scope, element, attrs) {
 
                 const selectButton = element.find('.entity-link-selector-confirm');

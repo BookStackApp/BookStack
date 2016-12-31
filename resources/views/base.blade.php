@@ -17,6 +17,7 @@
     <!-- Scripts -->
     <script src="{{ baseUrl('/libs/jquery/jquery.min.js?version=2.1.4') }}"></script>
     <script src="{{ baseUrl('/libs/jquery/jquery-ui.min.js?version=1.11.4') }}"></script>
+    <script src="{{ baseUrl('/translations.js') }}"></script>
 
     @yield('head')
 

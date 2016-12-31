@@ -85,5 +85,5 @@
     </div>
 
     <p class="margin-top large"><br></p>
-    @include('partials/image-manager', ['imageType' => 'user'])
+    @include('components.image-manager', ['imageType' => 'user'])
 @stop

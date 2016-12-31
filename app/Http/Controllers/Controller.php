@@ -118,17 +118,6 @@ abstract class Controller extends BaseController
     }
 
     /**
-     * Send a json respons with a message attached as a header.
-     * @param $data
-     * @param string $successMessage
-     * @return $this
-     */
-    protected function jsonSuccess($data, $successMessage = "")
-    {
-        return response()->json($data)->header('message-success', $successMessage);
-    }
-
-    /**
      * Send back a json error message.
      * @param string $messageText
      * @param int $statusCode
