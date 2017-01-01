@@ -7,6 +7,8 @@ class Page extends Entity
 
     protected $simpleAttributes = ['name', 'id', 'slug'];
 
+    protected $with = ['book'];
+
     /**
      * Converts this page into a simplified array.
      * @return mixed

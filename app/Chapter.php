@@ -5,6 +5,8 @@ class Chapter extends Entity
 {
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
 
+    protected $with = ['book'];
+
     /**
      * Get the book this chapter is within.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -8,8 +8,8 @@ use BookStack\Ownable;
 use BookStack\Page;
 use BookStack\Role;
 use BookStack\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class PermissionService
 {
@@ -469,17 +469,8 @@ class PermissionService
      */
     public function enforcePageRestrictions($query, $action = 'view')
     {
-        // Prevent drafts being visible to others.
-        $query = $query->where(function ($query) {
-            $query->where('draft', '=', false);
-            if ($this->currentUser()) {
-                $query->orWhere(function ($query) {
-                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser()->id);
-                });
-            }
-        });
-
-        return $this->enforceEntityRestrictions($query, $action);
+        // TODO - remove this
+        return $this->enforceEntityRestrictions('page', $query, $action);
     }
 
     /**
@@ -490,7 +481,8 @@ class PermissionService
      */
     public function enforceChapterRestrictions($query, $action = 'view')
     {
-        return $this->enforceEntityRestrictions($query, $action);
+        // TODO - remove this
+        return $this->enforceEntityRestrictions('chapter', $query, $action);
     }
 
     /**
@@ -501,21 +493,36 @@ class PermissionService
      */
     public function enforceBookRestrictions($query, $action = 'view')
     {
-        return $this->enforceEntityRestrictions($query, $action);
+        // TODO - remove this
+        return $this->enforceEntityRestrictions('book', $query, $action);
     }
 
     /**
      * Add restrictions for a generic entity
-     * @param $query
+     * @param string $entityType
+     * @param Builder|Entity $query
      * @param string $action
      * @return mixed
      */
-    public function enforceEntityRestrictions($query, $action = 'view')
+    public function enforceEntityRestrictions($entityType, $query, $action = 'view')
     {
+        if (strtolower($entityType) === 'page') {
+            // Prevent drafts being visible to others.
+            $query = $query->where(function ($query) {
+                $query->where('draft', '=', false);
+                if ($this->currentUser()) {
+                    $query->orWhere(function ($query) {
+                        $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser()->id);
+                    });
+                }
+            });
+        }
+
         if ($this->isAdmin()) {
             $this->clean();
             return $query;
         }
+
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }

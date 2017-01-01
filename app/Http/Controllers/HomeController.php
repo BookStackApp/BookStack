@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use Activity;
 use BookStack\Repos\EntityRepo;
 use BookStack\Http\Requests;
+use Illuminate\Http\Response;
 use Views;
 
 class HomeController extends Controller
@@ -31,9 +32,9 @@ class HomeController extends Controller
         $activity = Activity::latest(10);
         $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreatedBooks(10*$recentFactor);
-        $recentlyCreatedPages = $this->entityRepo->getRecentlyCreatedPages(5);
-        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdatedPages(5);
+        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 10*$recentFactor);
+        $recentlyCreatedPages = $this->entityRepo->getRecentlyCreated('page', 5);
+        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 5);
         return view('home', [
             'activity' => $activity,
             'recents' => $recents,
