@@ -5,9 +5,7 @@ use BookStack\View;
 
 class ViewService
 {
-
     protected $view;
-    protected $user;
     protected $permissionService;
 
     /**
@@ -18,7 +16,6 @@ class ViewService
     public function __construct(View $view, PermissionService $permissionService)
     {
         $this->view = $view;
-        $this->user = user();
         $this->permissionService = $permissionService;
     }
 
@@ -29,8 +26,9 @@ class ViewService
      */
     public function add(Entity $entity)
     {
-        if ($this->user === null) return 0;
-        $view = $entity->views()->where('user_id', '=', $this->user->id)->first();
+        $user = user();
+        if ($user === null || $user->isDefault()) return 0;
+        $view = $entity->views()->where('user_id', '=', $user->id)->first();
         // Add view if model exists
         if ($view) {
             $view->increment('views');
@@ -39,7 +37,7 @@ class ViewService
 
         // Otherwise create new view count
         $entity->views()->save($this->view->create([
-            'user_id' => $this->user->id,
+            'user_id' => user()->id,
             'views' => 1
         ]));
 
@@ -78,13 +76,14 @@ class ViewService
      */
     public function getUserRecentlyViewed($count = 10, $page = 0, $filterModel = false)
     {
-        if ($this->user === null) return collect();
+        $user = user();
+        if ($user === null || $user->isDefault()) return collect();
 
         $query = $this->permissionService
             ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
 
         if ($filterModel) $query = $query->where('viewable_type', '=', get_class($filterModel));
-        $query = $query->where('user_id', '=', user()->id);
+        $query = $query->where('user_id', '=', $user->id);
 
         $viewables = $query->with('viewable')->orderBy('updated_at', 'desc')
             ->skip($count * $page)->take($count)->get()->pluck('viewable');
