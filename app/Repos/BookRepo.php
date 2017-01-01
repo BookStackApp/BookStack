@@ -1,11 +1,6 @@
 <?php namespace BookStack\Repos;
 
-use Alpha\B;
-use BookStack\Exceptions\NotFoundException;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 use BookStack\Book;
-use Views;
 
 class BookRepo extends EntityRepo
 {
@@ -22,105 +17,6 @@ class BookRepo extends EntityRepo
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
         parent::__construct();
-    }
-
-    /**
-     * Base query for getting books.
-     * Takes into account any restrictions.
-     * @return mixed
-     */
-    private function bookQuery()
-    {
-        return $this->permissionService->enforceBookRestrictions($this->book, 'view');
-    }
-
-    /**
-     * Get the book that has the given id.
-     * @param $id
-     * @return mixed
-     */
-    public function getById($id)
-    {
-        return $this->bookQuery()->findOrFail($id);
-    }
-
-    /**
-     * Get all books, Limited by count.
-     * @param int $count
-     * @return mixed
-     */
-    public function getAll($count = 10)
-    {
-        $bookQuery = $this->bookQuery()->orderBy('name', 'asc');
-        if (!$count) return $bookQuery->get();
-        return $bookQuery->take($count)->get();
-    }
-
-    /**
-     * Get all books paginated.
-     * @param int $count
-     * @return mixed
-     */
-    public function getAllPaginated($count = 10)
-    {
-        return $this->bookQuery()
-            ->orderBy('name', 'asc')->paginate($count);
-    }
-
-
-    /**
-     * Get the latest books.
-     * @param int $count
-     * @return mixed
-     */
-    public function getLatest($count = 10)
-    {
-        return $this->bookQuery()->orderBy('created_at', 'desc')->take($count)->get();
-    }
-
-    /**
-     * Gets the most recently viewed for a user.
-     * @param int $count
-     * @param int $page
-     * @return mixed
-     */
-    public function getRecentlyViewed($count = 10, $page = 0)
-    {
-        return Views::getUserRecentlyViewed($count, $page, $this->book);
-    }
-
-    /**
-     * Gets the most viewed books.
-     * @param int $count
-     * @param int $page
-     * @return mixed
-     */
-    public function getPopular($count = 10, $page = 0)
-    {
-        return Views::getPopular($count, $page, $this->book);
-    }
-
-    /**
-     * Get a book by slug
-     * @param $slug
-     * @return mixed
-     * @throws NotFoundException
-     */
-    public function getBySlug($slug)
-    {
-        $book = $this->bookQuery()->where('slug', '=', $slug)->first();
-        if ($book === null) throw new NotFoundException(trans('errors.book_not_found'));
-        return $book;
-    }
-
-    /**
-     * Checks if a book exists.
-     * @param $id
-     * @return bool
-     */
-    public function exists($id)
-    {
-        return $this->bookQuery()->where('id', '=', $id)->exists();
     }
 
     /**

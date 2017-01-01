@@ -22,58 +22,6 @@ class ChapterRepo extends EntityRepo
     }
 
     /**
-     * Base query for getting chapters, Takes permissions into account.
-     * @return mixed
-     */
-    private function chapterQuery()
-    {
-        return $this->permissionService->enforceChapterRestrictions($this->chapter, 'view');
-    }
-
-    /**
-     * Check if an id exists.
-     * @param $id
-     * @return bool
-     */
-    public function idExists($id)
-    {
-        return $this->chapterQuery()->where('id', '=', $id)->count() > 0;
-    }
-
-    /**
-     * Get a chapter by a specific id.
-     * @param $id
-     * @return mixed
-     */
-    public function getById($id)
-    {
-        return $this->chapterQuery()->findOrFail($id);
-    }
-
-    /**
-     * Get all chapters.
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function getAll()
-    {
-        return $this->chapterQuery()->all();
-    }
-
-    /**
-     * Get a chapter that has the given slug within the given book.
-     * @param $slug
-     * @param $bookId
-     * @return mixed
-     * @throws NotFoundException
-     */
-    public function getBySlug($slug, $bookId)
-    {
-        $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($chapter === null) throw new NotFoundException(trans('errors.chapter_not_found'));
-        return $chapter;
-    }
-
-    /**
      * Get the child items for a chapter
      * @param Chapter $chapter
      */

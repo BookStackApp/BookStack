@@ -65,9 +65,9 @@ class RestrictionsTest extends TestCase
         $this->forceVisit($bookUrl)
             ->see('Book not found');
         $this->forceVisit($bookPage->getUrl())
-            ->see('Book not found');
+            ->see('Page not found');
         $this->forceVisit($bookChapter->getUrl())
-            ->see('Book not found');
+            ->see('Chapter not found');
 
         $this->setEntityRestrictions($book, ['view']);
 

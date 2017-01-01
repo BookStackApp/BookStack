@@ -46,31 +46,6 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Get a page via a specific ID.
-     * @param $id
-     * @param bool $allowDrafts
-     * @return Page
-     */
-    public function getById($id, $allowDrafts = false)
-    {
-        return $this->pageQuery($allowDrafts)->findOrFail($id);
-    }
-
-    /**
-     * Get a page identified by the given slug.
-     * @param $slug
-     * @param $bookId
-     * @return Page
-     * @throws NotFoundException
-     */
-    public function getBySlug($slug, $bookId)
-    {
-        $page = $this->pageQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($page === null) throw new NotFoundException(trans('errors.page_not_found'));
-        return $page;
-    }
-
-    /**
      * Search through page revisions and retrieve
      * the last page in the current book that
      * has a slug equal to the one given.

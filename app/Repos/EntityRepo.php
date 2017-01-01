@@ -3,11 +3,12 @@
 use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Page;
 use BookStack\Services\PermissionService;
-use BookStack\User;
+use BookStack\Services\ViewService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class EntityRepo
 {
@@ -28,9 +29,20 @@ class EntityRepo
     public $page;
 
     /**
+     * Base entity instances keyed by type
+     * @var []Entity
+     */
+    protected $entities;
+
+    /**
      * @var PermissionService
      */
     protected $permissionService;
+
+    /**
+     * @var ViewService
+     */
+    protected $viewService;
 
     /**
      * Acceptable operators to be used in a query
@@ -43,23 +55,126 @@ class EntityRepo
      */
     public function __construct()
     {
+        // TODO - Redo this to come via injection
         $this->book = app(Book::class);
         $this->chapter = app(Chapter::class);
         $this->page = app(Page::class);
+        $this->entities = [
+            'page' => $this->page,
+            'chapter' => $this->chapter,
+            'book' => $this->book
+        ];
+        $this->viewService = app(ViewService::class);
         $this->permissionService = app(PermissionService::class);
     }
 
     /**
-     * Get the latest books added to the system.
+     * Get an entity instance via type.
+     * @param $type
+     * @return Entity
+     */
+    protected function getEntity($type)
+    {
+        return $this->entities[strtolower($type)];
+    }
+
+    /**
+     * Base query for searching entities via permission system
+     * @param string $type
+     * @param bool $allowDrafts
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function entityQuery($type, $allowDrafts = false)
+    {
+        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type), 'view');
+        if (strtolower($type) === 'page' && !$allowDrafts) {
+            $q = $q->where('draft', '=', false);
+        }
+        return $q;
+    }
+
+    /**
+     * Check if an entity with the given id exists.
+     * @param $type
+     * @param $id
+     * @return bool
+     */
+    public function exists($type, $id)
+    {
+        return $this->entityQuery($type)->where('id', '=', $id)->exists();
+    }
+
+    /**
+     * Get an entity by ID
+     * @param string $type
+     * @param integer $id
+     * @param bool $allowDrafts
+     * @return Entity
+     */
+    public function getById($type, $id, $allowDrafts = false)
+    {
+        return $this->entityQuery($type, $allowDrafts)->findOrFail($id);
+    }
+
+    /**
+     * Get an entity by its url slug.
+     * @param string $type
+     * @param string $slug
+     * @param string|bool $bookSlug
+     * @return Entity
+     * @throws NotFoundException
+     */
+    public function getBySlug($type, $slug, $bookSlug = false)
+    {
+        $q = $this->entityQuery($type)->where('slug', '=', $slug);
+        if (strtolower($type) === 'chapter' || strtolower($type) === 'page') {
+            $q = $q->where('book_id', '=', function($query) use ($bookSlug) {
+                $query->select('id')
+                    ->from($this->book->getTable())
+                    ->where('slug', '=', $bookSlug)->limit(1);
+            });
+        }
+        $entity = $q->first();
+        if ($entity === null) throw new NotFoundException(trans('errors.' . strtolower($type) . '_not_found'));
+        return $entity;
+    }
+
+    /**
+     * Get all entities of a type limited by count unless count if false.
+     * @param string $type
+     * @param integer|bool $count
+     * @return Collection
+     */
+    public function getAll($type, $count = 20)
+    {
+        $q = $this->entityQuery($type)->orderBy('name', 'asc');
+        if ($count !== false) $q = $q->take($count);
+        return $q->get();
+    }
+
+    /**
+     * Get all entities in a paginated format
+     * @param $type
+     * @param int $count
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getAllPaginated($type, $count = 10)
+    {
+        return $this->entityQuery($type)->orderBy('name', 'asc')->paginate($count);
+    }
+
+    /**
+     * Get the most recently created entities of the given type.
+     * @param string $type
      * @param int $count
      * @param int $page
-     * @param bool $additionalQuery
-     * @return
+     * @param bool|callable $additionalQuery
      */
-    public function getRecentlyCreatedBooks($count = 20, $page = 0, $additionalQuery = false)
+    public function getRecentlyCreated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->permissionService->enforceBookRestrictions($this->book)
+        $query = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type))
             ->orderBy('created_at', 'desc');
+        if (strtolower($type) === 'page') $query = $query->where('draft', '=', false);
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
@@ -67,45 +182,17 @@ class EntityRepo
     }
 
     /**
-     * Get the most recently updated books.
-     * @param $count
-     * @param int $page
-     * @return mixed
-     */
-    public function getRecentlyUpdatedBooks($count = 20, $page = 0)
-    {
-        return $this->permissionService->enforceBookRestrictions($this->book)
-            ->orderBy('updated_at', 'desc')->skip($page * $count)->take($count)->get();
-    }
-
-    /**
-     * Get the latest pages added to the system.
+     * Get the most recently updated entities of the given type.
+     * @param string $type
      * @param int $count
      * @param int $page
-     * @param bool $additionalQuery
-     * @return
+     * @param bool|callable $additionalQuery
      */
-    public function getRecentlyCreatedPages($count = 20, $page = 0, $additionalQuery = false)
+    public function getRecentlyUpdated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->permissionService->enforcePageRestrictions($this->page)
-            ->orderBy('created_at', 'desc')->where('draft', '=', false);
-        if ($additionalQuery !== false && is_callable($additionalQuery)) {
-            $additionalQuery($query);
-        }
-        return $query->with('book')->skip($page * $count)->take($count)->get();
-    }
-
-    /**
-     * Get the latest chapters added to the system.
-     * @param int $count
-     * @param int $page
-     * @param bool $additionalQuery
-     * @return
-     */
-    public function getRecentlyCreatedChapters($count = 20, $page = 0, $additionalQuery = false)
-    {
-        $query = $this->permissionService->enforceChapterRestrictions($this->chapter)
-            ->orderBy('created_at', 'desc');
+        $query = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type))
+            ->orderBy('updated_at', 'desc');
+        if (strtolower($type) === 'page') $query = $query->where('draft', '=', false);
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
@@ -113,16 +200,29 @@ class EntityRepo
     }
 
     /**
-     * Get the most recently updated pages.
-     * @param $count
+     * Get the most recently viewed entities.
+     * @param string|bool $type
+     * @param int $count
      * @param int $page
      * @return mixed
      */
-    public function getRecentlyUpdatedPages($count = 20, $page = 0)
+    public function getRecentlyViewed($type, $count = 10, $page = 0)
     {
-        return $this->permissionService->enforcePageRestrictions($this->page)
-            ->where('draft', '=', false)
-            ->orderBy('updated_at', 'desc')->with('book')->skip($page * $count)->take($count)->get();
+        $filter = is_bool($type) ? false : $this->getEntity($type);
+        return $this->viewService->getUserRecentlyViewed($count, $page, $filter);
+    }
+
+    /**
+     * Get the most popular entities base on all views.
+     * @param string|bool $type
+     * @param int $count
+     * @param int $page
+     * @return mixed
+     */
+    public function getPopular($type, $count = 10, $page = 0)
+    {
+        $filter = is_bool($type) ? false : $this->getEntity($type);
+        return $this->viewService->getPopular($count, $page, $filter);
     }
 
     /**
