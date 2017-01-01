@@ -9,6 +9,8 @@ class Page extends Entity
 
     protected $with = ['book'];
 
+    protected $fieldsToSearch = ['name', 'text'];
+
     /**
      * Converts this page into a simplified array.
      * @return mixed

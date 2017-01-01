@@ -238,6 +238,83 @@ class EntityRepo
             ->skip($count * $page)->take($count)->get();
     }
 
+    public function getBySearch($type, $term, $whereTerms = [], $count = 20, $paginationAppends = [])
+    {
+        $terms = $this->prepareSearchTerms($term);
+        $q = $this->permissionService->enforceChapterRestrictions($this->getEntity($type)->fullTextSearchQuery($terms, $whereTerms));
+        $q = $this->addAdvancedSearchQueries($q, $term);
+        $entities = $q->paginate($count)->appends($paginationAppends);
+        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
+
+        // Highlight page content
+        if ($type === 'page') {
+            //lookahead/behind assertions ensures cut between words
+            $s = '\s\x00-/:-@\[-`{-~'; //character set for start/end of words
+
+            foreach ($entities as $page) {
+                preg_match_all('#(?<=[' . $s . ']).{1,30}((' . $words . ').{1,30})+(?=[' . $s . '])#uis', $page->text, $matches, PREG_SET_ORDER);
+                //delimiter between occurrences
+                $results = [];
+                foreach ($matches as $line) {
+                    $results[] = htmlspecialchars($line[0], 0, 'UTF-8');
+                }
+                $matchLimit = 6;
+                if (count($results) > $matchLimit) $results = array_slice($results, 0, $matchLimit);
+                $result = join('... ', $results);
+
+                //highlight
+                $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $result);
+                if (strlen($result) < 5) $result = $page->getExcerpt(80);
+
+                $page->searchSnippet = $result;
+            }
+            return $entities;
+        }
+
+        // Highlight chapter/book content
+        foreach ($entities as $entity) {
+            //highlight
+            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $entity->getExcerpt(100));
+            $entity->searchSnippet = $result;
+        }
+        return $entities;
+    }
+
+    /**
+     * Find a suitable slug for an entity.
+     * @param string $type
+     * @param string $name
+     * @param bool|integer $currentId
+     * @param bool|integer $bookId Only pass if type is not a book
+     * @return string
+     */
+    public function findSuitableSlug($type, $name, $currentId = false, $bookId = false)
+    {
+        $slug = $this->nameToSlug($name);
+        while ($this->slugExists($type, $slug, $currentId, $bookId)) {
+            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
+        }
+        return $slug;
+    }
+
+    /**
+     * Check if a slug already exists in the database.
+     * @param string $type
+     * @param string $slug
+     * @param bool|integer $currentId
+     * @param bool|integer $bookId
+     * @return bool
+     */
+    protected function slugExists($type, $slug, $currentId = false, $bookId = false)
+    {
+        $query = $this->getEntity($type)->where('slug', '=', $slug);
+        if (strtolower($type) === 'page' || strtolower($type) === 'chapter') {
+            $query = $query->where('book_id', '=', $bookId);
+        }
+        if ($currentId) $query = $query->where('id', '!=', $currentId);
+        return $query->count() > 0;
+    }
+
     /**
      * Updates entity restrictions from a request
      * @param $request

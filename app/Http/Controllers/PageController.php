@@ -26,6 +26,7 @@ class PageController extends Controller
 
     /**
      * PageController constructor.
+     * @param EntityRepo $entityRepo
      * @param PageRepo $pageRepo
      * @param BookRepo $bookRepo
      * @param ChapterRepo $chapterRepo

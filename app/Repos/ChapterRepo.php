@@ -45,7 +45,7 @@ class ChapterRepo extends EntityRepo
     public function createFromInput($input, Book $book)
     {
         $chapter = $this->chapter->newInstance($input);
-        $chapter->slug = $this->findSuitableSlug($chapter->name, $book->id);
+        $chapter->slug = $this->findSuitableSlug('chapter', $chapter->name, false, $book->id);
         $chapter->created_by = user()->id;
         $chapter->updated_by = user()->id;
         $chapter = $book->chapters()->save($chapter);
@@ -72,38 +72,6 @@ class ChapterRepo extends EntityRepo
         $chapter->delete();
     }
 
-    /**
-     * Check if a chapter's slug exists.
-     * @param            $slug
-     * @param            $bookId
-     * @param bool|false $currentId
-     * @return bool
-     */
-    public function doesSlugExist($slug, $bookId, $currentId = false)
-    {
-        $query = $this->chapter->where('slug', '=', $slug)->where('book_id', '=', $bookId);
-        if ($currentId) {
-            $query = $query->where('id', '!=', $currentId);
-        }
-        return $query->count() > 0;
-    }
-
-    /**
-     * Finds a suitable slug for the provided name.
-     * Checks database to prevent duplicate slugs.
-     * @param            $name
-     * @param            $bookId
-     * @param bool|false $currentId
-     * @return string
-     */
-    public function findSuitableSlug($name, $bookId, $currentId = false)
-    {
-        $slug = $this->nameToSlug($name);
-        while ($this->doesSlugExist($slug, $bookId, $currentId)) {
-            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
-        }
-        return $slug;
-    }
 
     /**
      * Get a new priority value for a new page to be added
@@ -115,29 +83,6 @@ class ChapterRepo extends EntityRepo
     {
         $lastPage = $chapter->pages->last();
         return $lastPage !== null ? $lastPage->priority + 1 : 0;
-    }
-
-    /**
-     * Get chapters by the given search term.
-     * @param string $term
-     * @param array $whereTerms
-     * @param int $count
-     * @param array $paginationAppends
-     * @return mixed
-     */
-    public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
-    {
-        $terms = $this->prepareSearchTerms($term);
-        $chapterQuery = $this->permissionService->enforceChapterRestrictions($this->chapter->fullTextSearchQuery(['name', 'description'], $terms, $whereTerms));
-        $chapterQuery = $this->addAdvancedSearchQueries($chapterQuery, $term);
-        $chapters = $chapterQuery->paginate($count)->appends($paginationAppends);
-        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
-        foreach ($chapters as $chapter) {
-            //highlight
-            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $chapter->getExcerpt(100));
-            $chapter->searchSnippet = $result;
-        }
-        return $chapters;
     }
 
     /**
@@ -155,7 +100,7 @@ class ChapterRepo extends EntityRepo
             $activity->book_id = $bookId;
             $activity->save();
         }
-        $chapter->slug = $this->findSuitableSlug($chapter->name, $bookId, $chapter->id);
+        $chapter->slug = $this->findSuitableSlug('chapter', $chapter->name, $chapter->id, $bookId);
         $chapter->save();
         // Update all child pages
         foreach ($chapter->pages as $page) {

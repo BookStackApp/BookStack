@@ -118,7 +118,7 @@ class ChapterController extends Controller
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
         if ($chapter->name !== $request->get('name')) {
-            $chapter->slug = $this->chapterRepo->findSuitableSlug($request->get('name'), $chapter->book->id, $chapter->id);
+            $chapter->slug = $this->entityRepo->findSuitableSlug('chapter', $request->get('name'), $chapter->id, $chapter->book->id);
         }
         $chapter->fill($request->all());
         $chapter->updated_by = user()->id;
