@@ -8,6 +8,7 @@ use BookStack\Ownable;
 use BookStack\Page;
 use BookStack\Role;
 use BookStack\User;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -23,6 +24,8 @@ class PermissionService
     public $chapter;
     public $page;
 
+    protected $db;
+
     protected $jointPermission;
     protected $role;
 
@@ -31,18 +34,21 @@ class PermissionService
     /**
      * PermissionService constructor.
      * @param JointPermission $jointPermission
+     * @param Connection $db
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
      * @param Role $role
      */
-    public function __construct(JointPermission $jointPermission, Book $book, Chapter $chapter, Page $page, Role $role)
+    public function __construct(JointPermission $jointPermission, Connection $db, Book $book, Chapter $chapter, Page $page, Role $role)
     {
+        $this->db = $db;
         $this->jointPermission = $jointPermission;
         $this->role = $role;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
+        // TODO - Update so admin still goes through filters
     }
 
     /**
@@ -302,6 +308,10 @@ class PermissionService
         $explodedAction = explode('-', $action);
         $restrictionAction = end($explodedAction);
 
+        if ($role->system_name === 'admin') {
+            return $this->createJointPermissionDataArray($entity, $role, $action, true, true);
+        }
+
         if ($entity->isA('book')) {
 
             if (!$entity->restricted) {
@@ -461,6 +471,51 @@ class PermissionService
         return $q;
     }
 
+    public function bookChildrenQuery($book_id, $filterDrafts = false) {
+
+        // Draft setup
+        $params = [
+            'userId' => $this->currentUser()->id,
+            'bookIdPage' => $book_id,
+            'bookIdChapter' => $book_id
+        ];
+        if (!$filterDrafts) {
+            $params['userIdDrafts'] = $this->currentUser()->id;
+        }
+        // Role setup
+        $userRoles = $this->getRoles();
+        $roleBindings = [];
+        $roleValues = [];
+        foreach ($userRoles as $index => $roleId) {
+            $roleBindings[':role'.$index] = $roleId;
+            $roleValues['role'.$index] = $roleId;
+        }
+        // TODO - Clean this up, Maybe extract into a nice class for doing these kind of manual things
+        // Something which will handle the above role crap in a nice clean way
+        $roleBindingString = implode(',', array_keys($roleBindings));
+        $query = "SELECT * from (
+(SELECT 'Bookstack\\\Page' as entity_type, id, slug, name, text, '' as description, book_id, priority, chapter_id, draft FROM {$this->page->getTable()}
+    where book_id = :bookIdPage AND ". ($filterDrafts ? '(draft = 0)' : '(draft = 0 OR (draft = 1 AND created_by = :userIdDrafts))') .")
+UNION
+(SELECT 'Bookstack\\\Chapter' as entity_type, id, slug, name, '' as text, description, book_id, priority, 0 as chapter_id, 0 as draft FROM {$this->chapter->getTable()} WHERE book_id = :bookIdChapter)
+) as U  WHERE (
+	SELECT COUNT(*) FROM {$this->jointPermission->getTable()} jp
+    WHERE
+		jp.entity_id=U.id AND
+        jp.entity_type=U.entity_type AND
+		jp.action = 'view' AND
+        jp.role_id IN ({$roleBindingString}) AND
+        (
+			jp.has_permission = 1 OR
+            (jp.has_permission_own = 1 AND jp.created_by = :userId)
+        )
+) > 0
+ORDER BY draft desc, priority asc";
+
+        $this->clean();
+        return $this->db->select($query, array_replace($roleValues, $params));
+    }
+
     /**
      * Add restrictions for a page query
      * @param $query
@@ -608,7 +663,7 @@ class PermissionService
     private function isAdmin()
     {
         if ($this->isAdminUser === null) {
-            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasRole('admin') : false;
+            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasSystemRole('admin') : false;
         }
 
         return $this->isAdminUser;

@@ -93,47 +93,32 @@ class BookRepo extends EntityRepo
      */
     public function getChildren(Book $book, $filterDrafts = false)
     {
-        $pageQuery = $book->pages()->where('chapter_id', '=', 0);
-        $pageQuery = $this->permissionService->enforcePageRestrictions($pageQuery, 'view');
+        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts);
+        $entities = [];
+        $parents = [];
+        $tree = [];
 
-        if ($filterDrafts) {
-            $pageQuery = $pageQuery->where('draft', '=', false);
-        }
-
-        $pages = $pageQuery->get();
-
-        $chapterQuery = $book->chapters()->with(['pages' => function ($query) use ($filterDrafts) {
-            $this->permissionService->enforcePageRestrictions($query, 'view');
-            if ($filterDrafts) $query->where('draft', '=', false);
-        }]);
-        $chapterQuery = $this->permissionService->enforceChapterRestrictions($chapterQuery, 'view');
-        $chapters = $chapterQuery->get();
-        $children = $pages->values();
-        foreach ($chapters as $chapter) {
-            $children->push($chapter);
-        }
-        $bookSlug = $book->slug;
-
-        $children->each(function ($child) use ($bookSlug) {
-            $child->setAttribute('bookSlug', $bookSlug);
-            if ($child->isA('chapter')) {
-                $child->pages->each(function ($page) use ($bookSlug) {
-                    $page->setAttribute('bookSlug', $bookSlug);
-                });
-                $child->pages = $child->pages->sortBy(function ($child, $key) {
-                    $score = $child->priority;
-                    if ($child->draft) $score -= 100;
-                    return $score;
-                });
+        foreach ($q as $index => $rawEntity) {
+            if ($rawEntity->entity_type === 'Bookstack\\Page') {
+                $entities[$index] = $this->page->newFromBuilder($rawEntity);
+            } else if ($rawEntity->entity_type === 'Bookstack\\Chapter') {
+                $entities[$index] = $this->chapter->newFromBuilder($rawEntity);
+                $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
+                $parents[$key] = $entities[$index];
+                $parents[$key]->setAttribute('pages', collect());
             }
-        });
+            if ($entities[$index]->chapter_id === 0) $tree[] = $entities[$index];
+            $entities[$index]->book = $book;
+        }
 
-        // Sort items with drafts first then by priority.
-        return $children->sortBy(function ($child, $key) {
-            $score = $child->priority;
-            if ($child->isA('page') && $child->draft) $score -= 100;
-            return $score;
-        });
+        foreach ($entities as $entity) {
+            if ($entity->chapter_id === 0) continue;
+            $parentKey = 'Bookstack\\Chapter:' . $entity->chapter_id;
+            $chapter = $parents[$parentKey];
+            $chapter->pages->push($entity);
+        }
+
+        return collect($tree);
     }
 
 }

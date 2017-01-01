@@ -22,6 +22,7 @@ class BookController extends Controller
 
     /**
      * BookController constructor.
+     * @param EntityRepo $entityRepo
      * @param BookRepo $bookRepo
      * @param PageRepo $pageRepo
      * @param ChapterRepo $chapterRepo

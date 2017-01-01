@@ -37,7 +37,7 @@ class ViewService
 
         // Otherwise create new view count
         $entity->views()->save($this->view->create([
-            'user_id' => user()->id,
+            'user_id' => $user->id,
             'views' => 1
         ]));
 
