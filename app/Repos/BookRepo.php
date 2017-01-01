@@ -27,7 +27,7 @@ class BookRepo extends EntityRepo
     public function createFromInput($input)
     {
         $book = $this->book->newInstance($input);
-        $book->slug = $this->findSuitableSlug($book->name);
+        $book->slug = $this->findSuitableSlug('book', $book->name);
         $book->created_by = user()->id;
         $book->updated_by = user()->id;
         $book->save();
@@ -44,7 +44,7 @@ class BookRepo extends EntityRepo
     public function updateFromInput(Book $book, $input)
     {
         if ($book->name !== $input['name']) {
-            $book->slug = $this->findSuitableSlug($input['name'], $book->id);
+            $book->slug = $this->findSuitableSlug('book', $input['name'], $book->id);
         }
         $book->fill($input);
         $book->updated_by = user()->id;
@@ -81,36 +81,6 @@ class BookRepo extends EntityRepo
     {
         $lastElem = $this->getChildren($book)->pop();
         return $lastElem ? $lastElem->priority + 1 : 0;
-    }
-
-    /**
-     * @param string $slug
-     * @param bool|false $currentId
-     * @return bool
-     */
-    public function doesSlugExist($slug, $currentId = false)
-    {
-        $query = $this->book->where('slug', '=', $slug);
-        if ($currentId) {
-            $query = $query->where('id', '!=', $currentId);
-        }
-        return $query->count() > 0;
-    }
-
-    /**
-     * Provides a suitable slug for the given book name.
-     * Ensures the returned slug is unique in the system.
-     * @param string $name
-     * @param bool|false $currentId
-     * @return string
-     */
-    public function findSuitableSlug($name, $currentId = false)
-    {
-        $slug = $this->nameToSlug($name);
-        while ($this->doesSlugExist($slug, $currentId)) {
-            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
-        }
-        return $slug;
     }
 
     /**
@@ -164,28 +134,6 @@ class BookRepo extends EntityRepo
             if ($child->isA('page') && $child->draft) $score -= 100;
             return $score;
         });
-    }
-
-    /**
-     * Get books by search term.
-     * @param $term
-     * @param int $count
-     * @param array $paginationAppends
-     * @return mixed
-     */
-    public function getBySearch($term, $count = 20, $paginationAppends = [])
-    {
-        $terms = $this->prepareSearchTerms($term);
-        $bookQuery = $this->permissionService->enforceBookRestrictions($this->book->fullTextSearchQuery(['name', 'description'], $terms));
-        $bookQuery = $this->addAdvancedSearchQueries($bookQuery, $term);
-        $books = $bookQuery->paginate($count)->appends($paginationAppends);
-        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
-        foreach ($books as $book) {
-            //highlight
-            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $book->getExcerpt(100));
-            $book->searchSnippet = $result;
-        }
-        return $books;
     }
 
 }

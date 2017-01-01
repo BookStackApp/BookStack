@@ -66,17 +66,6 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Get a new Page instance from the given input.
-     * @param $input
-     * @return Page
-     */
-    public function newFromInput($input)
-    {
-        $page = $this->page->fill($input);
-        return $page;
-    }
-
-    /**
      * Count the pages with a particular slug within a book.
      * @param $slug
      * @param $bookId
@@ -103,7 +92,7 @@ class PageRepo extends EntityRepo
             $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
         }
 
-        $draftPage->slug = $this->findSuitableSlug($draftPage->name, $draftPage->book->id);
+        $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = strip_tags($draftPage->html);
         $draftPage->draft = false;
@@ -223,50 +212,6 @@ class PageRepo extends EntityRepo
 
 
     /**
-     * Gets pages by a search term.
-     * Highlights page content for showing in results.
-     * @param string $term
-     * @param array $whereTerms
-     * @param int $count
-     * @param array $paginationAppends
-     * @return mixed
-     */
-    public function getBySearch($term, $whereTerms = [], $count = 20, $paginationAppends = [])
-    {
-        $terms = $this->prepareSearchTerms($term);
-        $pageQuery = $this->permissionService->enforcePageRestrictions($this->page->fullTextSearchQuery(['name', 'text'], $terms, $whereTerms));
-        $pageQuery = $this->addAdvancedSearchQueries($pageQuery, $term);
-        $pages = $pageQuery->paginate($count)->appends($paginationAppends);
-
-        // Add highlights to page text.
-        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
-        //lookahead/behind assertions ensures cut between words
-        $s = '\s\x00-/:-@\[-`{-~'; //character set for start/end of words
-
-        foreach ($pages as $page) {
-            preg_match_all('#(?<=[' . $s . ']).{1,30}((' . $words . ').{1,30})+(?=[' . $s . '])#uis', $page->text, $matches, PREG_SET_ORDER);
-            //delimiter between occurrences
-            $results = [];
-            foreach ($matches as $line) {
-                $results[] = htmlspecialchars($line[0], 0, 'UTF-8');
-            }
-            $matchLimit = 6;
-            if (count($results) > $matchLimit) {
-                $results = array_slice($results, 0, $matchLimit);
-            }
-            $result = join('... ', $results);
-
-            //highlight
-            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $result);
-            if (strlen($result) < 5) {
-                $result = $page->getExcerpt(80);
-            }
-            $page->searchSnippet = $result;
-        }
-        return $pages;
-    }
-
-    /**
      * Search for image usage.
      * @param $imageString
      * @return mixed
@@ -297,7 +242,7 @@ class PageRepo extends EntityRepo
 
         // Prevent slug being updated if no name change
         if ($page->name !== $input['name']) {
-            $page->slug = $this->findSuitableSlug($input['name'], $book_id, $page->id);
+            $page->slug = $this->findSuitableSlug('page', $input['name'], $page->id, $book_id);
         }
 
         // Save page tags if present
@@ -337,7 +282,7 @@ class PageRepo extends EntityRepo
         $this->saveRevision($page);
         $revision = $this->getRevisionById($revisionId);
         $page->fill($revision->toArray());
-        $page->slug = $this->findSuitableSlug($page->name, $book->id, $page->id);
+        $page->slug = $this->findSuitableSlug('page', $page->name, $page->id, $book->id);
         $page->text = strip_tags($page->html);
         $page->updated_by = user()->id;
         $page->save();
@@ -530,20 +475,6 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Checks if a slug exists within a book already.
-     * @param            $slug
-     * @param            $bookId
-     * @param bool|false $currentId
-     * @return bool
-     */
-    public function doesSlugExist($slug, $bookId, $currentId = false)
-    {
-        $query = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId);
-        if ($currentId) $query = $query->where('id', '!=', $currentId);
-        return $query->count() > 0;
-    }
-
-    /**
      * Changes the related book for the specified page.
      * Changes the book id of any relations to the page that store the book id.
      * @param int $bookId
@@ -557,7 +488,7 @@ class PageRepo extends EntityRepo
             $activity->book_id = $bookId;
             $activity->save();
         }
-        $page->slug = $this->findSuitableSlug($page->name, $bookId, $page->id);
+        $page->slug = $this->findSuitableSlug('page', $page->name, $page->id, $bookId);
         $page->save();
         return $page;
     }
@@ -576,22 +507,6 @@ class PageRepo extends EntityRepo
         $page = $this->changeBook($book->id, $page);
         $page->load('book');
         $this->permissionService->buildJointPermissionsForEntity($book);
-    }
-
-    /**
-     * Gets a suitable slug for the resource
-     * @param string $name
-     * @param int $bookId
-     * @param bool|false $currentId
-     * @return string
-     */
-    public function findSuitableSlug($name, $bookId, $currentId = false)
-    {
-        $slug = $this->nameToSlug($name);
-        while ($this->doesSlugExist($slug, $bookId, $currentId)) {
-            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
-        }
-        return $slug;
     }
 
     /**
