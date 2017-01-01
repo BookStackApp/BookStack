@@ -45,7 +45,7 @@
                             @else
                                 <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
                                 <span class="text-muted">&nbsp;|&nbsp;</span>
-                                <a href="{{ $revision->getUrl('restore') }}" target="_blank">{{ trans('entities.pages_revisions_restore') }}</a>
+                                <a href="{{ $revision->getUrl('restore') }}">{{ trans('entities.pages_revisions_restore') }}</a>
                             @endif
                         </td>
                     </tr>
