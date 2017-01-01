@@ -33,7 +33,7 @@
   position: relative;
   z-index: 5;
   textarea {
-    font-family: 'Roboto Mono';
+    font-family: 'Roboto Mono', monospace;
     font-style: normal;
     font-weight: 400;
     padding: $-xs $-m;
@@ -55,6 +55,7 @@
     display: flex;
     flex-direction: column;
     border: 1px solid #DDD;
+    width: 50%;
   }
   .markdown-display {
     padding: 0 $-m 0;
@@ -68,7 +69,7 @@
 .editor-toolbar {
   width: 100%;
   padding: $-xs $-m;
-  font-family: 'Roboto Mono';
+  font-family: 'Roboto Mono', monospace;
   font-size: 11px;
   line-height: 1.6;
   border-bottom: 1px solid #DDD;
