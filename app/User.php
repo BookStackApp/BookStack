@@ -75,6 +75,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Check if the user has a role.
+     * @param $role
+     * @return mixed
+     */
+    public function hasSystemRole($role)
+    {
+        return $this->roles->pluck('system_name')->contains('admin');
+    }
+
+    /**
      * Get all permissions belonging to a the current user.
      * @param bool $cache
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough

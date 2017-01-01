@@ -7,7 +7,6 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Page;
 use BookStack\Services\PermissionService;
 use BookStack\Services\ViewService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class EntityRepo
@@ -127,6 +126,7 @@ class EntityRepo
     public function getBySlug($type, $slug, $bookSlug = false)
     {
         $q = $this->entityQuery($type)->where('slug', '=', $slug);
+
         if (strtolower($type) === 'chapter' || strtolower($type) === 'page') {
             $q = $q->where('book_id', '=', function($query) use ($bookSlug) {
                 $query->select('id')
