@@ -2,7 +2,7 @@
 
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Attachment;
-use BookStack\Repos\PageRepo;
+use BookStack\Repos\EntityRepo;
 use BookStack\Services\AttachmentService;
 use Illuminate\Http\Request;
 
@@ -10,19 +10,19 @@ class AttachmentController extends Controller
 {
     protected $attachmentService;
     protected $attachment;
-    protected $pageRepo;
+    protected $entityRepo;
 
     /**
      * AttachmentController constructor.
      * @param AttachmentService $attachmentService
      * @param Attachment $attachment
-     * @param PageRepo $pageRepo
+     * @param EntityRepo $entityRepo
      */
-    public function __construct(AttachmentService $attachmentService, Attachment $attachment, PageRepo $pageRepo)
+    public function __construct(AttachmentService $attachmentService, Attachment $attachment, EntityRepo $entityRepo)
     {
         $this->attachmentService = $attachmentService;
         $this->attachment = $attachment;
-        $this->pageRepo = $pageRepo;
+        $this->entityRepo = $entityRepo;
         parent::__construct();
     }
 
@@ -40,7 +40,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId, true);
+        $page = $this->entityRepo->getById('page', $pageId, true);
 
         $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
@@ -70,7 +70,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId, true);
+        $page = $this->entityRepo->getById('page', $pageId, true);
         $attachment = $this->attachment->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $page);
@@ -106,7 +106,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId, true);
+        $page = $this->entityRepo->getById('page', $pageId, true);
         $attachment = $this->attachment->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $page);
@@ -134,7 +134,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId, true);
+        $page = $this->entityRepo->getById('page', $pageId, true);
 
         $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
@@ -153,7 +153,7 @@ class AttachmentController extends Controller
      */
     public function listForPage($pageId)
     {
-        $page = $this->pageRepo->getById($pageId, true);
+        $page = $this->entityRepo->getById('page', $pageId, true);
         $this->checkOwnablePermission('page-view', $page);
         return response()->json($page->attachments);
     }
@@ -170,7 +170,7 @@ class AttachmentController extends Controller
             'files' => 'required|array',
             'files.*.id' => 'required|integer',
         ]);
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->entityRepo->getById('page', $pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         $attachments = $request->get('files');
@@ -186,7 +186,7 @@ class AttachmentController extends Controller
     public function get($attachmentId)
     {
         $attachment = $this->attachment->findOrFail($attachmentId);
-        $page = $this->pageRepo->getById($attachment->uploaded_to);
+        $page = $this->entityRepo->getById('page', $attachment->uploaded_to);
         $this->checkOwnablePermission('page-view', $page);
 
         if ($attachment->external) {
