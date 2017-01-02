@@ -13,8 +13,8 @@ class SortTest extends TestCase
     public function test_drafts_do_not_show_up()
     {
         $this->asAdmin();
-        $pageRepo = app('\BookStack\Repos\PageRepo');
-        $draft = $pageRepo->getDraftPage($this->book);
+        $entityRepo = app('\BookStack\Repos\EntityRepo');
+        $draft = $entityRepo->getDraftPage($this->book);
 
         $this->visit($this->book->getUrl())
             ->see($draft->name)

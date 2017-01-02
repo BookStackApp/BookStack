@@ -517,42 +517,6 @@ ORDER BY draft desc, priority asc";
     }
 
     /**
-     * Add restrictions for a page query
-     * @param $query
-     * @param string $action
-     * @return mixed
-     */
-    public function enforcePageRestrictions($query, $action = 'view')
-    {
-        // TODO - remove this
-        return $this->enforceEntityRestrictions('page', $query, $action);
-    }
-
-    /**
-     * Add on permission restrictions to a chapter query.
-     * @param $query
-     * @param string $action
-     * @return mixed
-     */
-    public function enforceChapterRestrictions($query, $action = 'view')
-    {
-        // TODO - remove this
-        return $this->enforceEntityRestrictions('chapter', $query, $action);
-    }
-
-    /**
-     * Add restrictions to a book query.
-     * @param $query
-     * @param string $action
-     * @return mixed
-     */
-    public function enforceBookRestrictions($query, $action = 'view')
-    {
-        // TODO - remove this
-        return $this->enforceEntityRestrictions('book', $query, $action);
-    }
-
-    /**
      * Add restrictions for a generic entity
      * @param string $entityType
      * @param Builder|Entity $query
