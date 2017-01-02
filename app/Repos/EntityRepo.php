@@ -836,7 +836,7 @@ class EntityRepo
     /**
      * Parse the headers on the page to get a navigation menu
      * @param Page $page
-     * @return array
+     * @return Collection
      */
     public function getPageNav(Page $page)
     {
@@ -849,15 +849,24 @@ class EntityRepo
 
         if (is_null($headers)) return null;
 
-        $tree = [];
+        $tree = collect([]);
         foreach ($headers as $header) {
             $text = $header->nodeValue;
-            $tree[] = [
+            $tree->push([
                 'nodeName' => strtolower($header->nodeName),
                 'level' => intval(str_replace('h', '', $header->nodeName)),
                 'link' => '#' . $header->getAttribute('id'),
                 'text' => strlen($text) > 30 ? substr($text, 0, 27) . '...' : $text
-            ];
+            ]);
+        }
+
+        // Normalise headers if only smaller headers have been used
+        if (count($tree) > 0) {
+            $minLevel = $tree->pluck('level')->min();
+            $tree = $tree->map(function($header) use ($minLevel) {
+                $header['level'] -= ($minLevel - 2);
+                return $header;
+            });
         }
         return $tree;
     }
