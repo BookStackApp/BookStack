@@ -1,30 +1,26 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
-use BookStack\Repos\BookRepo;
-use BookStack\Repos\ChapterRepo;
 use Illuminate\Http\Response;
 use Views;
 
 class ChapterController extends Controller
 {
 
-    protected $bookRepo;
-    protected $chapterRepo;
     protected $userRepo;
+    protected $entityRepo;
 
     /**
      * ChapterController constructor.
-     * @param BookRepo $bookRepo
-     * @param ChapterRepo $chapterRepo
+     * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
      */
-    public function __construct(BookRepo $bookRepo, ChapterRepo $chapterRepo, UserRepo $userRepo)
+    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo)
     {
-        $this->bookRepo = $bookRepo;
-        $this->chapterRepo = $chapterRepo;
+        $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
         parent::__construct();
     }
@@ -36,7 +32,7 @@ class ChapterController extends Controller
      */
     public function create($bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('chapter-create', $book);
         $this->setPageTitle(trans('entities.chapters_create'));
         return view('chapters/create', ['book' => $book, 'current' => $book]);
@@ -54,12 +50,12 @@ class ChapterController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('chapter-create', $book);
 
         $input = $request->all();
-        $input['priority'] = $this->bookRepo->getNewPriority($book);
-        $chapter = $this->chapterRepo->createFromInput($input, $book);
+        $input['priority'] = $this->entityRepo->getNewBookPriority($book);
+        $chapter = $this->entityRepo->createFromInput('chapter', $input, $book);
         Activity::add($chapter, 'chapter_create', $book->id);
         return redirect($chapter->getUrl());
     }
@@ -72,15 +68,14 @@ class ChapterController extends Controller
      */
     public function show($bookSlug, $chapterSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-view', $chapter);
-        $sidebarTree = $this->bookRepo->getChildren($book);
+        $sidebarTree = $this->entityRepo->getBookChildren($chapter->book);
         Views::add($chapter);
         $this->setPageTitle($chapter->getShortName());
-        $pages = $this->chapterRepo->getChildren($chapter);
+        $pages = $this->entityRepo->getChapterChildren($chapter);
         return view('chapters/show', [
-            'book' => $book,
+            'book' => $chapter->book,
             'chapter' => $chapter,
             'current' => $chapter,
             'sidebarTree' => $sidebarTree,
@@ -96,11 +91,10 @@ class ChapterController extends Controller
      */
     public function edit($bookSlug, $chapterSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
         $this->setPageTitle(trans('entities.chapters_edit_named', ['chapterName' => $chapter->getShortName()]));
-        return view('chapters/edit', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
+        return view('chapters/edit', ['book' => $chapter->book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 
     /**
@@ -112,16 +106,15 @@ class ChapterController extends Controller
      */
     public function update(Request $request, $bookSlug, $chapterSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
         if ($chapter->name !== $request->get('name')) {
-            $chapter->slug = $this->chapterRepo->findSuitableSlug($request->get('name'), $book->id, $chapter->id);
+            $chapter->slug = $this->entityRepo->findSuitableSlug('chapter', $request->get('name'), $chapter->id, $chapter->book->id);
         }
         $chapter->fill($request->all());
         $chapter->updated_by = user()->id;
         $chapter->save();
-        Activity::add($chapter, 'chapter_update', $book->id);
+        Activity::add($chapter, 'chapter_update', $chapter->book->id);
         return redirect($chapter->getUrl());
     }
 
@@ -133,11 +126,10 @@ class ChapterController extends Controller
      */
     public function showDelete($bookSlug, $chapterSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-delete', $chapter);
         $this->setPageTitle(trans('entities.chapters_delete_named', ['chapterName' => $chapter->getShortName()]));
-        return view('chapters/delete', ['book' => $book, 'chapter' => $chapter, 'current' => $chapter]);
+        return view('chapters/delete', ['book' => $chapter->book, 'chapter' => $chapter, 'current' => $chapter]);
     }
 
     /**
@@ -148,11 +140,11 @@ class ChapterController extends Controller
      */
     public function destroy($bookSlug, $chapterSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
+        $book = $chapter->book;
         $this->checkOwnablePermission('chapter-delete', $chapter);
         Activity::addMessage('chapter_delete', $book->id, $chapter->name);
-        $this->chapterRepo->destroy($chapter);
+        $this->entityRepo->destroyChapter($chapter);
         return redirect($book->getUrl());
     }
 
@@ -164,13 +156,12 @@ class ChapterController extends Controller
      * @throws \BookStack\Exceptions\NotFoundException
      */
     public function showMove($bookSlug, $chapterSlug) {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->setPageTitle(trans('entities.chapters_move_named', ['chapterName' => $chapter->getShortName()]));
         $this->checkOwnablePermission('chapter-update', $chapter);
         return view('chapters/move', [
             'chapter' => $chapter,
-            'book' => $book
+            'book' => $chapter->book
         ]);
     }
 
@@ -183,8 +174,7 @@ class ChapterController extends Controller
      * @throws \BookStack\Exceptions\NotFoundException
      */
     public function move($bookSlug, $chapterSlug, Request $request) {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
 
         $entitySelection = $request->get('entity_selection', null);
@@ -199,7 +189,7 @@ class ChapterController extends Controller
         $parent = false;
 
         if ($entityType == 'book') {
-            $parent = $this->bookRepo->getById($entityId);
+            $parent = $this->entityRepo->getById('book', $entityId);
         }
 
         if ($parent === false || $parent === null) {
@@ -207,7 +197,7 @@ class ChapterController extends Controller
             return redirect()->back();
         }
 
-        $this->chapterRepo->changeBook($parent->id, $chapter, true);
+        $this->entityRepo->changeBook('chapter', $parent->id, $chapter, true);
         Activity::add($chapter, 'chapter_move', $chapter->book->id);
         session()->flash('success', trans('entities.chapter_move_success', ['bookName' => $parent->name]));
 
@@ -222,8 +212,7 @@ class ChapterController extends Controller
      */
     public function showRestrict($bookSlug, $chapterSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
         $roles = $this->userRepo->getRestrictableRoles();
         return view('chapters/restrictions', [
@@ -241,10 +230,9 @@ class ChapterController extends Controller
      */
     public function restrict($bookSlug, $chapterSlug, Request $request)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
-        $this->chapterRepo->updateEntityPermissionsFromRequest($request, $chapter);
+        $this->entityRepo->updateEntityPermissionsFromRequest($request, $chapter);
         session()->flash('success', trans('entities.chapters_permissions_success'));
         return redirect($chapter->getUrl());
     }

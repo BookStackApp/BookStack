@@ -114,7 +114,7 @@ class ActivityService
         
         $activity = $this->permissionService
             ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')->skip($count * $page)->take($count)->get();
+            ->orderBy('created_at', 'desc')->with(['entity', 'user.avatar'])->skip($count * $page)->take($count)->get();
 
         return $this->filterSimilar($activity);
     }

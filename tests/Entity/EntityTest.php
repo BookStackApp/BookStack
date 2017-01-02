@@ -168,7 +168,7 @@ class EntityTest extends TestCase
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
         app('BookStack\Repos\UserRepo')->destroy($creator);
-        app('BookStack\Repos\PageRepo')->saveRevision($entities['page']);
+        app('BookStack\Repos\EntityRepo')->savePageRevision($entities['page']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -181,7 +181,7 @@ class EntityTest extends TestCase
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
         app('BookStack\Repos\UserRepo')->destroy($updater);
-        app('BookStack\Repos\PageRepo')->saveRevision($entities['page']);
+        app('BookStack\Repos\EntityRepo')->savePageRevision($entities['page']);
 
         $this->checkEntitiesViewable($entities);
     }

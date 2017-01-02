@@ -4,6 +4,8 @@
 class Entity extends Ownable
 {
 
+    protected $fieldsToSearch = ['name', 'description'];
+
     /**
      * Compares this entity to another given entity.
      * Matches by comparing class and id.
@@ -157,7 +159,7 @@ class Entity extends Ownable
      * @param string[] array $wheres
      * @return mixed
      */
-    public function fullTextSearchQuery($fieldsToSearch, $terms, $wheres = [])
+    public function fullTextSearchQuery($terms, $wheres = [])
     {
         $exactTerms = [];
         $fuzzyTerms = [];
@@ -181,16 +183,16 @@ class Entity extends Ownable
         // Perform fulltext search if relevant terms exist.
         if ($isFuzzy) {
             $termString = implode(' ', $fuzzyTerms);
-            $fields = implode(',', $fieldsToSearch);
+            $fields = implode(',', $this->fieldsToSearch);
             $search = $search->selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
             $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
         }
 
         // Ensure at least one exact term matches if in search
         if (count($exactTerms) > 0) {
-            $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
+            $search = $search->where(function ($query) use ($exactTerms) {
                 foreach ($exactTerms as $exactTerm) {
-                    foreach ($fieldsToSearch as $field) {
+                    foreach ($this->fieldsToSearch as $field) {
                         $query->orWhere($field, 'like', $exactTerm);
                     }
                 }

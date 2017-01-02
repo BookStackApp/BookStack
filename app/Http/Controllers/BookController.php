@@ -1,35 +1,26 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
 use Illuminate\Http\Request;
-use BookStack\Http\Requests;
-use BookStack\Repos\BookRepo;
-use BookStack\Repos\ChapterRepo;
-use BookStack\Repos\PageRepo;
 use Illuminate\Http\Response;
 use Views;
 
 class BookController extends Controller
 {
 
-    protected $bookRepo;
-    protected $pageRepo;
-    protected $chapterRepo;
+    protected $entityRepo;
     protected $userRepo;
 
     /**
      * BookController constructor.
-     * @param BookRepo $bookRepo
-     * @param PageRepo $pageRepo
-     * @param ChapterRepo $chapterRepo
+     * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
      */
-    public function __construct(BookRepo $bookRepo, PageRepo $pageRepo, ChapterRepo $chapterRepo, UserRepo $userRepo)
+    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo)
     {
-        $this->bookRepo = $bookRepo;
-        $this->pageRepo = $pageRepo;
-        $this->chapterRepo = $chapterRepo;
+        $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
         parent::__construct();
     }
@@ -40,9 +31,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->bookRepo->getAllPaginated(10);
-        $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed(4, 0) : false;
-        $popular = $this->bookRepo->getPopular(4, 0);
+        $books = $this->entityRepo->getAllPaginated('book', 10);
+        $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
+        $popular = $this->entityRepo->getPopular('book', 4, 0);
         $this->setPageTitle('Books');
         return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular]);
     }
@@ -71,7 +62,7 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $book = $this->bookRepo->createFromInput($request->all());
+        $book = $this->entityRepo->createFromInput('book', $request->all());
         Activity::add($book, 'book_create', $book->id);
         return redirect($book->getUrl());
     }
@@ -83,9 +74,9 @@ class BookController extends Controller
      */
     public function show($slug)
     {
-        $book = $this->bookRepo->getBySlug($slug);
+        $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-view', $book);
-        $bookChildren = $this->bookRepo->getChildren($book);
+        $bookChildren = $this->entityRepo->getBookChildren($book);
         Views::add($book);
         $this->setPageTitle($book->getShortName());
         return view('books/show', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
@@ -98,7 +89,7 @@ class BookController extends Controller
      */
     public function edit($slug)
     {
-        $book = $this->bookRepo->getBySlug($slug);
+        $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named',['bookName'=>$book->getShortName()]));
         return view('books/edit', ['book' => $book, 'current' => $book]);
@@ -112,13 +103,13 @@ class BookController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $book = $this->bookRepo->getBySlug($slug);
+        $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $book = $this->bookRepo->updateFromInput($book, $request->all());
+        $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
         Activity::add($book, 'book_update', $book->id);
         return redirect($book->getUrl());
     }
@@ -130,7 +121,7 @@ class BookController extends Controller
      */
     public function showDelete($bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle(trans('entities.books_delete_named', ['bookName'=>$book->getShortName()]));
         return view('books/delete', ['book' => $book, 'current' => $book]);
@@ -143,10 +134,10 @@ class BookController extends Controller
      */
     public function sort($bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-update', $book);
-        $bookChildren = $this->bookRepo->getChildren($book, true);
-        $books = $this->bookRepo->getAll(false);
+        $bookChildren = $this->entityRepo->getBookChildren($book, true);
+        $books = $this->entityRepo->getAll('book', false);
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
         return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
     }
@@ -159,8 +150,8 @@ class BookController extends Controller
      */
     public function getSortItem($bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $bookChildren = $this->bookRepo->getChildren($book);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $bookChildren = $this->entityRepo->getBookChildren($book);
         return view('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
@@ -172,7 +163,7 @@ class BookController extends Controller
      */
     public function saveSort($bookSlug, Request $request)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent
@@ -191,13 +182,13 @@ class BookController extends Controller
             $priority = $bookChild->sort;
             $id = intval($bookChild->id);
             $isPage = $bookChild->type == 'page';
-            $bookId = $this->bookRepo->exists($bookChild->book) ? intval($bookChild->book) : $defaultBookId;
+            $bookId = $this->entityRepo->exists('book', $bookChild->book) ? intval($bookChild->book) : $defaultBookId;
             $chapterId = ($isPage && $bookChild->parentChapter === false) ? 0 : intval($bookChild->parentChapter);
-            $model = $isPage ? $this->pageRepo->getById($id) : $this->chapterRepo->getById($id);
+            $model = $this->entityRepo->getById($isPage?'page':'chapter', $id);
 
             // Update models only if there's a change in parent chain or ordering.
             if ($model->priority !== $priority || $model->book_id !== $bookId || ($isPage && $model->chapter_id !== $chapterId)) {
-                $isPage ? $this->pageRepo->changeBook($bookId, $model) : $this->chapterRepo->changeBook($bookId, $model);
+                $this->entityRepo->changeBook($isPage?'page':'chapter', $bookId, $model);
                 $model->priority = $priority;
                 if ($isPage) $model->chapter_id = $chapterId;
                 $model->save();
@@ -212,12 +203,12 @@ class BookController extends Controller
 
         // Add activity for books
         foreach ($sortedBooks as $bookId) {
-            $updatedBook = $this->bookRepo->getById($bookId);
+            $updatedBook = $this->entityRepo->getById('book', $bookId);
             Activity::add($updatedBook, 'book_sort', $updatedBook->id);
         }
 
         // Update permissions on changed models
-        $this->bookRepo->buildJointPermissions($updatedModels);
+        $this->entityRepo->buildJointPermissions($updatedModels);
 
         return redirect($book->getUrl());
     }
@@ -229,11 +220,10 @@ class BookController extends Controller
      */
     public function destroy($bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         Activity::addMessage('book_delete', 0, $book->name);
-        Activity::removeEntity($book);
-        $this->bookRepo->destroy($book);
+        $this->entityRepo->destroyBook($book);
         return redirect('/books');
     }
 
@@ -244,7 +234,7 @@ class BookController extends Controller
      */
     public function showRestrict($bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
         $roles = $this->userRepo->getRestrictableRoles();
         return view('books/restrictions', [
@@ -262,9 +252,9 @@ class BookController extends Controller
      */
     public function restrict($bookSlug, Request $request)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
-        $this->bookRepo->updateEntityPermissionsFromRequest($request, $book);
+        $this->entityRepo->updateEntityPermissionsFromRequest($request, $book);
         session()->flash('success', trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());
     }
