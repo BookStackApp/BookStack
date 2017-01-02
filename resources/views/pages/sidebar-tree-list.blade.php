@@ -30,7 +30,7 @@
         <h6 class="text-muted">{{ trans('entities.pages_navigation') }}</h6>
         <div class="sidebar-page-nav menu">
             @foreach($pageNav as $navItem)
-                <li class="page-nav-item {{ $navItem['nodeName'] }}">
+                <li class="page-nav-item h{{ $navItem['level'] }}">
                     <a href="{{ $navItem['link'] }}">{{ $navItem['text'] }}</a>
                 </li>
             @endforeach
