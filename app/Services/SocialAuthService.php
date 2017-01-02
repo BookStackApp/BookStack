@@ -98,7 +98,6 @@ class SocialAuthService
 
         // Get any attached social accounts or users
         $socialAccount = $this->socialAccount->where('driver_id', '=', $socialId)->first();
-        $user = $this->userRepo->getByEmail($socialUser->getEmail());
         $isLoggedIn = auth()->check();
         $currentUser = user();
 

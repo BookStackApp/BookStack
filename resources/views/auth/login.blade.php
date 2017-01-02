@@ -34,10 +34,10 @@
                 <hr class="margin-top">
                 <h3 class="text-muted">{{ trans('auth.social_login') }}</h3>
                 @if(isset($socialDrivers['google']))
-                    <a href="{{ baseUrl("/login/service/google") }}" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
+                    <a id="social-login-google" href="{{ baseUrl("/login/service/google") }}" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
                 @endif
                 @if(isset($socialDrivers['github']))
-                    <a href="{{ baseUrl("/login/service/github") }}" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
+                    <a id="social-login-github" href="{{ baseUrl("/login/service/github") }}" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
                 @endif
             @endif
         </div>
