@@ -3,7 +3,6 @@
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Attachment;
 use BookStack\Repos\EntityRepo;
-use BookStack\Repos\PageRepo;
 use BookStack\Services\AttachmentService;
 use Illuminate\Http\Request;
 
@@ -11,21 +10,18 @@ class AttachmentController extends Controller
 {
     protected $attachmentService;
     protected $attachment;
-    protected $pageRepo;
     protected $entityRepo;
 
     /**
      * AttachmentController constructor.
      * @param AttachmentService $attachmentService
      * @param Attachment $attachment
-     * @param PageRepo $pageRepo
+     * @param EntityRepo $entityRepo
      */
-    public function __construct(AttachmentService $attachmentService, Attachment $attachment, EntityRepo $entityRepo, PageRepo $pageRepo)
+    public function __construct(AttachmentService $attachmentService, Attachment $attachment, EntityRepo $entityRepo)
     {
         $this->attachmentService = $attachmentService;
         $this->attachment = $attachment;
-        // TODO - Remove this
-        $this->pageRepo = $pageRepo;
         $this->entityRepo = $entityRepo;
         parent::__construct();
     }

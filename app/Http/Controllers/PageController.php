@@ -7,9 +7,6 @@ use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use BookStack\Repos\BookRepo;
-use BookStack\Repos\ChapterRepo;
-use BookStack\Repos\PageRepo;
 use Illuminate\Http\Response;
 use Views;
 use GatherContent\Htmldiff\Htmldiff;
@@ -18,28 +15,18 @@ class PageController extends Controller
 {
 
     protected $entityRepo;
-    protected $pageRepo;
-    protected $bookRepo;
-    protected $chapterRepo;
     protected $exportService;
     protected $userRepo;
 
     /**
      * PageController constructor.
      * @param EntityRepo $entityRepo
-     * @param PageRepo $pageRepo
-     * @param BookRepo $bookRepo
-     * @param ChapterRepo $chapterRepo
      * @param ExportService $exportService
      * @param UserRepo $userRepo
      */
-    public function __construct(EntityRepo $entityRepo, PageRepo $pageRepo, BookRepo $bookRepo, ChapterRepo $chapterRepo, ExportService $exportService, UserRepo $userRepo)
+    public function __construct(EntityRepo $entityRepo, ExportService $exportService, UserRepo $userRepo)
     {
         $this->entityRepo = $entityRepo;
-        // TODO - remove below;
-        $this->pageRepo = $pageRepo;
-        $this->bookRepo = $bookRepo;
-        $this->chapterRepo = $chapterRepo;
         $this->exportService = $exportService;
         $this->userRepo = $userRepo;
         parent::__construct();
@@ -61,7 +48,7 @@ class PageController extends Controller
 
         // Redirect to draft edit screen if signed in
         if ($this->signedIn) {
-            $draft = $this->pageRepo->getDraftPage($book, $chapter);
+            $draft = $this->entityRepo->getDraftPage($book, $chapter);
             return redirect($draft->getUrl());
         }
 
@@ -89,8 +76,8 @@ class PageController extends Controller
         $parent = $chapter ? $chapter : $book;
         $this->checkOwnablePermission('page-create', $parent);
 
-        $page = $this->pageRepo->getDraftPage($book, $chapter);
-        $this->pageRepo->publishDraft($page, [
+        $page = $this->entityRepo->getDraftPage($book, $chapter);
+        $this->entityRepo->publishPageDraft($page, [
             'name' => $request->get('name'),
             'html' => ''
         ]);
@@ -141,12 +128,12 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-create', $parent);
 
         if ($parent->isA('chapter')) {
-            $input['priority'] = $this->chapterRepo->getNewPriority($parent);
+            $input['priority'] = $this->entityRepo->getNewChapterPriority($parent);
         } else {
-            $input['priority'] = $this->bookRepo->getNewPriority($parent);
+            $input['priority'] = $this->entityRepo->getNewBookPriority($parent);
         }
 
-        $page = $this->pageRepo->publishDraft($draftPage, $input);
+        $page = $this->entityRepo->publishPageDraft($draftPage, $input);
 
         Activity::add($page, 'page_create', $book->id);
         return redirect($page->getUrl());
@@ -164,15 +151,15 @@ class PageController extends Controller
         try {
             $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         } catch (NotFoundException $e) {
-            $page = $this->pageRepo->findPageUsingOldSlug($pageSlug, $bookSlug);
+            $page = $this->entityRepo->getPageByOldSlug($pageSlug, $bookSlug);
             if ($page === null) abort(404);
             return redirect($page->getUrl());
         }
 
         $this->checkOwnablePermission('page-view', $page);
 
-        $sidebarTree = $this->bookRepo->getChildren($page->book);
-        $pageNav = $this->pageRepo->getPageNav($page);
+        $sidebarTree = $this->entityRepo->getBookChildren($page->book);
+        $pageNav = $this->entityRepo->getPageNav($page);
         
         Views::add($page);
         $this->setPageTitle($page->getShortName());
@@ -206,18 +193,18 @@ class PageController extends Controller
 
         // Check for active editing
         $warnings = [];
-        if ($this->pageRepo->isPageEditingActive($page, 60)) {
-            $warnings[] = $this->pageRepo->getPageEditingActiveMessage($page, 60);
+        if ($this->entityRepo->isPageEditingActive($page, 60)) {
+            $warnings[] = $this->entityRepo->getPageEditingActiveMessage($page, 60);
         }
 
         // Check for a current draft version for this user
-        if ($this->pageRepo->hasUserGotPageDraft($page, $this->currentUser->id)) {
-            $draft = $this->pageRepo->getUserPageDraft($page, $this->currentUser->id);
+        if ($this->entityRepo->hasUserGotPageDraft($page, $this->currentUser->id)) {
+            $draft = $this->entityRepo->getUserPageDraft($page, $this->currentUser->id);
             $page->name = $draft->name;
             $page->html = $draft->html;
             $page->markdown = $draft->markdown;
             $page->isDraft = true;
-            $warnings [] = $this->pageRepo->getUserPageDraftMessage($draft);
+            $warnings [] = $this->entityRepo->getUserPageDraftMessage($draft);
         }
 
         if (count($warnings) > 0) session()->flash('warning', implode("\n", $warnings));
@@ -245,7 +232,7 @@ class PageController extends Controller
         ]);
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
-        $this->pageRepo->updatePage($page, $page->book->id, $request->all());
+        $this->entityRepo->updatePage($page, $page->book->id, $request->all());
         Activity::add($page, 'page_update', $page->book->id);
         return redirect($page->getUrl());
     }
@@ -268,11 +255,7 @@ class PageController extends Controller
             ], 500);
         }
 
-        if ($page->draft) {
-            $draft = $this->pageRepo->updateDraftPage($page, $request->only(['name', 'html', 'markdown']));
-        } else {
-            $draft = $this->pageRepo->saveUpdateDraft($page, $request->only(['name', 'html', 'markdown']));
-        }
+        $draft = $this->entityRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
 
         $updateTime = $draft->updated_at->timestamp;
         $utcUpdateTimestamp = $updateTime + Carbon::createFromTimestamp(0)->offset;
@@ -339,7 +322,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-delete', $page);
         Activity::addMessage('page_delete', $book->id, $page->name);
         session()->flash('success', trans('entities.pages_delete_success'));
-        $this->pageRepo->destroy($page);
+        $this->entityRepo->destroyPage($page);
         return redirect($book->getUrl());
     }
 
@@ -356,7 +339,7 @@ class PageController extends Controller
         $book = $page->book;
         $this->checkOwnablePermission('page-update', $page);
         session()->flash('success', trans('entities.pages_delete_draft_success'));
-        $this->pageRepo->destroy($page);
+        $this->entityRepo->destroyPage($page);
         return redirect($book->getUrl());
     }
 
@@ -383,7 +366,7 @@ class PageController extends Controller
     public function showRevision($bookSlug, $pageSlug, $revisionId)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $revision = $this->pageRepo->getRevisionById($revisionId);
+        $revision = $this->entityRepo->getById('page_revision', $revisionId, false);
 
         $page->fill($revision->toArray());
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
@@ -404,7 +387,7 @@ class PageController extends Controller
     public function showRevisionChanges($bookSlug, $pageSlug, $revisionId)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $revision = $this->pageRepo->getRevisionById($revisionId);
+        $revision = $this->entityRepo->getById('page_revision', $revisionId);
 
         $prev = $revision->getPrevious();
         $prevContent = ($prev === null) ? '' : $prev->html;
@@ -431,7 +414,7 @@ class PageController extends Controller
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
-        $page = $this->pageRepo->restoreRevision($page, $page->book, $revisionId);
+        $page = $this->entityRepo->restorePageRevision($page, $page->book, $revisionId);
         Activity::add($page, 'page_restore', $page->book->id);
         return redirect($page->getUrl());
     }
@@ -491,7 +474,7 @@ class PageController extends Controller
      */
     public function showRecentlyCreated()
     {
-        $pages = $this->pageRepo->getRecentlyCreatedPaginated(20)->setPath(baseUrl('/pages/recently-created'));
+        $pages = $this->entityRepo->getRecentlyCreatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-created'));
         return view('pages/detailed-listing', [
             'title' => trans('entities.recently_created_pages'),
             'pages' => $pages
@@ -504,7 +487,7 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $pages = $this->pageRepo->getRecentlyUpdatedPaginated(20)->setPath(baseUrl('/pages/recently-updated'));
+        $pages = $this->entityRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-updated'));
         return view('pages/detailed-listing', [
             'title' => trans('entities.recently_updated_pages'),
             'pages' => $pages
@@ -575,7 +558,7 @@ class PageController extends Controller
             return redirect()->back();
         }
 
-        $this->pageRepo->changePageParent($page, $parent);
+        $this->entityRepo->changePageParent($page, $parent);
         Activity::add($page, 'page_move', $page->book->id);
         session()->flash('success', trans('entities.pages_move_success', ['parentName' => $parent->name]));
 
@@ -593,7 +576,7 @@ class PageController extends Controller
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
-        $this->pageRepo->updateEntityPermissionsFromRequest($request, $page);
+        $this->entityRepo->updateEntityPermissionsFromRequest($request, $page);
         session()->flash('success', trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());
     }

@@ -18,11 +18,12 @@ class Chapter extends Entity
 
     /**
      * Get the pages that this chapter contains.
+     * @param string $dir
      * @return mixed
      */
-    public function pages()
+    public function pages($dir = 'ASC')
     {
-        return $this->hasMany(Page::class)->orderBy('priority', 'ASC');
+        return $this->hasMany(Page::class)->orderBy('priority', $dir);
     }
 
     /**
