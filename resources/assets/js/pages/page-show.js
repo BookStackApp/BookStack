@@ -1,16 +1,13 @@
 "use strict";
 // Configure ZeroClipboard
-var zeroClipBoard = require('zeroclipboard');
-zeroClipBoard.config({
-    swfPath: window.baseUrl('/ZeroClipboard.swf')
-});
+import zeroClipBoard from "zeroclipboard";
 
-window.setupPageShow = module.exports = function (pageId) {
+export default window.setupPageShow = function (pageId) {
 
     // Set up pointer
-    var $pointer = $('#pointer').detach();
-    var $pointerInner = $pointer.children('div.pointer').first();
-    var isSelection = false;
+    let $pointer = $('#pointer').detach();
+    let $pointerInner = $pointer.children('div.pointer').first();
+    let isSelection = false;
 
     // Select all contents on input click
     $pointer.on('click', 'input', function (e) {
@@ -19,6 +16,9 @@ window.setupPageShow = module.exports = function (pageId) {
     });
 
     // Set up copy-to-clipboard
+    zeroClipBoard.config({
+        swfPath: window.baseUrl('/ZeroClipboard.swf')
+    });
     new zeroClipBoard($pointer.find('button').first()[0]);
 
     // Hide pointer when clicking away
@@ -31,11 +31,11 @@ window.setupPageShow = module.exports = function (pageId) {
     // Show pointer when selecting a single block of tagged content
     $('.page-content [id^="bkmrk"]').on('mouseup keyup', function (e) {
         e.stopPropagation();
-        var selection = window.getSelection();
+        let selection = window.getSelection();
         if (selection.toString().length === 0) return;
 
         // Show pointer and set link
-        var $elem = $(this);
+        let $elem = $(this);
         let link = window.baseUrl('/link/' + pageId + '#' + $elem.attr('id'));
         if (link.indexOf('http') !== 0) link = window.location.protocol + "//" + window.location.host + link;
         $pointer.find('input').val(link);
@@ -44,9 +44,9 @@ window.setupPageShow = module.exports = function (pageId) {
         $pointer.show();
 
         // Set pointer to sit near mouse-up position
-        var pointerLeftOffset = (e.pageX - $elem.offset().left - ($pointerInner.width() / 2));
+        let pointerLeftOffset = (e.pageX - $elem.offset().left - ($pointerInner.width() / 2));
         if (pointerLeftOffset < 0) pointerLeftOffset = 0;
-        var pointerLeftOffsetPercent = (pointerLeftOffset / $elem.width()) * 100;
+        let pointerLeftOffsetPercent = (pointerLeftOffset / $elem.width()) * 100;
         $pointerInner.css('left', pointerLeftOffsetPercent + '%');
 
         isSelection = true;
@@ -57,7 +57,7 @@ window.setupPageShow = module.exports = function (pageId) {
 
     // Go to, and highlight if necessary, the specified text.
     function goToText(text) {
-        var idElem = $('.page-content #' + text).first();
+        let idElem = $('.page-content #' + text).first();
         if (idElem.length !== 0) {
             idElem.smoothScrollTo();
             idElem.css('background-color', 'rgba(244, 249, 54, 0.25)');
@@ -68,19 +68,19 @@ window.setupPageShow = module.exports = function (pageId) {
 
     // Check the hash on load
     if (window.location.hash) {
-        var text = window.location.hash.replace(/\%20/g, ' ').substr(1);
+        let text = window.location.hash.replace(/\%20/g, ' ').substr(1);
         goToText(text);
     }
 
     // Make the book-tree sidebar stick in view on scroll
-    var $window = $(window);
-    var $bookTree = $(".book-tree");
-    var $bookTreeParent = $bookTree.parent();
+    let $window = $(window);
+    let $bookTree = $(".book-tree");
+    let $bookTreeParent = $bookTree.parent();
     // Check the page is scrollable and the content is taller than the tree
-    var pageScrollable = ($(document).height() > $window.height()) && ($bookTree.height() < $('.page-content').height());
+    let pageScrollable = ($(document).height() > $window.height()) && ($bookTree.height() < $('.page-content').height());
     // Get current tree's width and header height
-    var headerHeight = $("#header").height() + $(".toolbar").height();
-    var isFixed = $window.scrollTop() > headerHeight;
+    let headerHeight = $("#header").height() + $(".toolbar").height();
+    let isFixed = $window.scrollTop() > headerHeight;
     // Function to fix the tree as a sidebar
     function stickTree() {
         $bookTree.width($bookTreeParent.width() + 15);
@@ -95,7 +95,7 @@ window.setupPageShow = module.exports = function (pageId) {
     }
     // Checks if the tree stickiness state should change
     function checkTreeStickiness(skipCheck) {
-        var shouldBeFixed = $window.scrollTop() > headerHeight;
+        let shouldBeFixed = $window.scrollTop() > headerHeight;
         if (shouldBeFixed && (!isFixed || skipCheck)) {
             stickTree();
         } else if (!shouldBeFixed && (isFixed || skipCheck)) {

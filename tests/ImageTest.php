@@ -90,7 +90,7 @@ class ImageTest extends TestCase
             'type' => 'gallery'
         ]);
 
-        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has been deleted');
+        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has not been deleted as expected');
     }
 
 }

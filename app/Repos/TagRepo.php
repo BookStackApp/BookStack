@@ -38,7 +38,7 @@ class TagRepo
     {
         $entityInstance = $this->entity->getEntityInstance($entityType);
         $searchQuery = $entityInstance->where('id', '=', $entityId)->with('tags');
-        $searchQuery = $this->permissionService->enforceEntityRestrictions($searchQuery, $action);
+        $searchQuery = $this->permissionService->enforceEntityRestrictions($entityType, $searchQuery, $action);
         return $searchQuery->first();
     }
 
@@ -121,7 +121,7 @@ class TagRepo
     /**
      * Create a new Tag instance from user input.
      * @param $input
-     * @return static
+     * @return Tag
      */
     protected function newInstanceFromInput($input)
     {
