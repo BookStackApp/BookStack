@@ -13,8 +13,8 @@ class SortTest extends TestCase
     public function test_drafts_do_not_show_up()
     {
         $this->asAdmin();
-        $pageRepo = app('\BookStack\Repos\PageRepo');
-        $draft = $pageRepo->getDraftPage($this->book);
+        $entityRepo = app('\BookStack\Repos\EntityRepo');
+        $draft = $entityRepo->getDraftPage($this->book);
 
         $this->visit($this->book->getUrl())
             ->see($draft->name)
@@ -28,7 +28,7 @@ class SortTest extends TestCase
         $currentBook = $page->book;
         $newBook = \BookStack\Book::where('id', '!=', $currentBook->id)->first();
         $this->asAdmin()->visit($page->getUrl() . '/move')
-            ->see('Move Page')->see($page->name)
+            ->see('Move Page')
             ->type('book:' . $newBook->id, 'entity_selection')->press('Move Page');
 
         $page = \BookStack\Page::find($page->id);
@@ -48,7 +48,7 @@ class SortTest extends TestCase
         $newBook = \BookStack\Book::where('id', '!=', $currentBook->id)->first();
 
         $this->asAdmin()->visit($chapter->getUrl() . '/move')
-            ->see('Move Chapter')->see($chapter->name)
+            ->see('Move Chapter')
             ->type('book:' . $newBook->id, 'entity_selection')->press('Move Chapter');
 
         $chapter = \BookStack\Chapter::find($chapter->id);

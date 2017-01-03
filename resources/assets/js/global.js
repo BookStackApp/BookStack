@@ -1,11 +1,11 @@
 "use strict";
 
 // AngularJS - Create application and load components
-var angular = require('angular');
-var ngResource = require('angular-resource');
-var ngAnimate = require('angular-animate');
-var ngSanitize = require('angular-sanitize');
-require('angular-ui-sortable');
+import angular from "angular";
+import "angular-resource";
+import "angular-animate";
+import "angular-sanitize";
+import "angular-ui-sortable";
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -15,7 +15,13 @@ window.baseUrl = function(path) {
     return basePath + '/' + path;
 };
 
-var ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
+let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
+
+// Translation setup
+// Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
+import Translations from "./translations"
+let translator = new Translations(window.translations);
+window.trans = translator.get.bind(translator);
 
 // Global Event System
 class EventManager {
@@ -25,9 +31,9 @@ class EventManager {
 
     emit(eventName, eventData) {
         if (typeof this.listeners[eventName] === 'undefined') return this;
-        var eventsToStart = this.listeners[eventName];
+        let eventsToStart = this.listeners[eventName];
         for (let i = 0; i < eventsToStart.length; i++) {
-            var event = eventsToStart[i];
+            let event = eventsToStart[i];
             event(eventData);
         }
         return this;
@@ -70,93 +76,83 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
 });
 
 // Global jQuery Elements
-$(function () {
-
-    var notifications = $('.notification');
-    var successNotification = notifications.filter('.pos');
-    var errorNotification = notifications.filter('.neg');
-    var warningNotification = notifications.filter('.warning');
-    // Notification Events
-    window.Events.listen('success', function (text) {
-        successNotification.hide();
-        successNotification.find('span').text(text);
-        setTimeout(() => {
-            successNotification.show();
-        }, 1);
-    });
-    window.Events.listen('warning', function (text) {
-        warningNotification.find('span').text(text);
-        warningNotification.show();
-    });
-    window.Events.listen('error', function (text) {
-        errorNotification.find('span').text(text);
-        errorNotification.show();
-    });
-
-    // Notification hiding
-    notifications.click(function () {
-        $(this).fadeOut(100);
-    });
-
-    // Chapter page list toggles
-    $('.chapter-toggle').click(function (e) {
-        e.preventDefault();
-        $(this).toggleClass('open');
-        $(this).closest('.chapter').find('.inset-list').slideToggle(180);
-    });
-
-    // Back to top button
-    $('#back-to-top').click(function() {
-         $('#header').smoothScrollTo();
-    });
-    var scrollTopShowing = false;
-    var scrollTop = document.getElementById('back-to-top');
-    var scrollTopBreakpoint = 1200;
-    window.addEventListener('scroll', function() {
-        let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
-        if (!scrollTopShowing && scrollTopPos > scrollTopBreakpoint) {
-            scrollTop.style.display = 'block';
-            scrollTopShowing = true;
-            setTimeout(() => {
-                scrollTop.style.opacity = 0.4;
-            }, 1);
-        } else if (scrollTopShowing && scrollTopPos < scrollTopBreakpoint) {
-            scrollTop.style.opacity = 0;
-            scrollTopShowing = false;
-            setTimeout(() => {
-                scrollTop.style.display = 'none';
-            }, 500);
-        }
-    });
-
-    // Common jQuery actions
-    $('[data-action="expand-entity-list-details"]').click(function() {
-        $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
-    });
-
-    // Popup close
-    $('.popup-close').click(function() {
-        $(this).closest('.overlay').fadeOut(240);
-    });
-    $('.overlay').click(function(event) {
-        if (!$(event.target).hasClass('overlay')) return;
-        $(this).fadeOut(240);
-    });
-
-    // Prevent markdown display link click redirect
-    $('.markdown-display').on('click', 'a', function(event) {
-        event.preventDefault();
-        window.open($(this).attr('href'));
-    });
-
-    // Detect IE for css
-    if(navigator.userAgent.indexOf('MSIE')!==-1
-        || navigator.appVersion.indexOf('Trident/') > 0
-        || navigator.userAgent.indexOf('Safari') !== -1){
-        $('body').addClass('flexbox-support');
-    }
-
+let notifications = $('.notification');
+let successNotification = notifications.filter('.pos');
+let errorNotification = notifications.filter('.neg');
+let warningNotification = notifications.filter('.warning');
+// Notification Events
+window.Events.listen('success', function (text) {
+    successNotification.hide();
+    successNotification.find('span').text(text);
+    setTimeout(() => {
+        successNotification.show();
+    }, 1);
+});
+window.Events.listen('warning', function (text) {
+    warningNotification.find('span').text(text);
+    warningNotification.show();
+});
+window.Events.listen('error', function (text) {
+    errorNotification.find('span').text(text);
+    errorNotification.show();
 });
 
+// Notification hiding
+notifications.click(function () {
+    $(this).fadeOut(100);
+});
+
+// Chapter page list toggles
+$('.chapter-toggle').click(function (e) {
+    e.preventDefault();
+    $(this).toggleClass('open');
+    $(this).closest('.chapter').find('.inset-list').slideToggle(180);
+});
+
+// Back to top button
+$('#back-to-top').click(function() {
+     $('#header').smoothScrollTo();
+});
+let scrollTopShowing = false;
+let scrollTop = document.getElementById('back-to-top');
+let scrollTopBreakpoint = 1200;
+window.addEventListener('scroll', function() {
+    let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (!scrollTopShowing && scrollTopPos > scrollTopBreakpoint) {
+        scrollTop.style.display = 'block';
+        scrollTopShowing = true;
+        setTimeout(() => {
+            scrollTop.style.opacity = 0.4;
+        }, 1);
+    } else if (scrollTopShowing && scrollTopPos < scrollTopBreakpoint) {
+        scrollTop.style.opacity = 0;
+        scrollTopShowing = false;
+        setTimeout(() => {
+            scrollTop.style.display = 'none';
+        }, 500);
+    }
+});
+
+// Common jQuery actions
+$('[data-action="expand-entity-list-details"]').click(function() {
+    $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
+});
+
+// Popup close
+$('.popup-close').click(function() {
+    $(this).closest('.overlay').fadeOut(240);
+});
+$('.overlay').click(function(event) {
+    if (!$(event.target).hasClass('overlay')) return;
+    $(this).fadeOut(240);
+});
+
+// Detect IE for css
+if(navigator.userAgent.indexOf('MSIE')!==-1
+    || navigator.appVersion.indexOf('Trident/') > 0
+    || navigator.userAgent.indexOf('Safari') !== -1){
+    $('body').addClass('flexbox-support');
+}
+
 // Page specific items
-require('./pages/page-show');
+import "./pages/page-show";

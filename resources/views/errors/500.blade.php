@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container">
-        <h1 class="text-muted">An Error Occurred</h1>
+        <h1 class="text-muted">{{ trans('errors.error_occurred') }}</h1>
         <p>{{ $message }}</p>
     </div>
 

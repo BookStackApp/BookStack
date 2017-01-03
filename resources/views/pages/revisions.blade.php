@@ -6,37 +6,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 faded">
-                    <div class="breadcrumbs">
-                        <a href="{{ $page->book->getUrl() }}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $page->book->getShortName() }}</a>
-                        @if($page->hasChapter())
-                            <span class="sep">&raquo;</span>
-                            <a href="{{ $page->chapter->getUrl() }}" class="text-chapter text-button">
-                                <i class="zmdi zmdi-collection-bookmark"></i>
-                                {{ $page->chapter->getShortName() }}
-                            </a>
-                        @endif
-                        <span class="sep">&raquo;</span>
-                        <a href="{{ $page->getUrl() }}" class="text-page text-button"><i class="zmdi zmdi-file"></i>{{ $page->getShortName() }}</a>
-                    </div>
+                    @include('pages._breadcrumbs', ['page' => $page])
                 </div>
             </div>
         </div>
     </div>
 
-
-
     <div class="container" ng-non-bindable>
-        <h1>Page Revisions <span class="subheader">For "{{ $page->name }}"</span></h1>
+        <h1>{{ trans('entities.pages_revisions') }}</h1>
 
         @if(count($page->revisions) > 0)
 
             <table class="table">
                 <tr>
-                    <th width="23%">Name</th>
-                    <th colspan="2" width="8%">Created By</th>
-                    <th width="15%">Revision Date</th>
-                    <th width="25%">Changelog</th>
-                    <th width="20%">Actions</th>
+                    <th width="23%">{{ trans('entities.pages_name') }}</th>
+                    <th colspan="2" width="8%">{{ trans('entities.pages_revisions_created_by') }}</th>
+                    <th width="15%">{{ trans('entities.pages_revisions_date') }}</th>
+                    <th width="25%">{{ trans('entities.pages_revisions_changelog') }}</th>
+                    <th width="20%">{{ trans('common.actions') }}</th>
                 </tr>
                 @foreach($page->revisions as $index => $revision)
                     <tr>
@@ -46,19 +33,19 @@
                                 <img class="avatar" src="{{ $revision->createdBy->getAvatar(30) }}" alt="{{ $revision->createdBy->name }}">
                             @endif
                         </td>
-                        <td> @if($revision->createdBy) {{ $revision->createdBy->name }} @else Deleted User @endif</td>
+                        <td> @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif</td>
                         <td><small>{{ $revision->created_at->format('jS F, Y H:i:s') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
                         <td>{{ $revision->summary }}</td>
                         <td>
-                            <a href="{{ $revision->getUrl('changes') }}" target="_blank">Changes</a>
+                            <a href="{{ $revision->getUrl('changes') }}" target="_blank">{{ trans('entities.pages_revisions_changes') }}</a>
                             <span class="text-muted">&nbsp;|&nbsp;</span>
 
                             @if ($index === 0)
-                                <a target="_blank" href="{{ $page->getUrl() }}"><i>Current Version</i></a>
+                                <a target="_blank" href="{{ $page->getUrl() }}"><i>{{ trans('entities.pages_revisions_current') }}</i></a>
                             @else
-                                <a href="{{ $revision->getUrl() }}" target="_blank">Preview</a>
+                                <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
                                 <span class="text-muted">&nbsp;|&nbsp;</span>
-                                <a href="{{ $revision->getUrl('restore') }}" target="_blank">Restore</a>
+                                <a href="{{ $revision->getUrl('restore') }}">{{ trans('entities.pages_revisions_restore') }}</a>
                             @endif
                         </td>
                     </tr>
@@ -66,7 +53,7 @@
             </table>
 
         @else
-            <p>This page has no revisions.</p>
+            <p>{{ trans('entities.pages_revisions_none') }}</p>
         @endif
 
     </div>

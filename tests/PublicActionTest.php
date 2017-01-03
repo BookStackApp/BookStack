@@ -64,7 +64,7 @@ class PublicActionTest extends TestCase
         $this->visit($chapter->book->getUrl());
         $this->visit($chapter->getUrl())
             ->click('New Page')
-            ->see('Create Page')
+            ->see('New Page')
             ->seePageIs($chapter->getUrl('/create-page'));
 
         $this->submitForm('Continue', [

@@ -15,15 +15,11 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="page-content">
 
-                @include('pages/page-display')
+                @include('pages.page-display')
 
                 <hr>
 
-                <p class="text-muted small">
-                    Created {{$page->created_at->toDayDateTimeString()}} @if($page->createdBy) by {{$page->createdBy->name}} @endif
-                    <br>
-                    Last Updated {{$page->updated_at->toDayDateTimeString()}} @if($page->updatedBy) by {{$page->updatedBy->name}} @endif
-                </p>
+                @include('partials.entity-meta', ['entity' => $page])
 
             </div>
         </div>

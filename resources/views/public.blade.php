@@ -25,7 +25,7 @@
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 
-@include('partials/notifications')
+@include('partials.notifications')
 
 <header id="header">
     <div class="container">
@@ -47,23 +47,7 @@
                         @yield('header-buttons')
                     </div>
                     @if(isset($signedIn) && $signedIn)
-                        <div class="dropdown-container" dropdown>
-                            <span class="user-name" dropdown-toggle>
-                                <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
-                                <span class="name" ng-non-bindable>{{ $currentUser->getShortName(9) }}</span> <i class="zmdi zmdi-caret-down"></i>
-                            </span>
-                            <ul>
-                                <li>
-                                    <a href="{{ baseUrl("/user/{$currentUser->id}") }}" class="text-primary"><i class="zmdi zmdi-account zmdi-hc-fw zmdi-hc-lg"></i>View Profile</a>
-                                </li>
-                                <li>
-                                    <a href="{{ baseUrl("/settings/users/{$currentUser->id}") }}" class="text-primary"><i class="zmdi zmdi-edit zmdi-hc-fw zmdi-hc-lg"></i>Edit Profile</a>
-                                </li>
-                                <li>
-                                    <a href="{{ baseUrl('/logout') }}" class="text-neg"><i class="zmdi zmdi-run zmdi-hc-fw zmdi-hc-lg"></i>Logout</a>
-                                </li>
-                            </ul>
-                        </div>
+                        @include('partials._header-dropdown', ['currentUser' => $currentUser])
                     @endif
                 </div>
             </div>

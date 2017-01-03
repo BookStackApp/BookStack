@@ -148,6 +148,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
 
 
         /*
@@ -218,6 +219,7 @@ return [
 
         'ImageTool' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'SnappyPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
         /**

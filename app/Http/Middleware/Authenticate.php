@@ -4,8 +4,6 @@ namespace BookStack\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use BookStack\Exceptions\UserRegistrationException;
-use Setting;
 
 class Authenticate
 {

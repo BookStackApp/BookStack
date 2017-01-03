@@ -17,7 +17,7 @@
         @endforeach
     @else
         <p class="text-muted empty-text">
-            {{ $emptyText or 'No items available' }}
+            {{ $emptyText or trans('common.no_items') }}
         </p>
     @endif
 </div>

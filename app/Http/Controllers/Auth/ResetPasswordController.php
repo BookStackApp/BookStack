@@ -41,7 +41,7 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetResponse($response)
     {
-        $message = 'Your password has been successfully reset.';
+        $message = trans('auth.reset_password_success');
         session()->flash('success', $message);
         return redirect($this->redirectPath())
             ->with('status', trans($response));

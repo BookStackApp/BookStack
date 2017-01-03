@@ -1,19 +1,19 @@
 <div class="form-group">
-    <label for="username">Username</label>
+    <label for="username">{{ trans('auth.username') }}</label>
     @include('form/text', ['name' => 'username', 'tabindex' => 1])
 </div>
 
 @if(session('request-email', false) === true)
     <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">{{ trans('auth.email') }}</label>
         @include('form/text', ['name' => 'email', 'tabindex' => 1])
         <span class="text-neg">
-            Please enter an email to use for this account.
+            {{ trans('auth.ldap_email_hint') }}
         </span>
     </div>
 @endif
 
 <div class="form-group">
-    <label for="password">Password</label>
+    <label for="password">{{ trans('auth.password') }}</label>
     @include('form/password', ['name' => 'password', 'tabindex' => 2])
 </div>

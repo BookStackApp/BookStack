@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 use BookStack\Page;
 
 class ExportService
@@ -28,8 +27,13 @@ class ExportService
     {
         $cssContent = file_get_contents(public_path('/css/export-styles.css'));
         $pageHtml = view('pages/pdf', ['page' => $page, 'css' => $cssContent])->render();
+        $useWKHTML = config('snappy.pdf.binary') !== false;
         $containedHtml = $this->containHtml($pageHtml);
-        $pdf = \PDF::loadHTML($containedHtml);
+        if ($useWKHTML) {
+            $pdf = \SnappyPDF::loadHTML($containedHtml);
+        } else {
+            $pdf = \PDF::loadHTML($containedHtml);
+        }
         return $pdf->output();
     }
 
