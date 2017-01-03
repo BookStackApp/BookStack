@@ -7,7 +7,7 @@
             </div>
         @endforeach
     @else
-        <p class="text-muted">No pages matched this search</p>
+        <p class="text-muted">{{ trans('entities.search_no_pages') }}</p>
     @endif
 </div>
 

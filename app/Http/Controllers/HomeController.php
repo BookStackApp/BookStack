@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use Activity;
 use BookStack\Repos\EntityRepo;
 use BookStack\Http\Requests;
+use Illuminate\Http\Response;
 use Views;
 
 class HomeController extends Controller
@@ -31,15 +32,50 @@ class HomeController extends Controller
         $activity = Activity::latest(10);
         $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreatedBooks(10*$recentFactor);
-        $recentlyCreatedPages = $this->entityRepo->getRecentlyCreatedPages(5);
-        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdatedPages(5);
+        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 10*$recentFactor);
+        $recentlyCreatedPages = $this->entityRepo->getRecentlyCreated('page', 5);
+        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 5);
         return view('home', [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyCreatedPages' => $recentlyCreatedPages,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
             'draftPages' => $draftPages
+        ]);
+    }
+
+    /**
+     * Get a js representation of the current translations
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function getTranslations() {
+        $locale = trans()->getLocale();
+        $cacheKey = 'GLOBAL_TRANSLATIONS_' . $locale;
+        if (cache()->has($cacheKey) && config('app.env') !== 'development') {
+            $resp = cache($cacheKey);
+        } else {
+            $translations = [
+                // Get only translations which might be used in JS
+                'common' => trans('common'),
+                'components' => trans('components'),
+                'entities' => trans('entities'),
+                'errors' => trans('errors')
+            ];
+            if ($locale !== 'en') {
+                $enTrans = [
+                    'common' => trans('common', [], null, 'en'),
+                    'components' => trans('components', [], null, 'en'),
+                    'entities' => trans('entities', [], null, 'en'),
+                    'errors' => trans('errors', [], null, 'en')
+                ];
+                $translations = array_replace_recursive($enTrans, $translations);
+            }
+            $resp = 'window.translations = ' . json_encode($translations);
+            cache()->put($cacheKey, $resp, 120);
+        }
+
+        return response($resp, 200, [
+            'Content-Type' => 'application/javascript'
         ]);
     }
 

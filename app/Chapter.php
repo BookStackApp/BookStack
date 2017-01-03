@@ -5,6 +5,8 @@ class Chapter extends Entity
 {
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
 
+    protected $with = ['book'];
+
     /**
      * Get the book this chapter is within.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -16,11 +18,12 @@ class Chapter extends Entity
 
     /**
      * Get the pages that this chapter contains.
+     * @param string $dir
      * @return mixed
      */
-    public function pages()
+    public function pages($dir = 'ASC')
     {
-        return $this->hasMany(Page::class)->orderBy('priority', 'ASC');
+        return $this->hasMany(Page::class)->orderBy('priority', $dir);
     }
 
     /**

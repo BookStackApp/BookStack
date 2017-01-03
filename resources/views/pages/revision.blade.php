@@ -7,14 +7,12 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="page-content anim fadeIn">
-                    @include('pages/page-display')
+                    @include('pages.page-display')
                 </div>
             </div>
         </div>
     </div>
 
 
-
-    @include('partials/highlight')
-
+    @include('partials.highlight')
 @stop

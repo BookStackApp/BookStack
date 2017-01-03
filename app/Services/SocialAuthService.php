@@ -70,12 +70,12 @@ class SocialAuthService
 
         // Check social account has not already been used
         if ($this->socialAccount->where('driver_id', '=', $socialUser->getId())->exists()) {
-            throw new UserRegistrationException('This ' . $socialDriver . ' account is already in use, Try logging in via the ' . $socialDriver . ' option.', '/login');
+            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver]), '/login');
         }
 
         if ($this->userRepo->getByEmail($socialUser->getEmail())) {
             $email = $socialUser->getEmail();
-            throw new UserRegistrationException('The email ' . $email . ' is already in use. If you already have an account you can connect your ' . $socialDriver . ' account from your profile settings.', '/login');
+            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver, 'email' => $email]), '/login');
         }
 
         return $socialUser;
@@ -98,7 +98,6 @@ class SocialAuthService
 
         // Get any attached social accounts or users
         $socialAccount = $this->socialAccount->where('driver_id', '=', $socialId)->first();
-        $user = $this->userRepo->getByEmail($socialUser->getEmail());
         $isLoggedIn = auth()->check();
         $currentUser = user();
 
@@ -113,27 +112,26 @@ class SocialAuthService
         if ($isLoggedIn && $socialAccount === null) {
             $this->fillSocialAccount($socialDriver, $socialUser);
             $currentUser->socialAccounts()->save($this->socialAccount);
-            session()->flash('success', title_case($socialDriver) . ' account was successfully attached to your profile.');
+            session()->flash('success', trans('settings.users_social_connected', ['socialAccount' => title_case($socialDriver)]));
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in and the social account exists and is already linked to the current user.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id === $currentUser->id) {
-            session()->flash('error', 'This ' . title_case($socialDriver) . ' account is already attached to your profile.');
+            session()->flash('error', trans('errors.social_account_existing', ['socialAccount' => title_case($socialDriver)]));
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in, A social account exists but the users do not match.
-        // Change the user that the social account is assigned to.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
-            session()->flash('success', 'This ' . title_case($socialDriver) . ' account is already used by another user.');
+            session()->flash('error', trans('errors.social_account_already_used_existing', ['socialAccount' => title_case($socialDriver)]));
             return redirect($currentUser->getEditUrl());
         }
 
         // Otherwise let the user know this social account is not used by anyone.
-        $message = 'This ' . $socialDriver . ' account is not linked to any users. Please attach it in your profile settings';
+        $message = trans('errors.social_account_not_used', ['socialAccount' => title_case($socialDriver)]);
         if (setting('registration-enabled')) {
-            $message .= ' or, If you do not yet have an account, You can register an account using the ' . $socialDriver . ' option';
+            $message .= trans('errors.social_account_register_instructions', ['socialAccount' => title_case($socialDriver)]);
         }
         
         throw new SocialSignInException($message . '.', '/login');
@@ -157,8 +155,8 @@ class SocialAuthService
     {
         $driver = trim(strtolower($socialDriver));
 
-        if (!in_array($driver, $this->validSocialDrivers)) abort(404, 'Social Driver Not Found');
-        if (!$this->checkDriverConfigured($driver)) throw new SocialDriverNotConfigured("Your {$driver} social settings are not configured correctly.");
+        if (!in_array($driver, $this->validSocialDrivers)) abort(404, trans('errors.social_driver_not_found'));
+        if (!$this->checkDriverConfigured($driver)) throw new SocialDriverNotConfigured(trans('errors.social_driver_not_configured', ['socialAccount' => title_case($socialDriver)]));
 
         return $driver;
     }
@@ -215,7 +213,7 @@ class SocialAuthService
     {
         session();
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
-        session()->flash('success', title_case($socialDriver) . ' account successfully detached');
+        session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => title_case($socialDriver)]));
         return redirect(user()->getEditUrl());
     }
 

@@ -35,6 +35,12 @@ table.table {
   tr:hover {
     background-color: #EEE;
   }
+  .text-right {
+    text-align: right;
+  }
+  .text-center {
+    text-align: center;
+  }
 }
 
 table.no-style {

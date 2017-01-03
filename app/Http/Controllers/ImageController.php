@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Repos\EntityRepo;
 use BookStack\Repos\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
@@ -73,6 +74,7 @@ class ImageController extends Controller
      * @param $filter
      * @param int $page
      * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function getGalleryFiltered($filter, $page = 0, Request $request)
     {
@@ -149,12 +151,12 @@ class ImageController extends Controller
 
     /**
      * Deletes an image and all thumbnail/image files
-     * @param PageRepo $pageRepo
+     * @param EntityRepo $entityRepo
      * @param Request $request
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(PageRepo $pageRepo, Request $request, $id)
+    public function destroy(EntityRepo $entityRepo, Request $request, $id)
     {
         $image = $this->imageRepo->getById($id);
         $this->checkOwnablePermission('image-delete', $image);
@@ -162,14 +164,14 @@ class ImageController extends Controller
         // Check if this image is used on any pages
         $isForced = ($request->has('force') && ($request->get('force') === 'true') || $request->get('force') === true);
         if (!$isForced) {
-            $pageSearch = $pageRepo->searchForImage($image->url);
+            $pageSearch = $entityRepo->searchForImage($image->url);
             if ($pageSearch !== false) {
                 return response()->json($pageSearch, 400);
             }
         }
 
         $this->imageRepo->destroyImage($image);
-        return response()->json('Image Deleted');
+        return response()->json(trans('components.images_deleted'));
     }
 
 

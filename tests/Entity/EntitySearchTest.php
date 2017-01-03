@@ -15,8 +15,8 @@ class EntitySearchTest extends TestCase
             ->type($page->name, 'term')
             ->press('header-search-box-button')
             ->see('Search Results')
-            ->see($page->name)
-            ->click($page->name)
+            ->seeInElement('.entity-list', $page->name)
+            ->clickInElement('.entity-list', $page->name)
             ->seePageIs($page->getUrl());
     }
 
