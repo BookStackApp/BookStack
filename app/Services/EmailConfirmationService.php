@@ -33,7 +33,7 @@ class EmailConfirmationService
     public function sendConfirmation(User $user)
     {
         if ($user->email_confirmed) {
-            throw new ConfirmationEmailException('Email has already been confirmed, Try logging in.', '/login');
+            throw new ConfirmationEmailException(trans('errors.email_already_confirmed'), '/login');
         }
 
         $this->deleteConfirmationsByUser($user);
@@ -63,7 +63,7 @@ class EmailConfirmationService
      * Gets an email confirmation by looking up the token,
      * Ensures the token has not expired.
      * @param string $token
-     * @return EmailConfirmation
+     * @return array|null|\stdClass
      * @throws UserRegistrationException
      */
     public function getEmailConfirmationFromToken($token)
@@ -72,14 +72,14 @@ class EmailConfirmationService
 
         // If not found show error
         if ($emailConfirmation === null) {
-            throw new UserRegistrationException('This confirmation token is not valid or has already been used, Please try registering again.', '/register');
+            throw new UserRegistrationException(trans('errors.email_confirmation_invalid'), '/register');
         }
 
         // If more than a day old
         if (Carbon::now()->subDay()->gt(new Carbon($emailConfirmation->created_at))) {
             $user = $this->users->getById($emailConfirmation->user_id);
             $this->sendConfirmation($user);
-            throw new UserRegistrationException('The confirmation token has expired, A new confirmation email has been sent.', '/register/confirm');
+            throw new UserRegistrationException(trans('errors.email_confirmation_expired'), '/register/confirm');
         }
 
         $emailConfirmation->user = $this->users->getById($emailConfirmation->user_id);

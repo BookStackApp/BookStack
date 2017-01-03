@@ -11,12 +11,12 @@
         <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="post">
             <div class="row">
                 <div class="col-sm-8">
-                    <h1>Edit {{ $user->id === $currentUser->id ? 'Profile' : 'User' }}</h1>
+                    <h1>{{ $user->id === $currentUser->id ? trans('settings.users_edit_profile') : trans('settings.users_edit') }}</h1>
                 </div>
                 <div class="col-sm-4">
                     <p></p>
                     @if($authMethod !== 'system')
-                        <a href="{{ baseUrl("/settings/users/{$user->id}/delete") }}" class="neg button float right">Delete User</a>
+                        <a href="{{ baseUrl("/settings/users/{$user->id}/delete") }}" class="neg button float right">{{ trans('settings.users_delete') }}</a>
                     @endif
                 </div>
             </div>
@@ -29,9 +29,20 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group" id="logo-control">
-                    <label for="user-avatar">User Avatar</label>
-                    <p class="small">This image should be approx 256px square.</p>
-                    <image-picker resize-height="512" resize-width="512" current-image="{{ $user->getAvatar(80) }}" current-id="{{ $user->image_id }}" default-image="{{ baseUrl("/user_avatar.png") }}" name="image_id" show-remove="false" image-class="['avatar' ,'large']"></image-picker>
+                    <label for="user-avatar">{{ trans('settings.users_avatar') }}</label>
+                    <p class="small">{{ trans('settings.users_avatar_desc') }}</p>
+
+                    @include('components.image-picker', [
+                          'resizeHeight' => '512',
+                          'resizeWidth' => '512',
+                          'showRemove' => false,
+                          'defaultImage' => baseUrl('/user_avatar.png'),
+                          'currentImage' => $user->getAvatar(80),
+                          'currentId' => $user->image_id,
+                          'name' => 'image_id',
+                          'imageClass' => 'avatar large'
+                      ])
+
                 </div>
             </div>
         </div>
@@ -40,20 +51,17 @@
         <hr class="margin-top large">
 
         @if($currentUser->id === $user->id && count($activeSocialDrivers) > 0)
-            <h3>Social Accounts</h3>
-            <p class="text-muted">
-                Here you can connect your other accounts for quicker and easier login. <br>
-                Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.
-            </p>
+            <h3>{{ trans('settings.users_social_accounts') }}</h3>
+            <p class="text-muted">{{ trans('settings.users_social_accounts_info') }}</p>
             <div class="row">
                 @if(isset($activeSocialDrivers['google']))
                     <div class="col-md-3 text-center">
                         <div><i class="zmdi zmdi-google-plus-box zmdi-hc-4x" style="color: #DC4E41;"></i></div>
                         <div>
                             @if($user->hasSocialAccount('google'))
-                                <a href="{{ baseUrl("/login/service/google/detach") }}" class="button neg">Disconnect Account</a>
+                                <a href="{{ baseUrl("/login/service/google/detach") }}" class="button neg">{{ trans('settings.users_social_disconnect') }}</a>
                             @else
-                                <a href="{{ baseUrl("/login/service/google") }}" class="button pos">Attach Account</a>
+                                <a href="{{ baseUrl("/login/service/google") }}" class="button pos">{{ trans('settings.users_social_connect') }}</a>
                             @endif
                         </div>
                     </div>
@@ -63,9 +71,9 @@
                         <div><i class="zmdi zmdi-github zmdi-hc-4x" style="color: #444;"></i></div>
                         <div>
                             @if($user->hasSocialAccount('github'))
-                                <a href="{{ baseUrl("/login/service/github/detach") }}" class="button neg">Disconnect Account</a>
+                                <a href="{{ baseUrl("/login/service/github/detach") }}" class="button neg">{{ trans('settings.users_social_disconnect') }}</a>
                             @else
-                                <a href="{{ baseUrl("/login/service/github") }}" class="button pos">Attach Account</a>
+                                <a href="{{ baseUrl("/login/service/github") }}" class="button pos">{{ trans('settings.users_social_connect') }}</a>
                             @endif
                         </div>
                     </div>
@@ -77,5 +85,5 @@
     </div>
 
     <p class="margin-top large"><br></p>
-    @include('partials/image-manager', ['imageType' => 'user'])
+    @include('components.image-manager', ['imageType' => 'user'])
 @stop

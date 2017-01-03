@@ -59,7 +59,7 @@ class ImageService extends UploadService
     {
         $imageName = $imageName ? $imageName : basename($url);
         $imageData = file_get_contents($url);
-        if($imageData === false) throw new \Exception('Cannot get image from ' . $url);
+        if($imageData === false) throw new \Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
         return $this->saveNew($imageName, $imageData, $type);
     }
 
@@ -93,7 +93,7 @@ class ImageService extends UploadService
             $storage->put($fullPath, $imageData);
             $storage->setVisibility($fullPath, 'public');
         } catch (Exception $e) {
-            throw new ImageUploadException('Image Path ' . $fullPath . ' is not writable by the server.');
+            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
         }
 
         if ($this->isLocal()) $fullPath = str_replace_first('/public', '', $fullPath);
@@ -160,7 +160,7 @@ class ImageService extends UploadService
             $thumb = $this->imageTool->make($storage->get($imagePath));
         } catch (Exception $e) {
             if ($e instanceof \ErrorException || $e instanceof NotSupportedException) {
-                throw new ImageUploadException('The server cannot create thumbnails. Please check you have the GD PHP extension installed.');
+                throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
             } else {
                 throw $e;
             }

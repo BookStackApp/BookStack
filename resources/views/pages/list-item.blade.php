@@ -12,8 +12,7 @@
     @if(isset($style) && $style === 'detailed')
         <div class="row meta text-muted text-small">
             <div class="col-md-6">
-                Created {{$page->created_at->diffForHumans()}} @if($page->createdBy)by {{$page->createdBy->name}}@endif <br>
-                Last updated {{ $page->updated_at->diffForHumans() }} @if($page->updatedBy)by {{$page->updatedBy->name}} @endif
+                @include('partials.entity-meta', ['entity' => $page])
             </div>
             <div class="col-md-6">
                 <a class="text-book" href="{{ $page->book->getUrl() }}"><i class="zmdi zmdi-book"></i>{{ $page->book->getShortName(30) }}</a>
@@ -21,7 +20,7 @@
                 @if($page->chapter)
                     <a class="text-chapter" href="{{ $page->chapter->getUrl() }}"><i class="zmdi zmdi-collection-bookmark"></i>{{ $page->chapter->getShortName(30) }}</a>
                 @else
-                    <i class="zmdi zmdi-collection-bookmark"></i> Page is not in a chapter
+                    <i class="zmdi zmdi-collection-bookmark"></i> {{ trans('entities.pages_not_in_chapter') }}
                 @endif
             </div>
         </div>

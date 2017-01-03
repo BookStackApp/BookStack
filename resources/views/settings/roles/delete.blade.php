@@ -5,8 +5,8 @@
     @include('settings/navbar', ['selected' => 'roles'])
 
     <div class="container small" ng-non-bindable>
-        <h1>Delete Role</h1>
-        <p>This will delete the role with the name '{{ $role->display_name }}'.</p>
+        <h1>{{ trans('settings.role_delete') }}</h1>
+        <p>{{ trans('settings.role_delete_confirm', ['roleName' => $role->display_name]) }}</p>
 
         <form action="{{ baseUrl("/settings/roles/delete/{$role->id}") }}" method="POST">
             {!! csrf_field() !!}
@@ -14,14 +14,14 @@
 
             @if($role->users->count() > 0)
             <div class="form-group">
-                    <p>This role has {{$role->users->count()}} users assigned to it. If you would like to migrate the users from this role select a new role below.</p>
+                    <p>{{ trans('settings.role_delete_users_assigned', ['userCount' => $role->users->count()]) }}</p>
                     @include('form/role-select', ['options' => $roles, 'name' => 'migration_role_id'])
             </div>
             @endif
 
-            <p class="text-neg">Are you sure you want to delete this role?</p>
-            <a href="{{ baseUrl("/settings/roles/{$role->id}") }}" class="button">Cancel</a>
-            <button type="submit" class="button neg">Confirm</button>
+            <p class="text-neg">{{ trans('settings.role_delete_sure') }}</p>
+            <a href="{{ baseUrl("/settings/roles/{$role->id}") }}" class="button muted">{{ trans('common.cancel') }}</a>
+            <button type="submit" class="button neg">{{ trans('common.confirm') }}</button>
         </form>
     </div>
 
