@@ -405,7 +405,7 @@ class PermissionService
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
-        $nonJointPermissions = ['restrictions'];
+        $nonJointPermissions = ['restrictions', 'image', 'attachment'];
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
@@ -420,7 +420,6 @@ class PermissionService
         if ($action === 'create') {
             $this->currentAction = $permission;
         }
-
 
         $q = $this->entityRestrictionQuery($baseQuery)->count() > 0;
         $this->clean();
