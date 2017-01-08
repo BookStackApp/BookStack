@@ -38,6 +38,7 @@ class SettingService
      */
     public function get($key, $default = false)
     {
+        if ($default === false) $default = config('setting-defaults.' . $key, false);
         $value = $this->getValueFromStore($key, $default);
         return $this->formatValue($value, $default);
     }
@@ -65,14 +66,6 @@ class SettingService
         $settingObject = $this->getSettingObjectByKey($key);
         if ($settingObject !== null) {
             $value = $settingObject->value;
-            $this->cache->forever($cacheKey, $value);
-            return $value;
-        }
-
-        // Check the defaults set in the app config.
-        $configPrefix = 'setting-defaults.' . $key;
-        if (config()->has($configPrefix)) {
-            $value = config($configPrefix);
             $this->cache->forever($cacheKey, $value);
             return $value;
         }
