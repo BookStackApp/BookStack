@@ -578,4 +578,45 @@ class RolesTest extends TestCase
             ->see('Cannot be deleted');
     }
 
+
+
+    public function test_image_delete_own_permission()
+    {
+        $this->giveUserPermissions($this->user, ['image-update-all']);
+//        $admin = $this->getAdmin();
+        $page = \BookStack\Page::first();
+        $image = factory(\BookStack\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $this->user->id, 'updated_by' => $this->user->id]);
+
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
+            ->seeStatusCode(403);
+
+        $this->giveUserPermissions($this->user, ['image-delete-own']);
+
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
+            ->seeStatusCode(200)
+            ->dontSeeInDatabase('images', ['id' => $image->id]);
+    }
+
+    public function test_image_delete_all_permission()
+    {
+        $this->giveUserPermissions($this->user, ['image-update-all']);
+        $admin = $this->getAdmin();
+        $page = \BookStack\Page::first();
+        $image = factory(\BookStack\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
+
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
+            ->seeStatusCode(403);
+
+        $this->giveUserPermissions($this->user, ['image-delete-own']);
+
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
+            ->seeStatusCode(403);
+
+        $this->giveUserPermissions($this->user, ['image-delete-all']);
+
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
+            ->seeStatusCode(200)
+            ->dontSeeInDatabase('images', ['id' => $image->id]);
+    }
+
 }
