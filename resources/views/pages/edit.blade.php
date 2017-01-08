@@ -24,3 +24,7 @@
     @include('components.entity-selector-popup')
 
 @stop
+
+@section('scripts')
+    @include('partials/highlight')
+@stop

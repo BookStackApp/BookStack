@@ -18,5 +18,8 @@
     "marked": "^0.3.5",
     "moment": "^2.12.0",
     "zeroclipboard": "^2.2.0"
+  },
+  "dependencies": {
+    "ace-builds": "^1.2.5"
   }
 }

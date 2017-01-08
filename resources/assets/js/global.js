@@ -1,5 +1,12 @@
 "use strict";
 
+// TinyMCE
+import customTinyMCEPlugins from "./pages/tinymce_plugins";
+if (window.tinymce) {
+    customTinyMCEPlugins(window.tinymce);
+}
+
+
 // AngularJS - Create application and load components
 import angular from "angular";
 import "angular-resource";
