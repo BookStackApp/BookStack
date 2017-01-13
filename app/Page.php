@@ -39,6 +39,15 @@ class Page extends Entity
     {
         return $this->belongsTo(Chapter::class);
     }
+    
+    /**
+     * Get the comments in the page.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     /**
      * Check if this page has a chapter.

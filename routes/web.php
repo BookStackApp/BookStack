@@ -113,6 +113,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/ajax/search/entities', 'SearchController@searchEntitiesAjax');
 
+    // Comments
+    Route::post('/ajax/page/{pageId}/comment/', 'CommentController@add');
+    Route::put('/ajax/page/comment/{id}', 'CommentController@update');
+    Route::delete('/ajax/comment/{id}', 'CommentController@destroy');
+    Route::get('/ajax/page/{pageId}/comment/', 'CommentController@getLastXComments');
+    Route::get('/ajax/page/{pageId}/comment/{id}/sub-comments', 'CommentController@getChildComments');    
+    
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');
 
