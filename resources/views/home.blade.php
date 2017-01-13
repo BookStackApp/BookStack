@@ -51,7 +51,7 @@
                     @include('partials/entity-list', [
                     'entities' => $recentlyUpdatedPages,
                     'style' => 'compact',
-                    'emptyText' => trans('entites.no_pages_recently_updated')
+                    'emptyText' => trans('entities.no_pages_recently_updated')
                     ])
                 </div>
             </div>

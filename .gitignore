@@ -8,9 +8,11 @@ Homestead.yaml
 /public/css
 /public/js
 /public/bower
+/public/build/
 /storage/images
 _ide_helper.php
 /storage/debugbar
 .phpstorm.meta.php
 yarn.lock
 /bin
+nbproject
