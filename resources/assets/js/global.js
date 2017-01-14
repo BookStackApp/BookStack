@@ -61,10 +61,9 @@ Controllers(ngApp, window.Events);
 // Smooth scrolling
 jQuery.fn.smoothScrollTo = function () {
     if (this.length === 0) return;
-    let scrollElem = document.documentElement.scrollTop === 0 ?  document.body : document.documentElement;
-    $(scrollElem).animate({
+    $('html, body').animate({
         scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
-    }, 800); // Adjust to change animations speed (ms)
+    }, 300); // Adjust to change animations speed (ms)
     return this;
 };
 
