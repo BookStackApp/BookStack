@@ -836,18 +836,18 @@ class EntityRepo
     /**
      * Parse the headers on the page to get a navigation menu
      * @param Page $page
-     * @return Collection
+     * @return array
      */
     public function getPageNav(Page $page)
     {
-        if ($page->html == '') return null;
+        if ($page->html == '') return [];
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($page->html, 'HTML-ENTITIES', 'UTF-8'));
         $xPath = new DOMXPath($doc);
         $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
 
-        if (is_null($headers)) return null;
+        if (is_null($headers)) return [];
 
         $tree = collect([]);
         foreach ($headers as $header) {
@@ -868,7 +868,7 @@ class EntityRepo
                 return $header;
             });
         }
-        return $tree;
+        return $tree->toArray();
     }
 
     /**
