@@ -18,24 +18,6 @@ class Ldap
      */
     public function connect($hostName, $port)
     {
-        /*
-        * LDAPS is not working because even if port 363 is specified, 
-        * BookStack tries to open a LDAP connection on the LDAPS channel.
-        * The if-clause below fixed this, although it would be better to
-        * change the settings in .env from
-        *   LDAP_SERVER=servername:port
-        * to
-        *   LDAP_SERVER=ldap://servername:389
-        *   LDAP_SERVER=ldaps://servername:363
-        * in order to be compatible with non-standard setups. Currently, 
-        * specifying ldap:// or ldaps:// results in an error because BookStack
-        * splits at ":" and takes the seconds chunk (in this case "//servername"
-        * as the port value.
-        */
-        if ($port == 363)
-        {
-                $hostName = "ldaps://".$hostName;
-        }
         return ldap_connect($hostName, $port);
     }
 
