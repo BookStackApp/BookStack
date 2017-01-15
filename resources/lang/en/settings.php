@@ -101,12 +101,23 @@ return [
     'users_edit_success' => 'User successfully updated',
     'users_avatar' => 'User Avatar',
     'users_avatar_desc' => 'This image should be approx 256px square.',
+    'users_preferred_language' => 'Preferred Language',
     'users_social_accounts' => 'Social Accounts',
     'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Connect Account',
     'users_social_disconnect' => 'Disconnect Account',
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
+
+    // Since these labels are already localized this array does not need to be
+    // translated in the language-specific files.
+    // DELETE BELOW IF COPIED FROM EN
+    ///////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'de' => 'Deutsch'
+    ]
+    ///////////////////////////////////
 ];
 
 

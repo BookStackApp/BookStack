@@ -1,13 +1,8 @@
-<?php
+<?php namespace BookStack\Http\Controllers;
 
-namespace BookStack\Http\Controllers;
-
-use BookStack\Activity;
 use Exception;
 use Illuminate\Http\Request;
-
 use Illuminate\Http\Response;
-use BookStack\Http\Requests;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\SocialAuthService;
 use BookStack\User;
@@ -152,7 +147,8 @@ class UserController extends Controller
             'name'             => 'min:2',
             'email'            => 'min:2|email|unique:users,email,' . $id,
             'password'         => 'min:5|required_with:password_confirm',
-            'password-confirm' => 'same:password|required_with:password'
+            'password-confirm' => 'same:password|required_with:password',
+            'setting'          => 'array'
         ]);
 
         $user = $this->user->findOrFail($id);
@@ -173,6 +169,13 @@ class UserController extends Controller
         // External auth id updates
         if ($this->currentUser->can('users-manage') && $request->has('external_auth_id')) {
             $user->external_auth_id = $request->get('external_auth_id');
+        }
+
+        // Save an user-specific settings
+        if ($request->has('setting')) {
+            foreach ($request->get('setting') as $key => $value) {
+                setting()->putUser($user, $key, $value);
+            }
         }
 
         $user->save();

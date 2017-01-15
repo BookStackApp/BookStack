@@ -40,13 +40,19 @@ php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
 
 Once done you can run `phpunit` in the application root directory to run all tests.
 
-## Website and Docs 
+## Translations
 
-The website and project docs are currently stored in the [BookStackApp/website](https://github.com/BookStackApp/website) repo. The docs are stored as markdown files in the `resources/docs` folder
+As part of BookStack v0.14 support for translations has been built in. All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
+ 
+ Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
+
+## Website, Docs & Blog 
+
+The website project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
 
 ## License
 
-BookStack is provided under the MIT License.
+The BookStack source is provided under the MIT License.
 
 ## Attribution
 

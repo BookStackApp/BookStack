@@ -1,6 +1,4 @@
-<?php
-
-namespace BookStack\Http;
+<?php namespace BookStack\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -30,6 +28,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \BookStack\Http\Middleware\Localization::class
         ],
         'api' => [
             'throttle:60,1',
