@@ -318,15 +318,15 @@ class EntityRepo
      */
     public function getBookChildren(Book $book, $filterDrafts = false)
     {
-        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts);
+        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts)->get();
         $entities = [];
         $parents = [];
         $tree = [];
 
         foreach ($q as $index => $rawEntity) {
-            if ($rawEntity->entity_type === 'Bookstack\\Page') {
+            if ($rawEntity->entity_type === 'BookStack\\Page') {
                 $entities[$index] = $this->page->newFromBuilder($rawEntity);
-            } else if ($rawEntity->entity_type === 'Bookstack\\Chapter') {
+            } else if ($rawEntity->entity_type === 'BookStack\\Chapter') {
                 $entities[$index] = $this->chapter->newFromBuilder($rawEntity);
                 $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
                 $parents[$key] = $entities[$index];
@@ -338,7 +338,7 @@ class EntityRepo
 
         foreach ($entities as $entity) {
             if ($entity->chapter_id === 0) continue;
-            $parentKey = 'Bookstack\\Chapter:' . $entity->chapter_id;
+            $parentKey = 'BookStack\\Chapter:' . $entity->chapter_id;
             $chapter = $parents[$parentKey];
             $chapter->pages->push($entity);
         }
