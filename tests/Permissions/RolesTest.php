@@ -583,7 +583,6 @@ class RolesTest extends TestCase
     public function test_image_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
-//        $admin = $this->getAdmin();
         $page = \BookStack\Page::first();
         $image = factory(\BookStack\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $this->user->id, 'updated_by' => $this->user->id]);
 

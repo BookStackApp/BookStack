@@ -1,6 +1,4 @@
-<?php
-
-namespace BookStack\Http\Middleware;
+<?php namespace BookStack\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
