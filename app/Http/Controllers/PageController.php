@@ -156,15 +156,19 @@ class PageController extends Controller
             return redirect($page->getUrl());
         }
 
+
         $this->checkOwnablePermission('page-view', $page);
 
+        $pageContent = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
         $pageNav = $this->entityRepo->getPageNav($page);
         
         Views::add($page);
         $this->setPageTitle($page->getShortName());
-        return view('pages/show', ['page' => $page, 'book' => $page->book,
-                                   'current' => $page, 'sidebarTree' => $sidebarTree, 'pageNav' => $pageNav]);
+        return view('pages/show', [
+            'page' => $page,'book' => $page->book,
+            'current' => $page, 'sidebarTree' => $sidebarTree,
+            'pageNav' => $pageNav, 'pageContent' => $pageContent]);
     }
 
     /**

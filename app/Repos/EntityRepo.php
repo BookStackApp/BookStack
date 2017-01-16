@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;
 use Illuminate\Support\Collection;
+use Symfony\Component\DomCrawler\Crawler;
 
 class EntityRepo
 {
@@ -791,6 +792,44 @@ class EntityRepo
         $html = '';
         foreach ($childNodes as $childNode) {
             $html .= $doc->saveHTML($childNode);
+        }
+
+        return $html;
+    }
+
+
+    /**
+     * Render the page for viewing, Parsing and performing features such as page transclusion.
+     * @param Page $page
+     * @return mixed|string
+     */
+    public function renderPage(Page $page)
+    {
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding('<body>'.$page->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
+        $xpath = new DOMXpath($doc);
+
+        $bsElems = $xpath->query('body/div[@bs-embed-page]');
+        if (is_null($bsElems)) return $page->html;
+        foreach ($bsElems as $bsElem) {
+            $pageId = intval($bsElem->getAttribute('bs-embed-page'));
+            $embeddedPage = $this->getById('page', $pageId);
+            if ($embeddedPage !== null) {
+                $innerPage = $doc->createDocumentFragment();
+                $innerPage->appendXML($embeddedPage->html);
+                // Empty div then append in child content
+                foreach ($bsElem->childNodes as $child) {
+                    $bsElem->removeChild($child);
+                }
+                $bsElem->appendChild($innerPage);
+            }
+        }
+
+        $body = $doc->getElementsByTagName('body')->item(0);
+        $html = '';
+        foreach ($body->childNodes as $node) {
+            $html .= $doc->saveHTML($node);
         }
 
         return $html;
