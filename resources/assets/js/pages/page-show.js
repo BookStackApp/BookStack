@@ -1,6 +1,6 @@
 "use strict";
 // Configure ZeroClipboard
-import zeroClipBoard from "zeroclipboard";
+import ZeroClipBoard from "zeroclipboard";
 
 export default window.setupPageShow = function (pageId) {
 
@@ -16,10 +16,10 @@ export default window.setupPageShow = function (pageId) {
     });
 
     // Set up copy-to-clipboard
-    zeroClipBoard.config({
+    ZeroClipBoard.config({
         swfPath: window.baseUrl('/ZeroClipboard.swf')
     });
-    new zeroClipBoard($pointer.find('button').first()[0]);
+    new ZeroClipBoard($pointer.find('button').first()[0]);
 
     // Hide pointer when clicking away
     $(document.body).find('*').on('click focus', function (e) {
@@ -57,10 +57,12 @@ export default window.setupPageShow = function (pageId) {
 
     // Go to, and highlight if necessary, the specified text.
     function goToText(text) {
-        let idElem = $('.page-content #' + text).first();
-        if (idElem.length !== 0) {
-            idElem.smoothScrollTo();
-            idElem.css('background-color', 'rgba(244, 249, 54, 0.25)');
+        let idElem = document.getElementById(text);
+        $('.page-content [data-highlighted]').attr('data-highlighted', '').css('background-color', '');
+        if (idElem !== null) {
+            let $idElem = $(idElem);
+            let color = $('#custom-styles').attr('data-color-light');
+            $idElem.css('background-color', color).attr('data-highlighted', 'true').smoothScrollTo();
         } else {
             $('.page-content').find(':contains("' + text + '")').smoothScrollTo();
         }
@@ -71,6 +73,11 @@ export default window.setupPageShow = function (pageId) {
         let text = window.location.hash.replace(/\%20/g, ' ').substr(1);
         goToText(text);
     }
+
+    // Sidebar page nav click event
+    $('.sidebar-page-nav').on('click', 'a', event => {
+        goToText(event.target.getAttribute('href').substr(1));
+    });
 
     // Make the book-tree sidebar stick in view on scroll
     let $window = $(window);

@@ -112,9 +112,13 @@ class LdapService
             throw new LdapException(trans('errors.ldap_extension_not_installed'));
         }
 
-        // Get port from server string if specified.
+        // Get port from server string and protocol if specified.
         $ldapServer = explode(':', $this->config['server']);
-        $ldapConnection = $this->ldap->connect($ldapServer[0], count($ldapServer) > 1 ? $ldapServer[1] : 389);
+        $hasProtocol = preg_match('/^ldaps{0,1}\:\/\//', $this->config['server']) === 1;
+        if (!$hasProtocol) array_unshift($ldapServer, '');
+        $hostName = $ldapServer[0] . ($hasProtocol?':':'') . $ldapServer[1];
+        $defaultPort = $ldapServer[0] === 'ldaps' ? 636 : 389;
+        $ldapConnection = $this->ldap->connect($hostName, count($ldapServer) > 2 ? intval($ldapServer[2]) : $defaultPort);
 
         if ($ldapConnection === false) {
             throw new LdapException(trans('errors.ldap_cannot_connect'));
