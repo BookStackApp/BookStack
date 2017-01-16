@@ -1,13 +1,13 @@
 <?php
 
 return [
-    
+
     /**
      * Settings text strings
      * Contains all text strings used in the general settings sections of BookStack
      * including users and roles.
      */
-    
+
     'settings' => 'Settings',
     'settings_save' => 'Save Settings',
     'settings_save_success' => 'Settings saved',
@@ -92,7 +92,7 @@ return [
     'users_password_warning' => 'Only fill the below if you would like to change your password:',
     'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
     'users_delete' => 'Delete User',
-    'users_delete_named' => 'Delete ser :userName',
+    'users_delete_named' => 'Delete user :userName',
     'users_delete_warning' => 'This will fully delete this user with the name \':userName\' from the system.',
     'users_delete_confirm' => 'Are you sure you want to delete this user?',
     'users_delete_success' => 'Users successfully removed',
@@ -115,37 +115,8 @@ return [
     ///////////////////////////////////
     'language_select' => [
         'en' => 'English',
-        'de' => 'Deutsch'
+        'de' => 'Deutsch',
+        'fr' => 'Français',
     ]
     ///////////////////////////////////
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
