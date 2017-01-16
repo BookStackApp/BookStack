@@ -110,33 +110,3 @@ return [
     'users_social_disconnected' => 'Votre compte :socialAccount a été déconnecté avec succès',
 
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
