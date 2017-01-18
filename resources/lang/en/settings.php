@@ -117,6 +117,7 @@ return [
         'en' => 'English',
         'de' => 'Deutsch',
         'fr' => 'Français',
+        'pt_BR' => 'Português do Brasil'
     ]
     ///////////////////////////////////
 ];
