@@ -53,9 +53,9 @@
 
                     <div class="pointer-container" id="pointer">
                         <div class="pointer anim">
-                            <i class="zmdi zmdi-link"></i>
-                            <input readonly="readonly" type="text" placeholder="url">
-                            <button class="button icon" title="{{ trans('entities.pages_copy_link') }}" data-clipboard-text=""><i class="zmdi zmdi-copy"></i></button>
+                            <span class="icon text-primary"><i class="zmdi zmdi-link"></i></span>
+                            <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
+                            <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}"><i class="zmdi zmdi-copy"></i></button>
                         </div>
                     </div>
 
