@@ -1,13 +1,16 @@
 "use strict";
 // Configure ZeroClipboard
-import ZeroClipBoard from "zeroclipboard";
+import Clipboard from "clipboard";
 
 export default window.setupPageShow = function (pageId) {
 
     // Set up pointer
     let $pointer = $('#pointer').detach();
+    let pointerShowing = false;
     let $pointerInner = $pointer.children('div.pointer').first();
     let isSelection = false;
+    let pointerModeLink = true;
+    let pointerSectionId = '';
 
     // Select all contents on input click
     $pointer.on('click', 'input', function (e) {
@@ -15,18 +18,33 @@ export default window.setupPageShow = function (pageId) {
         e.stopPropagation();
     });
 
-    // Set up copy-to-clipboard
-    ZeroClipBoard.config({
-        swfPath: window.baseUrl('/ZeroClipboard.swf')
+    // Pointer mode toggle
+    $pointer.on('click', 'span.icon', event => {
+        let $icon = $(event.currentTarget);
+        pointerModeLink = !pointerModeLink;
+        $icon.html(pointerModeLink ? '<i class="zmdi zmdi-link"></i>' : '<i class="zmdi zmdi-square-down"></i>');
+        updatePointerContent();
     });
-    new ZeroClipBoard($pointer.find('button').first()[0]);
+
+    // Set up clipboard
+    let clipboard = new Clipboard('#pointer button');
 
     // Hide pointer when clicking away
-    $(document.body).find('*').on('click focus', function (e) {
-        if (!isSelection) {
-            $pointer.detach();
-        }
+    $(document.body).find('*').on('click focus', event => {
+        if (!pointerShowing || isSelection) return;
+        let target = $(event.target);
+        if (target.is('.zmdi') || $(event.target).closest('#pointer').length === 1) return;
+
+        $pointer.detach();
+        pointerShowing = false;
     });
+
+    function updatePointerContent() {
+        let inputText = pointerModeLink ? window.baseUrl(`/link/${pageId}#${pointerSectionId}`) : `{{@${pageId}#${pointerSectionId}}}`;
+        if (pointerModeLink && inputText.indexOf('http') !== 0) inputText = window.location.protocol + "//" + window.location.host + inputText;
+
+        $pointer.find('input').val(inputText);
+    }
 
     // Show pointer when selecting a single block of tagged content
     $('.page-content [id^="bkmrk"]').on('mouseup keyup', function (e) {
@@ -36,12 +54,12 @@ export default window.setupPageShow = function (pageId) {
 
         // Show pointer and set link
         let $elem = $(this);
-        let link = window.baseUrl('/link/' + pageId + '#' + $elem.attr('id'));
-        if (link.indexOf('http') !== 0) link = window.location.protocol + "//" + window.location.host + link;
-        $pointer.find('input').val(link);
-        $pointer.find('button').first().attr('data-clipboard-text', link);
+        pointerSectionId = $elem.attr('id');
+        updatePointerContent();
+
         $elem.before($pointer);
         $pointer.show();
+        pointerShowing = true;
 
         // Set pointer to sit near mouse-up position
         let pointerLeftOffset = (e.pageX - $elem.offset().left - ($pointerInner.width() / 2));

@@ -157,7 +157,7 @@ class PermissionService
      */
     public function buildJointPermissionsForEntity(Entity $entity)
     {
-        $roles = $this->role->with('jointPermissions')->get();
+        $roles = $this->role->get();
         $entities = collect([$entity]);
 
         if ($entity->isA('book')) {
@@ -177,7 +177,7 @@ class PermissionService
      */
     public function buildJointPermissionsForEntities(Collection $entities)
     {
-        $roles = $this->role->with('jointPermissions')->get();
+        $roles = $this->role->get();
         $this->deleteManyJointPermissionsForEntities($entities);
         $this->createManyJointPermissions($entities, $roles);
     }
@@ -564,6 +564,7 @@ class PermissionService
                     });
             });
         });
+        $this->clean();
         return $q;
     }
 
