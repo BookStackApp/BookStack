@@ -60,7 +60,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function asEditor()
     {
-        if($this->editor === null) {
+        if ($this->editor === null) {
             $this->editor = $this->getEditor();
         }
         return $this->actingAs($this->editor);
