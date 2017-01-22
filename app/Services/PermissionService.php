@@ -486,17 +486,22 @@ class PermissionService
             }
         });
         $chapterSelect = $this->db->table('chapters')->selectRaw("'BookStack\\\\Chapter' as entity_type, id, slug, name, '' as text, description, book_id, priority, 0 as chapter_id, 0 as draft")->where('book_id', '=', $book_id);
-        $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
-            ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
-            ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
-            ->where(function($query) {
-                $query->where('jp.has_permission', '=', 1)->orWhere(function($query) {
-                    $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
-                });
-            });
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
-            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect)
-            ->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery)->orderBy('draft', 'desc')->orderBy('priority', 'asc');
+            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
+
+        if (!$this->isAdmin()) {
+            $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
+                ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
+                ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
+                ->where(function($query) {
+                    $query->where('jp.has_permission', '=', 1)->orWhere(function($query) {
+                        $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
+                    });
+                });
+            $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
+        }
+
+        $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
         $this->clean();
         return  $query;
     }
