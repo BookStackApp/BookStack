@@ -93,7 +93,7 @@ class PermissionsRepo
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
 
-        if ($role->name === 'admin') {
+        if ($role->system_name === 'admin') {
             $permissions = $this->permission->all()->pluck('id')->toArray();
             $role->permissions()->sync($permissions);
         }
