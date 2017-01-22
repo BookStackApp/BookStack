@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="container">
-        <h1 class="text-muted">{{ setting('app-name') }} is down right now</h1>
-        <p>It will be back up soon.</p>
+        <h1 class="text-muted">{{ trans('errors.app_down', ['appName' => setting('app-name')]) }}</h1>
+        <p>{{ trans('errors.back_soon') }}</p>
     </div>
 
 @stop

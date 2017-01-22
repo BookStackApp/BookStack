@@ -52,7 +52,7 @@ class ForgotPasswordController extends Controller
         );
 
         if ($response === Password::RESET_LINK_SENT) {
-            $message = 'A password reset link has been sent to ' . $request->get('email') . '.';
+            $message = trans('auth.reset_password_sent_success', ['email' => $request->get('email')]);
             session()->flash('success', $message);
             return back()->with('status', trans($response));
         }

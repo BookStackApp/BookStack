@@ -75,6 +75,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Check if the user has a role.
+     * @param $role
+     * @return mixed
+     */
+    public function hasSystemRole($role)
+    {
+        return $this->roles->pluck('system_name')->contains('admin');
+    }
+
+    /**
      * Get all permissions belonging to a the current user.
      * @param bool $cache
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
@@ -150,8 +160,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getAvatar($size = 50)
     {
-        if ($this->image_id === 0 || $this->image_id === '0' || $this->image_id === null) return baseUrl('/user_avatar.png');
-        return baseUrl($this->avatar->getThumb($size, $size, false));
+        $default = baseUrl('/user_avatar.png');
+        $imageId = $this->image_id;
+        if ($imageId === 0 || $imageId === '0' || $imageId === null) return $default;
+
+        try {
+            $avatar = baseUrl($this->avatar->getThumb($size, $size, false));
+        } catch (\Exception $err) {
+            $avatar = $default;
+        }
+        return $avatar;
     }
 
     /**

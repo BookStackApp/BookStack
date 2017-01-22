@@ -1,38 +1,8 @@
 "use strict";
-const DropZone = require('dropzone');
-const markdown = require('marked');
+import DropZone from "dropzone";
+import markdown from "marked";
 
-module.exports = function (ngApp, events) {
-
-    /**
-     * Toggle Switches
-     * Has basic on/off functionality.
-     * Use string values of 'true' & 'false' to dictate the current state.
-     */
-    ngApp.directive('toggleSwitch', function () {
-        return {
-            restrict: 'A',
-            template: `
-            <div class="toggle-switch" ng-click="switch()" ng-class="{'active': isActive}">
-                <input type="hidden" ng-attr-name="{{name}}" ng-attr-value="{{value}}"/>
-                <div class="switch-handle"></div>
-            </div>
-            `,
-            scope: true,
-            link: function (scope, element, attrs) {
-                scope.name = attrs.name;
-                scope.value = attrs.value;
-                scope.isActive = scope.value == true && scope.value != 'false';
-                scope.value = (scope.value == true && scope.value != 'false') ? 'true' : 'false';
-
-                scope.switch = function () {
-                    scope.isActive = !scope.isActive;
-                    scope.value = scope.isActive ? 'true' : 'false';
-                }
-
-            }
-        };
-    });
+export default function (ngApp, events) {
 
     /**
      * Common tab controls using simple jQuery functions.
@@ -65,7 +35,7 @@ module.exports = function (ngApp, events) {
     });
 
     /**
-     * Sub form component to allow inner-form sections to act like thier own forms.
+     * Sub form component to allow inner-form sections to act like their own forms.
      */
     ngApp.directive('subForm', function() {
         return {
@@ -80,95 +50,12 @@ module.exports = function (ngApp, events) {
                 element.find('button[type="submit"]').click(submitEvent);
 
                 function submitEvent(e) {
-                    e.preventDefault()
+                    e.preventDefault();
                     if (attrs.subForm) scope.$eval(attrs.subForm);
                 }
             }
         };
     });
-
-
-    /**
-     * Image Picker
-     * Is a simple front-end interface that connects to an ImageManager if present.
-     */
-    ngApp.directive('imagePicker', ['$http', 'imageManagerService', function ($http, imageManagerService) {
-        return {
-            restrict: 'E',
-            template: `
-            <div class="image-picker">
-                <div>
-                    <img ng-if="image && image !== 'none'" ng-src="{{image}}" ng-class="{{imageClass}}" alt="Image Preview">
-                    <img ng-if="image === '' && defaultImage" ng-src="{{defaultImage}}" ng-class="{{imageClass}}" alt="Image Preview">
-                </div>
-                <button class="button" type="button" ng-click="showImageManager()">Select Image</button>
-                <br>
-
-                <button class="text-button" ng-click="reset()" type="button">Reset</button>
-                <span ng-show="showRemove" class="sep">|</span>
-                <button ng-show="showRemove" class="text-button neg" ng-click="remove()" type="button">Remove</button>
-
-                <input type="hidden" ng-attr-name="{{name}}" ng-attr-id="{{name}}" ng-attr-value="{{value}}">
-            </div>
-            `,
-            scope: {
-                name: '@',
-                resizeHeight: '@',
-                resizeWidth: '@',
-                resizeCrop: '@',
-                showRemove: '=',
-                currentImage: '@',
-                currentId: '@',
-                defaultImage: '@',
-                imageClass: '@'
-            },
-            link: function (scope, element, attrs) {
-                let usingIds = typeof scope.currentId !== 'undefined' || scope.currentId === 'false';
-                scope.image = scope.currentImage;
-                scope.value = scope.currentImage || '';
-                if (usingIds) scope.value = scope.currentId;
-
-                function setImage(imageModel, imageUrl) {
-                    scope.image = imageUrl;
-                    scope.value = usingIds ? imageModel.id : imageUrl;
-                }
-
-                scope.reset = function () {
-                    setImage({id: 0}, scope.defaultImage);
-                };
-
-                scope.remove = function () {
-                    scope.image = 'none';
-                    scope.value = 'none';
-                };
-
-                scope.showImageManager = function () {
-                    imageManagerService.show((image) => {
-                        scope.updateImageFromModel(image);
-                    });
-                };
-
-                scope.updateImageFromModel = function (model) {
-                    let isResized = scope.resizeWidth && scope.resizeHeight;
-
-                    if (!isResized) {
-                        scope.$apply(() => {
-                            setImage(model, model.url);
-                        });
-                        return;
-                    }
-
-                    let cropped = scope.resizeCrop ? 'true' : 'false';
-                    let requestString = '/images/thumb/' + model.id + '/' + scope.resizeWidth + '/' + scope.resizeHeight + '/' + cropped;
-                    requestString = window.baseUrl(requestString);
-                    $http.get(requestString).then((response) => {
-                        setImage(model, response.data.url);
-                    });
-                };
-
-            }
-        };
-    }]);
 
     /**
      * DropZone
@@ -179,25 +66,26 @@ module.exports = function (ngApp, events) {
             restrict: 'E',
             template: `
             <div class="dropzone-container">
-                <div class="dz-message">Drop files or click here to upload</div>
+                <div class="dz-message">{{message}}</div>
             </div>
             `,
             scope: {
                 uploadUrl: '@',
                 eventSuccess: '=',
                 eventError: '=',
-                uploadedTo: '@'
+                uploadedTo: '@',
             },
             link: function (scope, element, attrs) {
+                scope.message = attrs.message;
                 if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
-                var dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
+                let dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
                     url: scope.uploadUrl,
                     init: function () {
-                        var dz = this;
+                        let dz = this;
                         dz.on('sending', function (file, xhr, data) {
-                            var token = window.document.querySelector('meta[name=token]').getAttribute('content');
+                            let token = window.document.querySelector('meta[name=token]').getAttribute('content');
                             data.append('_token', token);
-                            var uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
+                            let uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
                             data.append('uploaded_to', uploadedTo);
                         });
                         if (typeof scope.eventSuccess !== 'undefined') dz.on('success', scope.eventSuccess);
@@ -214,7 +102,7 @@ module.exports = function (ngApp, events) {
                                 $(file.previewElement).find('[data-dz-errormessage]').text(message);
                             }
 
-                            if (xhr.status === 413) setMessage('The server does not allow uploads of this size. Please try a smaller file.');
+                            if (xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
                             if (errorMessage.file) setMessage(errorMessage.file[0]);
 
                         });
@@ -273,7 +161,7 @@ module.exports = function (ngApp, events) {
 
                 function tinyMceSetup(editor) {
                     editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
-                        var content = editor.getContent();
+                        let content = editor.getContent();
                         $timeout(() => {
                             scope.mceModel = content;
                         });
@@ -301,9 +189,9 @@ module.exports = function (ngApp, events) {
                 // Custom tinyMCE plugins
                 tinymce.PluginManager.add('customhr', function (editor) {
                     editor.addCommand('InsertHorizontalRule', function () {
-                        var hrElem = document.createElement('hr');
-                        var cNode = editor.selection.getNode();
-                        var parentNode = cNode.parentNode;
+                        let hrElem = document.createElement('hr');
+                        let cNode = editor.selection.getNode();
+                        let parentNode = cNode.parentNode;
                         parentNode.insertBefore(hrElem, cNode);
                     });
 
@@ -373,15 +261,21 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 // Elements
-                const input = element.find('[markdown-input] textarea').first();
-                const display = element.find('.markdown-display').first();
-                const insertImage = element.find('button[data-action="insertImage"]');
-                const insertEntityLink = element.find('button[data-action="insertEntityLink"]')
+                const $input = element.find('[markdown-input] textarea').first();
+                const $display = element.find('.markdown-display').first();
+                const $insertImage = element.find('button[data-action="insertImage"]');
+                const $insertEntityLink = element.find('button[data-action="insertEntityLink"]');
+
+                // Prevent markdown display link click redirect
+                $display.on('click', 'a', function(event) {
+                    event.preventDefault();
+                    window.open(this.getAttribute('href'));
+                });
 
                 let currentCaretPos = 0;
 
-                input.blur(event => {
-                    currentCaretPos = input[0].selectionStart;
+                $input.blur(event => {
+                    currentCaretPos = $input[0].selectionStart;
                 });
 
                 // Scroll sync
@@ -391,10 +285,10 @@ module.exports = function (ngApp, events) {
                     displayHeight;
 
                 function setScrollHeights() {
-                    inputScrollHeight = input[0].scrollHeight;
-                    inputHeight = input.height();
-                    displayScrollHeight = display[0].scrollHeight;
-                    displayHeight = display.height();
+                    inputScrollHeight = $input[0].scrollHeight;
+                    inputHeight = $input.height();
+                    displayScrollHeight = $display[0].scrollHeight;
+                    displayHeight = $display.height();
                 }
 
                 setTimeout(() => {
@@ -403,29 +297,29 @@ module.exports = function (ngApp, events) {
                 window.addEventListener('resize', setScrollHeights);
                 let scrollDebounceTime = 800;
                 let lastScroll = 0;
-                input.on('scroll', event => {
+                $input.on('scroll', event => {
                     let now = Date.now();
                     if (now - lastScroll > scrollDebounceTime) {
                         setScrollHeights()
                     }
-                    let scrollPercent = (input.scrollTop() / (inputScrollHeight - inputHeight));
+                    let scrollPercent = ($input.scrollTop() / (inputScrollHeight - inputHeight));
                     let displayScrollY = (displayScrollHeight - displayHeight) * scrollPercent;
-                    display.scrollTop(displayScrollY);
+                    $display.scrollTop(displayScrollY);
                     lastScroll = now;
                 });
 
                 // Editor key-presses
-                input.keydown(event => {
+                $input.keydown(event => {
                     // Insert image shortcut
                     if (event.which === 73 && event.ctrlKey && event.shiftKey) {
                         event.preventDefault();
-                        let caretPos = input[0].selectionStart;
-                        let currentContent = input.val();
+                        let caretPos = $input[0].selectionStart;
+                        let currentContent = $input.val();
                         const mdImageText = "![](http://)";
-                        input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        input.focus();
-                        input[0].selectionStart = caretPos + ("![](".length);
-                        input[0].selectionEnd = caretPos + ('![](http://'.length);
+                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
+                        $input.focus();
+                        $input[0].selectionStart = caretPos + ("![](".length);
+                        $input[0].selectionEnd = caretPos + ('![](http://'.length);
                         return;
                     }
 
@@ -440,48 +334,48 @@ module.exports = function (ngApp, events) {
                 });
 
                 // Insert image from image manager
-                insertImage.click(event => {
+                $insertImage.click(event => {
                     window.ImageManager.showExternal(image => {
                         let caretPos = currentCaretPos;
-                        let currentContent = input.val();
+                        let currentContent = $input.val();
                         let mdImageText = "![" + image.name + "](" + image.thumbs.display + ")";
-                        input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        input.change();
+                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
+                        $input.change();
                     });
                 });
 
                 function showLinkSelector() {
                     window.showEntityLinkSelector((entity) => {
                         let selectionStart = currentCaretPos;
-                        let selectionEnd = input[0].selectionEnd;
+                        let selectionEnd = $input[0].selectionEnd;
                         let textSelected = (selectionEnd !== selectionStart);
-                        let currentContent = input.val();
+                        let currentContent = $input.val();
 
                         if (textSelected) {
                             let selectedText = currentContent.substring(selectionStart, selectionEnd);
                             let linkText = `[${selectedText}](${entity.link})`;
-                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
+                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
                         } else {
                             let linkText = ` [${entity.name}](${entity.link}) `;
-                            input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
+                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
                         }
-                        input.change();
+                        $input.change();
                     });
                 }
-                insertEntityLink.click(showLinkSelector);
+                $insertEntityLink.click(showLinkSelector);
 
                 // Upload and insert image on paste
                 function editorPaste(e) {
                     e = e.originalEvent;
                     if (!e.clipboardData) return
-                    var items = e.clipboardData.items;
+                    let items = e.clipboardData.items;
                     if (!items) return;
-                    for (var i = 0; i < items.length; i++) {
+                    for (let i = 0; i < items.length; i++) {
                         uploadImage(items[i].getAsFile());
                     }
                 }
 
-                input.on('paste', editorPaste);
+                $input.on('paste', editorPaste);
 
                 // Handle image drop, Uploads images to BookStack.
                 function handleImageDrop(event) {
@@ -493,17 +387,17 @@ module.exports = function (ngApp, events) {
                     }
                 }
 
-                input.on('drop', handleImageDrop);
+                $input.on('drop', handleImageDrop);
 
                 // Handle image upload and add image into markdown content
                 function uploadImage(file) {
                     if (file.type.indexOf('image') !== 0) return;
-                    var formData = new FormData();
-                    var ext = 'png';
-                    var xhr = new XMLHttpRequest();
+                    let formData = new FormData();
+                    let ext = 'png';
+                    let xhr = new XMLHttpRequest();
 
                     if (file.name) {
-                        var fileNameMatches = file.name.match(/\.(.+)$/);
+                        let fileNameMatches = file.name.match(/\.(.+)$/);
                         if (fileNameMatches) {
                             ext = fileNameMatches[1];
                         }
@@ -511,17 +405,17 @@ module.exports = function (ngApp, events) {
 
                     // Insert image into markdown
                     let id = "image-" + Math.random().toString(16).slice(2);
-                    let selectStart = input[0].selectionStart;
-                    let selectEnd = input[0].selectionEnd;
-                    let content = input[0].value;
+                    let selectStart = $input[0].selectionStart;
+                    let selectEnd = $input[0].selectionEnd;
+                    let content = $input[0].value;
                     let selectText = content.substring(selectStart, selectEnd);
                     let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
                     let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
-                    input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
+                    $input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
 
-                    input.focus();
-                    input[0].selectionStart = selectStart;
-                    input[0].selectionEnd = selectStart;
+                    $input.focus();
+                    $input[0].selectionStart = selectStart;
+                    $input[0].selectionEnd = selectStart;
 
                     let remoteFilename = "image-" + Date.now() + "." + ext;
                     formData.append('file', file, remoteFilename);
@@ -529,20 +423,20 @@ module.exports = function (ngApp, events) {
 
                     xhr.open('POST', window.baseUrl('/images/gallery/upload'));
                     xhr.onload = function () {
-                        let selectStart = input[0].selectionStart;
+                        let selectStart = $input[0].selectionStart;
                         if (xhr.status === 200 || xhr.status === 201) {
-                            var result = JSON.parse(xhr.responseText);
-                            input[0].value = input[0].value.replace(placeholderImage, result.thumbs.display);
-                            input.change();
+                            let result = JSON.parse(xhr.responseText);
+                            $input[0].value = $input[0].value.replace(placeholderImage, result.thumbs.display);
+                            $input.change();
                         } else {
-                            console.log('An error occurred uploading the image');
+                            console.log(trans('errors.image_upload_error'));
                             console.log(xhr.responseText);
-                            input[0].value = input[0].value.replace(innerContent, '');
-                            input.change();
+                            $input[0].value = $input[0].value.replace(innerContent, '');
+                            $input.change();
                         }
-                        input.focus();
-                        input[0].selectionStart = selectStart;
-                        input[0].selectionEnd = selectStart;
+                        $input.focus();
+                        $input[0].selectionStart = selectStart;
+                        $input[0].selectionEnd = selectStart;
                     };
                     xhr.send(formData);
                 }
@@ -680,8 +574,7 @@ module.exports = function (ngApp, events) {
                     }
                     // Enter or tab key
                     else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
-                        let text = suggestionElems[active].textContent;
-                        currentInput[0].value = text;
+                        currentInput[0].value = suggestionElems[active].textContent;
                         currentInput.focus();
                         $suggestionBox.hide();
                         isShowing = false;
@@ -732,14 +625,13 @@ module.exports = function (ngApp, events) {
                     // Build suggestions
                     $suggestionBox[0].innerHTML = '';
                     for (let i = 0; i < suggestions.length; i++) {
-                        var suggestion = document.createElement('li');
+                        let suggestion = document.createElement('li');
                         suggestion.textContent = suggestions[i];
                         suggestion.onclick = suggestionClick;
                         if (i === 0) {
-                            suggestion.className = 'active'
+                            suggestion.className = 'active';
                             active = 0;
                         }
-                        ;
                         $suggestionBox[0].appendChild(suggestion);
                     }
 
@@ -748,12 +640,11 @@ module.exports = function (ngApp, events) {
 
                 // Suggestion click event
                 function suggestionClick(event) {
-                    let text = this.textContent;
-                    currentInput[0].value = text;
+                    currentInput[0].value = this.textContent;
                     currentInput.focus();
                     $suggestionBox.hide();
                     isShowing = false;
-                };
+                }
 
                 // Get suggestions & cache
                 function getSuggestions(input, url) {
@@ -779,7 +670,7 @@ module.exports = function (ngApp, events) {
 
     ngApp.directive('entityLinkSelector', [function($http) {
         return {
-            restict: 'A',
+            restrict: 'A',
             link: function(scope, element, attrs) {
 
                 const selectButton = element.find('.entity-link-selector-confirm');
@@ -843,7 +734,7 @@ module.exports = function (ngApp, events) {
                 const input = element.find('[entity-selector-input]').first();
 
                 // Detect double click events
-                var lastClick = 0;
+                let lastClick = 0;
                 function isDoubleClick() {
                     let now = Date.now();
                     let answer = now - lastClick < 300;

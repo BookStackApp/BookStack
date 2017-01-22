@@ -8,8 +8,9 @@ use BookStack\Ownable;
 use BookStack\Page;
 use BookStack\Role;
 use BookStack\User;
+use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class PermissionService
 {
@@ -23,6 +24,8 @@ class PermissionService
     public $chapter;
     public $page;
 
+    protected $db;
+
     protected $jointPermission;
     protected $role;
 
@@ -31,18 +34,21 @@ class PermissionService
     /**
      * PermissionService constructor.
      * @param JointPermission $jointPermission
+     * @param Connection $db
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
      * @param Role $role
      */
-    public function __construct(JointPermission $jointPermission, Book $book, Chapter $chapter, Page $page, Role $role)
+    public function __construct(JointPermission $jointPermission, Connection $db, Book $book, Chapter $chapter, Page $page, Role $role)
     {
+        $this->db = $db;
         $this->jointPermission = $jointPermission;
         $this->role = $role;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
+        // TODO - Update so admin still goes through filters
     }
 
     /**
@@ -151,7 +157,7 @@ class PermissionService
      */
     public function buildJointPermissionsForEntity(Entity $entity)
     {
-        $roles = $this->role->with('jointPermissions')->get();
+        $roles = $this->role->get();
         $entities = collect([$entity]);
 
         if ($entity->isA('book')) {
@@ -171,7 +177,7 @@ class PermissionService
      */
     public function buildJointPermissionsForEntities(Collection $entities)
     {
-        $roles = $this->role->with('jointPermissions')->get();
+        $roles = $this->role->get();
         $this->deleteManyJointPermissionsForEntities($entities);
         $this->createManyJointPermissions($entities, $roles);
     }
@@ -302,6 +308,10 @@ class PermissionService
         $explodedAction = explode('-', $action);
         $restrictionAction = end($explodedAction);
 
+        if ($role->system_name === 'admin') {
+            return $this->createJointPermissionDataArray($entity, $role, $action, true, true);
+        }
+
         if ($entity->isA('book')) {
 
             if (!$entity->restricted) {
@@ -395,7 +405,7 @@ class PermissionService
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
-        $nonJointPermissions = ['restrictions'];
+        $nonJointPermissions = ['restrictions', 'image', 'attachment'];
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
@@ -410,7 +420,6 @@ class PermissionService
         if ($action === 'create') {
             $this->currentAction = $permission;
         }
-
 
         $q = $this->entityRestrictionQuery($baseQuery)->count() > 0;
         $this->clean();
@@ -462,60 +471,67 @@ class PermissionService
     }
 
     /**
-     * Add restrictions for a page query
-     * @param $query
-     * @param string $action
-     * @return mixed
+     * Get the children of a book in an efficient single query, Filtered by the permission system.
+     * @param integer $book_id
+     * @param bool    $filterDrafts
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function enforcePageRestrictions($query, $action = 'view')
-    {
-        // Prevent drafts being visible to others.
-        $query = $query->where(function ($query) {
-            $query->where('draft', '=', false);
-            if ($this->currentUser()) {
-                $query->orWhere(function ($query) {
-                    $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser()->id);
+    public function bookChildrenQuery($book_id, $filterDrafts = false) {
+        $pageSelect = $this->db->table('pages')->selectRaw("'BookStack\\\\Page' as entity_type, id, slug, name, text, '' as description, book_id, priority, chapter_id, draft")->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
+            $query->where('draft', '=', 0);
+            if (!$filterDrafts) {
+                $query->orWhere(function($query) {
+                    $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
                 });
             }
         });
+        $chapterSelect = $this->db->table('chapters')->selectRaw("'BookStack\\\\Chapter' as entity_type, id, slug, name, '' as text, description, book_id, priority, 0 as chapter_id, 0 as draft")->where('book_id', '=', $book_id);
+        $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
+            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
 
-        return $this->enforceEntityRestrictions($query, $action);
-    }
+        if (!$this->isAdmin()) {
+            $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
+                ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
+                ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
+                ->where(function($query) {
+                    $query->where('jp.has_permission', '=', 1)->orWhere(function($query) {
+                        $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
+                    });
+                });
+            $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
+        }
 
-    /**
-     * Add on permission restrictions to a chapter query.
-     * @param $query
-     * @param string $action
-     * @return mixed
-     */
-    public function enforceChapterRestrictions($query, $action = 'view')
-    {
-        return $this->enforceEntityRestrictions($query, $action);
-    }
-
-    /**
-     * Add restrictions to a book query.
-     * @param $query
-     * @param string $action
-     * @return mixed
-     */
-    public function enforceBookRestrictions($query, $action = 'view')
-    {
-        return $this->enforceEntityRestrictions($query, $action);
+        $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
+        $this->clean();
+        return  $query;
     }
 
     /**
      * Add restrictions for a generic entity
-     * @param $query
+     * @param string $entityType
+     * @param Builder|Entity $query
      * @param string $action
      * @return mixed
      */
-    public function enforceEntityRestrictions($query, $action = 'view')
+    public function enforceEntityRestrictions($entityType, $query, $action = 'view')
     {
+        if (strtolower($entityType) === 'page') {
+            // Prevent drafts being visible to others.
+            $query = $query->where(function ($query) {
+                $query->where('draft', '=', false);
+                if ($this->currentUser()) {
+                    $query->orWhere(function ($query) {
+                        $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser()->id);
+                    });
+                }
+            });
+        }
+
         if ($this->isAdmin()) {
             $this->clean();
             return $query;
         }
+
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }
@@ -553,6 +569,7 @@ class PermissionService
                     });
             });
         });
+        $this->clean();
         return $q;
     }
 
@@ -601,7 +618,7 @@ class PermissionService
     private function isAdmin()
     {
         if ($this->isAdminUser === null) {
-            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasRole('admin') : false;
+            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasSystemRole('admin') : false;
         }
 
         return $this->isAdminUser;

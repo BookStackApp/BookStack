@@ -18,5 +18,5 @@ if (! empty($outroLines)) {
     echo implode("\n", $outroLines), "\n\n";
 }
 
-echo 'Regards,', "\n";
-echo config('app.name'), "\n";
+echo "\n";
+echo setting('app-name'), "\n";

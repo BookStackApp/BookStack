@@ -3,7 +3,6 @@
 use BookStack\Role;
 use BookStack\User;
 use Exception;
-use Setting;
 
 class UserRepo
 {
@@ -169,13 +168,13 @@ class UserRepo
     public function getRecentlyCreated(User $user, $count = 20)
     {
         return [
-            'pages'    => $this->entityRepo->getRecentlyCreatedPages($count, 0, function ($query) use ($user) {
+            'pages'    => $this->entityRepo->getRecentlyCreated('page', $count, 0, function ($query) use ($user) {
                 $query->where('created_by', '=', $user->id);
             }),
-            'chapters' => $this->entityRepo->getRecentlyCreatedChapters($count, 0, function ($query) use ($user) {
+            'chapters' => $this->entityRepo->getRecentlyCreated('chapter', $count, 0, function ($query) use ($user) {
                 $query->where('created_by', '=', $user->id);
             }),
-            'books'    => $this->entityRepo->getRecentlyCreatedBooks($count, 0, function ($query) use ($user) {
+            'books'    => $this->entityRepo->getRecentlyCreated('book', $count, 0, function ($query) use ($user) {
                 $query->where('created_by', '=', $user->id);
             })
         ];

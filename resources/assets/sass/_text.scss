@@ -109,6 +109,9 @@ em, i, .italic {
 small, p.small, span.small, .text-small {
   font-size: 0.8em;
   color: lighten($text-dark, 20%);
+  small, p.small, span.small, .text-small {
+    font-size: 1em;
+  }
 }
 
 sup, .superscript {
@@ -172,6 +175,7 @@ pre code {
   background-color: transparent;
   border: 0;
   font-size: 1em;
+  display: block;
 }
 /*
  * Text colors

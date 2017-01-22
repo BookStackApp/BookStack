@@ -24,7 +24,7 @@ class AuthTest extends TestCase
         $settings->put('app-public', 'true');
         $this->visit('/')
             ->seePageIs('/')
-            ->see('Sign In');
+            ->see('Log In');
     }
 
     public function test_registration_showing()
@@ -132,7 +132,7 @@ class AuthTest extends TestCase
 
         $this->asAdmin()
             ->visit('/settings/users')
-            ->click('Add new user')
+            ->click('Add New User')
             ->type($user->name, '#name')
             ->type($user->email, '#email')
             ->check('roles[admin]')
@@ -245,7 +245,7 @@ class AuthTest extends TestCase
     {
         $this->setSettings(['registration-enabled' => 'true']);
         $this->visit('/password/email')
-            ->seeLink('Sign in')
+            ->seeLink('Log in')
             ->seeLink('Sign up');
     }
 
@@ -260,6 +260,6 @@ class AuthTest extends TestCase
         return $this->visit('/login')
             ->type($email, '#email')
             ->type($password, '#password')
-            ->press('Sign In');
+            ->press('Log In');
     }
 }

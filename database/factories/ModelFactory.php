@@ -60,3 +60,13 @@ $factory->define(BookStack\Tag::class, function ($faker) {
         'value' => $faker->sentence(3)
     ];
 });
+
+$factory->define(BookStack\Image::class, function ($faker) {
+    return [
+        'name' => $faker->slug . '.jpg',
+        'url' => $faker->url,
+        'path' => $faker->url,
+        'type' => 'gallery',
+        'uploaded_to' => 0
+    ];
+});

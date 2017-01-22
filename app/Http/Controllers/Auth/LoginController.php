@@ -87,7 +87,7 @@ class LoginController extends Controller
             // Check for users with same email already
             $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
             if ($alreadyUser) {
-                throw new AuthException('A user with the email ' . $user->email . ' already exists but with different credentials.');
+                throw new AuthException(trans('errors.error_user_exists_different_creds', ['email' => $user->email]));
             }
 
             $user->save();

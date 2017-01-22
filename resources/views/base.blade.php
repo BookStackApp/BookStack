@@ -17,6 +17,7 @@
     <!-- Scripts -->
     <script src="{{ baseUrl('/libs/jquery/jquery.min.js?version=2.1.4') }}"></script>
     <script src="{{ baseUrl('/libs/jquery/jquery-ui.min.js?version=1.11.4') }}"></script>
+    <script src="{{ baseUrl('/translations.js') }}"></script>
 
     @yield('head')
 
@@ -53,32 +54,16 @@
                 <div class="col-lg-4 col-sm-5">
                     <div class="float right">
                         <div class="links text-center">
-                            <a href="{{ baseUrl('/books') }}"><i class="zmdi zmdi-book"></i>Books</a>
+                            <a href="{{ baseUrl('/books') }}"><i class="zmdi zmdi-book"></i>{{ trans('entities.books') }}</a>
                             @if(isset($currentUser) && userCan('settings-manage'))
-                                <a href="{{ baseUrl('/settings') }}"><i class="zmdi zmdi-settings"></i>Settings</a>
+                                <a href="{{ baseUrl('/settings') }}"><i class="zmdi zmdi-settings"></i>{{ trans('settings.settings') }}</a>
                             @endif
                             @if(!isset($signedIn) || !$signedIn)
-                                <a href="{{ baseUrl('/login') }}"><i class="zmdi zmdi-sign-in"></i>Sign In</a>
+                                <a href="{{ baseUrl('/login') }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
                             @endif
                         </div>
                         @if(isset($signedIn) && $signedIn)
-                            <div class="dropdown-container" dropdown>
-                                <span class="user-name" dropdown-toggle>
-                                    <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
-                                    <span class="name" ng-non-bindable>{{ $currentUser->getShortName(9) }}</span> <i class="zmdi zmdi-caret-down"></i>
-                                </span>
-                                <ul>
-                                    <li>
-                                        <a href="{{ baseUrl("/user/{$currentUser->id}") }}" class="text-primary"><i class="zmdi zmdi-account zmdi-hc-fw zmdi-hc-lg"></i>View Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ baseUrl("/settings/users/{$currentUser->id}") }}" class="text-primary"><i class="zmdi zmdi-edit zmdi-hc-fw zmdi-hc-lg"></i>Edit Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ baseUrl('/logout') }}" class="text-neg"><i class="zmdi zmdi-run zmdi-hc-fw zmdi-hc-lg"></i>Logout</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            @include('partials._header-dropdown', ['currentUser' => $currentUser])
                         @endif
 
                     </div>
@@ -93,7 +78,7 @@
 
     <div id="back-to-top">
         <div class="inner">
-            <i class="zmdi zmdi-chevron-up"></i> <span>Back to top</span>
+            <i class="zmdi zmdi-chevron-up"></i> <span>{{ trans('common.back_to_top') }}</span>
         </div>
     </div>
 @yield('bottom')

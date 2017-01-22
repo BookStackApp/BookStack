@@ -1,11 +1,13 @@
 ### For Feature Requests
+
 Desired Feature:
 
 ### For Bug Reports
-PHP Version:
 
-MySQL Version:
+* BookStack Version:
+* PHP Version:
+* MySQL Version:
 
-Expected Behavior:
+##### Expected Behavior
 
-Actual Behavior:
+##### Actual Behavior

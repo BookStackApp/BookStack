@@ -6,27 +6,23 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 faded">
-                    <div class="breadcrumbs">
-                        <a href="{{ $book->getUrl() }}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
-                        <span class="sep">&raquo;</span>
-                        <a href="{{ $chapter->getUrl() }}" class="text-chapter text-button"><i class="zmdi zmdi-collection-bookmark"></i>{{ $chapter->getShortName() }}</a>
-                    </div>
+                    @include('chapters._breadcrumbs', ['chapter' => $chapter])
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <h1>Move Chapter <small class="subheader">{{$chapter->name}}</small></h1>
+        <h1>{{ trans('entities.chapters_move') }}</h1>
 
         <form action="{{ $chapter->getUrl('/move') }}" method="POST">
             {!! csrf_field() !!}
             <input type="hidden" name="_method" value="PUT">
 
-            @include('partials/entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book'])
+            @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book'])
 
-            <a href="{{ $chapter->getUrl() }}" class="button muted">Cancel</a>
-            <button type="submit" class="button pos">Move Chapter</button>
+            <a href="{{ $chapter->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
+            <button type="submit" class="button pos">{{ trans('entities.chapters_move') }}</button>
         </form>
     </div>
 

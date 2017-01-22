@@ -322,6 +322,9 @@ ul.pagination {
     font-size: 0.75em;
     margin-top: $-xs;
   }
+  .text-muted p.text-muted {
+    margin-top: 0;
+  }
   .page.draft .text-page {
     color: $color-page-draft;
   }
