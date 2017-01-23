@@ -243,13 +243,14 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForEntities($entities)
     {
+        if (count($entities) === 0) return;
         $query = $this->jointPermission->newQuery();
-        foreach ($entities as $entity) {
-            $query->orWhere(function($query) use ($entity) {
-                $query->where('entity_id', '=', $entity->id)
-                    ->where('entity_type', '=', $entity->getMorphClass());
-            });
-        }
+            foreach ($entities as $entity) {
+                $query->orWhere(function($query) use ($entity) {
+                    $query->where('entity_id', '=', $entity->id)
+                        ->where('entity_type', '=', $entity->getMorphClass());
+                });
+            }
         $query->delete();
     }
 
