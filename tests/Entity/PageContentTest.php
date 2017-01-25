@@ -1,6 +1,6 @@
 <?php
 
-class PageContentTest extends TestCase
+class PageContentTest extends BrowserKitTest
 {
 
     public function test_page_includes()

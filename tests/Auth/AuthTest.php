@@ -3,7 +3,7 @@
 use BookStack\Notifications\ConfirmEmail;
 use Illuminate\Support\Facades\Notification;
 
-class AuthTest extends TestCase
+class AuthTest extends BrowserKitTest
 {
 
     public function test_auth_working()
@@ -220,6 +220,9 @@ class AuthTest extends TestCase
 
     public function test_reset_password_flow()
     {
+
+        Notification::fake();
+
         $this->visit('/login')->click('Forgot Password?')
             ->seePageIs('/password/email')
             ->type('admin@admin.com', 'email')
@@ -230,8 +233,13 @@ class AuthTest extends TestCase
             'email' => 'admin@admin.com'
         ]);
 
+        $user = \BookStack\User::where('email', '=', 'admin@admin.com')->first();
+
+        Notification::assertSentTo($user, \BookStack\Notifications\ResetPassword::class);
+        $n = Notification::sent($user, \BookStack\Notifications\ResetPassword::class);
+
         $reset = DB::table('password_resets')->where('email', '=', 'admin@admin.com')->first();
-        $this->visit('/password/reset/' . $reset->token)
+        $this->visit('/password/reset/' . $n->first()->token)
             ->see('Reset Password')
             ->submitForm('Reset Password', [
                 'email' => 'admin@admin.com',

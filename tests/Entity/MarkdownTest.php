@@ -1,7 +1,6 @@
 <?php
 
-
-class MarkdownTest extends TestCase
+class MarkdownTest extends BrowserKitTest
 {
     protected $page;
 
