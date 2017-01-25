@@ -1,9 +1,7 @@
 <?php
-
-use BookStack\Services\LdapService;
 use BookStack\User;
 
-class LdapTest extends \TestCase
+class LdapTest extends BrowserKitTest
 {
 
     protected $mockLdap;

@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ActivityTrackingTest extends TestCase
+class ActivityTrackingTest extends BrowserKitTest
 {
 
     public function test_recently_viewed_books()

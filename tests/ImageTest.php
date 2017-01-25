@@ -1,6 +1,6 @@
 <?php
 
-class ImageTest extends TestCase
+class ImageTest extends BrowserKitTest
 {
 
     /**

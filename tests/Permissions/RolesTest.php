@@ -1,6 +1,6 @@
 <?php
 
-class RolesTest extends TestCase
+class RolesTest extends BrowserKitTest
 {
     protected $user;
 

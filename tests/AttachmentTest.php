@@ -1,6 +1,6 @@
 <?php
 
-class AttachmentTest extends TestCase
+class AttachmentTest extends BrowserKitTest
 {
     /**
      * Get a test file that can be uploaded

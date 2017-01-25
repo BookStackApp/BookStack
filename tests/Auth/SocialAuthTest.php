@@ -1,6 +1,6 @@
 <?php
 
-class SocialAuthTest extends TestCase
+class SocialAuthTest extends BrowserKitTest
 {
 
     public function test_social_registration()

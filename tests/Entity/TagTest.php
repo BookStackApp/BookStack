@@ -1,10 +1,10 @@
-<?php namespace Entity;
+<?php
 
 use BookStack\Tag;
 use BookStack\Page;
 use BookStack\Services\PermissionService;
 
-class TagTest extends \TestCase
+class TagTest extends BrowserKitTest
 {
 
     protected $defaultTagCount = 20;

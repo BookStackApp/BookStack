@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-
-class EntityTest extends TestCase
+class EntityTest extends BrowserKitTest
 {
 
     public function test_entity_creation()

@@ -1,6 +1,6 @@
 <?php
 
-class PublicActionTest extends TestCase
+class PublicActionTest extends BrowserKitTest
 {
 
     public function test_app_not_public()
