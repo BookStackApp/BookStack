@@ -1,13 +1,13 @@
 <?php
 
 return [
-    
+
     /**
      * Settings text strings
      * Contains all text strings used in the general settings sections of BookStack
      * including users and roles.
      */
-    
+
     'settings' => 'Settings',
     'settings_save' => 'Save Settings',
     'settings_save_success' => 'Settings saved',
@@ -92,7 +92,7 @@ return [
     'users_password_warning' => 'Only fill the below if you would like to change your password:',
     'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
     'users_delete' => 'Delete User',
-    'users_delete_named' => 'Delete ser :userName',
+    'users_delete_named' => 'Delete user :userName',
     'users_delete_warning' => 'This will fully delete this user with the name \':userName\' from the system.',
     'users_delete_confirm' => 'Are you sure you want to delete this user?',
     'users_delete_success' => 'Users successfully removed',
@@ -101,40 +101,23 @@ return [
     'users_edit_success' => 'User successfully updated',
     'users_avatar' => 'User Avatar',
     'users_avatar_desc' => 'This image should be approx 256px square.',
+    'users_preferred_language' => 'Preferred Language',
     'users_social_accounts' => 'Social Accounts',
     'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Connect Account',
     'users_social_disconnect' => 'Disconnect Account',
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
+
+    // Since these labels are already localized this array does not need to be
+    // translated in the language-specific files.
+    // DELETE BELOW IF COPIED FROM EN
+    ///////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'de' => 'Deutsch',
+        'fr' => 'Français',
+        'pt_BR' => 'Português do Brasil'
+    ]
+    ///////////////////////////////////
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

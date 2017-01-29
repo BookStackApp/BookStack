@@ -18,7 +18,7 @@
                 <label>@include('settings/roles/checkbox', ['permission' => 'users-manage']) {{ trans('settings.role_manage_users') }}</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) {{ trans('settings.role_manage_roles') }}</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-all']) {{ trans('settings.role_manage_entity_permissions') }}</label>
-                <label>@include('settings/roles/checkbox', ['permission' => 'permissions']) {{ trans('settings.role_manage_own_entity_permissions') }}</label>
+                <label>@include('settings/roles/checkbox', ['permission' => 'restrictions-manage-own']) {{ trans('settings.role_manage_own_entity_permissions') }}</label>
                 <label>@include('settings/roles/checkbox', ['permission' => 'settings-manage']) {{ trans('settings.role_manage_settings') }}</label>
             </div>
 
