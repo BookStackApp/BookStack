@@ -223,4 +223,10 @@ return [
     'profile_not_created_pages' => ':userName has not created any pages',
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any books',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Comment',
+    'comments' => 'Comments'
 ];
