@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-
-class EntitySearchTest extends TestCase
+class EntitySearchTest extends BrowserKitTest
 {
 
     public function test_page_search()

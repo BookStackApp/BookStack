@@ -139,7 +139,7 @@ class EntityRepo
      */
     public function getById($type, $id, $allowDrafts = false)
     {
-        return $this->entityQuery($type, $allowDrafts)->findOrFail($id);
+        return $this->entityQuery($type, $allowDrafts)->find($id);
     }
 
     /**
@@ -318,15 +318,15 @@ class EntityRepo
      */
     public function getBookChildren(Book $book, $filterDrafts = false)
     {
-        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts);
+        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts)->get();
         $entities = [];
         $parents = [];
         $tree = [];
 
         foreach ($q as $index => $rawEntity) {
-            if ($rawEntity->entity_type === 'Bookstack\\Page') {
+            if ($rawEntity->entity_type === 'BookStack\\Page') {
                 $entities[$index] = $this->page->newFromBuilder($rawEntity);
-            } else if ($rawEntity->entity_type === 'Bookstack\\Chapter') {
+            } else if ($rawEntity->entity_type === 'BookStack\\Chapter') {
                 $entities[$index] = $this->chapter->newFromBuilder($rawEntity);
                 $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
                 $parents[$key] = $entities[$index];
@@ -338,7 +338,7 @@ class EntityRepo
 
         foreach ($entities as $entity) {
             if ($entity->chapter_id === 0) continue;
-            $parentKey = 'Bookstack\\Chapter:' . $entity->chapter_id;
+            $parentKey = 'BookStack\\Chapter:' . $entity->chapter_id;
             $chapter = $parents[$parentKey];
             $chapter->pages->push($entity);
         }
@@ -796,6 +796,52 @@ class EntityRepo
         return $html;
     }
 
+
+    /**
+     * Render the page for viewing, Parsing and performing features such as page transclusion.
+     * @param Page $page
+     * @return mixed|string
+     */
+    public function renderPage(Page $page)
+    {
+        $content = $page->html;
+        $matches = [];
+        preg_match_all("/{{@\s?([0-9].*?)}}/", $content, $matches);
+        if (count($matches[0]) === 0) return $content;
+
+        foreach ($matches[1] as $index => $includeId) {
+            $splitInclude = explode('#', $includeId, 2);
+            $pageId = intval($splitInclude[0]);
+            if (is_nan($pageId)) continue;
+
+            $page = $this->getById('page', $pageId);
+            if ($page === null) {
+                $content = str_replace($matches[0][$index], '', $content);
+                continue;
+            }
+
+            if (count($splitInclude) === 1) {
+                $content = str_replace($matches[0][$index], $page->html, $content);
+                continue;
+            }
+
+            $doc = new DOMDocument();
+            $doc->loadHTML(mb_convert_encoding('<body>'.$page->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
+            $matchingElem = $doc->getElementById($splitInclude[1]);
+            if ($matchingElem === null) {
+                $content = str_replace($matches[0][$index], '', $content);
+                continue;
+            }
+            $innerContent = '';
+            foreach ($matchingElem->childNodes as $childNode) {
+                $innerContent .= $doc->saveHTML($childNode);
+            }
+            $content = str_replace($matches[0][$index], trim($innerContent), $content);
+        }
+
+        return $content;
+    }
+
     /**
      * Get a new draft page instance.
      * @param Book $book
@@ -835,19 +881,19 @@ class EntityRepo
 
     /**
      * Parse the headers on the page to get a navigation menu
-     * @param Page $page
-     * @return Collection
+     * @param String $pageContent
+     * @return array
      */
-    public function getPageNav(Page $page)
+    public function getPageNav($pageContent)
     {
-        if ($page->html == '') return null;
+        if ($pageContent == '') return [];
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($page->html, 'HTML-ENTITIES', 'UTF-8'));
+        $doc->loadHTML(mb_convert_encoding($pageContent, 'HTML-ENTITIES', 'UTF-8'));
         $xPath = new DOMXPath($doc);
         $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
 
-        if (is_null($headers)) return null;
+        if (is_null($headers)) return [];
 
         $tree = collect([]);
         foreach ($headers as $header) {
@@ -868,7 +914,7 @@ class EntityRepo
                 return $header;
             });
         }
-        return $tree;
+        return $tree->toArray();
     }
 
     /**

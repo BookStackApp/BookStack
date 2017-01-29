@@ -158,13 +158,16 @@ class PageController extends Controller
 
         $this->checkOwnablePermission('page-view', $page);
 
+        $pageContent = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
-        $pageNav = $this->entityRepo->getPageNav($page);
+        $pageNav = $this->entityRepo->getPageNav($pageContent);
         
         Views::add($page);
         $this->setPageTitle($page->getShortName());
-        return view('pages/show', ['page' => $page, 'book' => $page->book,
-                                   'current' => $page, 'sidebarTree' => $sidebarTree, 'pageNav' => $pageNav]);
+        return view('pages/show', [
+            'page' => $page,'book' => $page->book,
+            'current' => $page, 'sidebarTree' => $sidebarTree,
+            'pageNav' => $pageNav, 'pageContent' => $pageContent]);
     }
 
     /**
@@ -430,6 +433,7 @@ class PageController extends Controller
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $pdfContent = $this->exportService->pageToPdf($page);
+//        return $pdfContent;
         return response()->make($pdfContent, 200, [
             'Content-Type'        => 'application/octet-stream',
             'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.pdf'

@@ -1,10 +1,10 @@
-<?php namespace Entity;
+<?php
 
 use BookStack\Tag;
 use BookStack\Page;
 use BookStack\Services\PermissionService;
 
-class TagTests extends \TestCase
+class TagTest extends BrowserKitTest
 {
 
     protected $defaultTagCount = 20;
@@ -86,61 +86,16 @@ class TagTests extends \TestCase
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'color']));
         $page = $this->getPageWithTags($attrs);
 
-        $this->asAdmin()->get('/ajax/tags/suggest?search=co')->seeJsonEquals(['color', 'country']);
-        $this->asEditor()->get('/ajax/tags/suggest?search=co')->seeJsonEquals(['color', 'country']);
+        $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
+        $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
 
         // Set restricted permission the page
         $page->restricted = true;
         $page->save();
         $permissionService->buildJointPermissionsForEntity($page);
 
-        $this->asAdmin()->get('/ajax/tags/suggest?search=co')->seeJsonEquals(['color', 'country']);
-        $this->asEditor()->get('/ajax/tags/suggest?search=co')->seeJsonEquals([]);
-    }
-
-    public function test_entity_tag_updating()
-    {
-        $page = $this->getPageWithTags();
-
-        $testJsonData = [
-            ['name' => 'color', 'value' => 'red'],
-            ['name' => 'color', 'value' => ' blue '],
-            ['name' => 'city', 'value' => 'London '],
-            ['name' => 'country', 'value' => ' England'],
-        ];
-        $testResponseJsonData = [
-            ['name' => 'color', 'value' => 'red'],
-            ['name' => 'color', 'value' => 'blue'],
-            ['name' => 'city', 'value' => 'London'],
-            ['name' => 'country', 'value' => 'England'],
-        ];
-
-        // Do update request
-        $this->asAdmin()->json("POST", "/ajax/tags/update/page/" . $page->id, ['tags' => $testJsonData]);
-        $updateData = json_decode($this->response->getContent());
-        // Check data is correct
-        $testDataCorrect = true;
-        foreach ($updateData->tags as $data) {
-            $testItem = ['name' => $data->name, 'value' => $data->value];
-            if (!in_array($testItem, $testResponseJsonData)) $testDataCorrect = false;
-        }
-        $testMessage = "Expected data was not found in the response.\nExpected Data: %s\nRecieved Data: %s";
-        $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($updateData)));
-        $this->assertTrue(isset($updateData->message), "No message returned in tag update response");
-
-        // Do get request
-        $this->asAdmin()->get("/ajax/tags/get/page/" . $page->id);
-        $getResponseData = json_decode($this->response->getContent());
-        // Check counts
-        $this->assertTrue(count($getResponseData) === count($testJsonData), "The received tag count is incorrect");
-        // Check data is correct
-        $testDataCorrect = true;
-        foreach ($getResponseData as $data) {
-            $testItem = ['name' => $data->name, 'value' => $data->value];
-            if (!in_array($testItem, $testResponseJsonData)) $testDataCorrect = false;
-        }
-        $testMessage = "Expected data was not found in the response.\nExpected Data: %s\nRecieved Data: %s";
-        $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($getResponseData)));
+        $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
+        $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals([]);
     }
 
 }
