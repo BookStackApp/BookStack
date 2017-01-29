@@ -138,6 +138,10 @@
     font-size: 18px;
     padding-top: 4px;
   }
+  span.icon {
+    cursor: pointer;
+    user-select: none;
+  }
   .button {
     line-height: 1;
     margin: 0 0 0 -4px;

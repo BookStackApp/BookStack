@@ -26,7 +26,7 @@
         @endforeach
     @endif
 
-    @if (isset($pageNav) && $pageNav)
+    @if (isset($pageNav) && count($pageNav))
         <h6 class="text-muted">{{ trans('entities.pages_navigation') }}</h6>
         <div class="sidebar-page-nav menu">
             @foreach($pageNav as $navItem)

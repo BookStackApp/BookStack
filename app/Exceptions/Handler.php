@@ -3,9 +3,9 @@
 namespace BookStack\Exceptions;
 
 use Exception;
-use Illuminate\Contracts\Validation\ValidationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use PhpSpec\Exception\Example\ErrorException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\Access\AuthorizationException;

@@ -1,7 +1,7 @@
 <?php
 
 
-class PageDraftTest extends TestCase
+class PageDraftTest extends BrowserKitTest
 {
     protected $page;
     protected $entityRepo;

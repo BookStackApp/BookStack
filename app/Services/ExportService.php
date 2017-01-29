@@ -1,9 +1,21 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Page;
+use BookStack\Repos\EntityRepo;
 
 class ExportService
 {
+
+    protected $entityRepo;
+
+    /**
+     * ExportService constructor.
+     * @param $entityRepo
+     */
+    public function __construct(EntityRepo $entityRepo)
+    {
+        $this->entityRepo = $entityRepo;
+    }
 
     /**
      * Convert a page to a self-contained HTML file.
@@ -14,7 +26,7 @@ class ExportService
     public function pageToContainedHtml(Page $page)
     {
         $cssContent = file_get_contents(public_path('/css/export-styles.css'));
-        $pageHtml = view('pages/export', ['page' => $page, 'css' => $cssContent])->render();
+        $pageHtml = view('pages/export', ['page' => $page, 'pageContent' => $this->entityRepo->renderPage($page), 'css' => $cssContent])->render();
         return $this->containHtml($pageHtml);
     }
 
@@ -26,7 +38,8 @@ class ExportService
     public function pageToPdf(Page $page)
     {
         $cssContent = file_get_contents(public_path('/css/export-styles.css'));
-        $pageHtml = view('pages/pdf', ['page' => $page, 'css' => $cssContent])->render();
+        $pageHtml = view('pages/pdf', ['page' => $page, 'pageContent' => $this->entityRepo->renderPage($page), 'css' => $cssContent])->render();
+//        return $pageHtml;
         $useWKHTML = config('snappy.pdf.binary') !== false;
         $containedHtml = $this->containHtml($pageHtml);
         if ($useWKHTML) {
@@ -59,9 +72,13 @@ class ExportService
                     $pathString = $srcString;
                 }
                 if ($isLocal && !file_exists($pathString)) continue;
-                $imageContent = file_get_contents($pathString);
-                $imageEncoded = 'data:image/' . pathinfo($pathString, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageContent);
-                $newImageString = str_replace($srcString, $imageEncoded, $oldImgString);
+                try {
+                    $imageContent = file_get_contents($pathString);
+                    $imageEncoded = 'data:image/' . pathinfo($pathString, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageContent);
+                    $newImageString = str_replace($srcString, $imageEncoded, $oldImgString);
+                } catch (\ErrorException $e) {
+                    $newImageString = '';
+                }
                 $htmlContent = str_replace($oldImgString, $newImageString, $htmlContent);
             }
         }
@@ -88,14 +105,14 @@ class ExportService
 
     /**
      * Converts the page contents into simple plain text.
-     * This method filters any bad looking content to
-     * provide a nice final output.
+     * This method filters any bad looking content to provide a nice final output.
      * @param Page $page
      * @return mixed
      */
     public function pageToPlainText(Page $page)
     {
-        $text = $page->text;
+        $html = $this->entityRepo->renderPage($page);
+        $text = strip_tags($html);
         // Replace multiple spaces with single spaces
         $text = preg_replace('/\ {2,}/', ' ', $text);
         // Reduce multiple horrid whitespace characters.

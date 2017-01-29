@@ -208,7 +208,7 @@ class BookController extends Controller
         }
 
         // Update permissions on changed models
-        $this->entityRepo->buildJointPermissions($updatedModels);
+        if (count($updatedModels) === 0) $this->entityRepo->buildJointPermissions($updatedModels);
 
         return redirect($book->getUrl());
     }

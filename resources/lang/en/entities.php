@@ -89,6 +89,7 @@ return [
      * Chapters
      */
     'chapter' => 'Chapter',
+    'chapters' => 'Chapters',
     'chapters_popular' => 'Popular Chapters',
     'chapters_new' => 'New Chapter',
     'chapters_create' => 'Create New Chapter',
