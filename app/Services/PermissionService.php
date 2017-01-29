@@ -157,7 +157,7 @@ class PermissionService
      */
     public function buildJointPermissionsForEntity(Entity $entity)
     {
-        $roles = $this->role->with('jointPermissions')->get();
+        $roles = $this->role->get();
         $entities = collect([$entity]);
 
         if ($entity->isA('book')) {
@@ -177,7 +177,7 @@ class PermissionService
      */
     public function buildJointPermissionsForEntities(Collection $entities)
     {
-        $roles = $this->role->with('jointPermissions')->get();
+        $roles = $this->role->get();
         $this->deleteManyJointPermissionsForEntities($entities);
         $this->createManyJointPermissions($entities, $roles);
     }
@@ -243,13 +243,14 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForEntities($entities)
     {
+        if (count($entities) === 0) return;
         $query = $this->jointPermission->newQuery();
-        foreach ($entities as $entity) {
-            $query->orWhere(function($query) use ($entity) {
-                $query->where('entity_id', '=', $entity->id)
-                    ->where('entity_type', '=', $entity->getMorphClass());
-            });
-        }
+            foreach ($entities as $entity) {
+                $query->orWhere(function($query) use ($entity) {
+                    $query->where('entity_id', '=', $entity->id)
+                        ->where('entity_type', '=', $entity->getMorphClass());
+                });
+            }
         $query->delete();
     }
 
@@ -405,7 +406,7 @@ class PermissionService
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
-        $nonJointPermissions = ['restrictions'];
+        $nonJointPermissions = ['restrictions', 'image', 'attachment'];
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
@@ -420,7 +421,6 @@ class PermissionService
         if ($action === 'create') {
             $this->currentAction = $permission;
         }
-
 
         $q = $this->entityRestrictionQuery($baseQuery)->count() > 0;
         $this->clean();
@@ -471,49 +471,40 @@ class PermissionService
         return $q;
     }
 
+    /**
+     * Get the children of a book in an efficient single query, Filtered by the permission system.
+     * @param integer $book_id
+     * @param bool    $filterDrafts
+     * @return \Illuminate\Database\Query\Builder
+     */
     public function bookChildrenQuery($book_id, $filterDrafts = false) {
+        $pageSelect = $this->db->table('pages')->selectRaw("'BookStack\\\\Page' as entity_type, id, slug, name, text, '' as description, book_id, priority, chapter_id, draft")->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
+            $query->where('draft', '=', 0);
+            if (!$filterDrafts) {
+                $query->orWhere(function($query) {
+                    $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
+                });
+            }
+        });
+        $chapterSelect = $this->db->table('chapters')->selectRaw("'BookStack\\\\Chapter' as entity_type, id, slug, name, '' as text, description, book_id, priority, 0 as chapter_id, 0 as draft")->where('book_id', '=', $book_id);
+        $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
+            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
 
-        // Draft setup
-        $params = [
-            'userId' => $this->currentUser()->id,
-            'bookIdPage' => $book_id,
-            'bookIdChapter' => $book_id
-        ];
-        if (!$filterDrafts) {
-            $params['userIdDrafts'] = $this->currentUser()->id;
+        if (!$this->isAdmin()) {
+            $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
+                ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
+                ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
+                ->where(function($query) {
+                    $query->where('jp.has_permission', '=', 1)->orWhere(function($query) {
+                        $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
+                    });
+                });
+            $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
         }
-        // Role setup
-        $userRoles = $this->getRoles();
-        $roleBindings = [];
-        $roleValues = [];
-        foreach ($userRoles as $index => $roleId) {
-            $roleBindings[':role'.$index] = $roleId;
-            $roleValues['role'.$index] = $roleId;
-        }
-        // TODO - Clean this up, Maybe extract into a nice class for doing these kind of manual things
-        // Something which will handle the above role crap in a nice clean way
-        $roleBindingString = implode(',', array_keys($roleBindings));
-        $query = "SELECT * from (
-(SELECT 'Bookstack\\\Page' as entity_type, id, slug, name, text, '' as description, book_id, priority, chapter_id, draft FROM {$this->page->getTable()}
-    where book_id = :bookIdPage AND ". ($filterDrafts ? '(draft = 0)' : '(draft = 0 OR (draft = 1 AND created_by = :userIdDrafts))') .")
-UNION
-(SELECT 'Bookstack\\\Chapter' as entity_type, id, slug, name, '' as text, description, book_id, priority, 0 as chapter_id, 0 as draft FROM {$this->chapter->getTable()} WHERE book_id = :bookIdChapter)
-) as U  WHERE (
-	SELECT COUNT(*) FROM {$this->jointPermission->getTable()} jp
-    WHERE
-		jp.entity_id=U.id AND
-        jp.entity_type=U.entity_type AND
-		jp.action = 'view' AND
-        jp.role_id IN ({$roleBindingString}) AND
-        (
-			jp.has_permission = 1 OR
-            (jp.has_permission_own = 1 AND jp.created_by = :userId)
-        )
-) > 0
-ORDER BY draft desc, priority asc";
 
+        $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
         $this->clean();
-        return $this->db->select($query, array_replace($roleValues, $params));
+        return  $query;
     }
 
     /**
@@ -579,6 +570,7 @@ ORDER BY draft desc, priority asc";
                     });
             });
         });
+        $this->clean();
         return $q;
     }
 

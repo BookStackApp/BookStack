@@ -5,8 +5,6 @@
 
     @include('settings/navbar', ['selected' => 'users'])
 
-
-
     <div class="container small">
         <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="post">
             <div class="row">
@@ -42,7 +40,14 @@
                           'name' => 'image_id',
                           'imageClass' => 'avatar large'
                       ])
-
+                </div>
+                <div class="form-group">
+                    <label for="user-language">{{ trans('settings.users_preferred_language') }}</label>
+                    <select name="setting[language]" id="user-language">
+                        @foreach(trans('settings.language_select') as $lang => $label)
+                            <option @if(setting()->getUser($user, 'language') === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

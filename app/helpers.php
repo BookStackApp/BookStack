@@ -60,11 +60,12 @@ function userCan($permission, Ownable $ownable = null)
  * Helper to access system settings.
  * @param $key
  * @param bool $default
- * @return mixed
+ * @return bool|string|\BookStack\Services\SettingService
  */
-function setting($key, $default = false)
+function setting($key = null, $default = false)
 {
     $settingService = app(\BookStack\Services\SettingService::class);
+    if (is_null($key)) return $settingService;
     return $settingService->get($key, $default);
 }
 

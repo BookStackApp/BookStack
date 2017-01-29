@@ -1,6 +1,6 @@
 <?php
 
-class SortTest extends TestCase
+class SortTest extends BrowserKitTest
 {
     protected $book;
 

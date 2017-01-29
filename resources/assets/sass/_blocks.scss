@@ -136,9 +136,6 @@
   background-color: #EEE;
   padding: $-s;
   display: block;
-  > * {
-    display: inline-block;
-  }
   &:before {
     font-family: 'Material-Design-Iconic-Font';
     padding-right: $-s;

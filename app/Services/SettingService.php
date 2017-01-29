@@ -1,6 +1,7 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Setting;
+use BookStack\User;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 /**
@@ -38,8 +39,21 @@ class SettingService
      */
     public function get($key, $default = false)
     {
+        if ($default === false) $default = config('setting-defaults.' . $key, false);
         $value = $this->getValueFromStore($key, $default);
         return $this->formatValue($value, $default);
+    }
+
+    /**
+     * Get a user-specific setting from the database or cache.
+     * @param User $user
+     * @param $key
+     * @param bool $default
+     * @return bool|string
+     */
+    public function getUser($user, $key, $default = false)
+    {
+        return $this->get($this->userKey($user->id, $key), $default);
     }
 
     /**
@@ -65,14 +79,6 @@ class SettingService
         $settingObject = $this->getSettingObjectByKey($key);
         if ($settingObject !== null) {
             $value = $settingObject->value;
-            $this->cache->forever($cacheKey, $value);
-            return $value;
-        }
-
-        // Check the defaults set in the app config.
-        $configPrefix = 'setting-defaults.' . $key;
-        if (config()->has($configPrefix)) {
-            $value = config($configPrefix);
             $this->cache->forever($cacheKey, $value);
             return $value;
         }
@@ -119,6 +125,16 @@ class SettingService
     }
 
     /**
+     * Check if a user setting is in the database.
+     * @param $key
+     * @return bool
+     */
+    public function hasUser($key)
+    {
+        return $this->has($this->userKey($key));
+    }
+
+    /**
      * Add a setting to the database.
      * @param $key
      * @param $value
@@ -136,6 +152,28 @@ class SettingService
     }
 
     /**
+     * Put a user-specific setting into the database.
+     * @param User $user
+     * @param $key
+     * @param $value
+     * @return bool
+     */
+    public function putUser($user, $key, $value)
+    {
+        return $this->put($this->userKey($user->id, $key), $value);
+    }
+
+    /**
+     * Convert a setting key into a user-specific key.
+     * @param $key
+     * @return string
+     */
+    protected function userKey($userId, $key = '')
+    {
+        return 'user:' . $userId . ':' . $key;
+    }
+
+    /**
      * Removes a setting from the database.
      * @param $key
      * @return bool
@@ -148,6 +186,16 @@ class SettingService
         }
         $this->clearFromCache($key);
         return true;
+    }
+
+    /**
+     * Delete settings for a given user id.
+     * @param $userId
+     * @return mixed
+     */
+    public function deleteUserSettings($userId)
+    {
+        return $this->setting->where('setting_key', 'like', $this->userKey($userId) . '%')->delete();
     }
 
     /**
