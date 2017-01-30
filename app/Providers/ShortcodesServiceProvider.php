@@ -34,7 +34,6 @@ class ShortcodesServiceProvider extends ServiceProvider
 			$activeTab = ($tabCounter == 0) ? 'active' : '';
 			list($lang, $source) = explode(':', $attr, 2);
 			preg_match("/(.*)\((.*)\)/", $lang, $matches); 
-			var_dump($matches);
 		        if (count($matches) > 1) {
 				$lang = $matches[1];
 				$titleLang = $matches[2];
