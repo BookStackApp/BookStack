@@ -1,7 +1,7 @@
 # BookStack
 
-[![GitHub release](https://img.shields.io/github/release/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/releases/latest)
-[![license](https://img.shields.io/github/license/ssddanbrown/BookStack.svg?maxAge=2592000)](https://github.com/ssddanbrown/BookStack/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg?maxAge=2592000)](https://github.com/BookStackApp/BookStack/releases/latest)
+[![license](https://img.shields.io/github/license/BookStackApp/BookStack.svg?maxAge=2592000)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/BookStackApp/BookStack.svg)](https://travis-ci.org/BookStackApp/BookStack)
 
 A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
@@ -45,6 +45,12 @@ Once done you can run `phpunit` in the application root directory to run all tes
 As part of BookStack v0.14 support for translations has been built in. All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
  
  Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
+ 
+## Contributing
+
+Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
+
+Pull requests are very welcome. If the scope of your pull request is very large it may be best to open the pull request early or create an issue for it to discuss how it will fit in to the project and plan out the merge.
 
 ## Website, Docs & Blog 
 
