@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3124d900cfe857392a94de479f3ff6d4",
-    "content-hash": "a968767a73f77e66e865c276cf76eedf",
+    "hash": "6cbfae7320efb9e61c4745a160369d32",
+    "content-hash": "ef3e043bc03519c1571b9b0077e84f5e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3060,6 +3060,62 @@
                 "environment"
             ],
             "time": "2016-09-01 10:05:43"
+        },
+        {
+            "name": "webwizo/laravel-shortcodes",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webwizo/laravel-shortcodes.git",
+                "reference": "9633ec2a906cb42ec2d757b0dffd6d289afffb4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webwizo/laravel-shortcodes/zipball/9633ec2a906cb42ec2d757b0dffd6d289afffb4d",
+                "reference": "9633ec2a906cb42ec2d757b0dffd6d289afffb4d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "~5.1|~5.2|~5.3",
+                "illuminate/support": "~5.1|~5.2|~5.3",
+                "illuminate/view": "~5.1|~5.2|~5.3",
+                "php": "~5.5|~7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.2",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "tests/TestCase.php"
+                ],
+                "psr-4": {
+                    "Webwizo\\Shortcodes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Asif Iqbal",
+                    "email": "webwizo@gmail.com",
+                    "homepage": "http://www.webwizo.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Wordpress like shortcodes for Laravel 5.3",
+            "homepage": "https://github.com/webwizo/laravel-shortcodes",
+            "keywords": [
+                "laravel",
+                "shortcodes",
+                "wordpress"
+            ],
+            "time": "2016-12-06 03:31:32"
         }
     ],
     "packages-dev": [

@@ -148,6 +148,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Webwizo\Shortcodes\ShortcodesServiceProvider::class,
 
 
         /*
@@ -161,6 +162,7 @@ return [
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
         BookStack\Providers\CustomFacadeProvider::class,
+        BookStack\Providers\ShortcodesServiceProvider::class,
 
     ],
 
@@ -228,6 +230,7 @@ return [
         'Setting'  => BookStack\Services\Facades\Setting::class,
         'Views'    => BookStack\Services\Facades\Views::class,
         'Images'   => \BookStack\Services\Facades\Images::class,
+        'Shortcode' => Webwizo\Shortcodes\Facades\Shortcode::class,
 
     ],
 
