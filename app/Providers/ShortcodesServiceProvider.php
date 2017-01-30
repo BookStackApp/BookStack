@@ -28,8 +28,9 @@ class ShortcodesServiceProvider extends ServiceProvider
     {
         \Webwizo\Shortcodes\Facades\Shortcode::register('codesample', function ($shortcode, $content) {
           $tabCounter = 0;
+          $groupID = uniqid();
  	  $body = '';
-	  $header = '<ul class="nav nav-tabs" role="tablist">';
+	  $header = '<ul class="nav nav-tabs code-tabs" role="tablist">';
             	foreach($shortcode->toArray() as $attr) {
 			$activeTab = ($tabCounter == 0) ? 'active' : '';
 			list($lang, $source) = explode(':', $attr, 2);
@@ -41,8 +42,8 @@ class ShortcodesServiceProvider extends ServiceProvider
 				$titleLang = strtoupper($lang);
 			}
 			$srcData = $this->loadRemote($source);
-			$header .= "<li role='presentation' class='$activeTab'><a href='#$lang' aria-controls='$lang' role='tab' data-toggle='tab'>$titleLang</a></li>";
-			$body .= "<div class='tab-pane $activeTab' role='tabpanel' id='$lang'><pre><code class=\"$lang\">" . htmlentities($srcData) . "</code></pre></div>";
+			$header .= "<li role='presentation' class='$activeTab' data-lang='$lang'><a href='#$lang-$groupID' aria-controls='$lang' role='tab' data-toggle='tab' data-lang='$lang'>$titleLang</a></li>";
+			$body .= "<div class='tab-pane $activeTab' role='tabpanel' id='$lang-$groupID' data-lang='$lang'><pre><code class=\"$lang\">" . htmlentities($srcData) . "</code></pre></div>";
                         $tabCounter++;
 		}
 

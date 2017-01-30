@@ -17,7 +17,29 @@
     <!-- Scripts -->
     <script src="{{ baseUrl('/libs/jquery/jquery.min.js?version=2.1.4') }}"></script>
     <script src="{{ baseUrl('/libs/jquery/jquery-ui.min.js?version=1.11.4') }}"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script type="text/javascript">
+  jQuery(function() {
+    selectPreferredLang();
+
+    jQuery('li[data-lang]').on('click', function() {
+      if (jQuery(this).siblings().length === 0) return;
+      window.localStorage.setItem('selected-lang', jQuery(this).data('lang'));
+      selectPreferredLang();
+    });
+  });
+
+  function selectPreferredLang() {
+        var selected = window.localStorage.getItem("selected-lang");
+    if (selected == null) return;
+
+    jQuery('.code-tabs a[data-lang=' + selected + ']').tab('show');
+  }
+</script>
     @yield('head')
 
     @include('partials/custom-styles')
