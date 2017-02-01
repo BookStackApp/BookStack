@@ -332,12 +332,12 @@ class EntityRepo
                 $parents[$key] = $entities[$index];
                 $parents[$key]->setAttribute('pages', collect());
             }
-            if ($entities[$index]->chapter_id === 0) $tree[] = $entities[$index];
+            if ($entities[$index]->chapter_id === 0 || $entities[$index]->chapter_id === '0') $tree[] = $entities[$index];
             $entities[$index]->book = $book;
         }
 
         foreach ($entities as $entity) {
-            if ($entity->chapter_id === 0) continue;
+            if ($entity->chapter_id === 0 || $entity->chapter_id === '0') continue;
             $parentKey = 'BookStack\\Chapter:' . $entity->chapter_id;
             $chapter = $parents[$parentKey];
             $chapter->pages->push($entity);
