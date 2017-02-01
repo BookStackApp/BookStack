@@ -119,6 +119,11 @@ sup, .superscript {
   font-size: 0.8em;
 }
 
+sub, .subscript {
+  vertical-align: sub;
+  font-size: 0.8em;
+}
+
 pre {
   font-family: monospace;
   white-space:pre;
