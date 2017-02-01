@@ -165,7 +165,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if ($imageId === 0 || $imageId === '0' || $imageId === null) return $default;
 
         try {
-            $avatar = baseUrl($this->avatar->getThumb($size, $size, false));
+            $avatar = $this->avatar ? baseUrl($this->avatar->getThumb($size, $size, false)) : $default;
         } catch (\Exception $err) {
             $avatar = $default;
         }
