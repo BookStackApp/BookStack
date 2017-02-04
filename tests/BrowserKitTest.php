@@ -1,9 +1,12 @@
-<?php
+<?php namespace Tests;
 
+use BookStack\Role;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
+abstract class BrowserKitTest extends TestCase
 {
 
     use DatabaseTransactions;
@@ -28,7 +31,7 @@ abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        $app->make(Kernel::class)->bootstrap();
 
         return $app;
     }
@@ -48,7 +51,7 @@ abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
      */
     public function getAdmin() {
         if($this->admin === null) {
-            $adminRole = \BookStack\Role::getRole('admin');
+            $adminRole = Role::getRole('admin');
             $this->admin = $adminRole->users->first();
         }
         return $this->admin;
@@ -95,9 +98,9 @@ abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
     protected function createEntityChainBelongingToUser($creatorUser, $updaterUser = false)
     {
         if ($updaterUser === false) $updaterUser = $creatorUser;
-        $book = factory(BookStack\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
-        $chapter = factory(BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
-        $page = factory(BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
+        $book = factory(\BookStack\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
+        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
+        $page = factory(\BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
         $book->chapters()->saveMany([$chapter]);
         $chapter->pages()->saveMany([$page]);
         $restrictionService = $this->app[\BookStack\Services\PermissionService::class];
@@ -117,7 +120,7 @@ abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
     protected function getEditor($attributes = [])
     {
         $user = factory(\BookStack\User::class)->create($attributes);
-        $role = \BookStack\Role::getRole('editor');
+        $role = Role::getRole('editor');
         $user->attachRole($role);;
         return $user;
     }
@@ -211,7 +214,6 @@ abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
     /**
      * Check if the page contains the given element.
      * @param  string  $selector
-     * @return bool
      */
     protected function pageHasElement($selector)
     {
@@ -223,7 +225,6 @@ abstract class BrowserKitTest extends \Laravel\BrowserKitTesting\TestCase
     /**
      * Check if the page contains the given element.
      * @param  string  $selector
-     * @return bool
      */
     protected function pageNotHasElement($selector)
     {

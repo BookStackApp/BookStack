@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 use BookStack\Notifications\ConfirmEmail;
 use Illuminate\Support\Facades\Notification;
@@ -88,7 +88,7 @@ class AuthTest extends BrowserKitTest
             ->press('Resend Confirmation Email');
 
         // Get confirmation and confirm notification matches
-        $emailConfirmation = DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
+        $emailConfirmation = \DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
         Notification::assertSentTo($dbUser, ConfirmEmail::class, function($notification, $channels) use ($emailConfirmation) {
             return $notification->token === $emailConfirmation->token;
         });
@@ -177,7 +177,7 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/settings/users');
 
             $userPassword = \BookStack\User::find($user->id)->password;
-            $this->assertTrue(Hash::check('newpassword', $userPassword));
+            $this->assertTrue(\Hash::check('newpassword', $userPassword));
     }
 
     public function test_user_deletion()
@@ -238,7 +238,6 @@ class AuthTest extends BrowserKitTest
         Notification::assertSentTo($user, \BookStack\Notifications\ResetPassword::class);
         $n = Notification::sent($user, \BookStack\Notifications\ResetPassword::class);
 
-        $reset = DB::table('password_resets')->where('email', '=', 'admin@admin.com')->first();
         $this->visit('/password/reset/' . $n->first()->token)
             ->see('Reset Password')
             ->submitForm('Reset Password', [
