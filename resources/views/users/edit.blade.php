@@ -59,30 +59,18 @@
             <h3>{{ trans('settings.users_social_accounts') }}</h3>
             <p class="text-muted">{{ trans('settings.users_social_accounts_info') }}</p>
             <div class="row">
-                @if(isset($activeSocialDrivers['google']))
+                @foreach($activeSocialDrivers as $driver => $enabled)
                     <div class="col-md-3 text-center">
-                        <div><i class="zmdi zmdi-google-plus-box zmdi-hc-4x" style="color: #DC4E41;"></i></div>
+                        <div>@icon($driver, ['width' => 56])</div>
                         <div>
-                            @if($user->hasSocialAccount('google'))
-                                <a href="{{ baseUrl("/login/service/google/detach") }}" class="button neg">{{ trans('settings.users_social_disconnect') }}</a>
+                            @if($user->hasSocialAccount($driver))
+                                <a href="{{ baseUrl("/login/service/{$driver}/detach") }}" class="button neg">{{ trans('settings.users_social_disconnect') }}</a>
                             @else
-                                <a href="{{ baseUrl("/login/service/google") }}" class="button pos">{{ trans('settings.users_social_connect') }}</a>
+                                <a href="{{ baseUrl("/login/service/{$driver}") }}" class="button pos">{{ trans('settings.users_social_connect') }}</a>
                             @endif
                         </div>
                     </div>
-                @endif
-                @if(isset($activeSocialDrivers['github']))
-                    <div class="col-md-3 text-center">
-                        <div><i class="zmdi zmdi-github zmdi-hc-4x" style="color: #444;"></i></div>
-                        <div>
-                            @if($user->hasSocialAccount('github'))
-                                <a href="{{ baseUrl("/login/service/github/detach") }}" class="button neg">{{ trans('settings.users_social_disconnect') }}</a>
-                            @else
-                                <a href="{{ baseUrl("/login/service/github") }}" class="button pos">{{ trans('settings.users_social_connect') }}</a>
-                            @endif
-                        </div>
-                    </div>
-                @endif
+                @endforeach
             </div>
         @endif
 

@@ -16,7 +16,7 @@ h2 {
 }
 h3 {
   font-size: 2.333em;
-  line-height: 1.571428572em;
+  line-height: 1.221428572em;
   margin-top: 0.78571429em;
   margin-bottom: 0.43137255em;
 }
@@ -71,6 +71,13 @@ a, .link {
     padding-right: 0;
     padding-left: $-s;
   }
+  &.icon {
+    display: inline-block;
+  }
+  svg {
+    position: relative;
+    display: inline-block;
+  }
 }
 
 /*
@@ -84,7 +91,6 @@ p, ul, ol, pre, table, blockquote {
 hr {
   border: 0;
   height: 1px;
-  border: 0;
   background: #EAEAEA;
   margin-bottom: $-l;
   &.faded {
