@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 class PageContentTest extends BrowserKitTest
 {
