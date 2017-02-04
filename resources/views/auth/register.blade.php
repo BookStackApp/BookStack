@@ -37,12 +37,10 @@
                 <hr class="margin-top">
                 <h3 class="text-muted">{{ trans('auth.social_registration') }}</h3>
                 <p class="text-small">{{ trans('auth.social_registration_text') }}</p>
-                @if(isset($socialDrivers['google']))
-                    <a href="{{ baseUrl("/register/service/google") }}" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
-                @endif
-                @if(isset($socialDrivers['github']))
-                    <a href="{{ baseUrl("/register/service/github") }}" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
-                @endif
+                @foreach($socialDrivers as $driver => $enabled)
+                    <a href="{{ baseUrl("/register/service/" . $driver) }}">@icon($driver, ['width' => 56])</a>
+                    &nbsp;
+                @endforeach
             @endif
         </div>
     </div>

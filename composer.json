@@ -17,7 +17,8 @@
         "predis/predis": "^1.1",
         "gathercontent/htmldiff": "^0.2.1",
         "barryvdh/laravel-snappy": "^0.3.1",
-        "laravel/browser-kit-testing": "^1.0"
+        "laravel/browser-kit-testing": "^1.0",
+        "socialiteproviders/slack": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
