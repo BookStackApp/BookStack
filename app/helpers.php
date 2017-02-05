@@ -38,6 +38,15 @@ function user()
 }
 
 /**
+ * Check if current user is a signed in user.
+ * @return bool
+ */
+function signedInUser()
+{
+    return auth()->user() && !auth()->user()->isDefault();
+}
+
+/**
  * Check if the current user has a permission.
  * If an ownable element is passed in the jointPermissions are checked against
  * that particular item.
