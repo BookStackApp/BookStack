@@ -117,6 +117,16 @@ function redirect($to = null, $status = 302, $headers = [], $secure = null)
     return app('redirect')->to($to, $status, $headers, $secure);
 }
 
+function icon($name, $attrs = []) {
+    $iconPath = resource_path('assets/icons/' . $name . '.svg');
+    $attrString = ' ';
+    foreach ($attrs as $attrName => $attr) {
+        $attrString .=  $attrName . '="' . $attr . '" ';
+    }
+    $fileContents = file_get_contents($iconPath);
+    return  str_replace('<svg', '<svg' . $attrString, $fileContents);
+}
+
 /**
  * Generate a url with multiple parameters for sorting purposes.
  * Works out the logic to set the correct sorting direction
