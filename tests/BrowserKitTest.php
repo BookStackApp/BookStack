@@ -51,7 +51,7 @@ abstract class BrowserKitTest extends TestCase
      */
     public function getAdmin() {
         if($this->admin === null) {
-            $adminRole = Role::getRole('admin');
+            $adminRole = Role::getSystemRole('admin');
             $this->admin = $adminRole->users->first();
         }
         return $this->admin;

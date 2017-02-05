@@ -5,10 +5,10 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 faded">
+                <div class="col-sm-6 faded">
                     @include('books._breadcrumbs', ['book' => $book])
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     <div class="action-buttons faded">
                         @if(userCan('page-create', $book))
                             <a href="{{ $book->getUrl('/page/create') }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.pages_new') }}</a>
