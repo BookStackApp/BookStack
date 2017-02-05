@@ -135,11 +135,19 @@
   border-left: 3px solid #BBB;
   background-color: #EEE;
   padding: $-s;
+  padding-left: $-xl;
   display: block;
+  position: relative;
   &:before {
     font-family: 'Material-Design-Iconic-Font';
-    padding-right: $-s;
+    left: $-xs + 4px;
+    top: 50%;
+    margin-top: -9px;
+    //top: $-xs + 5px;
     display: inline-block;
+    position: absolute;
+    font-size: 1.222em;
+    line-height: 1;
   }
   &.success {
     border-left-color: $positive;
