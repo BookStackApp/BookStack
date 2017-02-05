@@ -49,6 +49,24 @@ return [
         'redirect'      => env('APP_URL') . '/login/service/google/callback',
     ],
 
+    'slack'   => [
+        'client_id'     => env('SLACK_APP_ID', false),
+        'client_secret' => env('SLACK_APP_SECRET', false),
+        'redirect'      => env('APP_URL') . '/login/service/slack/callback',
+    ],
+
+    'facebook'   => [
+        'client_id'     => env('FACEBOOK_APP_ID', false),
+        'client_secret' => env('FACEBOOK_APP_SECRET', false),
+        'redirect'      => env('APP_URL') . '/login/service/facebook/callback',
+    ],
+
+    'twitter'   => [
+        'client_id'     => env('TWITTER_APP_ID', false),
+        'client_secret' => env('TWITTER_APP_SECRET', false),
+        'redirect'      => env('APP_URL') . '/login/service/twitter/callback',
+    ],
+
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
         'dn' => env('LDAP_DN', false),

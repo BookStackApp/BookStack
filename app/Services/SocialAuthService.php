@@ -14,7 +14,7 @@ class SocialAuthService
     protected $socialite;
     protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github'];
+    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter'];
 
     /**
      * SocialAuthService constructor.
@@ -211,7 +211,6 @@ class SocialAuthService
      */
     public function detachSocialAccount($socialDriver)
     {
-        session();
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => title_case($socialDriver)]));
         return redirect(user()->getEditUrl());
