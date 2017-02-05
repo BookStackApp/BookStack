@@ -1,5 +1,7 @@
 <?php namespace BookStack\Providers;
 
+use BookStack\Services\SettingService;
+use BookStack\Setting;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 
@@ -30,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(SettingService::class, function($app) {
+            return new SettingService($app->make(Setting::class), $app->make('Illuminate\Contracts\Cache\Repository'));
+        });
     }
 }
