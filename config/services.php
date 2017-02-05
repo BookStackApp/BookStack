@@ -41,30 +41,35 @@ return [
         'client_id'     => env('GITHUB_APP_ID', false),
         'client_secret' => env('GITHUB_APP_SECRET', false),
         'redirect'      => env('APP_URL') . '/login/service/github/callback',
+        'name'          => 'GitHub',
     ],
 
     'google'   => [
         'client_id'     => env('GOOGLE_APP_ID', false),
         'client_secret' => env('GOOGLE_APP_SECRET', false),
         'redirect'      => env('APP_URL') . '/login/service/google/callback',
+        'name'          => 'Google',
     ],
 
     'slack'   => [
         'client_id'     => env('SLACK_APP_ID', false),
         'client_secret' => env('SLACK_APP_SECRET', false),
         'redirect'      => env('APP_URL') . '/login/service/slack/callback',
+        'name'          => 'Slack',
     ],
 
     'facebook'   => [
         'client_id'     => env('FACEBOOK_APP_ID', false),
         'client_secret' => env('FACEBOOK_APP_SECRET', false),
         'redirect'      => env('APP_URL') . '/login/service/facebook/callback',
+        'name'          => 'Facebook',
     ],
 
     'twitter'   => [
         'client_id'     => env('TWITTER_APP_ID', false),
         'client_secret' => env('TWITTER_APP_SECRET', false),
         'redirect'      => env('APP_URL') . '/login/service/twitter/callback',
+        'name'          => 'Twitter',
     ],
 
     'ldap' => [
