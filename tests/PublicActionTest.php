@@ -80,4 +80,14 @@ class PublicActionTest extends TestCase
         ]);
     }
 
+    public function test_content_not_listed_on_404_for_public_users()
+    {
+        $page = \BookStack\Page::first();
+        $this->asAdmin()->visit($page->getUrl());
+        Auth::logout();
+        view()->share('pageTitle', '');
+        $this->forceVisit('/cats/dogs/hippos');
+        $this->dontSee($page->name);
+    }
+
 }
