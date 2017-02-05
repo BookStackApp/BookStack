@@ -35,11 +35,11 @@
 
             @if(count($socialDrivers) > 0)
                 <hr class="margin-top">
-                <h3 class="text-muted">{{ trans('auth.social_registration') }}</h3>
-                <p class="text-small">{{ trans('auth.social_registration_text') }}</p>
-                @foreach($socialDrivers as $driver => $enabled)
-                    <a href="{{ baseUrl("/register/service/" . $driver) }}">@icon($driver, ['width' => 56])</a>
-                    &nbsp;
+                @foreach($socialDrivers as $driver => $name)
+                    <a id="social-register-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/register/service/" . $driver) }}">
+                        @icon($driver)
+                        {{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}
+                    </a>
                 @endforeach
             @endif
         </div>
