@@ -30,7 +30,7 @@
 <header id="header">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6">
 
                 <a href="{{ baseUrl('/') }}" class="logo">
                     @if(setting('app-logo', '') !== 'none')
@@ -41,7 +41,7 @@
                     @endif
                 </a>
             </div>
-            <div class="col-md-6">
+            <div class="col-sm-6">
                 <div class="float right">
                     <div class="links text-center">
                         @yield('header-buttons')
