@@ -5,10 +5,10 @@ return [
      * Shared
      */
     'recently_created' => 'Recent Aangemaakt',
-    'recently_created_pages' => 'Recent Aangemaakte Pagina\'s',
-    'recently_updated_pages' => 'Recent Bijgewerkte Pagina\'s',
-    'recently_created_chapters' => 'Recent Aangemaakte Hoofdstukken',
-    'recently_created_books' => 'Recent Aangemaakte Boeken',
+    'recently_created_pages' => 'Nieuwe Pagina\'s',
+    'recently_updated_pages' => 'Bijgewerkte Pagina\'s',
+    'recently_created_chapters' => 'Nieuwe Hoofdstukken',
+    'recently_created_books' => 'Nieuwe Boeken',
     'recently_update' => 'Recent Bijgewerkt',
     'recently_viewed' => 'Recent Bekeken',
     'recent_activity' => 'Recente Activiteit',
@@ -22,7 +22,7 @@ return [
     'entity_select' => 'Entiteit Selecteren',
     'images' => 'Afbeeldingen',
     'my_recent_drafts' => 'Mijn Concepten',
-    'my_recently_viewed' => 'Mijn Recent Bekeken',
+    'my_recently_viewed' => 'Recent Door Mij Bekeken',
     'no_pages_viewed' => 'Je hebt nog niets bekeken',
     'no_pages_recently_created' => 'Er zijn geen recent aangemaakte pagina\'s',
     'no_pages_recently_updated' => 'Er zijn geen recente wijzigingen',
