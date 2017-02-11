@@ -49,28 +49,28 @@ return [
     'reset_password' => 'Wachtwoord Herstellen',
     'reset_password_send_instructions' => 'Geef je e-mail en we sturen je een link om je wachtwoord te herstellen',
     'reset_password_send_button' => 'Link Sturen',
-    'reset_password_sent_success' => 'A password reset link has been sent to :email.',
-    'reset_password_success' => 'Your password has been successfully reset.',
+    'reset_password_sent_success' => 'Een link om je wachtwoord te herstellen is verstuurd naar :email.',
+    'reset_password_success' => 'Je wachtwoord is succesvol hersteld.',
 
-    'email_reset_subject' => 'Reset your :appName password',
-    'email_reset_text' => 'You are receiving this email because we received a password reset request for your account.',
-    'email_reset_not_requested' => 'If you did not request a password reset, no further action is required.',
+    'email_reset_subject' => 'Herstel je wachtwoord van :appName',
+    'email_reset_text' => 'Je ontvangt deze e-mail zodat je je wachtwoord kunt herstellen.',
+    'email_reset_not_requested' => 'Als je jouw wachtwoord niet wilt wijzigen, doe dan niets.',
 
 
     /**
      * Email Confirmation
      */
-    'email_confirm_subject' => 'Confirm your email on :appName',
-    'email_confirm_greeting' => 'Thanks for joining :appName!',
-    'email_confirm_text' => 'Please confirm your email address by clicking the button below:',
-    'email_confirm_action' => 'Confirm Email',
-    'email_confirm_send_error' => 'Email confirmation required but the system could not send the email. Contact the admin to ensure email is set up correctly.',
-    'email_confirm_success' => 'Your email has been confirmed!',
-    'email_confirm_resent' => 'Confirmation email resent, Please check your inbox.',
+    'email_confirm_subject' => 'Bevestig je e-mailadres op :appName',
+    'email_confirm_greeting' => 'Bedankt voor je aanmelding op :appName!',
+    'email_confirm_text' => 'Bevestig je registratie door op onderstaande knop te drukken:',
+    'email_confirm_action' => 'Bevestig je e-mail',
+    'email_confirm_send_error' => 'E-mail bevestiging is vereisd maar het systeem kon geen mail verzenden. Neem contact op met de beheerder.',
+    'email_confirm_success' => 'Je e-mailadres is bevestigt!',
+    'email_confirm_resent' => 'De bevestigingse-mails is opnieuw verzonden. Controleer je inbox.',
 
-    'email_not_confirmed' => 'Email Address Not Confirmed',
-    'email_not_confirmed_text' => 'Your email address has not yet been confirmed.',
-    'email_not_confirmed_click_link' => 'Please click the link in the email that was sent shortly after you registered.',
-    'email_not_confirmed_resend' => 'If you cannot find the email you can re-send the confirmation email by submitting the form below.',
-    'email_not_confirmed_resend_button' => 'Resend Confirmation Email',
+    'email_not_confirmed' => 'E-mail nog niet bevestigd',
+    'email_not_confirmed_text' => 'Je e-mailadres is nog niet bevestigd.',
+    'email_not_confirmed_click_link' => 'Klik op de link in de e-mail die vlak na je registratie is verstuurd.',
+    'email_not_confirmed_resend' => 'Als je deze e-mail niet kunt vinden kun je deze met onderstaande formulier opnieuw verzenden.',
+    'email_not_confirmed_resend_button' => 'Bevestigingsmail Opnieuw Verzenden',
 ];
