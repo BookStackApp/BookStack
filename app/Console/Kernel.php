@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \BookStack\Console\Commands\Inspire::class,
         \BookStack\Console\Commands\ResetViews::class,
         \BookStack\Console\Commands\RegeneratePermissions::class,
+    	\BookStack\Console\Commands\NewUser::class,
     ];
 
     /**

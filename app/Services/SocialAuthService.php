@@ -6,6 +6,7 @@ use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Repos\UserRepo;
 use BookStack\SocialAccount;
+use BookStack\User;
 
 class SocialAuthService
 {
@@ -14,7 +15,7 @@ class SocialAuthService
     protected $socialite;
     protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter'];
+    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'nescio'];
 
     /**
      * SocialAuthService constructor.
@@ -105,6 +106,15 @@ class SocialAuthService
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
             return $this->logUserIn($socialAccount->user);
+        }
+        
+        $user = User::where("email",$socialId)->first();
+        
+        if(!$isLoggedIn && $user){
+        	$this->fillSocialAccount($socialDriver, $socialUser);
+        	$user->socialAccounts()->save($this->socialAccount);
+        	
+        	return $this->logUserIn($user);
         }
 
         // When a user is logged in but the social account does not exist,

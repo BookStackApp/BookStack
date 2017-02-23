@@ -50,6 +50,14 @@ return [
         'redirect'      => env('APP_URL') . '/login/service/google/callback',
         'name'          => 'Google',
     ],
+		
+	'nescio'   => [
+			'client_id'     => 'NOTUSED',
+			'client_secret' => 'NOTUSED',
+			'redirect'      => 'NOTUSED',
+			'name'          => 'Nescio',
+			'baseurl'		=> 'https://asdgasdgdsag.nl'
+	],
 
     'slack'   => [
         'client_id'     => env('SLACK_APP_ID', false),

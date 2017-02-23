@@ -14,3 +14,10 @@ _ide_helper.php
 .phpstorm.meta.php
 yarn.lock
 /bin
+.buildpath
+
+.project
+
+.settings/org.eclipse.wst.common.project.facet.core.xml
+
+.settings/org.eclipse.php.core.prefs
