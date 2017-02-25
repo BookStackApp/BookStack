@@ -39,7 +39,6 @@ class ExportService
     {
         $cssContent = file_get_contents(public_path('/css/export-styles.css'));
         $pageHtml = view('pages/pdf', ['page' => $page, 'pageContent' => $this->entityRepo->renderPage($page), 'css' => $cssContent])->render();
-//        return $pageHtml;
         $useWKHTML = config('snappy.pdf.binary') !== false;
         $containedHtml = $this->containHtml($pageHtml);
         if ($useWKHTML) {

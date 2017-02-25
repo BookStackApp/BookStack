@@ -13,7 +13,7 @@
         "barryvdh/laravel-ide-helper": "^2.2.3",
         "barryvdh/laravel-debugbar": "^2.3.2",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "barryvdh/laravel-dompdf": "^0.7",
+        "barryvdh/laravel-dompdf": "^0.8",
         "predis/predis": "^1.1",
         "gathercontent/htmldiff": "^0.2.1",
         "barryvdh/laravel-snappy": "^0.3.1",
