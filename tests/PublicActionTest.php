@@ -84,7 +84,7 @@ class PublicActionTest extends BrowserKitTest
     {
         $page = \BookStack\Page::first();
         $this->asAdmin()->visit($page->getUrl());
-        Auth::logout();
+        \Auth::logout();
         view()->share('pageTitle', '');
         $this->forceVisit('/cats/dogs/hippos');
         $this->dontSee($page->name);

@@ -369,10 +369,13 @@ class PageController extends Controller
     public function showRevision($bookSlug, $pageSlug, $revisionId)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $revision = $this->entityRepo->getById('page_revision', $revisionId, false);
+        $revision = $page->revisions()->where('id', '=', $revisionId)->first();
+        if ($revision === null) {
+            abort(404);
+        }
 
         $page->fill($revision->toArray());
-        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
+        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
         
         return view('pages/revision', [
             'page' => $page,
@@ -390,7 +393,10 @@ class PageController extends Controller
     public function showRevisionChanges($bookSlug, $pageSlug, $revisionId)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $revision = $this->entityRepo->getById('page_revision', $revisionId);
+        $revision = $page->revisions()->where('id', '=', $revisionId)->first();
+        if ($revision === null) {
+            abort(404);
+        }
 
         $prev = $revision->getPrevious();
         $prevContent = ($prev === null) ? '' : $prev->html;
