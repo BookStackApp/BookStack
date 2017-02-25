@@ -13,6 +13,7 @@ abstract class TestCase extends BaseTestCase
     use DatabaseTransactions;
 
     protected $admin;
+    protected $editor;
 
     /**
      * Set the current user context to be an admin.
@@ -33,6 +34,28 @@ abstract class TestCase extends BaseTestCase
             $this->admin = $adminRole->users->first();
         }
         return $this->admin;
+    }
+
+    /**
+     * Set the current user context to be an editor.
+     * @return $this
+     */
+    public function asEditor()
+    {
+        return $this->actingAs($this->getEditor());
+    }
+
+
+    /**
+     * Get a editor user.
+     * @return mixed
+     */
+    public function getEditor() {
+        if($this->editor === null) {
+            $editorRole = Role::getRole('editor');
+            $this->editor = $editorRole->users->first();
+        }
+        return $this->editor;
     }
 
     /**

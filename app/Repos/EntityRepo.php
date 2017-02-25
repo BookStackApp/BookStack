@@ -86,8 +86,7 @@ class EntityRepo
         $this->entities = [
             'page' => $this->page,
             'chapter' => $this->chapter,
-            'book' => $this->book,
-            'page_revision' => $this->pageRevision
+            'book' => $this->book
         ];
         $this->viewService = $viewService;
         $this->permissionService = $permissionService;
