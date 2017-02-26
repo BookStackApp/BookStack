@@ -5,7 +5,9 @@
     <title>{{ $book->name }}</title>
 
     <style>
+        @if (!app()->environment('testing'))
         {!! file_get_contents(public_path('/css/export-styles.css')) !!}
+        @endif
         .page-break {
             page-break-after: always;
         }

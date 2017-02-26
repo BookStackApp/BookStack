@@ -5,7 +5,9 @@
     <title>{{ $page->name }}</title>
 
     <style>
+        @if (!app()->environment('testing'))
         {!! file_get_contents(public_path('/css/export-styles.css')) !!}
+        @endif
     </style>
     @yield('head')
 </head>
