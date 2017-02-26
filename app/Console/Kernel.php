@@ -13,8 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \BookStack\Console\Commands\Inspire::class,
-        \BookStack\Console\Commands\ResetViews::class,
+        \BookStack\Console\Commands\ClearViews::class,
+        \BookStack\Console\Commands\ClearActivity::class,
+        \BookStack\Console\Commands\ClearRevisions::class,
         \BookStack\Console\Commands\RegeneratePermissions::class,
     ];
 
@@ -26,7 +27,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        //
     }
 }
