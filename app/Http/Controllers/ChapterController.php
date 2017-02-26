@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
+use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -12,16 +13,19 @@ class ChapterController extends Controller
 
     protected $userRepo;
     protected $entityRepo;
+    protected $exportService;
 
     /**
      * ChapterController constructor.
      * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
+     * @param ExportService $exportService
      */
-    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo)
+    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
     {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
+        $this->exportService = $exportService;
         parent::__construct();
     }
 
@@ -235,5 +239,53 @@ class ChapterController extends Controller
         $this->entityRepo->updateEntityPermissionsFromRequest($request, $chapter);
         session()->flash('success', trans('entities.chapters_permissions_success'));
         return redirect($chapter->getUrl());
+    }
+
+    /**
+     * Exports a chapter to pdf .
+     * @param string $bookSlug
+     * @param string $chapterSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPdf($bookSlug, $chapterSlug)
+    {
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
+        $pdfContent = $this->exportService->chapterToPdf($chapter);
+        return response()->make($pdfContent, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.pdf'
+        ]);
+    }
+
+    /**
+     * Export a chapter to a self-contained HTML file.
+     * @param string $bookSlug
+     * @param string $chapterSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportHtml($bookSlug, $chapterSlug)
+    {
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
+        $containedHtml = $this->exportService->chapterToContainedHtml($chapter);
+        return response()->make($containedHtml, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.html'
+        ]);
+    }
+
+    /**
+     * Export a chapter to a simple plaintext .txt file.
+     * @param string $bookSlug
+     * @param string $chapterSlug
+     * @return \Illuminate\Http\Response
+     */
+    public function exportPlainText($bookSlug, $chapterSlug)
+    {
+        $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
+        $containedHtml = $this->exportService->chapterToPlainText($chapter);
+        return response()->make($containedHtml, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.txt'
+        ]);
     }
 }

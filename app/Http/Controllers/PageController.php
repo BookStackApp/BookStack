@@ -429,7 +429,7 @@ class PageController extends Controller
     }
 
     /**
-     * Exports a page to pdf format using barryvdh/laravel-dompdf wrapper.
+     * Exports a page to a PDF.
      * https://github.com/barryvdh/laravel-dompdf
      * @param string $bookSlug
      * @param string $pageSlug
