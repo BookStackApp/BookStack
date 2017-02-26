@@ -439,7 +439,6 @@ class PageController extends Controller
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $pdfContent = $this->exportService->pageToPdf($page);
-//        return $pdfContent;
         return response()->make($pdfContent, 200, [
             'Content-Type'        => 'application/octet-stream',
             'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.pdf'
