@@ -143,7 +143,7 @@ return [
          * the desired content might be different (e.g. screen or projection view of html file).
          * Therefore allow specification of content here.
          */
-        "DOMPDF_DEFAULT_MEDIA_TYPE" => "screen",
+        "DOMPDF_DEFAULT_MEDIA_TYPE" => "print",
 
         /**
          * The default paper size.

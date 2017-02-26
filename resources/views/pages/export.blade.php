@@ -5,7 +5,7 @@
     <title>{{ $page->name }}</title>
 
     <style>
-        {!! $css !!}
+        {!! file_get_contents(public_path('/css/export-styles.css')) !!}
     </style>
     @yield('head')
 </head>

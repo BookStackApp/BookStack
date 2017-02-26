@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
+use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -12,16 +13,19 @@ class BookController extends Controller
 
     protected $entityRepo;
     protected $userRepo;
+    protected $exportService;
 
     /**
      * BookController constructor.
      * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
+     * @param ExportService $exportService
      */
-    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo)
+    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
     {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
+        $this->exportService = $exportService;
         parent::__construct();
     }
 
@@ -257,5 +261,50 @@ class BookController extends Controller
         $this->entityRepo->updateEntityPermissionsFromRequest($request, $book);
         session()->flash('success', trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());
+    }
+
+    /**
+     * Export a book as a PDF file.
+     * @param string $bookSlug
+     * @return mixed
+     */
+    public function exportPdf($bookSlug)
+    {
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $pdfContent = $this->exportService->bookToPdf($book);
+        return response()->make($pdfContent, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.pdf'
+        ]);
+    }
+
+    /**
+     * Export a book as a contained HTML file.
+     * @param string $bookSlug
+     * @return mixed
+     */
+    public function exportHtml($bookSlug)
+    {
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $htmlContent = $this->exportService->bookToContainedHtml($book);
+        return response()->make($htmlContent, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.html'
+        ]);
+    }
+
+    /**
+     * Export a book as a plain text file.
+     * @param $bookSlug
+     * @return mixed
+     */
+    public function exportPlainText($bookSlug)
+    {
+        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $htmlContent = $this->exportService->bookToPlainText($book);
+        return response()->make($htmlContent, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.txt'
+        ]);
     }
 }

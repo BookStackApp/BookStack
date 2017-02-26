@@ -26,6 +26,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}/delete', 'BookController@showDelete');
         Route::get('/{bookSlug}/sort', 'BookController@sort');
         Route::put('/{bookSlug}/sort', 'BookController@saveSort');
+        Route::get('/{bookSlug}/export/html', 'BookController@exportHtml');
+        Route::get('/{bookSlug}/export/pdf', 'BookController@exportPdf');
+        Route::get('/{bookSlug}/export/plaintext', 'BookController@exportPlainText');
 
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');

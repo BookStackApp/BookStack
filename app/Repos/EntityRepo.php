@@ -313,11 +313,12 @@ class EntityRepo
      * Loads the book slug onto child elements to prevent access database access for getting the slug.
      * @param Book $book
      * @param bool $filterDrafts
+     * @param bool $renderPages
      * @return mixed
      */
-    public function getBookChildren(Book $book, $filterDrafts = false)
+    public function getBookChildren(Book $book, $filterDrafts = false, $renderPages = false)
     {
-        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts)->get();
+        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts, $renderPages)->get();
         $entities = [];
         $parents = [];
         $tree = [];
@@ -325,6 +326,10 @@ class EntityRepo
         foreach ($q as $index => $rawEntity) {
             if ($rawEntity->entity_type === 'BookStack\\Page') {
                 $entities[$index] = $this->page->newFromBuilder($rawEntity);
+                if ($renderPages) {
+                    $entities[$index]->html = $rawEntity->description;
+                    $entities[$index]->html = $this->renderPage($entities[$index]);
+                };
             } else if ($rawEntity->entity_type === 'BookStack\\Chapter') {
                 $entities[$index] = $this->chapter->newFromBuilder($rawEntity);
                 $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
