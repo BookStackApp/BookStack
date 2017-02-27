@@ -1,7 +1,6 @@
-<?php
+<?php namespace Tests;
 
-
-class MarkdownTest extends TestCase
+class MarkdownTest extends BrowserKitTest
 {
     protected $page;
 

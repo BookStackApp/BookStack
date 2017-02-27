@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class ImageTest extends TestCase
+class ImageTest extends BrowserKitTest
 {
 
     /**

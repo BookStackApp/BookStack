@@ -73,7 +73,7 @@ function userCan($permission, Ownable $ownable = null)
  */
 function setting($key = null, $default = false)
 {
-    $settingService = app(\BookStack\Services\SettingService::class);
+    $settingService = resolve(\BookStack\Services\SettingService::class);
     if (is_null($key)) return $settingService;
     return $settingService->get($key, $default);
 }
@@ -124,6 +124,16 @@ function redirect($to = null, $status = 302, $headers = [], $secure = null)
     $to = baseUrl($to);
 
     return app('redirect')->to($to, $status, $headers, $secure);
+}
+
+function icon($name, $attrs = []) {
+    $iconPath = resource_path('assets/icons/' . $name . '.svg');
+    $attrString = ' ';
+    foreach ($attrs as $attrName => $attr) {
+        $attrString .=  $attrName . '="' . $attr . '" ';
+    }
+    $fileContents = file_get_contents($iconPath);
+    return  str_replace('<svg', '<svg' . $attrString, $fileContents);
 }
 
 /**

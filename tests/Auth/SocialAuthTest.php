@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class SocialAuthTest extends TestCase
+class SocialAuthTest extends BrowserKitTest
 {
 
     public function test_social_registration()
@@ -11,10 +11,10 @@ class SocialAuthTest extends TestCase
         $this->setSettings(['registration-enabled' => 'true']);
         config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
 
-        $mockSocialite = Mockery::mock('Laravel\Socialite\Contracts\Factory');
+        $mockSocialite = \Mockery::mock('Laravel\Socialite\Contracts\Factory');
         $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
-        $mockSocialDriver = Mockery::mock('Laravel\Socialite\Contracts\Provider');
-        $mockSocialUser = Mockery::mock('\Laravel\Socialite\Contracts\User');
+        $mockSocialDriver = \Mockery::mock('Laravel\Socialite\Contracts\Provider');
+        $mockSocialUser = \Mockery::mock('\Laravel\Socialite\Contracts\User');
 
         $mockSocialite->shouldReceive('driver')->twice()->with('google')->andReturn($mockSocialDriver);
         $mockSocialDriver->shouldReceive('redirect')->once()->andReturn(redirect('/'));
@@ -34,18 +34,16 @@ class SocialAuthTest extends TestCase
 
     public function test_social_login()
     {
-        $user = factory(\BookStack\User::class)->make();
-
         config([
             'GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc',
             'GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc',
             'APP_URL' => 'http://localhost'
         ]);
 
-        $mockSocialite = Mockery::mock('Laravel\Socialite\Contracts\Factory');
+        $mockSocialite = \Mockery::mock('Laravel\Socialite\Contracts\Factory');
         $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
-        $mockSocialDriver = Mockery::mock('Laravel\Socialite\Contracts\Provider');
-        $mockSocialUser = Mockery::mock('\Laravel\Socialite\Contracts\User');
+        $mockSocialDriver = \Mockery::mock('Laravel\Socialite\Contracts\Provider');
+        $mockSocialUser = \Mockery::mock('\Laravel\Socialite\Contracts\User');
 
         $mockSocialUser->shouldReceive('getId')->twice()->andReturn('logintest123');
 
@@ -68,7 +66,7 @@ class SocialAuthTest extends TestCase
         ->seePageIs('/login');
 
         // Test social callback with matching social account
-        DB::table('social_accounts')->insert([
+        \DB::table('social_accounts')->insert([
             'user_id' => $this->getAdmin()->id,
             'driver' => 'github',
             'driver_id' => 'logintest123'

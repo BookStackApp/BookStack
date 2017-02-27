@@ -14,7 +14,7 @@ class SocialAuthService
     protected $socialite;
     protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github'];
+    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter'];
 
     /**
      * SocialAuthService constructor.
@@ -181,12 +181,22 @@ class SocialAuthService
     public function getActiveDrivers()
     {
         $activeDrivers = [];
-        foreach ($this->validSocialDrivers as $driverName) {
-            if ($this->checkDriverConfigured($driverName)) {
-                $activeDrivers[$driverName] = true;
+        foreach ($this->validSocialDrivers as $driverKey) {
+            if ($this->checkDriverConfigured($driverKey)) {
+                $activeDrivers[$driverKey] = $this->getDriverName($driverKey);
             }
         }
         return $activeDrivers;
+    }
+
+    /**
+     * Get the presentational name for a driver.
+     * @param $driver
+     * @return mixed
+     */
+    public function getDriverName($driver)
+    {
+        return config('services.' . strtolower($driver) . '.name');
     }
 
     /**
@@ -211,7 +221,6 @@ class SocialAuthService
      */
     public function detachSocialAccount($socialDriver)
     {
-        session();
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => title_case($socialDriver)]));
         return redirect(user()->getEditUrl());

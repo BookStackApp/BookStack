@@ -1,7 +1,7 @@
-<?php
+<?php namespace Tests;
 
 
-class PageDraftTest extends TestCase
+class PageDraftTest extends BrowserKitTest
 {
     protected $page;
     protected $entityRepo;

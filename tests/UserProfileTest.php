@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class UserProfileTest extends TestCase
+class UserProfileTest extends BrowserKitTest
 {
     protected $user;
 
@@ -55,8 +55,8 @@ class UserProfileTest extends TestCase
         $newUser = $this->getEditor();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::add($entities['book'], 'book_update', $entities['book']->id);
-        Activity::add($entities['page'], 'page_create', $entities['book']->id);
+        \Activity::add($entities['book'], 'book_update', $entities['book']->id);
+        \Activity::add($entities['page'], 'page_create', $entities['book']->id);
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
             ->seeInElement('#recent-activity', 'updated book')
@@ -69,8 +69,8 @@ class UserProfileTest extends TestCase
         $newUser = $this->getEditor();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::add($entities['book'], 'book_update', $entities['book']->id);
-        Activity::add($entities['page'], 'page_create', $entities['book']->id);
+        \Activity::add($entities['book'], 'book_update', $entities['book']->id);
+        \Activity::add($entities['page'], 'page_create', $entities['book']->id);
 
         $this->asAdmin()->visit('/')->clickInElement('#recent-activity', $newUser->name)
             ->seePageIs('/user/' . $newUser->id)

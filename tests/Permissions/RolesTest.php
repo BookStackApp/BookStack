@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class RolesTest extends TestCase
+class RolesTest extends BrowserKitTest
 {
     protected $user;
 

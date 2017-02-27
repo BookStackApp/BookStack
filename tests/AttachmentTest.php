@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class AttachmentTest extends TestCase
+class AttachmentTest extends BrowserKitTest
 {
     /**
      * Get a test file that can be uploaded
@@ -75,7 +75,6 @@ class AttachmentTest extends TestCase
     {
         $page = \BookStack\Page::first();
         $this->asAdmin();
-        $admin = $this->getAdmin();
         $fileName = 'upload_test_file.txt';
 
         $this->uploadFile($fileName, $page->id);

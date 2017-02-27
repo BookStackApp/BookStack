@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class PublicActionTest extends TestCase
+class PublicActionTest extends BrowserKitTest
 {
 
     public function test_app_not_public()
@@ -84,7 +84,7 @@ class PublicActionTest extends TestCase
     {
         $page = \BookStack\Page::first();
         $this->asAdmin()->visit($page->getUrl());
-        Auth::logout();
+        \Auth::logout();
         view()->share('pageTitle', '');
         $this->forceVisit('/cats/dogs/hippos');
         $this->dontSee($page->name);

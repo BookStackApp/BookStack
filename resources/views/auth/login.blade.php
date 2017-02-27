@@ -32,13 +32,12 @@
 
             @if(count($socialDrivers) > 0)
                 <hr class="margin-top">
-                <h3 class="text-muted">{{ trans('auth.social_login') }}</h3>
-                @if(isset($socialDrivers['google']))
-                    <a id="social-login-google" href="{{ baseUrl("/login/service/google") }}" style="color: #DC4E41;"><i class="zmdi zmdi-google-plus-box zmdi-hc-4x"></i></a>
-                @endif
-                @if(isset($socialDrivers['github']))
-                    <a id="social-login-github" href="{{ baseUrl("/login/service/github") }}" style="color:#444;"><i class="zmdi zmdi-github zmdi-hc-4x"></i></a>
-                @endif
+                @foreach($socialDrivers as $driver => $name)
+                    <a id="social-login-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
+                        @icon($driver)
+                        {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
+                    </a>
+                @endforeach
             @endif
         </div>
     </div>

@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests;
 
-class RestrictionsTest extends TestCase
+class RestrictionsTest extends BrowserKitTest
 {
     protected $user;
     protected $viewer;
