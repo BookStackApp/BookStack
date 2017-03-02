@@ -2,9 +2,10 @@
 <script src="{{ baseUrl('/libs/highlightjs/highlight.min.js') }}"></script>
 <script>
     $(function() {
-        var aCodes = document.getElementsByTagName('pre');
-        for (var i=0; i < aCodes.length; i++) {
-            hljs.highlightBlock(aCodes[i]);
-        }
+        $(document).ready(function() {
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
     });
 </script>

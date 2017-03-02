@@ -2,6 +2,10 @@
 import DropZone from "dropzone";
 import markdown from "marked";
 
+markdown.setOptions({
+    langPrefix: ''
+});
+
 export default function (ngApp, events) {
 
     /**
