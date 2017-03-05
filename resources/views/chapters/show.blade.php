@@ -11,11 +11,11 @@
                 <div class="col-sm-4 faded">
                     <div class="action-buttons">
                         <span dropdown class="dropdown-container">
-                            <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.pages_export') }}</div>
+                            <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
                             <ul class="wide">
-                                <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.pages_export_html') }} <span class="text-muted float right">.html</span></a></li>
-                                <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.pages_export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                                <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.pages_export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                                <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                                <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                                <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
                             </ul>
                         </span>
                         @if(userCan('page-create', $chapter))

@@ -26,6 +26,10 @@ return [
     'no_pages_viewed' => 'Sie haben bisher keine Seiten angesehen.',
     'no_pages_recently_created' => 'Sie haben bisher keine Seiten angelegt.',
     'no_pages_recently_updated' => 'Sie haben bisher keine Seiten aktualisiert.',
+    'export' => 'Exportieren',
+    'export_html' => 'HTML-Datei',
+    'export_pdf' => 'PDF-Datei',
+    'export_text' => 'Text-Datei',
 
     /**
      * Permissions and restrictions
@@ -160,10 +164,6 @@ return [
     'pages_revisions_preview' => 'Vorschau',
     'pages_revisions_restore' => 'Zur&uuml;ck sichern',
     'pages_revisions_none' => 'Diese Seite hat keine &auml;lteren Versionen.',
-    'pages_export' => 'Exportieren',
-    'pages_export_html' => 'HTML-Datei',
-    'pages_export_pdf' => 'PDF-Datei',
-    'pages_export_text' => 'Text-Datei',
     'pages_copy_link' => 'Link kopieren',
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Ver&ouml;ffentlichung',
