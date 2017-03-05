@@ -32,9 +32,3 @@
     <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
     @include('form.password', ['name' => 'password-confirm'])
 </div>
-
-<div class="form-group">
-    <a href="{{ baseUrl("/settings/users") }}" class="button muted">{{ trans('common.cancel') }}</a>
-    <button class="button pos" type="submit">{{ trans('common.save') }}</button>
-</div>
-

@@ -13,7 +13,7 @@ return [
     'page_update'                 => 'página actualizada',
     'page_update_notification'    => 'Página actualizada exitosamente',
     'page_delete'                 => 'página borrada',
-    'page_delete_notification'    => 'Página borrada exitosamente,
+    'page_delete_notification'    => 'Página borrada exitosamente',
     'page_restore'                => 'página restaurada',
     'page_restore_notification'   => 'Página restaurada exitosamente',
     'page_move'                   => 'página movida',
