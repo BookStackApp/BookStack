@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/translations.js', 'HomeController@getTranslations');
+Route::get('/translations', 'HomeController@getTranslations');
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
