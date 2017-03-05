@@ -26,6 +26,10 @@ return [
     'no_pages_viewed' => 'Je hebt nog niets bekeken',
     'no_pages_recently_created' => 'Er zijn geen recent aangemaakte pagina\'s',
     'no_pages_recently_updated' => 'Er zijn geen recente wijzigingen',
+    'export' => 'Exporteren',
+    'export_html' => 'Contained Web File',
+    'export_pdf' => 'PDF File',
+    'export_text' => 'Plain Text File',
 
     /**
      * Permissions and restrictions
@@ -161,10 +165,6 @@ return [
     'pages_revisions_preview' => 'Preview',
     'pages_revisions_restore' => 'Herstellen',
     'pages_revisions_none' => 'Deze pagina heeft geen revisies',
-    'pages_export' => 'Exporteren',
-    'pages_export_html' => 'Contained Web File',
-    'pages_export_pdf' => 'PDF File',
-    'pages_export_text' => 'Plain Text File',
     'pages_copy_link' => 'Link Kopiëren',
     'pages_permissions_active' => 'Pagina Permissies Actief',
     'pages_initial_revision' => 'Eerste publicatie',
