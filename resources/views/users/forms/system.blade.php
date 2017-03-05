@@ -19,8 +19,3 @@
     </div>
 @endif
 
-<div class="form-group">
-    <a href="{{ baseUrl("/settings/users") }}" class="button muted">{{ trans('common.cancel') }}</a>
-    <button class="button pos" type="submit">{{ trans('common.save') }}</button>
-</div>
-

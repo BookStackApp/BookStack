@@ -19,38 +19,42 @@
                 </div>
             </div>
             <div class="row">
-            <div class="col-md-6" ng-non-bindable>
-                {!! csrf_field() !!}
-                <input type="hidden" name="_method" value="put">
-                @include('users.forms.' . $authMethod, ['model' => $user])
+                <div class="col-sm-6" ng-non-bindable>
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="put">
+                    @include('users.forms.' . $authMethod, ['model' => $user])
 
-            </div>
-            <div class="col-md-6">
-                <div class="form-group" id="logo-control">
-                    <label for="user-avatar">{{ trans('settings.users_avatar') }}</label>
-                    <p class="small">{{ trans('settings.users_avatar_desc') }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" id="logo-control">
+                        <label for="user-avatar">{{ trans('settings.users_avatar') }}</label>
+                        <p class="small">{{ trans('settings.users_avatar_desc') }}</p>
 
-                    @include('components.image-picker', [
-                          'resizeHeight' => '512',
-                          'resizeWidth' => '512',
-                          'showRemove' => false,
-                          'defaultImage' => baseUrl('/user_avatar.png'),
-                          'currentImage' => $user->getAvatar(80),
-                          'currentId' => $user->image_id,
-                          'name' => 'image_id',
-                          'imageClass' => 'avatar large'
-                      ])
-                </div>
-                <div class="form-group">
-                    <label for="user-language">{{ trans('settings.users_preferred_language') }}</label>
-                    <select name="setting[language]" id="user-language">
-                        @foreach(trans('settings.language_select') as $lang => $label)
-                            <option @if(setting()->getUser($user, 'language') === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
-                        @endforeach
-                    </select>
+                        @include('components.image-picker', [
+                              'resizeHeight' => '512',
+                              'resizeWidth' => '512',
+                              'showRemove' => false,
+                              'defaultImage' => baseUrl('/user_avatar.png'),
+                              'currentImage' => $user->getAvatar(80),
+                              'currentId' => $user->image_id,
+                              'name' => 'image_id',
+                              'imageClass' => 'avatar large'
+                          ])
+                    </div>
+                    <div class="form-group">
+                        <label for="user-language">{{ trans('settings.users_preferred_language') }}</label>
+                        <select name="setting[language]" id="user-language">
+                            @foreach(trans('settings.language_select') as $lang => $label)
+                                <option @if(setting()->getUser($user, 'language') === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="form-group">
+                <a href="{{  baseUrl($currentUser->can('users-manage') ? "/settings/users" : "/") }}" class="button muted">{{ trans('common.cancel') }}</a>
+                <button class="button pos" type="submit">{{ trans('common.save') }}</button>
+            </div>
         </form>
 
         <hr class="margin-top large">
@@ -60,7 +64,7 @@
             <p class="text-muted">{{ trans('settings.users_social_accounts_info') }}</p>
             <div class="row">
                 @foreach($activeSocialDrivers as $driver => $enabled)
-                    <div class="col-md-3 text-center">
+                    <div class="col-sm-3 col-xs-6 text-center">
                         <div>@icon($driver, ['width' => 56])</div>
                         <div>
                             @if($user->hasSocialAccount($driver))
