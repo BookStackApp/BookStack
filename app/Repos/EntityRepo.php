@@ -8,6 +8,7 @@ use BookStack\Page;
 use BookStack\PageRevision;
 use BookStack\Services\AttachmentService;
 use BookStack\Services\PermissionService;
+use BookStack\Services\SearchService;
 use BookStack\Services\ViewService;
 use Carbon\Carbon;
 use DOMDocument;
@@ -59,13 +60,18 @@ class EntityRepo
     protected $tagRepo;
 
     /**
+     * @var SearchService
+     */
+    protected $searchService;
+
+    /**
      * Acceptable operators to be used in a query
      * @var array
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
     /**
-     * EntityService constructor.
+     * EntityRepo constructor.
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
@@ -73,10 +79,12 @@ class EntityRepo
      * @param ViewService $viewService
      * @param PermissionService $permissionService
      * @param TagRepo $tagRepo
+     * @param SearchService $searchService
      */
     public function __construct(
         Book $book, Chapter $chapter, Page $page, PageRevision $pageRevision,
-        ViewService $viewService, PermissionService $permissionService, TagRepo $tagRepo
+        ViewService $viewService, PermissionService $permissionService,
+        TagRepo $tagRepo, SearchService $searchService
     )
     {
         $this->book = $book;
@@ -91,6 +99,7 @@ class EntityRepo
         $this->viewService = $viewService;
         $this->permissionService = $permissionService;
         $this->tagRepo = $tagRepo;
+        $this->searchService = $searchService;
     }
 
     /**
@@ -608,6 +617,7 @@ class EntityRepo
         $entity->updated_by = user()->id;
         $isChapter ? $book->chapters()->save($entity) : $entity->save();
         $this->permissionService->buildJointPermissionsForEntity($entity);
+        $this->searchService->indexEntity($entity);
         return $entity;
     }
 
@@ -628,6 +638,7 @@ class EntityRepo
         $entityModel->updated_by = user()->id;
         $entityModel->save();
         $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $this->searchService->indexEntity($entityModel);
         return $entityModel;
     }
 
@@ -961,6 +972,8 @@ class EntityRepo
             $this->savePageRevision($page, $input['summary']);
         }
 
+        $this->searchService->indexEntity($page);
+
         return $page;
     }
 
@@ -1064,6 +1077,7 @@ class EntityRepo
         $page->text = strip_tags($page->html);
         $page->updated_by = user()->id;
         $page->save();
+        $this->searchService->indexEntity($page);
         return $page;
     }
 
@@ -1156,6 +1170,7 @@ class EntityRepo
         $book->views()->delete();
         $book->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($book);
+        $this->searchService->deleteEntityTerms($book);
         $book->delete();
     }
 
@@ -1175,6 +1190,7 @@ class EntityRepo
         $chapter->views()->delete();
         $chapter->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($chapter);
+        $this->searchService->deleteEntityTerms($chapter);
         $chapter->delete();
     }
 
@@ -1190,6 +1206,7 @@ class EntityRepo
         $page->revisions()->delete();
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);
+        $this->searchService->deleteEntityTerms($page);
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);
