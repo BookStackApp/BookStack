@@ -479,8 +479,7 @@ class PermissionService
      * @return \Illuminate\Database\Query\Builder
      */
     public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false) {
-        $pageContentSelect = $fetchPageContent ? 'html' : "''";
-        $pageSelect = $this->db->table('pages')->selectRaw("'BookStack\\\\Page' as entity_type, id, slug, name, text, {$pageContentSelect} as description, book_id, priority, chapter_id, draft")->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
+        $pageSelect = $this->db->table('pages')->selectRaw($this->page->entityRawQuery($fetchPageContent))->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
             $query->where('draft', '=', 0);
             if (!$filterDrafts) {
                 $query->orWhere(function($query) {
@@ -488,7 +487,7 @@ class PermissionService
                 });
             }
         });
-        $chapterSelect = $this->db->table('chapters')->selectRaw("'BookStack\\\\Chapter' as entity_type, id, slug, name, '' as text, description, book_id, priority, 0 as chapter_id, 0 as draft")->where('book_id', '=', $book_id);
+        $chapterSelect = $this->db->table('chapters')->selectRaw($this->chapter->entityRawQuery())->where('book_id', '=', $book_id);
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
             ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
 
@@ -540,7 +539,7 @@ class PermissionService
     }
 
     /**
-     * Filter items that have entities set a a polymorphic relation.
+     * Filter items that have entities set as a polymorphic relation.
      * @param $query
      * @param string $tableName
      * @param string $entityIdColumn

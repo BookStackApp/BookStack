@@ -4,7 +4,7 @@
 class Entity extends Ownable
 {
 
-    protected $fieldsToSearch = ['name', 'description'];
+    protected $textField = 'description';
 
     /**
      * Compares this entity to another given entity.
@@ -63,6 +63,15 @@ class Entity extends Ownable
     public function tags()
     {
         return $this->morphMany(Tag::class, 'entity')->orderBy('order', 'asc');
+    }
+
+    /**
+     * Get the related search terms.
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function searchTerms()
+    {
+        return $this->morphMany(SearchTerm::class, 'entity');
     }
 
     /**
@@ -153,10 +162,25 @@ class Entity extends Ownable
     }
 
     /**
+     * Get the body text of this entity.
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->{$this->textField};
+    }
+
+    /**
+     * Return a generalised, common raw query that can be 'unioned' across entities.
+     * @return string
+     */
+    public function entityRawQuery(){return '';}
+
+    /**
      * Perform a full-text search on this entity.
-     * @param string[] $fieldsToSearch
      * @param string[] $terms
      * @param string[] array $wheres
+     * TODO - REMOVE
      * @return mixed
      */
     public function fullTextSearchQuery($terms, $wheres = [])
@@ -178,21 +202,21 @@ class Entity extends Ownable
         }
 
         $isFuzzy = count($exactTerms) === 0 && count($fuzzyTerms) > 0;
-
+        $fieldsToSearch = ['name', $this->textField];
 
         // Perform fulltext search if relevant terms exist.
         if ($isFuzzy) {
             $termString = implode(' ', $fuzzyTerms);
-            $fields = implode(',', $this->fieldsToSearch);
+
             $search = $search->selectRaw('*, MATCH(name) AGAINST(? IN BOOLEAN MODE) AS title_relevance', [$termString]);
-            $search = $search->whereRaw('MATCH(' . $fields . ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
+            $search = $search->whereRaw('MATCH(' . implode(',', $fieldsToSearch ). ') AGAINST(? IN BOOLEAN MODE)', [$termString]);
         }
 
         // Ensure at least one exact term matches if in search
         if (count($exactTerms) > 0) {
-            $search = $search->where(function ($query) use ($exactTerms) {
+            $search = $search->where(function ($query) use ($exactTerms, $fieldsToSearch) {
                 foreach ($exactTerms as $exactTerm) {
-                    foreach ($this->fieldsToSearch as $field) {
+                    foreach ($fieldsToSearch as $field) {
                         $query->orWhere($field, 'like', $exactTerm);
                     }
                 }

@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Repos\EntityRepo;
+use BookStack\Services\SearchService;
 use BookStack\Services\ViewService;
 use Illuminate\Http\Request;
 
@@ -8,16 +9,19 @@ class SearchController extends Controller
 {
     protected $entityRepo;
     protected $viewService;
+    protected $searchService;
 
     /**
      * SearchController constructor.
      * @param EntityRepo $entityRepo
      * @param ViewService $viewService
+     * @param SearchService $searchService
      */
-    public function __construct(EntityRepo $entityRepo, ViewService $viewService)
+    public function __construct(EntityRepo $entityRepo, ViewService $viewService, SearchService $searchService)
     {
         $this->entityRepo = $entityRepo;
         $this->viewService = $viewService;
+        $this->searchService = $searchService;
         parent::__construct();
     }
 
@@ -33,15 +37,13 @@ class SearchController extends Controller
             return redirect()->back();
         }
         $searchTerm = $request->get('term');
-        $paginationAppends = $request->only('term');
-        $pages = $this->entityRepo->getBySearch('page', $searchTerm, [], 20, $paginationAppends);
-        $books = $this->entityRepo->getBySearch('book', $searchTerm, [], 10, $paginationAppends);
-        $chapters = $this->entityRepo->getBySearch('chapter', $searchTerm, [], 10, $paginationAppends);
+//        $paginationAppends = $request->only('term'); TODO - Check pagination
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $searchTerm]));
+
+        $entities = $this->searchService->searchEntities($searchTerm);
+
         return view('search/all', [
-            'pages'      => $pages,
-            'books'      => $books,
-            'chapters'   => $chapters,
+            'entities'   => $entities,
             'searchTerm' => $searchTerm
         ]);
     }
