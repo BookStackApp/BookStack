@@ -1058,7 +1058,7 @@ class EntityRepo
     public function restorePageRevision(Page $page, Book $book, $revisionId)
     {
         $this->savePageRevision($page);
-        $revision = $this->getById('page_revision', $revisionId);
+        $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
         $page->slug = $this->findSuitableSlug('page', $page->name, $page->id, $book->id);
         $page->text = strip_tags($page->html);

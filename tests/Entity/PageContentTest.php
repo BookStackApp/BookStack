@@ -53,4 +53,31 @@ class PageContentTest extends TestCase
         $revisionView->assertSee('new content');
     }
 
+    public function test_page_revision_restore_updates_content()
+    {
+        $this->asEditor();
+
+        $entityRepo = $this->app[EntityRepo::class];
+        $page = Page::first();
+        $entityRepo->updatePage($page, $page->book_id, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
+        $entityRepo->updatePage($page, $page->book_id, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $page =  Page::find($page->id);
+
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee('abc123');
+        $pageView->assertDontSee('def456');
+
+        $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
+        $restoreReq = $this->get($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $page =  Page::find($page->id);
+
+        $restoreReq->assertStatus(302);
+        $restoreReq->assertRedirect($page->getUrl());
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee('abc123');
+        $pageView->assertSee('def456');
+    }
+
 }
