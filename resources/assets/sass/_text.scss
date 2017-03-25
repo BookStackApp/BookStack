@@ -281,6 +281,14 @@ ol {
   overflow: hidden;
 }
 
+li.checkbox-item {
+  list-style: none;
+  margin-left: - ($-m * 1.3);
+  input[type="checkbox"] {
+    margin-right: $-xs;
+  }
+}
+
 /*
  * Generic text styling classes
  */

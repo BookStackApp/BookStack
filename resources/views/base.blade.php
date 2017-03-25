@@ -17,15 +17,16 @@
     <!-- Scripts -->
     <script src="{{ baseUrl('/libs/jquery/jquery.min.js?version=2.1.4') }}"></script>
     <script src="{{ baseUrl('/libs/jquery/jquery-ui.min.js?version=1.11.4') }}"></script>
-    <script src="{{ baseUrl('/translations.js') }}"></script>
+    <script src="{{ baseUrl('/translations') }}"></script>
 
     @yield('head')
 
     @include('partials/custom-styles')
 
-    <!-- Custom user content -->
-    @if(setting('app-custom-head'))
+    @if(setting('app-custom-head') && \Route::currentRouteName() !== 'settings')
+        <!-- Custom user content -->
         {!! setting('app-custom-head') !!}
+        <!-- End custom user content -->
     @endif
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
@@ -55,15 +56,15 @@
                     <div class="float right">
                         <div class="links text-center">
                             <a href="{{ baseUrl('/books') }}"><i class="zmdi zmdi-book"></i>{{ trans('entities.books') }}</a>
-                            @if(isset($currentUser) && userCan('settings-manage'))
+                            @if(signedInUser() && userCan('settings-manage'))
                                 <a href="{{ baseUrl('/settings') }}"><i class="zmdi zmdi-settings"></i>{{ trans('settings.settings') }}</a>
                             @endif
-                            @if(!isset($signedIn) || !$signedIn)
+                            @if(!signedInUser())
                                 <a href="{{ baseUrl('/login') }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
                             @endif
                         </div>
-                        @if(isset($signedIn) && $signedIn)
-                            @include('partials._header-dropdown', ['currentUser' => $currentUser])
+                        @if(signedInUser())
+                            @include('partials._header-dropdown', ['currentUser' => user()])
                         @endif
 
                     </div>

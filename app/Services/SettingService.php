@@ -16,6 +16,7 @@ class SettingService
 
     protected $setting;
     protected $cache;
+    protected $localCache = [];
 
     protected $cachePrefix = 'setting-';
 
@@ -40,8 +41,12 @@ class SettingService
     public function get($key, $default = false)
     {
         if ($default === false) $default = config('setting-defaults.' . $key, false);
+        if (isset($this->localCache[$key])) return $this->localCache[$key];
+
         $value = $this->getValueFromStore($key, $default);
-        return $this->formatValue($value, $default);
+        $formatted = $this->formatValue($value, $default);
+        $this->localCache[$key] = $formatted;
+        return $formatted;
     }
 
     /**
@@ -71,9 +76,8 @@ class SettingService
 
         // Check the cache
         $cacheKey = $this->cachePrefix . $key;
-        if ($this->cache->has($cacheKey)) {
-            return $this->cache->get($cacheKey);
-        }
+        $cacheVal = $this->cache->get($cacheKey, null);
+        if ($cacheVal !== null) return $cacheVal;
 
         // Check the database
         $settingObject = $this->getSettingObjectByKey($key);

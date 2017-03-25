@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 
 class ActivityTrackingTest extends BrowserKitTest
