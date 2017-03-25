@@ -11,14 +11,14 @@ class DummyContentSeeder extends Seeder
      */
     public function run()
     {
-        $user = factory(BookStack\User::class, 1)->create();
+        $user = factory(\BookStack\User::class)->create();
         $role = \BookStack\Role::getRole('editor');
         $user->attachRole($role);
 
 
-        $books = factory(BookStack\Book::class, 20)->create(['created_by' => $user->id, 'updated_by' => $user->id])
+        $books = factory(\BookStack\Book::class, 20)->create(['created_by' => $user->id, 'updated_by' => $user->id])
             ->each(function($book) use ($user) {
-                $chapters = factory(BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])
+                $chapters = factory(\BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])
                     ->each(function($chapter) use ($user, $book){
                        $pages = factory(\BookStack\Page::class, 5)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id]);
                         $chapter->pages()->saveMany($pages);

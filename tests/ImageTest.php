@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 class ImageTest extends BrowserKitTest
 {
