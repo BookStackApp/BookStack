@@ -100,7 +100,11 @@ class SearchService
         $nameTerms = $this->generateTermArrayFromText($entity->name, 5);
         $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1);
         $terms = array_merge($nameTerms, $bodyTerms);
-        $entity->searchTerms()->createMany($terms);
+        foreach ($terms as $index => $term) {
+            $terms[$index]['entity_type'] = $entity->getMorphClass();
+            $terms[$index]['entity_id'] = $entity->id;
+        }
+        $this->searchTerm->newQuery()->insert($terms);
     }
 
     /**
@@ -121,7 +125,7 @@ class SearchService
 
         $chunkedTerms = array_chunk($terms, 500);
         foreach ($chunkedTerms as $termChunk) {
-            $this->searchTerm->insert($termChunk);
+            $this->searchTerm->newQuery()->insert($termChunk);
         }
     }
 
