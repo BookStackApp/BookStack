@@ -16,6 +16,8 @@ class SearchService
     protected $chapter;
     protected $page;
     protected $db;
+    protected $permissionService;
+    protected $entities;
 
     /**
      * SearchService constructor.
@@ -24,22 +26,41 @@ class SearchService
      * @param Chapter $chapter
      * @param Page $page
      * @param Connection $db
+     * @param PermissionService $permissionService
      */
-    public function __construct(SearchTerm $searchTerm, Book $book, Chapter $chapter, Page $page, Connection $db)
+    public function __construct(SearchTerm $searchTerm, Book $book, Chapter $chapter, Page $page, Connection $db, PermissionService $permissionService)
     {
         $this->searchTerm = $searchTerm;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
         $this->db = $db;
+        $this->entities = [
+            'page' => $this->page,
+            'chapter' => $this->chapter,
+            'book' => $this->book
+        ];
+        $this->permissionService = $permissionService;
     }
 
-    public function searchEntities($searchString, $entityType = 'all')
+    public function searchEntities($searchString, $entityType = 'all', $page = 0, $count = 20)
     {
         // TODO - Add Tag Searches
         // TODO - Add advanced custom column searches
         // TODO - Add exact match searches ("")
+        // TODO - Check drafts don't show up in results
+        // TODO - Move search all page to just /search?term=cat
 
+       if ($entityType !== 'all') return $this->searchEntityTable($searchString, $entityType, $page, $count);
+
+       $bookSearch = $this->searchEntityTable($searchString, 'book', $page, $count);
+       $chapterSearch = $this->searchEntityTable($searchString, 'chapter', $page, $count);
+       $pageSearch = $this->searchEntityTable($searchString, 'page', $page, $count);
+       return collect($bookSearch)->merge($chapterSearch)->merge($pageSearch)->sortByDesc('score');
+    }
+
+    public function searchEntityTable($searchString, $entityType = 'page', $page = 0, $count = 20)
+    {
         $termArray = explode(' ', $searchString);
 
         $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
@@ -49,13 +70,24 @@ class SearchService
             }
         });
 
+        $entity = $this->getEntity($entityType);
         $subQuery = $subQuery->groupBy('entity_type', 'entity_id');
-        $pageSelect = $this->db->table('pages as e')->join(\DB::raw('(' . $subQuery->toSql() . ') as s'), function(JoinClause $join) {
-            $join->on('e.id', '=', 's.entity_id');
-        })->selectRaw('e.*, s.score')->orderBy('score', 'desc');
-        $pageSelect->mergeBindings($subQuery);
-        dd($pageSelect->toSql());
-        // TODO - Continue from here
+        $entitySelect = $entity->newQuery()->join(\DB::raw('(' . $subQuery->toSql() . ') as s'), function(JoinClause $join) {
+            $join->on('id', '=', 'entity_id');
+        })->selectRaw($entity->getTable().'.*, s.score')->orderBy('score', 'desc')->skip($page * $count)->take($count);
+        $entitySelect->mergeBindings($subQuery);
+        $query = $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
+        return $query->get();
+    }
+
+    /**
+     * Get an entity instance via type.
+     * @param $type
+     * @return Entity
+     */
+    protected function getEntity($type)
+    {
+        return $this->entities[strtolower($type)];
     }
 
     /**
@@ -86,7 +118,11 @@ class SearchService
                 $terms[] = $term;
             }
         }
-        $this->searchTerm->insert($terms);
+
+        $chunkedTerms = array_chunk($terms, 500);
+        foreach ($chunkedTerms as $termChunk) {
+            $this->searchTerm->insert($termChunk);
+        }
     }
 
     /**
@@ -97,17 +133,17 @@ class SearchService
         $this->searchTerm->truncate();
 
         // Chunk through all books
-        $this->book->chunk(500, function ($books) {
+        $this->book->chunk(1000, function ($books) {
             $this->indexEntities($books);
         });
 
         // Chunk through all chapters
-        $this->chapter->chunk(500, function ($chapters) {
+        $this->chapter->chunk(1000, function ($chapters) {
             $this->indexEntities($chapters);
         });
 
         // Chunk through all pages
-        $this->page->chunk(500, function ($pages) {
+        $this->page->chunk(1000, function ($pages) {
             $this->indexEntities($pages);
         });
     }

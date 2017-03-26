@@ -12,7 +12,7 @@ class RegenerateSearch extends Command
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-search';
+    protected $signature = 'bookstack:regenerate-search {--database= : The database connection to use.}';
 
     /**
      * The console command description.
@@ -41,6 +41,13 @@ class RegenerateSearch extends Command
      */
     public function handle()
     {
+        $connection = \DB::getDefaultConnection();
+        if ($this->option('database') !== null) {
+            \DB::setDefaultConnection($this->option('database'));
+        }
+
         $this->searchService->indexAllEntities();
+        \DB::setDefaultConnection($connection);
+        $this->comment('Search index regenerated');
     }
 }

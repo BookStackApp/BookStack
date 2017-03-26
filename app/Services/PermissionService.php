@@ -513,7 +513,7 @@ class PermissionService
      * @param string $entityType
      * @param Builder|Entity $query
      * @param string $action
-     * @return mixed
+     * @return Builder
      */
     public function enforceEntityRestrictions($entityType, $query, $action = 'view')
     {
