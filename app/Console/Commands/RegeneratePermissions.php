@@ -12,7 +12,7 @@ class RegeneratePermissions extends Command
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-permissions';
+    protected $signature = 'bookstack:regenerate-permissions {--database= : The database connection to use.}';
 
     /**
      * The console command description.
@@ -46,7 +46,14 @@ class RegeneratePermissions extends Command
      */
     public function handle()
     {
+        $connection = \DB::getDefaultConnection();
+        if ($this->option('database') !== null) {
+            \DB::setDefaultConnection($this->option('database'));
+        }
+
         $this->permissionService->buildJointPermissions();
+
+        \DB::setDefaultConnection($connection);
         $this->comment('Permissions regenerated');
     }
 }
