@@ -4,7 +4,7 @@
 class Entity extends Ownable
 {
 
-    protected $textField = 'description';
+    public $textField = 'description';
 
     /**
      * Compares this entity to another given entity.
