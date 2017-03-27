@@ -12,7 +12,6 @@ use Illuminate\Support\Collection;
 
 class SearchService
 {
-
     protected $searchTerm;
     protected $book;
     protected $chapter;
@@ -20,6 +19,12 @@ class SearchService
     protected $db;
     protected $permissionService;
     protected $entities;
+
+    /**
+     * Acceptable operators to be used in a query
+     * @var array
+     */
+    protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
     /**
      * SearchService constructor.
@@ -55,11 +60,7 @@ class SearchService
      */
     public function searchEntities($searchString, $entityType = 'all', $page = 0, $count = 20)
     {
-        // TODO - Add Tag Searches
-        // TODO - Add advanced custom column searches
         // TODO - Check drafts don't show up in results
-        // TODO - Move search all page to just /search?term=cat
-
        if ($entityType !== 'all') return $this->searchEntityTable($searchString, $entityType, $page, $count);
 
        $bookSearch = $this->searchEntityTable($searchString, 'book', $page, $count);
@@ -109,6 +110,19 @@ class SearchService
             });
         }
 
+        // Handle tag searches
+        foreach ($searchTerms['tags'] as $inputTerm) {
+            $this->applyTagSearch($entitySelect, $inputTerm);
+        }
+
+        // Handle filters
+        foreach ($searchTerms['filters'] as $filterTerm) {
+            $splitTerm = explode(':', $filterTerm);
+            $functionName = camel_case('filter_' . $splitTerm[0]);
+            $param = count($splitTerm) > 1 ? $splitTerm[1] : '';
+            if (method_exists($this, $functionName)) $this->$functionName($entitySelect, $entity, $param);
+        }
+
         $entitySelect->skip($page * $count)->take($count);
         $query = $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
         return $query->get();
@@ -120,7 +134,7 @@ class SearchService
      * @param $searchString
      * @return array
      */
-    public function parseSearchString($searchString)
+    protected function parseSearchString($searchString)
     {
         $terms = [
             'search' => [],
@@ -149,6 +163,50 @@ class SearchService
         }
 
         return $terms;
+    }
+
+    /**
+     * Get the available query operators as a regex escaped list.
+     * @return mixed
+     */
+    protected function getRegexEscapedOperators()
+    {
+        $escapedOperators = [];
+        foreach ($this->queryOperators as $operator) {
+            $escapedOperators[] = preg_quote($operator);
+        }
+        return join('|', $escapedOperators);
+    }
+
+    /**
+     * Apply a tag search term onto a entity query.
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $tagTerm
+     * @return mixed
+     */
+    protected function applyTagSearch(\Illuminate\Database\Eloquent\Builder $query, $tagTerm) {
+        preg_match("/^(.*?)((".$this->getRegexEscapedOperators().")(.*?))?$/", $tagTerm, $tagSplit);
+        $query->whereHas('tags', function(\Illuminate\Database\Eloquent\Builder $query) use ($tagSplit) {
+            $tagName = $tagSplit[1];
+            $tagOperator = count($tagSplit) > 2 ? $tagSplit[3] : '';
+            $tagValue = count($tagSplit) > 3 ? $tagSplit[4] : '';
+            $validOperator = in_array($tagOperator, $this->queryOperators);
+            if (!empty($tagOperator) && !empty($tagValue) && $validOperator) {
+                if (!empty($tagName)) $query->where('name', '=', $tagName);
+                if (is_numeric($tagValue) && $tagOperator !== 'like') {
+                    // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
+                    // search the value as a string which prevents being able to do number-based operations
+                    // on the tag values. We ensure it has a numeric value and then cast it just to be sure.
+                    $tagValue = (float) trim($query->getConnection()->getPdo()->quote($tagValue), "'");
+                    $query->whereRaw("value ${tagOperator} ${tagValue}");
+                } else {
+                    $query->where('value', $tagOperator, $tagValue);
+                }
+            } else {
+                $query->where('name', '=', $tagName);
+            }
+        });
+        return $query;
     }
 
     /**
@@ -256,6 +314,84 @@ class SearchService
             ];
         }
         return $terms;
+    }
+
+
+
+
+    /**
+     * Custom entity search filters
+     */
+
+    protected function filterUpdatedAfter(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        try { $date = date_create($input);
+        } catch (\Exception $e) {return;}
+        $query->where('updated_at', '>=', $date);
+    }
+
+    protected function filterUpdatedBefore(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        try { $date = date_create($input);
+        } catch (\Exception $e) {return;}
+        $query->where('updated_at', '<', $date);
+    }
+
+    protected function filterCreatedAfter(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        try { $date = date_create($input);
+        } catch (\Exception $e) {return;}
+        $query->where('created_at', '>=', $date);
+    }
+
+    protected function filterCreatedBefore(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        try { $date = date_create($input);
+        } catch (\Exception $e) {return;}
+        $query->where('created_at', '<', $date);
+    }
+
+    protected function filterCreatedBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        if (!is_numeric($input)) return;
+        $query->where('created_by', '=', $input);
+    }
+
+    protected function filterUpdatedBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        if (!is_numeric($input)) return;
+        $query->where('updated_by', '=', $input);
+    }
+
+    protected function filterInName(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        $query->where('name', 'like', '%' .$input. '%');
+    }
+
+    protected function filterInTitle(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input) {$this->filterInName($query, $model, $input);}
+
+    protected function filterInBody(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        $query->where($model->textField, 'like', '%' .$input. '%');
+    }
+
+    protected function filterIsRestricted(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        $query->where('restricted', '=', true);
+    }
+
+    protected function filterViewedByMe(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        $query->whereHas('views', function($query) {
+            $query->where('user_id', '=', user()->id);
+        });
+    }
+
+    protected function filterNotViewedByMe(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        $query->whereDoesntHave('views', function($query) {
+            $query->where('user_id', '=', user()->id);
+        });
     }
 
 }
