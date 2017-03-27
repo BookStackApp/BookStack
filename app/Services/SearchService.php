@@ -6,7 +6,9 @@ use BookStack\Entity;
 use BookStack\Page;
 use BookStack\SearchTerm;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Collection;
 
 class SearchService
 {
@@ -43,11 +45,18 @@ class SearchService
         $this->permissionService = $permissionService;
     }
 
+    /**
+     * Search all entities in the system.
+     * @param $searchString
+     * @param string $entityType
+     * @param int $page
+     * @param int $count
+     * @return Collection
+     */
     public function searchEntities($searchString, $entityType = 'all', $page = 0, $count = 20)
     {
         // TODO - Add Tag Searches
         // TODO - Add advanced custom column searches
-        // TODO - Add exact match searches ("")
         // TODO - Check drafts don't show up in results
         // TODO - Move search all page to just /search?term=cat
 
@@ -59,25 +68,87 @@ class SearchService
        return collect($bookSearch)->merge($chapterSearch)->merge($pageSearch)->sortByDesc('score');
     }
 
+    /**
+     * Search across a particular entity type.
+     * @param string $searchString
+     * @param string $entityType
+     * @param int $page
+     * @param int $count
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function searchEntityTable($searchString, $entityType = 'page', $page = 0, $count = 20)
     {
-        $termArray = explode(' ', $searchString);
-
-        $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
-        $subQuery->where(function($query) use ($termArray) {
-            foreach ($termArray as $inputTerm) {
-                $query->orWhere('term', 'like', $inputTerm .'%');
-            }
-        });
+        $searchTerms = $this->parseSearchString($searchString);
 
         $entity = $this->getEntity($entityType);
-        $subQuery = $subQuery->groupBy('entity_type', 'entity_id');
-        $entitySelect = $entity->newQuery()->join(\DB::raw('(' . $subQuery->toSql() . ') as s'), function(JoinClause $join) {
-            $join->on('id', '=', 'entity_id');
-        })->selectRaw($entity->getTable().'.*, s.score')->orderBy('score', 'desc')->skip($page * $count)->take($count);
-        $entitySelect->mergeBindings($subQuery);
+        $entitySelect = $entity->newQuery();
+
+        // Handle normal search terms
+        if (count($searchTerms['search']) > 0) {
+            $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
+            $subQuery->where(function(Builder $query) use ($searchTerms) {
+                foreach ($searchTerms['search'] as $inputTerm) {
+                    $query->orWhere('term', 'like', $inputTerm .'%');
+                }
+            })->groupBy('entity_type', 'entity_id');
+            $entitySelect->join(\DB::raw('(' . $subQuery->toSql() . ') as s'), function(JoinClause $join) {
+                $join->on('id', '=', 'entity_id');
+            })->selectRaw($entity->getTable().'.*, s.score')->orderBy('score', 'desc');
+            $entitySelect->mergeBindings($subQuery);
+        }
+
+        // Handle exact term matching
+        if (count($searchTerms['exact']) > 0) {
+            $entitySelect->where(function(\Illuminate\Database\Eloquent\Builder $query) use ($searchTerms, $entity) {
+                foreach ($searchTerms['exact'] as $inputTerm) {
+                    $query->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($inputTerm, $entity) {
+                        $query->where('name', 'like', '%'.$inputTerm .'%')
+                            ->orWhere($entity->textField, 'like', '%'.$inputTerm .'%');
+                    });
+                }
+            });
+        }
+
+        $entitySelect->skip($page * $count)->take($count);
         $query = $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
         return $query->get();
+    }
+
+
+    /**
+     * Parse a search string into components.
+     * @param $searchString
+     * @return array
+     */
+    public function parseSearchString($searchString)
+    {
+        $terms = [
+            'search' => [],
+            'exact' => [],
+            'tags' => [],
+            'filters' => []
+        ];
+
+        $patterns = [
+            'exact' => '/"(.*?)"/',
+            'tags' => '/\[(.*?)\]/',
+            'filters' => '/\{(.*?)\}/'
+        ];
+
+        foreach ($patterns as $termType => $pattern) {
+            $matches = [];
+            preg_match_all($pattern, $searchString, $matches);
+            if (count($matches) > 0) {
+                $terms[$termType] = $matches[1];
+                $searchString = preg_replace($pattern, '', $searchString);
+            }
+        }
+
+        foreach (explode(' ', trim($searchString)) as $searchTerm) {
+            if ($searchTerm !== '') $terms['search'][] = $searchTerm;
+        }
+
+        return $terms;
     }
 
     /**
