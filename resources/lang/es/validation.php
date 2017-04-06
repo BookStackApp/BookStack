@@ -28,7 +28,7 @@ return [
         'array'   => 'El :attribute debe estar entre :min y :max items.',
     ],
     'boolean'              => 'El campo :attribute debe ser true o false.',
-    'confirmed'            => 'El :attribute confirmaci√n no concuerda.',
+    'confirmed'            => 'La confirmaci√n de :attribute no concuerda.',
     'date'                 => 'El :attribute no es una fecha v√lida.',
     'date_format'          => 'El :attribute no coincide con el formato :format.',
     'different'            => ':attribute y :other deben ser diferentes.',
@@ -57,23 +57,23 @@ return [
     'not_in'               => ':attribute seleccionado es inv√°lio.',
     'numeric'              => ':attribute debe ser num√©rico.',
     'regex'                => ':attribute con formato inv√lido',
-    'required'             => 'The :attribute field is required.',
-    'required_if'          => 'The :attribute field is required when :other is :value.',
-    'required_with'        => 'The :attribute field is required when :values is present.',
-    'required_with_all'    => 'The :attribute field is required when :values is present.',
-    'required_without'     => 'The :attribute field is required when :values is not present.',
-    'required_without_all' => 'The :attribute field is required when none of :values are present.',
-    'same'                 => 'The :attribute and :other must match.',
+    'required'             => ':attribute es requerido.',
+    'required_if'          => ':attribute es requerido cuando :other vale :value.',
+    'required_with'        => 'El campo :attribute es requerido cuando se encuentre entre los valores :values.',
+    'required_with_all'    => 'El campo :attribute es requerido cuando los valores sean :values.',
+    'required_without'     => ':attribute es requerido cuando no se encuentre entre los valores :values.',
+    'required_without_all' => ':attribute es requerido cuando ninguno de los valores :values est√n presentes.',
+    'same'                 => ':attribute y :other deben coincidir.',
     'size'                 => [
-        'numeric' => 'The :attribute must be :size.',
-        'file'    => 'The :attribute must be :size kilobytes.',
-        'string'  => 'The :attribute must be :size characters.',
-        'array'   => 'The :attribute must contain :size items.',
+        'numeric' => ':attribute debe ser :size.',
+        'file'    => ':attribute debe ser :size kilobytes.',
+        'string'  => ':attribute debe ser :size caracteres.',
+        'array'   => ':attribute debe contener :size items.',
     ],
-    'string'               => 'The :attribute must be a string.',
-    'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
-    'url'                  => 'The :attribute format is invalid.',
+    'string'               => 'El atributo :attribute debe ser una cadena.',
+    'timezone'             => 'El atributo :attribute debe ser una zona v√lida.',
+    'unique'               => 'El atributo :attribute ya ha sido tomado.',
+    'url'                  => 'El atributo :attribute tiene un formato inv√lido°.',
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +88,7 @@ return [
 
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Password confirmation required',
+            'required_with' => 'Confirmaci√n de Password requerida',
         ],
     ],
 
