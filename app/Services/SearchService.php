@@ -52,7 +52,7 @@ class SearchService
 
     /**
      * Search all entities in the system.
-     * @param $searchString
+     * @param string $searchString
      * @param string $entityType
      * @param int $page
      * @param int $count
@@ -60,35 +60,45 @@ class SearchService
      */
     public function searchEntities($searchString, $entityType = 'all', $page = 0, $count = 20)
     {
-        // TODO - Check drafts don't show up in results
-       if ($entityType !== 'all') return $this->searchEntityTable($searchString, $entityType, $page, $count);
+        $terms = $this->parseSearchString($searchString);
+        $entityTypes = array_keys($this->entities);
+        $entityTypesToSearch = $entityTypes;
+        $results = collect();
 
-       $bookSearch = $this->searchEntityTable($searchString, 'book', $page, $count);
-       $chapterSearch = $this->searchEntityTable($searchString, 'chapter', $page, $count);
-       $pageSearch = $this->searchEntityTable($searchString, 'page', $page, $count);
-       return collect($bookSearch)->merge($chapterSearch)->merge($pageSearch)->sortByDesc('score');
+        if ($entityType !== 'all') {
+            $entityTypesToSearch = $entityType;
+        } else if (isset($terms['filters']['type'])) {
+            $entityTypesToSearch = explode('|', $terms['filters']['type']);
+        }
+
+        // TODO - Check drafts don't show up in results
+        foreach ($entityTypesToSearch as $entityType) {
+            if (!in_array($entityType, $entityTypes)) continue;
+            $search = $this->searchEntityTable($terms, $entityType, $page, $count);
+            $results = $results->merge($search);
+        }
+
+        return $results->sortByDesc('score');
     }
 
     /**
      * Search across a particular entity type.
-     * @param string $searchString
+     * @param array $terms
      * @param string $entityType
      * @param int $page
      * @param int $count
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function searchEntityTable($searchString, $entityType = 'page', $page = 0, $count = 20)
+    public function searchEntityTable($terms, $entityType = 'page', $page = 0, $count = 20)
     {
-        $searchTerms = $this->parseSearchString($searchString);
-
         $entity = $this->getEntity($entityType);
         $entitySelect = $entity->newQuery();
 
         // Handle normal search terms
-        if (count($searchTerms['search']) > 0) {
+        if (count($terms['search']) > 0) {
             $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
-            $subQuery->where(function(Builder $query) use ($searchTerms) {
-                foreach ($searchTerms['search'] as $inputTerm) {
+            $subQuery->where(function(Builder $query) use ($terms) {
+                foreach ($terms['search'] as $inputTerm) {
                     $query->orWhere('term', 'like', $inputTerm .'%');
                 }
             })->groupBy('entity_type', 'entity_id');
@@ -99,9 +109,9 @@ class SearchService
         }
 
         // Handle exact term matching
-        if (count($searchTerms['exact']) > 0) {
-            $entitySelect->where(function(\Illuminate\Database\Eloquent\Builder $query) use ($searchTerms, $entity) {
-                foreach ($searchTerms['exact'] as $inputTerm) {
+        if (count($terms['exact']) > 0) {
+            $entitySelect->where(function(\Illuminate\Database\Eloquent\Builder $query) use ($terms, $entity) {
+                foreach ($terms['exact'] as $inputTerm) {
                     $query->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($inputTerm, $entity) {
                         $query->where('name', 'like', '%'.$inputTerm .'%')
                             ->orWhere($entity->textField, 'like', '%'.$inputTerm .'%');
@@ -111,16 +121,14 @@ class SearchService
         }
 
         // Handle tag searches
-        foreach ($searchTerms['tags'] as $inputTerm) {
+        foreach ($terms['tags'] as $inputTerm) {
             $this->applyTagSearch($entitySelect, $inputTerm);
         }
 
         // Handle filters
-        foreach ($searchTerms['filters'] as $filterTerm) {
-            $splitTerm = explode(':', $filterTerm);
-            $functionName = camel_case('filter_' . $splitTerm[0]);
-            $param = count($splitTerm) > 1 ? $splitTerm[1] : '';
-            if (method_exists($this, $functionName)) $this->$functionName($entitySelect, $entity, $param);
+        foreach ($terms['filters'] as $filterTerm => $filterValue) {
+            $functionName = camel_case('filter_' . $filterTerm);
+            if (method_exists($this, $functionName)) $this->$functionName($entitySelect, $entity, $filterValue);
         }
 
         $entitySelect->skip($page * $count)->take($count);
@@ -149,6 +157,7 @@ class SearchService
             'filters' => '/\{(.*?)\}/'
         ];
 
+        // Parse special terms
         foreach ($patterns as $termType => $pattern) {
             $matches = [];
             preg_match_all($pattern, $searchString, $matches);
@@ -158,9 +167,18 @@ class SearchService
             }
         }
 
+        // Parse standard terms
         foreach (explode(' ', trim($searchString)) as $searchTerm) {
             if ($searchTerm !== '') $terms['search'][] = $searchTerm;
         }
+
+        // Split filter values out
+        $splitFilters = [];
+        foreach ($terms['filters'] as $filter) {
+            $explodedFilter = explode(':', $filter, 1);
+            $splitFilters[$explodedFilter[0]] = (count($explodedFilter) > 1) ? $explodedFilter[1] : '';
+        }
+        $terms['filters'] = $splitFilters;
 
         return $terms;
     }

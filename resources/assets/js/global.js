@@ -1,12 +1,5 @@
 "use strict";
 
-// AngularJS - Create application and load components
-import angular from "angular";
-import "angular-resource";
-import "angular-animate";
-import "angular-sanitize";
-import "angular-ui-sortable";
-
 // Url retrieval function
 window.baseUrl = function(path) {
     let basePath = document.querySelector('meta[name="base-url"]').getAttribute('content');
@@ -14,6 +7,28 @@ window.baseUrl = function(path) {
     if (path[0] === '/') path = path.slice(1);
     return basePath + '/' + path;
 };
+
+// Vue and axios setup
+import vue from "vue/dist/vue.common";
+import axios from "axios";
+
+let axiosInstance = axios.create({
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
+        'baseURL': baseUrl('')
+    }
+});
+
+window.Vue = vue;
+window.axios = axiosInstance;
+Vue.prototype.$http = axiosInstance;
+
+// AngularJS - Create application and load components
+import angular from "angular";
+import "angular-resource";
+import "angular-animate";
+import "angular-sanitize";
+import "angular-ui-sortable";
 
 let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
@@ -47,6 +62,7 @@ class EventManager {
 }
 
 window.Events = new EventManager();
+Vue.prototype.$events = window.Events;
 
 // Load in angular specific items
 import Services from './services';
