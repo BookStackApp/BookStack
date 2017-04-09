@@ -26,7 +26,19 @@ class CreateSearchIndexTable extends Migration
             $table->index('score');
         });
 
-        // TODO - Drop old fulltext indexes
+        // Drop search indexes
+        Schema::table('pages', function(Blueprint $table) {
+            $table->dropIndex('search');
+            $table->dropIndex('name_search');
+        });
+        Schema::table('books', function(Blueprint $table) {
+            $table->dropIndex('search');
+            $table->dropIndex('name_search');
+        });
+        Schema::table('chapters', function(Blueprint $table) {
+            $table->dropIndex('search');
+            $table->dropIndex('name_search');
+        });
 
         app(\BookStack\Services\SearchService::class)->indexAllEntities();
     }
@@ -38,6 +50,14 @@ class CreateSearchIndexTable extends Migration
      */
     public function down()
     {
+        $prefix = DB::getTablePrefix();
+        DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT search(name, text)");
+        DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT search(name, description)");
+        DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT search(name, description)");
+        DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT name_search(name)");
+        DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT name_search(name)");
+        DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT name_search(name)");
+
         Schema::dropIfExists('search_terms');
     }
 }
