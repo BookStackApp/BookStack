@@ -175,7 +175,7 @@ class SearchService
         // Split filter values out
         $splitFilters = [];
         foreach ($terms['filters'] as $filter) {
-            $explodedFilter = explode(':', $filter, 1);
+            $explodedFilter = explode(':', $filter, 2);
             $splitFilters[$explodedFilter[0]] = (count($explodedFilter) > 1) ? $explodedFilter[1] : '';
         }
         $terms['filters'] = $splitFilters;
