@@ -1,9 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build": "gulp --production",
-    "dev": "gulp watch",
-    "watch": "gulp watch"
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
     "angular": "^1.5.5",
@@ -11,14 +15,16 @@
     "angular-resource": "^1.5.5",
     "angular-sanitize": "^1.5.5",
     "angular-ui-sortable": "^0.15.0",
+    "cross-env": "^3.2.3",
     "dropzone": "^4.0.1",
     "gulp": "^3.9.0",
-    "laravel-elixir": "^6.0.0-11",
-    "laravel-elixir-browserify-official": "^0.1.3",
+    "laravel-mix": "0.*",
     "marked": "^0.3.5",
     "moment": "^2.12.0"
   },
   "dependencies": {
-    "clipboard": "^1.5.16"
+    "axios": "^0.16.1",
+    "clipboard": "^1.5.16",
+    "vue": "^2.2.6"
   }
 }
