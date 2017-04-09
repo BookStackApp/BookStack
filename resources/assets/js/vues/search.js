@@ -53,6 +53,10 @@ let methods = {
             return;
         }
         this.appendTerm(typeTerm);
+    },
+
+    updateSearch() {
+        window.location = '/search?term=' + encodeURIComponent(this.termString);
     }
 
 };

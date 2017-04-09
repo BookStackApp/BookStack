@@ -40,6 +40,9 @@
                     <label><input type="checkbox" v-on:change="typeChange" v-model="search.type.book" value="book"> Book</label>
                 </div>
 
+
+                <button type="button" class="button pos" v-on:click="updateSearch">Update Search</button>
+
             </div>
 
         </div>
@@ -48,11 +51,4 @@
     </div>
 </div>
 
-@stop
-
-@section('scripts')
-    <script>
-
-
-    </script>
 @stop
