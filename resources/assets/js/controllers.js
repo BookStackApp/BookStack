@@ -1,12 +1,12 @@
 "use strict";
 
-import moment from 'moment';
-import 'moment/locale/en-gb';
-import editorOptions from "./pages/page-form";
+const moment = require('moment');
+require('moment/locale/en-gb');
+const editorOptions = require("./pages/page-form");
 
 moment.locale('en-gb');
 
-export default function (ngApp, events) {
+module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {

@@ -8,33 +8,33 @@ window.baseUrl = function(path) {
     return basePath + '/' + path;
 };
 
-// Vue and axios setup
-import vue from "vue/dist/vue.common";
-import axios from "axios";
+const Vue = require("vue");
+const axios = require("axios");
 
 let axiosInstance = axios.create({
     headers: {
         'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
-        'baseURL': baseUrl('')
+        'baseURL': window.baseUrl('')
     }
 });
 
-window.Vue = vue;
-window.axios = axiosInstance;
 Vue.prototype.$http = axiosInstance;
 
+require("./vues/vues");
+
+
 // AngularJS - Create application and load components
-import angular from "angular";
-import "angular-resource";
-import "angular-animate";
-import "angular-sanitize";
-import "angular-ui-sortable";
+const angular = require("angular");
+require("angular-resource");
+require("angular-animate");
+require("angular-sanitize");
+require("angular-ui-sortable");
 
 let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
 
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
-import Translations from "./translations"
+const Translations = require("./translations");
 let translator = new Translations(window.translations);
 window.trans = translator.get.bind(translator);
 
@@ -65,9 +65,9 @@ window.Events = new EventManager();
 Vue.prototype.$events = window.Events;
 
 // Load in angular specific items
-import Services from './services';
-import Directives from './directives';
-import Controllers from './controllers';
+const Services = require('./services');
+const Directives = require('./directives');
+const Controllers = require('./controllers');
 Services(ngApp, window.Events);
 Directives(ngApp, window.Events);
 Controllers(ngApp, window.Events);
@@ -170,4 +170,4 @@ if(navigator.userAgent.indexOf('MSIE')!==-1
 }
 
 // Page specific items
-import "./pages/page-show";
+require("./pages/page-show");

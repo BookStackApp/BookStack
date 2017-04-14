@@ -1,3 +1,4 @@
+const Vue = require("vue");
 
 function exists(id) {
     return document.getElementById(id) !== null;
