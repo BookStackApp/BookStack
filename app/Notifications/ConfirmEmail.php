@@ -3,11 +3,14 @@
 namespace BookStack\Notifications;
 
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ConfirmEmail extends Notification
+class ConfirmEmail extends Notification implements ShouldQueue
 {
 
+    use Queueable;
+    
     public $token;
 
     /**
