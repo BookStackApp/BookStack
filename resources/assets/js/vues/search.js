@@ -1,16 +1,18 @@
-
-let termString = document.querySelector('[name=searchTerm]').value;
-let terms = termString.split(' ');
+const moment = require('moment');
 
 let data = {
-    terms: terms,
-        termString : termString,
-        search: {
+    terms: '',
+    termString : '',
+    search: {
         type: {
             page: true,
             chapter: true,
             book: true
-        }
+        },
+        exactTerms: [],
+        tagTerms: [],
+        option: {},
+        dates: {}
     }
 };
 
@@ -21,8 +23,76 @@ let computed = {
 let methods = {
 
     appendTerm(term) {
-        if (this.termString.slice(-1) !== " ") this.termString += ' ';
-        this.termString += term;
+        this.termString += ' ' + term;
+        this.termString = this.termString.replace(/\s{2,}/g, ' ');
+        this.termString = this.termString.replace(/^\s+/, '');
+        this.termString = this.termString.replace(/\s+$/, '');
+    },
+
+    exactParse(searchString) {
+        this.search.exactTerms = [];
+        let exactFilter = /"(.+?)"/g;
+        let matches;
+        while ((matches = exactFilter.exec(searchString)) !== null) {
+            this.search.exactTerms.push(matches[1]);
+        }
+    },
+
+    exactChange() {
+        let exactFilter = /"(.+?)"/g;
+        this.termString = this.termString.replace(exactFilter, '');
+        let matchesTerm = this.search.exactTerms.filter(term => {
+            return term.trim() !== '';
+        }).map(term => {
+            return `"${term}"`
+        }).join(' ');
+        this.appendTerm(matchesTerm);
+    },
+
+    addExact() {
+        this.search.exactTerms.push('');
+        setTimeout(() => {
+            let exactInputs = document.querySelectorAll('.exact-input');
+            exactInputs[exactInputs.length - 1].focus();
+        }, 100);
+    },
+
+    removeExact(index) {
+        this.search.exactTerms.splice(index, 1);
+        this.exactChange();
+    },
+
+    tagParse(searchString) {
+        this.search.tagTerms = [];
+        let tagFilter = /\[(.+?)\]/g;
+        let matches;
+        while ((matches = tagFilter.exec(searchString)) !== null) {
+            this.search.tagTerms.push(matches[1]);
+        }
+    },
+
+    tagChange() {
+        let tagFilter = /\[(.+?)\]/g;
+        this.termString = this.termString.replace(tagFilter, '');
+        let matchesTerm = this.search.tagTerms.filter(term => {
+            return term.trim() !== '';
+        }).map(term => {
+            return `[${term}]`
+        }).join(' ');
+        this.appendTerm(matchesTerm);
+    },
+
+    addTag() {
+        this.search.tagTerms.push('');
+        setTimeout(() => {
+            let tagInputs = document.querySelectorAll('.tag-input');
+            tagInputs[tagInputs.length - 1].focus();
+        }, 100);
+    },
+
+    removeTag(index) {
+        this.search.tagTerms.splice(index, 1);
+        this.tagChange();
     },
 
     typeParse(searchString) {
@@ -55,14 +125,40 @@ let methods = {
         this.appendTerm(typeTerm);
     },
 
-    updateSearch() {
+    optionParse(searchString) {
+        let optionFilter = /{([a-z_-]+?)}/gi;
+        let matches;
+        while ((matches = optionFilter.exec(searchString)) !== null) {
+            this.search.option[matches[1].toLowerCase()] = true;
+        }
+    },
+
+    optionChange(optionName) {
+        let isChecked = this.search.option[optionName];
+        if (isChecked) {
+            this.appendTerm(`{${optionName}}`);
+        } else {
+            this.termString = this.termString.replace(`{${optionName}}`, '');
+        }
+    },
+
+    updateSearch(e) {
+        e.preventDefault();
         window.location = '/search?term=' + encodeURIComponent(this.termString);
+    },
+
+    enableDate(optionName) {
+        this.search.dates[optionName] = moment().format('YYYY-MM-DD');
     }
 
 };
 
 function created() {
+    this.termString = document.querySelector('[name=searchTerm]').value;
     this.typeParse(this.termString);
+    this.exactParse(this.termString);
+    this.tagParse(this.termString);
+    this.optionParse(this.termString);
 }
 
 module.exports = {

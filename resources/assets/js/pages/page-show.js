@@ -1,8 +1,8 @@
 "use strict";
 // Configure ZeroClipboard
-import Clipboard from "clipboard";
+const Clipboard = require("clipboard");
 
-export default window.setupPageShow = function (pageId) {
+let setupPageShow = window.setupPageShow = function (pageId) {
 
     // Set up pointer
     let $pointer = $('#pointer').detach();
@@ -151,3 +151,5 @@ export default window.setupPageShow = function (pageId) {
     });
 
 };
+
+module.exports = setupPageShow;
