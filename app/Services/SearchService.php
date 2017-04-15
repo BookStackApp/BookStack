@@ -8,7 +8,6 @@ use BookStack\SearchTerm;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Support\Collection;
 
 class SearchService
 {
@@ -56,9 +55,9 @@ class SearchService
      * @param string $entityType
      * @param int $page
      * @param int $count
-     * @return Collection
+     * @return array[int, Collection];
      */
-    public function searchEntities($searchString, $entityType = 'all', $page = 0, $count = 20)
+    public function searchEntities($searchString, $entityType = 'all', $page = 1, $count = 20)
     {
         $terms = $this->parseSearchString($searchString);
         $entityTypes = array_keys($this->entities);
@@ -71,14 +70,20 @@ class SearchService
             $entityTypesToSearch = explode('|', $terms['filters']['type']);
         }
 
-        // TODO - Check drafts don't show up in results
+        $total = 0;
+
         foreach ($entityTypesToSearch as $entityType) {
             if (!in_array($entityType, $entityTypes)) continue;
             $search = $this->searchEntityTable($terms, $entityType, $page, $count);
+            $total += $this->searchEntityTable($terms, $entityType, $page, $count, true);
             $results = $results->merge($search);
         }
 
-        return $results->sortByDesc('score');
+        return [
+            'total' => $total,
+            'count' => count($results),
+            'results' => $results->sortByDesc('score')
+        ];
     }
 
     /**
@@ -87,9 +92,10 @@ class SearchService
      * @param string $entityType
      * @param int $page
      * @param int $count
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @param bool $getCount Return the total count of the search
+     * @return \Illuminate\Database\Eloquent\Collection|int|static[]
      */
-    public function searchEntityTable($terms, $entityType = 'page', $page = 0, $count = 20)
+    public function searchEntityTable($terms, $entityType = 'page', $page = 1, $count = 20, $getCount = false)
     {
         $entity = $this->getEntity($entityType);
         $entitySelect = $entity->newQuery();
@@ -131,8 +137,10 @@ class SearchService
             if (method_exists($this, $functionName)) $this->$functionName($entitySelect, $entity, $filterValue);
         }
 
-        $entitySelect->skip($page * $count)->take($count);
         $query = $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
+        if ($getCount) return $query->count();
+
+        $query = $query->skip(($page-1) * $count)->take($count);
         return $query->get();
     }
 
@@ -371,13 +379,15 @@ class SearchService
 
     protected function filterCreatedBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
     {
-        if (!is_numeric($input)) return;
+        if (!is_numeric($input) && $input !== 'me') return;
+        if ($input === 'me') $input = user()->id;
         $query->where('created_by', '=', $input);
     }
 
     protected function filterUpdatedBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
     {
-        if (!is_numeric($input)) return;
+        if (!is_numeric($input) && $input !== 'me') return;
+        if ($input === 'me') $input = user()->id;
         $query->where('updated_by', '=', $input);
     }
 

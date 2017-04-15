@@ -7,8 +7,8 @@
 @import "grid";
 @import "blocks";
 @import "buttons";
-@import "forms";
 @import "tables";
+@import "forms";
 @import "animations";
 @import "tinymce";
 @import "highlightjs";
@@ -17,7 +17,11 @@
 @import "lists";
 @import "pages";
 
-[v-cloak], [v-show] {display: none;}
+[v-cloak], [v-show] {
+  display: none; opacity: 0;
+  animation-name: none !important;
+}
+
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
@@ -269,11 +273,6 @@ $btt-size: 40px;
     border: 1px solid #DDD;
   }
 }
-
-
-
-
-
 
 
 

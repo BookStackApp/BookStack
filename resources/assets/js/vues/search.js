@@ -12,7 +12,12 @@ let data = {
         exactTerms: [],
         tagTerms: [],
         option: {},
-        dates: {}
+        dates: {
+            updated_after: false,
+            updated_before: false,
+            created_after: false,
+            created_before: false,
+        }
     }
 };
 
@@ -126,7 +131,7 @@ let methods = {
     },
 
     optionParse(searchString) {
-        let optionFilter = /{([a-z_-]+?)}/gi;
+        let optionFilter = /{([a-z_\-:]+?)}/gi;
         let matches;
         while ((matches = optionFilter.exec(searchString)) !== null) {
             this.search.option[matches[1].toLowerCase()] = true;
@@ -148,7 +153,30 @@ let methods = {
     },
 
     enableDate(optionName) {
-        this.search.dates[optionName] = moment().format('YYYY-MM-DD');
+        this.search.dates[optionName.toLowerCase()] = moment().format('YYYY-MM-DD');
+        this.dateChange(optionName);
+    },
+
+    dateParse(searchString) {
+        let dateFilter = /{([a-z_\-]+?):([a-z_\-0-9]+?)}/gi;
+        let dateTags = Object.keys(this.search.dates);
+        let matches;
+        while ((matches = dateFilter.exec(searchString)) !== null) {
+            if (dateTags.indexOf(matches[1]) === -1) continue;
+            this.search.dates[matches[1].toLowerCase()] = matches[2];
+        }
+    },
+
+    dateChange(optionName) {
+        let dateFilter = new RegExp('{\\s?'+optionName+'\\s?:([a-z_\\-0-9]+?)}', 'gi');
+        this.termString = this.termString.replace(dateFilter, '');
+        if (!this.search.dates[optionName]) return;
+        this.appendTerm(`{${optionName}:${this.search.dates[optionName]}}`);
+    },
+
+    dateRemove(optionName) {
+        this.search.dates[optionName] = false;
+        this.dateChange(optionName);
     }
 
 };
@@ -159,6 +187,7 @@ function created() {
     this.exactParse(this.termString);
     this.tagParse(this.termString);
     this.optionParse(this.termString);
+    this.dateParse(this.termString);
 }
 
 module.exports = {
