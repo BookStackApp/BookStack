@@ -97,10 +97,16 @@ class SearchService
     public function searchBook($bookId, $searchString)
     {
         $terms = $this->parseSearchString($searchString);
+        $entityTypes = ['page', 'chapter'];
+        $entityTypesToSearch = isset($terms['filters']['type']) ? explode('|', $terms['filters']['type']) : $entityTypes;
+
         $results = collect();
-        $pages = $this->buildEntitySearchQuery($terms, 'page')->where('book_id', '=', $bookId)->take(20)->get();
-        $chapters = $this->buildEntitySearchQuery($terms, 'chapter')->where('book_id', '=', $bookId)->take(20)->get();
-        return $results->merge($pages)->merge($chapters)->sortByDesc('score')->take(20);
+        foreach ($entityTypesToSearch as $entityType) {
+            if (!in_array($entityType, $entityTypes)) continue;
+            $search = $this->buildEntitySearchQuery($terms, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
+            $results = $results->merge($search);
+        }
+        return $results->sortByDesc('score')->take(20);
     }
 
     /**
