@@ -34,14 +34,20 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $searchTerm = $request->get('term');
-//        $paginationAppends = $request->only('term'); TODO - Check pagination
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $searchTerm]));
 
-        $entities = $this->searchService->searchEntities($searchTerm);
+        $page = $request->has('page') && is_int(intval($request->get('page'))) ? intval($request->get('page')) : 1;
+        $nextPageLink = baseUrl('/search?term=' . urlencode($searchTerm) . '&page=' . ($page+1));
+
+        $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
+        $hasNextPage = $this->searchService->searchEntities($searchTerm, 'all', $page+1, 20)['count'] > 0;
 
         return view('search/all', [
-            'entities'   => $entities,
-            'searchTerm' => $searchTerm
+            'entities'   => $results['results'],
+            'totalResults' => $results['total'],
+            'searchTerm' => $searchTerm,
+            'hasNextPage' => $hasNextPage,
+            'nextPageLink' => $nextPageLink
         ]);
     }
 
