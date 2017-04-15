@@ -120,6 +120,7 @@ return [
     'chapters_empty' => 'No pages are currently in this chapter.',
     'chapters_permissions_active' => 'Chapter Permissions Active',
     'chapters_permissions_success' => 'Chapter Permissions Updated',
+    'chapters_search_this' => 'Search this chapter',
 
     /**
      * Pages

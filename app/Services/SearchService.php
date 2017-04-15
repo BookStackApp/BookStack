@@ -8,6 +8,7 @@ use BookStack\SearchTerm;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Collection;
 
 class SearchService
 {
@@ -86,6 +87,35 @@ class SearchService
         ];
     }
 
+
+    /**
+     * Search a book for entities
+     * @param integer $bookId
+     * @param string $searchString
+     * @return Collection
+     */
+    public function searchBook($bookId, $searchString)
+    {
+        $terms = $this->parseSearchString($searchString);
+        $results = collect();
+        $pages = $this->buildEntitySearchQuery($terms, 'page')->where('book_id', '=', $bookId)->take(20)->get();
+        $chapters = $this->buildEntitySearchQuery($terms, 'chapter')->where('book_id', '=', $bookId)->take(20)->get();
+        return $results->merge($pages)->merge($chapters)->sortByDesc('score')->take(20);
+    }
+
+    /**
+     * Search a book for entities
+     * @param integer $chapterId
+     * @param string $searchString
+     * @return Collection
+     */
+    public function searchChapter($chapterId, $searchString)
+    {
+        $terms = $this->parseSearchString($searchString);
+        $pages = $this->buildEntitySearchQuery($terms, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
+        return $pages->sortByDesc('score');
+    }
+
     /**
      * Search across a particular entity type.
      * @param array $terms
@@ -96,6 +126,21 @@ class SearchService
      * @return \Illuminate\Database\Eloquent\Collection|int|static[]
      */
     public function searchEntityTable($terms, $entityType = 'page', $page = 1, $count = 20, $getCount = false)
+    {
+        $query = $this->buildEntitySearchQuery($terms, $entityType);
+        if ($getCount) return $query->count();
+
+        $query = $query->skip(($page-1) * $count)->take($count);
+        return $query->get();
+    }
+
+    /**
+     * Create a search query for an entity
+     * @param array $terms
+     * @param string $entityType
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function buildEntitySearchQuery($terms, $entityType = 'page')
     {
         $entity = $this->getEntity($entityType);
         $entitySelect = $entity->newQuery();
@@ -137,11 +182,7 @@ class SearchService
             if (method_exists($this, $functionName)) $this->$functionName($entitySelect, $entity, $filterValue);
         }
 
-        $query = $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
-        if ($getCount) return $query->count();
-
-        $query = $query->skip(($page-1) * $count)->take($count);
-        return $query->get();
+        return $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
     }
 
 

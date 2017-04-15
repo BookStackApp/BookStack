@@ -5,7 +5,8 @@ function exists(id) {
 }
 
 let vueMapping = {
-    'search-system': require('./search')
+    'search-system': require('./search'),
+    'entity-dashboard': require('./entity-search'),
 };
 
 Object.keys(vueMapping).forEach(id => {

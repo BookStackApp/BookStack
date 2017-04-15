@@ -569,7 +569,7 @@ class EntityRepo
 
         $draftPage->save();
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
-
+        $this->searchService->indexEntity($draftPage);
         return $draftPage;
     }
 
