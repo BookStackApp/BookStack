@@ -61,16 +61,24 @@ class SearchController extends Controller
      */
     public function searchBook(Request $request, $bookId)
     {
-        if (!$request->has('term')) {
-            return redirect()->back();
-        }
-        $searchTerm = $request->get('term');
-        $searchWhereTerms = [['book_id', '=', $bookId]];
-        $pages = $this->entityRepo->getBySearch('page', $searchTerm, $searchWhereTerms);
-        $chapters = $this->entityRepo->getBySearch('chapter', $searchTerm, $searchWhereTerms);
-        return view('search/book', ['pages' => $pages, 'chapters' => $chapters, 'searchTerm' => $searchTerm]);
+        $term = $request->get('term', '');
+        $results = $this->searchService->searchBook($bookId, $term);
+        return view('partials/entity-list', ['entities' => $results]);
     }
 
+    /**
+     * Searches all entities within a chapter.
+     * @param Request $request
+     * @param integer $chapterId
+     * @return \Illuminate\View\View
+     * @internal param string $searchTerm
+     */
+    public function searchChapter(Request $request, $chapterId)
+    {
+        $term = $request->get('term', '');
+        $results = $this->searchService->searchChapter($chapterId, $term);
+        return view('partials/entity-list', ['entities' => $results]);
+    }
 
     /**
      * Search for a list of entities and return a partial HTML response of matching entities.
@@ -80,19 +88,13 @@ class SearchController extends Controller
      */
     public function searchEntitiesAjax(Request $request)
     {
-        $entities = collect();
         $entityTypes = $request->has('types') ? collect(explode(',', $request->get('types'))) : collect(['page', 'chapter', 'book']);
         $searchTerm = ($request->has('term') && trim($request->get('term')) !== '') ? $request->get('term') : false;
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
-            foreach (['page', 'chapter', 'book'] as $entityType) {
-                if ($entityTypes->contains($entityType)) {
-                    // TODO - Update to new system
-                    $entities = $entities->merge($this->entityRepo->getBySearch($entityType, $searchTerm)->items());
-                }
-            }
-            $entities = $entities->sortByDesc('title_relevance');
+            $searchTerm .= ' {type:'. implode('|', $entityTypes->toArray()) .'}';
+            $entities = $this->searchService->searchEntities($searchTerm)['results'];
         } else {
             $entityNames = $entityTypes->map(function ($type) {
                 return 'BookStack\\' . ucfirst($type);

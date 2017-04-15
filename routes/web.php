@@ -125,6 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Search
     Route::get('/search', 'SearchController@search');
     Route::get('/search/book/{bookId}', 'SearchController@searchBook');
+    Route::get('/search/chapter/{bookId}', 'SearchController@searchChapter');
 
     // Other Pages
     Route::get('/', 'HomeController@index');
