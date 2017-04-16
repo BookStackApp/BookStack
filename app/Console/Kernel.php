@@ -1,6 +1,4 @@
-<?php
-
-namespace BookStack\Console;
+<?php namespace BookStack\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -13,10 +11,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \BookStack\Console\Commands\ClearViews::class,
-        \BookStack\Console\Commands\ClearActivity::class,
-        \BookStack\Console\Commands\ClearRevisions::class,
-        \BookStack\Console\Commands\RegeneratePermissions::class,
+        Commands\ClearViews::class,
+        Commands\ClearActivity::class,
+        Commands\ClearRevisions::class,
+        Commands\RegeneratePermissions::class,
+        Commands\RegenerateSearch::class
     ];
 
     /**

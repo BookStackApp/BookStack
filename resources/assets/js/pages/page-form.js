@@ -60,7 +60,7 @@ function registerEditorShortcuts(editor) {
     editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
-export default function() {
+module.exports = function() {
     let settings = {
         selector: '#html-editor',
         content_css: [
@@ -213,4 +213,4 @@ export default function() {
         }
     };
     return settings;
-}
+};

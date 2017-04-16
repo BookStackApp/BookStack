@@ -16,7 +16,7 @@ class DummyContentSeeder extends Seeder
         $user->attachRole($role);
 
 
-        $books = factory(\BookStack\Book::class, 20)->create(['created_by' => $user->id, 'updated_by' => $user->id])
+        factory(\BookStack\Book::class, 20)->create(['created_by' => $user->id, 'updated_by' => $user->id])
             ->each(function($book) use ($user) {
                 $chapters = factory(\BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])
                     ->each(function($chapter) use ($user, $book){
@@ -28,7 +28,7 @@ class DummyContentSeeder extends Seeder
                 $book->pages()->saveMany($pages);
             });
 
-        $restrictionService = app(\BookStack\Services\PermissionService::class);
-        $restrictionService->buildJointPermissions();
+        app(\BookStack\Services\PermissionService::class)->buildJointPermissions();
+        app(\BookStack\Services\SearchService::class)->indexAllEntities();
     }
 }
