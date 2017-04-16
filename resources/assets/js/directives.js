@@ -1,8 +1,8 @@
 "use strict";
-import DropZone from "dropzone";
-import markdown from "marked";
+const DropZone = require("dropzone");
+const markdown = require("marked");
 
-export default function (ngApp, events) {
+module.exports = function (ngApp, events) {
 
     /**
      * Common tab controls using simple jQuery functions.

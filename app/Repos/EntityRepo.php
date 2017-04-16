@@ -8,6 +8,7 @@ use BookStack\Page;
 use BookStack\PageRevision;
 use BookStack\Services\AttachmentService;
 use BookStack\Services\PermissionService;
+use BookStack\Services\SearchService;
 use BookStack\Services\ViewService;
 use Carbon\Carbon;
 use DOMDocument;
@@ -59,13 +60,12 @@ class EntityRepo
     protected $tagRepo;
 
     /**
-     * Acceptable operators to be used in a query
-     * @var array
+     * @var SearchService
      */
-    protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
+    protected $searchService;
 
     /**
-     * EntityService constructor.
+     * EntityRepo constructor.
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
@@ -73,10 +73,12 @@ class EntityRepo
      * @param ViewService $viewService
      * @param PermissionService $permissionService
      * @param TagRepo $tagRepo
+     * @param SearchService $searchService
      */
     public function __construct(
         Book $book, Chapter $chapter, Page $page, PageRevision $pageRevision,
-        ViewService $viewService, PermissionService $permissionService, TagRepo $tagRepo
+        ViewService $viewService, PermissionService $permissionService,
+        TagRepo $tagRepo, SearchService $searchService
     )
     {
         $this->book = $book;
@@ -91,6 +93,7 @@ class EntityRepo
         $this->viewService = $viewService;
         $this->permissionService = $permissionService;
         $this->tagRepo = $tagRepo;
+        $this->searchService = $searchService;
     }
 
     /**
@@ -216,6 +219,7 @@ class EntityRepo
      * @param int $count
      * @param int $page
      * @param bool|callable $additionalQuery
+     * @return Collection
      */
     public function getRecentlyCreated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
@@ -234,6 +238,7 @@ class EntityRepo
      * @param int $count
      * @param int $page
      * @param bool|callable $additionalQuery
+     * @return Collection
      */
     public function getRecentlyUpdated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
@@ -327,7 +332,7 @@ class EntityRepo
             if ($rawEntity->entity_type === 'BookStack\\Page') {
                 $entities[$index] = $this->page->newFromBuilder($rawEntity);
                 if ($renderPages) {
-                    $entities[$index]->html = $rawEntity->description;
+                    $entities[$index]->html = $rawEntity->html;
                     $entities[$index]->html = $this->renderPage($entities[$index]);
                 };
             } else if ($rawEntity->entity_type === 'BookStack\\Chapter') {
@@ -354,6 +359,7 @@ class EntityRepo
      * Get the child items for a chapter sorted by priority but
      * with draft items floated to the top.
      * @param Chapter $chapter
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getChapterChildren(Chapter $chapter)
     {
@@ -361,56 +367,6 @@ class EntityRepo
             ->orderBy('draft', 'DESC')->orderBy('priority', 'ASC')->get();
     }
 
-    /**
-     * Search entities of a type via a given query.
-     * @param string $type
-     * @param string $term
-     * @param array $whereTerms
-     * @param int $count
-     * @param array $paginationAppends
-     * @return mixed
-     */
-    public function getBySearch($type, $term, $whereTerms = [], $count = 20, $paginationAppends = [])
-    {
-        $terms = $this->prepareSearchTerms($term);
-        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type)->fullTextSearchQuery($terms, $whereTerms));
-        $q = $this->addAdvancedSearchQueries($q, $term);
-        $entities = $q->paginate($count)->appends($paginationAppends);
-        $words = join('|', explode(' ', preg_quote(trim($term), '/')));
-
-        // Highlight page content
-        if ($type === 'page') {
-            //lookahead/behind assertions ensures cut between words
-            $s = '\s\x00-/:-@\[-`{-~'; //character set for start/end of words
-
-            foreach ($entities as $page) {
-                preg_match_all('#(?<=[' . $s . ']).{1,30}((' . $words . ').{1,30})+(?=[' . $s . '])#uis', $page->text, $matches, PREG_SET_ORDER);
-                //delimiter between occurrences
-                $results = [];
-                foreach ($matches as $line) {
-                    $results[] = htmlspecialchars($line[0], 0, 'UTF-8');
-                }
-                $matchLimit = 6;
-                if (count($results) > $matchLimit) $results = array_slice($results, 0, $matchLimit);
-                $result = join('... ', $results);
-
-                //highlight
-                $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $result);
-                if (strlen($result) < 5) $result = $page->getExcerpt(80);
-
-                $page->searchSnippet = $result;
-            }
-            return $entities;
-        }
-
-        // Highlight chapter/book content
-        foreach ($entities as $entity) {
-            //highlight
-            $result = preg_replace('#' . $words . '#iu', "<span class=\"highlight\">\$0</span>", $entity->getExcerpt(100));
-            $entity->searchSnippet = $result;
-        }
-        return $entities;
-    }
 
     /**
      * Get the next sequential priority for a new child element in the given book.
@@ -492,104 +448,7 @@ class EntityRepo
         $this->permissionService->buildJointPermissionsForEntity($entity);
     }
 
-    /**
-     * Prepare a string of search terms by turning
-     * it into an array of terms.
-     * Keeps quoted terms together.
-     * @param $termString
-     * @return array
-     */
-    public function prepareSearchTerms($termString)
-    {
-        $termString = $this->cleanSearchTermString($termString);
-        preg_match_all('/(".*?")/', $termString, $matches);
-        $terms = [];
-        if (count($matches[1]) > 0) {
-            foreach ($matches[1] as $match) {
-                $terms[] = $match;
-            }
-            $termString = trim(preg_replace('/"(.*?)"/', '', $termString));
-        }
-        if (!empty($termString)) $terms = array_merge($terms, explode(' ', $termString));
-        return $terms;
-    }
 
-    /**
-     * Removes any special search notation that should not
-     * be used in a full-text search.
-     * @param $termString
-     * @return mixed
-     */
-    protected function cleanSearchTermString($termString)
-    {
-        // Strip tag searches
-        $termString = preg_replace('/\[.*?\]/', '', $termString);
-        // Reduced multiple spacing into single spacing
-        $termString = preg_replace("/\s{2,}/", " ", $termString);
-        return $termString;
-    }
-
-    /**
-     * Get the available query operators as a regex escaped list.
-     * @return mixed
-     */
-    protected function getRegexEscapedOperators()
-    {
-        $escapedOperators = [];
-        foreach ($this->queryOperators as $operator) {
-            $escapedOperators[] = preg_quote($operator);
-        }
-        return join('|', $escapedOperators);
-    }
-
-    /**
-     * Parses advanced search notations and adds them to the db query.
-     * @param $query
-     * @param $termString
-     * @return mixed
-     */
-    protected function addAdvancedSearchQueries($query, $termString)
-    {
-        $escapedOperators = $this->getRegexEscapedOperators();
-        // Look for tag searches
-        preg_match_all("/\[(.*?)((${escapedOperators})(.*?))?\]/", $termString, $tags);
-        if (count($tags[0]) > 0) {
-            $this->applyTagSearches($query, $tags);
-        }
-
-        return $query;
-    }
-
-    /**
-     * Apply extracted tag search terms onto a entity query.
-     * @param $query
-     * @param $tags
-     * @return mixed
-     */
-    protected function applyTagSearches($query, $tags) {
-        $query->where(function($query) use ($tags) {
-            foreach ($tags[1] as $index => $tagName) {
-                $query->whereHas('tags', function($query) use ($tags, $index, $tagName) {
-                    $tagOperator = $tags[3][$index];
-                    $tagValue = $tags[4][$index];
-                    if (!empty($tagOperator) && !empty($tagValue) && in_array($tagOperator, $this->queryOperators)) {
-                        if (is_numeric($tagValue) && $tagOperator !== 'like') {
-                            // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
-                            // search the value as a string which prevents being able to do number-based operations
-                            // on the tag values. We ensure it has a numeric value and then cast it just to be sure.
-                            $tagValue = (float) trim($query->getConnection()->getPdo()->quote($tagValue), "'");
-                            $query->where('name', '=', $tagName)->whereRaw("value ${tagOperator} ${tagValue}");
-                        } else {
-                            $query->where('name', '=', $tagName)->where('value', $tagOperator, $tagValue);
-                        }
-                    } else {
-                        $query->where('name', '=', $tagName);
-                    }
-                });
-            }
-        });
-        return $query;
-    }
 
     /**
      * Create a new entity from request input.
@@ -608,12 +467,13 @@ class EntityRepo
         $entity->updated_by = user()->id;
         $isChapter ? $book->chapters()->save($entity) : $entity->save();
         $this->permissionService->buildJointPermissionsForEntity($entity);
+        $this->searchService->indexEntity($entity);
         return $entity;
     }
 
     /**
      * Update entity details from request input.
-     * Use for books and chapters
+     * Used for books and chapters
      * @param string $type
      * @param Entity $entityModel
      * @param array $input
@@ -628,6 +488,7 @@ class EntityRepo
         $entityModel->updated_by = user()->id;
         $entityModel->save();
         $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $this->searchService->indexEntity($entityModel);
         return $entityModel;
     }
 
@@ -711,7 +572,7 @@ class EntityRepo
 
         $draftPage->save();
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
-
+        $this->searchService->indexEntity($draftPage);
         return $draftPage;
     }
 
@@ -961,6 +822,8 @@ class EntityRepo
             $this->savePageRevision($page, $input['summary']);
         }
 
+        $this->searchService->indexEntity($page);
+
         return $page;
     }
 
@@ -1064,6 +927,7 @@ class EntityRepo
         $page->text = strip_tags($page->html);
         $page->updated_by = user()->id;
         $page->save();
+        $this->searchService->indexEntity($page);
         return $page;
     }
 
@@ -1156,6 +1020,7 @@ class EntityRepo
         $book->views()->delete();
         $book->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($book);
+        $this->searchService->deleteEntityTerms($book);
         $book->delete();
     }
 
@@ -1175,6 +1040,7 @@ class EntityRepo
         $chapter->views()->delete();
         $chapter->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($chapter);
+        $this->searchService->deleteEntityTerms($chapter);
         $chapter->delete();
     }
 
@@ -1190,6 +1056,7 @@ class EntityRepo
         $page->revisions()->delete();
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);
+        $this->searchService->deleteEntityTerms($page);
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);
