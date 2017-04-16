@@ -81,6 +81,12 @@ let setupPageShow = window.setupPageShow = function (pageId) {
             let $idElem = $(idElem);
             let color = $('#custom-styles').attr('data-color-light');
             $idElem.css('background-color', color).attr('data-highlighted', 'true').smoothScrollTo();
+            setTimeout(() => {
+                $idElem.addClass('anim').addClass('selectFade').css('background-color', '');
+                setTimeout(() => {
+                   $idElem.removeClass('selectFade');
+                }, 3000);
+            }, 100);
         } else {
             $('.page-content').find(':contains("' + text + '")').smoothScrollTo();
         }
