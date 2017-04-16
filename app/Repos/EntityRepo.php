@@ -219,6 +219,7 @@ class EntityRepo
      * @param int $count
      * @param int $page
      * @param bool|callable $additionalQuery
+     * @return Collection
      */
     public function getRecentlyCreated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
@@ -237,6 +238,7 @@ class EntityRepo
      * @param int $count
      * @param int $page
      * @param bool|callable $additionalQuery
+     * @return Collection
      */
     public function getRecentlyUpdated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
@@ -330,7 +332,7 @@ class EntityRepo
             if ($rawEntity->entity_type === 'BookStack\\Page') {
                 $entities[$index] = $this->page->newFromBuilder($rawEntity);
                 if ($renderPages) {
-                    $entities[$index]->html = $rawEntity->description;
+                    $entities[$index]->html = $rawEntity->html;
                     $entities[$index]->html = $this->renderPage($entities[$index]);
                 };
             } else if ($rawEntity->entity_type === 'BookStack\\Chapter') {
@@ -357,6 +359,7 @@ class EntityRepo
      * Get the child items for a chapter sorted by priority but
      * with draft items floated to the top.
      * @param Chapter $chapter
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getChapterChildren(Chapter $chapter)
     {
@@ -470,7 +473,7 @@ class EntityRepo
 
     /**
      * Update entity details from request input.
-     * Use for books and chapters
+     * Used for books and chapters
      * @param string $type
      * @param Entity $entityModel
      * @param array $input
