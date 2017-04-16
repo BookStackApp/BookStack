@@ -68,6 +68,7 @@ module.exports = function() {
             window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
         ],
         body_class: 'page-content',
+        browser_spellcheck: true,
         relative_urls: false,
         remove_script_host: false,
         document_base_url: window.baseUrl('/'),
