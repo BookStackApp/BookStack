@@ -269,19 +269,31 @@ span.highlight {
 /*
  * Lists
  */
+ul, ol {
+  overflow: hidden;
+  p {
+    margin: 0;
+  }
+}
 ul {
   padding-left: $-m * 1.3;
   list-style: disc;
-  overflow: hidden;
+  ul {
+    list-style: circle;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  label {
+    margin: 0;
+  }
 }
 
 ol {
   list-style: decimal;
   padding-left: $-m * 2;
-  overflow: hidden;
 }
 
-li.checkbox-item {
+li.checkbox-item, li.task-list-item {
   list-style: none;
   margin-left: - ($-m * 1.3);
   input[type="checkbox"] {
