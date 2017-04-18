@@ -12,9 +12,10 @@ class AddSearchIndexes extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE pages ADD FULLTEXT search(name, text)');
-        DB::statement('ALTER TABLE books ADD FULLTEXT search(name, description)');
-        DB::statement('ALTER TABLE chapters ADD FULLTEXT search(name, description)');
+        $prefix = DB::getTablePrefix();
+        DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT search(name, text)");
+        DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT search(name, description)");
+        DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT search(name, description)");
     }
 
     /**

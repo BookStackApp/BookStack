@@ -1,12 +1,12 @@
 "use strict";
 
-import moment from 'moment';
-import 'moment/locale/en-gb';
-import editorOptions from "./pages/page-form";
+const moment = require('moment');
+require('moment/locale/en-gb');
+const editorOptions = require("./pages/page-form");
 
 moment.locale('en-gb');
 
-export default function (ngApp, events) {
+module.exports = function (ngApp, events) {
 
     ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
         function ($scope, $attrs, $http, $timeout, imageManagerService) {
@@ -258,39 +258,6 @@ export default function (ngApp, events) {
             };
 
         }]);
-
-
-    ngApp.controller('BookShowController', ['$scope', '$http', '$attrs', '$sce', function ($scope, $http, $attrs, $sce) {
-        $scope.searching = false;
-        $scope.searchTerm = '';
-        $scope.searchResults = '';
-
-        $scope.searchBook = function (e) {
-            e.preventDefault();
-            let term = $scope.searchTerm;
-            if (term.length == 0) return;
-            $scope.searching = true;
-            $scope.searchResults = '';
-            let searchUrl = window.baseUrl('/search/book/' + $attrs.bookId);
-            searchUrl += '?term=' + encodeURIComponent(term);
-            $http.get(searchUrl).then((response) => {
-                $scope.searchResults = $sce.trustAsHtml(response.data);
-            });
-        };
-
-        $scope.checkSearchForm = function () {
-            if ($scope.searchTerm.length < 1) {
-                $scope.searching = false;
-            }
-        };
-
-        $scope.clearSearch = function () {
-            $scope.searching = false;
-            $scope.searchTerm = '';
-        };
-
-    }]);
-
 
     ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', '$sce',
         function ($scope, $http, $attrs, $interval, $timeout, $sce) {

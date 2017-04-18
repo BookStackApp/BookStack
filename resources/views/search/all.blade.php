@@ -2,59 +2,212 @@
 
 @section('content')
 
+    <input type="hidden" name="searchTerm" value="{{$searchTerm}}">
+
+<div id="search-system">
+
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 faded">
                     <div class="breadcrumbs">
-                        <a href="{{ baseUrl("/search/all?term={$searchTerm}") }}" class="text-button"><i class="zmdi zmdi-search"></i>{{ $searchTerm }}</a>
+                        <a href="{{ baseUrl("/search?term=" . urlencode($searchTerm)) }}" class="text-button"><i class="zmdi zmdi-search"></i>{{ trans('entities.search_for_term', ['term' => $searchTerm]) }}</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <div class="container" ng-non-bindable>
-
-        <h1>{{ trans('entities.search_results') }}</h1>
-
-        <p>
-            @if(count($pages) > 0)
-                <a href="{{ baseUrl("/search/pages?term={$searchTerm}") }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.search_view_pages') }}</a>
-            @endif
-
-            @if(count($chapters) > 0)
-                &nbsp; &nbsp;&nbsp;
-                <a href="{{ baseUrl("/search/chapters?term={$searchTerm}") }}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>{{ trans('entities.search_view_chapters') }}</a>
-            @endif
-
-            @if(count($books) > 0)
-                &nbsp; &nbsp;&nbsp;
-                <a href="{{ baseUrl("/search/books?term={$searchTerm}") }}" class="text-book"><i class="zmdi zmdi-book"></i>{{ trans('entities.search_view_books') }}</a>
-            @endif
-        </p>
+    <div class="container" ng-non-bindable id="searchSystem">
 
         <div class="row">
-            <div class="col-md-6">
-                <h3><a href="{{ baseUrl("/search/pages?term={$searchTerm}") }}" class="no-color">{{ trans('entities.pages') }}</a></h3>
-                @include('partials/entity-list', ['entities' => $pages, 'style' => 'detailed'])
-            </div>
-            <div class="col-md-5 col-md-offset-1">
-                @if(count($books) > 0)
-                    <h3><a href="{{ baseUrl("/search/books?term={$searchTerm}") }}" class="no-color">{{ trans('entities.books') }}</a></h3>
-                    @include('partials/entity-list', ['entities' => $books])
-                @endif
 
-                @if(count($chapters) > 0)
-                    <h3><a href="{{ baseUrl("/search/chapters?term={$searchTerm}") }}" class="no-color">{{ trans('entities.chapters') }}</a></h3>
-                    @include('partials/entity-list', ['entities' => $chapters])
+            <div class="col-md-6">
+                <h1>{{ trans('entities.search_results') }}</h1>
+                <h6 class="text-muted">{{ trans_choice('entities.search_total_results_found', $totalResults, ['count' => $totalResults]) }}</h6>
+                @include('partials/entity-list', ['entities' => $entities])
+                @if ($hasNextPage)
+                    <a href="{{ $nextPageLink }}" class="button">{{ trans('entities.search_more') }}</a>
                 @endif
             </div>
+
+            <div class="col-md-5 col-md-offset-1">
+               <h3>{{ trans('entities.search_filters') }}</h3>
+
+                <form v-on:submit="updateSearch" v-cloak class="v-cloak anim fadeIn">
+                    <h6 class="text-muted">{{ trans('entities.search_content_type') }}</h6>
+                    <div class="form-group">
+                        <label class="inline checkbox text-page"><input type="checkbox" v-on:change="typeChange" v-model="search.type.page" value="page">{{ trans('entities.page') }}</label>
+                        <label class="inline checkbox text-chapter"><input type="checkbox" v-on:change="typeChange" v-model="search.type.chapter" value="chapter">{{ trans('entities.chapter') }}</label>
+                        <label class="inline checkbox text-book"><input type="checkbox" v-on:change="typeChange" v-model="search.type.book" value="book">{{ trans('entities.book') }}</label>
+                    </div>
+
+                    <h6 class="text-muted">{{ trans('entities.search_exact_matches') }}</h6>
+                    <table cellpadding="0" cellspacing="0" border="0" class="no-style">
+                        <tr v-for="(term, i) in search.exactTerms">
+                            <td style="padding: 0 12px 6px 0;">
+                                <input class="exact-input outline" v-on:input="exactChange" type="text" v-model="search.exactTerms[i]"></td>
+                            <td>
+                                <button type="button" class="text-neg text-button" v-on:click="removeExact(i)">
+                                    <i class="zmdi zmdi-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="text-button" v-on:click="addExact">
+                                    <i class="zmdi zmdi-plus-circle-o"></i>{{ trans('common.add') }}
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h6 class="text-muted">{{ trans('entities.search_tags') }}</h6>
+                    <table cellpadding="0" cellspacing="0" border="0" class="no-style">
+                        <tr v-for="(term, i) in search.tagTerms">
+                            <td style="padding: 0 12px 6px 0;">
+                                <input class="tag-input outline" v-on:input="tagChange" type="text" v-model="search.tagTerms[i]"></td>
+                            <td>
+                                <button type="button" class="text-neg text-button" v-on:click="removeTag(i)">
+                                    <i class="zmdi zmdi-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="text-button" v-on:click="addTag">
+                                    <i class="zmdi zmdi-plus-circle-o"></i>{{ trans('common.add') }}
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h6 class="text-muted">Options</h6>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('viewed_by_me')"
+                               v-model="search.option.viewed_by_me" value="page">
+                        {{ trans('entities.search_viewed_by_me') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('not_viewed_by_me')"
+                               v-model="search.option.not_viewed_by_me" value="page">
+                        {{ trans('entities.search_not_viewed_by_me') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('is_restricted')"
+                               v-model="search.option.is_restricted" value="page">
+                        {{ trans('entities.search_permissions_set') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('created_by:me')"
+                               v-model="search.option['created_by:me']" value="page">
+                        {{ trans('entities.search_created_by_me') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('updated_by:me')"
+                               v-model="search.option['updated_by:me']" value="page">
+                        {{ trans('entities.search_updated_by_me') }}
+                    </label>
+
+                    <h6 class="text-muted">Date Options</h6>
+                    <table cellpadding="0" cellspacing="0" border="0" class="no-style form-table">
+                        <tr>
+                            <td width="200">{{ trans('entities.search_updated_after') }}</td>
+                            <td width="80">
+                                <button type="button" class="text-button" v-if="!search.dates.updated_after"
+                                        v-on:click="enableDate('updated_after')">{{ trans('entities.search_set_date') }}</button>
+
+                            </td>
+                        </tr>
+                        <tr v-if="search.dates.updated_after">
+                            <td>
+                                <input v-if="search.dates.updated_after" class="tag-input"
+                                       v-on:input="dateChange('updated_after')" type="date" v-model="search.dates.updated_after"
+                                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                            </td>
+                            <td>
+                                <button v-if="search.dates.updated_after" type="button" class="text-neg text-button"
+                                        v-on:click="dateRemove('updated_after')">
+                                    <i class="zmdi zmdi-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('entities.search_updated_before') }}</td>
+                            <td>
+                                <button type="button" class="text-button" v-if="!search.dates.updated_before"
+                                        v-on:click="enableDate('updated_before')">{{ trans('entities.search_set_date') }}</button>
+
+                            </td>
+                        </tr>
+                        <tr v-if="search.dates.updated_before">
+                            <td>
+                                <input v-if="search.dates.updated_before" class="tag-input"
+                                       v-on:input="dateChange('updated_before')" type="date" v-model="search.dates.updated_before"
+                                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                            </td>
+                            <td>
+                                <button v-if="search.dates.updated_before" type="button" class="text-neg text-button"
+                                        v-on:click="dateRemove('updated_before')">
+                                    <i class="zmdi zmdi-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('entities.search_created_after') }}</td>
+                            <td>
+                                <button type="button" class="text-button" v-if="!search.dates.created_after"
+                                        v-on:click="enableDate('created_after')">{{ trans('entities.search_set_date') }}</button>
+
+                            </td>
+                        </tr>
+                        <tr v-if="search.dates.created_after">
+                            <td>
+                                <input v-if="search.dates.created_after" class="tag-input"
+                                       v-on:input="dateChange('created_after')" type="date" v-model="search.dates.created_after"
+                                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                            </td>
+                            <td>
+                                <button v-if="search.dates.created_after" type="button" class="text-neg text-button"
+                                        v-on:click="dateRemove('created_after')">
+                                    <i class="zmdi zmdi-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('entities.search_created_before') }}</td>
+                            <td>
+                                <button type="button" class="text-button" v-if="!search.dates.created_before"
+                                        v-on:click="enableDate('created_before')">{{ trans('entities.search_set_date') }}</button>
+
+                            </td>
+                        </tr>
+                        <tr v-if="search.dates.created_before">
+                            <td>
+                                <input v-if="search.dates.created_before" class="tag-input"
+                                       v-on:input="dateChange('created_before')" type="date" v-model="search.dates.created_before"
+                                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                            </td>
+                            <td>
+                                <button v-if="search.dates.created_before" type="button" class="text-neg text-button"
+                                        v-on:click="dateRemove('created_before')">
+                                    <i class="zmdi zmdi-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <button type="submit" class="button primary">{{ trans('entities.search_update') }}</button>
+                </form>
+
+
+            </div>
+
         </div>
 
 
     </div>
-
+</div>
 
 @stop

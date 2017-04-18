@@ -120,6 +120,7 @@ return [
         'fr' => 'Français',
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
     ]
     ///////////////////////////////////
 ];

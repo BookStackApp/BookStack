@@ -33,6 +33,7 @@ return [
     'search_clear' => 'Clear Search',
     'reset' => 'Reset',
     'remove' => 'Remove',
+    'add' => 'Add',
 
 
     /**

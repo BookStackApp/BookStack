@@ -1,8 +1,9 @@
 "use strict";
-import DropZone from "dropzone";
-import markdown from "marked";
+const DropZone = require("dropzone");
+const MarkdownIt = require("markdown-it");
+const mdTasksLists = require('markdown-it-task-lists');
 
-export default function (ngApp, events) {
+module.exports = function (ngApp, events) {
 
     /**
      * Common tab controls using simple jQuery functions.
@@ -214,18 +215,8 @@ export default function (ngApp, events) {
         }
     }]);
 
-    let renderer = new markdown.Renderer();
-    // Custom markdown checkbox list item
-    // Attribution: https://github.com/chjj/marked/issues/107#issuecomment-44542001
-    renderer.listitem = function(text) {
-        if (/^\s*\[[x ]\]\s*/.test(text)) {
-            text = text
-                .replace(/^\s*\[ \]\s*/, '<input type="checkbox"/>')
-                .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked/>');
-            return `<li class="checkbox-item">${text}</li>`;
-        }
-        return `<li>${text}</li>`;
-    };
+    const md = new MarkdownIt();
+    md.use(mdTasksLists, {label: true});
 
     /**
      * Markdown input
@@ -244,20 +235,20 @@ export default function (ngApp, events) {
                 element = element.find('textarea').first();
                 let content = element.val();
                 scope.mdModel = content;
-                scope.mdChange(markdown(content, {renderer: renderer}));
+                scope.mdChange(md.render(content));
 
                 element.on('change input', (event) => {
                     content = element.val();
                     $timeout(() => {
                         scope.mdModel = content;
-                        scope.mdChange(markdown(content, {renderer: renderer}));
+                        scope.mdChange(md.render(content));
                     });
                 });
 
                 scope.$on('markdown-update', (event, value) => {
                     element.val(value);
                     scope.mdModel = value;
-                    scope.mdChange(markdown(value));
+                    scope.mdChange(md.render(value));
                 });
 
             }
