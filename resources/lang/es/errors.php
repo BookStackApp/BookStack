@@ -7,52 +7,52 @@ return [
      */
 
     // Permissions
-    'permission' => 'Ud. no tiene permisos para visualizar la pÃgina solicitada.',
-    'permissionJson' => 'Ud. no tiene permisos para ejecutar la acciÃn solicitada.',
+    'permission' => 'Ud. no tiene permisos para visualizar la pÃ¡gina solicitada.',
+    'permissionJson' => 'Ud. no tiene permisos para ejecutar la acciÃ³n solicitada.',
 
     // Auth
     'error_user_exists_different_creds' => 'Un usuario con el email :email ya existe pero con credenciales diferentes.',
-    'email_already_confirmed' => 'El email ya ha sido confirmado, Intente loguearse en la aplicaciÃn.',
+    'email_already_confirmed' => 'El email ya ha sido confirmado, Intente loguearse en la aplicaciÃ³n.',
     'email_confirmation_invalid' => 'Este token de confirmaciÃ³n no e vÃ¡lido o ya ha sido usado,Intente registrar uno nuevamente.',
-    'email_confirmation_expired' => 'El token de confirmaciÃn ha expirado, Un nuevo email de confirmaciÃn ha sido enviado.',
-    'ldap_fail_anonymous' => 'El acceso con LDAP ha fallado usando binding anÃnimo',
+    'email_confirmation_expired' => 'El token de confirmaciÃ³n ha expirado, Un nuevo email de confirmacÃ³n ha sido enviado.',
+    'ldap_fail_anonymous' => 'El acceso con LDAP ha fallado usando binding anÃ³nimo',
     'ldap_fail_authed' => 'El acceso LDAP usando el dn & password detallados',
-    'ldap_extension_not_installed' => 'La extensiÃn LDAP PHP no se encuentra instalada',
-    'ldap_cannot_connect' => 'No se puede conectar con el servidor ldap, la conexiÃn inicial ha fallado',
-    'social_no_action_defined' => 'AcciÃn no definida',
-    'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente loguearse a travÃs de la opciÃn :socialAccount .',
-    'social_account_email_in_use' => 'El email :email ya se encuentra en uso. Si ud. ya dispone de una cuenta puede loguearse a travÃs de su cuenta :socialAccount desde la configuraciÃn de perfil.',
+    'ldap_extension_not_installed' => 'La extensiÃ³n LDAP PHP no se encuentra instalada',
+    'ldap_cannot_connect' => 'No se puede conectar con el servidor ldap, la conexiÃ³n inicial ha fallado',
+    'social_no_action_defined' => 'AcciÃ³n no definida',
+    'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente loguearse a travÃ©s de la opcÃ³n :socialAccount .',
+    'social_account_email_in_use' => 'El email :email ya se encuentra en uso. Si ud. ya dispone de una cuenta puede loguearse a travÃ©s de su cuenta :socialAccount desde la configuraciÃ³n de perfil.',
     'social_account_existing' => 'La cuenta :socialAccount ya se encuentra asignada a su perfil.',
     'social_account_already_used_existing' => 'La cuenta :socialAccount ya se encuentra usada por otro usuario.',
-    'social_account_not_used' => 'La cuenta :socialAccount no estÃ asociada a ningÃn usuario. Por favor adjuntela a su configuraciÃn de perfil. ',
+    'social_account_not_used' => 'La cuenta :socialAccount no estÃ¡ asociada a ningÃºn usuario. Por favor adjuntela a su configuraciÃ³n de perfil. ',
     'social_account_register_instructions' => 'Si no dispone de una cuenta, puede registrar una cuenta usando la opciÃ³n de :socialAccount .',
     'social_driver_not_found' => 'Driver social no encontrado',
-    'social_driver_not_configured' => 'Su configuraciÃn :socialAccount no es correcta.',
+    'social_driver_not_configured' => 'Su configuraciÃ³n :socialAccount no es correcta.',
 
     // System
     'path_not_writable' => 'La ruta :filePath no pudo ser cargada. Asegurese de que es escribible por el servidor.',
     'cannot_get_image_from_url' => 'No se puede obtener la imagen desde :url',
-    'cannot_create_thumbs' => 'El servidor no puede crear la imagen miniatura. Por favor chequee que tiene la extensiÃn GD instalada.',
-    'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamaÃo. Por favor intente con un fichero de menor tamaÃo.',
+    'cannot_create_thumbs' => 'El servidor no puede crear la imagen miniatura. Por favor chequee que tiene la extensiÃ³n GD instalada.',
+    'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamaÃ±. Por favor intente con un fichero de menor tamaÃ±.',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
 
     // Attachments
-    'attachment_page_mismatch' => 'PÃgina no coincidente durante la subida del adjunto ',
+    'attachment_page_mismatch' => 'PÃ¡gina no coincidente durante la subida del adjunto ',
 
     // Pages
-    'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegurese de que tiene conexiÃn a Internet antes de guardar este borrador',
+    'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegurese de que tiene conexiÃ³n a Internet antes de guardar este borrador',
 
     // Entities
     'entity_not_found' => 'Entidad no encontrada',
     'book_not_found' => 'Libro no encontrado',
-    'page_not_found' => 'PÃgina no encontrada',
-    'chapter_not_found' => 'CapÃtulo no encontrado',
+    'page_not_found' => 'PÃ¡gina no encontrada',
+    'chapter_not_found' => 'CapÃ­tulo no encontrado',
     'selected_book_not_found' => 'El libro seleccionado no fue encontrado',
-    'selected_book_chapter_not_found' => 'El libro o capÃtulo seleccionado no fue encontrado',
+    'selected_book_chapter_not_found' => 'El libro o capÃ­tulo seleccionado no fue encontrado',
     'guests_cannot_save_drafts' => 'Los invitados no pueden guardar los borradores',
 
     // Users
-    'users_cannot_delete_only_admin' => 'No se puede borrar el Ãnico administrador',
+    'users_cannot_delete_only_admin' => 'No se puede borrar el Ãºnico administrador',
     'users_cannot_delete_guest' => 'No se puede borrar el usuario invitado',
 
     // Roles
@@ -61,10 +61,10 @@ return [
     'role_registration_default_cannot_delete' => 'Este rol no puede ser borrado mientras sea el rol por defecto de registro',
 
     // Error pages
-    '404_page_not_found' => 'PÃgina no encontrada',
-    'sorry_page_not_found' => 'Lo sentimos, la pÃgina que intenta acceder no pudo ser encontrada.',
+    '404_page_not_found' => 'PÃ¡gina no encontrada',
+    'sorry_page_not_found' => 'Lo sentimos, la pÃ¡gina que intenta acceder no pudo ser encontrada.',
     'return_home' => 'Volver al home',
     'error_occurred' => 'Ha ocurrido un error',
-    'app_down' => 'La aplicaciÃn :appName se encuentra caÃ­da en este momento',
-    'back_soon' => 'VolverÃ a estar operativa en corto tiempo.',
+    'app_down' => 'La aplicaciÃ³n :appName se encuentra caÃ­da en este momento',
+    'back_soon' => 'VolverÃ¡ a estar operativa en corto tiempo.',
 ];
