@@ -98,17 +98,34 @@ label {
 
 label.radio, label.checkbox {
   font-weight: 400;
+  user-select: none;
   input[type="radio"], input[type="checkbox"] {
     margin-right: $-xs;
   }
+}
+
+label.inline.checkbox {
+  margin-right: $-m;
 }
 
 label + p.small {
   margin-bottom: 0.8em;
 }
 
-input[type="text"], input[type="number"], input[type="email"], input[type="search"], input[type="url"], input[type="password"], select, textarea {
+table.form-table {
+  max-width: 100%;
+  td {
+    overflow: hidden;
+    padding: $-xxs/2 0;
+  }
+}
+
+input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="search"], input[type="url"], input[type="password"], select, textarea {
   @extend .input-base;
+}
+
+input[type=date] {
+  width: 190px;
 }
 
 .toggle-switch {

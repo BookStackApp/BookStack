@@ -43,18 +43,9 @@ return [
      * Search
      */
     'search_results' => 'Zoekresultaten',
-    'search_results_page' => 'Pagina Zoekresultaten',
-    'search_results_chapter' => 'Hoofdstuk Zoekresultaten',
-    'search_results_book' => 'Boek Zoekresultaten',
     'search_clear' => 'Zoekopdracht wissen',
-    'search_view_pages' => 'Bekijk alle gevonden pagina\'s',
-    'search_view_chapters' => 'Bekijk alle gevonden hoofdstukken',
-    'search_view_books' => 'Bekijk alle gevonden boeken',
     'search_no_pages' => 'Er zijn geen pagina\'s gevonden',
     'search_for_term' => 'Zoeken op :term',
-    'search_page_for_term' => 'Pagina doorzoeken op :term',
-    'search_chapter_for_term' => 'Hoofdstuk doorzoeken op :term',
-    'search_book_for_term' => 'Boeken doorzoeken op :term',
 
     /**
      * Books

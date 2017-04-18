@@ -8,8 +8,7 @@ class Page extends Entity
     protected $simpleAttributes = ['name', 'id', 'slug'];
 
     protected $with = ['book'];
-
-    protected $fieldsToSearch = ['name', 'text'];
+    public $textField = 'text';
 
     /**
      * Converts this page into a simplified array.
@@ -103,6 +102,16 @@ class Page extends Entity
     {
         $text = strlen($this->text) > $length ? substr($this->text, 0, $length-3) . '...' : $this->text;
         return mb_convert_encoding($text, 'UTF-8');
+    }
+
+    /**
+     * Return a generalised, common raw query that can be 'unioned' across entities.
+     * @param bool $withContent
+     * @return string
+     */
+    public function entityRawQuery($withContent = false)
+    {   $htmlQuery = $withContent ? 'html' : "'' as html";
+        return "'BookStack\\\\Page' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text, {$htmlQuery}, book_id, priority, chapter_id, draft, created_by, updated_by, updated_at, created_at";
     }
 
 }

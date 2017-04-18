@@ -50,15 +50,15 @@
     </div>
 
 
-    <div class="container" id="book-dashboard" ng-controller="BookShowController" book-id="{{ $book->id }}">
+    <div class="container" id="entity-dashboard" entity-id="{{ $book->id }}" entity-type="book">
         <div class="row">
             <div class="col-md-7">
 
                 <h1>{{$book->name}}</h1>
-                <div class="book-content" ng-show="!searching">
-                    <p class="text-muted" ng-non-bindable>{{$book->description}}</p>
+                <div class="book-content" v-if="!searching">
+                    <p class="text-muted" v-pre>{{$book->description}}</p>
 
-                    <div class="page-list" ng-non-bindable>
+                    <div class="page-list" v-pre>
                         <hr>
                         @if(count($bookChildren) > 0)
                             @foreach($bookChildren as $childElement)
@@ -81,12 +81,12 @@
                         @include('partials.entity-meta', ['entity' => $book])
                     </div>
                 </div>
-                <div class="search-results" ng-cloak ng-show="searching">
-                    <h3 class="text-muted">{{ trans('entities.search_results') }} <a ng-if="searching" ng-click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
-                    <div ng-if="!searchResults">
+                <div class="search-results" v-cloak v-if="searching">
+                    <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
+                    <div v-if="!searchResults">
                         @include('partials/loading-icon')
                     </div>
-                    <div ng-bind-html="searchResults"></div>
+                    <div v-html="searchResults"></div>
                 </div>
 
 
@@ -94,6 +94,7 @@
 
             <div class="col-md-4 col-md-offset-1">
                 <div class="margin-top large"></div>
+
                 @if($book->restricted)
                     <p class="text-muted">
                         @if(userCan('restrictions-manage', $book))
@@ -103,14 +104,16 @@
                         @endif
                     </p>
                 @endif
+
                 <div class="search-box">
-                    <form ng-submit="searchBook($event)">
-                        <input ng-model="searchTerm" ng-change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
+                    <form v-on:submit="searchBook">
+                        <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
                         <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                        <button ng-if="searching" ng-click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
+                        <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
                     </form>
                 </div>
-                <div class="activity anim fadeIn">
+                
+                <div class="activity">
                     <h3>{{ trans('entities.recent_activity') }}</h3>
                     @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
                 </div>
