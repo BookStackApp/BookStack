@@ -76,4 +76,16 @@ abstract class TestCase extends BaseTestCase
     public function newChapter($input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book) {
         return $this->app[EntityRepo::class]->createFromInput('chapter', $input, $book);
     }
+
+    /**
+     * Create and return a new test page
+     * @param array $input
+     * @return Chapter
+     */
+    public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
+        $book = Book::first();
+        $entityRepo = $this->app[EntityRepo::class];
+        $draftPage = $entityRepo->getDraftPage($book);
+        return $entityRepo->publishPageDraft($draftPage, $input);
+    }
 }

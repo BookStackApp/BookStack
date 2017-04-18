@@ -51,4 +51,13 @@ class Chapter extends Entity
         return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
     }
 
+    /**
+     * Return a generalised, common raw query that can be 'unioned' across entities.
+     * @return string
+     */
+    public function entityRawQuery()
+    {
+        return "'BookStack\\\\Chapter' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text, '' as html, book_id, priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
+    }
+
 }

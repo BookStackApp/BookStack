@@ -2,41 +2,36 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Services\PermissionService;
+use BookStack\Services\SearchService;
 use Illuminate\Console\Command;
 
-class RegeneratePermissions extends Command
+class RegenerateSearch extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-permissions {--database= : The database connection to use.}';
+    protected $signature = 'bookstack:regenerate-search {--database= : The database connection to use.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Regenerate all system permissions';
+    protected $description = 'Command description';
 
-    /**
-     * The service to handle the permission system.
-     *
-     * @var PermissionService
-     */
-    protected $permissionService;
+    protected $searchService;
 
     /**
      * Create a new command instance.
      *
-     * @param PermissionService $permissionService
+     * @param SearchService $searchService
      */
-    public function __construct(PermissionService $permissionService)
+    public function __construct(SearchService $searchService)
     {
-        $this->permissionService = $permissionService;
         parent::__construct();
+        $this->searchService = $searchService;
     }
 
     /**
@@ -51,9 +46,8 @@ class RegeneratePermissions extends Command
             \DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->permissionService->buildJointPermissions();
-
+        $this->searchService->indexAllEntities();
         \DB::setDefaultConnection($connection);
-        $this->comment('Permissions regenerated');
+        $this->comment('Search index regenerated');
     }
 }
