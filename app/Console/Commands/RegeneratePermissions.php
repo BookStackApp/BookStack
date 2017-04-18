@@ -12,7 +12,7 @@ class RegeneratePermissions extends Command
      *
      * @var string
      */
-    protected $signature = 'permissions:regen';
+    protected $signature = 'bookstack:regenerate-permissions';
 
     /**
      * The console command description.
@@ -47,5 +47,6 @@ class RegeneratePermissions extends Command
     public function handle()
     {
         $this->permissionService->buildJointPermissions();
+        $this->comment('Permissions regenerated');
     }
 }

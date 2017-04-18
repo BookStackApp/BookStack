@@ -474,11 +474,13 @@ class PermissionService
     /**
      * Get the children of a book in an efficient single query, Filtered by the permission system.
      * @param integer $book_id
-     * @param bool    $filterDrafts
+     * @param bool $filterDrafts
+     * @param bool $fetchPageContent
      * @return \Illuminate\Database\Query\Builder
      */
-    public function bookChildrenQuery($book_id, $filterDrafts = false) {
-        $pageSelect = $this->db->table('pages')->selectRaw("'BookStack\\\\Page' as entity_type, id, slug, name, text, '' as description, book_id, priority, chapter_id, draft")->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
+    public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false) {
+        $pageContentSelect = $fetchPageContent ? 'html' : "''";
+        $pageSelect = $this->db->table('pages')->selectRaw("'BookStack\\\\Page' as entity_type, id, slug, name, text, {$pageContentSelect} as description, book_id, priority, chapter_id, draft")->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
             $query->where('draft', '=', 0);
             if (!$filterDrafts) {
                 $query->orWhere(function($query) {

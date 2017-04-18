@@ -2,30 +2,35 @@
 
 namespace BookStack\Console\Commands;
 
+use BookStack\Activity;
 use Illuminate\Console\Command;
 
-class ResetViews extends Command
+class ClearActivity extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'views:reset';
+    protected $signature = 'bookstack:clear-activity';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reset all view-counts for all entities.';
+    protected $description = 'Clear user activity from the system';
+
+    protected $activity;
 
     /**
      * Create a new command instance.
      *
+     * @param Activity $activity
      */
-    public function __construct()
+    public function __construct(Activity $activity)
     {
+        $this->activity = $activity;
         parent::__construct();
     }
 
@@ -36,6 +41,7 @@ class ResetViews extends Command
      */
     public function handle()
     {
-        \Views::resetAll();
+        $this->activity->newQuery()->truncate();
+        $this->comment('System activity cleared');
     }
 }

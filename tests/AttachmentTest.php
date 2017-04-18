@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 class AttachmentTest extends BrowserKitTest
 {
@@ -75,7 +75,6 @@ class AttachmentTest extends BrowserKitTest
     {
         $page = \BookStack\Page::first();
         $this->asAdmin();
-        $admin = $this->getAdmin();
         $fileName = 'upload_test_file.txt';
 
         $this->uploadFile($fileName, $page->id);

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 class PublicActionTest extends BrowserKitTest
 {
@@ -78,6 +78,16 @@ class PublicActionTest extends BrowserKitTest
             'created_by' => $user->id,
             'updated_by' => $user->id
         ]);
+    }
+
+    public function test_content_not_listed_on_404_for_public_users()
+    {
+        $page = \BookStack\Page::first();
+        $this->asAdmin()->visit($page->getUrl());
+        \Auth::logout();
+        view()->share('pageTitle', '');
+        $this->forceVisit('/cats/dogs/hippos');
+        $this->dontSee($page->name);
     }
 
 }

@@ -305,6 +305,7 @@ export default function (ngApp, events) {
         $scope.draftsEnabled = $attrs.draftsEnabled === 'true';
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
+        $scope.commentsLoaded = false;
 
         // Set initial header draft text
         if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
@@ -713,5 +714,80 @@ export default function (ngApp, events) {
             }
 
         }]);
+
+    // CommentCrudController
+    ngApp.controller('CommentAddController', ['$scope', '$http', function ($scope, $http) {
+        let vm = this;
+        let comment = {};
+        $scope.errors = {};
+        vm.saveComment = function () {
+            let pageId = $scope.comment.pageId;
+            let comment = $scope.comment.newComment;
+            let commentHTML = $scope.getCommentHTML();
+
+            $http.post(window.baseUrl(`/ajax/page/${pageId}/comment/`), {
+                text: comment,
+                html: commentHTML
+            }).then(resp => {                
+                $scope.clearInput();
+                if (!resp.data || resp.data.status !== 'success') {
+                     return events.emit('error', trans('error'));
+                }
+                events.emit('success', trans(resp.data.message));
+            }, checkError('add'));
+                        
+        };  
+        
+        function checkError(errorGroupName) {
+            $scope.errors[errorGroupName] = {};
+            return function(response) {
+                if (typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined') {
+                    events.emit('error', response.data.error);
+                }
+                if (typeof response.data !== 'undefined' && typeof response.data.validation !== 'undefined') {
+                    $scope.errors[errorGroupName] = response.data.validation;
+                    console.log($scope.errors[errorGroupName])
+                }
+            }
+        }
+    }]);
+
+
+    // CommentListController
+    ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+        let vm = this;
+        $scope.errors = {};
+        $scope.defaultAvatar = defaultAvatar;        
+        vm.totalCommentsStr = 'Loading...';
+        $scope.editorChange = function (content) {
+            console.log(content);
+        }
+        
+        $timeout(function() {
+            console.log($scope.pageId);
+            $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
+                if (!resp.data || resp.data.success !== true) {
+                    // TODO : Handle error
+                    return;
+                } 
+                vm.comments = resp.data.comments.data;  
+                vm.totalComments = resp.data.comments.total;
+                if (vm.totalComments === 0) {
+                    vm.totalCommentsStr = 'No comments found.';
+                } else if (vm.totalComments === 1) {
+                    vm.totalCommentsStr = '1 Comments';
+                } else {
+                    vm.totalCommentsStr = vm.totalComments + ' Comments'
+                }
+            }, checkError('app'));
+        });        
+        
+        function checkError(errorGroupName) {
+            $scope.errors[errorGroupName] = {};
+            return function(response) {
+                console.log(resp);
+            }
+        }
+    }]);
 
 };

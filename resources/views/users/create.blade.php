@@ -21,6 +21,10 @@
         <form action="{{ baseUrl("/settings/users/create") }}" method="post">
             {!! csrf_field() !!}
             @include('users/forms/' . $authMethod)
+            <div class="form-group">
+                <a href="{{  baseUrl($currentUser->can('users-manage') ? "/settings/users" : "/") }}" class="button muted">{{ trans('common.cancel') }}</a>
+                <button class="button pos" type="submit">{{ trans('common.save') }}</button>
+            </div>
         </form>
     </div>
 

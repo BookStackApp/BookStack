@@ -214,6 +214,19 @@ export default function (ngApp, events) {
         }
     }]);
 
+    let renderer = new markdown.Renderer();
+    // Custom markdown checkbox list item
+    // Attribution: https://github.com/chjj/marked/issues/107#issuecomment-44542001
+    renderer.listitem = function(text) {
+        if (/^\s*\[[x ]\]\s*/.test(text)) {
+            text = text
+                .replace(/^\s*\[ \]\s*/, '<input type="checkbox"/>')
+                .replace(/^\s*\[x\]\s*/, '<input type="checkbox" checked/>');
+            return `<li class="checkbox-item">${text}</li>`;
+        }
+        return `<li>${text}</li>`;
+    };
+
     /**
      * Markdown input
      * Handles the logic for just the editor input field.
@@ -231,13 +244,13 @@ export default function (ngApp, events) {
                 element = element.find('textarea').first();
                 let content = element.val();
                 scope.mdModel = content;
-                scope.mdChange(markdown(content));
+                scope.mdChange(markdown(content, {renderer: renderer}));
 
                 element.on('change input', (event) => {
                     content = element.val();
                     $timeout(() => {
                         scope.mdModel = content;
-                        scope.mdChange(markdown(content));
+                        scope.mdChange(markdown(content, {renderer: renderer}));
                     });
                 });
 
@@ -814,4 +827,52 @@ export default function (ngApp, events) {
             }
         };
     }]);
+
+
+    ngApp.directive('simpleMarkdownInput', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                smdModel: '=',
+                smdChange: '=',
+                smdGetContent: '=',
+                smdClear: '='
+            },
+            link: function (scope, element, attrs) {
+                // Set initial model content
+                element = element.find('textarea').first();
+                let simplemde = new SimpleMDE({
+                    element: element[0],
+                    status: []
+                });
+                let content = element.val();
+                simplemde.value(content)
+                scope.smdModel = content;
+
+                simplemde.codemirror.on('change', (event) => {
+                    content = simplemde.value();
+                    $timeout(() => {
+                        scope.smdModel = content;
+                        if (scope.smdChange) {
+                            scope.smdChange(element, content);
+                        }
+                    });
+                });
+                
+                if ('smdGetContent' in attrs) {
+                    scope.smdGetContent = function () {
+                        return simplemde.options.previewRender(simplemde.value());
+                    };
+                }
+                
+                if ('smdClear' in attrs) {
+                    scope.smdClear = function () {
+                        simplemde.value('');
+                        scope.smdModel = '';                        
+                    };
+                }
+            }
+        }
+    }]);
+
 };

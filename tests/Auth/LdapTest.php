@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 use BookStack\User;
 
 class LdapTest extends BrowserKitTest
@@ -12,7 +12,7 @@ class LdapTest extends BrowserKitTest
     {
         parent::setUp();
         app('config')->set(['auth.method' => 'ldap', 'services.ldap.base_dn' => 'dc=ldap,dc=local', 'auth.providers.users.driver' => 'ldap']);
-        $this->mockLdap = Mockery::mock(BookStack\Services\Ldap::class);
+        $this->mockLdap = \Mockery::mock(\BookStack\Services\Ldap::class);
         $this->app['BookStack\Services\Ldap'] = $this->mockLdap;
         $this->mockUser = factory(User::class)->make();
     }
@@ -22,7 +22,7 @@ class LdapTest extends BrowserKitTest
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
-            ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
@@ -50,7 +50,7 @@ class LdapTest extends BrowserKitTest
         $this->mockLdap->shouldReceive('setVersion')->once();
         $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
-            ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'cn' => [$this->mockUser->name],
                 'dn' => $ldapDn,
@@ -73,7 +73,7 @@ class LdapTest extends BrowserKitTest
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
-            ->with($this->resourceId, config('services.ldap.base_dn'), Mockery::type('string'), Mockery::type('array'))
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
