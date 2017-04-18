@@ -43,18 +43,9 @@ return [
      * Search
      */
     'search_results' => 'Suchergebnisse',
-    'search_results_page' => 'Seiten-Suchergebnisse',
-    'search_results_chapter' => 'Kapitel-Suchergebnisse',
-    'search_results_book' => 'Buch-Suchergebnisse',
     'search_clear' => 'Suche zur&uuml;cksetzen',
-    'search_view_pages' => 'Zeige alle passenden Seiten',
-    'search_view_chapters' => 'Zeige alle passenden Kapitel',
-    'search_view_books' => 'Zeige alle passenden B&uuml;cher',
     'search_no_pages' => 'Es wurden keine passenden Suchergebnisse gefunden',
     'search_for_term' => 'Suche nach :term',
-    'search_page_for_term' => 'Suche nach :term in Seiten',
-    'search_chapter_for_term' => 'Suche nach :term in Kapiteln',
-    'search_book_for_term' => 'Suche nach :term in B&uuml;chern',
 
     /**
      * Books

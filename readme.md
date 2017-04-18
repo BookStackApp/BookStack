@@ -74,7 +74,7 @@ These are the great projects used to help build BookStack:
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [ZeroClipboard](http://zeroclipboard.org/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
-* [Marked](https://github.com/chjj/marked)
+* [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
 * [Moment.js](http://momentjs.com/)
 * [BarryVD](https://github.com/barryvdh)
     * [Debugbar](https://github.com/barryvdh/laravel-debugbar)

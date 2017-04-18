@@ -109,6 +109,7 @@
   transition-property: right, border;
   border-left: 0px solid #FFF;
   background-color: #FFF;
+  max-width: 320px;
   &.fixed {
     background-color: #FFF;
     z-index: 5;

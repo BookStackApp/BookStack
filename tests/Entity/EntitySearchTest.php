@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
-class EntitySearchTest extends BrowserKitTest
+
+class EntitySearchTest extends TestCase
 {
 
     public function test_page_search()
@@ -8,32 +9,35 @@ class EntitySearchTest extends BrowserKitTest
         $book = \BookStack\Book::all()->first();
         $page = $book->pages->first();
 
-        $this->asAdmin()
-            ->visit('/')
-            ->type($page->name, 'term')
-            ->press('header-search-box-button')
-            ->see('Search Results')
-            ->seeInElement('.entity-list', $page->name)
-            ->clickInElement('.entity-list', $page->name)
-            ->seePageIs($page->getUrl());
+        $search = $this->asEditor()->get('/search?term=' . urlencode($page->name));
+        $search->assertSee('Search Results');
+        $search->assertSee($page->name);
     }
 
     public function test_invalid_page_search()
     {
-        $this->asAdmin()
-            ->visit('/')
-            ->type('<p>test</p>', 'term')
-            ->press('header-search-box-button')
-            ->see('Search Results')
-            ->seeStatusCode(200);
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('<p>test</p>'));
+        $resp->assertSee('Search Results');
+        $resp->assertStatus(200);
+        $this->get('/search?term=cat+-')->assertStatus(200);
     }
 
-    public function test_empty_search_redirects_back()
+    public function test_empty_search_shows_search_page()
     {
-        $this->asAdmin()
-            ->visit('/')
-            ->visit('/search/all')
-            ->seePageIs('/');
+        $res = $this->asEditor()->get('/search');
+        $res->assertStatus(200);
+    }
+
+    public function test_searching_accents_and_small_terms()
+    {
+        $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'some áéííúü¿¡ test content {a2 orange dog']);
+        $this->asEditor();
+
+        $accentSearch = $this->get('/search?term=' . urlencode('áéíí'));
+        $accentSearch->assertStatus(200)->assertSee($page->name);
+
+        $smallSearch = $this->get('/search?term=' . urlencode('{a'));
+        $smallSearch->assertStatus(200)->assertSee($page->name);
     }
 
     public function test_book_search()
@@ -42,57 +46,20 @@ class EntitySearchTest extends BrowserKitTest
         $page = $book->pages->last();
         $chapter = $book->chapters->last();
 
-        $this->asAdmin()
-            ->visit('/search/book/' . $book->id . '?term=' . urlencode($page->name))
-            ->see($page->name)
+        $pageTestResp = $this->asEditor()->get('/search/book/' . $book->id . '?term=' . urlencode($page->name));
+        $pageTestResp->assertSee($page->name);
 
-            ->visit('/search/book/' . $book->id  . '?term=' . urlencode($chapter->name))
-            ->see($chapter->name);
+        $chapterTestResp = $this->asEditor()->get('/search/book/' . $book->id . '?term=' . urlencode($chapter->name));
+        $chapterTestResp->assertSee($chapter->name);
     }
 
-    public function test_empty_book_search_redirects_back()
+    public function test_chapter_search()
     {
-        $book = \BookStack\Book::all()->first();
-        $this->asAdmin()
-            ->visit('/books')
-            ->visit('/search/book/' . $book->id . '?term=')
-            ->seePageIs('/books');
-    }
+        $chapter = \BookStack\Chapter::has('pages')->first();
+        $page = $chapter->pages[0];
 
-
-    public function test_pages_search_listing()
-    {
-        $page = \BookStack\Page::all()->last();
-        $this->asAdmin()->visit('/search/pages?term=' . $page->name)
-            ->see('Page Search Results')->see('.entity-list', $page->name);
-    }
-
-    public function test_chapters_search_listing()
-    {
-        $chapter = \BookStack\Chapter::all()->last();
-        $this->asAdmin()->visit('/search/chapters?term=' . $chapter->name)
-            ->see('Chapter Search Results')->seeInElement('.entity-list', $chapter->name);
-    }
-
-    public function test_search_quote_term_preparation()
-    {
-        $termString = '"192" cat "dog hat"';
-        $repo = $this->app[\BookStack\Repos\EntityRepo::class];
-        $preparedTerms = $repo->prepareSearchTerms($termString);
-        $this->assertTrue($preparedTerms === ['"192"','"dog hat"', 'cat']);
-    }
-
-    public function test_books_search_listing()
-    {
-        $book = \BookStack\Book::all()->last();
-        $this->asAdmin()->visit('/search/books?term=' . $book->name)
-            ->see('Book Search Results')->see('.entity-list', $book->name);
-    }
-
-    public function test_searching_hypen_doesnt_break()
-    {
-        $this->visit('/search/all?term=cat+-')
-            ->seeStatusCode(200);
+        $pageTestResp = $this->asEditor()->get('/search/chapter/' . $chapter->id . '?term=' . urlencode($page->name));
+        $pageTestResp->assertSee($page->name);
     }
 
     public function test_tag_search()
@@ -114,27 +81,99 @@ class EntitySearchTest extends BrowserKitTest
         $pageB = \BookStack\Page::all()->last();
         $pageB->tags()->create(['name' => 'animal', 'value' => 'dog']);
 
-        $this->asAdmin()->visit('/search/all?term=%5Banimal%5D')
-            ->seeLink($pageA->name)
-            ->seeLink($pageB->name);
+        $this->asEditor();
+        $tNameSearch = $this->get('/search?term=%5Banimal%5D');
+        $tNameSearch->assertSee($pageA->name)->assertSee($pageB->name);
 
-        $this->visit('/search/all?term=%5Bcolor%5D')
-            ->seeLink($pageA->name)
-            ->dontSeeLink($pageB->name);
+        $tNameSearch2 = $this->get('/search?term=%5Bcolor%5D');
+        $tNameSearch2->assertSee($pageA->name)->assertDontSee($pageB->name);
 
-        $this->visit('/search/all?term=%5Banimal%3Dcat%5D')
-            ->seeLink($pageA->name)
-            ->dontSeeLink($pageB->name);
+        $tNameValSearch = $this->get('/search?term=%5Banimal%3Dcat%5D');
+        $tNameValSearch->assertSee($pageA->name)->assertDontSee($pageB->name);
+    }
 
+    public function test_exact_searches()
+    {
+        $page = $this->newPage(['name' => 'My new test page', 'html' => 'this is a story about an orange donkey']);
+
+        $exactSearchA = $this->asEditor()->get('/search?term=' . urlencode('"story about an orange"'));
+        $exactSearchA->assertStatus(200)->assertSee($page->name);
+
+        $exactSearchB = $this->asEditor()->get('/search?term=' . urlencode('"story not about an orange"'));
+        $exactSearchB->assertStatus(200)->assertDontSee($page->name);
+    }
+
+    public function test_search_filters()
+    {
+        $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
+        $this->asEditor();
+        $editorId = $this->getEditor()->id;
+
+        // Viewed filter searches
+        $this->get('/search?term=' . urlencode('danzorbhsing {not_viewed_by_me}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {viewed_by_me}'))->assertDontSee($page->name);
+        $this->get($page->getUrl());
+        $this->get('/search?term=' . urlencode('danzorbhsing {not_viewed_by_me}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {viewed_by_me}'))->assertSee($page->name);
+
+        // User filters
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorId.'}'))->assertDontSee($page->name);
+        $page->created_by = $editorId;
+        $page->save();
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_by:'.$editorId.'}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
+        $page->updated_by = $editorId;
+        $page->save();
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorId.'}'))->assertSee($page->name);
+
+        // Content filters
+        $this->get('/search?term=' . urlencode('{in_name:danzorbhsing}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('{in_body:danzorbhsing}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('{in_name:test quaffleachits}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('{in_body:test quaffleachits}'))->assertDontSee($page->name);
+
+        // Restricted filter
+        $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertDontSee($page->name);
+        $page->restricted = true;
+        $page->save();
+        $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertSee($page->name);
+
+        // Date filters
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_after:2037-01-01}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_before:2037-01-01}'))->assertSee($page->name);
+        $page->updated_at = '2037-02-01';
+        $page->save();
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_after:2037-01-01}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_before:2037-01-01}'))->assertDontSee($page->name);
+
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_after:2037-01-01}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_before:2037-01-01}'))->assertSee($page->name);
+        $page->created_at = '2037-02-01';
+        $page->save();
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_after:2037-01-01}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_before:2037-01-01}'))->assertDontSee($page->name);
     }
 
     public function test_ajax_entity_search()
     {
         $page = \BookStack\Page::all()->last();
         $notVisitedPage = \BookStack\Page::first();
-        $this->visit($page->getUrl());
-        $this->asAdmin()->visit('/ajax/search/entities?term=' . $page->name)->see('.entity-list', $page->name);
-        $this->asAdmin()->visit('/ajax/search/entities?types=book&term=' . $page->name)->dontSee('.entity-list', $page->name);
-        $this->asAdmin()->visit('/ajax/search/entities')->see('.entity-list', $page->name)->dontSee($notVisitedPage->name);
+
+        // Visit the page to make popular
+        $this->asEditor()->get($page->getUrl());
+
+        $normalSearch = $this->get('/ajax/search/entities?term=' . urlencode($page->name));
+        $normalSearch->assertSee($page->name);
+
+        $bookSearch = $this->get('/ajax/search/entities?types=book&term=' . urlencode($page->name));
+        $bookSearch->assertDontSee($page->name);
+
+        $defaultListTest = $this->get('/ajax/search/entities');
+        $defaultListTest->assertSee($page->name);
+        $defaultListTest->assertDontSee($notVisitedPage->name);
     }
 }

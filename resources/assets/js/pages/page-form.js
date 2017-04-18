@@ -60,7 +60,7 @@ function registerEditorShortcuts(editor) {
     editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
-export default function() {
+module.exports = function() {
     let settings = {
         selector: '#html-editor',
         content_css: [
@@ -68,6 +68,7 @@ export default function() {
             window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
         ],
         body_class: 'page-content',
+        browser_spellcheck: true,
         relative_urls: false,
         remove_script_host: false,
         document_base_url: window.baseUrl('/'),
@@ -213,4 +214,4 @@ export default function() {
         }
     };
     return settings;
-}
+};
