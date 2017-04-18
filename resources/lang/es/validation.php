@@ -14,11 +14,11 @@ return [
     */
 
     'accepted'             => 'El :attribute debe ser aceptado.',
-    'active_url'           => 'El :attribute no es una URl v√lida.',
+    'active_url'           => 'El :attribute no es una URl v√°lida.',
     'after'                => 'El :attribute debe ser una fecha posterior :date.',
     'alpha'                => 'El :attribute solo puede contener letras.',
-    'alpha_dash'           => 'El :attribute s√lo puede contener letras, n√meros y guiones.',
-    'alpha_num'            => 'El :attribute s√lo puede contener letras y n√meros∫.',
+    'alpha_dash'           => 'El :attribute solo puede contener letras, n√∫meros y guiones.',
+    'alpha_num'            => 'El :attribute solo puede contener letras y n√∫mero.',
     'array'                => 'El :attribute debe de ser un array.',
     'before'               => 'El :attribute debe ser una fecha anterior a  :date.',
     'between'              => [
@@ -28,41 +28,41 @@ return [
         'array'   => 'El :attribute debe estar entre :min y :max items.',
     ],
     'boolean'              => 'El campo :attribute debe ser true o false.',
-    'confirmed'            => 'La confirmaci√n de :attribute no concuerda.',
-    'date'                 => 'El :attribute no es una fecha v√lida.',
+    'confirmed'            => 'La confirmaci√≥n de :attribute no concuerda.',
+    'date'                 => 'El :attribute no es una fecha v√°lida.',
     'date_format'          => 'El :attribute no coincide con el formato :format.',
     'different'            => ':attribute y :other deben ser diferentes.',
     'digits'               => ':attribute debe ser de :digits d√≠gitos.',
     'digits_between'       => ':attribute debe ser un valor entre :min y :max d√≠gios.',
-    'email'                => ':attribute debe ser una direcci√n v√lida.',
+    'email'                => ':attribute debe ser una direcci√≥n √°lida.',
     'filled'               => 'El campo :attribute es requerido.',
     'exists'               => 'El :attribute seleccionado es inv√°lido.',
     'image'                => 'El :attribute debe ser una imagen.',
     'in'                   => 'El selected :attribute es inv√°lio.',
     'integer'              => 'El :attribute debe ser un entero.',
-    'ip'                   => 'El :attribute debe ser una direcci√n IP v√lida.',
+    'ip'                   => 'El :attribute debe ser una direcci√≥n IP √°lida.',
     'max'                  => [
         'numeric' => ':attribute no puede ser mayor que :max.',
         'file'    => ':attribute no puede ser mayor que :max kilobytes.',
         'string'  => ':attribute no puede ser mayor que :max car√°cteres.',
-        'array'   => ':attribute no puede contener m√s de :max items.',
+        'array'   => ':attribute no puede contener m√°s de :max items.',
     ],
     'mimes'                => ':attribute debe ser un fichero de tipo: :values.',
     'min'                  => [
         'numeric' => ':attribute debe ser al menos de :min.',
         'file'    => ':attribute debe ser al menos :min kilobytes.',
         'string'  => ':attribute debe ser al menos :min caracteres.',
-        'array'   => ':attribute debe tener como m√nimo :min items.',
+        'array'   => ':attribute debe tener como m√≠nimo :min items.',
     ],
     'not_in'               => ':attribute seleccionado es inv√°lio.',
     'numeric'              => ':attribute debe ser num√©rico.',
-    'regex'                => ':attribute con formato inv√lido',
+    'regex'                => ':attribute con formato inv√°lido',
     'required'             => ':attribute es requerido.',
     'required_if'          => ':attribute es requerido cuando :other vale :value.',
     'required_with'        => 'El campo :attribute es requerido cuando se encuentre entre los valores :values.',
     'required_with_all'    => 'El campo :attribute es requerido cuando los valores sean :values.',
     'required_without'     => ':attribute es requerido cuando no se encuentre entre los valores :values.',
-    'required_without_all' => ':attribute es requerido cuando ninguno de los valores :values est√n presentes.',
+    'required_without_all' => ':attribute es requerido cuando ninguno de los valores :values est√°n presentes.',
     'same'                 => ':attribute y :other deben coincidir.',
     'size'                 => [
         'numeric' => ':attribute debe ser :size.',
@@ -71,9 +71,9 @@ return [
         'array'   => ':attribute debe contener :size items.',
     ],
     'string'               => 'El atributo :attribute debe ser una cadena.',
-    'timezone'             => 'El atributo :attribute debe ser una zona v√lida.',
+    'timezone'             => 'El atributo :attribute debe ser una zona v√°lida.',
     'unique'               => 'El atributo :attribute ya ha sido tomado.',
-    'url'                  => 'El atributo :attribute tiene un formato inv√lido°.',
+    'url'                  => 'El atributo :attribute tiene un formato inv√°lid.',
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +88,7 @@ return [
 
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Confirmaci√n de Password requerida',
+            'required_with' => 'Confirmaci√≥n de Password requerida',
         ],
     ],
 
