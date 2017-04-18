@@ -1,10 +1,7 @@
-<?php
-
-namespace BookStack\Http\Controllers;
+<?php namespace BookStack\Http\Controllers;
 
 use Activity;
 use BookStack\Repos\EntityRepo;
-use BookStack\Http\Requests;
 use Illuminate\Http\Response;
 use Views;
 
@@ -63,10 +60,10 @@ class HomeController extends Controller
             ];
             if ($locale !== 'en') {
                 $enTrans = [
-                    'common' => trans('common', [], null, 'en'),
-                    'components' => trans('components', [], null, 'en'),
-                    'entities' => trans('entities', [], null, 'en'),
-                    'errors' => trans('errors', [], null, 'en')
+                    'common' => trans('common', [], 'en'),
+                    'components' => trans('components', [], 'en'),
+                    'entities' => trans('entities', [], 'en'),
+                    'errors' => trans('errors', [], 'en')
                 ];
                 $translations = array_replace_recursive($enTrans, $translations);
             }

@@ -5,11 +5,19 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 faded">
+                <div class="col-sm-6 faded">
                     @include('books._breadcrumbs', ['book' => $book])
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     <div class="action-buttons faded">
+                        <span dropdown class="dropdown-container">
+                            <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
+                            <ul class="wide">
+                                <li><a href="{{ $book->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                                <li><a href="{{ $book->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                                <li><a href="{{ $book->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                            </ul>
+                        </span>
                         @if(userCan('page-create', $book))
                             <a href="{{ $book->getUrl('/page/create') }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.pages_new') }}</a>
                         @endif

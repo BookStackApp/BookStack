@@ -16,3 +16,7 @@ _ide_helper.php
 yarn.lock
 /bin
 nbproject
+.buildpath
+.project
+.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/org.eclipse.php.core.prefs

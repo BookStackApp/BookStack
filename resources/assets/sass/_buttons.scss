@@ -54,6 +54,9 @@ $button-border-radius: 2px;
   &.muted {
     @include generate-button-colors(#EEE, #888);
   }
+  &.muted-light {
+    @include generate-button-colors(#666, #e4e4e4);
+  }
 }
 
 .text-button {
@@ -92,12 +95,28 @@ $button-border-radius: 2px;
   width: 100%;
   text-align: center;
   display: block;
+  &.text-left {
+    text-align: left;
+  }
 }
 
 .button.icon {
   i {
     padding-right: 0;
   }
+}
+
+.button.svg {
+  svg {
+    display: inline-block;
+    position: absolute;
+    left: $-m;
+    top: $-s - 2px;
+    width: 24px;
+  }
+  padding: $-s $-m;
+  padding-bottom: $-s - 2px;
+  padding-left: $-m*2 + 24px;
 }
 
 .button[disabled] {

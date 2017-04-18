@@ -55,20 +55,6 @@ div[class^="col-"] img {
   }
 }
 
-.center-box {
-  margin: $-xl auto 0 auto;
-  padding: $-m $-xxl $-xl*2 $-xxl;
-  max-width: 346px;
-  display: inline-block;
-  text-align: left;
-  vertical-align: top;
-  &.login {
-    background-color: #EEE;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid #DDD;
-  }
-}
-
 .row {
   margin-left: -$-m;
   margin-right: -$-m;

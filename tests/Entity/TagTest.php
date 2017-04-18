@@ -1,4 +1,4 @@
-<?php
+<?php namespace Tests;
 
 use BookStack\Tag;
 use BookStack\Page;

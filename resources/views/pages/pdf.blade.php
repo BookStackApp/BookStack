@@ -30,11 +30,5 @@
             clear: both;
             display: block;
         }
-
-        .tag-display {
-            min-width: 0;
-            max-width: none;
-            display: none;
-        }
     </style>
 @stop

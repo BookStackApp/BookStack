@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/translations.js', 'HomeController@getTranslations');
+Route::get('/translations', 'HomeController@getTranslations');
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
@@ -26,6 +26,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}/delete', 'BookController@showDelete');
         Route::get('/{bookSlug}/sort', 'BookController@sort');
         Route::put('/{bookSlug}/sort', 'BookController@saveSort');
+        Route::get('/{bookSlug}/export/html', 'BookController@exportHtml');
+        Route::get('/{bookSlug}/export/pdf', 'BookController@exportPdf');
+        Route::get('/{bookSlug}/export/plaintext', 'BookController@exportPlainText');
 
         // Pages
         Route::get('/{bookSlug}/page/create', 'PageController@create');
@@ -64,6 +67,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@move');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@showRestrict');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/pdf', 'ChapterController@exportPdf');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/html', 'ChapterController@exportHtml');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/plaintext', 'ChapterController@exportPlainText');
         Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@restrict');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
@@ -114,12 +120,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ajax/search/entities', 'SearchController@searchEntitiesAjax');
 
     // Comments
-    Route::post('/ajax/page/{pageId}/comment/', 'CommentController@add');
-    Route::put('/ajax/page/comment/{id}', 'CommentController@update');
+    Route::post('/ajax/page/{pageId}/comment/', 'CommentController@save');
+    Route::put('/ajax/page/{pageId}/comment/{commentId}', 'CommentController@save');
     Route::delete('/ajax/comment/{id}', 'CommentController@destroy');
-    Route::get('/ajax/page/{pageId}/comment/', 'CommentController@getLastXComments');
-    Route::get('/ajax/page/{pageId}/comment/{id}/sub-comments', 'CommentController@getChildComments');    
-    
+    Route::get('/ajax/page/{pageId}/comments/{commentId}/sub-comments', 'CommentController@getComments');
+    Route::get('/ajax/page/{pageId}/comments/', 'CommentController@getComments');
+
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');
 
@@ -136,7 +142,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Settings
     Route::group(['prefix' => 'settings'], function() {
-        Route::get('/', 'SettingController@index');
+        Route::get('/', 'SettingController@index')->name('settings');
         Route::post('/', 'SettingController@update');
 
         // Users
