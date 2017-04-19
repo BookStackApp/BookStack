@@ -18,7 +18,7 @@ return [
     'image_dropzone' => 'Arrastre las imágenes o hacer click aquí para Subir',
     'images_deleted' => 'Imágenes borradas',
     'image_preview' => 'Preview de la imagen',
-    'image_upload_success' => 'Imagen subida exitosamente',
+    'image_upload_success' => 'Imagen subida éxitosamente',
     'image_update_success' => 'Detalles de la imagen actualizados exitosamente',
     'image_delete_success' => 'Imagen borrada exitosamente'
 ];
