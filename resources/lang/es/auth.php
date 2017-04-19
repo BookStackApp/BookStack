@@ -11,7 +11,7 @@ return [
     |
     */
     'failed' => 'Las credenciales no concuerdan con nuestros registros.',
-    'throttle' => 'Demasiados intentos fallidos de conexi√n. Por favor intente nuevamente en :seconds segundos.',
+    'throttle' => 'Demasiados intentos fallidos de conexi√≥n. Por favor intente nuevamente en :seconds segundos.',
 
     /**
      * Login & Register

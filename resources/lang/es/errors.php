@@ -7,64 +7,64 @@ return [
      */
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Ud. no tiene permisos para visualizar la página solicitada.',
+    'permissionJson' => 'Ud. no tiene permisos para ejecutar la acción solicitada.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
-    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
-    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
-    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
-    'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
-    'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
-    'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
-    'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
-    'social_no_action_defined' => 'No action defined',
-    'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',
-    'social_account_email_in_use' => 'The email :email is already in use. If you already have an account you can connect your :socialAccount account from your profile settings.',
-    'social_account_existing' => 'This :socialAccount is already attached to your profile.',
-    'social_account_already_used_existing' => 'This :socialAccount account is already used by another user.',
-    'social_account_not_used' => 'This :socialAccount account is not linked to any users. Please attach it in your profile settings. ',
-    'social_account_register_instructions' => 'If you do not yet have an account, You can register an account using the :socialAccount option.',
-    'social_driver_not_found' => 'Social driver not found',
-    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
+    'error_user_exists_different_creds' => 'Un usuario con el email :email ya existe pero con credenciales diferentes.',
+    'email_already_confirmed' => 'El email ya ha sido confirmado, Intente loguearse en la aplicación.',
+    'email_confirmation_invalid' => 'Este token de confirmación no e válido o ya ha sido usado,Intente registrar uno nuevamente.',
+    'email_confirmation_expired' => 'El token de confirmación ha expirado, Un nuevo email de confirmacón ha sido enviado.',
+    'ldap_fail_anonymous' => 'El acceso con LDAP ha fallado usando binding anónimo',
+    'ldap_fail_authed' => 'El acceso LDAP usando el dn & password detallados',
+    'ldap_extension_not_installed' => 'La extensión LDAP PHP no se encuentra instalada',
+    'ldap_cannot_connect' => 'No se puede conectar con el servidor ldap, la conexión inicial ha fallado',
+    'social_no_action_defined' => 'Acción no definida',
+    'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente loguearse a través de la opcón :socialAccount .',
+    'social_account_email_in_use' => 'El email :email ya se encuentra en uso. Si ud. ya dispone de una cuenta puede loguearse a través de su cuenta :socialAccount desde la configuración de perfil.',
+    'social_account_existing' => 'La cuenta :socialAccount ya se encuentra asignada a su perfil.',
+    'social_account_already_used_existing' => 'La cuenta :socialAccount ya se encuentra usada por otro usuario.',
+    'social_account_not_used' => 'La cuenta :socialAccount no está asociada a ningún usuario. Por favor adjuntela a su configuración de perfil. ',
+    'social_account_register_instructions' => 'Si no dispone de una cuenta, puede registrar una cuenta usando la opción de :socialAccount .',
+    'social_driver_not_found' => 'Driver social no encontrado',
+    'social_driver_not_configured' => 'Su configuración :socialAccount no es correcta.',
 
     // System
-    'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
-    'cannot_get_image_from_url' => 'Cannot get image from :url',
-    'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
-    'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'image_upload_error' => 'An error occurred uploading the image',
+    'path_not_writable' => 'La ruta :filePath no pudo ser cargada. Asegurese de que es escribible por el servidor.',
+    'cannot_get_image_from_url' => 'No se puede obtener la imagen desde :url',
+    'cannot_create_thumbs' => 'El servidor no puede crear la imagen miniatura. Por favor chequee que tiene la extensión GD instalada.',
+    'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamañ. Por favor intente con un fichero de menor tamañ.',
+    'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
+    'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',
 
     // Pages
-    'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
+    'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegurese de que tiene conexión a Internet antes de guardar este borrador',
 
     // Entities
-    'entity_not_found' => 'Entity not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
-    'selected_book_not_found' => 'The selected book was not found',
-    'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'entity_not_found' => 'Entidad no encontrada',
+    'book_not_found' => 'Libro no encontrado',
+    'page_not_found' => 'Página no encontrada',
+    'chapter_not_found' => 'Capítulo no encontrado',
+    'selected_book_not_found' => 'El libro seleccionado no fue encontrado',
+    'selected_book_chapter_not_found' => 'El libro o capítulo seleccionado no fue encontrado',
+    'guests_cannot_save_drafts' => 'Los invitados no pueden guardar los borradores',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'No se puede borrar el único administrador',
+    'users_cannot_delete_guest' => 'No se puede borrar el usuario invitado',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
+    'role_cannot_be_edited' => 'Este rol no puede ser editado',
+    'role_system_cannot_be_deleted' => 'Este rol es un rol de sistema y no puede ser borrado',
+    'role_registration_default_cannot_delete' => 'Este rol no puede ser borrado mientras sea el rol por defecto de registro',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    '404_page_not_found' => 'Página no encontrada',
+    'sorry_page_not_found' => 'Lo sentimos, la página que intenta acceder no pudo ser encontrada.',
+    'return_home' => 'Volver al home',
+    'error_occurred' => 'Ha ocurrido un error',
+    'app_down' => 'La aplicación :appName se encuentra caída en este momento',
+    'back_soon' => 'Volverá a estar operativa en corto tiempo.',
 ];
