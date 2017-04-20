@@ -569,6 +569,7 @@ class EntityRepo
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = strip_tags($draftPage->html);
         $draftPage->draft = false;
+        $draftPage->revision_count = 1;
 
         $draftPage->save();
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
@@ -593,6 +594,7 @@ class EntityRepo
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
+        $revision->revision_number = $page->revision_count;
         $revision->save();
 
         // Clear old revisions
@@ -812,6 +814,7 @@ class EntityRepo
         $page->text = strip_tags($page->html);
         if (setting('app-editor') !== 'markdown') $page->markdown = '';
         $page->updated_by = $userId;
+        $page->revision_count++;
         $page->save();
 
         // Remove all update drafts for this user & page.
@@ -920,6 +923,7 @@ class EntityRepo
      */
     public function restorePageRevision(Page $page, Book $book, $revisionId)
     {
+        $page->revision_count++;
         $this->savePageRevision($page);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
