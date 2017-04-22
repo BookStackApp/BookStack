@@ -43,7 +43,8 @@ $factory->define(BookStack\Page::class, function ($faker) {
         'name' => $faker->sentence,
         'slug' => str_random(10),
         'html' => $html,
-        'text' => strip_tags($html)
+        'text' => strip_tags($html),
+        'revision_count' => 1
     ];
 });
 
