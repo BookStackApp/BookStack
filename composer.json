@@ -64,6 +64,10 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "refresh-test-database": [
+            "php artisan migrate:refresh --database=mysql_testing",
+            "php artisan db:seed --class=DummyContentSeeder --database=mysql_testing"
         ]
     },
     "config": {
