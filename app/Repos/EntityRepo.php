@@ -348,6 +348,10 @@ class EntityRepo
         foreach ($entities as $entity) {
             if ($entity->chapter_id === 0 || $entity->chapter_id === '0') continue;
             $parentKey = 'BookStack\\Chapter:' . $entity->chapter_id;
+            if (!isset($parents[$parentKey])) {
+                $tree[] = $entity;
+                continue;
+            }
             $chapter = $parents[$parentKey];
             $chapter->pages->push($entity);
         }

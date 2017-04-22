@@ -39,8 +39,10 @@
 
     <h6 class="text-muted">{{ trans('entities.books_navigation') }}</h6>
     <ul class="sidebar-page-list menu">
-        <li class="book-header"><a href="{{ $book->getUrl() }}" class="book {{ $current->matches($book)? 'selected' : '' }}"><i class="zmdi zmdi-book"></i>{{$book->name}}</a></li>
 
+        @if (userCan('view', $book))
+            <li class="book-header"><a href="{{ $book->getUrl() }}" class="book {{ $current->matches($book)? 'selected' : '' }}"><i class="zmdi zmdi-book"></i>{{$book->name}}</a></li>
+        @endif
 
         @foreach($sidebarTree as $bookChild)
             <li class="list-item-{{ $bookChild->getClassName() }} {{ $bookChild->getClassName() }} {{ $bookChild->isA('page') && $bookChild->draft ? 'draft' : '' }}">
