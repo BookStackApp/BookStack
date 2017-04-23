@@ -24,7 +24,7 @@ abstract class BrowserKitTest extends TestCase
 
     public function tearDown()
     {
-        \DB::disconnect('mysql_testing');
+        \DB::disconnect();
         parent::tearDown();
     }
 
