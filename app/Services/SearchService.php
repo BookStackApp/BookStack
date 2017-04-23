@@ -154,6 +154,7 @@ class SearchService
         // Handle normal search terms
         if (count($terms['search']) > 0) {
             $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
+            $subQuery->where('entity_type', '=', 'BookStack\\' . ucfirst($entityType));
             $subQuery->where(function(Builder $query) use ($terms) {
                 foreach ($terms['search'] as $inputTerm) {
                     $query->orWhere('term', 'like', $inputTerm .'%');
