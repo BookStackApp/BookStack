@@ -14,6 +14,7 @@ return [
     'recent_activity' => 'Recent Activity',
     'create_now' => 'Create one now',
     'revisions' => 'Revisions',
+    'meta_revision' => 'Revision #:revisionCount',
     'meta_created' => 'Created :timeLength',
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',
@@ -43,18 +44,26 @@ return [
      * Search
      */
     'search_results' => 'Search Results',
-    'search_results_page' => 'Page Search Results',
-    'search_results_chapter' => 'Chapter Search Results',
-    'search_results_book' => 'Book Search Results',
+    'search_total_results_found' => ':count result found|:count total results found',
     'search_clear' => 'Clear Search',
-    'search_view_pages' => 'View all matches pages',
-    'search_view_chapters' => 'View all matches chapters',
-    'search_view_books' => 'View all matches books',
     'search_no_pages' => 'No pages matched this search',
     'search_for_term' => 'Search for :term',
-    'search_page_for_term' => 'Page search for :term',
-    'search_chapter_for_term' => 'Chapter search for :term',
-    'search_book_for_term' => 'Books search for :term',
+    'search_more' => 'More Results',
+    'search_filters' => 'Search Filters',
+    'search_content_type' => 'Content Type',
+    'search_exact_matches' => 'Exact Matches',
+    'search_tags' => 'Tag Searches',
+    'search_viewed_by_me' => 'Viewed by me',
+    'search_not_viewed_by_me' => 'Not viewed by me',
+    'search_permissions_set' => 'Permissions set',
+    'search_created_by_me' => 'Created by me',
+    'search_updated_by_me' => 'Updated by me',
+    'search_updated_before' => 'Updated before',
+    'search_updated_after' => 'Updated after',
+    'search_created_before' => 'Created before',
+    'search_created_after' => 'Created after',
+    'search_set_date' => 'Set Date',
+    'search_update' => 'Update Search',
 
     /**
      * Books
@@ -112,6 +121,7 @@ return [
     'chapters_empty' => 'No pages are currently in this chapter.',
     'chapters_permissions_active' => 'Chapter Permissions Active',
     'chapters_permissions_success' => 'Chapter Permissions Updated',
+    'chapters_search_this' => 'Search this chapter',
 
     /**
      * Pages
@@ -159,6 +169,7 @@ return [
     'pages_revision_named' => 'Page Revision for :pageName',
     'pages_revisions_created_by' => 'Created By',
     'pages_revisions_date' => 'Revision Date',
+    'pages_revisions_number' => '#',
     'pages_revisions_changelog' => 'Changelog',
     'pages_revisions_changes' => 'Changes',
     'pages_revisions_current' => 'Current Version',

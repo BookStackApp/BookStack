@@ -19,6 +19,7 @@
 
             <table class="table">
                 <tr>
+                    <th width="3%">{{ trans('entities.pages_revisions_number') }}</th>
                     <th width="23%">{{ trans('entities.pages_name') }}</th>
                     <th colspan="2" width="8%">{{ trans('entities.pages_revisions_created_by') }}</th>
                     <th width="15%">{{ trans('entities.pages_revisions_date') }}</th>
@@ -27,6 +28,7 @@
                 </tr>
                 @foreach($page->revisions as $index => $revision)
                     <tr>
+                        <td>{{ $revision->revision_number == 0 ? '' : $revision->revision_number }}</td>
                         <td>{{ $revision->name }}</td>
                         <td style="line-height: 0;">
                             @if($revision->createdBy)

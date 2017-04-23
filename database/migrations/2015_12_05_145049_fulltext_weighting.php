@@ -12,9 +12,10 @@ class FulltextWeighting extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE pages ADD FULLTEXT name_search(name)');
-        DB::statement('ALTER TABLE books ADD FULLTEXT name_search(name)');
-        DB::statement('ALTER TABLE chapters ADD FULLTEXT name_search(name)');
+        $prefix = DB::getTablePrefix();
+        DB::statement("ALTER TABLE {$prefix}pages ADD FULLTEXT name_search(name)");
+        DB::statement("ALTER TABLE {$prefix}books ADD FULLTEXT name_search(name)");
+        DB::statement("ALTER TABLE {$prefix}chapters ADD FULLTEXT name_search(name)");
     }
 
     /**

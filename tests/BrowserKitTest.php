@@ -22,6 +22,12 @@ abstract class BrowserKitTest extends TestCase
     private $admin;
     private $editor;
 
+    public function tearDown()
+    {
+        \DB::disconnect();
+        parent::tearDown();
+    }
+
     /**
      * Creates the application.
      *
