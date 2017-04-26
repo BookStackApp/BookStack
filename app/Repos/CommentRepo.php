@@ -38,14 +38,13 @@ class CommentRepo {
         return $comment;
     }
     
-    public function getCommentsForPage($pageId, $commentId, $count = 20) {
-        if (empty($commentId)) {
-            // requesting parent comments
-            $query = $this->comment->getParentCommentsByPage($pageId);
-            return $query->paginate($count);
-        } else {
-            // requesting the child comments.
-            return Comment::whereRaw("page_id = $pageId AND parent_id = $commentId")->get();
-        }        
+    public function getCommentsForPage($pageId, $commentId, $count = 20) {        
+        // requesting parent comments
+        $query = $this->comment->getCommentsByPage($pageId, $commentId);
+        return $query->paginate($count);        
+    }
+    
+    public function getCommentCount($pageId) {
+        return $this->comment->where('page_id', '=', $pageId)->count();
     }
 }

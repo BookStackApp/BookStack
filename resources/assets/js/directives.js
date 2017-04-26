@@ -865,5 +865,52 @@ module.exports = function (ngApp, events) {
             }
         }
     }]);
+    
+    ngApp.directive('commentReply', ['$timeout', function ($timeout) {        
+        return {
+            restrict: 'E',
+            templateUrl: 'comment-reply.html',
+            scope: {
+                
+            },
+            link: function (scope, element, attr) {
+               
+            }
+        }
+                
+    }]);
 
+    ngApp.directive('commentReplyLink', ['$document', '$compile', function ($document, $compile) {
+        return { 
+            link: function (scope, element, attr) {
+                element.on('$destroy', function () {
+                    element.off('click');
+                    scope.$destroy(); 
+                });
+                
+                element.on('click', function () {
+                    var $container = element.parents('.comment-box').first();
+                    if (!$container.length) {
+                        console.error('commentReplyLink directive should be placed inside a container with class comment-box!');
+                        return;
+                    }
+                    if (attr.noCommentReplyDupe) {
+                        removeDupe();                    
+                    }
+                    var compiledHTML = $compile('<comment-reply></comment-reply>')(scope);
+                    $container.append(compiledHTML);
+                });
+            }
+        };
+        
+        
+        function removeDupe() {
+            let $existingElement = $document.find('comment-reply');
+            if (!$existingElement.length) {
+                return;
+            }
+            
+            $existingElement.remove();
+        }
+    }]);
 };
