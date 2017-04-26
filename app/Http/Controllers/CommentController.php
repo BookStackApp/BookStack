@@ -85,7 +85,11 @@ class CommentController extends Controller
         $this->checkOwnablePermission('page-view', $page);
         
         $comments = $this->commentRepo->getCommentsForPage($pageId, $commentId);
-        
+        if (empty($commentId)) {
+            // requesting for parent level comments, send the total count as well.
+            $totalComments = $this->commentRepo->getCommentCount($pageId);
+            return response()->json(array('success' => true, 'comments'=> $comments, 'total' => $totalComments));
+        }
         return response()->json(array('success' => true, 'comments'=> $comments));
     }
 }

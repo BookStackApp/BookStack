@@ -731,14 +731,14 @@ module.exports = function (ngApp, events) {
         }
         
         $timeout(function() {
-            console.log($scope.pageId);
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
                 if (!resp.data || resp.data.success !== true) {
                     // TODO : Handle error
                     return;
-                } 
+                }
                 vm.comments = resp.data.comments.data;  
-                vm.totalComments = resp.data.comments.total;
+                vm.totalComments = resp.data.total;
+                // TODO : Fetch message from translate.
                 if (vm.totalComments === 0) {
                     vm.totalCommentsStr = 'No comments found.';
                 } else if (vm.totalComments === 1) {
@@ -748,6 +748,18 @@ module.exports = function (ngApp, events) {
                 }
             }, checkError('app'));
         });        
+        
+        vm.loadSubComments = function(event, comment) {
+            event.preventDefault();
+            $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/${comment.id}/sub-comments`)).then(resp => {
+                console.log(resp);
+                if (!resp.data || resp.data.success !== true) {
+                    return;
+                }
+                comment.is_loaded = true;                
+                comment.comments = resp.data.comments.data;                
+            }, checkError('app'));
+        };
         
         function checkError(errorGroupName) {
             $scope.errors[errorGroupName] = {};

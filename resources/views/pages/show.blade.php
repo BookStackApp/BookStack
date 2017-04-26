@@ -113,7 +113,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                @include('pages/comments', ['pageId' => $page->id])
+                @include('comments/comments', ['pageId' => $page->id])
             </div>
         </div>
     </div>
