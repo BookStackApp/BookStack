@@ -533,11 +533,11 @@ class EntityRepo
 
     /**
      * Alias method to update the book jointPermissions in the PermissionService.
-     * @param Collection $collection collection on entities
+     * @param Book $book
      */
-    public function buildJointPermissions(Collection $collection)
+    public function buildJointPermissionsForBook(Book $book)
     {
-        $this->permissionService->buildJointPermissionsForEntities($collection);
+        $this->permissionService->buildJointPermissionsForEntity($book);
     }
 
     /**
