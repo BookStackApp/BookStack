@@ -46,7 +46,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function getTranslations() {
-        $locale = trans()->getLocale();
+        $locale = app()->getLocale();
         $cacheKey = 'GLOBAL_TRANSLATIONS_' . $locale;
         if (cache()->has($cacheKey) && config('app.env') !== 'development') {
             $resp = cache($cacheKey);
