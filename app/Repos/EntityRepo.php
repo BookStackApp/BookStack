@@ -533,11 +533,11 @@ class EntityRepo
 
     /**
      * Alias method to update the book jointPermissions in the PermissionService.
-     * @param Collection $collection collection on entities
+     * @param Book $book
      */
-    public function buildJointPermissions(Collection $collection)
+    public function buildJointPermissionsForBook(Book $book)
     {
-        $this->permissionService->buildJointPermissionsForEntities($collection);
+        $this->permissionService->buildJointPermissionsForEntity($book);
     }
 
     /**
@@ -730,6 +730,7 @@ class EntityRepo
         if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
+        $page = $this->page->find($page->id);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
     }

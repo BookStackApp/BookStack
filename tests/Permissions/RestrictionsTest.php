@@ -226,6 +226,7 @@ class RestrictionsTest extends BrowserKitTest
             ->type('test content', 'html')
             ->press('Save Page')
             ->seePageIs($chapter->book->getUrl() . '/page/test-page');
+
         $this->visit($chapterUrl)->seeInElement('.action-buttons', 'New Page');
     }
 

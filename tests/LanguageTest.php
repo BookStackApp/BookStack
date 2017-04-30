@@ -14,6 +14,23 @@ class LanguageTest extends TestCase
         $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.']);
     }
 
+    public function test_locales_config_key_set_properly()
+    {
+        $configLocales = config('app.locales');
+        sort($configLocales);
+        sort($this->langs);
+        $this->assertTrue(implode(':', $this->langs) === implode(':', $configLocales), 'app.locales configuration variable matches found lang files');
+    }
+
+    public function test_correct_language_if_not_logged_in()
+    {
+        $loginReq = $this->get('/login');
+        $loginReq->assertSee('Log In');
+
+        $loginPageFrenchReq = $this->get('/login', ['Accept-Language' => 'fr']);
+        $loginPageFrenchReq->assertSee('Se Connecter');
+    }
+
     public function test_js_endpoint_for_each_language()
     {
 

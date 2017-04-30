@@ -1,5 +1,8 @@
 <?php namespace Tests;
 
+use BookStack\Repos\PermissionsRepo;
+use BookStack\Role;
+
 class RolesTest extends BrowserKitTest
 {
     protected $user;
@@ -34,11 +37,11 @@ class RolesTest extends BrowserKitTest
     /**
      * Create a new basic role for testing purposes.
      * @param array $permissions
-     * @return static
+     * @return Role
      */
     protected function createNewRole($permissions = [])
     {
-        $permissionRepo = app('BookStack\Repos\PermissionsRepo');
+        $permissionRepo = app(PermissionsRepo::class);
         $roleData = factory(\BookStack\Role::class)->make()->toArray();
         $roleData['permissions'] = array_flip($permissions);
         return $permissionRepo->saveNewRole($roleData);
@@ -107,16 +110,16 @@ class RolesTest extends BrowserKitTest
 
     public function test_manage_user_permission()
     {
-        $this->actingAs($this->user)->visit('/')->visit('/settings/users')
+        $this->actingAs($this->user)->visit('/settings/users')
             ->seePageIs('/');
         $this->giveUserPermissions($this->user, ['users-manage']);
-        $this->actingAs($this->user)->visit('/')->visit('/settings/users')
+        $this->actingAs($this->user)->visit('/settings/users')
             ->seePageIs('/settings/users');
     }
 
     public function test_user_roles_manage_permission()
     {
-        $this->actingAs($this->user)->visit('/')->visit('/settings/roles')
+        $this->actingAs($this->user)->visit('/settings/roles')
             ->seePageIs('/')->visit('/settings/roles/1')->seePageIs('/');
         $this->giveUserPermissions($this->user, ['user-roles-manage']);
         $this->actingAs($this->user)->visit('/settings/roles')
@@ -126,10 +129,10 @@ class RolesTest extends BrowserKitTest
 
     public function test_settings_manage_permission()
     {
-        $this->actingAs($this->user)->visit('/')->visit('/settings')
+        $this->actingAs($this->user)->visit('/settings')
             ->seePageIs('/');
         $this->giveUserPermissions($this->user, ['settings-manage']);
-        $this->actingAs($this->user)->visit('/')->visit('/settings')
+        $this->actingAs($this->user)->visit('/settings')
             ->seePageIs('/settings')->press('Save Settings')->see('Settings Saved');
     }
 
@@ -181,27 +184,26 @@ class RolesTest extends BrowserKitTest
      * @param string $permission
      * @param array $accessUrls Urls that are only accessible after having the permission
      * @param array $visibles Check this text, In the buttons toolbar, is only visible with the permission
-     * @param null $callback
      */
     private function checkAccessPermission($permission, $accessUrls = [], $visibles = [])
     {
         foreach ($accessUrls as $url) {
-            $this->actingAs($this->user)->visit('/')->visit($url)
+            $this->actingAs($this->user)->visit($url)
                 ->seePageIs('/');
         }
         foreach ($visibles as $url => $text) {
-            $this->actingAs($this->user)->visit('/')->visit($url)
+            $this->actingAs($this->user)->visit($url)
                 ->dontSeeInElement('.action-buttons',$text);
         }
 
         $this->giveUserPermissions($this->user, [$permission]);
 
         foreach ($accessUrls as $url) {
-            $this->actingAs($this->user)->visit('/')->visit($url)
+            $this->actingAs($this->user)->visit($url)
                 ->seePageIs($url);
         }
         foreach ($visibles as $url => $text) {
-            $this->actingAs($this->user)->visit('/')->visit($url)
+            $this->actingAs($this->user)->visit($url)
                 ->see($text);
         }
     }
@@ -391,8 +393,8 @@ class RolesTest extends BrowserKitTest
 
     public function test_page_create_own_permissions()
     {
-        $book = \BookStack\Book::take(1)->get()->first();
-        $chapter = \BookStack\Chapter::take(1)->get()->first();
+        $book = \BookStack\Book::first();
+        $chapter = \BookStack\Chapter::first();
 
         $entities = $this->createEntityChainBelongingToUser($this->user);
         $ownBook = $entities['book'];
@@ -405,7 +407,7 @@ class RolesTest extends BrowserKitTest
         $accessUrls = [$createUrl, $createUrlChapter];
 
         foreach ($accessUrls as $url) {
-            $this->actingAs($this->user)->visit('/')->visit($url)
+            $this->actingAs($this->user)->visit($url)
                 ->seePageIs('/');
         }
 
@@ -417,7 +419,7 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['page-create-own']);
 
         foreach ($accessUrls as $index => $url) {
-            $this->actingAs($this->user)->visit('/')->visit($url);
+            $this->actingAs($this->user)->visit($url);
             $expectedUrl = \BookStack\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
             $this->seePageIs($expectedUrl);
         }
@@ -449,7 +451,7 @@ class RolesTest extends BrowserKitTest
         $accessUrls = [$createUrl, $createUrlChapter];
 
         foreach ($accessUrls as $url) {
-            $this->actingAs($this->user)->visit('/')->visit($url)
+            $this->actingAs($this->user)->visit($url)
                 ->seePageIs('/');
         }
 
@@ -461,7 +463,7 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['page-create-all']);
 
         foreach ($accessUrls as $index => $url) {
-            $this->actingAs($this->user)->visit('/')->visit($url);
+            $this->actingAs($this->user)->visit($url);
             $expectedUrl = \BookStack\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
             $this->seePageIs($expectedUrl);
         }
