@@ -11,8 +11,8 @@ use BookStack\Role;
 use BookStack\User;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class PermissionService
 {
@@ -54,6 +54,15 @@ class PermissionService
         $this->chapter = $chapter;
         $this->page = $page;
         // TODO - Update so admin still goes through filters
+    }
+
+    /**
+     * Set the database connection
+     * @param Connection $connection
+     */
+    public function setConnection(Connection $connection)
+    {
+        $this->db = $connection;
     }
 
     /**
@@ -138,10 +147,14 @@ class PermissionService
         $this->readyEntityCache();
 
         // Get all roles (Should be the most limited dimension)
-        $roles = $this->role->with('permissions')->get();
+        $roles = $this->role->with('permissions')->get()->all();
 
         // Chunk through all books
-        $this->book->newQuery()->with('chapters', 'pages')->chunk(5, function ($books) use ($roles) {
+        $this->book->newQuery()->select(['id', 'restricted', 'created_by'])->with(['chapters' => function($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id']);
+        }, 'pages'  => function($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+        }])->chunk(5, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
     }
@@ -149,17 +162,18 @@ class PermissionService
     /**
      * Build joint permissions for an array of books
      * @param Collection $books
-     * @param Collection $roles
+     * @param array $roles
      * @param bool $deleteOld
      */
     protected function buildJointPermissionsForBooks($books, $roles, $deleteOld = false) {
         $entities = clone $books;
 
-        foreach ($books as $book) {
-            foreach ($book->chapters as $chapter) {
+        /** @var Book $book */
+        foreach ($books->all() as $book) {
+            foreach ($book->getRelation('chapters') as $chapter) {
                 $entities->push($chapter);
             }
-            foreach ($book->pages as $page) {
+            foreach ($book->getRelation('pages') as $page) {
                 $entities->push($page);
             }
         }
@@ -176,7 +190,12 @@ class PermissionService
     {
         $roles = $this->role->newQuery()->get();
         $book = ($entity->isA('book')) ? $entity : $entity->book;
-        $this->buildJointPermissionsForBooks(collect([$book]), $roles, true);
+        $book = $this->book->newQuery()->select(['id', 'restricted', 'created_by'])->with(['chapters' => function($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id']);
+        }, 'pages'  => function($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+        }])->where('id', '=', $book->id)->get();
+        $this->buildJointPermissionsForBooks($book, $roles, true);
     }
 
     /**
@@ -196,12 +215,15 @@ class PermissionService
      */
     public function buildJointPermissionForRole(Role $role)
     {
-        $roles = collect([$role]);
-
+        $roles = [$role];
         $this->deleteManyJointPermissionsForRoles($roles);
 
         // Chunk through all books
-        $this->book->with('chapters', 'pages')->chunk(5, function ($books) use ($roles) {
+        $this->book->newQuery()->select(['id', 'restricted', 'created_by'])->with(['chapters' => function($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id']);
+        }, 'pages'  => function($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+        }])->chunk(5, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
     }
@@ -221,9 +243,10 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForRoles($roles)
     {
-        foreach ($roles as $role) {
-            $role->jointPermissions()->delete();
-        }
+        $roleIds = array_map(function($role) {
+            return $role->id;
+        }, $roles);
+        $this->jointPermission->newQuery()->whereIn('id', $roleIds)->delete();
     }
 
     /**
@@ -242,22 +265,27 @@ class PermissionService
     protected function deleteManyJointPermissionsForEntities($entities)
     {
         if (count($entities) === 0) return;
-        $query = $this->jointPermission->newQuery();
 
-        foreach ($entities as $entity) {
-            $query->orWhere(function($query) use ($entity) {
-                $query->where('entity_id', '=', $entity->id)
-                    ->where('entity_type', '=', $entity->getMorphClass());
-            });
-        }
+        $this->db->transaction(function() use ($entities) {
 
-        $query->delete();
+            foreach (array_chunk($entities, 1000) as $entityChunk) {
+                $query = $this->db->table('joint_permissions');
+                foreach ($entityChunk as $entity) {
+                    $query->orWhere(function(QueryBuilder $query) use ($entity) {
+                        $query->where('entity_id', '=', $entity->id)
+                            ->where('entity_type', '=', $entity->getMorphClass());
+                    });
+                }
+                $query->delete();
+            }
+
+        });
     }
 
     /**
      * Create & Save entity jointPermissions for many entities and jointPermissions.
      * @param Collection $entities
-     * @param Collection $roles
+     * @param array $roles
      */
     protected function createManyJointPermissions($entities, $roles)
     {
@@ -299,9 +327,12 @@ class PermissionService
                 }
             }
         }
-        foreach (array_chunk($jointPermissions, 5000) as $jointPermissionChunk) {
-            $this->jointPermission->insert($jointPermissionChunk);
-        }
+
+        $this->db->transaction(function() use ($jointPermissions) {
+            foreach (array_chunk($jointPermissions, 1000) as $jointPermissionChunk) {
+                $this->db->table('joint_permissions')->insert($jointPermissionChunk);
+            }
+        });
     }
 
 
@@ -494,7 +525,7 @@ class PermissionService
      * @param integer $book_id
      * @param bool $filterDrafts
      * @param bool $fetchPageContent
-     * @return \Illuminate\Database\Query\Builder
+     * @return QueryBuilder
      */
     public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false) {
         $pageSelect = $this->db->table('pages')->selectRaw($this->page->entityRawQuery($fetchPageContent))->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {

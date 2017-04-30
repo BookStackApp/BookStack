@@ -51,6 +51,15 @@ class SearchService
     }
 
     /**
+     * Set the database connection
+     * @param Connection $connection
+     */
+    public function setConnection(Connection $connection)
+    {
+        $this->db = $connection;
+    }
+
+    /**
      * Search all entities in the system.
      * @param string $searchString
      * @param string $entityType
