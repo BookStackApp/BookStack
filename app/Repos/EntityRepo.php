@@ -730,6 +730,7 @@ class EntityRepo
         if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
+        $page = $this->page->find($page->id);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
     }
