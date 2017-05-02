@@ -17,7 +17,7 @@ class CommentController extends Controller
         parent::__construct();
     }
 
-    public function save(Request $request, $pageId, $commentId)
+    public function save(Request $request, $pageId, $commentId = null)
     {
         $this->validate($request, [
             'text' => 'required|string',

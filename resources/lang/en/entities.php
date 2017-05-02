@@ -239,5 +239,6 @@ return [
      * Comments
      */
     'comment' => 'Comment',
-    'comments' => 'Comments'
+    'comments' => 'Comments',
+    'comment_placeholder' => 'Enter your comments here, markdown supported...'
 ];
