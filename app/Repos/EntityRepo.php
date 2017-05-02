@@ -348,6 +348,10 @@ class EntityRepo
         foreach ($entities as $entity) {
             if ($entity->chapter_id === 0 || $entity->chapter_id === '0') continue;
             $parentKey = 'BookStack\\Chapter:' . $entity->chapter_id;
+            if (!isset($parents[$parentKey])) {
+                $tree[] = $entity;
+                continue;
+            }
             $chapter = $parents[$parentKey];
             $chapter->pages->push($entity);
         }
@@ -529,11 +533,11 @@ class EntityRepo
 
     /**
      * Alias method to update the book jointPermissions in the PermissionService.
-     * @param Collection $collection collection on entities
+     * @param Book $book
      */
-    public function buildJointPermissions(Collection $collection)
+    public function buildJointPermissionsForBook(Book $book)
     {
-        $this->permissionService->buildJointPermissionsForEntities($collection);
+        $this->permissionService->buildJointPermissionsForEntity($book);
     }
 
     /**
@@ -569,6 +573,7 @@ class EntityRepo
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = strip_tags($draftPage->html);
         $draftPage->draft = false;
+        $draftPage->revision_count = 1;
 
         $draftPage->save();
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
@@ -593,6 +598,7 @@ class EntityRepo
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
+        $revision->revision_number = $page->revision_count;
         $revision->save();
 
         // Clear old revisions
@@ -724,6 +730,7 @@ class EntityRepo
         if ($chapter) $page->chapter_id = $chapter->id;
 
         $book->pages()->save($page);
+        $page = $this->page->find($page->id);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
     }
@@ -812,6 +819,7 @@ class EntityRepo
         $page->text = strip_tags($page->html);
         if (setting('app-editor') !== 'markdown') $page->markdown = '';
         $page->updated_by = $userId;
+        $page->revision_count++;
         $page->save();
 
         // Remove all update drafts for this user & page.
@@ -920,6 +928,7 @@ class EntityRepo
      */
     public function restorePageRevision(Page $page, Book $book, $revisionId)
     {
+        $page->revision_count++;
         $this->savePageRevision($page);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());

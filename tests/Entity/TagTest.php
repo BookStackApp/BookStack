@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Role;
 use BookStack\Tag;
 use BookStack\Page;
 use BookStack\Services\PermissionService;

@@ -226,6 +226,7 @@ class RestrictionsTest extends BrowserKitTest
             ->type('test content', 'html')
             ->press('Save Page')
             ->seePageIs($chapter->book->getUrl() . '/page/test-page');
+
         $this->visit($chapterUrl)->seeInElement('.action-buttons', 'New Page');
     }
 
@@ -520,6 +521,23 @@ class RestrictionsTest extends BrowserKitTest
             ->seePageIs($bookPage->getUrl() . '/delete')->see('Delete Page');
         $this->visit($bookChapter->getUrl() . '/delete')
             ->see('Delete Chapter');
+    }
+
+    public function test_page_visible_if_has_permissions_when_book_not_visible()
+    {
+        $book = \BookStack\Book::first();
+        $bookChapter = $book->chapters->first();
+        $bookPage = $bookChapter->pages->first();
+
+        $this->setEntityRestrictions($book, []);
+        $this->setEntityRestrictions($bookPage, ['view']);
+
+        $this->actingAs($this->viewer);
+        $this->get($bookPage->getUrl());
+        $this->assertResponseOk();
+        $this->see($bookPage->name);
+        $this->dontSee(substr($book->name, 0, 15));
+        $this->dontSee(substr($bookChapter->name, 0, 15));
     }
 
 }

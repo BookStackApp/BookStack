@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
 use BookStack\Role;
+use BookStack\Services\PermissionService;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\BrowserKitTesting\TestCase;
@@ -21,6 +22,12 @@ abstract class BrowserKitTest extends TestCase
     // Local user instances
     private $admin;
     private $editor;
+
+    public function tearDown()
+    {
+        \DB::disconnect();
+        parent::tearDown();
+    }
 
     /**
      * Creates the application.
@@ -99,11 +106,9 @@ abstract class BrowserKitTest extends TestCase
     {
         if ($updaterUser === false) $updaterUser = $creatorUser;
         $book = factory(\BookStack\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
-        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
-        $page = factory(\BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
-        $book->chapters()->saveMany([$chapter]);
-        $chapter->pages()->saveMany([$page]);
-        $restrictionService = $this->app[\BookStack\Services\PermissionService::class];
+        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
+        $page = factory(\BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id, 'chapter_id' => $chapter->id]);
+        $restrictionService = $this->app[PermissionService::class];
         $restrictionService->buildJointPermissionsForEntity($book);
         return [
             'book' => $book,

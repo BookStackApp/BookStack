@@ -49,6 +49,7 @@ class RegeneratePermissions extends Command
         $connection = \DB::getDefaultConnection();
         if ($this->option('database') !== null) {
             \DB::setDefaultConnection($this->option('database'));
+            $this->permissionService->setConnection(\DB::connection($this->option('database')));
         }
 
         $this->permissionService->buildJointPermissions();
