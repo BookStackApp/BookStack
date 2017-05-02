@@ -1,5 +1,11 @@
 <?php namespace Tests;
 
+use BookStack\Book;
+use BookStack\Chapter;
+use BookStack\Page;
+use BookStack\Repos\EntityRepo;
+use BookStack\Repos\UserRepo;
+
 class EntityTest extends BrowserKitTest
 {
 
@@ -18,7 +24,7 @@ class EntityTest extends BrowserKitTest
         $this->bookDelete($book);
     }
 
-    public function bookDelete(\BookStack\Book $book)
+    public function bookDelete(Book $book)
     {
         $this->asAdmin()
             ->visit($book->getUrl())
@@ -32,7 +38,7 @@ class EntityTest extends BrowserKitTest
             ->notSeeInDatabase('books', ['id' => $book->id]);
     }
 
-    public function bookUpdate(\BookStack\Book $book)
+    public function bookUpdate(Book $book)
     {
         $newName = $book->name . ' Updated';
         $this->asAdmin()
@@ -46,12 +52,12 @@ class EntityTest extends BrowserKitTest
             ->seePageIs($book->getUrl() . '-updated')
             ->see($newName);
 
-        return \BookStack\Book::find($book->id);
+        return Book::find($book->id);
     }
 
     public function test_book_sort_page_shows()
     {
-        $books =  \BookStack\Book::all();
+        $books =  Book::all();
         $bookToSort = $books[0];
         $this->asAdmin()
             ->visit($bookToSort->getUrl())
@@ -65,7 +71,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_book_sort_item_returns_book_content()
     {
-        $books =  \BookStack\Book::all();
+        $books =  Book::all();
         $bookToSort = $books[0];
         $firstPage = $bookToSort->pages[0];
         $firstChapter = $bookToSort->chapters[0];
@@ -79,7 +85,7 @@ class EntityTest extends BrowserKitTest
 
     public function pageCreation($chapter)
     {
-        $page = factory(\BookStack\Page::class)->make([
+        $page = factory(Page::class)->make([
             'name' => 'My First Page'
         ]);
 
@@ -88,7 +94,7 @@ class EntityTest extends BrowserKitTest
             ->visit($chapter->getUrl())
             ->click('New Page');
 
-        $draftPage = \BookStack\Page::where('draft', '=', true)->orderBy('created_at', 'desc')->first();
+        $draftPage = Page::where('draft', '=', true)->orderBy('created_at', 'desc')->first();
 
         $this->seePageIs($draftPage->getUrl())
             // Fill out form
@@ -99,13 +105,13 @@ class EntityTest extends BrowserKitTest
             ->seePageIs($chapter->book->getUrl() . '/page/my-first-page')
             ->see($page->name);
 
-        $page = \BookStack\Page::where('slug', '=', 'my-first-page')->where('chapter_id', '=', $chapter->id)->first();
+        $page = Page::where('slug', '=', 'my-first-page')->where('chapter_id', '=', $chapter->id)->first();
         return $page;
     }
 
-    public function chapterCreation(\BookStack\Book $book)
+    public function chapterCreation(Book $book)
     {
-        $chapter = factory(\BookStack\Chapter::class)->make([
+        $chapter = factory(Chapter::class)->make([
             'name' => 'My First Chapter'
         ]);
 
@@ -122,13 +128,13 @@ class EntityTest extends BrowserKitTest
             ->seePageIs($book->getUrl() . '/chapter/my-first-chapter')
             ->see($chapter->name)->see($chapter->description);
 
-        $chapter = \BookStack\Chapter::where('slug', '=', 'my-first-chapter')->where('book_id', '=', $book->id)->first();
+        $chapter = Chapter::where('slug', '=', 'my-first-chapter')->where('book_id', '=', $book->id)->first();
         return $chapter;
     }
 
     public function bookCreation()
     {
-        $book = factory(\BookStack\Book::class)->make([
+        $book = factory(Book::class)->make([
             'name' => 'My First Book'
         ]);
         $this->asAdmin()
@@ -154,7 +160,7 @@ class EntityTest extends BrowserKitTest
         $expectedPattern = '/\/books\/my-first-book-[0-9a-zA-Z]{3}/';
         $this->assertRegExp($expectedPattern, $this->currentUri, "Did not land on expected page [$expectedPattern].\n");
 
-        $book = \BookStack\Book::where('slug', '=', 'my-first-book')->first();
+        $book = Book::where('slug', '=', 'my-first-book')->first();
         return $book;
     }
 
@@ -165,8 +171,8 @@ class EntityTest extends BrowserKitTest
         $updater = $this->getEditor();
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
-        app('BookStack\Repos\UserRepo')->destroy($creator);
-        app('BookStack\Repos\EntityRepo')->savePageRevision($entities['page']);
+        app(UserRepo::class)->destroy($creator);
+        app(EntityRepo::class)->savePageRevision($entities['page']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -178,8 +184,8 @@ class EntityTest extends BrowserKitTest
         $updater = $this->getEditor();
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
-        app('BookStack\Repos\UserRepo')->destroy($updater);
-        app('BookStack\Repos\EntityRepo')->savePageRevision($entities['page']);
+        app(UserRepo::class)->destroy($updater);
+        app(EntityRepo::class)->savePageRevision($entities['page']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -216,7 +222,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_old_page_slugs_redirect_to_new_pages()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $pageUrl = $page->getUrl();
         $newPageUrl = '/books/' . $page->book->slug . '/page/super-test-page';
         // Need to save twice since revisions are not generated in seeder.
@@ -225,7 +231,7 @@ class EntityTest extends BrowserKitTest
             ->type('super test', '#name')
             ->press('Save Page');
 
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $pageUrl = $page->getUrl();
 
         // Second Save
@@ -242,7 +248,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_recently_updated_pages_on_home()
     {
-        $page = \BookStack\Page::orderBy('updated_at', 'asc')->first();
+        $page = Page::orderBy('updated_at', 'asc')->first();
         $this->asAdmin()->visit('/')
             ->dontSeeInElement('#recently-updated-pages', $page->name);
         $this->visit($page->getUrl() . '/edit')

@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Book;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
@@ -207,12 +208,11 @@ class BookController extends Controller
 
         // Add activity for books
         foreach ($sortedBooks as $bookId) {
+            /** @var Book $updatedBook */
             $updatedBook = $this->entityRepo->getById('book', $bookId);
+            $this->entityRepo->buildJointPermissionsForBook($updatedBook);
             Activity::add($updatedBook, 'book_sort', $updatedBook->id);
         }
-
-        // Update permissions on changed models
-        if (count($updatedModels) === 0) $this->entityRepo->buildJointPermissions($updatedModels);
 
         return redirect($book->getUrl());
     }

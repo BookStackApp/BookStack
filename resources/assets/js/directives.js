@@ -215,7 +215,7 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    const md = new MarkdownIt();
+    const md = new MarkdownIt({html: true});
     md.use(mdTasksLists, {label: true});
 
     /**

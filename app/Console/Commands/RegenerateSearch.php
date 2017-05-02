@@ -44,6 +44,7 @@ class RegenerateSearch extends Command
         $connection = \DB::getDefaultConnection();
         if ($this->option('database') !== null) {
             \DB::setDefaultConnection($this->option('database'));
+            $this->searchService->setConnection(\DB::connection($this->option('database')));
         }
 
         $this->searchService->indexAllEntities();

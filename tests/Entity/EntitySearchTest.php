@@ -42,7 +42,7 @@ class EntitySearchTest extends TestCase
 
     public function test_book_search()
     {
-        $book = \BookStack\Book::all()->first();
+        $book = \BookStack\Book::first();
         $page = $book->pages->last();
         $chapter = $book->chapters->last();
 

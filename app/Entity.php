@@ -95,17 +95,6 @@ class Entity extends Ownable
     }
 
     /**
-     * Check if this entity has live (active) restrictions in place.
-     * @param $role_id
-     * @param $action
-     * @return bool
-     */
-    public function hasActiveRestriction($role_id, $action)
-    {
-        return $this->getRawAttribute('restricted') && $this->hasRestriction($role_id, $action);
-    }
-
-    /**
      * Get the entity jointPermissions this is connected to.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -176,5 +165,11 @@ class Entity extends Ownable
      */
     public function entityRawQuery(){return '';}
 
+    /**
+     * Get the url of this entity
+     * @param $path
+     * @return string
+     */
+    public function getUrl($path){return '/';}
 
 }
