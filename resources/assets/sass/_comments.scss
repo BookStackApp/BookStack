@@ -57,4 +57,11 @@
 
 .comment-editor {
     margin-top: 2em;
+    
+    textarea {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        min-height: 120px;
+    }
 }

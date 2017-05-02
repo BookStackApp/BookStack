@@ -1,6 +1,3 @@
-@section('head')
-    <script src="{{ baseUrl("/libs/simplemde/simplemde.min.js") }}"></script>
-@stop
 <script type="text/ng-template" id="comment-list-item.html">
     @include('comments/list-item')
 </script>

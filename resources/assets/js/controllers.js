@@ -684,19 +684,20 @@ module.exports = function (ngApp, events) {
 
     // CommentCrudController
     ngApp.controller('CommentAddController', ['$scope', '$http', function ($scope, $http) {
+        const MarkdownIt = require("markdown-it");
+        const md = new MarkdownIt({html: true});
         let vm = this;
-        let comment = {};
         $scope.errors = {};
         vm.saveComment = function () {
             let pageId = $scope.comment.pageId;
             let comment = $scope.comment.newComment;
-            let commentHTML = $scope.getCommentHTML();
+            let commentHTML = md.render($scope.comment.newComment);
 
             $http.post(window.baseUrl(`/ajax/page/${pageId}/comment/`), {
                 text: comment,
                 html: commentHTML
             }).then(resp => {                
-                $scope.clearInput();
+                $scope.comment.newComment = '';
                 if (!resp.data || resp.data.status !== 'success') {
                      return events.emit('error', trans('error'));
                 }

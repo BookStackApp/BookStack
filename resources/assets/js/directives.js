@@ -818,53 +818,6 @@ module.exports = function (ngApp, events) {
             }
         };
     }]);
-
-
-    ngApp.directive('simpleMarkdownInput', ['$timeout', function ($timeout) {
-        return {
-            restrict: 'A',
-            scope: {
-                smdModel: '=',
-                smdChange: '=',
-                smdGetContent: '=',
-                smdClear: '='
-            },
-            link: function (scope, element, attrs) {
-                // Set initial model content
-                element = element.find('textarea').first();
-                let simplemde = new SimpleMDE({
-                    element: element[0],
-                    status: []
-                });
-                let content = element.val();
-                simplemde.value(content)
-                scope.smdModel = content;
-
-                simplemde.codemirror.on('change', (event) => {
-                    content = simplemde.value();
-                    $timeout(() => {
-                        scope.smdModel = content;
-                        if (scope.smdChange) {
-                            scope.smdChange(element, content);
-                        }
-                    });
-                });
-                
-                if ('smdGetContent' in attrs) {
-                    scope.smdGetContent = function () {
-                        return simplemde.options.previewRender(simplemde.value());
-                    };
-                }
-                
-                if ('smdClear' in attrs) {
-                    scope.smdClear = function () {
-                        simplemde.value('');
-                        scope.smdModel = '';                        
-                    };
-                }
-            }
-        }
-    }]);
     
     ngApp.directive('commentReply', ['$timeout', function ($timeout) {        
         return {
