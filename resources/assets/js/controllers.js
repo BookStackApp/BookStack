@@ -683,29 +683,49 @@ module.exports = function (ngApp, events) {
         }]);
 
     // CommentCrudController
-    ngApp.controller('CommentAddController', ['$scope', '$http', function ($scope, $http) {
+    ngApp.controller('CommentReplyController', ['$scope', '$http', function ($scope, $http) {
         const MarkdownIt = require("markdown-it");
         const md = new MarkdownIt({html: true});
         let vm = this;
         $scope.errors = {};
         vm.saveComment = function () {
-            let pageId = $scope.comment.pageId;
-            let comment = $scope.comment.newComment;
-            let commentHTML = md.render($scope.comment.newComment);
-
-            $http.post(window.baseUrl(`/ajax/page/${pageId}/comment/`), {
+            let pageId = $scope.comment.pageId || $scope.pageId;
+            let comment = $scope.comment.text;
+            let commentHTML = md.render($scope.comment.text);
+            let serviceUrl = `/ajax/page/${pageId}/comment/`;
+            let httpMethod = 'post';
+            let errorOp = 'add';
+            let reqObj = {
                 text: comment,
                 html: commentHTML
-            }).then(resp => {                
-                $scope.comment.newComment = '';
+            };
+
+            if ($scope.isEdit === true) {
+                // this will be set when editing the comment.
+                serviceUrl = `/ajax/page/${pageId}/comment/${$scope.comment.id}`;
+                httpMethod = 'put';
+                errorOp = 'update';
+            } else if ($scope.isReply === true) {
+                // if its reply, get the parent comment id
+                reqObj.parent_id = $scope.parentId;
+            }
+            $http[httpMethod](window.baseUrl(serviceUrl), reqObj).then(resp => {
                 if (!resp.data || resp.data.status !== 'success') {
                      return events.emit('error', trans('error'));
                 }
+                if ($scope.isEdit) {
+                    $scope.comment.html = commentHTML;
+                    $scope.$emit('evt.comment-success', $scope.comment.id);
+                } else {
+                    $scope.comment.text = '';
+                    $scope.$emit('evt.comment-success', null, true);
+                }
                 events.emit('success', trans(resp.data.message));
-            }, checkError('add'));
-                        
-        };  
-        
+
+            }, checkError(errorOp));
+
+        };
+
         function checkError(errorGroupName) {
             $scope.errors[errorGroupName] = {};
             return function(response) {
@@ -725,19 +745,19 @@ module.exports = function (ngApp, events) {
     ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         let vm = this;
         $scope.errors = {};
-        $scope.defaultAvatar = defaultAvatar;        
+        $scope.defaultAvatar = defaultAvatar;
         vm.totalCommentsStr = 'Loading...';
         $scope.editorChange = function (content) {
             console.log(content);
         }
-        
+
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
                 if (!resp.data || resp.data.success !== true) {
                     // TODO : Handle error
                     return;
                 }
-                vm.comments = resp.data.comments.data;  
+                vm.comments = resp.data.comments.data;
                 vm.totalComments = resp.data.total;
                 // TODO : Fetch message from translate.
                 if (vm.totalComments === 0) {
@@ -748,20 +768,19 @@ module.exports = function (ngApp, events) {
                     vm.totalCommentsStr = vm.totalComments + ' Comments'
                 }
             }, checkError('app'));
-        });        
-        
+        });
+
         vm.loadSubComments = function(event, comment) {
             event.preventDefault();
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/${comment.id}/sub-comments`)).then(resp => {
-                console.log(resp);
                 if (!resp.data || resp.data.success !== true) {
                     return;
                 }
-                comment.is_loaded = true;                
-                comment.comments = resp.data.comments.data;                
+                comment.is_loaded = true;
+                comment.comments = resp.data.comments.data;
             }, checkError('app'));
         };
-        
+
         function checkError(errorGroupName) {
             $scope.errors[errorGroupName] = {};
             return function(response) {

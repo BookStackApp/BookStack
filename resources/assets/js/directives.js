@@ -818,29 +818,62 @@ module.exports = function (ngApp, events) {
             }
         };
     }]);
-    
-    ngApp.directive('commentReply', ['$timeout', function ($timeout) {        
+
+    ngApp.directive('commentReply', [function () {
         return {
             restrict: 'E',
             templateUrl: 'comment-reply.html',
             scope: {
-                
+              pageId: '=',
+              parentId: '='
             },
-            link: function (scope, element, attr) {
-               
+            link: function (scope, element) {
+                scope.isReply = true;
+                scope.$on('evt.comment-success', function (event) {
+                    // no need for the event to do anything more.
+                    event.stopPropagation();
+                    event.preventDefault();
+                    element.remove();
+                    scope.$destroy();
+                });
             }
         }
-                
     }]);
 
-    ngApp.directive('commentReplyLink', ['$document', '$compile', function ($document, $compile) {
-        return { 
+    ngApp.directive('commentEdit', [function () {
+         return {
+            restrict: 'E',
+            templateUrl: 'comment-reply.html',
+            scope: {
+              comment: '=',
+            },
+            link: function (scope, element) {
+                scope.isEdit = true;
+                scope.$on('evt.comment-success', function (event, commentId) {
+                   // no need for the event to do anything more.
+                   event.stopPropagation();
+                   event.preventDefault();
+                   if (commentId === scope.comment.id && !scope.isNew) {
+                       element.remove();
+                       scope.$destroy();
+                   }
+                });
+            }
+        }
+    }]);
+
+
+    ngApp.directive('commentReplyLink', ['$document', '$compile', '$http', function ($document, $compile, $http) {
+        return {
+            scope: {
+                comment: '='
+            },
             link: function (scope, element, attr) {
                 element.on('$destroy', function () {
                     element.off('click');
-                    scope.$destroy(); 
+                    scope.$destroy();
                 });
-                
+
                 element.on('click', function () {
                     var $container = element.parents('.comment-box').first();
                     if (!$container.length) {
@@ -848,21 +881,31 @@ module.exports = function (ngApp, events) {
                         return;
                     }
                     if (attr.noCommentReplyDupe) {
-                        removeDupe();                    
+                        removeDupe();
                     }
-                    var compiledHTML = $compile('<comment-reply></comment-reply>')(scope);
-                    $container.append(compiledHTML);
+
+                    compileHtml($container, scope, attr.isReply === 'true');
                 });
             }
         };
-        
-        
+
+        function compileHtml($container, scope, isReply) {
+            let lnkFunc = null;
+            if (isReply) {
+                lnkFunc = $compile('<comment-reply page-id="comment.pageId" parent-id="comment.id"></comment-reply>');
+            } else {
+                lnkFunc = $compile('<comment-edit comment="comment"></comment-add>');
+            }
+            var compiledHTML = lnkFunc(scope);
+            $container.append(compiledHTML);
+        }
+
         function removeDupe() {
-            let $existingElement = $document.find('comment-reply');
+            let $existingElement = $document.find('.comments-list comment-reply');
             if (!$existingElement.length) {
                 return;
             }
-            
+
             $existingElement.remove();
         }
     }]);

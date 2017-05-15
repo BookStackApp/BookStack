@@ -2,7 +2,7 @@
     @include('comments/list-item')
 </script>
 <script type="text/ng-template" id="comment-reply.html">
-    @include('comments/comment-reply')
+    @include('comments/comment-reply', ['pageId' => $pageId])
 </script>
 <div ng-controller="CommentListController as vm" ng-init="pageId = <?= $page->id ?>" class="comments-list" ng-cloak>   
 <h3>@{{vm.totalCommentsStr}}</h3>
@@ -13,4 +13,4 @@
         </div>
     </div>
 </div>
-@include('comments/add', ['pageId' => $pageId])
+@include('comments/comment-reply', ['pageId' => $pageId])
