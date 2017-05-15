@@ -399,7 +399,7 @@ class PermissionService
         $hasPermissiveAccessToParents = !$book->restricted;
 
         // For pages with a chapter, Check if explicit permissions are set on the Chapter
-        if ($entity->isA('page') && $entity->chapter_id !== 0) {
+        if ($entity->isA('page') && $entity->chapter_id !== 0 && $entity->chapter_id !== '0') {
             $chapter = $this->getChapter($entity->chapter_id);
             $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && !$chapter->restricted;
             if ($chapter->restricted) {
