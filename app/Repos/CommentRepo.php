@@ -10,7 +10,7 @@ use BookStack\Page;
 class CommentRepo {
     /**
      *
-     * @var Comment $comment 
+     * @var Comment $comment
      */
     protected $comment;
 
@@ -25,7 +25,7 @@ class CommentRepo {
         $comment->fill($data);
         // new comment
         $comment->page_id = $page->id;
-        $comment->created_by = $userId;        
+        $comment->created_by = $userId;
         $comment->save();
         return $comment;
     }
@@ -37,13 +37,13 @@ class CommentRepo {
         $comment->save();
         return $comment;
     }
-    
-    public function getCommentsForPage($pageId, $commentId, $count = 20) {        
+
+    public function getCommentsForPage($pageId, $commentId, $count = 20) {
         // requesting parent comments
         $query = $this->comment->getCommentsByPage($pageId, $commentId);
-        return $query->paginate($count);        
+        return $query->paginate($count);
     }
-    
+
     public function getCommentCount($pageId) {
         return $this->comment->where('page_id', '=', $pageId)->count();
     }

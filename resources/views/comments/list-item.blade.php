@@ -6,12 +6,13 @@
         <div class="comment-header">
             @{{ ::comment.created_by_name }}
         </div>
-        <div ng-bind-html="::comment.html" class="comment-body">
+        <div ng-bind-html="comment.html" class="comment-body">
 
         </div>
         <div class="comment-actions">
             <ul>
-                <li><a href="#" comment-reply-link no-comment-reply-dupe="true">Reply</a></li>
+                <li><a href="#" comment-reply-link no-comment-reply-dupe="true" comment="comment" is-reply="true">Reply</a></li>
+                <li><a href="#" comment-reply-link no-comment-reply-dupe="true" comment="comment">Edit</a></li>
                 <li><a href="#">@{{::comment.created_at}}</a></li>            
             </ul>                
         </div>

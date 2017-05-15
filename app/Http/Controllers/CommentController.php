@@ -2,18 +2,19 @@
 
 use BookStack\Repos\CommentRepo;
 use BookStack\Repos\EntityRepo;
+use BookStack\Comment;
 use Illuminate\Http\Request;
-use Views;
 
 // delete  -checkOwnablePermission \
 class CommentController extends Controller
 {
     protected $entityRepo;
 
-    public function __construct(EntityRepo $entityRepo, CommentRepo $commentRepo)
+    public function __construct(EntityRepo $entityRepo, CommentRepo $commentRepo, Comment $comment)
     {
         $this->entityRepo = $entityRepo;
         $this->commentRepo = $commentRepo;
+        $this->comment = $comment;
         parent::__construct();
     }
 
@@ -43,10 +44,10 @@ class CommentController extends Controller
             // create a new comment.
             $this->checkPermission('comment-create-all');
             $comment = $this->commentRepo->create($page, $request->only(['text', 'html', 'parent_id']));
-            $respMsg = trans('entities.comment_created');            
+            $respMsg = trans('entities.comment_created');
         } else {
             // update existing comment
-            // get comment by ID and check if this user has permission to update.            
+            // get comment by ID and check if this user has permission to update.
             $comment = $this->comment->findOrFail($commentId);
             $this->checkOwnablePermission('comment-update', $comment);
             $this->commentRepo->update($comment, $request->all());
@@ -59,7 +60,7 @@ class CommentController extends Controller
         ]);
 
     }
-    
+
     public function destroy($id) {
         $comment = $this->comment->findOrFail($id);
         $this->checkOwnablePermission('comment-delete', $comment);
@@ -67,13 +68,13 @@ class CommentController extends Controller
         //
     }
 
-    public function getComments($pageId, $commentId = null) {        
+    public function getCommentThread($pageId, $commentId = null) {
         try {
             $page = $this->entityRepo->getById('page', $pageId, true);
         } catch (ModelNotFoundException $e) {
             return response('Not found', 404);
         }
-        
+
         if($page->draft) {
             // cannot add comments to drafts.
             return response()->json([
@@ -81,15 +82,15 @@ class CommentController extends Controller
                 'message' => trans('errors.no_comments_for_draft'),
             ], 400);
         }
-        
+
         $this->checkOwnablePermission('page-view', $page);
-        
+
         $comments = $this->commentRepo->getCommentsForPage($pageId, $commentId);
         if (empty($commentId)) {
             // requesting for parent level comments, send the total count as well.
             $totalComments = $this->commentRepo->getCommentCount($pageId);
-            return response()->json(array('success' => true, 'comments'=> $comments, 'total' => $totalComments));
+            return response()->json(['success' => true, 'comments'=> $comments, 'total' => $totalComments]);
         }
-        return response()->json(array('success' => true, 'comments'=> $comments));
+        return response()->json(['success' => true, 'comments'=> $comments]);
     }
 }
