@@ -745,11 +745,11 @@ module.exports = function (ngApp, events) {
     ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         let vm = this;
         $scope.errors = {};
+        // keep track of comment levels
+        $scope.level = 1;
         $scope.defaultAvatar = defaultAvatar;
         vm.totalCommentsStr = 'Loading...';
-        $scope.editorChange = function (content) {
-            console.log(content);
-        }
+
 
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
