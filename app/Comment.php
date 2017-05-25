@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class Comment extends Ownable
 {
     protected $fillable = ['text', 'html', 'parent_id'];
-
+    protected $appends = ['created', 'updated'];
     /**
      * Get the entity that this comment belongs to
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
@@ -52,5 +52,24 @@ class Comment extends Ownable
         }
         $query->orderBy('created_at');
         return $query;
+    }
+
+    public function getCreatedAttribute() {
+        $created = [
+            'day_time_str' => $this->created_at->toDayDateTimeString(),
+            'diff' => $this->created_at->diffForHumans()
+        ];
+        return $created;
+    }
+
+    public function getUpdatedAttribute() {
+        if (empty($this->updated_at)) {
+            return null;
+        }
+        $updated = [
+            'day_time_str' => $this->updated_at->toDayDateTimeString(),
+            'diff' => $this->updated_at->diffForHumans()
+        ];
+        return $updated;
     }
 }
