@@ -26,6 +26,7 @@ class CommentRepo {
         // new comment
         $comment->page_id = $page->id;
         $comment->created_by = $userId;
+        $comment->updated_at = null;
         $comment->save();
         return $comment;
     }
