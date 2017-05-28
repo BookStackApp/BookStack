@@ -37,3 +37,20 @@ module.exports.highlight = function() {
 
 };
 
+module.exports.markdownEditor = function(elem) {
+    let content = elem.textContent;
+
+    let cm = CodeMirror(function(elt) {
+        elem.parentNode.insertBefore(elt, elem);
+        elem.style.display = 'none';
+    }, {
+        value: content,
+        mode:  "markdown",
+        lineNumbers: true,
+        theme: 'base16-light',
+        lineWrapping: true
+    });
+    return cm;
+
+};
+

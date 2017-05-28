@@ -2,6 +2,7 @@
 const DropZone = require("dropzone");
 const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
+const code = require('./code');
 
 module.exports = function (ngApp, events) {
 
@@ -233,19 +234,41 @@ module.exports = function (ngApp, events) {
 
                 // Set initial model content
                 element = element.find('textarea').first();
-                let content = element.val();
-                scope.mdModel = content;
-                scope.mdChange(md.render(content));
 
-                element.on('change input', (event) => {
-                    content = element.val();
+                // Codemirror Setup
+                let cm = code.markdownEditor(element[0]);
+                cm.on('change', (instance, changeObj) => {
+                    update(instance);
+                });
+
+                cm.on('scroll', instance => {
+                    // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
+                    let scroll = instance.getScrollInfo();
+                    let atEnd = scroll.top + scroll.clientHeight === scroll.height;
+                    if (atEnd) {
+                        scope.$emit('markdown-scroll', -1);
+                        return;
+                    }
+                    let lineNum = instance.lineAtHeight(scroll.top, 'local');
+                    let range = instance.getRange({line: 0, ch: null}, {line: lineNum, ch: null});
+                    let parser = new DOMParser();
+                    let doc = parser.parseFromString(md.render(range), 'text/html');
+                    let totalLines = doc.documentElement.querySelectorAll('body > *');
+                    scope.$emit('markdown-scroll', totalLines.length);
+                });
+
+                function update(instance) {
+                    let content = instance.getValue();
+                    element.val(content);
                     $timeout(() => {
                         scope.mdModel = content;
                         scope.mdChange(md.render(content));
                     });
-                });
+                }
+                update(cm);
 
                 scope.$on('markdown-update', (event, value) => {
+                    cm.setValue(value);
                     element.val(value);
                     scope.mdModel = value;
                     scope.mdChange(md.render(value));
@@ -259,7 +282,7 @@ module.exports = function (ngApp, events) {
      * Markdown Editor
      * Handles all functionality of the markdown editor.
      */
-    ngApp.directive('markdownEditor', ['$timeout', function ($timeout) {
+    ngApp.directive('markdownEditor', ['$timeout', '$rootScope', function ($timeout, $rootScope) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -282,34 +305,15 @@ module.exports = function (ngApp, events) {
                     currentCaretPos = $input[0].selectionStart;
                 });
 
-                // Scroll sync
-                let inputScrollHeight,
-                    inputHeight,
-                    displayScrollHeight,
-                    displayHeight;
-
-                function setScrollHeights() {
-                    inputScrollHeight = $input[0].scrollHeight;
-                    inputHeight = $input.height();
-                    displayScrollHeight = $display[0].scrollHeight;
-                    displayHeight = $display.height();
-                }
-
-                setTimeout(() => {
-                    setScrollHeights();
-                }, 200);
-                window.addEventListener('resize', setScrollHeights);
-                let scrollDebounceTime = 800;
-                let lastScroll = 0;
-                $input.on('scroll', event => {
-                    let now = Date.now();
-                    if (now - lastScroll > scrollDebounceTime) {
-                        setScrollHeights()
+                // Handle scroll sync event from editor scroll
+                $rootScope.$on('markdown-scroll', (event, lineCount) => {
+                    let elems = $display[0].children[0].children;
+                    if (elems.length > lineCount) {
+                        let topElem = (lineCount === -1) ? elems[elems.length-1] : elems[lineCount];
+                        $display.animate({
+                            scrollTop: topElem.offsetTop
+                        }, {queue: false, duration: 200, easing: 'linear'});
                     }
-                    let scrollPercent = ($input.scrollTop() / (inputScrollHeight - inputHeight));
-                    let displayScrollY = (displayScrollHeight - displayHeight) * scrollPercent;
-                    $display.scrollTop(displayScrollY);
-                    lastScroll = now;
                 });
 
                 // Editor key-presses
