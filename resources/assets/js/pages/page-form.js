@@ -78,9 +78,9 @@ module.exports = function() {
         extended_valid_elements: 'pre[*]',
         automatic_uploads: false,
         valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
-        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists",
+        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codesample",
         imagetools_toolbar: 'imageoptions',
-        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
+        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen codesample",
         content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
         style_formats: [
             {title: "Header Large", format: "h2"},
