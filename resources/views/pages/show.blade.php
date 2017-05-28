@@ -110,7 +110,6 @@
         </div>
     </div>
 
-    @include('partials/highlight')
 @stop
 
 @section('scripts')

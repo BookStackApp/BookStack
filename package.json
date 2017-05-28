@@ -31,6 +31,7 @@
     "axios": "^0.16.1",
     "babel-preset-es2015": "^6.24.1",
     "clipboard": "^1.5.16",
+    "codemirror": "^5.26.0",
     "dropzone": "^4.0.1",
     "gulp-util": "^3.0.8",
     "markdown-it": "^8.3.1",
