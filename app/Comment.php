@@ -1,12 +1,12 @@
 <?php
 
 namespace BookStack;
-use Illuminate\Support\Facades\DB;
 
 class Comment extends Ownable
 {
+    public $sub_comments = [];
     protected $fillable = ['text', 'html', 'parent_id'];
-    protected $appends = ['created', 'updated'];
+    protected $appends = ['created', 'updated', 'sub_comments'];
     /**
      * Get the entity that this comment belongs to
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
@@ -34,24 +34,38 @@ class Comment extends Ownable
         return $this->belongsTo(User::class);
     }
 
-    public function getCommentsByPage($pageId, $commentId, $pageNum = 0, $limit = 0) {
-
+    public function getPageComments($pageId) {
         $query = static::newQuery();
         $query->join('users AS u', 'comments.created_by', '=', 'u.id');
         $query->leftJoin('users AS u1', 'comments.updated_by', '=', 'u1.id');
         $query->leftJoin('images AS i', 'i.id', '=', 'u.image_id');
-        $query->selectRaw('comments.id, text, html, comments.created_by, comments.updated_by, comments.created_at, comments.updated_at, '
+        $query->selectRaw('comments.id, text, html, comments.created_by, comments.updated_by, '
+                . 'comments.created_at, comments.updated_at, comments.parent_id, '
                 . 'u.name AS created_by_name, u1.name AS updated_by_name, '
-                . '(SELECT count(c.id) FROM bookstack.comments c WHERE c.parent_id = comments.id AND page_id = ?) AS cnt_sub_comments, i.url AS avatar ',
-                [$pageId]);
-
-        if (empty($commentId)) {
-            $query->whereRaw('page_id = ? AND parent_id IS NULL', [$pageId]);
-        } else {
-            $query->whereRaw('page_id = ? AND parent_id = ?', [$pageId, $commentId]);
-        }
+                . 'i.url AS avatar ');
+        $query->whereRaw('page_id = ?', [$pageId]);
         $query->orderBy('created_at');
-        return $query;
+        return $query->get();
+    }
+
+    public function getAllPageComments($pageId) {
+        return self::where('page_id', '=', $pageId)->with(['createdBy' => function($query) {
+            $query->select('id', 'name', 'image_id');
+        }, 'updatedBy' => function($query) {
+            $query->select('id', 'name');
+        }, 'createdBy.avatar' => function ($query) {
+            $query->select('id', 'path', 'url');
+        }])->get();
+    }
+
+    public function getCommentById($commentId) {
+        return self::where('id', '=', $commentId)->with(['createdBy' => function($query) {
+            $query->select('id', 'name', 'image_id');
+        }, 'updatedBy' => function($query) {
+            $query->select('id', 'name');
+        }, 'createdBy.avatar' => function ($query) {
+            $query->select('id', 'path', 'url');
+        }])->first();
     }
 
     public function getCreatedAttribute() {
@@ -71,5 +85,9 @@ class Comment extends Ownable
             'diff' => $this->updated_at->diffForHumans()
         ];
         return $updated;
+    }
+
+    public function getSubCommentsAttribute() {
+        return $this->sub_comments;
     }
 }

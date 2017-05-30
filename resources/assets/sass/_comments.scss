@@ -4,12 +4,7 @@
     }
 
     .comment-box:last-child {
-        border-bottom: none;
-    }
-    .load-more-comments {
-        font-size: 0.8em;
-        margin-top: -1px;
-        margin-bottom: 6px;
+        border-bottom: 0px;
     }
 }
 .page-comment {
@@ -42,11 +37,11 @@
         }
     }
 
-    .comment-actions.has-border {
+    .comment-actions {
         border-bottom: 1px solid #DDD;
     }
 
-    .comment-actions.has-border:last-child {
+    .comment-actions:last-child {
         border-bottom: 0px;
     }
 

@@ -39,13 +39,48 @@ class CommentRepo {
         return $comment;
     }
 
-    public function getCommentsForPage($pageId, $commentId, $count = 20) {
-        // requesting parent comments
-        $query = $this->comment->getCommentsByPage($pageId, $commentId);
-        return $query->paginate($count);
+    public function getPageComments($pageId) {
+        $comments = $this->comment->getAllPageComments($pageId);
+        $index = [];
+        $totalComments = count($comments);
+        // normalizing the response.
+        foreach($comments as &$comment) {
+            $comment = $this->normalizeComment($comment);
+            $parentId = $comment->parent_id;
+            if (empty($parentId)) {
+                $index[$comment->id] = $comment;
+                continue;
+            }
+
+            if (empty($index[$parentId])) {
+                // weird condition should not happen.
+                continue;
+            }
+            if (empty($index[$parentId]->sub_comments)) {
+                $index[$parentId]->sub_comments = [];
+            }
+            array_push($index[$parentId]->sub_comments, $comment);
+            $index[$comment->id] = $comment;
+        }
+        return [
+            'comments' => $comments,
+            'total' => $totalComments
+        ];
     }
 
-    public function getCommentCount($pageId) {
-        return $this->comment->where('page_id', '=', $pageId)->count();
+    public function getCommentById($commentId) {
+        return $this->normalizeComment($this->comment->getCommentById($commentId));
+    }
+
+    private function normalizeComment($comment) {
+        if (empty($comment)) {
+            return;
+        }
+        $comment->createdBy->avatar_url = $comment->createdBy->getAvatar(50);
+        $comment->createdBy->profile_url = $comment->createdBy->getProfileUrl();
+        if (!empty($comment->updatedBy)) {
+            $comment->updatedBy->profile_url = $comment->updatedBy->getProfileUrl();
+        }
+        return $comment;
     }
 }
