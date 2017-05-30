@@ -54,9 +54,12 @@ class CommentController extends Controller
             $respMsg = trans('entities.comment_updated');
         }
 
+        $comment = $this->commentRepo->getCommentById($comment->id);
+
         return response()->json([
             'status'    => 'success',
-            'message'   => $respMsg
+            'message'   => $respMsg,
+            'comment'   => $comment
         ]);
 
     }
@@ -64,11 +67,10 @@ class CommentController extends Controller
     public function destroy($id) {
         $comment = $this->comment->findOrFail($id);
         $this->checkOwnablePermission('comment-delete', $comment);
-
-        //
     }
 
-    public function getCommentThread($pageId, $commentId = null) {
+
+    public function getPageComments($pageId) {
         try {
             $page = $this->entityRepo->getById('page', $pageId, true);
         } catch (ModelNotFoundException $e) {
@@ -85,12 +87,7 @@ class CommentController extends Controller
 
         $this->checkOwnablePermission('page-view', $page);
 
-        $comments = $this->commentRepo->getCommentsForPage($pageId, $commentId);
-        if (empty($commentId)) {
-            // requesting for parent level comments, send the total count as well.
-            $totalComments = $this->commentRepo->getCommentCount($pageId);
-            return response()->json(['success' => true, 'comments'=> $comments, 'total' => $totalComments]);
-        }
-        return response()->json(['success' => true, 'comments'=> $comments]);
+        $comments = $this->commentRepo->getPageComments($pageId);
+        return response()->json(['success' => true, 'comments'=> $comments['comments'], 'total' => $comments['total']]);
     }
 }

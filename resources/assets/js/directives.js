@@ -825,10 +825,12 @@ module.exports = function (ngApp, events) {
             templateUrl: 'comment-reply.html',
             scope: {
               pageId: '=',
-              parentId: '='
+              parentId: '=',
+              parent: '='
             },
             link: function (scope, element) {
                 scope.isReply = true;
+                element.find('textarea').focus();
                 scope.$on('evt.comment-success', function (event) {
                     // no need for the event to do anything more.
                     event.stopPropagation();
@@ -849,6 +851,7 @@ module.exports = function (ngApp, events) {
             },
             link: function (scope, element) {
                 scope.isEdit = true;
+                element.find('textarea').focus();
                 scope.$on('evt.comment-success', function (event, commentId) {
                    // no need for the event to do anything more.
                    event.stopPropagation();
@@ -892,7 +895,7 @@ module.exports = function (ngApp, events) {
         function compileHtml($container, scope, isReply) {
             let lnkFunc = null;
             if (isReply) {
-                lnkFunc = $compile('<comment-reply page-id="comment.pageId" parent-id="comment.id"></comment-reply>');
+                lnkFunc = $compile('<comment-reply page-id="comment.pageId" parent-id="comment.id" parent="comment"></comment-reply>');
             } else {
                 lnkFunc = $compile('<comment-edit comment="comment"></comment-add>');
             }

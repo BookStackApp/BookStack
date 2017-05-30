@@ -714,10 +714,18 @@ module.exports = function (ngApp, events) {
                      return events.emit('error', trans('error'));
                 }
                 if ($scope.isEdit) {
-                    $scope.comment.html = commentHTML;
+                    $scope.comment.html = resp.data.comment.html;
+                    $scope.comment.text = resp.data.comment.text;
+                    $scope.comment.updated = resp.data.comment.updated;
+                    $scope.comment.updated_by = resp.data.comment.updated_by;
                     $scope.$emit('evt.comment-success', $scope.comment.id);
                 } else {
                     $scope.comment.text = '';
+                    if ($scope.isReply === true && $scope.parent.sub_comments) {
+                        $scope.parent.sub_comments.push(resp.data.comment);
+                    } else {
+                        $scope.$emit('evt.new-comment', resp.data.comment);
+                    }
                     $scope.$emit('evt.comment-success', null, true);
                 }
                 events.emit('success', trans(resp.data.message));
@@ -747,9 +755,14 @@ module.exports = function (ngApp, events) {
         $scope.errors = {};
         // keep track of comment levels
         $scope.level = 1;
-        $scope.defaultAvatar = defaultAvatar;
         vm.totalCommentsStr = 'Loading...';
 
+        $scope.$on('evt.new-comment', function (event, comment) {
+            // add the comment to the comment list.
+            vm.comments.push(comment);
+            event.stopPropagation();
+            event.preventDefault();
+        });
 
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
@@ -757,7 +770,7 @@ module.exports = function (ngApp, events) {
                     // TODO : Handle error
                     return;
                 }
-                vm.comments = resp.data.comments.data;
+                vm.comments = resp.data.comments;
                 vm.totalComments = resp.data.total;
                 // TODO : Fetch message from translate.
                 if (vm.totalComments === 0) {
@@ -770,21 +783,10 @@ module.exports = function (ngApp, events) {
             }, checkError('app'));
         });
 
-        vm.loadSubComments = function(event, comment) {
-            event.preventDefault();
-            $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/${comment.id}/sub-comments`)).then(resp => {
-                if (!resp.data || resp.data.success !== true) {
-                    return;
-                }
-                comment.is_loaded = true;
-                comment.comments = resp.data.comments.data;
-            }, checkError('app'));
-        };
-
         function checkError(errorGroupName) {
             $scope.errors[errorGroupName] = {};
             return function(response) {
-                console.log(resp);
+                console.log(response);
             }
         }
     }]);
