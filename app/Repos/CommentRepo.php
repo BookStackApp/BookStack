@@ -46,8 +46,8 @@ class CommentRepo {
     }
 
     public function delete($comment) {
-        $comment->text = trans('errors.cannot_add_comment_to_draft');
-        $comment->html = trans('errors.cannot_add_comment_to_draft');
+        $comment->text = trans('activities.comment_deleted');
+        $comment->html = trans('activities.comment_deleted');
         $comment->active = false;
         $userId = user()->id;
         $comment->updated_by = $userId;

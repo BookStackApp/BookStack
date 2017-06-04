@@ -240,5 +240,9 @@ return [
      */
     'comment' => 'Comment',
     'comments' => 'Comments',
-    'comment_placeholder' => 'Enter your comments here, markdown supported...'
+    'comment_placeholder' => 'Enter your comments here, markdown supported...',
+    'no_comments' => 'No Comments',
+    'x_comments' => ':numComments Comments',
+    'one_comment' => '1 Comment',
+    'comments_loading' => 'Loading...'
 ];
