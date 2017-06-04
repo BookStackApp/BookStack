@@ -908,7 +908,7 @@ module.exports = function (ngApp, events) {
         }
 
         function removeDupe() {
-            let $existingElement = $document.find('.comments-list comment-reply');
+            let $existingElement = $document.find('.comments-list comment-reply, .comments-list comment-edit');
             if (!$existingElement.length) {
                 return;
             }

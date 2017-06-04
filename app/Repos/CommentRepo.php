@@ -43,11 +43,14 @@ class CommentRepo {
         $comments = $this->comment->getAllPageComments($pageId);
         $index = [];
         $totalComments = count($comments);
+        $finalCommentList = [];
+
         // normalizing the response.
-        foreach($comments as &$comment) {
-            $comment = $this->normalizeComment($comment);
+        for ($i = 0; $i < count($comments); ++$i) {
+            $comment = $this->normalizeComment($comments[$i]);
             $parentId = $comment->parent_id;
             if (empty($parentId)) {
+                $finalCommentList[] = $comment;
                 $index[$comment->id] = $comment;
                 continue;
             }
@@ -63,7 +66,7 @@ class CommentRepo {
             $index[$comment->id] = $comment;
         }
         return [
-            'comments' => $comments,
+            'comments' => $finalCommentList,
             'total' => $totalComments
         ];
     }
