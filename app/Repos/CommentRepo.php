@@ -31,10 +31,26 @@ class CommentRepo {
         return $comment;
     }
 
-    public function update($comment, $input) {
+    public function update($comment, $input, $activeOnly = true) {
         $userId = user()->id;
         $comment->updated_by = $userId;
         $comment->fill($input);
+
+        // only update active comments by default.
+        $whereClause = ['active' => 1];
+        if (!$activeOnly) {
+            $whereClause = [];
+        }
+        $comment->update($whereClause);
+        return $comment;
+    }
+
+    public function delete($comment) {
+        $comment->text = trans('errors.cannot_add_comment_to_draft');
+        $comment->html = trans('errors.cannot_add_comment_to_draft');
+        $comment->active = false;
+        $userId = user()->id;
+        $comment->updated_by = $userId;
         $comment->save();
         return $comment;
     }

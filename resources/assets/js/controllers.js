@@ -683,11 +683,12 @@ module.exports = function (ngApp, events) {
         }]);
 
     // CommentCrudController
-    ngApp.controller('CommentReplyController', ['$scope', '$http', function ($scope, $http) {
+    ngApp.controller('CommentReplyController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         const MarkdownIt = require("markdown-it");
         const md = new MarkdownIt({html: true});
         let vm = this;
         $scope.errors = {};
+
         vm.saveComment = function () {
             let pageId = $scope.comment.pageId || $scope.pageId;
             let comment = $scope.comment.text;
@@ -713,11 +714,9 @@ module.exports = function (ngApp, events) {
                 if (!resp.data || resp.data.status !== 'success') {
                      return events.emit('error', trans('error'));
                 }
+                // hide the comments first, and then retrigger the refresh
                 if ($scope.isEdit) {
-                    $scope.comment.html = resp.data.comment.html;
-                    $scope.comment.text = resp.data.comment.text;
-                    $scope.comment.updated = resp.data.comment.updated;
-                    $scope.comment.updated_by = resp.data.comment.updated_by;
+                    updateComment($scope.comment, resp.data);
                     $scope.$emit('evt.comment-success', $scope.comment.id);
                 } else {
                     $scope.comment.text = '';
@@ -728,6 +727,11 @@ module.exports = function (ngApp, events) {
                     }
                     $scope.$emit('evt.comment-success', null, true);
                 }
+                $scope.comment.is_hidden = true;
+                $timeout(function() {
+                    $scope.comment.is_hidden = false;
+                });
+
                 events.emit('success', trans(resp.data.message));
 
             }, checkError(errorOp));
@@ -748,6 +752,24 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
+    ngApp.controller('CommentDeleteController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+        let vm = this;
+
+        vm.delete = function(comment) {
+            $http.delete(window.baseUrl(`/ajax/comment/${comment.id}`)).then(resp => {
+                if (!resp.data || resp.data.success !== true) {
+                    return;
+                }
+                updateComment(comment, resp.data, $timeout, true);
+            }, function (resp) {
+                if (!resp || !resp.data || resp.data.success !== true) {
+                    events.emit('error', trans('entities.comment_delete_fail'));
+                } else {
+                    events.emit('success', trans('entities.comment_delete_success'));
+                }
+            });
+        };
+    }]);
 
     // CommentListController
     ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
@@ -766,6 +788,9 @@ module.exports = function (ngApp, events) {
         });
 
         vm.canEdit = function (comment) {
+            if (!comment.active) {
+                return false;
+            }
             if (vm.permissions.comment_update_all) {
                 return true;
             }
@@ -774,11 +799,11 @@ module.exports = function (ngApp, events) {
                 return true;
             }
             return false;
-        }
+        };
 
         vm.canComment = function () {
             return vm.permissions.comment_create;
-        }
+        };
 
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
@@ -797,7 +822,7 @@ module.exports = function (ngApp, events) {
                 } else if (vm.totalComments === 1) {
                     vm.totalCommentsStr = '1 Comments';
                 } else {
-                    vm.totalCommentsStr = vm.totalComments + ' Comments'
+                    vm.totalCommentsStr = vm.totalComments + ' Comments';
                 }
             }, checkError('app'));
         });
@@ -806,8 +831,29 @@ module.exports = function (ngApp, events) {
             $scope.errors[errorGroupName] = {};
             return function(response) {
                 console.log(response);
-            }
+            };
         }
     }]);
 
+    function updateComment(comment, resp, $timeout, isDelete) {
+        if (isDelete && !resp.comment.active) {
+            comment.html = trans('entities.comment_deleted');
+        }
+        comment.text = resp.comment.text;
+        comment.updated = resp.comment.updated;
+        comment.updated_by = resp.comment.updated_by;
+        comment.active = resp.comment.active;
+        if (isDelete && !resp.comment.active) {
+            comment.html = trans('entities.comment_deleted');
+        } else {
+            comment.html = resp.comment.html;
+        }
+        if (!$timeout) {
+            return;
+        }
+        comment.is_hidden = true;
+        $timeout(function() {
+            comment.is_hidden = false;
+        });
+    }
 };

@@ -67,6 +67,14 @@ class CommentController extends Controller
     public function destroy($id) {
         $comment = $this->comment->findOrFail($id);
         $this->checkOwnablePermission('comment-delete', $comment);
+        $this->commentRepo->delete($comment);
+        $comment = $this->commentRepo->getCommentById($comment->id);
+
+        return response()->json([
+            'success' => true,
+            'message' => trans('entities.comment_deleted'),
+            'comment' => $comment
+        ]);
     }
 
 

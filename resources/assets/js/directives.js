@@ -870,7 +870,7 @@ module.exports = function (ngApp, events) {
     }]);
 
 
-    ngApp.directive('commentReplyLink', ['$document', '$compile', '$http', function ($document, $compile, $http) {
+    ngApp.directive('commentReplyLink', ['$document', '$compile', function ($document, $compile) {
         return {
             scope: {
                 comment: '='
@@ -915,5 +915,25 @@ module.exports = function (ngApp, events) {
 
             $existingElement.remove();
         }
+    }]);
+
+    ngApp.directive('commentDeleteLink', ['$window', function ($window) {
+        return {
+            controller: 'CommentDeleteController',
+            scope: {
+                comment: '='
+            },
+            link: function (scope, element, attr, ctrl) {
+
+                element.on('click', function() {
+                   var resp = $window.confirm('This will remove the content of the comment, are you sure you want to continue?');
+                   if (!resp) {
+                       return;
+                   }
+
+                   ctrl.delete(scope.comment);
+                });
+            }
+        };
     }]);
 };
