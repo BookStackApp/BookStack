@@ -6,11 +6,11 @@
         <div class="comment-header">
             <a href="@{{::comment.created_by.profile_url}}">@{{ ::comment.created_by.name }}</a>
         </div>
-        <div ng-bind-html="comment.html" ng-if="::comment.active" class="comment-body">
+        <div ng-bind-html="comment.html" ng-if="::comment.active" class="comment-body" ng-class="!comment.active ? 'comment-inactive' : ''">
 
         </div>
-        <div ng-if="::!comment.active" class="comment-body">
-            {{ trans('entites.comment_deleted') }}
+        <div ng-if="::!comment.active" class="comment-body comment-inactive">
+            {{ trans('activities.comment_deleted') }}
         </div>
         <div class="comment-actions">
             <ul ng-if="!comment.is_hidden">

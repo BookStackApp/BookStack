@@ -37,4 +37,10 @@ return [
     'book_sort'                   => 'sorted book',
     'book_sort_notification'      => 'Book Successfully Re-sorted',
 
+    // Comments
+    'comment_create_notification' => '',
+    'comment_update_notification' => '',
+    'comment_delete_notification' => '',
+    'comment_deleted'             => 'This comment has been deleted.'
+
 ];

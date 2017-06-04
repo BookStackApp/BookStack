@@ -777,12 +777,14 @@ module.exports = function (ngApp, events) {
         $scope.errors = {};
         // keep track of comment levels
         $scope.level = 1;
-        vm.totalCommentsStr = 'Loading...';
+        vm.totalCommentsStr = trans('entities.comments_loading');
         vm.permissions = {};
 
         $scope.$on('evt.new-comment', function (event, comment) {
             // add the comment to the comment list.
             vm.comments.push(comment);
+            ++vm.totalComments;
+            setTotalCommentMsg();
             event.stopPropagation();
             event.preventDefault();
         });
@@ -812,20 +814,25 @@ module.exports = function (ngApp, events) {
                     return;
                 }
                 vm.comments = resp.data.comments;
-                vm.totalComments = resp.data.total;
+                vm.totalComments = +resp.data.total;
                 vm.permissions = resp.data.permissions;
                 vm.current_user_id = resp.data.user_id;
-
-                // TODO : Fetch message from translate.
-                if (vm.totalComments === 0) {
-                    vm.totalCommentsStr = 'No comments found.';
-                } else if (vm.totalComments === 1) {
-                    vm.totalCommentsStr = '1 Comments';
-                } else {
-                    vm.totalCommentsStr = vm.totalComments + ' Comments';
-                }
+                setTotalCommentMsg();
             }, checkError('app'));
         });
+
+        function setTotalCommentMsg () {
+            // TODO : Fetch message from translate.
+            if (vm.totalComments === 0) {
+                vm.totalCommentsStr = trans('entities.no_comments');
+            } else if (vm.totalComments === 1) {
+                vm.totalCommentsStr = trans('entities.one_comment');
+            } else {
+                vm.totalCommentsStr = trans('entities.x_comments', {
+                    numComments: vm.totalComments
+                });
+            }
+        }
 
         function checkError(errorGroupName) {
             $scope.errors[errorGroupName] = {};
@@ -836,15 +843,12 @@ module.exports = function (ngApp, events) {
     }]);
 
     function updateComment(comment, resp, $timeout, isDelete) {
-        if (isDelete && !resp.comment.active) {
-            comment.html = trans('entities.comment_deleted');
-        }
         comment.text = resp.comment.text;
         comment.updated = resp.comment.updated;
         comment.updated_by = resp.comment.updated_by;
         comment.active = resp.comment.active;
         if (isDelete && !resp.comment.active) {
-            comment.html = trans('entities.comment_deleted');
+            comment.html = trans('activities.comment_deleted');
         } else {
             comment.html = resp.comment.html;
         }
