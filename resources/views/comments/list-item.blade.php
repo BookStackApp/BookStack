@@ -10,7 +10,7 @@
 
         </div>
         <div ng-if="::!comment.active" class="comment-body comment-inactive">
-            {{ trans('activities.comment_deleted') }}
+            {{ trans('entities.comment_deleted') }}
         </div>
         <div class="comment-actions">
             <ul ng-if="!comment.is_hidden">

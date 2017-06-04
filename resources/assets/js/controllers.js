@@ -848,7 +848,7 @@ module.exports = function (ngApp, events) {
         comment.updated_by = resp.comment.updated_by;
         comment.active = resp.comment.active;
         if (isDelete && !resp.comment.active) {
-            comment.html = trans('activities.comment_deleted');
+            comment.html = trans('entities.comment_deleted');
         } else {
             comment.html = resp.comment.html;
         }
