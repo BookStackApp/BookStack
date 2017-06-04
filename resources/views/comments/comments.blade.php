@@ -12,5 +12,7 @@
 
         </div>
     </div>
-    @include('comments/comment-reply', ['pageId' => $pageId])
+    <div ng-if="::vm.canComment()">
+        @include('comments/comment-reply', ['pageId' => $pageId])
+    </div>
 </div>

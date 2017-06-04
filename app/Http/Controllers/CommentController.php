@@ -88,6 +88,13 @@ class CommentController extends Controller
         $this->checkOwnablePermission('page-view', $page);
 
         $comments = $this->commentRepo->getPageComments($pageId);
-        return response()->json(['success' => true, 'comments'=> $comments['comments'], 'total' => $comments['total']]);
+        return response()->json(['success' => true, 'comments'=> $comments['comments'],
+            'total' => $comments['total'], 'permissions' => [
+                'comment_create' => $this->currentUser->can('comment-create-all'),
+                'comment_update_own' => $this->currentUser->can('comment-update-own'),
+                'comment_update_all' => $this->currentUser->can('comment-update-all'),
+                'comment_delete_all' => $this->currentUser->can('comment-delete-all'),
+                'comment_delete_own' => $this->currentUser->can('comment-delete-own'),
+            ], 'user_id' => $this->currentUser->id]);
     }
 }

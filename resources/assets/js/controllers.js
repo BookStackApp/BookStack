@@ -756,6 +756,7 @@ module.exports = function (ngApp, events) {
         // keep track of comment levels
         $scope.level = 1;
         vm.totalCommentsStr = 'Loading...';
+        vm.permissions = {};
 
         $scope.$on('evt.new-comment', function (event, comment) {
             // add the comment to the comment list.
@@ -763,6 +764,21 @@ module.exports = function (ngApp, events) {
             event.stopPropagation();
             event.preventDefault();
         });
+
+        vm.canEdit = function (comment) {
+            if (vm.permissions.comment_update_all) {
+                return true;
+            }
+
+            if (vm.permissions.comment_update_own && comment.created_by.id === vm.current_user_id) {
+                return true;
+            }
+            return false;
+        }
+
+        vm.canComment = function () {
+            return vm.permissions.comment_create;
+        }
 
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
@@ -772,6 +788,9 @@ module.exports = function (ngApp, events) {
                 }
                 vm.comments = resp.data.comments;
                 vm.totalComments = resp.data.total;
+                vm.permissions = resp.data.permissions;
+                vm.current_user_id = resp.data.user_id;
+
                 // TODO : Fetch message from translate.
                 if (vm.totalComments === 0) {
                     vm.totalCommentsStr = 'No comments found.';
