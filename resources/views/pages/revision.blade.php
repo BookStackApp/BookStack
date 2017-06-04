@@ -13,6 +13,10 @@
         </div>
     </div>
 
+@stop
 
-    @include('partials.highlight')
+@section('scripts')
+    <script>
+        setupPageShow(null);
+    </script>
 @stop
