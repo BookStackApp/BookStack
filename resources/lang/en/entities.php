@@ -244,5 +244,7 @@ return [
     'no_comments' => 'No Comments',
     'x_comments' => ':numComments Comments',
     'one_comment' => '1 Comment',
-    'comments_loading' => 'Loading...'
+    'comments_loading' => 'Loading...',
+    'comment_save' => 'Save Comment',
+    'comment_cancel' => 'Cancel'
 ];
