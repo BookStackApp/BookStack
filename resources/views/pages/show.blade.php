@@ -109,20 +109,17 @@
 
         </div>
     </div>
-
     <div class="container">
         <div class="row">
             <div class="col-md-9">
                 @include('comments/comments', ['pageId' => $page->id])
             </div>
         </div>
-    </div>
-    @include('partials/highlight')
+    </div>	
 @stop
 
 @section('scripts')
     <script>
-        var defaultAvatar = '{{baseUrl('/user_avatar.png')}}';
         setupPageShow({{$page->id}});
     </script>
 @stop
