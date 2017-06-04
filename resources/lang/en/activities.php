@@ -41,6 +41,5 @@ return [
     'comment_create_notification' => '',
     'comment_update_notification' => '',
     'comment_delete_notification' => '',
-    'comment_deleted'             => 'This comment has been deleted.'
 
 ];

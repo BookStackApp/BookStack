@@ -890,7 +890,7 @@ module.exports = function (ngApp, events) {
                 });
 
                 element.on('click', function () {
-                    var $container = element.parents('.comment-box').first();
+                    var $container = element.parents('.comment-actions').first();
                     if (!$container.length) {
                         console.error('commentReplyLink directive should be placed inside a container with class comment-box!');
                         return;

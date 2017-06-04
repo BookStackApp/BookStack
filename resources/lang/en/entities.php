@@ -246,5 +246,6 @@ return [
     'one_comment' => '1 Comment',
     'comments_loading' => 'Loading...',
     'comment_save' => 'Save Comment',
-    'comment_cancel' => 'Cancel'
+    'comment_cancel' => 'Cancel',
+    'comment_deleted' => 'This comment has been deleted.'
 ];

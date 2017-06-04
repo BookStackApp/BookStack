@@ -46,8 +46,8 @@ class CommentRepo {
     }
 
     public function delete($comment) {
-        $comment->text = trans('activities.comment_deleted');
-        $comment->html = trans('activities.comment_deleted');
+        $comment->text = trans('entities.comment_deleted');
+        $comment->html = trans('entities.comment_deleted');
         $comment->active = false;
         $userId = user()->id;
         $comment->updated_by = $userId;
