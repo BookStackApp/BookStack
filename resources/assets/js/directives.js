@@ -839,9 +839,13 @@ module.exports = function (ngApp, events) {
                     // no need for the event to do anything more.
                     event.stopPropagation();
                     event.preventDefault();
+                    scope.closeBox();
+                });
+
+                scope.closeBox = function () {
                     element.remove();
                     scope.$destroy();
-                });
+                }
             }
         }
     }]);
@@ -861,10 +865,14 @@ module.exports = function (ngApp, events) {
                    event.stopPropagation();
                    event.preventDefault();
                    if (commentId === scope.comment.id && !scope.isNew) {
-                       element.remove();
-                       scope.$destroy();
+                       scope.closeBox();
                    }
                 });
+
+                scope.closeBox = function () {
+                    element.remove();
+                    scope.$destroy();
+                }
             }
         }
     }]);
