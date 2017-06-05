@@ -34,6 +34,9 @@ class Comment extends Ownable
         return $this->belongsTo(User::class);
     }
 
+    /*
+     * Not being used, but left here because might be used in the future for performance reasons.
+     */
     public function getPageComments($pageId) {
         $query = static::newQuery();
         $query->join('users AS u', 'comments.created_by', '=', 'u.id');

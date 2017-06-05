@@ -5,7 +5,6 @@ use BookStack\Repos\EntityRepo;
 use BookStack\Comment;
 use Illuminate\Http\Request;
 
-// delete  -checkOwnablePermission \
 class CommentController extends Controller
 {
     protected $entityRepo;
@@ -68,12 +67,12 @@ class CommentController extends Controller
         $comment = $this->comment->findOrFail($id);
         $this->checkOwnablePermission('comment-delete', $comment);
         $this->commentRepo->delete($comment);
-        $comment = $this->commentRepo->getCommentById($comment->id);
+        $updatedComment = $this->commentRepo->getCommentById($comment->id);
 
         return response()->json([
-            'success' => true,
+            'status' => 'success',
             'message' => trans('entities.comment_deleted'),
-            'comment' => $comment
+            'comment' => $updatedComment
         ]);
     }
 
@@ -85,18 +84,10 @@ class CommentController extends Controller
             return response('Not found', 404);
         }
 
-        if($page->draft) {
-            // cannot add comments to drafts.
-            return response()->json([
-                'status' => 'error',
-                'message' => trans('errors.no_comments_for_draft'),
-            ], 400);
-        }
-
         $this->checkOwnablePermission('page-view', $page);
 
         $comments = $this->commentRepo->getPageComments($pageId);
-        return response()->json(['success' => true, 'comments'=> $comments['comments'],
+        return response()->json(['status' => 'success', 'comments'=> $comments['comments'],
             'total' => $comments['total'], 'permissions' => [
                 'comment_create' => $this->currentUser->can('comment-create-all'),
                 'comment_update_own' => $this->currentUser->can('comment-update-own'),

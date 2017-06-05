@@ -246,6 +246,12 @@ return [
     'one_comment' => '1 Comment',
     'comments_loading' => 'Loading...',
     'comment_save' => 'Save Comment',
+    'comment_reply' => 'Reply',
+    'comment_edit' => 'Edit',
+    'comment_delete' => 'Delete',
     'comment_cancel' => 'Cancel',
-    'comment_deleted' => 'This comment has been deleted.'
+    'comment_created' => 'Comment added',
+    'comment_updated' => 'Comment updated',
+    'comment_deleted' => 'Comment deleted',
+    'comment_updated_text' => 'Updated :updateDiff by'
 ];
