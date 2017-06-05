@@ -682,7 +682,7 @@ module.exports = function (ngApp, events) {
 
         }]);
 
-    // CommentCrudController
+    // Controller used to reply to and add new comments
     ngApp.controller('CommentReplyController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         const MarkdownIt = require("markdown-it");
         const md = new MarkdownIt({html: true});
@@ -692,10 +692,12 @@ module.exports = function (ngApp, events) {
         vm.saveComment = function () {
             let pageId = $scope.comment.pageId || $scope.pageId;
             let comment = $scope.comment.text;
+            if (!comment) {
+                return events.emit('warning', trans('errors.empty_comment'));
+            }
             let commentHTML = md.render($scope.comment.text);
             let serviceUrl = `/ajax/page/${pageId}/comment/`;
             let httpMethod = 'post';
-            let errorOp = 'add';
             let reqObj = {
                 text: comment,
                 html: commentHTML
@@ -705,14 +707,13 @@ module.exports = function (ngApp, events) {
                 // this will be set when editing the comment.
                 serviceUrl = `/ajax/page/${pageId}/comment/${$scope.comment.id}`;
                 httpMethod = 'put';
-                errorOp = 'update';
             } else if ($scope.isReply === true) {
                 // if its reply, get the parent comment id
                 reqObj.parent_id = $scope.parentId;
             }
             $http[httpMethod](window.baseUrl(serviceUrl), reqObj).then(resp => {
-                if (!resp.data || resp.data.status !== 'success') {
-                     return events.emit('error', trans('error'));
+                if (!isCommentOpSuccess(resp)) {
+                     return;
                 }
                 // hide the comments first, and then retrigger the refresh
                 if ($scope.isEdit) {
@@ -734,44 +735,47 @@ module.exports = function (ngApp, events) {
 
                 events.emit('success', trans(resp.data.message));
 
-            }, checkError(errorOp));
+            }, checkError);
 
         };
 
-        function checkError(errorGroupName) {
-            $scope.errors[errorGroupName] = {};
-            return function(response) {
-                if (typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined') {
-                    events.emit('error', response.data.error);
-                }
-                if (typeof response.data !== 'undefined' && typeof response.data.validation !== 'undefined') {
-                    $scope.errors[errorGroupName] = response.data.validation;
-                    console.log($scope.errors[errorGroupName])
-                }
+        function checkError(response) {
+            let msg = null;
+            if (isCommentOpSuccess(response)) {
+                // all good
+                return;
+            } else if (response.data) {
+                msg = response.data.message;
+            } else {
+                msg = trans('errors.comment_add_error');
+            }
+            if (msg) {
+                events.emit('success', msg);
             }
         }
     }]);
 
+    // Controller used to delete comments
     ngApp.controller('CommentDeleteController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         let vm = this;
 
         vm.delete = function(comment) {
             $http.delete(window.baseUrl(`/ajax/comment/${comment.id}`)).then(resp => {
-                if (!resp.data || resp.data.success !== true) {
+                if (isCommentOpSuccess(resp)) {
                     return;
                 }
                 updateComment(comment, resp.data, $timeout, true);
             }, function (resp) {
-                if (!resp || !resp.data || resp.data.success !== true) {
-                    events.emit('error', trans('entities.comment_delete_fail'));
-                } else {
+                if (isCommentOpSuccess(resp)) {
                     events.emit('success', trans('entities.comment_delete_success'));
+                } else {
+                    events.emit('error', trans('entities.comment_delete_fail'));
                 }
             });
         };
     }]);
 
-    // CommentListController
+    // Controller used to fetch all comments for a page
     ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         let vm = this;
         $scope.errors = {};
@@ -779,6 +783,7 @@ module.exports = function (ngApp, events) {
         $scope.level = 1;
         vm.totalCommentsStr = trans('entities.comments_loading');
         vm.permissions = {};
+        vm.trans = window.trans;
 
         $scope.$on('evt.new-comment', function (event, comment) {
             // add the comment to the comment list.
@@ -809,8 +814,7 @@ module.exports = function (ngApp, events) {
 
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
-                if (!resp.data || resp.data.success !== true) {
-                    // TODO : Handle error
+                if (!isCommentOpSuccess(resp)) {
                     return;
                 }
                 vm.comments = resp.data.comments;
@@ -818,11 +822,10 @@ module.exports = function (ngApp, events) {
                 vm.permissions = resp.data.permissions;
                 vm.current_user_id = resp.data.user_id;
                 setTotalCommentMsg();
-            }, checkError('app'));
+            }, checkError);
         });
 
         function setTotalCommentMsg () {
-            // TODO : Fetch message from translate.
             if (vm.totalComments === 0) {
                 vm.totalCommentsStr = trans('entities.no_comments');
             } else if (vm.totalComments === 1) {
@@ -834,11 +837,19 @@ module.exports = function (ngApp, events) {
             }
         }
 
-        function checkError(errorGroupName) {
-            $scope.errors[errorGroupName] = {};
-            return function(response) {
-                console.log(response);
-            };
+        function checkError(response) {
+            let msg = null;
+            if (isCommentOpSuccess(response)) {
+                // all good
+                return;
+            } else if (response.data) {
+                msg = response.data.message;
+            } else {
+                msg = trans('errors.comment_error');
+            }
+            if (msg) {
+                events.emit('success', msg);
+            }
         }
     }]);
 
@@ -859,5 +870,12 @@ module.exports = function (ngApp, events) {
         $timeout(function() {
             comment.is_hidden = false;
         });
+    }
+
+    function isCommentOpSuccess(resp) {
+        if (resp && resp.data && resp.data.status === 'success') {
+            return true;
+        }
+        return false;
     }
 };

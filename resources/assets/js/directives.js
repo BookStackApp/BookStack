@@ -845,9 +845,9 @@ module.exports = function (ngApp, events) {
                 scope.closeBox = function () {
                     element.remove();
                     scope.$destroy();
-                }
+                };
             }
-        }
+        };
     }]);
 
     ngApp.directive('commentEdit', [function () {
@@ -855,7 +855,7 @@ module.exports = function (ngApp, events) {
             restrict: 'E',
             templateUrl: 'comment-reply.html',
             scope: {
-              comment: '=',
+              comment: '='
             },
             link: function (scope, element) {
                 scope.isEdit = true;
@@ -872,9 +872,9 @@ module.exports = function (ngApp, events) {
                 scope.closeBox = function () {
                     element.remove();
                     scope.$destroy();
-                }
+                };
             }
-        }
+        };
     }]);
 
 
