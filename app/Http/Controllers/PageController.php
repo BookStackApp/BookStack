@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
-use GatherContent\Htmldiff\Htmldiff;
+use Caxy\HtmlDiff\HtmlDiff;
 
 class PageController extends Controller
 {
@@ -161,7 +161,7 @@ class PageController extends Controller
         $pageContent = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
         $pageNav = $this->entityRepo->getPageNav($pageContent);
-        
+
         Views::add($page);
         $this->setPageTitle($page->getShortName());
         return view('pages/show', [
@@ -376,7 +376,7 @@ class PageController extends Controller
 
         $page->fill($revision->toArray());
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
-        
+
         return view('pages/revision', [
             'page' => $page,
             'book' => $page->book,
@@ -400,7 +400,9 @@ class PageController extends Controller
 
         $prev = $revision->getPrevious();
         $prevContent = ($prev === null) ? '' : $prev->html;
-        $diff = (new Htmldiff)->diff($prevContent, $revision->html);
+
+        $htmlDiff = new HtmlDiff($prevContent, $revision->html);
+        $diff = $htmlDiff->build();
 
         $page->fill($revision->toArray());
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
