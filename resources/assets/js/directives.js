@@ -889,7 +889,8 @@ module.exports = function (ngApp, events) {
                     scope.$destroy();
                 });
 
-                element.on('click', function () {
+                element.on('click', function (e) {
+                    e.preventDefault();
                     var $container = element.parents('.comment-actions').first();
                     if (!$container.length) {
                         console.error('commentReplyLink directive should be placed inside a container with class comment-box!');
@@ -933,13 +934,14 @@ module.exports = function (ngApp, events) {
             },
             link: function (scope, element, attr, ctrl) {
 
-                element.on('click', function() {
-                   var resp = $window.confirm('This will remove the content of the comment, are you sure you want to continue?');
-                   if (!resp) {
-                       return;
-                   }
+                element.on('click', function(e) {
+                    e.preventDefault();
+                    var resp = $window.confirm('This will remove the content of the comment, are you sure you want to continue?');
+                    if (!resp) {
+                        return;
+                    }
 
-                   ctrl.delete(scope.comment);
+                    ctrl.delete(scope.comment);
                 });
             }
         };

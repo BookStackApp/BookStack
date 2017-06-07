@@ -776,7 +776,7 @@ module.exports = function (ngApp, events) {
     }]);
 
     // Controller used to fetch all comments for a page
-    ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+    ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
         let vm = this;
         $scope.errors = {};
         // keep track of comment levels
@@ -808,13 +808,16 @@ module.exports = function (ngApp, events) {
             if (vm.permissions[propOwn] && comment.created_by.id === vm.current_user_id) {
                 return true;
             }
-            
+
             return false;
         };
 
         vm.canComment = function () {
             return vm.permissions.comment_create;
         };
+
+        // check if there are is any direct linking
+        let linkedCommentId = $location.search().cm;
 
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
@@ -829,6 +832,13 @@ module.exports = function (ngApp, events) {
                 vm.permissions = resp.data.permissions;
                 vm.current_user_id = resp.data.user_id;
                 setTotalCommentMsg();
+                if (!linkedCommentId) {
+                    return;
+                }
+                $timeout(function() {
+                    // wait for the UI to render.
+                    focusLinkedComment(linkedCommentId);
+                });
             }, checkError);
         });
 
@@ -842,6 +852,15 @@ module.exports = function (ngApp, events) {
                     numComments: vm.totalComments
                 });
             }
+        }
+
+        function focusLinkedComment(linkedCommentId) {
+            let comment = angular.element('#' + linkedCommentId);
+            if (comment.length === 0) {
+                return;
+            }
+
+            window.setupPageShow.goToText(linkedCommentId);
         }
 
         function checkError(response) {
