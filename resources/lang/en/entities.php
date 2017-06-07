@@ -253,5 +253,6 @@ return [
     'comment_created' => 'Comment added',
     'comment_updated' => 'Comment updated',
     'comment_deleted' => 'Comment deleted',
-    'comment_updated_text' => 'Updated :updateDiff by'
+    'comment_updated_text' => 'Updated :updateDiff by',
+    'comment_delete_confirm' => 'This will remove the contents of the comment. Are you sure you want to delete this comment?'
 ];
