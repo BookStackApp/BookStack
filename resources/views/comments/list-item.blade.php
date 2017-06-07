@@ -15,8 +15,8 @@
         <div class="comment-actions">
             <ul ng-if="!comment.is_hidden">
                 <li ng-if="::(level < 3 && vm.canComment())"><a href="#" comment-reply-link no-comment-reply-dupe="true" comment="comment" is-reply="true">{{ trans('entities.comment_reply') }}</a></li>
-                <li ng-if="::vm.canEdit(comment)"><a href="#" comment-reply-link no-comment-reply-dupe="true" comment="comment" >{{ trans('entities.comment_edit') }}</a></li>
-                <li ng-if="::vm.canEdit(comment, true)"><a href="#" comment-delete-link comment="comment" >{{ trans('entities.comment_delete') }}</a></li>
+                <li ng-if="::vm.canEditDelete(comment, 'comment_update')"><a href="#" comment-reply-link no-comment-reply-dupe="true" comment="comment" >{{ trans('entities.comment_edit') }}</a></li>
+                <li ng-if="::vm.canEditDelete(comment, 'comment_delete')"><a href="#" comment-delete-link comment="comment" >{{ trans('entities.comment_delete') }}</a></li>
                 <li>Created <a title="@{{::comment.created.day_time_str}}" href="#comment-@{{::comment.id}}-@{{::pageId}}">@{{::comment.created.diff}}</a></li>
                 <li ng-if="::comment.updated"><span title="@{{::comment.updated.day_time_str}}">@{{ ::vm.trans('entities.comment_updated_text', { updateDiff: comment.updated.diff }) }}
                         <a href="@{{::comment.updated_by.profile_url}}">@{{::comment.updated_by.name}}</a></span></li>

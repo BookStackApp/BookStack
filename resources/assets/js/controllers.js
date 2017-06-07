@@ -747,7 +747,7 @@ module.exports = function (ngApp, events) {
             } else if (response.data) {
                 msg = response.data.message;
             } else {
-                msg = trans('errors.comment_add_error');
+                msg = trans('errors.comment_add');
             }
             if (msg) {
                 events.emit('success', msg);
@@ -761,15 +761,15 @@ module.exports = function (ngApp, events) {
 
         vm.delete = function(comment) {
             $http.delete(window.baseUrl(`/ajax/comment/${comment.id}`)).then(resp => {
-                if (isCommentOpSuccess(resp)) {
+                if (!isCommentOpSuccess(resp)) {
                     return;
                 }
                 updateComment(comment, resp.data, $timeout, true);
             }, function (resp) {
                 if (isCommentOpSuccess(resp)) {
-                    events.emit('success', trans('entities.comment_delete_success'));
+                    events.emit('success', trans('entities.comment_deleted'));
                 } else {
-                    events.emit('error', trans('entities.comment_delete_fail'));
+                    events.emit('error', trans('error.comment_delete'));
                 }
             });
         };
@@ -794,17 +794,21 @@ module.exports = function (ngApp, events) {
             event.preventDefault();
         });
 
-        vm.canEdit = function (comment) {
+        vm.canEditDelete = function (comment, prop) {
             if (!comment.active) {
                 return false;
             }
-            if (vm.permissions.comment_update_all) {
+            let propAll = prop + '_all';
+            let propOwn = prop + '_own';
+
+            if (vm.permissions[propAll]) {
                 return true;
             }
 
-            if (vm.permissions.comment_update_own && comment.created_by.id === vm.current_user_id) {
+            if (vm.permissions[propOwn] && comment.created_by.id === vm.current_user_id) {
                 return true;
             }
+            
             return false;
         };
 
@@ -815,6 +819,9 @@ module.exports = function (ngApp, events) {
         $timeout(function() {
             $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
                 if (!isCommentOpSuccess(resp)) {
+                    // just show that no comments are available.
+                    vm.totalComments = 0;
+                    setTotalCommentMsg();
                     return;
                 }
                 vm.comments = resp.data.comments;
@@ -845,7 +852,7 @@ module.exports = function (ngApp, events) {
             } else if (response.data) {
                 msg = response.data.message;
             } else {
-                msg = trans('errors.comment_error');
+                msg = trans('errors.comment_list');
             }
             if (msg) {
                 events.emit('success', msg);
