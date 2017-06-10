@@ -225,7 +225,7 @@ return [
     'profile_not_created_books' => ':userName nevytvoril žiadne knihy',
 
     /**
-     *
+     * Comments
      */
     'comment' => 'Komentár',
     'comments' => 'Komentáre',
