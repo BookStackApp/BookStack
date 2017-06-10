@@ -272,7 +272,6 @@ module.exports = function (ngApp, events) {
         $scope.draftsEnabled = $attrs.draftsEnabled === 'true';
         $scope.isUpdateDraft = Number($attrs.pageUpdateDraft) === 1;
         $scope.isNewPageDraft = Number($attrs.pageNewDraft) === 1;
-        $scope.commentsLoaded = false;
 
         // Set initial header draft text
         if ($scope.isUpdateDraft || $scope.isNewPageDraft) {
@@ -687,7 +686,6 @@ module.exports = function (ngApp, events) {
         const MarkdownIt = require("markdown-it");
         const md = new MarkdownIt({html: true});
         let vm = this;
-        $scope.errors = {};
 
         vm.saveComment = function () {
             let pageId = $scope.comment.pageId || $scope.pageId;
