@@ -936,12 +936,12 @@ module.exports = function (ngApp, events) {
 
                 element.on('click', function(e) {
                     e.preventDefault();
-                   var resp = $window.confirm(trans('entities.comment_delete_confirm'));
-                   if (!resp) {
-                       return;
-                   }
+                    var resp = $window.confirm(trans('entities.comment_delete_confirm'));
+                    if (!resp) {
+                        return;
+                    }
 
-                   ctrl.delete(scope.comment);
+                    ctrl.delete(scope.comment);
                 });
             }
         };
