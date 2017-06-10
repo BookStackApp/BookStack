@@ -233,7 +233,7 @@ return [
     'comment_created' => 'Comentario añadido',
     'comment_updated' => 'Comentario actualizado',
     'comment_deleted' => 'Comentario eliminado',
-    'comment_updated_text' => 'Actualizado hace :updateDiff minutos por',
+    'comment_updated_text' => 'Actualizado hace :updateDiff por',
     'comment_delete_confirm' => 'Esto eliminará el contenido del comentario. ¿Estás seguro de que quieres eliminar este comentario?',
     'comment_create' => 'Creado'
 ];
