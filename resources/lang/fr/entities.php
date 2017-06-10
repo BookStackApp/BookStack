@@ -213,4 +213,26 @@ return [
     'profile_not_created_pages' => ':userName n\'a pas créé de pages',
     'profile_not_created_chapters' => ':userName n\'a pas créé de chapitres',
     'profile_not_created_books' => ':userName n\'a pas créé de livres',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Commentaire',
+    'comments' => 'Commentaires',
+    'comment_placeholder' => 'Entrez vos commentaires ici, merci supporté ...',
+    'no_comments' => 'No Comments',
+    'x_comments' => ':numComments Commentaires',
+    'one_comment' => '1 Commentaire',
+    'comments_loading' => 'Loading ...',
+    'comment_save' => 'Enregistrer le commentaire',
+    'comment_reply' => 'Répondre',
+    'comment_edit' => 'Modifier',
+    'comment_delete' => 'Supprimer',
+    'comment_cancel' => 'Annuler',
+    'comment_created' => 'Commentaire ajouté',
+    'comment_updated' => 'Commentaire mis à jour',
+    'comment_deleted' => 'Commentaire supprimé',
+    'comment_updated_text' => 'Mis à jour il y a :updateDiff par',
+    'comment_delete_confirm' => 'Cela supprime le contenu du commentaire. Êtes-vous sûr de vouloir supprimer ce commentaire?',
+    'comment_create' => 'Créé'
 ];
