@@ -620,4 +620,110 @@ class RolesTest extends BrowserKitTest
             ->dontSeeInDatabase('images', ['id' => $image->id]);
     }
 
+    public function test_comment_create_permission () {
+        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+
+        $this->actingAs($this->user)->addComment($ownPage);
+
+        $this->assertResponseStatus(403);
+
+        $this->giveUserPermissions($this->user, ['comment-create-all']);
+
+        $this->actingAs($this->user)->addComment($ownPage);
+        $this->assertResponseOk(200)->seeJsonContains(['status' => 'success']);
+    }
+
+
+    public function test_comment_update_own_permission () {
+        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $this->giveUserPermissions($this->user, ['comment-create-all']);
+        $comment = $this->actingAs($this->user)->addComment($ownPage);
+
+        // no comment-update-own
+        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
+        $this->assertResponseStatus(403);
+
+        $this->giveUserPermissions($this->user, ['comment-update-own']);
+
+        // now has comment-update-own
+        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
+        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+    }
+
+    public function test_comment_update_all_permission () {
+        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $comment = $this->asAdmin()->addComment($ownPage);
+
+        // no comment-update-all
+        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
+        $this->assertResponseStatus(403);
+
+        $this->giveUserPermissions($this->user, ['comment-update-all']);
+
+        // now has comment-update-all
+        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
+        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+    }
+
+    public function test_comment_delete_own_permission () {
+        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $this->giveUserPermissions($this->user, ['comment-create-all']);
+        $comment = $this->actingAs($this->user)->addComment($ownPage);
+
+        // no comment-delete-own
+        $this->actingAs($this->user)->deleteComment($comment['id']);
+        $this->assertResponseStatus(403);
+
+        $this->giveUserPermissions($this->user, ['comment-delete-own']);
+
+        // now has comment-update-own
+        $this->actingAs($this->user)->deleteComment($comment['id']);
+        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+    }
+
+    public function test_comment_delete_all_permission () {
+        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $comment = $this->asAdmin()->addComment($ownPage);
+
+        // no comment-delete-all
+        $this->actingAs($this->user)->deleteComment($comment['id']);
+        $this->assertResponseStatus(403);
+
+        $this->giveUserPermissions($this->user, ['comment-delete-all']);
+
+        // now has comment-delete-all
+        $this->actingAs($this->user)->deleteComment($comment['id']);
+        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+    }
+
+    private function addComment($page) {
+        $comment = factory(\BookStack\Comment::class)->make();
+        $url = "/ajax/page/$page->id/comment/";
+        $request = [
+            'text' => $comment->text,
+            'html' => $comment->html
+        ];
+
+        $this->json('POST', $url, $request);
+        $resp = $this->decodeResponseJson();
+        return $resp['comment'];
+
+    }
+
+    private function updateComment($page, $commentId) {
+        $comment = factory(\BookStack\Comment::class)->make();
+        $url = "/ajax/page/$page->id/comment/$commentId";
+        $request = [
+            'text' => $comment->text,
+            'html' => $comment->html
+        ];
+
+        return $this->json('PUT', $url, $request);
+    }
+
+    private function deleteComment($commentId) {
+         $url = '/ajax/comment/' . $commentId;
+         return $this->json('DELETE', $url);
+    }
+
 }
