@@ -706,8 +706,10 @@ class RolesTest extends BrowserKitTest
 
         $this->json('POST', $url, $request);
         $resp = $this->decodeResponseJson();
-        return $resp['comment'];
-
+        if (isset($resp['comment'])) {
+            return $resp['comment'];
+        }
+        return null;
     }
 
     private function updateComment($page, $commentId) {
