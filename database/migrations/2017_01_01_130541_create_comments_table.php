@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             return;
         }
         Schema::create('comments', function (Blueprint $table) {
-            $table->increments('id')->unsigned();                       
+            $table->increments('id')->unsigned();
             $table->integer('page_id')->unsigned();
             $table->longText('text')->nullable();
             $table->longText('html')->nullable();
@@ -45,6 +45,51 @@ class CreateCommentsTable extends Migration
                     'permission_id' => $permissionId
                 ]);
             }
+
+            // Get roles with permissions we need to change
+            /*
+            $editorRole = DB::table('roles')->where('name', '=', 'editor')->first();
+            if (!empty($editorRole)) {
+                $editorRoleId = $editorRole->id;
+                // Create & attach new entity permissions
+                $ops = ['Create All', 'Create Own', 'Update Own', 'Delete Own'];
+                $entity = 'Comment';
+                foreach ($ops as $op) {
+                    $permissionId = DB::table('role_permissions')->insertGetId([
+                        'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+                        'display_name' => $op . ' ' . $entity . 's',
+                        'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                        'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    ]);
+                    DB::table('permission_role')->insert([
+                        'role_id' => $editorRoleId,
+                        'permission_id' => $permissionId
+                    ]);
+                }
+            }
+
+            // Get roles with permissions we need to change
+            $viewerRole = DB::table('roles')->where('name', '=', 'viewer')->first();
+            if (!empty($viewerRole)) {
+                $viewerRoleId = $viewerRole->id;
+                // Create & attach new entity permissions
+                $ops = ['Create All'];
+                $entity = 'Comment';
+                foreach ($ops as $op) {
+                    $permissionId = DB::table('role_permissions')->insertGetId([
+                        'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+                        'display_name' => $op . ' ' . $entity . 's',
+                        'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                        'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    ]);
+                    DB::table('permission_role')->insert([
+                        'role_id' => $viewerRoleId,
+                        'permission_id' => $permissionId
+                    ]);
+                }
+            }
+            */
+
         });
     }
 

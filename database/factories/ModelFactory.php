@@ -77,7 +77,7 @@ $factory->define(BookStack\Comment::class, function($faker) {
     $html = '<p>' . $text. '</p>';
     return [
         'html' => $html,
-        'text' => '#' . $text,
+        'text' => $text,
         'active' => 1
     ];
 });
