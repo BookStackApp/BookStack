@@ -399,7 +399,7 @@ module.exports = function (ngApp, events) {
 
                 // Handle image upload and add image into markdown content
                 function uploadImage(file) {
-                    if (file.type.indexOf('image') !== 0) return;
+                    if (file === null || !file.type.indexOf('image') !== 0) return;
                     let formData = new FormData();
                     let ext = 'png';
                     let xhr = new XMLHttpRequest();
