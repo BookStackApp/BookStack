@@ -1,5 +1,7 @@
 "use strict";
 
+const Code = require('../code');
+
 /**
  * Handle pasting images from clipboard.
  * @param e  - event
@@ -60,13 +62,85 @@ function registerEditorShortcuts(editor) {
     editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
+
+function codePlugin() {
+
+    function elemIsCodeBlock(elem) {
+        return elem.className === 'CodeMirrorContainer';
+    }
+
+    function showPopup(editor) {
+        let selectedNode = editor.selection.getNode();
+        if (!elemIsCodeBlock(selectedNode)) {
+            return;
+        }
+
+        let lang = selectedNode.hasAttribute('data-language') ? selectedNode.getAttribute('data-language') : '';
+        let currentCode = selectedNode.querySelector('textarea').textContent;
+        console.log('SHOW POPUP');
+        // TODO - Show custom editor
+    }
+
+    window.tinymce.PluginManager.add('codeeditor', (editor, url) => {
+
+        let $ = editor.$;
+
+        editor.addButton('codeeditor', {
+            text: 'Code block',
+            icon: false,
+            onclick() {
+                showPopup(editor);
+            }
+        });
+
+        // Convert
+        editor.on('PreProcess', function (e) {
+            $('div.CodeMirrorContainer', e.node).
+            each((index, elem) => {
+                let $elem = $(elem);
+                let code = elem.querySelector('textarea').textContent;
+
+                // $elem.attr('class', $.trim($elem.attr('class')));
+                $elem.removeAttr('contentEditable');
+
+                $elem.empty().append('<pre></pre>').find('pre').first().append($('<code></code>').each((index, elem) => {
+                    // Needs to be textContent since innerText produces BR:s
+                    elem.textContent = code;
+                }).attr('class', $elem.attr('class')));
+                console.log($elem[0].outerHTML);
+            });
+        });
+
+        editor.on('SetContent', function () {
+            let codeSamples = $('pre').filter((index, elem) => {
+                return elem.contentEditable !== "false";
+            });
+
+            if (codeSamples.length) {
+                editor.undoManager.transact(function () {
+                    codeSamples.each((index, elem) => {
+                        console.log(elem.textContent);
+                        let outerWrap = Code.wysiwygView(elem);
+                        outerWrap.addEventListener('dblclick', () => {
+                            showPopup(editor);
+                        })
+                    });
+                });
+            }
+        });
+
+    });
+}
+
 module.exports = function() {
+    codePlugin();
     let settings = {
         selector: '#html-editor',
         content_css: [
             window.baseUrl('/css/styles.css'),
             window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
         ],
+        branding: false,
         body_class: 'page-content',
         browser_spellcheck: true,
         relative_urls: false,
@@ -78,9 +152,9 @@ module.exports = function() {
         extended_valid_elements: 'pre[*]',
         automatic_uploads: false,
         valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
-        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codesample",
+        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
         imagetools_toolbar: 'imageoptions',
-        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen codesample",
+        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen codeeditor",
         content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
         style_formats: [
             {title: "Header Large", format: "h2"},
