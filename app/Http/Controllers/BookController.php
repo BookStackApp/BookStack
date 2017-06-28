@@ -36,11 +36,12 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAllPaginated('book', 10);
+        $books = $this->entityRepo->getAllPaginated('book', 16);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
-        $popular = $this->entityRepo->getPopular('book', 4, 0);
+        $popular = $this->entityRepo->getPopular('book', 3, 0);
+        $display = $this->currentUser->display;
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular]);
+        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'display' => $display]);  //added displaly to access user display
     }
 
     /**
