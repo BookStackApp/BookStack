@@ -49,6 +49,15 @@
                             @endforeach
                         </select>
                     </div>
+                    <!--Select display type -->
+                    <div class="form-group">
+                        <label for="display">Type of view</label>
+                        <select name="display" id="display">
+                            <option @if($user->display === 'grid') selected @endif value="grid">Grid</option>
+                            <option @if($user->display === 'list') selected @endif value="list">List</option>
+                        </select>
+                    </div>
+                    <!---->
                 </div>
             </div>
             <div class="form-group">

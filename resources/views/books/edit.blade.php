@@ -14,7 +14,7 @@
 
     <div class="container small" ng-non-bindable>
         <h1>{{ trans('entities.books_edit') }}</h1>
-        <form action="{{ $book->getUrl() }}" method="POST">
+        <form action="{{ $book->getUrl() }}" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PUT">
             @include('books/form', ['model' => $book])
         </form>

@@ -40,7 +40,7 @@ class BookController extends Controller
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular]);
+        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'display' => $display]);  //added displaly to access user display
     }
 
     /**
@@ -67,7 +67,14 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
+        $image = $request->file('image');
+        $input = time().'-'.$image->getClientOriginalName();
+        $destinationPath = public_path('uploads/book/');
+        $image->move($destinationPath, $input);
+        $path = baseUrl('/uploads/book/').'/'.$input;
         $book = $this->entityRepo->createFromInput('book', $request->all());
+        $book->image = $path; 
+        $book->save();
         Activity::add($book, 'book_create', $book->id);
         return redirect($book->getUrl());
     }
@@ -114,9 +121,17 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
-        Activity::add($book, 'book_update', $book->id);
-        return redirect($book->getUrl());
+            
+            $input = $request->file('image')->getClientOriginalName();
+            echo $input;
+         $destinationPath = public_path('uploads/book/');
+         $request->file('image')->move($destinationPath, $input);
+         $path = baseUrl('/uploads/book/').'/'.$input;
+         $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
+         $book->image = $path; 
+         $book->save();
+         Activity::add($book, 'book_update', $book->id);
+         return redirect($book->getUrl());
     }
 
     /**
