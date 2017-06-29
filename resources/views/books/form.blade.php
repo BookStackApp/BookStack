@@ -11,6 +11,10 @@
 </div>
 
 <div class="form-group">
+    <label for="image">Choose image</label>
+    <input type="file" name="image">
+</div>
+<div class="form-group">
     <a href="{{ isset($book) ? $book->getUrl() : baseUrl('/books') }}" class="button muted">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button pos">{{ trans('entities.books_save') }}</button>
 </div>
