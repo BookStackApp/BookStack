@@ -1,5 +1,6 @@
 require('codemirror/mode/css/css');
 require('codemirror/mode/clike/clike');
+require('codemirror/mode/diff/diff');
 require('codemirror/mode/go/go');
 require('codemirror/mode/htmlmixed/htmlmixed');
 require('codemirror/mode/javascript/javascript');
@@ -26,6 +27,7 @@ const modeMap = {
     'c++': 'clike',
     'c#': 'clike',
     csharp: 'clike',
+    diff: 'diff',
     go: 'go',
     html: 'htmlmixed',
     javascript: 'javascript',
@@ -42,6 +44,7 @@ const modeMap = {
     ruby: 'ruby',
     rb: 'ruby',
     shell: 'shell',
+    sh: 'shell',
     bash: 'shell',
     toml: 'toml',
     sql: 'sql',
