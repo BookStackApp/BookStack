@@ -74,6 +74,7 @@ function codePlugin() {
 
     function showPopup(editor) {
         let selectedNode = editor.selection.getNode();
+        console.log('show ppoe');
 
         if (!elemIsCodeBlock(selectedNode)) {
             let providedCode = editor.selection.getNode().textContent;
@@ -81,6 +82,7 @@ function codePlugin() {
                 let wrap = document.createElement('div');
                 wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
                 wrap.querySelector('code').innerText = code;
+
                 editor.formatter.toggle('pre');
                 let node = editor.selection.getNode();
                 editor.dom.setHTML(node, wrap.querySelector('pre').innerHTML);
@@ -105,6 +107,20 @@ function codePlugin() {
         });
     }
 
+    function codeMirrorContainerToPre($codeMirrorContainer) {
+        let textArea = $codeMirrorContainer[0].querySelector('textarea');
+        let code = textArea.textContent;
+        let lang = $codeMirrorContainer[0].getAttribute('data-lang');
+
+        $codeMirrorContainer.removeAttr('contentEditable');
+        let $pre = $('<pre></pre>');
+        $pre.append($('<code></code>').each((index, elem) => {
+            // Needs to be textContent since innerText produces BR:s
+            elem.textContent = code;
+        }).attr('class', `language-${lang}`));
+        $codeMirrorContainer.replaceWith($pre);
+    }
+
     window.tinymce.PluginManager.add('codeeditor', (editor, url) => {
 
         let $ = editor.$;
@@ -124,36 +140,36 @@ function codePlugin() {
             $('div.CodeMirrorContainer', e.node).
             each((index, elem) => {
                 let $elem = $(elem);
-                let textArea = elem.querySelector('textarea');
-                let code = textArea.textContent;
-                let lang = elem.getAttribute('data-lang');
-
-                // $elem.attr('class', $.trim($elem.attr('class')));
-                $elem.removeAttr('contentEditable');
-                let $pre = $('<pre></pre>');
-                $pre.append($('<code></code>').each((index, elem) => {
-                    // Needs to be textContent since innerText produces BR:s
-                    elem.textContent = code;
-                }).attr('class', `language-${lang}`));
-                $elem.replaceWith($pre);
+                codeMirrorContainerToPre($elem);
             });
         });
 
+        editor.on('dblclick', event => {
+            let selectedNode = editor.selection.getNode();
+            if (!elemIsCodeBlock(selectedNode)) return;
+            showPopup(editor);
+        });
+
         editor.on('SetContent', function () {
+
+            // Recover broken codemirror instances
+            $('.CodeMirrorContainer').filter((index ,elem) => {
+                return typeof elem.querySelector('.CodeMirror').CodeMirror === 'undefined';
+            }).each((index, elem) => {
+                console.log('COVERT');
+                codeMirrorContainerToPre($(elem));
+            });
+
             let codeSamples = $('body > pre').filter((index, elem) => {
                 return elem.contentEditable !== "false";
             });
 
-            if (codeSamples.length) {
-                editor.undoManager.transact(function () {
-                    codeSamples.each((index, elem) => {
-                        let editDetails = Code.wysiwygView(elem);
-                        editDetails.wrap.addEventListener('dblclick', () => {
-                            showPopup(editor, editDetails.wrap, editDetails.editor);
-                        });
-                    });
+            if (!codeSamples.length) return;
+            editor.undoManager.transact(function () {
+                codeSamples.each((index, elem) => {
+                    Code.wysiwygView(elem);
                 });
-            }
+            });
         });
 
     });
@@ -178,7 +194,7 @@ module.exports = function() {
         paste_data_images: false,
         extended_valid_elements: 'pre[*]',
         automatic_uploads: false,
-        valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
+        valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre]",
         plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
         imagetools_toolbar: 'imageoptions',
         toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
@@ -190,7 +206,7 @@ module.exports = function() {
             {title: "Header Tiny", format: "h5"},
             {title: "Paragraph", format: "p", exact: true, classes: ''},
             {title: "Blockquote", format: "blockquote"},
-            {title: "Code Block", icon: "code", cmd: 'codeeditor'},
+            {title: "Code Block", icon: "code", cmd: 'codeeditor', format: 'codeeditor'},
             {title: "Inline Code", icon: "code", inline: "code"},
             {title: "Callouts", items: [
                 {title: "Success", block: 'p', exact: true, attributes : {'class' : 'callout success'}},
@@ -201,6 +217,7 @@ module.exports = function() {
         ],
         style_formats_merge: false,
         formats: {
+            codeeditor: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div'},
             alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
             aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
             alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},

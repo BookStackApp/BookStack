@@ -96,7 +96,6 @@ module.exports.wysiwygView = function(elem) {
 
     let lang = (elem.className || '').replace('language-', '');
     if (lang === '' && codeElem) {
-        console.log(codeElem.className);
         lang = (codeElem.className || '').replace('language-', '')
     }
 
