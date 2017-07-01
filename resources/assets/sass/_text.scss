@@ -135,6 +135,21 @@ pre {
   font-size: 12px;
   background-color: #f5f5f5;
   border: 1px solid #DDD;
+  padding-left: 31px;
+  position: relative;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 29px;
+    left: 0;
+    background-color: #f5f5f5;
+    height: 100%;
+    border-right: 1px solid #DDD;
+  }
 }
 
 
@@ -182,6 +197,7 @@ pre code {
   border: 0;
   font-size: 1em;
   display: block;
+  line-height: 1.6;
 }
 /*
  * Text colors

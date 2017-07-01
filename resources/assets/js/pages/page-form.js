@@ -58,11 +58,14 @@ function registerEditorShortcuts(editor) {
     // Other block shortcuts
     editor.addShortcut('meta+q', '', ['FormatBlock', false, 'blockquote']);
     editor.addShortcut('meta+d', '', ['FormatBlock', false, 'p']);
-    editor.addShortcut('meta+e', '', ['FormatBlock', false, 'pre']);
+    editor.addShortcut('meta+e', '', ['codeeditor', false, 'pre']);
     editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
 
+/**
+ * Create and enable our custom code plugin
+ */
 function codePlugin() {
 
     function elemIsCodeBlock(elem) {
@@ -71,14 +74,35 @@ function codePlugin() {
 
     function showPopup(editor) {
         let selectedNode = editor.selection.getNode();
+
         if (!elemIsCodeBlock(selectedNode)) {
+            let providedCode = editor.selection.getNode().textContent;
+            window.vues['code-editor'].open(providedCode, '', (code, lang) => {
+                let wrap = document.createElement('div');
+                wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
+                wrap.querySelector('code').innerText = code;
+                editor.formatter.toggle('pre');
+                let node = editor.selection.getNode();
+                editor.dom.setHTML(node, wrap.querySelector('pre').innerHTML);
+                editor.fire('SetContent');
+            });
             return;
         }
 
-        let lang = selectedNode.hasAttribute('data-language') ? selectedNode.getAttribute('data-language') : '';
+        let lang = selectedNode.hasAttribute('data-lang') ? selectedNode.getAttribute('data-lang') : '';
         let currentCode = selectedNode.querySelector('textarea').textContent;
-        console.log('SHOW POPUP');
-        // TODO - Show custom editor
+
+        window.vues['code-editor'].open(currentCode, lang, (code, lang) => {
+            let editorElem = selectedNode.querySelector('.CodeMirror');
+            let cmInstance = editorElem.CodeMirror;
+            if (cmInstance) {
+                Code.setContent(cmInstance, code);
+                Code.setMode(cmInstance, lang);
+            }
+            let textArea = selectedNode.querySelector('textarea');
+            if (textArea) textArea.textContent = code;
+            selectedNode.setAttribute('data-lang', lang);
+        });
     }
 
     window.tinymce.PluginManager.add('codeeditor', (editor, url) => {
@@ -88,9 +112,11 @@ function codePlugin() {
         editor.addButton('codeeditor', {
             text: 'Code block',
             icon: false,
-            onclick() {
-                showPopup(editor);
-            }
+            cmd: 'codeeditor'
+        });
+
+        editor.addCommand('codeeditor', () => {
+            showPopup(editor);
         });
 
         // Convert
@@ -98,32 +124,33 @@ function codePlugin() {
             $('div.CodeMirrorContainer', e.node).
             each((index, elem) => {
                 let $elem = $(elem);
-                let code = elem.querySelector('textarea').textContent;
+                let textArea = elem.querySelector('textarea');
+                let code = textArea.textContent;
+                let lang = elem.getAttribute('data-lang');
 
                 // $elem.attr('class', $.trim($elem.attr('class')));
                 $elem.removeAttr('contentEditable');
-
-                $elem.empty().append('<pre></pre>').find('pre').first().append($('<code></code>').each((index, elem) => {
+                let $pre = $('<pre></pre>');
+                $pre.append($('<code></code>').each((index, elem) => {
                     // Needs to be textContent since innerText produces BR:s
                     elem.textContent = code;
-                }).attr('class', $elem.attr('class')));
-                console.log($elem[0].outerHTML);
+                }).attr('class', `language-${lang}`));
+                $elem.replaceWith($pre);
             });
         });
 
         editor.on('SetContent', function () {
-            let codeSamples = $('pre').filter((index, elem) => {
+            let codeSamples = $('body > pre').filter((index, elem) => {
                 return elem.contentEditable !== "false";
             });
 
             if (codeSamples.length) {
                 editor.undoManager.transact(function () {
                     codeSamples.each((index, elem) => {
-                        console.log(elem.textContent);
-                        let outerWrap = Code.wysiwygView(elem);
-                        outerWrap.addEventListener('dblclick', () => {
-                            showPopup(editor);
-                        })
+                        let editDetails = Code.wysiwygView(elem);
+                        editDetails.wrap.addEventListener('dblclick', () => {
+                            showPopup(editor, editDetails.wrap, editDetails.editor);
+                        });
                     });
                 });
             }
@@ -154,7 +181,7 @@ module.exports = function() {
         valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
         plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
         imagetools_toolbar: 'imageoptions',
-        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen codeeditor",
+        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
         content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
         style_formats: [
             {title: "Header Large", format: "h2"},
@@ -163,14 +190,14 @@ module.exports = function() {
             {title: "Header Tiny", format: "h5"},
             {title: "Paragraph", format: "p", exact: true, classes: ''},
             {title: "Blockquote", format: "blockquote"},
-            {title: "Code Block", icon: "code", format: "pre"},
+            {title: "Code Block", icon: "code", cmd: 'codeeditor'},
             {title: "Inline Code", icon: "code", inline: "code"},
             {title: "Callouts", items: [
                 {title: "Success", block: 'p', exact: true, attributes : {'class' : 'callout success'}},
                 {title: "Info", block: 'p', exact: true, attributes : {'class' : 'callout info'}},
                 {title: "Warning", block: 'p', exact: true, attributes : {'class' : 'callout warning'}},
                 {title: "Danger", block: 'p', exact: true, attributes : {'class' : 'callout danger'}}
-            ]}
+            ]},
         ],
         style_formats_merge: false,
         formats: {

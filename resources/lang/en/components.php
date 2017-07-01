@@ -20,5 +20,13 @@ return [
     'image_preview' => 'Image Preview',
     'image_upload_success' => 'Image uploaded successfully',
     'image_update_success' => 'Image details successfully updated',
-    'image_delete_success' => 'Image successfully deleted'
+    'image_delete_success' => 'Image successfully deleted',
+
+    /**
+     * Code editor
+     */
+    'code_editor' => 'Edit Code',
+    'code_language' => 'Code Language',
+    'code_content' => 'Code Content',
+    'code_save' => 'Save Code',
 ];
