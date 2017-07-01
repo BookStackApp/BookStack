@@ -11,6 +11,10 @@ const methods = {
     updateEditorMode(language) {
         codeLib.setMode(this.editor, language);
     },
+    updateLanguage(lang) {
+        this.language = lang;
+        this.updateEditorMode(lang);
+    },
     open(code, language, callback) {
         this.show();
         this.updateEditorMode(language);
