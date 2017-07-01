@@ -10,6 +10,28 @@
             <div class="padded">
                 <div class="form-group">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
+                    <div class="lang-options">
+                        <small>
+                            <a @click="updateLanguage('CSS')">CSS</a>
+                            <a @click="updateLanguage('C')">C</a>
+                            <a @click="updateLanguage('C++')">C++</a>
+                            <a @click="updateLanguage('C#')">C#</a>
+                            <a @click="updateLanguage('Go')">Go</a>
+                            <a @click="updateLanguage('HTML')">HTML</a>
+                            <a @click="updateLanguage('Java')">Java</a>
+                            <a @click="updateLanguage('JavaScript')">JavaScript</a>
+                            <a @click="updateLanguage('JSON')">JSON</a>
+                            <a @click="updateLanguage('PHP')">PHP</a>
+                            <a @click="updateLanguage('MarkDown')">MarkDown</a>
+                            <a @click="updateLanguage('Nginx')">Nginx</a>
+                            <a @click="updateLanguage('Python')">Python</a>
+                            <a @click="updateLanguage('Ruby')">Ruby</a>
+                            <a @click="updateLanguage('shell')">Shell/Bash</a>
+                            <a @click="updateLanguage('SQL')">SQL</a>
+                            <a @click="updateLanguage('XML')">XML</a>
+                            <a @click="updateLanguage('YAML')">YAML</a>
+                        </small>
+                    </div>
                     <input @keypress.enter="save()" id="code-editor-language" type="text" @input="updateEditorMode(language)" v-model="language">
                 </div>
 
