@@ -1,7 +1,10 @@
 <?php namespace Tests;
 
+use BookStack\Page;
 use BookStack\Repos\PermissionsRepo;
 use BookStack\Role;
+use Laravel\BrowserKitTesting\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RolesTest extends BrowserKitTest
 {
@@ -580,8 +583,6 @@ class RolesTest extends BrowserKitTest
             ->see('Cannot be deleted');
     }
 
-
-
     public function test_image_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
@@ -618,6 +619,24 @@ class RolesTest extends BrowserKitTest
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
             ->seeStatusCode(200)
             ->dontSeeInDatabase('images', ['id' => $image->id]);
+    }
+
+    public function test_role_permission_removal()
+    {
+        // To cover issue fixed in f99c8ff99aee9beb8c692f36d4b84dc6e651e50a.
+        $page = Page::first();
+        $viewerRole = \BookStack\Role::getRole('viewer');
+        $viewer = $this->getViewer();
+        $this->actingAs($viewer)->visit($page->getUrl())->assertResponseOk();
+
+        $this->asAdmin()->put('/settings/roles/' . $viewerRole->id, [
+            'display_name' => $viewerRole->display_name,
+            'description' => $viewerRole->description,
+            'permission' => []
+        ])->assertResponseStatus(302);
+
+        $this->expectException(HttpException::class);
+        $this->actingAs($viewer)->visit($page->getUrl())->assertResponseStatus(404);
     }
 
 }
