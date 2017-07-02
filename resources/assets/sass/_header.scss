@@ -155,7 +155,6 @@ form.search-box {
       text-decoration: none;
     }
   }
-
 }
 
 .faded span.faded-text {
@@ -175,6 +174,13 @@ form.search-box {
   &:last-child {
     padding-right: 0;
   }
+  &:first-child {
+    padding-left: 0;
+  }
+}
+.action-buttons .dropdown-container:last-child a {
+  padding-right: 0;
+  padding-left: $-s;
 }
 .action-buttons {
   text-align: right;

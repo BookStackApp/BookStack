@@ -74,7 +74,6 @@ function codePlugin() {
 
     function showPopup(editor) {
         let selectedNode = editor.selection.getNode();
-        console.log('show ppoe');
 
         if (!elemIsCodeBlock(selectedNode)) {
             let providedCode = editor.selection.getNode().textContent;
@@ -156,7 +155,6 @@ function codePlugin() {
             $('.CodeMirrorContainer').filter((index ,elem) => {
                 return typeof elem.querySelector('.CodeMirror').CodeMirror === 'undefined';
             }).each((index, elem) => {
-                console.log('COVERT');
                 codeMirrorContainerToPre($(elem));
             });
 
