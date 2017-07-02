@@ -232,15 +232,33 @@ module.exports = function (ngApp, events) {
             },
             link: function (scope, element, attrs) {
 
-                // Set initial model content
-                element = element.find('textarea').first();
-
                 // Codemirror Setup
+                element = element.find('textarea').first();
                 let cm = code.markdownEditor(element[0]);
+
+                // Custom key commands
+                let metaKey = code.getMetaKey();
+                const extraKeys = {};
+                // Insert Image shortcut
+                extraKeys[`${metaKey}-Alt-I`] = function(cm) {
+                    let selectedText = cm.getSelection();
+                    let newText = `![${selectedText}](http://)`;
+                    let cursorPos = cm.getCursor('from');
+                    cm.replaceSelection(newText);
+                    cm.setCursor(cursorPos.line, cursorPos.ch + newText.length -1);
+                };
+                // Save draft
+                extraKeys[`${metaKey}-S`] = function(cm) {scope.$emit('save-draft');};
+                // Show link selector
+                extraKeys[`Shift-${metaKey}-K`] = function(cm) {showLinkSelector()};
+                cm.setOption('extraKeys', extraKeys);
+
+                // Update data on content change
                 cm.on('change', (instance, changeObj) => {
                     update(instance);
                 });
 
+                // Handle scroll to sync display view
                 cm.on('scroll', instance => {
                     // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
                     let scroll = instance.getScrollInfo();
@@ -257,6 +275,89 @@ module.exports = function (ngApp, events) {
                     scope.$emit('markdown-scroll', totalLines.length);
                 });
 
+                // Handle image paste
+                cm.on('paste', (cm, event) => {
+                    if (!event.clipboardData || !event.clipboardData.items) return;
+                    for (let i = 0; i < event.clipboardData.items.length; i++) {
+                        uploadImage(event.clipboardData.items[i].getAsFile());
+                    }
+                });
+
+                // Handle images on drag-drop
+                cm.on('drop', (cm, event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    let cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
+                    cm.setCursor(cursorPos);
+                    if (!event.dataTransfer || !event.dataTransfer.files) return;
+                    for (let i = 0; i < event.dataTransfer.files.length; i++) {
+                        uploadImage(event.dataTransfer.files[i]);
+                    }
+                });
+
+                // Helper to replace editor content
+                function replaceContent(search, replace) {
+                    let text = cm.getValue();
+                    let cursor = cm.listSelections();
+                    cm.setValue(text.replace(search, replace));
+                    cm.setSelections(cursor);
+                }
+
+                // Handle image upload and add image into markdown content
+                function uploadImage(file) {
+                    if (file === null || file.type.indexOf('image') !== 0) return;
+                    let ext = 'png';
+
+                    if (file.name) {
+                        let fileNameMatches = file.name.match(/\.(.+)$/);
+                        if (fileNameMatches.length > 1) ext = fileNameMatches[1];
+                    }
+
+                    // Insert image into markdown
+                    let id = "image-" + Math.random().toString(16).slice(2);
+                    let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
+                    let selectedText = cm.getSelection();
+                    let placeHolderText = `![${selectedText}](${placeholderImage})`;
+                    cm.replaceSelection(placeHolderText);
+
+                    let remoteFilename = "image-" + Date.now() + "." + ext;
+                    let formData = new FormData();
+                    formData.append('file', file, remoteFilename);
+
+                    window.$http.post('/images/gallery/upload', formData).then(resp => {
+                        replaceContent(placeholderImage, resp.data.thumbs.display);
+                    }).catch(err => {
+                        events.emit('error', trans('errors.image_upload_error'));
+                        replaceContent(placeHolderText, selectedText);
+                        console.log(err);
+                    });
+                }
+
+                // Show the popup link selector and insert a link when finished
+                function showLinkSelector() {
+                    let cursorPos = cm.getCursor('from');
+                    window.showEntityLinkSelector(entity => {
+                        let selectedText = cm.getSelection() || entity.name;
+                        let newText = `[${selectedText}](${entity.link})`;
+                        cm.focus();
+                        cm.replaceSelection(newText);
+                        cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                    });
+                }
+
+                // Show the image manager and handle image insertion
+                function showImageManager() {
+                    let cursorPos = cm.getCursor('from');
+                    window.ImageManager.showExternal(image => {
+                        let selectedText = cm.getSelection();
+                        let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
+                        cm.focus();
+                        cm.replaceSelection(newText);
+                        cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                    });
+                }
+
+                // Update the data models and rendered output
                 function update(instance) {
                     let content = instance.getValue();
                     element.val(content);
@@ -267,6 +368,9 @@ module.exports = function (ngApp, events) {
                 }
                 update(cm);
 
+                // Listen to commands from parent scope
+                scope.$on('md-insert-link', showLinkSelector);
+                scope.$on('md-insert-image', showImageManager);
                 scope.$on('markdown-update', (event, value) => {
                     cm.setValue(value);
                     element.val(value);
@@ -287,8 +391,7 @@ module.exports = function (ngApp, events) {
             restrict: 'A',
             link: function (scope, element, attrs) {
 
-                // Elements
-                const $input = element.find('[markdown-input] textarea').first();
+                // Editor Elements
                 const $display = element.find('.markdown-display').first();
                 const $insertImage = element.find('button[data-action="insertImage"]');
                 const $insertEntityLink = element.find('button[data-action="insertEntityLink"]');
@@ -299,11 +402,9 @@ module.exports = function (ngApp, events) {
                     window.open(this.getAttribute('href'));
                 });
 
-                let currentCaretPos = 0;
-
-                $input.blur(event => {
-                    currentCaretPos = $input[0].selectionStart;
-                });
+                // Editor UI Actions
+                $insertEntityLink.click(e => {scope.$broadcast('md-insert-link');});
+                $insertImage.click(e => {scope.$broadcast('md-insert-image');});
 
                 // Handle scroll sync event from editor scroll
                 $rootScope.$on('markdown-scroll', (event, lineCount) => {
@@ -315,140 +416,6 @@ module.exports = function (ngApp, events) {
                         }, {queue: false, duration: 200, easing: 'linear'});
                     }
                 });
-
-                // Editor key-presses
-                $input.keydown(event => {
-                    // Insert image shortcut
-                    if (event.which === 73 && event.ctrlKey && event.shiftKey) {
-                        event.preventDefault();
-                        let caretPos = $input[0].selectionStart;
-                        let currentContent = $input.val();
-                        const mdImageText = "![](http://)";
-                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        $input.focus();
-                        $input[0].selectionStart = caretPos + ("![](".length);
-                        $input[0].selectionEnd = caretPos + ('![](http://'.length);
-                        return;
-                    }
-
-                    // Insert entity link shortcut
-                    if (event.which === 75 && event.ctrlKey && event.shiftKey) {
-                        showLinkSelector();
-                        return;
-                    }
-
-                    // Pass key presses to controller via event
-                    scope.$emit('editor-keydown', event);
-                });
-
-                // Insert image from image manager
-                $insertImage.click(event => {
-                    window.ImageManager.showExternal(image => {
-                        let caretPos = currentCaretPos;
-                        let currentContent = $input.val();
-                        let mdImageText = "![" + image.name + "](" + image.thumbs.display + ")";
-                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        $input.change();
-                    });
-                });
-
-                function showLinkSelector() {
-                    window.showEntityLinkSelector((entity) => {
-                        let selectionStart = currentCaretPos;
-                        let selectionEnd = $input[0].selectionEnd;
-                        let textSelected = (selectionEnd !== selectionStart);
-                        let currentContent = $input.val();
-
-                        if (textSelected) {
-                            let selectedText = currentContent.substring(selectionStart, selectionEnd);
-                            let linkText = `[${selectedText}](${entity.link})`;
-                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
-                        } else {
-                            let linkText = ` [${entity.name}](${entity.link}) `;
-                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
-                        }
-                        $input.change();
-                    });
-                }
-                $insertEntityLink.click(showLinkSelector);
-
-                // Upload and insert image on paste
-                function editorPaste(e) {
-                    e = e.originalEvent;
-                    if (!e.clipboardData) return
-                    let items = e.clipboardData.items;
-                    if (!items) return;
-                    for (let i = 0; i < items.length; i++) {
-                        uploadImage(items[i].getAsFile());
-                    }
-                }
-
-                $input.on('paste', editorPaste);
-
-                // Handle image drop, Uploads images to BookStack.
-                function handleImageDrop(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    let files = event.originalEvent.dataTransfer.files;
-                    for (let i = 0; i < files.length; i++) {
-                        uploadImage(files[i]);
-                    }
-                }
-
-                $input.on('drop', handleImageDrop);
-
-                // Handle image upload and add image into markdown content
-                function uploadImage(file) {
-                    if (file === null || !file.type.indexOf('image') !== 0) return;
-                    let formData = new FormData();
-                    let ext = 'png';
-                    let xhr = new XMLHttpRequest();
-
-                    if (file.name) {
-                        let fileNameMatches = file.name.match(/\.(.+)$/);
-                        if (fileNameMatches) {
-                            ext = fileNameMatches[1];
-                        }
-                    }
-
-                    // Insert image into markdown
-                    let id = "image-" + Math.random().toString(16).slice(2);
-                    let selectStart = $input[0].selectionStart;
-                    let selectEnd = $input[0].selectionEnd;
-                    let content = $input[0].value;
-                    let selectText = content.substring(selectStart, selectEnd);
-                    let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
-                    let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
-                    $input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
-
-                    $input.focus();
-                    $input[0].selectionStart = selectStart;
-                    $input[0].selectionEnd = selectStart;
-
-                    let remoteFilename = "image-" + Date.now() + "." + ext;
-                    formData.append('file', file, remoteFilename);
-                    formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
-
-                    xhr.open('POST', window.baseUrl('/images/gallery/upload'));
-                    xhr.onload = function () {
-                        let selectStart = $input[0].selectionStart;
-                        if (xhr.status === 200 || xhr.status === 201) {
-                            let result = JSON.parse(xhr.responseText);
-                            $input[0].value = $input[0].value.replace(placeholderImage, result.thumbs.display);
-                            $input.change();
-                        } else {
-                            console.log(trans('errors.image_upload_error'));
-                            console.log(xhr.responseText);
-                            $input[0].value = $input[0].value.replace(innerContent, '');
-                            $input.change();
-                        }
-                        $input.focus();
-                        $input[0].selectionStart = selectStart;
-                        $input[0].selectionEnd = selectStart;
-                    };
-                    xhr.send(formData);
-                }
-
             }
         }
     }]);

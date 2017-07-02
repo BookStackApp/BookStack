@@ -17,6 +17,7 @@ let axiosInstance = axios.create({
         'baseURL': window.baseUrl('')
     }
 });
+window.$http = axiosInstance;
 
 Vue.prototype.$http = axiosInstance;
 
