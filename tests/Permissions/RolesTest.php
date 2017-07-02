@@ -639,4 +639,22 @@ class RolesTest extends BrowserKitTest
         $this->actingAs($viewer)->visit($page->getUrl())->assertResponseStatus(404);
     }
 
+    public function test_empty_state_actions_not_visible_without_permission()
+    {
+        $admin = $this->getAdmin();
+        // Book links
+        $book = factory(\BookStack\Book::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
+        $this->updateEntityPermissions($book);
+        $this->actingAs($this->getViewer())->visit($book->getUrl())
+            ->dontSee('Create a new page')
+            ->dontSee('Add a chapter');
+
+        // Chapter links
+        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
+        $this->updateEntityPermissions($chapter);
+        $this->actingAs($this->getViewer())->visit($chapter->getUrl())
+            ->dontSee('Create a new page')
+            ->dontSee('Sort the current book');
+    }
+
 }
