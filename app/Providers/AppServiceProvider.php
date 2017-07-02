@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
         \Blade::directive('icon', function($expression) {
             return "<?php echo icon($expression); ?>";
         });
+
+        // Allow longer string lengths after upgrade to utf8mb4
+        \Schema::defaultStringLength(191);
     }
 
     /**
