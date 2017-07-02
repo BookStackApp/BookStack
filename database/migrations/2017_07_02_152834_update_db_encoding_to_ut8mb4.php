@@ -17,11 +17,11 @@ class UpdateDbEncodingToUt8mb4 extends Migration
         $tables = DB::select('SHOW TABLES');
         $pdo = DB::getPdo();
         $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
-        $pdo->exec('ALTER DATABASE '.$database.' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $pdo->exec('ALTER DATABASE `'.$database.'` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $key = 'Tables_in_' . $database;
         foreach ($tables as $table) {
             $tableName = $table->$key;
-            $pdo->exec('ALTER TABLE '.$tableName.' CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+            $pdo->exec('ALTER TABLE `'.$tableName.'` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         }
     }
 
@@ -36,11 +36,11 @@ class UpdateDbEncodingToUt8mb4 extends Migration
         $tables = DB::select('SHOW TABLES');
         $pdo = DB::getPdo();
         $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
-        $pdo->exec('ALTER DATABASE '.$database.' CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+        $pdo->exec('ALTER DATABASE `'.$database.'` CHARACTER SET utf8 COLLATE utf8_unicode_ci');
         $key = 'Tables_in_' . $database;
         foreach ($tables as $table) {
             $tableName = $table->$key;
-            $pdo->exec('ALTER TABLE '.$tableName.' CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+            $pdo->exec('ALTER TABLE `'.$tableName.'` CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci');
         }
     }
 }

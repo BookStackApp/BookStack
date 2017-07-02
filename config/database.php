@@ -19,7 +19,7 @@ if (env('REDIS_SERVERS', false)) {
 $mysql_host = env('DB_HOST', 'localhost');
 $mysql_host_exploded = explode(':', $mysql_host);
 $mysql_port = env('DB_PORT', 3306);
-if (count($mysql_host_exploded) > 0) {
+if (count($mysql_host_exploded) > 1) {
     $mysql_host = $mysql_host_exploded[0];
     $mysql_port = intval($mysql_host_exploded[1]);
 }
