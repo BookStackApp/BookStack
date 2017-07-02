@@ -169,6 +169,10 @@ module.exports.markdownEditor = function(elem) {
         theme: 'base16-light',
         lineWrapping: true
     });
+};
 
+module.exports.getMetaKey = function() {
+    let mac = CodeMirror.keyMap["default"] == CodeMirror.keyMap.macDefault;
+    return mac ? "Cmd" : "Ctrl";
 };
 
