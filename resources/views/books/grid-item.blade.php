@@ -1,5 +1,4 @@
-<div class="galleryContainer"  data-entity-type="book" data-entity-id="{{$book->id}}">
-<div class="col-sm-3 galleryItem">
+<div class="col-md-3 galleryItem"  data-entity-type="book" data-entity-id="{{$book->id}}">
     <h3>
         <a class="text-book entity-list-item-link" href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i><span class="entity-list-item-name">{{$book->name}}</span>
         <br>
@@ -11,5 +10,4 @@
     @else
         <p class="text-muted">{{ $book->getExcerpt() }}</p>
     @endif
-    </div>
 </div>
