@@ -5,13 +5,13 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-xs-11 faded">
+                <div class="col-xs-12 faded">
                     <div class="action-buttons text-left">
+                    <a data-action="expand-thumbnail" class="text-primary text-button"><i class="zmdi zmdi-wrap-text"></i>{{ trans('common.toggle_thumbnails') }}</a>
                         @if($currentUser->can('book-create-all'))
                             <a href="{{ baseUrl("/books/create") }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.books_create') }}</a>
                         @endif
-                        <a data-action="expand-thumbnail" class="text-primary text-button"><i class="zmdi zmdi-wrap-text"></i>{{ trans('common.toggle_thumbnails') }}</a>
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
 
     <div class="container" ng-non-bindable>
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-xs-12 col-sm-12 col-md-9">
                 <h1>{{ trans('entities.books') }}</h1>
                 {!! $books->render() !!}
                 @if(count($books) > 0)
@@ -40,7 +40,7 @@
                     @endif
                 @endif
             </div>
-            <div class="col-sm-3">
+            <div class="col-xs-12 col-sm-12 col-md-3">
                 <div id="recents">
                     @if($recents)
                         <div class="margin-top">&nbsp;</div>
