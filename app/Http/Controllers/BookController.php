@@ -133,7 +133,7 @@ class BookController extends Controller
      * @param  $image
      * @return $path
      */
-    public function getBookCoverURL($image)
+    private function getBookCoverURL($image)
     {
          $input = time().'-'.$image->getClientOriginalName();
          $destinationPath = public_path('uploads/book/');
