@@ -23,7 +23,6 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('slug')->indexed();
             $table->text('description');
-            $table->string('image');
             $table->nullableTimestamps();
         });
     }
