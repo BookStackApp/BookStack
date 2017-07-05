@@ -17,6 +17,7 @@ return [
     'name' => 'Name',
     'description' => 'Description',
     'role' => 'Role',
+    'cover_image' => 'Cover image',
 
     /**
      * Actions
