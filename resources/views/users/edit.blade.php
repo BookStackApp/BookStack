@@ -52,8 +52,8 @@
                     <div class="form-group">
                         <label for="books_display">Type of view</label>
                         <select name="books_display" id="books_display">
-                            <option @if($user->books_display === 'grid') selected @endif value="grid">Grid</option>
-                            <option @if($user->books_display === 'list') selected @endif value="list">List</option>
+                            <option @if($user->books_display === 'grid') selected @endif value = "grid">Grid</option>
+                            <option @if($user->books_display === 'list') selected @endif value = "list">List</option>
                         </select>
                     </div>
                 </div>
