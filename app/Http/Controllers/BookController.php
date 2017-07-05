@@ -36,11 +36,12 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAllPaginated('book', 10);
+        $books = $this->entityRepo->getAllPaginated('book', 16);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
-        $popular = $this->entityRepo->getPopular('book', 4, 0);
+        $popular = $this->entityRepo->getPopular('book', 3, 0);
+        $books_display = $this->currentUser->books_display;
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'display' => $display]);  //added displaly to access user display
+        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'books_display' => $books_display]);
     }
 
     /**
@@ -68,10 +69,7 @@ class BookController extends Controller
             'description' => 'string|max:1000'
         ]);
         $image = $request->file('image');
-        $input = time().'-'.$image->getClientOriginalName();
-        $destinationPath = public_path('uploads/book/');
-        $image->move($destinationPath, $input);
-        $path = baseUrl('/uploads/book/').'/'.$input;
+        $path = $this->getBookCoverURL($image);
         $book = $this->entityRepo->createFromInput('book', $request->all());
         $book->image = $path; 
         $book->save();
@@ -121,17 +119,27 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-            
-            $input = $request->file('image')->getClientOriginalName();
-            echo $input;
-         $destinationPath = public_path('uploads/book/');
-         $request->file('image')->move($destinationPath, $input);
-         $path = baseUrl('/uploads/book/').'/'.$input;
+         $image = $request->file('image');
+         $path = $this->getBookCoverURL($image);
          $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
          $book->image = $path; 
          $book->save();
          Activity::add($book, 'book_update', $book->id);
          return redirect($book->getUrl());
+    }
+
+    /**
+     * Generate URL for book cover image
+     * @param  $image
+     * @return $path
+     */
+    public function getBookCoverURL($image)
+    {
+         $input = time().'-'.$image->getClientOriginalName();
+         $destinationPath = public_path('uploads/book/');
+         $image->move($destinationPath, $input);
+         $path = baseUrl('/uploads/book/').'/'.$input;
+         return $path;
     }
 
     /**

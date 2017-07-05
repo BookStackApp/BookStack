@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->rememberToken();
+            $table->string('books_display')->default('grid');
             $table->nullableTimestamps();
         });
 
@@ -26,6 +27,7 @@ class CreateUsersTable extends Migration
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
+            'books_display' => 'grid',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);

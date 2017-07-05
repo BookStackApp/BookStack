@@ -24,7 +24,7 @@
                 <h1>{{ trans('entities.books') }}</h1>
                 {!! $books->render() !!}
                 @if(count($books) > 0)
-                    @if($display=='grid')
+                    @if($books_display=='grid')
                         @foreach($books as $book)
                             @include('books/grid-item', ['book' => $book])
                         @endforeach
