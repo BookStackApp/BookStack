@@ -41,7 +41,7 @@ class BookController extends Controller
         $popular = $this->entityRepo->getPopular('book', 3, 0);
         $books_display = $this->currentUser->books_display;
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'books_display' => $books_display]);
+        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'books_display' => $books_display] );
     }
 
     /**
