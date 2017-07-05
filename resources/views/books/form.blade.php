@@ -11,7 +11,7 @@
 </div>
 
 <div class="form-group">
-    <label for="image">Choose image</label>
+    <label for="image">{{ trans('common.cover_image') }}</label>
     <input type="file" name="image">
 </div>
 <div class="form-group">
