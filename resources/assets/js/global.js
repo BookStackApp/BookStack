@@ -153,11 +153,10 @@ $('[data-action="expand-entity-list-details"]').click(function() {
     $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
 });
 
-// Toggle thumbnail::hide image and reduce grid size
+// Toggle thumbnails
 $(document).ready(function(){
    $('[data-action="expand-thumbnail"]').click(function(){
-     $('.galleryItem').toggleClass("collapse");
-     $('.galleryItem').find('img').slideToggle(50);
+     $('.galleryItem').toggleClass("collapse").find('img').slideToggle(50);
    });
 });
 
