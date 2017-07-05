@@ -301,29 +301,3 @@ $btt-size: 40px;
     height: 130px;
   }
 }
-
-.galleryItem {
-  width: 22%;
-  padding: 5px;
-  float: left;
-  height: 330px;
-  margin: 2% 1% 2% 1%;
-  overflow: hidden;
-  border: 1px solid #9e9e9e;
-  h3 {
-    font-size: 1.2em;
-    text-align: center;
-  }
-  p {
-    font-size: 0.8em;
-    text-align: center;
-  }
-  img {
-    height: 192px;
-    width: 120px;
-    margin-top: 5%;
-  }
-  &.collapse {
-    height: 130px;
-  }
-}
