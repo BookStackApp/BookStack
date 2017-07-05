@@ -3,7 +3,7 @@
 class Book extends Entity
 {
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'image'];
 
     /**
      * Get the url for this book.
