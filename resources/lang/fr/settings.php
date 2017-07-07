@@ -91,7 +91,6 @@ return [
     'users_external_auth_id' => 'Identifiant d\'authentification externe',
     'users_password_warning' => 'Remplissez ce fomulaire uniquement si vous souhaitez changer de mot de passe:',
     'users_system_public' => 'Cet utilisateur représente les invités visitant votre instance. Il est assigné automatiquement aux invités.',
-    'users_books_display_type' => 'Sélectionnez le type de vue',
     'users_delete' => 'Supprimer un utilisateur',
     'users_delete_named' => 'Supprimer l\'utilisateur :userName',
     'users_delete_warning' => 'Ceci va supprimer \':userName\' du système.',
