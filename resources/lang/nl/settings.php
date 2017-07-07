@@ -91,7 +91,6 @@ return [
     'users_external_auth_id' => 'External Authentication ID',
     'users_password_warning' => 'Vul onderstaande formulier alleen in als je het wachtwoord wilt aanpassen:',
     'users_system_public' => 'De eigenschappen van deze gebruiker worden voor elke gastbezoeker gebruikt. Er kan niet mee ingelogd worden en wordt automatisch toegewezen.',
-    'users_books_display_type' => 'Selecteer het type weergave',
     'users_delete' => 'Verwijder gebruiker',
     'users_delete_named' => 'Verwijder gebruiker :userName',
     'users_delete_warning' => 'Dit zal de gebruiker \':userName\' volledig uit het systeem verwijderen.',

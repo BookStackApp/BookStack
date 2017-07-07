@@ -91,7 +91,6 @@ return [
     'users_external_auth_id' => 'Externe Authentifizierungs-ID',
     'users_password_warning' => 'F&uuml;llen Sie die folgenden Felder nur aus, wenn Sie Ihr Passwort &auml;ndern m&ouml;chten:',
     'users_system_public' => 'Dieser Benutzer repr&auml;sentiert alle Gast-Benutzer, die diese Seite betrachten. Er kann nicht zum Anmelden benutzt werden, sondern wird automatisch zugeordnet.',
-    'users_books_display_type' => 'Wählen Sie die Art der Ansicht aus',
     'users_delete' => 'Benutzer l&ouml;schen',
     'users_delete_named' => 'Benutzer :userName l&ouml;schen',
     'users_delete_warning' => 'Sie m&ouml;chten den Benutzer \':userName\' g&auml;nzlich aus dem System l&ouml;schen.',
