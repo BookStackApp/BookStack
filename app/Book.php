@@ -18,6 +18,24 @@ class Book extends Entity
         return baseUrl('/books/' . urlencode($this->slug));
     }
 
+public function getBookCover($size = 120)
+    {
+        $default = baseUrl('/default.png');
+        $image = $this->image;
+        if ($image === 0 || $image === '0' || $image === null) 
+            return $default;
+        try {
+            $cover = $this->cover ? baseUrl($this->cover->getThumb(120, 192, false)) : $default;
+        } catch (\Exception $err) {
+            $cover = $default;
+        }
+        return $cover;
+    }
+
+public function cover()
+    {
+        return $this->belongsTo(Image::class, 'image');
+    }
     /*
      * Get the edit url for this book.
      * @return string

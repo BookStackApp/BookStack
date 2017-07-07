@@ -18,7 +18,7 @@ class AddCoverImageDisplay extends Migration
         });
 
         Schema::table('books', function (Blueprint $table) {
-            $table->string('image');
+            $table->integer('image');
         });
     }
 

@@ -8,5 +8,6 @@
         @include('books/form')
     </form>
 </div>
-
+<p class="margin-top large"><br></p>
+    @include('components.image-manager', ['imageType' => 'cover'])
 @stop
