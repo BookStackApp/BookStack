@@ -8,7 +8,6 @@ use BookStack\Services\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
-use File;
 
 class BookController extends Controller
 {
@@ -69,11 +68,7 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $image = $request->file('image');
-        $path = $this->getBookCoverURL($image);
         $book = $this->entityRepo->createFromInput('book', $request->all());
-        $book->image = $path; 
-        $book->save();
         Activity::add($book, 'book_create', $book->id);
         return redirect($book->getUrl());
     }
@@ -120,34 +115,9 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-         $image = $request->file('image');
-         $path = $this->getBookCoverURL($image);
          $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
-         $book->image = $path; 
-         $book->save();
          Activity::add($book, 'book_update', $book->id);
          return redirect($book->getUrl());
-    }
-
-    /**
-     * Generate URL for book cover image
-     * @param  $image
-     * @return $path
-     */
-    private function getBookCoverURL($image)
-    {
-        if(is_null($image))
-        {
-            return;
-        }
-        else
-        {
-            $input = time().'-'.$image->getClientOriginalName();
-            $destinationPath = public_path('uploads/book/');
-            $image->move($destinationPath, $input);
-            $path = baseUrl('/uploads/book/').'/'.$input;
-            return $path;
-        }
     }
 
     /**
@@ -258,8 +228,6 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         Activity::addMessage('book_delete', 0, $book->name);
-        $file = basename($book->image);
-        File::delete('uploads/book/'.$file);
         $this->entityRepo->destroyBook($book);
         return redirect('/books');
     }
