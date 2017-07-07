@@ -19,5 +19,5 @@
             @include('books/form', ['model' => $book])
         </form>
     </div>
-
+@include('components.image-manager', ['imageType' => 'cover'])
 @stop
