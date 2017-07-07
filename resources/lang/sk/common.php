@@ -17,7 +17,7 @@ return [
     'name' => 'Meno',
     'description' => 'Popis',
     'role' => 'Rola',
-
+    'cover_image' => 'Obal knihy',
     /**
      * Actions
      */
@@ -43,6 +43,7 @@ return [
     'no_items' => 'Žiadne položky nie sú dostupné',
     'back_to_top' => 'Späť nahor',
     'toggle_details' => 'Prepnúť detaily',
+    'toggle_thumbnails' => 'Prepnúť náhľady',
 
     /**
      * Header

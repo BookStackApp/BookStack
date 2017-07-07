@@ -153,6 +153,13 @@ $('[data-action="expand-entity-list-details"]').click(function() {
     $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
 });
 
+// Toggle thumbnails
+$(document).ready(function(){
+   $('[data-action="expand-thumbnail"]').click(function(){
+     $('.galleryItem').toggleClass("collapse").find('img').slideToggle(50);
+   });
+});
+
 // Popup close
 $('.popup-close').click(function() {
     $(this).closest('.overlay').fadeOut(240);
