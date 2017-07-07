@@ -39,9 +39,9 @@ class BookController extends Controller
         $books = $this->entityRepo->getAllPaginated('book', 16);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 3, 0);
-        $books_display = $this->currentUser->books_display;
+        $display = $this->currentUser->display;
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'books_display' => $books_display] );
+        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'display' => $display]); //added displaly to access user display
     }
 
     /**
@@ -115,9 +115,9 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-         $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
-         Activity::add($book, 'book_update', $book->id);
-         return redirect($book->getUrl());
+        $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
+        Activity::add($book, 'book_update', $book->id);
+        return redirect($book->getUrl());
     }
 
     /**

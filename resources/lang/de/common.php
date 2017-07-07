@@ -17,7 +17,6 @@ return [
     'name' => 'Name',
     'description' => 'Beschreibung',
     'role' => 'Rolle',
-    'cover_image' => 'Titelbild',
 
     /**
      * Actions
@@ -44,7 +43,7 @@ return [
     'no_items' => 'Keine Eintr&auml;ge gefunden.',
     'back_to_top' => 'nach oben',
     'toggle_details' => 'Details zeigen/verstecken',
-    'toggle_thumbnails' => 'Thumbnails zeigen/verstecken',
+
     /**
      * Header
      */
