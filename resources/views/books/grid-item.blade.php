@@ -7,7 +7,7 @@
     </h4>
     <div class="gallery-image">
         <a class="text-book entity-list-item-link" href="{{$book->getUrl()}}">
-        <img src="{{$book->getBookCover(192)}}" alt="{{$book->name}}">
+        <img src="{{$book->getBookCover()}}" alt="{{$book->name}}">
         </a>
     </div>
     @if(isset($book->searchSnippet))
