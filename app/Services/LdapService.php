@@ -42,6 +42,8 @@ class LdapService
         $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
         $baseDn = $this->config['base_dn'];
         $emailAttr = $this->config['email_attribute'];
+        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
         $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', $emailAttr]);
         if ($users['count'] === 0) return null;
 

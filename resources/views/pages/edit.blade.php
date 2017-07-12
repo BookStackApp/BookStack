@@ -21,6 +21,7 @@
     </div>
     
     @include('components.image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
+    @include('components.code-editor')
     @include('components.entity-selector-popup')
 
 @stop

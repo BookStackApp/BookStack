@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Entity;
 use BookStack\Role;
 use BookStack\Services\PermissionService;
 use Illuminate\Contracts\Console\Kernel;
@@ -115,6 +116,16 @@ abstract class BrowserKitTest extends TestCase
             'chapter' => $chapter,
             'page' => $page
         ];
+    }
+
+    /**
+     * Helper for updating entity permissions.
+     * @param Entity $entity
+     */
+    protected function updateEntityPermissions(Entity $entity)
+    {
+        $restrictionService = $this->app[PermissionService::class];
+        $restrictionService->buildJointPermissionsForEntity($entity);
     }
 
     /**
