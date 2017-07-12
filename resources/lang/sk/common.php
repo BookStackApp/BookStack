@@ -18,6 +18,7 @@ return [
     'description' => 'Popis',
     'role' => 'Rola',
     'cover_image' => 'Obal knihy',
+    'cover_image_description' => 'Obraz by mal mať pomer strán 1.6: 1.',
     /**
      * Actions
      */
