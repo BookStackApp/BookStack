@@ -64,13 +64,15 @@ The BookStack source is provided under the MIT License.
 
 ## Attribution
 
-These are the great projects used to help build BookStack:
+These are the great open-source projects used to help build BookStack:
 
 * [Laravel](http://laravel.com/)
 * [AngularJS](https://angularjs.org/)
 * [jQuery](https://jquery.com/)
 * [TinyMCE](https://www.tinymce.com/)
-* [highlight.js](https://highlightjs.org/)
+* [CodeMirror](https://codemirror.net)
+* [Vue.js](http://vuejs.org/)
+* [Axios](https://github.com/mzabriskie/axios)
 * [jQuery Sortable](https://johnny.github.io/jquery-sortable/)
 * [Material Design Iconic Font](http://zavoloklom.github.io/material-design-iconic-font/icons.html)
 * [Dropzone.js](http://www.dropzonejs.com/)
@@ -84,5 +86,3 @@ These are the great projects used to help build BookStack:
     * [Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy)
     * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
-
-Additionally, Thank you [BrowserStack](https://www.browserstack.com/) for supporting us and making cross-browser testing easy.

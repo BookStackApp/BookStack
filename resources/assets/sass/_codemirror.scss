@@ -248,6 +248,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   -webkit-tap-highlight-color: transparent;
   -webkit-font-variant-ligatures: contextual;
   font-variant-ligatures: contextual;
+  &:after {
+    content: none;
+    display: none;
+  }
 }
 .CodeMirror-wrap pre {
   word-wrap: break-word;

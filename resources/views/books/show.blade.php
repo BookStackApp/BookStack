@@ -72,9 +72,15 @@
                         @else
                             <p class="text-muted">{{ trans('entities.books_empty_contents') }}</p>
                             <p>
+                                @if(userCan('page-create', $book))
                                 <a href="{{ $book->getUrl('/page/create') }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.books_empty_create_page') }}</a>
+                                @endif
+                                @if(userCan('page-create', $book) && userCan('chapter-create', $book))
                                 &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
+                                @endif
+                                @if(userCan('chapter-create', $book))
                                 <a href="{{ $book->getUrl('/chapter/create') }}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>{{ trans('entities.books_empty_add_chapter') }}</a>
+                                @endif
                             </p>
                             <hr>
                         @endif

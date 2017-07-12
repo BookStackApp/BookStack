@@ -1,5 +1,7 @@
 "use strict";
 
+const Code = require('../code');
+
 /**
  * Handle pasting images from clipboard.
  * @param e  - event
@@ -56,17 +58,130 @@ function registerEditorShortcuts(editor) {
     // Other block shortcuts
     editor.addShortcut('meta+q', '', ['FormatBlock', false, 'blockquote']);
     editor.addShortcut('meta+d', '', ['FormatBlock', false, 'p']);
-    editor.addShortcut('meta+e', '', ['FormatBlock', false, 'pre']);
+    editor.addShortcut('meta+e', '', ['codeeditor', false, 'pre']);
     editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
 }
 
+
+/**
+ * Create and enable our custom code plugin
+ */
+function codePlugin() {
+
+    function elemIsCodeBlock(elem) {
+        return elem.className === 'CodeMirrorContainer';
+    }
+
+    function showPopup(editor) {
+        let selectedNode = editor.selection.getNode();
+
+        if (!elemIsCodeBlock(selectedNode)) {
+            let providedCode = editor.selection.getNode().textContent;
+            window.vues['code-editor'].open(providedCode, '', (code, lang) => {
+                let wrap = document.createElement('div');
+                wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
+                wrap.querySelector('code').innerText = code;
+
+                editor.formatter.toggle('pre');
+                let node = editor.selection.getNode();
+                editor.dom.setHTML(node, wrap.querySelector('pre').innerHTML);
+                editor.fire('SetContent');
+            });
+            return;
+        }
+
+        let lang = selectedNode.hasAttribute('data-lang') ? selectedNode.getAttribute('data-lang') : '';
+        let currentCode = selectedNode.querySelector('textarea').textContent;
+
+        window.vues['code-editor'].open(currentCode, lang, (code, lang) => {
+            let editorElem = selectedNode.querySelector('.CodeMirror');
+            let cmInstance = editorElem.CodeMirror;
+            if (cmInstance) {
+                Code.setContent(cmInstance, code);
+                Code.setMode(cmInstance, lang);
+            }
+            let textArea = selectedNode.querySelector('textarea');
+            if (textArea) textArea.textContent = code;
+            selectedNode.setAttribute('data-lang', lang);
+        });
+    }
+
+    function codeMirrorContainerToPre($codeMirrorContainer) {
+        let textArea = $codeMirrorContainer[0].querySelector('textarea');
+        let code = textArea.textContent;
+        let lang = $codeMirrorContainer[0].getAttribute('data-lang');
+
+        $codeMirrorContainer.removeAttr('contentEditable');
+        let $pre = $('<pre></pre>');
+        $pre.append($('<code></code>').each((index, elem) => {
+            // Needs to be textContent since innerText produces BR:s
+            elem.textContent = code;
+        }).attr('class', `language-${lang}`));
+        $codeMirrorContainer.replaceWith($pre);
+    }
+
+    window.tinymce.PluginManager.add('codeeditor', (editor, url) => {
+
+        let $ = editor.$;
+
+        editor.addButton('codeeditor', {
+            text: 'Code block',
+            icon: false,
+            cmd: 'codeeditor'
+        });
+
+        editor.addCommand('codeeditor', () => {
+            showPopup(editor);
+        });
+
+        // Convert
+        editor.on('PreProcess', function (e) {
+            $('div.CodeMirrorContainer', e.node).
+            each((index, elem) => {
+                let $elem = $(elem);
+                codeMirrorContainerToPre($elem);
+            });
+        });
+
+        editor.on('dblclick', event => {
+            let selectedNode = editor.selection.getNode();
+            if (!elemIsCodeBlock(selectedNode)) return;
+            showPopup(editor);
+        });
+
+        editor.on('SetContent', function () {
+
+            // Recover broken codemirror instances
+            $('.CodeMirrorContainer').filter((index ,elem) => {
+                return typeof elem.querySelector('.CodeMirror').CodeMirror === 'undefined';
+            }).each((index, elem) => {
+                codeMirrorContainerToPre($(elem));
+            });
+
+            let codeSamples = $('body > pre').filter((index, elem) => {
+                return elem.contentEditable !== "false";
+            });
+
+            if (!codeSamples.length) return;
+            editor.undoManager.transact(function () {
+                codeSamples.each((index, elem) => {
+                    Code.wysiwygView(elem);
+                });
+            });
+        });
+
+    });
+}
+
 module.exports = function() {
+    codePlugin();
     let settings = {
         selector: '#html-editor',
         content_css: [
             window.baseUrl('/css/styles.css'),
             window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
         ],
+        branding: false,
         body_class: 'page-content',
         browser_spellcheck: true,
         relative_urls: false,
@@ -77,10 +192,10 @@ module.exports = function() {
         paste_data_images: false,
         extended_valid_elements: 'pre[*]',
         automatic_uploads: false,
-        valid_children: "-div[p|pre|h1|h2|h3|h4|h5|h6|blockquote]",
-        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codesample",
+        valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre]",
+        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
         imagetools_toolbar: 'imageoptions',
-        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen codesample",
+        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
         content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
         style_formats: [
             {title: "Header Large", format: "h2"},
@@ -89,17 +204,18 @@ module.exports = function() {
             {title: "Header Tiny", format: "h5"},
             {title: "Paragraph", format: "p", exact: true, classes: ''},
             {title: "Blockquote", format: "blockquote"},
-            {title: "Code Block", icon: "code", format: "pre"},
+            {title: "Code Block", icon: "code", cmd: 'codeeditor', format: 'codeeditor'},
             {title: "Inline Code", icon: "code", inline: "code"},
             {title: "Callouts", items: [
                 {title: "Success", block: 'p', exact: true, attributes : {'class' : 'callout success'}},
                 {title: "Info", block: 'p', exact: true, attributes : {'class' : 'callout info'}},
                 {title: "Warning", block: 'p', exact: true, attributes : {'class' : 'callout warning'}},
                 {title: "Danger", block: 'p', exact: true, attributes : {'class' : 'callout danger'}}
-            ]}
+            ]},
         ],
         style_formats_merge: false,
         formats: {
+            codeeditor: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div'},
             alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
             aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
             alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},

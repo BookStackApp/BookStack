@@ -467,3 +467,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .image-picker .none {
   display: none;
 }
+
+#code-editor .CodeMirror {
+  height: 400px;
+}
+
+#code-editor .lang-options {
+  max-width: 400px;
+  margin-bottom: $-s;
+  a {
+    margin-right: $-xs;
+    text-decoration: underline;
+  }
+}
