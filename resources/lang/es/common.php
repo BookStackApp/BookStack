@@ -17,7 +17,7 @@ return [
     'name' => 'Nombre',
     'description' => 'Descripción',
     'role' => 'Rol',
-
+    'cover_image' => 'Imagen de portada',
     /**
      * Actions
      */
@@ -43,6 +43,7 @@ return [
     'no_items' => 'No hay items disponibles',
     'back_to_top' => 'Volver arriba',
     'toggle_details' => 'Alternar detalles',
+    'toggle_thumbnails' => 'Alternar miniaturas',
 
     /**
      * Header
