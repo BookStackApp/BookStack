@@ -17,7 +17,7 @@ return [
     'name' => 'Nome',
     'description' => 'Descrição',
     'role' => 'Regra',
-
+    'cover_image' => 'Imagem de capa',
     /**
      * Actions
      */
@@ -43,6 +43,7 @@ return [
     'no_items' => 'Nenhum item disponível',
     'back_to_top' => 'Voltar ao topo',
     'toggle_details' => 'Alternar Detalhes',
+    'toggle_thumbnails' => 'Alternar Miniaturas',
 
     /**
      * Header

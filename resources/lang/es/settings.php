@@ -91,6 +91,7 @@ return [
     'users_external_auth_id' => 'ID externo de autenticación',
     'users_password_warning' => 'Solo rellene a continuación si desea cambiar su password:',
     'users_system_public' => 'Este usuario representa cualquier usuario invitado que visita la aplicación. No puede utilizarse para hacer login sio que es asignado automáticamente.',
+    'users_books_display_type' => 'Seleccione el tipo de vista',
     'users_delete' => 'Borrar usuario',
     'users_delete_named' => 'Borrar usuario :userName',
     'users_delete_warning' => 'Se borrará completamente el usuario con el nombre \':userName\' del sistema.',

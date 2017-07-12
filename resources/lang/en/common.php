@@ -17,6 +17,7 @@ return [
     'name' => 'Name',
     'description' => 'Description',
     'role' => 'Role',
+    'cover_image' => 'Cover image',
 
     /**
      * Actions
@@ -44,6 +45,7 @@ return [
     'no_items' => 'No items available',
     'back_to_top' => 'Back to top',
     'toggle_details' => 'Toggle Details',
+    'toggle_thumbnails' => 'Toggle Thumbnails',
 
     /**
      * Header
