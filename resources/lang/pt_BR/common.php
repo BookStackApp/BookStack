@@ -18,6 +18,7 @@ return [
     'description' => 'Descrição',
     'role' => 'Regra',
     'cover_image' => 'Imagem de capa',
+    'cover_image_description' => 'A imagem deve estar em uma relação de aspecto 1.6: 1.',
     /**
      * Actions
      */

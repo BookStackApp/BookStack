@@ -18,7 +18,7 @@ class Book extends Entity
         return baseUrl('/books/' . urlencode($this->slug));
     }
 
-    public function getBookCover($size = 120)
+    public function getBookCover()
     {
         $default = baseUrl('/default.png');
         $image = $this->image;

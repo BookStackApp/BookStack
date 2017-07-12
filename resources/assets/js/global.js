@@ -154,10 +154,10 @@ $('[data-action="expand-entity-list-details"]').click(function() {
     $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
 });
 
-// Toggle thumbnails
+// Toggle thumbnail::hide image and reduce grid size
 $(document).ready(function(){
    $('[data-action="expand-thumbnail"]').click(function(){
-     $('.galleryItem').toggleClass("collapse").find('img').slideToggle(50);
+     $('.gallery-item').toggleClass("collapse").find('img').slideToggle(50);
    });
 });
 
