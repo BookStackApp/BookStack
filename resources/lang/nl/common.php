@@ -17,7 +17,7 @@ return [
     'name' => 'Naam',
     'description' => 'Beschrijving',
     'role' => 'Rol',
-
+    'cover_image' => 'Omslagfoto',
     /**
      * Actions
      */
@@ -43,6 +43,7 @@ return [
     'no_items' => 'Geen items beschikbaar',
     'back_to_top' => 'Terug naar boven',
     'toggle_details' => 'Details Weergeven',
+    'toggle_thumbnails' => 'Thumbnails Weergeven',
 
     /**
      * Header
