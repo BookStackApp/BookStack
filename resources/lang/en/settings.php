@@ -122,6 +122,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
         'ja' => '日本語',
+        'pl' => 'Polski',
     ]
     ///////////////////////////////////
 ];
