@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3"  data-entity-type="book" data-entity-id="{{$book->id}}">
+<div class="col-xs-6 col-sm-4 col-md-4 col-lg-3"  data-entity-type="book" data-entity-id="{{$book->id}}">
     <div class="gallery-item">
     <h4>
         <a class="text-book entity-list-item-link" href="{{$book->getUrl()}}"><i class="zmdi zmdi-book"></i><span class="entity-list-item-name">{{$book->name}}</span>
