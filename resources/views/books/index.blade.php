@@ -24,12 +24,14 @@
                 <h1>{{ trans('entities.books') }}</h1>
                 @if(count($books) > 0)
                     @if($books_display=='grid')
+                      <div class="row">
                         @foreach($books as $book)
                             @include('books/grid-item', ['book' => $book])
                         @endforeach
                         <div class="col-xs-12">
                             {!! $books->render() !!}
                         </div>
+                      </div>
                     @else
                         @foreach($books as $book)
                             @include('books/list-item', ['book' => $book])
