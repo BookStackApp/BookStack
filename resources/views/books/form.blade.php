@@ -21,7 +21,7 @@
             'currentImage' => @isset($model) ? $model->getBookCover(80) : baseUrl('/default.png') ,
             'currentId' => @isset($model) ? $model->image : 0,
             'name' => 'image',
-            'imageClass' => 'avatar cover'
+            'imageClass' => 'cover'
         ])
 </div>
 <div class="form-group">
