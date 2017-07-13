@@ -63,11 +63,6 @@ body.dragging, body.dragging * {
   &.square {
     border-radius: 3px;
   }
-  &.cover {
-    height: 192px;
-    width: 120px;
-    border-radius: 3px;
-  }
 }
 
 // System wide notifications
@@ -307,3 +302,9 @@ $btt-size: 40px;
     border-radius: 3px;
   }
 }
+
+.cover {
+    height: 192px;
+    width: 120px;
+    border-radius: 3px;
+  }
