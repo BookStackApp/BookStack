@@ -145,16 +145,27 @@ class EntityTest extends BrowserKitTest
             // Fill out form & save
             ->type($book->name, '#name')
             ->type($book->description, '#description')
+            ->press('Select Image')
+            ->click('test-image.jpg')
+            ->press('Select Image')
             ->press('Save Book')
             // Check it redirects correctly
             ->seePageIs('/books/my-first-book')
             ->see($book->name)->see($book->description);
+
+         $book = factory(Book::class)->latest();
+        $this->assertDatabaseHas('images', [
+        'id' => $book->image
+        ]);
 
         // Ensure duplicate names are given different slugs
         $this->asAdmin()
             ->visit('/books/create')
             ->type($book->name, '#name')
             ->type($book->description, '#description')
+            ->press('Select Image')
+            ->click('test-image.jpg')
+            ->press('Select Image')
             ->press('Save Book');
         
         $expectedPattern = '/\/books\/my-first-book-[0-9a-zA-Z]{3}/';
