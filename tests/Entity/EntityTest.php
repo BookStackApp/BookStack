@@ -153,7 +153,7 @@ class EntityTest extends BrowserKitTest
             ->seePageIs('/books/my-first-book')
             ->see($book->name)->see($book->description);
 
-         $book = factory(Book::class)->latest();
+        $book = factory(Book::class)->latest();
         $this->assertDatabaseHas('images', [
         'id' => $book->image
         ]);
