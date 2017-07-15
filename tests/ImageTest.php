@@ -47,7 +47,7 @@ class ImageTest extends BrowserKitTest
     }
 
 
-    public function test_image_upload()
+    protected function test_image_upload()
     {
         $page = \BookStack\Page::first();
         $this->asAdmin();
