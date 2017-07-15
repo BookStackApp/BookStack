@@ -5,6 +5,7 @@ use BookStack\Chapter;
 use BookStack\Page;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
+use ImageTest;
 
 class EntityTest extends BrowserKitTest
 {
@@ -137,6 +138,7 @@ class EntityTest extends BrowserKitTest
         $book = factory(Book::class)->make([
             'name' => 'My First Book'
         ]);
+        $imagePath = uploadImage('test-image.jpg', 0);
         $this->asAdmin()
             ->visit('/books')
             // Choose to create a book
