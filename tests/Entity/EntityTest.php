@@ -137,8 +137,6 @@ class EntityTest extends BrowserKitTest
         $book = factory(Book::class)->make([
             'name' => 'My First Book'
         ]);
-
-        $this->uploadImage('test-image.jpg', 0);
         $this->asAdmin()
             ->visit('/books')
             // Choose to create a book
@@ -147,9 +145,6 @@ class EntityTest extends BrowserKitTest
             // Fill out form & save
             ->type($book->name, '#name')
             ->type($book->description, '#description')
-            ->press('Select Image')
-            ->click('test-image.jpg')
-            ->press('Select Image')
             ->press('Save Book')
             // Check it redirects correctly
             ->seePageIs('/books/my-first-book')
@@ -269,29 +264,4 @@ class EntityTest extends BrowserKitTest
             ->visit('/')
             ->seeInElement('#recently-updated-pages', $page->name);
     }
-
-    public function test_recently_created_pages_on_home()
-    {
-        $entityChain = $this->createEntityChainBelongingToUser($this->getEditor());
-        $this->asAdmin()->visit('/')
-            ->seeInElement('#recently-created-pages', $entityChain['page']->name);
-    }
-
-    protected function uploadImage($name, $uploadedTo = 0)
-    {
-        $file = $this->getTestImage($name);
-        $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
-        return $this->getTestImagePath('gallery', $name);
-    }
-
-    protected function getTestImage($fileName)
-    {
-        return new \Illuminate\Http\UploadedFile(base_path('tests/test-data/test-image.jpg'), $fileName, 'image/jpeg', 5238);
-    }
-
-    protected function getTestImagePath($type, $fileName)
-    {
-        return '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/' . $fileName;
-    }
 }
-
