@@ -32,6 +32,12 @@ class Book extends Entity
         return $cover;
     }
 
+    public function getHeadingExcerpt($length = 35)
+    {
+        $heading = $this->name;
+        return strlen($heading) > $length ? substr($heading, 0, $length-3) . '...' : $heading;
+    }
+    
     public function cover()
     {
         return $this->belongsTo(Image::class, 'image');
