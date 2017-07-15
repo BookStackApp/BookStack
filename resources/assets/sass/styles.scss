@@ -284,6 +284,8 @@ $btt-size: 40px;
   h4 {
     font-size: 1.2em;
     text-align: center;
+    height: 55px;
+    padding: 0px 12px;
   }
   p {
     font-size: 0.8em;
@@ -291,7 +293,7 @@ $btt-size: 40px;
     padding: 0px 12px;
   }
   &.collapse {
-    height: 130px;
+    height: 150px;
   }
 }
 
