@@ -99,7 +99,7 @@ class UserProfileTest extends BrowserKitTest
     {
         $this->asAdmin()
             ->visit('/settings/users/' . $this->user->id)
-            ->select('#books_display', 'List')
+            ->select('grid', '#books_display')
             ->press('Save')
             ->visit('/books')
             ->pageNotHasElement('.gallery-item')
@@ -110,7 +110,7 @@ class UserProfileTest extends BrowserKitTest
     {
         $this->asAdmin()
             ->visit('/settings/users/' . $this->user->id)
-            ->select('#books_display', 'Grid')
+            ->select('list', '#books_display')
             ->press('Save')
             ->visit('/books')
             ->pageNotHasElement('.entity-list-item')
