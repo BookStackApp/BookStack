@@ -94,12 +94,12 @@ class UserProfileTest extends BrowserKitTest
             ->seePageIs('/settings/users/' . $guestUser->id)
             ->see('cannot delete the guest user');
     }
-    
+
     public function test_books_display_is_list()
     {
         $this->asAdmin()
             ->visit('/settings/users/' . $this->user->id)
-            ->select('#books_display', 'List')
+            ->select('grid', '#books_display')
             ->press('Save')
             ->visit('/books')
             ->pageHasElement('.entity-list-item');
@@ -109,7 +109,7 @@ class UserProfileTest extends BrowserKitTest
     {
         $this->asAdmin()
             ->visit('/settings/users/' . $this->user->id)
-            ->select('#books_display', 'Grid')
+            ->select('list', '#books_display')
             ->press('Save')
             ->visit('/books')
             ->pageHasElement('.gallery-item');
