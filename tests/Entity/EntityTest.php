@@ -294,3 +294,4 @@ class EntityTest extends BrowserKitTest
         return '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/' . $fileName;
     }
 }
+
