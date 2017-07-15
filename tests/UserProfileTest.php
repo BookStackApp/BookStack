@@ -98,7 +98,7 @@ class UserProfileTest extends BrowserKitTest
     public function test_books_display_is_list()
     {
         $this->asAdmin()
-            ->visit('/settings/user/' . $this->user->id)
+            ->visit('/settings/users/' . $this->user->id)
             ->select('books_display', 'List')
             ->press('Save')
             ->visit('/books')
@@ -108,7 +108,7 @@ class UserProfileTest extends BrowserKitTest
     public function test_books_display_is_grid()
     {
         $this->asAdmin()
-            ->visit('/settings/user/' . $this->user->id)
+            ->visit('/settings/users/' . $this->user->id)
             ->select('books_display', 'Grid')
             ->press('Save')
             ->visit('/books')
