@@ -155,9 +155,6 @@ class EntityTest extends BrowserKitTest
             ->visit('/books/create')
             ->type($book->name, '#name')
             ->type($book->description, '#description')
-            ->press('Select Image')
-            ->click('test-image.jpg')
-            ->press('Select Image')
             ->press('Save Book');
         
         $expectedPattern = '/\/books\/my-first-book-[0-9a-zA-Z]{3}/';
