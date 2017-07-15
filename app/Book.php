@@ -34,8 +34,8 @@ class Book extends Entity
 
     public function getHeadingExcerpt($length = 35)
     {
-        $heading = $this->name;
-        return strlen($heading) > $length ? substr($heading, 0, $length-3) . '...' : $heading;
+        $bookHeading = $this->name;
+        return strlen($bookHeading) > $length ? substr($bookHeading, 0, $length-3) . '...' : $bookHeading;
     }
     
     public function cover()
