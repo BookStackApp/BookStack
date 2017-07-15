@@ -5,7 +5,6 @@ use BookStack\Chapter;
 use BookStack\Page;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
-use ImageTest;
 
 class EntityTest extends BrowserKitTest
 {
@@ -138,7 +137,8 @@ class EntityTest extends BrowserKitTest
         $book = factory(Book::class)->make([
             'name' => 'My First Book'
         ]);
-        $imagePath = uploadImage('test-image.jpg', 0);
+
+        $this->uploadImage('test-image.jpg', 0);
         $this->asAdmin()
             ->visit('/books')
             // Choose to create a book
@@ -277,4 +277,20 @@ class EntityTest extends BrowserKitTest
             ->seeInElement('#recently-created-pages', $entityChain['page']->name);
     }
 
+    protected function uploadImage($name, $uploadedTo = 0)
+    {
+        $file = $this->getTestImage($name);
+        $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+        return $this->getTestImagePath('gallery', $name);
+    }
+
+    protected function getTestImage($fileName)
+    {
+        return new \Illuminate\Http\UploadedFile(base_path('tests/test-data/test-image.jpg'), $fileName, 'image/jpeg', 5238);
+    }
+
+    protected function getTestImagePath($type, $fileName)
+    {
+        return '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/' . $fileName;
+    }
 }

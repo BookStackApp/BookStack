@@ -30,7 +30,7 @@ class ImageTest extends BrowserKitTest
      * @param int $uploadedTo
      * @return string
      */
-    public function uploadImage($name, $uploadedTo = 0)
+    protected function uploadImage($name, $uploadedTo = 0)
     {
         $file = $this->getTestImage($name);
         $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
