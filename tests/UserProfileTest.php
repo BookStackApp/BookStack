@@ -97,10 +97,11 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_books_display_is_list()
     {
-        $this->asAdmin()
-            ->visit('/settings/users/' . $this->user->id)
-            ->select('list', '#books_display')
-            ->press('Save')
+        $editor = $this->getEditor([
+          'books_display' => 'list'
+        ]);
+
+        $this->actingAs($editor)
             ->visit('/books')
             ->pageNotHasElement('.gallery-item')
             ->pageHasElement('.entity-list-item');
@@ -108,12 +109,12 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_books_display_is_grid()
     {
-        $this->asAdmin()
-            ->visit('/settings/users/' . $this->user->id)
-            ->select('grid', '#books_display')
-            ->press('Save')
+        $editor = $this->getEditor([
+          'books_display' => 'grid'
+        ]);
+
+        $this->actingAs($editor)
             ->visit('/books')
-            ->pageNotHasElement('.entity-list-item')
             ->pageHasElement('.gallery-item');
     }
 }
