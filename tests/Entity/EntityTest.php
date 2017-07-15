@@ -150,11 +150,6 @@ class EntityTest extends BrowserKitTest
             ->seePageIs('/books/my-first-book')
             ->see($book->name)->see($book->description);
 
-        $book = factory(Book::class)->latest();
-        $this->assertDatabaseHas('images', [
-        'id' => $book->image
-        ]);
-
         // Ensure duplicate names are given different slugs
         $this->asAdmin()
             ->visit('/books/create')
