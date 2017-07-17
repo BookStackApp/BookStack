@@ -21,6 +21,7 @@ class LdapTest extends BrowserKitTest
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption');
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
