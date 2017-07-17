@@ -28,4 +28,4 @@ after_failure:
   - cat storage/logs/laravel.log
 
 script:
-  - phpunit
+  - phpunit --stop-on-error --stop-on-failure
