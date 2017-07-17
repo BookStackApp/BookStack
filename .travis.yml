@@ -8,9 +8,6 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-before_install:
-  - echo "extension = ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-
 before_script:
   - mysql -u root -e 'create database `bookstack-test`;'
   - mysql -u root -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED BY 'bookstack-test';"
