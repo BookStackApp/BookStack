@@ -4,8 +4,12 @@ language: php
 php:
   - 7.0
 
+addons:
+  apt:
+    packages:
+      - php7.0-ldap
+
 before_install:
-  - sudo apt-get install php7.0-ldap
   - echo "extension=ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - php -i "(command-line 'phpinfo()')" | grep ldap
 
