@@ -4,6 +4,11 @@ language: php
 php:
   - 7.0
 
+before_install:
+  - pecl install ldap
+  - echo "extension=ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - php -i "(command-line 'phpinfo()')" | grep ldap
+
 cache:
   directories:
     - $HOME/.composer/cache
