@@ -7,7 +7,7 @@ php:
 addons:
   apt:
     packages:
-      - php7.0-ldap
+      - php-ldap
 
 before_install:
   - echo "extension=ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
