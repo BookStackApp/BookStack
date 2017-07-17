@@ -9,7 +9,7 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-    - echo "extension=ldap.so" >> php --ini | grep "Loaded Configuration" | sed -e "s|.:\s||"
+  - echo "extension = ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
   - mysql -u root -e 'create database `bookstack-test`;'
