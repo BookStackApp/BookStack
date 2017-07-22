@@ -12,7 +12,7 @@ class UpgradeDatabaseEncoding extends Command
      *
      * @var string
      */
-    protected $signature = 'bookstack:db-utf8mb4-syntax {--database= : The database connection to use.}';
+    protected $signature = 'bookstack:db-utf8mb4 {--database= : The database connection to use.}';
 
     /**
      * The console command description.
