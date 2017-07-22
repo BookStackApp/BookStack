@@ -152,6 +152,14 @@ pre {
   }
 }
 
+@media print {
+  pre {
+    padding-left: 12px;
+  }
+  pre:after {
+    display: none;
+  }
+}
 
 blockquote {
   display: block;
