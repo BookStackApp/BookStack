@@ -30,7 +30,7 @@ return [
     'app_logo' => 'Logo de l\'Application',
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',
-    'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
+    'app_primary_color_desc' => 'Cela devrait être une valeur hexadécimale. <br>Laisser vide pour rétablir la couleur par défaut.',
 
     /**
      * Registration settings
