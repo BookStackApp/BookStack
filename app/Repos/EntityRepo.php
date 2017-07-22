@@ -571,7 +571,7 @@ class EntityRepo
 
         $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
-        $draftPage->text = $this->pageToPlainText($draftPage->html);
+        $draftPage->text = $this->pageToPlainText($draftPage);
         $draftPage->draft = false;
         $draftPage->revision_count = 1;
 
@@ -944,7 +944,7 @@ class EntityRepo
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
         $page->slug = $this->findSuitableSlug('page', $page->name, $page->id, $book->id);
-        $page->text = $this->pageToPlainText($page->html);
+        $page->text = $this->pageToPlainText($page);
         $page->updated_by = user()->id;
         $page->save();
         $this->searchService->indexEntity($page);
@@ -964,7 +964,7 @@ class EntityRepo
         if ($page->draft) {
             $page->fill($data);
             if (isset($data['html'])) {
-                $page->text = $this->pageToPlainText($data['html']);
+                $page->text = $this->pageToPlainText($page);
             }
             $page->save();
             return $page;
