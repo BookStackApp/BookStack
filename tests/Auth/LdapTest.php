@@ -11,6 +11,7 @@ class LdapTest extends BrowserKitTest
     public function setUp()
     {
         parent::setUp();
+        if (!defined('LDAP_OPT_REFERRALS')) define('LDAP_OPT_REFERRALS', 1);
         app('config')->set(['auth.method' => 'ldap', 'services.ldap.base_dn' => 'dc=ldap,dc=local', 'auth.providers.users.driver' => 'ldap']);
         $this->mockLdap = \Mockery::mock(\BookStack\Services\Ldap::class);
         $this->app['BookStack\Services\Ldap'] = $this->mockLdap;
@@ -21,6 +22,7 @@ class LdapTest extends BrowserKitTest
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(4);
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
@@ -49,6 +51,7 @@ class LdapTest extends BrowserKitTest
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
         $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('setOption')->times(2);
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
@@ -72,6 +75,7 @@ class LdapTest extends BrowserKitTest
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(2);
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
