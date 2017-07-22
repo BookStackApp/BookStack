@@ -379,7 +379,7 @@ module.exports = function (ngApp, events) {
          */
         $scope.discardDraft = function () {
             let url = window.baseUrl('/ajax/page/' + pageId);
-            $http.get(url).then((responseData) => {
+            $http.get(url).then(responseData => {
                 if (autoSave) $interval.cancel(autoSave);
                 $scope.draftText = trans('entities.pages_editing_page');
                 $scope.isUpdateDraft = false;
