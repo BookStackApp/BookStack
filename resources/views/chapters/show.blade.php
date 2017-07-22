@@ -5,10 +5,10 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 faded" ng-non-bindable>
+                <div class="col-sm-6 col-xs-3 faded" ng-non-bindable>
                     @include('chapters._breadcrumbs', ['chapter' => $chapter])
                 </div>
-                <div class="col-sm-4 faded">
+                <div class="col-sm-6 col-xs-9 faded">
                     <div class="action-buttons">
                         <span dropdown class="dropdown-container">
                             <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
