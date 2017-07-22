@@ -11,6 +11,7 @@ class LdapTest extends BrowserKitTest
     public function setUp()
     {
         parent::setUp();
+        if (!defined('LDAP_OPT_REFERRALS')) define('LDAP_OPT_REFERRALS', 1);
         app('config')->set(['auth.method' => 'ldap', 'services.ldap.base_dn' => 'dc=ldap,dc=local', 'auth.providers.users.driver' => 'ldap']);
         $this->mockLdap = \Mockery::mock(\BookStack\Services\Ldap::class);
         $this->app['BookStack\Services\Ldap'] = $this->mockLdap;
