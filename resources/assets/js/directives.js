@@ -123,25 +123,31 @@ module.exports = function (ngApp, events) {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 const menu = element.find('ul');
-                element.find('[dropdown-toggle]').on('click', function () {
+
+                function hide() {
+                    menu.hide();
+                    menu.removeClass('anim menuIn');
+                }
+
+                function show() {
                     menu.show().addClass('anim menuIn');
+                    element.mouseleave(hide);
+
+                    // Focus on input if exist in dropdown and hide on enter press
                     let inputs = menu.find('input');
-                    let hasInput = inputs.length > 0;
-                    if (hasInput) {
-                        inputs.first().focus();
-                        element.on('keypress', 'input', event => {
-                            if (event.keyCode === 13) {
-                                event.preventDefault();
-                                menu.hide();
-                                menu.removeClass('anim menuIn');
-                                return false;
-                            }
-                        });
-                    }
-                    element.mouseleave(function () {
-                        menu.hide();
-                        menu.removeClass('anim menuIn');
-                    });
+                    if (inputs.length > 0) inputs.first().focus();
+                }
+
+                // Hide menu on option click
+                element.on('click', '> ul a', hide);
+                // Show dropdown on toggle click.
+                element.find('[dropdown-toggle]').on('click', show);
+                // Hide menu on enter press in inputs
+                element.on('keypress', 'input', event => {
+                    if (event.keyCode !== 13) return true;
+                    event.preventDefault();
+                    hide();
+                    return false;
                 });
             }
         };
