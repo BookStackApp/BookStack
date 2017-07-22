@@ -142,7 +142,6 @@ form.search-box {
   color: #aaa;
   padding: 0 $-xs;
 }
-
 .faded {
   a, button, span, span > div {
     color: #666;
@@ -178,6 +177,8 @@ form.search-box {
     padding-left: 0;
   }
 }
+
+
 .action-buttons .dropdown-container:last-child a {
   padding-right: 0;
   padding-left: $-s;
@@ -193,6 +194,25 @@ form.search-box {
   }
   &.text-center {
     text-align: center;
+  }
+}
+
+@include smaller-than($m) {
+  .breadcrumbs .text-button, .action-buttons .text-button {
+    padding: $-s $-xs;
+  }
+  .action-buttons .dropdown-container:last-child a {
+    padding-left: $-xs;
+  }
+  .breadcrumbs .text-button {
+    font-size: 0;
+  }
+  .breadcrumbs a i {
+    font-size: $fs-m;
+    padding-right: 0;
+  }
+  .breadcrumbs span.sep {
+    padding: 0 $-xxs;
   }
 }
 
