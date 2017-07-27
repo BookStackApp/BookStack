@@ -52,7 +52,7 @@
             <div class="col-md-7">
                 <h1>{{ $chapter->name }}</h1>
                 <div class="chapter-content" v-if="!searching">
-                    <p class="text-muted">{{ $chapter->description }}</p>
+                    <p class="text-muted">{!! nl2br($chapter->description) !!}</p>
 
                     @if(count($pages) > 0)
                         <div class="page-list">

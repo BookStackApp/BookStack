@@ -56,7 +56,7 @@
 
                 <h1>{{$book->name}}</h1>
                 <div class="book-content" v-if="!searching">
-                    <p class="text-muted" v-pre>{{$book->description}}</p>
+                    <p class="text-muted" v-pre>{!! nl2br($book->description) !!}</p>
 
                     <div class="page-list" v-pre>
                         <hr>
@@ -118,7 +118,7 @@
                         <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
                     </form>
                 </div>
-                
+
                 <div class="activity">
                     <h3>{{ trans('entities.recent_activity') }}</h3>
                     @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])
