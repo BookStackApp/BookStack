@@ -4,7 +4,8 @@
     "build": "gulp build",
     "production": "gulp build --production",
     "dev": "gulp",
-    "watch": "gulp"
+    "watch": "gulp",
+    "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
   },
   "devDependencies": {
     "babelify": "^7.3.0",

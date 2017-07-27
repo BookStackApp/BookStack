@@ -1,5 +1,17 @@
 <div class="page {{$page->draft ? 'draft' : ''}} entity-list-item" data-entity-type="page" data-entity-id="{{$page->id}}">
     <h4>
+        @if (isset($showPath) && $showPath)
+            <a href="{{ $page->book->getUrl() }}" class="text-book">
+                <i class="zmdi zmdi-book"></i>{{ $page->book->getShortName() }}
+            </a>
+            <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
+            @if($page->chapter)
+                <a href="{{ $page->chapter->getUrl() }}" class="text-chapter">
+                    <i class="zmdi zmdi-collection-bookmark"></i>{{ $page->chapter->getShortName() }}
+                </a>
+                <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
+            @endif
+        @endif
         <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name">{{ $page->name }}</span></a>
     </h4>
 
