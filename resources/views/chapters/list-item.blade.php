@@ -2,7 +2,7 @@
     <h4>
         @if (isset($showPath) && $showPath)
             <a href="{{ $chapter->book->getUrl() }}" class="text-book">
-                <i class="zmdi zmdi-book"></i>{{ $chapter->book->name }}
+                <i class="zmdi zmdi-book"></i>{{ $chapter->book->getShortName() }}
             </a>
             <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
         @endif

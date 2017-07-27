@@ -2,7 +2,7 @@
     @if(count($entities) > 0)
         @foreach($entities as $index => $entity)
             @if($entity->isA('page'))
-                @include('pages/list-item', ['page' => $entity])
+                @include('pages/list-item', ['page' => $entity, 'showPath' => true])
             @elseif($entity->isA('book'))
                 @include('books/list-item', ['book' => $entity])
             @elseif($entity->isA('chapter'))
