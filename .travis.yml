@@ -4,15 +4,6 @@ language: php
 php:
   - 7.0
 
-addons:
-  apt:
-    packages:
-      - ldap-utils
-      - slapd
-
-before_install:
-  - echo "extension=ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-
 cache:
   directories:
     - $HOME/.composer/cache
@@ -34,4 +25,4 @@ after_failure:
   - cat storage/logs/laravel.log
 
 script:
-  - phpunit --stop-on-error --stop-on-failure
+  - phpunit
