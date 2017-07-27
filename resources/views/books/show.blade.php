@@ -56,7 +56,7 @@
 
                 <h1>{{$book->name}}</h1>
                 <div class="book-content" v-if="!searching">
-                    <p class="text-muted" v-pre>{!! nl2br($book->description) !!}</p>
+                    <p class="text-muted" v-pre>{!! nl2br(e($book->description)) !!}</p>
 
                     <div class="page-list" v-pre>
                         <hr>
