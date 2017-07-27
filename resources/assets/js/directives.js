@@ -193,30 +193,6 @@ module.exports = function (ngApp, events) {
                 }
 
                 scope.tinymce.extraSetups.push(tinyMceSetup);
-
-                // Custom tinyMCE plugins
-                tinymce.PluginManager.add('customhr', function (editor) {
-                    editor.addCommand('InsertHorizontalRule', function () {
-                        let hrElem = document.createElement('hr');
-                        let cNode = editor.selection.getNode();
-                        let parentNode = cNode.parentNode;
-                        parentNode.insertBefore(hrElem, cNode);
-                    });
-
-                    editor.addButton('hr', {
-                        icon: 'hr',
-                        tooltip: 'Horizontal line',
-                        cmd: 'InsertHorizontalRule'
-                    });
-
-                    editor.addMenuItem('hr', {
-                        icon: 'hr',
-                        text: 'Horizontal line',
-                        cmd: 'InsertHorizontalRule',
-                        context: 'insert'
-                    });
-                });
-
                 tinymce.init(scope.tinymce);
             }
         }
@@ -257,6 +233,21 @@ module.exports = function (ngApp, events) {
                 extraKeys[`${metaKey}-S`] = function(cm) {scope.$emit('save-draft');};
                 // Show link selector
                 extraKeys[`Shift-${metaKey}-K`] = function(cm) {showLinkSelector()};
+                // Insert Link
+                extraKeys[`${metaKey}-K`] = function(cm) {insertLink()};
+                // FormatShortcuts
+                extraKeys[`${metaKey}-1`] = function(cm) {replaceLineStart('##');};
+                extraKeys[`${metaKey}-2`] = function(cm) {replaceLineStart('###');};
+                extraKeys[`${metaKey}-3`] = function(cm) {replaceLineStart('####');};
+                extraKeys[`${metaKey}-4`] = function(cm) {replaceLineStart('#####');};
+                extraKeys[`${metaKey}-5`] = function(cm) {replaceLineStart('');};
+                extraKeys[`${metaKey}-d`] = function(cm) {replaceLineStart('');};
+                extraKeys[`${metaKey}-6`] = function(cm) {replaceLineStart('>');};
+                extraKeys[`${metaKey}-q`] = function(cm) {replaceLineStart('>');};
+                extraKeys[`${metaKey}-7`] = function(cm) {wrapSelection('\n```\n', '\n```');};
+                extraKeys[`${metaKey}-8`] = function(cm) {wrapSelection('`', '`');};
+                extraKeys[`Shift-${metaKey}-E`] = function(cm) {wrapSelection('`', '`');};
+                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</div>');};
                 cm.setOption('extraKeys', extraKeys);
 
                 // Update data on content change
@@ -309,6 +300,73 @@ module.exports = function (ngApp, events) {
                     cm.setSelections(cursor);
                 }
 
+                // Helper to replace the start of the line
+                function replaceLineStart(newStart) {
+                    let cursor = cm.getCursor();
+                    let lineContent = cm.getLine(cursor.line);
+                    let lineLen = lineContent.length;
+                    let lineStart = lineContent.split(' ')[0];
+
+                    // Remove symbol if already set
+                    if (lineStart === newStart) {
+                        lineContent = lineContent.replace(`${newStart} `, '');
+                        cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
+                        cm.setCursor({line: cursor.line, ch: cursor.ch - (newStart.length + 1)});
+                        return;
+                    }
+
+                    let alreadySymbol = /^[#>`]/.test(lineStart);
+                    let posDif = 0;
+                    if (alreadySymbol) {
+                        posDif = newStart.length - lineStart.length;
+                        lineContent = lineContent.replace(lineStart, newStart).trim();
+                    } else if (newStart !== '') {
+                        posDif = newStart.length + 1;
+                        lineContent = newStart + ' ' + lineContent;
+                    }
+                    cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + posDif});
+                }
+
+                function wrapLine(start, end) {
+                    let cursor = cm.getCursor();
+                    let lineContent = cm.getLine(cursor.line);
+                    let lineLen = lineContent.length;
+                    let newLineContent = lineContent;
+
+                    if (lineContent.indexOf(start) === 0 && lineContent.slice(-end.length) === end) {
+                        newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
+                    } else {
+                        newLineContent = `${start}${lineContent}${end}`;
+                    }
+
+                    cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + (newLineContent.length - lineLen)});
+                }
+
+                function wrapSelection(start, end) {
+                    let selection = cm.getSelection();
+                    if (selection === '') return wrapLine(start, end);
+                    let newSelection = selection;
+                    let frontDiff = 0;
+                    let endDiff = 0;
+
+                    if (selection.indexOf(start) === 0 && selection.slice(-end.length) === end) {
+                        newSelection = selection.slice(start.length, selection.length - end.length);
+                        endDiff = -(end.length + start.length);
+                    } else {
+                        newSelection = `${start}${selection}${end}`;
+                        endDiff = start.length + end.length;
+                    }
+
+                    let selections = cm.listSelections()[0];
+                    cm.replaceSelection(newSelection);
+                    let headFirst = selections.head.ch <= selections.anchor.ch;
+                    selections.head.ch += headFirst ? frontDiff : endDiff;
+                    selections.anchor.ch += headFirst ? endDiff : frontDiff;
+                    cm.setSelections([selections]);
+                }
+
                 // Handle image upload and add image into markdown content
                 function uploadImage(file) {
                     if (file === null || file.type.indexOf('image') !== 0) return;
@@ -349,6 +407,16 @@ module.exports = function (ngApp, events) {
                         cm.replaceSelection(newText);
                         cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
                     });
+                }
+
+                function insertLink() {
+                    let cursorPos = cm.getCursor('from');
+                    let selectedText = cm.getSelection() || '';
+                    let newText = `[${selectedText}]()`;
+                    cm.focus();
+                    cm.replaceSelection(newText);
+                    let cursorPosDiff = (selectedText === '') ? -3 : -1;
+                    cm.setCursor(cursorPos.line, cursorPos.ch + newText.length+cursorPosDiff);
                 }
 
                 // Show the image manager and handle image insertion
