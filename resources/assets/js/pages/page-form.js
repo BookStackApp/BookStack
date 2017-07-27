@@ -120,7 +120,7 @@ function codePlugin() {
         $codeMirrorContainer.replaceWith($pre);
     }
 
-    window.tinymce.PluginManager.add('codeeditor', (editor, url) => {
+    window.tinymce.PluginManager.add('codeeditor', function(editor, url) {
 
         let $ = editor.$;
 
