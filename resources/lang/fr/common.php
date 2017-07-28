@@ -9,7 +9,7 @@ return [
     'back' => 'Retour',
     'save' => 'Enregistrer',
     'continue' => 'Continuer',
-    'select' => 'Selectionner',
+    'select' => 'Sélectionner',
 
     /**
      * Form Labels
@@ -53,6 +53,6 @@ return [
     /**
      * Email Content
      */
-    'email_action_help' => 'Si vous rencontrez des problèmes pour cliquer le bouton ":actionText", copiez et collez l\'adresse ci-dessous dans votre navigateur:',
+    'email_action_help' => 'Si vous rencontrez des problèmes pour cliquer sur le bouton ":actionText", copiez et collez l\'adresse ci-dessous dans votre navigateur :',
     'email_rights' => 'Tous droits réservés',
 ];

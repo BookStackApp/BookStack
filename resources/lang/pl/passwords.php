@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'password' => 'Les mots de passe doivent faire au moins 6 caractères et correspondre à la confirmation.',
-    'user' => "Nous n'avons pas trouvé d'utilisateur avec cette adresse.",
-    'token' => 'Le jeton de réinitialisation est invalide.',
-    'sent' => 'Nous vous avons envoyé un lien de réinitialisation de mot de passe !',
-    'reset' => 'Votre mot de passe a été réinitialisé !',
+    'password' => 'Hasło musi zawierać co najmniej 6 znaków i być zgodne z powtórzeniem.',
+    'user' => "Nie znaleziono użytkownika o takim adresie email.",
+    'token' => 'Ten token resetowania hasła jest nieprawidłowy.',
+    'sent' => 'Wysłaliśmy Ci link do resetowania hasła!',
+    'reset' => 'Twoje hasło zostało zresetowane!',
 
 ];
