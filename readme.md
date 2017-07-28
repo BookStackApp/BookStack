@@ -22,8 +22,11 @@ All development on BookStack is currently done on the master branch. When it's t
 SASS is used to help the CSS development and the JavaScript is run through browserify/babel to allow for writing ES6 code. Both of these are done using gulp. To run the build task you can use the following commands:
 
 ``` bash
-# Build and minify for production
+# Build assets for development
 npm run-script build
+
+# Build and minify assets for production
+npm run-script production
 
 # Build for dev (With sourcemaps) and watch for changes
 npm run-script dev
