@@ -468,7 +468,7 @@ class PermissionService
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
-        $nonJointPermissions = ['restrictions', 'image', 'attachment'];
+        $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {

@@ -60,6 +60,13 @@ return [
     'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
     'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
 
+    // Comments
+    'comment_list' => 'An error occurred while fetching the comments.',
+    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
+    'comment_add' => 'An error occurred while adding the comment.',
+    'comment_delete' => 'An error occurred while deleting the comment.',
+    'empty_comment' => 'Cannot add an empty comment.',
+
     // Error pages
     '404_page_not_found' => 'Page Not Found',
     'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
