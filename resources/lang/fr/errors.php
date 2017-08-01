@@ -67,4 +67,11 @@ return [
     'error_occurred' => 'Une erreur est survenue',
     'app_down' => ':appName n\'est pas en service pour le moment',
     'back_soon' => 'Nous serons bientôt de retour.',
+
+    // comments
+    'comment_list' => 'Une erreur s\'est produite lors de la récupération des commentaires.',
+    'cannot_add_comment_to_draft' => 'Vous ne pouvez pas ajouter de commentaires à un projet.',
+    'comment_add' => 'Une erreur s\'est produite lors de l\'ajout du commentaire.',
+    'comment_delete' => 'Une erreur s\'est produite lors de la suppression du commentaire.',
+    'empty_comment' => 'Impossible d\'ajouter un commentaire vide.',
 ];

@@ -71,3 +71,13 @@ $factory->define(BookStack\Image::class, function ($faker) {
         'uploaded_to' => 0
     ];
 });
+
+$factory->define(BookStack\Comment::class, function($faker) {
+    $text = $faker->paragraph(3);
+    $html = '<p>' . $text. '</p>';
+    return [
+        'html' => $html,
+        'text' => $text,
+        'active' => 1
+    ];
+});
