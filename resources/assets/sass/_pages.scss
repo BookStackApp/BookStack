@@ -311,3 +311,7 @@
     }
   }
 }
+
+.comment-editor .CodeMirror, .comment-editor .CodeMirror-scroll {
+  min-height: 175px;
+}
