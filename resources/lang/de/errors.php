@@ -67,4 +67,11 @@ return [
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
     'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',
     'back_soon' => 'Wir werden so schnell wie m&ouml;glich wieder online sein.',
+
+    // Comments
+    'comment_list' => 'Beim Abrufen der Kommentare ist ein Fehler aufgetreten.',
+    'cannot_add_comment_to_draft' => 'Du kannst keine Kommentare zu einem Entwurf hinzufügen.',
+    'comment_add' => 'Beim Hinzufügen des Kommentars ist ein Fehler aufgetreten.',
+    'comment_delete' => 'Beim Löschen des Kommentars ist ein Fehler aufgetreten.',
+    'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen',
 ];
