@@ -115,45 +115,6 @@ module.exports = function (ngApp, events) {
     }]);
 
     /**
-     * Dropdown
-     * Provides some simple logic to create small dropdown menus
-     */
-    ngApp.directive('dropdown', [function () {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                const menu = element.find('ul');
-
-                function hide() {
-                    menu.hide();
-                    menu.removeClass('anim menuIn');
-                }
-
-                function show() {
-                    menu.show().addClass('anim menuIn');
-                    element.mouseleave(hide);
-
-                    // Focus on input if exist in dropdown and hide on enter press
-                    let inputs = menu.find('input');
-                    if (inputs.length > 0) inputs.first().focus();
-                }
-
-                // Hide menu on option click
-                element.on('click', '> ul a', hide);
-                // Show dropdown on toggle click.
-                element.find('[dropdown-toggle]').on('click', show);
-                // Hide menu on enter press in inputs
-                element.on('keypress', 'input', event => {
-                    if (event.keyCode !== 13) return true;
-                    event.preventDefault();
-                    hide();
-                    return false;
-                });
-            }
-        };
-    }]);
-
-    /**
      * TinyMCE
      * An angular wrapper around the tinyMCE editor.
      */

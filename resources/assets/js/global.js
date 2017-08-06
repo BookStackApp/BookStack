@@ -1,4 +1,5 @@
 "use strict";
+require("babel-polyfill");
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -22,6 +23,7 @@ window.$http = axiosInstance;
 Vue.prototype.$http = axiosInstance;
 
 require("./vues/vues");
+require("./components");
 
 
 // AngularJS - Create application and load components
