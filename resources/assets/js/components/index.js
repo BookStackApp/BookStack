@@ -1,6 +1,11 @@
 
 let componentMapping = {
     'dropdown': require('./dropdown'),
+    'overlay': require('./overlay'),
+    'back-to-top': require('./back-top-top'),
+    'notification': require('./notification'),
+    'chapter-toggle': require('./chapter-toggle'),
+    'expand-toggle': require('./expand-toggle'),
 };
 
 window.components = {};

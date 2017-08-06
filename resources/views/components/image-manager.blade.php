@@ -1,10 +1,10 @@
 <div id="image-manager" image-type="{{ $imageType }}" ng-controller="ImageManagerController" uploaded-to="{{ $uploaded_to or 0 }}">
-    <div class="overlay" ng-cloak ng-click="hide()">
+    <div overlay ng-cloak ng-click="hide()">
         <div class="popup-body" ng-click="$event.stopPropagation()">
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
-                <button class="popup-close neg corner-button button">x</button>
+                <button class="overlay-close neg corner-button button">x</button>
             </div>
 
             <div class="flex-fill image-manager-body">

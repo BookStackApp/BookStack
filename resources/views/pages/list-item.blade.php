@@ -15,11 +15,13 @@
         <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name">{{ $page->name }}</span></a>
     </h4>
 
-    @if(isset($page->searchSnippet))
-        <p class="text-muted">{!! $page->searchSnippet !!}</p>
-    @else
-        <p class="text-muted">{{ $page->getExcerpt() }}</p>
-    @endif
+    <div class="entity-item-snippet">
+        @if(isset($page->searchSnippet))
+            <p class="text-muted">{!! $page->searchSnippet !!}</p>
+        @else
+            <p class="text-muted">{{ $page->getExcerpt() }}</p>
+        @endif
+    </div>
 
     @if(isset($style) && $style === 'detailed')
         <div class="row meta text-muted text-small">
