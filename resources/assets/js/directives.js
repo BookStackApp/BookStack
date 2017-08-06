@@ -713,6 +713,7 @@ module.exports = function (ngApp, events) {
                 function hide() {
                     element.fadeOut(240);
                 }
+                scope.hide = hide;
 
                 // Listen to confirmation of entity selections (doubleclick)
                 events.listen('entity-select-confirm', entity => {
