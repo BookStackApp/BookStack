@@ -1,5 +1,3 @@
-"use strict";
-// Configure ZeroClipboard
 const Clipboard = require("clipboard");
 const Code = require('../code');
 
