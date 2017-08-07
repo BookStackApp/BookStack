@@ -21,7 +21,7 @@ class Overlay {
             let targetOpacity = show ? (elapsedTime / duration) : 1-(elapsedTime / duration);
             this.container.style.opacity = targetOpacity;
             if (elapsedTime > duration) {
-                this.container.style.display = show ? 'display' : 'none';
+                this.container.style.display = show ? 'flex' : 'none';
                 this.container.style.opacity = '';
             } else {
                 requestAnimationFrame(setOpacity.bind(this));
