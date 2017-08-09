@@ -383,7 +383,7 @@ module.exports = function (ngApp, events) {
                 // Show the image manager and handle image insertion
                 function showImageManager() {
                     let cursorPos = cm.getCursor('from');
-                    window.ImageManager.showExternal(image => {
+                    window.ImageManager.show(image => {
                         let selectedText = cm.getSelection();
                         let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
                         cm.focus();
