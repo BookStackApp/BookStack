@@ -21,6 +21,8 @@ for (let i = 0, len = componentNames.length; i < len; i++) {
     if (typeof window.components[name] === "undefined") window.components[name] = [];
     for (let j = 0, jLen = elems.length; j < jLen; j++) {
          let instance = new component(elems[j]);
+         if (typeof elems[j].components === 'undefined') elems[j].components = {};
+         elems[j].components[name] = instance;
          window.components[name].push(instance);
     }
 }

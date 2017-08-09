@@ -67,10 +67,8 @@ require("./vues/vues");
 require("./components");
 
 // Load in angular specific items
-const Services = require('./services');
 const Directives = require('./directives');
 const Controllers = require('./controllers');
-Services(ngApp, window.Events);
 Directives(ngApp, window.Events);
 Controllers(ngApp, window.Events);
 

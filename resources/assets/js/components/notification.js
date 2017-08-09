@@ -7,14 +7,16 @@ class Notification {
         this.textElem = elem.querySelector('span');
         this.autohide = this.elem.hasAttribute('data-autohide');
         window.Events.listen(this.type, text => {
-            console.log('show', text);
             this.show(text);
         });
         elem.addEventListener('click', this.hide.bind(this));
         if (elem.hasAttribute('data-show')) this.show(this.textElem.textContent);
+
+        this.hideCleanup = this.hideCleanup.bind(this);
     }
 
     show(textToShow = '') {
+        this.elem.removeEventListener('transitionend', this.hideCleanup);
         this.textElem.textContent = textToShow;
         this.elem.style.display = 'block';
         setTimeout(() => {
@@ -26,13 +28,12 @@ class Notification {
 
     hide() {
         this.elem.classList.remove('showing');
+        this.elem.addEventListener('transitionend', this.hideCleanup);
+    }
 
-        function transitionEnd() {
-            this.elem.style.display = 'none';
-            this.elem.removeEventListener('transitionend', transitionEnd);
-        }
-
-        this.elem.addEventListener('transitionend', transitionEnd.bind(this));
+    hideCleanup() {
+        this.elem.style.display = 'none';
+        this.elem.removeEventListener('transitionend', this.hideCleanup);
     }
 
 }

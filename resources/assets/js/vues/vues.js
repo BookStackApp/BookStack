@@ -7,7 +7,8 @@ function exists(id) {
 let vueMapping = {
     'search-system': require('./search'),
     'entity-dashboard': require('./entity-search'),
-    'code-editor': require('./code-editor')
+    'code-editor': require('./code-editor'),
+    'image-manager': require('./image-manager'),
 };
 
 window.vues = {};
