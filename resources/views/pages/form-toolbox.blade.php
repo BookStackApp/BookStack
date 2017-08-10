@@ -9,31 +9,36 @@
         @endif
     </div>
 
-    <div toolbox-tab-content="tags" ng-controller="PageTagController" page-id="{{ $page->id or 0 }}">
+    <div toolbox-tab-content="tags" id="tag-manager" page-id="{{ $page->id or 0 }}">
         <h4>{{ trans('entities.page_tags') }}</h4>
         <div class="padded tags">
             <p class="muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
-            <table class="no-style" tag-autosuggestions style="width: 100%;">
-                <tbody ui-sortable="sortOptions" ng-model="tags" >
-                    <tr ng-repeat="tag in tags track by $index">
-                        <td width="20" ><i class="handle zmdi zmdi-menu"></i></td>
-                        <td><input autosuggest="{{ baseUrl('/ajax/tags/suggest/names') }}" autosuggest-type="name" class="outline" ng-attr-name="tags[@{{$index}}][name]" type="text" ng-model="tag.name" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"></td>
-                        <td><input autosuggest="{{ baseUrl('/ajax/tags/suggest/values') }}" autosuggest-type="value" class="outline" ng-attr-name="tags[@{{$index}}][value]" type="text" ng-model="tag.value" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"></td>
-                        <td width="10" ng-show="tags.length != 1" class="text-center text-neg" style="padding: 0;" ng-click="removeTag(tag)"><i class="zmdi zmdi-close"></i></td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <draggable class="fake-table no-style tag-table" :options="{handle: '.handle'}" :list="tags" element="div" style="width: 100%;">
+                <transition-group name="test" tag="div">
+                    <div v-for="(tag, i) in tags" :key="tag.key">
+                        <div width="20" class="handle" ><i class="zmdi zmdi-menu"></i></div>
+                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/names') }}" autosuggest-type="name" class="outline" :name="tags[i].name"
+                                   v-model="tag.name" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"></div>
+                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/values') }}" autosuggest-type="value" class="outline" :name="tags[i].value"
+                                   v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"></div>
+                        <div width="10" v-show="tags.length !== 1" class="text-center text-neg" style="padding: 0;" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
+                    </div>
+                </transition-group>
+            </draggable>
+
             <table class="no-style" style="width: 100%;">
                 <tbody>
                 <tr class="unsortable">
-                    <td  width="34"></td>
-                    <td ng-click="addEmptyTag()">
+                    <td width="34"></td>
+                    <td @click="addEmptyTag">
                         <button type="button" class="text-button">{{ trans('entities.tags_add') }}</button>
                     </td>
                     <td></td>
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 

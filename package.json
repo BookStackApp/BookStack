@@ -40,7 +40,8 @@
     "markdown-it": "^8.3.1",
     "markdown-it-task-lists": "^2.0.0",
     "moment": "^2.12.0",
-    "vue": "^2.2.6"
+    "vue": "^2.2.6",
+    "vuedraggable": "^2.14.1"
   },
   "browser": {
     "vue": "vue/dist/vue.common.js"
