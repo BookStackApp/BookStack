@@ -9,6 +9,7 @@ let vueMapping = {
     'entity-dashboard': require('./entity-search'),
     'code-editor': require('./code-editor'),
     'image-manager': require('./image-manager'),
+    'tag-manager': require('./tag-manager'),
 };
 
 window.vues = {};

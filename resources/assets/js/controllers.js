@@ -157,74 +157,7 @@ module.exports = function (ngApp, events) {
                 containment: "parent",
                 axis: "y"
             };
-
-            /**
-             * Push an empty tag to the end of the scope tags.
-             */
-            function addEmptyTag() {
-                $scope.tags.push({
-                    name: '',
-                    value: ''
-                });
-            }
-            $scope.addEmptyTag = addEmptyTag;
-
-            /**
-             * Get all tags for the current book and add into scope.
-             */
-            function getTags() {
-                let url = window.baseUrl(`/ajax/tags/get/page/${pageId}`);
-                $http.get(url).then((responseData) => {
-                    $scope.tags = responseData.data;
-                    addEmptyTag();
-                });
-            }
-            getTags();
-
-            /**
-             * Set the order property on all tags.
-             */
-            function setTagOrder() {
-                for (let i = 0; i < $scope.tags.length; i++) {
-                    $scope.tags[i].order = i;
-                }
-            }
-
-            /**
-             * When an tag changes check if another empty editable
-             * field needs to be added onto the end.
-             * @param tag
-             */
-            $scope.tagChange = function(tag) {
-                let cPos = $scope.tags.indexOf(tag);
-                if (cPos !== $scope.tags.length-1) return;
-
-                if (tag.name !== '' || tag.value !== '') {
-                    addEmptyTag();
-                }
-            };
-
-            /**
-             * When an tag field loses focus check the tag to see if its
-             * empty and therefore could be removed from the list.
-             * @param tag
-             */
-            $scope.tagBlur = function(tag) {
-                let isLast = $scope.tags.length - 1 === $scope.tags.indexOf(tag);
-                if (tag.name === '' && tag.value === '' && !isLast) {
-                    let cPos = $scope.tags.indexOf(tag);
-                    $scope.tags.splice(cPos, 1);
-                }
-            };
-
-            /**
-             * Remove a tag from the current list.
-             * @param tag
-             */
-            $scope.removeTag = function(tag) {
-                let cIndex = $scope.tags.indexOf(tag);
-                $scope.tags.splice(cIndex, 1);
-            };
+            // TODO - Delete
 
         }]);
 
