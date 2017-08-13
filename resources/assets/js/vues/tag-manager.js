@@ -1,15 +1,15 @@
 const draggable = require('vuedraggable');
+const autosuggest = require('./components/autosuggest');
 
 let data = {
     pageId: false,
     tags: [],
 };
 
-const components = {draggable};
+const components = {draggable, autosuggest};
+const directives = {};
 
-let computed = {
-
-};
+let computed = {};
 
 let methods = {
 
@@ -64,5 +64,5 @@ function mounted() {
 }
 
 module.exports = {
-    data, computed, methods, mounted, components
+    data, computed, methods, mounted, components, directives
 };

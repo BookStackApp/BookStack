@@ -18,10 +18,14 @@
                 <transition-group name="test" tag="div">
                     <div v-for="(tag, i) in tags" :key="tag.key">
                         <div width="20" class="handle" ><i class="zmdi zmdi-menu"></i></div>
-                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/names') }}" autosuggest-type="name" class="outline" :name="getTagFieldName(i, 'name')"
-                                   v-model="tag.name" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"></div>
-                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/values') }}" autosuggest-type="value" class="outline" :name="getTagFieldName(i, 'value')"
-                                   v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"></div>
+                        <div>
+                            <autosuggest url="/ajax/tags/suggest/names" type="name" class="outline" :name="getTagFieldName(i, 'name')"
+                                   v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
+                        </div>
+                        <div>
+                            <autosuggest url="/ajax/tags/suggest/values" type="value" class="outline" :name="getTagFieldName(i, 'value')"
+                                         v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
+                        </div>
                         <div width="10" v-show="tags.length !== 1" class="text-center text-neg" style="padding: 0;" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
                     </div>
                 </transition-group>
