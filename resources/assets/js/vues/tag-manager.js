@@ -23,8 +23,7 @@ let methods = {
      */
     tagChange(tag) {
         let tagPos = this.tags.indexOf(tag);
-        if (tagPos !== this.tags.length-1 || tag.name !== '' || tag.value !== '') return;
-        this.addEmptyTag();
+        if (tagPos === this.tags.length-1 && (tag.name !== '' || tag.value !== '')) this.addEmptyTag();
     },
 
     /**
@@ -43,7 +42,11 @@ let methods = {
         let tagPos = this.tags.indexOf(tag);
         if (tagPos === -1) return;
         this.tags.splice(tagPos, 1);
-    }
+    },
+
+    getTagFieldName(index, key) {
+        return `tags[${index}][${key}]`;
+    },
 };
 
 function mounted() {

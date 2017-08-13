@@ -145,23 +145,6 @@ module.exports = function (ngApp, events) {
 
     }]);
 
-    ngApp.controller('PageTagController', ['$scope', '$http', '$attrs',
-        function ($scope, $http, $attrs) {
-
-            const pageId = Number($attrs.pageId);
-            $scope.tags = [];
-
-            $scope.sortOptions = {
-                handle: '.handle',
-                items: '> tr',
-                containment: "parent",
-                axis: "y"
-            };
-            // TODO - Delete
-
-        }]);
-
-
     ngApp.controller('PageAttachmentController', ['$scope', '$http', '$attrs',
         function ($scope, $http, $attrs) {
 

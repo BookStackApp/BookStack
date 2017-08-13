@@ -18,9 +18,9 @@
                 <transition-group name="test" tag="div">
                     <div v-for="(tag, i) in tags" :key="tag.key">
                         <div width="20" class="handle" ><i class="zmdi zmdi-menu"></i></div>
-                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/names') }}" autosuggest-type="name" class="outline" :name="tags[i].name"
+                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/names') }}" autosuggest-type="name" class="outline" :name="getTagFieldName(i, 'name')"
                                    v-model="tag.name" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"></div>
-                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/values') }}" autosuggest-type="value" class="outline" :name="tags[i].value"
+                        <div><input autosuggest="{{ baseUrl('/ajax/tags/suggest/values') }}" autosuggest-type="value" class="outline" :name="getTagFieldName(i, 'value')"
                                    v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"></div>
                         <div width="10" v-show="tags.length !== 1" class="text-center text-neg" style="padding: 0;" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
                     </div>
@@ -86,15 +86,15 @@
                             <p class="muted small">{{ trans('entities.attachments_explain_link') }}</p>
                             <div class="form-group">
                                 <label for="attachment-via-link">{{ trans('entities.attachments_link_name') }}</label>
-                                <input type="text" placeholder="{{ trans('entities.attachments_link_name') }}" ng-model="file.name">
+                                <input placeholder="{{ trans('entities.attachments_link_name') }}" ng-model="file.name">
                                 <p class="small neg" ng-repeat="error in errors.link.name" ng-bind="error"></p>
                             </div>
                             <div class="form-group">
                                 <label for="attachment-via-link">{{ trans('entities.attachments_link_url') }}</label>
-                                <input type="text" placeholder="{{ trans('entities.attachments_link_url_hint') }}" ng-model="file.link">
+                                <input placeholder="{{ trans('entities.attachments_link_url_hint') }}" ng-model="file.link">
                                 <p class="small neg" ng-repeat="error in errors.link.link" ng-bind="error"></p>
                             </div>
-                            <button type="submit" class="button pos">{{ trans('entities.attach') }}</button>
+                            <button class="button pos">{{ trans('entities.attach') }}</button>
 
                         </div>
                     </div>
@@ -122,14 +122,14 @@
                         <div tab-content="link">
                             <div class="form-group">
                                 <label for="attachment-link-edit">{{ trans('entities.attachments_link_url') }}</label>
-                                <input type="text" id="attachment-link-edit" placeholder="{{ trans('entities.attachment_link') }}" ng-model="editFile.link">
+                                <input id="attachment-link-edit" placeholder="{{ trans('entities.attachment_link') }}" ng-model="editFile.link">
                                 <p class="small neg" ng-repeat="error in errors.edit.link" ng-bind="error"></p>
                             </div>
                         </div>
                     </div>
 
                     <button type="button" class="button" ng-click="cancelEdit()">{{ trans('common.back') }}</button>
-                    <button type="submit" class="button pos">{{ trans('common.save') }}</button>
+                    <button class="button pos">{{ trans('common.save') }}</button>
                 </div>
 
             </div>
