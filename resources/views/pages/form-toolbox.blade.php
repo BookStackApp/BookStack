@@ -9,31 +9,40 @@
         @endif
     </div>
 
-    <div toolbox-tab-content="tags" ng-controller="PageTagController" page-id="{{ $page->id or 0 }}">
+    <div toolbox-tab-content="tags" id="tag-manager" page-id="{{ $page->id or 0 }}">
         <h4>{{ trans('entities.page_tags') }}</h4>
         <div class="padded tags">
             <p class="muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
-            <table class="no-style" tag-autosuggestions style="width: 100%;">
-                <tbody ui-sortable="sortOptions" ng-model="tags" >
-                    <tr ng-repeat="tag in tags track by $index">
-                        <td width="20" ><i class="handle zmdi zmdi-menu"></i></td>
-                        <td><input autosuggest="{{ baseUrl('/ajax/tags/suggest/names') }}" autosuggest-type="name" class="outline" ng-attr-name="tags[@{{$index}}][name]" type="text" ng-model="tag.name" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"></td>
-                        <td><input autosuggest="{{ baseUrl('/ajax/tags/suggest/values') }}" autosuggest-type="value" class="outline" ng-attr-name="tags[@{{$index}}][value]" type="text" ng-model="tag.value" ng-change="tagChange(tag)" ng-blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"></td>
-                        <td width="10" ng-show="tags.length != 1" class="text-center text-neg" style="padding: 0;" ng-click="removeTag(tag)"><i class="zmdi zmdi-close"></i></td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <draggable class="fake-table no-style tag-table" :options="{handle: '.handle'}" :list="tags" element="div" style="width: 100%;">
+                <transition-group name="test" tag="div">
+                    <div v-for="(tag, i) in tags" :key="tag.key">
+                        <div width="20" class="handle" ><i class="zmdi zmdi-menu"></i></div>
+                        <div>
+                            <autosuggest url="/ajax/tags/suggest/names" type="name" class="outline" :name="getTagFieldName(i, 'name')"
+                                   v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
+                        </div>
+                        <div>
+                            <autosuggest url="/ajax/tags/suggest/values" type="value" class="outline" :name="getTagFieldName(i, 'value')"
+                                         v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
+                        </div>
+                        <div width="10" v-show="tags.length !== 1" class="text-center text-neg" style="padding: 0;" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
+                    </div>
+                </transition-group>
+            </draggable>
+
             <table class="no-style" style="width: 100%;">
                 <tbody>
                 <tr class="unsortable">
-                    <td  width="34"></td>
-                    <td ng-click="addEmptyTag()">
+                    <td width="34"></td>
+                    <td @click="addEmptyTag">
                         <button type="button" class="text-button">{{ trans('entities.tags_add') }}</button>
                     </td>
                     <td></td>
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 
@@ -81,15 +90,15 @@
                             <p class="muted small">{{ trans('entities.attachments_explain_link') }}</p>
                             <div class="form-group">
                                 <label for="attachment-via-link">{{ trans('entities.attachments_link_name') }}</label>
-                                <input type="text" placeholder="{{ trans('entities.attachments_link_name') }}" ng-model="file.name">
+                                <input placeholder="{{ trans('entities.attachments_link_name') }}" ng-model="file.name">
                                 <p class="small neg" ng-repeat="error in errors.link.name" ng-bind="error"></p>
                             </div>
                             <div class="form-group">
                                 <label for="attachment-via-link">{{ trans('entities.attachments_link_url') }}</label>
-                                <input type="text" placeholder="{{ trans('entities.attachments_link_url_hint') }}" ng-model="file.link">
+                                <input placeholder="{{ trans('entities.attachments_link_url_hint') }}" ng-model="file.link">
                                 <p class="small neg" ng-repeat="error in errors.link.link" ng-bind="error"></p>
                             </div>
-                            <button type="submit" class="button pos">{{ trans('entities.attach') }}</button>
+                            <button class="button pos">{{ trans('entities.attach') }}</button>
 
                         </div>
                     </div>
@@ -117,14 +126,14 @@
                         <div tab-content="link">
                             <div class="form-group">
                                 <label for="attachment-link-edit">{{ trans('entities.attachments_link_url') }}</label>
-                                <input type="text" id="attachment-link-edit" placeholder="{{ trans('entities.attachment_link') }}" ng-model="editFile.link">
+                                <input id="attachment-link-edit" placeholder="{{ trans('entities.attachment_link') }}" ng-model="editFile.link">
                                 <p class="small neg" ng-repeat="error in errors.edit.link" ng-bind="error"></p>
                             </div>
                         </div>
                     </div>
 
                     <button type="button" class="button" ng-click="cancelEdit()">{{ trans('common.back') }}</button>
-                    <button type="submit" class="button pos">{{ trans('common.save') }}</button>
+                    <button class="button pos">{{ trans('common.save') }}</button>
                 </div>
 
             </div>

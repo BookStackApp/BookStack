@@ -1,9 +1,9 @@
 <div id="entity-selector-wrap">
-    <div class="overlay" entity-link-selector>
+    <div overlay entity-link-selector>
         <div class="popup-body small flex-child">
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('entities.entity_select') }}</div>
-                <button type="button" class="corner-button neg button popup-close">x</button>
+                <button type="button" class="corner-button neg button overlay-close">x</button>
             </div>
             @include('components.entity-selector', ['name' => 'entity-selector'])
             <div class="popup-footer">

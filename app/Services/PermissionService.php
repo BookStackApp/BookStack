@@ -259,7 +259,7 @@ class PermissionService
         $roleIds = array_map(function($role) {
             return $role->id;
         }, $roles);
-        $this->jointPermission->newQuery()->whereIn('id', $roleIds)->delete();
+        $this->jointPermission->newQuery()->whereIn('role_id', $roleIds)->delete();
     }
 
     /**

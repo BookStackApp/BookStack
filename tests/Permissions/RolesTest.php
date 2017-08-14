@@ -1,7 +1,10 @@
 <?php namespace Tests;
 
+use BookStack\Page;
 use BookStack\Repos\PermissionsRepo;
 use BookStack\Role;
+use Laravel\BrowserKitTesting\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RolesTest extends BrowserKitTest
 {
@@ -580,8 +583,6 @@ class RolesTest extends BrowserKitTest
             ->see('Cannot be deleted');
     }
 
-
-
     public function test_image_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
@@ -618,6 +619,42 @@ class RolesTest extends BrowserKitTest
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
             ->seeStatusCode(200)
             ->dontSeeInDatabase('images', ['id' => $image->id]);
+    }
+
+    public function test_role_permission_removal()
+    {
+        // To cover issue fixed in f99c8ff99aee9beb8c692f36d4b84dc6e651e50a.
+        $page = Page::first();
+        $viewerRole = \BookStack\Role::getRole('viewer');
+        $viewer = $this->getViewer();
+        $this->actingAs($viewer)->visit($page->getUrl())->assertResponseOk();
+
+        $this->asAdmin()->put('/settings/roles/' . $viewerRole->id, [
+            'display_name' => $viewerRole->display_name,
+            'description' => $viewerRole->description,
+            'permission' => []
+        ])->assertResponseStatus(302);
+
+        $this->expectException(HttpException::class);
+        $this->actingAs($viewer)->visit($page->getUrl())->assertResponseStatus(404);
+    }
+
+    public function test_empty_state_actions_not_visible_without_permission()
+    {
+        $admin = $this->getAdmin();
+        // Book links
+        $book = factory(\BookStack\Book::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
+        $this->updateEntityPermissions($book);
+        $this->actingAs($this->getViewer())->visit($book->getUrl())
+            ->dontSee('Create a new page')
+            ->dontSee('Add a chapter');
+
+        // Chapter links
+        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
+        $this->updateEntityPermissions($chapter);
+        $this->actingAs($this->getViewer())->visit($chapter->getUrl())
+            ->dontSee('Create a new page')
+            ->dontSee('Sort the current book');
     }
 
     public function test_comment_create_permission () {
