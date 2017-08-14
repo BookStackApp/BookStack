@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
         Commands\ClearActivity::class,
         Commands\ClearRevisions::class,
         Commands\RegeneratePermissions::class,
-        Commands\RegenerateSearch::class
+        Commands\RegenerateSearch::class,
+        Commands\UpgradeDatabaseEncoding::class
     ];
 
     /**

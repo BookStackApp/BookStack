@@ -5,10 +5,10 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 faded">
+                <div class="col-sm-8 col-xs-5 faded">
                     @include('pages._breadcrumbs', ['page' => $page])
                 </div>
-                <div class="col-sm-6 faded">
+                <div class="col-sm-4 col-xs-7 faded">
                     <div class="action-buttons">
                         <span dropdown class="dropdown-container">
                             <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>

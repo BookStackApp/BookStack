@@ -77,7 +77,7 @@
         @yield('content')
     </section>
 
-    <div id="back-to-top">
+    <div back-to-top>
         <div class="inner">
             <i class="zmdi zmdi-chevron-up"></i> <span>{{ trans('common.back_to_top') }}</span>
         </div>

@@ -5,10 +5,10 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 faded" ng-non-bindable>
+                <div class="col-sm-6 col-xs-3 faded" ng-non-bindable>
                     @include('chapters._breadcrumbs', ['chapter' => $chapter])
                 </div>
-                <div class="col-sm-4 faded">
+                <div class="col-sm-6 col-xs-9 faded">
                     <div class="action-buttons">
                         <span dropdown class="dropdown-container">
                             <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
@@ -47,12 +47,12 @@
     </div>
 
 
-    <div class="container" id="entity-dashboard" entity-id="{{ $chapter->id }}" entity-type="chapter">
+    <div class="container" id="entity-dashboard" ng-non-bindable entity-id="{{ $chapter->id }}" entity-type="chapter">
         <div class="row">
             <div class="col-md-7">
                 <h1>{{ $chapter->name }}</h1>
                 <div class="chapter-content" v-if="!searching">
-                    <p class="text-muted">{{ $chapter->description }}</p>
+                    <p class="text-muted">{!! nl2br(e($chapter->description)) !!}</p>
 
                     @if(count($pages) > 0)
                         <div class="page-list">
@@ -116,7 +116,7 @@
                 @endif
 
                 <div class="search-box">
-                    <form v-on:submit="searchBook">
+                    <form v-on:submit.prevent="searchBook">
                         <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.chapters_search_this') }}">
                         <button type="submit"><i class="zmdi zmdi-search"></i></button>
                         <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>

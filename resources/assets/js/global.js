@@ -1,4 +1,5 @@
 "use strict";
+require("babel-polyfill");
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -17,10 +18,8 @@ let axiosInstance = axios.create({
         'baseURL': window.baseUrl('')
     }
 });
-
+window.$http = axiosInstance;
 Vue.prototype.$http = axiosInstance;
-
-require("./vues/vues");
 
 
 // AngularJS - Create application and load components
@@ -64,11 +63,12 @@ class EventManager {
 window.Events = new EventManager();
 Vue.prototype.$events = window.Events;
 
+require("./vues/vues");
+require("./components");
+
 // Load in angular specific items
-const Services = require('./services');
 const Directives = require('./directives');
 const Controllers = require('./controllers');
-Services(ngApp, window.Events);
 Directives(ngApp, window.Events);
 Controllers(ngApp, window.Events);
 
@@ -90,83 +90,11 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
     };
 });
 
-// Global jQuery Elements
-let notifications = $('.notification');
-let successNotification = notifications.filter('.pos');
-let errorNotification = notifications.filter('.neg');
-let warningNotification = notifications.filter('.warning');
-// Notification Events
-window.Events.listen('success', function (text) {
-    successNotification.hide();
-    successNotification.find('span').text(text);
-    setTimeout(() => {
-        successNotification.show();
-    }, 1);
-});
-window.Events.listen('warning', function (text) {
-    warningNotification.find('span').text(text);
-    warningNotification.show();
-});
-window.Events.listen('error', function (text) {
-    errorNotification.find('span').text(text);
-    errorNotification.show();
-});
-
-// Notification hiding
-notifications.click(function () {
-    $(this).fadeOut(100);
-});
-
-// Chapter page list toggles
-$('.chapter-toggle').click(function (e) {
-    e.preventDefault();
-    $(this).toggleClass('open');
-    $(this).closest('.chapter').find('.inset-list').slideToggle(180);
-});
-
-// Back to top button
-$('#back-to-top').click(function() {
-     $('#header').smoothScrollTo();
-});
-let scrollTopShowing = false;
-let scrollTop = document.getElementById('back-to-top');
-let scrollTopBreakpoint = 1200;
-window.addEventListener('scroll', function() {
-    let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
-    if (!scrollTopShowing && scrollTopPos > scrollTopBreakpoint) {
-        scrollTop.style.display = 'block';
-        scrollTopShowing = true;
-        setTimeout(() => {
-            scrollTop.style.opacity = 0.4;
-        }, 1);
-    } else if (scrollTopShowing && scrollTopPos < scrollTopBreakpoint) {
-        scrollTop.style.opacity = 0;
-        scrollTopShowing = false;
-        setTimeout(() => {
-            scrollTop.style.display = 'none';
-        }, 500);
-    }
-});
-
-// Common jQuery actions
-$('[data-action="expand-entity-list-details"]').click(function() {
-    $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
-});
-
-// Popup close
-$('.popup-close').click(function() {
-    $(this).closest('.overlay').fadeOut(240);
-});
-$('.overlay').click(function(event) {
-    if (!$(event.target).hasClass('overlay')) return;
-    $(this).fadeOut(240);
-});
-
 // Detect IE for css
 if(navigator.userAgent.indexOf('MSIE')!==-1
     || navigator.appVersion.indexOf('Trident/') > 0
     || navigator.userAgent.indexOf('Safari') !== -1){
-    $('body').addClass('flexbox-support');
+    document.body.classList.add('flexbox-support');
 }
 
 // Page specific items

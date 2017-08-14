@@ -32,7 +32,7 @@
 #markdown-editor {
   position: relative;
   z-index: 5;
-  textarea {
+  #markdown-editor-input {
     font-family: 'Roboto Mono', monospace;
     font-style: normal;
     font-weight: 400;
@@ -265,7 +265,7 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   }
 }
 
-input.outline {
+.outline > input {
   border: 0;
   border-bottom: 2px solid #DDD;
   border-radius: 0;

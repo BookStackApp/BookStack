@@ -68,3 +68,16 @@ table.file-table {
     display: table;
   }
 }
+
+.fake-table {
+  display: table;
+  > div {
+    display: table-row-group;
+  }
+  > div > div {
+    display: table-row;
+  }
+  > div > div > div {
+    display: table-cell;
+  }
+}

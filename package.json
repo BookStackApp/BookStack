@@ -4,7 +4,8 @@
     "build": "gulp build",
     "production": "gulp build --production",
     "dev": "gulp",
-    "watch": "gulp"
+    "watch": "gulp",
+    "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
   },
   "devDependencies": {
     "babelify": "^7.3.0",
@@ -13,6 +14,7 @@
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.1",
     "gulp-clean-css": "^3.0.4",
+    "gulp-livereload": "^3.8.1",
     "gulp-minify-css": "1.2.4",
     "gulp-plumber": "1.1.0",
     "gulp-sass": "3.1.0",
@@ -29,15 +31,17 @@
     "angular-sanitize": "^1.5.5",
     "angular-ui-sortable": "^0.17.0",
     "axios": "^0.16.1",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
-    "clipboard": "^1.5.16",
+    "clipboard": "^1.7.1",
     "codemirror": "^5.26.0",
     "dropzone": "^4.0.1",
     "gulp-util": "^3.0.8",
     "markdown-it": "^8.3.1",
     "markdown-it-task-lists": "^2.0.0",
     "moment": "^2.12.0",
-    "vue": "^2.2.6"
+    "vue": "^2.2.6",
+    "vuedraggable": "^2.14.1"
   },
   "browser": {
     "vue": "vue/dist/vue.common.js"

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-sm-6 faded">
                     <div class="action-buttons text-left">
-                        <a data-action="expand-entity-list-details" class="text-primary text-button"><i class="zmdi zmdi-wrap-text"></i>{{ trans('common.toggle_details') }}</a>
+                        <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-primary text-button"><i class="zmdi zmdi-wrap-text"></i>{{ trans('common.toggle_details') }}</a>
                     </div>
                 </div>
             </div>

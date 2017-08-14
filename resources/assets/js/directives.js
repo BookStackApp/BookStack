@@ -115,39 +115,6 @@ module.exports = function (ngApp, events) {
     }]);
 
     /**
-     * Dropdown
-     * Provides some simple logic to create small dropdown menus
-     */
-    ngApp.directive('dropdown', [function () {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                const menu = element.find('ul');
-                element.find('[dropdown-toggle]').on('click', function () {
-                    menu.show().addClass('anim menuIn');
-                    let inputs = menu.find('input');
-                    let hasInput = inputs.length > 0;
-                    if (hasInput) {
-                        inputs.first().focus();
-                        element.on('keypress', 'input', event => {
-                            if (event.keyCode === 13) {
-                                event.preventDefault();
-                                menu.hide();
-                                menu.removeClass('anim menuIn');
-                                return false;
-                            }
-                        });
-                    }
-                    element.mouseleave(function () {
-                        menu.hide();
-                        menu.removeClass('anim menuIn');
-                    });
-                });
-            }
-        };
-    }]);
-
-    /**
      * TinyMCE
      * An angular wrapper around the tinyMCE editor.
      */
@@ -187,30 +154,6 @@ module.exports = function (ngApp, events) {
                 }
 
                 scope.tinymce.extraSetups.push(tinyMceSetup);
-
-                // Custom tinyMCE plugins
-                tinymce.PluginManager.add('customhr', function (editor) {
-                    editor.addCommand('InsertHorizontalRule', function () {
-                        let hrElem = document.createElement('hr');
-                        let cNode = editor.selection.getNode();
-                        let parentNode = cNode.parentNode;
-                        parentNode.insertBefore(hrElem, cNode);
-                    });
-
-                    editor.addButton('hr', {
-                        icon: 'hr',
-                        tooltip: 'Horizontal line',
-                        cmd: 'InsertHorizontalRule'
-                    });
-
-                    editor.addMenuItem('hr', {
-                        icon: 'hr',
-                        text: 'Horizontal line',
-                        cmd: 'InsertHorizontalRule',
-                        context: 'insert'
-                    });
-                });
-
                 tinymce.init(scope.tinymce);
             }
         }
@@ -232,15 +175,48 @@ module.exports = function (ngApp, events) {
             },
             link: function (scope, element, attrs) {
 
-                // Set initial model content
-                element = element.find('textarea').first();
-
                 // Codemirror Setup
+                element = element.find('textarea').first();
                 let cm = code.markdownEditor(element[0]);
+
+                // Custom key commands
+                let metaKey = code.getMetaKey();
+                const extraKeys = {};
+                // Insert Image shortcut
+                extraKeys[`${metaKey}-Alt-I`] = function(cm) {
+                    let selectedText = cm.getSelection();
+                    let newText = `![${selectedText}](http://)`;
+                    let cursorPos = cm.getCursor('from');
+                    cm.replaceSelection(newText);
+                    cm.setCursor(cursorPos.line, cursorPos.ch + newText.length -1);
+                };
+                // Save draft
+                extraKeys[`${metaKey}-S`] = function(cm) {scope.$emit('save-draft');};
+                // Show link selector
+                extraKeys[`Shift-${metaKey}-K`] = function(cm) {showLinkSelector()};
+                // Insert Link
+                extraKeys[`${metaKey}-K`] = function(cm) {insertLink()};
+                // FormatShortcuts
+                extraKeys[`${metaKey}-1`] = function(cm) {replaceLineStart('##');};
+                extraKeys[`${metaKey}-2`] = function(cm) {replaceLineStart('###');};
+                extraKeys[`${metaKey}-3`] = function(cm) {replaceLineStart('####');};
+                extraKeys[`${metaKey}-4`] = function(cm) {replaceLineStart('#####');};
+                extraKeys[`${metaKey}-5`] = function(cm) {replaceLineStart('');};
+                extraKeys[`${metaKey}-d`] = function(cm) {replaceLineStart('');};
+                extraKeys[`${metaKey}-6`] = function(cm) {replaceLineStart('>');};
+                extraKeys[`${metaKey}-q`] = function(cm) {replaceLineStart('>');};
+                extraKeys[`${metaKey}-7`] = function(cm) {wrapSelection('\n```\n', '\n```');};
+                extraKeys[`${metaKey}-8`] = function(cm) {wrapSelection('`', '`');};
+                extraKeys[`Shift-${metaKey}-E`] = function(cm) {wrapSelection('`', '`');};
+                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</div>');};
+                cm.setOption('extraKeys', extraKeys);
+
+                // Update data on content change
                 cm.on('change', (instance, changeObj) => {
                     update(instance);
                 });
 
+                // Handle scroll to sync display view
                 cm.on('scroll', instance => {
                     // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
                     let scroll = instance.getScrollInfo();
@@ -257,6 +233,166 @@ module.exports = function (ngApp, events) {
                     scope.$emit('markdown-scroll', totalLines.length);
                 });
 
+                // Handle image paste
+                cm.on('paste', (cm, event) => {
+                    if (!event.clipboardData || !event.clipboardData.items) return;
+                    for (let i = 0; i < event.clipboardData.items.length; i++) {
+                        uploadImage(event.clipboardData.items[i].getAsFile());
+                    }
+                });
+
+                // Handle images on drag-drop
+                cm.on('drop', (cm, event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    let cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
+                    cm.setCursor(cursorPos);
+                    if (!event.dataTransfer || !event.dataTransfer.files) return;
+                    for (let i = 0; i < event.dataTransfer.files.length; i++) {
+                        uploadImage(event.dataTransfer.files[i]);
+                    }
+                });
+
+                // Helper to replace editor content
+                function replaceContent(search, replace) {
+                    let text = cm.getValue();
+                    let cursor = cm.listSelections();
+                    cm.setValue(text.replace(search, replace));
+                    cm.setSelections(cursor);
+                }
+
+                // Helper to replace the start of the line
+                function replaceLineStart(newStart) {
+                    let cursor = cm.getCursor();
+                    let lineContent = cm.getLine(cursor.line);
+                    let lineLen = lineContent.length;
+                    let lineStart = lineContent.split(' ')[0];
+
+                    // Remove symbol if already set
+                    if (lineStart === newStart) {
+                        lineContent = lineContent.replace(`${newStart} `, '');
+                        cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
+                        cm.setCursor({line: cursor.line, ch: cursor.ch - (newStart.length + 1)});
+                        return;
+                    }
+
+                    let alreadySymbol = /^[#>`]/.test(lineStart);
+                    let posDif = 0;
+                    if (alreadySymbol) {
+                        posDif = newStart.length - lineStart.length;
+                        lineContent = lineContent.replace(lineStart, newStart).trim();
+                    } else if (newStart !== '') {
+                        posDif = newStart.length + 1;
+                        lineContent = newStart + ' ' + lineContent;
+                    }
+                    cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + posDif});
+                }
+
+                function wrapLine(start, end) {
+                    let cursor = cm.getCursor();
+                    let lineContent = cm.getLine(cursor.line);
+                    let lineLen = lineContent.length;
+                    let newLineContent = lineContent;
+
+                    if (lineContent.indexOf(start) === 0 && lineContent.slice(-end.length) === end) {
+                        newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
+                    } else {
+                        newLineContent = `${start}${lineContent}${end}`;
+                    }
+
+                    cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + (newLineContent.length - lineLen)});
+                }
+
+                function wrapSelection(start, end) {
+                    let selection = cm.getSelection();
+                    if (selection === '') return wrapLine(start, end);
+                    let newSelection = selection;
+                    let frontDiff = 0;
+                    let endDiff = 0;
+
+                    if (selection.indexOf(start) === 0 && selection.slice(-end.length) === end) {
+                        newSelection = selection.slice(start.length, selection.length - end.length);
+                        endDiff = -(end.length + start.length);
+                    } else {
+                        newSelection = `${start}${selection}${end}`;
+                        endDiff = start.length + end.length;
+                    }
+
+                    let selections = cm.listSelections()[0];
+                    cm.replaceSelection(newSelection);
+                    let headFirst = selections.head.ch <= selections.anchor.ch;
+                    selections.head.ch += headFirst ? frontDiff : endDiff;
+                    selections.anchor.ch += headFirst ? endDiff : frontDiff;
+                    cm.setSelections([selections]);
+                }
+
+                // Handle image upload and add image into markdown content
+                function uploadImage(file) {
+                    if (file === null || file.type.indexOf('image') !== 0) return;
+                    let ext = 'png';
+
+                    if (file.name) {
+                        let fileNameMatches = file.name.match(/\.(.+)$/);
+                        if (fileNameMatches.length > 1) ext = fileNameMatches[1];
+                    }
+
+                    // Insert image into markdown
+                    let id = "image-" + Math.random().toString(16).slice(2);
+                    let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
+                    let selectedText = cm.getSelection();
+                    let placeHolderText = `![${selectedText}](${placeholderImage})`;
+                    cm.replaceSelection(placeHolderText);
+
+                    let remoteFilename = "image-" + Date.now() + "." + ext;
+                    let formData = new FormData();
+                    formData.append('file', file, remoteFilename);
+
+                    window.$http.post('/images/gallery/upload', formData).then(resp => {
+                        replaceContent(placeholderImage, resp.data.thumbs.display);
+                    }).catch(err => {
+                        events.emit('error', trans('errors.image_upload_error'));
+                        replaceContent(placeHolderText, selectedText);
+                        console.log(err);
+                    });
+                }
+
+                // Show the popup link selector and insert a link when finished
+                function showLinkSelector() {
+                    let cursorPos = cm.getCursor('from');
+                    window.showEntityLinkSelector(entity => {
+                        let selectedText = cm.getSelection() || entity.name;
+                        let newText = `[${selectedText}](${entity.link})`;
+                        cm.focus();
+                        cm.replaceSelection(newText);
+                        cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                    });
+                }
+
+                function insertLink() {
+                    let cursorPos = cm.getCursor('from');
+                    let selectedText = cm.getSelection() || '';
+                    let newText = `[${selectedText}]()`;
+                    cm.focus();
+                    cm.replaceSelection(newText);
+                    let cursorPosDiff = (selectedText === '') ? -3 : -1;
+                    cm.setCursor(cursorPos.line, cursorPos.ch + newText.length+cursorPosDiff);
+                }
+
+                // Show the image manager and handle image insertion
+                function showImageManager() {
+                    let cursorPos = cm.getCursor('from');
+                    window.ImageManager.show(image => {
+                        let selectedText = cm.getSelection();
+                        let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
+                        cm.focus();
+                        cm.replaceSelection(newText);
+                        cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                    });
+                }
+
+                // Update the data models and rendered output
                 function update(instance) {
                     let content = instance.getValue();
                     element.val(content);
@@ -267,6 +403,9 @@ module.exports = function (ngApp, events) {
                 }
                 update(cm);
 
+                // Listen to commands from parent scope
+                scope.$on('md-insert-link', showLinkSelector);
+                scope.$on('md-insert-image', showImageManager);
                 scope.$on('markdown-update', (event, value) => {
                     cm.setValue(value);
                     element.val(value);
@@ -287,8 +426,7 @@ module.exports = function (ngApp, events) {
             restrict: 'A',
             link: function (scope, element, attrs) {
 
-                // Elements
-                const $input = element.find('[markdown-input] textarea').first();
+                // Editor Elements
                 const $display = element.find('.markdown-display').first();
                 const $insertImage = element.find('button[data-action="insertImage"]');
                 const $insertEntityLink = element.find('button[data-action="insertEntityLink"]');
@@ -299,11 +437,9 @@ module.exports = function (ngApp, events) {
                     window.open(this.getAttribute('href'));
                 });
 
-                let currentCaretPos = 0;
-
-                $input.blur(event => {
-                    currentCaretPos = $input[0].selectionStart;
-                });
+                // Editor UI Actions
+                $insertEntityLink.click(e => {scope.$broadcast('md-insert-link');});
+                $insertImage.click(e => {scope.$broadcast('md-insert-image');});
 
                 // Handle scroll sync event from editor scroll
                 $rootScope.$on('markdown-scroll', (event, lineCount) => {
@@ -315,140 +451,6 @@ module.exports = function (ngApp, events) {
                         }, {queue: false, duration: 200, easing: 'linear'});
                     }
                 });
-
-                // Editor key-presses
-                $input.keydown(event => {
-                    // Insert image shortcut
-                    if (event.which === 73 && event.ctrlKey && event.shiftKey) {
-                        event.preventDefault();
-                        let caretPos = $input[0].selectionStart;
-                        let currentContent = $input.val();
-                        const mdImageText = "![](http://)";
-                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        $input.focus();
-                        $input[0].selectionStart = caretPos + ("![](".length);
-                        $input[0].selectionEnd = caretPos + ('![](http://'.length);
-                        return;
-                    }
-
-                    // Insert entity link shortcut
-                    if (event.which === 75 && event.ctrlKey && event.shiftKey) {
-                        showLinkSelector();
-                        return;
-                    }
-
-                    // Pass key presses to controller via event
-                    scope.$emit('editor-keydown', event);
-                });
-
-                // Insert image from image manager
-                $insertImage.click(event => {
-                    window.ImageManager.showExternal(image => {
-                        let caretPos = currentCaretPos;
-                        let currentContent = $input.val();
-                        let mdImageText = "![" + image.name + "](" + image.thumbs.display + ")";
-                        $input.val(currentContent.substring(0, caretPos) + mdImageText + currentContent.substring(caretPos));
-                        $input.change();
-                    });
-                });
-
-                function showLinkSelector() {
-                    window.showEntityLinkSelector((entity) => {
-                        let selectionStart = currentCaretPos;
-                        let selectionEnd = $input[0].selectionEnd;
-                        let textSelected = (selectionEnd !== selectionStart);
-                        let currentContent = $input.val();
-
-                        if (textSelected) {
-                            let selectedText = currentContent.substring(selectionStart, selectionEnd);
-                            let linkText = `[${selectedText}](${entity.link})`;
-                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionEnd));
-                        } else {
-                            let linkText = ` [${entity.name}](${entity.link}) `;
-                            $input.val(currentContent.substring(0, selectionStart) + linkText + currentContent.substring(selectionStart))
-                        }
-                        $input.change();
-                    });
-                }
-                $insertEntityLink.click(showLinkSelector);
-
-                // Upload and insert image on paste
-                function editorPaste(e) {
-                    e = e.originalEvent;
-                    if (!e.clipboardData) return
-                    let items = e.clipboardData.items;
-                    if (!items) return;
-                    for (let i = 0; i < items.length; i++) {
-                        uploadImage(items[i].getAsFile());
-                    }
-                }
-
-                $input.on('paste', editorPaste);
-
-                // Handle image drop, Uploads images to BookStack.
-                function handleImageDrop(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    let files = event.originalEvent.dataTransfer.files;
-                    for (let i = 0; i < files.length; i++) {
-                        uploadImage(files[i]);
-                    }
-                }
-
-                $input.on('drop', handleImageDrop);
-
-                // Handle image upload and add image into markdown content
-                function uploadImage(file) {
-                    if (file.type.indexOf('image') !== 0) return;
-                    let formData = new FormData();
-                    let ext = 'png';
-                    let xhr = new XMLHttpRequest();
-
-                    if (file.name) {
-                        let fileNameMatches = file.name.match(/\.(.+)$/);
-                        if (fileNameMatches) {
-                            ext = fileNameMatches[1];
-                        }
-                    }
-
-                    // Insert image into markdown
-                    let id = "image-" + Math.random().toString(16).slice(2);
-                    let selectStart = $input[0].selectionStart;
-                    let selectEnd = $input[0].selectionEnd;
-                    let content = $input[0].value;
-                    let selectText = content.substring(selectStart, selectEnd);
-                    let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
-                    let innerContent = ((selectEnd > selectStart) ? `![${selectText}]` : '![]') + `(${placeholderImage})`;
-                    $input[0].value = content.substring(0, selectStart) +  innerContent + content.substring(selectEnd);
-
-                    $input.focus();
-                    $input[0].selectionStart = selectStart;
-                    $input[0].selectionEnd = selectStart;
-
-                    let remoteFilename = "image-" + Date.now() + "." + ext;
-                    formData.append('file', file, remoteFilename);
-                    formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
-
-                    xhr.open('POST', window.baseUrl('/images/gallery/upload'));
-                    xhr.onload = function () {
-                        let selectStart = $input[0].selectionStart;
-                        if (xhr.status === 200 || xhr.status === 201) {
-                            let result = JSON.parse(xhr.responseText);
-                            $input[0].value = $input[0].value.replace(placeholderImage, result.thumbs.display);
-                            $input.change();
-                        } else {
-                            console.log(trans('errors.image_upload_error'));
-                            console.log(xhr.responseText);
-                            $input[0].value = $input[0].value.replace(innerContent, '');
-                            $input.change();
-                        }
-                        $input.focus();
-                        $input[0].selectionStart = selectStart;
-                        $input[0].selectionEnd = selectStart;
-                    };
-                    xhr.send(formData);
-                }
-
             }
         }
     }]);
@@ -494,188 +496,6 @@ module.exports = function (ngApp, events) {
         }
     }]);
 
-    /**
-     * Tag Autosuggestions
-     * Listens to child inputs and provides autosuggestions depending on field type
-     * and input. Suggestions provided by server.
-     */
-    ngApp.directive('tagAutosuggestions', ['$http', function ($http) {
-        return {
-            restrict: 'A',
-            link: function (scope, elem, attrs) {
-
-                // Local storage for quick caching.
-                const localCache = {};
-
-                // Create suggestion element
-                const suggestionBox = document.createElement('ul');
-                suggestionBox.className = 'suggestion-box';
-                suggestionBox.style.position = 'absolute';
-                suggestionBox.style.display = 'none';
-                const $suggestionBox = $(suggestionBox);
-
-                // General state tracking
-                let isShowing = false;
-                let currentInput = false;
-                let active = 0;
-
-                // Listen to input events on autosuggest fields
-                elem.on('input focus', '[autosuggest]', function (event) {
-                    let $input = $(this);
-                    let val = $input.val();
-                    let url = $input.attr('autosuggest');
-                    let type = $input.attr('autosuggest-type');
-
-                    // Add name param to request if for a value
-                    if (type.toLowerCase() === 'value') {
-                        let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
-                        let nameVal = $nameInput.val();
-                        if (nameVal !== '') {
-                            url += '?name=' + encodeURIComponent(nameVal);
-                        }
-                    }
-
-                    let suggestionPromise = getSuggestions(val.slice(0, 3), url);
-                    suggestionPromise.then(suggestions => {
-                        if (val.length === 0) {
-                            displaySuggestions($input, suggestions.slice(0, 6));
-                        } else  {
-                            suggestions = suggestions.filter(item => {
-                                return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
-                            }).slice(0, 4);
-                            displaySuggestions($input, suggestions);
-                        }
-                    });
-                });
-
-                // Hide autosuggestions when input loses focus.
-                // Slight delay to allow clicks.
-                let lastFocusTime = 0;
-                elem.on('blur', '[autosuggest]', function (event) {
-                    let startTime = Date.now();
-                    setTimeout(() => {
-                        if (lastFocusTime < startTime) {
-                            $suggestionBox.hide();
-                            isShowing = false;
-                        }
-                    }, 200)
-                });
-                elem.on('focus', '[autosuggest]', function (event) {
-                    lastFocusTime = Date.now();
-                });
-
-                elem.on('keydown', '[autosuggest]', function (event) {
-                    if (!isShowing) return;
-
-                    let suggestionElems = suggestionBox.childNodes;
-                    let suggestCount = suggestionElems.length;
-
-                    // Down arrow
-                    if (event.keyCode === 40) {
-                        let newActive = (active === suggestCount - 1) ? 0 : active + 1;
-                        changeActiveTo(newActive, suggestionElems);
-                    }
-                    // Up arrow
-                    else if (event.keyCode === 38) {
-                        let newActive = (active === 0) ? suggestCount - 1 : active - 1;
-                        changeActiveTo(newActive, suggestionElems);
-                    }
-                    // Enter or tab key
-                    else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
-                        currentInput[0].value = suggestionElems[active].textContent;
-                        currentInput.focus();
-                        $suggestionBox.hide();
-                        isShowing = false;
-                        if (event.keyCode === 13) {
-                            event.preventDefault();
-                            return false;
-                        }
-                    }
-                });
-
-                // Change the active suggestion to the given index
-                function changeActiveTo(index, suggestionElems) {
-                    suggestionElems[active].className = '';
-                    active = index;
-                    suggestionElems[active].className = 'active';
-                }
-
-                // Display suggestions on a field
-                let prevSuggestions = [];
-
-                function displaySuggestions($input, suggestions) {
-
-                    // Hide if no suggestions
-                    if (suggestions.length === 0) {
-                        $suggestionBox.hide();
-                        isShowing = false;
-                        prevSuggestions = suggestions;
-                        return;
-                    }
-
-                    // Otherwise show and attach to input
-                    if (!isShowing) {
-                        $suggestionBox.show();
-                        isShowing = true;
-                    }
-                    if ($input !== currentInput) {
-                        $suggestionBox.detach();
-                        $input.after($suggestionBox);
-                        currentInput = $input;
-                    }
-
-                    // Return if no change
-                    if (prevSuggestions.join() === suggestions.join()) {
-                        prevSuggestions = suggestions;
-                        return;
-                    }
-
-                    // Build suggestions
-                    $suggestionBox[0].innerHTML = '';
-                    for (let i = 0; i < suggestions.length; i++) {
-                        let suggestion = document.createElement('li');
-                        suggestion.textContent = suggestions[i];
-                        suggestion.onclick = suggestionClick;
-                        if (i === 0) {
-                            suggestion.className = 'active';
-                            active = 0;
-                        }
-                        $suggestionBox[0].appendChild(suggestion);
-                    }
-
-                    prevSuggestions = suggestions;
-                }
-
-                // Suggestion click event
-                function suggestionClick(event) {
-                    currentInput[0].value = this.textContent;
-                    currentInput.focus();
-                    $suggestionBox.hide();
-                    isShowing = false;
-                }
-
-                // Get suggestions & cache
-                function getSuggestions(input, url) {
-                    let hasQuery = url.indexOf('?') !== -1;
-                    let searchUrl = url + (hasQuery ? '&' : '?') + 'search=' + encodeURIComponent(input);
-
-                    // Get from local cache if exists
-                    if (typeof localCache[searchUrl] !== 'undefined') {
-                        return new Promise((resolve, reject) => {
-                            resolve(localCache[searchUrl]);
-                        });
-                    }
-
-                    return $http.get(searchUrl).then(response => {
-                        localCache[searchUrl] = response.data;
-                        return response.data;
-                    });
-                }
-
-            }
-        }
-    }]);
-
     ngApp.directive('entityLinkSelector', [function($http) {
         return {
             restrict: 'A',
@@ -711,6 +531,7 @@ module.exports = function (ngApp, events) {
                 function hide() {
                     element.fadeOut(240);
                 }
+                scope.hide = hide;
 
                 // Listen to confirmation of entity selections (doubleclick)
                 events.listen('entity-select-confirm', entity => {

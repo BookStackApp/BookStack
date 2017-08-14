@@ -1,6 +1,9 @@
 <?php namespace Tests;
 
 
+use BookStack\Chapter;
+use BookStack\Page;
+
 class EntitySearchTest extends TestCase
 {
 
@@ -75,10 +78,10 @@ class EntitySearchTest extends TestCase
             ])
         ];
 
-        $pageA = \BookStack\Page::first();
+        $pageA = Page::first();
         $pageA->tags()->saveMany($newTags);
 
-        $pageB = \BookStack\Page::all()->last();
+        $pageB = Page::all()->last();
         $pageB->tags()->create(['name' => 'animal', 'value' => 'dog']);
 
         $this->asEditor();
@@ -160,8 +163,8 @@ class EntitySearchTest extends TestCase
 
     public function test_ajax_entity_search()
     {
-        $page = \BookStack\Page::all()->last();
-        $notVisitedPage = \BookStack\Page::first();
+        $page = Page::all()->last();
+        $notVisitedPage = Page::first();
 
         // Visit the page to make popular
         $this->asEditor()->get($page->getUrl());
@@ -175,5 +178,21 @@ class EntitySearchTest extends TestCase
         $defaultListTest = $this->get('/ajax/search/entities');
         $defaultListTest->assertSee($page->name);
         $defaultListTest->assertDontSee($notVisitedPage->name);
+    }
+
+    public function test_ajax_entity_serach_shows_breadcrumbs()
+    {
+        $chapter = Chapter::first();
+        $page = $chapter->pages->first();
+        $this->asEditor();
+
+        $pageSearch = $this->get('/ajax/search/entities?term=' . urlencode($page->name));
+        $pageSearch->assertSee($page->name);
+        $pageSearch->assertSee($chapter->getShortName());
+        $pageSearch->assertSee($page->book->getShortName());
+
+        $chapterSearch = $this->get('/ajax/search/entities?term=' . urlencode($chapter->name));
+        $chapterSearch->assertSee($chapter->name);
+        $chapterSearch->assertSee($chapter->book->getShortName());
     }
 }
