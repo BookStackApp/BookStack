@@ -28,9 +28,9 @@ return [
     'edit' => 'Bearbeiten',
     'sort' => 'Sortieren',
     'move' => 'Verschieben',
-    'delete' => 'L&ouml;schen',
+    'delete' => 'Löschen',
     'search' => 'Suchen',
-    'search_clear' => 'Suche l&ouml;schen',
+    'search_clear' => 'Suche löschen',
     'reset' => 'Zurücksetzen',
     'remove' => 'Entfernen',
 
@@ -38,9 +38,9 @@ return [
     /**
      * Misc
      */
-    'deleted_user' => 'Gel&ouml;schte Benutzer',
-    'no_activity' => 'Keine Aktivit&auml;ten zum Anzeigen',
-    'no_items' => 'Keine Eintr&auml;ge gefunden.',
+    'deleted_user' => 'Gelöschte Benutzer',
+    'no_activity' => 'Keine Aktivitäten zum Anzeigen',
+    'no_items' => 'Keine Einträge gefunden.',
     'back_to_top' => 'nach oben',
     'toggle_details' => 'Details zeigen/verstecken',
 
@@ -53,6 +53,6 @@ return [
     /**
      * Email Content
      */
-    'email_action_help' => 'Sollte es beim Anklicken des ":actionText" Buttons Probleme geben, kopieren Sie folgende URL und fügen diese in Ihrem Webbrowser ein:',
+    'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":action_text" Probleme geben, öffnen Sie folgende URL in Ihrem Browser:',
     'email_rights' => 'Alle Rechte vorbehalten',
 ];
