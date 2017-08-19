@@ -1,3 +1,14 @@
+/**
+ * Fonts
+ */
+
+body, button, input, select, label {
+  font-family: $text;
+}
+.Codemirror, pre, #markdown-editor-input, .editor-toolbar, .code-base {
+  font-family: $mono;
+}
+
 /*
  * Header Styles
  */
@@ -58,7 +69,6 @@ a, .link {
   cursor: pointer;
   text-decoration: none;
   transition: color ease-in-out 80ms;
-  font-family: $text;
   line-height: 1.6;
   &:hover {
     text-decoration: underline;
@@ -131,7 +141,6 @@ sub, .subscript {
 }
 
 pre {
-  font-family: monospace;
   font-size: 12px;
   background-color: #f5f5f5;
   border: 1px solid #DDD;
@@ -180,7 +189,6 @@ blockquote {
 
 .code-base {
     background-color: #F8F8F8;
-    font-family: monospace;
     font-size: 0.80em;
     border: 1px solid #DDD;
     border-radius: 3px;

@@ -1,6 +1,5 @@
 @import "reset";
 @import "variables";
-@import "fonts";
 @import "mixins";
 @import "html";
 @import "text";
@@ -22,7 +21,6 @@
   display: none; opacity: 0;
   animation-name: none !important;
 }
-
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
