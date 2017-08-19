@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-md-7">
                 <h1>{{ $chapter->name }}</h1>
-                <div class="chapter-content" v-if="!searching">
+                <div class="chapter-content" v-show="!searching">
                     <p class="text-muted">{!! nl2br(e($chapter->description)) !!}</p>
 
                     @if(count($pages) > 0)
@@ -82,7 +82,7 @@
                     @include('partials.entity-meta', ['entity' => $chapter])
                 </div>
 
-                <div class="search-results" v-cloak v-if="searching">
+                <div class="search-results" v-cloak v-show="searching">
                     <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
                     <div v-if="!searchResults">
                         @include('partials/loading-icon')
