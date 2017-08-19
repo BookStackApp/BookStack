@@ -9,34 +9,6 @@ window.baseUrl = function(path) {
     return basePath + '/' + path;
 };
 
-const Vue = require("vue");
-const axios = require("axios");
-
-let axiosInstance = axios.create({
-    headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
-        'baseURL': window.baseUrl('')
-    }
-});
-window.$http = axiosInstance;
-Vue.prototype.$http = axiosInstance;
-
-
-// AngularJS - Create application and load components
-const angular = require("angular");
-require("angular-resource");
-require("angular-animate");
-require("angular-sanitize");
-require("angular-ui-sortable");
-
-let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
-
-// Translation setup
-// Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
-const Translations = require("./translations");
-let translator = new Translations(window.translations);
-window.trans = translator.get.bind(translator);
-
 // Global Event System
 class EventManager {
     constructor() {
@@ -61,7 +33,44 @@ class EventManager {
 }
 
 window.Events = new EventManager();
+
+const Vue = require("vue");
+const axios = require("axios");
+
+let axiosInstance = axios.create({
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
+        'baseURL': window.baseUrl('')
+    }
+});
+axiosInstance.interceptors.request.use(resp => {
+    return resp;
+}, err => {
+    if (typeof err.response === "undefined" || typeof err.response.data === "undefined") return Promise.reject(err);
+    if (typeof err.response.data.error !== "undefined") window.Events.emit('error', err.response.data.error);
+    if (typeof err.response.data.message !== "undefined") window.Events.emit('error', err.response.data.message);
+});
+window.$http = axiosInstance;
+
+Vue.prototype.$http = axiosInstance;
 Vue.prototype.$events = window.Events;
+
+
+// AngularJS - Create application and load components
+const angular = require("angular");
+require("angular-resource");
+require("angular-animate");
+require("angular-sanitize");
+require("angular-ui-sortable");
+
+let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
+
+// Translation setup
+// Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
+const Translations = require("./translations");
+let translator = new Translations(window.translations);
+window.trans = translator.get.bind(translator);
+
 
 require("./vues/vues");
 require("./components");

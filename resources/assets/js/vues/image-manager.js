@@ -127,8 +127,6 @@ const methods = {
                     message += errors[key].join('\n');
                 });
                 this.$events.emit('error', message);
-            } else if (error.response.status === 403) {
-                this.$events.emit('error', error.response.data.error);
             }
         });
     },
@@ -144,8 +142,6 @@ const methods = {
         }).catch(error=> {
             if (error.response.status === 400) {
                 this.dependantPages = error.response.data;
-            } else if (error.response.status === 403) {
-                this.$events.emit('error', error.response.data.error);
             }
         });
     },
