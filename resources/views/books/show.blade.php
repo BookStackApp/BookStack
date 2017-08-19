@@ -55,7 +55,7 @@
             <div class="col-md-7">
 
                 <h1>{{$book->name}}</h1>
-                <div class="book-content" v-if="!searching">
+                <div class="book-content" v-show="!searching">
                     <p class="text-muted" v-pre>{!! nl2br(e($book->description)) !!}</p>
 
                     <div class="page-list" v-pre>
@@ -87,7 +87,7 @@
                         @include('partials.entity-meta', ['entity' => $book])
                     </div>
                 </div>
-                <div class="search-results" v-cloak v-if="searching">
+                <div class="search-results" v-cloak v-show="searching">
                     <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
                     <div v-if="!searchResults">
                         @include('partials/loading-icon')
