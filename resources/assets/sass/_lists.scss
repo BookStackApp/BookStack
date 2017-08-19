@@ -86,24 +86,18 @@
 
 // Sidebar list
 .book-tree {
-  padding: $-xs 0 0 0;
   position: relative;
   right: 0;
   top: 0;
   transition: ease-in-out 240ms;
   transition-property: right, border;
-  border-left: 0px solid #FFF;
-  background-color: #FFF;
-  max-width: 320px;
   &.fixed {
-    background-color: #FFF;
     z-index: 5;
     position: fixed;
     top: 0;
-    padding-left: $-l;
-    padding-right: $-l + 15;
+    padding-right: $-l + 5px;
     width: 30%;
-    right: -15px;
+    left: 0;
     height: 100%;
     overflow-y: scroll;
     -ms-overflow-style: none;

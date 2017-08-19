@@ -74,7 +74,7 @@
 
         {{--Markdown Editor--}}
         @if(setting('app-editor') === 'markdown')
-            <div id="markdown-editor" markdown-editor class="flex-fill flex">
+            <div id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
 
                 <div class="markdown-editor-wrap">
                     <div class="editor-toolbar">
