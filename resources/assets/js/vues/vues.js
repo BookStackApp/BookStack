@@ -10,14 +10,15 @@ let vueMapping = {
     'code-editor': require('./code-editor'),
     'image-manager': require('./image-manager'),
     'tag-manager': require('./tag-manager'),
+    'attachment-manager': require('./attachment-manager'),
 };
 
 window.vues = {};
 
-Object.keys(vueMapping).forEach(id => {
-    if (exists(id)) {
-        let config = vueMapping[id];
-        config.el = '#' + id;
-        window.vues[id] = new Vue(config);
-    }
-});
+let ids = Object.keys(vueMapping);
+for (let i = 0, len = ids.length; i < len; i++) {
+    if (!exists(ids[i])) continue;
+    let config = vueMapping[ids[i]];
+    config.el = '#' + ids[i];
+    window.vues[ids[i]] = new Vue(config);
+}
