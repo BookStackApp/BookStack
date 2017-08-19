@@ -248,15 +248,14 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     border: none;
     color: $primary;
     padding: 0;
-    margin: 0;
     cursor: pointer;
-    margin-left: $-s;
-  }
-  button[type="submit"] {
-    margin-left: -$-l;
+    position: absolute;
+    left: 7px;
+    top: 7px;
   }
   input {
-    padding-right: $-l;
+    display: block;
+    padding-left: $-l;
     width: 300px;
     max-width: 100%;
   }

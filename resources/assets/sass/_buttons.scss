@@ -64,6 +64,7 @@ $button-border-radius: 2px;
   padding: 0;
   margin: 0;
   border: none;
+  user-select: none;
   &:focus, &:active {
     outline: 0;
   }

@@ -43,7 +43,7 @@
              }
 
              if (action === 'show-image-manager') {
-                 window.ImageManager.showExternal((image) => {
+                 window.ImageManager.show((image) => {
                      if (!resize) {
                          setImage(image);
                          return;

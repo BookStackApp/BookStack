@@ -111,13 +111,11 @@
                     </p>
                 @endif
 
-                <div class="search-box">
-                    <form v-on:submit.prevent="searchBook">
-                        <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
-                        <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                        <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
-                    </form>
-                </div>
+                <form v-on:submit.prevent="searchBook" class="search-box">
+                    <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
+                    <button type="submit"><i class="zmdi zmdi-search"></i></button>
+                    <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
+                </form>
 
                 <div class="activity">
                     <h3>{{ trans('entities.recent_activity') }}</h3>
