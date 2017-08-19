@@ -20,19 +20,46 @@ body.flexbox {
   align-items: stretch;
   min-height: 0;
   position: relative;
-  .flex, &.flex {
-    min-height: 0;
-    flex: 1;
+  &.rows {
+    flex-direction: row;
   }
+  &.columns {
+    flex-direction: column;
+  }
+}
+
+.flex {
+  min-height: 0;
+  flex: 1;
+}
+
+.flex.scroll {
+  //overflow-y: auto;
+  display: flex;
+  &.sidebar {
+    margin-right: -14px;
+  }
+}
+.flex.scroll .scroll-body {
+  overflow-y: scroll;
+  flex: 1;
 }
 
 .flex-child > div {
   flex: 1;
 }
 
-//body.ie .flex-child > div {
-//  flex: 1 0 0px;
-//}
+.flex.sidebar {
+  flex: 1;
+  background-color: #F2F2F2;
+  max-width: 360px;
+  min-height: 90vh;
+}
+.flex.sidebar + .flex.content {
+  flex: 3;
+  background-color: #FFFFFF;
+  border-left: 1px solid #DDD;
+}
 
 /** Rules for all columns */
 div[class^="col-"] img {
