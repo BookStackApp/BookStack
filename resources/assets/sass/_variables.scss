@@ -27,8 +27,12 @@ $-xs: 6px;
 $-xxs: 3px;
 
 // Fonts
-$heading:  'Roboto', 'DejaVu Sans', Helvetica,  Arial, sans-serif;
-$text: 'Roboto', 'DejaVu Sans', Helvetica,  Arial, sans-serif;
+$text: -apple-system, BlinkMacSystemFont,
+"Segoe UI", "Oxygen", "Ubuntu", "Roboto", "Cantarell",
+"Fira Sans", "Droid Sans", "Helvetica Neue",
+sans-serif;
+$mono: "Lucida Console", "DejaVu Sans Mono", "Ubunto Mono", Monaco, monospace;
+$heading: $text;
 $fs-m: 15px;
 $fs-s: 14px;
 
