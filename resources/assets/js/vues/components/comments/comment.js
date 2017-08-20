@@ -37,7 +37,7 @@ const template = `
               </li>
           </ul>
       </div>
-      <div v-if="showEditor && level <= 3">
+      <div v-if="showEditor">
         <comment-reply :page-id="comment.page_id" :comment-obj="comment"
           v-on:editor-removed.stop.prevent="hideComment"
           v-on:comment-replied.stop="commentReplied(...arguments)"
@@ -57,134 +57,121 @@ const template = `
 
 const props = ['initialComment', 'index', 'level', 'permissions', 'currentUserId'];
 
-function data () {
-  return {
-    trans: trans,
-    commentHref: null,
-    comments: [],
-    showEditor: false,
-    comment: this.initialComment,
-    nextLevel: this.level + 1
-  };
+function data() {
+    return {
+        commentHref: null,
+        trans: trans,
+        comments: [],
+        showEditor: false,
+        comment: this.initialComment,
+        nextLevel: this.level + 1
+    };
 }
 
 const methods = {
-  deleteComment: function () {
-    var resp = window.confirm(trans('entities.comment_delete_confirm'));
-    if (!resp) {
-        return;
-    }
-    this.$http.delete(window.baseUrl(`/ajax/comment/${this.comment.id}`)).then(resp => {
-      if (!isCommentOpSuccess(resp)) {
-          return;
-      }
-      updateComment(this.comment, resp.data, true);
-    }, function (resp) {
-      if (isCommentOpSuccess(resp)) {
-          this.$events.emit('success', trans('entities.comment_deleted'));
-      } else {
-          this.$events.emit('error', trans('error.comment_delete'));
-      }
-    });
-  },
-  replyComment: function () {
-    this.toggleEditor(false);
-  },
-  editComment: function () {
-    this.toggleEditor(true);
-  },
-  hideComment: function () {
-    this.showEditor = false;
-  },
-  toggleEditor: function (isEdit) {
-    this.showEditor = false;
-    this.isEdit = isEdit;
-    this.isReply = !isEdit;
-    this.showEditor = true;
-  },
-  commentReplied: function (event, comment) {
-    this.comments.push(comment);
-    this.showEditor = false;
-  },
-  commentEdited: function (event, comment) {
-    this.comment = comment;
-    this.showEditor = false;
-  },
-  commentAdded: function (event, comment) {
-    // this is to handle non-parent child relationship
-    // we want to make it go up.
-    this.$emit('comment-added', event);
-  },
-  canEditOrDelete: function (prop) {
-    if (!this.comment.active) {
-      return false;
-    }
+    deleteComment: function () {
+        var resp = window.confirm(trans('entities.comment_delete_confirm'));
+        if (!resp) {
+            return;
+        }
+        this.$http.delete(window.baseUrl(`/ajax/comment/${this.comment.id}`)).then(resp => {
+            if (!isCommentOpSuccess(resp)) {
+                this.$events.emit('error', trans('error.comment_delete'));
+                return;
+            }
+            this.$events.emit('success', trans('entities.comment_deleted'));
+            this.comment = resp.data.comment;
+        }).catch(err => {
+            this.$events.emit('error', trans('error.comment_delete'));
+        });
+    },
+    replyComment: function () {
+        this.toggleEditor(false);
+    },
+    editComment: function () {
+        this.toggleEditor(true);
+    },
+    hideComment: function () {
+        this.showEditor = false;
+    },
+    toggleEditor: function (isEdit) {
+        this.showEditor = false;
+        this.isEdit = isEdit;
+        this.isReply = !isEdit;
+        this.showEditor = true;
+    },
+    commentReplied: function (event, comment) {
+        this.comments.push(comment);
+        this.showEditor = false;
+    },
+    commentEdited: function (event, comment) {
+        this.comment = comment;
+        this.showEditor = false;
+    },
+    commentAdded: function (event, comment) {
+        // this is to handle non-parent child relationship
+        // we want to make it go up.
+        this.$emit('comment-added', event);
+    },
+    canEditOrDelete: function (prop) {
+        if (!this.comment.active) {
+            return false;
+        }
 
-    if (!this.permissions) {
-      return false;
-    }
+        if (!this.permissions) {
+            return false;
+        }
 
-    let propAll = 'comment_' + prop + '_all';
-    let propOwn = 'comment_' + prop + '_own';
+        let propAll = 'comment_' + prop + '_all';
+        let propOwn = 'comment_' + prop + '_own';
 
-    if (this.permissions[propAll]) {
-        return true;
-    }
+        if (this.permissions[propAll]) {
+            return true;
+        }
 
-    if (this.permissions[propOwn] && this.comment.created_by.id === this.currentUserId) {
-        return true;
-    }
+        if (this.permissions[propOwn] && this.comment.created_by.id === this.currentUserId) {
+            return true;
+        }
 
-    return false;
-  },
-  canComment: function () {
-    if (!this.permissions) {
-      return false;
+        return false;
+    },
+    canComment: function () {
+        if (!this.permissions) {
+            return false;
+        }
+        return this.permissions.comment_create === true;
     }
-    return this.permissions.comment_create === true;
-  }
 };
 
 const computed = {
-  commentId: {
-    get: function () {
-      return `comment-${this.comment.page_id}-${this.comment.id}`;
-    },
-    set: function () {
-      this.commentHref = `#?cm=${this.commentId}`
+    commentId: {
+        get: function () {
+            return `comment-${this.comment.page_id}-${this.comment.id}`;
+        },
+        set: function () {
+            this.commentHref = `#?cm=${this.commentId}`
+        }
     }
-  }
 };
 
-function mounted () {
-  if (this.comment.sub_comments && this.comment.sub_comments.length) {
-    // set this so that we can render the next set of sub comments.
-    this.comments = this.comment.sub_comments;
-  }
+function mounted() {
+    if (this.comment.sub_comments && this.comment.sub_comments.length) {
+        // set this so that we can render the next set of sub comments.
+        this.comments = this.comment.sub_comments;
+    }
 }
 
 function isCommentOpSuccess(resp) {
-  if (resp && resp.data && resp.data.status === 'success') {
-      return true;
-  }
-  return false;
-}
-
-function updateComment(comment, resp, isDelete) {
-  comment.text = resp.comment.text;
-  comment.updated = resp.comment.updated;
-  comment.updated_by = resp.comment.updated_by;
-  comment.active = resp.comment.active;
-  if (isDelete && !resp.comment.active) {
-      comment.html = trans('entities.comment_deleted');
-  } else {
-      comment.html = resp.comment.html;
-  }
+    if (resp && resp.data && resp.data.status === 'success') {
+        return true;
+    }
+    return false;
 }
 
 module.exports = {
-  name: 'comment',
-  template, data, props, methods, computed, mounted, components: {
-  commentReply
-}};
+    name: 'comment',
+    template, data, props, methods, computed, mounted, components: {
+        commentReply
+    }
+};
 
