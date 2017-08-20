@@ -1,5 +1,7 @@
 @extends('base')
 
+@section('body-class', 'shaded')
+
 @section('content')
 
     <div class="toolbar-container">
@@ -13,16 +15,11 @@
     </div>
 
 
-    <div class="flex-fill flex" @yield('container-attrs') >
-
-        <div class="sidebar flex print-hidden">
-            <div class="scroll-body">
-                @yield('sidebar')
-            </div>
-        </div>
-
+    <div class="flex-fill flex">
         <div class="content flex">
-            @yield('body')
+            <div class="scroll-body">
+                @yield('body')
+            </div>
         </div>
     </div>
 

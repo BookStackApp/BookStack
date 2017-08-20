@@ -6,14 +6,14 @@
     </div>
     <div class="col-sm-4 col-xs-7 faded">
         <div class="action-buttons">
-                    <span dropdown class="dropdown-container">
-                        <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
-                        <ul class="wide">
-                            <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                            <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                            <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                        </ul>
-                    </span>
+            <span dropdown class="dropdown-container">
+                <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
+                <ul class="wide">
+                    <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                    <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                    <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                </ul>
+            </span>
             @if(userCan('page-update', $page))
                 <a href="{{ $page->getUrl('/edit') }}" class="text-primary text-button" ><i class="zmdi zmdi-edit"></i>{{ trans('common.edit') }}</a>
             @endif
@@ -41,38 +41,50 @@
 
 @section('sidebar')
     @if($book->restricted || ($page->chapter && $page->chapter->restricted) || $page->restricted)
-        <div class="text-muted">
+        <div class="card">
+            <h3><i class="zmdi zmdi-key"></i> {{ trans('entities.permissions') }}</h3>
+            <div class="body">
+                <div class="text-muted">
 
-            @if($book->restricted)
-                @if(userCan('restrictions-manage', $book))
-                    <a href="{{ $book->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.books_permissions_active') }}</a>
-                @else
-                    <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.books_permissions_active') }}
-                @endif
-                <br>
-            @endif
+                    @if($book->restricted)
+                        @if(userCan('restrictions-manage', $book))
+                            <a href="{{ $book->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.books_permissions_active') }}</a>
+                        @else
+                            <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.books_permissions_active') }}
+                        @endif
+                        <br>
+                    @endif
 
-            @if($page->chapter && $page->chapter->restricted)
-                @if(userCan('restrictions-manage', $page->chapter))
-                    <a href="{{ $page->chapter->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.chapters_permissions_active') }}</a>
-                @else
-                    <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.chapters_permissions_active') }}
-                @endif
-                <br>
-            @endif
+                    @if($page->chapter && $page->chapter->restricted)
+                        @if(userCan('restrictions-manage', $page->chapter))
+                            <a href="{{ $page->chapter->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.chapters_permissions_active') }}</a>
+                        @else
+                            <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.chapters_permissions_active') }}
+                        @endif
+                        <br>
+                    @endif
 
-            @if($page->restricted)
-                @if(userCan('restrictions-manage', $page))
-                    <a href="{{ $page->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.pages_permissions_active') }}</a>
-                @else
-                    <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.pages_permissions_active') }}
-                @endif
-                <br>
-            @endif
+                    @if($page->restricted)
+                        @if(userCan('restrictions-manage', $page))
+                            <a href="{{ $page->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.pages_permissions_active') }}</a>
+                        @else
+                            <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.pages_permissions_active') }}
+                        @endif
+                        <br>
+                    @endif
+                </div>
+            </div>
         </div>
     @endif
 
     @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree, 'pageNav' => $pageNav])
+
+    <div class="card">
+        <h3><i class="zmdi zmdi-info-outline"></i> {{ trans('common.details') }}</h3>
+        <div class="body">
+            @include('partials.entity-meta', ['entity' => $book])
+        </div>
+    </div>
 @stop
 
 @section('body')
@@ -87,10 +99,6 @@
         </div>
 
         @include('pages/page-display')
-
-        <hr>
-
-        @include('partials.entity-meta', ['entity' => $page])
 
     </div>
     <div class="container small">
