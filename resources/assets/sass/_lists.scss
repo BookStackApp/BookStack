@@ -310,6 +310,11 @@ ul.pagination {
   }
 }
 
+.card .entity-list-item {
+  padding-left: $-m;
+  padding-right: $-m;
+}
+
 .entity-list.compact {
   font-size: 0.6em;
   h4, a {
