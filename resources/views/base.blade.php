@@ -36,7 +36,7 @@
     <header id="header">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-sm-4" ng-non-bindable>
+                <div class="col-sm-4" ng-non-bindable>
                     <a href="{{ baseUrl('/') }}" class="logo">
                         @if(setting('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ setting('app-logo', '') === '' ? baseUrl('/logo.png') : baseUrl(setting('app-logo', '')) }}" alt="Logo">
@@ -46,14 +46,14 @@
                         @endif
                     </a>
                 </div>
-                <div class="col-lg-4 col-sm-3 text-center">
-                    <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">
-                        <input id="header-search-box-input" type="text" name="term" tabindex="2" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
-                        <button id="header-search-box-button" type="submit" class="text-button"><i class="zmdi zmdi-search"></i></button>
-                    </form>
-                </div>
-                <div class="col-lg-4 col-sm-5">
+                <div class="col-sm-8">
                     <div class="float right">
+                        <div class="header-search">
+                            <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">
+                                <button id="header-search-box-button" type="submit"><i class="zmdi zmdi-search"></i> </button>
+                                <input id="header-search-box-input" type="text" name="term" tabindex="2" placeholder="{{ trans('common.search') }}" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
+                            </form>
+                        </div>
                         <div class="links text-center">
                             <a href="{{ baseUrl('/books') }}"><i class="zmdi zmdi-book"></i>{{ trans('entities.books') }}</a>
                             @if(signedInUser() && userCan('settings-manage'))

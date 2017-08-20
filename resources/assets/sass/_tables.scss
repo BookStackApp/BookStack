@@ -59,18 +59,9 @@ table.list-table {
   }
 }
 
-table.file-table {
-  @extend .no-style;
-  td {
-    padding: $-xs;
-  }
-  .ui-sortable-helper {
-    display: table;
-  }
-}
-
 .fake-table {
   display: table;
+  width: 100%;
   > div {
     display: table-row-group;
   }
