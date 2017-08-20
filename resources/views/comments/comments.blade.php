@@ -1,18 +1,11 @@
-<script type="text/ng-template" id="comment-list-item.html">
-    @include('comments/list-item')
-</script>
-<script type="text/ng-template" id="comment-reply.html">
-    @include('comments/comment-reply', ['pageId' => $pageId])
-</script>
-<div ng-controller="CommentListController as vm" ng-init="pageId = <?= $page->id ?>" class="comments-list" ng-cloak>
-<h3>@{{vm.totalCommentsStr}}</h3>
-<hr>
-    <div class="comment-box" ng-repeat="comment in vm.comments track by comment.id">
-        <div ng-include src="'comment-list-item.html'">
-
-        </div>
-    </div>
-    <div ng-if="::vm.canComment()">
-        @include('comments/comment-reply', ['pageId' => $pageId])
-    </div>
+<div id="page-comments" page-id="<?= $page->id ?>" class="comments-list" v-cloak>
+  <h3>@{{totalCommentsStr}}</h3>
+  <hr>
+  <comment v-for="(comment, index) in comments" :initial-comment="comment" :index="index" :level=1
+     v-on:comment-added.stop="commentAdded"
+     :key="comment.id"></comment>
+  <div v-if="canComment">
+     <comment-reply v-on:comment-added.stop="commentAdded" :page-id="<?= $page->id ?>">
+     </comment-reply>
+  </div>
 </div>

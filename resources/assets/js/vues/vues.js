@@ -10,6 +10,7 @@ let vueMapping = {
     'code-editor': require('./code-editor'),
     'image-manager': require('./image-manager'),
     'tag-manager': require('./tag-manager'),
+    'page-comments': require('./page-comments')
 };
 
 window.vues = {};
