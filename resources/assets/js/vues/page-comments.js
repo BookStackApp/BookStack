@@ -1,15 +1,11 @@
 const comment = require('./components/comments/comment');
 const commentReply = require('./components/comments/comment-reply');
 
-// 1. Remove code from controllers
-// 2. Remove code from services.
-// 3.
-
 let data = {
   totalCommentsStr: trans('entities.comments_loading'),
   comments: [],
   permissions: null,
-  current_user_id: null,
+  currentUserId: null,
   trans: trans,
   commentCount: 0
 };
@@ -39,7 +35,10 @@ let computed = {
     }
   },
   canComment: function () {
-    return true;
+    if (!this.permissions) {
+      return false;
+    }
+    return this.permissions.comment_create === true;
   }
 }
 
@@ -56,7 +55,7 @@ function mounted() {
     this.comments = resp.data.comments;
     this.totalComments = +resp.data.total;
     this.permissions = resp.data.permissions;
-    this.current_user_id = resp.data.user_id;
+    this.currentUserId = resp.data.user_id;
     if (!linkedCommentId) {
         return;
     }

@@ -18,13 +18,13 @@ const template = `
       </div>
       <div class="comment-actions">
           <ul>
-              <li v-if="(level < 3 && canComment)">
+              <li v-if="(level < 4 && canComment)">
                 <a href="#" comment="comment" v-on:click.prevent="replyComment">{{ trans('entities.comment_reply') }}</a>
               </li>
-              <li v-if="canUpdate">
+              <li v-if="canEditOrDelete('update')">
                 <a href="#" comment="comment" v-on:click.prevent="editComment">{{ trans('entities.comment_edit') }}</a>
               </li>
-              <li v-if="canDelete">
+              <li v-if="canEditOrDelete('delete')">
                 <a href="#" comment="comment" v-on:click.prevent="deleteComment">{{ trans('entities.comment_delete') }}</a>
               </li>
               <li>{{ trans('entities.comment_create') }}
@@ -46,8 +46,8 @@ const template = `
            :is-reply="isReply" :is-edit="isEdit">
         </comment-reply>
       </div>
-      <comment v-for="(comment, index) in comments" :initial-comment="comment"
-        :index="index" :level="nextLevel" :key="comment.id"
+      <comment v-for="(comment, index) in comments" :initial-comment="comment" :index="index"
+        :level="nextLevel" :key="comment.id" :permissions="permissions" :current-user-id="currentUserId"
         v-on:comment-added.stop="commentAdded"></comment>
 
   </div>
@@ -55,7 +55,7 @@ const template = `
 </div>
 `;
 
-const props = ['initialComment', 'index', 'level'];
+const props = ['initialComment', 'index', 'level', 'permissions', 'currentUserId'];
 
 function data () {
   return {
@@ -114,6 +114,34 @@ const methods = {
     // this is to handle non-parent child relationship
     // we want to make it go up.
     this.$emit('comment-added', event);
+  },
+  canEditOrDelete: function (prop) {
+    if (!this.comment.active) {
+      return false;
+    }
+
+    if (!this.permissions) {
+      return false;
+    }
+
+    let propAll = 'comment_' + prop + '_all';
+    let propOwn = 'comment_' + prop + '_own';
+
+    if (this.permissions[propAll]) {
+        return true;
+    }
+
+    if (this.permissions[propOwn] && this.comment.created_by.id === this.currentUserId) {
+        return true;
+    }
+
+    return false;
+  },
+  canComment: function () {
+    if (!this.permissions) {
+      return false;
+    }
+    return this.permissions.comment_create === true;
   }
 };
 
@@ -125,18 +153,6 @@ const computed = {
     set: function () {
       this.commentHref = `#?cm=${this.commentId}`
     }
-  },
-  canUpdate: function () {
-    return true;
-  },
-  canDelete: function () {
-    return true;
-  },
-  canComment: function () {
-    return true;
-  },
-  canUpdate: function () {
-    return true;
   }
 };
 
