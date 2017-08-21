@@ -104,11 +104,9 @@ function getUrlParameter(name) {
 
 function focusLinkedComment(linkedCommentId) {
     let comment = document.getElementById(linkedCommentId);
-    if (comment && comment.length === 0) {
-        return;
+    if (comment && comment.length !== 0) {
+        window.setupPageShow.goToText(linkedCommentId);
     }
-
-    window.setupPageShow.goToText(linkedCommentId);
 }
 
 module.exports = {
