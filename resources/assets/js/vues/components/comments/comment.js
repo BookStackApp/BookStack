@@ -59,7 +59,6 @@ const props = ['initialComment', 'index', 'level', 'permissions', 'currentUserId
 
 function data() {
     return {
-        commentHref: null,
         trans: trans,
         comments: [],
         showEditor: false,
@@ -144,13 +143,11 @@ const methods = {
 };
 
 const computed = {
-    commentId: {
-        get: function () {
-            return `comment-${this.comment.page_id}-${this.comment.id}`;
-        },
-        set: function () {
-            this.commentHref = `#?cm=${this.commentId}`
-        }
+    commentId: function () {
+        return `comment-${this.comment.page_id}-${this.comment.id}`;
+    },
+    commentHref: function () {
+        return `#?cm=${this.commentId}`;
     }
 };
 
