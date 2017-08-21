@@ -144,17 +144,4 @@ module.exports = function (ngApp, events) {
         };
 
     }]);
-
-    // Controller used to fetch all comments for a page
-    ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
-
-        function focusLinkedComment(linkedCommentId) {
-            let comment = angular.element('#' + linkedCommentId);
-            if (comment.length === 0) {
-                return;
-            }
-
-            window.setupPageShow.goToText(linkedCommentId);
-        }
-    }]);
 };

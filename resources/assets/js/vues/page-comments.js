@@ -45,7 +45,7 @@ let computed = {
 function mounted() {
     this.pageId = Number(this.$el.getAttribute('page-id'));
     // let linkedCommentId = this.$route.query.cm;
-    let linkedCommentId = null;
+    let linkedCommentId = getUrlParameter('cm');
     this.$http.get(window.baseUrl(`/ajax/page/${this.pageId}/comments/`)).then(resp => {
         if (!isCommentOpSuccess(resp)) {
             // just show that no comments are available.
@@ -60,9 +60,13 @@ function mounted() {
         if (!linkedCommentId) {
             return;
         }
-        focusLinkedComment(linkedCommentId);
+
+        // adding a setTimeout to give comment list some time to render.
+        setTimeout(function() {
+            focusLinkedComment(linkedCommentId);
+        });
     }).catch(err => {
-        this.$events.emit('error', 'errors.comment_list');
+        this.$events.emit('error', trans('errors.comment_list'));
     });
 }
 
@@ -89,6 +93,22 @@ function created() {
 
 function beforeDestroy() {
     this.$off('new-comment');
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.hash);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+function focusLinkedComment(linkedCommentId) {
+    let comment = document.getElementById(linkedCommentId);
+    if (comment && comment.length === 0) {
+        return;
+    }
+
+    window.setupPageShow.goToText(linkedCommentId);
 }
 
 module.exports = {
