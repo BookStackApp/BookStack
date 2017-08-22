@@ -44,7 +44,6 @@ let computed = {
 
 function mounted() {
     this.pageId = Number(this.$el.getAttribute('page-id'));
-    // let linkedCommentId = this.$route.query.cm;
     let linkedCommentId = getUrlParameter('cm');
     this.$http.get(window.baseUrl(`/ajax/page/${this.pageId}/comments/`)).then(resp => {
         if (!isCommentOpSuccess(resp)) {
@@ -61,7 +60,8 @@ function mounted() {
             return;
         }
 
-        // adding a setTimeout to give comment list some time to render.
+        // adding a setTimeout to give the comment list some time to render
+        // before focusing the comment.
         setTimeout(function() {
             focusLinkedComment(linkedCommentId);
         });
