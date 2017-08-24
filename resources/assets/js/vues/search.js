@@ -149,7 +149,7 @@ let methods = {
 
     updateSearch(e) {
         e.preventDefault();
-        window.location = '/search?term=' + encodeURIComponent(this.termString);
+        window.location = window.baseUrl('/search?term=' + encodeURIComponent(this.termString));
     },
 
     enableDate(optionName) {
