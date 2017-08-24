@@ -20,5 +20,13 @@ return [
     'image_preview' => '画像プレビュー',
     'image_upload_success' => '画像がアップロードされました',
     'image_update_success' => '画像が更新されました',
-    'image_delete_success' => '画像が削除されました'
+    'image_delete_success' => '画像が削除されました',
+
+    /**
+     * Code editor
+     */
+    'code_editor' => 'プログラム編集画面',
+    'code_language' => 'プログラミング言語の選択',
+    'code_content' => 'プログラム内容',
+    'code_save' => 'プログラムを保存'
 ];
