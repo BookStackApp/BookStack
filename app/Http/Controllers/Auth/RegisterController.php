@@ -8,6 +8,7 @@ use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\EmailConfirmationService;
 use BookStack\Services\SocialAuthService;
+use BookStack\SocialAccount;
 use BookStack\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -103,7 +104,7 @@ class RegisterController extends Controller
      * @param Request|\Illuminate\Http\Request $request
      * @return Response
      * @throws UserRegistrationException
-     * @throws \Illuminate\Foundation\Validation\ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function postRegister(Request $request)
     {
@@ -255,16 +256,13 @@ class RegisterController extends Controller
      */
     public function socialCallback($socialDriver)
     {
-        if (session()->has('social-callback')) {
-            $action = session()->pull('social-callback');
-            if ($action == 'login') {
-                return $this->socialAuthService->handleLoginCallback($socialDriver);
-            } elseif ($action == 'register') {
-                return $this->socialRegisterCallback($socialDriver);
-            }
-        } else {
+        if (!session()->has('social-callback')) {
             throw new SocialSignInException(trans('errors.social_no_action_defined'), '/login');
         }
+
+        $action = session()->pull('social-callback');
+        if ($action == 'login') return $this->socialAuthService->handleLoginCallback($socialDriver);
+        if ($action == 'register') return $this->socialRegisterCallback($socialDriver);
         return redirect()->back();
     }
 

@@ -1,4 +1,65 @@
-.overlay {
+// System wide notifications
+[notification] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: $-xl*2 $-xl;
+  padding: $-l $-xl;
+  background-color: #EEE;
+  border-radius: 3px;
+  box-shadow: $bs-med;
+  z-index: 999999;
+  display: block;
+  cursor: pointer;
+  max-width: 480px;
+  transition: transform ease-in-out 360ms;
+  transform: translate3d(580px, 0, 0);
+  i, span {
+    display: table-cell;
+  }
+  i {
+    font-size: 2em;
+    padding-right: $-l;
+  }
+  span {
+    vertical-align: middle;
+  }
+  &.pos {
+    background-color: $positive;
+    color: #EEE;
+  }
+  &.neg {
+    background-color: $negative;
+    color: #EEE;
+  }
+  &.warning {
+    background-color: $secondary;
+    color: #EEE;
+  }
+  &.showing {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+[chapter-toggle] {
+  cursor: pointer;
+  margin: 0;
+  transition: all ease-in-out 180ms;
+  user-select: none;
+  i.zmdi-caret-right {
+    transition: all ease-in-out 180ms;
+    transform: rotate(0deg);
+    transform-origin: 25% 50%;
+  }
+  &.open {
+    //margin-bottom: 0;
+  }
+  &.open i.zmdi-caret-right {
+    transform: rotate(90deg);
+  }
+}
+
+[overlay] {
   background-color: rgba(0, 0, 0, 0.333);
   position: fixed;
   z-index: 95536;
@@ -451,7 +512,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 
-[tab-container] .nav-tabs {
+.tab-container .nav-tabs {
   text-align: left;
   border-bottom: 1px solid #DDD;
   margin-bottom: $-m;

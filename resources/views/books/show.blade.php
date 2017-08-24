@@ -5,10 +5,10 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 faded">
+                <div class="col-sm-6 col-xs-1  faded">
                     @include('books._breadcrumbs', ['book' => $book])
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 col-xs-11">
                     <div class="action-buttons faded">
                         <span dropdown class="dropdown-container">
                             <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
@@ -50,13 +50,13 @@
     </div>
 
 
-    <div class="container" id="entity-dashboard" entity-id="{{ $book->id }}" entity-type="book">
+    <div ng-non-bindable class="container" id="entity-dashboard" entity-id="{{ $book->id }}" entity-type="book">
         <div class="row">
             <div class="col-md-7">
 
                 <h1>{{$book->name}}</h1>
-                <div class="book-content" v-if="!searching">
-                    <p class="text-muted" v-pre>{{$book->description}}</p>
+                <div class="book-content" v-show="!searching">
+                    <p class="text-muted" v-pre>{!! nl2br(e($book->description)) !!}</p>
 
                     <div class="page-list" v-pre>
                         <hr>
@@ -87,7 +87,7 @@
                         @include('partials.entity-meta', ['entity' => $book])
                     </div>
                 </div>
-                <div class="search-results" v-cloak v-if="searching">
+                <div class="search-results" v-cloak v-show="searching">
                     <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
                     <div v-if="!searchResults">
                         @include('partials/loading-icon')
@@ -111,14 +111,12 @@
                     </p>
                 @endif
 
-                <div class="search-box">
-                    <form v-on:submit="searchBook">
-                        <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
-                        <button type="submit"><i class="zmdi zmdi-search"></i></button>
-                        <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
-                    </form>
-                </div>
-                
+                <form v-on:submit.prevent="searchBook" class="search-box">
+                    <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
+                    <button type="submit"><i class="zmdi zmdi-search"></i></button>
+                    <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
+                </form>
+
                 <div class="activity">
                     <h3>{{ trans('entities.recent_activity') }}</h3>
                     @include('partials/activity-list', ['activity' => Activity::entityActivity($book, 20, 0)])

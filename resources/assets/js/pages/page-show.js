@@ -1,5 +1,3 @@
-"use strict";
-// Configure ZeroClipboard
 const Clipboard = require("clipboard");
 const Code = require('../code');
 
@@ -161,6 +159,8 @@ let setupPageShow = window.setupPageShow = function (pageId) {
         }
     });
 
+    // in order to call from other places.
+    window.setupPageShow.goToText = goToText;
 };
 
 module.exports = setupPageShow;

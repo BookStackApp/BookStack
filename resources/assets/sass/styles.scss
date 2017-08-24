@@ -1,6 +1,5 @@
 @import "reset";
 @import "variables";
-@import "fonts";
 @import "mixins";
 @import "html";
 @import "text";
@@ -16,12 +15,12 @@
 @import "header";
 @import "lists";
 @import "pages";
+@import "comments";
 
-[v-cloak], [v-show] {
+[v-cloak] {
   display: none; opacity: 0;
   animation-name: none !important;
 }
-
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
@@ -62,44 +61,6 @@ body.dragging, body.dragging * {
   }
   &.square {
     border-radius: 3px;
-  }
-}
-
-// System wide notifications
-.notification {
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: $-xl*2 $-xl;
-  padding: $-l $-xl;
-  background-color: #EEE;
-  border-radius: 3px;
-  box-shadow: $bs-med;
-  z-index: 999999;
-  display: block;
-  cursor: pointer;
-  max-width: 480px;
-  i, span {
-    display: table-cell;
-  }
-  i {
-    font-size: 2em;
-    padding-right: $-l;
-  }
-  span {
-    vertical-align: middle;
-  }
-  &.pos {
-    background-color: $positive;
-    color: #EEE;
-  }
-  &.neg {
-    background-color: $negative;
-    color: #EEE;
-  }
-  &.warning {
-    background-color: $secondary;
-    color: #EEE;
   }
 }
 
@@ -150,7 +111,7 @@ $loadingSize: 10px;
 
 // Back to top link
 $btt-size: 40px;
-#back-to-top {
+[back-to-top] {
   background-color: $primary;
   position: fixed;
   bottom: $-m;

@@ -1,4 +1,3 @@
-//@import "reset";
 @import "variables";
 @import "mixins";
 @import "html";
@@ -10,6 +9,7 @@
 @import "header";
 @import "lists";
 @import "pages";
+@import "comments";
 
 table {
   border-spacing: 0;

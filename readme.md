@@ -22,8 +22,11 @@ All development on BookStack is currently done on the master branch. When it's t
 SASS is used to help the CSS development and the JavaScript is run through browserify/babel to allow for writing ES6 code. Both of these are done using gulp. To run the build task you can use the following commands:
 
 ``` bash
-# Build and minify for production
+# Build assets for development
 npm run-script build
+
+# Build and minify assets for production
+npm run-script production
 
 # Build for dev (With sourcemaps) and watch for changes
 npm run-script dev
@@ -76,7 +79,7 @@ These are the great open-source projects used to help build BookStack:
 * [jQuery Sortable](https://johnny.github.io/jquery-sortable/)
 * [Material Design Iconic Font](http://zavoloklom.github.io/material-design-iconic-font/icons.html)
 * [Dropzone.js](http://www.dropzonejs.com/)
-* [ZeroClipboard](http://zeroclipboard.org/)
+* [clipboard.js](https://clipboardjs.com/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
 * [Moment.js](http://momentjs.com/)

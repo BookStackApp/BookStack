@@ -1,5 +1,6 @@
 <style id="custom-styles" data-color="{{ setting('app-color') }}" data-color-light="{{ setting('app-color-light') }}">
-    header, #back-to-top, .primary-background {
+    @if(setting('app-color'))
+    header, [back-to-top], .primary-background {
         background-color: {{ setting('app-color') }} !important;
     }
     .faded-small, .primary-background-light {
@@ -17,4 +18,5 @@
     .text-primary, p.primary, p .primary, span.primary:hover, .text-primary:hover, a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
         color: {{ setting('app-color') }};
     }
+    @endif
 </style>

@@ -8,256 +8,6 @@ moment.locale('en-gb');
 
 module.exports = function (ngApp, events) {
 
-    ngApp.controller('ImageManagerController', ['$scope', '$attrs', '$http', '$timeout', 'imageManagerService',
-        function ($scope, $attrs, $http, $timeout, imageManagerService) {
-
-            $scope.images = [];
-            $scope.imageType = $attrs.imageType;
-            $scope.selectedImage = false;
-            $scope.dependantPages = false;
-            $scope.showing = false;
-            $scope.hasMore = false;
-            $scope.imageUpdateSuccess = false;
-            $scope.imageDeleteSuccess = false;
-            $scope.uploadedTo = $attrs.uploadedTo;
-            $scope.view = 'all';
-
-            $scope.searching = false;
-            $scope.searchTerm = '';
-
-            let page = 0;
-            let previousClickTime = 0;
-            let previousClickImage = 0;
-            let dataLoaded = false;
-            let callback = false;
-
-            let preSearchImages = [];
-            let preSearchHasMore = false;
-
-            /**
-             * Used by dropzone to get the endpoint to upload to.
-             * @returns {string}
-             */
-            $scope.getUploadUrl = function () {
-                return window.baseUrl('/images/' + $scope.imageType + '/upload');
-            };
-
-            /**
-             * Cancel the current search operation.
-             */
-            function cancelSearch() {
-                $scope.searching = false;
-                $scope.searchTerm = '';
-                $scope.images = preSearchImages;
-                $scope.hasMore = preSearchHasMore;
-            }
-            $scope.cancelSearch = cancelSearch;
-
-
-            /**
-             * Runs on image upload, Adds an image to local list of images
-             * and shows a success message to the user.
-             * @param file
-             * @param data
-             */
-            $scope.uploadSuccess = function (file, data) {
-                $scope.$apply(() => {
-                    $scope.images.unshift(data);
-                });
-                events.emit('success', trans('components.image_upload_success'));
-            };
-
-            /**
-             * Runs the callback and hides the image manager.
-             * @param returnData
-             */
-            function callbackAndHide(returnData) {
-                if (callback) callback(returnData);
-                $scope.hide();
-            }
-
-            /**
-             * Image select action. Checks if a double-click was fired.
-             * @param image
-             */
-            $scope.imageSelect = function (image) {
-                let dblClickTime = 300;
-                let currentTime = Date.now();
-                let timeDiff = currentTime - previousClickTime;
-
-                if (timeDiff < dblClickTime && image.id === previousClickImage) {
-                    // If double click
-                    callbackAndHide(image);
-                } else {
-                    // If single
-                    $scope.selectedImage = image;
-                    $scope.dependantPages = false;
-                }
-                previousClickTime = currentTime;
-                previousClickImage = image.id;
-            };
-
-            /**
-             * Action that runs when the 'Select image' button is clicked.
-             * Runs the callback and hides the image manager.
-             */
-            $scope.selectButtonClick = function () {
-                callbackAndHide($scope.selectedImage);
-            };
-
-            /**
-             * Show the image manager.
-             * Takes a callback to execute later on.
-             * @param doneCallback
-             */
-            function show(doneCallback) {
-                callback = doneCallback;
-                $scope.showing = true;
-                $('#image-manager').find('.overlay').css('display', 'flex').hide().fadeIn(240);
-                // Get initial images if they have not yet been loaded in.
-                if (!dataLoaded) {
-                    fetchData();
-                    dataLoaded = true;
-                }
-            }
-
-            // Connects up the image manger so it can be used externally
-            // such as from TinyMCE.
-            imageManagerService.show = show;
-            imageManagerService.showExternal = function (doneCallback) {
-                $scope.$apply(() => {
-                    show(doneCallback);
-                });
-            };
-            window.ImageManager = imageManagerService;
-
-            /**
-             * Hide the image manager
-             */
-            $scope.hide = function () {
-                $scope.showing = false;
-                $('#image-manager').find('.overlay').fadeOut(240);
-            };
-
-            let baseUrl = window.baseUrl('/images/' + $scope.imageType + '/all/');
-
-            /**
-             * Fetch the list image data from the server.
-             */
-            function fetchData() {
-                let url = baseUrl + page + '?';
-                let components = {};
-                if ($scope.uploadedTo) components['page_id'] = $scope.uploadedTo;
-                if ($scope.searching) components['term'] = $scope.searchTerm;
-
-
-                url += Object.keys(components).map((key) => {
-                    return key + '=' + encodeURIComponent(components[key]);
-                }).join('&');
-
-                $http.get(url).then((response) => {
-                    $scope.images = $scope.images.concat(response.data.images);
-                    $scope.hasMore = response.data.hasMore;
-                    page++;
-                });
-            }
-            $scope.fetchData = fetchData;
-
-            /**
-             * Start a search operation
-             */
-            $scope.searchImages = function() {
-
-                if ($scope.searchTerm === '') {
-                    cancelSearch();
-                    return;
-                }
-
-                if (!$scope.searching) {
-                    preSearchImages = $scope.images;
-                    preSearchHasMore = $scope.hasMore;
-                }
-
-                $scope.searching = true;
-                $scope.images = [];
-                $scope.hasMore = false;
-                page = 0;
-                baseUrl = window.baseUrl('/images/' + $scope.imageType + '/search/');
-                fetchData();
-            };
-
-            /**
-             * Set the current image listing view.
-             * @param viewName
-             */
-            $scope.setView = function(viewName) {
-                cancelSearch();
-                $scope.images = [];
-                $scope.hasMore = false;
-                page = 0;
-                $scope.view = viewName;
-                baseUrl = window.baseUrl('/images/' + $scope.imageType  + '/' + viewName + '/');
-                fetchData();
-            };
-
-            /**
-             * Save the details of an image.
-             * @param event
-             */
-            $scope.saveImageDetails = function (event) {
-                event.preventDefault();
-                let url = window.baseUrl('/images/update/' + $scope.selectedImage.id);
-                $http.put(url, this.selectedImage).then(response => {
-                    events.emit('success', trans('components.image_update_success'));
-                }, (response) => {
-                    if (response.status === 422) {
-                        let errors = response.data;
-                        let message = '';
-                        Object.keys(errors).forEach((key) => {
-                            message += errors[key].join('\n');
-                        });
-                        events.emit('error', message);
-                    } else if (response.status === 403) {
-                        events.emit('error', response.data.error);
-                    }
-                });
-            };
-
-            /**
-             * Delete an image from system and notify of success.
-             * Checks if it should force delete when an image
-             * has dependant pages.
-             * @param event
-             */
-            $scope.deleteImage = function (event) {
-                event.preventDefault();
-                let force = $scope.dependantPages !== false;
-                let url = window.baseUrl('/images/' + $scope.selectedImage.id);
-                if (force) url += '?force=true';
-                $http.delete(url).then((response) => {
-                    $scope.images.splice($scope.images.indexOf($scope.selectedImage), 1);
-                    $scope.selectedImage = false;
-                    events.emit('success', trans('components.image_delete_success'));
-                }, (response) => {
-                    // Pages failure
-                    if (response.status === 400) {
-                        $scope.dependantPages = response.data;
-                    } else if (response.status === 403) {
-                        events.emit('error', response.data.error);
-                    }
-                });
-            };
-
-            /**
-             * Simple date creator used to properly format dates.
-             * @param stringDate
-             * @returns {Date}
-             */
-            $scope.getDate = function (stringDate) {
-                return new Date(stringDate);
-            };
-
-        }]);
 
     ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', '$sce',
         function ($scope, $http, $attrs, $interval, $timeout, $sce) {
@@ -379,7 +129,7 @@ module.exports = function (ngApp, events) {
          */
         $scope.discardDraft = function () {
             let url = window.baseUrl('/ajax/page/' + pageId);
-            $http.get(url).then((responseData) => {
+            $http.get(url).then(responseData => {
                 if (autoSave) $interval.cancel(autoSave);
                 $scope.draftText = trans('entities.pages_editing_page');
                 $scope.isUpdateDraft = false;
@@ -395,284 +145,225 @@ module.exports = function (ngApp, events) {
 
     }]);
 
-    ngApp.controller('PageTagController', ['$scope', '$http', '$attrs',
-        function ($scope, $http, $attrs) {
+    // Controller used to reply to and add new comments
+    ngApp.controller('CommentReplyController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+        const MarkdownIt = require("markdown-it");
+        const md = new MarkdownIt({html: true});
+        let vm = this;
 
-            const pageId = Number($attrs.pageId);
-            $scope.tags = [];
-
-            $scope.sortOptions = {
-                handle: '.handle',
-                items: '> tr',
-                containment: "parent",
-                axis: "y"
+        vm.saveComment = function () {
+            let pageId = $scope.comment.pageId || $scope.pageId;
+            let comment = $scope.comment.text;
+            if (!comment) {
+                return events.emit('warning', trans('errors.empty_comment'));
+            }
+            let commentHTML = md.render($scope.comment.text);
+            let serviceUrl = `/ajax/page/${pageId}/comment/`;
+            let httpMethod = 'post';
+            let reqObj = {
+                text: comment,
+                html: commentHTML
             };
 
-            /**
-             * Push an empty tag to the end of the scope tags.
-             */
-            function addEmptyTag() {
-                $scope.tags.push({
-                    name: '',
-                    value: ''
-                });
+            if ($scope.isEdit === true) {
+                // this will be set when editing the comment.
+                serviceUrl = `/ajax/page/${pageId}/comment/${$scope.comment.id}`;
+                httpMethod = 'put';
+            } else if ($scope.isReply === true) {
+                // if its reply, get the parent comment id
+                reqObj.parent_id = $scope.parentId;
             }
-            $scope.addEmptyTag = addEmptyTag;
-
-            /**
-             * Get all tags for the current book and add into scope.
-             */
-            function getTags() {
-                let url = window.baseUrl(`/ajax/tags/get/page/${pageId}`);
-                $http.get(url).then((responseData) => {
-                    $scope.tags = responseData.data;
-                    addEmptyTag();
-                });
-            }
-            getTags();
-
-            /**
-             * Set the order property on all tags.
-             */
-            function setTagOrder() {
-                for (let i = 0; i < $scope.tags.length; i++) {
-                    $scope.tags[i].order = i;
+            $http[httpMethod](window.baseUrl(serviceUrl), reqObj).then(resp => {
+                if (!isCommentOpSuccess(resp)) {
+                     return;
                 }
-            }
-
-            /**
-             * When an tag changes check if another empty editable
-             * field needs to be added onto the end.
-             * @param tag
-             */
-            $scope.tagChange = function(tag) {
-                let cPos = $scope.tags.indexOf(tag);
-                if (cPos !== $scope.tags.length-1) return;
-
-                if (tag.name !== '' || tag.value !== '') {
-                    addEmptyTag();
-                }
-            };
-
-            /**
-             * When an tag field loses focus check the tag to see if its
-             * empty and therefore could be removed from the list.
-             * @param tag
-             */
-            $scope.tagBlur = function(tag) {
-                let isLast = $scope.tags.length - 1 === $scope.tags.indexOf(tag);
-                if (tag.name === '' && tag.value === '' && !isLast) {
-                    let cPos = $scope.tags.indexOf(tag);
-                    $scope.tags.splice(cPos, 1);
-                }
-            };
-
-            /**
-             * Remove a tag from the current list.
-             * @param tag
-             */
-            $scope.removeTag = function(tag) {
-                let cIndex = $scope.tags.indexOf(tag);
-                $scope.tags.splice(cIndex, 1);
-            };
-
-        }]);
-
-
-    ngApp.controller('PageAttachmentController', ['$scope', '$http', '$attrs',
-        function ($scope, $http, $attrs) {
-
-            const pageId = $scope.uploadedTo = $attrs.pageId;
-            let currentOrder = '';
-            $scope.files = [];
-            $scope.editFile = false;
-            $scope.file = getCleanFile();
-            $scope.errors = {
-                link: {},
-                edit: {}
-            };
-
-            function getCleanFile() {
-                return {
-                    page_id: pageId
-                };
-            }
-
-            // Angular-UI-Sort options
-            $scope.sortOptions = {
-                handle: '.handle',
-                items: '> tr',
-                containment: "parent",
-                axis: "y",
-                stop: sortUpdate,
-            };
-
-            /**
-             * Event listener for sort changes.
-             * Updates the file ordering on the server.
-             * @param event
-             * @param ui
-             */
-            function sortUpdate(event, ui) {
-                let newOrder = $scope.files.map(file => {return file.id}).join(':');
-                if (newOrder === currentOrder) return;
-
-                currentOrder = newOrder;
-                $http.put(window.baseUrl(`/attachments/sort/page/${pageId}`), {files: $scope.files}).then(resp => {
-                    events.emit('success', resp.data.message);
-                }, checkError('sort'));
-            }
-
-            /**
-             * Used by dropzone to get the endpoint to upload to.
-             * @returns {string}
-             */
-            $scope.getUploadUrl = function (file) {
-                let suffix = (typeof file !== 'undefined') ? `/${file.id}` : '';
-                return window.baseUrl(`/attachments/upload${suffix}`);
-            };
-
-            /**
-             * Get files for the current page from the server.
-             */
-            function getFiles() {
-                let url = window.baseUrl(`/attachments/get/page/${pageId}`);
-                $http.get(url).then(resp => {
-                    $scope.files = resp.data;
-                    currentOrder = resp.data.map(file => {return file.id}).join(':');
-                }, checkError('get'));
-            }
-            getFiles();
-
-            /**
-             * Runs on file upload, Adds an file to local file list
-             * and shows a success message to the user.
-             * @param file
-             * @param data
-             */
-            $scope.uploadSuccess = function (file, data) {
-                $scope.$apply(() => {
-                    $scope.files.push(data);
-                });
-                events.emit('success', trans('entities.attachments_file_uploaded'));
-            };
-
-            /**
-             * Upload and overwrite an existing file.
-             * @param file
-             * @param data
-             */
-            $scope.uploadSuccessUpdate = function (file, data) {
-                $scope.$apply(() => {
-                    let search = filesIndexOf(data);
-                    if (search !== -1) $scope.files[search] = data;
-
-                    if ($scope.editFile) {
-                        $scope.editFile = angular.copy(data);
-                        data.link = '';
+                // hide the comments first, and then retrigger the refresh
+                if ($scope.isEdit) {
+                    updateComment($scope.comment, resp.data);
+                    $scope.$emit('evt.comment-success', $scope.comment.id);
+                } else {
+                    $scope.comment.text = '';
+                    if ($scope.isReply === true && $scope.parent.sub_comments) {
+                        $scope.parent.sub_comments.push(resp.data.comment);
+                    } else {
+                        $scope.$emit('evt.new-comment', resp.data.comment);
                     }
+                    $scope.$emit('evt.comment-success', null, true);
+                }
+                $scope.comment.is_hidden = true;
+                $timeout(function() {
+                    $scope.comment.is_hidden = false;
                 });
-                events.emit('success', trans('entities.attachments_file_updated'));
-            };
 
-            /**
-             * Delete a file from the server and, on success, the local listing.
-             * @param file
-             */
-            $scope.deleteFile = function(file) {
-                if (!file.deleting) {
-                    file.deleting = true;
+                events.emit('success', trans(resp.data.message));
+
+            }, checkError);
+
+        };
+
+        function checkError(response) {
+            let msg = null;
+            if (isCommentOpSuccess(response)) {
+                // all good
+                return;
+            } else if (response.data) {
+                msg = response.data.message;
+            } else {
+                msg = trans('errors.comment_add');
+            }
+            if (msg) {
+                events.emit('success', msg);
+            }
+        }
+    }]);
+
+    // Controller used to delete comments
+    ngApp.controller('CommentDeleteController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+        let vm = this;
+
+        vm.delete = function(comment) {
+            $http.delete(window.baseUrl(`/ajax/comment/${comment.id}`)).then(resp => {
+                if (!isCommentOpSuccess(resp)) {
                     return;
                 }
-                  $http.delete(window.baseUrl(`/attachments/${file.id}`)).then(resp => {
-                      events.emit('success', resp.data.message);
-                      $scope.files.splice($scope.files.indexOf(file), 1);
-                  }, checkError('delete'));
-            };
-
-            /**
-             * Attach a link to a page.
-             * @param file
-             */
-            $scope.attachLinkSubmit = function(file) {
-                file.uploaded_to = pageId;
-                $http.post(window.baseUrl('/attachments/link'), file).then(resp => {
-                    $scope.files.push(resp.data);
-                    events.emit('success', trans('entities.attachments_link_attached'));
-                    $scope.file = getCleanFile();
-                }, checkError('link'));
-            };
-
-            /**
-             * Start the edit mode for a file.
-             * @param file
-             */
-            $scope.startEdit = function(file) {
-                $scope.editFile = angular.copy(file);
-                $scope.editFile.link = (file.external) ? file.path : '';
-            };
-
-            /**
-             * Cancel edit mode
-             */
-            $scope.cancelEdit = function() {
-                $scope.editFile = false;
-            };
-
-            /**
-             * Update the name and link of a file.
-             * @param file
-             */
-            $scope.updateFile = function(file) {
-                $http.put(window.baseUrl(`/attachments/${file.id}`), file).then(resp => {
-                    let search = filesIndexOf(resp.data);
-                    if (search !== -1) $scope.files[search] = resp.data;
-
-                    if ($scope.editFile && !file.external) {
-                        $scope.editFile.link = '';
-                    }
-                    $scope.editFile = false;
-                    events.emit('success', trans('entities.attachments_updated_success'));
-                }, checkError('edit'));
-            };
-
-            /**
-             * Get the url of a file.
-             */
-            $scope.getFileUrl = function(file) {
-                return window.baseUrl('/attachments/' + file.id);
-            };
-
-            /**
-             * Search the local files via another file object.
-             * Used to search via object copies.
-             * @param file
-             * @returns int
-             */
-            function filesIndexOf(file) {
-                for (let i = 0; i < $scope.files.length; i++) {
-                    if ($scope.files[i].id == file.id) return i;
+                updateComment(comment, resp.data, $timeout, true);
+            }, function (resp) {
+                if (isCommentOpSuccess(resp)) {
+                    events.emit('success', trans('entities.comment_deleted'));
+                } else {
+                    events.emit('error', trans('error.comment_delete'));
                 }
-                return -1;
+            });
+        };
+    }]);
+
+    // Controller used to fetch all comments for a page
+    ngApp.controller('CommentListController', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
+        let vm = this;
+        $scope.errors = {};
+        // keep track of comment levels
+        $scope.level = 1;
+        vm.totalCommentsStr = trans('entities.comments_loading');
+        vm.permissions = {};
+        vm.trans = window.trans;
+
+        $scope.$on('evt.new-comment', function (event, comment) {
+            // add the comment to the comment list.
+            vm.comments.push(comment);
+            ++vm.totalComments;
+            setTotalCommentMsg();
+            event.stopPropagation();
+            event.preventDefault();
+        });
+
+        vm.canEditDelete = function (comment, prop) {
+            if (!comment.active) {
+                return false;
+            }
+            let propAll = prop + '_all';
+            let propOwn = prop + '_own';
+
+            if (vm.permissions[propAll]) {
+                return true;
             }
 
-            /**
-             * Check for an error response in a ajax request.
-             * @param errorGroupName
-             */
-            function checkError(errorGroupName) {
-                $scope.errors[errorGroupName] = {};
-                return function(response) {
-                    if (typeof response.data !== 'undefined' && typeof response.data.error !== 'undefined') {
-                        events.emit('error', response.data.error);
-                    }
-                    if (typeof response.data !== 'undefined' && typeof response.data.validation !== 'undefined') {
-                        $scope.errors[errorGroupName] = response.data.validation;
-                        console.log($scope.errors[errorGroupName])
-                    }
-                }
+            if (vm.permissions[propOwn] && comment.created_by.id === vm.current_user_id) {
+                return true;
             }
 
-        }]);
+            return false;
+        };
 
+        vm.canComment = function () {
+            return vm.permissions.comment_create;
+        };
+
+        // check if there are is any direct linking
+        let linkedCommentId = $location.search().cm;
+
+        $timeout(function() {
+            $http.get(window.baseUrl(`/ajax/page/${$scope.pageId}/comments/`)).then(resp => {
+                if (!isCommentOpSuccess(resp)) {
+                    // just show that no comments are available.
+                    vm.totalComments = 0;
+                    setTotalCommentMsg();
+                    return;
+                }
+                vm.comments = resp.data.comments;
+                vm.totalComments = +resp.data.total;
+                vm.permissions = resp.data.permissions;
+                vm.current_user_id = resp.data.user_id;
+                setTotalCommentMsg();
+                if (!linkedCommentId) {
+                    return;
+                }
+                $timeout(function() {
+                    // wait for the UI to render.
+                    focusLinkedComment(linkedCommentId);
+                });
+            }, checkError);
+        });
+
+        function setTotalCommentMsg () {
+            if (vm.totalComments === 0) {
+                vm.totalCommentsStr = trans('entities.no_comments');
+            } else if (vm.totalComments === 1) {
+                vm.totalCommentsStr = trans('entities.one_comment');
+            } else {
+                vm.totalCommentsStr = trans('entities.x_comments', {
+                    numComments: vm.totalComments
+                });
+            }
+        }
+
+        function focusLinkedComment(linkedCommentId) {
+            let comment = angular.element('#' + linkedCommentId);
+            if (comment.length === 0) {
+                return;
+            }
+
+            window.setupPageShow.goToText(linkedCommentId);
+        }
+
+        function checkError(response) {
+            let msg = null;
+            if (isCommentOpSuccess(response)) {
+                // all good
+                return;
+            } else if (response.data) {
+                msg = response.data.message;
+            } else {
+                msg = trans('errors.comment_list');
+            }
+            if (msg) {
+                events.emit('success', msg);
+            }
+        }
+    }]);
+
+    function updateComment(comment, resp, $timeout, isDelete) {
+        comment.text = resp.comment.text;
+        comment.updated = resp.comment.updated;
+        comment.updated_by = resp.comment.updated_by;
+        comment.active = resp.comment.active;
+        if (isDelete && !resp.comment.active) {
+            comment.html = trans('entities.comment_deleted');
+        } else {
+            comment.html = resp.comment.html;
+        }
+        if (!$timeout) {
+            return;
+        }
+        comment.is_hidden = true;
+        $timeout(function() {
+            comment.is_hidden = false;
+        });
+    }
+
+    function isCommentOpSuccess(resp) {
+        if (resp && resp.data && resp.data.status === 'success') {
+            return true;
+        }
+        return false;
+    }
 };

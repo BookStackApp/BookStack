@@ -226,7 +226,7 @@
     width: 100%;
     min-width: 50px;
   }
-  .tags td {
+  .tags td, .tag-table > div > div > div {
     padding-right: $-s;
     padding-top: $-s;
     position: relative;
@@ -310,4 +310,8 @@
       background-color: #EEE;
     }
   }
+}
+
+.comment-editor .CodeMirror, .comment-editor .CodeMirror-scroll {
+  min-height: 175px;
 }

@@ -5,10 +5,10 @@
     <div class="faded-small toolbar">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 faded">
+                <div class="col-sm-8 col-xs-5 faded">
                     @include('pages._breadcrumbs', ['page' => $page])
                 </div>
-                <div class="col-sm-6 faded">
+                <div class="col-sm-4 col-xs-7 faded">
                     <div class="action-buttons">
                         <span dropdown class="dropdown-container">
                             <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
@@ -46,13 +46,13 @@
     </div>
 
 
-    <div class="container" id="page-show" ng-non-bindable>
+    <div class="container" id="page-show">
         <div class="row">
             <div class="col-md-9 print-full-width">
-                <div class="page-content">
+                <div class="page-content" ng-non-bindable>
 
                     <div class="pointer-container" id="pointer">
-                        <div class="pointer anim">
+                        <div class="pointer anim" >
                             <span class="icon text-primary"><i class="zmdi zmdi-link"></i></span>
                             <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
                             <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}"><i class="zmdi zmdi-copy"></i></button>
@@ -66,6 +66,7 @@
                     @include('partials.entity-meta', ['entity' => $page])
 
                 </div>
+                @include('comments/comments', ['pageId' => $page->id])
             </div>
 
             <div class="col-md-3 print-hidden">
@@ -109,7 +110,6 @@
 
         </div>
     </div>
-
 @stop
 
 @section('scripts')

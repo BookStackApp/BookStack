@@ -571,7 +571,7 @@ class EntityRepo
 
         $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
-        $draftPage->text = strip_tags($draftPage->html);
+        $draftPage->text = $this->pageToPlainText($draftPage);
         $draftPage->draft = false;
         $draftPage->revision_count = 1;
 
@@ -714,6 +714,17 @@ class EntityRepo
     }
 
     /**
+     * Get the plain text version of a page's content.
+     * @param Page $page
+     * @return string
+     */
+    public function pageToPlainText(Page $page)
+    {
+        $html = $this->renderPage($page);
+        return strip_tags($html);
+    }
+
+    /**
      * Get a new draft page instance.
      * @param Book $book
      * @param Chapter|bool $chapter
@@ -816,7 +827,7 @@ class EntityRepo
         $userId = user()->id;
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
-        $page->text = strip_tags($page->html);
+        $page->text = $this->pageToPlainText($page);
         if (setting('app-editor') !== 'markdown') $page->markdown = '';
         $page->updated_by = $userId;
         $page->revision_count++;
@@ -933,7 +944,7 @@ class EntityRepo
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
         $page->slug = $this->findSuitableSlug('page', $page->name, $page->id, $book->id);
-        $page->text = strip_tags($page->html);
+        $page->text = $this->pageToPlainText($page);
         $page->updated_by = user()->id;
         $page->save();
         $this->searchService->indexEntity($page);
@@ -953,7 +964,7 @@ class EntityRepo
         if ($page->draft) {
             $page->fill($data);
             if (isset($data['html'])) {
-                $page->text = strip_tags($data['html']);
+                $page->text = $this->pageToPlainText($page);
             }
             $page->save();
             return $page;

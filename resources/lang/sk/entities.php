@@ -223,4 +223,26 @@ return [
     'profile_not_created_pages' => ':userName nevytvoril žiadne stránky',
     'profile_not_created_chapters' => ':userName nevytvoril žiadne kapitoly',
     'profile_not_created_books' => ':userName nevytvoril žiadne knihy',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Komentár',
+    'comments' => 'Komentáre',
+    'comment_placeholder' => 'Tu zadajte svoje pripomienky, podporované označenie ...',
+    'no_comments' => 'No Comments',
+    'x_comments' => ':numComments komentárov',
+    'one_comment' => '1 komentár',
+    'comments_loading' => 'Loading ..',
+    'comment_save' => 'Uložiť komentár',
+    'comment_reply' => 'Odpovedať',
+    'comment_edit' => 'Upraviť',
+    'comment_delete' => 'Odstrániť',
+    'comment_cancel' => 'Zrušiť',
+    'comment_created' => 'Pridaný komentár',
+    'comment_updated' => 'Komentár aktualizovaný',
+    'comment_deleted' => 'Komentár bol odstránený',
+    'comment_updated_text' => 'Aktualizované pred :updateDiff',
+    'comment_delete_confirm' => 'Tým sa odstráni obsah komentára. Naozaj chcete odstrániť tento komentár?',
+    'comment_create' => 'Vytvorené'
 ];

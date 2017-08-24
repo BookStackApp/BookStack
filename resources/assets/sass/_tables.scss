@@ -59,12 +59,16 @@ table.list-table {
   }
 }
 
-table.file-table {
-  @extend .no-style;
-  td {
-    padding: $-xs;
+.fake-table {
+  display: table;
+  width: 100%;
+  > div {
+    display: table-row-group;
   }
-  .ui-sortable-helper {
-    display: table;
+  > div > div {
+    display: table-row;
+  }
+  > div > div > div {
+    display: table-cell;
   }
 }
