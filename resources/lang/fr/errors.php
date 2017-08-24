@@ -18,21 +18,21 @@ return [
     'ldap_fail_anonymous' => 'L\'accès LDAP anonyme n\'a pas abouti',
     'ldap_fail_authed' => 'L\'accès LDAP n\'a pas abouti avec cet utilisateur et ce mot de passe',
     'ldap_extension_not_installed' => 'L\'extention LDAP PHP n\'est pas installée',
-    'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
-    'social_no_action_defined' => 'No action defined',
-    'social_account_in_use' => 'Cet compte :socialAccount est déjà utilisé. Essayez de vous connecter via :socialAccount.',
-    'social_account_email_in_use' => 'L\'email :email Est déjà utilisé. Si vous avez déjà un compte :socialAccount, vous pouvez le joindre à votre profil existant.',
+    'ldap_cannot_connect' => 'Impossible de se connecter au serveur LDAP, la connexion initiale a échoué',
+    'social_no_action_defined' => 'Pas d\'action définie',
+    'social_account_in_use' => 'Ce compte :socialAccount est déjà utilisé. Essayez de vous connecter via :socialAccount.',
+    'social_account_email_in_use' => 'L\'email :email est déjà utilisé. Si vous avez déjà un compte :socialAccount, vous pouvez le joindre à votre profil existant.',
     'social_account_existing' => 'Ce compte :socialAccount est déjà rattaché à votre profil.',
     'social_account_already_used_existing' => 'Ce compte :socialAccount est déjà utilisé par un autre utilisateur.',
     'social_account_not_used' => 'Ce compte :socialAccount n\'est lié à aucun utilisateur. ',
     'social_account_register_instructions' => 'Si vous n\'avez pas encore de compte, vous pouvez le lier avec l\'option :socialAccount.',
-    'social_driver_not_found' => 'Social driver not found',
-    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
+    'social_driver_not_found' => 'Pilote de compte social absent',
+    'social_driver_not_configured' => 'Vos préférences pour le compte :socialAccount sont incorrectes.',
 
     // System
-    'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
+    'path_not_writable' => 'Impossible d\'écrire dans :filePath. Assurez-vous d\'avoir les droits d\'écriture sur le serveur',
     'cannot_get_image_from_url' => 'Impossible de récupérer l\'image depuis :url',
-    'cannot_create_thumbs' => 'Le serveur ne peux pas créer de miniatures, vérifier que l\extensions GD PHP est installée.',
+    'cannot_create_thumbs' => 'Le serveur ne peut pas créer de miniature, vérifier que l\'extension PHP GD est installée.',
     'server_upload_limit' => 'La taille du fichier est trop grande.',
     'image_upload_error' => 'Une erreur est survenue pendant l\'envoi de l\'image',
 
@@ -57,7 +57,7 @@ return [
 
     // Roles
     'role_cannot_be_edited' => 'Ce rôle ne peut pas être modifié',
-    'role_system_cannot_be_deleted' => 'Ceci est un rôle du système et on ne peut pas le supprimer',
+    'role_system_cannot_be_deleted' => 'Ceci est un rôle du système et ne peut pas être supprimé',
     'role_registration_default_cannot_delete' => 'Ce rôle ne peut pas être supprimé tant qu\'il est le rôle par défaut',
 
     // Error pages
@@ -67,4 +67,11 @@ return [
     'error_occurred' => 'Une erreur est survenue',
     'app_down' => ':appName n\'est pas en service pour le moment',
     'back_soon' => 'Nous serons bientôt de retour.',
+
+    // comments
+    'comment_list' => 'Une erreur s\'est produite lors de la récupération des commentaires.',
+    'cannot_add_comment_to_draft' => 'Vous ne pouvez pas ajouter de commentaires à un projet.',
+    'comment_add' => 'Une erreur s\'est produite lors de l\'ajout du commentaire.',
+    'comment_delete' => 'Une erreur s\'est produite lors de la suppression du commentaire.',
+    'empty_comment' => 'Impossible d\'ajouter un commentaire vide.',
 ];

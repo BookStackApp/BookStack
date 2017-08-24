@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class UpdateDbEncodingToUt8mb4 extends Migration
@@ -13,16 +11,9 @@ class UpdateDbEncodingToUt8mb4 extends Migration
      */
     public function up()
     {
-        $database = DB::getDatabaseName();
-        $tables = DB::select('SHOW TABLES');
-        $pdo = DB::getPdo();
-        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
-        $pdo->exec('ALTER DATABASE `'.$database.'` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
-        $key = 'Tables_in_' . $database;
-        foreach ($tables as $table) {
-            $tableName = $table->$key;
-            $pdo->exec('ALTER TABLE `'.$tableName.'` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
-        }
+        // Migration removed due to issues during live migration.
+        // Instead you can run the command `artisan bookstack:db-utf8mb4`
+        // which will generate out the SQL request to upgrade your DB to utf8mb4.
     }
 
     /**
@@ -32,15 +23,6 @@ class UpdateDbEncodingToUt8mb4 extends Migration
      */
     public function down()
     {
-        $database = DB::getDatabaseName();
-        $tables = DB::select('SHOW TABLES');
-        $pdo = DB::getPdo();
-        $pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
-        $pdo->exec('ALTER DATABASE `'.$database.'` CHARACTER SET utf8 COLLATE utf8_unicode_ci');
-        $key = 'Tables_in_' . $database;
-        foreach ($tables as $table) {
-            $tableName = $table->$key;
-            $pdo->exec('ALTER TABLE `'.$tableName.'` CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci');
-        }
+        //
     }
 }

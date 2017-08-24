@@ -134,8 +134,7 @@
 .callout {
   border-left: 3px solid #BBB;
   background-color: #EEE;
-  padding: $-s;
-  padding-left: $-xl;
+  padding: $-s $-s $-s $-xl;
   display: block;
   position: relative;
   &:before {

@@ -67,4 +67,11 @@ return [
     'error_occurred' => 'Ha ocurrido un error',
     'app_down' => 'La aplicación :appName se encuentra caída en este momento',
     'back_soon' => 'Volverá a estar operativa en corto tiempo.',
+
+    // Comments
+    'comment_list' => 'Se ha producido un error al buscar los comentarios.',
+    'cannot_add_comment_to_draft' => 'No puedes añadir comentarios a un borrador.',
+    'comment_add' => 'Se ha producido un error al añadir el comentario.',
+    'comment_delete' => 'Se ha producido un error al eliminar el comentario.',
+    'empty_comment' => 'No se puede agregar un comentario vacío.',
 ];

@@ -52,14 +52,36 @@ function editorPaste(e, editor) {
 function registerEditorShortcuts(editor) {
     // Headers
     for (let i = 1; i < 5; i++) {
-        editor.addShortcut('meta+' + i, '', ['FormatBlock', false, 'h' + i]);
+        editor.shortcuts.add('meta+' + i, '', ['FormatBlock', false, 'h' + (i+1)]);
     }
 
     // Other block shortcuts
-    editor.addShortcut('meta+q', '', ['FormatBlock', false, 'blockquote']);
-    editor.addShortcut('meta+d', '', ['FormatBlock', false, 'p']);
-    editor.addShortcut('meta+e', '', ['codeeditor', false, 'pre']);
-    editor.addShortcut('meta+shift+E', '', ['FormatBlock', false, 'code']);
+    editor.shortcuts.add('meta+5', '', ['FormatBlock', false, 'p']);
+    editor.shortcuts.add('meta+d', '', ['FormatBlock', false, 'p']);
+    editor.shortcuts.add('meta+6', '', ['FormatBlock', false, 'blockquote']);
+    editor.shortcuts.add('meta+q', '', ['FormatBlock', false, 'blockquote']);
+    editor.shortcuts.add('meta+7', '', ['codeeditor', false, 'pre']);
+    editor.shortcuts.add('meta+e', '', ['codeeditor', false, 'pre']);
+    editor.shortcuts.add('meta+8', '', ['FormatBlock', false, 'code']);
+    editor.shortcuts.add('meta+shift+E', '', ['FormatBlock', false, 'code']);
+    // Loop through callout styles
+    editor.shortcuts.add('meta+9', '', function() {
+        let selectedNode = editor.selection.getNode();
+        let formats = ['info', 'success', 'warning', 'danger'];
+
+        if (!selectedNode || selectedNode.className.indexOf('callout') === -1) {
+            editor.formatter.apply('calloutinfo');
+            return;
+        }
+
+        for (let i = 0; i < formats.length; i++) {
+            if (selectedNode.className.indexOf(formats[i]) === -1) continue;
+            let newFormat = (i === formats.length -1) ? formats[0] : formats[i+1];
+            editor.formatter.apply('callout' + newFormat);
+            return;
+        }
+        editor.formatter.apply('p');
+    });
 }
 
 
@@ -120,7 +142,7 @@ function codePlugin() {
         $codeMirrorContainer.replaceWith($pre);
     }
 
-    window.tinymce.PluginManager.add('codeeditor', (editor, url) => {
+    window.tinymce.PluginManager.add('codeeditor', function(editor, url) {
 
         let $ = editor.$;
 
@@ -173,7 +195,32 @@ function codePlugin() {
     });
 }
 
+function hrPlugin() {
+    window.tinymce.PluginManager.add('customhr', function (editor) {
+        editor.addCommand('InsertHorizontalRule', function () {
+            let hrElem = document.createElement('hr');
+            let cNode = editor.selection.getNode();
+            let parentNode = cNode.parentNode;
+            parentNode.insertBefore(hrElem, cNode);
+        });
+
+        editor.addButton('hr', {
+            icon: 'hr',
+            tooltip: 'Horizontal line',
+            cmd: 'InsertHorizontalRule'
+        });
+
+        editor.addMenuItem('hr', {
+            icon: 'hr',
+            text: 'Horizontal line',
+            cmd: 'InsertHorizontalRule',
+            context: 'insert'
+        });
+    });
+}
+
 module.exports = function() {
+    hrPlugin();
     codePlugin();
     let settings = {
         selector: '#html-editor',
@@ -207,10 +254,10 @@ module.exports = function() {
             {title: "Code Block", icon: "code", cmd: 'codeeditor', format: 'codeeditor'},
             {title: "Inline Code", icon: "code", inline: "code"},
             {title: "Callouts", items: [
-                {title: "Success", block: 'p', exact: true, attributes : {'class' : 'callout success'}},
-                {title: "Info", block: 'p', exact: true, attributes : {'class' : 'callout info'}},
-                {title: "Warning", block: 'p', exact: true, attributes : {'class' : 'callout warning'}},
-                {title: "Danger", block: 'p', exact: true, attributes : {'class' : 'callout danger'}}
+                {title: "Info", format: 'calloutinfo'},
+                {title: "Success", format: 'calloutsuccess'},
+                {title: "Warning", format: 'calloutwarning'},
+                {title: "Danger", format: 'calloutdanger'}
             ]},
         ],
         style_formats_merge: false,
@@ -219,6 +266,10 @@ module.exports = function() {
             alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
             aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
             alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
+            calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
+            calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
+            calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
+            calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}}
         },
         file_browser_callback: function (field_name, url, type, win) {
 
@@ -232,7 +283,7 @@ module.exports = function() {
 
             if (type === 'image') {
                 // Show image manager
-                window.ImageManager.showExternal(function (image) {
+                window.ImageManager.show(function (image) {
 
                     // Set popover link input to image url then fire change event
                     // to ensure the new value sticks
@@ -314,7 +365,7 @@ module.exports = function() {
                 icon: 'image',
                 tooltip: 'Insert an image',
                 onclick: function () {
-                    window.ImageManager.showExternal(function (image) {
+                    window.ImageManager.show(function (image) {
                         let html = `<a href="${image.url}" target="_blank">`;
                         html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                         html += '</a>';

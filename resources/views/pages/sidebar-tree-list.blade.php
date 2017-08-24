@@ -51,7 +51,7 @@
                 </a>
 
                 @if($bookChild->isA('chapter') && count($bookChild->pages) > 0)
-                    <p class="text-muted chapter-toggle @if($bookChild->matchesOrContains($current)) open @endif">
+                    <p chapter-toggle class="text-muted @if($bookChild->matchesOrContains($current)) open @endif">
                         <i class="zmdi zmdi-caret-right"></i> <i class="zmdi zmdi-file-text"></i> <span>{{ trans('entities.x_pages', ['count' => $bookChild->pages->count()]) }}</span>
                     </p>
                     <ul class="menu sub-menu inset-list @if($bookChild->matchesOrContains($current)) open @endif">

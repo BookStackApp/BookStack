@@ -31,7 +31,6 @@ $button-border-radius: 2px;
   display: inline-block;
   border: none;
   font-weight: 500;
-  font-family: $text;
   outline: 0;
   border-radius: $button-border-radius;
   cursor: pointer;
@@ -65,6 +64,7 @@ $button-border-radius: 2px;
   padding: 0;
   margin: 0;
   border: none;
+  user-select: none;
   &:focus, &:active {
     outline: 0;
   }
