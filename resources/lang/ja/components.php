@@ -25,7 +25,7 @@ return [
     /**
      * Code editor
      */
-    'code_editor' => 'プログラム編集画面',
+    'code_editor' => 'プログラムブロック編集',
     'code_language' => 'プログラミング言語の選択',
     'code_content' => 'プログラム内容',
     'code_save' => 'プログラムを保存'
