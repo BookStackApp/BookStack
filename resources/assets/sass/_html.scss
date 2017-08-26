@@ -9,6 +9,9 @@ html {
   &.flexbox {
     overflow-y: hidden;
   }
+  &.shaded {
+    background-color: #F2F2F2;
+  }
 }
 
 body {

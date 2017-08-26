@@ -27,6 +27,15 @@
             <div class="body text-muted">{{ trans('entities.books_popular_empty') }}</div>
         @endif
     </div>
+
+    <div id="new" class="card">
+        <h3><i class="zmdi zmdi-star-circle"></i> {{ trans('entities.books_new') }}</h3>
+        @if(count($popular) > 0)
+            @include('partials/entity-list', ['entities' => $new, 'style' => 'compact'])
+        @else
+            <div class="body text-muted">{{ trans('entities.books_new_empty') }}</div>
+        @endif
+    </div>
 @stop
 
 @section('body')

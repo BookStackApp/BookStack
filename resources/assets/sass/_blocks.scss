@@ -195,7 +195,13 @@
     font-weight: 400;
     text-transform: uppercase;
   }
-  .body {
+  .body, p.empty-text {
     padding: $-m;
   }
+}
+
+.well {
+  background-color: #F8F8F8;
+  padding: $-m;
+  border: 1px solid #DDD;
 }

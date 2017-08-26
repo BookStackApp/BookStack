@@ -39,8 +39,14 @@ class BookController extends Controller
         $books = $this->entityRepo->getAllPaginated('book', 20);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
+        $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular]);
+        return view('books/index', [
+            'books' => $books,
+            'recents' => $recents,
+            'popular' => $popular,
+            'new' => $new
+        ]);
     }
 
     /**
