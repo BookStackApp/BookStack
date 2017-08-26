@@ -1,20 +1,19 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
+@section('toolbar')
+    <div class="col-sm-12 faded">
+        @include('pages._breadcrumbs', ['page' => $page])
+    </div>
+@stop
 
-    <div class="faded-small toolbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 faded">
-                    @include('pages._breadcrumbs', ['page' => $page])
-                </div>
+@section('body')
+    <div class="container" ng-non-bindable>
+        <p>&nbsp;</p>
+        <div class="card">
+            <h3><i class="zmdi zmdi-lock-outline"></i> {{ trans('entities.pages_permissions') }}</h3>
+            <div class="body">
+                @include('form.restriction-form', ['model' => $page])
             </div>
         </div>
     </div>
-
-    <div class="container" ng-non-bindable>
-        <h1>{{ trans('entities.pages_permissions') }}</h1>
-        @include('form.restriction-form', ['model' => $page])
-    </div>
-
 @stop

@@ -205,3 +205,20 @@
   padding: $-m;
   border: 1px solid #DDD;
 }
+
+#sidebar .scroll-body {
+  &.fixed {
+    z-index: 5;
+    position: fixed;
+    top: 0;
+    padding-right: $-m;
+    width: 30%;
+    left: 0;
+    height: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    //background-color: $primary-faded;
+    border-left: 1px solid #DDD;
+    &::-webkit-scrollbar { width: 0 !important }
+  }
+}

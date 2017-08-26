@@ -16,8 +16,6 @@
             @include('pages/form', ['model' => $page])
             @include('pages/form-toolbox')
         </form>
-
-
     </div>
     
     @include('components.image-manager', ['imageType' => 'gallery', 'uploaded_to' => $page->id])
