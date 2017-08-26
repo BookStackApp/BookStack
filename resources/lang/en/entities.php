@@ -110,8 +110,7 @@ return [
     'chapters_create' => 'Create New Chapter',
     'chapters_delete' => 'Delete Chapter',
     'chapters_delete_named' => 'Delete Chapter :chapterName',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\', All pages will be removed
-        and added directly to the parent book.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages will be removed and added directly to the parent book.',
     'chapters_delete_confirm' => 'Are you sure you want to delete this chapter?',
     'chapters_edit' => 'Edit Chapter',
     'chapters_edit_named' => 'Edit Chapter :chapterName',
