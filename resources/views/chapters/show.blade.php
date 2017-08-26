@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 @stop
 
 @section('body')

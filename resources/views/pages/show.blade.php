@@ -19,7 +19,7 @@
             @endif
             @if(userCan('page-update', $page) || userCan('restrictions-manage', $page) || userCan('page-delete', $page))
                 <div dropdown class="dropdown-container">
-                    <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i></a>
+                    <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i> {{ trans('common.more') }}</a>
                     <ul>
                         @if(userCan('page-update', $page))
                             <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" ><i class="zmdi zmdi-folder"></i>{{ trans('common.move') }}</a></li>
@@ -77,7 +77,53 @@
         </div>
     @endif
 
-    @include('pages/sidebar-tree-list', ['book' => $book, 'sidebarTree' => $sidebarTree, 'pageNav' => $pageNav])
+    @if($page->tags->count() > 0)
+        <div class="card tag-display">
+            <h3><i class="zmdi zmdi-tag"></i> {{ trans('entities.page_tags') }}</h3>
+            <div class="body">
+                <table>
+                    <tbody>
+                    @foreach($page->tags as $tag)
+                        <tr class="tag">
+                            <td @if(!$tag->value) colspan="2" @endif><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%5D') }}">{{ $tag->name }}</a></td>
+                            @if($tag->value) <td class="tag-value"><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%3D' . urlencode($tag->value) . '%5D') }}">{{$tag->value}}</a></td> @endif
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
+    @if ($page->attachments->count() > 0)
+        <div class="card">
+            <h3><i class="zmdi zmdi-attachment-alt"></i> {{ trans('entities.pages_attachments') }}</h3>
+            <div class="body">
+                @foreach($page->attachments as $attachment)
+                    <div class="attachment">
+                        <a href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif><i class="zmdi zmdi-{{ $attachment->external ? 'open-in-new' : 'file' }}"></i>{{ $attachment->name }}</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if (isset($pageNav) && count($pageNav))
+        <div class="card">
+            <h3><i class="zmdi zmdi-compass"></i> {{ trans('entities.pages_navigation') }}</h3>
+            <div class="body">
+                <div class="sidebar-page-nav menu">
+                    @foreach($pageNav as $navItem)
+                        <li class="page-nav-item h{{ $navItem['level'] }}">
+                            <a href="{{ $navItem['link'] }}">{{ $navItem['text'] }}</a>
+                        </li>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 
     <div class="card">
         <h3><i class="zmdi zmdi-info-outline"></i> {{ trans('common.details') }}</h3>

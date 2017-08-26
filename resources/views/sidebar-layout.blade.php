@@ -15,7 +15,7 @@
 
     <div class="flex-fill flex" @yield('container-attrs') >
 
-        <div class="sidebar flex print-hidden">
+        <div class="sidebar flex print-hidden" id="sidebar">
             <div class="scroll-body">
                 @yield('sidebar')
             </div>

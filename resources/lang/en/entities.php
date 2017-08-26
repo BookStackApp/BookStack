@@ -165,6 +165,7 @@ return [
     'pages_move_success' => 'Page moved to ":parentName"',
     'pages_permissions' => 'Page Permissions',
     'pages_permissions_success' => 'Page permissions updated',
+    'pages_revision' => 'Revision',
     'pages_revisions' => 'Page Revisions',
     'pages_revisions_named' => 'Page Revisions for :pageName',
     'pages_revision_named' => 'Page Revision for :pageName',
