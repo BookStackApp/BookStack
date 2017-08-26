@@ -3,16 +3,20 @@
 const argv = require('yargs').argv;
 const gulp = require('gulp'),
     plumber = require('gulp-plumber');
+
 const autoprefixer = require('gulp-autoprefixer');
-const uglify = require('gulp-uglify');
 const minifycss = require('gulp-clean-css');
 const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
+
 const browserify = require("browserify");
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const babelify = require("babelify");
 const watchify = require("watchify");
 const envify = require("envify");
+const uglify = require('gulp-uglify');
+
 const gutil = require("gulp-util");
 const liveReload = require('gulp-livereload');
 
@@ -21,6 +25,7 @@ let isProduction = argv.production || process.env.NODE_ENV === 'production';
 
 gulp.task('styles', () => {
     let chain = gulp.src(['resources/assets/sass/**/*.scss'])
+        .pipe(sourcemaps.init())
         .pipe(plumber({
             errorHandler: function (error) {
                 console.log(error.message);
@@ -29,6 +34,7 @@ gulp.task('styles', () => {
         .pipe(sass())
         .pipe(autoprefixer('last 2 versions'));
     if (isProduction) chain = chain.pipe(minifycss());
+    chain = chain.pipe(sourcemaps.write());
     return chain.pipe(gulp.dest('public/css/')).pipe(liveReload());
 });
 

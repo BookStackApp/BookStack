@@ -71,9 +71,7 @@
     @if(count($activity) > 0)
         <div class="activity card">
             <h3><i class="zmdi zmdi-time"></i> {{ trans('entities.recent_activity') }}</h3>
-            <div class="body">
-                @include('partials/activity-list', ['activity' => $activity])
-            </div>
+            @include('partials/activity-list', ['activity' => $activity])
         </div>
     @endif
 
@@ -97,34 +95,33 @@
         <h1>{{$book->name}}</h1>
         <div class="book-content" v-show="!searching">
             <p class="text-muted" v-pre>{!! nl2br(e($book->description)) !!}</p>
-
+            @if(count($bookChildren) > 0)
             <div class="page-list" v-pre>
                 <hr>
-                @if(count($bookChildren) > 0)
-                    @foreach($bookChildren as $childElement)
-                        @if($childElement->isA('chapter'))
-                            @include('chapters/list-item', ['chapter' => $childElement])
-                        @else
-                            @include('pages/list-item', ['page' => $childElement])
-                        @endif
-                        <hr>
-                    @endforeach
-                @else
-                    <p class="text-muted">{{ trans('entities.books_empty_contents') }}</p>
-                    <p>
+                @foreach($bookChildren as $childElement)
+                    @if($childElement->isA('chapter'))
+                        @include('chapters/list-item', ['chapter' => $childElement])
+                    @else
+                        @include('pages/list-item', ['page' => $childElement])
+                    @endif
+                    <hr>
+                @endforeach
+            </div>
+            @else
+                <div class="well">
+                    <p class="text-muted italic">{{ trans('entities.books_empty_contents') }}</p>
                         @if(userCan('page-create', $book))
-                        <a href="{{ $book->getUrl('/page/create') }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.books_empty_create_page') }}</a>
+                            <a href="{{ $book->getUrl('/page/create') }}" class="button outline page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.books_empty_create_page') }}</a>
                         @endif
                         @if(userCan('page-create', $book) && userCan('chapter-create', $book))
-                        &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
                         @endif
                         @if(userCan('chapter-create', $book))
-                        <a href="{{ $book->getUrl('/chapter/create') }}" class="text-chapter"><i class="zmdi zmdi-collection-bookmark"></i>{{ trans('entities.books_empty_add_chapter') }}</a>
+                            <a href="{{ $book->getUrl('/chapter/create') }}" class="button outline chapter"><i class="zmdi zmdi-collection-bookmark"></i>{{ trans('entities.books_empty_add_chapter') }}</a>
                         @endif
-                    </p>
-                    <hr>
-                @endif
-            </div>
+                </div>
+            @endif
+
         </div>
         <div class="search-results" v-cloak v-show="searching">
             <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>

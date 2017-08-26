@@ -239,6 +239,9 @@
   .left + .right {
     margin-left: 30px + $-s;
   }
+  &:last-of-type {
+    border-bottom: 0;
+  }
 }
 
 ul.pagination {
@@ -291,9 +294,6 @@ ul.pagination {
   h4 {
     margin: 0;
   }
-  p {
-    margin: $-xs 0 0 0;
-  }
   hr {
     margin: 0;
   }
@@ -310,7 +310,7 @@ ul.pagination {
   }
 }
 
-.card .entity-list-item {
+.card .entity-list-item, .card .activity-list-item {
   padding-left: $-m;
   padding-right: $-m;
 }
@@ -323,9 +323,11 @@ ul.pagination {
   .entity-item-snippet {
     display: none;
   }
-  p {
+  .entity-list-item p {
     font-size: $fs-m * 0.8;
     padding-top: $-xs;
+  }
+  p {
     margin: 0;
   }
   > p.empty-text {

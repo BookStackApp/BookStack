@@ -10,7 +10,7 @@
     @include('form/textarea', ['name' => 'description'])
 </div>
 
-<div class="form-group">
-    <a href="{{ isset($book) ? $book->getUrl() : baseUrl('/books') }}" class="button muted">{{ trans('common.cancel') }}</a>
+<div class="form-group text-right">
+    <a href="{{ isset($book) ? $book->getUrl() : baseUrl('/books') }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button pos">{{ trans('entities.books_save') }}</button>
 </div>
