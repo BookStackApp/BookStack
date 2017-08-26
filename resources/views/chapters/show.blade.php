@@ -110,20 +110,20 @@
                     @endforeach
                 </div>
             @else
-                <hr>
-                <p class="text-muted">{{ trans('entities.chapters_empty') }}</p>
-                <p>
-                    @if(userCan('page-create', $chapter))
-                        <a href="{{ $chapter->getUrl('/create-page') }}" class="text-page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.books_empty_create_page') }}</a>
-                    @endif
-                    @if(userCan('page-create', $chapter) && userCan('book-update', $book))
-                        &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
-                    @endif
-                    @if(userCan('book-update', $book))
-                        <a href="{{ $book->getUrl('/sort') }}" class="text-book"><i class="zmdi zmdi-book"></i>{{ trans('entities.books_empty_sort_current_book') }}</a>
-                    @endif
-                </p>
-                <hr>
+                <div class="well">
+                    <p class="text-muted italic">{{ trans('entities.chapters_empty') }}</p>
+                    <p>
+                        @if(userCan('page-create', $chapter))
+                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.books_empty_create_page') }}</a>
+                        @endif
+                        @if(userCan('page-create', $chapter) && userCan('book-update', $book))
+                            &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp; &nbsp;
+                        @endif
+                        @if(userCan('book-update', $book))
+                            <a href="{{ $book->getUrl('/sort') }}" class="button outline book"><i class="zmdi zmdi-book"></i>{{ trans('entities.books_empty_sort_current_book') }}</a>
+                        @endif
+                    </p>
+                </div>
             @endif
         </div>
 

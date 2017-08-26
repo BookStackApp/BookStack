@@ -3,6 +3,8 @@
   background-color: $backgroundColor;
   color: $textColor;
   text-transform: uppercase;
+  border: 1px solid $backgroundColor;
+  vertical-align: top;
   &:hover {
     background-color: lighten($backgroundColor, 8%);
     //box-shadow: $bs-med;
@@ -80,6 +82,14 @@ $button-border-radius: 2px;
     color: $color-chapter;
     &:hover, &:focus, &:active {
       background-color: $color-chapter;
+      color: #FFF;
+    }
+  }
+  &.book {
+    border-color: $color-book;
+    color: $color-book;
+    &:hover, &:focus, &:active {
+      background-color: $color-book;
       color: #FFF;
     }
   }
