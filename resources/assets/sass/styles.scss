@@ -217,21 +217,14 @@ $btt-size: 40px;
 }
 
 .center-box {
-  margin: $-xl auto 0 auto;
-  padding: $-m $-xxl $-xl $-xxl;
+  margin: $-xxl auto 0 auto;
   width: 420px;
   max-width: 100%;
   display: inline-block;
   text-align: left;
   vertical-align: top;
-  //border: 1px solid #DDD;
   input {
     width: 100%;
-  }
-  &.login {
-    background-color: #EEE;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid #DDD;
   }
 }
 

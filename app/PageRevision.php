@@ -47,4 +47,16 @@ class PageRevision extends Model
         return null;
     }
 
+    /**
+     * Allows checking of the exact class, Used to check entity type.
+     * Included here to align with entities in similar use cases.
+     * (Yup, Bit of an awkward hack)
+     * @param $type
+     * @return bool
+     */
+    public static function isA($type)
+    {
+        return $type === 'revision';
+    }
+
 }

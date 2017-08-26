@@ -1,18 +1,15 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col-sm-7">
-                <h1>{{ $title }}</h1>
-                @include('partials/entity-list', ['entities' => $pages, 'style' => 'detailed'])
+@section('body')
+    <div class="container small">
+        <p>&nbsp;</p>
+        <div class="card">
+            <h3>{{ $title }}</h3>
+            @include('partials/entity-list', ['entities' => $pages, 'style' => 'detailed'])
+            <div class="body text-center">
                 {!! $pages->links() !!}
             </div>
-
-            <div class="col-sm-4 col-sm-offset-1"></div>
-
         </div>
+
     </div>
 @stop

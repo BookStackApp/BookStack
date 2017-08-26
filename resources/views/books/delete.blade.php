@@ -1,28 +1,30 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
-
-    <div class="faded-small toolbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 faded">
-                    @include('books._breadcrumbs', ['book' => $book])
-                </div>
-            </div>
-        </div>
+@section('toolbar')
+    <div class="col-sm-12 faded">
+        @include('books._breadcrumbs', ['book' => $book])
     </div>
+@stop
+
+@section('body')
 
     <div class="container small" ng-non-bindable>
-        <h1>{{ trans('entities.books_delete') }}</h1>
-        <p>{{ trans('entities.books_delete_explain', ['bookName' => $book->name]) }}</p>
-        <p class="text-neg">{{ trans('entities.books_delete_confirmation') }}</p>
+        <p>&nbsp;</p>
+        <div class="card">
+            <h3><i class="zmdi zmdi-delete"></i> {{ trans('entities.books_delete') }}</h3>
+            <div class="body">
+                <p>{{ trans('entities.books_delete_explain', ['bookName' => $book->name]) }}</p>
+                <p class="text-neg">{{ trans('entities.books_delete_confirmation') }}</p>
 
-        <form action="{{$book->getUrl()}}" method="POST">
-            {!! csrf_field() !!}
-            <input type="hidden" name="_method" value="DELETE">
-            <a href="{{$book->getUrl()}}" class="button">{{ trans('common.cancel') }}</a>
-            <button type="submit" class="button neg">{{ trans('common.confirm') }}</button>
-        </form>
+                <form action="{{$book->getUrl()}}" method="POST">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a href="{{$book->getUrl()}}" class="button outline">{{ trans('common.cancel') }}</a>
+                    <button type="submit" class="button neg">{{ trans('common.confirm') }}</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
 @stop

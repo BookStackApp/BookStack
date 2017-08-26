@@ -231,7 +231,6 @@ class RegisterController extends Controller
             return redirect('/register/confirm');
         }
 
-        $this->emailConfirmationService->sendConfirmation($user);
         session()->flash('success', trans('auth.email_confirm_resent'));
         return redirect('/register/confirm');
     }

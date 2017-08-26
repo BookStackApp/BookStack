@@ -27,6 +27,8 @@
         @endforeach
     </table>
 
-    <a href="{{ $model->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
-    <button type="submit" class="button pos">{{ trans('entities.permissions_save') }}</button>
+    <div class="text-right">
+        <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+        <button type="submit" class="button pos">{{ trans('entities.permissions_save') }}</button>
+    </div>
 </form>

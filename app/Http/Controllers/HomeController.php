@@ -29,13 +29,11 @@ class HomeController extends Controller
         $activity = Activity::latest(10);
         $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 10*$recentFactor);
-        $recentlyCreatedPages = $this->entityRepo->getRecentlyCreated('page', 5);
-        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 5);
+        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
+        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
         return view('home', [
             'activity' => $activity,
             'recents' => $recents,
-            'recentlyCreatedPages' => $recentlyCreatedPages,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
             'draftPages' => $draftPages
         ]);

@@ -1,56 +1,59 @@
-@extends('base')
+@extends('simple-layout')
 
 @section('head')
     <script src="{{ baseUrl("/libs/jquery-sortable/jquery-sortable.min.js") }}"></script>
 @stop
 
-@section('content')
-
-    <div class="faded-small toolbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 faded">
-                    @include('books._breadcrumbs', ['book' => $book])
-                </div>
-            </div>
-        </div>
+@section('toolbar')
+    <div class="col-sm-12 faded">
+        @include('books._breadcrumbs', ['book' => $book])
     </div>
+@stop
+
+@section('body')
 
     <div class="container" ng-non-bindable>
-        <h1>{{ trans('entities.books_sort') }}</h1>
+
         <div class="row">
-            <div class="col-md-8" id="sort-boxes">
-
-                @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
-
-            </div>
-
-            @if(count($books) > 1)
-                <div class="col-md-4">
-                    <h3>{{ trans('entities.books_sort_show_other') }}</h3>
-                    <div id="additional-books">
-                    @foreach($books as $otherBook)
-                        @if($otherBook->id !== $book->id)
-                        <div>
-                            <a href="{{ $otherBook->getUrl('/sort-item') }}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $otherBook->name }}</a>
+            <div class="col-md-8">
+                <div class="card">
+                    <h3><i class="zmdi zmdi-sort"></i> {{ trans('entities.books_sort') }}</h3>
+                    <div class="body">
+                        <div id="sort-boxes">
+                            @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
                         </div>
-                        @endif
-                    @endforeach
+
+                        <form action="{{ $book->getUrl('/sort') }}" method="POST">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" id="sort-tree-input" name="sort-tree">
+                            <div class="list">
+                                <a href="{{ $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+                                <button class="button pos" type="submit">{{ trans('entities.books_sort_save') }}</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
+            @if(count($books) > 1)
+            <div class="col-md-4">
+                <div class="card">
+                    <h3><i class="zmdi zmdi-book"></i> {{ trans('entities.books_sort_show_other') }}</h3>
+                    <div class="body" id="additional-books">
+                        @foreach($books as $otherBook)
+                            @if($otherBook->id !== $book->id)
+                                <div>
+                                    <a href="{{ $otherBook->getUrl('/sort-item') }}" class="text-book"><i class="zmdi zmdi-book"></i>{{ $otherBook->name }}</a>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
             @endif
-
         </div>
 
-        <form action="{{ $book->getUrl('/sort') }}" method="POST">
-            {!! csrf_field() !!}
-            <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" id="sort-tree-input" name="sort-tree">
-            <div class="list">
-                <a href="{{ $book->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
-                <button class="button pos" type="submit">{{ trans('entities.books_sort_save') }}</button>
-            </div>
-        </form>
+
 
     </div>
 

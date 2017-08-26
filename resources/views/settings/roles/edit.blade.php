@@ -1,24 +1,17 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
-
+@section('toolbar')
     @include('settings/navbar', ['selected' => 'roles'])
+@stop
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <h1>{{ trans('settings.role_edit') }}</h1>
-            </div>
-            <div class="col-sm-6">
-                <p></p>
-                <a href="{{ baseUrl("/settings/roles/delete/{$role->id}") }}" class="button neg float right">{{ trans('settings.role_delete') }}</a>
+@section('body')
+
+    <form action="{{ baseUrl("/settings/roles/{$role->id}") }}" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="container">
+            <div class="row">
+                @include('settings/roles/form', ['model' => $role, 'title' => trans('settings.role_edit'), 'icon' => 'edit'])
             </div>
         </div>
-
-        <form action="{{ baseUrl("/settings/roles/{$role->id}") }}" method="POST">
-            <input type="hidden" name="_method" value="PUT">
-            @include('settings/roles/form', ['model' => $role])
-        </form>
-    </div>
-
+    </form>
 @stop
