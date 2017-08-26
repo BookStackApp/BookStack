@@ -257,11 +257,4 @@ class EntityTest extends BrowserKitTest
             ->seeInElement('#recently-updated-pages', $page->name);
     }
 
-    public function test_recently_created_pages_on_home()
-    {
-        $entityChain = $this->createEntityChainBelongingToUser($this->getEditor());
-        $this->asAdmin()->visit('/')
-            ->seeInElement('#recently-created-pages', $entityChain['page']->name);
-    }
-
 }

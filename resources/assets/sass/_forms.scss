@@ -2,14 +2,13 @@
 .input-base {
   background-color: #FFF;
   border-radius: 3px;
-  border: 1px solid #CCC;
+  border: 1px solid #D4D4D4;
   display: inline-block;
   font-size: $fs-s;
-  padding: $-xs;
-  color: #222;
+  padding: $-xs*1.5;
+  color: #666;
   width: 250px;
   max-width: 100%;
-  //-webkit-appearance:none;
   &.neg, &.invalid {
     border: 1px solid $negative;
   }
@@ -84,8 +83,9 @@ label {
   display: block;
   line-height: 1.4em;
   font-size: 0.94em;
-  font-weight: 500;
-  color: #666;
+  font-weight: 400;
+  color: #999;
+  text-transform: uppercase;
   padding-bottom: 2px;
   margin-bottom: 0.2em;
   &.inline {
@@ -186,28 +186,15 @@ input:checked + .toggle-switch {
 }
 
 .inline-input-style {
-  border: 2px dotted #BBB;
   display: block;
   width: 100%;
-  padding: $-xs $-s;
-}
-
-.title-input .input {
-  width: 100%;
-}
-
-.title-input label, .description-input label{
-  margin-top: $-m;
-  color: #666;
+  padding: $-s;
 }
 
 .title-input input[type="text"] {
-  @extend h1;
   @extend .inline-input-style;
   margin-top: 0;
-  padding-right: 0;
-  width: 100%;
-  color: #444;
+  font-size: 2em;
 }
 
 .title-input.page-title {
@@ -250,8 +237,8 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     padding: 0;
     cursor: pointer;
     position: absolute;
-    left: 7px;
-    top: 7px;
+    left: 8px;
+    top: 9.5px;
   }
   input {
     display: block;

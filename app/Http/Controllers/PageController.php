@@ -380,6 +380,7 @@ class PageController extends Controller
         return view('pages/revision', [
             'page' => $page,
             'book' => $page->book,
+            'revision' => $revision
         ]);
     }
 
@@ -409,6 +410,7 @@ class PageController extends Controller
             'page' => $page,
             'book' => $page->book,
             'diff' => $diff,
+            'revision' => $revision
         ]);
     }
 
