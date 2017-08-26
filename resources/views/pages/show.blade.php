@@ -82,7 +82,7 @@
     <div class="card">
         <h3><i class="zmdi zmdi-info-outline"></i> {{ trans('common.details') }}</h3>
         <div class="body">
-            @include('partials.entity-meta', ['entity' => $book])
+            @include('partials.entity-meta', ['entity' => $page])
         </div>
     </div>
 @stop
