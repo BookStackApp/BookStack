@@ -68,8 +68,8 @@
                         <div class="form-group" id="color-control">
                             <label for="setting-app-color">{{ trans('settings.app_primary_color') }}</label>
                             <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
-                            <input  type="text" value="{{ setting('app-color', '') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
-                            <input  type="hidden" value="{{ setting('app-color-light', '') }}" name="setting-app-color-light" id="setting-app-color-light" placeholder="rgba(21, 101, 192, 0.15)">
+                            <input type="text" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
+                            <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                         </div>
                     </div>
 
@@ -152,6 +152,7 @@
                 var hexVal = '#' + this.color.colors.HEX;
                 var rgb = this.color.colors.RND.rgb;
                 var rgbLightVal = 'rgba('+ [rgb.r, rgb.g, rgb.b, '0.15'].join(',') +')';
+
                 // Set textbox color to hex color code.
                 var isEmpty = $.trim($elm.val()).length === 0;
                 if (!isEmpty) $elm.val(hexVal);
