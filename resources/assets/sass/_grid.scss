@@ -58,8 +58,84 @@ body.flexbox {
 .flex.sidebar + .flex.content {
   flex: 3;
   background-color: #FFFFFF;
+  padding: 0 $-l;
   border-left: 1px solid #DDD;
+  max-width: 100%;
 }
+.flex.sidebar .sidebar-toggle {
+  display: none;
+}
+
+@include smaller-than($xl) {
+  body.sidebar-layout {
+    padding-left: 30px;
+  }
+  .flex.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    padding-right: 30px;
+    width: 360px;
+    box-shadow: none;
+    transform: translate3d(-330px, 0, 0);
+    transition: transform ease-in-out 120ms;
+  }
+  .flex.sidebar.open {
+    box-shadow: 1px 2px 2px 1px rgba(0,0,0,.10);
+    transform: translate3d(0, 0, 0);
+    .sidebar-toggle i {
+      transform: rotate(180deg);
+    }
+  }
+  .flex.sidebar .sidebar-toggle {
+    display: block;
+    position: absolute;
+    opacity: 0.9;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    color: #666;
+    font-size: 20px;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid #DDD;
+    border-top: 1px solid #BBB;
+    padding-top: $-m;
+    cursor: pointer;
+    i {
+      opacity: 0.5;
+      transition: all ease-in-out 120ms;
+      padding: 0;
+    }
+    &:hover i {
+      opacity: 1;
+    }
+  }
+  #sidebar .scroll-body.fixed {
+    width: auto !important;
+  }
+}
+
+@include larger-than($xl) {
+  #sidebar .scroll-body.fixed {
+    z-index: 5;
+    position: fixed;
+    top: 0;
+    padding-right: $-m;
+    width: 30%;
+    left: 0;
+    height: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    //background-color: $primary-faded;
+    border-left: 1px solid #DDD;
+    &::-webkit-scrollbar { width: 0 !important }
+  }
+}
+
 
 /** Rules for all columns */
 div[class^="col-"] img {

@@ -8,6 +8,7 @@ let componentMapping = {
     'expand-toggle': require('./expand-toggle'),
     'entity-selector-popup': require('./entity-selector-popup'),
     'entity-selector': require('./entity-selector'),
+    'sidebar': require('./sidebar'),
 };
 
 window.components = {};
