@@ -6,7 +6,7 @@ class Notification {
         this.type = elem.getAttribute('notification');
         this.textElem = elem.querySelector('span');
         this.autohide = this.elem.hasAttribute('data-autohide');
-        window.Events.listen(this.type, text => {
+        window.$events.listen(this.type, text => {
             this.show(text);
         });
         elem.addEventListener('click', this.hide.bind(this));
