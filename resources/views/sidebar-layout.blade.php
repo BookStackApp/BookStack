@@ -1,5 +1,7 @@
 @extends('base')
 
+@section('body-class', 'sidebar-layout')
+
 @section('content')
 
     <div class="toolbar-container">
@@ -15,7 +17,9 @@
 
     <div class="flex-fill flex" @yield('container-attrs') >
 
-        <div class="sidebar flex print-hidden" id="sidebar">
+        <div sidebar class="sidebar flex print-hidden" id="sidebar">
+            <div class="sidebar-toggle primary-background-light"><i class="zmdi zmdi-caret-right-circle"></i>
+            </div>
             <div class="scroll-body">
                 @yield('sidebar')
             </div>
