@@ -71,6 +71,11 @@
                             <input type="text" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                         </div>
+                        <div class="form-group" id="homepage-control">
+                            <label for="setting-app-homepage">{{ trans('settings.app_homepage') }}</label>
+                            <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
+                            @include('components.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_default'), 'value' => setting('app-homepage')])
+                        </div>
                     </div>
 
                 </div>
@@ -140,6 +145,7 @@
 </div>
 
 @include('components.image-manager', ['imageType' => 'system'])
+@include('components.entity-selector-popup', ['entityTypes' => 'page'])
 
 @stop
 

@@ -23,6 +23,11 @@
   }
 }
 
+.fake-input {
+  @extend .input-base;
+  overflow: auto;
+}
+
 #html-editor {
   display: none;
 }

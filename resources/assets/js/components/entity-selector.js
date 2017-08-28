@@ -68,8 +68,9 @@ class EntitySelector {
 
     onClick(event) {
         let t = event.target;
+        console.log('click', t);
 
-        if (t.matches('.entity-list a')) {
+        if (t.matches('.entity-list-item  *')) {
             event.preventDefault();
             event.stopPropagation();
             let item = t.closest('[data-entity-type]');
@@ -84,12 +85,16 @@ class EntitySelector {
         let isDblClick = this.isDoubleClick();
         let type = item.getAttribute('data-entity-type');
         let id = item.getAttribute('data-entity-id');
-        let isSelected = item.classList.contains('selected') || isDblClick;
+        let isSelected = !item.classList.contains('selected') || isDblClick;
 
         this.unselectAll();
         this.input.value = isSelected ? `${type}:${id}` : '';
 
         if (!isSelected) window.$events.emit('entity-select-change', null);
+        if (isSelected) {
+            item.classList.add('selected');
+            item.classList.add('primary-background');
+        }
         if (!isDblClick && !isSelected) return;
 
         let link = item.querySelector('.entity-list-item-link').getAttribute('href');
