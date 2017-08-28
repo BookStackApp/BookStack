@@ -167,7 +167,7 @@ class PageController extends Controller
         return view('pages/show', [
             'page' => $page,'book' => $page->book,
             'current' => $page, 'sidebarTree' => $sidebarTree,
-            'pageNav' => $pageNav, 'pageContent' => $pageContent]);
+            'pageNav' => $pageNav]);
     }
 
     /**

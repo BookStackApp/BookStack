@@ -31,11 +31,23 @@ class HomeController extends Controller
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
         $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
-        return view('home', [
+
+        // Custom homepage
+        $customHomepage = false;
+        $homepageSetting = setting('app-homepage');
+        if ($homepageSetting) {
+            $id = intval(explode(':', $homepageSetting)[0]);
+            $customHomepage = $this->entityRepo->getById('page', $id);
+            $this->entityRepo->renderPage($customHomepage);
+        }
+
+        $view = $customHomepage ? 'home-custom' : 'home';
+        return view($view, [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
-            'draftPages' => $draftPages
+            'draftPages' => $draftPages,
+            'customHomepage' => $customHomepage
         ]);
     }
 
