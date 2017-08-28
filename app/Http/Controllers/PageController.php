@@ -103,7 +103,6 @@ class PageController extends Controller
             'book' => $draft->book,
             'isDraft' => true,
             'draftsEnabled' => $draftsEnabled,
-						'language'=>   setting()->getUser($this->currentUser, 'language')
         ]);
     }
 
