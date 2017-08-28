@@ -37,8 +37,8 @@ class HomeController extends Controller
         $homepageSetting = setting('app-homepage');
         if ($homepageSetting) {
             $id = intval(explode(':', $homepageSetting)[0]);
-            $customHomepage = $this->entityRepo->getById('page', $id);
-            $this->entityRepo->renderPage($customHomepage);
+            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
+            $this->entityRepo->renderPage($customHomepage, true);
         }
 
         $view = $customHomepage ? 'home-custom' : 'home';
