@@ -95,13 +95,15 @@ class PageController extends Controller
         $draft = $this->entityRepo->getById('page', $pageId, true);
         $this->checkOwnablePermission('page-create', $draft->book);
         $this->setPageTitle(trans('entities.pages_edit_draft'));
+				$draft->language = setting()->getUser($this->currentUser, 'language');	// Set language for tinymce
 
         $draftsEnabled = $this->signedIn;
         return view('pages/edit', [
             'page' => $draft,
             'book' => $draft->book,
             'isDraft' => true,
-            'draftsEnabled' => $draftsEnabled
+            'draftsEnabled' => $draftsEnabled,
+						'language'=>   setting()->getUser($this->currentUser, 'language')
         ]);
     }
 
@@ -193,6 +195,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_editing_named', ['pageName'=>$page->getShortName()]));
         $page->isDraft = false;
+				$page->language = setting()->getUser($this->currentUser, 'language'); // Set language for tinymce
 
         // Check for active editing
         $warnings = [];
