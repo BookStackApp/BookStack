@@ -1,7 +1,7 @@
 # BookStack
 
-[![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg?maxAge=2592000)](https://github.com/BookStackApp/BookStack/releases/latest)
-[![license](https://img.shields.io/github/license/BookStackApp/BookStack.svg?maxAge=2592000)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest)
+[![license](https://img.shields.io/github/license/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/BookStackApp/BookStack.svg)](https://travis-ci.org/BookStackApp/BookStack)
 
 A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
@@ -12,6 +12,12 @@ A platform for storing and organising information and documentation. General inf
   * *Username: `admin@example.com`*
   * *Password: `password`*
 * [BookStack Blog](https://www.bookstackapp.com/blog)
+
+## Project Definition
+
+BookStack is an opinionated wiki system that provides a pleasant and simple out of the box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
+
+BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above. 
 
 ## Development & Testing
 

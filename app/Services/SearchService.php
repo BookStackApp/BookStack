@@ -92,7 +92,7 @@ class SearchService
         return [
             'total' => $total,
             'count' => count($results),
-            'results' => $results->sortByDesc('score')
+            'results' => $results->sortByDesc('score')->values()
         ];
     }
 

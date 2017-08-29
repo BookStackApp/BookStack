@@ -11,7 +11,7 @@
     @include('form/textarea', ['name' => 'description'])
 </div>
 
-<div class="form-group">
-    <a href="{{ back()->getTargetUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
+<div class="form-group text-right">
+    <a href="{{ back()->getTargetUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button pos">{{ trans('entities.chapters_save') }}</button>
 </div>

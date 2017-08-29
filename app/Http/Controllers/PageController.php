@@ -167,7 +167,7 @@ class PageController extends Controller
         return view('pages/show', [
             'page' => $page,'book' => $page->book,
             'current' => $page, 'sidebarTree' => $sidebarTree,
-            'pageNav' => $pageNav, 'pageContent' => $pageContent]);
+            'pageNav' => $pageNav]);
     }
 
     /**
@@ -380,6 +380,7 @@ class PageController extends Controller
         return view('pages/revision', [
             'page' => $page,
             'book' => $page->book,
+            'revision' => $revision
         ]);
     }
 
@@ -409,6 +410,7 @@ class PageController extends Controller
             'page' => $page,
             'book' => $page->book,
             'diff' => $diff,
+            'revision' => $revision
         ]);
     }
 

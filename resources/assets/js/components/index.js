@@ -6,6 +6,10 @@ let componentMapping = {
     'notification': require('./notification'),
     'chapter-toggle': require('./chapter-toggle'),
     'expand-toggle': require('./expand-toggle'),
+    'entity-selector-popup': require('./entity-selector-popup'),
+    'entity-selector': require('./entity-selector'),
+    'sidebar': require('./sidebar'),
+    'page-picker': require('./page-picker'),
 };
 
 window.components = {};

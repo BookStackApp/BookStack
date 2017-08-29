@@ -3,8 +3,13 @@
 @section('content')
 
     <div class="container">
-        <h1 class="text-muted">{{ trans('errors.error_occurred') }}</h1>
-        <p>{{ $message }}</p>
+        <div class="card">
+            <h3 class="text-muted">{{ trans('errors.error_occurred') }}</h3>
+            <div class="body">
+                <h5>{{ $message }}</h5>
+                <p><a href="{{ baseUrl('/') }}" class="button outline">{{ trans('errors.return_home') }}</a></p>
+            </div>
+        </div>
     </div>
 
 @stop

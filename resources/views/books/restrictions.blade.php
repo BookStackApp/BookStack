@@ -1,21 +1,21 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
-
-    <div class="faded-small toolbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 faded">
-                    @include('books._breadcrumbs', ['book' => $book])
-                </div>
-            </div>
-        </div>
+@section('toolbar')
+    <div class="col-sm-12 faded">
+        @include('books._breadcrumbs', ['book' => $book])
     </div>
+@stop
 
+@section('body')
 
     <div class="container" ng-non-bindable>
-        <h1>{{ trans('entities.books_permissions') }}</h1>
-        @include('form/restriction-form', ['model' => $book])
+        <p>&nbsp;</p>
+        <div class="card">
+            <h3><i class="zmdi zmdi-lock-outline"></i> {{ trans('entities.books_permissions') }}</h3>
+            <div class="body">
+                @include('form/restriction-form', ['model' => $book])
+            </div>
+        </div>
     </div>
 
 @stop

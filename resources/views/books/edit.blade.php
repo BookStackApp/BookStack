@@ -1,23 +1,24 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
-
-    <div class="faded-small toolbar">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 faded">
-                    @include('books._breadcrumbs', ['book' => $book])
-                </div>
-            </div>
-        </div>
+@section('toolbar')
+    <div class="col-sm-12 faded">
+        @include('books._breadcrumbs', ['book' => $book])
     </div>
+@stop
+
+@section('body')
 
     <div class="container small" ng-non-bindable>
-        <h1>{{ trans('entities.books_edit') }}</h1>
-        <form action="{{ $book->getUrl() }}" method="POST">
-            <input type="hidden" name="_method" value="PUT">
-            @include('books/form', ['model' => $book])
-        </form>
+        <p>&nbsp;</p>
+        <div class="card">
+            <h3><i class="zmdi zmdi-edit"></i> {{ trans('entities.books_edit') }}</h3>
+            <div class="body">
+                <form action="{{ $book->getUrl() }}" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    @include('books/form', ['model' => $book])
+                </form>
+            </div>
+        </div>
     </div>
 @include('components.image-manager', ['imageType' => 'cover'])
 @stop

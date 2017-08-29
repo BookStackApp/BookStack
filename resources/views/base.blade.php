@@ -34,7 +34,7 @@
     @include('partials/notifications')
 
     <header id="header">
-        <div class="container">
+        <div class="container fluid">
             <div class="row">
                 <div class="col-sm-4" ng-non-bindable>
                     <a href="{{ baseUrl('/') }}" class="logo">

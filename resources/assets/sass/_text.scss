@@ -2,7 +2,7 @@
  * Fonts
  */
 
-body, button, input, select, label {
+body, button, input, select, label, textarea {
   font-family: $text;
 }
 .Codemirror, pre, #markdown-editor-input, .editor-toolbar, .code-base {
@@ -376,12 +376,6 @@ span.sep {
 
 .list > * {
   display: block;
-}
-
-.action-header {
-  h1 {
-    margin-top: $-m;
-  }
 }
 
 /**
