@@ -1,12 +1,27 @@
-@extends('base')
+@extends('simple-layout')
 
-@section('content')
+@section('toolbar')
+    <div class="col-sm-8 faded">
+        <div class="breadcrumbs">
+            <a href="{{ baseUrl('/books') }}" class="text-button"><i class="zmdi zmdi-book"></i>{{ trans('entities.books') }}</a>
+            <span class="sep">&raquo;</span>
+            <a href="{{ baseUrl('/books/create') }}" class="text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.books_create') }}</a>
+        </div>
+    </div>
+@stop
 
-<div class="container small" ng-non-bindable>
-    <h1>{{ trans('entities.books_create') }}</h1>
-    <form action="{{ baseUrl("/books") }}" method="POST" enctype="multipart/form-data">
-        @include('books/form')
-    </form>
+@section('body')
+
+<div ng-non-bindable class="container small">
+    <p>&nbsp;</p>
+    <div class="card">
+        <h3><i class="zmdi zmdi-plus"></i> {{ trans('entities.books_create') }}</h3>
+        <div class="body">
+            <form action="{{ baseUrl("/books") }}" method="POST" enctype="multipart/form-data">
+                @include('books/form')
+            </form>
+        </div>
+    </div>
 </div>
 <p class="margin-top large"><br></p>
     @include('components.image-manager', ['imageType' => 'cover'])

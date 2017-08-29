@@ -2,9 +2,13 @@
 
 @section('content')
 
-    <div class="container">
-        <h1 class="text-muted">{{ trans('errors.app_down', ['appName' => setting('app-name')]) }}</h1>
-        <p>{{ trans('errors.back_soon') }}</p>
+    <div class="container small">
+        <div class="card">
+            <div class="body">
+                <h4 class="text-muted"><i class="zmdi zmdi-alert-octagon"></i> {{ trans('errors.app_down', ['appName' => setting('app-name')]) }}</h4>
+                <p>{{ trans('errors.back_soon') }}</p>
+            </div>
+        </div>
     </div>
 
 @stop

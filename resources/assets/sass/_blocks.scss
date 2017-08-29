@@ -181,3 +181,27 @@
     content: '\f1f1';
   }
 }
+
+.card {
+  margin: $-m;
+  background-color: #FFF;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2);
+  h3 {
+    padding: $-m;
+    border-bottom: 1px solid #E8E8E8;
+    margin: 0;
+    font-size: $fs-s;
+    color: #888;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .body, p.empty-text {
+    padding: $-m;
+  }
+}
+
+.well {
+  background-color: #F8F8F8;
+  padding: $-m;
+  border: 1px solid #DDD;
+}

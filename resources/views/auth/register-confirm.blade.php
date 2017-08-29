@@ -9,9 +9,11 @@
 @section('content')
 
     <div class="text-center">
-        <div class="center-box">
-            <h2>{{ trans('auth.register_thanks') }}</h2>
-            <p>{{ trans('auth.register_confirm', ['appName' => setting('app-name')]) }}</p>
+        <div class="card center-box">
+            <h3><i class="zmdi zmdi-accounts"></i> {{ trans('auth.register_thanks') }}</h3>
+            <div class="body">
+                <p>{{ trans('auth.register_confirm', ['appName' => setting('app-name')]) }}</p>
+            </div>
         </div>
     </div>
 
