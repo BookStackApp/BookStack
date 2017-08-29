@@ -7,6 +7,6 @@
     @if (isset($diff) && $diff)
         {!! $diff !!}
     @else
-        {!! isset($pageContent) ? $pageContent : $page->html !!}
+        {!! isset($page->renderedHTML) ? $page->renderedHTML : $page->html !!}
     @endif
 </div>

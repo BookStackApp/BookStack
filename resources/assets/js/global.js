@@ -1,5 +1,6 @@
 "use strict";
 require("babel-polyfill");
+require('./dom-polyfills');
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -13,9 +14,11 @@ window.baseUrl = function(path) {
 class EventManager {
     constructor() {
         this.listeners = {};
+        this.stack = [];
     }
 
     emit(eventName, eventData) {
+        this.stack.push({name: eventName, data: eventData});
         if (typeof this.listeners[eventName] === 'undefined') return this;
         let eventsToStart = this.listeners[eventName];
         for (let i = 0; i < eventsToStart.length; i++) {
@@ -32,7 +35,7 @@ class EventManager {
     }
 }
 
-window.Events = new EventManager();
+window.$events = new EventManager();
 
 const Vue = require("vue");
 const axios = require("axios");
@@ -47,13 +50,13 @@ axiosInstance.interceptors.request.use(resp => {
     return resp;
 }, err => {
     if (typeof err.response === "undefined" || typeof err.response.data === "undefined") return Promise.reject(err);
-    if (typeof err.response.data.error !== "undefined") window.Events.emit('error', err.response.data.error);
-    if (typeof err.response.data.message !== "undefined") window.Events.emit('error', err.response.data.message);
+    if (typeof err.response.data.error !== "undefined") window.$events.emit('error', err.response.data.error);
+    if (typeof err.response.data.message !== "undefined") window.$events.emit('error', err.response.data.message);
 });
 window.$http = axiosInstance;
 
 Vue.prototype.$http = axiosInstance;
-Vue.prototype.$events = window.Events;
+Vue.prototype.$events = window.$events;
 
 
 // AngularJS - Create application and load components
@@ -78,8 +81,8 @@ require("./components");
 // Load in angular specific items
 const Directives = require('./directives');
 const Controllers = require('./controllers');
-Directives(ngApp, window.Events);
-Controllers(ngApp, window.Events);
+Directives(ngApp, window.$events);
+Controllers(ngApp, window.$events);
 
 //Global jQuery Config & Extensions
 

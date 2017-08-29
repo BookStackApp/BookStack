@@ -4,6 +4,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Repos\EntityRepo;
 use BookStack\Role;
+use BookStack\Services\SettingService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -87,5 +88,17 @@ abstract class TestCase extends BaseTestCase
         $entityRepo = $this->app[EntityRepo::class];
         $draftPage = $entityRepo->getDraftPage($book);
         return $entityRepo->publishPageDraft($draftPage, $input);
+    }
+
+    /**
+     * Quickly sets an array of settings.
+     * @param $settingsArray
+     */
+    protected function setSettings($settingsArray)
+    {
+        $settings = app(SettingService::class);
+        foreach ($settingsArray as $key => $value) {
+            $settings->put($key, $value);
+        }
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="shaded">
 <head>
     <title>{{ setting('app-name') }}</title>
 
@@ -23,12 +23,12 @@
         {!! setting('app-custom-head') !!}
     @endif
 </head>
-<body class="@yield('body-class')" ng-app="bookStack">
+<body class="@yield('body-class')">
 
 @include('partials.notifications')
 
 <header id="header">
-    <div class="container">
+    <div class="container fluid">
         <div class="row">
             <div class="col-sm-6">
 

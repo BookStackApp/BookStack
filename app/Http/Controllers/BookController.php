@@ -36,12 +36,17 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAllPaginated('book', 16);
+        $books = $this->entityRepo->getAllPaginated('book', 20);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
-        $popular = $this->entityRepo->getPopular('book', 3, 0);
-        $books_display = $this->currentUser->books_display;
+        $popular = $this->entityRepo->getPopular('book', 4, 0);
+        $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
         $this->setPageTitle('Books');
-        return view('books/index', ['books' => $books, 'recents' => $recents, 'popular' => $popular, 'books_display' => $books_display] );
+        return view('books/index', [
+            'books' => $books,
+            'recents' => $recents,
+            'popular' => $popular,
+            'new' => $new
+        ]);
     }
 
     /**
@@ -85,7 +90,12 @@ class BookController extends Controller
         $bookChildren = $this->entityRepo->getBookChildren($book);
         Views::add($book);
         $this->setPageTitle($book->getShortName());
-        return view('books/show', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
+        return view('books/show', [
+            'book' => $book,
+            'current' => $book,
+            'bookChildren' => $bookChildren,
+            'activity' => Activity::entityActivity($book, 20, 0)
+        ]);
     }
 
     /**

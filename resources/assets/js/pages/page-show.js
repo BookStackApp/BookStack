@@ -106,25 +106,25 @@ let setupPageShow = window.setupPageShow = function (pageId) {
         goToText(event.target.getAttribute('href').substr(1));
     });
 
-    // Make the book-tree sidebar stick in view on scroll
+    // Make the sidebar stick in view on scroll
     let $window = $(window);
-    let $bookTree = $(".book-tree");
-    let $bookTreeParent = $bookTree.parent();
+    let $sidebar = $("#sidebar .scroll-body");
+    let $bookTreeParent = $sidebar.parent();
     // Check the page is scrollable and the content is taller than the tree
-    let pageScrollable = ($(document).height() > $window.height()) && ($bookTree.height() < $('.page-content').height());
+    let pageScrollable = ($(document).height() > $window.height()) && ($sidebar.height() < $('.page-content').height());
     // Get current tree's width and header height
     let headerHeight = $("#header").height() + $(".toolbar").height();
     let isFixed = $window.scrollTop() > headerHeight;
     // Function to fix the tree as a sidebar
     function stickTree() {
-        $bookTree.width($bookTreeParent.width() + 15);
-        $bookTree.addClass("fixed");
+        $sidebar.width($bookTreeParent.width() + 15);
+        $sidebar.addClass("fixed");
         isFixed = true;
     }
     // Function to un-fix the tree back into position
     function unstickTree() {
-        $bookTree.css('width', 'auto');
-        $bookTree.removeClass("fixed");
+        $sidebar.css('width', 'auto');
+        $sidebar.removeClass("fixed");
         isFixed = false;
     }
     // Checks if the tree stickiness state should change
