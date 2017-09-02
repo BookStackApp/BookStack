@@ -58,17 +58,3 @@ table.list-table {
     padding: $-xs;
   }
 }
-
-.fake-table {
-  display: table;
-  width: 100%;
-  > div {
-    display: table-row-group;
-  }
-  > div > div {
-    display: table-row;
-  }
-  > div > div > div {
-    display: table-cell;
-  }
-}
