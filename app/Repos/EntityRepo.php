@@ -691,19 +691,19 @@ class EntityRepo
             $pageId = intval($splitInclude[0]);
             if (is_nan($pageId)) continue;
 
-            $page = $this->getById('page', $pageId, false, $ignorePermissions);
-            if ($page === null) {
+            $matchedPage = $this->getById('page', $pageId, false, $ignorePermissions);
+            if ($matchedPage === null) {
                 $content = str_replace($matches[0][$index], '', $content);
                 continue;
             }
 
             if (count($splitInclude) === 1) {
-                $content = str_replace($matches[0][$index], $page->html, $content);
+                $content = str_replace($matches[0][$index], $matchedPage->html, $content);
                 continue;
             }
 
             $doc = new DOMDocument();
-            $doc->loadHTML(mb_convert_encoding('<body>'.$page->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
+            $doc->loadHTML(mb_convert_encoding('<body>'.$matchedPage->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
             $matchingElem = $doc->getElementById($splitInclude[1]);
             if ($matchingElem === null) {
                 $content = str_replace($matches[0][$index], '', $content);
@@ -716,7 +716,7 @@ class EntityRepo
             $content = str_replace($matches[0][$index], trim($innerContent), $content);
         }
 
-        $page->renderedHTML = $content;
+        $page->setAttribute('renderedHTML', $content);
         return $content;
     }
 
