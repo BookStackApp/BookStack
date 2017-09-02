@@ -53,13 +53,20 @@ const modeMap = {
     yml: 'yaml',
 };
 
-module.exports.highlight = function() {
+/**
+ * Highlight pre elements on a page
+ */
+function highlight() {
     let codeBlocks = document.querySelectorAll('.page-content pre');
     for (let i = 0; i < codeBlocks.length; i++) {
         highlightElem(codeBlocks[i]);
     }
-};
+}
 
+/**
+ * Add code highlighting to a single element.
+ * @param {HTMLElement} elem
+ */
 function highlightElem(elem) {
     let innerCodeElem = elem.querySelector('code[class^=language-]');
     let mode = '';
@@ -76,7 +83,7 @@ function highlightElem(elem) {
         value: content,
         mode:  mode,
         lineNumbers: true,
-        theme: 'base16-light',
+        theme: getTheme(),
         readOnly: true
     });
 }
@@ -91,9 +98,21 @@ function getMode(suggestion) {
     return (typeof modeMap[suggestion] !== 'undefined') ? modeMap[suggestion] : '';
 }
 
-module.exports.highlightElem = highlightElem;
+/**
+ * Ge the theme to use for CodeMirror instances.
+ * @returns {*|string}
+ */
+function getTheme() {
+    return window.codeTheme || 'base16-light';
+}
 
-module.exports.wysiwygView = function(elem) {
+/**
+ * Create a CodeMirror instance for showing inside the WYSIWYG editor.
+ *  Manages a textarea element to hold code content.
+ * @param {HTMLElement} elem
+ * @returns {{wrap: Element, editor: *}}
+ */
+function wysiwygView(elem) {
     let doc = elem.ownerDocument;
     let codeElem = elem.querySelector('code');
 
@@ -122,16 +141,22 @@ module.exports.wysiwygView = function(elem) {
         value: content,
         mode:  getMode(lang),
         lineNumbers: true,
-        theme: 'base16-light',
+        theme: getTheme(),
         readOnly: true
     });
     setTimeout(() => {
         cm.refresh();
     }, 300);
     return {wrap: newWrap, editor: cm};
-};
+}
 
-module.exports.popupEditor = function(elem, modeSuggestion) {
+/**
+ * Create a CodeMirror instance to show in the WYSIWYG pop-up editor
+ * @param {HTMLElement} elem
+ * @param {String} modeSuggestion
+ * @returns {*}
+ */
+function popupEditor(elem, modeSuggestion) {
     let content = elem.textContent;
 
     return CodeMirror(function(elt) {
@@ -141,22 +166,38 @@ module.exports.popupEditor = function(elem, modeSuggestion) {
         value: content,
         mode:  getMode(modeSuggestion),
         lineNumbers: true,
-        theme: 'base16-light',
+        theme: getTheme(),
         lineWrapping: true
     });
-};
+}
 
-module.exports.setMode = function(cmInstance, modeSuggestion) {
+/**
+ * Set the mode of a codemirror instance.
+ * @param cmInstance
+ * @param modeSuggestion
+ */
+function setMode(cmInstance, modeSuggestion) {
       cmInstance.setOption('mode', getMode(modeSuggestion));
-};
-module.exports.setContent = function(cmInstance, codeContent) {
+}
+
+/**
+ * Set the content of a cm instance.
+ * @param cmInstance
+ * @param codeContent
+ */
+function setContent(cmInstance, codeContent) {
     cmInstance.setValue(codeContent);
     setTimeout(() => {
         cmInstance.refresh();
     }, 10);
-};
+}
 
-module.exports.markdownEditor = function(elem) {
+/**
+ * Get a CodeMirror instace to use for the markdown editor.
+ * @param {HTMLElement} elem
+ * @returns {*}
+ */
+function markdownEditor(elem) {
     let content = elem.textContent;
 
     return CodeMirror(function (elt) {
@@ -166,13 +207,27 @@ module.exports.markdownEditor = function(elem) {
         value: content,
         mode: "markdown",
         lineNumbers: true,
-        theme: 'base16-light',
+        theme: getTheme(),
         lineWrapping: true
     });
-};
+}
 
-module.exports.getMetaKey = function() {
+/**
+ * Get the 'meta' key dependant on the user's system.
+ * @returns {string}
+ */
+function getMetaKey() {
     let mac = CodeMirror.keyMap["default"] == CodeMirror.keyMap.macDefault;
     return mac ? "Cmd" : "Ctrl";
-};
+}
 
+module.exports = {
+    highlight: highlight,
+    highlightElem: highlightElem,
+    wysiwygView: wysiwygView,
+    popupEditor: popupEditor,
+    setMode: setMode,
+    setContent: setContent,
+    markdownEditor: markdownEditor,
+    getMetaKey: getMetaKey,
+};
