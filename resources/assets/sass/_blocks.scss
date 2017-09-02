@@ -200,6 +200,51 @@
   }
 }
 
+.card.drag-card {
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  display: flex;
+  padding: 0;
+  padding-left: $-s + 28px;
+  margin: $-s 0;
+  position: relative;
+  .drag-card-action {
+    cursor: pointer;
+  }
+  .handle, .drag-card-action {
+    display: flex;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+    width: 28px;
+    padding-left: $-xs;
+    padding-right: $-xs;
+    &:hover {
+      background-color: #EEE;
+    }
+    i {
+      flex: 1;
+      padding: 0;
+    }
+  }
+  > div .outline input {
+    margin: $-s 0;
+  }
+  > div.padded {
+    padding: $-s 0 !important;
+  }
+  .handle {
+    background-color: #EEE;
+    left: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+  > div {
+    padding: 0 $-s;
+  }
+}
+
 .well {
   background-color: #F8F8F8;
   padding: $-m;
