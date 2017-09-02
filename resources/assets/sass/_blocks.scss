@@ -198,6 +198,10 @@
   .body, p.empty-text {
     padding: $-m;
   }
+  a {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
 }
 
 .card.drag-card {
@@ -242,6 +246,7 @@
   }
   > div {
     padding: 0 $-s;
+    max-width: 80%;
   }
 }
 
