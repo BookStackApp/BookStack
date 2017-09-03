@@ -10,6 +10,7 @@ let componentMapping = {
     'entity-selector': require('./entity-selector'),
     'sidebar': require('./sidebar'),
     'page-picker': require('./page-picker'),
+    'page-comments': require('./page-comments'),
 };
 
 window.components = {};

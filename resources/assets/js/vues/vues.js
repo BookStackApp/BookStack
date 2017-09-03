@@ -11,7 +11,6 @@ let vueMapping = {
     'image-manager': require('./image-manager'),
     'tag-manager': require('./tag-manager'),
     'attachment-manager': require('./attachment-manager'),
-    'page-comments': require('./page-comments')
 };
 
 window.vues = {};

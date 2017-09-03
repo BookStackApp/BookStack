@@ -161,6 +161,7 @@ class PageController extends Controller
         $pageContent = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
         $pageNav = $this->entityRepo->getPageNav($pageContent);
+        $page->load(['comments.createdBy']);
 
         Views::add($page);
         $this->setPageTitle($page->getShortName());

@@ -1,105 +1,87 @@
 <?php namespace BookStack\Repos;
 
 use BookStack\Comment;
-use BookStack\Page;
+use BookStack\Entity;
 
 /**
- * Class TagRepo
+ * Class CommentRepo
  * @package BookStack\Repos
  */
 class CommentRepo {
+
     /**
-     *
      * @var Comment $comment
      */
     protected $comment;
 
+    /**
+     * CommentRepo constructor.
+     * @param Comment $comment
+     */
     public function __construct(Comment $comment)
     {
         $this->comment = $comment;
     }
 
-    public function create (Page $page, $data = []) {
+    /**
+     * Get a comment by ID.
+     * @param $id
+     * @return Comment|\Illuminate\Database\Eloquent\Model
+     */
+    public function getById($id)
+    {
+        return $this->comment->newQuery()->findOrFail($id);
+    }
+
+    /**
+     * Create a new comment on an entity.
+     * @param Entity $entity
+     * @param array $data
+     * @return Comment
+     */
+    public function create (Entity $entity, $data = [])
+    {
         $userId = user()->id;
-        $comment = $this->comment->newInstance();
-        $comment->fill($data);
-        // new comment
-        $comment->page_id = $page->id;
+        $comment = $this->comment->newInstance($data);
         $comment->created_by = $userId;
-        $comment->updated_at = null;
-        $comment->save();
-        return $comment;
-    }
-
-    public function update($comment, $input, $activeOnly = true) {
-        $userId = user()->id;
         $comment->updated_by = $userId;
-        $comment->fill($input);
-
-        // only update active comments by default.
-        $whereClause = ['active' => 1];
-        if (!$activeOnly) {
-            $whereClause = [];
-        }
-        $comment->update($whereClause);
+        $comment->local_id = $this->getNextLocalId($entity);
+        $entity->comments()->save($comment);
         return $comment;
     }
 
-    public function delete($comment) {
-        $comment->text = trans('entities.comment_deleted');
-        $comment->html = trans('entities.comment_deleted');
-        $comment->active = false;
-        $userId = user()->id;
-        $comment->updated_by = $userId;
-        $comment->save();
+    /**
+     * Update an existing comment.
+     * @param Comment $comment
+     * @param array $input
+     * @return mixed
+     */
+    public function update($comment, $input)
+    {
+        $comment->updated_by = user()->id;
+        $comment->update($input);
         return $comment;
     }
 
-    public function getPageComments($pageId) {
-        $comments = $this->comment->getAllPageComments($pageId);
-        $index = [];
-        $totalComments = count($comments);
-        $finalCommentList = [];
-
-        // normalizing the response.
-        for ($i = 0; $i < count($comments); ++$i) {
-            $comment = $this->normalizeComment($comments[$i]);
-            $parentId = $comment->parent_id;
-            if (empty($parentId)) {
-                $finalCommentList[] = $comment;
-                $index[$comment->id] = $comment;
-                continue;
-            }
-
-            if (empty($index[$parentId])) {
-                // weird condition should not happen.
-                continue;
-            }
-            if (empty($index[$parentId]->sub_comments)) {
-                $index[$parentId]->sub_comments = [];
-            }
-            array_push($index[$parentId]->sub_comments, $comment);
-            $index[$comment->id] = $comment;
-        }
-        return [
-            'comments' => $finalCommentList,
-            'total' => $totalComments
-        ];
+    /**
+     * Delete a comment from the system.
+     * @param Comment $comment
+     * @return mixed
+     */
+    public function delete($comment)
+    {
+        return $comment->delete();
     }
 
-    public function getCommentById($commentId) {
-        return $this->normalizeComment($this->comment->getCommentById($commentId));
-    }
-
-    private function normalizeComment($comment) {
-        if (empty($comment)) {
-            return;
-        }
-        $comment->createdBy->avatar_url = $comment->createdBy->getAvatar(50);
-        $comment->createdBy->profile_url = $comment->createdBy->getProfileUrl();
-        if (!empty($comment->updatedBy)) {
-            $comment->updatedBy->profile_url = $comment->updatedBy->getProfileUrl();
-        }
-        return $comment;
+    /**
+     * Get the next local ID relative to the linked entity.
+     * @param Entity $entity
+     * @return int
+     */
+    protected function getNextLocalId(Entity $entity)
+    {
+        $comments = $entity->comments()->orderBy('local_id', 'desc')->first();
+        if ($comments === null) return 1;
+        return $comments->local_id + 1;
     }
 }

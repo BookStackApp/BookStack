@@ -2,22 +2,34 @@
 
 use BookStack\Repos\CommentRepo;
 use BookStack\Repos\EntityRepo;
-use BookStack\Comment;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
     protected $entityRepo;
+    protected $commentRepo;
 
-    public function __construct(EntityRepo $entityRepo, CommentRepo $commentRepo, Comment $comment)
+    /**
+     * CommentController constructor.
+     * @param EntityRepo $entityRepo
+     * @param CommentRepo $commentRepo
+     */
+    public function __construct(EntityRepo $entityRepo, CommentRepo $commentRepo)
     {
         $this->entityRepo = $entityRepo;
         $this->commentRepo = $commentRepo;
-        $this->comment = $comment;
         parent::__construct();
     }
 
-    public function save(Request $request, $pageId, $commentId = null)
+    /**
+     * Save a new comment for a Page
+     * @param Request $request
+     * @param integer $pageId
+     * @param null|integer $commentId
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function savePageComment(Request $request, $pageId, $commentId = null)
     {
         $this->validate($request, [
             'text' => 'required|string',
@@ -30,70 +42,50 @@ class CommentController extends Controller
             return response('Not found', 404);
         }
 
-        if($page->draft) {
-            // cannot add comments to drafts.
-            return response()->json([
-                'status' => 'error',
-                'message' => trans('errors.cannot_add_comment_to_draft'),
-            ], 400);
-        }
-
         $this->checkOwnablePermission('page-view', $page);
-        if (empty($commentId)) {
-            // create a new comment.
-            $this->checkPermission('comment-create-all');
-            $comment = $this->commentRepo->create($page, $request->only(['text', 'html', 'parent_id']));
-            $respMsg = trans('entities.comment_created');
-        } else {
-            // update existing comment
-            // get comment by ID and check if this user has permission to update.
-            $comment = $this->comment->findOrFail($commentId);
-            $this->checkOwnablePermission('comment-update', $comment);
-            $this->commentRepo->update($comment, $request->all());
-            $respMsg = trans('entities.comment_updated');
+
+        // Prevent adding comments to draft pages
+        if ($page->draft) {
+            return $this->jsonError(trans('errors.cannot_add_comment_to_draft'), 400);
         }
 
-        $comment = $this->commentRepo->getCommentById($comment->id);
-
-        return response()->json([
-            'status'    => 'success',
-            'message'   => $respMsg,
-            'comment'   => $comment
-        ]);
-
+        // Create a new comment.
+        $this->checkPermission('comment-create-all');
+        $comment = $this->commentRepo->create($page, $request->all());
+        return view('comments/comment', ['comment' => $comment]);
     }
 
-    public function destroy($id) {
-        $comment = $this->comment->findOrFail($id);
+    /**
+     * Update an existing comment.
+     * @param Request $request
+     * @param integer $commentId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function update(Request $request, $commentId)
+    {
+        $this->validate($request, [
+            'text' => 'required|string',
+            'html' => 'required|string',
+        ]);
+
+        $comment = $this->commentRepo->getById($commentId);
+        $this->checkOwnablePermission('page-view', $comment->entity);
+        $this->checkOwnablePermission('comment-update', $comment);
+
+        $comment = $this->commentRepo->update($comment, $request->all());
+        return view('comments/comment', ['comment' => $comment]);
+    }
+
+    /**
+     * Delete a comment from the system.
+     * @param integer $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy($id)
+    {
+        $comment = $this->commentRepo->getById($id);
         $this->checkOwnablePermission('comment-delete', $comment);
         $this->commentRepo->delete($comment);
-        $updatedComment = $this->commentRepo->getCommentById($comment->id);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => trans('entities.comment_deleted'),
-            'comment' => $updatedComment
-        ]);
-    }
-
-
-    public function getPageComments($pageId) {
-        try {
-            $page = $this->entityRepo->getById('page', $pageId, true);
-        } catch (ModelNotFoundException $e) {
-            return response('Not found', 404);
-        }
-
-        $this->checkOwnablePermission('page-view', $page);
-
-        $comments = $this->commentRepo->getPageComments($pageId);
-        return response()->json(['status' => 'success', 'comments'=> $comments['comments'],
-            'total' => $comments['total'], 'permissions' => [
-                'comment_create' => $this->currentUser->can('comment-create-all'),
-                'comment_update_own' => $this->currentUser->can('comment-update-own'),
-                'comment_update_all' => $this->currentUser->can('comment-update-all'),
-                'comment_delete_all' => $this->currentUser->can('comment-delete-all'),
-                'comment_delete_own' => $this->currentUser->can('comment-delete-own'),
-            ], 'user_id' => $this->currentUser->id]);
+        return response()->json(['message' => trans('entities.comment_deleted')]);
     }
 }

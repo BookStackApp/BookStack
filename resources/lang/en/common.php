@@ -29,6 +29,7 @@ return [
     'edit' => 'Edit',
     'sort' => 'Sort',
     'move' => 'Move',
+    'reply' => 'Reply',
     'delete' => 'Delete',
     'search' => 'Search',
     'search_clear' => 'Clear Search',
