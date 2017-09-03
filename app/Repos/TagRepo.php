@@ -33,6 +33,7 @@ class TagRepo
      * @param $entityType
      * @param $entityId
      * @param string $action
+     * @return \Illuminate\Database\Eloquent\Model|null|static
      */
     public function getEntity($entityType, $entityId, $action = 'view')
     {

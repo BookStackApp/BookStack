@@ -1,6 +1,8 @@
 <?php namespace BookStack;
 
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 class Entity extends Ownable
 {
 
@@ -64,6 +66,16 @@ class Entity extends Ownable
     {
         return $this->morphMany(Tag::class, 'entity')->orderBy('order', 'asc');
     }
+
+    /**
+     * Get the comments for an entity
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'entity')->orderBy('created_at', 'asc');
+    }
+
 
     /**
      * Get the related search terms.

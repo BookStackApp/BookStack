@@ -147,8 +147,9 @@
         @include('pages/page-display')
 
     </div>
+
     <div class="container small">
-        @include('comments/comments', ['pageId' => $page->id])
+        @include('comments/comments', ['page' => $page])
     </div>
 @stop
 

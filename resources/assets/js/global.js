@@ -73,6 +73,7 @@ let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize'
 const Translations = require("./translations");
 let translator = new Translations(window.translations);
 window.trans = translator.get.bind(translator);
+window.trans_choice = translator.getPlural.bind(translator);
 
 
 require("./vues/vues");

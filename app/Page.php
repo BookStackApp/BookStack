@@ -66,10 +66,6 @@ class Page extends Entity
         return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
     }
 
-    public function comments() {
-        return $this->hasMany(Comment::class, 'page_id')->orderBy('created_on', 'asc');
-    }
-
     /**
      * Get the url for this page.
      * @param string|bool $path

@@ -15,16 +15,18 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('page_id')->unsigned();
+            $table->integer('entity_id')->unsigned();
+            $table->string('entity_type');
             $table->longText('text')->nullable();
             $table->longText('html')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
+            $table->integer('local_id')->unsigned()->nullable();
             $table->integer('created_by')->unsigned();
             $table->integer('updated_by')->unsigned()->nullable();
-            $table->boolean('active')->default(true);
-
-            $table->index(['page_id']);
             $table->timestamps();
+
+            $table->index(['entity_id', 'entity_type']);
+            $table->index(['local_id']);
 
             // Assign new comment permissions to admin role
             $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;

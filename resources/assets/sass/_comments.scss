@@ -1,82 +1,33 @@
-.comments-list {
-    .comment-box {
-        border-bottom: 1px solid $comment-border;
+.comment-box {
+    border: 1px solid #DDD;
+    margin-bottom: $-s;
+    border-radius: 3px;
+    .content {
+        padding: $-s;
     }
-
-    .comment-box:last-child {
-        border-bottom: 0px;
-    }
-}
-.page-comment {
-    .comment-container {
-        margin-left: 42px;
-    }
-
-    .comment-actions {
-        font-size: 0.8em;
-        padding-bottom: 2px;
-
-        ul {
-            padding-left: 0px;
-            margin-bottom: 2px;
-        }
-        li {
-            float: left;
-            list-style-type: none;
-        }
-
-        li:after {
-            content: '•';
-            color: #707070;
-            padding: 0 5px;
-            font-size: 1em;
-        }
-
-        li:last-child:after {
-            content: none;
-        }
-    }
-
-    .comment-actions {
-        border-bottom: 1px solid #DDD;
-    }
-
-    .comment-actions:last-child {
-        border-bottom: 0px;
-    }
-
-    .comment-header {
-        font-size: 1.25em;
-        margin-top: 0.6em;
-    }
-
-    .comment-body p {
+    .content p {
         margin-bottom: 1em;
     }
-
-    .comment-inactive {
-        font-style: italic;
-        font-size: 0.85em;
-        padding-top: 5px;
-    }
-
-    .user-image {
-        float: left;
-        margin-right: 10px;
-        width: 32px;
-        img {
-            width: 100%;
-        }
-    }
 }
 
-.comment-editor {
-    margin-top: 2em;
-
-    textarea {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        min-height: 120px;
+.comment-box .header {
+    padding: $-xs $-s;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #DDD;
+    img, a, span {
+        display: inline-block;
+        vertical-align: top;
+    }
+    a, span {
+        padding: $-xxs 0 $-xxs 0;
+        line-height: 1.6;
+    }
+    a { color: #666; }
+    span {
+        color: #888;
+        padding-left: $-xxs;
+    }
+    .text-muted {
+        color: #999;
     }
 }
