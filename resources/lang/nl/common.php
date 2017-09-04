@@ -18,7 +18,7 @@ return [
     'description' => 'Beschrijving',
     'role' => 'Rol',
     'cover_image' => 'Omslagfoto',
-    'cover_image_description' => 'De afbeelding moet in een hoogte / breedte verhouding van 1.6: 1 zijn.',
+    'cover_image_description' => 'De afbeelding moet in een hoogte / breedte verhouding van 1.7: 1 zijn.',
     /**
      * Actions
      */

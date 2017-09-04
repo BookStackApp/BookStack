@@ -18,7 +18,7 @@ return [
     'description' => 'Beschreibung',
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
-    'cover_image_description' => 'Das Bild sollte in einem Verhältnis von Höhe zu Breite von 1.6: 1 sein.',
+    'cover_image_description' => 'Das Bild sollte in einem Verhältnis von Höhe zu Breite von 1.7: 1 sein.',
 
     /**
      * Actions
