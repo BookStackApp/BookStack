@@ -95,26 +95,26 @@ class UserProfileTest extends BrowserKitTest
             ->see('cannot delete the guest user');
     }
 
-    public function test_books_display_is_list()
+    public function test_books_view_is_list()
     {
         $editor = $this->getEditor([
-          'books_display' => 'list'
+          'books_view_type' => 'list'
         ]);
 
         $this->actingAs($editor)
             ->visit('/books')
-            ->pageNotHasElement('.gallery-item')
+            ->pageNotHasElement('.featured-image-container')
             ->pageHasElement('.entity-list-item');
     }
 
-    public function test_books_display_is_grid()
+    public function test_books_view_is_grid()
     {
         $editor = $this->getEditor([
-          'books_display' => 'grid'
+          'books_view_type' => 'grid'
         ]);
 
         $this->actingAs($editor)
             ->visit('/books')
-            ->pageHasElement('.gallery-item');
+            ->pageHasElement('.featured-image-container');
     }
 }

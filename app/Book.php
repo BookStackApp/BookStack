@@ -3,7 +3,7 @@
 class Book extends Entity
 {
 
-    protected $fillable = ['name', 'description', 'image'];
+    protected $fillable = ['name', 'description', 'image_id'];
 
     /**
      * Get the url for this book.
@@ -17,30 +17,45 @@ class Book extends Entity
         }
         return baseUrl('/books/' . urlencode($this->slug));
     }
-
-    public function getBookCover()
+    
+    /**
+     * Returns book cover image, if book cover not exists return default cover image.
+     * @param int $height - Height of the image
+     * @param type $width - Width of the image
+     * @return type string
+     */
+    public function getBookCover($height = 170, $width = 300)
     {
-        $default = baseUrl('/default.png');
-        $image = $this->image;
+        $default = baseUrl('/book_default_cover.png');
+        $image = $this->image_id;
         if ($image === 0 || $image === '0' || $image === null) 
             return $default;
         try {
-            $cover = $this->cover ? baseUrl($this->cover->getThumb(120, 192, false)) : $default;
+            $cover = $this->cover ? baseUrl($this->cover->getThumb($width, $height, false)) : $default;
         } catch (\Exception $err) {
             $cover = $default;
         }
         return $cover;
     }
-
+    
+    /**
+     * Get an excerpt of this book's name to the specified length or less.
+     * @param int $length
+     * @return string
+     */
     public function getHeadingExcerpt($length = 35)
     {
         $bookHeading = $this->name;
         return strlen($bookHeading) > $length ? substr($bookHeading, 0, $length-3) . '...' : $bookHeading;
     }
     
+    /**
+     * Get the cover image of the book
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function cover()
     {
-        return $this->belongsTo(Image::class, 'image');
+        return $this->belongsTo(Image::class, 'image_id');
     }
     /*
      * Get the edit url for this book.
@@ -87,6 +102,15 @@ class Book extends Entity
     public function entityRawQuery()
     {
         return "'BookStack\\\\Book' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text,'' as html, '0' as book_id, '0' as priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
+    }
+    
+    /**
+     * Get the user that created the page revision
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy()
+    {   
+        return $this->belongsTo(User::class, 'created_by');
     }
 
 }

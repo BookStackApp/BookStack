@@ -91,7 +91,7 @@ return [
     'users_external_auth_id' => 'ID de Autenticação Externa',
     'users_password_warning' => 'Preencha os dados abaixo caso queira modificar a sua senha:',
     'users_system_public' => 'Esse usuário representa quaisquer convidados que visitam o aplicativo. Ele não pode ser usado para login.',
-    'users_books_display_type' => 'Layout preferido para mostrar livros',
+    'users_books_view_type' => 'Layout preferido para mostrar livros',
     'users_delete' => 'Excluir Usuário',
     'users_delete_named' => 'Excluir :userName',
     'users_delete_warning' => 'A ação vai excluir completamente o usuário de nome \':userName\' do sistema.',
