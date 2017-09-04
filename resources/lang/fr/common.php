@@ -18,7 +18,7 @@ return [
     'description' => 'Description',
     'role' => 'Rôle',
     'cover_image' => 'Image de couverture',
-    'cover_image_description' => 'L\'image devrait avoir un rapport d\'aspect 1.6: 1',
+    'cover_image_description' => 'L\'image devrait avoir un rapport d\'aspect 1.7: 1',
     /**
      * Actions
      */

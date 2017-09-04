@@ -19,7 +19,7 @@ return [
     'description' => 'Description',
     'role' => 'Role',
     'cover_image' => 'Cover image',
-    'cover_image_description' => 'The image should be in a height/width ratio of 1.6:1.',
+    'cover_image_description' => 'The image should be in a height/width ratio of 1.7:1.',
     /**
      * Actions
      */
