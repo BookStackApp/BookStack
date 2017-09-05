@@ -18,7 +18,7 @@ return [
     'description' => 'Popis',
     'role' => 'Rola',
     'cover_image' => 'Obal knihy',
-    'cover_image_description' => 'Obraz by mal mať pomer strán 1.7: 1.',
+    'cover_image_description' => 'Tento obrázok by mal byť približne 300 x 170 pixelov.',
     /**
      * Actions
      */

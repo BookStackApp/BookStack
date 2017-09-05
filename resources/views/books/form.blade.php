@@ -17,8 +17,8 @@
             'resizeHeight' => '512',
             'resizeWidth' => '512',
             'showRemove' => true,
-            'defaultImage' => baseUrl('/default.png'),
-            'currentImage' => @isset($model) ? $model->getBookCover() : baseUrl('/default.png') ,
+            'defaultImage' => baseUrl('/book_default_cover.png'),
+            'currentImage' => @isset($model) ? $model->getBookCover() : baseUrl('/book_default_cover.png') ,
             'currentId' => @isset($model) ? $model->image_id : 0,
             'name' => 'image_id',
             'imageClass' => 'cover'
