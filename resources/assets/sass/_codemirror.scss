@@ -384,7 +384,10 @@ span.CodeMirror-selectedtext { background: none; }
 /**
  * Custom BookStack overrides
  */
-.cm-s-base16-light.CodeMirror {
+.CodeMirror, .CodeMirror pre {
+  font-size: 12px;
+}
+.CodeMirror {
   font-size: 12px;
   height: auto;
   margin-bottom: $-l;
