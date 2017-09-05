@@ -256,5 +256,4 @@ class EntityTest extends BrowserKitTest
             ->visit('/')
             ->seeInElement('#recently-updated-pages', $page->name);
     }
-
 }

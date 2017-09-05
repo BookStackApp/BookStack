@@ -13,7 +13,7 @@
         <button class="text-button neg" data-action="remove-image" type="button">{{ trans('common.remove') }}</button>
     @endif
 
-    <input type="hidden" name="{{$name}}" id="{{$name}}" value="{{ isset($currentId) && ($currentId !== '' && $currentId !== false) ? $currentId : $currentImage}}">
+    <input type="hidden" name="{{$name}}" id="{{$name}}" value="{{ isset($currentId) && ($currentId !== 0 && $currentId !== false) ? $currentId : $currentImage}}">
 </div>
 
 <script>

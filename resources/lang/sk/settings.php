@@ -91,6 +91,7 @@ return [
     'users_external_auth_id' => 'Externé autentifikačné ID',
     'users_password_warning' => 'Pole nižšie vyplňte iba ak chcete zmeniť heslo:',
     'users_system_public' => 'Tento účet reprezentuje každého hosťovského používateľa, ktorý navštívi Vašu inštanciu. Nedá sa pomocou neho prihlásiť a je priradený automaticky.',
+    'users_books_view_type' => 'Preferované rozloženie pre prezeranie kníh',
     'users_delete' => 'Zmazať používateľa',
     'users_delete_named' => 'Zmazať používateľa :userName',
     'users_delete_warning' => ' Toto úplne odstráni používateľa menom \':userName\' zo systému.',
