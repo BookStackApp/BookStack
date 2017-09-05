@@ -14,13 +14,13 @@
         <p class="small">{{ trans('common.cover_image_description') }}</p>
 
         @include('components.image-picker', [
-            'resizeHeight' => '192',
-            'resizeWidth' => '120',
+            'resizeHeight' => '512',
+            'resizeWidth' => '512',
             'showRemove' => true,
-            'defaultImage' => baseUrl('/default.png'),
-            'currentImage' => @isset($model) ? $model->getBookCover(80) : baseUrl('/default.png') ,
-            'currentId' => @isset($model) ? $model->image : 0,
-            'name' => 'image',
+            'defaultImage' => baseUrl('/book_default_cover.png'),
+            'currentImage' => @isset($model) ? $model->getBookCover() : baseUrl('/book_default_cover.png') ,
+            'currentId' => @isset($model) ? $model->image_id : 0,
+            'name' => 'image_id',
             'imageClass' => 'cover'
         ])
 </div>
