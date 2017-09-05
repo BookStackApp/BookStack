@@ -17,7 +17,7 @@ return [
     'name' => '名称',
     'description' => '概要',
     'role' => '権限',
-
+    'cover_image_description' => 'この画像は約 300x170px をする必要があります。',
     /**
      * Actions
      */

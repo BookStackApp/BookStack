@@ -18,7 +18,7 @@ return [
     'description' => 'Descripción',
     'role' => 'Rol',
     'cover_image' => 'Imagen de portada',
-    'cover_image_description' => 'La imagen debe estar en una relación altura / anchura de 1.7: 1.',
+    'cover_image_description' => 'Esta imagen debe ser aproximadamente 300x170px.',
     /**
      * Actions
      */
