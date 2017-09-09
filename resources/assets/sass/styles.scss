@@ -15,7 +15,6 @@
 @import "header";
 @import "lists";
 @import "pages";
-@import "comments";
 
 [v-cloak] {
   display: none; opacity: 0;
@@ -69,7 +68,6 @@ $loadingSize: 10px;
 .loading-container {
   position: relative;
   display: block;
-  height: $loadingSize;
   margin: $-xl auto;
   > div {
     width: $loadingSize;
@@ -77,7 +75,8 @@ $loadingSize: 10px;
     border-radius: $loadingSize;
     display: inline-block;
     vertical-align: top;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+    margin-top: $-xs;
     animation-name: loadingBob;
     animation-duration: 1.4s;
     animation-iteration-count: infinite;
@@ -91,10 +90,16 @@ $loadingSize: 10px;
       background-color: $color-book;
       animation-delay: 0s;
   }
-  > div:last-child {
+  > div:last-of-type {
     left: $loadingSize+$-xs;
     background-color: $color-chapter;
     animation-delay: 0.6s;
+  }
+  > span {
+    margin-left: $-s;
+    font-style: italic;
+    color: #888;
+    vertical-align: top;
   }
 }
 

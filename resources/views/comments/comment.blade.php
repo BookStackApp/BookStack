@@ -1,4 +1,4 @@
-<div class="comment-box" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id || ''}}" id="comment{{$comment->local_id}}">
+<div class="comment-box" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id}}" id="comment{{$comment->local_id}}">
     <div class="header">
 
         <div class="float right actions">
@@ -23,17 +23,20 @@
         <div class="meta">
             <a href="#comment{{$comment->local_id}}" class="text-muted">#{{$comment->local_id}}</a>
             &nbsp;&nbsp;
-            <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar" alt="{{ $comment->createdBy->name }}">
-            &nbsp;
-            <a href="{{ $comment->createdBy->getProfileUrl() }}">{{ $comment->createdBy->name }}</a>
-            {{--TODO - Account for deleted user--}}
+            @if ($comment->createdBy)
+                <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar" alt="{{ $comment->createdBy->name }}">
+                &nbsp;
+                <a href="{{ $comment->createdBy->getProfileUrl() }}">{{ $comment->createdBy->name }}</a>
+            @else
+                <span>{{ trans('common.deleted_user') }}</span>
+            @endif
             <span title="{{ $comment->created_at }}">
             {{ trans('entities.comment_created', ['createDiff' => $comment->created]) }}
         </span>
             @if($comment->isUpdated())
                 <span title="{{ $comment->updated_at }}">
                 &bull;&nbsp;
-                    {{ trans('entities.comment_updated', ['updateDiff' => $comment->updated, 'username' => $comment->updatedBy->name]) }}
+                    {{ trans('entities.comment_updated', ['updateDiff' => $comment->updated, 'username' => $comment->updatedBy? $comment->updatedBy->name : trans('common.deleted_user')]) }}
             </span>
             @endif
         </div>
@@ -47,6 +50,9 @@
     @endif
 
     <div comment-content class="content">
+        <div class="form-group loading" style="display: none;">
+            @include('partials.loading-icon', ['text' => trans('entities.comment_deleting')])
+        </div>
         {!! $comment->html  !!}
     </div>
 
@@ -59,6 +65,9 @@
                 <div class="form-group text-right">
                     <button type="button" class="button outline" action="closeUpdateForm">{{ trans('common.cancel') }}</button>
                     <button type="submit" class="button pos">{{ trans('entities.comment_save') }}</button>
+                </div>
+                <div class="form-group loading" style="display: none;">
+                    @include('partials.loading-icon', ['text' => trans('entities.comment_saving')])
                 </div>
             </form>
         </div>

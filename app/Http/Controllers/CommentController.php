@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use Activity;
 use BookStack\Repos\CommentRepo;
 use BookStack\Repos\EntityRepo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -51,7 +52,8 @@ class CommentController extends Controller
 
         // Create a new comment.
         $this->checkPermission('comment-create-all');
-        $comment = $this->commentRepo->create($page, $request->all());
+        $comment = $this->commentRepo->create($page, $request->only(['html', 'text', 'parent_id']));
+        Activity::add($page, 'commented_on', $page->book->id);
         return view('comments/comment', ['comment' => $comment]);
     }
 
@@ -72,7 +74,7 @@ class CommentController extends Controller
         $this->checkOwnablePermission('page-view', $comment->entity);
         $this->checkOwnablePermission('comment-update', $comment);
 
-        $comment = $this->commentRepo->update($comment, $request->all());
+        $comment = $this->commentRepo->update($comment, $request->only(['html', 'text']));
         return view('comments/comment', ['comment' => $comment]);
     }
 

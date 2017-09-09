@@ -541,3 +541,44 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     text-decoration: underline;
   }
 }
+
+.comment-box {
+  border: 1px solid #DDD;
+  margin-bottom: $-s;
+  border-radius: 3px;
+  .content {
+    padding: $-s;
+    font-size: 0.666em;
+  }
+  .content p {
+    font-size: $fs-m;
+    margin: .5em 0;
+  }
+  .reply-row {
+    padding: $-xs $-s;
+  }
+}
+
+.comment-box .header {
+  padding: $-xs $-s;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #DDD;
+  .meta {
+    img, a, span {
+      display: inline-block;
+      vertical-align: top;
+    }
+    a, span {
+      padding: $-xxs 0 $-xxs 0;
+      line-height: 1.6;
+    }
+    a { color: #666; }
+    span {
+      color: #888;
+      padding-left: $-xxs;
+    }
+  }
+  .text-muted {
+    color: #999;
+  }
+}
