@@ -99,7 +99,7 @@ module.exports = function (ngApp, events) {
                 extraKeys[`${metaKey}-7`] = function(cm) {wrapSelection('\n```\n', '\n```');};
                 extraKeys[`${metaKey}-8`] = function(cm) {wrapSelection('`', '`');};
                 extraKeys[`Shift-${metaKey}-E`] = function(cm) {wrapSelection('`', '`');};
-                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</div>');};
+                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</p>');};
                 cm.setOption('extraKeys', extraKeys);
 
                 // Update data on content change
@@ -193,12 +193,13 @@ module.exports = function (ngApp, events) {
                     }
 
                     cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-                    cm.setCursor({line: cursor.line, ch: cursor.ch + (newLineContent.length - lineLen)});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + start.length});
                 }
 
                 function wrapSelection(start, end) {
                     let selection = cm.getSelection();
                     if (selection === '') return wrapLine(start, end);
+
                     let newSelection = selection;
                     let frontDiff = 0;
                     let endDiff = 0;
