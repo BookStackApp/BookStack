@@ -148,7 +148,7 @@
 
     </div>
 
-    <div class="container small">
+    <div class="container small nopad">
         @include('comments/comments', ['page' => $page])
     </div>
 @stop

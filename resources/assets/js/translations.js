@@ -44,7 +44,6 @@ class Translator {
 
             // Parse exact matches
             let exactMatches = t.match(exactCountRegex);
-            console.log(exactMatches);
             if (exactMatches !== null && Number(exactMatches[1]) === count) {
                 result = t.replace(exactCountRegex, '').trim();
                 break;

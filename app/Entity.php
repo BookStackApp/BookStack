@@ -69,13 +69,14 @@ class Entity extends Ownable
 
     /**
      * Get the comments for an entity
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @param bool $orderByCreated
+     * @return MorphMany
      */
-    public function comments()
+    public function comments($orderByCreated = true)
     {
-        return $this->morphMany(Comment::class, 'entity')->orderBy('created_at', 'asc');
+        $query = $this->morphMany(Comment::class, 'entity');
+        return $orderByCreated ? $query->orderBy('created_at', 'asc') : $query;
     }
-
 
     /**
      * Get the related search terms.

@@ -251,7 +251,8 @@ return [
     'comment_deleted_success' => 'Comment deleted',
     'comment_created_success' => 'Comment added',
     'comment_updated_success' => 'Comment updated',
-    'comment_delete_confirm' => 'This will remove the contents of the comment. Are you sure you want to delete this comment?',
+    'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
+    'comment_in_reply_to' => 'In reply to :commentId',
     'comment_create' => 'Created'
 
 ];

@@ -157,6 +157,10 @@ div[class^="col-"] img {
   &.small {
     max-width: 840px;
   }
+  &.nopad {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .row {

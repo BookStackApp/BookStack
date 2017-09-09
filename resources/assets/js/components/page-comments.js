@@ -18,11 +18,18 @@ class PageComments {
         this.elem.addEventListener('submit', this.updateComment.bind(this));
 
         this.editingComment = null;
+        this.parentId = null;
     }
 
     handleAction(event) {
         let actionElem = event.target.closest('[action]');
+        if (event.target.matches('a[href^="#"]')) {
+            let id = event.target.href.split('#')[1];
+            console.log(document.querySelector('#' + id));
+            window.scrollAndHighlight(document.querySelector('#' + id));
+        }
         if (actionElem === null) return;
+        event.preventDefault();
 
         let action = actionElem.getAttribute('action');
         if (action === 'edit') this.editComment(actionElem.closest('[comment]'));
@@ -30,7 +37,8 @@ class PageComments {
         if (action === 'delete') this.deleteComment(actionElem.closest('[comment]'));
         if (action === 'addComment') this.showForm();
         if (action === 'hideForm') this.hideForm();
-        if (action === 'reply') this.setReply();
+        if (action === 'reply') this.setReply(actionElem.closest('[comment]'));
+        if (action === 'remove-reply-to') this.removeReplyTo();
     }
 
     closeUpdateForm() {
@@ -54,7 +62,7 @@ class PageComments {
         let reqData = {
             text: text,
             html: md.render(text),
-            // parent_id: this.parent_id TODO - Handle replies
+            parent_id: this.parentId || null,
         };
         // TODO - Loading indicator
         let commentId = this.editingComment.getAttribute('comment');
@@ -63,6 +71,7 @@ class PageComments {
             newComment.innerHTML = resp.data;
             this.editingComment.innerHTML = newComment.children[0].innerHTML;
             window.$events.emit('success', window.trans('entities.comment_updated_success'));
+            window.components.init(this.editingComment);
             this.closeUpdateForm();
             this.editingComment = null;
         });
@@ -71,7 +80,6 @@ class PageComments {
     deleteComment(commentElem) {
         let id = commentElem.getAttribute('comment');
         // TODO - Loading indicator
-        // TODO - Confirm dropdown
         window.$http.delete(window.baseUrl(`/ajax/comment/${id}`)).then(resp => {
             commentElem.parentNode.removeChild(commentElem);
             window.$events.emit('success', window.trans('entities.comment_deleted_success'));
@@ -86,14 +94,15 @@ class PageComments {
         let reqData = {
             text: text,
             html: md.render(text),
-            // parent_id: this.parent_id TODO - Handle replies
+            parent_id: this.parentId || null,
         };
         // TODO - Loading indicator
         window.$http.post(window.baseUrl(`/ajax/page/${this.pageId}/comment`), reqData).then(resp => {
             let newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
-            this.container.appendChild(newComment.children[0]);
-
+            let newElem = newComment.children[0];
+            this.container.appendChild(newElem);
+            window.components.init(newElem);
             window.$events.emit('success', window.trans('entities.comment_created_success'));
             this.resetForm();
             this.updateCount();
@@ -109,13 +118,15 @@ class PageComments {
         this.formInput.value = '';
         this.formContainer.appendChild(this.form);
         this.hideForm();
+        this.removeReplyTo();
     }
 
     showForm() {
         this.formContainer.style.display = 'block';
         this.formContainer.parentNode.style.display = 'block';
         this.elem.querySelector('[comment-add-button]').style.display = 'none';
-        this.formInput.focus(); // TODO - Scroll to input on focus
+        this.formInput.focus();
+        window.scrollToElement(this.formInput);
     }
 
     hideForm() {
@@ -124,9 +135,18 @@ class PageComments {
         this.elem.querySelector('[comment-add-button]').style.display = 'block';
     }
 
-    setReply() {
-
+    setReply(commentElem) {
         this.showForm();
+        this.parentId = Number(commentElem.getAttribute('local-id'));
+        this.elem.querySelector('[comment-form-reply-to]').style.display = 'block';
+        let replyLink = this.elem.querySelector('[comment-form-reply-to] a');
+        replyLink.textContent = `#${this.parentId}`;
+        replyLink.href = `#comment${this.parentId}`;
+    }
+
+    removeReplyTo() {
+        this.parentId = null;
+        this.elem.querySelector('[comment-form-reply-to]').style.display = 'none';
     }
 
 }
