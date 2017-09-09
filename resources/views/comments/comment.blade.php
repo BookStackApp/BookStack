@@ -1,4 +1,4 @@
-<div class="comment-box" comment="{{ $comment->id }}" id="comment{{$comment->local_id}}">
+<div class="comment-box" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id || ''}}" id="comment{{$comment->local_id}}">
     <div class="header">
 
         <div class="float right actions">
@@ -9,26 +9,43 @@
                 <button type="button" class="text-button" action="reply" title="{{ trans('common.reply') }}"><i class="zmdi zmdi-mail-reply-all"></i></button>
             @endif
             @if(userCan('comment-delete', $comment))
-                <button type="button" class="text-button" action="delete" title="{{ trans('common.delete') }}"><i class="zmdi zmdi-delete"></i></button>
+
+                <div dropdown class="dropdown-container">
+                    <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}"><i class="zmdi zmdi-delete"></i></button>
+                    <ul>
+                        <li class="padded"><small class="text-muted">{{trans('entities.comment_delete_confirm')}}</small></li>
+                        <li><a action="delete" class="text-button neg" ><i class="zmdi zmdi-delete"></i>{{ trans('common.delete') }}</a></li>
+                    </ul>
+                </div>
             @endif
         </div>
 
-        <a href="#comment{{$comment->local_id}}" class="text-muted">#{{$comment->local_id}}</a>
-        &nbsp;&nbsp;
-        <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar" alt="{{ $comment->createdBy->name }}">
-        &nbsp;
-        <a href="{{ $comment->createdBy->getProfileUrl() }}">{{ $comment->createdBy->name }}</a>
-        {{--TODO - Account for deleted user--}}
-        <span title="{{ $comment->created_at }}">
+        <div class="meta">
+            <a href="#comment{{$comment->local_id}}" class="text-muted">#{{$comment->local_id}}</a>
+            &nbsp;&nbsp;
+            <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar" alt="{{ $comment->createdBy->name }}">
+            &nbsp;
+            <a href="{{ $comment->createdBy->getProfileUrl() }}">{{ $comment->createdBy->name }}</a>
+            {{--TODO - Account for deleted user--}}
+            <span title="{{ $comment->created_at }}">
             {{ trans('entities.comment_created', ['createDiff' => $comment->created]) }}
         </span>
-        @if($comment->isUpdated())
-            <span title="{{ $comment->updated_at }}">
+            @if($comment->isUpdated())
+                <span title="{{ $comment->updated_at }}">
                 &bull;&nbsp;
-               {{ trans('entities.comment_updated', ['updateDiff' => $comment->updated, 'username' => $comment->updatedBy->name]) }}
+                    {{ trans('entities.comment_updated', ['updateDiff' => $comment->updated, 'username' => $comment->updatedBy->name]) }}
             </span>
-        @endif
+            @endif
+        </div>
+
     </div>
+
+    @if ($comment->parent_id)
+        <div class="reply-row primary-background-light text-muted">
+            {!! trans('entities.comment_in_reply_to', ['commentId' => '<a href="#comment'.$comment->parent_id.'">#'.$comment->parent_id.'</a>']) !!}
+        </div>
+    @endif
+
     <div comment-content class="content">
         {!! $comment->html  !!}
     </div>

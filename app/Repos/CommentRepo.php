@@ -80,7 +80,7 @@ class CommentRepo {
      */
     protected function getNextLocalId(Entity $entity)
     {
-        $comments = $entity->comments()->orderBy('local_id', 'desc')->first();
+        $comments = $entity->comments(false)->orderBy('local_id', 'desc')->first();
         if ($comments === null) return 1;
         return $comments->local_id + 1;
     }

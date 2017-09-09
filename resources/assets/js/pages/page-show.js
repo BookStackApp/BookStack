@@ -81,15 +81,7 @@ let setupPageShow = window.setupPageShow = function (pageId) {
         let idElem = document.getElementById(text);
         $('.page-content [data-highlighted]').attr('data-highlighted', '').css('background-color', '');
         if (idElem !== null) {
-            let $idElem = $(idElem);
-            let color = $('#custom-styles').attr('data-color-light');
-            $idElem.css('background-color', color).attr('data-highlighted', 'true').smoothScrollTo();
-            setTimeout(() => {
-                $idElem.addClass('anim').addClass('selectFade').css('background-color', '');
-                setTimeout(() => {
-                   $idElem.removeClass('selectFade');
-                }, 3000);
-            }, 100);
+            window.scrollAndHighlight(idElem);
         } else {
             $('.page-content').find(':contains("' + text + '")').smoothScrollTo();
         }
@@ -158,9 +150,6 @@ let setupPageShow = window.setupPageShow = function (pageId) {
             unstickTree();
         }
     });
-
-    // in order to call from other places.
-    window.setupPageShow.goToText = goToText;
 };
 
 module.exports = setupPageShow;
