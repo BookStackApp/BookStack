@@ -18,14 +18,10 @@ class DummyContentSeeder extends Seeder
 
         factory(\BookStack\Book::class, 20)->create(['created_by' => $user->id, 'updated_by' => $user->id])
             ->each(function($book) use ($user) {
-                $chapters = factory(\BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])
-                    ->each(function($chapter) use ($user, $book){
-                       $pages = factory(\BookStack\Page::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id])->each(function($page) use ($user) {
-                           $comments = factory(\BookStack\Comment::class, 3)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'page_id' => $page->id]);
-                           $page->comments()->saveMany($comments);
-                       });
-                        $chapter->pages()->saveMany($pages);
-                    });
+                $chapters = factory(\BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])->each(function($chapter) use ($user, $book) {
+                    $pages = factory(\BookStack\Page::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id]);
+                    $chapter->pages()->saveMany($pages);
+                });
                 $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $user->id, 'updated_by' => $user->id]);
                 $book->chapters()->saveMany($chapters);
                 $book->pages()->saveMany($pages);
