@@ -255,6 +255,4 @@ return [
     'comment_updated_success' => 'Comment updated',
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
-    'comment_create' => 'Created'
-
 ];

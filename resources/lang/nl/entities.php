@@ -220,20 +220,6 @@ return [
      */
     'comment' => 'Commentaar',
     'comments' => 'Commentaren',
-    'comment_placeholder' => 'Vul hier uw reacties in, markdown ondersteund ...',
-    'no_comments' => 'No Comments',
-    'x_comments' => ':numComments Opmerkingen',
-    'one_comment' => '1 commentaar',
-    'comments_loading' => 'Loading ...',
+    'comment_placeholder' => 'Vul hier uw reacties in',
     'comment_save' => 'Opslaan opslaan',
-    'comment_reply' => 'Antwoord',
-    'comment_edit' => 'Bewerken',
-    'comment_delete' => 'Verwijderen',
-    'comment_cancel' => 'Annuleren',
-    'comment_created' => 'Opmerking toegevoegd',
-    'comment_updated' => 'Opmerking bijgewerkt',
-    'comment_deleted' => 'Opmerking verwijderd',
-    'comment_updated_text' => 'Bijgewerkt :updateDiff geleden door',
-    'comment_delete_confirm' => 'Hiermee verwijdert u de inhoud van de reactie. Weet u zeker dat u deze reactie wilt verwijderen?',
-    'comment_create' => 'Gemaakt'
 ];
