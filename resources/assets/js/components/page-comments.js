@@ -1,31 +1,31 @@
 const MarkdownIt = require("markdown-it");
-const md = new MarkdownIt({ html: true });
+const md = new MarkdownIt({ html: false });
 
 class PageComments {
 
     constructor(elem) {
         this.elem = elem;
         this.pageId = Number(elem.getAttribute('page-id'));
-
-        this.formContainer = elem.querySelector('[comment-form-container]');
-        this.form = this.formContainer.querySelector('form');
-        this.formInput = this.form.querySelector('textarea');
-        this.container = elem.querySelector('[comment-container]');
-
-        // TODO - Handle elem usage when no permissions
-        this.form.addEventListener('submit', this.saveComment.bind(this));
-        this.elem.addEventListener('click', this.handleAction.bind(this));
-        this.elem.addEventListener('submit', this.updateComment.bind(this));
-
         this.editingComment = null;
         this.parentId = null;
+
+        this.container = elem.querySelector('[comment-container]');
+        this.formContainer = elem.querySelector('[comment-form-container]');
+
+        if (this.formContainer) {
+            this.form = this.formContainer.querySelector('form');
+            this.formInput = this.form.querySelector('textarea');
+            this.form.addEventListener('submit', this.saveComment.bind(this));
+        }
+
+        this.elem.addEventListener('click', this.handleAction.bind(this));
+        this.elem.addEventListener('submit', this.updateComment.bind(this));
     }
 
     handleAction(event) {
         let actionElem = event.target.closest('[action]');
         if (event.target.matches('a[href^="#"]')) {
             let id = event.target.href.split('#')[1];
-            console.log(document.querySelector('#' + id));
             window.scrollAndHighlight(document.querySelector('#' + id));
         }
         if (actionElem === null) return;
@@ -52,6 +52,9 @@ class PageComments {
         if (this.editingComment) this.closeUpdateForm();
         commentElem.querySelector('[comment-content]').style.display = 'none';
         commentElem.querySelector('[comment-edit-container]').style.display = 'block';
+        let textArea = commentElem.querySelector('[comment-edit-container] textarea');
+        let lineCount = textArea.value.split('\n').length;
+        textArea.style.height = (lineCount * 20) + 'px';
         this.editingComment = commentElem;
     }
 
@@ -64,7 +67,7 @@ class PageComments {
             html: md.render(text),
             parent_id: this.parentId || null,
         };
-        // TODO - Loading indicator
+        this.showLoading(form);
         let commentId = this.editingComment.getAttribute('comment');
         window.$http.put(window.baseUrl(`/ajax/comment/${commentId}`), reqData).then(resp => {
             let newComment = document.createElement('div');
@@ -74,12 +77,13 @@ class PageComments {
             window.components.init(this.editingComment);
             this.closeUpdateForm();
             this.editingComment = null;
+            this.hideLoading(form);
         });
     }
 
     deleteComment(commentElem) {
         let id = commentElem.getAttribute('comment');
-        // TODO - Loading indicator
+        this.showLoading(commentElem.querySelector('[comment-content]'));
         window.$http.delete(window.baseUrl(`/ajax/comment/${id}`)).then(resp => {
             commentElem.parentNode.removeChild(commentElem);
             window.$events.emit('success', window.trans('entities.comment_deleted_success'));
@@ -96,7 +100,7 @@ class PageComments {
             html: md.render(text),
             parent_id: this.parentId || null,
         };
-        // TODO - Loading indicator
+        this.showLoading(this.form);
         window.$http.post(window.baseUrl(`/ajax/page/${this.pageId}/comment`), reqData).then(resp => {
             let newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
@@ -119,6 +123,7 @@ class PageComments {
         this.formContainer.appendChild(this.form);
         this.hideForm();
         this.removeReplyTo();
+        this.hideLoading(this.form);
     }
 
     showForm() {
@@ -149,9 +154,22 @@ class PageComments {
         this.elem.querySelector('[comment-form-reply-to]').style.display = 'none';
     }
 
+    showLoading(formElem) {
+        let groups = formElem.querySelectorAll('.form-group');
+        for (let i = 0, len = groups.length; i < len; i++) {
+            groups[i].style.display = 'none';
+        }
+        formElem.querySelector('.form-group.loading').style.display = 'block';
+    }
+
+    hideLoading(formElem) {
+        let groups = formElem.querySelectorAll('.form-group');
+        for (let i = 0, len = groups.length; i < len; i++) {
+            groups[i].style.display = 'block';
+        }
+        formElem.querySelector('.form-group.loading').style.display = 'none';
+    }
+
 }
-
-// TODO - Go to comment if url param set
-
 
 module.exports = PageComments;
