@@ -627,7 +627,7 @@ class RolesTest extends BrowserKitTest
         $page = Page::first();
         $viewerRole = \BookStack\Role::getRole('viewer');
         $viewer = $this->getViewer();
-        $this->actingAs($viewer)->visit($page->getUrl())->assertResponseOk();
+        $this->actingAs($viewer)->visit($page->getUrl())->assertResponseStatus(200);
 
         $this->asAdmin()->put('/settings/roles/' . $viewerRole->id, [
             'display_name' => $viewerRole->display_name,
@@ -667,97 +667,94 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['comment-create-all']);
 
         $this->actingAs($this->user)->addComment($ownPage);
-        $this->assertResponseOk(200)->seeJsonContains(['status' => 'success']);
+        $this->assertResponseStatus(200);
     }
 
 
     public function test_comment_update_own_permission () {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->giveUserPermissions($this->user, ['comment-create-all']);
-        $comment = $this->actingAs($this->user)->addComment($ownPage);
+        $commentId = $this->actingAs($this->user)->addComment($ownPage);
 
         // no comment-update-own
-        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
+        $this->actingAs($this->user)->updateComment($commentId);
         $this->assertResponseStatus(403);
 
         $this->giveUserPermissions($this->user, ['comment-update-own']);
 
         // now has comment-update-own
-        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
-        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+        $this->actingAs($this->user)->updateComment($commentId);
+        $this->assertResponseStatus(200);
     }
 
     public function test_comment_update_all_permission () {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
-        $comment = $this->asAdmin()->addComment($ownPage);
+        $commentId = $this->asAdmin()->addComment($ownPage);
 
         // no comment-update-all
-        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
+        $this->actingAs($this->user)->updateComment($commentId);
         $this->assertResponseStatus(403);
 
         $this->giveUserPermissions($this->user, ['comment-update-all']);
 
         // now has comment-update-all
-        $this->actingAs($this->user)->updateComment($ownPage, $comment['id']);
-        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+        $this->actingAs($this->user)->updateComment($commentId);
+        $this->assertResponseStatus(200);
     }
 
     public function test_comment_delete_own_permission () {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->giveUserPermissions($this->user, ['comment-create-all']);
-        $comment = $this->actingAs($this->user)->addComment($ownPage);
+        $commentId = $this->actingAs($this->user)->addComment($ownPage);
 
         // no comment-delete-own
-        $this->actingAs($this->user)->deleteComment($comment['id']);
+        $this->actingAs($this->user)->deleteComment($commentId);
         $this->assertResponseStatus(403);
 
         $this->giveUserPermissions($this->user, ['comment-delete-own']);
 
         // now has comment-update-own
-        $this->actingAs($this->user)->deleteComment($comment['id']);
-        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+        $this->actingAs($this->user)->deleteComment($commentId);
+        $this->assertResponseStatus(200);
     }
 
     public function test_comment_delete_all_permission () {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
-        $comment = $this->asAdmin()->addComment($ownPage);
+        $commentId = $this->asAdmin()->addComment($ownPage);
 
         // no comment-delete-all
-        $this->actingAs($this->user)->deleteComment($comment['id']);
+        $this->actingAs($this->user)->deleteComment($commentId);
         $this->assertResponseStatus(403);
 
         $this->giveUserPermissions($this->user, ['comment-delete-all']);
 
         // now has comment-delete-all
-        $this->actingAs($this->user)->deleteComment($comment['id']);
-        $this->assertResponseOk()->seeJsonContains(['status' => 'success']);
+        $this->actingAs($this->user)->deleteComment($commentId);
+        $this->assertResponseStatus(200);
     }
 
     private function addComment($page) {
         $comment = factory(\BookStack\Comment::class)->make();
-        $url = "/ajax/page/$page->id/comment/";
+        $url = "/ajax/page/$page->id/comment";
         $request = [
             'text' => $comment->text,
             'html' => $comment->html
         ];
 
-        $this->json('POST', $url, $request);
-        $resp = $this->decodeResponseJson();
-        if (isset($resp['comment'])) {
-            return $resp['comment'];
-        }
-        return null;
+        $this->postJson($url, $request);
+        $comment = $page->comments()->first();
+        return $comment === null ? null : $comment->id;
     }
 
-    private function updateComment($page, $commentId) {
+    private function updateComment($commentId) {
         $comment = factory(\BookStack\Comment::class)->make();
-        $url = "/ajax/page/$page->id/comment/$commentId";
+        $url = "/ajax/comment/$commentId";
         $request = [
             'text' => $comment->text,
             'html' => $comment->html
         ];
 
-        return $this->json('PUT', $url, $request);
+        return $this->putJson($url, $request);
     }
 
     private function deleteComment($commentId) {

@@ -235,25 +235,10 @@ return [
     'profile_not_created_books' => ':userName hat noch keine Bücher erstellt.',
 
     /**
-     * Comnents
+     * Comments
      */
     'comment' => 'Kommentar',
     'comments' => 'Kommentare',
     'comment_placeholder' => 'Geben Sie hier Ihre Kommentare ein (Markdown unterstützt)',
-    'no_comments' => 'Keine Kommentare',
-    'x_comments' => ':numComments Kommentare',
-    'one_comment' => '1 Kommentar',
-    'comments_loading' => 'Laden...',
     'comment_save' => 'Kommentar speichern',
-    'comment_reply' => 'Antworten',
-    'comment_edit' => 'Bearbeiten',
-    'comment_delete' => 'Löschen',
-    'comment_cancel' => 'Abbrechen',
-    'comment_created' => 'Kommentar hinzugefügt',
-    'comment_updated' => 'Kommentar aktualisiert',
-    'comment_deleted' => 'Kommentar gelöscht',
-    'comment_updated_text' => 'Aktualisiert vor :updateDiff von',
-    'comment_delete_confirm' => 'Der Inhalt des Kommentars wird entfernt. Bist du sicher, dass du diesen Kommentar löschen möchtest?',
-    'comment_create' => 'Erstellt'
-
 ];

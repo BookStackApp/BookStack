@@ -73,11 +73,11 @@ $factory->define(BookStack\Image::class, function ($faker) {
 });
 
 $factory->define(BookStack\Comment::class, function($faker) {
-    $text = $faker->paragraph(3);
+    $text = $faker->paragraph(1);
     $html = '<p>' . $text. '</p>';
     return [
         'html' => $html,
         'text' => $text,
-        'active' => 1
+        'parent_id' => null
     ];
 });

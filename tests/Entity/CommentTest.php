@@ -3,109 +3,72 @@
 use BookStack\Page;
 use BookStack\Comment;
 
-class CommentTest extends BrowserKitTest
+class CommentTest extends TestCase
 {
 
     public function test_add_comment()
     {
         $this->asAdmin();
-        $page = $this->getPage();
+        $page = Page::first();
 
-        $this->addComment($page);
-    }
+        $comment = factory(Comment::class)->make(['parent_id' => 2]);
+        $resp = $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
 
-    public function test_comment_reply()
-    {
-        $this->asAdmin();
-        $page = $this->getPage();
+        $resp->assertStatus(200);
+        $resp->assertSee($comment->text);
 
-        // add a normal comment
-        $createdComment = $this->addComment($page);
+        $pageResp = $this->get($page->getUrl());
+        $pageResp->assertSee($comment->text);
 
-        // reply to the added comment
-        $this->addComment($page, $createdComment['id']);
+        $this->assertDatabaseHas('comments', [
+            'local_id' => 1,
+            'entity_id' => $page->id,
+            'entity_type' => 'BookStack\\Page',
+            'text' => $comment->text,
+            'parent_id' => 2
+        ]);
     }
 
     public function test_comment_edit()
     {
         $this->asAdmin();
-        $page = $this->getPage();
+        $page = Page::first();
 
-        $createdComment = $this->addComment($page);
-        $comment = [
-            'id' => $createdComment['id'],
-            'page_id' => $createdComment['page_id']
-        ];
-        $this->updateComment($comment);
+        $comment = factory(Comment::class)->make();
+        $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+
+        $comment = $page->comments()->first();
+        $newText = 'updated text content';
+        $resp = $this->putJson("/ajax/comment/$comment->id", [
+            'text' => $newText,
+            'html' => '<p>'.$newText.'</p>',
+        ]);
+
+        $resp->assertStatus(200);
+        $resp->assertSee($newText);
+        $resp->assertDontSee($comment->text);
+
+        $this->assertDatabaseHas('comments', [
+            'text' => $newText,
+            'entity_id' => $page->id
+        ]);
     }
 
     public function test_comment_delete()
     {
         $this->asAdmin();
-        $page = $this->getPage();
-
-        $createdComment = $this->addComment($page);
-
-        $this->deleteComment($createdComment['id']);
-    }
-
-    private function getPage() {
         $page = Page::first();
-        return $page;
-    }
 
-
-    private function addComment($page, $parentCommentId = null) {
         $comment = factory(Comment::class)->make();
-        $url = "/ajax/page/$page->id/comment/";
-        $request = [
-            'text' => $comment->text,
-            'html' => $comment->html
-        ];
-        if (!empty($parentCommentId)) {
-            $request['parent_id'] = $parentCommentId;
-        }
-        $this->call('POST', $url, $request);
+        $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
 
-        $createdComment = $this->checkResponse();
-        return $createdComment;
-    }
+        $comment = $page->comments()->first();
 
-    private function updateComment($comment) {
-        $tmpComment = factory(Comment::class)->make();
-        $url = '/ajax/page/' . $comment['page_id'] . '/comment/ ' . $comment['id'];
-         $request = [
-            'text' => $tmpComment->text,
-            'html' => $tmpComment->html
-        ];
+        $resp = $this->delete("/ajax/comment/$comment->id");
+        $resp->assertStatus(200);
 
-        $this->call('PUT', $url, $request);
-
-        $updatedComment = $this->checkResponse();
-        return $updatedComment;
-    }
-
-    private function deleteComment($commentId) {
-        //  Route::delete('/ajax/comment/{id}', 'CommentController@destroy');
-        $url = '/ajax/comment/' . $commentId;
-        $this->call('DELETE', $url);
-
-        $deletedComment = $this->checkResponse();
-        return $deletedComment;
-    }
-
-    private function checkResponse() {
-        $expectedResp = [
-            'status' => 'success'
-        ];
-
-        $this->assertResponseOk();
-        $this->seeJsonContains($expectedResp);
-
-        $resp = $this->decodeResponseJson();
-        $createdComment = $resp['comment'];
-        $this->assertArrayHasKey('id', $createdComment);
-
-        return $createdComment;
+        $this->assertDatabaseMissing('comments', [
+            'id' => $comment->id
+        ]);
     }
 }
