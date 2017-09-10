@@ -242,21 +242,10 @@ return [
      */
     'comment' => 'Commento',
     'comments' => 'Commenti',
-    'comment_placeholder' => 'Enter your comments here, markdown supported...',
-    'no_comments' => 'Nessun Commento',
-    'x_comments' => ':numComments Commenti',
-    'one_comment' => '1 Commento',
-    'comments_loading' => 'Caricamento...',
+    'comment_count' => '1 Commento|:count Commenti',
     'comment_save' => 'Salva Commento',
-    'comment_reply' => 'Rispondi',
-    'comment_edit' => 'Modifica',
-    'comment_delete' => 'Elimina',
-    'comment_cancel' => 'Annulla',
-    'comment_created' => 'Commento aggiunto',
-    'comment_updated' => 'Commento aggiornato',
-    'comment_deleted' => 'Commento eliminato',
-    'comment_updated_text' => 'Aggiornato :updateDiff da',
-    'comment_delete_confirm' => 'Questo rimuoverà il contenuto del commento. Sei sicuro di voler eliminare questo commento?',
-    'comment_create' => 'Creato'
-
+    'comment_deleted_success' => 'Commento eliminato',
+    'comment_created_success' => 'Commento aggiunto',
+    'comment_updated_success' => 'Commento aggiornato',
+    'comment_delete_confirm' => 'Questo rimuoverà il contenuto del commento?',
 ];
