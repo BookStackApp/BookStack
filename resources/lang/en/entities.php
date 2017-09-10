@@ -19,7 +19,6 @@ return [
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
-    'x_pages' => ':count Pages',
     'entity_select' => 'Entity Select',
     'images' => 'Images',
     'my_recent_drafts' => 'My Recent Drafts',
@@ -70,6 +69,7 @@ return [
      */
     'book' => 'Book',
     'books' => 'Books',
+    'x_books' => ':count Book|:count Books',
     'books_empty' => 'No books have been created',
     'books_popular' => 'Popular Books',
     'books_recent' => 'Recent Books',
@@ -105,6 +105,7 @@ return [
      */
     'chapter' => 'Chapter',
     'chapters' => 'Chapters',
+    'x_chapters' => ':count Chapter|:count Chapters',
     'chapters_popular' => 'Popular Chapters',
     'chapters_new' => 'New Chapter',
     'chapters_create' => 'Create New Chapter',
@@ -129,6 +130,7 @@ return [
      */
     'page' => 'Page',
     'pages' => 'Pages',
+    'x_pages' => ':count Page|:count Pages',
     'pages_popular' => 'Popular Pages',
     'pages_new' => 'New Page',
     'pages_attachments' => 'Attachments',
