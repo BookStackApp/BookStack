@@ -93,7 +93,8 @@ Controllers(ngApp, window.$events);
  */
 window.scrollToElement = function(element) {
     if (!element) return;
-    let top = element.getBoundingClientRect().top + document.body.scrollTop;
+    let offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    let top = element.getBoundingClientRect().top + offset;
     $('html, body').animate({
         scrollTop: top - 60 // Adjust to change final scroll position top margin
     }, 300);
