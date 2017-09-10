@@ -549,10 +549,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .content {
     padding: $-s;
     font-size: 0.666em;
-  }
-  .content p {
-    font-size: $fs-m;
-    margin: .5em 0;
+    p, ul {
+      font-size: $fs-m;
+      margin: .5em 0;
+    }
   }
   .reply-row {
     padding: $-xs $-s;
