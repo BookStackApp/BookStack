@@ -57,7 +57,7 @@ const modeMap = {
  * Highlight pre elements on a page
  */
 function highlight() {
-    let codeBlocks = document.querySelectorAll('.page-content pre');
+    let codeBlocks = document.querySelectorAll('.page-content pre, .comment-box .content pre');
     for (let i = 0; i < codeBlocks.length; i++) {
         highlightElem(codeBlocks[i]);
     }
@@ -75,7 +75,7 @@ function highlightElem(elem) {
         mode = getMode(langName);
     }
     elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
-    let content = elem.textContent;
+    let content = elem.textContent.trim();
 
     CodeMirror(function(elt) {
         elem.parentNode.replaceChild(elt, elem);
