@@ -214,4 +214,12 @@ return [
     'profile_not_created_pages' => ':userName heeft geen pagina\'s gemaakt',
     'profile_not_created_chapters' => ':userName heeft geen hoofdstukken gemaakt',
     'profile_not_created_books' => ':userName heeft geen boeken gemaakt',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Commentaar',
+    'comments' => 'Commentaren',
+    'comment_placeholder' => 'Vul hier uw reacties in',
+    'comment_save' => 'Opslaan opslaan',
 ];

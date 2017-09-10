@@ -2,15 +2,13 @@
 .input-base {
   background-color: #FFF;
   border-radius: 3px;
-  border: 1px solid #CCC;
+  border: 1px solid #D4D4D4;
   display: inline-block;
   font-size: $fs-s;
-  font-family: $text;
-  padding: $-xs;
-  color: #222;
+  padding: $-xs*1.5;
+  color: #666;
   width: 250px;
   max-width: 100%;
-  //-webkit-appearance:none;
   &.neg, &.invalid {
     border: 1px solid $negative;
   }
@@ -25,6 +23,11 @@
   }
 }
 
+.fake-input {
+  @extend .input-base;
+  overflow: auto;
+}
+
 #html-editor {
   display: none;
 }
@@ -33,7 +36,6 @@
   position: relative;
   z-index: 5;
   #markdown-editor-input {
-    font-family: 'Roboto Mono', monospace;
     font-style: normal;
     font-weight: 400;
     padding: $-xs $-m;
@@ -69,7 +71,6 @@
 .editor-toolbar {
   width: 100%;
   padding: $-xs $-m;
-  font-family: 'Roboto Mono', monospace;
   font-size: 11px;
   line-height: 1.6;
   border-bottom: 1px solid #DDD;
@@ -87,8 +88,9 @@ label {
   display: block;
   line-height: 1.4em;
   font-size: 0.94em;
-  font-weight: 500;
-  color: #666;
+  font-weight: 400;
+  color: #999;
+  text-transform: uppercase;
   padding-bottom: 2px;
   margin-bottom: 0.2em;
   &.inline {
@@ -189,28 +191,15 @@ input:checked + .toggle-switch {
 }
 
 .inline-input-style {
-  border: 2px dotted #BBB;
   display: block;
   width: 100%;
-  padding: $-xs $-s;
-}
-
-.title-input .input {
-  width: 100%;
-}
-
-.title-input label, .description-input label{
-  margin-top: $-m;
-  color: #666;
+  padding: $-s;
 }
 
 .title-input input[type="text"] {
-  @extend h1;
   @extend .inline-input-style;
   margin-top: 0;
-  padding-right: 0;
-  width: 100%;
-  color: #444;
+  font-size: 2em;
 }
 
 .title-input.page-title {
@@ -251,21 +240,20 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     border: none;
     color: $primary;
     padding: 0;
-    margin: 0;
     cursor: pointer;
-    margin-left: $-s;
-  }
-  button[type="submit"] {
-    margin-left: -$-l;
+    position: absolute;
+    left: 8px;
+    top: 9.5px;
   }
   input {
-    padding-right: $-l;
+    display: block;
+    padding-left: $-l;
     width: 300px;
     max-width: 100%;
   }
 }
 
-input.outline {
+.outline > input {
   border: 0;
   border-bottom: 2px solid #DDD;
   border-radius: 0;

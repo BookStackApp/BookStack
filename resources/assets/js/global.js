@@ -1,4 +1,6 @@
 "use strict";
+require("babel-polyfill");
+require('./dom-polyfills');
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -8,44 +10,15 @@ window.baseUrl = function(path) {
     return basePath + '/' + path;
 };
 
-const Vue = require("vue");
-const axios = require("axios");
-
-let axiosInstance = axios.create({
-    headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
-        'baseURL': window.baseUrl('')
-    }
-});
-window.$http = axiosInstance;
-
-Vue.prototype.$http = axiosInstance;
-
-require("./vues/vues");
-
-
-// AngularJS - Create application and load components
-const angular = require("angular");
-require("angular-resource");
-require("angular-animate");
-require("angular-sanitize");
-require("angular-ui-sortable");
-
-let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
-
-// Translation setup
-// Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
-const Translations = require("./translations");
-let translator = new Translations(window.translations);
-window.trans = translator.get.bind(translator);
-
 // Global Event System
 class EventManager {
     constructor() {
         this.listeners = {};
+        this.stack = [];
     }
 
     emit(eventName, eventData) {
+        this.stack.push({name: eventName, data: eventData});
         if (typeof this.listeners[eventName] === 'undefined') return this;
         let eventsToStart = this.listeners[eventName];
         for (let i = 0; i < eventsToStart.length; i++) {
@@ -62,25 +35,95 @@ class EventManager {
     }
 }
 
-window.Events = new EventManager();
-Vue.prototype.$events = window.Events;
+window.$events = new EventManager();
+
+const Vue = require("vue");
+const axios = require("axios");
+
+let axiosInstance = axios.create({
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
+        'baseURL': window.baseUrl('')
+    }
+});
+axiosInstance.interceptors.request.use(resp => {
+    return resp;
+}, err => {
+    if (typeof err.response === "undefined" || typeof err.response.data === "undefined") return Promise.reject(err);
+    if (typeof err.response.data.error !== "undefined") window.$events.emit('error', err.response.data.error);
+    if (typeof err.response.data.message !== "undefined") window.$events.emit('error', err.response.data.message);
+});
+window.$http = axiosInstance;
+
+Vue.prototype.$http = axiosInstance;
+Vue.prototype.$events = window.$events;
+
+
+// AngularJS - Create application and load components
+const angular = require("angular");
+require("angular-resource");
+require("angular-animate");
+require("angular-sanitize");
+require("angular-ui-sortable");
+
+let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
+
+// Translation setup
+// Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
+const Translations = require("./translations");
+let translator = new Translations(window.translations);
+window.trans = translator.get.bind(translator);
+window.trans_choice = translator.getPlural.bind(translator);
+
+
+require("./vues/vues");
+require("./components");
 
 // Load in angular specific items
-const Services = require('./services');
 const Directives = require('./directives');
 const Controllers = require('./controllers');
-Services(ngApp, window.Events);
-Directives(ngApp, window.Events);
-Controllers(ngApp, window.Events);
+Directives(ngApp, window.$events);
+Controllers(ngApp, window.$events);
 
 //Global jQuery Config & Extensions
+
+/**
+ * Scroll the view to a specific element.
+ * @param {HTMLElement} element
+ */
+window.scrollToElement = function(element) {
+    if (!element) return;
+    let offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    let top = element.getBoundingClientRect().top + offset;
+    $('html, body').animate({
+        scrollTop: top - 60 // Adjust to change final scroll position top margin
+    }, 300);
+};
+
+/**
+ * Scroll and highlight an element.
+ * @param {HTMLElement} element
+ */
+window.scrollAndHighlight = function(element) {
+    if (!element) return;
+    window.scrollToElement(element);
+    let color = document.getElementById('custom-styles').getAttribute('data-color-light');
+    let initColor = window.getComputedStyle(element).getPropertyValue('background-color');
+    element.style.backgroundColor = color;
+    setTimeout(() => {
+        element.classList.add('selectFade');
+        element.style.backgroundColor = initColor;
+    }, 10);
+    setTimeout(() => {
+        element.classList.remove('selectFade');
+        element.style.backgroundColor = '';
+    }, 3000);
+};
 
 // Smooth scrolling
 jQuery.fn.smoothScrollTo = function () {
     if (this.length === 0) return;
-    $('html, body').animate({
-        scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
-    }, 300); // Adjust to change animations speed (ms)
+    window.scrollToElement(this[0]);
     return this;
 };
 
@@ -91,83 +134,11 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
     };
 });
 
-// Global jQuery Elements
-let notifications = $('.notification');
-let successNotification = notifications.filter('.pos');
-let errorNotification = notifications.filter('.neg');
-let warningNotification = notifications.filter('.warning');
-// Notification Events
-window.Events.listen('success', function (text) {
-    successNotification.hide();
-    successNotification.find('span').text(text);
-    setTimeout(() => {
-        successNotification.show();
-    }, 1);
-});
-window.Events.listen('warning', function (text) {
-    warningNotification.find('span').text(text);
-    warningNotification.show();
-});
-window.Events.listen('error', function (text) {
-    errorNotification.find('span').text(text);
-    errorNotification.show();
-});
-
-// Notification hiding
-notifications.click(function () {
-    $(this).fadeOut(100);
-});
-
-// Chapter page list toggles
-$('.chapter-toggle').click(function (e) {
-    e.preventDefault();
-    $(this).toggleClass('open');
-    $(this).closest('.chapter').find('.inset-list').slideToggle(180);
-});
-
-// Back to top button
-$('#back-to-top').click(function() {
-     $('#header').smoothScrollTo();
-});
-let scrollTopShowing = false;
-let scrollTop = document.getElementById('back-to-top');
-let scrollTopBreakpoint = 1200;
-window.addEventListener('scroll', function() {
-    let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
-    if (!scrollTopShowing && scrollTopPos > scrollTopBreakpoint) {
-        scrollTop.style.display = 'block';
-        scrollTopShowing = true;
-        setTimeout(() => {
-            scrollTop.style.opacity = 0.4;
-        }, 1);
-    } else if (scrollTopShowing && scrollTopPos < scrollTopBreakpoint) {
-        scrollTop.style.opacity = 0;
-        scrollTopShowing = false;
-        setTimeout(() => {
-            scrollTop.style.display = 'none';
-        }, 500);
-    }
-});
-
-// Common jQuery actions
-$('[data-action="expand-entity-list-details"]').click(function() {
-    $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
-});
-
-// Popup close
-$('.popup-close').click(function() {
-    $(this).closest('.overlay').fadeOut(240);
-});
-$('.overlay').click(function(event) {
-    if (!$(event.target).hasClass('overlay')) return;
-    $(this).fadeOut(240);
-});
-
 // Detect IE for css
 if(navigator.userAgent.indexOf('MSIE')!==-1
     || navigator.appVersion.indexOf('Trident/') > 0
     || navigator.userAgent.indexOf('Safari') !== -1){
-    $('body').addClass('flexbox-support');
+    document.body.classList.add('flexbox-support');
 }
 
 // Page specific items

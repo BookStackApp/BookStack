@@ -213,4 +213,12 @@ return [
     'profile_not_created_pages' => ':userName n\'a pas créé de page',
     'profile_not_created_chapters' => ':userName n\'a pas créé de chapitre',
     'profile_not_created_books' => ':userName n\'a pas créé de livre',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Commentaire',
+    'comments' => 'Commentaires',
+    'comment_placeholder' => 'Entrez vos commentaires ici',
+    'comment_save' => 'Enregistrer le commentaire',
 ];

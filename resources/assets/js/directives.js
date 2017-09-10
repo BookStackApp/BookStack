@@ -1,157 +1,9 @@
 "use strict";
-const DropZone = require("dropzone");
 const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
 const code = require('./code');
 
 module.exports = function (ngApp, events) {
-
-    /**
-     * Common tab controls using simple jQuery functions.
-     */
-    ngApp.directive('tabContainer', function() {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                const $content = element.find('[tab-content]');
-                const $buttons = element.find('[tab-button]');
-
-                if (attrs.tabContainer) {
-                    let initial = attrs.tabContainer;
-                    $buttons.filter(`[tab-button="${initial}"]`).addClass('selected');
-                    $content.hide().filter(`[tab-content="${initial}"]`).show();
-                } else {
-                    $content.hide().first().show();
-                    $buttons.first().addClass('selected');
-                }
-
-                $buttons.click(function() {
-                    let clickedTab = $(this);
-                    $buttons.removeClass('selected');
-                    $content.hide();
-                    let name = clickedTab.addClass('selected').attr('tab-button');
-                    $content.filter(`[tab-content="${name}"]`).show();
-                });
-            }
-        };
-    });
-
-    /**
-     * Sub form component to allow inner-form sections to act like their own forms.
-     */
-    ngApp.directive('subForm', function() {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                element.on('keypress', e => {
-                    if (e.keyCode === 13) {
-                        submitEvent(e);
-                    }
-                });
-
-                element.find('button[type="submit"]').click(submitEvent);
-
-                function submitEvent(e) {
-                    e.preventDefault();
-                    if (attrs.subForm) scope.$eval(attrs.subForm);
-                }
-            }
-        };
-    });
-
-    /**
-     * DropZone
-     * Used for uploading images
-     */
-    ngApp.directive('dropZone', [function () {
-        return {
-            restrict: 'E',
-            template: `
-            <div class="dropzone-container">
-                <div class="dz-message">{{message}}</div>
-            </div>
-            `,
-            scope: {
-                uploadUrl: '@',
-                eventSuccess: '=',
-                eventError: '=',
-                uploadedTo: '@',
-            },
-            link: function (scope, element, attrs) {
-                scope.message = attrs.message;
-                if (attrs.placeholder) element[0].querySelector('.dz-message').textContent = attrs.placeholder;
-                let dropZone = new DropZone(element[0].querySelector('.dropzone-container'), {
-                    url: scope.uploadUrl,
-                    init: function () {
-                        let dz = this;
-                        dz.on('sending', function (file, xhr, data) {
-                            let token = window.document.querySelector('meta[name=token]').getAttribute('content');
-                            data.append('_token', token);
-                            let uploadedTo = typeof scope.uploadedTo === 'undefined' ? 0 : scope.uploadedTo;
-                            data.append('uploaded_to', uploadedTo);
-                        });
-                        if (typeof scope.eventSuccess !== 'undefined') dz.on('success', scope.eventSuccess);
-                        dz.on('success', function (file, data) {
-                            $(file.previewElement).fadeOut(400, function () {
-                                dz.removeFile(file);
-                            });
-                        });
-                        if (typeof scope.eventError !== 'undefined') dz.on('error', scope.eventError);
-                        dz.on('error', function (file, errorMessage, xhr) {
-                            console.log(errorMessage);
-                            console.log(xhr);
-                            function setMessage(message) {
-                                $(file.previewElement).find('[data-dz-errormessage]').text(message);
-                            }
-
-                            if (xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
-                            if (errorMessage.file) setMessage(errorMessage.file[0]);
-
-                        });
-                    }
-                });
-            }
-        };
-    }]);
-
-    /**
-     * Dropdown
-     * Provides some simple logic to create small dropdown menus
-     */
-    ngApp.directive('dropdown', [function () {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-                const menu = element.find('ul');
-
-                function hide() {
-                    menu.hide();
-                    menu.removeClass('anim menuIn');
-                }
-
-                function show() {
-                    menu.show().addClass('anim menuIn');
-                    element.mouseleave(hide);
-
-                    // Focus on input if exist in dropdown and hide on enter press
-                    let inputs = menu.find('input');
-                    if (inputs.length > 0) inputs.first().focus();
-                }
-
-                // Hide menu on option click
-                element.on('click', '> ul a', hide);
-                // Show dropdown on toggle click.
-                element.find('[dropdown-toggle]').on('click', show);
-                // Hide menu on enter press in inputs
-                element.on('keypress', 'input', event => {
-                    if (event.keyCode !== 13) return true;
-                    event.preventDefault();
-                    hide();
-                    return false;
-                });
-            }
-        };
-    }]);
 
     /**
      * TinyMCE
@@ -168,7 +20,7 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 function tinyMceSetup(editor) {
-                    editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
+                    editor.on('ExecCommand change input NodeChange ObjectResized', (e) => {
                         let content = editor.getContent();
                         $timeout(() => {
                             scope.mceModel = content;
@@ -177,7 +29,10 @@ module.exports = function (ngApp, events) {
                     });
 
                     editor.on('keydown', (event) => {
-                        scope.$emit('editor-keydown', event);
+                        if (event.keyCode === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                            event.preventDefault();
+                            scope.$emit('save-draft', event);
+                        }
                     });
 
                     editor.on('init', (e) => {
@@ -247,7 +102,7 @@ module.exports = function (ngApp, events) {
                 extraKeys[`${metaKey}-7`] = function(cm) {wrapSelection('\n```\n', '\n```');};
                 extraKeys[`${metaKey}-8`] = function(cm) {wrapSelection('`', '`');};
                 extraKeys[`Shift-${metaKey}-E`] = function(cm) {wrapSelection('`', '`');};
-                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</div>');};
+                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</p>');};
                 cm.setOption('extraKeys', extraKeys);
 
                 // Update data on content change
@@ -341,12 +196,13 @@ module.exports = function (ngApp, events) {
                     }
 
                     cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-                    cm.setCursor({line: cursor.line, ch: cursor.ch + (newLineContent.length - lineLen)});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + start.length});
                 }
 
                 function wrapSelection(start, end) {
                     let selection = cm.getSelection();
                     if (selection === '') return wrapLine(start, end);
+
                     let newSelection = selection;
                     let frontDiff = 0;
                     let endDiff = 0;
@@ -400,7 +256,7 @@ module.exports = function (ngApp, events) {
                 // Show the popup link selector and insert a link when finished
                 function showLinkSelector() {
                     let cursorPos = cm.getCursor('from');
-                    window.showEntityLinkSelector(entity => {
+                    window.EntitySelectorPopup.show(entity => {
                         let selectedText = cm.getSelection() || entity.name;
                         let newText = `[${selectedText}](${entity.link})`;
                         cm.focus();
@@ -422,7 +278,7 @@ module.exports = function (ngApp, events) {
                 // Show the image manager and handle image insertion
                 function showImageManager() {
                     let cursorPos = cm.getCursor('from');
-                    window.ImageManager.showExternal(image => {
+                    window.ImageManager.show(image => {
                         let selectedText = cm.getSelection();
                         let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
                         cm.focus();
@@ -533,334 +389,5 @@ module.exports = function (ngApp, events) {
                 });
             }
         }
-    }]);
-
-    /**
-     * Tag Autosuggestions
-     * Listens to child inputs and provides autosuggestions depending on field type
-     * and input. Suggestions provided by server.
-     */
-    ngApp.directive('tagAutosuggestions', ['$http', function ($http) {
-        return {
-            restrict: 'A',
-            link: function (scope, elem, attrs) {
-
-                // Local storage for quick caching.
-                const localCache = {};
-
-                // Create suggestion element
-                const suggestionBox = document.createElement('ul');
-                suggestionBox.className = 'suggestion-box';
-                suggestionBox.style.position = 'absolute';
-                suggestionBox.style.display = 'none';
-                const $suggestionBox = $(suggestionBox);
-
-                // General state tracking
-                let isShowing = false;
-                let currentInput = false;
-                let active = 0;
-
-                // Listen to input events on autosuggest fields
-                elem.on('input focus', '[autosuggest]', function (event) {
-                    let $input = $(this);
-                    let val = $input.val();
-                    let url = $input.attr('autosuggest');
-                    let type = $input.attr('autosuggest-type');
-
-                    // Add name param to request if for a value
-                    if (type.toLowerCase() === 'value') {
-                        let $nameInput = $input.closest('tr').find('[autosuggest-type="name"]').first();
-                        let nameVal = $nameInput.val();
-                        if (nameVal !== '') {
-                            url += '?name=' + encodeURIComponent(nameVal);
-                        }
-                    }
-
-                    let suggestionPromise = getSuggestions(val.slice(0, 3), url);
-                    suggestionPromise.then(suggestions => {
-                        if (val.length === 0) {
-                            displaySuggestions($input, suggestions.slice(0, 6));
-                        } else  {
-                            suggestions = suggestions.filter(item => {
-                                return item.toLowerCase().indexOf(val.toLowerCase()) !== -1;
-                            }).slice(0, 4);
-                            displaySuggestions($input, suggestions);
-                        }
-                    });
-                });
-
-                // Hide autosuggestions when input loses focus.
-                // Slight delay to allow clicks.
-                let lastFocusTime = 0;
-                elem.on('blur', '[autosuggest]', function (event) {
-                    let startTime = Date.now();
-                    setTimeout(() => {
-                        if (lastFocusTime < startTime) {
-                            $suggestionBox.hide();
-                            isShowing = false;
-                        }
-                    }, 200)
-                });
-                elem.on('focus', '[autosuggest]', function (event) {
-                    lastFocusTime = Date.now();
-                });
-
-                elem.on('keydown', '[autosuggest]', function (event) {
-                    if (!isShowing) return;
-
-                    let suggestionElems = suggestionBox.childNodes;
-                    let suggestCount = suggestionElems.length;
-
-                    // Down arrow
-                    if (event.keyCode === 40) {
-                        let newActive = (active === suggestCount - 1) ? 0 : active + 1;
-                        changeActiveTo(newActive, suggestionElems);
-                    }
-                    // Up arrow
-                    else if (event.keyCode === 38) {
-                        let newActive = (active === 0) ? suggestCount - 1 : active - 1;
-                        changeActiveTo(newActive, suggestionElems);
-                    }
-                    // Enter or tab key
-                    else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
-                        currentInput[0].value = suggestionElems[active].textContent;
-                        currentInput.focus();
-                        $suggestionBox.hide();
-                        isShowing = false;
-                        if (event.keyCode === 13) {
-                            event.preventDefault();
-                            return false;
-                        }
-                    }
-                });
-
-                // Change the active suggestion to the given index
-                function changeActiveTo(index, suggestionElems) {
-                    suggestionElems[active].className = '';
-                    active = index;
-                    suggestionElems[active].className = 'active';
-                }
-
-                // Display suggestions on a field
-                let prevSuggestions = [];
-
-                function displaySuggestions($input, suggestions) {
-
-                    // Hide if no suggestions
-                    if (suggestions.length === 0) {
-                        $suggestionBox.hide();
-                        isShowing = false;
-                        prevSuggestions = suggestions;
-                        return;
-                    }
-
-                    // Otherwise show and attach to input
-                    if (!isShowing) {
-                        $suggestionBox.show();
-                        isShowing = true;
-                    }
-                    if ($input !== currentInput) {
-                        $suggestionBox.detach();
-                        $input.after($suggestionBox);
-                        currentInput = $input;
-                    }
-
-                    // Return if no change
-                    if (prevSuggestions.join() === suggestions.join()) {
-                        prevSuggestions = suggestions;
-                        return;
-                    }
-
-                    // Build suggestions
-                    $suggestionBox[0].innerHTML = '';
-                    for (let i = 0; i < suggestions.length; i++) {
-                        let suggestion = document.createElement('li');
-                        suggestion.textContent = suggestions[i];
-                        suggestion.onclick = suggestionClick;
-                        if (i === 0) {
-                            suggestion.className = 'active';
-                            active = 0;
-                        }
-                        $suggestionBox[0].appendChild(suggestion);
-                    }
-
-                    prevSuggestions = suggestions;
-                }
-
-                // Suggestion click event
-                function suggestionClick(event) {
-                    currentInput[0].value = this.textContent;
-                    currentInput.focus();
-                    $suggestionBox.hide();
-                    isShowing = false;
-                }
-
-                // Get suggestions & cache
-                function getSuggestions(input, url) {
-                    let hasQuery = url.indexOf('?') !== -1;
-                    let searchUrl = url + (hasQuery ? '&' : '?') + 'search=' + encodeURIComponent(input);
-
-                    // Get from local cache if exists
-                    if (typeof localCache[searchUrl] !== 'undefined') {
-                        return new Promise((resolve, reject) => {
-                            resolve(localCache[searchUrl]);
-                        });
-                    }
-
-                    return $http.get(searchUrl).then(response => {
-                        localCache[searchUrl] = response.data;
-                        return response.data;
-                    });
-                }
-
-            }
-        }
-    }]);
-
-    ngApp.directive('entityLinkSelector', [function($http) {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attrs) {
-
-                const selectButton = element.find('.entity-link-selector-confirm');
-                let callback = false;
-                let entitySelection = null;
-
-                // Handle entity selection change, Stores the selected entity locally
-                function entitySelectionChange(entity) {
-                    entitySelection = entity;
-                    if (entity === null) {
-                        selectButton.attr('disabled', 'true');
-                    } else {
-                        selectButton.removeAttr('disabled');
-                    }
-                }
-                events.listen('entity-select-change', entitySelectionChange);
-
-                // Handle selection confirm button click
-                selectButton.click(event => {
-                    hide();
-                    if (entitySelection !== null) callback(entitySelection);
-                });
-
-                // Show selector interface
-                function show() {
-                    element.fadeIn(240);
-                }
-
-                // Hide selector interface
-                function hide() {
-                    element.fadeOut(240);
-                }
-
-                // Listen to confirmation of entity selections (doubleclick)
-                events.listen('entity-select-confirm', entity => {
-                    hide();
-                    callback(entity);
-                });
-
-                // Show entity selector, Accessible globally, and store the callback
-                window.showEntityLinkSelector = function(passedCallback) {
-                    show();
-                    callback = passedCallback;
-                };
-
-            }
-        };
-    }]);
-
-
-    ngApp.directive('entitySelector', ['$http', '$sce', function ($http, $sce) {
-        return {
-            restrict: 'A',
-            scope: true,
-            link: function (scope, element, attrs) {
-                scope.loading = true;
-                scope.entityResults = false;
-                scope.search = '';
-
-                // Add input for forms
-                const input = element.find('[entity-selector-input]').first();
-
-                // Detect double click events
-                let lastClick = 0;
-                function isDoubleClick() {
-                    let now = Date.now();
-                    let answer = now - lastClick < 300;
-                    lastClick = now;
-                    return answer;
-                }
-
-                // Listen to entity item clicks
-                element.on('click', '.entity-list a', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    let item = $(this).closest('[data-entity-type]');
-                    itemSelect(item, isDoubleClick());
-                });
-                element.on('click', '[data-entity-type]', function(event) {
-                    itemSelect($(this), isDoubleClick());
-                });
-
-                // Select entity action
-                function itemSelect(item, doubleClick) {
-                    let entityType = item.attr('data-entity-type');
-                    let entityId = item.attr('data-entity-id');
-                    let isSelected = !item.hasClass('selected') || doubleClick;
-                    element.find('.selected').removeClass('selected').removeClass('primary-background');
-                    if (isSelected) item.addClass('selected').addClass('primary-background');
-                    let newVal = isSelected ? `${entityType}:${entityId}` : '';
-                    input.val(newVal);
-
-                    if (!isSelected) {
-                        events.emit('entity-select-change', null);
-                    }
-
-                    if (!doubleClick && !isSelected) return;
-
-                    let link = item.find('.entity-list-item-link').attr('href');
-                    let name = item.find('.entity-list-item-name').text();
-
-                    if (doubleClick) {
-                        events.emit('entity-select-confirm', {
-                            id: Number(entityId),
-                            name: name,
-                            link: link
-                        });
-                    }
-
-                    if (isSelected) {
-                        events.emit('entity-select-change', {
-                            id: Number(entityId),
-                            name: name,
-                            link: link
-                        });
-                    }
-                }
-
-                // Get search url with correct types
-                function getSearchUrl() {
-                    let types = (attrs.entityTypes) ? encodeURIComponent(attrs.entityTypes) : encodeURIComponent('page,book,chapter');
-                    return window.baseUrl(`/ajax/search/entities?types=${types}`);
-                }
-
-                // Get initial contents
-                $http.get(getSearchUrl()).then(resp => {
-                    scope.entityResults = $sce.trustAsHtml(resp.data);
-                    scope.loading = false;
-                });
-
-                // Search when typing
-                scope.searchEntities = function() {
-                    scope.loading = true;
-                    input.val('');
-                    let url = getSearchUrl() + '&term=' + encodeURIComponent(scope.search);
-                    $http.get(url).then(resp => {
-                        scope.entityResults = $sce.trustAsHtml(resp.data);
-                        scope.loading = false;
-                    });
-                };
-            }
-        };
     }]);
 };

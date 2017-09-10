@@ -62,7 +62,7 @@ class ViewService
             $query->whereIn('viewable_type', $filterModel);
         } else if ($filterModel) {
             $query->where('viewable_type', '=', get_class($filterModel));
-        };
+        }
 
         return $query->with('viewable')->skip($skipCount)->take($count)->get()->pluck('viewable');
     }

@@ -67,4 +67,11 @@ return [
     'error_occurred' => 'Nastala chyba',
     'app_down' => ':appName je momentálne nedostupná',
     'back_soon' => 'Čoskoro bude opäť dostupná.',
+
+    // comments
+    'comment_list' => 'Pri načítaní komentárov sa vyskytla chyba',
+    'cannot_add_comment_to_draft' => 'Do konceptu nemôžete pridávať komentáre.',
+    'comment_add' => 'Počas pridávania komentára sa vyskytla chyba',
+    'comment_delete' => 'Pri odstraňovaní komentára došlo k chybe',
+    'empty_comment' => 'Nelze pridať prázdny komentár.',
 ];

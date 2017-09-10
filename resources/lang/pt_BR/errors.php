@@ -67,4 +67,11 @@ return [
     'error_occurred' => 'Um erro ocorreu',
     'app_down' => ':appName está fora do ar no momento',
     'back_soon' => 'Voltaremos em seguida.',
+
+    // comments
+    'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
+    'cannot_add_comment_to_draft' => 'Você não pode adicionar comentários a um rascunho.',
+    'comment_add' => 'Ocorreu um erro ao adicionar o comentário.',
+    'comment_delete' => 'Ocorreu um erro ao excluir o comentário.',
+    'empty_comment' => 'Não é possível adicionar um comentário vazio.',
 ];

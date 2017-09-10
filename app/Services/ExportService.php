@@ -27,9 +27,9 @@ class ExportService
      */
     public function pageToContainedHtml(Page $page)
     {
+        $this->entityRepo->renderPage($page);
         $pageHtml = view('pages/export', [
-            'page' => $page,
-            'pageContent' => $this->entityRepo->renderPage($page)
+            'page' => $page
         ])->render();
         return $this->containHtml($pageHtml);
     }
@@ -74,9 +74,9 @@ class ExportService
      */
     public function pageToPdf(Page $page)
     {
+        $this->entityRepo->renderPage($page);
         $html = view('pages/pdf', [
-            'page' => $page,
-            'pageContent' => $this->entityRepo->renderPage($page)
+            'page' => $page
         ])->render();
         return $this->htmlToPdf($html);
     }

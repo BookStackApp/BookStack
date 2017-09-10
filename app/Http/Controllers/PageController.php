@@ -161,13 +161,14 @@ class PageController extends Controller
         $pageContent = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
         $pageNav = $this->entityRepo->getPageNav($pageContent);
-        
+        $page->load(['comments.createdBy']);
+
         Views::add($page);
         $this->setPageTitle($page->getShortName());
         return view('pages/show', [
             'page' => $page,'book' => $page->book,
             'current' => $page, 'sidebarTree' => $sidebarTree,
-            'pageNav' => $pageNav, 'pageContent' => $pageContent]);
+            'pageNav' => $pageNav]);
     }
 
     /**
@@ -376,10 +377,11 @@ class PageController extends Controller
 
         $page->fill($revision->toArray());
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
-        
+
         return view('pages/revision', [
             'page' => $page,
             'book' => $page->book,
+            'revision' => $revision
         ]);
     }
 
@@ -409,6 +411,7 @@ class PageController extends Controller
             'page' => $page,
             'book' => $page->book,
             'diff' => $diff,
+            'revision' => $revision
         ]);
     }
 

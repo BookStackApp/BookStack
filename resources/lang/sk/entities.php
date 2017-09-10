@@ -223,4 +223,12 @@ return [
     'profile_not_created_pages' => ':userName nevytvoril žiadne stránky',
     'profile_not_created_chapters' => ':userName nevytvoril žiadne kapitoly',
     'profile_not_created_books' => ':userName nevytvoril žiadne knihy',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Komentár',
+    'comments' => 'Komentáre',
+    'comment_placeholder' => 'Tu zadajte svoje pripomienky',
+    'comment_save' => 'Uložiť komentár',
 ];

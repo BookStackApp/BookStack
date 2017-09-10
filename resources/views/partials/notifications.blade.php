@@ -1,12 +1,12 @@
 
-<div class="notification anim pos" @if(!session()->has('success')) style="display:none;" @endif>
+<div notification="success" data-autohide class="pos" @if(session()->has('success')) data-show @endif>
     <i class="zmdi zmdi-check-circle"></i> <span>{!! nl2br(htmlentities(session()->get('success'))) !!}</span>
 </div>
 
-<div class="notification anim warning stopped" @if(!session()->has('warning')) style="display:none;" @endif>
+<div notification="warning" class="warning" @if(session()->has('warning')) data-show @endif>
     <i class="zmdi zmdi-info"></i> <span>{!! nl2br(htmlentities(session()->get('warning'))) !!}</span>
 </div>
 
-<div class="notification anim neg stopped" @if(!session()->has('error')) style="display:none;" @endif>
+<div notification="error" class="neg" @if(session()->has('error')) data-show @endif>
     <i class="zmdi zmdi-alert-circle"></i> <span>{!! nl2br(htmlentities(session()->get('error'))) !!}</span>
 </div>

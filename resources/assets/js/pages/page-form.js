@@ -274,7 +274,7 @@ module.exports = function() {
         file_browser_callback: function (field_name, url, type, win) {
 
             if (type === 'file') {
-                window.showEntityLinkSelector(function(entity) {
+                window.EntitySelectorPopup.show(function(entity) {
                     let originalField = win.document.getElementById(field_name);
                     originalField.value = entity.link;
                     $(originalField).closest('.mce-form').find('input').eq(2).val(entity.name);
@@ -283,7 +283,7 @@ module.exports = function() {
 
             if (type === 'image') {
                 // Show image manager
-                window.ImageManager.showExternal(function (image) {
+                window.ImageManager.show(function (image) {
 
                     // Set popover link input to image url then fire change event
                     // to ensure the new value sticks
@@ -365,7 +365,7 @@ module.exports = function() {
                 icon: 'image',
                 tooltip: 'Insert an image',
                 onclick: function () {
-                    window.ImageManager.showExternal(function (image) {
+                    window.ImageManager.show(function (image) {
                         let html = `<a href="${image.url}" target="_blank">`;
                         html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                         html += '</a>';
