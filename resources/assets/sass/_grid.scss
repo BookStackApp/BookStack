@@ -81,6 +81,8 @@ body.flexbox {
     box-shadow: none;
     transform: translate3d(-330px, 0, 0);
     transition: transform ease-in-out 120ms;
+    display: flex;
+    flex-direction: column;
   }
   .flex.sidebar.open {
     box-shadow: 1px 2px 2px 1px rgba(0,0,0,.10);
@@ -113,6 +115,10 @@ body.flexbox {
     &:hover i {
       opacity: 1;
     }
+  }
+  .sidebar .scroll-body {
+    flex: 1;
+    overflow-y: scroll;
   }
   #sidebar .scroll-body.fixed {
     width: auto !important;
