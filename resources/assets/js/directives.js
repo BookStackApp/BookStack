@@ -20,7 +20,7 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 function tinyMceSetup(editor) {
-                    editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
+                    editor.on('ExecCommand change input NodeChange ObjectResized', (e) => {
                         let content = editor.getContent();
                         $timeout(() => {
                             scope.mceModel = content;
@@ -29,7 +29,10 @@ module.exports = function (ngApp, events) {
                     });
 
                     editor.on('keydown', (event) => {
-                        scope.$emit('editor-keydown', event);
+                        if (event.keyCode === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                            event.preventDefault();
+                            scope.$emit('save-draft', event);
+                        }
                     });
 
                     editor.on('init', (e) => {
