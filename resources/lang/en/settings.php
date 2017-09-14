@@ -126,7 +126,8 @@ return [
         'sk' => 'Slovensky',
         'ja' => '日本語',
         'pl' => 'Polski',
-        'it' => 'Italian'
+        'it' => 'Italian',
+        'ru' => 'Русский'
     ]
     ///////////////////////////////////
 ];
