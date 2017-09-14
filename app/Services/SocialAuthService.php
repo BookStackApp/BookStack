@@ -104,7 +104,8 @@ class SocialAuthService
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
-            return $this->logUserIn($socialAccount->user);
+            auth()->login($socialAccount->user);
+            return redirect()->intended('/');
         }
 
         // When a user is logged in but the social account does not exist,
@@ -135,13 +136,6 @@ class SocialAuthService
         }
         
         throw new SocialSignInException($message . '.', '/login');
-    }
-
-
-    private function logUserIn($user)
-    {
-        auth()->login($user);
-        return redirect('/');
     }
 
     /**
