@@ -234,4 +234,27 @@ return [
     'profile_not_created_pages' => ':userName has not created any pages',
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any books',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Comment',
+    'comments' => 'Comments',
+    'comment_placeholder' => 'Enter your comments here, markdown supported...',
+    'no_comments' => 'No Comments',
+    'x_comments' => ':numComments Comments',
+    'one_comment' => '1 Comment',
+    'comments_loading' => 'Loading...',
+    'comment_save' => 'Save Comment',
+    'comment_reply' => 'Reply',
+    'comment_edit' => 'Edit',
+    'comment_delete' => 'Delete',
+    'comment_cancel' => 'Cancel',
+    'comment_created' => 'Comment added',
+    'comment_updated' => 'Comment updated',
+    'comment_deleted' => 'Comment deleted',
+    'comment_updated_text' => 'Updated :updateDiff by',
+    'comment_delete_confirm' => 'This will remove the contents of the comment. Are you sure you want to delete this comment?',
+    'comment_create' => 'Created'
+
 ];

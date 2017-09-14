@@ -117,6 +117,19 @@
                             <label>@include('settings/roles/checkbox', ['permission' => 'attachment-delete-all']) {{ trans('settings.role_all') }}</label>
                         </td>
                     </tr>
+                    <tr>
+                        <td>{{ trans('entities.comments') }}</td>
+                        <td>@include('settings/roles/checkbox', ['permission' => 'comment-create-all'])</td>
+                        <td style="line-height:1.2;"><small class="faded">{{ trans('settings.role_controlled_by_asset') }}</small></td>
+                        <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'comment-update-own']) {{ trans('settings.role_own') }}</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'comment-update-all']) {{ trans('settings.role_all') }}</label>
+                        </td>
+                        <td>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'comment-delete-own']) {{ trans('settings.role_own') }}</label>
+                            <label>@include('settings/roles/checkbox', ['permission' => 'comment-delete-all']) {{ trans('settings.role_all') }}</label>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

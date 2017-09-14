@@ -79,7 +79,7 @@ These are the great open-source projects used to help build BookStack:
 * [jQuery Sortable](https://johnny.github.io/jquery-sortable/)
 * [Material Design Iconic Font](http://zavoloklom.github.io/material-design-iconic-font/icons.html)
 * [Dropzone.js](http://www.dropzonejs.com/)
-* [ZeroClipboard](http://zeroclipboard.org/)
+* [clipboard.js](https://clipboardjs.com/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
 * [Moment.js](http://momentjs.com/)

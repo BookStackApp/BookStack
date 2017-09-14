@@ -1,10 +1,10 @@
 <div id="code-editor">
-    <div class="overlay" ref="overlay" v-cloak @click="hide()">
+    <div overlay ref="overlay" v-cloak @click="hide()">
         <div class="popup-body" @click.stop>
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.code_editor') }}</div>
-                <button class="popup-close neg corner-button button" @click="hide()">x</button>
+                <button class="overlay-close neg corner-button button" @click="hide()">x</button>
             </div>
 
             <div class="padded">
