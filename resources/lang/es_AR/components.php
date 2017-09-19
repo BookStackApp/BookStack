@@ -20,7 +20,7 @@ return [
     'image_preview' => 'Preview de la imagen',
     'image_upload_success' => 'Imagen subida éxitosamente',
     'image_update_success' => 'Detalles de la imagen actualizados exitosamente',
-    'image_delete_success' => 'Imagen borrada exitosamente'
+    'image_delete_success' => 'Imagen borrada exitosamente',
 
     /**
      * Code editor
