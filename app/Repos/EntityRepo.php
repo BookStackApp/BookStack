@@ -716,7 +716,6 @@ class EntityRepo
             $content = str_replace($matches[0][$index], trim($innerContent), $content);
         }
 
-        $page->setAttribute('renderedHTML', $content);
         return $content;
     }
 
