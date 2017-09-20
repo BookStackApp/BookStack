@@ -120,13 +120,15 @@ return [
         'en' => 'English',
         'de' => 'Deutsch',
         'es' => 'Español',
+        'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
         'ja' => '日本語',
         'pl' => 'Polski',
-        'it' => 'Italian'
+        'it' => 'Italian',
+        'ru' => 'Русский'
     ]
     ///////////////////////////////////
 ];
