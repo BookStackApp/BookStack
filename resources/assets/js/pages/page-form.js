@@ -4,49 +4,51 @@ const Code = require('../code');
 
 /**
  * Handle pasting images from clipboard.
- * @param e  - event
- * @param editor - editor instance
+ * @param {ClipboardEvent} event
+ * @param editor
  */
-function editorPaste(e, editor) {
-    if (!e.clipboardData) return;
-    let items = e.clipboardData.items;
-    if (!items) return;
+function editorPaste(event, editor) {
+    if (!event.clipboardData || !event.clipboardData.items) return;
+    let items = event.clipboardData.items;
+
     for (let i = 0; i < items.length; i++) {
-        if (items[i].type.indexOf("image") === -1) return;
-
-        let file = items[i].getAsFile();
-        let formData = new FormData();
-        let ext = 'png';
-        let xhr = new XMLHttpRequest();
-
-        if (file.name) {
-            let fileNameMatches = file.name.match(/\.(.+)$/);
-            if (fileNameMatches) {
-                ext = fileNameMatches[1];
-            }
-        }
+        if (items[i].type.indexOf("image") === -1) continue;
+        event.preventDefault();
 
         let id = "image-" + Math.random().toString(16).slice(2);
         let loadingImage = window.baseUrl('/loading.gif');
-        editor.execCommand('mceInsertContent', false, `<img src="${loadingImage}" id="${id}">`);
-
-        let remoteFilename = "image-" + Date.now() + "." + ext;
-        formData.append('file', file, remoteFilename);
-        formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
-
-        xhr.open('POST', window.baseUrl('/images/gallery/upload'));
-        xhr.onload = function () {
-            if (xhr.status === 200 || xhr.status === 201) {
-                let result = JSON.parse(xhr.responseText);
-                editor.dom.setAttrib(id, 'src', result.thumbs.display);
-            } else {
-                console.log('An error occurred uploading the image', xhr.responseText);
+        let file = items[i].getAsFile();
+        setTimeout(() => {
+            editor.insertContent(`<p><img src="${loadingImage}" id="${id}"></p>`);
+            uploadImageFile(file).then(resp => {
+                editor.dom.setAttrib(id, 'src', resp.thumbs.display);
+            }).catch(err => {
                 editor.dom.remove(id);
-            }
-        };
-        xhr.send(formData);
-        
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+        }, 10);
     }
+}
+
+/**
+ * Upload an image file to the server
+ * @param {File} file
+ */
+function uploadImageFile(file) {
+    if (file === null || file.type.indexOf('image') !== 0) return Promise.reject(`Not an image file`);
+
+    let ext = 'png';
+    if (file.name) {
+        let fileNameMatches = file.name.match(/\.(.+)$/);
+        if (fileNameMatches.length > 1) ext = fileNameMatches[1];
+    }
+
+    let remoteFilename = "image-" + Date.now() + "." + ext;
+    let formData = new FormData();
+    formData.append('file', file, remoteFilename);
+
+    return window.$http.post('/images/gallery/upload', formData).then(resp => (resp.data));
 }
 
 function registerEditorShortcuts(editor) {
@@ -375,9 +377,7 @@ module.exports = function() {
             });
 
             // Paste image-uploads
-            editor.on('paste', function(event) {
-                editorPaste(event, editor);
-            });
+            editor.on('paste', event => { editorPaste(event, editor) });
         }
     };
     return settings;
