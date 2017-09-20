@@ -120,6 +120,7 @@ return [
         'en' => 'English',
         'de' => 'Deutsch',
         'es' => 'Español',
+        'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
