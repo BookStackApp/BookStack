@@ -15,15 +15,11 @@ class DummyContentSeeder extends Seeder
         $role = \BookStack\Role::getRole('editor');
         $user->attachRole($role);
 
-
         factory(\BookStack\Book::class, 20)->create(['created_by' => $user->id, 'updated_by' => $user->id])
             ->each(function($book) use ($user) {
                 $chapters = factory(\BookStack\Chapter::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id])
                     ->each(function($chapter) use ($user, $book){
-                       $pages = factory(\BookStack\Page::class, 5)->create(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id])->each(function($page) use ($user) {
-                           $comments = factory(\BookStack\Comment::class, 3)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'page_id' => $page->id]);
-                           $page->comments()->saveMany($comments);
-                       });
+                        $pages = factory(\BookStack\Page::class, 5)->make(['created_by' => $user->id, 'updated_by' => $user->id, 'book_id' => $book->id]);
                         $chapter->pages()->saveMany($pages);
                     });
                 $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $user->id, 'updated_by' => $user->id]);
@@ -36,7 +32,6 @@ class DummyContentSeeder extends Seeder
         $chapters = factory(\BookStack\Chapter::class, 50)->make(['created_by' => $user->id, 'updated_by' => $user->id]);
         $largeBook->pages()->saveMany($pages);
         $largeBook->chapters()->saveMany($chapters);
-
         app(\BookStack\Services\PermissionService::class)->buildJointPermissions();
         app(\BookStack\Services\SearchService::class)->indexAllEntities();
     }

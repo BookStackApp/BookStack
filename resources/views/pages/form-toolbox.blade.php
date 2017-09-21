@@ -14,34 +14,23 @@
         <div class="padded tags">
             <p class="muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
 
-            <draggable class="fake-table no-style tag-table" :options="{handle: '.handle'}" :list="tags" element="div">
-                <transition-group tag="div">
-                    <div v-for="(tag, i) in tags" :key="tag.key">
-                        <div width="20" class="handle" ><i class="zmdi zmdi-menu"></i></div>
-                        <div>
-                            <autosuggest url="/ajax/tags/suggest/names" type="name" class="outline" :name="getTagFieldName(i, 'name')"
-                                   v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
-                        </div>
-                        <div>
-                            <autosuggest url="/ajax/tags/suggest/values" type="value" class="outline" :name="getTagFieldName(i, 'value')"
-                                         v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
-                        </div>
-                        <div width="10" v-show="tags.length !== 1" class="text-center text-neg" style="padding: 0;" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
+
+            <draggable :options="{handle: '.handle'}" :list="tags" element="div">
+                <div v-for="(tag, i) in tags" :key="tag.key" class="card drag-card">
+                    <div class="handle" ><i class="zmdi zmdi-menu"></i></div>
+                    <div>
+                        <autosuggest url="/ajax/tags/suggest/names" type="name" class="outline" :name="getTagFieldName(i, 'name')"
+                                     v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
                     </div>
-                </transition-group>
+                    <div>
+                        <autosuggest url="/ajax/tags/suggest/values" type="value" class="outline" :name="getTagFieldName(i, 'value')"
+                                     v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"/>
+                    </div>
+                    <div v-show="tags.length !== 1" class="text-center drag-card-action text-neg" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
+                </div>
             </draggable>
 
-            <table class="no-style" style="width: 100%;">
-                <tbody>
-                <tr class="unsortable">
-                    <td width="34"></td>
-                    <td @click="addEmptyTag">
-                        <button type="button" class="text-button">{{ trans('entities.tags_add') }}</button>
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
+            <button @click="addEmptyTag" type="button" class="text-button">{{ trans('entities.tags_add') }}</button>
 
         </div>
     </div>
@@ -61,11 +50,10 @@
                             <div @click="tab = 'link'" :class="{selected: tab === 'link'}" class="tab-item">{{ trans('entities.attachments_link') }}</div>
                         </div>
                         <div v-show="tab === 'list'">
-                            <draggable class="fake-table no-style " style="width: 100%;" :options="{handle: '.handle'}" @change="fileSortUpdate" :list="files" element="div">
-                                <transition-group tag="div">
-                                <div v-for="(file, index) in files" :key="file.id">
-                                    <div width="20" ><i class="handle zmdi zmdi-menu"></i></div>
-                                    <div>
+                            <draggable style="width: 100%;" :options="{handle: '.handle'}" @change="fileSortUpdate" :list="files" element="div">
+                                <div v-for="(file, index) in files" :key="file.id" class="card drag-card">
+                                    <div class="handle"><i class="zmdi zmdi-menu"></i></div>
+                                    <div class="padded">
                                         <a :href="getFileUrl(file)" target="_blank" v-text="file.name"></a>
                                         <div v-if="file.deleting">
                                             <span class="neg small">{{ trans('entities.attachments_delete_confirm') }}</span>
@@ -73,11 +61,9 @@
                                             <span class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</span>
                                         </div>
                                     </div>
-                                    <div width="10" @click="startEdit(file)" class="text-center text-primary" style="padding: 0;"><i class="zmdi zmdi-edit"></i></div>
-                                    <div width="5"></div>
-                                    <div width="10" @click="deleteFile(file)" class="text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></div>
+                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary" style="padding: 0;"><i class="zmdi zmdi-edit"></i></div>
+                                    <div @click="deleteFile(file)" class="drag-card-action text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></div>
                                 </div>
-                                </transition-group>
                             </draggable>
                             <p class="small muted" v-if="files.length === 0">
                                 {{ trans('entities.attachments_no_files') }}
@@ -132,7 +118,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="button" @click="cancelEdit">{{ trans('common.back') }}</button>
+                    <button type="button" class="button outline" @click="cancelEdit">{{ trans('common.back') }}</button>
                     <button @click.enter.prevent="updateFile(fileToEdit)" class="button pos">{{ trans('common.save') }}</button>
                 </div>
 

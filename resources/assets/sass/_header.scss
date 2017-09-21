@@ -85,7 +85,7 @@ header {
 }
 header .search-box {
   display: inline-block;
-  margin-top: $-s;
+  margin-top: 10px;
   input {
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -169,6 +169,10 @@ header .search-box {
   color: #000;
   font-size: 0.9em;
   background-color: $primary-faded;
+}
+
+.toolbar-container {
+  background-color: #FFF;
 }
 
 .breadcrumbs .text-button, .action-buttons .text-button {

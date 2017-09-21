@@ -10,6 +10,7 @@ return [
     'save' => 'Save',
     'continue' => 'Continue',
     'select' => 'Select',
+    'more' => 'More',
 
     /**
      * Form Labels
@@ -28,13 +29,13 @@ return [
     'edit' => 'Edit',
     'sort' => 'Sort',
     'move' => 'Move',
+    'reply' => 'Reply',
     'delete' => 'Delete',
     'search' => 'Search',
     'search_clear' => 'Clear Search',
     'reset' => 'Reset',
     'remove' => 'Remove',
     'add' => 'Add',
-
 
     /**
      * Misc
@@ -44,6 +45,7 @@ return [
     'no_items' => 'No items available',
     'back_to_top' => 'Back to top',
     'toggle_details' => 'Toggle Details',
+    'details' => 'Details',
 
     /**
      * Header

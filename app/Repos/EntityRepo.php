@@ -137,10 +137,15 @@ class EntityRepo
      * @param string $type
      * @param integer $id
      * @param bool $allowDrafts
+     * @param bool $ignorePermissions
      * @return Entity
      */
-    public function getById($type, $id, $allowDrafts = false)
+    public function getById($type, $id, $allowDrafts = false, $ignorePermissions = false)
     {
+        if ($ignorePermissions) {
+            $entity = $this->getEntity($type);
+            return $entity->newQuery()->find($id);
+        }
         return $this->entityQuery($type, $allowDrafts)->find($id);
     }
 
@@ -671,9 +676,10 @@ class EntityRepo
     /**
      * Render the page for viewing, Parsing and performing features such as page transclusion.
      * @param Page $page
+     * @param bool $ignorePermissions
      * @return mixed|string
      */
-    public function renderPage(Page $page)
+    public function renderPage(Page $page, $ignorePermissions = false)
     {
         $content = $page->html;
         $matches = [];
@@ -685,19 +691,19 @@ class EntityRepo
             $pageId = intval($splitInclude[0]);
             if (is_nan($pageId)) continue;
 
-            $page = $this->getById('page', $pageId);
-            if ($page === null) {
+            $matchedPage = $this->getById('page', $pageId, false, $ignorePermissions);
+            if ($matchedPage === null) {
                 $content = str_replace($matches[0][$index], '', $content);
                 continue;
             }
 
             if (count($splitInclude) === 1) {
-                $content = str_replace($matches[0][$index], $page->html, $content);
+                $content = str_replace($matches[0][$index], $matchedPage->html, $content);
                 continue;
             }
 
             $doc = new DOMDocument();
-            $doc->loadHTML(mb_convert_encoding('<body>'.$page->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
+            $doc->loadHTML(mb_convert_encoding('<body>'.$matchedPage->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
             $matchingElem = $doc->getElementById($splitInclude[1]);
             if ($matchingElem === null) {
                 $content = str_replace($matches[0][$index], '', $content);

@@ -31,6 +31,9 @@ return [
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application primary color',
     'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
+    'app_homepage' => 'Application Homepage',
+    'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_default' => 'Default homepage view chosen',
 
     /**
      * Registration settings
@@ -117,12 +120,15 @@ return [
         'en' => 'English',
         'de' => 'Deutsch',
         'es' => 'Español',
+        'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
         'ja' => '日本語',
         'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский'
     ]
     ///////////////////////////////////
 ];

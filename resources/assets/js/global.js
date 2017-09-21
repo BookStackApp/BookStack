@@ -1,5 +1,6 @@
 "use strict";
 require("babel-polyfill");
+require('./dom-polyfills');
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -13,9 +14,11 @@ window.baseUrl = function(path) {
 class EventManager {
     constructor() {
         this.listeners = {};
+        this.stack = [];
     }
 
     emit(eventName, eventData) {
+        this.stack.push({name: eventName, data: eventData});
         if (typeof this.listeners[eventName] === 'undefined') return this;
         let eventsToStart = this.listeners[eventName];
         for (let i = 0; i < eventsToStart.length; i++) {
@@ -32,7 +35,7 @@ class EventManager {
     }
 }
 
-window.Events = new EventManager();
+window.$events = new EventManager();
 
 const Vue = require("vue");
 const axios = require("axios");
@@ -47,13 +50,13 @@ axiosInstance.interceptors.request.use(resp => {
     return resp;
 }, err => {
     if (typeof err.response === "undefined" || typeof err.response.data === "undefined") return Promise.reject(err);
-    if (typeof err.response.data.error !== "undefined") window.Events.emit('error', err.response.data.error);
-    if (typeof err.response.data.message !== "undefined") window.Events.emit('error', err.response.data.message);
+    if (typeof err.response.data.error !== "undefined") window.$events.emit('error', err.response.data.error);
+    if (typeof err.response.data.message !== "undefined") window.$events.emit('error', err.response.data.message);
 });
 window.$http = axiosInstance;
 
 Vue.prototype.$http = axiosInstance;
-Vue.prototype.$events = window.Events;
+Vue.prototype.$events = window.$events;
 
 
 // AngularJS - Create application and load components
@@ -70,6 +73,7 @@ let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize'
 const Translations = require("./translations");
 let translator = new Translations(window.translations);
 window.trans = translator.get.bind(translator);
+window.trans_choice = translator.getPlural.bind(translator);
 
 
 require("./vues/vues");
@@ -78,17 +82,48 @@ require("./components");
 // Load in angular specific items
 const Directives = require('./directives');
 const Controllers = require('./controllers');
-Directives(ngApp, window.Events);
-Controllers(ngApp, window.Events);
+Directives(ngApp, window.$events);
+Controllers(ngApp, window.$events);
 
 //Global jQuery Config & Extensions
+
+/**
+ * Scroll the view to a specific element.
+ * @param {HTMLElement} element
+ */
+window.scrollToElement = function(element) {
+    if (!element) return;
+    let offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    let top = element.getBoundingClientRect().top + offset;
+    $('html, body').animate({
+        scrollTop: top - 60 // Adjust to change final scroll position top margin
+    }, 300);
+};
+
+/**
+ * Scroll and highlight an element.
+ * @param {HTMLElement} element
+ */
+window.scrollAndHighlight = function(element) {
+    if (!element) return;
+    window.scrollToElement(element);
+    let color = document.getElementById('custom-styles').getAttribute('data-color-light');
+    let initColor = window.getComputedStyle(element).getPropertyValue('background-color');
+    element.style.backgroundColor = color;
+    setTimeout(() => {
+        element.classList.add('selectFade');
+        element.style.backgroundColor = initColor;
+    }, 10);
+    setTimeout(() => {
+        element.classList.remove('selectFade');
+        element.style.backgroundColor = '';
+    }, 3000);
+};
 
 // Smooth scrolling
 jQuery.fn.smoothScrollTo = function () {
     if (this.length === 0) return;
-    $('html, body').animate({
-        scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
-    }, 300); // Adjust to change animations speed (ms)
+    window.scrollToElement(this[0]);
     return this;
 };
 

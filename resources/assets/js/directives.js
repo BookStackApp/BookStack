@@ -20,7 +20,7 @@ module.exports = function (ngApp, events) {
             link: function (scope, element, attrs) {
 
                 function tinyMceSetup(editor) {
-                    editor.on('ExecCommand change NodeChange ObjectResized', (e) => {
+                    editor.on('ExecCommand change input NodeChange ObjectResized', (e) => {
                         let content = editor.getContent();
                         $timeout(() => {
                             scope.mceModel = content;
@@ -29,7 +29,10 @@ module.exports = function (ngApp, events) {
                     });
 
                     editor.on('keydown', (event) => {
-                        scope.$emit('editor-keydown', event);
+                        if (event.keyCode === 83 && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
+                            event.preventDefault();
+                            scope.$emit('save-draft', event);
+                        }
                     });
 
                     editor.on('init', (e) => {
@@ -99,7 +102,7 @@ module.exports = function (ngApp, events) {
                 extraKeys[`${metaKey}-7`] = function(cm) {wrapSelection('\n```\n', '\n```');};
                 extraKeys[`${metaKey}-8`] = function(cm) {wrapSelection('`', '`');};
                 extraKeys[`Shift-${metaKey}-E`] = function(cm) {wrapSelection('`', '`');};
-                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</div>');};
+                extraKeys[`${metaKey}-9`] = function(cm) {wrapSelection('<p class="callout info">', '</p>');};
                 cm.setOption('extraKeys', extraKeys);
 
                 // Update data on content change
@@ -193,12 +196,13 @@ module.exports = function (ngApp, events) {
                     }
 
                     cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-                    cm.setCursor({line: cursor.line, ch: cursor.ch + (newLineContent.length - lineLen)});
+                    cm.setCursor({line: cursor.line, ch: cursor.ch + start.length});
                 }
 
                 function wrapSelection(start, end) {
                     let selection = cm.getSelection();
                     if (selection === '') return wrapLine(start, end);
+
                     let newSelection = selection;
                     let frontDiff = 0;
                     let endDiff = 0;
@@ -252,7 +256,7 @@ module.exports = function (ngApp, events) {
                 // Show the popup link selector and insert a link when finished
                 function showLinkSelector() {
                     let cursorPos = cm.getCursor('from');
-                    window.showEntityLinkSelector(entity => {
+                    window.EntitySelectorPopup.show(entity => {
                         let selectedText = cm.getSelection() || entity.name;
                         let newText = `[${selectedText}](${entity.link})`;
                         cm.focus();
@@ -385,277 +389,5 @@ module.exports = function (ngApp, events) {
                 });
             }
         }
-    }]);
-
-    ngApp.directive('entityLinkSelector', [function($http) {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attrs) {
-
-                const selectButton = element.find('.entity-link-selector-confirm');
-                let callback = false;
-                let entitySelection = null;
-
-                // Handle entity selection change, Stores the selected entity locally
-                function entitySelectionChange(entity) {
-                    entitySelection = entity;
-                    if (entity === null) {
-                        selectButton.attr('disabled', 'true');
-                    } else {
-                        selectButton.removeAttr('disabled');
-                    }
-                }
-                events.listen('entity-select-change', entitySelectionChange);
-
-                // Handle selection confirm button click
-                selectButton.click(event => {
-                    hide();
-                    if (entitySelection !== null) callback(entitySelection);
-                });
-
-                // Show selector interface
-                function show() {
-                    element.fadeIn(240);
-                }
-
-                // Hide selector interface
-                function hide() {
-                    element.fadeOut(240);
-                }
-                scope.hide = hide;
-
-                // Listen to confirmation of entity selections (doubleclick)
-                events.listen('entity-select-confirm', entity => {
-                    hide();
-                    callback(entity);
-                });
-
-                // Show entity selector, Accessible globally, and store the callback
-                window.showEntityLinkSelector = function(passedCallback) {
-                    show();
-                    callback = passedCallback;
-                };
-
-            }
-        };
-    }]);
-
-
-    ngApp.directive('entitySelector', ['$http', '$sce', function ($http, $sce) {
-        return {
-            restrict: 'A',
-            scope: true,
-            link: function (scope, element, attrs) {
-                scope.loading = true;
-                scope.entityResults = false;
-                scope.search = '';
-
-                // Add input for forms
-                const input = element.find('[entity-selector-input]').first();
-
-                // Detect double click events
-                let lastClick = 0;
-                function isDoubleClick() {
-                    let now = Date.now();
-                    let answer = now - lastClick < 300;
-                    lastClick = now;
-                    return answer;
-                }
-
-                // Listen to entity item clicks
-                element.on('click', '.entity-list a', function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    let item = $(this).closest('[data-entity-type]');
-                    itemSelect(item, isDoubleClick());
-                });
-                element.on('click', '[data-entity-type]', function(event) {
-                    itemSelect($(this), isDoubleClick());
-                });
-
-                // Select entity action
-                function itemSelect(item, doubleClick) {
-                    let entityType = item.attr('data-entity-type');
-                    let entityId = item.attr('data-entity-id');
-                    let isSelected = !item.hasClass('selected') || doubleClick;
-                    element.find('.selected').removeClass('selected').removeClass('primary-background');
-                    if (isSelected) item.addClass('selected').addClass('primary-background');
-                    let newVal = isSelected ? `${entityType}:${entityId}` : '';
-                    input.val(newVal);
-
-                    if (!isSelected) {
-                        events.emit('entity-select-change', null);
-                    }
-
-                    if (!doubleClick && !isSelected) return;
-
-                    let link = item.find('.entity-list-item-link').attr('href');
-                    let name = item.find('.entity-list-item-name').text();
-
-                    if (doubleClick) {
-                        events.emit('entity-select-confirm', {
-                            id: Number(entityId),
-                            name: name,
-                            link: link
-                        });
-                    }
-
-                    if (isSelected) {
-                        events.emit('entity-select-change', {
-                            id: Number(entityId),
-                            name: name,
-                            link: link
-                        });
-                    }
-                }
-
-                // Get search url with correct types
-                function getSearchUrl() {
-                    let types = (attrs.entityTypes) ? encodeURIComponent(attrs.entityTypes) : encodeURIComponent('page,book,chapter');
-                    return window.baseUrl(`/ajax/search/entities?types=${types}`);
-                }
-
-                // Get initial contents
-                $http.get(getSearchUrl()).then(resp => {
-                    scope.entityResults = $sce.trustAsHtml(resp.data);
-                    scope.loading = false;
-                });
-
-                // Search when typing
-                scope.searchEntities = function() {
-                    scope.loading = true;
-                    input.val('');
-                    let url = getSearchUrl() + '&term=' + encodeURIComponent(scope.search);
-                    $http.get(url).then(resp => {
-                        scope.entityResults = $sce.trustAsHtml(resp.data);
-                        scope.loading = false;
-                    });
-                };
-            }
-        };
-    }]);
-
-    ngApp.directive('commentReply', [function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'comment-reply.html',
-            scope: {
-              pageId: '=',
-              parentId: '=',
-              parent: '='
-            },
-            link: function (scope, element) {
-                scope.isReply = true;
-                element.find('textarea').focus();
-                scope.$on('evt.comment-success', function (event) {
-                    // no need for the event to do anything more.
-                    event.stopPropagation();
-                    event.preventDefault();
-                    scope.closeBox();
-                });
-
-                scope.closeBox = function () {
-                    element.remove();
-                    scope.$destroy();
-                };
-            }
-        };
-    }]);
-
-    ngApp.directive('commentEdit', [function () {
-         return {
-            restrict: 'E',
-            templateUrl: 'comment-reply.html',
-            scope: {
-              comment: '='
-            },
-            link: function (scope, element) {
-                scope.isEdit = true;
-                element.find('textarea').focus();
-                scope.$on('evt.comment-success', function (event, commentId) {
-                   // no need for the event to do anything more.
-                   event.stopPropagation();
-                   event.preventDefault();
-                   if (commentId === scope.comment.id && !scope.isNew) {
-                       scope.closeBox();
-                   }
-                });
-
-                scope.closeBox = function () {
-                    element.remove();
-                    scope.$destroy();
-                };
-            }
-        };
-    }]);
-
-
-    ngApp.directive('commentReplyLink', ['$document', '$compile', function ($document, $compile) {
-        return {
-            scope: {
-                comment: '='
-            },
-            link: function (scope, element, attr) {
-                element.on('$destroy', function () {
-                    element.off('click');
-                    scope.$destroy();
-                });
-
-                element.on('click', function (e) {
-                    e.preventDefault();
-                    var $container = element.parents('.comment-actions').first();
-                    if (!$container.length) {
-                        console.error('commentReplyLink directive should be placed inside a container with class comment-box!');
-                        return;
-                    }
-                    if (attr.noCommentReplyDupe) {
-                        removeDupe();
-                    }
-
-                    compileHtml($container, scope, attr.isReply === 'true');
-                });
-            }
-        };
-
-        function compileHtml($container, scope, isReply) {
-            let lnkFunc = null;
-            if (isReply) {
-                lnkFunc = $compile('<comment-reply page-id="comment.pageId" parent-id="comment.id" parent="comment"></comment-reply>');
-            } else {
-                lnkFunc = $compile('<comment-edit comment="comment"></comment-add>');
-            }
-            var compiledHTML = lnkFunc(scope);
-            $container.append(compiledHTML);
-        }
-
-        function removeDupe() {
-            let $existingElement = $document.find('.comments-list comment-reply, .comments-list comment-edit');
-            if (!$existingElement.length) {
-                return;
-            }
-
-            $existingElement.remove();
-        }
-    }]);
-
-    ngApp.directive('commentDeleteLink', ['$window', function ($window) {
-        return {
-            controller: 'CommentDeleteController',
-            scope: {
-                comment: '='
-            },
-            link: function (scope, element, attr, ctrl) {
-
-                element.on('click', function(e) {
-                    e.preventDefault();
-                    var resp = $window.confirm(trans('entities.comment_delete_confirm'));
-                    if (!resp) {
-                        return;
-                    }
-
-                    ctrl.delete(scope.comment);
-                });
-            }
-        };
     }]);
 };

@@ -158,16 +158,17 @@ class PageController extends Controller
 
         $this->checkOwnablePermission('page-view', $page);
 
-        $pageContent = $this->entityRepo->renderPage($page);
+        $page->html = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
-        $pageNav = $this->entityRepo->getPageNav($pageContent);
+        $pageNav = $this->entityRepo->getPageNav($page->html);
+        $page->load(['comments.createdBy']);
 
         Views::add($page);
         $this->setPageTitle($page->getShortName());
         return view('pages/show', [
             'page' => $page,'book' => $page->book,
             'current' => $page, 'sidebarTree' => $sidebarTree,
-            'pageNav' => $pageNav, 'pageContent' => $pageContent]);
+            'pageNav' => $pageNav]);
     }
 
     /**
@@ -380,6 +381,7 @@ class PageController extends Controller
         return view('pages/revision', [
             'page' => $page,
             'book' => $page->book,
+            'revision' => $revision
         ]);
     }
 
@@ -409,6 +411,7 @@ class PageController extends Controller
             'page' => $page,
             'book' => $page->book,
             'diff' => $diff,
+            'revision' => $revision
         ]);
     }
 
@@ -438,6 +441,7 @@ class PageController extends Controller
     public function exportPdf($bookSlug, $pageSlug)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $page->html = $this->entityRepo->renderPage($page);
         $pdfContent = $this->exportService->pageToPdf($page);
         return response()->make($pdfContent, 200, [
             'Content-Type'        => 'application/octet-stream',
@@ -454,6 +458,7 @@ class PageController extends Controller
     public function exportHtml($bookSlug, $pageSlug)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $page->html = $this->entityRepo->renderPage($page);
         $containedHtml = $this->exportService->pageToContainedHtml($page);
         return response()->make($containedHtml, 200, [
             'Content-Type'        => 'application/octet-stream',

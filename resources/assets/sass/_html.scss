@@ -9,6 +9,9 @@ html {
   &.flexbox {
     overflow-y: hidden;
   }
+  &.shaded {
+    background-color: #F2F2F2;
+  }
 }
 
 body {
@@ -16,6 +19,9 @@ body {
   line-height: 1.6;
   color: #616161;
   -webkit-font-smoothing: antialiased;
+  &.shaded {
+    background-color: #F2F2F2;
+  }
 }
 
 button {
