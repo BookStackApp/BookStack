@@ -21,4 +21,11 @@ return [
     'image_upload_success' => 'Afbeelding succesvol geüpload',
     'image_update_success' => 'Afbeeldingsdetails succesvol verwijderd',
     'image_delete_success' => 'Afbeelding succesvol verwijderd'
+    /**
+     * Code editor
+     */
+    'code_editor' => 'Code invoegen',
+    'code_language' => 'Code taal',
+    'code_content' => 'Code',
+    'code_save' => 'Sla code op',
 ];
