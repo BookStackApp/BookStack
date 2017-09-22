@@ -10,6 +10,7 @@ return [
     'save' => 'Opslaan',
     'continue' => 'Doorgaan',
     'select' => 'Kies',
+    'more' => 'Meer',
 
     /**
      * Form Labels
@@ -33,7 +34,7 @@ return [
     'search_clear' => 'Zoekopdracht wissen',
     'reset' => 'Reset',
     'remove' => 'Verwijderen',
-
+    'add' => 'Toevoegen',
 
     /**
      * Misc
