@@ -44,7 +44,7 @@ return [
      * Search
      */
     'search_results' => 'Zoekresultaten',
-    'search_total_results_found' => ':count resultaten gevonden|:count resultaten gevonden,	 
+    'search_total_results_found' => ':count resultaten gevonden|:count resultaten gevonden', 
     'search_clear' => 'Zoekopdracht wissen',
     'search_no_pages' => 'Er zijn geen pagina\'s gevonden',
     'search_for_term' => 'Zoeken op :term',
