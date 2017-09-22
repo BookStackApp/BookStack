@@ -20,7 +20,7 @@ return [
     'image_preview' => 'Afbeelding Voorbeeld',
     'image_upload_success' => 'Afbeelding succesvol geüpload',
     'image_update_success' => 'Afbeeldingsdetails succesvol verwijderd',
-    'image_delete_success' => 'Afbeelding succesvol verwijderd'
+    'image_delete_success' => 'Afbeelding succesvol verwijderd',
     /**
      * Code editor
      */
