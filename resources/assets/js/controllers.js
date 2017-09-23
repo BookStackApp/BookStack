@@ -2,7 +2,6 @@
 
 const moment = require('moment');
 require('moment/locale/en-gb');
-const editorOptions = require("./pages/page-form");
 
 moment.locale('en-gb');
 
@@ -12,8 +11,9 @@ module.exports = function (ngApp, events) {
     ngApp.controller('PageEditController', ['$scope', '$http', '$attrs', '$interval', '$timeout', '$sce',
         function ($scope, $http, $attrs, $interval, $timeout, $sce) {
 
-        $scope.editorOptions = editorOptions();
-        $scope.editContent = '';
+        $scope.editorHTML = '';
+        $scope.editorMarkdown = '';
+
         $scope.draftText = '';
         let pageId = Number($attrs.pageId);
         let isEdit = pageId !== 0;
@@ -43,19 +43,6 @@ module.exports = function (ngApp, events) {
             }, 1000);
         }
 
-        // Actions specifically for the markdown editor
-        if (isMarkdown) {
-            $scope.displayContent = '';
-            // Editor change event
-            $scope.editorChange = function (content) {
-                $scope.displayContent = $sce.trustAsHtml(content);
-            }
-        }
-
-        if (!isMarkdown) {
-            $scope.editorChange = function() {};
-        }
-
         let lastSave = 0;
 
         /**
@@ -64,13 +51,13 @@ module.exports = function (ngApp, events) {
          */
         function startAutoSave() {
             currentContent.title = $('#name').val();
-            currentContent.html = $scope.editContent;
+            currentContent.html = $scope.editorHTML;
 
             autoSave = $interval(() => {
                 // Return if manually saved recently to prevent bombarding the server
                 if (Date.now() - lastSave < (1000*autosaveFrequency)/2) return;
                 let newTitle = $('#name').val();
-                let newHtml = $scope.editContent;
+                let newHtml = $scope.editorHTML;
 
                 if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
                     currentContent.html = newHtml;
@@ -87,12 +74,12 @@ module.exports = function (ngApp, events) {
          */
         function saveDraft() {
             if (!$scope.draftsEnabled) return;
+
             let data = {
                 name: $('#name').val(),
-                html: isMarkdown ? $sce.getTrustedHtml($scope.displayContent) : $scope.editContent
+                html: $scope.editorHTML
             };
-
-            if (isMarkdown) data.markdown = $scope.editContent;
+            if (isMarkdown) data.markdown = $scope.editorMarkdown;
 
             let url = window.baseUrl('/ajax/page/' + pageId + '/save-draft');
             $http.put(url, data).then(responseData => {
@@ -121,7 +108,15 @@ module.exports = function (ngApp, events) {
         };
 
         // Listen to save draft events from editor
-        $scope.$on('save-draft', saveDraft);
+        window.$events.listen('editor-save-draft', saveDraft);
+
+        // Listen to content changes from the editor
+        window.$events.listen('editor-html-change', html => {
+            $scope.editorHTML = html;
+        });
+        window.$events.listen('editor-markdown-change', markdown => {
+            $scope.editorMarkdown = markdown;
+        });
 
         /**
          * Discard the current draft and grab the current page
@@ -131,10 +126,12 @@ module.exports = function (ngApp, events) {
             let url = window.baseUrl('/ajax/page/' + pageId);
             $http.get(url).then(responseData => {
                 if (autoSave) $interval.cancel(autoSave);
+
                 $scope.draftText = trans('entities.pages_editing_page');
                 $scope.isUpdateDraft = false;
-                $scope.$broadcast('html-update', responseData.data.html);
-                $scope.$broadcast('markdown-update', responseData.data.markdown || responseData.data.html);
+                window.$events.emit('editor-html-update', responseData.data.html);
+                window.$events.emit('editor-markdown-update', responseData.data.markdown || responseData.data.html);
+
                 $('#name').val(responseData.data.name);
                 $timeout(() => {
                     startAutoSave();
