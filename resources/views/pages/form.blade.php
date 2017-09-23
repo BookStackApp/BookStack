@@ -62,9 +62,9 @@
 
         {{--WYSIWYG Editor--}}
         @if(setting('app-editor') === 'wysiwyg')
-            <div tinymce="editorOptions" mce-change="editorChange" mce-model="editContent" class="flex-fill flex">
+            <div wysiwyg-editor class="flex-fill flex">
                 <textarea id="html-editor"   name="html" rows="5" ng-non-bindable
-                          @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
+                    @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
             </div>
 
             @if($errors->has('html'))
@@ -74,7 +74,7 @@
 
         {{--Markdown Editor--}}
         @if(setting('app-editor') === 'markdown')
-            <div id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
+            <div ng-non-bindable id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
 
                 <div class="markdown-editor-wrap">
                     <div class="editor-toolbar">
@@ -82,12 +82,12 @@
                         <div class="float right buttons">
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>{{ trans('entities.pages_md_insert_image') }}</button>
                             &nbsp;|&nbsp;
-                            <button class="text-button" type="button" data-action="insertEntityLink"><i class="zmdi zmdi-link"></i>{{ trans('entities.pages_md_insert_link') }}</button>
+                            <button class="text-button" type="button" data-action="insertLink"><i class="zmdi zmdi-link"></i>{{ trans('entities.pages_md_insert_link') }}</button>
                         </div>
                     </div>
 
                     <div markdown-input md-change="editorChange" md-model="editContent" class="flex flex-fill">
-                        <textarea ng-non-bindable id="markdown-editor-input"  name="markdown" rows="5"
+                        <textarea  id="markdown-editor-input"  name="markdown" rows="5"
                             @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
                     </div>
 
@@ -101,10 +101,11 @@
                         <div class="page-content" ng-bind-html="displayContent"></div>
                     </div>
                 </div>
+                <input type="hidden" name="html"/>
 
             </div>
 
-            <input type="hidden" name="html" ng-value="displayContent">
+
 
             @if($errors->has('markdown'))
                 <div class="text-neg text-small">{{ $errors->first('markdown') }}</div>
