@@ -80,9 +80,7 @@ require("./vues/vues");
 require("./components");
 
 // Load in angular specific items
-const Directives = require('./directives');
 const Controllers = require('./controllers');
-Directives(ngApp, window.$events);
 Controllers(ngApp, window.$events);
 
 //Global jQuery Config & Extensions
