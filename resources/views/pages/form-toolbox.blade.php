@@ -1,5 +1,5 @@
 
-<div toolbox class="floating-toolbox">
+<div editor-toolbox class="floating-toolbox">
 
     <div class="tabs primary-background-light">
         <span toolbox-toggle><i class="zmdi zmdi-caret-left-circle"></i></span>
