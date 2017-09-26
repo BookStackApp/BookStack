@@ -250,6 +250,7 @@ return [
     'comment_saving' => 'Saving comment...',
     'comment_deleting' => 'Deleting comment...',
     'comment_new' => 'New Comment',
+    'comment_add' => 'Add Comment',
     'comment_created' => 'commented :createDiff',
     'comment_updated' => 'Updated :updateDiff by :username',
     'comment_deleted_success' => 'Comment deleted',
