@@ -233,4 +233,24 @@ return [
     'profile_not_created_pages' => ':userNameはページを作成していません',
     'profile_not_created_chapters' => ':userNameはチャプターを作成していません',
     'profile_not_created_books' => ':userNameはブックを作成していません',
+
+    /**
+     * Comments
+     */
+    'comment' => 'コメント',
+    'comments' => 'コメント',
+    'comment_placeholder' => 'コメントを入力してください',
+    'comment_count' => '{0} コメントはありません|{1} 1 件|[2,*] :count 件',
+    'comment_save' => 'コメントを保存',
+    'comment_saving' => 'コメントを保存中...',
+    'comment_deleting' => 'コメントを削除中...',
+    'comment_new' => '新しいコメント',
+    'comment_add' => 'コメントする',
+    'comment_created' => '作成日 :createDiff',
+    'comment_updated' => '更新日 :updateDiff by :username',
+    'comment_deleted_success' => 'コメントを削除しました',
+    'comment_created_success' => 'コメントを追加しました',
+    'comment_updated_success' => 'コメントを更新しました',
+    'comment_delete_confirm' => '本当に削除しますか?',
+    'comment_in_reply_to' => ':commentIdへ返信',
 ];
