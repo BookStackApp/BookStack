@@ -58,16 +58,6 @@ window.$http = axiosInstance;
 Vue.prototype.$http = axiosInstance;
 Vue.prototype.$events = window.$events;
 
-
-// AngularJS - Create application and load components
-const angular = require("angular");
-require("angular-resource");
-require("angular-animate");
-require("angular-sanitize");
-require("angular-ui-sortable");
-
-let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
-
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
 const Translations = require("./translations");
@@ -79,9 +69,6 @@ window.trans_choice = translator.getPlural.bind(translator);
 require("./vues/vues");
 require("./components");
 
-// Load in angular specific items
-const Controllers = require('./controllers');
-Controllers(ngApp, window.$events);
 
 //Global jQuery Config & Extensions
 
