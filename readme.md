@@ -76,7 +76,6 @@ The BookStack source is provided under the MIT License.
 These are the great open-source projects used to help build BookStack:
 
 * [Laravel](http://laravel.com/)
-* [AngularJS](https://angularjs.org/)
 * [jQuery](https://jquery.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [CodeMirror](https://codemirror.net)
