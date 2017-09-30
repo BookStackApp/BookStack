@@ -382,11 +382,13 @@ class SearchService
     protected function generateTermArrayFromText($text, $scoreAdjustment = 1)
     {
         $tokenMap = []; // {TextToken => OccurrenceCount}
-        $splitText = explode(' ', $text);
-        foreach ($splitText as $token) {
-            if ($token === '') continue;
+        $splitChars = " \n\t.,";
+        $token = strtok($text, $splitChars);
+
+        while ($token !== false) {
             if (!isset($tokenMap[$token])) $tokenMap[$token] = 0;
             $tokenMap[$token]++;
+            $token = strtok($splitChars);
         }
 
         $terms = [];
