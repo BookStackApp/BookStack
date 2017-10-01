@@ -29,6 +29,7 @@ return [
     'edit' => 'Modifica',
     'sort' => 'Ordina',
     'move' => 'Muovi',
+    'reply' => 'Rispondi',
     'delete' => 'Elimina',
     'search' => 'Cerca',
     'search_clear' => 'Pulisci Ricerca',
