@@ -96,7 +96,7 @@ let methods = {
         window.$http.put(url, data).then(response => {
             draftErroring = false;
             let updateTime = moment.utc(moment.unix(response.data.timestamp)).toDate();
-            if (!this.isNewPageDraft) this.isUpdateDraft = true;
+            if (!this.isNewDraft) this.isUpdateDraft = true;
             this.draftNotifyChange(response.data.message + moment(updateTime).format('HH:mm'));
             lastSave = Date.now();
         }, errorRes => {
