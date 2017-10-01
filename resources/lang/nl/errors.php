@@ -60,6 +60,12 @@ return [
     'role_system_cannot_be_deleted' => 'Dit is een systeemrol en kan niet verwijderd worden',
     'role_registration_default_cannot_delete' => 'Deze rol kan niet verwijerd worden zolang dit de standaardrol na registratie is.',
 
+    // Comments
+    'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de reacties.',
+    'cannot_add_comment_to_draft' => 'U kunt geen reacties toevoegen aan een concept.',
+    'comment_add' => 'Er is een fout opgetreden tijdens het toevoegen van de reactie.',
+    'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
+    'empty_comment' => 'Kan geen lege reactie toevoegen.',
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
     'sorry_page_not_found' => 'Sorry, de pagina die je zocht is niet beschikbaar.',
@@ -67,11 +73,4 @@ return [
     'error_occurred' => 'Er Ging Iets Fout',
     'app_down' => ':appName is nu niet beschikbaar',
     'back_soon' => 'Komt snel weer online.',
-
-    // Comments
-    'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de reacties.',
-    'cannot_add_comment_to_draft' => 'U kunt geen reacties toevoegen aan een ontwerp.',
-    'comment_add' => 'Er is een fout opgetreden tijdens het toevoegen van de reactie.',
-    'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
-    'empty_comment' => 'Kan geen lege reactie toevoegen.',
 ];
