@@ -11,6 +11,9 @@ let componentMapping = {
     'sidebar': require('./sidebar'),
     'page-picker': require('./page-picker'),
     'page-comments': require('./page-comments'),
+    'wysiwyg-editor': require('./wysiwyg-editor'),
+    'markdown-editor': require('./markdown-editor'),
+    'editor-toolbox': require('./editor-toolbox'),
 };
 
 window.components = {};

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e6d32752d02dae662bedc69fa5856feb",
-    "content-hash": "5f0f4e912f1207e761caf9344f2308a0",
+    "hash": "aa5f3333b909857a179e6aa9c30ab9ab",
+    "content-hash": "dc4c98aa8942f27fde6a9faa440e1a74",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2072,6 +2072,43 @@
             ],
             "description": "Easily add new or override built-in providers in Laravel Socialite.",
             "time": "2017-02-07 07:26:42"
+        },
+        {
+            "name": "socialiteproviders/microsoft-azure",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Microsoft-Azure.git",
+                "reference": "d7a703a782eb9f7eae0db803beaa3ddec19ef372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Microsoft-Azure/zipball/d7a703a782eb9f7eae0db803beaa3ddec19ef372",
+                "reference": "d7a703a782eb9f7eae0db803beaa3ddec19ef372",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Azure\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Hemmings",
+                    "email": "chris@hemmin.gs"
+                }
+            ],
+            "description": "Microsoft Azure OAuth2 Provider for Laravel Socialite",
+            "time": "2017-01-25 09:48:29"
         },
         {
             "name": "socialiteproviders/slack",
