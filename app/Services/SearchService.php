@@ -481,4 +481,23 @@ class SearchService
         });
     }
 
+    protected function filterSortBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    {
+        $functionName = camel_case('sort_by_' . $input);
+        if (method_exists($this, $functionName)) $this->$functionName($query, $model);
+    }
+
+
+    /**
+     * Sorting filter options
+     */
+
+    protected function sortByLastCommented(\Illuminate\Database\Eloquent\Builder $query, Entity $model)
+    {
+        $commentsTable = $this->db->getTablePrefix() . 'comments';
+        $morphClass = str_replace('\\', '\\\\', $model->getMorphClass());
+        $commentQuery = $this->db->raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM '.$commentsTable.' c1 LEFT JOIN '.$commentsTable.' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \''. $morphClass .'\' AND c2.created_at IS NULL) as comments');
+
+        $query->join($commentQuery, $model->getTable() . '.id', '=', 'comments.entity_id')->orderBy('last_commented', 'desc');
+    }
 }
