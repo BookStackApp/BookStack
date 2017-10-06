@@ -136,6 +136,7 @@ class ExportService
      * Bundle of the contents of a html file to be self-contained.
      * @param $htmlContent
      * @return mixed|string
+     * @throws \Exception
      */
     protected function containHtml($htmlContent)
     {
@@ -153,9 +154,27 @@ class ExportService
                 } else {
                     $pathString = $srcString;
                 }
+
+                // Attempt to find local files even if url not absolute
+                $base = baseUrl('/');
+                if (strpos($srcString, $base) === 0) {
+                    $isLocal = true;
+                    $relString = str_replace($base, '', $srcString);
+                    $pathString = public_path(trim($relString, '/'));
+                }
+
                 if ($isLocal && !file_exists($pathString)) continue;
                 try {
-                    $imageContent = file_get_contents($pathString);
+                    if ($isLocal) {
+                        $imageContent = file_get_contents($pathString);
+                    } else {
+                        $ch = curl_init();
+                        curl_setopt_array($ch, [CURLOPT_URL => $pathString, CURLOPT_RETURNTRANSFER => 1, CURLOPT_CONNECTTIMEOUT => 5]);
+                        $imageContent = curl_exec($ch);
+                        $err = curl_error($ch);
+                        curl_close($ch);
+                        if ($err) throw new \Exception("Image fetch failed, Received error: " . $err);
+                    }
                     $imageEncoded = 'data:image/' . pathinfo($pathString, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageContent);
                     $newImageString = str_replace($srcString, $imageEncoded, $oldImgString);
                 } catch (\ErrorException $e) {
