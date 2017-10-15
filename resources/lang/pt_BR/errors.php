@@ -41,6 +41,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Falou ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',
+    'page_custom_home_deletion' => 'Não pode deletar uma página que está definida como página inicial',
 
     // Entities
     'entity_not_found' => 'Entidade não encontrada',
@@ -60,6 +61,13 @@ return [
     'role_system_cannot_be_deleted' => 'Esse perfil é um perfil de sistema e não pode ser excluído',
     'role_registration_default_cannot_delete' => 'Esse perfil não poderá se excluído enquando estiver registrado como o perfil padrão',
 
+    // comments
+    'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
+    'cannot_add_comment_to_draft' => 'Você não pode adicionar comentários a um rascunho.',
+    'comment_add' => 'Ocorreu um erro ao adicionar o comentário.',
+    'comment_delete' => 'Ocorreu um erro ao excluir o comentário.',
+    'empty_comment' => 'Não é possível adicionar um comentário vazio.',
+
     // Error pages
     '404_page_not_found' => 'Página não encontrada',
     'sorry_page_not_found' => 'Desculpe, a página que você está procurando não pôde ser encontrada.',
@@ -67,11 +75,4 @@ return [
     'error_occurred' => 'Um erro ocorreu',
     'app_down' => ':appName está fora do ar no momento',
     'back_soon' => 'Voltaremos em seguida.',
-
-    // comments
-    'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
-    'cannot_add_comment_to_draft' => 'Você não pode adicionar comentários a um rascunho.',
-    'comment_add' => 'Ocorreu um erro ao adicionar o comentário.',
-    'comment_delete' => 'Ocorreu um erro ao excluir o comentário.',
-    'empty_comment' => 'Não é possível adicionar um comentário vazio.',
 ];
