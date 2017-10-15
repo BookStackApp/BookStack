@@ -41,6 +41,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
+    'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
 
     // Entities
     'entity_not_found' => 'Entity not found',

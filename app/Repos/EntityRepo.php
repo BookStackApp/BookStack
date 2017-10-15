@@ -4,6 +4,7 @@ use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Page;
 use BookStack\PageRevision;
 use BookStack\Services\AttachmentService;
@@ -1073,6 +1074,7 @@ class EntityRepo
     /**
      * Destroy a given page along with its dependencies.
      * @param Page $page
+     * @throws NotifyException
      */
     public function destroyPage(Page $page)
     {
@@ -1083,6 +1085,12 @@ class EntityRepo
         $page->permissions()->delete();
         $this->permissionService->deleteJointPermissionsForEntity($page);
         $this->searchService->deleteEntityTerms($page);
+
+        // Check if set as custom homepage
+        $customHome = setting('app-homepage', '0:');
+        if (intval($page->id) === intval(explode(':', $customHome)[0])) {
+            throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
+        }
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);
