@@ -7,7 +7,7 @@
     </div>
 @endif
 
-<div class="right" ng-non-bindable>
+<div class="right" v-pre>
     @if($activity->user)
         <a href="{{ $activity->user->getProfileUrl() }}">{{ $activity->user->name }}</a>
     @else
