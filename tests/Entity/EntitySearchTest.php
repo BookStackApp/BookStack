@@ -33,13 +33,13 @@ class EntitySearchTest extends TestCase
 
     public function test_searching_accents_and_small_terms()
     {
-        $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'some áéííúü¿¡ test content {a2 orange dog']);
+        $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'some áéííúü¿¡ test content a2 orange dog']);
         $this->asEditor();
 
         $accentSearch = $this->get('/search?term=' . urlencode('áéíí'));
         $accentSearch->assertStatus(200)->assertSee($page->name);
 
-        $smallSearch = $this->get('/search?term=' . urlencode('{a'));
+        $smallSearch = $this->get('/search?term=' . urlencode('a2'));
         $smallSearch->assertStatus(200)->assertSee($page->name);
     }
 
