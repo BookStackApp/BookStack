@@ -324,9 +324,10 @@ class PageController extends Controller
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $book = $page->book;
         $this->checkOwnablePermission('page-delete', $page);
+        $this->entityRepo->destroyPage($page);
+
         Activity::addMessage('page_delete', $book->id, $page->name);
         session()->flash('success', trans('entities.pages_delete_success'));
-        $this->entityRepo->destroyPage($page);
         return redirect($book->getUrl());
     }
 
