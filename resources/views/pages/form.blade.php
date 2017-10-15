@@ -51,7 +51,7 @@
     </div>
 
     {{--Title input--}}
-    <div class="title-input page-title clearfix" ng-non-bindable>
+    <div class="title-input page-title clearfix" v-pre>
         <div class="input">
             @include('form/text', ['name' => 'name', 'placeholder' => trans('entities.pages_title')])
         </div>
@@ -63,7 +63,7 @@
         {{--WYSIWYG Editor--}}
         @if(setting('app-editor') === 'wysiwyg')
             <div wysiwyg-editor class="flex-fill flex">
-                <textarea id="html-editor"   name="html" rows="5" ng-non-bindable
+                <textarea id="html-editor"  name="html" rows="5" v-pre
                     @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
             </div>
 
@@ -74,7 +74,7 @@
 
         {{--Markdown Editor--}}
         @if(setting('app-editor') === 'markdown')
-            <div ng-non-bindable id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
+            <div v-pre id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
 
                 <div class="markdown-editor-wrap">
                     <div class="editor-toolbar">

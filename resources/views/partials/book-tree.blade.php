@@ -1,4 +1,4 @@
-<div class="card book-tree" ng-non-bindable>
+<div class="card book-tree" v-pre>
     <h3><i class="zmdi zmdi-book"></i> {{ trans('entities.books_navigation') }}</h3>
     <div class="body">
         <ul class="sidebar-page-list menu">

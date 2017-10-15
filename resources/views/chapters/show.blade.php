@@ -1,19 +1,19 @@
 @extends('sidebar-layout')
 
 @section('toolbar')
-    <div class="col-sm-6 col-xs-3 faded" ng-non-bindable>
+    <div class="col-sm-6 col-xs-3 faded" v-pre>
         @include('chapters._breadcrumbs', ['chapter' => $chapter])
     </div>
     <div class="col-sm-6 col-xs-9 faded">
         <div class="action-buttons">
-                        <span dropdown class="dropdown-container">
-                            <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
-                            <ul class="wide">
-                                <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                                <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                                <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                            </ul>
-                        </span>
+            <span dropdown class="dropdown-container">
+                <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
+                <ul class="wide">
+                    <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                    <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                    <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                </ul>
+            </span>
             @if(userCan('page-create', $chapter))
                 <a href="{{ $chapter->getUrl('/create-page') }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.pages_new') }}</a>
             @endif
@@ -96,13 +96,13 @@
 
 @section('body')
 
-    <div class="container small"  ng-non-bindable >
-        <h1>{{ $chapter->name }}</h1>
+    <div class="container small">
+        <h1 v-pre>{{ $chapter->name }}</h1>
         <div class="chapter-content" v-show="!searching">
-            <p class="text-muted">{!! nl2br(e($chapter->description)) !!}</p>
+            <p v-pre class="text-muted">{!! nl2br(e($chapter->description)) !!}</p>
 
             @if(count($pages) > 0)
-                <div class="page-list">
+                <div v-pre class="page-list">
                     <hr>
                     @foreach($pages as $page)
                         @include('pages/list-item', ['page' => $page])
@@ -110,7 +110,7 @@
                     @endforeach
                 </div>
             @else
-                <div class="well">
+                <div v-pre class="well">
                     <p class="text-muted italic">{{ trans('entities.chapters_empty') }}</p>
                     <p>
                         @if(userCan('page-create', $chapter))
