@@ -89,6 +89,14 @@ return [
         'version' => env('LDAP_VERSION', false),
         'email_attribute' => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),
-    ]
+    ],
+		
+	'okta' => [
+    'url' => env('OKTA_URL'),
+    'client_id' => env('OKTA_CLIENT_ID'),
+    'client_secret' => env('OKTA_CLIENT_SECRET'),
+    'redirect' => env('OKTA_REDIRECT'),
+	'name'          => 'Okta',
+	]
 
 ];
