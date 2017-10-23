@@ -5,8 +5,8 @@ Homestead.yaml
 /public/dist
 .idea
 /public/plugins
-/public/css
-/public/js
+/public/css/*.map
+/public/js/*.map
 /public/bower
 /public/build/
 /storage/images
