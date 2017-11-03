@@ -553,7 +553,7 @@ class EntityRepo
      */
     protected function nameToSlug($name)
     {
-        $slug = str_replace(' ', '-', strtolower($name));
+        $slug = str_replace(' ', '-', function_exists('mb_strtolower') ? mb_strtolower($name) : strtolower($name));
         $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', $slug);
         if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
         return $slug;
