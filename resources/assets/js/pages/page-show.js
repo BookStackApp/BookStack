@@ -156,53 +156,57 @@ let setupPageShow = window.setupPageShow = function (pageId) {
     if ('IntersectionObserver' in window &&
         'IntersectionObserverEntry' in window &&
         'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
-        $(document).ready(function () {
-            // fetch all the headings.
-            let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
-            // if headings are present, add observers.
-            if (headings.length > 0) {
-                addNavObserver(headings);
-            }
-        });
+        addPageHighlighting();
     }
 
-    let $pageNav = null;
-    function addNavObserver(headings) {
-        // Setup the intersection observer.
-        // margin top = -25px to trigger the threshold change before the heading
-        // has completely left the viewport on the top.
-        let intersectOpts = {
-            rootMargin: '-25px 0px 0px 0px',
-            threshold: 1.0
-        }
-        $pageNav = $('.sidebar-page-nav');
-        let pageNavObserver = new IntersectionObserver(cbHeadingVisible, intersectOpts);
+    function addPageHighlighting() {
+      let $pageNav = null;
 
-        // observe each heading
-        for (let i = 0; i !== headings.length; ++i) {
-            pageNavObserver.observe(headings[i]);
-        }
+      $(document).ready(function () {
+          // fetch all the headings.
+          let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
+          // if headings are present, add observers.
+          if (headings.length > 0) {
+              addNavObserver(headings);
+          }
+      });
+
+      function addNavObserver(headings) {
+          // Setup the intersection observer.
+          // margin top = -35px to trigger the threshold change before the heading
+          // has completely left the viewport on the top.
+          let intersectOpts = {
+              rootMargin: '-35px 0px 0px 0px',
+              threshold: 1.0
+          }
+          $pageNav = $('.sidebar-page-nav');
+          let pageNavObserver = new IntersectionObserver(cbHeadingVisible, intersectOpts);
+
+          // observe each heading
+          for (let i = 0; i !== headings.length; ++i) {
+              pageNavObserver.observe(headings[i]);
+          }
+      }
+
+      function cbHeadingVisible(entries, observer) {
+          let element = null;
+          for (let i = 0; i !== entries.length; ++i) {
+              let currentEntry = entries[i];
+              // check if its currently visible and its distance from top of viewport is less than 100
+              if (currentEntry.intersectionRatio <= 1 && currentEntry.boundingClientRect.y < 100) {
+                  element = currentEntry.target;
+              } else {
+                  break;
+              }
+          }
+          if (!element) {
+              return;
+          }
+          let elementId = element.id;
+          $pageNav.find('a').removeClass('current-heading');
+          $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
+      }
     }
-
-    function cbHeadingVisible(entries, observer) {
-        let element = null;
-        for (let i = 0; i !== entries.length; ++i) {
-            let currentEntry = entries[i];
-            // check if its currently visible and its distance from top of viewport is less than 100
-            if (currentEntry.intersectionRatio <= 1 && currentEntry.boundingClientRect.y < 100) {
-                element = currentEntry.target;
-            } else {
-                break;
-            }
-        }
-        if (!element) {
-            return;
-        }
-        let elementId = element.id;
-        $pageNav.find('a').removeClass('current-heading');
-        $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
-    }
-
 };
 
 module.exports = setupPageShow;
