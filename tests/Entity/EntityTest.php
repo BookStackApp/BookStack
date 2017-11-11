@@ -257,4 +257,15 @@ class EntityTest extends BrowserKitTest
             ->seeInElement('#recently-updated-pages', $page->name);
     }
 
+    public function test_slug_multi_byte_lower_casing()
+    {
+        $entityRepo = app(EntityRepo::class);
+        $book = $entityRepo->createFromInput('book', [
+            'name' => 'КНИГА'
+        ]);
+
+        $this->assertEquals('книга', $book->slug);
+    }
+
+
 }
