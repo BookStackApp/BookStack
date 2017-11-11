@@ -53,7 +53,7 @@ class RegisterController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
-        $this->middleware('guest')->except(['socialCallback', 'detachSocialAccount']);
+        $this->middleware('guest')->only(['getRegister', 'postRegister', 'socialRegister']);
         $this->socialAuthService = $socialAuthService;
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
