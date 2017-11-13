@@ -20,5 +20,13 @@ return [
     'image_preview' => 'Virtualização de Imagem',
     'image_upload_success' => 'Upload de imagem efetuado com sucesso',
     'image_update_success' => 'Upload de detalhes da imagem efetuado com sucesso',
-    'image_delete_success' => 'Imagem excluída com sucesso'
+    'image_delete_success' => 'Imagem excluída com sucesso',
+
+    /**
+     * Code editor
+     */
+    'code_editor' => 'Editar Código',
+    'code_language' => 'Linguagem do Código',
+    'code_content' => 'Código',
+    'code_save' => 'Salvar Código',
 ];

@@ -36,5 +36,7 @@ return [
     'book_delete_notification'    => 'Livro excluído com sucesso',
     'book_sort'                   => 'livro classificado',
     'book_sort_notification'      => 'Livro reclassificado com sucesso',
- 
+
+    // Other
+    'commented_on'                => 'comentou em',
 ];

@@ -18,6 +18,8 @@ return [
      */
     'sign_up' => 'Registrar-se',
     'log_in' => 'Entrar',
+    'log_in_with' => 'Entrar com :socialDriver',
+    'sign_up_with' => 'Registrar com :socialDriver',
     'logout' => 'Sair',
 
     'name' => 'Nome',
