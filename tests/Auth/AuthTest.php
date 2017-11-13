@@ -124,6 +124,45 @@ class AuthTest extends BrowserKitTest
             ->press('Create Account')
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
+
+        $this->visit('/')->seePageIs('/login')
+            ->type($user->email, '#email')
+            ->type($user->password, '#password')
+            ->press('Log In')
+            ->seePageIs('/register/confirm/awaiting')
+            ->seeText('Email Address Not Confirmed');
+    }
+
+    public function test_restricted_registration_with_confirmation_disabled()
+    {
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'false', 'registration-restrict' => 'example.com']);
+        $user = factory(\BookStack\User::class)->make();
+        // Go through registration process
+        $this->visit('/register')
+            ->type($user->name, '#name')
+            ->type($user->email, '#email')
+            ->type($user->password, '#password')
+            ->press('Create Account')
+            ->seePageIs('/register')
+            ->dontSeeInDatabase('users', ['email' => $user->email])
+            ->see('That email domain does not have access to this application');
+
+        $user->email = 'barry@example.com';
+
+        $this->visit('/register')
+            ->type($user->name, '#name')
+            ->type($user->email, '#email')
+            ->type($user->password, '#password')
+            ->press('Create Account')
+            ->seePageIs('/register/confirm')
+            ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
+
+        $this->visit('/')->seePageIs('/login')
+            ->type($user->email, '#email')
+            ->type($user->password, '#password')
+            ->press('Log In')
+            ->seePageIs('/register/confirm/awaiting')
+            ->seeText('Email Address Not Confirmed');
     }
 
     public function test_user_creation()

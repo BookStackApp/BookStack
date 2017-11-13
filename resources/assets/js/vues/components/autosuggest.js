@@ -125,6 +125,4 @@ const methods = {
 
 };
 
-const computed = [];
-
-module.exports = {template, data, props, methods, computed};
+module.exports = {template, data, props, methods};
