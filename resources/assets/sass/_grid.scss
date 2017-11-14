@@ -135,7 +135,7 @@ body.flexbox {
     width: 30%;
     left: 0;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     -ms-overflow-style: none;
     //background-color: $primary-faded;
     border-left: 1px solid #DDD;
