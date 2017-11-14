@@ -176,7 +176,7 @@ let setupPageShow = window.setupPageShow = function (pageId) {
           // margin top = -35px to trigger the threshold change before the heading
           // has completely left the viewport on the top.
           let intersectOpts = {
-              rootMargin: '-35px 0px 0px 0px',
+              rootMargin: '0px 0px 0px 0px',
               threshold: 1.0
           }
           $pageNav = $('.sidebar-page-nav');
@@ -189,22 +189,24 @@ let setupPageShow = window.setupPageShow = function (pageId) {
       }
 
       function cbHeadingVisible(entries, observer) {
-          let element = null;
           for (let i = 0; i !== entries.length; ++i) {
               let currentEntry = entries[i];
+              let element = currentEntry.target;
               // check if its currently visible and its distance from top of viewport is less than 100
-              if (currentEntry.intersectionRatio <= 1 && currentEntry.boundingClientRect.y < 100) {
-                  element = currentEntry.target;
+              if (currentEntry.intersectionRatio === 1) {
+                  highlightElement(element.id);
               } else {
-                  break;
+                  removeHighlight(element.id);
               }
           }
-          if (!element) {
-              return;
-          }
-          let elementId = element.id;
-          $pageNav.find('a').removeClass('current-heading');
-          $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
+      }
+
+      function highlightElement(elementId) {
+        $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
+      }
+
+      function removeHighlight(elementId) {
+          $pageNav.find('a[href="#' + elementId + '"]').removeClass('current-heading');
       }
     }
 };
