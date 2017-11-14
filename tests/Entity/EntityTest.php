@@ -11,7 +11,6 @@ class EntityTest extends BrowserKitTest
 
     public function test_entity_creation()
     {
-
         // Test Creation
         $book = $this->bookCreation();
         $chapter = $this->chapterCreation($book);
@@ -255,6 +254,27 @@ class EntityTest extends BrowserKitTest
             ->press('Save Page')
             ->visit('/')
             ->seeInElement('#recently-updated-pages', $page->name);
+    }
+
+    public function test_slug_multi_byte_lower_casing()
+    {
+        $entityRepo = app(EntityRepo::class);
+        $book = $entityRepo->createFromInput('book', [
+            'name' => 'КНИГА'
+        ]);
+
+        $this->assertEquals('книга', $book->slug);
+    }
+
+
+    public function test_slug_format()
+    {
+        $entityRepo = app(EntityRepo::class);
+        $book = $entityRepo->createFromInput('book', [
+            'name' => 'PartA / PartB / PartC'
+        ]);
+
+        $this->assertEquals('parta-partb-partc', $book->slug);
     }
 
 }

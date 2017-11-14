@@ -10,6 +10,7 @@ return [
     'save' => 'Salvar',
     'continue' => 'Continuar',
     'select' => 'Selecionar',
+    'more' => 'Mais',
 
     /**
      * Form Labels
@@ -28,12 +29,13 @@ return [
     'edit' => 'Editar',
     'sort' => 'Ordenar',
     'move' => 'Mover',
+    'reply' => 'Responder',
     'delete' => 'Excluir',
     'search' => 'Pesquisar',
     'search_clear' => 'Limpar Pesquisa',
     'reset' => 'Resetar',
     'remove' => 'Remover',
-
+    'add' => 'Adicionar',
 
     /**
      * Misc
@@ -43,6 +45,7 @@ return [
     'no_items' => 'Nenhum item disponível',
     'back_to_top' => 'Voltar ao topo',
     'toggle_details' => 'Alternar Detalhes',
+    'details' => 'Detalhes',
 
     /**
      * Header
