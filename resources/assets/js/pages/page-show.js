@@ -173,8 +173,6 @@ let setupPageShow = window.setupPageShow = function (pageId) {
 
       function addNavObserver(headings) {
           // Setup the intersection observer.
-          // margin top = -35px to trigger the threshold change before the heading
-          // has completely left the viewport on the top.
           let intersectOpts = {
               rootMargin: '0px 0px 0px 0px',
               threshold: 1.0
@@ -192,7 +190,7 @@ let setupPageShow = window.setupPageShow = function (pageId) {
           for (let i = 0; i !== entries.length; ++i) {
               let currentEntry = entries[i];
               let element = currentEntry.target;
-              // check if its currently visible and its distance from top of viewport is less than 100
+              // check if its currently visible
               if (currentEntry.intersectionRatio === 1) {
                   highlightElement(element.id);
               } else {
@@ -202,7 +200,7 @@ let setupPageShow = window.setupPageShow = function (pageId) {
       }
 
       function highlightElement(elementId) {
-        $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
+          $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
       }
 
       function removeHighlight(elementId) {
