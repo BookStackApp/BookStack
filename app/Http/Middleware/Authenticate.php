@@ -30,8 +30,11 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check() && setting('registration-confirmation') && !$this->auth->user()->email_confirmed) {
-            return redirect(baseUrl('/register/confirm/awaiting'));
+        if ($this->auth->check()) {
+            $requireConfirmation = (setting('registration-confirmation') || setting('registration-restrict'));
+            if ($requireConfirmation && !$this->auth->user()->email_confirmed) {
+                return redirect('/register/confirm/awaiting');
+            }
         }
 
         if ($this->auth->guest() && !setting('app-public')) {
