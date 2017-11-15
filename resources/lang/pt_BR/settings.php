@@ -1,13 +1,13 @@
 <?php
 
 return [
-    
+
     /**
      * Settings text strings
      * Contains all text strings used in the general settings sections of BookStack
      * including users and roles.
      */
-    
+
     'settings' => 'Configurações',
     'settings_save' => 'Salvar Configurações',
     'settings_save_success' => 'Configurações Salvas',
@@ -31,6 +31,9 @@ return [
     'app_logo_desc' => 'A imagem deve ter 43px de altura. <br>Imagens mais largas devem ser reduzidas.',
     'app_primary_color' => 'Cor primária da Aplicação',
     'app_primary_color_desc' => 'Esse valor deverá ser Hexadecimal. <br>Deixe em branco para que o Bookstack assuma a cor padrão.',
+    'app_homepage' => 'Página incial',
+    'app_homepage_desc' => 'Selecione a página para ser usada como página inicial em vez da padrão. Permissões da página serão ignoradas.',
+    'app_homepage_default' => 'Escolhida página inicial padrão',
 
     /**
      * Registration settings
@@ -101,6 +104,7 @@ return [
     'users_edit_success' => 'Usuário atualizado com sucesso',
     'users_avatar' => 'Imagem de Usuário',
     'users_avatar_desc' => 'Essa imagem deve ser um quadrado com aproximadamente 256px de altura e largura.',
+    'users_preferred_language' => 'Linguagem de Preferência',
     'users_social_accounts' => 'Contas Sociais',
     'users_social_accounts_info' => 'Aqui você pode conectar outras contas para acesso mais rápido. Desconectar uma conta não retira a possibilidade de acesso usando-a. Para revogar o acesso ao perfil através da conta social, você deverá fazê-lo na sua conta social.',
     'users_social_connect' => 'Contas conectadas',

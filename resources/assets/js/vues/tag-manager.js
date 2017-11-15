@@ -9,8 +9,6 @@ let data = {
 const components = {draggable, autosuggest};
 const directives = {};
 
-let computed = {};
-
 let methods = {
 
     addEmptyTag() {
@@ -64,5 +62,5 @@ function mounted() {
 }
 
 module.exports = {
-    data, computed, methods, mounted, components, directives
+    data, methods, mounted, components, directives
 };
