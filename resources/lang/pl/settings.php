@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => 'Ten obrazek powinien mieć nie więcej niż 43px w pionie. <br>Większe obrazki będą skalowane w dół.',
     'app_primary_color' => 'Podstawowy kolor aplikacji',
     'app_primary_color_desc' => 'To powinna być wartość HEX. <br>Zostaw to pole puste, by powrócić do podstawowego koloru.',
+    'app_disable_comments' => 'Wyłącz komentarze',
+    'app_disable_comments_desc' => 'Wyłącz komentarze na wszystkich stronach w aplikacji. Istniejące komentarze nie są pokazywane.',
 
     /**
      * Registration settings

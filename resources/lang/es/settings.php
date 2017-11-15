@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => 'Esta imagen debería de ser 43px en altura. <br>Iágenes grandes seán escaladas.',
     'app_primary_color' => 'Color primario de la aplicación',
     'app_primary_color_desc' => 'Esto debería ser un valor hexadecimal. <br>Deje el valor vaío para reiniciar al valor por defecto.',
+    'app_disable_comments' => 'Deshabilitar comentarios',
+    'app_disable_comments_desc' => 'Deshabilita los comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran. ',
 
     /**
      * Registration settings

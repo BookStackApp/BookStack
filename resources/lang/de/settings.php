@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => "Dieses Bild sollte 43px hoch sein.\nGrößere Bilder werden verkleinert.",
     'app_primary_color' => 'Primäre Anwendungsfarbe',
     'app_primary_color_desc' => "Dies sollte ein HEX Wert sein.\nWenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt.",
+    'app_disable_comments' => 'Kommentare deaktivieren',
+    'app_disable_comments_desc' => 'Deaktiviert Kommentare über alle Seiten in der Anwendung. Vorhandene Kommentare werden nicht angezeigt.',
 
     /**
      * Registration settings
