@@ -5,17 +5,15 @@ define('LARAVEL_START', microtime(true));
 
 /*
 |--------------------------------------------------------------------------
-| Register The Auto Loader
+| Initialize The App
 |--------------------------------------------------------------------------
 |
-| Composer provides a convenient, automatically generated class loader
-| for our application. We just need to utilize it! We'll require it
-| into the script here so that we do not have to worry about the
-| loading of any our classes "manually". Feels great to relax.
+| We need to get things going before we start up the app.
+| The init file loads everything in, in the correct order.
 |
 */
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/bootstrap/init.php';
 
 $app = require_once __DIR__.'/bootstrap/app.php';
 
