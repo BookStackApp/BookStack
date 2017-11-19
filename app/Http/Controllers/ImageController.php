@@ -107,7 +107,7 @@ class ImageController extends Controller
         $imageUpload = $request->file('file');
 
         try {
-            $uploadedTo = $request->has('uploaded_to') ? $request->get('uploaded_to') : 0;
+            $uploadedTo = $request->filled('uploaded_to') ? $request->get('uploaded_to') : 0;
             $image = $this->imageRepo->saveNew($imageUpload, $type, $uploadedTo);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);
@@ -162,7 +162,7 @@ class ImageController extends Controller
         $this->checkOwnablePermission('image-delete', $image);
 
         // Check if this image is used on any pages
-        $isForced = ($request->has('force') && ($request->get('force') === 'true') || $request->get('force') === true);
+        $isForced = in_array($request->get('force', ''), [true, 'true']);
         if (!$isForced) {
             $pageSearch = $entityRepo->searchForImage($image->url);
             if ($pageSearch !== false) {

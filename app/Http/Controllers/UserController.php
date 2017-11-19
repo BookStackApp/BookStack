@@ -34,9 +34,9 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $listDetails = [
-            'order' => $request->has('order') ? $request->get('order') : 'asc',
-            'search' => $request->has('search') ? $request->get('search') : '',
-            'sort' => $request->has('sort') ? $request->get('sort') : 'name',
+            'order' => $request->get('order', 'asc'),
+            'search' => $request->get('search', ''),
+            'sort' => $request->get('sort', 'name'),
         ];
         $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
         $this->setPageTitle(trans('settings.users'));
@@ -88,7 +88,7 @@ class UserController extends Controller
 
         $user->save();
 
-        if ($request->has('roles')) {
+        if ($request->filled('roles')) {
             $roles = $request->get('roles');
             $user->roles()->sync($roles);
         }
@@ -155,24 +155,24 @@ class UserController extends Controller
         $user->fill($request->all());
 
         // Role updates
-        if (userCan('users-manage') && $request->has('roles')) {
+        if (userCan('users-manage') && $request->filled('roles')) {
             $roles = $request->get('roles');
             $user->roles()->sync($roles);
         }
 
         // Password updates
-        if ($request->has('password') && $request->get('password') != '') {
+        if ($request->filled('password')) {
             $password = $request->get('password');
             $user->password = bcrypt($password);
         }
 
         // External auth id updates
-        if ($this->currentUser->can('users-manage') && $request->has('external_auth_id')) {
+        if ($this->currentUser->can('users-manage') && $request->filled('external_auth_id')) {
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
         // Save an user-specific settings
-        if ($request->has('setting')) {
+        if ($request->filled('setting')) {
             foreach ($request->get('setting') as $key => $value) {
                 setting()->putUser($user, $key, $value);
             }

@@ -183,7 +183,7 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent
-        if (!$request->has('sort-tree')) {
+        if (!$request->filled('sort-tree')) {
             return redirect($book->getUrl());
         }
 

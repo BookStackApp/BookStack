@@ -442,9 +442,10 @@ class EntityRepo
      */
     public function updateEntityPermissionsFromRequest($request, Entity $entity)
     {
-        $entity->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $entity->restricted = $request->get('restricted', '') === 'true';
         $entity->permissions()->delete();
-        if ($request->has('restrictions')) {
+
+        if ($request->filled('restrictions')) {
             foreach ($request->get('restrictions') as $roleId => $restrictions) {
                 foreach ($restrictions as $action => $value) {
                     $entity->permissions()->create([
@@ -454,6 +455,7 @@ class EntityRepo
                 }
             }
         }
+
         $entity->save();
         $this->permissionService->buildJointPermissionsForEntity($entity);
     }

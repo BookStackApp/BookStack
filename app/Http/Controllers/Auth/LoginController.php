@@ -72,13 +72,13 @@ class LoginController extends Controller
         // Explicitly log them out for now if they do no exist.
         if (!$user->exists) auth()->logout($user);
 
-        if (!$user->exists && $user->email === null && !$request->has('email')) {
+        if (!$user->exists && $user->email === null && !$request->filled('email')) {
             $request->flash();
             session()->flash('request-email', true);
             return redirect('/login');
         }
 
-        if (!$user->exists && $user->email === null && $request->has('email')) {
+        if (!$user->exists && $user->email === null && $request->filled('email')) {
             $user->email = $request->get('email');
         }
 

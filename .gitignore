@@ -2,8 +2,10 @@
 /node_modules
 Homestead.yaml
 .env
-/public/dist
 .idea
+npm-debug.log
+yarn-error.log
+/public/dist
 /public/plugins
 /public/css
 /public/js
@@ -18,5 +20,4 @@ yarn.lock
 nbproject
 .buildpath
 .project
-.settings/org.eclipse.wst.common.project.facet.core.xml
-.settings/org.eclipse.php.core.prefs
+.settings/

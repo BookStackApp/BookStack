@@ -36,7 +36,7 @@ class SearchController extends Controller
         $searchTerm = $request->get('term');
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $searchTerm]));
 
-        $page = $request->has('page') && is_int(intval($request->get('page'))) ? intval($request->get('page')) : 1;
+        $page = intval($request->get('page', '0')) ?: 1;
         $nextPageLink = baseUrl('/search?term=' . urlencode($searchTerm) . '&page=' . ($page+1));
 
         $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
@@ -88,8 +88,8 @@ class SearchController extends Controller
      */
     public function searchEntitiesAjax(Request $request)
     {
-        $entityTypes = $request->has('types') ? collect(explode(',', $request->get('types'))) : collect(['page', 'chapter', 'book']);
-        $searchTerm = ($request->has('term') && trim($request->get('term')) !== '') ? $request->get('term') : false;
+        $entityTypes = $request->filled('types') ? collect(explode(',', $request->get('types'))) : collect(['page', 'chapter', 'book']);
+        $searchTerm =  $request->get('term', false);
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {

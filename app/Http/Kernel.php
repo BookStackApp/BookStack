@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \BookStack\Http\Middleware\TrimStrings::class,
+        \BookStack\Http\Middleware\TrustProxies::class,
     ];
 
     /**
@@ -44,10 +45,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'can'        => \Illuminate\Auth\Middleware\Authorize::class,
         'auth'       => \BookStack\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'can'        => \Illuminate\Auth\Middleware\Authorize::class,
         'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'perm'       => \BookStack\Http\Middleware\PermissionMiddleware::class
     ];
 }
