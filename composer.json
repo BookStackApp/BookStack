@@ -59,12 +59,8 @@
             "php -r \"!file_exists('bootstrap/cache/compiled.php') || @unlink('bootstrap/cache/compiled.php');\""
         ],
         "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan cache:clear",
             "php artisan view:clear"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
@@ -76,6 +72,7 @@
         ]
     },
     "config": {
+        "optimize-autoloader": true,
         "preferred-install": "dist",
         "php": "7.0"
     }
