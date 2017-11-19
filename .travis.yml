@@ -15,7 +15,6 @@ before_script:
   - mysql -u root -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
   - mysql -u root -e "FLUSH PRIVILEGES;"
   - phpenv config-rm xdebug.ini
-  - composer dump-autoload --no-interaction
   - composer install --prefer-dist --no-interaction
   - php artisan clear-compiled -n
   - php artisan optimize -n
