@@ -17,6 +17,7 @@ class EventServiceProvider extends ServiceProvider
         SocialiteWasCalled::class => [
             'SocialiteProviders\Slack\SlackExtendSocialite@handle',
             'SocialiteProviders\Azure\AzureExtendSocialite@handle',
+            'SocialiteProviders\Okta\OktaExtendSocialite@handle',
         ],
     ];
 

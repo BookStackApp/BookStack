@@ -17,7 +17,8 @@
         "gathercontent/htmldiff": "^0.2.1",
         "barryvdh/laravel-snappy": "^0.4.0",
         "socialiteproviders/slack": "^3.0",
-        "socialiteproviders/microsoft-azure": "^3.0"
+        "socialiteproviders/microsoft-azure": "^3.0",
+        "socialiteproviders/okta": "^1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
