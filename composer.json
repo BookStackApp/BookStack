@@ -74,6 +74,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "php": "7.0"
+        "platform": {
+            "php": "7.0"
+        }
     }
 }
