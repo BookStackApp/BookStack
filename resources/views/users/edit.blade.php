@@ -45,9 +45,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="books-view-type">{{ trans('settings.users_books_view_type') }}</label>
-                                <select name="books_view_type" id="books-view-type">
-                                    <option @if($user->books_view_type === 'grid') selected @endif value="grid">Grid</option>
-                                    <option @if($user->books_view_type === 'list') selected @endif value="list">List</option>
+                                <select name="setting[books_view_type]" id="books-view-type">
+                                    <option @if(setting()->getUser($user, 'books_view_type', 'list') === 'list') selected @endif value="list">List</option>
+                                    <option @if(setting()->getUser($user, 'books_view_type', 'list') === 'grid') selected @endif value="grid">Grid</option>
                                 </select>
                             </div>
                         </div>

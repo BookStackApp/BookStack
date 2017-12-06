@@ -373,3 +373,51 @@ ul.pagination {
     border-bottom: 1px solid #DDD;
   }
 }
+
+// Books grid view
+.featured-image-container {
+  position: relative;
+  overflow: hidden;
+  background: #F2F2F2;
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    transition: all .5s ease;
+  }
+  img:hover {
+    transform: scale(1.15);
+    opacity: .5;
+  }
+}
+
+.book-grid-content {
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-top: 0;
+  border-bottom-width: 2px;
+  h2 {
+    font-size: 1.5em;
+    margin: 0 0 10px;
+  }
+  h2 a {
+    display: block;
+    line-height: 1.2;
+    color: #009688;;
+    text-decoration: none;
+  }
+  p {
+    font-size: .85em;
+    margin: 0 0 10px;
+    line-height: 1.6em;
+  }
+  p.small {
+    font-size: .8em;
+  }
+}
+
+.book-grid-item {
+  margin-bottom : 20px;
+}
