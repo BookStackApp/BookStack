@@ -97,9 +97,8 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_books_view_is_list()
     {
-        $editor = $this->getEditor([
-          'books_view_type' => 'list'
-        ]);
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'list');
 
         $this->actingAs($editor)
             ->visit('/books')
@@ -109,9 +108,8 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_books_view_is_grid()
     {
-        $editor = $this->getEditor([
-          'books_view_type' => 'grid'
-        ]);
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'grid');
 
         $this->actingAs($editor)
             ->visit('/books')
