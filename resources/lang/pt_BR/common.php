@@ -18,7 +18,8 @@ return [
     'name' => 'Nome',
     'description' => 'Descrição',
     'role' => 'Regra',
-
+    'cover_image' => 'Imagem de capa',
+    'cover_image_description' => 'Esta imagem deve ser aproximadamente 300x170px.',
     /**
      * Actions
      */
@@ -45,6 +46,7 @@ return [
     'no_items' => 'Nenhum item disponível',
     'back_to_top' => 'Voltar ao topo',
     'toggle_details' => 'Alternar Detalhes',
+    'toggle_thumbnails' => 'Alternar Miniaturas',
     'details' => 'Detalhes',
 
     /**

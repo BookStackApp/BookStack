@@ -39,15 +39,29 @@
 @stop
 
 @section('body')
-
-    <div class="container small" ng-non-bindable>
+    @if($booksViewType === 'list')
+        <div class="container small" ng-non-bindable>
+    @else
+        <div class="container" ng-non-bindable>
+    @endif
         <h1>{{ trans('entities.books') }}</h1>
         @if(count($books) > 0)
-            @foreach($books as $book)
-                @include('books/list-item', ['book' => $book])
-                <hr>
-            @endforeach
-            {!! $books->render() !!}
+            @if($booksViewType === 'list')
+                @foreach($books as $book)
+                    @include('books/list-item', ['book' => $book])
+                    <hr>
+                @endforeach
+                {!! $books->render() !!}
+            @else 
+             <div class="row auto-clear">
+                    @foreach($books as $key => $book)
+                            @include('books/grid-item', ['book' => $book])
+                    @endforeach
+                <div class="col-xs-12">
+                    {!! $books->render() !!}
+                </div>
+             </div>
+            @endif
         @else
             <p class="text-muted">{{ trans('entities.books_empty') }}</p>
             @if(userCan('books-create-all'))
@@ -55,5 +69,4 @@
             @endif
         @endif
     </div>
-
 @stop

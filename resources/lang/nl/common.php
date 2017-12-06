@@ -18,7 +18,8 @@ return [
     'name' => 'Naam',
     'description' => 'Beschrijving',
     'role' => 'Rol',
-
+    'cover_image' => 'Omslagfoto',
+    'cover_image_description' => 'Deze afbeelding moet ongeveer 300x170px zijn.',
     /**
      * Actions
      */
@@ -44,6 +45,7 @@ return [
     'no_items' => 'Geen items beschikbaar',
     'back_to_top' => 'Terug naar boven',
     'toggle_details' => 'Details Weergeven',
+    'toggle_thumbnails' => 'Thumbnails Weergeven',
 
     /**
      * Header

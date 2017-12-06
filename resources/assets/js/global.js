@@ -119,6 +119,19 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
     };
 });
 
+// Common jQuery actions
+$('[data-action="expand-entity-list-details"]').click(function() {
+    $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
+});
+
+// Toggle thumbnail::hide image and reduce grid size
+$(document).ready(function(){
+   $('[data-action="expand-thumbnail"]').click(function(){
+     $('.gallery-item').toggleClass("collapse").find('img').slideToggle(50);
+   });
+});
+
+
 // Detect IE for css
 if(navigator.userAgent.indexOf('MSIE')!==-1
     || navigator.appVersion.indexOf('Trident/') > 0
