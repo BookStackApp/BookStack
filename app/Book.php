@@ -17,14 +17,14 @@ class Book extends Entity
         }
         return baseUrl('/books/' . urlencode($this->slug));
     }
-    
+
     /**
      * Returns book cover image, if book cover not exists return default cover image.
-     * @param int $height - Height of the image
      * @param int $width - Width of the image
+     * @param int $height - Height of the image
      * @return string
      */
-    public function getBookCover($height = 170, $width = 300)
+    public function getBookCover($width = 440, $height = 250)
     {
         $default = baseUrl('/book_default_cover.png');
         if (!$this->image_id) return $default;
@@ -36,7 +36,7 @@ class Book extends Entity
         }
         return $cover;
     }
-    
+
     /**
      * Get the cover image of the book
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
