@@ -17,6 +17,8 @@ return [
     'name' => 'Name',
     'description' => 'Beschreibung',
     'role' => 'Rolle',
+    'cover_image' => 'Titelbild',
+    'cover_image_description' => 'Das Bild sollte eine Auflösung von 300x170px haben.',
 
     /**
      * Actions
@@ -43,7 +45,7 @@ return [
     'no_items' => 'Keine Einträge gefunden.',
     'back_to_top' => 'nach oben',
     'toggle_details' => 'Details zeigen/verstecken',
-
+    'toggle_thumbnails' => 'Thumbnails zeigen/verstecken',
     /**
      * Header
      */

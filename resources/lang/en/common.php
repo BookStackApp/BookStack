@@ -18,7 +18,9 @@ return [
     'name' => 'Name',
     'description' => 'Description',
     'role' => 'Role',
-
+    'cover_image' => 'Cover image',
+    'cover_image_description' => 'This image should be approx 300x170px.',
+    
     /**
      * Actions
      */
@@ -45,8 +47,8 @@ return [
     'no_items' => 'No items available',
     'back_to_top' => 'Back to top',
     'toggle_details' => 'Toggle Details',
+    'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => 'Details',
-
     /**
      * Header
      */

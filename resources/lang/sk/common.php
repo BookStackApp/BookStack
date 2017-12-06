@@ -17,7 +17,8 @@ return [
     'name' => 'Meno',
     'description' => 'Popis',
     'role' => 'Rola',
-
+    'cover_image' => 'Obal knihy',
+    'cover_image_description' => 'Tento obrázok by mal byť približne 300 x 170 pixelov.',
     /**
      * Actions
      */
@@ -43,6 +44,7 @@ return [
     'no_items' => 'Žiadne položky nie sú dostupné',
     'back_to_top' => 'Späť nahor',
     'toggle_details' => 'Prepnúť detaily',
+    'toggle_thumbnails' => 'Prepnúť náhľady',
 
     /**
      * Header

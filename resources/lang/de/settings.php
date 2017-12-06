@@ -96,6 +96,7 @@ return [
     'users_delete_warning' => 'Der Benutzer ":userName" wird aus dem System gelöscht.',
     'users_delete_confirm' => 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?',
     'users_delete_success' => 'Benutzer erfolgreich gelöscht.',
+    'users_books_view_type' => 'Bevorzugtes Display-Layout für Bücher',
     'users_edit' => 'Benutzer bearbeiten',
     'users_edit_profile' => 'Profil bearbeiten',
     'users_edit_success' => 'Benutzer erfolgreich aktualisisert',
