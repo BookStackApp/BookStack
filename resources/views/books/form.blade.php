@@ -16,7 +16,7 @@
         @include('components.image-picker', [
             'resizeHeight' => '512',
             'resizeWidth' => '512',
-            'showRemove' => true,
+            'showRemove' => false,
             'defaultImage' => baseUrl('/book_default_cover.png'),
             'currentImage' => @isset($model) ? $model->getBookCover() : baseUrl('/book_default_cover.png') ,
             'currentId' => @isset($model) ? $model->image_id : 0,
