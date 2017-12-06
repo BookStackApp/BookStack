@@ -11,7 +11,7 @@ class LanguageTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.']);
+        $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.', 'check.php']);
     }
 
     public function test_locales_config_key_set_properly()
