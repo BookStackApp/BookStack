@@ -84,6 +84,8 @@ class MarkdownEditor {
         };
         // Save draft
         extraKeys[`${metaKey}-S`] = cm => {window.$events.emit('editor-save-draft')};
+        // Save page
+        extraKeys[`${metaKey}-Enter`] = cm => {window.$events.emit('editor-save-page')};
         // Show link selector
         extraKeys[`Shift-${metaKey}-K`] = cm => {this.actionShowLinkSelector()};
         // Insert Link
