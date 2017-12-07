@@ -102,23 +102,28 @@ let setupPageShow = window.setupPageShow = function (pageId) {
     let $window = $(window);
     let $sidebar = $("#sidebar .scroll-body");
     let $bookTreeParent = $sidebar.parent();
+
     // Check the page is scrollable and the content is taller than the tree
     let pageScrollable = ($(document).height() > $window.height()) && ($sidebar.height() < $('.page-content').height());
+
     // Get current tree's width and header height
     let headerHeight = $("#header").height() + $(".toolbar").height();
     let isFixed = $window.scrollTop() > headerHeight;
-    // Function to fix the tree as a sidebar
+
+    // Fix the tree as a sidebar
     function stickTree() {
         $sidebar.width($bookTreeParent.width() + 15);
         $sidebar.addClass("fixed");
         isFixed = true;
     }
-    // Function to un-fix the tree back into position
+
+    // Un-fix the tree back into position
     function unstickTree() {
         $sidebar.css('width', 'auto');
         $sidebar.removeClass("fixed");
         isFixed = false;
     }
+
     // Checks if the tree stickiness state should change
     function checkTreeStickiness(skipCheck) {
         let shouldBeFixed = $window.scrollTop() > headerHeight;
@@ -160,25 +165,22 @@ let setupPageShow = window.setupPageShow = function (pageId) {
     }
 
     function addPageHighlighting() {
-      let $pageNav = null;
+      let pageNav = document.querySelector('.sidebar-page-nav');
 
-      $(document).ready(function () {
-          // fetch all the headings.
-          let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
-          // if headings are present, add observers.
-          if (headings.length > 0) {
-              addNavObserver(headings);
-          }
-      });
+      // fetch all the headings.
+      let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
+      // if headings are present, add observers.
+      if (headings.length > 0) {
+          addNavObserver(headings);
+      }
 
       function addNavObserver(headings) {
           // Setup the intersection observer.
           let intersectOpts = {
               rootMargin: '0px 0px 0px 0px',
               threshold: 1.0
-          }
-          $pageNav = $('.sidebar-page-nav');
-          let pageNavObserver = new IntersectionObserver(cbHeadingVisible, intersectOpts);
+          };
+          let pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
 
           // observe each heading
           for (let i = 0; i !== headings.length; ++i) {
@@ -186,26 +188,25 @@ let setupPageShow = window.setupPageShow = function (pageId) {
           }
       }
 
-      function cbHeadingVisible(entries, observer) {
-          for (let i = 0; i !== entries.length; ++i) {
+      function headingVisibilityChange(entries, observer) {
+          for (let i = 0; i < entries.length; i++) {
               let currentEntry = entries[i];
-              let element = currentEntry.target;
-              // check if its currently visible
-              if (currentEntry.intersectionRatio === 1) {
-                  highlightElement(element.id);
-              } else {
-                  removeHighlight(element.id);
-              }
+              let isVisible = (currentEntry.intersectionRatio === 1);
+              toggleAnchorHighlighting(currentEntry.target.id, isVisible);
           }
       }
 
-      function highlightElement(elementId) {
-          $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
-      }
-
-      function removeHighlight(elementId) {
-          $pageNav.find('a[href="#' + elementId + '"]').removeClass('current-heading');
-      }
+        function toggleAnchorHighlighting(elementId, shouldHighlight) {
+            let anchorsToHighlight = pageNav.querySelectorAll('a[href="#' + elementId + '"]');
+            for (let i = 0; i < anchorsToHighlight.length; i++) {
+                // Change below to use classList.toggle when IE support is dropped.
+                if (shouldHighlight) {
+                    anchorsToHighlight[i].classList.add('current-heading');
+                } else {
+                    anchorsToHighlight[i].classList.remove('current-heading');
+                }
+            }
+        }
     }
 };
 
