@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => 'Tento obrázok by mal mať 43px na výšku. <br>Veľké obrázky budú preškálované na menší rozmer.',
     'app_primary_color' => 'Primárna farba pre aplikáciu',
     'app_primary_color_desc' => 'Toto by mala byť hodnota v hex tvare. <br>Nechajte prázdne ak chcete použiť prednastavenú farbu.',
+    'app_disable_comments' => 'Zakázať komentáre',
+    'app_disable_comments_desc' => 'Zakázať komentáre na všetkých stránkach aplikácie. Existujúce komentáre sa nezobrazujú.',
 
     /**
      * Registration settings

@@ -131,7 +131,7 @@
     </div>
 
     @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
-    
+
 @stop
 
 @section('body')
@@ -148,10 +148,11 @@
         @include('pages/page-display')
 
     </div>
-
-    <div class="container small nopad">
-        @include('comments/comments', ['page' => $page])
-    </div>
+    @if ($commentsEnabled)
+      <div class="container small nopad">
+          @include('comments/comments', ['page' => $page])
+      </div>
+    @endif
 @stop
 
 @section('scripts')

@@ -34,6 +34,8 @@ return [
     'app_homepage' => 'Página incial',
     'app_homepage_desc' => 'Selecione a página para ser usada como página inicial em vez da padrão. Permissões da página serão ignoradas.',
     'app_homepage_default' => 'Escolhida página inicial padrão',
+    'app_disable_comments' => 'Desativar comentários',
+    'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo. Os comentários existentes não são exibidos.',
 
     /**
      * Registration settings

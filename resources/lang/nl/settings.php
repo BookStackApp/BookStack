@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => 'De afbeelding moet 43px hoog zijn. <br>Grotere afbeeldingen worden geschaald.',
     'app_primary_color' => 'Applicatie hoofdkleur',
     'app_primary_color_desc' => 'Geef een hexadecimale waarde. <br>Als je niks invult wordt de standaardkleur gebruikt.',
+    'app_disable_comments' => 'Reacties uitschakelen',
+    'app_disable_comments_desc' => 'Schakel opmerkingen uit op alle pagina\'s in de applicatie. Bestaande opmerkingen worden niet getoond.',
 
     /**
      * Registration settings
