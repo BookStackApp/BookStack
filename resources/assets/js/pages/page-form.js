@@ -71,6 +71,11 @@ function registerEditorShortcuts(editor) {
         window.$events.emit('editor-save-draft');
     });
 
+    // Save page shortcut
+    editor.shortcuts.add('meta+13', '', () => {
+        window.$events.emit('editor-save-page');
+    });
+
     // Loop through callout styles
     editor.shortcuts.add('meta+9', '', function() {
         let selectedNode = editor.selection.getNode();

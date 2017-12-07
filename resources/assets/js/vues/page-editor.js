@@ -34,8 +34,9 @@ function mounted() {
         this.draftText = trans('entities.pages_editing_page');
     }
 
-    // Listen to save draft events from editor
+    // Listen to save events from editor
     window.$events.listen('editor-save-draft', this.saveDraft);
+    window.$events.listen('editor-save-page', this.savePage);
 
     // Listen to content changes from the editor
     window.$events.listen('editor-html-change', html => {
@@ -106,6 +107,9 @@ let methods = {
         });
     },
 
+    savePage() {
+        this.$el.closest('form').submit();
+    },
 
     draftNotifyChange(text) {
         this.draftText = text;
