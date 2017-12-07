@@ -170,7 +170,7 @@ let setupPageShow = window.setupPageShow = function (pageId) {
       // fetch all the headings.
       let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
       // if headings are present, add observers.
-      if (headings.length > 0) {
+      if (headings.length > 0 && pageNav !== null) {
           addNavObserver(headings);
       }
 
