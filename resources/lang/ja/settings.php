@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => '高さ43pxで表示されます。これを上回る場合、自動で縮小されます。',
     'app_primary_color' => 'プライマリカラー',
     'app_primary_color_desc' => '16進数カラーコードで入力します。空にした場合、デフォルトの色にリセットされます。',
+    'app_disable_comments' => 'コメントを無効にする',
+    'app_disable_comments_desc' => 'アプリケーション内のすべてのページのコメントを無効にします。既存のコメントは表示されません。',
 
     /**
      * Registration settings
@@ -108,5 +110,5 @@ return [
     'users_social_disconnect' => 'アカウントを接続解除',
     'users_social_connected' => '「:socialAccount」がプロフィールに接続されました。',
     'users_social_disconnected' => '「:socialAccount」がプロフィールから接続解除されました。'
-    
+
 ];

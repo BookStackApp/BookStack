@@ -34,11 +34,12 @@ return [
     'app_homepage' => 'Homepage Applicazione',
     'app_homepage_desc' => 'Seleziona una pagina da mostrare nella home anzichè quella di default. I permessi della pagina sono ignorati per quella selezionata.',
     'app_homepage_default' => 'Homepage di default scelta',
+    'app_disable_comments' => 'Disattiva commenti',
+    'app_disable_comments_desc' => 'Disabilita i commenti su tutte le pagine nell\'applicazione. I commenti esistenti non sono mostrati. ',
 
     /**
      * Registration settings
      */
-
     'reg_settings' => 'Impostazioni Registrazione',
     'reg_allow' => 'Consentire Registrazione?',
     'reg_default_role' => 'Ruolo predefinito dopo la registrazione',
