@@ -234,4 +234,6 @@ return [
 
     ],
 
+    'proxies' => env('APP_PROXIES', ''),
+
 ];
