@@ -150,6 +150,63 @@ let setupPageShow = window.setupPageShow = function (pageId) {
             unstickTree();
         }
     });
+
+
+    // Check if support is present for IntersectionObserver
+    if ('IntersectionObserver' in window &&
+        'IntersectionObserverEntry' in window &&
+        'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+        addPageHighlighting();
+    }
+
+    function addPageHighlighting() {
+      let $pageNav = null;
+
+      $(document).ready(function () {
+          // fetch all the headings.
+          let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
+          // if headings are present, add observers.
+          if (headings.length > 0) {
+              addNavObserver(headings);
+          }
+      });
+
+      function addNavObserver(headings) {
+          // Setup the intersection observer.
+          let intersectOpts = {
+              rootMargin: '0px 0px 0px 0px',
+              threshold: 1.0
+          }
+          $pageNav = $('.sidebar-page-nav');
+          let pageNavObserver = new IntersectionObserver(cbHeadingVisible, intersectOpts);
+
+          // observe each heading
+          for (let i = 0; i !== headings.length; ++i) {
+              pageNavObserver.observe(headings[i]);
+          }
+      }
+
+      function cbHeadingVisible(entries, observer) {
+          for (let i = 0; i !== entries.length; ++i) {
+              let currentEntry = entries[i];
+              let element = currentEntry.target;
+              // check if its currently visible
+              if (currentEntry.intersectionRatio === 1) {
+                  highlightElement(element.id);
+              } else {
+                  removeHighlight(element.id);
+              }
+          }
+      }
+
+      function highlightElement(elementId) {
+          $pageNav.find('a[href="#' + elementId + '"]').addClass('current-heading');
+      }
+
+      function removeHighlight(elementId) {
+          $pageNav.find('a[href="#' + elementId + '"]').removeClass('current-heading');
+      }
+    }
 };
 
 module.exports = setupPageShow;

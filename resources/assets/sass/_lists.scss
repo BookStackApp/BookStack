@@ -82,6 +82,9 @@
   .h6 {
     margin-left: $nav-indent*4;
   }
+  .current-heading {
+    font-weight: bold;
+  }
 }
 
 // Sidebar list
