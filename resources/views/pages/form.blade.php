@@ -97,8 +97,7 @@
                     <div class="editor-toolbar">
                         <div class="">{{ trans('entities.pages_md_preview') }}</div>
                     </div>
-                    <div class="markdown-display">
-                        <div class="page-content"></div>
+                    <div class="markdown-display page-content">
                     </div>
                 </div>
                 <input type="hidden" name="html"/>

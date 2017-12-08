@@ -97,6 +97,17 @@ function registerEditorShortcuts(editor) {
 
 }
 
+/**
+ * Load custom HTML head content from the settings into the editor.
+ * @param editor
+ */
+function loadCustomHeadContent(editor) {
+    window.$http.get(window.baseUrl('/custom-head-content')).then(resp => {
+        if (!resp.data) return;
+        let head = editor.getDoc().querySelector('head');
+        head.innerHTML += resp.data;
+    });
+}
 
 /**
  * Create and enable our custom code plugin
@@ -321,6 +332,9 @@ module.exports = {
         if (content.indexOf('<img src="file://') !== -1) {
             args.content = '';
         }
+    },
+    init_instance_callback: function(editor) {
+        loadCustomHeadContent(editor);
     },
     setup: function (editor) {
 
