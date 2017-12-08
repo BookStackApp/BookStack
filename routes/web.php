@@ -135,6 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Other Pages
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
+    Route::get('/custom-head-content', 'HomeController@customHeadContent');
 
     // Settings
     Route::group(['prefix' => 'settings'], function() {

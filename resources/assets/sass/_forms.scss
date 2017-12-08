@@ -63,9 +63,10 @@
     padding: 0 $-m 0;
     margin-left: -1px;
     overflow-y: scroll;
-    .page-content {
-      margin: 0 auto;
-    }
+  }
+  .markdown-display.page-content {
+    margin: 0 auto;
+    max-width: 100%;
   }
 }
 .editor-toolbar {
