@@ -1,0 +1,29 @@
+{
+    "name": "laravel/browser-kit-testing",
+    "description": "Provides backwards compatibility for BrowserKit testing in Laravel 5.4.",
+    "keywords": ["laravel", "testing"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taylor Otwell",
+            "email": "taylor@laravel.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/css-selector": "~3.1",
+        "symfony/dom-crawler": "~3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravel\\BrowserKitTesting\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
