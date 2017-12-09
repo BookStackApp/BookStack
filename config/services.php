@@ -81,8 +81,8 @@ return [
     ],
 
     'okta' => [
-        'client_id' => env('OKTA_KEY'),
-        'client_secret' => env('OKTA_SECRET'),
+        'client_id' => env('OKTA_APP_ID'),
+        'client_secret' => env('OKTA_APP_SECRET'),
         'redirect' => env('APP_URL') . '/login/service/okta/callback', 
         'base_url' => env('OKTA_BASE_URL'), 
         'name'          => 'Okta',

@@ -1,5 +1,7 @@
 <?php namespace BookStack\Services;
 
+use BookStack\Http\Requests\Request;
+use GuzzleHttp\Exception\ClientException;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInException;
@@ -91,7 +93,6 @@ class SocialAuthService
     public function handleLoginCallback($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-
         // Get user details from social driver
         $socialUser = $this->socialite->driver($driver)->user();
         $socialId = $socialUser->getId();
@@ -135,7 +136,7 @@ class SocialAuthService
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => title_case($socialDriver)]);
         }
         
-        throw new SocialSignInException($message . '.', '/login');
+        throw new SocialSignInException($message, '/login');
     }
 
     /**
