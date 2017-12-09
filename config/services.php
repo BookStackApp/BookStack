@@ -80,6 +80,14 @@ return [
         'name'          => 'Microsoft Azure',
     ],
 
+    'okta' => [
+        'client_id' => env('OKTA_KEY'),
+        'client_secret' => env('OKTA_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/okta/callback', 
+        'base_url' => env('OKTA_BASE_URL'), 
+        'name'          => 'Okta',
+    ], 
+
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
         'dn' => env('LDAP_DN', false),

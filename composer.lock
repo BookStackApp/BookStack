@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5f180d7eca24ffd70ed8083f7a08107",
+    "content-hash": "7d60f09393b99551e9ffdb6622ed7ade",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.44.1",
+            "version": "3.45.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "3f88cb0b9eb6ca34b2823c1cb42e10ac4d52fa6d"
+                "reference": "d0abb0b1194fa64973b135191f56df991bc5787c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3f88cb0b9eb6ca34b2823c1cb42e10ac4d52fa6d",
-                "reference": "3f88cb0b9eb6ca34b2823c1cb42e10ac4d52fa6d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d0abb0b1194fa64973b135191f56df991bc5787c",
+                "reference": "d0abb0b1194fa64973b135191f56df991bc5787c",
                 "shasum": ""
             },
             "require": {
@@ -39,7 +39,7 @@
                 "ext-dom": "*",
                 "ext-openssl": "*",
                 "nette/neon": "^2.3",
-                "phpunit/phpunit": "^4.8.35|^5.4.0",
+                "phpunit/phpunit": "^4.8.35|^5.4.3",
                 "psr/cache": "^1.0"
             },
             "suggest": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-12-01T20:57:47+00:00"
+            "time": "2017-12-08T21:36:50+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -898,25 +898,25 @@
         },
         {
             "name": "knplabs/knp-snappy",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/snappy.git",
-                "reference": "e6a29846ca759ea268a1bca4455b8a14815a3976"
+                "reference": "68590ef3aa94425b1c0019cc28ce471729f51fcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/e6a29846ca759ea268a1bca4455b8a14815a3976",
-                "reference": "e6a29846ca759ea268a1bca4455b8a14815a3976",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/68590ef3aa94425b1c0019cc28ce471729f51fcb",
+                "reference": "68590ef3aa94425b1c0019cc28ce471729f51fcb",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
                 "psr/log": "^1.0",
-                "symfony/process": "~2.3|~3.0"
+                "symfony/process": "~2.3 || ~3.0 || ~4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.7"
+                "phpunit/phpunit": "~4.8.36"
             },
             "suggest": {
                 "h4cc/wkhtmltoimage-amd64": "Provides wkhtmltoimage-amd64 binary for Linux-compatible machines, use version `~0.12` as dependency",
@@ -960,20 +960,20 @@
                 "thumbnail",
                 "wkhtmltopdf"
             ],
-            "time": "2017-10-04T19:39:41+00:00"
+            "time": "2017-12-03T23:18:18+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.23",
+            "version": "v5.5.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "cb8ec95aa65fbaeeaf94026c8a9f04bb97c13777"
+                "reference": "06135405bb1f736dac5e9529ed1541fc446c9c0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/cb8ec95aa65fbaeeaf94026c8a9f04bb97c13777",
-                "reference": "cb8ec95aa65fbaeeaf94026c8a9f04bb97c13777",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/06135405bb1f736dac5e9529ed1541fc446c9c0f",
+                "reference": "06135405bb1f736dac5e9529ed1541fc446c9c0f",
                 "shasum": ""
             },
             "require": {
@@ -1093,7 +1093,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-12-04T14:19:08+00:00"
+            "time": "2017-12-07T01:28:21+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -2160,6 +2160,43 @@
             ],
             "description": "Microsoft Azure OAuth2 Provider for Laravel Socialite",
             "time": "2017-01-25T09:48:29+00:00"
+        },
+        {
+            "name": "socialiteproviders/okta",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Okta.git",
+                "reference": "dcda13432c80060cd84d4cb5f2af422d280ab895"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Okta/zipball/dcda13432c80060cd84d4cb5f2af422d280ab895",
+                "reference": "dcda13432c80060cd84d4cb5f2af422d280ab895",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~2.0 || ~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Okta\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chase Coney",
+                    "email": "chase.coney@gmail.com"
+                }
+            ],
+            "description": "Okta OAuth2 Provider for Laravel Socialite",
+            "time": "2017-11-21T05:31:47+00:00"
         },
         {
             "name": "socialiteproviders/slack",
@@ -4041,16 +4078,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "5.2.4",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "033ec97498cf530cc1be4199264cad568b19be26"
+                "reference": "661f34d0bd3f1a7225ef491a70a020ad23a057a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/033ec97498cf530cc1be4199264cad568b19be26",
-                "reference": "033ec97498cf530cc1be4199264cad568b19be26",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/661f34d0bd3f1a7225ef491a70a020ad23a057a1",
+                "reference": "661f34d0bd3f1a7225ef491a70a020ad23a057a1",
                 "shasum": ""
             },
             "require": {
@@ -4066,7 +4103,6 @@
                 "theseer/tokenizer": "^1.1"
             },
             "require-dev": {
-                "ext-xdebug": "^2.5",
                 "phpunit/phpunit": "^6.0"
             },
             "suggest": {
@@ -4075,7 +4111,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.2.x-dev"
+                    "dev-master": "5.3.x-dev"
                 }
             },
             "autoload": {
@@ -4090,7 +4126,7 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
+                    "email": "sebastian@phpunit.de",
                     "role": "lead"
                 }
             ],
@@ -4101,7 +4137,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-27T09:00:30+00:00"
+            "time": "2017-12-06T09:29:45+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4291,16 +4327,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.5.2",
+            "version": "6.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "24b708f2fd725bcef1c8153b366043381aa324f2"
+                "reference": "882e886cc928a0abd3c61282b2a64026237d14a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/24b708f2fd725bcef1c8153b366043381aa324f2",
-                "reference": "24b708f2fd725bcef1c8153b366043381aa324f2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/882e886cc928a0abd3c61282b2a64026237d14a4",
+                "reference": "882e886cc928a0abd3c61282b2a64026237d14a4",
                 "shasum": ""
             },
             "require": {
@@ -4314,7 +4350,7 @@
                 "phar-io/version": "^1.0",
                 "php": "^7.0",
                 "phpspec/prophecy": "^1.7",
-                "phpunit/php-code-coverage": "^5.2.3",
+                "phpunit/php-code-coverage": "^5.3",
                 "phpunit/php-file-iterator": "^1.4.3",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^1.0.9",
@@ -4371,7 +4407,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-02T05:36:24+00:00"
+            "time": "2017-12-06T09:42:03+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
