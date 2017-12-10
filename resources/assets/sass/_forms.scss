@@ -191,6 +191,41 @@ input:checked + .toggle-switch {
   }
 }
 
+.form-group[collapsible] {
+  margin-left: -$-m;
+  margin-right: -$-m;
+  padding: 0 $-m;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  .collapse-title {
+    margin-left: -$-m;
+    margin-right: -$-m;
+    padding: $-s $-m;
+  }
+  .collapse-title, .collapse-title label {
+    cursor: pointer;
+  }
+  .collapse-title label {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    color: inherit;
+  }
+  .collapse-title label:before {
+    display: inline-block;
+    content: '▸';
+    margin-right: $-m;
+    transition: all ease-in-out 400ms;
+    transform: rotate(0);
+  }
+  .collapse-content {
+    display: none;
+    padding-bottom: $-m;
+  }
+  &.open .collapse-title label:before {
+    transform: rotate(90deg);
+  }
+}
+
 .inline-input-style {
   display: block;
   width: 100%;

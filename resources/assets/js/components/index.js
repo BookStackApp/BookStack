@@ -15,6 +15,7 @@ let componentMapping = {
     'markdown-editor': require('./markdown-editor'),
     'editor-toolbox': require('./editor-toolbox'),
     'image-picker': require('./image-picker'),
+    'collapsible': require('./collapsible'),
 };
 
 window.components = {};
