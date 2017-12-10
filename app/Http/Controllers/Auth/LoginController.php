@@ -102,12 +102,21 @@ class LoginController extends Controller
 
     /**
      * Show the application login form.
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function getLogin()
+    public function getLogin(Request $request)
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         $authMethod = config('auth.method');
+
+        if ($request->has('email')) {
+            session()->flashInput([
+                'email' => $request->get('email'),
+                'password' => (config('app.env') === 'demo') ? $request->get('password', '') : ''
+            ]);
+        }
+
         return view('auth/login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
     }
 
