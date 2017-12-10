@@ -54,6 +54,7 @@ class HomeController extends Controller
     /**
      * Get a js representation of the current translations
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function getTranslations() {
         $locale = app()->getLocale();
@@ -84,6 +85,15 @@ class HomeController extends Controller
         return response($resp, 200, [
             'Content-Type' => 'application/javascript'
         ]);
+    }
+
+    /**
+     * Get custom head HTML, Used in ajax calls to show in editor.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function customHeadContent()
+    {
+        return view('partials/custom-head-content');
     }
 
 }

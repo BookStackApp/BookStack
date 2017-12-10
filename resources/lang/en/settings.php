@@ -34,6 +34,8 @@ return [
     'app_homepage' => 'Application Homepage',
     'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
     'app_homepage_default' => 'Default homepage view chosen',
+    'app_disable_comments' => 'Disable comments',
+    'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
     /**
      * Registration settings
@@ -94,6 +96,7 @@ return [
     'users_external_auth_id' => 'External Authentication ID',
     'users_password_warning' => 'Only fill the below if you would like to change your password:',
     'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
+    'users_books_view_type' => 'Preferred layout for books viewing',
     'users_delete' => 'Delete User',
     'users_delete_named' => 'Delete user :userName',
     'users_delete_warning' => 'This will fully delete this user with the name \':userName\' from the system.',

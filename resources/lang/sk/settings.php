@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => 'Tento obrázok by mal mať 43px na výšku. <br>Veľké obrázky budú preškálované na menší rozmer.',
     'app_primary_color' => 'Primárna farba pre aplikáciu',
     'app_primary_color_desc' => 'Toto by mala byť hodnota v hex tvare. <br>Nechajte prázdne ak chcete použiť prednastavenú farbu.',
+    'app_disable_comments' => 'Zakázať komentáre',
+    'app_disable_comments_desc' => 'Zakázať komentáre na všetkých stránkach aplikácie. Existujúce komentáre sa nezobrazujú.',
 
     /**
      * Registration settings
@@ -91,6 +93,7 @@ return [
     'users_external_auth_id' => 'Externé autentifikačné ID',
     'users_password_warning' => 'Pole nižšie vyplňte iba ak chcete zmeniť heslo:',
     'users_system_public' => 'Tento účet reprezentuje každého hosťovského používateľa, ktorý navštívi Vašu inštanciu. Nedá sa pomocou neho prihlásiť a je priradený automaticky.',
+    'users_books_view_type' => 'Preferované rozloženie pre prezeranie kníh',
     'users_delete' => 'Zmazať používateľa',
     'users_delete_named' => 'Zmazať používateľa :userName',
     'users_delete_warning' => ' Toto úplne odstráni používateľa menom \':userName\' zo systému.',

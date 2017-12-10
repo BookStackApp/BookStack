@@ -442,9 +442,10 @@ class EntityRepo
      */
     public function updateEntityPermissionsFromRequest($request, Entity $entity)
     {
-        $entity->restricted = $request->has('restricted') && $request->get('restricted') === 'true';
+        $entity->restricted = $request->get('restricted', '') === 'true';
         $entity->permissions()->delete();
-        if ($request->has('restrictions')) {
+
+        if ($request->filled('restrictions')) {
             foreach ($request->get('restrictions') as $roleId => $restrictions) {
                 foreach ($restrictions as $action => $value) {
                     $entity->permissions()->create([
@@ -454,6 +455,7 @@ class EntityRepo
                 }
             }
         }
+
         $entity->save();
         $this->permissionService->buildJointPermissionsForEntity($entity);
     }
@@ -553,8 +555,9 @@ class EntityRepo
      */
     protected function nameToSlug($name)
     {
-        $slug = str_replace(' ', '-', strtolower($name));
-        $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', $slug);
+        $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', mb_strtolower($name));
+        $slug = preg_replace('/\s{2,}/', ' ', $slug);
+        $slug = str_replace(' ', '-', $slug);
         if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
         return $slug;
     }

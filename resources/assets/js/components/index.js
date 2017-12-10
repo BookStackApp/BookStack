@@ -14,6 +14,8 @@ let componentMapping = {
     'wysiwyg-editor': require('./wysiwyg-editor'),
     'markdown-editor': require('./markdown-editor'),
     'editor-toolbox': require('./editor-toolbox'),
+    'image-picker': require('./image-picker'),
+    'collapsible': require('./collapsible'),
 };
 
 window.components = {};

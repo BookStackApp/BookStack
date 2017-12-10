@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => 'Esta imagen debería de ser 43px en altura. <br>Iágenes grandes seán escaladas.',
     'app_primary_color' => 'Color primario de la aplicación',
     'app_primary_color_desc' => 'Esto debería ser un valor hexadecimal. <br>Deje el valor vaío para reiniciar al valor por defecto.',
+    'app_disable_comments' => 'Deshabilitar comentarios',
+    'app_disable_comments_desc' => 'Deshabilita los comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran. ',
 
     /**
      * Registration settings
@@ -91,6 +93,7 @@ return [
     'users_external_auth_id' => 'ID externo de autenticación',
     'users_password_warning' => 'Solo rellene a continuación si desea cambiar su password:',
     'users_system_public' => 'Este usuario representa cualquier usuario invitado que visita la aplicación. No puede utilizarse para hacer login sio que es asignado automáticamente.',
+    'users_books_view_type' => 'Diseño de pantalla preferido para libros',
     'users_delete' => 'Borrar usuario',
     'users_delete_named' => 'Borrar usuario :userName',
     'users_delete_warning' => 'Se borrará completamente el usuario con el nombre \':userName\' del sistema.',

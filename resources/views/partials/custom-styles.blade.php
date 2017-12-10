@@ -7,6 +7,7 @@
     }
     .button-base, .button, input[type="button"], input[type="submit"] {
         background-color: {{ setting('app-color') }};
+        border-color: {{ setting('app-color') }};
     }
     .button-base:hover, .button:hover, input[type="button"]:hover, input[type="submit"]:hover, .button:focus {
         background-color: {{ setting('app-color') }};

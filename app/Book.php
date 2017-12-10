@@ -3,7 +3,7 @@
 class Book extends Entity
 {
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'image_id'];
 
     /**
      * Get the url for this book.
@@ -18,6 +18,33 @@ class Book extends Entity
         return baseUrl('/books/' . urlencode($this->slug));
     }
 
+    /**
+     * Returns book cover image, if book cover not exists return default cover image.
+     * @param int $width - Width of the image
+     * @param int $height - Height of the image
+     * @return string
+     */
+    public function getBookCover($width = 440, $height = 250)
+    {
+        $default = baseUrl('/book_default_cover.png');
+        if (!$this->image_id) return $default;
+
+        try {
+            $cover = $this->cover ? baseUrl($this->cover->getThumb($width, $height, false)) : $default;
+        } catch (\Exception $err) {
+            $cover = $default;
+        }
+        return $cover;
+    }
+
+    /**
+     * Get the cover image of the book
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function cover()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
     /*
      * Get the edit url for this book.
      * @return string

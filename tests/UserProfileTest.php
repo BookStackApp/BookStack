@@ -33,7 +33,7 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_profile_page_shows_created_content_counts()
     {
-        $newUser = $this->getEditor();
+        $newUser = $this->getNewBlankUser();
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
             ->see($newUser->name)
@@ -52,7 +52,7 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_profile_page_shows_recent_activity()
     {
-        $newUser = $this->getEditor();
+        $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
         \Activity::add($entities['book'], 'book_update', $entities['book']->id);
@@ -66,7 +66,7 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_clicking_user_name_in_activity_leads_to_profile_page()
     {
-        $newUser = $this->getEditor();
+        $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
         \Activity::add($entities['book'], 'book_update', $entities['book']->id);
@@ -94,5 +94,25 @@ class UserProfileTest extends BrowserKitTest
             ->seePageIs('/settings/users/' . $guestUser->id)
             ->see('cannot delete the guest user');
     }
-    
+
+    public function test_books_view_is_list()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'list');
+
+        $this->actingAs($editor)
+            ->visit('/books')
+            ->pageNotHasElement('.featured-image-container')
+            ->pageHasElement('.entity-list-item');
+    }
+
+    public function test_books_view_is_grid()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'grid');
+
+        $this->actingAs($editor)
+            ->visit('/books')
+            ->pageHasElement('.featured-image-container');
+    }
 }

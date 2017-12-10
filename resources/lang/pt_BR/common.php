@@ -10,6 +10,7 @@ return [
     'save' => 'Salvar',
     'continue' => 'Continuar',
     'select' => 'Selecionar',
+    'more' => 'Mais',
 
     /**
      * Form Labels
@@ -17,7 +18,8 @@ return [
     'name' => 'Nome',
     'description' => 'Descrição',
     'role' => 'Regra',
-
+    'cover_image' => 'Imagem de capa',
+    'cover_image_description' => 'Esta imagem deve ser aproximadamente 300x170px.',
     /**
      * Actions
      */
@@ -28,12 +30,13 @@ return [
     'edit' => 'Editar',
     'sort' => 'Ordenar',
     'move' => 'Mover',
+    'reply' => 'Responder',
     'delete' => 'Excluir',
     'search' => 'Pesquisar',
     'search_clear' => 'Limpar Pesquisa',
     'reset' => 'Resetar',
     'remove' => 'Remover',
-
+    'add' => 'Adicionar',
 
     /**
      * Misc
@@ -43,6 +46,8 @@ return [
     'no_items' => 'Nenhum item disponível',
     'back_to_top' => 'Voltar ao topo',
     'toggle_details' => 'Alternar Detalhes',
+    'toggle_thumbnails' => 'Alternar Miniaturas',
+    'details' => 'Detalhes',
 
     /**
      * Header

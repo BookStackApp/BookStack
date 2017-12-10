@@ -161,14 +161,22 @@ class PageController extends Controller
         $page->html = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
         $pageNav = $this->entityRepo->getPageNav($page->html);
-        $page->load(['comments.createdBy']);
+
+        // check if the comment's are enabled
+        $commentsEnabled = !setting('app-disable-comments');
+        if ($commentsEnabled) {
+            $page->load(['comments.createdBy']);
+        }
 
         Views::add($page);
         $this->setPageTitle($page->getShortName());
         return view('pages/show', [
             'page' => $page,'book' => $page->book,
-            'current' => $page, 'sidebarTree' => $sidebarTree,
-            'pageNav' => $pageNav]);
+            'current' => $page,
+            'sidebarTree' => $sidebarTree,
+            'commentsEnabled' => $commentsEnabled,
+            'pageNav' => $pageNav
+        ]);
     }
 
     /**

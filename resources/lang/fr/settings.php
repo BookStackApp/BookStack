@@ -31,7 +31,8 @@ return [
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',
     'app_primary_color_desc' => 'Cela devrait être une valeur hexadécimale. <br>Laisser vide pour rétablir la couleur par défaut.',
-
+    'app_disable_comments' => 'Désactiver les commentaires',
+    'app_disable_comments_desc' => 'Désactive les commentaires sur toutes les pages de l\'application. Les commentaires existants ne sont pas affichés.',
     /**
      * Registration settings
      */
@@ -91,6 +92,7 @@ return [
     'users_external_auth_id' => 'Identifiant d\'authentification externe',
     'users_password_warning' => 'Remplissez ce fomulaire uniquement si vous souhaitez changer de mot de passe:',
     'users_system_public' => 'Cet utilisateur représente les invités visitant votre instance. Il est assigné automatiquement aux invités.',
+    'users_books_view_type' => 'Disposition d\'affichage préférée pour les livres',
     'users_delete' => 'Supprimer un utilisateur',
     'users_delete_named' => 'Supprimer l\'utilisateur :userName',
     'users_delete_warning' => 'Ceci va supprimer \':userName\' du système.',

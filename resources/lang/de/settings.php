@@ -31,6 +31,8 @@ return [
     'app_logo_desc' => "Dieses Bild sollte 43px hoch sein.\nGrößere Bilder werden verkleinert.",
     'app_primary_color' => 'Primäre Anwendungsfarbe',
     'app_primary_color_desc' => "Dies sollte ein HEX Wert sein.\nWenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt.",
+    'app_disable_comments' => 'Kommentare deaktivieren',
+    'app_disable_comments_desc' => 'Deaktiviert Kommentare über alle Seiten in der Anwendung. Vorhandene Kommentare werden nicht angezeigt.',
 
     /**
      * Registration settings
@@ -96,6 +98,7 @@ return [
     'users_delete_warning' => 'Der Benutzer ":userName" wird aus dem System gelöscht.',
     'users_delete_confirm' => 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?',
     'users_delete_success' => 'Benutzer erfolgreich gelöscht.',
+    'users_books_view_type' => 'Bevorzugtes Display-Layout für Bücher',
     'users_edit' => 'Benutzer bearbeiten',
     'users_edit_profile' => 'Profil bearbeiten',
     'users_edit_success' => 'Benutzer erfolgreich aktualisisert',

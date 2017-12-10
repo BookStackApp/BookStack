@@ -17,7 +17,9 @@ return [
     'name' => 'Nazwa',
     'description' => 'Opis',
     'role' => 'Rola',
-
+    'cover_image' => 'Zdjęcie z okładki',
+    'cover_image_description' => 'Ten obraz powinien wynosić około 300 x 170 piksli.',
+    
     /**
      * Actions
      */

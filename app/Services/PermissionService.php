@@ -205,12 +205,17 @@ class PermissionService
         }
 
         $entities[] = $entity->book;
-        if ($entity->isA('page') && $entity->chapter_id) $entities[] = $entity->chapter;
+
+        if ($entity->isA('page') && $entity->chapter_id) {
+            $entities[] = $entity->chapter;
+        }
+
         if ($entity->isA('chapter')) {
             foreach ($entity->pages as $page) {
                 $entities[] = $page;
             }
         }
+
         $this->deleteManyJointPermissionsForEntities($entities);
         $this->buildJointPermissionsForEntities(collect($entities));
     }

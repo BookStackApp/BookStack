@@ -40,12 +40,14 @@ class BookController extends Controller
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
-        $this->setPageTitle('Books');
+        $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', 'list');
+        $this->setPageTitle(trans('entities.books'));
         return view('books/index', [
             'books' => $books,
             'recents' => $recents,
             'popular' => $popular,
-            'new' => $new
+            'new' => $new, 
+            'booksViewType' => $booksViewType
         ]);
     }
 
@@ -125,9 +127,9 @@ class BookController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
-        $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
-        Activity::add($book, 'book_update', $book->id);
-        return redirect($book->getUrl());
+         $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
+         Activity::add($book, 'book_update', $book->id);
+         return redirect($book->getUrl());
     }
 
     /**
@@ -183,7 +185,7 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent
-        if (!$request->has('sort-tree')) {
+        if (!$request->filled('sort-tree')) {
             return redirect($book->getUrl());
         }
 
