@@ -7,8 +7,8 @@ npm-debug.log
 yarn-error.log
 /public/dist
 /public/plugins
-/public/css
-/public/js
+/public/css/*.map
+/public/js/*.map
 /public/bower
 /public/build/
 /storage/images
