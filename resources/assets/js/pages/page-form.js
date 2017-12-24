@@ -220,6 +220,124 @@ function codePlugin() {
 }
 codePlugin();
 
+function drawIoPlugin() {
+
+    const drawIoUrl = 'https://www.draw.io/?embed=1&ui=atlas&spin=1&proto=json';
+    let iframe = null;
+    let pageEditor = null;
+
+    function isDrawing(node) {
+        return node.hasAttribute('drawio-diagram');
+    }
+
+    function showDrawingEditor(mceEditor) {
+        pageEditor = mceEditor;
+        iframe = document.createElement('iframe');
+        iframe.setAttribute('frameborder', '0');
+        window.addEventListener('message', drawReceive);
+        iframe.setAttribute('src', drawIoUrl);
+        iframe.setAttribute('class', 'fullscreen');
+        document.body.appendChild(iframe);
+    }
+
+    function drawReceive(event) {
+        if (!event.data || event.data.length < 1) return;
+        let message = JSON.parse(event.data);
+        console.log(message);
+        if (message.event === 'init') {
+            drawEventInit();
+        } else if (message.event === 'exit') {
+            drawEventClose();
+        } else if (message.event === 'save') {
+            drawEventSave(message);
+        } else if (message.event === 'export') {
+            drawEventExport(message);
+        }
+    }
+
+    function updateContent(svg) {
+        let svgWrap = document.createElement('div');
+        svgWrap.setAttribute('drawio-diagram', svg);
+        svgWrap.setAttribute('contenteditable', 'false');
+        pageEditor.insertContent(svgWrap.outerHTML);
+    }
+
+    function b64DecodeUnicode(str) {
+        str = str.split(';base64,')[1];
+        // Going backwards: from bytestream, to percent-encoding, to original string.
+        return decodeURIComponent(atob(str).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    }
+
+    function drawEventExport(message) {
+        updateContent(message.data);
+    }
+
+    function drawEventSave(message) {
+        drawPostMessage({action: 'export', format: 'svg', xml: message.xml, spin: 'Updating drawing'});
+    }
+
+    function drawEventInit() {
+        drawPostMessage({action: 'load', autosave: 1, xml: ''});
+    }
+
+    function drawEventClose() {
+        window.removeEventListener('message', drawReceive);
+        if (iframe) document.body.removeChild(iframe);
+    }
+
+    function drawPostMessage(data) {
+        iframe.contentWindow.postMessage(JSON.stringify(data), '*');
+    }
+
+    window.tinymce.PluginManager.add('drawio', function(editor, url) {
+
+        let $ = editor.$;
+
+        editor.addCommand('drawio', () => {
+            showDrawingEditor(editor);
+        });
+
+        editor.addButton('drawio', {
+            text: 'Drawing',
+            icon: false,
+            cmd: 'drawio'
+        });
+
+        editor.on('dblclick', event => {
+            let selectedNode = editor.selection.getNode();
+            if (!isDrawing(selectedNode)) return;
+            showDrawingEditor(editor);
+        });
+
+        editor.on('PreProcess', function (e) {
+            $('div[drawio-diagram]', e.node).
+            each((index, elem) => {
+                let $elem = $(elem);
+                let svgData = b64DecodeUnicode($elem.attr('drawio-diagram'));
+                $elem.html(svgData);
+            });
+        });
+
+        editor.on('SetContent', function () {
+
+            let drawings = $('body > div[drawio-diagram]');
+
+            if (!drawings.length) return;
+            editor.undoManager.transact(function () {
+                drawings.each((index, elem) => {
+                    let svgContent =  b64DecodeUnicode(elem.getAttribute('drawio-diagram'));
+                    elem.setAttribute('contenteditable', 'false');
+                    elem.innerHTML = svgContent;
+                });
+            });
+        });
+
+    });
+}
+drawIoPlugin();
+
 window.tinymce.PluginManager.add('customhr', function (editor) {
     editor.addCommand('InsertHorizontalRule', function () {
         let hrElem = document.createElement('hr');
@@ -259,12 +377,12 @@ module.exports = {
     statusbar: false,
     menubar: false,
     paste_data_images: false,
-    extended_valid_elements: 'pre[*]',
+    extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram]',
     automatic_uploads: false,
-    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre]",
-    plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
+    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[svg],+svg",
+    plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor drawio",
     imagetools_toolbar: 'imageoptions',
-    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
+    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen drawio",
     content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
     style_formats: [
         {title: "Header Large", format: "h2"},
