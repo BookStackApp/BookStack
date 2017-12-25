@@ -8,6 +8,7 @@
         @endif
         <a href="{{ $chapter->getUrl() }}" class="text-chapter entity-list-item-link">
             <i class="zmdi zmdi-collection-bookmark"></i><span class="entity-list-item-name">{{ $chapter->name }}</span>
+            <small class="small-title">{{ trans('entities.chapter') }}</small>
         </a>
     </h4>
 
