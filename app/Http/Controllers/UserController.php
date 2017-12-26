@@ -251,7 +251,9 @@ class UserController extends Controller
     }
 
     public function switchBookView($id, Request $request) {
-        $this->checkPermission('users-manage');
+        $this->checkPermissionOr('users-manage', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
         $viewType = $request->get('book_view_type');
 
         if (!in_array($viewType, ['grid', 'list'])) {
