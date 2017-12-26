@@ -34,6 +34,8 @@ return [
     'app_homepage' => 'Application Homepage',
     'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
     'app_homepage_default' => 'Default homepage view chosen',
+    'app_disable_comments' => 'Disable comments',
+    'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
     /**
      * Registration settings
@@ -121,12 +123,15 @@ return [
         'en' => 'English',
         'de' => 'Deutsch',
         'es' => 'Español',
+        'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
         'ja' => '日本語',
         'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский'
     ]
     ///////////////////////////////////
 ];

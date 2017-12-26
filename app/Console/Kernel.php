@@ -11,12 +11,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\ClearViews::class,
-        Commands\ClearActivity::class,
-        Commands\ClearRevisions::class,
-        Commands\RegeneratePermissions::class,
-        Commands\RegenerateSearch::class,
-        Commands\UpgradeDatabaseEncoding::class
+        //
     ];
 
     /**
@@ -28,5 +23,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //
+    }
+
+    /**
+     * Register the commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__.'/Commands');
     }
 }

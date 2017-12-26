@@ -54,14 +54,31 @@ Once done you can run `phpunit` in the application root directory to run all tes
 As part of BookStack v0.14 support for translations has been built in. All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
 
 You will also need to add the language to the `locales` array in the `config/app.php` file.
+
+There is a script available which compares translation content to `en` files to see what items are missing or redundant. This can be ran like so from your BookStack install folder:
+
+```bash
+# Syntax
+php resources/lang/check.php <lang>
+
+# Examples
+php resources/lang/check.php fr
+php resources/lang/check.php pt_BR
+```
  
- Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
+Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
  
 ## Contributing
 
 Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
 
-Pull requests are very welcome. If the scope of your pull request is very large it may be best to open the pull request early or create an issue for it to discuss how it will fit in to the project and plan out the merge.
+### Pull Request
+
+Pull requests are very welcome. If the scope of your pull request is large it may be best to open the pull request early or create an issue for it to discuss how it will fit in to the project and plan out the merge.
+
+Pull requests should be created from the `master` branch and should be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
+
+If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly. 
 
 ## Website, Docs & Blog 
 
@@ -76,7 +93,6 @@ The BookStack source is provided under the MIT License.
 These are the great open-source projects used to help build BookStack:
 
 * [Laravel](http://laravel.com/)
-* [AngularJS](https://angularjs.org/)
 * [jQuery](https://jquery.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [CodeMirror](https://codemirror.net)

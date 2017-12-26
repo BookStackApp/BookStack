@@ -19,7 +19,7 @@ return [
     'description' => 'Description',
     'role' => 'Role',
     'cover_image' => 'Cover image',
-    'cover_image_description' => 'This image should be approx 300x170px.',
+    'cover_image_description' => 'This image should be approx 440x250px.',
     
     /**
      * Actions
@@ -31,6 +31,7 @@ return [
     'edit' => 'Edit',
     'sort' => 'Sort',
     'move' => 'Move',
+    'reply' => 'Reply',
     'delete' => 'Delete',
     'search' => 'Search',
     'search_clear' => 'Clear Search',
@@ -48,6 +49,7 @@ return [
     'toggle_details' => 'Toggle Details',
     'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => 'Details',
+
     /**
      * Header
      */

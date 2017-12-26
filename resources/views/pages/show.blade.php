@@ -123,14 +123,15 @@
         </div>
     @endif
 
-    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
-
     <div class="card">
         <h3><i class="zmdi zmdi-info-outline"></i> {{ trans('common.details') }}</h3>
         <div class="body">
             @include('partials.entity-meta', ['entity' => $page])
         </div>
     </div>
+
+    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+
 @stop
 
 @section('body')
@@ -147,9 +148,11 @@
         @include('pages/page-display')
 
     </div>
-    <div class="container small">
-        @include('comments/comments', ['pageId' => $page->id])
-    </div>
+    @if ($commentsEnabled)
+      <div class="container small nopad">
+          @include('comments/comments', ['page' => $page])
+      </div>
+    @endif
 @stop
 
 @section('scripts')

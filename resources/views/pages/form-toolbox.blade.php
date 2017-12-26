@@ -1,5 +1,5 @@
 
-<div toolbox class="floating-toolbox">
+<div editor-toolbox class="floating-toolbox">
 
     <div class="tabs primary-background-light">
         <span toolbox-toggle><i class="zmdi zmdi-caret-left-circle"></i></span>
@@ -19,11 +19,11 @@
                 <div v-for="(tag, i) in tags" :key="tag.key" class="card drag-card">
                     <div class="handle" ><i class="zmdi zmdi-menu"></i></div>
                     <div>
-                        <autosuggest url="/ajax/tags/suggest/names" type="name" class="outline" :name="getTagFieldName(i, 'name')"
+                        <autosuggest url="{{ baseUrl('/ajax/tags/suggest/names') }}" type="name" class="outline" :name="getTagFieldName(i, 'name')"
                                      v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
                     </div>
                     <div>
-                        <autosuggest url="/ajax/tags/suggest/values" type="value" class="outline" :name="getTagFieldName(i, 'value')"
+                        <autosuggest url="{{ baseUrl('/ajax/tags/suggest/values') }}" type="value" class="outline" :name="getTagFieldName(i, 'value')"
                                      v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"/>
                     </div>
                     <div v-show="tags.length !== 1" class="text-center drag-card-action text-neg" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>

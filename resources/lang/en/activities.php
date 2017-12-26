@@ -37,4 +37,6 @@ return [
     'book_sort'                   => 'sorted book',
     'book_sort_notification'      => 'Book Successfully Re-sorted',
 
+    // Other
+    'commented_on'                => 'commented on',
 ];

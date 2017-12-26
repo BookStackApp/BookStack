@@ -3,6 +3,7 @@
 use BookStack\Entity;
 use BookStack\Role;
 use BookStack\Services\PermissionService;
+use BookStack\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\BrowserKitTesting\TestCase;
@@ -129,15 +130,25 @@ abstract class BrowserKitTest extends TestCase
     }
 
     /**
-     * Quick way to create a new user
+     * Get an instance of a user with 'editor' permissions
      * @param array $attributes
      * @return mixed
      */
     protected function getEditor($attributes = [])
     {
-        $user = factory(\BookStack\User::class)->create($attributes);
-        $role = Role::getRole('editor');
-        $user->attachRole($role);;
+        $user = \BookStack\Role::getRole('editor')->users()->first();
+        if (!empty($attributes)) $user->forceFill($attributes)->save();
+        return $user;
+    }
+
+    /**
+     * Get an instance of a user with 'viewer' permissions
+     * @return mixed
+     */
+    protected function getViewer()
+    {
+        $user = \BookStack\Role::getRole('viewer')->users()->first();
+        if (!empty($attributes)) $user->forceFill($attributes)->save();
         return $user;
     }
 

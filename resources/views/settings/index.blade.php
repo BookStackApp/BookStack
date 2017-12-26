@@ -39,6 +39,11 @@
                             @include('components.toggle-switch', ['name' => 'setting-app-secure-images', 'value' => setting('app-secure-images')])
                         </div>
                         <div class="form-group">
+                            <label>{{ trans('settings.app_disable_comments') }}</label>
+                            <p class="small">{{ trans('settings.app_disable_comments_desc') }}</p>
+                            @include('components.toggle-switch', ['name' => 'setting-app-disable-comments', 'value' => setting('app-disable-comments')])
+                        </div>
+                        <div class="form-group">
                             <label for="setting-app-editor">{{ trans('settings.app_editor') }}</label>
                             <p class="small">{{ trans('settings.app_editor_desc') }}</p>
                             <select name="setting-app-editor" id="setting-app-editor">

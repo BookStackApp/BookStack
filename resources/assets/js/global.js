@@ -58,40 +58,57 @@ window.$http = axiosInstance;
 Vue.prototype.$http = axiosInstance;
 Vue.prototype.$events = window.$events;
 
-
-// AngularJS - Create application and load components
-const angular = require("angular");
-require("angular-resource");
-require("angular-animate");
-require("angular-sanitize");
-require("angular-ui-sortable");
-
-let ngApp = angular.module('bookStack', ['ngResource', 'ngAnimate', 'ngSanitize', 'ui.sortable']);
-
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
 const Translations = require("./translations");
 let translator = new Translations(window.translations);
 window.trans = translator.get.bind(translator);
+window.trans_choice = translator.getPlural.bind(translator);
 
 
 require("./vues/vues");
 require("./components");
 
-// Load in angular specific items
-const Directives = require('./directives');
-const Controllers = require('./controllers');
-Directives(ngApp, window.$events);
-Controllers(ngApp, window.$events);
 
 //Global jQuery Config & Extensions
+
+/**
+ * Scroll the view to a specific element.
+ * @param {HTMLElement} element
+ */
+window.scrollToElement = function(element) {
+    if (!element) return;
+    let offset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    let top = element.getBoundingClientRect().top + offset;
+    $('html, body').animate({
+        scrollTop: top - 60 // Adjust to change final scroll position top margin
+    }, 300);
+};
+
+/**
+ * Scroll and highlight an element.
+ * @param {HTMLElement} element
+ */
+window.scrollAndHighlight = function(element) {
+    if (!element) return;
+    window.scrollToElement(element);
+    let color = document.getElementById('custom-styles').getAttribute('data-color-light');
+    let initColor = window.getComputedStyle(element).getPropertyValue('background-color');
+    element.style.backgroundColor = color;
+    setTimeout(() => {
+        element.classList.add('selectFade');
+        element.style.backgroundColor = initColor;
+    }, 10);
+    setTimeout(() => {
+        element.classList.remove('selectFade');
+        element.style.backgroundColor = '';
+    }, 3000);
+};
 
 // Smooth scrolling
 jQuery.fn.smoothScrollTo = function () {
     if (this.length === 0) return;
-    $('html, body').animate({
-        scrollTop: this.offset().top - 60 // Adjust to change final scroll position top margin
-    }, 300); // Adjust to change animations speed (ms)
+    window.scrollToElement(this[0]);
     return this;
 };
 
@@ -101,19 +118,6 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
 });
-
-// Common jQuery actions
-$('[data-action="expand-entity-list-details"]').click(function() {
-    $('.entity-list.compact').find('p').not('.empty-text').slideToggle(240);
-});
-
-// Toggle thumbnail::hide image and reduce grid size
-$(document).ready(function(){
-   $('[data-action="expand-thumbnail"]').click(function(){
-     $('.gallery-item').toggleClass("collapse").find('img').slideToggle(50);
-   });
-});
-
 
 // Detect IE for css
 if(navigator.userAgent.indexOf('MSIE')!==-1

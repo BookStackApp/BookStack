@@ -1,52 +1,53 @@
 "use strict";
-
 const Code = require('../code');
 
 /**
  * Handle pasting images from clipboard.
- * @param e  - event
- * @param editor - editor instance
+ * @param {ClipboardEvent} event
+ * @param editor
  */
-function editorPaste(e, editor) {
-    if (!e.clipboardData) return;
-    let items = e.clipboardData.items;
-    if (!items) return;
+function editorPaste(event, editor) {
+    if (!event.clipboardData || !event.clipboardData.items) return;
+    let items = event.clipboardData.items;
+
     for (let i = 0; i < items.length; i++) {
-        if (items[i].type.indexOf("image") === -1) return;
-
-        let file = items[i].getAsFile();
-        let formData = new FormData();
-        let ext = 'png';
-        let xhr = new XMLHttpRequest();
-
-        if (file.name) {
-            let fileNameMatches = file.name.match(/\.(.+)$/);
-            if (fileNameMatches) {
-                ext = fileNameMatches[1];
-            }
-        }
+        if (items[i].type.indexOf("image") === -1) continue;
+        event.preventDefault();
 
         let id = "image-" + Math.random().toString(16).slice(2);
         let loadingImage = window.baseUrl('/loading.gif');
-        editor.execCommand('mceInsertContent', false, `<img src="${loadingImage}" id="${id}">`);
-
-        let remoteFilename = "image-" + Date.now() + "." + ext;
-        formData.append('file', file, remoteFilename);
-        formData.append('_token', document.querySelector('meta[name="token"]').getAttribute('content'));
-
-        xhr.open('POST', window.baseUrl('/images/gallery/upload'));
-        xhr.onload = function () {
-            if (xhr.status === 200 || xhr.status === 201) {
-                let result = JSON.parse(xhr.responseText);
-                editor.dom.setAttrib(id, 'src', result.thumbs.display);
-            } else {
-                console.log('An error occurred uploading the image', xhr.responseText);
+        let file = items[i].getAsFile();
+        setTimeout(() => {
+            editor.insertContent(`<p><img src="${loadingImage}" id="${id}"></p>`);
+            uploadImageFile(file).then(resp => {
+                editor.dom.setAttrib(id, 'src', resp.thumbs.display);
+            }).catch(err => {
                 editor.dom.remove(id);
-            }
-        };
-        xhr.send(formData);
-        
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+        }, 10);
     }
+}
+
+/**
+ * Upload an image file to the server
+ * @param {File} file
+ */
+function uploadImageFile(file) {
+    if (file === null || file.type.indexOf('image') !== 0) return Promise.reject(`Not an image file`);
+
+    let ext = 'png';
+    if (file.name) {
+        let fileNameMatches = file.name.match(/\.(.+)$/);
+        if (fileNameMatches.length > 1) ext = fileNameMatches[1];
+    }
+
+    let remoteFilename = "image-" + Date.now() + "." + ext;
+    let formData = new FormData();
+    formData.append('file', file, remoteFilename);
+
+    return window.$http.post('/images/gallery/upload', formData).then(resp => (resp.data));
 }
 
 function registerEditorShortcuts(editor) {
@@ -64,6 +65,17 @@ function registerEditorShortcuts(editor) {
     editor.shortcuts.add('meta+e', '', ['codeeditor', false, 'pre']);
     editor.shortcuts.add('meta+8', '', ['FormatBlock', false, 'code']);
     editor.shortcuts.add('meta+shift+E', '', ['FormatBlock', false, 'code']);
+
+    // Save draft shortcut
+    editor.shortcuts.add('meta+S', '', () => {
+        window.$events.emit('editor-save-draft');
+    });
+
+    // Save page shortcut
+    editor.shortcuts.add('meta+13', '', () => {
+        window.$events.emit('editor-save-page');
+    });
+
     // Loop through callout styles
     editor.shortcuts.add('meta+9', '', function() {
         let selectedNode = editor.selection.getNode();
@@ -82,8 +94,20 @@ function registerEditorShortcuts(editor) {
         }
         editor.formatter.apply('p');
     });
+
 }
 
+/**
+ * Load custom HTML head content from the settings into the editor.
+ * @param editor
+ */
+function loadCustomHeadContent(editor) {
+    window.$http.get(window.baseUrl('/custom-head-content')).then(resp => {
+        if (!resp.data) return;
+        let head = editor.getDoc().querySelector('head');
+        head.innerHTML += resp.data;
+    });
+}
 
 /**
  * Create and enable our custom code plugin
@@ -194,191 +218,195 @@ function codePlugin() {
 
     });
 }
+codePlugin();
 
-function hrPlugin() {
-    window.tinymce.PluginManager.add('customhr', function (editor) {
-        editor.addCommand('InsertHorizontalRule', function () {
-            let hrElem = document.createElement('hr');
-            let cNode = editor.selection.getNode();
-            let parentNode = cNode.parentNode;
-            parentNode.insertBefore(hrElem, cNode);
-        });
-
-        editor.addButton('hr', {
-            icon: 'hr',
-            tooltip: 'Horizontal line',
-            cmd: 'InsertHorizontalRule'
-        });
-
-        editor.addMenuItem('hr', {
-            icon: 'hr',
-            text: 'Horizontal line',
-            cmd: 'InsertHorizontalRule',
-            context: 'insert'
-        });
+window.tinymce.PluginManager.add('customhr', function (editor) {
+    editor.addCommand('InsertHorizontalRule', function () {
+        let hrElem = document.createElement('hr');
+        let cNode = editor.selection.getNode();
+        let parentNode = cNode.parentNode;
+        parentNode.insertBefore(hrElem, cNode);
     });
-}
 
-module.exports = function() {
-    hrPlugin();
-    codePlugin();
-    let settings = {
-        selector: '#html-editor',
-        content_css: [
-            window.baseUrl('/css/styles.css'),
-            window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
-        ],
-        branding: false,
-        body_class: 'page-content',
-        browser_spellcheck: true,
-        relative_urls: false,
-        remove_script_host: false,
-        document_base_url: window.baseUrl('/'),
-        statusbar: false,
-        menubar: false,
-        paste_data_images: false,
-        extended_valid_elements: 'pre[*]',
-        automatic_uploads: false,
-        valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre]",
-        plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
-        imagetools_toolbar: 'imageoptions',
-        toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
-        content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
-        style_formats: [
-            {title: "Header Large", format: "h2"},
-            {title: "Header Medium", format: "h3"},
-            {title: "Header Small", format: "h4"},
-            {title: "Header Tiny", format: "h5"},
-            {title: "Paragraph", format: "p", exact: true, classes: ''},
-            {title: "Blockquote", format: "blockquote"},
-            {title: "Code Block", icon: "code", cmd: 'codeeditor', format: 'codeeditor'},
-            {title: "Inline Code", icon: "code", inline: "code"},
-            {title: "Callouts", items: [
-                {title: "Info", format: 'calloutinfo'},
-                {title: "Success", format: 'calloutsuccess'},
-                {title: "Warning", format: 'calloutwarning'},
-                {title: "Danger", format: 'calloutdanger'}
-            ]},
-        ],
-        style_formats_merge: false,
-        formats: {
-            codeeditor: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div'},
-            alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
-            aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
-            alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
-            calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
-            calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
-            calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
-            calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}}
-        },
-        file_browser_callback: function (field_name, url, type, win) {
+    editor.addButton('hr', {
+        icon: 'hr',
+        tooltip: 'Horizontal line',
+        cmd: 'InsertHorizontalRule'
+    });
 
-            if (type === 'file') {
-                window.EntitySelectorPopup.show(function(entity) {
-                    let originalField = win.document.getElementById(field_name);
-                    originalField.value = entity.link;
-                    $(originalField).closest('.mce-form').find('input').eq(2).val(entity.name);
+    editor.addMenuItem('hr', {
+        icon: 'hr',
+        text: 'Horizontal line',
+        cmd: 'InsertHorizontalRule',
+        context: 'insert'
+    });
+});
+
+
+
+module.exports = {
+    selector: '#html-editor',
+    content_css: [
+        window.baseUrl('/css/styles.css'),
+        window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
+    ],
+    branding: false,
+    body_class: 'page-content',
+    browser_spellcheck: true,
+    relative_urls: false,
+    remove_script_host: false,
+    document_base_url: window.baseUrl('/'),
+    statusbar: false,
+    menubar: false,
+    paste_data_images: false,
+    extended_valid_elements: 'pre[*]',
+    automatic_uploads: false,
+    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre]",
+    plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
+    imagetools_toolbar: 'imageoptions',
+    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
+    content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
+    style_formats: [
+        {title: "Header Large", format: "h2"},
+        {title: "Header Medium", format: "h3"},
+        {title: "Header Small", format: "h4"},
+        {title: "Header Tiny", format: "h5"},
+        {title: "Paragraph", format: "p", exact: true, classes: ''},
+        {title: "Blockquote", format: "blockquote"},
+        {title: "Code Block", icon: "code", cmd: 'codeeditor', format: 'codeeditor'},
+        {title: "Inline Code", icon: "code", inline: "code"},
+        {title: "Callouts", items: [
+            {title: "Info", format: 'calloutinfo'},
+            {title: "Success", format: 'calloutsuccess'},
+            {title: "Warning", format: 'calloutwarning'},
+            {title: "Danger", format: 'calloutdanger'}
+        ]},
+    ],
+    style_formats_merge: false,
+    formats: {
+        codeeditor: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div'},
+        alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
+        aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
+        alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
+        calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
+        calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
+        calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
+        calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}}
+    },
+    file_browser_callback: function (field_name, url, type, win) {
+
+        if (type === 'file') {
+            window.EntitySelectorPopup.show(function(entity) {
+                let originalField = win.document.getElementById(field_name);
+                originalField.value = entity.link;
+                $(originalField).closest('.mce-form').find('input').eq(2).val(entity.name);
+            });
+        }
+
+        if (type === 'image') {
+            // Show image manager
+            window.ImageManager.show(function (image) {
+
+                // Set popover link input to image url then fire change event
+                // to ensure the new value sticks
+                win.document.getElementById(field_name).value = image.url;
+                if ("createEvent" in document) {
+                    let evt = document.createEvent("HTMLEvents");
+                    evt.initEvent("change", false, true);
+                    win.document.getElementById(field_name).dispatchEvent(evt);
+                } else {
+                    win.document.getElementById(field_name).fireEvent("onchange");
+                }
+
+                // Replace the actively selected content with the linked image
+                let html = `<a href="${image.url}" target="_blank">`;
+                html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
+                html += '</a>';
+                win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+            });
+        }
+
+    },
+    paste_preprocess: function (plugin, args) {
+        let content = args.content;
+        if (content.indexOf('<img src="file://') !== -1) {
+            args.content = '';
+        }
+    },
+    init_instance_callback: function(editor) {
+        loadCustomHeadContent(editor);
+    },
+    setup: function (editor) {
+
+        editor.on('init ExecCommand change input NodeChange ObjectResized', editorChange);
+
+        function editorChange() {
+            let content = editor.getContent();
+            window.$events.emit('editor-html-change', content);
+        }
+
+        window.$events.listen('editor-html-update', html => {
+            editor.setContent(html);
+            editor.selection.select(editor.getBody(), true);
+            editor.selection.collapse(false);
+            editorChange(html);
+        });
+
+        registerEditorShortcuts(editor);
+
+        let wrap;
+
+        function hasTextContent(node) {
+            return node && !!( node.textContent || node.innerText );
+        }
+
+        editor.on('dragstart', function () {
+            let node = editor.selection.getNode();
+
+            if (node.nodeName !== 'IMG') return;
+            wrap = editor.dom.getParent(node, '.mceTemp');
+
+            if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
+                wrap = node.parentNode;
+            }
+        });
+
+        editor.on('drop', function (event) {
+            let dom = editor.dom,
+                rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
+
+            // Don't allow anything to be dropped in a captioned image.
+            if (dom.getParent(rng.startContainer, '.mceTemp')) {
+                event.preventDefault();
+            } else if (wrap) {
+                event.preventDefault();
+
+                editor.undoManager.transact(function () {
+                    editor.selection.setRng(rng);
+                    editor.selection.setNode(wrap);
+                    dom.remove(wrap);
                 });
             }
 
-            if (type === 'image') {
-                // Show image manager
+            wrap = null;
+        });
+
+        // Custom Image picker button
+        editor.addButton('image-insert', {
+            title: 'My title',
+            icon: 'image',
+            tooltip: 'Insert an image',
+            onclick: function () {
                 window.ImageManager.show(function (image) {
-
-                    // Set popover link input to image url then fire change event
-                    // to ensure the new value sticks
-                    win.document.getElementById(field_name).value = image.url;
-                    if ("createEvent" in document) {
-                        let evt = document.createEvent("HTMLEvents");
-                        evt.initEvent("change", false, true);
-                        win.document.getElementById(field_name).dispatchEvent(evt);
-                    } else {
-                        win.document.getElementById(field_name).fireEvent("onchange");
-                    }
-
-                    // Replace the actively selected content with the linked image
                     let html = `<a href="${image.url}" target="_blank">`;
                     html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                     html += '</a>';
-                    win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+                    editor.execCommand('mceInsertContent', false, html);
                 });
             }
+        });
 
-        },
-        paste_preprocess: function (plugin, args) {
-            let content = args.content;
-            if (content.indexOf('<img src="file://') !== -1) {
-                args.content = '';
-            }
-        },
-        extraSetups: [],
-        setup: function (editor) {
-
-            // Run additional setup actions
-            // Used by the angular side of things
-            for (let i = 0; i < settings.extraSetups.length; i++) {
-                settings.extraSetups[i](editor);
-            }
-
-            registerEditorShortcuts(editor);
-
-            let wrap;
-
-            function hasTextContent(node) {
-                return node && !!( node.textContent || node.innerText );
-            }
-
-            editor.on('dragstart', function () {
-                let node = editor.selection.getNode();
-
-                if (node.nodeName !== 'IMG') return;
-                wrap = editor.dom.getParent(node, '.mceTemp');
-
-                if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
-                    wrap = node.parentNode;
-                }
-            });
-
-            editor.on('drop', function (event) {
-                let dom = editor.dom,
-                    rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
-
-                // Don't allow anything to be dropped in a captioned image.
-                if (dom.getParent(rng.startContainer, '.mceTemp')) {
-                    event.preventDefault();
-                } else if (wrap) {
-                    event.preventDefault();
-
-                    editor.undoManager.transact(function () {
-                        editor.selection.setRng(rng);
-                        editor.selection.setNode(wrap);
-                        dom.remove(wrap);
-                    });
-                }
-
-                wrap = null;
-            });
-
-            // Custom Image picker button
-            editor.addButton('image-insert', {
-                title: 'My title',
-                icon: 'image',
-                tooltip: 'Insert an image',
-                onclick: function () {
-                    window.ImageManager.show(function (image) {
-                        let html = `<a href="${image.url}" target="_blank">`;
-                        html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
-                        html += '</a>';
-                        editor.execCommand('mceInsertContent', false, html);
-                    });
-                }
-            });
-
-            // Paste image-uploads
-            editor.on('paste', function(event) {
-                editorPaste(event, editor);
-            });
-        }
-    };
-    return settings;
+        // Paste image-uploads
+        editor.on('paste', event => { editorPaste(event, editor) });
+    }
 };

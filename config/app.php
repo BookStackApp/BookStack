@@ -58,7 +58,7 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
-    'locales' => ['en', 'de', 'es', 'fr', 'nl', 'pt_BR', 'sk', 'ja', 'pl'],
+    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'ja', 'pl', 'it', 'ru'],
 
     /*
     |--------------------------------------------------------------------------
@@ -219,7 +219,7 @@ return [
          */
 
         'ImageTool' => Intervention\Image\Facades\Image::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'DomPDF' => Barryvdh\DomPDF\Facade::class,
         'SnappyPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
@@ -233,5 +233,7 @@ return [
         'Images'   => \BookStack\Services\Facades\Images::class,
 
     ],
+
+    'proxies' => env('APP_PROXIES', ''),
 
 ];

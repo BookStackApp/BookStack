@@ -19,7 +19,7 @@ class RegenerateSearch extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Re-index all content for searching';
 
     protected $searchService;
 
