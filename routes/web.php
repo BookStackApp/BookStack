@@ -146,6 +146,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
         Route::get('/users/{id}/delete', 'UserController@delete');
+        Route::post('/users/{id}/switch-book-view', 'UserController@switchBookView');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');

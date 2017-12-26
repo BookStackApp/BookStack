@@ -46,7 +46,7 @@ class BookController extends Controller
             'books' => $books,
             'recents' => $recents,
             'popular' => $popular,
-            'new' => $new, 
+            'new' => $new,
             'booksViewType' => $booksViewType
         ]);
     }
