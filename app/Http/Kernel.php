@@ -33,6 +33,14 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \BookStack\Http\Middleware\Localization::class
         ],
+        'web_errors' => [
+            \BookStack\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \BookStack\Http\Middleware\VerifyCsrfToken::class,
+            \BookStack\Http\Middleware\Localization::class
+        ],
         'api' => [
             'throttle:60,1',
             'bindings',

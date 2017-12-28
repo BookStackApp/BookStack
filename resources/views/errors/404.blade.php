@@ -1,8 +1,6 @@
 @extends('simple-layout')
 
 @section('content')
-
-
 <div class="container">
 
     <p>&nbsp;</p>
@@ -16,7 +14,6 @@
     </div>
 
     @if (setting('app-public') || !user()->isDefault())
-
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
