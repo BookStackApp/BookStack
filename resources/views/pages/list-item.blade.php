@@ -12,7 +12,7 @@
                 <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
             @endif
         @endif
-        <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name">{{ $page->name }}</span></a>
+        <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name">{{ $page->name }}</span><small class="small-title">{{ trans('entities.page') }}</small></a>
     </h4>
 
     <div class="entity-item-snippet">
@@ -39,6 +39,5 @@
             </div>
         </div>
     @endif
-
 
 </div>
