@@ -4,6 +4,11 @@
     <div class="col-xs-1"></div>
     <div class="col-xs-11 faded">
         <div class="action-buttons">
+            <form action="{{ baseUrl("/settings/users/{$currentUser->id}/switch-book-view") }}" method="POST" class="inline">
+                {!! csrf_field() !!}
+                <input type="hidden" value="{{ $booksViewType === 'list'? 'grid' : 'list' }}" name="book_view_type">
+                <button type="submit" class="text-pos text-button"><i class="zmdi zmdi-wrap-text"></i>{{ trans('entities.books_toggle_view') }}</button>
+            </form>
             @if($currentUser->can('book-create-all'))
                 <a href="{{ baseUrl("/books/create") }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.books_create') }}</a>
             @endif
@@ -52,7 +57,7 @@
                     <hr>
                 @endforeach
                 {!! $books->render() !!}
-            @else 
+            @else
              <div class="row auto-clear">
                     @foreach($books as $key => $book)
                             @include('books/grid-item', ['book' => $book])
