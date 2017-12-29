@@ -1,5 +1,7 @@
 <?php namespace BookStack\Services;
 
+use BookStack\Http\Requests\Request;
+use GuzzleHttp\Exception\ClientException;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInException;
@@ -14,7 +16,7 @@ class SocialAuthService
     protected $socialite;
     protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter'];
+    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'azure', 'okta'];
 
     /**
      * SocialAuthService constructor.
@@ -91,7 +93,6 @@ class SocialAuthService
     public function handleLoginCallback($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-
         // Get user details from social driver
         $socialUser = $this->socialite->driver($driver)->user();
         $socialId = $socialUser->getId();
@@ -104,7 +105,8 @@ class SocialAuthService
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
-            return $this->logUserIn($socialAccount->user);
+            auth()->login($socialAccount->user);
+            return redirect()->intended('/');
         }
 
         // When a user is logged in but the social account does not exist,
@@ -134,14 +136,7 @@ class SocialAuthService
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => title_case($socialDriver)]);
         }
         
-        throw new SocialSignInException($message . '.', '/login');
-    }
-
-
-    private function logUserIn($user)
-    {
-        auth()->login($user);
-        return redirect('/');
+        throw new SocialSignInException($message, '/login');
     }
 
     /**

@@ -35,6 +35,21 @@ class PageContentTest extends TestCase
         $pageContent->assertSee('Well This is a second block of content');
     }
 
+    public function test_saving_page_with_includes()
+    {
+        $page = Page::first();
+        $secondPage = Page::all()->get(2);
+        $this->asEditor();
+        $page->html = "<p>{{@$secondPage->id}}</p>";
+
+        $resp = $this->put($page->getUrl(), ['name' => $page->name, 'html' => $page->html, 'summary' => '']);
+
+        $resp->assertStatus(302);
+
+        $page = Page::find($page->id);
+        $this->assertContains("{{@$secondPage->id}}", $page->html);
+    }
+
     public function test_page_revision_views_viewable()
     {
         $this->asEditor();

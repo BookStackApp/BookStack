@@ -4,22 +4,22 @@
  * Laravel - A PHP Framework For Web Artisans
  *
  * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
+ * @author   Taylor Otwell <taylor@laravel.com>
  */
+
+define('LARAVEL_START', microtime(true));
 
 /*
 |--------------------------------------------------------------------------
-| Register The Auto Loader
+| Initialize The App
 |--------------------------------------------------------------------------
 |
-| Composer provides a convenient, automatically generated class loader for
-| our application. We just need to utilize it! We'll simply require it
-| into the script here so that we don't have to worry about manual
-| loading any of our classes later on. It feels nice to relax.
+| We need to get things going before we start up the app.
+| The init file loads everything in, in the correct order.
 |
 */
 
-require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__.'/../bootstrap/init.php';
 
 /*
 |--------------------------------------------------------------------------

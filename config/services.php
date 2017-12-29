@@ -72,6 +72,22 @@ return [
         'name'          => 'Twitter',
     ],
 
+    'azure'   => [
+        'client_id'     => env('AZURE_APP_ID', false),
+        'client_secret' => env('AZURE_APP_SECRET', false),
+        'tenant'       => env('AZURE_TENANT', false),
+        'redirect'      => env('APP_URL') . '/login/service/azure/callback',
+        'name'          => 'Microsoft Azure',
+    ],
+
+    'okta' => [
+        'client_id' => env('OKTA_APP_ID'),
+        'client_secret' => env('OKTA_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/okta/callback', 
+        'base_url' => env('OKTA_BASE_URL'), 
+        'name'          => 'Okta',
+    ], 
+
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
         'dn' => env('LDAP_DN', false),

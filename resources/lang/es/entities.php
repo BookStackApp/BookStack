@@ -220,20 +220,6 @@ return [
      */
     'comment' => 'Comentario',
     'comments' => 'Comentarios',
-    'comment_placeholder' => 'Introduzca sus comentarios aquí, markdown supported ...',
-    'no_comments' => 'No hay comentarios',
-    'x_comments' => ':numComments Comentarios',
-    'one_comment' => '1 Comentario',
-    'comments_loading' => 'Cargando ...',
+    'comment_placeholder' => 'Introduzca sus comentarios aquí',
     'comment_save' => 'Guardar comentario',
-    'comment_reply' => 'Responder',
-    'comment_edit' => 'Editar',
-    'comment_delete' => 'Eliminar',
-    'comment_cancel' => 'Cancelar',
-    'comment_created' => 'Comentario añadido',
-    'comment_updated' => 'Comentario actualizado',
-    'comment_deleted' => 'Comentario eliminado',
-    'comment_updated_text' => 'Actualizado hace :updateDiff por',
-    'comment_delete_confirm' => 'Esto eliminará el contenido del comentario. ¿Estás seguro de que quieres eliminar este comentario?',
-    'comment_create' => 'Creado'
 ];

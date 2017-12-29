@@ -31,7 +31,8 @@ return [
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',
     'app_primary_color_desc' => 'Cela devrait être une valeur hexadécimale. <br>Laisser vide pour rétablir la couleur par défaut.',
-
+    'app_disable_comments' => 'Désactiver les commentaires',
+    'app_disable_comments_desc' => 'Désactive les commentaires sur toutes les pages de l\'application. Les commentaires existants ne sont pas affichés.',
     /**
      * Registration settings
      */

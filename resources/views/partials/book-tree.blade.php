@@ -1,4 +1,4 @@
-<div class="card book-tree" ng-non-bindable>
+<div class="card book-tree" v-pre>
     <h3><i class="zmdi zmdi-book"></i> {{ trans('entities.books_navigation') }}</h3>
     <div class="body">
         <ul class="sidebar-page-list menu">
@@ -15,7 +15,7 @@
 
                     @if($bookChild->isA('chapter') && count($bookChild->pages) > 0)
                         <p chapter-toggle class="text-muted @if($bookChild->matchesOrContains($current)) open @endif">
-                            <i class="zmdi zmdi-caret-right"></i> <i class="zmdi zmdi-file-text"></i> <span>{{ trans('entities.x_pages', ['count' => $bookChild->pages->count()]) }}</span>
+                            <i class="zmdi zmdi-caret-right"></i> <i class="zmdi zmdi-file-text"></i> <span>{{ trans_choice('entities.x_pages', $bookChild->pages->count()) }}</span>
                         </p>
                         <ul class="menu sub-menu inset-list @if($bookChild->matchesOrContains($current)) open @endif">
                             @foreach($bookChild->pages as $childPage)

@@ -1,25 +1,33 @@
 <?php namespace Tests;
 
+use BookStack\Book;
+use BookStack\Services\PermissionService;
+use BookStack\User;
+
 class RestrictionsTest extends BrowserKitTest
 {
+
+    /**
+     * @var User
+     */
     protected $user;
+
+    /**
+     * @var User
+     */
     protected $viewer;
-    protected $restrictionService;
+
+    /**
+     * @var PermissionService
+     */
+    protected $permissionService;
 
     public function setUp()
     {
         parent::setUp();
         $this->user = $this->getEditor();
         $this->viewer = $this->getViewer();
-        $this->restrictionService = $this->app[\BookStack\Services\PermissionService::class];
-    }
-
-    protected function getViewer()
-    {
-        $role = \BookStack\Role::getRole('viewer');
-        $viewer = $this->getNewBlankUser();
-        $viewer->attachRole($role);;
-        return $viewer;
+        $this->permissionService = $this->app[PermissionService::class];
     }
 
     /**
@@ -31,27 +39,32 @@ class RestrictionsTest extends BrowserKitTest
     {
         $entity->restricted = true;
         $entity->permissions()->delete();
+
         $role = $this->user->roles->first();
         $viewerRole = $this->viewer->roles->first();
+
+        $permissions = [];
         foreach ($actions as $action) {
-            $entity->permissions()->create([
+            $permissions[] = [
                 'role_id' => $role->id,
                 'action' => strtolower($action)
-            ]);
-            $entity->permissions()->create([
+            ];
+            $permissions[] = [
                 'role_id' => $viewerRole->id,
                 'action' => strtolower($action)
-            ]);
+            ];
         }
+        $entity->permissions()->createMany($permissions);
+
         $entity->save();
         $entity->load('permissions');
-        $this->restrictionService->buildJointPermissionsForEntity($entity);
+        $this->permissionService->buildJointPermissionsForEntity($entity);
         $entity->load('jointPermissions');
     }
 
     public function test_book_view_restriction()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
@@ -81,7 +94,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_create_restriction()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->viewer)
@@ -120,7 +133,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_update_restriction()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
@@ -150,7 +163,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_delete_restriction()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
@@ -342,7 +355,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_restriction_form()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
         $this->asAdmin()->visit($book->getUrl() . '/permissions')
             ->see('Book Permissions')
             ->check('restricted')
@@ -430,7 +443,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_create_restriction_override()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->viewer)
@@ -465,7 +478,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_update_restriction_override()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
@@ -495,7 +508,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_book_delete_restriction_override()
     {
-        $book = \BookStack\Book::first();
+        $book = Book::first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
@@ -525,11 +538,12 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_visible_if_has_permissions_when_book_not_visible()
     {
-        $book = \BookStack\Book::first();
-        $bookChapter = $book->chapters->first();
-        $bookPage = $bookChapter->pages->first();
+        $book = Book::first();
 
         $this->setEntityRestrictions($book, []);
+
+        $bookChapter = $book->chapters->first();
+        $bookPage = $bookChapter->pages->first();
         $this->setEntityRestrictions($bookPage, ['view']);
 
         $this->actingAs($this->viewer);

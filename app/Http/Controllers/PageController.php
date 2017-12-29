@@ -158,16 +158,25 @@ class PageController extends Controller
 
         $this->checkOwnablePermission('page-view', $page);
 
-        $pageContent = $this->entityRepo->renderPage($page);
+        $page->html = $this->entityRepo->renderPage($page);
         $sidebarTree = $this->entityRepo->getBookChildren($page->book);
-        $pageNav = $this->entityRepo->getPageNav($pageContent);
+        $pageNav = $this->entityRepo->getPageNav($page->html);
+
+        // check if the comment's are enabled
+        $commentsEnabled = !setting('app-disable-comments');
+        if ($commentsEnabled) {
+            $page->load(['comments.createdBy']);
+        }
 
         Views::add($page);
         $this->setPageTitle($page->getShortName());
         return view('pages/show', [
             'page' => $page,'book' => $page->book,
-            'current' => $page, 'sidebarTree' => $sidebarTree,
-            'pageNav' => $pageNav]);
+            'current' => $page,
+            'sidebarTree' => $sidebarTree,
+            'commentsEnabled' => $commentsEnabled,
+            'pageNav' => $pageNav
+        ]);
     }
 
     /**
@@ -323,9 +332,10 @@ class PageController extends Controller
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $book = $page->book;
         $this->checkOwnablePermission('page-delete', $page);
+        $this->entityRepo->destroyPage($page);
+
         Activity::addMessage('page_delete', $book->id, $page->name);
         session()->flash('success', trans('entities.pages_delete_success'));
-        $this->entityRepo->destroyPage($page);
         return redirect($book->getUrl());
     }
 
@@ -440,6 +450,7 @@ class PageController extends Controller
     public function exportPdf($bookSlug, $pageSlug)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $page->html = $this->entityRepo->renderPage($page);
         $pdfContent = $this->exportService->pageToPdf($page);
         return response()->make($pdfContent, 200, [
             'Content-Type'        => 'application/octet-stream',
@@ -456,6 +467,7 @@ class PageController extends Controller
     public function exportHtml($bookSlug, $pageSlug)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $page->html = $this->entityRepo->renderPage($page);
         $containedHtml = $this->exportService->pageToContainedHtml($page);
         return response()->make($containedHtml, 200, [
             'Content-Type'        => 'application/octet-stream',
