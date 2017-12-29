@@ -3,6 +3,7 @@
 use BookStack\Role;
 use BookStack\User;
 use Exception;
+use BookStack\Services\ImageService;
 
 class UserRepo
 {
@@ -10,6 +11,7 @@ class UserRepo
     protected $user;
     protected $role;
     protected $entityRepo;
+    protected $imageService;
 
     /**
      * UserRepo constructor.
@@ -17,11 +19,12 @@ class UserRepo
      * @param Role $role
      * @param EntityRepo $entityRepo
      */
-    public function __construct(User $user, Role $role, EntityRepo $entityRepo)
+    public function __construct(User $user, Role $role, EntityRepo $entityRepo, ImageService $imageService)
     {
         $this->user = $user;
         $this->role = $role;
         $this->entityRepo = $entityRepo;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -145,6 +148,12 @@ class UserRepo
     {
         $user->socialAccounts()->delete();
         $user->delete();
+        
+        // Deleting User profile pics
+        $profilePic = $user->image_id ? $user->avatar->findOrFail($user->image_id) : FALSE;
+        if ($profilePic) {
+            $this->imageService->destroyImage($profilePic);
+        }
     }
 
     /**
