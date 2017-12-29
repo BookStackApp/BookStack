@@ -99,7 +99,6 @@ return [
     'books_sort_named' => 'Sort Book :bookName',
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
-    'books_toggle_view' => 'Toggle Book View',
 
     /**
      * Chapters

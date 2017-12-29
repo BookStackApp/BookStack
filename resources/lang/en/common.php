@@ -49,6 +49,8 @@ return [
     'toggle_details' => 'Toggle Details',
     'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => 'Details',
+    'grid_view' => 'Grid View',
+    'list_view' => 'List View',
 
     /**
      * Header
