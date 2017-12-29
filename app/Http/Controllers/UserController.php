@@ -250,12 +250,18 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Update the user's preferred book-list display setting.
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function switchBookView($id, Request $request) {
         $this->checkPermissionOr('users-manage', function () use ($id) {
             return $this->currentUser->id == $id;
         });
-        $viewType = $request->get('book_view_type');
 
+        $viewType = $request->get('book_view_type');
         if (!in_array($viewType, ['grid', 'list'])) {
             $viewType = 'list';
         }
@@ -263,13 +269,7 @@ class UserController extends Controller
         $user = $this->user->findOrFail($id);
         setting()->putUser($user, 'books_view_type', $viewType);
 
-        $previousUrl = url()->previous();
-        if (empty($previousUrl)) {
-            // if no previous URL, redirect to settings
-            return redirect("/settings/users/$id");
-        } else {
-            // redirect to the previous page.
-            return redirect($previousUrl);
-        }
+        return redirect()->back(302, [], "/settings/users/$id");
     }
+
 }
