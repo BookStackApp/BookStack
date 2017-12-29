@@ -39,11 +39,11 @@ class DeleteUsers extends Command{
         $numDeleted = 0;
         if (strtolower(trim($confirm)) === 'yes')
         {
-            $totalUsers = User::count();
+            $totalUsers = $this->user->count();
             $users = $this->user->where('system_name', '=', null)->with('roles')->get();
             foreach ($users as $user)
             {
-                if ($user->hasRole('admin'))
+                if ($user->hasSystemRole('admin'))
                 {
                     // don't delete users with "admin" role
                     continue;
