@@ -46,6 +46,24 @@ class ImageService extends UploadService
         return $this->saveNew($imageName, $imageData, $type, $uploadedTo);
     }
 
+    /**
+     * Save a new image from a uri-encoded base64 string of data.
+     * @param string $base64Uri
+     * @param string $name
+     * @param string $type
+     * @param int $uploadedTo
+     * @return Image
+     * @throws ImageUploadException
+     */
+    public function saveNewFromBase64Uri(string $base64Uri, string $name, string $type, $uploadedTo = 0)
+    {
+        $splitData = explode(';base64,', $base64Uri);
+        if (count($splitData) < 2) {
+            throw new ImageUploadException("Invalid base64 image data provided");
+        }
+        $data = base64_decode($splitData[1]);
+        return $this->saveNew($name, $data, $type, $uploadedTo);
+    }
 
     /**
      * Gets an image from url and saves it to the database.
@@ -181,6 +199,19 @@ class ImageService extends UploadService
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
+    }
+
+    /**
+     * Get the raw data content from an image.
+     * @param Image $image
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function getImageData(Image $image)
+    {
+        $imagePath = $this->getPath($image);
+        $storage = $this->getStorage();
+        return $storage->get($imagePath);
     }
 
     /**

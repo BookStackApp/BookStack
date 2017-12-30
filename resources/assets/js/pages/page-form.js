@@ -47,7 +47,7 @@ function uploadImageFile(file) {
     let formData = new FormData();
     formData.append('file', file, remoteFilename);
 
-    return window.$http.post('/images/gallery/upload', formData).then(resp => (resp.data));
+    return window.$http.post(window.baseUrl('/images/gallery/upload'), formData).then(resp => (resp.data));
 }
 
 function registerEditorShortcuts(editor) {
@@ -225,25 +225,27 @@ function drawIoPlugin() {
     const drawIoUrl = 'https://www.draw.io/?embed=1&ui=atlas&spin=1&proto=json';
     let iframe = null;
     let pageEditor = null;
+    let currentNode = null;
 
     function isDrawing(node) {
         return node.hasAttribute('drawio-diagram');
     }
 
-    function showDrawingEditor(mceEditor) {
+    function showDrawingEditor(mceEditor, selectedNode = null) {
         pageEditor = mceEditor;
+        currentNode = selectedNode;
         iframe = document.createElement('iframe');
         iframe.setAttribute('frameborder', '0');
         window.addEventListener('message', drawReceive);
         iframe.setAttribute('src', drawIoUrl);
         iframe.setAttribute('class', 'fullscreen');
+        iframe.style.backgroundColor = '#FFFFFF';
         document.body.appendChild(iframe);
     }
 
     function drawReceive(event) {
         if (!event.data || event.data.length < 1) return;
         let message = JSON.parse(event.data);
-        console.log(message);
         if (message.event === 'init') {
             drawEventInit();
         } else if (message.event === 'exit') {
@@ -255,19 +257,28 @@ function drawIoPlugin() {
         }
     }
 
-    function updateContent(svg) {
-        let svgWrap = document.createElement('div');
-        svgWrap.setAttribute('drawio-diagram', svg);
-        svgWrap.setAttribute('contenteditable', 'false');
-        pageEditor.insertContent(svgWrap.outerHTML);
-    }
+    function updateContent(pngData) {
+        let id = "image-" + Math.random().toString(16).slice(2);
+        let loadingImage = window.baseUrl('/loading.gif');
+        let data = {
+            image: pngData,
+            uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+        };
 
-    function b64DecodeUnicode(str) {
-        str = str.split(';base64,')[1];
-        // Going backwards: from bytestream, to percent-encoding, to original string.
-        return decodeURIComponent(atob(str).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        // TODO - Handle updating an existing image
+
+        setTimeout(() => {
+            pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
+            drawEventClose();
+            window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
+                pageEditor.dom.setAttrib(id, 'src', resp.data.url);
+                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', resp.data.id);
+            }).catch(err => {
+                pageEditor.dom.remove(id);
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+        }, 5);
     }
 
     function drawEventExport(message) {
@@ -275,11 +286,21 @@ function drawIoPlugin() {
     }
 
     function drawEventSave(message) {
-        drawPostMessage({action: 'export', format: 'svg', xml: message.xml, spin: 'Updating drawing'});
+        drawPostMessage({action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing'});
     }
 
     function drawEventInit() {
-        drawPostMessage({action: 'load', autosave: 1, xml: ''});
+        if (!currentNode) {
+            drawPostMessage({action: 'load', autosave: 1, xml: ''});
+            return;
+        }
+
+        let imgElem = currentNode.querySelector('img');
+        let drawingId = currentNode.getAttribute('drawio-diagram');
+        $http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
+            let xml = `data:image/png;base64,${resp.data.content}`;
+            drawPostMessage({action: 'load', autosave: 1, xml});
+        });
     }
 
     function drawEventClose() {
@@ -308,28 +329,16 @@ function drawIoPlugin() {
         editor.on('dblclick', event => {
             let selectedNode = editor.selection.getNode();
             if (!isDrawing(selectedNode)) return;
-            showDrawingEditor(editor);
-        });
-
-        editor.on('PreProcess', function (e) {
-            $('div[drawio-diagram]', e.node).
-            each((index, elem) => {
-                let $elem = $(elem);
-                let svgData = b64DecodeUnicode($elem.attr('drawio-diagram'));
-                $elem.html(svgData);
-            });
+            showDrawingEditor(editor, selectedNode);
         });
 
         editor.on('SetContent', function () {
-
             let drawings = $('body > div[drawio-diagram]');
-
             if (!drawings.length) return;
+
             editor.undoManager.transact(function () {
                 drawings.each((index, elem) => {
-                    let svgContent =  b64DecodeUnicode(elem.getAttribute('drawio-diagram'));
                     elem.setAttribute('contenteditable', 'false');
-                    elem.innerHTML = svgContent;
                 });
             });
         });
@@ -379,7 +388,7 @@ module.exports = {
     paste_data_images: false,
     extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram]',
     automatic_uploads: false,
-    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[svg],+svg",
+    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
     plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor drawio",
     imagetools_toolbar: 'imageoptions',
     toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen drawio",
