@@ -132,6 +132,8 @@ class ImageRepo
      * @param  string $type
      * @param int $uploadedTo
      * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     public function saveNew(UploadedFile $uploadFile, $type, $uploadedTo = 0)
     {
@@ -141,10 +143,26 @@ class ImageRepo
     }
 
     /**
+     * Save a drawing the the database;
+     * @param string $base64Uri
+     * @param int $uploadedTo
+     * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     */
+    public function saveDrawing(string $base64Uri, int $uploadedTo)
+    {
+        $name = 'Drawing-' . user()->getShortName(40) . '-' . strval(time()) . '.png';
+        $image = $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawing', $uploadedTo);
+        return $image;
+    }
+
+    /**
      * Update the details of an image via an array of properties.
      * @param Image $image
      * @param array $updateDetails
      * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     public function updateImageDetails(Image $image, $updateDetails)
     {
@@ -170,6 +188,8 @@ class ImageRepo
     /**
      * Load thumbnails onto an image object.
      * @param Image $image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     private function loadThumbs(Image $image)
     {
@@ -189,6 +209,8 @@ class ImageRepo
      * @param int $height
      * @param bool $keepRatio
      * @return string
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
@@ -197,6 +219,20 @@ class ImageRepo
         } catch (FileNotFoundException $exception) {
             $image->delete();
             return [];
+        }
+    }
+
+    /**
+     * Get the raw image data from an Image.
+     * @param Image $image
+     * @return null|string
+     */
+    public function getImageData(Image $image)
+    {
+        try {
+            return $this->imageService->getImageData($image);
+        } catch (\Exception $exception) {
+            return null;
         }
     }
 
