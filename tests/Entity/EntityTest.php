@@ -90,14 +90,14 @@ class EntityTest extends BrowserKitTest
         $this->actingAs($editor)
             ->visit('/books')
             ->pageHasElement('.featured-image-container')
-            ->submitForm('Toggle Book View')
+            ->submitForm('List View')
             // Check redirection.
             ->seePageIs('/books')
             ->pageNotHasElement('.featured-image-container');
 
         $this->actingAs($editor)
             ->visit('/books')
-            ->submitForm('Toggle Book View')
+            ->submitForm('Grid View')
             ->seePageIs('/books')
             ->pageHasElement('.featured-image-container');
 
