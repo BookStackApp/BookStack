@@ -195,20 +195,43 @@ class BookController extends Controller
         $sortMap = json_decode($request->get('sort-tree'));
         $defaultBookId = $book->id;
 
+        $permissionsList = [$book->id];
+
         // Loop through contents of provided map and update entities accordingly
         foreach ($sortMap as $bookChild) {
             $priority = $bookChild->sort;
             $id = intval($bookChild->id);
             $isPage = $bookChild->type == 'page';
-            $bookId = $this->entityRepo->exists('book', $bookChild->book) ? intval($bookChild->book) : $defaultBookId;
+            $bookId = $defaultBookId;
+            $targetBook = $this->entityRepo->getById('book', $bookChild->book);
+
+            // Check permission for target book
+            if (!empty($targetBook)) {
+                $bookId = $targetBook->id;
+                if (!in_array($bookId, $permissionsList)) {
+                    $this->checkOwnablePermission('book-update', $targetBook);
+                    // cache the permission for future use.
+                    $permissionsList[] = $bookId;
+                }
+            }
+
             $chapterId = ($isPage && $bookChild->parentChapter === false) ? 0 : intval($bookChild->parentChapter);
             $model = $this->entityRepo->getById($isPage?'page':'chapter', $id);
+
+            // Check permissions for the source book
+            $sourceBook = $model->book;
+            if (!in_array($sourceBook->id, $permissionsList)) {
+                $this->checkOwnablePermission('book-update', $sourceBook);
+                $permissionsList[] = $sourceBook->id;
+            }
 
             // Update models only if there's a change in parent chain or ordering.
             if ($model->priority !== $priority || $model->book_id !== $bookId || ($isPage && $model->chapter_id !== $chapterId)) {
                 $this->entityRepo->changeBook($isPage?'page':'chapter', $bookId, $model);
                 $model->priority = $priority;
-                if ($isPage) $model->chapter_id = $chapterId;
+                if ($isPage) {
+                    $model->chapter_id = $chapterId;
+                }
                 $model->save();
                 $updatedModels->push($model);
             }
