@@ -1,5 +1,10 @@
 <?php
 
+$viewPaths = [realpath(base_path('resources/views'))];
+if ($theme = env('APP_THEME', false)) {
+    array_unshift($viewPaths, base_path('themes/' . $theme));
+}
+
 return [
 
     /*
@@ -13,9 +18,7 @@ return [
     |
     */
 
-    'paths' => [
-        realpath(base_path('resources/views')),
-    ],
+    'paths' => $viewPaths,
 
     /*
     |--------------------------------------------------------------------------
