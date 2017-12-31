@@ -155,7 +155,7 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-update', $book);
         $bookChildren = $this->entityRepo->getBookChildren($book, true);
-        $books = $this->entityRepo->getAll('book', false);
+        $books = $this->entityRepo->getAll('book', false, 'update');
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
         return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
     }
@@ -229,9 +229,7 @@ class BookController extends Controller
             if ($model->priority !== $priority || $model->book_id !== $bookId || ($isPage && $model->chapter_id !== $chapterId)) {
                 $this->entityRepo->changeBook($isPage?'page':'chapter', $bookId, $model);
                 $model->priority = $priority;
-                if ($isPage) {
-                    $model->chapter_id = $chapterId;
-                }
+                if ($isPage) $model->chapter_id = $chapterId;
                 $model->save();
                 $updatedModels->push($model);
             }
