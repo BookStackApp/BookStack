@@ -195,7 +195,32 @@ class BookController extends Controller
         $sortMap = json_decode($request->get('sort-tree'));
         $defaultBookId = $book->id;
 
+        // Check permissions for all target and source books
         $permissionsList = [$book->id];
+        foreach ($sortMap as $bookChild) {
+            // Check permission for target book
+            if (!in_array($bookChild->book, $permissionsList)) {
+                $targetBook = $this->entityRepo->getById('book', $bookChild->book);
+                if (!empty($targetBook)) {
+                    $bookId = $targetBook->id;
+                    $this->checkOwnablePermission('book-update', $targetBook);
+                    // cache the permission for future use.
+                    $permissionsList[] = $bookId;
+                }
+            }
+
+            // Check permissions for the source book
+            $id = intval($bookChild->id);
+            $isPage = $bookChild->type == 'page';
+            $model = $this->entityRepo->getById($isPage?'page':'chapter', $id);
+            $sourceBook = $model->book;
+            if (!in_array($sourceBook->id, $permissionsList)) {
+                $this->checkOwnablePermission('book-update', $sourceBook);
+
+                // cache the permission for future use.
+                $permissionsList[] = $sourceBook->id;
+            }
+        }
 
         // Loop through contents of provided map and update entities accordingly
         foreach ($sortMap as $bookChild) {
@@ -205,25 +230,8 @@ class BookController extends Controller
             $bookId = $defaultBookId;
             $targetBook = $this->entityRepo->getById('book', $bookChild->book);
 
-            // Check permission for target book
-            if (!empty($targetBook)) {
-                $bookId = $targetBook->id;
-                if (!in_array($bookId, $permissionsList)) {
-                    $this->checkOwnablePermission('book-update', $targetBook);
-                    // cache the permission for future use.
-                    $permissionsList[] = $bookId;
-                }
-            }
-
             $chapterId = ($isPage && $bookChild->parentChapter === false) ? 0 : intval($bookChild->parentChapter);
             $model = $this->entityRepo->getById($isPage?'page':'chapter', $id);
-
-            // Check permissions for the source book
-            $sourceBook = $model->book;
-            if (!in_array($sourceBook->id, $permissionsList)) {
-                $this->checkOwnablePermission('book-update', $sourceBook);
-                $permissionsList[] = $sourceBook->id;
-            }
 
             // Update models only if there's a change in parent chain or ordering.
             if ($model->priority !== $priority || $model->book_id !== $bookId || ($isPage && $model->chapter_id !== $chapterId)) {
