@@ -46,7 +46,6 @@ class ImageService extends UploadService
         return $this->saveNew($imageName, $imageData, $type, $uploadedTo);
     }
 
-
     /**
      * Gets an image from url and saves it to the database.
      * @param             $url
@@ -82,8 +81,6 @@ class ImageService extends UploadService
 
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
 
-        if ($this->isLocal()) $imagePath = '/public' . $imagePath;
-
         while ($storage->exists($imagePath . $imageName)) {
             $imageName = str_random(3) . $imageName;
         }
@@ -95,8 +92,6 @@ class ImageService extends UploadService
         } catch (Exception $e) {
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
         }
-
-        if ($this->isLocal()) $fullPath = str_replace_first('/public', '', $fullPath);
 
         $imageDetails = [
             'name'       => $imageName,
@@ -112,8 +107,8 @@ class ImageService extends UploadService
             $imageDetails['updated_by'] = $userId;
         }
 
-        $image = Image::forceCreate($imageDetails);
-
+        $image = (new Image());
+        $image->forceFill($imageDetails)->save();
         return $image;
     }
 
@@ -124,14 +119,13 @@ class ImageService extends UploadService
      */
     protected function getPath(Image $image)
     {
-        return ($this->isLocal()) ? ('public/' . $image->path) : $image->path;
+        return $image->path;
     }
 
     /**
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
-     *
      * @param Image $image
      * @param int $width
      * @param int $height
@@ -151,7 +145,6 @@ class ImageService extends UploadService
         }
 
         $storage = $this->getStorage();
-
         if ($storage->exists($thumbFilePath)) {
             return $this->getPublicUrl($thumbFilePath);
         }
@@ -161,9 +154,8 @@ class ImageService extends UploadService
         } catch (Exception $e) {
             if ($e instanceof \ErrorException || $e instanceof NotSupportedException) {
                 throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
-            } else {
-                throw $e;
             }
+            throw $e;
         }
 
         if ($keepRatio) {
@@ -252,13 +244,11 @@ class ImageService extends UploadService
                     $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
                 }
             }
-
             $this->storageUrl = $storageUrl;
         }
 
-        if ($this->isLocal()) $filePath = str_replace_first('public/', '', $filePath);
-
-        return ($this->storageUrl == false ? rtrim(baseUrl(''), '/') : rtrim($this->storageUrl, '/')) . $filePath;
+        $basePath = ($this->storageUrl == false) ? baseUrl('/') : $this->storageUrl;
+        return rtrim($basePath, '/') . $filePath;
     }
 
 
