@@ -190,71 +190,56 @@ class BookController extends Controller
         }
 
         // Sort pages and chapters
-        $sortedBooks = [];
-        $updatedModels = collect();
-        $sortMap = json_decode($request->get('sort-tree'));
-        $defaultBookId = $book->id;
+        $sortMap = collect(json_decode($request->get('sort-tree')));
+        $bookIdsInvolved = collect([$book->id]);
 
-        // Check permissions for all target and source books
-        $permissionsList = [$book->id];
-        foreach ($sortMap as $bookChild) {
-            // Check permission for target book
-            if (!in_array($bookChild->book, $permissionsList)) {
-                $targetBook = $this->entityRepo->getById('book', $bookChild->book);
-                if (!empty($targetBook)) {
-                    $bookId = $targetBook->id;
-                    $this->checkOwnablePermission('book-update', $targetBook);
-                    // cache the permission for future use.
-                    $permissionsList[] = $bookId;
-                }
-            }
+        // Load models into map
+        $sortMap->each(function($mapItem) use ($bookIdsInvolved) {
+            $mapItem->type = ($mapItem->type === 'page' ? 'page' : 'chapter');
+            $mapItem->model = $this->entityRepo->getById($mapItem->type, $mapItem->id);
+            // Store source and target books
+            $bookIdsInvolved->push(intval($mapItem->model->book_id));
+            $bookIdsInvolved->push(intval($mapItem->book));
+        });
 
-            // Check permissions for the source book
-            $id = intval($bookChild->id);
-            $isPage = $bookChild->type == 'page';
-            $model = $this->entityRepo->getById($isPage?'page':'chapter', $id);
-            $sourceBook = $model->book;
-            if (!in_array($sourceBook->id, $permissionsList)) {
-                $this->checkOwnablePermission('book-update', $sourceBook);
-
-                // cache the permission for future use.
-                $permissionsList[] = $sourceBook->id;
-            }
+        // Get the books involved in the sort
+        $bookIdsInvolved = $bookIdsInvolved->unique()->toArray();
+        $booksInvolved = $this->entityRepo->book->newQuery()->whereIn('id', $bookIdsInvolved)->get();
+        // Throw permission error if invalid ids or inaccessible books given.
+        if (count($bookIdsInvolved) !== count($booksInvolved)) {
+            $this->showPermissionError();
         }
+        // Check permissions of involved books
+        $booksInvolved->each(function(Book $book) {
+             $this->checkOwnablePermission('book-update', $book);
+        });
 
-        // Loop through contents of provided map and update entities accordingly
-        foreach ($sortMap as $bookChild) {
-            $priority = $bookChild->sort;
-            $id = intval($bookChild->id);
-            $isPage = $bookChild->type == 'page';
-            $bookId = $defaultBookId;
-            $targetBook = $this->entityRepo->getById('book', $bookChild->book);
+        // Perform the sort
+        $sortMap->each(function($mapItem) {
+            $model = $mapItem->model;
 
-            $chapterId = ($isPage && $bookChild->parentChapter === false) ? 0 : intval($bookChild->parentChapter);
-            $model = $this->entityRepo->getById($isPage?'page':'chapter', $id);
+            $priorityChanged = intval($model->priority) !== intval($mapItem->sort);
+            $bookChanged = intval($model->book_id) !== intval($mapItem->book);
+            $chapterChanged = ($mapItem->type === 'page') && intval($model->chapter_id) !== $mapItem->parentChapter;
 
-            // Update models only if there's a change in parent chain or ordering.
-            if ($model->priority !== $priority || $model->book_id !== $bookId || ($isPage && $model->chapter_id !== $chapterId)) {
-                $this->entityRepo->changeBook($isPage?'page':'chapter', $bookId, $model);
-                $model->priority = $priority;
-                if ($isPage) $model->chapter_id = $chapterId;
+            if ($bookChanged) {
+                $this->entityRepo->changeBook($mapItem->type, $mapItem->book, $model);
+            }
+            if ($chapterChanged) {
+                $model->chapter_id = intval($mapItem->parentChapter);
                 $model->save();
-                $updatedModels->push($model);
             }
-
-            // Store involved books to be sorted later
-            if (!in_array($bookId, $sortedBooks)) {
-                $sortedBooks[] = $bookId;
+            if ($priorityChanged) {
+                $model->priority = intval($mapItem->sort);
+                $model->save();
             }
-        }
+        });
 
-        // Add activity for books
-        foreach ($sortedBooks as $bookId) {
-            /** @var Book $updatedBook */
-            $updatedBook = $this->entityRepo->getById('book', $bookId);
-            $this->entityRepo->buildJointPermissionsForBook($updatedBook);
-            Activity::add($updatedBook, 'book_sort', $updatedBook->id);
-        }
+        // Rebuild permissions and add activity for involved books.
+        $booksInvolved->each(function(Book $book) {
+            $this->entityRepo->buildJointPermissionsForBook($book);
+            Activity::add($book, 'book_sort', $book->id);
+        });
 
         return redirect($book->getUrl());
     }
