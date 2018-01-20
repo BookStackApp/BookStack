@@ -1,5 +1,6 @@
 "use strict";
-const Code = require('../code');
+const Code = require('../libs/code');
+const DrawIO = require('../libs/drawio');
 
 /**
  * Handle pasting images from clipboard.
@@ -233,27 +234,7 @@ function drawIoPlugin() {
     function showDrawingEditor(mceEditor, selectedNode = null) {
         pageEditor = mceEditor;
         currentNode = selectedNode;
-        iframe = document.createElement('iframe');
-        iframe.setAttribute('frameborder', '0');
-        window.addEventListener('message', drawReceive);
-        iframe.setAttribute('src', drawIoUrl);
-        iframe.setAttribute('class', 'fullscreen');
-        iframe.style.backgroundColor = '#FFFFFF';
-        document.body.appendChild(iframe);
-    }
-
-    function drawReceive(event) {
-        if (!event.data || event.data.length < 1) return;
-        let message = JSON.parse(event.data);
-        if (message.event === 'init') {
-            drawEventInit();
-        } else if (message.event === 'exit') {
-            drawEventClose();
-        } else if (message.event === 'save') {
-            drawEventSave(message);
-        } else if (message.event === 'export') {
-            drawEventExport(message);
-        }
+        DrawIO.show(drawingInit, updateContent);
     }
 
     function updateContent(pngData) {
@@ -266,8 +247,7 @@ function drawIoPlugin() {
 
         // Handle updating an existing image
         if (currentNode) {
-            console.log(currentNode);
-            drawEventClose();
+            DrawIO.close();
             let imgElem = currentNode.querySelector('img');
             let drawingId = currentNode.getAttribute('drawio-diagram');
             window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
@@ -281,7 +261,7 @@ function drawIoPlugin() {
 
         setTimeout(() => {
             pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
-            drawEventClose();
+            DrawIO.close();
             window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
                 pageEditor.dom.setAttrib(id, 'src', resp.data.url);
                 pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', resp.data.id);
@@ -293,40 +273,19 @@ function drawIoPlugin() {
         }, 5);
     }
 
-    function drawEventExport(message) {
-        updateContent(message.data);
-    }
 
-    function drawEventSave(message) {
-        drawPostMessage({action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing'});
-    }
-
-    function drawEventInit() {
+    function drawingInit() {
         if (!currentNode) {
-            drawPostMessage({action: 'load', autosave: 1, xml: ''});
-            return;
+            return Promise.resolve('');
         }
 
-        let imgElem = currentNode.querySelector('img');
         let drawingId = currentNode.getAttribute('drawio-diagram');
-        $http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
-            let xml = `data:image/png;base64,${resp.data.content}`;
-            drawPostMessage({action: 'load', autosave: 1, xml});
+        return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
+            return `data:image/png;base64,${resp.data.content}`;
         });
     }
 
-    function drawEventClose() {
-        window.removeEventListener('message', drawReceive);
-        if (iframe) document.body.removeChild(iframe);
-    }
-
-    function drawPostMessage(data) {
-        iframe.contentWindow.postMessage(JSON.stringify(data), '*');
-    }
-
     window.tinymce.PluginManager.add('drawio', function(editor, url) {
-
-        let $ = editor.$;
 
         editor.addCommand('drawio', () => {
             showDrawingEditor(editor);
@@ -345,7 +304,7 @@ function drawIoPlugin() {
         });
 
         editor.on('SetContent', function () {
-            let drawings = $('body > div[drawio-diagram]');
+            let drawings = editor.$('body > div[drawio-diagram]');
             if (!drawings.length) return;
 
             editor.undoManager.transact(function () {
@@ -380,9 +339,8 @@ window.tinymce.PluginManager.add('customhr', function (editor) {
     });
 });
 
+// Load plugins
 let plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor";
-
-// Load custom plugins
 codePlugin();
 if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') === 'true') {
     drawIoPlugin();
