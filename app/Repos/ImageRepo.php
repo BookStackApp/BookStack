@@ -157,6 +157,18 @@ class ImageRepo
     }
 
     /**
+     * Replace the image content of a drawing.
+     * @param Image $image
+     * @param string $base64Uri
+     * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     */
+    public function replaceDrawingContent(Image $image, string $base64Uri)
+    {
+        return $this->imageService->replaceImageDataFromBase64Uri($image, $base64Uri);
+    }
+
+    /**
      * Update the details of an image via an array of properties.
      * @param Image $image
      * @param array $updateDetails

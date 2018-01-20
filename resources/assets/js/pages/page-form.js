@@ -265,7 +265,20 @@ function drawIoPlugin() {
             uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
         };
 
-        // TODO - Handle updating an existing image
+        // Handle updating an existing image
+        if (currentNode) {
+            console.log(currentNode);
+            drawEventClose();
+            let imgElem = currentNode.querySelector('img');
+            let drawingId = currentNode.getAttribute('drawio-diagram');
+            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
+                pageEditor.dom.setAttrib(imgElem, 'src', `${resp.data.url}?updated=${Date.now()}`);
+            }).catch(err => {
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+            return;
+        }
 
         setTimeout(() => {
             pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
