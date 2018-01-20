@@ -2,6 +2,8 @@ const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
 const code = require('../libs/code');
 
+const DrawIO = require('../libs/drawio');
+
 class MarkdownEditor {
 
     constructor(elem) {
@@ -20,13 +22,26 @@ class MarkdownEditor {
 
     init() {
 
+        let lastClick = 0;
+
         // Prevent markdown display link click redirect
         this.display.addEventListener('click', event => {
-            let link = event.target.closest('a');
-            if (link === null) return;
+            let isDblClick = Date.now() - lastClick < 300;
 
-            event.preventDefault();
-            window.open(link.getAttribute('href'));
+            let link = event.target.closest('a');
+            if (link !== null) {
+                event.preventDefault();
+                window.open(link.getAttribute('href'));
+                return;
+            }
+
+            let drawing = event.target.closest('[drawio-diagram]');
+            if (drawing !== null && isDblClick) {
+                this.actionEditDrawing(drawing);
+                return;
+            }
+
+            lastClick = Date.now();
         });
 
         // Button actions
@@ -37,6 +52,7 @@ class MarkdownEditor {
             let action = button.getAttribute('data-action');
             if (action === 'insertImage') this.actionInsertImage();
             if (action === 'insertLink') this.actionShowLinkSelector();
+            if (action === 'insertDrawing') this.actionStartDrawing();
         });
 
         window.$events.listen('editor-markdown-update', value => {
@@ -287,6 +303,70 @@ class MarkdownEditor {
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+        });
+    }
+
+    // Show draw.io if enabled and handle save.
+    actionStartDrawing() {
+        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true') return;
+        let cursorPos = this.cm.getCursor('from');
+
+        DrawIO.show(() => {
+            return Promise.resolve('');
+        }, (pngData) => {
+            // let id = "image-" + Math.random().toString(16).slice(2);
+            // let loadingImage = window.baseUrl('/loading.gif');
+            let data = {
+                image: pngData,
+                uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+            };
+
+            window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
+                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
+                this.cm.focus();
+                this.cm.replaceSelection(newText);
+                this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                DrawIO.close();
+            }).catch(err => {
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+        });
+    }
+
+    // Show draw.io if enabled and handle save.
+    actionEditDrawing(imgContainer) {
+        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true') return;
+        let cursorPos = this.cm.getCursor('from');
+        let drawingId = imgContainer.getAttribute('drawio-diagram');
+
+        DrawIO.show(() => {
+            return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
+                return `data:image/png;base64,${resp.data.content}`;
+            });
+        }, (pngData) => {
+
+            let data = {
+                image: pngData,
+                uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+            };
+
+            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
+                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url + `?updated=${Date.now()}`}"></div>`;
+                let newContent = this.cm.getValue().split('\n').map(line => {
+                    if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
+                        return newText;
+                    }
+                    return line;
+                }).join('\n');
+                this.cm.setValue(newContent);
+                this.cm.setCursor(cursorPos);
+                this.cm.focus();
+                DrawIO.close();
+            }).catch(err => {
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
         });
     }
 

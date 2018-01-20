@@ -9,7 +9,7 @@ let onInit, onSave;
  * @param onInitCallback - Must return a promise with the xml to load for the editor.
  * @param onSaveCallback - Is called with the drawing data on save.
  */
-export function show(onInitCallback, onSaveCallback) {
+function show(onInitCallback, onSaveCallback) {
     onInit = onInitCallback;
     onSave = onSaveCallback;
 
@@ -19,9 +19,10 @@ export function show(onInitCallback, onSaveCallback) {
     iFrame.setAttribute('src', drawIoUrl);
     iFrame.setAttribute('class', 'fullscreen');
     iFrame.style.backgroundColor = '#FFFFFF';
+    document.body.appendChild(iFrame);
 }
 
-export function close() {
+function close() {
     drawEventClose();
 }
 
@@ -52,7 +53,7 @@ function drawEventSave(message) {
 function drawEventInit() {
     if (!onInit) return;
     onInit().then(xml => {
-        drawPostMessage({action: 'load', autosave: 1, xml: ''});
+        drawPostMessage({action: 'load', autosave: 1, xml: xml});
     });
 }
 
@@ -64,3 +65,5 @@ function drawEventClose() {
 function drawPostMessage(data) {
     iFrame.contentWindow.postMessage(JSON.stringify(data), '*');
 }
+
+module.exports = {show, close};
