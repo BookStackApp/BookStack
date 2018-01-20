@@ -115,9 +115,9 @@ class UserRepo
      */
     public function isOnlyAdmin(User $user)
     {
-        if (!$user->roles->pluck('name')->contains('admin')) return false;
+        if (!$user->hasSystemRole('admin')) return false;
 
-        $adminRole = $this->role->getRole('admin');
+        $adminRole = $this->role->getSystemRole('admin');
         if ($adminRole->users->count() > 1) return false;
         return true;
     }

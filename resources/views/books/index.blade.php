@@ -1,8 +1,21 @@
 @extends('sidebar-layout')
 
 @section('toolbar')
-    <div class="col-xs-1"></div>
-    <div class="col-xs-11 faded">
+    <div class="col-xs-6">
+        <div class="action-buttons text-left">
+            <form action="{{ baseUrl("/settings/users/{$currentUser->id}/switch-book-view") }}" method="POST" class="inline">
+                {!! csrf_field() !!}
+                {!! method_field('PATCH') !!}
+                <input type="hidden" value="{{ $booksViewType === 'list'? 'grid' : 'list' }}" name="book_view_type">
+                @if ($booksViewType === 'list')
+                    <button type="submit" class="text-pos text-button"><i class="zmdi zmdi-view-module"></i>{{ trans('common.grid_view') }}</button>
+                @else
+                    <button type="submit" class="text-pos text-button"><i class="zmdi zmdi-view-list"></i>{{ trans('common.list_view') }}</button>
+                @endif
+            </form>
+        </div>
+    </div>
+    <div class="col-xs-6 faded">
         <div class="action-buttons">
             @if($currentUser->can('book-create-all'))
                 <a href="{{ baseUrl("/books/create") }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.books_create') }}</a>
@@ -52,7 +65,7 @@
                     <hr>
                 @endforeach
                 {!! $books->render() !!}
-            @else 
+            @else
              <div class="row auto-clear">
                     @foreach($books as $key => $book)
                             @include('books/grid-item', ['book' => $book])

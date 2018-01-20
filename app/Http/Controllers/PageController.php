@@ -145,6 +145,7 @@ class PageController extends Controller
      * @param string $bookSlug
      * @param string $pageSlug
      * @return Response
+     * @throws NotFoundException
      */
     public function show($bookSlug, $pageSlug)
     {
@@ -152,7 +153,7 @@ class PageController extends Controller
             $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         } catch (NotFoundException $e) {
             $page = $this->entityRepo->getPageByOldSlug($pageSlug, $bookSlug);
-            if ($page === null) abort(404);
+            if ($page === null) throw $e;
             return redirect($page->getUrl());
         }
 
