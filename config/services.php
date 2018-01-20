@@ -13,7 +13,12 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
+
+    // Single option to disable non-auth external services such as Gravatar and Draw.io
     'disable_services' => env('DISABLE_EXTERNAL_SERVICES', false),
+    'drawio' => env('DRAWIO', !env('DISABLE_EXTERNAL_SERVICES', false)),
+
+
     'callback_url' => env('APP_URL', false),
 
     'mailgun'  => [

@@ -1,5 +1,11 @@
 
-<div class="page-editor flex-fill flex" id="page-editor" drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}" editor-type="{{ setting('app-editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
+<div class="page-editor flex-fill flex" id="page-editor"
+     drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
+     drawio-enabled="{{ config('services.drawio') ? 'true' : 'false' }}"
+     editor-type="{{ setting('app-editor') }}"
+     page-id="{{ $model->id or 0 }}"
+     page-new-draft="{{ $model->draft or 0 }}"
+     page-update-draft="{{ $model->isDraft or 0 }}">
 
     {{ csrf_field() }}
 

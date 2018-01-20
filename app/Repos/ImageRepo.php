@@ -152,7 +152,7 @@ class ImageRepo
     public function saveDrawing(string $base64Uri, int $uploadedTo)
     {
         $name = 'Drawing-' . user()->getShortName(40) . '-' . strval(time()) . '.png';
-        $image = $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawing', $uploadedTo);
+        $image = $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
         return $image;
     }
 
