@@ -218,7 +218,6 @@ function codePlugin() {
 
     });
 }
-codePlugin();
 
 function drawIoPlugin() {
 
@@ -334,8 +333,8 @@ function drawIoPlugin() {
         });
 
         editor.addButton('drawio', {
-            text: 'Drawing',
-            icon: false,
+            tooltip: 'Drawing',
+            image: window.baseUrl('/system_images/drawing.svg'),
             cmd: 'drawio'
         });
 
@@ -358,7 +357,6 @@ function drawIoPlugin() {
 
     });
 }
-drawIoPlugin();
 
 window.tinymce.PluginManager.add('customhr', function (editor) {
     editor.addCommand('InsertHorizontalRule', function () {
@@ -382,7 +380,14 @@ window.tinymce.PluginManager.add('customhr', function (editor) {
     });
 });
 
+let plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor";
 
+// Load custom plugins
+codePlugin();
+if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') === 'true') {
+    drawIoPlugin();
+    plugins += ' drawio';
+}
 
 module.exports = {
     selector: '#html-editor',
@@ -402,9 +407,9 @@ module.exports = {
     extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram]',
     automatic_uploads: false,
     valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
-    plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor drawio",
+    plugins: plugins,
     imagetools_toolbar: 'imageoptions',
-    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen drawio",
+    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr drawio | removeformat code fullscreen",
     content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
     style_formats: [
         {title: "Header Large", format: "h2"},
