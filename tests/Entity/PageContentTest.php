@@ -9,7 +9,7 @@ class PageContentTest extends TestCase
     public function test_page_includes()
     {
         $page = Page::first();
-        $secondPage = Page::all()->get(2);
+        $secondPage = Page::where('id', '!=', $page->id)->first();
 
         $secondPage->html = "<p id='section1'>Hello, This is a test</p><p id='section2'>This is a second block of content</p>";
         $secondPage->save();
@@ -38,7 +38,7 @@ class PageContentTest extends TestCase
     public function test_saving_page_with_includes()
     {
         $page = Page::first();
-        $secondPage = Page::all()->get(2);
+        $secondPage = Page::where('id', '!=', $page->id)->first();
         $this->asEditor();
         $page->html = "<p>{{@$secondPage->id}}</p>";
 
@@ -48,6 +48,23 @@ class PageContentTest extends TestCase
 
         $page = Page::find($page->id);
         $this->assertContains("{{@$secondPage->id}}", $page->html);
+    }
+
+    public function test_page_includes_do_not_break_tables()
+    {
+        $page = Page::first();
+        $secondPage = Page::where('id', '!=', $page->id)->first();
+
+        $content = '<table id="table"><tbody><tr><td>test</td></tr></tbody></table>';
+        $secondPage->html = $content;
+        $secondPage->save();
+
+        $page->html = "{{@{$secondPage->id}#table}}";
+        $page->save();
+
+        $this->asEditor();
+        $pageResp = $this->get($page->getUrl());
+        $pageResp->assertSee($content);
     }
 
     public function test_page_revision_views_viewable()

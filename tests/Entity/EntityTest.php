@@ -82,6 +82,27 @@ class EntityTest extends BrowserKitTest
             ->see($firstChapter->name);
     }
 
+    public function test_toggle_book_view()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'grid');
+
+        $this->actingAs($editor)
+            ->visit('/books')
+            ->pageHasElement('.featured-image-container')
+            ->submitForm('List View')
+            // Check redirection.
+            ->seePageIs('/books')
+            ->pageNotHasElement('.featured-image-container');
+
+        $this->actingAs($editor)
+            ->visit('/books')
+            ->submitForm('Grid View')
+            ->seePageIs('/books')
+            ->pageHasElement('.featured-image-container');
+
+    }
+
     public function pageCreation($chapter)
     {
         $page = factory(Page::class)->make([
@@ -155,7 +176,7 @@ class EntityTest extends BrowserKitTest
             ->type($book->name, '#name')
             ->type($book->description, '#description')
             ->press('Save Book');
-        
+
         $expectedPattern = '/\/books\/my-first-book-[0-9a-zA-Z]{3}/';
         $this->assertRegExp($expectedPattern, $this->currentUri, "Did not land on expected page [$expectedPattern].\n");
 

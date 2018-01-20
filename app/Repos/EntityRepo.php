@@ -113,9 +113,9 @@ class EntityRepo
      * @param bool $allowDrafts
      * @return \Illuminate\Database\Query\Builder
      */
-    protected function entityQuery($type, $allowDrafts = false)
+    protected function entityQuery($type, $allowDrafts = false, $permission = 'view')
     {
-        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type), 'view');
+        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type), $permission);
         if (strtolower($type) === 'page' && !$allowDrafts) {
             $q = $q->where('draft', '=', false);
         }
@@ -196,14 +196,15 @@ class EntityRepo
     }
 
     /**
-     * Get all entities of a type limited by count unless count if false.
+     * Get all entities of a type with the given permission, limited by count unless count is false.
      * @param string $type
      * @param integer|bool $count
+     * @param string $permission
      * @return Collection
      */
-    public function getAll($type, $count = 20)
+    public function getAll($type, $count = 20, $permission = 'view')
     {
-        $q = $this->entityQuery($type)->orderBy('name', 'asc');
+        $q = $this->entityQuery($type, false, $permission)->orderBy('name', 'asc');
         if ($count !== false) $q = $q->take($count);
         return $q->get();
     }
@@ -690,6 +691,7 @@ class EntityRepo
         preg_match_all("/{{@\s?([0-9].*?)}}/", $content, $matches);
         if (count($matches[0]) === 0) return $content;
 
+        $topLevelTags = ['table', 'ul', 'ol'];
         foreach ($matches[1] as $index => $includeId) {
             $splitInclude = explode('#', $includeId, 2);
             $pageId = intval($splitInclude[0]);
@@ -714,8 +716,13 @@ class EntityRepo
                 continue;
             }
             $innerContent = '';
-            foreach ($matchingElem->childNodes as $childNode) {
-                $innerContent .= $doc->saveHTML($childNode);
+            $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
+            if ($isTopLevel) {
+                $innerContent .= $doc->saveHTML($matchingElem);
+            } else {
+                foreach ($matchingElem->childNodes as $childNode) {
+                    $innerContent .= $doc->saveHTML($childNode);
+                }
             }
             $content = str_replace($matches[0][$index], trim($innerContent), $content);
         }

@@ -81,7 +81,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function hasSystemRole($role)
     {
-        return $this->roles->pluck('system_name')->contains('admin');
+        return $this->roles->pluck('system_name')->contains($role);
     }
 
     /**
