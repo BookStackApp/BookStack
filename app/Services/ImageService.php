@@ -66,6 +66,31 @@ class ImageService extends UploadService
     }
 
     /**
+     * Replace the data for an image via a Base64 encoded string.
+     * @param Image $image
+     * @param string $base64Uri
+     * @return Image
+     * @throws ImageUploadException
+     */
+    public function replaceImageDataFromBase64Uri(Image $image, string $base64Uri)
+    {
+        $splitData = explode(';base64,', $base64Uri);
+        if (count($splitData) < 2) {
+            throw new ImageUploadException("Invalid base64 image data provided");
+        }
+        $data = base64_decode($splitData[1]);
+        $storage = $this->getStorage();
+
+        try {
+            $storage->put($image->path, $data);
+        } catch (Exception $e) {
+            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $image->path]));
+        }
+
+        return $image;
+    }
+
+    /**
      * Gets an image from url and saves it to the database.
      * @param             $url
      * @param string      $type
