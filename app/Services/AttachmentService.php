@@ -9,14 +9,34 @@ class AttachmentService extends UploadService
 {
 
     /**
+     * Get the storage that will be used for storing files.
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
+    protected function getStorage()
+    {
+        if ($this->storageInstance !== null) return $this->storageInstance;
+
+        $storageType = config('filesystems.default');
+
+        // Override default location if set to local public to ensure not visible.
+        if ($storageType === 'local') {
+            $storageType = 'local_secure';
+        }
+
+        $this->storageInstance = $this->fileSystem->disk($storageType);
+
+        return $this->storageInstance;
+    }
+
+    /**
      * Get an attachment from storage.
      * @param Attachment $attachment
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getAttachmentFromStorage(Attachment $attachment)
     {
-        $attachmentPath = $this->getStorageBasePath() . $attachment->path;
-        return $this->getStorage()->get($attachmentPath);
+        return $this->getStorage()->get($attachment->path);
     }
 
     /**
@@ -93,16 +113,6 @@ class AttachmentService extends UploadService
     }
 
     /**
-     * Get the file storage base path, amended for storage type.
-     * This allows us to keep a generic path in the database.
-     * @return string
-     */
-    private function getStorageBasePath()
-    {
-        return $this->isLocal() ? 'storage/' : '';
-    }
-
-    /**
      * Updates the file ordering for a listing of attached files.
      * @param array $attachmentList
      * @param $pageId
@@ -138,6 +148,7 @@ class AttachmentService extends UploadService
     /**
      * Delete a File from the database and storage.
      * @param Attachment $attachment
+     * @throws Exception
      */
     public function deleteFile(Attachment $attachment)
     {
@@ -157,11 +168,10 @@ class AttachmentService extends UploadService
      */
     protected function deleteFileInStorage(Attachment $attachment)
     {
-        $storedFilePath = $this->getStorageBasePath() . $attachment->path;
         $storage = $this->getStorage();
-        $dirPath = dirname($storedFilePath);
+        $dirPath = dirname($attachment->path);
 
-        $storage->delete($storedFilePath);
+        $storage->delete($attachment->path);
         if (count($storage->allFiles($dirPath)) === 0) {
             $storage->deleteDirectory($dirPath);
         }
@@ -179,22 +189,20 @@ class AttachmentService extends UploadService
         $attachmentData = file_get_contents($uploadedFile->getRealPath());
 
         $storage = $this->getStorage();
-        $attachmentBasePath = 'uploads/files/' . Date('Y-m-M') . '/';
-        $storageBasePath = $this->getStorageBasePath() . $attachmentBasePath;
+        $basePath = 'uploads/files/' . Date('Y-m-M') . '/';
 
         $uploadFileName = $attachmentName;
-        while ($storage->exists($storageBasePath . $uploadFileName)) {
+        while ($storage->exists($basePath . $uploadFileName)) {
             $uploadFileName = str_random(3) . $uploadFileName;
         }
 
-        $attachmentPath = $attachmentBasePath . $uploadFileName;
-        $attachmentStoragePath = $this->getStorageBasePath() . $attachmentPath;
-
+        $attachmentPath = $basePath . $uploadFileName;
         try {
-            $storage->put($attachmentStoragePath, $attachmentData);
+            $storage->put($attachmentPath, $attachmentData);
         } catch (Exception $e) {
-            throw new FileUploadException(trans('errors.path_not_writable', ['filePath' => $attachmentStoragePath]));
+            throw new FileUploadException(trans('errors.path_not_writable', ['filePath' => $attachmentPath]));
         }
+
         return $attachmentPath;
     }
 
