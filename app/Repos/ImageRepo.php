@@ -183,7 +183,6 @@ class ImageRepo
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
-     *
      * @param Image $image
      * @param int $width
      * @param int $height
@@ -194,9 +193,9 @@ class ImageRepo
     {
         try {
             return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
-        } catch (FileNotFoundException $exception) {
-            $image->delete();
-            return [];
+        } catch (\Exception $exception) {
+            dd($exception);
+            return null;
         }
     }
 
