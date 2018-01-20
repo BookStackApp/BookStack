@@ -40,7 +40,6 @@ class UploadService
         return $this->storageInstance;
     }
 
-
     /**
      * Check whether or not a folder is empty.
      * @param $path
