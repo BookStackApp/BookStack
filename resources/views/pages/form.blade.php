@@ -86,6 +86,10 @@
                     <div class="editor-toolbar">
                         <span class="float left">{{ trans('entities.pages_md_editor') }}</span>
                         <div class="float right buttons">
+                            @if(config('services.drawio'))
+                                <button class="text-button" type="button" data-action="insertDrawing"><i class="zmdi zmdi-widgets"></i>{{ trans('entities.pages_md_insert_drawing') }}</button>
+                                &nbsp;|&nbsp
+                            @endif
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>{{ trans('entities.pages_md_insert_image') }}</button>
                             &nbsp;|&nbsp;
                             <button class="text-button" type="button" data-action="insertLink"><i class="zmdi zmdi-link"></i>{{ trans('entities.pages_md_insert_link') }}</button>

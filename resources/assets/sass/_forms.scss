@@ -59,16 +59,21 @@
     border: 1px solid #DDD;
     width: 50%;
   }
-  .markdown-display {
-    padding: 0 $-m 0;
-    margin-left: -1px;
-    overflow-y: scroll;
-  }
-  .markdown-display.page-content {
+}
+
+.markdown-display {
+  padding: 0 $-m 0;
+  margin-left: -1px;
+  overflow-y: scroll;
+  &.page-content {
     margin: 0 auto;
     max-width: 100%;
   }
+  [drawio-diagram]:hover {
+    outline: 2px solid $primary;
+  }
 }
+
 .editor-toolbar {
   width: 100%;
   padding: $-xs $-m;
