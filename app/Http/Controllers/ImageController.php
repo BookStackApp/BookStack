@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
@@ -26,6 +27,21 @@ class ImageController extends Controller
         $this->file = $file;
         $this->imageRepo = $imageRepo;
         parent::__construct();
+    }
+
+    /**
+     * Provide an image file from storage.
+     * @param string $path
+     * @return mixed
+     */
+    public function showImage(string $path)
+    {
+        $path = storage_path('uploads/images/' . $path);
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
     }
 
     /**
