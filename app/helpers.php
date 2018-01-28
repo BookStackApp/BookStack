@@ -74,7 +74,9 @@ function userCan($permission, Ownable $ownable = null)
 function setting($key = null, $default = false)
 {
     $settingService = resolve(\BookStack\Services\SettingService::class);
-    if (is_null($key)) return $settingService;
+    if (is_null($key)) {
+        return $settingService;
+    }
     return $settingService->get($key, $default);
 }
 
@@ -87,7 +89,9 @@ function setting($key = null, $default = false)
 function baseUrl($path, $forceAppDomain = false)
 {
     $isFullUrl = strpos($path, 'http') === 0;
-    if ($isFullUrl && !$forceAppDomain) return $path;
+    if ($isFullUrl && !$forceAppDomain) {
+        return $path;
+    }
     $path = trim($path, '/');
 
     // Remove non-specified domain if forced and we have a domain
@@ -126,7 +130,8 @@ function redirect($to = null, $status = 302, $headers = [], $secure = null)
     return app('redirect')->to($to, $status, $headers, $secure);
 }
 
-function icon($name, $attrs = []) {
+function icon($name, $attrs = [])
+{
     $iconPath = resource_path('assets/icons/' . $name . '.svg');
     $attrString = ' ';
     foreach ($attrs as $attrName => $attr) {
@@ -159,11 +164,15 @@ function sortUrl($path, $data, $overrideData = [])
 
     foreach ($queryData as $name => $value) {
         $trimmedVal = trim($value);
-        if ($trimmedVal === '') continue;
+        if ($trimmedVal === '') {
+            continue;
+        }
         $queryStringSections[] = urlencode($name) . '=' . urlencode($trimmedVal);
     }
 
-    if (count($queryStringSections) === 0) return $path;
+    if (count($queryStringSections) === 0) {
+        return $path;
+    }
 
     return baseUrl($path . '?' . implode('&', $queryStringSections));
 }

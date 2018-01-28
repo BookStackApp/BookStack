@@ -32,7 +32,9 @@ class UploadService
      */
     protected function getStorage()
     {
-        if ($this->storageInstance !== null) return $this->storageInstance;
+        if ($this->storageInstance !== null) {
+            return $this->storageInstance;
+        }
 
         $storageType = config('filesystems.default');
         $this->storageInstance = $this->fileSystem->disk($storageType);

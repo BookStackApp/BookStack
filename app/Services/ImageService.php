@@ -102,7 +102,9 @@ class ImageService extends UploadService
     {
         $imageName = $imageName ? $imageName : basename($url);
         $imageData = file_get_contents($url);
-        if($imageData === false) throw new \Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
+        if ($imageData === false) {
+            throw new \Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
+        }
         return $this->saveNew($imageName, $imageData, $type);
     }
 
@@ -121,7 +123,9 @@ class ImageService extends UploadService
         $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
-        if ($secureUploads) $imageName = str_random(16) . '-' . $imageName;
+        if ($secureUploads) {
+            $imageName = str_random(16) . '-' . $imageName;
+        }
 
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
 
@@ -255,9 +259,13 @@ class ImageService extends UploadService
 
         // Cleanup of empty folders
         foreach ($storage->directories($imageFolder) as $directory) {
-            if ($this->isFolderEmpty($directory)) $storage->deleteDirectory($directory);
+            if ($this->isFolderEmpty($directory)) {
+                $storage->deleteDirectory($directory);
+            }
         }
-        if ($this->isFolderEmpty($imageFolder)) $storage->deleteDirectory($imageFolder);
+        if ($this->isFolderEmpty($imageFolder)) {
+            $storage->deleteDirectory($imageFolder);
+        }
 
         $image->delete();
         return true;
@@ -308,6 +316,4 @@ class ImageService extends UploadService
         $basePath = ($this->storageUrl == false) ? baseUrl('/') : $this->storageUrl;
         return rtrim($basePath, '/') . $filePath;
     }
-
-
 }

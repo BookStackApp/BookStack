@@ -6,7 +6,8 @@ use BookStack\User;
 use BookStack\Repos\UserRepo;
 use Illuminate\Console\Command;
 
-class DeleteUsers extends Command{
+class DeleteUsers extends Command
+{
 
     /**
      * The name and signature of the console command.
@@ -37,14 +38,11 @@ class DeleteUsers extends Command{
     {
         $confirm = $this->ask('This will delete all users from the system that are not "admin" or system users. Are you sure you want to continue? (Type "yes" to continue)');
         $numDeleted = 0;
-        if (strtolower(trim($confirm)) === 'yes')
-        {
+        if (strtolower(trim($confirm)) === 'yes') {
             $totalUsers = $this->user->count();
             $users = $this->user->where('system_name', '=', null)->with('roles')->get();
-            foreach ($users as $user)
-            {
-                if ($user->hasSystemRole('admin'))
-                {
+            foreach ($users as $user) {
+                if ($user->hasSystemRole('admin')) {
                     // don't delete users with "admin" role
                     continue;
                 }
@@ -52,11 +50,8 @@ class DeleteUsers extends Command{
                 ++$numDeleted;
             }
             $this->info("Deleted $numDeleted of $totalUsers total users.");
-        }
-        else
-        {
+        } else {
             $this->info('Exiting...');
         }
     }
-
 }

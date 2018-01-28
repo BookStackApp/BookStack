@@ -60,7 +60,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function roles()
     {
-        if ($this->id === 0) return ;
+        if ($this->id === 0) {
+            return ;
+        }
         return $this->belongsToMany(Role::class);
     }
 
@@ -91,9 +93,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function permissions($cache = true)
     {
-        if(isset($this->permissions) && $cache) return $this->permissions;
+        if (isset($this->permissions) && $cache) {
+            return $this->permissions;
+        }
         $this->load('roles.permissions');
-        $permissions = $this->roles->map(function($role) {
+        $permissions = $this->roles->map(function ($role) {
             return $role->permissions;
         })->flatten()->unique();
         $this->permissions = $permissions;
@@ -107,7 +111,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function can($permissionName)
     {
-        if ($this->email === 'guest') return false;
+        if ($this->email === 'guest') {
+            return false;
+        }
         return $this->permissions()->pluck('name')->contains($permissionName);
     }
 
@@ -162,7 +168,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $default = baseUrl('/user_avatar.png');
         $imageId = $this->image_id;
-        if ($imageId === 0 || $imageId === '0' || $imageId === null) return $default;
+        if ($imageId === 0 || $imageId === '0' || $imageId === null) {
+            return $default;
+        }
 
         try {
             $avatar = $this->avatar ? baseUrl($this->avatar->getThumb($size, $size, false)) : $default;
@@ -206,10 +214,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getShortName($chars = 8)
     {
-        if (strlen($this->name) <= $chars) return $this->name;
+        if (strlen($this->name) <= $chars) {
+            return $this->name;
+        }
 
         $splitName = explode(' ', $this->name);
-        if (strlen($splitName[0]) <= $chars) return $splitName[0];
+        if (strlen($splitName[0]) <= $chars) {
+            return $splitName[0];
+        }
 
         return '';
     }

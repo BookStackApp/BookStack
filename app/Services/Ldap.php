@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 /**
  * Class Ldap
  * An object-orientated thin abstraction wrapper for common PHP LDAP functions.
@@ -93,5 +92,4 @@ class Ldap
     {
         return ldap_bind($ldapConnection, $bindRdn, $bindPassword);
     }
-
 }

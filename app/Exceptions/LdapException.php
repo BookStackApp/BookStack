@@ -1,3 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
-class LdapException extends PrettyException {}
+class LdapException extends PrettyException
+{
+
+}

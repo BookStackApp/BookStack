@@ -153,7 +153,9 @@ class PageController extends Controller
             $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         } catch (NotFoundException $e) {
             $page = $this->entityRepo->getPageByOldSlug($pageSlug, $bookSlug);
-            if ($page === null) throw $e;
+            if ($page === null) {
+                throw $e;
+            }
             return redirect($page->getUrl());
         }
 
@@ -220,7 +222,9 @@ class PageController extends Controller
             $warnings [] = $this->entityRepo->getUserPageDraftMessage($draft);
         }
 
-        if (count($warnings) > 0) session()->flash('warning', implode("\n", $warnings));
+        if (count($warnings) > 0) {
+            session()->flash('warning', implode("\n", $warnings));
+        }
 
         $draftsEnabled = $this->signedIn;
         return view('pages/edit', [
@@ -604,5 +608,4 @@ class PageController extends Controller
         session()->flash('success', trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());
     }
-
 }

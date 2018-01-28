@@ -25,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Auth::provider('ldap', function($app, array $config) {
+        Auth::provider('ldap', function ($app, array $config) {
             return new LdapUserProvider($config['model'], $app[LdapService::class]);
         });
     }

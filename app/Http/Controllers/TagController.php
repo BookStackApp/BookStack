@@ -54,5 +54,4 @@ class TagController extends Controller
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
         return response()->json($suggestions);
     }
-
 }

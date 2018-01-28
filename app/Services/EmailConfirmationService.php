@@ -108,6 +108,4 @@ class EmailConfirmationService
         }
         return $token;
     }
-
-
 }

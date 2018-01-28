@@ -63,14 +63,14 @@ class ImageController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function searchByType($type, $page = 0, Request $request)
+    public function searchByType(Request $request, $type, $page = 0)
     {
         $this->validate($request, [
             'term' => 'required|string'
         ]);
 
         $searchTerm = $request->get('term');
-        $imgData = $this->imageRepo->searchPaginatedByType($type, $page, 24, $searchTerm);
+        $imgData = $this->imageRepo->searchPaginatedByType($type, $searchTerm, $page, 24);
         return response()->json($imgData);
     }
 
@@ -92,17 +92,19 @@ class ImageController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function getGalleryFiltered($filter, $page = 0, Request $request)
+    public function getGalleryFiltered(Request $request, $filter, $page = 0)
     {
         $this->validate($request, [
             'page_id' => 'required|integer'
         ]);
 
         $validFilters = collect(['page', 'book']);
-        if (!$validFilters->contains($filter)) return response('Invalid filter', 500);
+        if (!$validFilters->contains($filter)) {
+            return response('Invalid filter', 500);
+        }
 
         $pageId = $request->get('page_id');
-        $imgData = $this->imageRepo->getGalleryFiltered($page, 24, strtolower($filter), $pageId);
+        $imgData = $this->imageRepo->getGalleryFiltered(strtolower($filter), $pageId, $page, 24);
 
         return response()->json($imgData);
     }
@@ -265,6 +267,4 @@ class ImageController extends Controller
         $this->imageRepo->destroyImage($image);
         return response()->json(trans('components.images_deleted'));
     }
-
-
 }

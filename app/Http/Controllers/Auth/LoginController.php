@@ -70,7 +70,9 @@ class LoginController extends Controller
     protected function authenticated(Request $request, Authenticatable $user)
     {
         // Explicitly log them out for now if they do no exist.
-        if (!$user->exists) auth()->logout($user);
+        if (!$user->exists) {
+            auth()->logout($user);
+        }
 
         if (!$user->exists && $user->email === null && !$request->filled('email')) {
             $request->flash();
@@ -83,7 +85,6 @@ class LoginController extends Controller
         }
 
         if (!$user->exists) {
-
             // Check for users with same email already
             $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
             if ($alreadyUser) {

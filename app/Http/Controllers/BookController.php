@@ -109,7 +109,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-update', $book);
-        $this->setPageTitle(trans('entities.books_edit_named',['bookName'=>$book->getShortName()]));
+        $this->setPageTitle(trans('entities.books_edit_named', ['bookName'=>$book->getShortName()]));
         return view('books/edit', ['book' => $book, 'current' => $book]);
     }
 
@@ -194,7 +194,7 @@ class BookController extends Controller
         $bookIdsInvolved = collect([$book->id]);
 
         // Load models into map
-        $sortMap->each(function($mapItem) use ($bookIdsInvolved) {
+        $sortMap->each(function ($mapItem) use ($bookIdsInvolved) {
             $mapItem->type = ($mapItem->type === 'page' ? 'page' : 'chapter');
             $mapItem->model = $this->entityRepo->getById($mapItem->type, $mapItem->id);
             // Store source and target books
@@ -210,12 +210,12 @@ class BookController extends Controller
             $this->showPermissionError();
         }
         // Check permissions of involved books
-        $booksInvolved->each(function(Book $book) {
+        $booksInvolved->each(function (Book $book) {
              $this->checkOwnablePermission('book-update', $book);
         });
 
         // Perform the sort
-        $sortMap->each(function($mapItem) {
+        $sortMap->each(function ($mapItem) {
             $model = $mapItem->model;
 
             $priorityChanged = intval($model->priority) !== intval($mapItem->sort);
@@ -236,7 +236,7 @@ class BookController extends Controller
         });
 
         // Rebuild permissions and add activity for involved books.
-        $booksInvolved->each(function(Book $book) {
+        $booksInvolved->each(function (Book $book) {
             $this->entityRepo->buildJointPermissionsForBook($book);
             Activity::add($book, 'book_sort', $book->id);
         });

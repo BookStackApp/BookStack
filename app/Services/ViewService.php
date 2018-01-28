@@ -27,7 +27,9 @@ class ViewService
     public function add(Entity $entity)
     {
         $user = user();
-        if ($user === null || $user->isDefault()) return 0;
+        if ($user === null || $user->isDefault()) {
+            return 0;
+        }
         $view = $entity->views()->where('user_id', '=', $user->id)->first();
         // Add view if model exists
         if ($view) {
@@ -77,12 +79,16 @@ class ViewService
     public function getUserRecentlyViewed($count = 10, $page = 0, $filterModel = false)
     {
         $user = user();
-        if ($user === null || $user->isDefault()) return collect();
+        if ($user === null || $user->isDefault()) {
+            return collect();
+        }
 
         $query = $this->permissionService
             ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
 
-        if ($filterModel) $query = $query->where('viewable_type', '=', get_class($filterModel));
+        if ($filterModel) {
+            $query = $query->where('viewable_type', '=', get_class($filterModel));
+        }
         $query = $query->where('user_id', '=', $user->id);
 
         $viewables = $query->with('viewable')->orderBy('updated_at', 'desc')
@@ -97,5 +103,4 @@ class ViewService
     {
         $this->view->truncate();
     }
-
 }

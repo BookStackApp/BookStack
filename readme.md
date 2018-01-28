@@ -72,7 +72,11 @@ Some strings have colon-prefixed variables in such as `:userName`. Leave these v
 
 Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
 
-### Pull Request
+### Standards
+
+PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
+
+### Pull Requests
 
 Pull requests are very welcome. If the scope of your pull request is large it may be best to open the pull request early or create an issue for it to discuss how it will fit in to the project and plan out the merge.
 
@@ -111,3 +115,4 @@ These are the great open-source projects used to help build BookStack:
     * [Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy)
     * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
+* [Draw.io](https://github.com/jgraph/drawio)
