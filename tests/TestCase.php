@@ -17,6 +17,12 @@ abstract class TestCase extends BaseTestCase
     protected $editor;
 
     /**
+     * The base URL to use while testing the application.
+     * @var string
+     */
+    protected $baseUrl = 'http://localhost';
+
+    /**
      * Set the current user context to be an admin.
      * @return $this
      */
