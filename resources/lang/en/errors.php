@@ -36,6 +36,7 @@ return [
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'image_upload_error' => 'An error occurred uploading the image',
+    'image_upload_type_error' => 'The image type being uploaded is invalid',
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update',
