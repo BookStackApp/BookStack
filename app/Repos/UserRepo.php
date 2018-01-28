@@ -1,6 +1,7 @@
 <?php namespace BookStack\Repos;
 
 use Activity;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Image;
 use BookStack\Role;
 use BookStack\User;
@@ -86,16 +87,7 @@ class UserRepo
         $this->attachDefaultRole($user);
 
         // Get avatar from gravatar and save
-        if (!config('services.disable_services')) {
-            try {
-                $avatar = Images::saveUserGravatar($user);
-                $user->avatar()->associate($avatar);
-                $user->save();
-            } catch (Exception $e) {
-                $user->save();
-                \Log::error('Failed to save user gravatar image');
-            }
-        }
+        $this->downloadGravatarToUserAvatar($user);
 
         return $user;
     }
@@ -111,6 +103,21 @@ class UserRepo
             $roleId = $this->role->first()->id;
         }
         $user->attachRoleId($roleId);
+    }
+
+    /**
+     * Assign a user to a system-level role.
+     * @param User $user
+     * @param $systemRoleName
+     * @throws NotFoundException
+     */
+    public function attachSystemRole(User $user, $systemRoleName)
+    {
+        $role = $this->role->newQuery()->where('system_name', '=', $systemRoleName)->first();
+        if ($role === null) {
+            throw new NotFoundException("Role '{$systemRoleName}' not found");
+        }
+        $user->attachRole($role);
     }
 
     /**
@@ -227,5 +234,29 @@ class UserRepo
     public function getRestrictableRoles()
     {
         return $this->role->where('system_name', '!=', 'admin')->get();
+    }
+
+    /**
+     * Get a gravatar image for a user and set it as their avatar.
+     * Does not run if gravatar disabled in config.
+     * @param User $user
+     * @return bool
+     */
+    public function downloadGravatarToUserAvatar(User $user)
+    {
+        // Get avatar from gravatar and save
+        if (!config('services.gravatar')) {
+            return false;
+        }
+
+        try {
+            $avatar = Images::saveUserGravatar($user);
+            $user->avatar()->associate($avatar);
+            $user->save();
+            return true;
+        } catch (Exception $e) {
+            \Log::error('Failed to save user gravatar image');
+            return false;
+        }
     }
 }

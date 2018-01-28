@@ -93,16 +93,7 @@ class UserController extends Controller
             $user->roles()->sync($roles);
         }
 
-        // Get avatar from gravatar and save
-        if (!config('services.disable_services')) {
-            try {
-                $avatar = \Images::saveUserGravatar($user);
-                $user->avatar()->associate($avatar);
-                $user->save();
-            } catch (Exception $e) {
-                \Log::error('Failed to save user gravatar image');
-            }
-        }
+        $this->userRepo->downloadGravatarToUserAvatar($user);
 
         return redirect('/settings/users');
     }
