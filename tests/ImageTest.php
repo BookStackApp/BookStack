@@ -5,7 +5,6 @@ use BookStack\Page;
 
 class ImageTest extends TestCase
 {
-
     /**
      * Get the path to our basic test image.
      * @return string
@@ -54,20 +53,25 @@ class ImageTest extends TestCase
      */
     protected function deleteImage($relPath)
     {
-        unlink(public_path($relPath));
+        $path = public_path($relPath);
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 
 
     public function test_image_upload()
     {
         $page = Page::first();
-        $this->asAdmin();
         $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
         $imageName = 'first-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
 
         $upload = $this->uploadImage($imageName, $page->id);
         $upload->assertStatus(200);
-        $relPath = $this->getTestImagePath('gallery', $imageName);
 
         $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image not found at path: '. public_path($relPath));
 

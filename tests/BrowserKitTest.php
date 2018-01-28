@@ -17,6 +17,12 @@ abstract class BrowserKitTest extends TestCase
     private $admin;
     private $editor;
 
+    /**
+     * The base URL to use while testing the application.
+     * @var string
+     */
+    protected $baseUrl = 'http://localhost';
+
     public function tearDown()
     {
         \DB::disconnect();
