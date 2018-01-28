@@ -16,6 +16,7 @@ return [
 
     // Single option to disable non-auth external services such as Gravatar and Draw.io
     'disable_services' => env('DISABLE_EXTERNAL_SERVICES', false),
+    'gravatar' => env('GRAVATAR', !env('DISABLE_EXTERNAL_SERVICES', false)),
     'drawio' => env('DRAWIO', !env('DISABLE_EXTERNAL_SERVICES', false)),
 
 
