@@ -102,6 +102,10 @@
     display: flex;
     align-self: flex-start;
   }
+
+  .popup-content {
+    overflow-y: auto;
+  }
 }
 
 .corner-button {
@@ -539,6 +543,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   a {
     margin-right: $-xs;
     text-decoration: underline;
+  }
+}
+
+@include smaller-than($m) {
+  #code-editor .lang-options {
+    max-width: 100%;
+  }
+  #code-editor .CodeMirror {
+    height: 200px;
   }
 }
 
