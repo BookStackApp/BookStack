@@ -1,9 +1,11 @@
 <?php namespace BookStack\Repos;
 
+use Activity;
+use BookStack\Image;
 use BookStack\Role;
 use BookStack\User;
 use Exception;
-use BookStack\Services\ImageService;
+use Images;
 
 class UserRepo
 {
@@ -11,7 +13,6 @@ class UserRepo
     protected $user;
     protected $role;
     protected $entityRepo;
-    protected $imageService;
 
     /**
      * UserRepo constructor.
@@ -19,12 +20,11 @@ class UserRepo
      * @param Role $role
      * @param EntityRepo $entityRepo
      */
-    public function __construct(User $user, Role $role, EntityRepo $entityRepo, ImageService $imageService)
+    public function __construct(User $user, Role $role, EntityRepo $entityRepo)
     {
         $this->user = $user;
         $this->role = $role;
         $this->entityRepo = $entityRepo;
-        $this->imageService = $imageService;
     }
 
     /**
@@ -88,7 +88,7 @@ class UserRepo
         // Get avatar from gravatar and save
         if (!config('services.disable_services')) {
             try {
-                $avatar = \Images::saveUserGravatar($user);
+                $avatar = Images::saveUserGravatar($user);
                 $user->avatar()->associate($avatar);
                 $user->save();
             } catch (Exception $e) {
@@ -143,16 +143,17 @@ class UserRepo
     /**
      * Remove the given user from storage, Delete all related content.
      * @param User $user
+     * @throws Exception
      */
     public function destroy(User $user)
     {
         $user->socialAccounts()->delete();
         $user->delete();
         
-        // Deleting User profile pics
-        $profilePic = $user->image_id ? $user->avatar->findOrFail($user->image_id) : FALSE;
-        if ($profilePic) {
-            $this->imageService->destroyImage($profilePic);
+        // Delete user profile images
+        $profileImages = $images = Image::where('type', '=', 'user')->where('created_by', '=', $user->id)->get();
+        foreach ($profileImages as $image) {
+            Images::destroyImage($image);
         }
     }
 
@@ -165,7 +166,7 @@ class UserRepo
      */
     public function getActivity(User $user, $count = 20, $page = 0)
     {
-        return \Activity::userActivity($user, $count, $page);
+        return Activity::userActivity($user, $count, $page);
     }
 
     /**

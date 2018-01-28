@@ -115,19 +115,5 @@ class UserProfileTest extends BrowserKitTest
             ->visit('/books')
             ->pageHasElement('.featured-image-container');
     }
-    
-    public function test_user_delete() 
-    {
-        $newUser = $this->getNewBlankUser();
-        $this->actingAs($newUser);
-        $this->asAdmin()->visit('/settings/users/' . $newUser->id . '/delete')
-		->see('Delete User')
-		->press('Confirm')
-		->seePageIs('/settings/users/')
-		->see('USERS')->see('ADD NEW USER');
-        
-        $this->dontSeeInDatabase('images', [
-		'id' => $newUser->image_id
-            ]);
-    }
+
 }

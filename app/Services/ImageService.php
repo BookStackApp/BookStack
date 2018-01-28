@@ -236,6 +236,7 @@ class ImageService extends UploadService
      * Destroys an Image object along with its files and thumbnails.
      * @param Image $image
      * @return bool
+     * @throws Exception
      */
     public function destroyImage(Image $image)
     {

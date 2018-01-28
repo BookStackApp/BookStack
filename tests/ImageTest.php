@@ -184,4 +184,28 @@ class ImageTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
     }
 
+    public function test_user_images_deleted_on_user_deletion()
+    {
+        $editor = $this->getEditor();
+        $this->actingAs($editor);
+
+        $imageName = 'profile.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+
+        $file = $this->getTestImage($imageName);
+        $this->call('POST', '/images/user/upload', [], [], ['file' => $file], []);
+        $this->call('POST', '/images/user/upload', [], [], ['file' => $file], []);
+
+        $profileImages = Image::where('type', '=', 'user')->where('created_by', '=', $editor->id)->get();
+        $this->assertTrue($profileImages->count() === 2, "Found profile images does not match upload count");
+
+        $userDelete = $this->asAdmin()->delete("/settings/users/{$editor->id}");
+        $userDelete->assertStatus(302);
+        $this->assertDatabaseMissing('images', [
+            'type' => 'user',
+            'created_by' => $editor->id
+        ]);
+    }
+
 }
