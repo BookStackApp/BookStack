@@ -13,16 +13,15 @@ abstract class BrowserKitTest extends TestCase
 
     use DatabaseTransactions;
 
-    /**
-     * The base URL to use while testing the application.
-     *
-     * @var string
-     */
-    protected $baseUrl = 'http://localhost';
-
     // Local user instances
     private $admin;
     private $editor;
+
+    /**
+     * The base URL to use while testing the application.
+     * @var string
+     */
+    protected $baseUrl = 'http://localhost';
 
     public function tearDown()
     {

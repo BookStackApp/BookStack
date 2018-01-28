@@ -112,6 +112,7 @@ class ImageController extends Controller
      * @param string $type
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function uploadByType($type, Request $request)
     {
@@ -120,10 +121,14 @@ class ImageController extends Controller
             'file' => 'is_image'
         ]);
 
+        if (!$this->imageRepo->isValidType($type)) {
+            return $this->jsonError(trans('errors.image_upload_type_error'));
+        }
+
         $imageUpload = $request->file('file');
 
         try {
-            $uploadedTo = $request->filled('uploaded_to') ? $request->get('uploaded_to') : 0;
+            $uploadedTo = $request->get('uploaded_to', 0);
             $image = $this->imageRepo->saveNew($imageUpload, $type, $uploadedTo);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);
@@ -133,12 +138,81 @@ class ImageController extends Controller
     }
 
     /**
+     * Upload a drawing to the system.
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function uploadDrawing(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|string',
+            'uploaded_to' => 'required|integer'
+        ]);
+        $this->checkPermission('image-create-all');
+        $imageBase64Data = $request->get('image');
+
+        try {
+            $uploadedTo = $request->get('uploaded_to', 0);
+            $image = $this->imageRepo->saveDrawing($imageBase64Data, $uploadedTo);
+        } catch (ImageUploadException $e) {
+            return response($e->getMessage(), 500);
+        }
+
+        return response()->json($image);
+    }
+
+    /**
+     * Replace the data content of a drawing.
+     * @param string $id
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function replaceDrawing(string $id, Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|string'
+        ]);
+        $this->checkPermission('image-create-all');
+
+        $imageBase64Data = $request->get('image');
+        $image = $this->imageRepo->getById($id);
+        $this->checkOwnablePermission('image-update', $image);
+
+        try {
+            $image = $this->imageRepo->replaceDrawingContent($image, $imageBase64Data);
+        } catch (ImageUploadException $e) {
+            return response($e->getMessage(), 500);
+        }
+
+        return response()->json($image);
+    }
+
+    /**
+     * Get the content of an image based64 encoded.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
+    public function getBase64Image($id)
+    {
+        $image = $this->imageRepo->getById($id);
+        $imageData = $this->imageRepo->getImageData($image);
+        if ($imageData === null) {
+            return $this->jsonError("Image data could not be found");
+        }
+        return response()->json([
+            'content' => base64_encode($imageData)
+        ]);
+    }
+
+    /**
      * Generate a sized thumbnail for an image.
      * @param $id
      * @param $width
      * @param $height
      * @param $crop
      * @return \Illuminate\Http\JsonResponse
+     * @throws ImageUploadException
+     * @throws \Exception
      */
     public function getThumbnail($id, $width, $height, $crop)
     {
@@ -153,6 +227,8 @@ class ImageController extends Controller
      * @param integer $imageId
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws ImageUploadException
+     * @throws \Exception
      */
     public function update($imageId, Request $request)
     {

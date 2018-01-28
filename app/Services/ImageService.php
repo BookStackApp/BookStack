@@ -47,6 +47,50 @@ class ImageService extends UploadService
     }
 
     /**
+     * Save a new image from a uri-encoded base64 string of data.
+     * @param string $base64Uri
+     * @param string $name
+     * @param string $type
+     * @param int $uploadedTo
+     * @return Image
+     * @throws ImageUploadException
+     */
+    public function saveNewFromBase64Uri(string $base64Uri, string $name, string $type, $uploadedTo = 0)
+    {
+        $splitData = explode(';base64,', $base64Uri);
+        if (count($splitData) < 2) {
+            throw new ImageUploadException("Invalid base64 image data provided");
+        }
+        $data = base64_decode($splitData[1]);
+        return $this->saveNew($name, $data, $type, $uploadedTo);
+    }
+
+    /**
+     * Replace the data for an image via a Base64 encoded string.
+     * @param Image $image
+     * @param string $base64Uri
+     * @return Image
+     * @throws ImageUploadException
+     */
+    public function replaceImageDataFromBase64Uri(Image $image, string $base64Uri)
+    {
+        $splitData = explode(';base64,', $base64Uri);
+        if (count($splitData) < 2) {
+            throw new ImageUploadException("Invalid base64 image data provided");
+        }
+        $data = base64_decode($splitData[1]);
+        $storage = $this->getStorage();
+
+        try {
+            $storage->put($image->path, $data);
+        } catch (Exception $e) {
+            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $image->path]));
+        }
+
+        return $image;
+    }
+
+    /**
      * Gets an image from url and saves it to the database.
      * @param             $url
      * @param string      $type
@@ -173,6 +217,19 @@ class ImageService extends UploadService
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
+    }
+
+    /**
+     * Get the raw data content from an image.
+     * @param Image $image
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function getImageData(Image $image)
+    {
+        $imagePath = $this->getPath($image);
+        $storage = $this->getStorage();
+        return $storage->get($imagePath);
     }
 
     /**

@@ -1,12 +1,9 @@
 <?php namespace BookStack\Repos;
 
-
 use BookStack\Image;
 use BookStack\Page;
 use BookStack\Services\ImageService;
 use BookStack\Services\PermissionService;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Setting;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
@@ -132,6 +129,8 @@ class ImageRepo
      * @param  string $type
      * @param int $uploadedTo
      * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     public function saveNew(UploadedFile $uploadFile, $type, $uploadedTo = 0)
     {
@@ -141,10 +140,38 @@ class ImageRepo
     }
 
     /**
+     * Save a drawing the the database;
+     * @param string $base64Uri
+     * @param int $uploadedTo
+     * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     */
+    public function saveDrawing(string $base64Uri, int $uploadedTo)
+    {
+        $name = 'Drawing-' . user()->getShortName(40) . '-' . strval(time()) . '.png';
+        $image = $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
+        return $image;
+    }
+
+    /**
+     * Replace the image content of a drawing.
+     * @param Image $image
+     * @param string $base64Uri
+     * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     */
+    public function replaceDrawingContent(Image $image, string $base64Uri)
+    {
+        return $this->imageService->replaceImageDataFromBase64Uri($image, $base64Uri);
+    }
+
+    /**
      * Update the details of an image via an array of properties.
      * @param Image $image
      * @param array $updateDetails
      * @return Image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     public function updateImageDetails(Image $image, $updateDetails)
     {
@@ -170,6 +197,8 @@ class ImageRepo
     /**
      * Load thumbnails onto an image object.
      * @param Image $image
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     private function loadThumbs(Image $image)
     {
@@ -188,6 +217,8 @@ class ImageRepo
      * @param int $height
      * @param bool $keepRatio
      * @return string
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \Exception
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
@@ -199,5 +230,29 @@ class ImageRepo
         }
     }
 
+    /**
+     * Get the raw image data from an Image.
+     * @param Image $image
+     * @return null|string
+     */
+    public function getImageData(Image $image)
+    {
+        try {
+            return $this->imageService->getImageData($image);
+        } catch (\Exception $exception) {
+            return null;
+        }
+    }
+
+    /**
+     * Check if the provided image type is valid.
+     * @param $type
+     * @return bool
+     */
+    public function isValidType($type)
+    {
+        $validTypes = ['drawing', 'gallery', 'cover', 'system', 'user'];
+        return in_array($type, $validTypes);
+    }
 
 }

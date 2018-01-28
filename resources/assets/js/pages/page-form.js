@@ -1,5 +1,6 @@
 "use strict";
-const Code = require('../code');
+const Code = require('../libs/code');
+const DrawIO = require('../libs/drawio');
 
 /**
  * Handle pasting images from clipboard.
@@ -47,7 +48,7 @@ function uploadImageFile(file) {
     let formData = new FormData();
     formData.append('file', file, remoteFilename);
 
-    return window.$http.post('/images/gallery/upload', formData).then(resp => (resp.data));
+    return window.$http.post(window.baseUrl('/images/gallery/upload'), formData).then(resp => (resp.data));
 }
 
 function registerEditorShortcuts(editor) {
@@ -218,7 +219,103 @@ function codePlugin() {
 
     });
 }
-codePlugin();
+
+function drawIoPlugin() {
+
+    const drawIoUrl = 'https://www.draw.io/?embed=1&ui=atlas&spin=1&proto=json';
+    let iframe = null;
+    let pageEditor = null;
+    let currentNode = null;
+
+    function isDrawing(node) {
+        return node.hasAttribute('drawio-diagram');
+    }
+
+    function showDrawingEditor(mceEditor, selectedNode = null) {
+        pageEditor = mceEditor;
+        currentNode = selectedNode;
+        DrawIO.show(drawingInit, updateContent);
+    }
+
+    function updateContent(pngData) {
+        let id = "image-" + Math.random().toString(16).slice(2);
+        let loadingImage = window.baseUrl('/loading.gif');
+        let data = {
+            image: pngData,
+            uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+        };
+
+        // Handle updating an existing image
+        if (currentNode) {
+            DrawIO.close();
+            let imgElem = currentNode.querySelector('img');
+            let drawingId = currentNode.getAttribute('drawio-diagram');
+            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
+                pageEditor.dom.setAttrib(imgElem, 'src', `${resp.data.url}?updated=${Date.now()}`);
+            }).catch(err => {
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+            return;
+        }
+
+        setTimeout(() => {
+            pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
+            DrawIO.close();
+            window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
+                pageEditor.dom.setAttrib(id, 'src', resp.data.url);
+                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', resp.data.id);
+            }).catch(err => {
+                pageEditor.dom.remove(id);
+                window.$events.emit('error', trans('errors.image_upload_error'));
+                console.log(err);
+            });
+        }, 5);
+    }
+
+
+    function drawingInit() {
+        if (!currentNode) {
+            return Promise.resolve('');
+        }
+
+        let drawingId = currentNode.getAttribute('drawio-diagram');
+        return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
+            return `data:image/png;base64,${resp.data.content}`;
+        });
+    }
+
+    window.tinymce.PluginManager.add('drawio', function(editor, url) {
+
+        editor.addCommand('drawio', () => {
+            showDrawingEditor(editor);
+        });
+
+        editor.addButton('drawio', {
+            tooltip: 'Drawing',
+            image: window.baseUrl('/system_images/drawing.svg'),
+            cmd: 'drawio'
+        });
+
+        editor.on('dblclick', event => {
+            let selectedNode = editor.selection.getNode();
+            if (!isDrawing(selectedNode)) return;
+            showDrawingEditor(editor, selectedNode);
+        });
+
+        editor.on('SetContent', function () {
+            let drawings = editor.$('body > div[drawio-diagram]');
+            if (!drawings.length) return;
+
+            editor.undoManager.transact(function () {
+                drawings.each((index, elem) => {
+                    elem.setAttribute('contenteditable', 'false');
+                });
+            });
+        });
+
+    });
+}
 
 window.tinymce.PluginManager.add('customhr', function (editor) {
     editor.addCommand('InsertHorizontalRule', function () {
@@ -242,7 +339,13 @@ window.tinymce.PluginManager.add('customhr', function (editor) {
     });
 });
 
-
+// Load plugins
+let plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor";
+codePlugin();
+if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') === 'true') {
+    drawIoPlugin();
+    plugins += ' drawio';
+}
 
 module.exports = {
     selector: '#html-editor',
@@ -259,12 +362,12 @@ module.exports = {
     statusbar: false,
     menubar: false,
     paste_data_images: false,
-    extended_valid_elements: 'pre[*]',
+    extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram]',
     automatic_uploads: false,
-    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre]",
-    plugins: "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor",
+    valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
+    plugins: plugins,
     imagetools_toolbar: 'imageoptions',
-    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr | removeformat code fullscreen",
+    toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr drawio | removeformat code fullscreen",
     content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
     style_formats: [
         {title: "Header Large", format: "h2"},
