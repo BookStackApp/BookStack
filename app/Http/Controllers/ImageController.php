@@ -120,7 +120,10 @@ class ImageController extends Controller
         $this->validate($request, [
             'file' => 'is_image'
         ]);
-        // TODO - Restrict & validate types
+
+        if (!$this->imageRepo->isValidType($type)) {
+            return $this->jsonError(trans('errors.image_upload_type_error'));
+        }
 
         $imageUpload = $request->file('file');
 

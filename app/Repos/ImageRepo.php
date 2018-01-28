@@ -1,12 +1,9 @@
 <?php namespace BookStack\Repos;
 
-
 use BookStack\Image;
 use BookStack\Page;
 use BookStack\Services\ImageService;
 use BookStack\Services\PermissionService;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Setting;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
@@ -247,5 +244,15 @@ class ImageRepo
         }
     }
 
+    /**
+     * Check if the provided image type is valid.
+     * @param $type
+     * @return bool
+     */
+    public function isValidType($type)
+    {
+        $validTypes = ['drawing', 'gallery', 'cover', 'system', 'user'];
+        return in_array($type, $validTypes);
+    }
 
 }
