@@ -2,7 +2,6 @@
 
 namespace BookStack\Providers;
 
-
 use BookStack\Role;
 use BookStack\Services\LdapService;
 use BookStack\User;
@@ -102,7 +101,9 @@ class LdapUserProvider implements UserProvider
     {
         // Get user via LDAP
         $userDetails = $this->ldapService->getUserDetails($credentials['username']);
-        if ($userDetails === null) return null;
+        if ($userDetails === null) {
+            return null;
+        }
 
         // Search current user base by looking up a uid
         $model = $this->createModel();
@@ -110,7 +111,9 @@ class LdapUserProvider implements UserProvider
             ->where('external_auth_id', $userDetails['uid'])
             ->first();
 
-        if ($currentUser !== null) return $currentUser;
+        if ($currentUser !== null) {
+            return $currentUser;
+        }
 
         $model->name = $userDetails['name'];
         $model->external_auth_id = $userDetails['uid'];

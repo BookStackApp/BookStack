@@ -1,4 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
+class SocialSignInException extends NotifyException
+{
 
-class SocialSignInException extends NotifyException {}
+}

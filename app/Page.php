@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Page extends Entity
 {
     protected $fillable = ['name', 'html', 'priority', 'markdown'];
@@ -101,8 +100,8 @@ class Page extends Entity
      * @return string
      */
     public function entityRawQuery($withContent = false)
-    {   $htmlQuery = $withContent ? 'html' : "'' as html";
+    {
+        $htmlQuery = $withContent ? 'html' : "'' as html";
         return "'BookStack\\\\Page' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text, {$htmlQuery}, book_id, priority, chapter_id, draft, created_by, updated_by, updated_at, created_at";
     }
-
 }

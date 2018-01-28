@@ -29,7 +29,8 @@
         "symfony/dom-crawler": "3.1.*",
         "laravel/browser-kit-testing": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.4.1",
-        "barryvdh/laravel-debugbar": "^3.1.0"
+        "barryvdh/laravel-debugbar": "^3.1.0",
+        "squizlabs/php_codesniffer": "^3.2"
     },
     "autoload": {
         "classmap": [

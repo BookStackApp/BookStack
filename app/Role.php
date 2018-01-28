@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Role extends Model
 {
 
@@ -40,7 +39,9 @@ class Role extends Model
     {
         $permissions = $this->getRelationValue('permissions');
         foreach ($permissions as $permission) {
-            if ($permission->getRawAttribute('name') === $permissionName) return true;
+            if ($permission->getRawAttribute('name') === $permissionName) {
+                return true;
+            }
         }
         return false;
     }
@@ -91,5 +92,4 @@ class Role extends Model
     {
         return static::where('hidden', '=', false)->orderBy('name')->get();
     }
-
 }

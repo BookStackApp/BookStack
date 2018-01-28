@@ -104,7 +104,4 @@ class SearchController extends Controller
 
         return view('search/entity-ajax-list', ['entities' => $entities]);
     }
-
 }
-
-

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+    <description>The coding standard for BookStack.</description>
+    <file>app</file>
+    <exclude-pattern>*/migrations/*</exclude-pattern>
+    <arg value="np"/>
+    <rule ref="PSR2"/>
+</ruleset>

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Repos;
 
-
 use BookStack\Exceptions\PermissionsException;
 use BookStack\RolePermission;
 use BookStack\Role;
@@ -149,5 +148,4 @@ class PermissionsRepo
         $this->permissionService->deleteJointPermissionsForRole($role);
         $role->delete();
     }
-
 }

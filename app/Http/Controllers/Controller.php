@@ -51,7 +51,9 @@ abstract class Controller extends BaseController
      */
     protected function preventAccessForDemoUsers()
     {
-        if (config('app.env') === 'demo') $this->showPermissionError();
+        if (config('app.env') === 'demo') {
+            $this->showPermissionError();
+        }
     }
 
     /**
@@ -100,7 +102,9 @@ abstract class Controller extends BaseController
      */
     protected function checkOwnablePermission($permission, Ownable $ownable)
     {
-        if (userCan($permission, $ownable)) return true;
+        if (userCan($permission, $ownable)) {
+            return true;
+        }
         return $this->showPermissionError();
     }
 
@@ -113,7 +117,9 @@ abstract class Controller extends BaseController
     protected function checkPermissionOr($permissionName, $callback)
     {
         $callbackResult = $callback();
-        if ($callbackResult === false) $this->checkPermission($permissionName);
+        if ($callbackResult === false) {
+            $this->checkPermission($permissionName);
+        }
         return true;
     }
 
@@ -145,5 +151,4 @@ abstract class Controller extends BaseController
             ->withInput($request->input())
             ->withErrors($errors, $this->errorBag());
     }
-
 }

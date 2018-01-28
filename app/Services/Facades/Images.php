@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services\Facades;
 
-
 use Illuminate\Support\Facades\Facade;
 
 class Images extends Facade
@@ -10,5 +9,8 @@ class Images extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'images'; }
+    protected static function getFacadeAccessor()
+    {
+        return 'images';
+    }
 }

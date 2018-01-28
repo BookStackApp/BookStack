@@ -95,9 +95,12 @@ class Handler extends ExceptionHandler
      * @param $type
      * @return bool
      */
-    protected function isExceptionType(Exception $e, $type) {
+    protected function isExceptionType(Exception $e, $type)
+    {
         do {
-            if (is_a($e, $type)) return true;
+            if (is_a($e, $type)) {
+                return true;
+            }
         } while ($e = $e->getPrevious());
         return false;
     }
@@ -107,7 +110,8 @@ class Handler extends ExceptionHandler
      * @param Exception $e
      * @return string
      */
-    protected function getOriginalMessage(Exception $e) {
+    protected function getOriginalMessage(Exception $e)
+    {
         do {
             $message = $e->getMessage();
         } while ($e = $e->getPrevious());

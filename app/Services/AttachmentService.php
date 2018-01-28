@@ -14,7 +14,9 @@ class AttachmentService extends UploadService
      */
     protected function getStorage()
     {
-        if ($this->storageInstance !== null) return $this->storageInstance;
+        if ($this->storageInstance !== null) {
+            return $this->storageInstance;
+        }
 
         $storageType = config('filesystems.default');
 
@@ -205,5 +207,4 @@ class AttachmentService extends UploadService
 
         return $attachmentPath;
     }
-
 }

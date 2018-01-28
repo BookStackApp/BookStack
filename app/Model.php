@@ -15,5 +15,4 @@ class Model extends EloquentModel
     {
         return parent::getAttributeFromArray($key);
     }
-
 }

@@ -159,7 +159,8 @@ class ChapterController extends Controller
      * @return mixed
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function showMove($bookSlug, $chapterSlug) {
+    public function showMove($bookSlug, $chapterSlug)
+    {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->setPageTitle(trans('entities.chapters_move_named', ['chapterName' => $chapter->getShortName()]));
         $this->checkOwnablePermission('chapter-update', $chapter);
@@ -177,7 +178,8 @@ class ChapterController extends Controller
      * @return mixed
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function move($bookSlug, $chapterSlug, Request $request) {
+    public function move($bookSlug, $chapterSlug, Request $request)
+    {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
 

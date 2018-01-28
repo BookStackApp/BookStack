@@ -40,8 +40,12 @@ class SettingService
      */
     public function get($key, $default = false)
     {
-        if ($default === false) $default = config('setting-defaults.' . $key, false);
-        if (isset($this->localCache[$key])) return $this->localCache[$key];
+        if ($default === false) {
+            $default = config('setting-defaults.' . $key, false);
+        }
+        if (isset($this->localCache[$key])) {
+            return $this->localCache[$key];
+        }
 
         $value = $this->getValueFromStore($key, $default);
         $formatted = $this->formatValue($value, $default);
@@ -72,12 +76,16 @@ class SettingService
     {
         // Check for an overriding value
         $overrideValue = $this->getOverrideValue($key);
-        if ($overrideValue !== null) return $overrideValue;
+        if ($overrideValue !== null) {
+            return $overrideValue;
+        }
 
         // Check the cache
         $cacheKey = $this->cachePrefix . $key;
         $cacheVal = $this->cache->get($cacheKey, null);
-        if ($cacheVal !== null) return $cacheVal;
+        if ($cacheVal !== null) {
+            return $cacheVal;
+        }
 
         // Check the database
         $settingObject = $this->getSettingObjectByKey($key);
@@ -112,11 +120,17 @@ class SettingService
     protected function formatValue($value, $default)
     {
         // Change string booleans to actual booleans
-        if ($value === 'true') $value = true;
-        if ($value === 'false') $value = false;
+        if ($value === 'true') {
+            $value = true;
+        }
+        if ($value === 'false') {
+            $value = false;
+        }
 
         // Set to default if empty
-        if ($value === '') $value = $default;
+        if ($value === '') {
+            $value = $default;
+        }
         return $value;
     }
 
@@ -225,8 +239,9 @@ class SettingService
      */
     protected function getOverrideValue($key)
     {
-        if ($key === 'registration-enabled' && config('auth.method') === 'ldap') return false;
+        if ($key === 'registration-enabled' && config('auth.method') === 'ldap') {
+            return false;
+        }
         return null;
     }
-
 }

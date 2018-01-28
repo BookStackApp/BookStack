@@ -7,7 +7,8 @@ use BookStack\Entity;
  * Class CommentRepo
  * @package BookStack\Repos
  */
-class CommentRepo {
+class CommentRepo
+{
 
     /**
      * @var Comment $comment
@@ -39,7 +40,7 @@ class CommentRepo {
      * @param array $data
      * @return Comment
      */
-    public function create (Entity $entity, $data = [])
+    public function create(Entity $entity, $data = [])
     {
         $userId = user()->id;
         $comment = $this->comment->newInstance($data);
@@ -81,7 +82,9 @@ class CommentRepo {
     protected function getNextLocalId(Entity $entity)
     {
         $comments = $entity->comments(false)->orderBy('local_id', 'desc')->first();
-        if ($comments === null) return 1;
+        if ($comments === null) {
+            return 1;
+        }
         return $comments->local_id + 1;
     }
 }

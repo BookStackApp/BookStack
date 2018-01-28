@@ -1,4 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
+class AuthException extends PrettyException
+{
 
-class AuthException extends PrettyException {}
+}

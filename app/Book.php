@@ -27,7 +27,9 @@ class Book extends Entity
     public function getBookCover($width = 440, $height = 250)
     {
         $default = baseUrl('/book_default_cover.png');
-        if (!$this->image_id) return $default;
+        if (!$this->image_id) {
+            return $default;
+        }
 
         try {
             $cover = $this->cover ? baseUrl($this->cover->getThumb($width, $height, false)) : $default;
@@ -91,5 +93,4 @@ class Book extends Entity
     {
         return "'BookStack\\\\Book' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text,'' as html, '0' as book_id, '0' as priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
     }
-
 }

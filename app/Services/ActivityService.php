@@ -170,5 +170,4 @@ class ActivityService
             Session::flash('success', $message);
         }
     }
-
 }

@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class EntityPermission extends Model
 {
 

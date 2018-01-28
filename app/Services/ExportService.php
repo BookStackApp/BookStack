@@ -42,7 +42,7 @@ class ExportService
     public function chapterToContainedHtml(Chapter $chapter)
     {
         $pages = $this->entityRepo->getChapterChildren($chapter);
-        $pages->each(function($page) {
+        $pages->each(function ($page) {
             $page->html = $this->entityRepo->renderPage($page);
         });
         $html = view('chapters/export', [
@@ -89,7 +89,7 @@ class ExportService
     public function chapterToPdf(Chapter $chapter)
     {
         $pages = $this->entityRepo->getChapterChildren($chapter);
-        $pages->each(function($page) {
+        $pages->each(function ($page) {
             $page->html = $this->entityRepo->renderPage($page);
         });
         $html = view('chapters/export', [
@@ -163,7 +163,9 @@ class ExportService
                     $pathString = public_path(trim($relString, '/'));
                 }
 
-                if ($isLocal && !file_exists($pathString)) continue;
+                if ($isLocal && !file_exists($pathString)) {
+                    continue;
+                }
                 try {
                     if ($isLocal) {
                         $imageContent = file_get_contents($pathString);
@@ -173,7 +175,9 @@ class ExportService
                         $imageContent = curl_exec($ch);
                         $err = curl_error($ch);
                         curl_close($ch);
-                        if ($err) throw new \Exception("Image fetch failed, Received error: " . $err);
+                        if ($err) {
+                            throw new \Exception("Image fetch failed, Received error: " . $err);
+                        }
                     }
                     $imageEncoded = 'data:image/' . pathinfo($pathString, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageContent);
                     $newImageString = str_replace($srcString, $imageEncoded, $oldImgString);
@@ -257,17 +261,4 @@ class ExportService
         }
         return $text;
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

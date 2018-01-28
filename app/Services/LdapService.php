@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 use BookStack\Exceptions\LdapException;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -45,7 +44,9 @@ class LdapService
         $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
         $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
         $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', $emailAttr]);
-        if ($users['count'] === 0) return null;
+        if ($users['count'] === 0) {
+            return null;
+        }
 
         $user = $users[0];
         return [
@@ -66,8 +67,12 @@ class LdapService
     public function validateUserCredentials(Authenticatable $user, $username, $password)
     {
         $ldapUser = $this->getUserDetails($username);
-        if ($ldapUser === null) return false;
-        if ($ldapUser['uid'] !== $user->external_auth_id) return false;
+        if ($ldapUser === null) {
+            return false;
+        }
+        if ($ldapUser['uid'] !== $user->external_auth_id) {
+            return false;
+        }
 
         $ldapConnection = $this->getConnection();
         try {
@@ -97,7 +102,9 @@ class LdapService
             $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
         }
 
-        if (!$ldapBind) throw new LdapException(($isAnonymous ? trans('errors.ldap_fail_anonymous') : trans('errors.ldap_fail_authed')));
+        if (!$ldapBind) {
+            throw new LdapException(($isAnonymous ? trans('errors.ldap_fail_anonymous') : trans('errors.ldap_fail_authed')));
+        }
     }
 
     /**
@@ -108,7 +115,9 @@ class LdapService
      */
     protected function getConnection()
     {
-        if ($this->ldapConnection !== null) return $this->ldapConnection;
+        if ($this->ldapConnection !== null) {
+            return $this->ldapConnection;
+        }
 
         // Check LDAP extension in installed
         if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
@@ -118,7 +127,9 @@ class LdapService
         // Get port from server string and protocol if specified.
         $ldapServer = explode(':', $this->config['server']);
         $hasProtocol = preg_match('/^ldaps{0,1}\:\/\//', $this->config['server']) === 1;
-        if (!$hasProtocol) array_unshift($ldapServer, '');
+        if (!$hasProtocol) {
+            array_unshift($ldapServer, '');
+        }
         $hostName = $ldapServer[0] . ($hasProtocol?':':'') . $ldapServer[1];
         $defaultPort = $ldapServer[0] === 'ldaps' ? 636 : 389;
         $ldapConnection = $this->ldap->connect($hostName, count($ldapServer) > 2 ? intval($ldapServer[2]) : $defaultPort);
@@ -151,5 +162,4 @@ class LdapService
         }
         return strtr($filterString, $newAttrs);
     }
-
 }

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Providers;
 
-
 use Illuminate\Pagination\PaginationServiceProvider as IlluminatePaginationServiceProvider;
 use Illuminate\Pagination\Paginator;
 

@@ -113,7 +113,8 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             $this->throwValidationException(
-                $request, $validator
+                $request,
+                $validator
             );
         }
 
@@ -272,8 +273,12 @@ class RegisterController extends Controller
         }
 
         $action = session()->pull('social-callback');
-        if ($action == 'login') return $this->socialAuthService->handleLoginCallback($socialDriver);
-        if ($action == 'register') return $this->socialRegisterCallback($socialDriver);
+        if ($action == 'login') {
+            return $this->socialAuthService->handleLoginCallback($socialDriver);
+        }
+        if ($action == 'register') {
+            return $this->socialRegisterCallback($socialDriver);
+        }
         return redirect()->back();
     }
 
@@ -308,5 +313,4 @@ class RegisterController extends Controller
         ];
         return $this->registerUser($userData, $socialAccount);
     }
-
 }

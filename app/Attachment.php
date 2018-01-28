@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Attachment extends Ownable
 {
     protected $fillable = ['name', 'order'];
@@ -11,7 +10,9 @@ class Attachment extends Ownable
      */
     public function getFileName()
     {
-        if (str_contains($this->name, '.')) return $this->name;
+        if (str_contains($this->name, '.')) {
+            return $this->name;
+        }
         return $this->name . '.' . $this->extension;
     }
 
@@ -32,5 +33,4 @@ class Attachment extends Ownable
     {
         return baseUrl('/attachments/' . $this->id);
     }
-
 }

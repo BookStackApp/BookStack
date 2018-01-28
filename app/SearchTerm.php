@@ -14,5 +14,4 @@ class SearchTerm extends Model
     {
         return $this->morphTo('entity');
     }
-
 }

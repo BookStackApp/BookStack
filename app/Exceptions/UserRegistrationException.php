@@ -1,4 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
+class UserRegistrationException extends NotifyException
+{
 
-class UserRegistrationException extends NotifyException {}
+}

@@ -34,28 +34,28 @@ class CustomFacadeProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('activity', function() {
+        $this->app->bind('activity', function () {
             return new ActivityService(
                 $this->app->make(Activity::class),
                 $this->app->make(PermissionService::class)
             );
         });
 
-        $this->app->bind('views', function() {
+        $this->app->bind('views', function () {
             return new ViewService(
                 $this->app->make(View::class),
                 $this->app->make(PermissionService::class)
             );
         });
 
-        $this->app->bind('setting', function() {
+        $this->app->bind('setting', function () {
             return new SettingService(
                 $this->app->make(Setting::class),
                 $this->app->make(Repository::class)
             );
         });
 
-        $this->app->bind('images', function() {
+        $this->app->bind('images', function () {
             return new ImageService(
                 $this->app->make(ImageManager::class),
                 $this->app->make(Factory::class),

@@ -102,7 +102,6 @@ class UserController extends Controller
             } catch (Exception $e) {
                 \Log::error('Failed to save user gravatar image');
             }
-
         }
 
         return redirect('/settings/users');
@@ -256,7 +255,8 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switchBookView($id, Request $request) {
+    public function switchBookView($id, Request $request)
+    {
         $this->checkPermissionOr('users-manage', function () use ($id) {
             return $this->currentUser->id == $id;
         });
@@ -271,5 +271,4 @@ class UserController extends Controller
 
         return redirect()->back(302, [], "/settings/users/$id");
     }
-
 }

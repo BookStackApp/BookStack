@@ -92,7 +92,7 @@ class ImageRepo
      * @param string $searchTerm
      * @return array
      */
-    public function searchPaginatedByType($type, $page = 0, $pageSize = 24, $searchTerm)
+    public function searchPaginatedByType($type, $searchTerm, $page = 0, $pageSize = 24)
     {
         $images = $this->image->where('type', '=', strtolower($type))->where('name', 'LIKE', '%' . $searchTerm . '%');
         return $this->returnPaginated($images, $page, $pageSize);
@@ -101,13 +101,13 @@ class ImageRepo
     /**
      * Get gallery images with a particular filter criteria such as
      * being within the current book or page.
-     * @param int $pagination
-     * @param int $pageSize
      * @param $filter
      * @param $pageId
+     * @param int $pageNum
+     * @param int $pageSize
      * @return array
      */
-    public function getGalleryFiltered($pagination = 0, $pageSize = 24, $filter, $pageId)
+    public function getGalleryFiltered($filter, $pageId, $pageNum = 0, $pageSize = 24)
     {
         $images = $this->image->where('type', '=', 'gallery');
 
@@ -120,7 +120,7 @@ class ImageRepo
             $images = $images->whereIn('uploaded_to', $validPageIds);
         }
 
-        return $this->returnPaginated($images, $pagination, $pageSize);
+        return $this->returnPaginated($images, $pageNum, $pageSize);
     }
 
     /**
@@ -254,5 +254,4 @@ class ImageRepo
         $validTypes = ['drawing', 'gallery', 'cover', 'system', 'user'];
         return in_array($type, $validTypes);
     }
-
 }

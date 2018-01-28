@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class PageRevision extends Model
 {
     protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
@@ -31,7 +30,9 @@ class PageRevision extends Model
     public function getUrl($path = null)
     {
         $url = $this->page->getUrl() . '/revisions/' . $this->id;
-        if ($path) return $url . '/' . trim($path, '/');
+        if ($path) {
+            return $url . '/' . trim($path, '/');
+        }
         return $url;
     }
 
@@ -58,5 +59,4 @@ class PageRevision extends Model
     {
         return $type === 'revision';
     }
-
 }

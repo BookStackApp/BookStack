@@ -52,7 +52,9 @@ class TagRepo
     public function getForEntity($entityType, $entityId)
     {
         $entity = $this->getEntity($entityType, $entityId);
-        if ($entity === null) return collect();
+        if ($entity === null) {
+            return collect();
+        }
 
         return $entity->tags;
     }
@@ -95,7 +97,9 @@ class TagRepo
             $query = $query->orderBy('count', 'desc')->take(50);
         }
 
-        if ($tagName !== false) $query = $query->where('name', '=', $tagName);
+        if ($tagName !== false) {
+            $query = $query->where('name', '=', $tagName);
+        }
 
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
         return $query->get(['value'])->pluck('value');
@@ -112,7 +116,9 @@ class TagRepo
         $entity->tags()->delete();
         $newTags = [];
         foreach ($tags as $tag) {
-            if (trim($tag['name']) === '') continue;
+            if (trim($tag['name']) === '') {
+                continue;
+            }
             $newTags[] = $this->newInstanceFromInput($tag);
         }
 
@@ -132,5 +138,4 @@ class TagRepo
         $values = ['name' => $name, 'value' => $value];
         return $this->tag->newInstance($values);
     }
-
 }

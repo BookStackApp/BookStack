@@ -56,7 +56,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function getTranslations() {
+    public function getTranslations()
+    {
         $locale = app()->getLocale();
         $cacheKey = 'GLOBAL_TRANSLATIONS_' . $locale;
         if (cache()->has($cacheKey) && config('app.env') !== 'development') {
@@ -95,5 +96,4 @@ class HomeController extends Controller
     {
         return view('partials/custom-head-content');
     }
-
 }

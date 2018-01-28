@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 abstract class Ownable extends Model
 {
     /**
@@ -29,5 +28,4 @@ abstract class Ownable extends Model
     {
         return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
     }
-
 }

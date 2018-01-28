@@ -1,4 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
+class ConfirmationEmailException extends NotifyException
+{
 
-class ConfirmationEmailException extends NotifyException {}
+}
