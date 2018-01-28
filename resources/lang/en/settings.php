@@ -127,6 +127,7 @@ return [
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
+        'sv' => 'Svenska',
         'ja' => '日本語',
         'pl' => 'Polski',
         'it' => 'Italian',

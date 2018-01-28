@@ -1,0 +1,42 @@
+<?php
+
+return [
+
+    /**
+     * Activity text strings.
+     * Is used for all the text within activity logs & notifications.
+     */
+
+    // Pages
+    'page_create'                 => 'skapade sidan',
+    'page_create_notification'    => 'Sidan har skapats',
+    'page_update'                 => 'uppdaterade sidan',
+    'page_update_notification'    => 'Sidan har uppdaterats',
+    'page_delete'                 => 'tog bort sidan',
+    'page_delete_notification'    => 'Sidan har tagits bort',
+    'page_restore'                => 'återställde sidan',
+    'page_restore_notification'   => 'Sidan har återställts',
+    'page_move'                   => 'flyttade sidan',
+
+    // Chapters
+    'chapter_create'              => 'skapade kapitlet',
+    'chapter_create_notification' => 'Kapitlet har skapats',
+    'chapter_update'              => 'uppdaterade kapitlet',
+    'chapter_update_notification' => 'Kapitlet har uppdaterats',
+    'chapter_delete'              => 'tog bort kapitlet',
+    'chapter_delete_notification' => 'Kapitlet har tagits bort',
+    'chapter_move'                => 'flyttade kapitlet',
+
+    // Books
+    'book_create'                 => 'skapade boken',
+    'book_create_notification'    => 'Boken har skapats',
+    'book_update'                 => 'uppdaterade boken',
+    'book_update_notification'    => 'Boken har uppdaterats',
+    'book_delete'                 => 'tog bort boken',
+    'book_delete_notification'    => 'Boken har tagits bort',
+    'book_sort'                   => 'sorterade boken',
+    'book_sort_notification'      => 'Boken har sorterats om',
+
+    // Other
+    'commented_on'                => 'kommenterade',
+];
