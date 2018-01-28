@@ -67,6 +67,7 @@
   overflow-y: scroll;
   &.page-content {
     margin: 0 auto;
+    width: 100%;
     max-width: 100%;
   }
   [drawio-diagram]:hover {
