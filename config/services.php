@@ -92,6 +92,13 @@ return [
         'redirect' => env('APP_URL') . '/login/service/okta/callback', 
         'base_url' => env('OKTA_BASE_URL'), 
         'name'          => 'Okta',
+    ],
+
+    'twitch' => [
+        'client_id' => env('TWITCH_KEY'),
+        'client_secret' => env('TWITCH_SECRET'),
+        'redirect' => env('TWITCH_REDIRECT_URI'),
+        'name'          => 'Twitch',
     ], 
 
     'ldap' => [
