@@ -92,7 +92,15 @@ return [
         'redirect' => env('APP_URL') . '/login/service/okta/callback', 
         'base_url' => env('OKTA_BASE_URL'), 
         'name'          => 'Okta',
-    ], 
+    ],
+
+    'gitlab' => [
+        'client_id' => env('GITLAB_KEY'),
+       'client_secret' => env('GITLAB_SECRET'),
+       'redirect' => env('APP_URL') . '/login/service/gitlab/callback',
+       'instance_uri' => env('GITLAB_INSTANCE_URI'), // needs only for GitLab self hosted
+       'name'          => 'Gitlab',
+    ],
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
