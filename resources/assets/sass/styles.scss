@@ -244,3 +244,8 @@ $btt-size: 40px;
   height:100%;
   z-index: 150;
 }
+
+iframe {
+        max-width: 100%;
+        max-height: 100%;
+}
