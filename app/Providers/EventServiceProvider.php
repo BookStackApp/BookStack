@@ -18,6 +18,7 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Slack\SlackExtendSocialite@handle',
             'SocialiteProviders\Azure\AzureExtendSocialite@handle',
             'SocialiteProviders\Okta\OktaExtendSocialite@handle',
+            'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
         ],
     ];
 
