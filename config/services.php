@@ -95,11 +95,11 @@ return [
     ],
 
     'gitlab' => [
-        'client_id' => env('GITLAB_KEY'),
-       'client_secret' => env('GITLAB_SECRET'),
-       'redirect' => env('APP_URL') . '/login/service/gitlab/callback',
-       'instance_uri' => env('GITLAB_INSTANCE_URI'), // needs only for GitLab self hosted
-       'name'          => 'Gitlab',
+        'client_id'     => env('GITLAB_APP_ID'),
+        'client_secret' => env('GITLAB_APP_SECRET'),
+        'redirect'      => env('APP_URL') . '/login/service/gitlab/callback',
+        'instance_uri'  => env('GITLAB_BASE_URI'), // needs only for GitLab self hosted
+        'name'          => 'Gitlab',
     ],
 
     'ldap' => [
