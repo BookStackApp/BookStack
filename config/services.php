@@ -95,11 +95,11 @@ return [
     ],
 
     'twitch' => [
-        'client_id' => env('TWITCH_KEY'),
-        'client_secret' => env('TWITCH_SECRET'),
-        'redirect' => env('TWITCH_REDIRECT_URI'),
+        'client_id' => env('TWITCH_APP_ID'),
+        'client_secret' => env('TWITCH_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/twitch/callback',
         'name'          => 'Twitch',
-    ], 
+    ],
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
