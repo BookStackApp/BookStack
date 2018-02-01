@@ -11,7 +11,7 @@
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",
     "envify": "^4.0.0",
-    "gulp": "3.9.1",
+    "gulp": "^3.9.1",
     "gulp-autoprefixer": "3.1.1",
     "gulp-clean-css": "^3.0.4",
     "gulp-livereload": "^3.8.1",
