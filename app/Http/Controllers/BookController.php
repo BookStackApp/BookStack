@@ -40,7 +40,7 @@ class BookController extends Controller
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
-        $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', 'list');
+        $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
         $this->setPageTitle(trans('entities.books'));
         return view('books/index', [
             'books' => $books,

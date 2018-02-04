@@ -2,10 +2,13 @@
 
 return [
 
-
     'env' => env('APP_ENV', 'production'),
 
     'editor' => env('APP_EDITOR', 'html'),
+
+    'views' => [
+        'books' => env('APP_VIEWS_BOOKS', 'list')
+    ],
 
     /*
     |--------------------------------------------------------------------------
