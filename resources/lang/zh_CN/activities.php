@@ -1,0 +1,42 @@
+<?php
+
+return [
+
+    /**
+     * Activity text strings.
+     * Is used for all the text within activity logs & notifications.
+     */
+
+    // Pages
+    'page_create'                 => '创建了页面',
+    'page_create_notification'    => '页面已创建成功',
+    'page_update'                 => '更新了页面',
+    'page_update_notification'    => '页面已更新成功',
+    'page_delete'                 => '删除了页面',
+    'page_delete_notification'    => '页面已删除成功',
+    'page_restore'                => '恢复了页面',
+    'page_restore_notification'   => '页面已恢复成功',
+    'page_move'                   => '移动了页面',
+
+    // Chapters
+    'chapter_create'              => '创建了章节',
+    'chapter_create_notification' => '章节已创建成功',
+    'chapter_update'              => '更新了章节',
+    'chapter_update_notification' => '章节已创建成功',
+    'chapter_delete'              => '删除了章节',
+    'chapter_delete_notification' => '章节已删除成功',
+    'chapter_move'                => '移动了章节',
+
+    // Books
+    'book_create'                 => '创建了图书',
+    'book_create_notification'    => '图书已创建成功',
+    'book_update'                 => '更新了图书',
+    'book_update_notification'    => '图书已更新成功',
+    'book_delete'                 => '删除了图书',
+    'book_delete_notification'    => '图书已删除成功',
+    'book_sort'                   => '排序了图书',
+    'book_sort_notification'      => '图书已重新排序成功',
+
+    // Other
+    'commented_on'                => '评论',
+];
