@@ -66,32 +66,34 @@
                     </tr>
                 </table>
 
-                <h6 class="text-muted">Options</h6>
-                <label class="checkbox">
-                    <input type="checkbox" v-on:change="optionChange('viewed_by_me')"
-                           v-model="search.option.viewed_by_me" value="page">
-                    {{ trans('entities.search_viewed_by_me') }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" v-on:change="optionChange('not_viewed_by_me')"
-                           v-model="search.option.not_viewed_by_me" value="page">
-                    {{ trans('entities.search_not_viewed_by_me') }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" v-on:change="optionChange('is_restricted')"
-                           v-model="search.option.is_restricted" value="page">
-                    {{ trans('entities.search_permissions_set') }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" v-on:change="optionChange('created_by:me')"
-                           v-model="search.option['created_by:me']" value="page">
-                    {{ trans('entities.search_created_by_me') }}
-                </label>
-                <label class="checkbox">
-                    <input type="checkbox" v-on:change="optionChange('updated_by:me')"
-                           v-model="search.option['updated_by:me']" value="page">
-                    {{ trans('entities.search_updated_by_me') }}
-                </label>
+               @if(signedInUser())
+                    <h6 class="text-muted">Options</h6>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('viewed_by_me')"
+                               v-model="search.option.viewed_by_me" value="page">
+                        {{ trans('entities.search_viewed_by_me') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('not_viewed_by_me')"
+                               v-model="search.option.not_viewed_by_me" value="page">
+                        {{ trans('entities.search_not_viewed_by_me') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('is_restricted')"
+                               v-model="search.option.is_restricted" value="page">
+                        {{ trans('entities.search_permissions_set') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('created_by:me')"
+                               v-model="search.option['created_by:me']" value="page">
+                        {{ trans('entities.search_created_by_me') }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" v-on:change="optionChange('updated_by:me')"
+                               v-model="search.option['updated_by:me']" value="page">
+                        {{ trans('entities.search_updated_by_me') }}
+                    </label>
+                @endif
 
                 <h6 class="text-muted">Date Options</h6>
                 <table cellpadding="0" cellspacing="0" border="0" class="no-style form-table">
