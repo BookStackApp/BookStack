@@ -14,3 +14,14 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
 }
+
+// Prevent code block overflow on export
+pre {
+  padding-left: 12px;
+}
+pre:after {
+  display: none;
+}
+pre code {
+  white-space: pre-wrap;
+}
