@@ -158,7 +158,10 @@ class RegisterController extends Controller
             $newUser->socialAccounts()->save($socialAccount);
         }
 
-        if (setting('registration-confirmation') || setting('registration-restrict')) {
+        if (setting('registration-restrict') && $socialAccount && $socialAccount['driver'] === 'google') {
+            $newUser->email_confirmed = true;
+            $newUser->save();
+        } elseif (setting('registration-confirmation') || setting('registration-restrict')) {
             $newUser->save();
 
             try {
