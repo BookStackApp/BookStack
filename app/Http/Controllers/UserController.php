@@ -93,17 +93,7 @@ class UserController extends Controller
             $user->roles()->sync($roles);
         }
 
-        // Get avatar from gravatar and save
-        if (!config('services.disable_services')) {
-            try {
-                $avatar = \Images::saveUserGravatar($user);
-                $user->avatar()->associate($avatar);
-                $user->save();
-            } catch (Exception $e) {
-                \Log::error('Failed to save user gravatar image');
-            }
-
-        }
+        $this->userRepo->downloadGravatarToUserAvatar($user);
 
         return redirect('/settings/users');
     }
@@ -248,5 +238,28 @@ class UserController extends Controller
             'recentlyCreated' => $recentlyCreated,
             'assetCounts' => $assetCounts
         ]);
+    }
+
+    /**
+     * Update the user's preferred book-list display setting.
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function switchBookView($id, Request $request)
+    {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
+
+        $viewType = $request->get('book_view_type');
+        if (!in_array($viewType, ['grid', 'list'])) {
+            $viewType = 'list';
+        }
+
+        $user = $this->user->findOrFail($id);
+        setting()->putUser($user, 'books_view_type', $viewType);
+
+        return redirect()->back(302, [], "/settings/users/$id");
     }
 }

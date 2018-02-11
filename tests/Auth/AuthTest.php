@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
 use BookStack\Notifications\ConfirmEmail;
+use BookStack\User;
 use Illuminate\Support\Facades\Notification;
 
 class AuthTest extends BrowserKitTest
@@ -41,7 +42,7 @@ class AuthTest extends BrowserKitTest
     {
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true']);
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(User::class)->make();
 
         // Test form and ensure user is created
         $this->visit('/register')
@@ -55,6 +56,18 @@ class AuthTest extends BrowserKitTest
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email]);
     }
 
+    public function test_empty_registration_redirects_back_with_errors()
+    {
+        // Set settings and get user instance
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        // Test form and ensure user is created
+        $this->visit('/register')
+            ->press('Create Account')
+            ->see('The name field is required')
+            ->seePageIs('/register');
+    }
+
 
     public function test_confirmed_registration()
     {
@@ -63,7 +76,7 @@ class AuthTest extends BrowserKitTest
 
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(User::class)->make();
 
         // Go through registration process
         $this->visit('/register')
@@ -76,7 +89,7 @@ class AuthTest extends BrowserKitTest
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
         // Ensure notification sent
-        $dbUser = \BookStack\User::where('email', '=', $user->email)->first();
+        $dbUser = User::where('email', '=', $user->email)->first();
         Notification::assertSentTo($dbUser, ConfirmEmail::class);
 
         // Test access and resend confirmation email
@@ -104,7 +117,7 @@ class AuthTest extends BrowserKitTest
     public function test_restricted_registration()
     {
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true', 'registration-restrict' => 'example.com']);
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(User::class)->make();
         // Go through registration process
         $this->visit('/register')
             ->type($user->name, '#name')
@@ -136,7 +149,7 @@ class AuthTest extends BrowserKitTest
     public function test_restricted_registration_with_confirmation_disabled()
     {
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'false', 'registration-restrict' => 'example.com']);
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(User::class)->make();
         // Go through registration process
         $this->visit('/register')
             ->type($user->name, '#name')
@@ -167,7 +180,7 @@ class AuthTest extends BrowserKitTest
 
     public function test_user_creation()
     {
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(User::class)->make();
 
         $this->asAdmin()
             ->visit('/settings/users')
@@ -215,13 +228,13 @@ class AuthTest extends BrowserKitTest
             ->press('Save')
             ->seePageIs('/settings/users');
 
-            $userPassword = \BookStack\User::find($user->id)->password;
+            $userPassword = User::find($user->id)->password;
             $this->assertTrue(\Hash::check('newpassword', $userPassword));
     }
 
     public function test_user_deletion()
     {
-        $userDetails = factory(\BookStack\User::class)->make();
+        $userDetails = factory(User::class)->make();
         $user = $this->getEditor($userDetails->toArray());
 
         $this->asAdmin()
@@ -272,7 +285,7 @@ class AuthTest extends BrowserKitTest
             'email' => 'admin@admin.com'
         ]);
 
-        $user = \BookStack\User::where('email', '=', 'admin@admin.com')->first();
+        $user = User::where('email', '=', 'admin@admin.com')->first();
 
         Notification::assertSentTo($user, \BookStack\Notifications\ResetPassword::class);
         $n = Notification::sent($user, \BookStack\Notifications\ResetPassword::class);

@@ -16,7 +16,7 @@ class SocialAuthService
     protected $socialite;
     protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'azure', 'okta'];
+    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'azure', 'okta', 'gitlab', 'twitch'];
 
     /**
      * SocialAuthService constructor.
@@ -150,8 +150,12 @@ class SocialAuthService
     {
         $driver = trim(strtolower($socialDriver));
 
-        if (!in_array($driver, $this->validSocialDrivers)) abort(404, trans('errors.social_driver_not_found'));
-        if (!$this->checkDriverConfigured($driver)) throw new SocialDriverNotConfigured(trans('errors.social_driver_not_configured', ['socialAccount' => title_case($socialDriver)]));
+        if (!in_array($driver, $this->validSocialDrivers)) {
+            abort(404, trans('errors.social_driver_not_found'));
+        }
+        if (!$this->checkDriverConfigured($driver)) {
+            throw new SocialDriverNotConfigured(trans('errors.social_driver_not_configured', ['socialAccount' => title_case($socialDriver)]));
+        }
 
         return $driver;
     }
@@ -220,5 +224,4 @@ class SocialAuthService
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => title_case($socialDriver)]));
         return redirect(user()->getEditUrl());
     }
-
 }

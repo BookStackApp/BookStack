@@ -88,7 +88,9 @@ class PermissionService
         }
 
         $book = $this->book->find($bookId);
-        if ($book === null) $book = false;
+        if ($book === null) {
+            $book = false;
+        }
         if (isset($this->entityCache['books'])) {
             $this->entityCache['books']->put($bookId, $book);
         }
@@ -108,7 +110,9 @@ class PermissionService
         }
 
         $chapter = $this->chapter->find($chapterId);
-        if ($chapter === null) $chapter = false;
+        if ($chapter === null) {
+            $chapter = false;
+        }
         if (isset($this->entityCache['chapters'])) {
             $this->entityCache['chapters']->put($chapterId, $chapter);
         }
@@ -122,7 +126,9 @@ class PermissionService
      */
     protected function getRoles()
     {
-        if ($this->userRoles !== false) return $this->userRoles;
+        if ($this->userRoles !== false) {
+            return $this->userRoles;
+        }
 
         $roles = [];
 
@@ -161,9 +167,9 @@ class PermissionService
      */
     protected function bookFetchQuery()
     {
-        return $this->book->newQuery()->select(['id', 'restricted', 'created_by'])->with(['chapters' => function($query) {
+        return $this->book->newQuery()->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id']);
-        }, 'pages'  => function($query) {
+        }, 'pages'  => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
         }]);
     }
@@ -174,7 +180,8 @@ class PermissionService
      * @param array $roles
      * @param bool $deleteOld
      */
-    protected function buildJointPermissionsForBooks($books, $roles, $deleteOld = false) {
+    protected function buildJointPermissionsForBooks($books, $roles, $deleteOld = false)
+    {
         $entities = clone $books;
 
         /** @var Book $book */
@@ -187,7 +194,9 @@ class PermissionService
             }
         }
 
-        if ($deleteOld) $this->deleteManyJointPermissionsForEntities($entities->all());
+        if ($deleteOld) {
+            $this->deleteManyJointPermissionsForEntities($entities->all());
+        }
         $this->createManyJointPermissions($entities, $roles);
     }
 
@@ -261,7 +270,7 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForRoles($roles)
     {
-        $roleIds = array_map(function($role) {
+        $roleIds = array_map(function ($role) {
             return $role->id;
         }, $roles);
         $this->jointPermission->newQuery()->whereIn('role_id', $roleIds)->delete();
@@ -282,21 +291,22 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForEntities($entities)
     {
-        if (count($entities) === 0) return;
+        if (count($entities) === 0) {
+            return;
+        }
 
-        $this->db->transaction(function() use ($entities) {
+        $this->db->transaction(function () use ($entities) {
 
             foreach (array_chunk($entities, 1000) as $entityChunk) {
                 $query = $this->db->table('joint_permissions');
                 foreach ($entityChunk as $entity) {
-                    $query->orWhere(function(QueryBuilder $query) use ($entity) {
+                    $query->orWhere(function (QueryBuilder $query) use ($entity) {
                         $query->where('entity_id', '=', $entity->id)
                             ->where('entity_type', '=', $entity->getMorphClass());
                     });
                 }
                 $query->delete();
             }
-
         });
     }
 
@@ -315,7 +325,7 @@ class PermissionService
         $permissionFetch = $this->entityPermission->newQuery();
         foreach ($entities as $entity) {
             $entityRestrictedMap[$entity->getMorphClass() . ':' . $entity->id] = boolval($entity->getRawAttribute('restricted'));
-            $permissionFetch->orWhere(function($query) use ($entity) {
+            $permissionFetch->orWhere(function ($query) use ($entity) {
                 $query->where('restrictable_id', '=', $entity->id)->where('restrictable_type', '=', $entity->getMorphClass());
             });
         }
@@ -346,7 +356,7 @@ class PermissionService
             }
         }
 
-        $this->db->transaction(function() use ($jointPermissions) {
+        $this->db->transaction(function () use ($jointPermissions) {
             foreach (array_chunk($jointPermissions, 1000) as $jointPermissionChunk) {
                 $this->db->table('joint_permissions')->insert($jointPermissionChunk);
             }
@@ -362,8 +372,12 @@ class PermissionService
     protected function getActions(Entity $entity)
     {
         $baseActions = ['view', 'update', 'delete'];
-        if ($entity->isA('chapter') || $entity->isA('book')) $baseActions[] = 'page-create';
-        if ($entity->isA('book')) $baseActions[] = 'chapter-create';
+        if ($entity->isA('chapter') || $entity->isA('book')) {
+            $baseActions[] = 'page-create';
+        }
+        if ($entity->isA('book')) {
+            $baseActions[] = 'chapter-create';
+        }
         return $baseActions;
     }
 
@@ -412,7 +426,10 @@ class PermissionService
             }
         }
 
-        return $this->createJointPermissionDataArray($entity, $role, $action,
+        return $this->createJointPermissionDataArray(
+            $entity,
+            $role,
+            $action,
             ($hasExplicitAccessToParents || ($roleHasPermission && $hasPermissiveAccessToParents)),
             ($hasExplicitAccessToParents || ($roleHasPermissionOwn && $hasPermissiveAccessToParents))
         );
@@ -426,7 +443,8 @@ class PermissionService
      * @param $action
      * @return bool
      */
-    protected function mapHasActiveRestriction($entityMap, Entity $entity, Role $role, $action) {
+    protected function mapHasActiveRestriction($entityMap, Entity $entity, Role $role, $action)
+    {
         $key = $entity->getMorphClass() . ':' . $entity->getRawAttribute('id') . ':' . $role->getRawAttribute('id') . ':' . $action;
         return isset($entityMap[$key]) ? $entityMap[$key] : false;
     }
@@ -545,11 +563,12 @@ class PermissionService
      * @param bool $fetchPageContent
      * @return QueryBuilder
      */
-    public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false) {
-        $pageSelect = $this->db->table('pages')->selectRaw($this->page->entityRawQuery($fetchPageContent))->where('book_id', '=', $book_id)->where(function($query) use ($filterDrafts) {
+    public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false)
+    {
+        $pageSelect = $this->db->table('pages')->selectRaw($this->page->entityRawQuery($fetchPageContent))->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
             $query->where('draft', '=', 0);
             if (!$filterDrafts) {
-                $query->orWhere(function($query) {
+                $query->orWhere(function ($query) {
                     $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
                 });
             }
@@ -562,8 +581,8 @@ class PermissionService
             $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
                 ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
                 ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
-                ->where(function($query) {
-                    $query->where('jp.has_permission', '=', 1)->orWhere(function($query) {
+                ->where(function ($query) {
+                    $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
                         $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
                     });
                 });
@@ -715,5 +734,4 @@ class PermissionService
         $this->userRoles = false;
         $this->isAdminUser = null;
     }
-
 }

@@ -1,5 +1,5 @@
 const Clipboard = require("clipboard");
-const Code = require('../code');
+const Code = require('../libs/code');
 
 let setupPageShow = window.setupPageShow = function (pageId) {
 

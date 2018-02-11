@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div v-show="view === 'all'" >
-                        <form @submit="searchImages" class="contained-search-box">
+                        <form @submit.prevent="searchImages" class="contained-search-box">
                             <input placeholder="{{ trans('components.image_search_hint') }}" v-model="searchTerm">
                             <button :class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" @click="cancelSearch()" class="text-button cancel"><i class="zmdi zmdi-close-circle-o"></i></button>
                             <button title="{{ trans('common.search') }}" class="text-button"><i class="zmdi zmdi-search"></i></button>

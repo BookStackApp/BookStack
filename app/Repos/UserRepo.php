@@ -1,8 +1,12 @@
 <?php namespace BookStack\Repos;
 
+use Activity;
+use BookStack\Exceptions\NotFoundException;
+use BookStack\Image;
 use BookStack\Role;
 use BookStack\User;
 use Exception;
+use Images;
 
 class UserRepo
 {
@@ -57,13 +61,13 @@ class UserRepo
      * @param $sortData
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
-    public function getAllUsersPaginatedAndSorted($count = 20, $sortData)
+    public function getAllUsersPaginatedAndSorted($count, $sortData)
     {
         $query = $this->user->with('roles', 'avatar')->orderBy($sortData['sort'], $sortData['order']);
 
         if ($sortData['search']) {
             $term = '%' . $sortData['search'] . '%';
-            $query->where(function($query) use ($term) {
+            $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term);
             });
@@ -83,16 +87,7 @@ class UserRepo
         $this->attachDefaultRole($user);
 
         // Get avatar from gravatar and save
-        if (!config('services.disable_services')) {
-            try {
-                $avatar = \Images::saveUserGravatar($user);
-                $user->avatar()->associate($avatar);
-                $user->save();
-            } catch (Exception $e) {
-                $user->save();
-                \Log::error('Failed to save user gravatar image');
-            }
-        }
+        $this->downloadGravatarToUserAvatar($user);
 
         return $user;
     }
@@ -104,8 +99,25 @@ class UserRepo
     public function attachDefaultRole($user)
     {
         $roleId = setting('registration-role');
-        if ($roleId === false) $roleId = $this->role->first()->id;
+        if ($roleId === false) {
+            $roleId = $this->role->first()->id;
+        }
         $user->attachRoleId($roleId);
+    }
+
+    /**
+     * Assign a user to a system-level role.
+     * @param User $user
+     * @param $systemRoleName
+     * @throws NotFoundException
+     */
+    public function attachSystemRole(User $user, $systemRoleName)
+    {
+        $role = $this->role->newQuery()->where('system_name', '=', $systemRoleName)->first();
+        if ($role === null) {
+            throw new NotFoundException("Role '{$systemRoleName}' not found");
+        }
+        $user->attachRole($role);
     }
 
     /**
@@ -115,10 +127,14 @@ class UserRepo
      */
     public function isOnlyAdmin(User $user)
     {
-        if (!$user->roles->pluck('name')->contains('admin')) return false;
+        if (!$user->hasSystemRole('admin')) {
+            return false;
+        }
 
-        $adminRole = $this->role->getRole('admin');
-        if ($adminRole->users->count() > 1) return false;
+        $adminRole = $this->role->getSystemRole('admin');
+        if ($adminRole->users->count() > 1) {
+            return false;
+        }
         return true;
     }
 
@@ -140,11 +156,18 @@ class UserRepo
     /**
      * Remove the given user from storage, Delete all related content.
      * @param User $user
+     * @throws Exception
      */
     public function destroy(User $user)
     {
         $user->socialAccounts()->delete();
         $user->delete();
+        
+        // Delete user profile images
+        $profileImages = $images = Image::where('type', '=', 'user')->where('created_by', '=', $user->id)->get();
+        foreach ($profileImages as $image) {
+            Images::destroyImage($image);
+        }
     }
 
     /**
@@ -156,7 +179,7 @@ class UserRepo
      */
     public function getActivity(User $user, $count = 20, $page = 0)
     {
-        return \Activity::userActivity($user, $count, $page);
+        return Activity::userActivity($user, $count, $page);
     }
 
     /**
@@ -213,4 +236,27 @@ class UserRepo
         return $this->role->where('system_name', '!=', 'admin')->get();
     }
 
+    /**
+     * Get a gravatar image for a user and set it as their avatar.
+     * Does not run if gravatar disabled in config.
+     * @param User $user
+     * @return bool
+     */
+    public function downloadGravatarToUserAvatar(User $user)
+    {
+        // Get avatar from gravatar and save
+        if (!config('services.gravatar')) {
+            return false;
+        }
+
+        try {
+            $avatar = Images::saveUserGravatar($user);
+            $user->avatar()->associate($avatar);
+            $user->save();
+            return true;
+        } catch (Exception $e) {
+            \Log::error('Failed to save user gravatar image');
+            return false;
+        }
+    }
 }

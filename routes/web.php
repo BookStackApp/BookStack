@@ -5,6 +5,9 @@ Route::get('/translations', 'HomeController@getTranslations');
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/uploads/images/{path}', 'ImageController@showImage')
+        ->where('path', '.*$');
+
     Route::group(['prefix' => 'pages'], function() {
         Route::get('/recently-created', 'PageController@showRecentlyCreated');
         Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
@@ -86,13 +89,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/user/all/{page}', 'ImageController@getAllForUserType');
         // Standard get, update and deletion for all types
         Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
+        Route::get('/base64/{id}', 'ImageController@getBase64Image');
         Route::put('/update/{imageId}', 'ImageController@update');
+        Route::post('/drawing/upload', 'ImageController@uploadDrawing');
+        Route::put('/drawing/upload/{id}', 'ImageController@replaceDrawing');
         Route::post('/{type}/upload', 'ImageController@uploadByType');
         Route::get('/{type}/all', 'ImageController@getAllByType');
         Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
         Route::get('/{type}/search/{page}', 'ImageController@searchByType');
         Route::get('/gallery/{filter}/{page}', 'ImageController@getGalleryFiltered');
-        Route::delete('/{imageId}', 'ImageController@destroy');
+        Route::delete('/{id}', 'ImageController@destroy');
     });
 
     // Attachments routes
@@ -146,6 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
         Route::get('/users/{id}/delete', 'UserController@delete');
+        Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');

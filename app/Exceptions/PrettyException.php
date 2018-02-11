@@ -1,3 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
-class PrettyException extends \Exception {}
+class PrettyException extends \Exception
+{
+
+}

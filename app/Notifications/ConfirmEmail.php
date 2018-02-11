@@ -49,5 +49,4 @@ class ConfirmEmail extends Notification implements ShouldQueue
                     ->line(trans('auth.email_confirm_text'))
                     ->action(trans('auth.email_confirm_action'), baseUrl('/register/confirm/' . $this->token));
     }
-
 }

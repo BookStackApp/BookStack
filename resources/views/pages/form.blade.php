@@ -1,5 +1,11 @@
 
-<div class="page-editor flex-fill flex" id="page-editor" drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}" editor-type="{{ setting('app-editor') }}" page-id="{{ $model->id or 0 }}" page-new-draft="{{ $model->draft or 0 }}" page-update-draft="{{ $model->isDraft or 0 }}">
+<div class="page-editor flex-fill flex" id="page-editor"
+     drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
+     drawio-enabled="{{ config('services.drawio') ? 'true' : 'false' }}"
+     editor-type="{{ setting('app-editor') }}"
+     page-id="{{ $model->id or 0 }}"
+     page-new-draft="{{ $model->draft or 0 }}"
+     page-update-draft="{{ $model->isDraft or 0 }}">
 
     {{ csrf_field() }}
 
@@ -80,6 +86,10 @@
                     <div class="editor-toolbar">
                         <span class="float left">{{ trans('entities.pages_md_editor') }}</span>
                         <div class="float right buttons">
+                            @if(config('services.drawio'))
+                                <button class="text-button" type="button" data-action="insertDrawing"><i class="zmdi zmdi-widgets"></i>{{ trans('entities.pages_md_insert_drawing') }}</button>
+                                &nbsp;|&nbsp
+                            @endif
                             <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>{{ trans('entities.pages_md_insert_image') }}</button>
                             &nbsp;|&nbsp;
                             <button class="text-button" type="button" data-action="insertLink"><i class="zmdi zmdi-link"></i>{{ trans('entities.pages_md_insert_link') }}</button>

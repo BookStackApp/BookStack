@@ -91,6 +91,7 @@ class RegisterController extends Controller
     /**
      * Show the application registration form.
      * @return Response
+     * @throws UserRegistrationException
      */
     public function getRegister()
     {
@@ -102,20 +103,13 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      * @param Request|\Illuminate\Http\Request $request
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function postRegister(Request $request)
     {
         $this->checkRegistrationAllowed();
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
+        $this->validator($request->all())->validate();
 
         $userData = $request->all();
         return $this->registerUser($userData);
@@ -141,7 +135,6 @@ class RegisterController extends Controller
      * @param bool|false|SocialAccount $socialAccount
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
-     * @throws ConfirmationEmailException
      */
     protected function registerUser(array $userData, $socialAccount = false)
     {
@@ -239,6 +232,8 @@ class RegisterController extends Controller
      * Redirect to the social site for authentication intended to register.
      * @param $socialDriver
      * @return mixed
+     * @throws UserRegistrationException
+     * @throws \BookStack\Exceptions\SocialDriverNotConfigured
      */
     public function socialRegister($socialDriver)
     {
@@ -272,8 +267,12 @@ class RegisterController extends Controller
         }
 
         $action = session()->pull('social-callback');
-        if ($action == 'login') return $this->socialAuthService->handleLoginCallback($socialDriver);
-        if ($action == 'register') return $this->socialRegisterCallback($socialDriver);
+        if ($action == 'login') {
+            return $this->socialAuthService->handleLoginCallback($socialDriver);
+        }
+        if ($action == 'register') {
+            return $this->socialRegisterCallback($socialDriver);
+        }
         return redirect()->back();
     }
 
@@ -291,7 +290,6 @@ class RegisterController extends Controller
      * Register a new user after a registration callback.
      * @param $socialDriver
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws ConfirmationEmailException
      * @throws UserRegistrationException
      * @throws \BookStack\Exceptions\SocialDriverNotConfigured
      */
@@ -308,5 +306,4 @@ class RegisterController extends Controller
         ];
         return $this->registerUser($userData, $socialAccount);
     }
-
 }

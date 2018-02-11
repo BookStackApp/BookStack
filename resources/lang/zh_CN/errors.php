@@ -1,0 +1,79 @@
+<?php
+
+return [
+
+    /**
+     * Error text strings.
+     */
+
+    // Permissions
+    'permission' => '您无权访问所请求的页面。',
+    'permissionJson' => '您无权执行所请求的操作。',
+
+    // Auth
+    'error_user_exists_different_creds' => 'Email为 :email 的用户已经存在，但具有不同的凭据。',
+    'email_already_confirmed' => 'Email已被确认，请尝试登录。',
+    'email_confirmation_invalid' => '此确认令牌无效或已被使用，请重新注册。',
+    'email_confirmation_expired' => '确认令牌已过期，已发送新的确认电子邮件。',
+    'ldap_fail_anonymous' => '使用匿名绑定的LDAP访问失败。',
+    'ldap_fail_authed' => '带有标识名称和密码的LDAP访问失败。',
+    'ldap_extension_not_installed' => '未安装LDAP PHP扩展程序',
+    'ldap_cannot_connect' => '无法连接到ldap服务器，初始连接失败',
+    'social_no_action_defined' => '没有定义行为',
+    'social_login_bad_response' => "在 :socialAccount 登录时遇到错误：\n:error",
+    'social_account_in_use' => ':socialAccount 账户已被使用，请尝试通过 :socialAccount 选项登录。',
+    'social_account_email_in_use' => 'Email :email 已经被使用。如果您已有帐户，则可以在个人资料设置中绑定您的 :socialAccount。',
+    'social_account_existing' => ':socialAccount已经被绑定到您的账户。',
+    'social_account_already_used_existing' => ':socialAccount账户已经被其他用户使用。',
+    'social_account_not_used' => ':socialAccount账户没有绑定到任何用户，请在您的个人资料设置中绑定。',
+    'social_account_register_instructions' => '如果您还没有帐户，您可以使用 :socialAccount 选项注册账户。',
+    'social_driver_not_found' => '未找到社交驱动程序',
+    'social_driver_not_configured' => '您的:socialAccount社交设置不正确。',
+
+    // System
+    'path_not_writable' => '无法上传到文件路径“:filePath”，请确保它可写入服务器。',
+    'cannot_get_image_from_url' => '无法从 :url 中获取图片',
+    'cannot_create_thumbs' => '服务器无法创建缩略图，请检查您是否安装了GD PHP扩展。',
+    'server_upload_limit' => '上传图片时发生错误。',
+    'image_upload_error' => '上传图片时发生错误',
+
+    // Attachments
+    'attachment_page_mismatch' => '附件更新期间的页面不匹配',
+
+    // Pages
+    'page_draft_autosave_fail' => '无法保存草稿，确保您在保存页面之前已经连接到互联网',
+    'page_custom_home_deletion' => '无法删除一个被设置为主页的页面',
+
+    // Entities
+    'entity_not_found' => '未找到实体',
+    'book_not_found' => '未找到图书',
+    'page_not_found' => '未找到页面',
+    'chapter_not_found' => '未找到章节',
+    'selected_book_not_found' => '选中的书未找到',
+    'selected_book_chapter_not_found' => '未找到所选的图书或章节',
+    'guests_cannot_save_drafts' => '访客不能保存草稿',
+
+    // Users
+    'users_cannot_delete_only_admin' => '您不能删除唯一的管理员账户',
+    'users_cannot_delete_guest' => '您不能删除访客用户',
+
+    // Roles
+    'role_cannot_be_edited' => '无法编辑该角色',
+    'role_system_cannot_be_deleted' => '无法删除系统角色',
+    'role_registration_default_cannot_delete' => '无法删除设置为默认注册的角色',
+
+    // Comments
+    'comment_list' => '提取评论时出现错误。',
+    'cannot_add_comment_to_draft' => '您不能为草稿添加评论。',
+    'comment_add' => '添加/更新评论时发生错误。',
+    'comment_delete' => '删除评论时发生错误。',
+    'empty_comment' => '不能添加空的评论。',
+
+    // Error pages
+    '404_page_not_found' => '无法找到页面',
+    'sorry_page_not_found' => '对不起，无法找到您想访问的页面。',
+    'return_home' => '返回主页',
+    'error_occurred' => '出现错误',
+    'app_down' => ':appName现在正在关闭',
+    'back_soon' => '请耐心等待网站的恢复。',
+];

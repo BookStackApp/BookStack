@@ -16,7 +16,9 @@ class Activity extends Model
      */
     public function entity()
     {
-        if ($this->entity_type === '') $this->entity_type = null;
+        if ($this->entity_type === '') {
+            $this->entity_type = null;
+        }
         return $this->morphTo('entity');
     }
 
@@ -43,8 +45,8 @@ class Activity extends Model
      * @param $activityB
      * @return bool
      */
-    public function isSimilarTo($activityB) {
+    public function isSimilarTo($activityB)
+    {
         return [$this->key, $this->entity_type, $this->entity_id] === [$activityB->key, $activityB->entity_type, $activityB->entity_id];
     }
-
 }

@@ -19,7 +19,9 @@ class Localization
             $locale = $defaultLang;
             $availableLocales = config('app.locales');
             foreach ($request->getLanguages() as $lang) {
-                if (!in_array($lang, $availableLocales)) continue;
+                if (!in_array($lang, $availableLocales)) {
+                    continue;
+                }
                 $locale = $lang;
                 break;
             }

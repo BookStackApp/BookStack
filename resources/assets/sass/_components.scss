@@ -102,6 +102,10 @@
     display: flex;
     align-self: flex-start;
   }
+
+  .popup-content {
+    overflow-y: auto;
+  }
 }
 
 .corner-button {
@@ -542,6 +546,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+@include smaller-than($m) {
+  #code-editor .lang-options {
+    max-width: 100%;
+  }
+  #code-editor .CodeMirror {
+    height: 200px;
+  }
+}
+
 .comment-box {
   border: 1px solid #DDD;
   margin-bottom: $-s;
@@ -549,7 +562,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .content {
     padding: $-s;
     font-size: 0.666em;
-    p, ul {
+    p, ul, ol {
       font-size: $fs-m;
       margin: .5em 0;
     }

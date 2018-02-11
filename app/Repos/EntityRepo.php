@@ -77,11 +77,15 @@ class EntityRepo
      * @param SearchService $searchService
      */
     public function __construct(
-        Book $book, Chapter $chapter, Page $page, PageRevision $pageRevision,
-        ViewService $viewService, PermissionService $permissionService,
-        TagRepo $tagRepo, SearchService $searchService
-    )
-    {
+        Book $book,
+        Chapter $chapter,
+        Page $page,
+        PageRevision $pageRevision,
+        ViewService $viewService,
+        PermissionService $permissionService,
+        TagRepo $tagRepo,
+        SearchService $searchService
+    ) {
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
@@ -113,9 +117,9 @@ class EntityRepo
      * @param bool $allowDrafts
      * @return \Illuminate\Database\Query\Builder
      */
-    protected function entityQuery($type, $allowDrafts = false)
+    protected function entityQuery($type, $allowDrafts = false, $permission = 'view')
     {
-        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type), 'view');
+        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type), $permission);
         if (strtolower($type) === 'page' && !$allowDrafts) {
             $q = $q->where('draft', '=', false);
         }
@@ -163,14 +167,16 @@ class EntityRepo
         $q = $this->entityQuery($type)->where('slug', '=', $slug);
 
         if (strtolower($type) === 'chapter' || strtolower($type) === 'page') {
-            $q = $q->where('book_id', '=', function($query) use ($bookSlug) {
+            $q = $q->where('book_id', '=', function ($query) use ($bookSlug) {
                 $query->select('id')
                     ->from($this->book->getTable())
                     ->where('slug', '=', $bookSlug)->limit(1);
             });
         }
         $entity = $q->first();
-        if ($entity === null) throw new NotFoundException(trans('errors.' . strtolower($type) . '_not_found'));
+        if ($entity === null) {
+            throw new NotFoundException(trans('errors.' . strtolower($type) . '_not_found'));
+        }
         return $entity;
     }
 
@@ -196,15 +202,18 @@ class EntityRepo
     }
 
     /**
-     * Get all entities of a type limited by count unless count if false.
+     * Get all entities of a type with the given permission, limited by count unless count is false.
      * @param string $type
      * @param integer|bool $count
+     * @param string $permission
      * @return Collection
      */
-    public function getAll($type, $count = 20)
+    public function getAll($type, $count = 20, $permission = 'view')
     {
-        $q = $this->entityQuery($type)->orderBy('name', 'asc');
-        if ($count !== false) $q = $q->take($count);
+        $q = $this->entityQuery($type, false, $permission)->orderBy('name', 'asc');
+        if ($count !== false) {
+            $q = $q->take($count);
+        }
         return $q->get();
     }
 
@@ -231,7 +240,9 @@ class EntityRepo
     {
         $query = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type))
             ->orderBy('created_at', 'desc');
-        if (strtolower($type) === 'page') $query = $query->where('draft', '=', false);
+        if (strtolower($type) === 'page') {
+            $query = $query->where('draft', '=', false);
+        }
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
@@ -250,7 +261,9 @@ class EntityRepo
     {
         $query = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type))
             ->orderBy('updated_at', 'desc');
-        if (strtolower($type) === 'page') $query = $query->where('draft', '=', false);
+        if (strtolower($type) === 'page') {
+            $query = $query->where('draft', '=', false);
+        }
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
@@ -347,12 +360,16 @@ class EntityRepo
                 $parents[$key] = $entities[$index];
                 $parents[$key]->setAttribute('pages', collect());
             }
-            if ($entities[$index]->chapter_id === 0 || $entities[$index]->chapter_id === '0') $tree[] = $entities[$index];
+            if ($entities[$index]->chapter_id === 0 || $entities[$index]->chapter_id === '0') {
+                $tree[] = $entities[$index];
+            }
             $entities[$index]->book = $book;
         }
 
         foreach ($entities as $entity) {
-            if ($entity->chapter_id === 0 || $entity->chapter_id === '0') continue;
+            if ($entity->chapter_id === 0 || $entity->chapter_id === '0') {
+                continue;
+            }
             $parentKey = 'BookStack\\Chapter:' . $entity->chapter_id;
             if (!isset($parents[$parentKey])) {
                 $tree[] = $entity;
@@ -431,7 +448,9 @@ class EntityRepo
         if (strtolower($type) === 'page' || strtolower($type) === 'chapter') {
             $query = $query->where('book_id', '=', $bookId);
         }
-        if ($currentId) $query = $query->where('id', '!=', $currentId);
+        if ($currentId) {
+            $query = $query->where('id', '!=', $currentId);
+        }
         return $query->count() > 0;
     }
 
@@ -558,7 +577,9 @@ class EntityRepo
         $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', mb_strtolower($name));
         $slug = preg_replace('/\s{2,}/', ' ', $slug);
         $slug = str_replace(' ', '-', $slug);
-        if ($slug === "") $slug = substr(md5(rand(1, 500)), 0, 5);
+        if ($slug === "") {
+            $slug = substr(md5(rand(1, 500)), 0, 5);
+        }
         return $slug;
     }
 
@@ -599,7 +620,9 @@ class EntityRepo
     public function savePageRevision(Page $page, $summary = null)
     {
         $revision = $this->pageRevision->newInstance($page->toArray());
-        if (setting('app-editor') !== 'markdown') $revision->markdown = '';
+        if (setting('app-editor') !== 'markdown') {
+            $revision->markdown = '';
+        }
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
@@ -627,7 +650,9 @@ class EntityRepo
      */
     protected function formatHtml($htmlText)
     {
-        if ($htmlText == '') return $htmlText;
+        if ($htmlText == '') {
+            return $htmlText;
+        }
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
@@ -641,7 +666,9 @@ class EntityRepo
 
         foreach ($childNodes as $index => $childNode) {
             /** @var \DOMElement $childNode */
-            if (get_class($childNode) !== 'DOMElement') continue;
+            if (get_class($childNode) !== 'DOMElement') {
+                continue;
+            }
 
             // Overwrite id if not a BookStack custom id
             if ($childNode->hasAttribute('id')) {
@@ -688,12 +715,17 @@ class EntityRepo
         $content = $page->html;
         $matches = [];
         preg_match_all("/{{@\s?([0-9].*?)}}/", $content, $matches);
-        if (count($matches[0]) === 0) return $content;
+        if (count($matches[0]) === 0) {
+            return $content;
+        }
 
+        $topLevelTags = ['table', 'ul', 'ol'];
         foreach ($matches[1] as $index => $includeId) {
             $splitInclude = explode('#', $includeId, 2);
             $pageId = intval($splitInclude[0]);
-            if (is_nan($pageId)) continue;
+            if (is_nan($pageId)) {
+                continue;
+            }
 
             $matchedPage = $this->getById('page', $pageId, false, $ignorePermissions);
             if ($matchedPage === null) {
@@ -714,8 +746,13 @@ class EntityRepo
                 continue;
             }
             $innerContent = '';
-            foreach ($matchingElem->childNodes as $childNode) {
-                $innerContent .= $doc->saveHTML($childNode);
+            $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
+            if ($isTopLevel) {
+                $innerContent .= $doc->saveHTML($matchingElem);
+            } else {
+                foreach ($matchingElem->childNodes as $childNode) {
+                    $innerContent .= $doc->saveHTML($childNode);
+                }
             }
             $content = str_replace($matches[0][$index], trim($innerContent), $content);
         }
@@ -748,7 +785,9 @@ class EntityRepo
         $page->updated_by = user()->id;
         $page->draft = true;
 
-        if ($chapter) $page->chapter_id = $chapter->id;
+        if ($chapter) {
+            $page->chapter_id = $chapter->id;
+        }
 
         $book->pages()->save($page);
         $page = $this->page->find($page->id);
@@ -779,14 +818,18 @@ class EntityRepo
      */
     public function getPageNav($pageContent)
     {
-        if ($pageContent == '') return [];
+        if ($pageContent == '') {
+            return [];
+        }
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($pageContent, 'HTML-ENTITIES', 'UTF-8'));
         $xPath = new DOMXPath($doc);
         $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
 
-        if (is_null($headers)) return [];
+        if (is_null($headers)) {
+            return [];
+        }
 
         $tree = collect([]);
         foreach ($headers as $header) {
@@ -802,7 +845,7 @@ class EntityRepo
         // Normalise headers if only smaller headers have been used
         if (count($tree) > 0) {
             $minLevel = $tree->pluck('level')->min();
-            $tree = $tree->map(function($header) use ($minLevel) {
+            $tree = $tree->map(function ($header) use ($minLevel) {
                 $header['level'] -= ($minLevel - 2);
                 return $header;
             });
@@ -838,7 +881,9 @@ class EntityRepo
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = $this->pageToPlainText($page);
-        if (setting('app-editor') !== 'markdown') $page->markdown = '';
+        if (setting('app-editor') !== 'markdown') {
+            $page->markdown = '';
+        }
         $page->updated_by = $userId;
         $page->revision_count++;
         $page->save();
@@ -900,7 +945,9 @@ class EntityRepo
     public function getUserPageDraftMessage(PageRevision $draft)
     {
         $message = trans('entities.pages_editing_draft_notification', ['timeDiff' => $draft->updated_at->diffForHumans()]);
-        if ($draft->page->updated_at->timestamp <= $draft->updated_at->timestamp) return $message;
+        if ($draft->page->updated_at->timestamp <= $draft->updated_at->timestamp) {
+            return $message;
+        }
         return $message . "\n" . trans('entities.pages_draft_edited_notification');
     }
 
@@ -996,7 +1043,9 @@ class EntityRepo
         }
 
         $draft->fill($data);
-        if (setting('app-editor') !== 'markdown') $draft->markdown = '';
+        if (setting('app-editor') !== 'markdown') {
+            $draft->markdown = '';
+        }
 
         $draft->save();
         return $draft;
@@ -1103,17 +1152,4 @@ class EntityRepo
 
         $page->delete();
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

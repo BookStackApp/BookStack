@@ -12,14 +12,14 @@
                 <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
             @endif
         @endif
-        <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name">{{ $page->name }}</span></a>
+        <a href="{{ $page->getUrl() }}" class="text-page entity-list-item-link"><i class="zmdi zmdi-file-text"></i><span class="entity-list-item-name break-text">{{ $page->name }}</span></a>
     </h4>
 
     <div class="entity-item-snippet">
         @if(isset($page->searchSnippet))
-            <p class="text-muted">{!! $page->searchSnippet !!}</p>
+            <p class="text-muted break-text">{!! $page->searchSnippet !!}</p>
         @else
-            <p class="text-muted">{{ $page->getExcerpt() }}</p>
+            <p class="text-muted break-text">{{ $page->getExcerpt() }}</p>
         @endif
     </div>
 

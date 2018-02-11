@@ -103,7 +103,7 @@ class UserProfileTest extends BrowserKitTest
         $this->actingAs($editor)
             ->visit('/books')
             ->pageNotHasElement('.featured-image-container')
-            ->pageHasElement('.entity-list-item');
+            ->pageHasElement('.content .entity-list-item');
     }
 
     public function test_books_view_is_grid()
@@ -115,4 +115,5 @@ class UserProfileTest extends BrowserKitTest
             ->visit('/books')
             ->pageHasElement('.featured-image-container');
     }
+
 }

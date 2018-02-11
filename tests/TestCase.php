@@ -17,6 +17,12 @@ abstract class TestCase extends BaseTestCase
     protected $editor;
 
     /**
+     * The base URL to use while testing the application.
+     * @var string
+     */
+    protected $baseUrl = 'http://localhost';
+
+    /**
      * Set the current user context to be an admin.
      * @return $this
      */
@@ -57,6 +63,18 @@ abstract class TestCase extends BaseTestCase
             $this->editor = $editorRole->users->first();
         }
         return $this->editor;
+    }
+
+    /**
+     * Get an instance of a user with 'viewer' permissions
+     * @param $attributes
+     * @return mixed
+     */
+    protected function getViewer($attributes = [])
+    {
+        $user = \BookStack\Role::getRole('viewer')->users()->first();
+        if (!empty($attributes)) $user->forceFill($attributes)->save();
+        return $user;
     }
 
     /**

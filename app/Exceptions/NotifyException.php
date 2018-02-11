@@ -1,6 +1,5 @@
 <?php namespace BookStack\Exceptions;
 
-
 class NotifyException extends \Exception
 {
 

@@ -7,15 +7,15 @@
             <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
         @endif
         <a href="{{ $chapter->getUrl() }}" class="text-chapter entity-list-item-link">
-            <i class="zmdi zmdi-collection-bookmark"></i><span class="entity-list-item-name">{{ $chapter->name }}</span>
+            <i class="zmdi zmdi-collection-bookmark"></i><span class="entity-list-item-name break-text">{{ $chapter->name }}</span>
         </a>
     </h4>
 
     <div class="entity-item-snippet">
         @if(isset($chapter->searchSnippet))
-            <p class="text-muted">{!! $chapter->searchSnippet !!}</p>
+            <p class="text-muted break-text">{!! $chapter->searchSnippet !!}</p>
         @else
-            <p class="text-muted">{{ $chapter->getExcerpt() }}</p>
+            <p class="text-muted break-text">{{ $chapter->getExcerpt() }}</p>
         @endif
     </div>
 

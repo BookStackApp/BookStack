@@ -13,7 +13,13 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
+
+    // Single option to disable non-auth external services such as Gravatar and Draw.io
     'disable_services' => env('DISABLE_EXTERNAL_SERVICES', false),
+    'gravatar' => env('GRAVATAR', !env('DISABLE_EXTERNAL_SERVICES', false)),
+    'drawio' => env('DRAWIO', !env('DISABLE_EXTERNAL_SERVICES', false)),
+
+
     'callback_url' => env('APP_URL', false),
 
     'mailgun'  => [
@@ -86,7 +92,22 @@ return [
         'redirect' => env('APP_URL') . '/login/service/okta/callback', 
         'base_url' => env('OKTA_BASE_URL'), 
         'name'          => 'Okta',
-    ], 
+    ],
+
+    'gitlab' => [
+        'client_id'     => env('GITLAB_APP_ID'),
+        'client_secret' => env('GITLAB_APP_SECRET'),
+        'redirect'      => env('APP_URL') . '/login/service/gitlab/callback',
+        'instance_uri'  => env('GITLAB_BASE_URI'), // Needed only for self hosted instances
+        'name'          => 'GitLab',
+    ],
+
+    'twitch' => [
+        'client_id' => env('TWITCH_APP_ID'),
+        'client_secret' => env('TWITCH_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/twitch/callback',
+        'name'          => 'Twitch',
+    ],
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),

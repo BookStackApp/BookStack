@@ -1,4 +1,6 @@
 <?php namespace BookStack\Exceptions;
 
+class FileUploadException extends PrettyException
+{
 
-class FileUploadException extends PrettyException {}
+}

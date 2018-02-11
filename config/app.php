@@ -2,10 +2,13 @@
 
 return [
 
-
     'env' => env('APP_ENV', 'production'),
 
     'editor' => env('APP_EDITOR', 'html'),
+
+    'views' => [
+        'books' => env('APP_VIEWS_BOOKS', 'list')
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +61,7 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
-    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'ja', 'pl', 'it', 'ru'],
+    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN'],
 
     /*
     |--------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class RolePermission extends Model
 {
     /**
@@ -8,7 +7,7 @@ class RolePermission extends Model
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'permission_role','permission_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'permission_role', 'permission_id', 'role_id');
     }
 
     /**
