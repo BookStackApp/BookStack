@@ -66,14 +66,14 @@
                 @endforeach
                 {!! $books->render() !!}
             @else
-             <div class="row auto-clear">
+                 <div class="grid third">
                     @foreach($books as $key => $book)
                             @include('books/grid-item', ['book' => $book])
                     @endforeach
-                <div class="col-xs-12">
+                 </div>
+                <div>
                     {!! $books->render() !!}
                 </div>
-             </div>
             @endif
         @else
             <p class="text-muted">{{ trans('entities.books_empty') }}</p>
