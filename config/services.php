@@ -102,6 +102,13 @@ return [
         'name'          => 'Gitlab',
     ],
 
+    'twitch' => [
+        'client_id' => env('TWITCH_APP_ID'),
+        'client_secret' => env('TWITCH_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/twitch/callback',
+        'name'          => 'Twitch',
+    ],
+
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
         'dn' => env('LDAP_DN', false),
