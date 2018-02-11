@@ -19,6 +19,7 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Azure\AzureExtendSocialite@handle',
             'SocialiteProviders\Okta\OktaExtendSocialite@handle',
             'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
+            'SocialiteProviders\Twitch\TwitchExtendSocialite@handle',
         ],
     ];
 
