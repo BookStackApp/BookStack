@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="grid-card-content">
-        <h2><a href="{{$book->getUrl()}}" title="{{$book->name}}">{{$book->getShortName(35)}}</a></h2>
+        <h2><a class="break-text" href="{{$book->getUrl()}}" title="{{$book->name}}">{{$book->getShortName(35)}}</a></h2>
         @if(isset($book->searchSnippet))
             <p >{!! $book->searchSnippet !!}</p>
         @else

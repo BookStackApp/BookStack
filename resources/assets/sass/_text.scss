@@ -359,6 +359,11 @@ li.checkbox-item, li.task-list-item {
   color: inherit;
 }
 
+.break-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 /**
  * Grouping
  */
