@@ -40,6 +40,7 @@ return [
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update',
+    'attachment_not_found' => 'Attachment not found',
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',

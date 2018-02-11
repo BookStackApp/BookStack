@@ -1,6 +1,10 @@
 <?php namespace Tests;
 
-class AttachmentTest extends BrowserKitTest
+use BookStack\Attachment;
+use BookStack\Page;
+use BookStack\Services\PermissionService;
+
+class AttachmentTest extends TestCase
 {
     /**
      * Get a test file that can be uploaded
@@ -16,7 +20,7 @@ class AttachmentTest extends BrowserKitTest
      * Uploads a file with the given name.
      * @param $name
      * @param int $uploadedTo
-     * @return string
+     * @return \Illuminate\Foundation\Testing\TestResponse
      */
     protected function uploadFile($name, $uploadedTo = 0)
     {
@@ -48,7 +52,7 @@ class AttachmentTest extends BrowserKitTest
 
     public function test_file_upload()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $this->asAdmin();
         $admin = $this->getAdmin();
         $fileName = 'upload_test_file.txt';
@@ -63,37 +67,41 @@ class AttachmentTest extends BrowserKitTest
             'path' => $this->getUploadPath($fileName)
         ];
 
-        $this->uploadFile($fileName, $page->id);
-        $this->assertResponseOk();
-        $this->seeJsonContains($expectedResp);
-        $this->seeInDatabase('attachments', $expectedResp);
+        $upload = $this->uploadFile($fileName, $page->id);
+        $upload->assertStatus(200);
+        $upload->assertJson($expectedResp);
+        $this->assertDatabaseHas('attachments', $expectedResp);
 
         $this->deleteUploads();
     }
 
     public function test_file_display_and_access()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $this->asAdmin();
         $fileName = 'upload_test_file.txt';
 
-        $this->uploadFile($fileName, $page->id);
-        $this->assertResponseOk();
-        $this->visit($page->getUrl())
-            ->seeLink($fileName)
-            ->click($fileName)
-            ->see('Hi, This is a test file for testing the upload process.');
+        $upload = $this->uploadFile($fileName, $page->id);
+        $upload->assertStatus(200);
+        $attachment = Attachment::orderBy('id', 'desc')->take(1)->first();
+
+        $pageGet = $this->get($page->getUrl());
+        $pageGet->assertSeeText($fileName);
+        $pageGet->assertSee($attachment->getUrl());
+
+        $attachmentGet = $this->get($attachment->getUrl());
+        $attachmentGet->assertSee('Hi, This is a test file for testing the upload process.');
 
         $this->deleteUploads();
     }
 
     public function test_attaching_link_to_page()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $admin = $this->getAdmin();
         $this->asAdmin();
 
-        $this->call('POST', 'attachments/link', [
+        $linkReq = $this->call('POST', 'attachments/link', [
             'link' => 'https://example.com',
             'name' => 'Example Attachment Link',
             'uploaded_to' => $page->id,
@@ -110,19 +118,24 @@ class AttachmentTest extends BrowserKitTest
             'extension' => ''
         ];
 
-        $this->assertResponseOk();
-        $this->seeJsonContains($expectedResp);
-        $this->seeInDatabase('attachments', $expectedResp);
+        $linkReq->assertStatus(200);
+        $linkReq->assertJson($expectedResp);
+        $this->assertDatabaseHas('attachments', $expectedResp);
+        $attachment = Attachment::orderBy('id', 'desc')->take(1)->first();
 
-        $this->visit($page->getUrl())->seeLink('Example Attachment Link')
-            ->click('Example Attachment Link')->seePageIs('https://example.com');
+        $pageGet = $this->get($page->getUrl());
+        $pageGet->assertSeeText('Example Attachment Link');
+        $pageGet->assertSee($attachment->getUrl());
+
+        $attachmentGet = $this->get($attachment->getUrl());
+        $attachmentGet->assertRedirect('https://example.com');
 
         $this->deleteUploads();
     }
 
     public function test_attachment_updating()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $this->asAdmin();
 
         $this->call('POST', 'attachments/link', [
@@ -133,7 +146,7 @@ class AttachmentTest extends BrowserKitTest
 
         $attachmentId = \BookStack\Attachment::first()->id;
 
-        $this->call('PUT', 'attachments/' . $attachmentId, [
+        $update = $this->call('PUT', 'attachments/' . $attachmentId, [
             'uploaded_to' => $page->id,
             'name' => 'My new attachment name',
             'link' => 'https://test.example.com'
@@ -145,28 +158,27 @@ class AttachmentTest extends BrowserKitTest
             'uploaded_to' => $page->id
         ];
 
-        $this->assertResponseOk();
-        $this->seeJsonContains($expectedResp);
-        $this->seeInDatabase('attachments', $expectedResp);
+        $update->assertStatus(200);
+        $update->assertJson($expectedResp);
+        $this->assertDatabaseHas('attachments', $expectedResp);
 
         $this->deleteUploads();
     }
 
     public function test_file_deletion()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $this->asAdmin();
         $fileName = 'deletion_test.txt';
         $this->uploadFile($fileName, $page->id);
 
         $filePath = base_path('storage/' . $this->getUploadPath($fileName));
-
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
 
-        $attachmentId = \BookStack\Attachment::first()->id;
-        $this->call('DELETE', 'attachments/' . $attachmentId);
+        $attachment = \BookStack\Attachment::first();
+        $this->delete($attachment->getUrl());
 
-        $this->dontSeeInDatabase('attachments', [
+        $this->assertDatabaseMissing('attachments', [
             'name' => $fileName
         ]);
         $this->assertFalse(file_exists($filePath), 'File at path ' . $filePath . ' was not deleted as expected');
@@ -176,7 +188,7 @@ class AttachmentTest extends BrowserKitTest
 
     public function test_attachment_deletion_on_page_deletion()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $this->asAdmin();
         $fileName = 'deletion_test.txt';
         $this->uploadFile($fileName, $page->id);
@@ -184,16 +196,41 @@ class AttachmentTest extends BrowserKitTest
         $filePath = base_path('storage/' . $this->getUploadPath($fileName));
 
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
-        $this->seeInDatabase('attachments', [
+        $this->assertDatabaseHas('attachments', [
             'name' => $fileName
         ]);
 
         $this->call('DELETE', $page->getUrl());
 
-        $this->dontSeeInDatabase('attachments', [
+        $this->assertDatabaseMissing('attachments', [
             'name' => $fileName
         ]);
         $this->assertFalse(file_exists($filePath), 'File at path ' . $filePath . ' was not deleted as expected');
+
+        $this->deleteUploads();
+    }
+
+    public function test_attachment_access_without_permission_shows_404()
+    {
+        $admin = $this->getAdmin();
+        $viewer = $this->getViewer();
+        $page = Page::first();
+
+        $this->actingAs($admin);
+        $fileName = 'permission_test.txt';
+        $this->uploadFile($fileName, $page->id);
+        $attachment = Attachment::orderBy('id', 'desc')->take(1)->first();
+
+        $page->restricted = true;
+        $page->permissions()->delete();
+        $page->save();
+        $this->app[PermissionService::class]->buildJointPermissionsForEntity($page);
+        $page->load('jointPermissions');
+
+        $this->actingAs($viewer);
+        $attachmentGet = $this->get($attachment->getUrl());
+        $attachmentGet->assertStatus(404);
+        $attachmentGet->assertSee("Attachment not found");
 
         $this->deleteUploads();
     }

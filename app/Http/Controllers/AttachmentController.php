@@ -2,6 +2,7 @@
 
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Attachment;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Repos\EntityRepo;
 use BookStack\Services\AttachmentService;
 use Illuminate\Http\Request;
@@ -182,11 +183,16 @@ class AttachmentController extends Controller
      * Get an attachment from storage.
      * @param $attachmentId
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function get($attachmentId)
     {
         $attachment = $this->attachment->findOrFail($attachmentId);
         $page = $this->entityRepo->getById('page', $attachment->uploaded_to);
+        if ($page === null) {
+            throw new NotFoundException(trans('errors.attachment_not_found'));
+        }
+
         $this->checkOwnablePermission('page-view', $page);
 
         if ($attachment->external) {
@@ -204,6 +210,7 @@ class AttachmentController extends Controller
      * Delete a specific attachment in the system.
      * @param $attachmentId
      * @return mixed
+     * @throws \Exception
      */
     public function delete($attachmentId)
     {
