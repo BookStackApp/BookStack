@@ -98,8 +98,8 @@ return [
         'client_id'     => env('GITLAB_APP_ID'),
         'client_secret' => env('GITLAB_APP_SECRET'),
         'redirect'      => env('APP_URL') . '/login/service/gitlab/callback',
-        'instance_uri'  => env('GITLAB_BASE_URI'), // needs only for GitLab self hosted
-        'name'          => 'Gitlab',
+        'instance_uri'  => env('GITLAB_BASE_URI'), // Needed only for self hosted instances
+        'name'          => 'GitLab',
     ],
 
     'twitch' => [
