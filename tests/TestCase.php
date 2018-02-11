@@ -66,6 +66,18 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
+     * Get an instance of a user with 'viewer' permissions
+     * @param $attributes
+     * @return mixed
+     */
+    protected function getViewer($attributes = [])
+    {
+        $user = \BookStack\Role::getRole('viewer')->users()->first();
+        if (!empty($attributes)) $user->forceFill($attributes)->save();
+        return $user;
+    }
+
+    /**
      * Create and return a new book.
      * @param array $input
      * @return Book
