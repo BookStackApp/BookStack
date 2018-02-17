@@ -3,7 +3,7 @@
 @section('toolbar')
     <div class="col-sm-6 col-xs-1 faded">
         <div class="breadcrumbs">
-            <a href="{{ $user->getProfileUrl() }}" class="text-button"><i class="zmdi zmdi-account"></i>{{ $user->name }}</a>
+            <a href="{{ $user->getProfileUrl() }}" class="text-button">@icon('user'){{ $user->name }}</a>
         </div>
     </div>
 @stop
@@ -38,13 +38,13 @@
             <div class="col-md-5 text-bigger" id="content-counts">
                 <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
                 <div class="text-book">
-                    <i class="zmdi zmdi-book zmdi-hc-fw"></i> {{ trans_choice('entities.x_books', $assetCounts['books']) }}
+                    @icon('book')  {{ trans_choice('entities.x_books', $assetCounts['books']) }}
                 </div>
                 <div class="text-chapter">
-                    <i class="zmdi zmdi-collection-bookmark zmdi-hc-fw"></i> {{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}
+                    @icon('chapter') {{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}
                 </div>
                 <div class="text-page">
-                    <i class="zmdi zmdi-file-text zmdi-hc-fw"></i> {{ trans_choice('entities.x_pages', $assetCounts['pages']) }}
+                    @icon('page') {{ trans_choice('entities.x_pages', $assetCounts['pages']) }}
                 </div>
             </div>
         </div>

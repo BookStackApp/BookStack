@@ -1,9 +1,5 @@
 <?php namespace Tests;
 
-use BookStack\JointPermission;
-use BookStack\Page;
-use BookStack\Repos\EntityRepo;
-
 class HomepageTest extends TestCase
 {
 

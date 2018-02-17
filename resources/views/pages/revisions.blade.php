@@ -11,7 +11,7 @@
         <p>&nbsp;</p>
 
         <div class="card">
-            <h3><i class="zmdi zmdi-replay"></i> {{ trans('entities.pages_revisions') }}</h3>
+            <h3>@icon('history') {{ trans('entities.pages_revisions') }}</h3>
             <div class="body">
                 @if(count($page->revisions) > 0)
 

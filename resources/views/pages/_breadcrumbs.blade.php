@@ -10,5 +10,5 @@
         </a>
         <span class="sep">&raquo;</span>
     @endif
-    <a href="{{ $page->getUrl() }}" class="text-page text-button"><i class="zmdi zmdi-file"></i>{{ $page->getShortName() }}</a>
+    <a href="{{ $page->getUrl() }}" class="text-page text-button">@icon('page'){{ $page->getShortName() }}</a>
 </div>

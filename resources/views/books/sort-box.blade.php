@@ -3,7 +3,7 @@
     <ul class="sortable-page-list sort-list">
         @foreach($bookChildren as $bookChild)
             <li data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getClassName() }}" class="text-{{ $bookChild->getClassName() }}">
-                <i class="zmdi {{ $bookChild->isA('chapter') ? 'zmdi-collection-bookmark':'zmdi-file-text'}}"></i>{{ $bookChild->name }}
+                @icon($bookChild->isA('chapter') ? 'chapter' : 'page'){{ $bookChild->name }}
                 @if($bookChild->isA('chapter'))
                     <ul>
                         @foreach($bookChild->pages as $page)

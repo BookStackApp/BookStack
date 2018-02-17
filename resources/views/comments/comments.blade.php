@@ -11,7 +11,7 @@
     @if(userCan('comment-create-all'))
 
         <div class="comment-box" comment-box style="display:none;">
-            <div class="header"><i class="zmdi zmdi-comment"></i> {{ trans('entities.comment_new') }}</div>
+            <div class="header">@icon('comment') {{ trans('entities.comment_new') }}</div>
             <div comment-form-reply-to class="reply-row primary-background-light text-muted" style="display: none;">
                 <button class="text-button float right" action="remove-reply-to">{{ trans('common.remove') }}</button>
                 {!! trans('entities.comment_in_reply_to', ['commentId' => '<a href=""></a>']) !!}

@@ -12,7 +12,6 @@
     <!-- Styles and Fonts -->
     <link rel="stylesheet" href="{{ versioned_asset('css/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('css/print-styles.css') }}">
-    <link rel="stylesheet" href="{{ baseUrl("/libs/material-design-iconic-font/css/material-design-iconic-font.min.css") }}">
 
     <!-- Scripts -->
     <script src="{{ baseUrl("/libs/jquery/jquery.min.js?version=2.1.4") }}"></script>

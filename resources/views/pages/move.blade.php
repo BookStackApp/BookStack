@@ -11,7 +11,7 @@
     <div class="container">
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-folder"></i> {{ trans('entities.pages_move') }}</h3>
+            <h3>@icon('folder') {{ trans('entities.pages_move') }}</h3>
             <div class="body">
                 <form action="{{ $page->getUrl('/move') }}" method="POST">
                     {!! csrf_field() !!}

@@ -50,14 +50,12 @@ header {
     > * {
       vertical-align: top;
     }
-    > span, > i {
+    > span {
       padding-left: $-xs;
       display: inline-block;
-    }
-    > span {
       padding-top: $-xxs;
     }
-    > i {
+    > svg {
       padding-top: 4px;
       font-size: 18px;
     }
