@@ -2,7 +2,7 @@
 
 <div class="col-md-9">
     <div class="card">
-        <h3><i class="zmdi zmdi-{{$icon}}"></i> {{$title}}</h3>
+        <h3>@icon($icon) {{$title}}</h3>
         <div class="body">
             <div class="row">
                 <div class="col-md-5">
@@ -146,7 +146,7 @@
 </div>
 <div class="col-md-3">
     <div class="card">
-        <h3><i class="zmdi zmdi-accounts"></i> {{ trans('settings.role_users') }}</h3>
+        <h3>@icon('users') {{ trans('settings.role_users') }}</h3>
         <div class="body">
             @if(isset($role) && count($role->users) > 0)
                 <table class="list-table">

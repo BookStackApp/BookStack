@@ -8,7 +8,7 @@
     <div class="container small" ng-non-bindable>
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-accounts"></i> {{ trans('settings.users') }}</h3>
+            <h3>@icon('users') {{ trans('settings.users') }}</h3>
             <div class="body">
                 <div class="container">
                     <div class="row">

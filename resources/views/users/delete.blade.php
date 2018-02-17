@@ -9,7 +9,7 @@
     <div class="container small" ng-non-bindable>
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-delete"></i> {{ trans('settings.users_delete') }}</h3>
+            <h3>@icon('delete') {{ trans('settings.users_delete') }}</h3>
             <div class="body">
                 <p>{{ trans('settings.users_delete_warning', ['userName' => $user->name]) }}</p>
                 <p class="text-neg">{{ trans('settings.users_delete_confirm') }}</p>

@@ -2,7 +2,7 @@
 
 @section('header-buttons')
     @if(!$signedIn)
-        <a href="{{ baseUrl("/login") }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
+        <a href="{{ baseUrl("/login") }}">@icon('login') {{ trans('auth.log_in') }}</a>
     @endif
 @stop
 
@@ -10,7 +10,7 @@
 
     <div class="text-center">
         <div class="card center-box">
-            <h3><i class="zmdi zmdi-accounts"></i> {{ trans('auth.register_thanks') }}</h3>
+            <h3>@icon('users') {{ trans('auth.register_thanks') }}</h3>
             <div class="body">
                 <p>{{ trans('auth.register_confirm', ['appName' => setting('app-name')]) }}</p>
             </div>

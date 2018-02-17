@@ -149,12 +149,18 @@ function theme_path($path = '')
  * Get fetch an SVG icon as a string.
  * Checks for icons defined within a custom theme before defaulting back
  * to the 'resources/assets/icons' folder.
+ *
+ * Returns an empty string if icon file not found.
  * @param $name
  * @param array $attrs
  * @return mixed
  */
 function icon($name, $attrs = [])
 {
+    $attrs = array_merge([
+        'class' => 'svg-icon',
+        'data-icon' => $name
+    ], $attrs);
     $attrString = ' ';
     foreach ($attrs as $attrName => $attr) {
         $attrString .=  $attrName . '="' . $attr . '" ';
@@ -164,6 +170,8 @@ function icon($name, $attrs = [])
     $themeIconPath = theme_path('icons/' . $name . '.svg');
     if ($themeIconPath && file_exists($themeIconPath)) {
         $iconPath = $themeIconPath;
+    } else if (!file_exists($iconPath)) {
+        return '';
     }
 
     $fileContents = file_get_contents($iconPath);

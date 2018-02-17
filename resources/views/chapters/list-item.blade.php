@@ -2,12 +2,12 @@
     <h4>
         @if (isset($showPath) && $showPath)
             <a href="{{ $chapter->book->getUrl() }}" class="text-book">
-                <i class="zmdi zmdi-book"></i>{{ $chapter->book->getShortName() }}
+                @icon('book'){{ $chapter->book->getShortName() }}
             </a>
             <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
         @endif
         <a href="{{ $chapter->getUrl() }}" class="text-chapter entity-list-item-link">
-            <i class="zmdi zmdi-collection-bookmark"></i><span class="entity-list-item-name break-text">{{ $chapter->name }}</span>
+            @icon('chapter')<span class="entity-list-item-name break-text">{{ $chapter->name }}</span>
         </a>
     </h4>
 
@@ -21,10 +21,10 @@
 
 
     @if(!isset($hidePages) && count($chapter->pages) > 0)
-        <p chapter-toggle class="text-muted"><i class="zmdi zmdi-caret-right"></i> <i class="zmdi zmdi-file-text"></i> <span>{{ trans_choice('entities.x_pages', $chapter->pages->count()) }}</span></p>
+        <p chapter-toggle class="text-muted">@icon('caret-right') @icon('page') <span>{{ trans_choice('entities.x_pages', $chapter->pages->count()) }}</span></p>
         <div class="inset-list">
             @foreach($chapter->pages as $page)
-                <h5 class="@if($page->draft) draft @endif"><a href="{{ $page->getUrl() }}" class="text-page @if($page->draft) draft @endif"><i class="zmdi zmdi-file-text"></i>{{$page->name}}</a></h5>
+                <h5 class="@if($page->draft) draft @endif"><a href="{{ $page->getUrl() }}" class="text-page @if($page->draft) draft @endif">@icon('page'){{$page->name}}</a></h5>
             @endforeach
         </div>
     @endif

@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/translations', 'HomeController@getTranslations');
+Route::get('/icon/{iconName}.svg', 'HomeController@getIcon');
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {

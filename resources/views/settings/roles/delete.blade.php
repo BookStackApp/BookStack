@@ -8,7 +8,7 @@
     <div class="container small" ng-non-bindable>
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-delete"></i> {{ trans('settings.role_delete') }}</h3>
+            <h3>@icon('delete') {{ trans('settings.role_delete') }}</h3>
             <div class="body">
                 <p>{{ trans('settings.role_delete_confirm', ['roleName' => $role->display_name]) }}</p>
 
