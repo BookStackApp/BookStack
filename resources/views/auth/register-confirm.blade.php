@@ -2,7 +2,7 @@
 
 @section('header-buttons')
     @if(!$signedIn)
-        <a href="{{ baseUrl("/login") }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
+        <a href="{{ baseUrl("/login") }}">@icon('login') {{ trans('auth.log_in') }}</a>
     @endif
 @stop
 

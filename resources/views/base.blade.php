@@ -50,17 +50,17 @@
                     <div class="float right">
                         <div class="header-search">
                             <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">
-                                <button id="header-search-box-button" type="submit"><i class="zmdi zmdi-search"></i> </button>
+                                <button id="header-search-box-button" type="submit">@icon('search') </button>
                                 <input id="header-search-box-input" type="text" name="term" tabindex="2" placeholder="{{ trans('common.search') }}" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
                             </form>
                         </div>
                         <div class="links text-center">
-                            <a href="{{ baseUrl('/books') }}"><i class="zmdi zmdi-book"></i>{{ trans('entities.books') }}</a>
+                            <a href="{{ baseUrl('/books') }}">@icon('book'){{ trans('entities.books') }}</a>
                             @if(signedInUser() && userCan('settings-manage'))
                                 <a href="{{ baseUrl('/settings') }}"><i class="zmdi zmdi-settings"></i>{{ trans('settings.settings') }}</a>
                             @endif
                             @if(!signedInUser())
-                                <a href="{{ baseUrl('/login') }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
+                                <a href="{{ baseUrl('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
                             @endif
                         </div>
                         @if(signedInUser())

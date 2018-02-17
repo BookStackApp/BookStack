@@ -18,7 +18,7 @@
     <div class="col-xs-6 faded">
         <div class="action-buttons">
             @if($currentUser->can('book-create-all'))
-                <a href="{{ baseUrl("/books/create") }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.books_create') }}</a>
+                <a href="{{ baseUrl("/books/create") }}" class="text-pos text-button">@icon('add'){{ trans('entities.books_create') }}</a>
             @endif
         </div>
     </div>
@@ -78,7 +78,7 @@
         @else
             <p class="text-muted">{{ trans('entities.books_empty') }}</p>
             @if(userCan('books-create-all'))
-                <a href="{{ baseUrl("/books/create") }}" class="text-pos"><i class="zmdi zmdi-edit"></i>{{ trans('entities.create_one_now') }}</a>
+                <a href="{{ baseUrl("/books/create") }}" class="text-pos">@icon('edit'){{ trans('entities.create_one_now') }}</a>
             @endif
         @endif
     </div>

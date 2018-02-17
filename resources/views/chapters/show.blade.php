@@ -15,10 +15,10 @@
                 </ul>
             </span>
             @if(userCan('page-create', $chapter))
-                <a href="{{ $chapter->getUrl('/create-page') }}" class="text-pos text-button"><i class="zmdi zmdi-plus"></i>{{ trans('entities.pages_new') }}</a>
+                <a href="{{ $chapter->getUrl('/create-page') }}" class="text-pos text-button">@icon('add'){{ trans('entities.pages_new') }}</a>
             @endif
             @if(userCan('chapter-update', $chapter))
-                <a href="{{ $chapter->getUrl('/edit') }}" class="text-primary text-button"><i class="zmdi zmdi-edit"></i>{{ trans('common.edit') }}</a>
+                <a href="{{ $chapter->getUrl('/edit') }}" class="text-primary text-button">@icon('edit'){{ trans('common.edit') }}</a>
             @endif
             @if(userCan('chapter-update', $chapter) || userCan('restrictions-manage', $chapter) || userCan('chapter-delete', $chapter))
                 <div dropdown class="dropdown-container">
@@ -31,7 +31,7 @@
                             <li><a href="{{ $chapter->getUrl('/permissions') }}" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.permissions') }}</a></li>
                         @endif
                         @if(userCan('chapter-delete', $chapter))
-                            <li><a href="{{ $chapter->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>{{ trans('common.delete') }}</a></li>
+                            <li><a href="{{ $chapter->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
                         @endif
                     </ul>
                 </div>
@@ -51,7 +51,7 @@
         <div class="body">
             <form @submit.prevent="searchBook" class="search-box">
                 <input v-model="searchTerm" @change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.chapters_search_this') }}">
-                <button type="submit"><i class="zmdi zmdi-search"></i></button>
+                <button type="submit">@icon('search')</button>
                 <button v-if="searching" v-cloak class="text-neg" @click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
             </form>
         </div>
@@ -114,13 +114,13 @@
                     <p class="text-muted italic">{{ trans('entities.chapters_empty') }}</p>
                     <p>
                         @if(userCan('page-create', $chapter))
-                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline page"><i class="zmdi zmdi-file-text"></i>{{ trans('entities.books_empty_create_page') }}</a>
+                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline page">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
                         @endif
                         @if(userCan('page-create', $chapter) && userCan('book-update', $book))
                             &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp; &nbsp;
                         @endif
                         @if(userCan('book-update', $book))
-                            <a href="{{ $book->getUrl('/sort') }}" class="button outline book"><i class="zmdi zmdi-book"></i>{{ trans('entities.books_empty_sort_current_book') }}</a>
+                            <a href="{{ $book->getUrl('/sort') }}" class="button outline book">@icon('book'){{ trans('entities.books_empty_sort_current_book') }}</a>
                         @endif
                     </p>
                 </div>

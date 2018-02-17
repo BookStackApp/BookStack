@@ -1,14 +1,14 @@
 @extends('public')
 
 @section('header-buttons')
-    <a href="{{ baseUrl("/login") }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
+    <a href="{{ baseUrl("/login") }}">@icon('login') {{ trans('auth.log_in') }}</a>
 @stop
 
 @section('content')
 
     <div class="text-center">
         <div class="card center-box">
-            <h3><i class="zmdi zmdi-account-add"></i> {{ title_case(trans('auth.sign_up')) }}</h3>
+            <h3>@icon('new-user')  {{ title_case(trans('auth.sign_up')) }}</h3>
             <div class="body">
                 <form action="{{ baseUrl("/register") }}" method="POST">
                     {!! csrf_field() !!}
@@ -37,7 +37,7 @@
                     <hr class="margin-top">
                     @foreach($socialDrivers as $driver => $name)
                         <a id="social-register-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/register/service/" . $driver) }}">
-                            @icon($driver)
+                            @icon('auth/' . $driver)
                             {{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}
                         </a>
                     @endforeach

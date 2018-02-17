@@ -10,7 +10,7 @@
 
 @section('sidebar')
     <div class="card" id="recent-activity">
-        <h3><i class="zmdi zmdi-time"></i> {{ trans('entities.recent_activity') }}</h3>
+        <h3>@icon('time') {{ trans('entities.recent_activity') }}</h3>
         @include('partials/activity-list', ['activity' => $activity])
     </div>
 @stop
