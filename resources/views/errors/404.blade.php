@@ -6,7 +6,7 @@
     <p>&nbsp;</p>
 
     <div class="card">
-        <h3><i class="zmdi zmdi-alert-octagon"></i> {{ $message or trans('errors.404_page_not_found') }}</h3>
+        <h3>@icon('danger') {{ $message or trans('errors.404_page_not_found') }}</h3>
         <div class="body">
             <h5>{{ trans('errors.sorry_page_not_found') }}</h5>
             <p><a href="{{ baseUrl('/') }}" class="button outline">{{ trans('errors.return_home') }}</a></p>

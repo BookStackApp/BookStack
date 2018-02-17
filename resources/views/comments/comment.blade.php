@@ -6,7 +6,7 @@
                 <button type="button" class="text-button" action="edit" title="{{ trans('common.edit') }}">@icon('edit')</button>
             @endif
             @if(userCan('comment-create-all'))
-                <button type="button" class="text-button" action="reply" title="{{ trans('common.reply') }}"><i class="zmdi zmdi-mail-reply-all"></i></button>
+                <button type="button" class="text-button" action="reply" title="{{ trans('common.reply') }}">@icon('reply')</button>
             @endif
             @if(userCan('comment-delete', $comment))
 

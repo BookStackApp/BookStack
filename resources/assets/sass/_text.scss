@@ -74,13 +74,6 @@ a, .link {
     text-decoration: underline;
     color: darken($primary, 20%);
   }
-  i {
-    padding-right: $-s;
-  }
-  i.zmdi-hc-flip-horizontal {
-    padding-right: 0;
-    padding-left: $-s;
-  }
   &.icon {
     display: inline-block;
   }

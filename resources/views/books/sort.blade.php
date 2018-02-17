@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <h3><i class="zmdi zmdi-sort"></i> {{ trans('entities.books_sort') }}</h3>
+                    <h3>@icon('sort') {{ trans('entities.books_sort') }}</h3>
                     <div class="body">
                         <div id="sort-boxes">
                             @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])

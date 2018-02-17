@@ -7,7 +7,7 @@
     <div class="col-sm-6 col-xs-11">
         <div class="action-buttons faded">
             <span dropdown class="dropdown-container">
-                <div dropdown-toggle class="text-button text-primary"><i class="zmdi zmdi-open-in-new"></i>{{ trans('entities.export') }}</div>
+                <div dropdown-toggle class="text-button text-primary">@icon('export'){{ trans('entities.export') }}</div>
                 <ul class="wide">
                     <li><a href="{{ $book->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
                     <li><a href="{{ $book->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
@@ -22,14 +22,14 @@
             @endif
             @if(userCan('book-update', $book) || userCan('restrictions-manage', $book) || userCan('book-delete', $book))
                 <div dropdown class="dropdown-container">
-                    <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-more-vert"></i>{{ trans('common.more') }}</a>
+                    <a dropdown-toggle class="text-primary text-button">@icon('more'){{ trans('common.more') }}</a>
                     <ul>
                         @if(userCan('book-update', $book))
                             <li><a href="{{$book->getEditUrl()}}" class="text-primary">@icon('edit'){{ trans('common.edit') }}</a></li>
-                            <li><a href="{{ $book->getUrl('/sort') }}" class="text-primary"><i class="zmdi zmdi-sort"></i>{{ trans('common.sort') }}</a></li>
+                            <li><a href="{{ $book->getUrl('/sort') }}" class="text-primary">@icon('sort'){{ trans('common.sort') }}</a></li>
                         @endif
                         @if(userCan('restrictions-manage', $book))
-                            <li><a href="{{ $book->getUrl('/permissions') }}" class="text-primary"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.permissions') }}</a></li>
+                            <li><a href="{{ $book->getUrl('/permissions') }}" class="text-primary">@icon('lock'){{ trans('entities.permissions') }}</a></li>
                         @endif
                         @if(userCan('book-delete', $book))
                             <li><a href="{{ $book->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
@@ -48,20 +48,20 @@
             <form v-on:submit.prevent="searchBook" class="search-box">
                 <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
                 <button type="submit">@icon('search')</button>
-                <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button"><i class="zmdi zmdi-close"></i></button>
+                <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button">@icon('close')</button>
             </form>
         </div>
     </div>
 
     @if($book->restricted)
         <div class="card">
-            <h3><i class="zmdi zmdi-key"></i> {{ trans('entities.permissions') }}</h3>
+            <h3>@icon('permission') {{ trans('entities.permissions') }}</h3>
             <div class="body">
                 <p class="text-muted">
                     @if(userCan('restrictions-manage', $book))
-                        <a href="{{ $book->getUrl('/permissions') }}"><i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.books_permissions_active') }}</a>
+                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
                     @else
-                        <i class="zmdi zmdi-lock-outline"></i>{{ trans('entities.books_permissions_active') }}
+                        @icon('lock'){{ trans('entities.books_permissions_active') }}
                     @endif
                 </p>
             </div>
@@ -76,7 +76,7 @@
     @endif
 
     <div class="card">
-        <h3><i class="zmdi zmdi-info-outline"></i> {{ trans('common.details') }}</h3>
+        <h3>@icon('info') {{ trans('common.details') }}</h3>
         <div class="body">
             @include('partials.entity-meta', ['entity' => $book])
         </div>
@@ -124,7 +124,7 @@
 
         </div>
         <div class="search-results" v-cloak v-show="searching">
-            <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small"><i class="zmdi zmdi-close"></i>{{ trans('entities.search_clear') }}</a></h3>
+            <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small">@icon('close'){{ trans('entities.search_clear') }}</a></h3>
             <div v-if="!searchResults">
                 @include('partials/loading-icon')
             </div>

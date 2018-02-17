@@ -100,7 +100,7 @@ body.flexbox {
     top: 0;
     bottom: 0;
     width: 30px;
-    color: #666;
+    fill: #666;
     font-size: 20px;
     vertical-align: middle;
     text-align: center;
@@ -108,10 +108,10 @@ body.flexbox {
     border-top: 1px solid #BBB;
     padding-top: $-m;
     cursor: pointer;
-    i {
+    svg {
       opacity: 0.5;
       transition: all ease-in-out 120ms;
-      padding: 0;
+      margin: 0;
     }
     &:hover i {
       opacity: 1;

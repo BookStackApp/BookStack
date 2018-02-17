@@ -5,7 +5,7 @@
     <div class="container small">
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-accounts"></i> {{ trans('auth.email_not_confirmed') }}</h3>
+            <h3>@icon('users') {{ trans('auth.email_not_confirmed') }}</h3>
             <div class="body">
                 <p class="text-muted">{{ trans('auth.email_not_confirmed_text') }}<br>
                     {{ trans('auth.email_not_confirmed_click_link') }} <br>

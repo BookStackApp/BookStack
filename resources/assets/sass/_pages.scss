@@ -154,11 +154,11 @@
   display: flex;
   transition: width ease-in-out 180ms;
   margin-top: -1px;
-  min-height: 0px;
+  min-height: 0;
   &.open {
     width: 480px;
   }
-  [toolbox-toggle] i {
+  [toolbox-toggle] svg {
     transition: transform ease-in-out 180ms;
   }
   [toolbox-toggle] {
@@ -167,7 +167,7 @@
   &.open [toolbox-toggle] {
     background-color: rgba(255, 0, 0, 0.29);
   }
-  &.open [toolbox-toggle] i {
+  &.open [toolbox-toggle] svg {
     transform: rotate(180deg);
   }
   > div {
@@ -180,8 +180,8 @@
     width: 48px;
     flex: 0 1 auto;
   }
-  .tabs i {
-    color: rgba(0, 0, 0, 0.5);
+  .tabs svg {
+    fill: rgba(0, 0, 0, 0.5);
     padding: 0;
     margin: 0;
   }
@@ -194,7 +194,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   &.open .tabs > span.active {
-    color: #444;
+    fill: #444;
     background-color: rgba(0, 0, 0, 0.1);
   }
   div[toolbox-tab-content] {
@@ -227,7 +227,7 @@
   .handle {
     user-select: none;
     cursor: move;
-    color: #999;
+    fill: #999;
   }
   form {
     display: flex;

@@ -138,15 +138,18 @@
   display: block;
   position: relative;
   &:before {
-    font-family: 'Material-Design-Iconic-Font';
-    left: $-xs + 4px;
+    background-image: url("/icon/info-filled.svg?color=015380");
+    background-repeat: no-repeat;
+    content: '';
+    width: 1.2em;
+    height: 1.2em;
+    left: $-xs + 1px;
     top: 50%;
     margin-top: -9px;
-    //top: $-xs + 5px;
     display: inline-block;
     position: absolute;
-    font-size: 1.222em;
     line-height: 1;
+    opacity: 0.8;
   }
   &.success {
     border-left-color: $positive;
@@ -154,7 +157,7 @@
     color: darken($positive, 16%);
   }
   &.success:before {
-    content: '\f269';
+    background-image: url("/icon/check-circle.svg?color=376c39");
   }
   &.danger {
     border-left-color: $negative;
@@ -162,15 +165,12 @@
     color: darken($negative, 20%);
   }
   &.danger:before {
-    content: '\f1f2';
+    background-image: url("/icon/danger.svg?color=b91818");
   }
   &.info {
     border-left-color: $info;
     background-color: lighten($info, 50%);
     color: darken($info, 16%);
-  }
-  &.info:before {
-    content: '\f1f8';
   }
   &.warning {
     border-left-color: $warning;
@@ -178,7 +178,7 @@
     color: darken($warning, 16%);
   }
   &.warning:before {
-    content: '\f1f1';
+    background-image: url("/icon/warning.svg?color=b6531c");
   }
 }
 
