@@ -61,7 +61,7 @@
                                             <span class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</span>
                                         </div>
                                     </div>
-                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary" style="padding: 0;"><i class="zmdi zmdi-edit"></i></div>
+                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary" style="padding: 0;">@icon('edit')</div>
                                     <div @click="deleteFile(file)" class="drag-card-action text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></div>
                                 </div>
                             </draggable>

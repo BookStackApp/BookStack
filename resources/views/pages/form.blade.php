@@ -29,7 +29,7 @@
                                 <a @click="saveDraft()" class="text-pos"><i class="zmdi zmdi-save"></i>{{ trans('entities.pages_edit_save_draft') }}</a>
                             </li>
                             <li v-if="isNewDraft">
-                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>{{ trans('entities.pages_edit_delete_draft') }}</a>
+                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
                             </li>
                             <li v-if="isUpdateDraft">
                                 <a type="button" @click="discardDraft" class="text-neg"><i class="zmdi zmdi-close-circle"></i>{{ trans('entities.pages_edit_discard_draft') }}</a>
@@ -40,7 +40,7 @@
                 <div class="col-sm-4 faded">
                     <div class="action-buttons" v-cloak>
                         <div dropdown class="dropdown-container">
-                            <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-edit"></i> <span v-text="changeSummaryShort"></span></a>
+                            <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
                             <ul class="wide">
                                 <li class="padded">
                                     <p class="text-muted">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>

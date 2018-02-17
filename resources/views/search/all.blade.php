@@ -3,7 +3,7 @@
 @section('toolbar')
     <div class="col-sm-12 faded">
         <div class="breadcrumbs">
-            <a href="{{ baseUrl("/search?term=" . urlencode($searchTerm)) }}" class="text-button"><i class="zmdi zmdi-search"></i>{{ trans('entities.search_for_term', ['term' => $searchTerm]) }}</a>
+            <a href="{{ baseUrl("/search?term=" . urlencode($searchTerm)) }}" class="text-button">@icon('search'){{ trans('entities.search_for_term', ['term' => $searchTerm]) }}</a>
         </div>
     </div>
 @stop

@@ -58,7 +58,7 @@
 
         @if($currentUser->id === $user->id && count($activeSocialDrivers) > 0)
             <div class="card">
-                <h3><i class="zmdi zmdi-sign-in"></i> {{ trans('settings.users_social_accounts') }}</h3>
+                <h3>@icon('login')  {{ trans('settings.users_social_accounts') }}</h3>
                 <div class="body">
                     <p class="text-muted">{{ trans('settings.users_social_accounts_info') }}</p>
                     <div class="container">

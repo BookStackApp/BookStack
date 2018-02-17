@@ -1,3 +1,3 @@
 <div class="breadcrumbs">
-    <a href="{{$book->getUrl()}}" class="text-book text-button"><i class="zmdi zmdi-book"></i>{{ $book->getShortName() }}</a>
+    <a href="{{$book->getUrl()}}" class="text-book text-button">@icon('book'){{ $book->getShortName() }}</a>
 </div>

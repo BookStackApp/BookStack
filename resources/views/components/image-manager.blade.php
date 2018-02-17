@@ -21,7 +21,7 @@
                         <form @submit.prevent="searchImages" class="contained-search-box">
                             <input placeholder="{{ trans('components.image_search_hint') }}" v-model="searchTerm">
                             <button :class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" @click="cancelSearch()" class="text-button cancel"><i class="zmdi zmdi-close-circle-o"></i></button>
-                            <button title="{{ trans('common.search') }}" class="text-button"><i class="zmdi zmdi-search"></i></button>
+                            <button title="{{ trans('common.search') }}" class="text-button">@icon('search')</button>
                         </form>
                     </div>
                     <div class="image-manager-list">
@@ -70,7 +70,7 @@
 
                             <div class="clearfix">
                                 <form class="float left" @submit.prevent="deleteImage">
-                                    <button class="button icon neg"><i class="zmdi zmdi-delete"></i></button>
+                                    <button class="button icon neg">@icon('delete')</button>
                                 </form>
                                 <button class="button pos anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
                                     <i class="zmdi zmdi-square-right"></i>{{ trans('components.image_select_image') }}

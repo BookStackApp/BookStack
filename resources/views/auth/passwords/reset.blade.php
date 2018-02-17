@@ -1,9 +1,9 @@
 @extends('public')
 
 @section('header-buttons')
-    <a href="{{ baseUrl("/login") }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
+    <a href="{{ baseUrl("/login") }}">@icon('login') {{ trans('auth.log_in') }}</a>
     @if(setting('registration-enabled'))
-        <a href="{{ baseUrl("/register") }}"><i class="zmdi zmdi-account-add"></i>{{ trans('auth.sign_up') }}</a>
+        <a href="{{ baseUrl("/register") }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
     @endif
 @stop
 
