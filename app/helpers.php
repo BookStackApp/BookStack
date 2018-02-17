@@ -130,13 +130,42 @@ function redirect($to = null, $status = 302, $headers = [], $secure = null)
     return app('redirect')->to($to, $status, $headers, $secure);
 }
 
+/**
+ * Get a path to a theme resource.
+ * @param string $path
+ * @return string|boolean
+ */
+function theme_path($path = '')
+{
+    $theme = config('view.theme');
+    if (!$theme) {
+        return false;
+    }
+
+    return base_path('themes/' . $theme .($path ? DIRECTORY_SEPARATOR.$path : $path));
+}
+
+/**
+ * Get fetch an SVG icon as a string.
+ * Checks for icons defined within a custom theme before defaulting back
+ * to the 'resources/assets/icons' folder.
+ * @param $name
+ * @param array $attrs
+ * @return mixed
+ */
 function icon($name, $attrs = [])
 {
-    $iconPath = resource_path('assets/icons/' . $name . '.svg');
     $attrString = ' ';
     foreach ($attrs as $attrName => $attr) {
         $attrString .=  $attrName . '="' . $attr . '" ';
     }
+
+    $iconPath = resource_path('assets/icons/' . $name . '.svg');
+    $themeIconPath = theme_path('icons/' . $name . '.svg');
+    if ($themeIconPath && file_exists($themeIconPath)) {
+        $iconPath = $themeIconPath;
+    }
+
     $fileContents = file_get_contents($iconPath);
     return  str_replace('<svg', '<svg' . $attrString, $fileContents);
 }
