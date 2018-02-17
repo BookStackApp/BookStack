@@ -8,6 +8,7 @@ header {
   top: 0;
   background-color: $primary-dark;
   color: #fff;
+  fill: #fff;
   .padded {
     padding: $-m;
   }
@@ -24,6 +25,7 @@ header {
     display: inline-block;
     padding: $-m $-l;
     color: #FFF;
+    fill: #FFF;
     &:last-child {
       padding-right: 0;
     }
@@ -48,14 +50,12 @@ header {
     > * {
       vertical-align: top;
     }
-    > span, > i {
+    > span {
       padding-left: $-xs;
       display: inline-block;
-    }
-    > span {
       padding-top: $-xxs;
     }
-    > i {
+    > svg {
       padding-top: 4px;
       font-size: 18px;
     }
@@ -93,6 +93,7 @@ header .search-box {
   }
   button {
     color: #EEE;
+    fill: #EEE;
   }
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #DDD;
@@ -149,6 +150,7 @@ header .search-box {
 .faded {
   a, button, span, span > div {
     color: #666;
+    fill: #666;
   }
   .text-button {
     opacity: 0.5;
@@ -167,6 +169,7 @@ header .search-box {
 
 .faded-small {
   color: #000;
+  fill: #000;
   font-size: 0.9em;
   background-color: $primary-faded;
 }
@@ -230,6 +233,7 @@ header .search-box {
     padding: $-m;
     display: inline-block;
     color: #666;
+    fill: #666;
     cursor: pointer;
     &.selected {
       border-bottom: 2px solid $primary;

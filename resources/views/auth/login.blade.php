@@ -2,7 +2,7 @@
 
 @section('header-buttons')
     @if(setting('registration-enabled', false))
-        <a href="{{ baseUrl("/register") }}"><i class="zmdi zmdi-account-add"></i>{{ trans('auth.sign_up') }}</a>
+        <a href="{{ baseUrl("/register") }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
     @endif
 @stop
 
@@ -10,12 +10,11 @@
 
     <div class="text-center">
         <div class="card center-box">
-            <h3><i class="zmdi zmdi-sign-in"></i> {{ title_case(trans('auth.log_in')) }}</h3>
+            <h3>@icon('login') {{ title_case(trans('auth.log_in')) }}</h3>
 
             <div class="body">
                 <form action="{{ baseUrl("/login") }}" method="POST" id="login-form">
                     {!! csrf_field() !!}
-
 
                     @include('auth/forms/login/' . $authMethod)
 
@@ -25,9 +24,8 @@
                         <label for="remember" class="toggle-switch"></label>
                     </div>
 
-
                     <div class="from-group">
-                        <button class="button block pos" tabindex="3"><i class="zmdi zmdi-sign-in"></i> {{ title_case(trans('auth.log_in')) }}</button>
+                        <button class="button block pos" tabindex="3">@icon('login') {{ title_case(trans('auth.log_in')) }}</button>
                     </div>
                 </form>
 
@@ -35,7 +33,7 @@
                     <hr class="margin-top">
                     @foreach($socialDrivers as $driver => $name)
                         <a id="social-login-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
-                            @icon($driver)
+                            @icon('auth/' . $driver)
                             {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
                         </a>
                     @endforeach

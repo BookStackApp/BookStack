@@ -2,6 +2,7 @@
 @mixin generate-button-colors($textColor, $backgroundColor) {
   background-color: $backgroundColor;
   color: $textColor;
+  fill: $textColor;
   text-transform: uppercase;
   border: 1px solid $backgroundColor;
   vertical-align: top;
@@ -138,8 +139,8 @@ $button-border-radius: 2px;
 }
 
 .button.icon {
-  i {
-    padding-right: 0;
+  .svg-icon {
+    margin-right: 0;
   }
 }
 

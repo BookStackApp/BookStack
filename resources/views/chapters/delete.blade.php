@@ -11,7 +11,7 @@
     <div class="container small" ng-non-bindable>
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-delete"></i> {{ trans('entities.chapters_delete') }}</h3>
+            <h3>@icon('delete') {{ trans('entities.chapters_delete') }}</h3>
 
             <div class="body">
                 <p>{{ trans('entities.chapters_delete_explain', ['chapterName' => $chapter->name]) }}</p>

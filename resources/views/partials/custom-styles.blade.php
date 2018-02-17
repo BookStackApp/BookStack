@@ -17,5 +17,6 @@
     }
     .text-primary, p.primary, p .primary, span.primary:hover, .text-primary:hover, a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
         color: {{ setting('app-color') }};
+        fill: {{ setting('app-color') }};
     }
 </style>

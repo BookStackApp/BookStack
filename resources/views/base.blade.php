@@ -12,7 +12,6 @@
     <!-- Styles and Fonts -->
     <link rel="stylesheet" href="{{ versioned_asset('css/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('css/print-styles.css') }}">
-    <link rel="stylesheet" href="{{ baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css') }}">
 
     <!-- Scripts -->
     <script src="{{ baseUrl('/libs/jquery/jquery.min.js?version=2.1.4') }}"></script>
@@ -50,17 +49,17 @@
                     <div class="float right">
                         <div class="header-search">
                             <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">
-                                <button id="header-search-box-button" type="submit"><i class="zmdi zmdi-search"></i> </button>
+                                <button id="header-search-box-button" type="submit">@icon('search') </button>
                                 <input id="header-search-box-input" type="text" name="term" tabindex="2" placeholder="{{ trans('common.search') }}" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
                             </form>
                         </div>
                         <div class="links text-center">
-                            <a href="{{ baseUrl('/books') }}"><i class="zmdi zmdi-book"></i>{{ trans('entities.books') }}</a>
+                            <a href="{{ baseUrl('/books') }}">@icon('book'){{ trans('entities.books') }}</a>
                             @if(signedInUser() && userCan('settings-manage'))
-                                <a href="{{ baseUrl('/settings') }}"><i class="zmdi zmdi-settings"></i>{{ trans('settings.settings') }}</a>
+                                <a href="{{ baseUrl('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
                             @endif
                             @if(!signedInUser())
-                                <a href="{{ baseUrl('/login') }}"><i class="zmdi zmdi-sign-in"></i>{{ trans('auth.log_in') }}</a>
+                                <a href="{{ baseUrl('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
                             @endif
                         </div>
                         @if(signedInUser())
@@ -79,7 +78,7 @@
 
     <div back-to-top>
         <div class="inner">
-            <i class="zmdi zmdi-chevron-up"></i> <span>{{ trans('common.back_to_top') }}</span>
+            @icon('chevron-up') <span>{{ trans('common.back_to_top') }}</span>
         </div>
     </div>
 @yield('bottom')

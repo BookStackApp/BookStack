@@ -12,16 +12,16 @@
                 <div class="image-manager-content">
                     <div v-if="imageType === 'gallery'" class="container">
                         <div class="image-manager-header row faded-small nav-tabs">
-                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_all_title') }}" :class="{selected: (view=='all')}" @click="setView('all')"><i class="zmdi zmdi-collection-image"></i> {{ trans('components.image_all') }}</div>
-                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_book_title') }}" :class="{selected: (view=='book')}" @click="setView('book')"><i class="zmdi zmdi-book text-book"></i> {{ trans('entities.book') }}</div>
-                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_page_title') }}" :class="{selected: (view=='page')}" @click="setView('page')"><i class="zmdi zmdi-file-text text-page"></i> {{ trans('entities.page') }}</div>
+                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_all_title') }}" :class="{selected: (view=='all')}" @click="setView('all')">@icon('images') {{ trans('components.image_all') }}</div>
+                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_book_title') }}" :class="{selected: (view=='book')}" @click="setView('book')">@icon('book', ['class' => 'text-book svg-icon']) {{ trans('entities.book') }}</div>
+                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_page_title') }}" :class="{selected: (view=='page')}" @click="setView('page')">@icon('page', ['class' => 'text-page svg-icon']) {{ trans('entities.page') }}</div>
                         </div>
                     </div>
                     <div v-show="view === 'all'" >
                         <form @submit.prevent="searchImages" class="contained-search-box">
                             <input placeholder="{{ trans('components.image_search_hint') }}" v-model="searchTerm">
-                            <button :class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" @click="cancelSearch()" class="text-button cancel"><i class="zmdi zmdi-close-circle-o"></i></button>
-                            <button title="{{ trans('common.search') }}" class="text-button"><i class="zmdi zmdi-search"></i></button>
+                            <button :class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" @click="cancelSearch()" class="text-button cancel">@icon('close')</button>
+                            <button title="{{ trans('common.search') }}" class="text-button">@icon('search')</button>
                         </form>
                     </div>
                     <div class="image-manager-list">
@@ -70,10 +70,10 @@
 
                             <div class="clearfix">
                                 <form class="float left" @submit.prevent="deleteImage">
-                                    <button class="button icon neg"><i class="zmdi zmdi-delete"></i></button>
+                                    <button class="button icon neg">@icon('delete')</button>
                                 </form>
                                 <button class="button pos anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
-                                    <i class="zmdi zmdi-square-right"></i>{{ trans('components.image_select_image') }}
+                                    {{ trans('components.image_select_image') }}
                                 </button>
                             </div>
 

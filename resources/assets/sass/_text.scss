@@ -74,13 +74,6 @@ a, .link {
     text-decoration: underline;
     color: darken($primary, 20%);
   }
-  i {
-    padding-right: $-s;
-  }
-  i.zmdi-hc-flip-horizontal {
-    padding-right: 0;
-    padding-left: $-s;
-  }
   &.icon {
     display: inline-block;
   }
@@ -220,71 +213,92 @@ pre code {
  */
 p.pos, p .pos, span.pos, .text-pos {
   color: $positive;
+  fill: $positive;
   &:hover {
     color: $positive;
+    fill: $positive;
   }
 }
 
 p.neg, p .neg, span.neg, .text-neg {
   color: $negative;
+  fill: $negative;
   &:hover {
     color: $negative;
+    fill: $negative;
   }
 }
 
 p.muted, p .muted, span.muted, .text-muted {
 	color: lighten($text-dark, 26%);
+	fill: lighten($text-dark, 26%);
     &.small, .small {
       color: lighten($text-dark, 32%);
+      fill: lighten($text-dark, 32%);
     }
 }
 
 p.primary, p .primary, span.primary, .text-primary {
 	color: $primary;
+	fill: $primary;
   &:hover {
     color: $primary;
+    fill: $primary;
   }
 }
 
 p.secondary, p .secondary, span.secondary, .text-secondary {
 	color: $secondary;
+	fill: $secondary;
   &:hover {
     color: $secondary;
+    fill: $secondary;
   }
 }
 
 .text-book {
   color: $color-book;
+  fill: $color-book;
   &:hover {
     color: $color-book;
+    fill: $color-book;
   }
 }
 .text-page {
   color: $color-page;
+  fill: $color-page;
   &:hover {
     color: $color-page;
+    fill: $color-page;
   }
   &.draft {
     color: $color-page-draft;
+    fill: $color-page-draft;
   }
   &.draft:hover {
     color: $color-page-draft;
+    fill: $color-page-draft;
   }
 }
 .text-chapter {
   color: $color-chapter;
+  fill: $color-chapter;
   &:hover {
     color: $color-chapter;
+    fill: $color-chapter;
   }
 }
 .faded .text-book:hover {
   color: $color-book !important;
+  fill: $color-book !important;
 }
 .faded .text-chapter:hover {
   color: $color-chapter !important;
+  fill: $color-chapter !important;
 }
 .faded .text-page:hover {
   color: $color-page !important;
+  fill: $color-page !important;
 }
 
 span.highlight {
@@ -388,5 +402,13 @@ span.sep {
   */
 i {
   padding-right: $-xs;
+}
+
+.svg-icon {
+  width: 1em;
+  display: inline-block;
+  position: relative;
+  bottom: -0.105em;
+  margin-right: $-xs;
 }
 
