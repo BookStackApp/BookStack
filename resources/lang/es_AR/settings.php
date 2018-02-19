@@ -34,6 +34,9 @@ return [
     'app_homepage' => 'Página de inicio de la Aplicación',
     'app_homepage_desc' => 'Seleccione una página de inicio para mostrar en lugar de la vista por defecto. Se ignoran los permisos de página para las páginas seleccionadas.',
     'app_homepage_default' => 'Página de inicio por defecto seleccionadad',
+    'app_disable_comments' => 'Deshabilitar comentarios',
+    'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
+
 
     /**
      * Registration settings
