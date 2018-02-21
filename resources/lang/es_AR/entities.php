@@ -27,10 +27,10 @@ return [
     'no_pages_viewed' => 'Ud. no ha visto ninguna página',
     'no_pages_recently_created' => 'Ninguna página ha sido creada recientemente',
     'no_pages_recently_updated' => 'Ninguna página ha sido actualizada recientemente',
-    'export' => 'Export',
-    'export_html' => 'Contained Web File',
-    'export_pdf' => 'PDF File',
-    'export_text' => 'Plain Text File',
+    'export' => 'Exportar',
+    'export_html' => 'Archivo web contenido',
+    'export_pdf' => 'Archivo PDF',
+    'export_text' => 'Archivo de texto plano',
 
     /**
      * Permissions and restrictions
