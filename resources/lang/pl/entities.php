@@ -70,6 +70,7 @@ return [
      */
     'book' => 'Księga',
     'books' => 'Księgi',
+    'x_books' => ':count Księga|:count Księgi',
     'books_empty' => 'Brak utworzonych ksiąg',
     'books_popular' => 'Popularne księgi',
     'books_recent' => 'Ostatnie księgi',
@@ -103,6 +104,7 @@ return [
      */
     'chapter' => 'Rozdział',
     'chapters' => 'Rozdziały',
+    'x_chapters' => ':count Rozdział|:count Rozdziały',
     'chapters_popular' => 'Popularne rozdziały',
     'chapters_new' => 'Nowy rozdział',
     'chapters_create' => 'Utwórz nowy rozdział',
@@ -234,4 +236,24 @@ return [
     'profile_not_created_pages' => ':userName nie utworzył żadnych stron',
     'profile_not_created_chapters' => ':userName nie utworzył żadnych rozdziałów',
     'profile_not_created_books' => ':userName nie utworzył żadnych ksiąg',
+
+    /**
+     * Comments
+     */
+    'comment' => 'Komentarz',
+    'comments' => 'Komentarze',
+    'comment_add' => 'Dodaj komentarz',
+    'comment_placeholder' => 'Napisz swój komentarz tutaj',
+    'comment_count' => '{0} Brak komentarzy |{1} 1 komentarz|[2,*] :count komentarzy',
+    'comment_save' => 'Zapisz komentarz',
+    'comment_saving' => 'Zapisywanie komentarza...',
+    'comment_deleting' => 'Usuwanie komentarza...',
+    'comment_new' => 'Nowy komentarz',
+    'comment_created' => 'Skomentowano :createDiff',
+    'comment_updated' => 'Zaktualizowano :updateDiff przez :username',
+    'comment_deleted_success' => 'Komentarz usunięty',
+    'comment_created_success' => 'Komentarz dodany',
+    'comment_updated_success' => 'Komentarz zaktualizowany',
+    'comment_delete_confirm' => 'Czy na pewno chcesz usunąc ten komentarz?',
+    'comment_in_reply_to' => 'W odpowiedzi na :commentId',
 ];
