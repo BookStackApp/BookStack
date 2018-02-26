@@ -21,7 +21,7 @@ BookStack is not designed as an extensible platform to be used for purposes that
 
 ## Development & Testing
 
-All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at it's version. Here are the current development requirements:
+All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
 * [Node.js](https://nodejs.org/en/) v6.9+
 
