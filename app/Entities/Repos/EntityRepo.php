@@ -640,7 +640,7 @@ class EntityRepo
     {
         $html = $this->renderInternalLinks($html);
         $html = $this->renderTransclusions($html);
-        
+
         return $html;
     }
 
@@ -657,13 +657,14 @@ class EntityRepo
         if (count($matches[0]) === 0) {
             return $content;
         }
-        
+
         foreach($matches[1] as $index => $entityId){
             preg_match('/href=".*"/', $matches[0][$index], $hrefMatches);
             $hrefAttribute = $hrefMatches[0];
             $openBracketCount = substr_count($hrefAttribute, '{', 6);
             $closeBracketCount = substr_count($hrefAttribute, '}', 6);
-            
+
+            $matchedEntity = null;
             if ($openBracketCount === $closeBracketCount){
                 if ($openBracketCount === 2){
                     $matchedEntity = $this->getById('page', $entityId, false, $ignorePermissions);
@@ -671,20 +672,18 @@ class EntityRepo
                     $matchedEntity = $this->getById('chapter', $entityId, false, $ignorePermissions);
                 }elseif ($openBracketCount === 4){
                     $matchedEntity = $this->getById('book', $entityId, false, $ignorePermissions);
-                }else{
-                    $matchedEntity = null;
-                }
-                
-                if ($matchedEntity === null) {
-                    $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
-                    $content = str_replace($matches[0][$index], $emptyLink, $content);
-                } else {
-                    $newLink = preg_replace('/href=".*"/', 'href="'.$matchedEntity->getUrl().'"', $matches[0][$index]);
-                    $content = str_replace($matches[0][$index], $newLink, $content);
                 }
             }
+
+            if ($matchedEntity === null) {
+                $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
+                $content = str_replace($matches[0][$index], $emptyLink, $content);
+            } else {
+                $newLink = preg_replace('/href=".*"/', 'href="'.$matchedEntity->getUrl().'"', $matches[0][$index]);
+                $content = str_replace($matches[0][$index], $newLink, $content);
+            }
         }
-        
+
         return $content;
     }
 
@@ -738,7 +737,7 @@ class EntityRepo
 
         return $html;
     }
-    
+
     /**
      * Escape script tags within HTML content.
      * @param string $html
