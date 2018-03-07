@@ -713,6 +713,48 @@ class EntityRepo
     public function renderPage(Page $page, $ignorePermissions = false)
     {
         $content = $page->html;
+        $content = $this->renderInternalLinks($content, $ignorePermissions);
+        $content = $this->renderTransclusions($content, $ignorePermissions);
+        
+        return $content;
+    }
+
+    /**
+     * Render internal page links.
+     * @param String $content
+     * @param bool $ignorePermissions
+     * @return mixed|string
+     */
+    public function renderInternalLinks($content, $ignorePermissions = false)
+    {
+        $matches = [];
+        preg_match_all('/<a .*href\="{{@([0-9]*)}}"/', $content, $matches);
+        if (count($matches[0]) === 0) {
+            return $content;
+        }
+        
+        foreach($matches[1] as $index => $pageId){
+            $matchedPage = $this->getById('page', $pageId, false, $ignorePermissions);
+            if ($matchedPage === null) {
+                $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
+                $content = str_replace($matches[0][$index], $emptyLink, $content);
+            } else {
+                $newLink = preg_replace('/href=".*"/', 'href="'.$matchedPage->getUrl().'"', $matches[0][$index]);
+                $content = str_replace($matches[0][$index], $newLink, $content);
+            }
+        }
+        
+        return $content;
+    }
+
+    /**
+     * Render page transclusions.
+     * @param String $content
+     * @param bool $ignorePermissions
+     * @return mixed|string
+     */
+    public function renderTransclusions($content, $ignorePermissions = false)
+    {
         $matches = [];
         preg_match_all("/{{@\s?([0-9].*?)}}/", $content, $matches);
         if (count($matches[0]) === 0) {
@@ -759,7 +801,7 @@ class EntityRepo
 
         return $content;
     }
-
+    
     /**
      * Get the plain text version of a page's content.
      * @param Page $page
