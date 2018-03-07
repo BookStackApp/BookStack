@@ -646,29 +646,46 @@ class EntityRepo
 
     /**
      * Render internal page links.
-     * @param String $html
+     * @param String $content
+     * @param boolean $ignorePermissions
      * @return mixed|string
      */
-    public function renderInternalLinks($html)
+    public function renderInternalLinks($content, $ignorePermissions = false)
     {
         $matches = [];
-        preg_match_all('/<a .*href\="{{@([0-9]*)}}"/', $html, $matches);
+        preg_match_all('/<a .*href\="{{{*@([0-9]*)}}}*"/', $content, $matches);
         if (count($matches[0]) === 0) {
-            return $html;
+            return $content;
         }
         
-        foreach($matches[1] as $index => $pageId){
-            $matchedPage = $this->getById('page', $pageId, false);
-            if ($matchedPage === null) {
-                $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
-                $html = str_replace($matches[0][$index], $emptyLink, $html);
-            } else {
-                $newLink = preg_replace('/href=".*"/', 'href="'.$matchedPage->getUrl().'"', $matches[0][$index]);
-                $html = str_replace($matches[0][$index], $newLink, $html);
+        foreach($matches[1] as $index => $entityId){
+            preg_match('/href=".*"/', $matches[0][$index], $hrefMatches);
+            $hrefAttribute = $hrefMatches[0];
+            $openBracketCount = substr_count($hrefAttribute, '{', 6);
+            $closeBracketCount = substr_count($hrefAttribute, '}', 6);
+            
+            if ($openBracketCount === $closeBracketCount){
+                if ($openBracketCount === 2){
+                    $matchedEntity = $this->getById('page', $entityId, false, $ignorePermissions);
+                }elseif ($openBracketCount === 3){
+                    $matchedEntity = $this->getById('chapter', $entityId, false, $ignorePermissions);
+                }elseif ($openBracketCount === 4){
+                    $matchedEntity = $this->getById('book', $entityId, false, $ignorePermissions);
+                }else{
+                    $matchedEntity = null;
+                }
+                
+                if ($matchedEntity === null) {
+                    $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
+                    $content = str_replace($matches[0][$index], $emptyLink, $content);
+                } else {
+                    $newLink = preg_replace('/href=".*"/', 'href="'.$matchedEntity->getUrl().'"', $matches[0][$index]);
+                    $content = str_replace($matches[0][$index], $newLink, $content);
+                }
             }
         }
         
-        return $html;
+        return $content;
     }
 
     /**
