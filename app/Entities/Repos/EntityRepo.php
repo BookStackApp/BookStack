@@ -638,6 +638,46 @@ class EntityRepo
      */
     protected function parsePageIncludes(string $html) : string
     {
+        $html = $this->renderInternalLinks($html);
+        $html = $this->renderTransclusions($html);
+        
+        return $html;
+    }
+
+    /**
+     * Render internal page links.
+     * @param String $html
+     * @return mixed|string
+     */
+    public function renderInternalLinks($html)
+    {
+        $matches = [];
+        preg_match_all('/<a .*href\="{{@([0-9]*)}}"/', $html, $matches);
+        if (count($matches[0]) === 0) {
+            return $html;
+        }
+        
+        foreach($matches[1] as $index => $pageId){
+            $matchedPage = $this->getById('page', $pageId, false);
+            if ($matchedPage === null) {
+                $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
+                $html = str_replace($matches[0][$index], $emptyLink, $html);
+            } else {
+                $newLink = preg_replace('/href=".*"/', 'href="'.$matchedPage->getUrl().'"', $matches[0][$index]);
+                $html = str_replace($matches[0][$index], $newLink, $html);
+            }
+        }
+        
+        return $html;
+    }
+
+    /**
+     * Render page transclusions.
+     * @param String $html
+     * @return mixed|string
+     */
+    public function renderTransclusions($html)
+    {
         $matches = [];
         preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
 
@@ -681,7 +721,7 @@ class EntityRepo
 
         return $html;
     }
-
+    
     /**
      * Escape script tags within HTML content.
      * @param string $html
