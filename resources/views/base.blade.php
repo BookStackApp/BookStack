@@ -82,7 +82,7 @@
         </div>
     </div>
 @yield('bottom')
-<script src="{{ versioned_asset('js/common.js') }}"></script>
+<script src="{{ versioned_asset('dist/bundle.js') }}"></script>
 @yield('scripts')
 </body>
 </html>
