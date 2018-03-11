@@ -21,7 +21,6 @@ let componentMapping = {
 window.components = {};
 
 let componentNames = Object.keys(componentMapping);
-initAll();
 
 /**
  * Initialize components of the given name within the given element.
@@ -54,3 +53,5 @@ function initAll(parentElement) {
 }
 
 window.components.init = initAll;
+
+export default initAll;

@@ -1,6 +1,16 @@
-"use strict";
-require("babel-polyfill");
-require('./dom-polyfills');
+import "../sass/styles.scss"
+import "../sass/print-styles.scss"
+import "../sass/export-styles.scss"
+
+import "babel-polyfill"
+import "./dom-polyfills"
+import "./pages/page-show"
+import Translations from "./translations"
+import vues from "./vues/vues"
+import components from "./components"
+
+import Vue from "vue"
+import axios from "axios"
 
 // Url retrieval function
 window.baseUrl = function(path) {
@@ -37,9 +47,6 @@ class EventManager {
 
 window.$events = new EventManager();
 
-const Vue = require("vue");
-const axios = require("axios");
-
 let axiosInstance = axios.create({
     headers: {
         'X-CSRF-TOKEN': document.querySelector('meta[name=token]').getAttribute('content'),
@@ -60,14 +67,13 @@ Vue.prototype.$events = window.$events;
 
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
-const Translations = require("./translations");
 let translator = new Translations(window.translations);
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
 
-
-require("./vues/vues");
-require("./components");
+// Load vues and components
+vues();
+components();
 
 
 //Global jQuery Config & Extensions
@@ -119,12 +125,11 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
     };
 });
 
+console.log('test');
+
 // Detect IE for css
 if(navigator.userAgent.indexOf('MSIE')!==-1
     || navigator.appVersion.indexOf('Trident/') > 0
     || navigator.userAgent.indexOf('Safari') !== -1){
     document.body.classList.add('flexbox-support');
 }
-
-// Page specific items
-require("./pages/page-show");
