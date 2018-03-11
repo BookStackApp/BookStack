@@ -20,6 +20,7 @@ return [
     'ldap_extension_not_installed' => 'La extensión LDAP PHP no se encuentra instalada',
     'ldap_cannot_connect' => 'No se puede conectar con el servidor ldap, la conexión inicial ha fallado',
     'social_no_action_defined' => 'Acción no definida',
+    'social_login_bad_response' => "SE recibió un Error durante el acceso con :socialAccount : \n:error",
     'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente loguearse a través de la opcón :socialAccount .',
     'social_account_email_in_use' => 'El email :email ya se encuentra en uso. Si ud. ya dispone de una cuenta puede loguearse a través de su cuenta :socialAccount desde la configuración de perfil.',
     'social_account_existing' => 'La cuenta :socialAccount ya se encuentra asignada a su perfil.',
@@ -35,12 +36,15 @@ return [
     'cannot_create_thumbs' => 'El servidor no puede crear la imagen miniatura. Por favor chequee que tiene la extensión GD instalada.',
     'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamañ. Por favor intente con un fichero de menor tamañ.',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
+    'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
 
     // Attachments
     'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',
+    'attachment_not_found' => 'No se encuentra el objeto adjunto',
 
     // Pages
     'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegurese de que tiene conexión a Internet antes de guardar este borrador',
+    'page_custom_home_deletion' => 'No se puede eliminar una página cuando está configurada como página de inicio',
 
     // Entities
     'entity_not_found' => 'Entidad no encontrada',
