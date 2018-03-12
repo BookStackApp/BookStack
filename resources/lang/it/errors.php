@@ -20,6 +20,7 @@ return [
     'ldap_extension_not_installed' => 'L\'estensione PHP LDAP non è installata',
     'ldap_cannot_connect' => 'Impossibile connettersi al server ldap, connessione iniziale fallita',
     'social_no_action_defined' => 'Nessuna azione definita',
+    'social_login_bad_response' => "Ricevuto error durante il login con :socialAccount : \n:error",
     'social_account_in_use' => 'Questo account :socialAccount è già utilizzato, prova a loggarti usando l\'opzione :socialAccount.',
     'social_account_email_in_use' => 'La mail :email è già in uso. Se hai già un account puoi connettere il tuo account :socialAccount dalle impostazioni del tuo profilo.',
     'social_account_existing' => 'Questo account :socialAccount è già connesso al tuo profilo.',
@@ -35,12 +36,15 @@ return [
     'cannot_create_thumbs' => 'Il server non può creare thumbnail. Controlla che l\'estensione GD sia installata.',
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
+    'image_upload_type_error' => 'Il tipo di immagine in upload non è valido',
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update',
+    'attachment_not_found' => 'Allegato non trovato',
 
     // Pages
     'page_draft_autosave_fail' => 'Impossibile salvare la bozza. Controlla di essere connesso ad internet prima di salvare questa pagina',
+    'page_custom_home_deletion' => 'Impossibile eliminare una pagina quando è impostata come homepage',
 
     // Entities
     'entity_not_found' => 'Entità non trovata',
