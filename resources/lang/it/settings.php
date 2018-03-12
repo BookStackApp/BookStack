@@ -40,6 +40,7 @@ return [
     /**
      * Registration settings
      */
+
     'reg_settings' => 'Impostazioni Registrazione',
     'reg_allow' => 'Consentire Registrazione?',
     'reg_default_role' => 'Ruolo predefinito dopo la registrazione',
