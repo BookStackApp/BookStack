@@ -120,7 +120,7 @@ class ImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => 'is_image'
+            'file' => 'image'
         ]);
 
         if (!$this->imageRepo->isValidType($type)) {
