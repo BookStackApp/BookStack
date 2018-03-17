@@ -2,14 +2,9 @@ const path = require('path');
 const dev = process.env.NODE_ENV !== 'production';
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].css"
-    // disable: process.env.NODE_ENV === "development"
-});
 
 const config = {
+    mode: dev? 'development' : 'production',
     entry: {
         app: './resources/assets/js/index.js',
         styles: './resources/assets/sass/styles.scss',
@@ -34,23 +29,40 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                use: extractSass.extract({
-                    use: [{
-                        loader: "css-loader", options: {
-                            sourceMap: dev
-                        }
-                    }, {
-                        loader: "sass-loader", options: {
-                            sourceMap: dev
-                        }
-                    }],
-                    // use style-loader in development
-                    fallback: "style-loader"
-                })
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].css',
+                        context: './src/css/',
+                        outputPath: './',
+                        publicPath: 'public/'
+                    }
+                }, {
+                    loader: 'extract-loader', options: {
+                        publicPath: '',
+                    }
+                }, {
+                    loader: "css-loader", options: {
+                        sourceMap: dev
+                    }
+                }, {
+                    loader: 'postcss-loader',
+                    options: {
+                        ident: 'postcss',
+                        sourceMap: dev,
+                        plugins: (loader) => [
+                            require('autoprefixer')(),
+                        ]
+                    }
+                }, {
+                    loader: "sass-loader", options: {
+                        sourceMap: dev
+                    }
+                }]
             }
         ]
     },
-    plugins: [extractSass]
+    plugins: []
 };
 
 if (dev) {
