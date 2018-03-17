@@ -112,4 +112,31 @@ class PageContentTest extends TestCase
         $pageView->assertSee('def456');
     }
 
+    public function test_page_content_scripts_escaped_by_default()
+    {
+        $this->asEditor();
+        $page = Page::first();
+        $script = '<script>console.log("hello-test")</script>';
+        $page->html = "escape {$script}";
+        $page->save();
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee(htmlentities($script));
+    }
+
+    public function test_page_content_scripts_show_when_configured()
+    {
+        $this->asEditor();
+        $page = Page::first();
+        config()->push('app.allow_content_scripts', 'true');
+        $script = '<script>console.log("hello-test")</script>';
+        $page->html = "no escape {$script}";
+        $page->save();
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee($script);
+        $pageView->assertDontSee(htmlentities($script));
+    }
+
 }

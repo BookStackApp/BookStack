@@ -8,6 +8,8 @@ return [
         'books' => env('APP_VIEWS_BOOKS', 'list')
     ],
 
+    'allow_content_scripts' => env('ALLOW_CONTENT_SCRIPTS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
