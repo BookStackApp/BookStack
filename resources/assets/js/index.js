@@ -1,5 +1,9 @@
 import "babel-polyfill"
 import "./dom-polyfills"
+
+import jQuery from "jquery"
+window.jQuery = window.$ = jQuery;
+
 import "./pages/page-show"
 import Translations from "./translations"
 import vues from "./vues/vues"

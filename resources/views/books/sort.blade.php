@@ -1,9 +1,5 @@
 @extends('simple-layout')
 
-@section('head')
-    <script src="{{ baseUrl("/libs/jquery-sortable/jquery-sortable.min.js") }}"></script>
-@stop
-
 @section('toolbar')
     <div class="col-sm-12 faded">
         @include('books._breadcrumbs', ['book' => $book])
@@ -52,11 +48,12 @@
             </div>
             @endif
         </div>
-
-
-
     </div>
 
+@stop
+
+@section('scripts')
+    <script src="{{ baseUrl("/libs/jquery-sortable/jquery-sortable.min.js") }}"></script>
     <script>
         $(document).ready(function() {
 
