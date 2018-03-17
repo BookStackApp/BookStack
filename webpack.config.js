@@ -4,6 +4,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
+    target: 'web',
     mode: dev? 'development' : 'production',
     entry: {
         app: './resources/assets/js/index.js',
