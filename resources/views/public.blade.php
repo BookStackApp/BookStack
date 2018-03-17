@@ -10,8 +10,8 @@
     <meta charset="utf-8">
 
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" href="{{ versioned_asset('css/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('css/print-styles.css') }}">
+    <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
+    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Scripts -->
     <script src="{{ baseUrl("/libs/jquery/jquery.min.js?version=2.1.4") }}"></script>
@@ -58,6 +58,6 @@
     @yield('content')
 </section>
 
-<script src="{{ versioned_asset('js/common.js') }}"></script>
+<script src="{{ versioned_asset('dist/app.js') }}"></script>
 </body>
 </html>
