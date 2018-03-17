@@ -2,9 +2,10 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "production": "NODE_ENV=production webpack",
-    "dev": "webpack --watch",
-    "watch": "gulp",
+    "production": "NODE_ENV=production webpack && rm -f ./public/dist/*styles.js",
+    "dev": "npm-run-all --parallel watch livereload",
+    "watch": "webpack --watch",
+    "livereload": "livereload ./public/dist/",
     "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
   },
   "devDependencies": {
@@ -12,15 +13,19 @@
     "@babel/preset-env": "^7.0.0-beta.40",
     "babel-loader": "^8.0.0-beta.0",
     "babel-polyfill": "^6.26.0",
+    "autoprefixer": "^8.1.0",
     "css-loader": "^0.28.10",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "extract-loader": "^1.0.2",
+    "file-loader": "^1.1.11",
+    "livereload": "^0.7.0",
     "node-sass": "^4.7.2",
+    "npm-run-all": "^4.1.2",
+    "postcss-loader": "^2.1.1",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.11",
-    "yargs": "^11.0.0"
+    "webpack-cli": "^2.0.11"
   },
   "dependencies": {
     "axios": "^0.18.0",

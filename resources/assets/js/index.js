@@ -1,7 +1,3 @@
-import "../sass/styles.scss"
-import "../sass/print-styles.scss"
-import "../sass/export-styles.scss"
-
 import "babel-polyfill"
 import "./dom-polyfills"
 import "./pages/page-show"
@@ -124,8 +120,6 @@ jQuery.expr[":"].contains = $.expr.createPseudo(function (arg) {
         return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
 });
-
-console.log('test');
 
 // Detect IE for css
 if(navigator.userAgent.indexOf('MSIE')!==-1
