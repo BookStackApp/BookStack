@@ -480,12 +480,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .dz-preview.dz-error {
-	.dz-image, .dz-details {
-		&:hover ~ .dz-error-message {
-			opacity: 1;
-			pointer-events: auto;
-		}
-	}
+  .dz-image, .dz-details {
+    &:hover ~ .dz-error-message {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 }
 
 .dz-preview .dz-error-message {
