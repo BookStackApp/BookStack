@@ -31,6 +31,9 @@ return [
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',
     'app_primary_color_desc' => 'Cela devrait être une valeur hexadécimale. <br>Laisser vide pour rétablir la couleur par défaut.',
+    'app_homepage' => 'Page d\'accueil de l\'application',
+    'app_homepage_desc' => 'Choisissez une page à afficher sur la page d\'accueil au lieu de la vue par défaut. Les permissions sont ignorées pour les pages sélectionnées.',
+    'app_homepage_default' => 'Page d\'accueil par défaut sélectionnée',
     'app_disable_comments' => 'Désactiver les commentaires',
     'app_disable_comments_desc' => 'Désactive les commentaires sur toutes les pages de l\'application. Les commentaires existants ne sont pas affichés.',
     /**
