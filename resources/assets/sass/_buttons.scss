@@ -65,6 +65,7 @@ $button-border-radius: 2px;
 .button.outline {
   background-color: transparent;
   color: #888;
+  fill: #888;
   border: 1px solid #DDD;
   &:hover, &:focus, &:active {
     box-shadow: none;
@@ -73,25 +74,31 @@ $button-border-radius: 2px;
   &.page {
     border-color: $color-page;
     color: $color-page;
+    fill: $color-page;
     &:hover, &:focus, &:active {
       background-color: $color-page;
       color: #FFF;
+      fill: #FFF;
     }
   }
   &.chapter {
     border-color: $color-chapter;
     color: $color-chapter;
+    fill: $color-chapter;
     &:hover, &:focus, &:active {
       background-color: $color-chapter;
       color: #FFF;
+      fill: #FFF;
     }
   }
   &.book {
     border-color: $color-book;
     color: $color-book;
+    fill: $color-book;
     &:hover, &:focus, &:active {
       background-color: $color-book;
       color: #FFF;
+      fill: #FFF;
     }
   }
 }
