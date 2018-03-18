@@ -96,8 +96,8 @@
 
 @section('body')
 
-    <div class="container small">
-        <h1 v-pre>{{ $chapter->name }}</h1>
+    <div class="container small nopad">
+        <h1 class="break-text" v-pre>{{ $chapter->name }}</h1>
         <div class="chapter-content" v-show="!searching">
             <p v-pre class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
 
