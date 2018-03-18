@@ -12,7 +12,7 @@ const props = ['placeholder', 'uploadUrl', 'uploadedTo'];
 function mounted() {
    let container = this.$el;
    let _this = this;
-   new DropZone(container, {
+   this._dz = new DropZone(container, {
 	addRemoveLinks: true,
 	dictRemoveFile: trans('components.image_upload_remove'),
         url: function() {
@@ -51,12 +51,19 @@ function mounted() {
 }
 
 function data() {
-    return {}
+    return {};
 }
+
+const methods = {
+    onClose: function () {
+        this._dz.removeAllFiles(true);
+    }
+};
 
 module.exports = {
     template,
     props,
     mounted,
     data,
+    methods
 };
