@@ -42,7 +42,7 @@ function mounted() {
                 }
 
                 if (xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
-                if (errorMessage.file) setMessage(errorMessage.file[0]);
+                else if (errorMessage.file) setMessage(errorMessage.file);
             });
         }
    });
