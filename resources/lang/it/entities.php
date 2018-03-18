@@ -162,6 +162,7 @@ return [
     'pages_md_preview' => 'Anteprima',
     'pages_md_insert_image' => 'Inserisci Immagina',
     'pages_md_insert_link' => 'Inserisci Link Entità',
+    'pages_md_insert_drawing' => 'Inserisci Disegno',
     'pages_not_in_chapter' => 'La pagina non è in un capitolo',
     'pages_move' => 'Muovi Pagina',
     'pages_move_success' => 'Pagina mossa in ":parentName"',
@@ -244,6 +245,7 @@ return [
      */
     'comment' => 'Commento',
     'comments' => 'Commenti',
+    'comment_add' => 'Aggiungi Commento',
     'comment_placeholder' => 'Scrivi un commento',
     'comment_count' => '{0} Nessun Commento|{1} 1 Commento|[2,*] :count Commenti',
     'comment_save' => 'Salva Commento',

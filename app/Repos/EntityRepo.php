@@ -713,6 +713,10 @@ class EntityRepo
     public function renderPage(Page $page, $ignorePermissions = false)
     {
         $content = $page->html;
+        if (!config('app.allow_content_scripts')) {
+            $content = $this->escapeScripts($content);
+        }
+
         $matches = [];
         preg_match_all("/{{@\s?([0-9].*?)}}/", $content, $matches);
         if (count($matches[0]) === 0) {
@@ -758,6 +762,24 @@ class EntityRepo
         }
 
         return $content;
+    }
+
+    /**
+     * Escape script tags within HTML content.
+     * @param string $html
+     * @return mixed
+     */
+    protected function escapeScripts(string $html)
+    {
+        $scriptSearchRegex = '/<script.*?>.*?<\/script>/ms';
+        $matches = [];
+        preg_match_all($scriptSearchRegex, $html, $matches);
+        if (count($matches) === 0) return $html;
+
+        foreach ($matches[0] as $match) {
+            $html = str_replace($match, htmlentities($match), $html);
+        }
+        return $html;
     }
 
     /**

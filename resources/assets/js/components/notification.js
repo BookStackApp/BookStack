@@ -18,7 +18,7 @@ class Notification {
     show(textToShow = '') {
         this.elem.removeEventListener('transitionend', this.hideCleanup);
         this.textElem.textContent = textToShow;
-        this.elem.style.display = 'block';
+        this.elem.style.display = 'grid';
         setTimeout(() => {
             this.elem.classList.add('showing');
         }, 1);

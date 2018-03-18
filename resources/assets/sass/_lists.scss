@@ -55,6 +55,12 @@
   }
 }
 
+@include smaller-than($s) {
+  .page-list h4 {
+    font-size: 1.333em;
+  }
+}
+
 .sidebar-page-nav {
   $nav-indent: $-s;
   list-style: none;

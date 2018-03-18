@@ -88,7 +88,7 @@
                 <div class="form-group">
                     <label for="setting-app-custom-head">{{ trans('settings.app_custom_html') }}</label>
                     <p class="small">{{ trans('settings.app_custom_html_desc') }}</p>
-                    <textarea name="setting-app-custom-head" id="setting-app-custom-head">{{ setting('app-custom-head', '') }}</textarea>
+                    <textarea class="simple-code-input" name="setting-app-custom-head" id="setting-app-custom-head">{{ setting('app-custom-head', '') }}</textarea>
                 </div>
 
                 <div class="form-group text-right">

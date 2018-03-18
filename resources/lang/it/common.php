@@ -18,6 +18,8 @@ return [
     'name' => 'Nome',
     'description' => 'Descrizione',
     'role' => 'Ruolo',
+    'cover_image' => 'Immagine di copertina',
+    'cover_image_description' => 'Questa immagine dovrebbe essere approssimatamente 440x250px.',
 
     /**
      * Actions
@@ -45,7 +47,10 @@ return [
     'no_items' => 'Nessun elemento disponibile',
     'back_to_top' => 'Torna in alto',
     'toggle_details' => 'Mostra Dettagli',
+    'toggle_thumbnails' => 'Mostra Miniature',
     'details' => 'Dettagli',
+    'grid_view' => 'Visualizzazione Griglia',
+    'list_view' => 'Visualizzazione Lista',
 
     /**
      * Header
