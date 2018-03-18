@@ -10,8 +10,8 @@
   box-shadow: $bs-med;
   z-index: 999999;
   cursor: pointer;
-  max-width: 480px;
-  transition: transform ease-in-out 360ms;
+  max-width: 360px;
+  transition: transform ease-in-out 280ms;
   transform: translate3d(580px, 0, 0);
   display: grid;
   grid-template-columns: 64px 1fr;
@@ -27,6 +27,7 @@
   }
   span {
     vertical-align: middle;
+    line-height: 1.3;
   }
   &.pos {
     background-color: $positive;
@@ -42,6 +43,9 @@
   }
   &.showing {
     transform: translate3d(0, 0, 0);
+  }
+  &.showing:hover {
+    transform: translate3d(0, -2px, 0);
   }
 }
 
