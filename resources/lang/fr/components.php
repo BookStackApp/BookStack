@@ -20,5 +20,13 @@ return [
     'image_preview' => 'Prévisualiser l\'image',
     'image_upload_success' => 'Image ajoutée avec succès',
     'image_update_success' => 'Détails de l\'image mis à jour',
-    'image_delete_success' => 'Image supprimée avec succès'
+    'image_delete_success' => 'Image supprimée avec succès',
+
+    /**
+     * Code editor
+     */
+    'code_editor' => 'Editer le code',
+    'code_language' => 'Language du code',
+    'code_content' => 'Contenu du code',
+    'code_save' => 'Enregistrer le code',
 ];
