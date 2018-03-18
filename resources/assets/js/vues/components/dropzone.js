@@ -13,6 +13,8 @@ function mounted() {
    let container = this.$el;
    let _this = this;
    new DropZone(container, {
+	addRemoveLinks: true,
+	dictRemoveFile: trans('components.image_upload_remove'),
         url: function() {
             return _this.uploadUrl;
         },
@@ -41,7 +43,7 @@ function mounted() {
                     $(file.previewElement).find('[data-dz-errormessage]').text(message);
                 }
 
-                if (xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
+                if (xhr && xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
                 if (errorMessage.file) setMessage(errorMessage.file[0]);
             });
         }
