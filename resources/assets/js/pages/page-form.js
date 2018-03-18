@@ -350,7 +350,7 @@ if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') ==
 module.exports = {
     selector: '#html-editor',
     content_css: [
-        window.baseUrl('/css/styles.css'),
+        window.baseUrl('/dist/styles.css'),
     ],
     branding: false,
     body_class: 'page-content',

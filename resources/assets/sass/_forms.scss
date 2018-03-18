@@ -58,6 +58,7 @@
     flex-direction: column;
     border: 1px solid #DDD;
     width: 50%;
+    max-width: 50%;
   }
 }
 
@@ -97,7 +98,6 @@ label {
   font-size: 0.94em;
   font-weight: 400;
   color: #999;
-  text-transform: uppercase;
   padding-bottom: 2px;
   margin-bottom: 0.2em;
   &.inline {
@@ -189,6 +189,13 @@ input:checked + .toggle-switch {
     width: 100%;
     min-height: 64px;
   }
+}
+
+.simple-code-input {
+  background-color: #F8F8F8;
+  font-family: monospace;
+  font-size: 12px;
+  min-height: 100px;
 }
 
 .form-group {
