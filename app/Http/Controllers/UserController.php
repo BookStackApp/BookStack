@@ -161,6 +161,10 @@ class UserController extends Controller
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
+        if ($request->filled('email') !== $request->old('email')) {
+            $this->userRepo->downloadGravatarToUserAvatar($user);
+        }
+
         // Save an user-specific settings
         if ($request->filled('setting')) {
             foreach ($request->get('setting') as $key => $value) {
