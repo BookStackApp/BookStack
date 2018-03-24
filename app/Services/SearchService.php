@@ -72,7 +72,6 @@ class SearchService
         $terms = $this->parseSearchString($searchString);
         $entityTypes = array_keys($this->entities);
         $entityTypesToSearch = $entityTypes;
-        $results = collect();
 
         if ($entityType !== 'all') {
             $entityTypesToSearch = $entityType;
@@ -80,21 +79,23 @@ class SearchService
             $entityTypesToSearch = explode('|', $terms['filters']['type']);
         }
 
+        $results = collect();
         $total = 0;
 
         foreach ($entityTypesToSearch as $entityType) {
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
-            $search = $this->searchEntityTable($terms, $entityType, $page, $count);
-            $total += $this->searchEntityTable($terms, $entityType, $page, $count, true);
+            $search = $this->searchEntityTable($terms, $entityType, $page, $count + 1);
+            $total += $this->searchEntityTable($terms, $entityType, $page, $count + 1, true);
             $results = $results->merge($search);
         }
 
         return [
             'total' => $total,
             'count' => count($results),
-            'results' => $results->sortByDesc('score')->values()
+            'has_more' => $results->count() > $count,
+            'results' => $results->sortByDesc('score')->slice(0, $count)->values()
         ];
     }
 
@@ -322,8 +323,8 @@ class SearchService
     public function indexEntity(Entity $entity)
     {
         $this->deleteEntityTerms($entity);
-        $nameTerms = $this->generateTermArrayFromText($entity->name, 5);
-        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1);
+        $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
+        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
         $terms = array_merge($nameTerms, $bodyTerms);
         foreach ($terms as $index => $term) {
             $terms[$index]['entity_type'] = $entity->getMorphClass();
@@ -340,8 +341,8 @@ class SearchService
     {
         $terms = [];
         foreach ($entities as $entity) {
-            $nameTerms = $this->generateTermArrayFromText($entity->name, 5);
-            $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1);
+            $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
+            $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
             foreach (array_merge($nameTerms, $bodyTerms) as $term) {
                 $term['entity_id'] = $entity->id;
                 $term['entity_type'] = $entity->getMorphClass();
