@@ -211,6 +211,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   margin-left: 1px;
   padding: $-m $-l;
   overflow-y: auto;
+  overflow-x: hidden;
   border-left: 1px solid #DDD;
   .dropzone-container {
     margin-top: $-m;
@@ -315,8 +316,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .dz-preview.dz-file-preview .dz-image {
   border-radius: 4px;
-  background: #999;
-  background: linear-gradient(to bottom, #eee, #ddd);
+  background: #e9e9e9;
 }
 
 .dz-preview.dz-file-preview .dz-details {
@@ -332,11 +332,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .dz-preview .dz-remove {
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
   display: block;
   cursor: pointer;
   border: none;
+  margin-top: 3px;
 }
 
 .dz-preview .dz-remove:hover {
@@ -385,7 +386,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border: 1px solid transparent;
 }
 
-.dz-preview .dz-details .dz-filename span, .dz-preview .dz-details .dz-size span {
+.dz-preview .dz-details .dz-filename span {
   background-color: rgba(255, 255, 255, 0.4);
   padding: 0 0.4em;
   border-radius: 3px;
@@ -421,13 +422,13 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .dz-preview .dz-success-mark, .dz-preview .dz-error-mark {
   pointer-events: none;
   opacity: 0;
-  z-index: 500;
+  z-index: 1001;
   position: absolute;
   display: block;
   top: 50%;
   left: 50%;
   margin-left: -27px;
-  margin-top: -27px;
+  margin-top: -35px;
 }
 
 .dz-preview .dz-success-mark svg, .dz-preview .dz-error-mark svg {
@@ -482,9 +483,13 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: block;
 }
 
-.dz-preview.dz-error:hover .dz-error-message {
-  opacity: 1;
-  pointer-events: auto;
+.dz-preview.dz-error {
+  .dz-image, .dz-details {
+    &:hover ~ .dz-error-message {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 }
 
 .dz-preview .dz-error-message {
@@ -496,7 +501,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   opacity: 0;
   transition: opacity 0.3s ease;
   border-radius: 4px;
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.2;
   top: 88px;
   left: -26px;
