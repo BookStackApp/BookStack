@@ -23,6 +23,7 @@ return [
      */
     'actions' => '実行',
     'view' => '表示',
+    'reply' => '返信',
     'create' => '作成',
     'update' => '更新',
     'edit' => '編集',
