@@ -64,7 +64,7 @@ class SearchService
      * @param string $searchString
      * @param string $entityType
      * @param int $page
-     * @param int $count
+     * @param int $count - Count of each entity to search, Total returned could can be larger and not guaranteed.
      * @return array[int, Collection];
      */
     public function searchEntities($searchString, $entityType = 'all', $page = 1, $count = 20)
@@ -81,21 +81,26 @@ class SearchService
 
         $results = collect();
         $total = 0;
+        $hasMore = false;
 
         foreach ($entityTypesToSearch as $entityType) {
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
-            $search = $this->searchEntityTable($terms, $entityType, $page, $count + 1);
-            $total += $this->searchEntityTable($terms, $entityType, $page, $count + 1, true);
+            $search = $this->searchEntityTable($terms, $entityType, $page, $count);
+            $entityTotal = $this->searchEntityTable($terms, $entityType, $page, $count, true);
+            if ($entityTotal > $page * $count) {
+                $hasMore = true;
+            }
+            $total += $entityTotal;
             $results = $results->merge($search);
         }
 
         return [
             'total' => $total,
             'count' => count($results),
-            'has_more' => $results->count() > $count,
-            'results' => $results->sortByDesc('score')->slice(0, $count)->values()
+            'has_more' => $hasMore,
+            'results' => $results->sortByDesc('score')->values()
         ];
     }
 
