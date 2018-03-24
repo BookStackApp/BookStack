@@ -171,6 +171,15 @@ class ImageService extends UploadService
     }
 
     /**
+     * Checks if the image is a gif. Returns true if it is, else false.
+     * @param Image $image
+     * @return boolean
+     */
+    protected function isGif(Image $image) {
+        return strtolower(pathinfo($this->getPath($image), PATHINFO_EXTENSION)) === 'gif';
+    }
+
+    /**
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
@@ -184,6 +193,10 @@ class ImageService extends UploadService
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
+        if ($keepRatio && $this->isGif($image)) {
+            return $this->getPublicUrl($this->getPath($image));
+        }
+
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
         $imagePath = $this->getPath($image);
         $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
