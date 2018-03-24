@@ -63,7 +63,7 @@ return [
     'search_created_before' => 'Créé avant',
     'search_created_after' => 'Créé après',
     'search_set_date' => 'Choisir la date',
-    'search_update' => 'Actualiser la recherche'
+    'search_update' => 'Actualiser la recherche',
 
     /**
      * Books
