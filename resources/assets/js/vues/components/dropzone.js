@@ -37,14 +37,14 @@ function mounted() {
 
             dz.on('error', function (file, errorMessage, xhr) {
                 _this.$emit('error', {file, errorMessage, xhr});
-                console.log(errorMessage);
-                console.log(xhr);
+
                 function setMessage(message) {
                     $(file.previewElement).find('[data-dz-errormessage]').text(message);
                 }
 
                 if (xhr && xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
-                if (errorMessage.file) setMessage(errorMessage.file[0]);
+                else if (errorMessage.file) setMessage(errorMessage.file);
+
             });
         }
    });
