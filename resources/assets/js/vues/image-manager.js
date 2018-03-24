@@ -43,6 +43,8 @@ const methods = {
 
     hide() {
         this.showing = false;
+        this.selectedImage = false;
+        this.$refs.dropzone.onClose();
         this.$el.children[0].components.overlay.hide();
     },
 

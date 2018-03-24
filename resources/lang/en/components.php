@@ -21,6 +21,7 @@ return [
     'image_upload_success' => 'Image uploaded successfully',
     'image_update_success' => 'Image details successfully updated',
     'image_delete_success' => 'Image successfully deleted',
+    'image_upload_remove' => 'Remove',
 
     /**
      * Code editor
