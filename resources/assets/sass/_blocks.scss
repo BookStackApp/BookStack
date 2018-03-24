@@ -224,15 +224,15 @@
     padding: 0;
     align-items: center;
     text-align: center;
+    justify-content: center;
     width: 28px;
     padding-left: $-xs;
     padding-right: $-xs;
     &:hover {
       background-color: #EEE;
     }
-    i {
-      flex: 1;
-      padding: 0;
+    .svg-icon {
+      margin-right: 0px;
     }
   }
   > div .outline input {
