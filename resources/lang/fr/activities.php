@@ -37,4 +37,7 @@ return [
     'book_sort'                   => 'a réordonné le livre',
     'book_sort_notification'      => 'Livre réordonné avec succès',
 
+    // Other
+    'commented_on'                => 'a commenté'
+
 ];
