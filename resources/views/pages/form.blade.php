@@ -15,24 +15,24 @@
             <div class="row">
                 <div class="col-sm-4 faded">
                     <div class="action-buttons text-left">
-                        <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary"><i class="zmdi zmdi-arrow-left"></i>{{ trans('common.back') }}</a>
-                        <a onclick="$('body>header').slideToggle();" class="text-button text-primary"><i class="zmdi zmdi-swap-vertical"></i>{{ trans('entities.pages_edit_toggle_header') }}</a>
+                        <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back'){{ trans('common.back') }}</a>
+                        <a onclick="$('body>header').slideToggle();" class="text-button text-primary">@icon('swap-vertical'){{ trans('entities.pages_edit_toggle_header') }}</a>
                     </div>
                 </div>
                 <div class="col-sm-4 faded text-center">
 
                     <div v-show="draftsEnabled" dropdown class="dropdown-container draft-display">
-                        <a dropdown-toggle class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; <i class="zmdi zmdi-more-vert"></i></a>
-                        <i class="zmdi zmdi-check-circle text-pos draft-notification" :class="{visible: draftUpdated}"></i>
+                        <a dropdown-toggle class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
+                        @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
                         <ul>
                             <li>
-                                <a @click="saveDraft()" class="text-pos"><i class="zmdi zmdi-save"></i>{{ trans('entities.pages_edit_save_draft') }}</a>
+                                <a @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</a>
                             </li>
                             <li v-if="isNewDraft">
-                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg"><i class="zmdi zmdi-delete"></i>{{ trans('entities.pages_edit_delete_draft') }}</a>
+                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
                             </li>
                             <li v-if="isUpdateDraft">
-                                <a type="button" @click="discardDraft" class="text-neg"><i class="zmdi zmdi-close-circle"></i>{{ trans('entities.pages_edit_discard_draft') }}</a>
+                                <a type="button" @click="discardDraft" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</a>
                             </li>
                         </ul>
                     </div>
@@ -40,7 +40,7 @@
                 <div class="col-sm-4 faded">
                     <div class="action-buttons" v-cloak>
                         <div dropdown class="dropdown-container">
-                            <a dropdown-toggle class="text-primary text-button"><i class="zmdi zmdi-edit"></i> <span v-text="changeSummaryShort"></span></a>
+                            <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
                             <ul class="wide">
                                 <li class="padded">
                                     <p class="text-muted">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
@@ -49,7 +49,7 @@
                             </ul>
                         </div>
 
-                        <button type="submit" id="save-button" class="text-button text-pos"><i class="zmdi zmdi-floppy"></i>{{ trans('entities.pages_save') }}</button>
+                        <button type="submit" id="save-button" class="text-button text-pos">@icon('save'){{ trans('entities.pages_save') }}</button>
                     </div>
                 </div>
             </div>
@@ -87,12 +87,12 @@
                         <span class="float left">{{ trans('entities.pages_md_editor') }}</span>
                         <div class="float right buttons">
                             @if(config('services.drawio'))
-                                <button class="text-button" type="button" data-action="insertDrawing"><i class="zmdi zmdi-widgets"></i>{{ trans('entities.pages_md_insert_drawing') }}</button>
+                                <button class="text-button" type="button" data-action="insertDrawing">@icon('drawing'){{ trans('entities.pages_md_insert_drawing') }}</button>
                                 &nbsp;|&nbsp
                             @endif
-                            <button class="text-button" type="button" data-action="insertImage"><i class="zmdi zmdi-image"></i>{{ trans('entities.pages_md_insert_image') }}</button>
+                            <button class="text-button" type="button" data-action="insertImage">@icon('image'){{ trans('entities.pages_md_insert_image') }}</button>
                             &nbsp;|&nbsp;
-                            <button class="text-button" type="button" data-action="insertLink"><i class="zmdi zmdi-link"></i>{{ trans('entities.pages_md_insert_link') }}</button>
+                            <button class="text-button" type="button" data-action="insertLink">@icon('link'){{ trans('entities.pages_md_insert_link') }}</button>
                         </div>
                     </div>
 

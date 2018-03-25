@@ -21,7 +21,7 @@ BookStack is not designed as an extensible platform to be used for purposes that
 
 ## Development & Testing
 
-All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at it's version. Here are the current development requirements:
+All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
 * [Node.js](https://nodejs.org/en/) v6.9+
 
@@ -103,7 +103,7 @@ These are the great open-source projects used to help build BookStack:
 * [Vue.js](http://vuejs.org/)
 * [Axios](https://github.com/mzabriskie/axios)
 * [jQuery Sortable](https://johnny.github.io/jquery-sortable/)
-* [Material Design Iconic Font](http://zavoloklom.github.io/material-design-iconic-font/icons.html)
+* [Google Material Icons](https://material.io/icons/)
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [clipboard.js](https://clipboardjs.com/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)

@@ -2,6 +2,8 @@
 
 class Chapter extends Entity
 {
+    public $searchFactor = 1.3;
+
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
 
     protected $with = ['book'];

@@ -3,7 +3,7 @@
 @section('toolbar')
     <div class="col-sm-6 faded">
         <div class="action-buttons text-left">
-            <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-primary text-button"><i class="zmdi zmdi-wrap-text"></i>{{ trans('common.toggle_details') }}</a>
+            <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-primary text-button">@icon('expand-text'){{ trans('common.toggle_details') }}</a>
         </div>
     </div>
 @stop
@@ -16,13 +16,13 @@
             <div class="col-sm-4">
                 @if(count($draftPages) > 0)
                     <div id="recent-drafts" class="card">
-                        <h3><i class="zmdi zmdi-edit"></i> {{ trans('entities.my_recent_drafts') }}</h3>
+                        <h3>@icon('edit') {{ trans('entities.my_recent_drafts') }}</h3>
                         @include('partials/entity-list', ['entities' => $draftPages, 'style' => 'compact'])
                     </div>
                 @endif
 
                 <div class="card">
-                    <h3><i class="zmdi zmdi-{{ $signedIn ? 'eye' : 'star-circle' }}"></i> {{ trans('entities.' . ($signedIn ? 'my_recently_viewed' : 'books_recent')) }}</h3>
+                    <h3>@icon($signedIn ? 'view' : 'star-circle') {{ trans('entities.' . ($signedIn ? 'my_recently_viewed' : 'books_recent')) }}</h3>
                     @include('partials/entity-list', [
                         'entities' => $recents,
                         'style' => 'compact',
@@ -33,7 +33,7 @@
 
             <div class="col-sm-4">
                 <div class="card">
-                    <h3><i class="zmdi zmdi-file"></i> <a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
+                    <h3>@icon('file') <a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
                     <div id="recently-updated-pages">
                         @include('partials/entity-list', [
                         'entities' => $recentlyUpdatedPages,
@@ -46,7 +46,7 @@
 
             <div class="col-sm-4" id="recent-activity">
                 <div class="card">
-                    <h3><i class="zmdi zmdi-time"></i> {{ trans('entities.recent_activity') }}</h3>
+                    <h3>@icon('time') {{ trans('entities.recent_activity') }}</h3>
                     @include('partials/activity-list', ['activity' => $activity])
                 </div>
             </div>

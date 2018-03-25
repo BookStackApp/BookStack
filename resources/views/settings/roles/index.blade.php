@@ -9,7 +9,7 @@
     <div class="container small">
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-lock-open"></i> {{ trans('settings.role_user_roles') }}</h3>
+            <h3>@icon('lock-open') {{ trans('settings.role_user_roles') }}</h3>
             <div class="body">
                 <table class="table">
                     <tr>

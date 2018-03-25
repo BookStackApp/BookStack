@@ -2,10 +2,10 @@
 <div editor-toolbox class="floating-toolbox">
 
     <div class="tabs primary-background-light">
-        <span toolbox-toggle><i class="zmdi zmdi-caret-left-circle"></i></span>
-        <span toolbox-tab-button="tags" title="{{ trans('entities.page_tags') }}" class="active"><i class="zmdi zmdi-tag"></i></span>
+        <span toolbox-toggle>@icon('caret-left-circle')</span>
+        <span toolbox-tab-button="tags" title="{{ trans('entities.page_tags') }}" class="active">@icon('tag')</span>
         @if(userCan('attachment-create-all'))
-            <span toolbox-tab-button="files" title="{{ trans('entities.attachments') }}"><i class="zmdi zmdi-attachment"></i></span>
+            <span toolbox-tab-button="files" title="{{ trans('entities.attachments') }}">@icon('attach')</span>
         @endif
     </div>
 
@@ -17,7 +17,7 @@
 
             <draggable :options="{handle: '.handle'}" :list="tags" element="div">
                 <div v-for="(tag, i) in tags" :key="tag.key" class="card drag-card">
-                    <div class="handle" ><i class="zmdi zmdi-menu"></i></div>
+                    <div class="handle" >@icon('grip')</div>
                     <div>
                         <autosuggest url="{{ baseUrl('/ajax/tags/suggest/names') }}" type="name" class="outline" :name="getTagFieldName(i, 'name')"
                                      v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
@@ -26,7 +26,7 @@
                         <autosuggest url="{{ baseUrl('/ajax/tags/suggest/values') }}" type="value" class="outline" :name="getTagFieldName(i, 'value')"
                                      v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"/>
                     </div>
-                    <div v-show="tags.length !== 1" class="text-center drag-card-action text-neg" @click="removeTag(tag)"><i class="zmdi zmdi-close"></i></div>
+                    <div v-show="tags.length !== 1" class="text-center drag-card-action text-neg" @click="removeTag(tag)">@icon('close')</div>
                 </div>
             </draggable>
 
@@ -52,7 +52,7 @@
                         <div v-show="tab === 'list'">
                             <draggable style="width: 100%;" :options="{handle: '.handle'}" @change="fileSortUpdate" :list="files" element="div">
                                 <div v-for="(file, index) in files" :key="file.id" class="card drag-card">
-                                    <div class="handle"><i class="zmdi zmdi-menu"></i></div>
+                                    <div class="handle">@icon('grip')</div>
                                     <div class="padded">
                                         <a :href="getFileUrl(file)" target="_blank" v-text="file.name"></a>
                                         <div v-if="file.deleting">
@@ -61,8 +61,8 @@
                                             <span class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</span>
                                         </div>
                                     </div>
-                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary" style="padding: 0;"><i class="zmdi zmdi-edit"></i></div>
-                                    <div @click="deleteFile(file)" class="drag-card-action text-center text-neg" style="padding: 0;"><i class="zmdi zmdi-close"></i></div>
+                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary" style="padding: 0;">@icon('edit')</div>
+                                    <div @click="deleteFile(file)" class="drag-card-action text-center text-neg" style="padding: 0;">@icon('close')</div>
                                 </div>
                             </draggable>
                             <p class="small muted" v-if="files.length === 0">

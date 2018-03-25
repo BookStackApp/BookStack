@@ -14,6 +14,7 @@ return [
     'recent_activity' => 'Actividad reciente',
     'create_now' => 'Crear uno ahora',
     'revisions' => 'Revisiones',
+    'meta_revision' => 'Revisión #:revisionCount',
     'meta_created' => 'Creado el :timeLength',
     'meta_created_name' => 'Creado el  :timeLength por :user',
     'meta_updated' => 'Actualizado el :timeLength',
@@ -26,10 +27,10 @@ return [
     'no_pages_viewed' => 'Ud. no ha visto ninguna página',
     'no_pages_recently_created' => 'Ninguna página ha sido creada recientemente',
     'no_pages_recently_updated' => 'Ninguna página ha sido actualizada recientemente',
-    'export' => 'Export',
-    'export_html' => 'Contained Web File',
-    'export_pdf' => 'PDF File',
-    'export_text' => 'Plain Text File',
+    'export' => 'Exportar',
+    'export_html' => 'Archivo web contenido',
+    'export_pdf' => 'Archivo PDF',
+    'export_text' => 'Archivo de texto plano',
 
     /**
      * Permissions and restrictions
@@ -162,6 +163,7 @@ return [
     'pages_md_preview' => 'Previsualizar',
     'pages_md_insert_image' => 'Insertar Imagen',
     'pages_md_insert_link' => 'Insertar link de entidad',
+    'pages_md_insert_drawing' => 'Insertar Dibujo',
     'pages_not_in_chapter' => 'La página no esá en el capítulo',
     'pages_move' => 'Mover página',
     'pages_move_success' => 'Página movida a ":parentName"',

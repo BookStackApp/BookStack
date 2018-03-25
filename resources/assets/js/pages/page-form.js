@@ -293,7 +293,7 @@ function drawIoPlugin() {
 
         editor.addButton('drawio', {
             tooltip: 'Drawing',
-            image: window.baseUrl('/system_images/drawing.svg'),
+            image: window.baseUrl('/icon/drawing.svg?color=000000'),
             cmd: 'drawio'
         });
 
@@ -350,8 +350,7 @@ if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') ==
 module.exports = {
     selector: '#html-editor',
     content_css: [
-        window.baseUrl('/css/styles.css'),
-        window.baseUrl('/libs/material-design-iconic-font/css/material-design-iconic-font.min.css')
+        window.baseUrl('/dist/styles.css'),
     ],
     branding: false,
     body_class: 'page-content',

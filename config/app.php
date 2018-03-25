@@ -4,11 +4,11 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
-    'editor' => env('APP_EDITOR', 'html'),
-
     'views' => [
         'books' => env('APP_VIEWS_BOOKS', 'list')
     ],
+
+    'allow_content_scripts' => env('ALLOW_CONTENT_SCRIPTS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -150,8 +150,6 @@ return [
          */
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
 
 
@@ -166,7 +164,6 @@ return [
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
         BookStack\Providers\CustomFacadeProvider::class,
-
     ],
 
     /*
@@ -224,7 +221,6 @@ return [
         'ImageTool' => Intervention\Image\Facades\Image::class,
         'DomPDF' => Barryvdh\DomPDF\Facade::class,
         'SnappyPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
         /**
          * Custom

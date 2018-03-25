@@ -11,7 +11,7 @@
     <div class="container small" ng-non-bindable>
         <p>&nbsp;</p>
         <div class="card">
-            <h3><i class="zmdi zmdi-delete"></i> {{ $page->draft ? trans('entities.pages_delete_draft') : trans('entities.pages_delete') }}</h3>
+            <h3>@icon('delete') {{ $page->draft ? trans('entities.pages_delete_draft') : trans('entities.pages_delete') }}</h3>
             <div class="body">
                 <p class="text-neg">{{ $page->draft ? trans('entities.pages_delete_draft_confirm'): trans('entities.pages_delete_confirm') }}</p>
 

@@ -136,6 +136,7 @@ class ImageController extends Controller
             return response($e->getMessage(), 500);
         }
 
+
         return response()->json($image);
     }
 

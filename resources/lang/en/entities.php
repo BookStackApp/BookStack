@@ -245,6 +245,7 @@ return [
      */
     'comment' => 'Comment',
     'comments' => 'Comments',
+    'comment_add' => 'Add Comment',
     'comment_placeholder' => 'Leave a comment here',
     'comment_count' => '{0} No Comments|{1} 1 Comment|[2,*] :count Comments',
     'comment_save' => 'Save Comment',

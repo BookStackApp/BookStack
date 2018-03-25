@@ -70,7 +70,7 @@ class PageDraftTest extends BrowserKitTest
         $book = \BookStack\Book::first();
         $this->asAdmin()->visit('/')
             ->dontSeeInElement('#recent-drafts', 'New Page')
-            ->visit($book->getUrl() . '/page/create')
+            ->visit($book->getUrl() . '/create-page')
             ->visit('/')
             ->seeInElement('#recent-drafts', 'New Page');
     }
@@ -82,7 +82,7 @@ class PageDraftTest extends BrowserKitTest
         $newUser = $this->getEditor();
 
         $this->actingAs($newUser)->visit('/')
-            ->visit($book->getUrl() . '/page/create')
+            ->visit($book->getUrl() . '/create-page')
             ->visit($chapter->getUrl() . '/create-page')
             ->visit($book->getUrl())
             ->seeInElement('.page-list', 'New Page');

@@ -5,7 +5,15 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 class Entity extends Ownable
 {
 
+    /**
+     * @var string - Name of property where the main text content is found
+     */
     public $textField = 'description';
+
+    /**
+     * @var float - Multiplier for search indexing.
+     */
+    public $searchFactor = 1.0;
 
     /**
      * Compares this entity to another given entity.
@@ -193,4 +201,5 @@ class Entity extends Ownable
     {
         return '/';
     }
+
 }
