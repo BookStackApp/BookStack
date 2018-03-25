@@ -5,7 +5,7 @@ Homestead.yaml
 .idea
 npm-debug.log
 yarn-error.log
-/public/dist
+/public/dist/*.map
 /public/plugins
 /public/css/*.map
 /public/js/*.map
