@@ -36,6 +36,8 @@ Project maintainers should generally follow these additional standards:
 
 * Avoid using a negative or harsh tone in communication, Even if the other party
 is being negative themselves.
+* When providing criticism, try to make it constructive to lead the other person
+down the correct path.
 * Keep the [project definition](https://github.com/BookStackApp/BookStack#project-definition)
 in mind when deciding what's in scope of the Project.
 
