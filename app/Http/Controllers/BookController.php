@@ -72,7 +72,7 @@ class BookController extends Controller
     {
         $this->checkPermission('book-create-all');
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|alpha_dash|notIn:create|max:255',
             'description' => 'string|max:1000'
         ]);
         $book = $this->entityRepo->createFromInput('book', $request->all());
