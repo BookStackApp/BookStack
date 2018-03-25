@@ -225,7 +225,6 @@ class ImageRepo
         try {
             return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
         } catch (\Exception $exception) {
-            dd($exception);
             return null;
         }
     }

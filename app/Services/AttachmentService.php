@@ -14,10 +14,6 @@ class AttachmentService extends UploadService
      */
     protected function getStorage()
     {
-        if ($this->storageInstance !== null) {
-            return $this->storageInstance;
-        }
-
         $storageType = config('filesystems.default');
 
         // Override default location if set to local public to ensure not visible.
@@ -25,9 +21,7 @@ class AttachmentService extends UploadService
             $storageType = 'local_secure';
         }
 
-        $this->storageInstance = $this->fileSystem->disk($storageType);
-
-        return $this->storageInstance;
+        return $this->fileSystem->disk($storageType);
     }
 
     /**
