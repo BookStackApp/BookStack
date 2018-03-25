@@ -193,7 +193,7 @@
 
 @section('body')
 
-    <div class="container small">
+    <div class="container small" v-pre>
         <input type="hidden" name="searchTerm" value="{{$searchTerm}}">
 
         <h1>{{ trans('entities.search_results') }}</h1>
