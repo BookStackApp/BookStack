@@ -310,3 +310,13 @@
 .comment-editor .CodeMirror, .comment-editor .CodeMirror-scroll {
   min-height: 175px;
 }
+
+/* FIXME - Ugly hack to modify the media plugin for TinyMCE */
+.mce-floatpanel[aria-label="Insert/edit media"] {
+	.mce-open {
+		display: none;
+	}
+	.mce-tab:last-of-type {
+		display: none;
+	}
+}
