@@ -192,7 +192,8 @@ class ImageService extends UploadService
      * @param Image $image
      * @return boolean
      */
-    protected function isGif(Image $image) {
+    protected function isGif(Image $image)
+    {
         return strtolower(pathinfo($this->getPath($image), PATHINFO_EXTENSION)) === 'gif';
     }
 

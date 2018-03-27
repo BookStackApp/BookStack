@@ -201,5 +201,4 @@ class Entity extends Ownable
     {
         return '/';
     }
-
 }
