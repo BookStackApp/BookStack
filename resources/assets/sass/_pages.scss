@@ -10,6 +10,14 @@
     flex: 1;
     flex-direction: column;
   }
+
+  .mce-tinymce {
+	box-shadow: none;
+  }
+
+  .mce-top-part::before {
+    box-shadow: none;
+  }
 }
 
 .draft-notification {
@@ -313,10 +321,7 @@
 
 /* FIXME - Ugly hack to modify the media plugin for TinyMCE */
 .mce-floatpanel[aria-label="Insert/edit media"] {
-	.mce-open {
-		display: none;
-	}
-	.mce-tab:last-of-type {
-		display: none;
-	}
+  .mce-open {
+    display: none;
+  }
 }
