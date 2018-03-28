@@ -12,7 +12,9 @@ const props = ['placeholder', 'uploadUrl', 'uploadedTo'];
 function mounted() {
    let container = this.$el;
    let _this = this;
-   new DropZone(container, {
+   this._dz = new DropZone(container, {
+	addRemoveLinks: true,
+	dictRemoveFile: trans('components.image_upload_remove'),
         url: function() {
             return _this.uploadUrl;
         },
@@ -35,26 +37,33 @@ function mounted() {
 
             dz.on('error', function (file, errorMessage, xhr) {
                 _this.$emit('error', {file, errorMessage, xhr});
-                console.log(errorMessage);
-                console.log(xhr);
+
                 function setMessage(message) {
                     $(file.previewElement).find('[data-dz-errormessage]').text(message);
                 }
 
-                if (xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
-                if (errorMessage.file) setMessage(errorMessage.file[0]);
+                if (xhr && xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
+                else if (errorMessage.file) setMessage(errorMessage.file);
+
             });
         }
    });
 }
 
 function data() {
-    return {}
+    return {};
 }
+
+const methods = {
+    onClose: function () {
+        this._dz.removeAllFiles(true);
+    }
+};
 
 module.exports = {
     template,
     props,
     mounted,
     data,
+    methods
 };

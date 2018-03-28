@@ -40,13 +40,12 @@ class SearchController extends Controller
         $nextPageLink = baseUrl('/search?term=' . urlencode($searchTerm) . '&page=' . ($page+1));
 
         $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
-        $hasNextPage = $this->searchService->searchEntities($searchTerm, 'all', $page+1, 20)['count'] > 0;
 
         return view('search/all', [
             'entities'   => $results['results'],
             'totalResults' => $results['total'],
             'searchTerm' => $searchTerm,
-            'hasNextPage' => $hasNextPage,
+            'hasNextPage' => $results['has_more'],
             'nextPageLink' => $nextPageLink
         ]);
     }

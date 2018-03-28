@@ -2,6 +2,7 @@
 
 class Book extends Entity
 {
+    public $searchFactor = 2;
 
     protected $fillable = ['name', 'description', 'image_id'];
 

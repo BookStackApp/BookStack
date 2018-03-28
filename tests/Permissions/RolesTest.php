@@ -214,12 +214,12 @@ class RolesTest extends BrowserKitTest
     public function test_books_create_all_permissions()
     {
         $this->checkAccessPermission('book-create-all', [
-            '/books/create'
+            '/create-book'
         ], [
             '/books' => 'Create New Book'
         ]);
 
-        $this->visit('/books/create')
+        $this->visit('/create-book')
             ->type('test book', 'name')
             ->type('book desc', 'description')
             ->press('Save Book')
@@ -293,40 +293,38 @@ class RolesTest extends BrowserKitTest
     {
         $book = \BookStack\Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
-        $baseUrl = $ownBook->getUrl() . '/chapter';
         $this->checkAccessPermission('chapter-create-own', [
-            $baseUrl . '/create'
+            $ownBook->getUrl('/create-chapter')
         ], [
             $ownBook->getUrl() => 'New Chapter'
         ]);
 
-        $this->visit($baseUrl . '/create')
+        $this->visit($ownBook->getUrl('/create-chapter'))
             ->type('test chapter', 'name')
             ->type('chapter desc', 'description')
             ->press('Save Chapter')
-            ->seePageIs($baseUrl . '/test-chapter');
+            ->seePageIs($ownBook->getUrl('/chapter/test-chapter'));
 
         $this->visit($book->getUrl())
             ->dontSeeInElement('.action-buttons', 'New Chapter')
-            ->visit($book->getUrl() . '/chapter/create')
+            ->visit($book->getUrl('/create-chapter'))
             ->seePageIs('/');
     }
 
     public function test_chapter_create_all_permissions()
     {
         $book = \BookStack\Book::take(1)->get()->first();
-        $baseUrl = $book->getUrl() . '/chapter';
         $this->checkAccessPermission('chapter-create-all', [
-            $baseUrl . '/create'
+            $book->getUrl('/create-chapter')
         ], [
             $book->getUrl() => 'New Chapter'
         ]);
 
-        $this->visit($baseUrl . '/create')
+        $this->visit($book->getUrl('/create-chapter'))
             ->type('test chapter', 'name')
             ->type('chapter desc', 'description')
             ->press('Save Chapter')
-            ->seePageIs($baseUrl . '/test-chapter');
+            ->seePageIs($book->getUrl('/chapter/test-chapter'));
     }
 
     public function test_chapter_edit_own_permission()
@@ -403,10 +401,8 @@ class RolesTest extends BrowserKitTest
         $ownBook = $entities['book'];
         $ownChapter = $entities['chapter'];
 
-        $baseUrl = $ownBook->getUrl() . '/page';
-
-        $createUrl = $baseUrl . '/create';
-        $createUrlChapter = $ownChapter->getUrl() . '/create-page';
+        $createUrl = $ownBook->getUrl('/create-page');
+        $createUrlChapter = $ownChapter->getUrl('/create-page');
         $accessUrls = [$createUrl, $createUrlChapter];
 
         foreach ($accessUrls as $url) {
@@ -427,15 +423,15 @@ class RolesTest extends BrowserKitTest
             $this->seePageIs($expectedUrl);
         }
 
-        $this->visit($baseUrl . '/create')
+        $this->visit($createUrl)
             ->type('test page', 'name')
             ->type('page desc', 'html')
             ->press('Save Page')
-            ->seePageIs($baseUrl . '/test-page');
+            ->seePageIs($ownBook->getUrl('/page/test-page'));
 
         $this->visit($book->getUrl())
             ->dontSeeInElement('.action-buttons', 'New Page')
-            ->visit($book->getUrl() . '/page/create')
+            ->visit($book->getUrl() . '/create-page')
             ->seePageIs('/');
         $this->visit($chapter->getUrl())
             ->dontSeeInElement('.action-buttons', 'New Page')
@@ -448,9 +444,9 @@ class RolesTest extends BrowserKitTest
         $book = \BookStack\Book::take(1)->get()->first();
         $chapter = \BookStack\Chapter::take(1)->get()->first();
         $baseUrl = $book->getUrl() . '/page';
-        $createUrl = $baseUrl . '/create';
+        $createUrl = $book->getUrl('/create-page');
 
-        $createUrlChapter = $chapter->getUrl() . '/create-page';
+        $createUrlChapter = $chapter->getUrl('/create-page');
         $accessUrls = [$createUrl, $createUrlChapter];
 
         foreach ($accessUrls as $url) {
@@ -471,17 +467,17 @@ class RolesTest extends BrowserKitTest
             $this->seePageIs($expectedUrl);
         }
 
-        $this->visit($baseUrl . '/create')
+        $this->visit($createUrl)
             ->type('test page', 'name')
             ->type('page desc', 'html')
             ->press('Save Page')
-            ->seePageIs($baseUrl . '/test-page');
+            ->seePageIs($book->getUrl('/page/test-page'));
 
-        $this->visit($chapter->getUrl() . '/create-page')
+        $this->visit($chapter->getUrl('/create-page'))
             ->type('new test page', 'name')
             ->type('page desc', 'html')
             ->press('Save Page')
-            ->seePageIs($baseUrl . '/new-test-page');
+            ->seePageIs($book->getUrl('/page/new-test-page'));
     }
 
     public function test_page_edit_own_permission()

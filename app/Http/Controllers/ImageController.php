@@ -120,7 +120,7 @@ class ImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => 'required|is_image'
+            'file' => 'is_image'
         ]);
 
         if (!$this->imageRepo->isValidType($type)) {
@@ -135,6 +135,7 @@ class ImageController extends Controller
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);
         }
+
 
         return response()->json($image);
     }

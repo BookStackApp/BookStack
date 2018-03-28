@@ -21,7 +21,7 @@ class ImageTest extends TestCase
      */
     protected function getTestImage($fileName)
     {
-        return new \Illuminate\Http\UploadedFile($this->getTestImageFilePath(), $fileName, 'image/jpeg', 5238);
+        return new \Illuminate\Http\UploadedFile($this->getTestImageFilePath(), $fileName, 'image/png', 5238);
     }
 
     /**
@@ -86,7 +86,42 @@ class ImageTest extends TestCase
             'updated_by' => $admin->id,
             'name' => $imageName
         ]);
+    }
 
+    public function test_secure_images_uploads_to_correct_place()
+    {
+        config()->set('filesystems.default', 'local_secure');
+        $this->asEditor();
+        $galleryFile = $this->getTestImage('my-secure-test-upload');
+        $page = Page::first();
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload');
+
+        $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $upload->assertStatus(200);
+
+        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: '. $expectedPath);
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
+    public function test_system_images_remain_public()
+    {
+        config()->set('filesystems.default', 'local_secure');
+        $this->asEditor();
+        $galleryFile = $this->getTestImage('my-system-test-upload');
+        $page = Page::first();
+        $expectedPath = public_path('uploads/images/system/' . Date('Y-m-M') . '/my-system-test-upload');
+
+        $upload = $this->call('POST', '/images/system/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $upload->assertStatus(200);
+
+        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: '. $expectedPath);
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
     }
 
     public function test_image_delete()

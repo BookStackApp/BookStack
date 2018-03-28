@@ -5,7 +5,7 @@
         <div class="breadcrumbs">
             <a href="{{ baseUrl('/books') }}" class="text-button">@icon('book'){{ trans('entities.books') }}</a>
             <span class="sep">&raquo;</span>
-            <a href="{{ baseUrl('/books/create') }}" class="text-button">@icon('add'){{ trans('entities.books_create') }}</a>
+            <a href="{{ baseUrl('/create-book') }}" class="text-button">@icon('add'){{ trans('entities.books_create') }}</a>
         </div>
     </div>
 @stop

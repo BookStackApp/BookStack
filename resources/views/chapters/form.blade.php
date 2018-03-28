@@ -12,6 +12,6 @@
 </div>
 
 <div class="form-group text-right">
-    <a href="{{ back()->getTargetUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+    <a href="{{ isset($chapter) ? $chapter->getUrl() : $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button pos">{{ trans('entities.chapters_save') }}</button>
 </div>

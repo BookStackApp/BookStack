@@ -109,21 +109,21 @@ class RestrictionsTest extends BrowserKitTest
 
         $this->setEntityRestrictions($book, ['view', 'delete', 'update']);
 
-        $this->forceVisit($bookUrl . '/chapter/create')
+        $this->forceVisit($bookUrl . '/create-chapter')
             ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookUrl . '/page/create')
+        $this->forceVisit($bookUrl . '/create-page')
             ->see('You do not have permission')->seePageIs('/');
         $this->visit($bookUrl)->dontSeeInElement('.action-buttons', 'New Page')
             ->dontSeeInElement('.action-buttons', 'New Chapter');
 
         $this->setEntityRestrictions($book, ['view', 'create']);
 
-        $this->visit($bookUrl . '/chapter/create')
+        $this->visit($bookUrl . '/create-chapter')
             ->type('test chapter', 'name')
             ->type('test description for chapter', 'description')
             ->press('Save Chapter')
             ->seePageIs($bookUrl . '/chapter/test-chapter');
-        $this->visit($bookUrl . '/page/create')
+        $this->visit($bookUrl . '/create-page')
             ->type('test page', 'name')
             ->type('test content', 'html')
             ->press('Save Page')
@@ -454,21 +454,21 @@ class RestrictionsTest extends BrowserKitTest
 
         $this->setEntityRestrictions($book, ['view', 'delete', 'update']);
 
-        $this->forceVisit($bookUrl . '/chapter/create')
+        $this->forceVisit($bookUrl . '/create-chapter')
             ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookUrl . '/page/create')
+        $this->forceVisit($bookUrl . '/create-page')
             ->see('You do not have permission')->seePageIs('/');
         $this->visit($bookUrl)->dontSeeInElement('.action-buttons', 'New Page')
             ->dontSeeInElement('.action-buttons', 'New Chapter');
 
         $this->setEntityRestrictions($book, ['view', 'create']);
 
-        $this->visit($bookUrl . '/chapter/create')
+        $this->visit($bookUrl . '/create-chapter')
             ->type('test chapter', 'name')
             ->type('test description for chapter', 'description')
             ->press('Save Chapter')
             ->seePageIs($bookUrl . '/chapter/test-chapter');
-        $this->visit($bookUrl . '/page/create')
+        $this->visit($bookUrl . '/create-page')
             ->type('test page', 'name')
             ->type('test content', 'html')
             ->press('Save Page')
