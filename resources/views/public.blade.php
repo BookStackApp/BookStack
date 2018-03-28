@@ -14,7 +14,6 @@
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Scripts -->
-    <script src="{{ baseUrl("/libs/jquery/jquery.min.js?version=2.1.4") }}"></script>
     @include('partials/custom-styles')
 
     <!-- Custom user content -->

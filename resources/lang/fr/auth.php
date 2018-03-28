@@ -18,6 +18,8 @@ return [
      */
     'sign_up' => "S'inscrire",
     'log_in' => 'Se connecter',
+    'log_in_with' => 'Se connecter avec :socialDriver',
+    'sign_up_with' => 'S\'inscrire avec :socialDriver',
     'logout' => 'Se déconnecter',
 
     'name' => 'Nom',

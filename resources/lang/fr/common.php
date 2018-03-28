@@ -10,6 +10,7 @@ return [
     'save' => 'Enregistrer',
     'continue' => 'Continuer',
     'select' => 'Sélectionner',
+    'more' => 'Montrer plus',
 
     /**
      * Form Labels
@@ -29,11 +30,13 @@ return [
     'edit' => 'Editer',
     'sort' => 'Trier',
     'move' => 'Déplacer',
+    'reply' => 'Répondre',
     'delete' => 'Supprimer',
     'search' => 'Chercher',
     'search_clear' => 'Réinitialiser la recherche',
     'reset' => 'Réinitialiser',
     'remove' => 'Enlever',
+    'add' => 'Ajouter',
 
 
     /**
@@ -45,6 +48,9 @@ return [
     'back_to_top' => 'Retour en haut',
     'toggle_details' => 'Afficher les détails',
     'toggle_thumbnails' => 'Afficher les vignettes',
+    'details' => 'Détails',
+    'grid_view' => 'Vue en grille',
+    'list_view' => 'Vue en liste',
 
     /**
      * Header

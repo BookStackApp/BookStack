@@ -32,6 +32,23 @@ class ImageService extends UploadService
     }
 
     /**
+     * Get the storage that will be used for storing images.
+     * @param string $type
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
+    protected function getStorage($type = '')
+    {
+        $storageType = config('filesystems.default');
+
+        // Override default location if set to local public to ensure not visible.
+        if ($type === 'system' && $storageType === 'local_secure') {
+            $storageType = 'local';
+        }
+
+        return $this->fileSystem->disk($storageType);
+    }
+
+    /**
      * Saves a new image from an upload.
      * @param UploadedFile $uploadedFile
      * @param  string $type
@@ -119,7 +136,7 @@ class ImageService extends UploadService
      */
     private function saveNew($imageName, $imageData, $type, $uploadedTo = 0)
     {
-        $storage = $this->getStorage();
+        $storage = $this->getStorage($type);
         $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
@@ -171,6 +188,16 @@ class ImageService extends UploadService
     }
 
     /**
+     * Checks if the image is a gif. Returns true if it is, else false.
+     * @param Image $image
+     * @return boolean
+     */
+    protected function isGif(Image $image)
+    {
+        return strtolower(pathinfo($this->getPath($image), PATHINFO_EXTENSION)) === 'gif';
+    }
+
+    /**
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
@@ -184,6 +211,10 @@ class ImageService extends UploadService
      */
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
+        if ($keepRatio && $this->isGif($image)) {
+            return $this->getPublicUrl($this->getPath($image));
+        }
+
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
         $imagePath = $this->getPath($image);
         $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
@@ -192,7 +223,7 @@ class ImageService extends UploadService
             return $this->getPublicUrl($thumbFilePath);
         }
 
-        $storage = $this->getStorage();
+        $storage = $this->getStorage($image->type);
         if ($storage->exists($thumbFilePath)) {
             return $this->getPublicUrl($thumbFilePath);
         }
@@ -274,8 +305,9 @@ class ImageService extends UploadService
     /**
      * Save a gravatar image and set a the profile image for a user.
      * @param User $user
-     * @param int  $size
+     * @param int $size
      * @return mixed
+     * @throws Exception
      */
     public function saveUserGravatar(User $user, $size = 500)
     {

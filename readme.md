@@ -17,7 +17,9 @@ A platform for storing and organising information and documentation. General inf
 
 BookStack is an opinionated wiki system that provides a pleasant and simple out of the box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
 
-BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above. 
+BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
+
+In regards to development philosophy, BookStack has a relaxed, open & positive approach. Put simply, At the end of the day this is free software developed and maintained by people donating their own free time.
 
 ## Development & Testing
 
@@ -25,17 +27,17 @@ All development on BookStack is currently done on the master branch. When it's t
 
 * [Node.js](https://nodejs.org/en/) v6.9+
 
-SASS is used to help the CSS development and the JavaScript is run through browserify/babel to allow for writing ES6 code. Both of these are done using gulp. To run the build task you can use the following commands:
+SASS is used to help the CSS development and the JavaScript is run through babel to allow for writing ES6 code. This is done using webpack. To run the build task you can use the following commands:
 
 ``` bash
 # Build assets for development
-npm run-script build
+npm run build
 
 # Build and minify assets for production
-npm run-script production
+npm run production
 
 # Build for dev (With sourcemaps) and watch for changes
-npm run-script dev
+npm run dev
 ```
 
 BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. To use you will need PHPUnit installed and accessible via command line. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the following database name, user name and password defined as `bookstack-test`. You will have to create that database and credentials before testing.
@@ -65,14 +67,16 @@ php resources/lang/check.php <lang>
 php resources/lang/check.php fr
 php resources/lang/check.php pt_BR
 ```
- 
+
 Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
- 
-## Contributing
+
+## Contributing & Maintenence
 
 Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
 
-### Standards
+The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
+
+### Code Standards
 
 PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
 
@@ -82,9 +86,9 @@ Pull requests are very welcome. If the scope of your pull request is large it ma
 
 Pull requests should be created from the `master` branch and should be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
 
-If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly. 
+If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
-## Website, Docs & Blog 
+## Website, Docs & Blog
 
 The website project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
 
@@ -93,6 +97,8 @@ The website project docs & Blog can be found in the [BookStackApp/website](https
 The BookStack source is provided under the MIT License.
 
 ## Attribution
+
+The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
 
 These are the great open-source projects used to help build BookStack:
 

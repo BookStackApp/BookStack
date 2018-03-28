@@ -1,10 +1,10 @@
 <div id="image-manager" image-type="{{ $imageType }}" uploaded-to="{{ $uploaded_to or 0 }}">
-    <div overlay v-cloak>
+    <div overlay v-cloak @click="hide()">
         <div class="popup-body" @click.stop="">
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
-                <button class="overlay-close neg corner-button button">x</button>
+                <button class="overlay-close neg corner-button button" @click="hide()">x</button>
             </div>
 
             <div class="flex-fill image-manager-body">
@@ -79,7 +79,7 @@
 
                         </div>
 
-                        <dropzone placeholder="{{ trans('components.image_dropzone') }}" :upload-url="uploadUrl" :uploaded-to="uploadedTo" @success="uploadSuccess"></dropzone>
+                        <dropzone ref="dropzone" placeholder="{{ trans('components.image_dropzone') }}" :upload-url="uploadUrl" :uploaded-to="uploadedTo" @success="uploadSuccess"></dropzone>
 
                     </div>
                 </div>
