@@ -237,6 +237,9 @@ input:checked + .toggle-switch {
   &.open .collapse-title label:before {
     transform: rotate(90deg);
   }
+  &+.form-group[collapsible] {
+    margin-top: -($-s + 1);
+  }
 }
 
 .inline-input-style {

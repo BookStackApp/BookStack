@@ -492,14 +492,19 @@ class EntityRepo
     public function createFromInput($type, $input = [], $book = false)
     {
         $isChapter = strtolower($type) === 'chapter';
-        $entity = $this->getEntity($type)->newInstance($input);
-        $entity->slug = $this->findSuitableSlug($type, $entity->name, false, $isChapter ? $book->id : false);
-        $entity->created_by = user()->id;
-        $entity->updated_by = user()->id;
-        $isChapter ? $book->chapters()->save($entity) : $entity->save();
-        $this->permissionService->buildJointPermissionsForEntity($entity);
-        $this->searchService->indexEntity($entity);
-        return $entity;
+        $entityModel = $this->getEntity($type)->newInstance($input);
+        $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $isChapter ? $book->id : false);
+        $entityModel->created_by = user()->id;
+        $entityModel->updated_by = user()->id;
+        $isChapter ? $book->chapters()->save($entityModel) : $entityModel->save();
+
+        if (isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
+        }
+
+        $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $this->searchService->indexEntity($entityModel);
+        return $entityModel;
     }
 
     /**
@@ -518,6 +523,11 @@ class EntityRepo
         $entityModel->fill($input);
         $entityModel->updated_by = user()->id;
         $entityModel->save();
+
+        if (isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
+        }
+
         $this->permissionService->buildJointPermissionsForEntity($entityModel);
         $this->searchService->indexEntity($entityModel);
         return $entityModel;

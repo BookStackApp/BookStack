@@ -11,23 +11,32 @@
 </div>
 
 <div class="form-group" collapsible id="logo-control">
-        <div class="collapse-title text-primary" collapsible-trigger>
-            <label for="user-avatar">{{ trans('common.cover_image') }}</label>
-        </div>
-        <div class="collapse-content" collapsible-content>
-            <p class="small">{{ trans('common.cover_image_description') }}</p>
+    <div class="collapse-title text-primary" collapsible-trigger>
+        <label for="user-avatar">{{ trans('common.cover_image') }}</label>
+    </div>
+    <div class="collapse-content" collapsible-content>
+        <p class="small">{{ trans('common.cover_image_description') }}</p>
 
-            @include('components.image-picker', [
-                'resizeHeight' => '512',
-                'resizeWidth' => '512',
-                'showRemove' => false,
-                'defaultImage' => baseUrl('/book_default_cover.png'),
-                'currentImage' => @isset($model) ? $model->getBookCover() : baseUrl('/book_default_cover.png') ,
-                'currentId' => @isset($model) ? $model->image_id : 0,
-                'name' => 'image_id',
-                'imageClass' => 'cover'
-            ])
-        </div>
+        @include('components.image-picker', [
+            'resizeHeight' => '512',
+            'resizeWidth' => '512',
+            'showRemove' => false,
+            'defaultImage' => baseUrl('/book_default_cover.png'),
+            'currentImage' => @isset($model) ? $model->getBookCover() : baseUrl('/book_default_cover.png') ,
+            'currentId' => @isset($model) ? $model->image_id : 0,
+            'name' => 'image_id',
+            'imageClass' => 'cover'
+        ])
+    </div>
+</div>
+
+<div class="form-group" collapsible id="logo-control">
+    <div class="collapse-title text-primary" collapsible-trigger>
+        <label for="user-avatar">{{ trans('entities.book_tags') }}</label>
+    </div>
+    <div class="collapse-content" collapsible-content>
+        @include('components.tag-manager', ['entity' => isset($book)?$book:null, 'entityType' => 'chapter'])
+    </div>
 </div>
 
 <div class="form-group text-right">
