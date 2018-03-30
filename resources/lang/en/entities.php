@@ -200,8 +200,10 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Page Tags',
+    'chapter_tags' => 'Chapter Tags',
+    'book_tags' => 'Book Tags',
     'tag' => 'Tag',
-    'tags' =>  '',
+    'tags' =>  'Tags',
     'tag_value' => 'Tag Value (Optional)',
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Add another tag',

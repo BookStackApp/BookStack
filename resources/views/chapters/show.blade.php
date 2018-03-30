@@ -91,6 +91,15 @@
         </div>
     </div>
 
+    @if($chapter->tags->count() > 0)
+        <div class="card tag-display">
+            <h3>@icon('tag') {{ trans('entities.chapter_tags') }}</h3>
+            <div class="body">
+                @include('components.tag-list', ['entity' => $chapter])
+            </div>
+        </div>
+    @endif
+
     @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 @stop
 

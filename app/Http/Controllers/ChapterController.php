@@ -107,17 +107,14 @@ class ChapterController extends Controller
      * @param          $bookSlug
      * @param          $chapterSlug
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
     public function update(Request $request, $bookSlug, $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
-        if ($chapter->name !== $request->get('name')) {
-            $chapter->slug = $this->entityRepo->findSuitableSlug('chapter', $request->get('name'), $chapter->id, $chapter->book->id);
-        }
-        $chapter->fill($request->all());
-        $chapter->updated_by = user()->id;
-        $chapter->save();
+
+        $this->entityRepo->updateFromInput('chapter', $chapter, $request->all());
         Activity::add($chapter, 'chapter_update', $chapter->book->id);
         return redirect($chapter->getUrl());
     }

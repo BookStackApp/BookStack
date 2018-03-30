@@ -226,6 +226,7 @@
     text-align: center;
     justify-content: center;
     width: 28px;
+    flex-grow: 0;
     padding-left: $-xs;
     padding-right: $-xs;
     &:hover {
@@ -237,6 +238,7 @@
   }
   > div .outline input {
     margin: $-s 0;
+    width: 100%;
   }
   > div.padded {
     padding: $-s 0 !important;
@@ -251,6 +253,7 @@
   > div {
     padding: 0 $-s;
     max-width: 80%;
+    flex: 1;
   }
 }
 
