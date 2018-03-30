@@ -784,7 +784,9 @@ class EntityRepo
         $scriptSearchRegex = '/<script.*?>.*?<\/script>/ms';
         $matches = [];
         preg_match_all($scriptSearchRegex, $html, $matches);
-        if (count($matches) === 0) return $html;
+        if (count($matches) === 0) {
+            return $html;
+        }
 
         foreach ($matches[0] as $match) {
             $html = str_replace($match, htmlentities($match), $html);
