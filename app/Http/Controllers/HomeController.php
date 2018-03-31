@@ -118,4 +118,20 @@ class HomeController extends Controller
     {
         return view('partials/custom-head-content');
     }
+
+    /**
+     * Show the view for /robots.txt
+     * @return $this
+     */
+    public function getRobots()
+    {
+        $sitePublic = setting('app-public', false);
+        $allowRobots = config('app.allow_robots');
+        if ($allowRobots === null) {
+            $allowRobots = $sitePublic;
+        }
+        return response()
+            ->view('robots', ['allowRobots' => $allowRobots])
+            ->header('Content-Type', 'text/plain');
+    }
 }
