@@ -1,4 +1,4 @@
-const moment = require('moment');
+import * as Dates from "../services/dates";
 
 let data = {
     terms: '',
@@ -153,7 +153,7 @@ let methods = {
     },
 
     enableDate(optionName) {
-        this.search.dates[optionName.toLowerCase()] = moment().format('YYYY-MM-DD');
+        this.search.dates[optionName.toLowerCase()] = Dates.getCurrentDay();
         this.dateChange(optionName);
     },
 

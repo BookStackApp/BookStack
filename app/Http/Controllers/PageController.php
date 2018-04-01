@@ -275,11 +275,10 @@ class PageController extends Controller
         $draft = $this->entityRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
 
         $updateTime = $draft->updated_at->timestamp;
-        $utcUpdateTimestamp = $updateTime + Carbon::createFromTimestamp(0)->offset;
         return response()->json([
             'status'    => 'success',
             'message'   => trans('entities.pages_edit_draft_save_at'),
-            'timestamp' => $utcUpdateTimestamp
+            'timestamp' => $updateTime
         ]);
     }
 

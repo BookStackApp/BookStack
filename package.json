@@ -3,6 +3,7 @@
   "scripts": {
     "build": "webpack",
     "production": "NODE_ENV=production webpack && rm -f ./public/dist/*styles.js",
+    "build-profile": "NODE_ENV=production webpack --profile --json > webpack-stats.json && rm -f ./public/dist/*styles.js",
     "dev": "npm-run-all --parallel watch livereload",
     "watch": "webpack --watch",
     "livereload": "livereload ./public/dist/",
@@ -34,7 +35,6 @@
     "jquery": "^3.3.1",
     "markdown-it": "^8.3.1",
     "markdown-it-task-lists": "^2.0.0",
-    "moment": "^2.21.0",
     "vue": "^2.2.6",
     "vuedraggable": "^2.14.1"
   },
