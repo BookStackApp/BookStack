@@ -4,7 +4,6 @@ import "./dom-polyfills"
 import jQuery from "jquery"
 window.jQuery = window.$ = jQuery;
 
-import "./pages/page-show"
 import Translations from "./translations"
 import vues from "./vues/vues"
 import components from "./components"
@@ -71,10 +70,6 @@ let translator = new Translations(window.translations);
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
 
-// Load vues and components
-vues();
-components();
-
 
 //Global jQuery Config & Extensions
 
@@ -131,3 +126,7 @@ if(navigator.userAgent.indexOf('MSIE')!==-1
     || navigator.userAgent.indexOf('Safari') !== -1){
     document.body.classList.add('flexbox-support');
 }
+
+// Load vues and components
+vues();
+components();

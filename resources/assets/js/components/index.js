@@ -17,6 +17,7 @@ let componentMapping = {
     'image-picker': require('./image-picker'),
     'collapsible': require('./collapsible'),
     'toggle-switch': require('./toggle-switch'),
+    'page-display': require('./page-display'),
 };
 
 window.components = {};

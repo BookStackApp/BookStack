@@ -126,7 +126,7 @@
 @stop
 
 @section('body')
-    <div class="page-content" ng-non-bindable>
+    <div class="page-content" page-display="{{ $page->id }}" ng-non-bindable>
 
         <div class="pointer-container" id="pointer">
             <div class="pointer anim" >
@@ -144,10 +144,4 @@
           @include('comments/comments', ['page' => $page])
       </div>
     @endif
-@stop
-
-@section('scripts')
-    <script>
-        setupPageShow({{$page->id}});
-    </script>
 @stop
