@@ -1,5 +1,5 @@
 import Clipboard from "clipboard";
-import Code from "../libs/code";
+import Code from "../services/code";
 
 class PageDisplay {
 

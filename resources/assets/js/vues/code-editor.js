@@ -1,4 +1,4 @@
-const codeLib = require('../libs/code');
+const codeLib = require('../services/code');
 
 const methods = {
     show() {

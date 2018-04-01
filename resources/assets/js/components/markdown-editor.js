@@ -1,8 +1,8 @@
 const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
-const code = require('../libs/code');
+const code = require('../services/code');
 
-const DrawIO = require('../libs/drawio');
+const DrawIO = require('../services/drawio');
 
 class MarkdownEditor {
 
