@@ -49,6 +49,8 @@ return [
     'toggle_details' => '顯示/隱藏詳細資訊',
     'toggle_thumbnails' => '顯示/隱藏縮圖',
     'details' => '詳細資訊',
+    'grid_view' => '縮圖檢視',
+    'list_view' => '清單撿視',
 
     /**
      * Header
