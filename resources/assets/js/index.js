@@ -12,6 +12,8 @@ import components from "./components"
 import Vue from "vue"
 import axios from "axios"
 
+import "./customHome";
+
 // Url retrieval function
 window.baseUrl = function(path) {
     let basePath = document.querySelector('meta[name="base-url"]').getAttribute('content');

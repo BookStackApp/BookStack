@@ -9,50 +9,40 @@
 @stop
 
 @section('body')
-
-    <div class="container" ng-non-bindable>
-        <div class="row">
-
-            <div class="col-sm-4">
-                @if(count($draftPages) > 0)
-                    <div id="recent-drafts" class="card">
-                        <h3>@icon('edit') {{ trans('entities.my_recent_drafts') }}</h3>
-                        @include('partials/entity-list', ['entities' => $draftPages, 'style' => 'compact'])
+    <div class="container ch-container" ng-non-bindable>
+            @if(count($books) > 0)
+                @foreach($books as $indexKey => $book)
+                    <div class="col-sm-4 ch-column">
+                        <div class="ch-panel">
+                            <a class="text-book entity-list-item-link d-block ch-text-book" href="{{$book->getUrl()}}">
+                                @icon('book')
+                                <span class="entity-list-item-name break-text">{{$book->name}}</span>
+                            </a>
+                            @foreach($chapters as $index => $chapter)
+                                @if ($chapter->book->id === $book->id)
+                                    <a class="text-chapter entity-list-item-link d-block" href="{{$chapter->getUrl()}}">
+                                        @icon('chapter')
+                                        {{ $chapter->name }}
+                                    </a>
+                                @endif
+                            @endforeach
+                            @foreach($pages as $index => $page)
+                                @if ($page->book->id === $book->id)
+                                <a class="text-page entity-list-item-link d-block" href="{{$page->getUrl()}}">
+                                    @icon('book')
+                                    {{ $page->name }}
+                                </a>
+                                @endif
+                            @endforeach  
+                        </div>               
                     </div>
-                @endif
-
-                <div class="card">
-                    <h3>@icon($signedIn ? 'view' : 'star-circle') {{ trans('entities.' . ($signedIn ? 'my_recently_viewed' : 'books_recent')) }}</h3>
-                    @include('partials/entity-list', [
-                        'entities' => $recents,
-                        'style' => 'compact',
-                        'emptyText' => $signedIn ? trans('entities.no_pages_viewed') : trans('entities.books_empty')
-                        ])
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="card">
-                    <h3>@icon('file') <a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
-                    <div id="recently-updated-pages">
-                        @include('partials/entity-list', [
-                        'entities' => $recentlyUpdatedPages,
-                        'style' => 'compact',
-                        'emptyText' => trans('entities.no_pages_recently_updated')
-                        ])
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4" id="recent-activity">
-                <div class="card">
-                    <h3>@icon('time') {{ trans('entities.recent_activity') }}</h3>
-                    @include('partials/activity-list', ['activity' => $activity])
-                </div>
-            </div>
-
-        </div>
+                    @if((++$indexKey % 3) == 0)
+                        <div class="clearfix"></div>
+                    @endif
+                @endforeach
+            @endif  
     </div>
+    
 
 
 @stop

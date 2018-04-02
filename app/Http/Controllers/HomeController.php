@@ -27,6 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $books = $this->entityRepo->getAll('book');
+        $pages = $this->entityRepo->getAll('page');
+        $chapters = $this->entityRepo->getAll('chapter');
         $activity = Activity::latest(10);
         $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
@@ -44,10 +47,9 @@ class HomeController extends Controller
 
         $view = $customHomepage ? 'home-custom' : 'home';
         return view($view, [
-            'activity' => $activity,
-            'recents' => $recents,
-            'recentlyUpdatedPages' => $recentlyUpdatedPages,
-            'draftPages' => $draftPages,
+            'books' => $books,
+            'pages' => $pages,
+            'chapters' => $chapters,
             'customHomepage' => $customHomepage
         ]);
     }

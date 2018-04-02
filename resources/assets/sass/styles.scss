@@ -16,6 +16,8 @@
 @import "lists";
 @import "pages";
 
+@import "customHome";
+
 [v-cloak] {
   display: none; opacity: 0;
   animation-name: none !important;
