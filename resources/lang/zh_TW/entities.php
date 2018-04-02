@@ -162,6 +162,7 @@ return [
     'pages_md_preview' => '預覽',
     'pages_md_insert_image' => '插入圖片',
     'pages_md_insert_link' => '插入連結',
+    'pages_md_insert_drawing' => '插入繪圖',
     'pages_not_in_chapter' => '本頁面不在某章節中',
     'pages_move' => '移動頁面',
     'pages_move_success' => '頁面已移動到「:parentName」',

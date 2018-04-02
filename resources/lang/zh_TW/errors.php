@@ -36,9 +36,11 @@ return [
     'cannot_create_thumbs' => '伺服器無法建立縮圖，請檢查您是否安裝了GD PHP外掛。',
     'server_upload_limit' => '上傳圖片時發生錯誤。',
     'image_upload_error' => '上傳圖片時發生錯誤',
+    'image_upload_type_error' => '上傳圖片類型錯誤',
 
     // Attachments
     'attachment_page_mismatch' => '附件更新期間的頁面不符合',
+    'attachment_not_found' => '沒有找到附件',
 
     // Pages
     'page_draft_autosave_fail' => '無法儲存草稿，確保您在儲存頁面之前已經連接到互聯網',

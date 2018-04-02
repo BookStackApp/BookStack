@@ -96,7 +96,7 @@ return [
     'users_external_auth_id' => '外部身份驗證ID',
     'users_password_warning' => '如果您想更改密碼，請填寫以下內容：',
     'users_system_public' => '此使用者代表進入您的App的任何訪客。它不能用於登入，而是自動分配。',
-    'users_books_view_type' => '圖書瀏覽佈局偏好',
+    //'users_books_view_type' => '圖書瀏覽佈局偏好',
     'users_delete' => '刪除使用者',
     'users_delete_named' => '刪除使用者 :userName',
     'users_delete_warning' => '這將從系統中完全刪除名為 \':userName\' 的使用者。',
