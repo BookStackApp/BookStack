@@ -41,7 +41,7 @@ $block-height: 170px;
     }
 
     &--opened {
-        max-height: $block-height * 3;
+        max-height: 2000px;
         z-index: 20;
 
         .ch-panel-more {
