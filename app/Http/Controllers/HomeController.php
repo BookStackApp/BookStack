@@ -27,14 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAll('book');
-        $pages = $this->entityRepo->getAll('page');
-        $chapters = $this->entityRepo->getAll('chapter');
-        $activity = Activity::latest(10);
-        $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
-        $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
-        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
+        $books = $this->entityRepo->getAll('book', false);
+        $pages = $this->entityRepo->getAll('page', false);
+
+        $chapters = $this->entityRepo->getAll('chapter', false);
 
         // Custom homepage
         $customHomepage = false;

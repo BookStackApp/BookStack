@@ -18,6 +18,7 @@
                                 @icon('book')
                                 <span class="entity-list-item-name break-text">{{$book->name}}</span>
                             </a>
+
                             @foreach($chapters as $index => $chapter)
                                 @if ($chapter->book->id === $book->id)
                                     <a class="text-chapter entity-list-item-link d-block" href="{{$chapter->getUrl()}}">
@@ -26,8 +27,9 @@
                                     </a>
                                 @endif
                             @endforeach
-                            @foreach($pages as $index => $page)
-                                @if (($page->book->id === $book->id) && (!$page->chapter))
+
+                            @foreach($pages as $page)
+                                @if ( ($page->book->id === $book->id) && (!$page->chapter) )
                                 <a class="text-page entity-list-item-link d-block" href="{{$page->getUrl()}}">
                                     @icon('book')
                                     {{ $page->name }}
