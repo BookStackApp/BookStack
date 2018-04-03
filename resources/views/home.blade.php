@@ -27,7 +27,7 @@
                                 @endif
                             @endforeach
                             @foreach($pages as $index => $page)
-                                @if ($page->book->id === $book->id)
+                                @if (($page->book->id === $book->id) && (!$page->chapter))
                                 <a class="text-page entity-list-item-link d-block" href="{{$page->getUrl()}}">
                                     @icon('book')
                                     {{ $page->name }}
