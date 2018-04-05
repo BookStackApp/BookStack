@@ -205,7 +205,7 @@ return [
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
-    'tags_explain' => "Agrege algunas etiquetas para mejorar la categorización de su contenido. \n Puede asignar un valor a una etiqueta para una organizacón a mayor detalle.",
+    'tags_explain' => "Agrege algunas etiquetas para mejorar la categorización de su contenido. \n Puede asignar un valor a una etiqueta para una organización a mayor detalle.",
     'tags_add' => 'Agregar otra etiqueta',
     'attachments' => 'Adjuntos',
     'attachments_explain' => 'Subir ficheros o agregar enlaces para mostrar en la página. Estos son visibles en la barra lateral de la página.',
