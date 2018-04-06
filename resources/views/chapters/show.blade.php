@@ -16,6 +16,7 @@
             </span>
             @if(userCan('page-create', $chapter))
                 <a href="{{ $chapter->getUrl('/create-page') }}" class="text-pos text-button">@icon('add'){{ trans('entities.pages_new') }}</a>
+                <a href="{{ $chapter->getUrl('/create-link') }}" class="text-pos text-button">@icon('add'){{ trans('entities.link_new') }}</a>
             @endif
             @if(userCan('chapter-update', $chapter))
                 <a href="{{ $chapter->getUrl('/edit') }}" class="text-primary text-button">@icon('edit'){{ trans('common.edit') }}</a>
@@ -132,6 +133,17 @@
                             <a href="{{ $book->getUrl('/sort') }}" class="button outline book">@icon('book'){{ trans('entities.books_empty_sort_current_book') }}</a>
                         @endif
                     </p>
+                </div>
+            @endif
+            @if(count($links) > 0)
+                <div v-pre class="page-list">
+                    <hr>
+                    @foreach($links as $link)
+                        @if ($link->chapter_id === $chapter->id)
+                            @include('links/list-item', ['link' => $link])
+                            <hr>
+                        @endif
+                    @endforeach
                 </div>
             @endif
         </div>

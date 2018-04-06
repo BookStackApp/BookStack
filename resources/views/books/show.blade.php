@@ -1,10 +1,10 @@
 @extends('sidebar-layout')
 
 @section('toolbar')
-    <div class="col-sm-6 col-xs-1  faded">
+    <div class="col-sm-5 col-xs-1  faded">
         @include('books._breadcrumbs', ['book' => $book])
     </div>
-    <div class="col-sm-6 col-xs-11">
+    <div class="col-sm-7 col-xs-11">
         <div class="action-buttons faded">
             <span dropdown class="dropdown-container">
                 <div dropdown-toggle class="text-button text-primary">@icon('export'){{ trans('entities.export') }}</div>
@@ -19,6 +19,9 @@
             @endif
             @if(userCan('chapter-create', $book))
                 <a href="{{ $book->getUrl('/create-chapter') }}" class="text-pos text-button">@icon('add'){{ trans('entities.chapters_new') }}</a>
+            @endif
+            @if(userCan('chapter-create', $book))
+                <a href="{{ $book->getUrl('/create-link') }}" class="text-pos text-button">@icon('add'){{ trans('entities.link_new') }}</a>
             @endif
             @if(userCan('book-update', $book) || userCan('restrictions-manage', $book) || userCan('book-delete', $book))
                 <div dropdown class="dropdown-container">
@@ -111,7 +114,11 @@
                     @if($childElement->isA('chapter'))
                         @include('chapters/list-item', ['chapter' => $childElement])
                     @else
-                        @include('pages/list-item', ['page' => $childElement])
+                        @if ($childElement->isA('page'))
+                            @include('pages/list-item', ['page' => $childElement])
+                        @else
+                            @include('links/list-item', ['link' => $childElement])
+                        @endif
                     @endif
                     <hr>
                 @endforeach

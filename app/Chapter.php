@@ -27,6 +27,11 @@ class Chapter extends Entity
         return $this->hasMany(Page::class)->orderBy('priority', $dir);
     }
 
+    public function links() 
+    {
+        return $this->hasMany(Link::class);
+    }
+
     /**
      * Get the url of this chapter.
      * @param string|bool $path

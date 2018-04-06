@@ -3,6 +3,7 @@
 use BookStack\Book;
 use BookStack\Chapter;
 use BookStack\Entity;
+use BookStack\Link;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Page;
@@ -33,6 +34,8 @@ class EntityRepo
      * @var Page
      */
     public $page;
+
+    public $link;
 
     /**
      * @var PageRevision
@@ -80,6 +83,7 @@ class EntityRepo
         Book $book,
         Chapter $chapter,
         Page $page,
+        Link $link,
         PageRevision $pageRevision,
         ViewService $viewService,
         PermissionService $permissionService,
@@ -89,11 +93,13 @@ class EntityRepo
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
+        $this->link = $link;
         $this->pageRevision = $pageRevision;
         $this->entities = [
             'page' => $this->page,
             'chapter' => $this->chapter,
-            'book' => $this->book
+            'book' => $this->book,
+            'link' => $this->link,
         ];
         $this->viewService = $viewService;
         $this->permissionService = $permissionService;
@@ -166,7 +172,7 @@ class EntityRepo
     {
         $q = $this->entityQuery($type)->where('slug', '=', $slug);
 
-        if (strtolower($type) === 'chapter' || strtolower($type) === 'page') {
+        if (strtolower($type) === 'chapter' || strtolower($type) === 'page' || strtolower($type) === 'link') {
             $q = $q->where('book_id', '=', function ($query) use ($bookSlug) {
                 $query->select('id')
                     ->from($this->book->getTable())
@@ -346,8 +352,8 @@ class EntityRepo
         $entities = [];
         $parents = [];
         $tree = [];
-
         foreach ($q as $index => $rawEntity) {
+            
             if ($rawEntity->entity_type === 'BookStack\\Page') {
                 $entities[$index] = $this->page->newFromBuilder($rawEntity);
                 if ($renderPages) {
@@ -359,6 +365,8 @@ class EntityRepo
                 $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
                 $parents[$key] = $entities[$index];
                 $parents[$key]->setAttribute('pages', collect());
+            } else if ($rawEntity->entity_type === 'BookStack\\Link') {
+                $entities[$index] = $this->link->newFromBuilder($rawEntity);
             }
             if ($entities[$index]->chapter_id === 0 || $entities[$index]->chapter_id === '0') {
                 $tree[] = $entities[$index];
@@ -390,8 +398,10 @@ class EntityRepo
      */
     public function getChapterChildren(Chapter $chapter)
     {
-        return $this->permissionService->enforceEntityRestrictions('page', $chapter->pages())
-            ->orderBy('draft', 'DESC')->orderBy('priority', 'ASC')->get();
+        
+        $q = $this->permissionService->enforceEntityRestrictions('page', $chapter->pages())
+        ->orderBy('draft', 'DESC')->orderBy('priority', 'ASC');
+        return $q->get();
     }
 
 
@@ -492,12 +502,18 @@ class EntityRepo
     public function createFromInput($type, $input = [], $book = false)
     {
         $isChapter = strtolower($type) === 'chapter';
+        $isLink = strtolower($type) === 'link';
         $entityModel = $this->getEntity($type)->newInstance($input);
         $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $isChapter ? $book->id : false);
         $entityModel->created_by = user()->id;
         $entityModel->updated_by = user()->id;
-        $isChapter ? $book->chapters()->save($entityModel) : $entityModel->save();
 
+        if ($isLink) {
+            $book->links()->save($entityModel);
+        } else {
+            $isChapter ? $book->chapters()->save($entityModel) : $entityModel->save();
+        }
+        
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
         }
@@ -1155,6 +1171,12 @@ class EntityRepo
         $this->permissionService->deleteJointPermissionsForEntity($chapter);
         $this->searchService->deleteEntityTerms($chapter);
         $chapter->delete();
+    }
+
+    public function destroyLink(Link $link)
+    {
+        $link->views()->delete();
+        $link->delete();
     }
 
     /**

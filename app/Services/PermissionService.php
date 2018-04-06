@@ -2,6 +2,7 @@
 
 use BookStack\Book;
 use BookStack\Chapter;
+use BookStack\Link;
 use BookStack\Entity;
 use BookStack\EntityPermission;
 use BookStack\JointPermission;
@@ -25,6 +26,7 @@ class PermissionService
     public $book;
     public $chapter;
     public $page;
+    public $link;
 
     protected $db;
 
@@ -44,7 +46,7 @@ class PermissionService
      * @param Page $page
      * @param Role $role
      */
-    public function __construct(JointPermission $jointPermission, EntityPermission $entityPermission, Connection $db, Book $book, Chapter $chapter, Page $page, Role $role)
+    public function __construct(JointPermission $jointPermission, EntityPermission $entityPermission, Connection $db, Book $book, Chapter $chapter, Page $page, Link $link, Role $role)
     {
         $this->db = $db;
         $this->jointPermission = $jointPermission;
@@ -52,6 +54,7 @@ class PermissionService
         $this->role = $role;
         $this->book = $book;
         $this->chapter = $chapter;
+        $this->link = $link;
         $this->page = $page;
         // TODO - Update so admin still goes through filters
     }
@@ -72,7 +75,8 @@ class PermissionService
     {
         $this->entityCache = [
             'books' => collect(),
-            'chapters' => collect()
+            'chapters' => collect(),
+            'links' => collect(),
         ];
     }
 
@@ -118,6 +122,23 @@ class PermissionService
         }
 
         return $chapter;
+    }
+
+    protected function getLink($linkId)
+    {
+        if (isset($this->entityCache['links']) && $this->entityCache['links']->has($linkId)) {
+            return $this->entityCache['links']->get($linkId);
+        }
+
+        $link = $this->link->find($linkId);
+        if ($link === null) {
+            $link = false;
+        }
+        if (isset($this->entityCache['links'])) {
+            $this->entityCache['links']->put($linkId, $link);
+        }
+
+        return $link;
     }
 
     /**
@@ -171,6 +192,8 @@ class PermissionService
             $query->select(['id', 'restricted', 'created_by', 'book_id']);
         }, 'pages'  => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+        }, 'links' => function ($query) {
+            $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
         }]);
     }
 
@@ -191,6 +214,9 @@ class PermissionService
             }
             foreach ($book->getRelation('pages') as $page) {
                 $entities->push($page);
+            }
+            foreach ($book->getRelation('links') as $link) {
+                $entities->push($link);
             }
         }
 
@@ -222,6 +248,12 @@ class PermissionService
         if ($entity->isA('chapter')) {
             foreach ($entity->pages as $page) {
                 $entities[] = $page;
+            }
+        }
+
+        if ($entity->isA('link')) {
+            foreach ($entity as $link) {
+                $entities[] = $link;
             }
         }
 
@@ -294,12 +326,13 @@ class PermissionService
         if (count($entities) === 0) {
             return;
         }
-
+        
         $this->db->transaction(function () use ($entities) {
 
             foreach (array_chunk($entities, 1000) as $entityChunk) {
                 $query = $this->db->table('joint_permissions');
                 foreach ($entityChunk as $entity) {
+                    if (!is_object($entity)) continue;
                     $query->orWhere(function (QueryBuilder $query) use ($entity) {
                         $query->where('entity_id', '=', $entity->id)
                             ->where('entity_type', '=', $entity->getMorphClass());
@@ -324,11 +357,13 @@ class PermissionService
         $entityRestrictedMap = [];
         $permissionFetch = $this->entityPermission->newQuery();
         foreach ($entities as $entity) {
+            if (!is_object($entity)) continue;
             $entityRestrictedMap[$entity->getMorphClass() . ':' . $entity->id] = boolval($entity->getRawAttribute('restricted'));
             $permissionFetch->orWhere(function ($query) use ($entity) {
                 $query->where('restrictable_id', '=', $entity->id)->where('restrictable_type', '=', $entity->getMorphClass());
             });
         }
+
         $permissions = $permissionFetch->get();
 
         // Create a mapping of explicit entity permissions
@@ -349,6 +384,7 @@ class PermissionService
 
         // Create Joint Permission Data
         foreach ($entities as $entity) {
+            if (!is_object($entity)) continue;
             foreach ($roles as $role) {
                 foreach ($this->getActions($entity) as $action) {
                     $jointPermissions[] = $this->createJointPermissionData($entity, $role, $action, $permissionMap, $rolePermissionMap);
@@ -372,7 +408,7 @@ class PermissionService
     protected function getActions(Entity $entity)
     {
         $baseActions = ['view', 'update', 'delete'];
-        if ($entity->isA('chapter') || $entity->isA('book')) {
+        if ($entity->isA('chapter') || $entity->isA('book') || $entity->isA('link')) {
             $baseActions[] = 'page-create';
         }
         if ($entity->isA('book')) {
@@ -414,6 +450,9 @@ class PermissionService
 
         // For chapters and pages, Check if explicit permissions are set on the Book.
         $book = $this->getBook($entity->book_id);
+        if (!$book) {
+            $book = $this->getChapter($entity->chapter_id);
+        }
         $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $book, $role, $restrictionAction);
         $hasPermissiveAccessToParents = !$book->restricted;
 
@@ -528,6 +567,8 @@ class PermissionService
             return $entity->restricted || $entity->book->restricted;
         } elseif ($entity->isA('book')) {
             return $entity->restricted;
+        } elseif ($entity->isA('link')) {
+            return $entity->restricted || $entity->book->restricted;
         }
     }
 
@@ -573,9 +614,12 @@ class PermissionService
                 });
             }
         });
+        
+        $linkSelect = $this->db->table('links')->selectRaw($this->link->entityRawQuery())->where('book_id', '=', $book_id)->where('chapter_id', '=', 0);
+
         $chapterSelect = $this->db->table('chapters')->selectRaw($this->chapter->entityRawQuery())->where('book_id', '=', $book_id);
-        $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
-            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
+        $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}  UNION {$linkSelect->toSQL()}) AS U"))
+            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect)->mergeBindings($linkSelect);        
 
         if (!$this->isAdmin()) {
             $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
@@ -589,7 +633,6 @@ class PermissionService
             $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
         }
 
-        $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
         $this->clean();
         return  $query;
     }

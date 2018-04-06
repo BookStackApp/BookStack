@@ -35,7 +35,18 @@
                                     {{ $page->name }}
                                 </a>
                                 @endif
-                            @endforeach  
+                            @endforeach
+                            
+                            @foreach($links as $link)
+                                @if ( is_object($link->book) && ($link->book->id === $book->id) && (!$link->chapter) )
+                                <a class="text-link entity-list-item-link d-block" href="{{$link->link_to}}" target="_blank">
+                                    @icon('link')
+                                    <span class="text-link-span">
+                                        {{ $link->name }}
+                                    </span>
+                                </a>
+                                @endif
+                            @endforeach
                         </div>               
                     </div>
                     @if((++$indexKey % 3) == 0)

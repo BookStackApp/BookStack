@@ -31,6 +31,7 @@ class HomeController extends Controller
         $pages = $this->entityRepo->getAll('page', false);
 
         $chapters = $this->entityRepo->getAll('chapter', false);
+        $links = $this->entityRepo->getAll('link', false);
 
         // Custom homepage
         $customHomepage = false;
@@ -46,6 +47,7 @@ class HomeController extends Controller
             'books' => $books,
             'pages' => $pages,
             'chapters' => $chapters,
+            'links' => $links, 
             'customHomepage' => $customHomepage
         ]);
     }

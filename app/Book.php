@@ -75,6 +75,11 @@ class Book extends Entity
         return $this->hasMany(Chapter::class);
     }
 
+    public function links() 
+    {
+        return $this->hasMany(Link::class);
+    }
+
     /**
      * Get an excerpt of this book's description to the specified length or less.
      * @param int $length

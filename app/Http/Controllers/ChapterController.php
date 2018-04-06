@@ -78,9 +78,11 @@ class ChapterController extends Controller
         Views::add($chapter);
         $this->setPageTitle($chapter->getShortName());
         $pages = $this->entityRepo->getChapterChildren($chapter);
+        $links = $this->entityRepo->getAll('link', false);
         return view('chapters/show', [
             'book' => $chapter->book,
             'chapter' => $chapter,
+            'links' => $links,
             'current' => $chapter,
             'sidebarTree' => $sidebarTree,
             'pages' => $pages

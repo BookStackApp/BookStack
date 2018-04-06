@@ -27,7 +27,7 @@
   hr {
     margin-top: 0;
   }
-  .page, .chapter, .book {
+  .page, .chapter, .book, .link {
     padding-left: $-l;
   }
   .page {
@@ -45,6 +45,9 @@
   }
   .book {
     border-left: 5px solid $color-book;
+  }
+  .link {
+    border-left: 5px solid #555;
   }
   .meta {
     margin-top: -$-m;
@@ -153,6 +156,10 @@
     &.selected {
       background-color: rgba($color-page, 0.1);
     }
+  }
+  .link {
+    color: #555 !important;
+    fill: #555 !important;
   }
   [chapter-toggle] {
     padding-left: $-s;

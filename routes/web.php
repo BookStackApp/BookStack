@@ -62,10 +62,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/create-link', 'LinkController@create');
         Route::post('/{bookSlug}/chapter/{chapterSlug}/create-guest-page', 'PageController@createAsGuest');
+        Route::post('/{bookSlug}/chapter/{chapterSlug}/create-link', 'LinkController@store');
         Route::get('/{bookSlug}/create-chapter', 'ChapterController@create');
         Route::post('/{bookSlug}/create-chapter', 'ChapterController@store');
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/link/{linkSlug}', 'LinkController@show');
         Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@showMove');
         Route::put('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@move');
@@ -78,6 +81,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
 
+        // Link
+        Route::get('/{bookSlug}/create-link', 'LinkController@create');
+        Route::post('/{bookSlug}/create-link', 'LinkController@store');
+        Route::get('/{bookSlug}/link/{linkSlug}', 'LinkController@show');
+        Route::put('/{bookSlug}/link/{linkSlug}', 'LinkController@update');
+        Route::get('/{bookSlug}/link/{linkSlug}/edit', 'LinkController@edit');
+        Route::get('/{bookSlug}/link/{linkSlug}/delete', 'LinkController@showDelete');
+        Route::delete('/{bookSlug}/link/{chaptelinkSlugrSlug}', 'LinkController@destroy');
     });
 
     // User Profile routes

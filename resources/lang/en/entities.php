@@ -261,4 +261,19 @@ return [
     'comment_updated_success' => 'Comment updated',
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
+
+
+    /** 
+     * Links
+     */
+    'link' => 'Link',
+    'links' => 'Links',
+    'link_new' => 'New link',
+    'link_create' => 'Create new link',
+    'link_save' => 'Save link',
+    'link_delete' => 'Delete link',
+    'link_edit' => 'Edit link',
+    'link_delete_confirm' => 'Are you sure you want to delete this link?',
+    'links_delete_named' => 'Delete link :linkName',
+    'links_editing_named' => 'Edit link :pageName',
 ];

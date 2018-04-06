@@ -93,6 +93,25 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>{{ trans('entities.links') }}</td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-create-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-create-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-view-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-view-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-update-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-update-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-delete-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'link-delete-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>{{ trans('entities.images') }}</td>
                             <td>@include('settings/roles/checkbox', ['permission' => 'image-create-all'])</td>
                             <td style="line-height:1.2;"><small class="faded">{{ trans('settings.role_controlled_by_asset') }}</small></td>

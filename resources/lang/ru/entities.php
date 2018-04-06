@@ -257,4 +257,19 @@ return [
     'comment_updated_success' => 'Комментарий обновлён',
     'comment_delete_confirm' => 'Вы уверенны, что хотите удалить этот комментарий?',
     'comment_in_reply_to' => 'В ответ на :commentId',
+
+
+    /** 
+     * Links
+     */
+    'link' => 'Ссылка',
+    'links' => 'Ссылки',
+    'link_new' => 'Новая ссылка',
+    'link_create' => 'Создать новую ссылку',
+    'link_save' => 'Сохранить ссылку',
+    'link_delete' => 'Удалить ссылку',
+    'link_edit' => 'Редактирование ссылки',
+    'link_delete_confirm' => 'Вы уверены, что хотите удалить эту ссылку?',
+    'links_delete_named' => 'Удалить ссылку :linkName',
+    'links_editing_named' => 'Редактирование ссылки :pageName',
 ];
