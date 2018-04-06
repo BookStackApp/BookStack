@@ -1,7 +1,7 @@
 FROM php:7.1-apache
 
 ENV BOOKSTACK=BookStack \
-    BOOKSTACK_VERSION=0.20.4 \
+    BOOKSTACK_VERSION=0.20.8 \
     BOOKSTACK_HOME="/var/www/bookstack"
 
 RUN apt-get update && apt-get install -y git zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev wget libldap2-dev libtidy-dev \

@@ -122,3 +122,18 @@ These are the great open-source projects used to help build BookStack:
     * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
 * [Draw.io](https://github.com/jgraph/drawio)
+
+
+Build our Wiki.brusnika
+1). Make release on Github
+2). Change version to new release in Dockerfile
+3). sudo docker build -t dr.mystand.ru/wiki.brusnika/bookstack .
+4). sudo docker push dr.mystand.ru/wiki.brusnika/bookstack
+5). Open Mystand docker hub
+6). docker-compose down
+7). docker-compose pull
+8). docker-compose up -d
+9). Looking for runing status: docker-compose logs bookstack
+
+
+
