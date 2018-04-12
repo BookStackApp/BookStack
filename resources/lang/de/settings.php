@@ -1,21 +1,16 @@
 <?php
-
 return [
-
     /**
      * Settings text strings
      * Contains all text strings used in the general settings sections of BookStack
      * including users and roles.
      */
-
     'settings' => 'Einstellungen',
     'settings_save' => 'Einstellungen speichern',
     'settings_save_success' => 'Einstellungen gespeichert',
-
     /**
      * App settings
      */
-
     'app_settings' => 'Anwendungseinstellungen',
     'app_name' => 'Anwendungsname',
     'app_name_desc' => 'Dieser Name wird im Header und in E-Mails angezeigt.',
@@ -31,13 +26,14 @@ return [
     'app_logo_desc' => "Dieses Bild sollte 43px hoch sein.\nGrößere Bilder werden verkleinert.",
     'app_primary_color' => 'Primäre Anwendungsfarbe',
     'app_primary_color_desc' => "Dies sollte ein HEX Wert sein.\nWenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt.",
+    'app_homepage' => 'Startseite der Anwendung',
+    'app_homepage_desc' => 'Wählen Sie eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
+    'app_homepage_default' => 'Ausgewählte Startseite',
     'app_disable_comments' => 'Kommentare deaktivieren',
     'app_disable_comments_desc' => 'Deaktiviert Kommentare über alle Seiten in der Anwendung. Vorhandene Kommentare werden nicht angezeigt.',
-
     /**
      * Registration settings
      */
-
     'reg_settings' => 'Registrierungseinstellungen',
     'reg_allow' => 'Registrierung erlauben?',
     'reg_default_role' => 'Standard-Benutzerrolle nach Registrierung',
@@ -46,11 +42,9 @@ return [
     'reg_confirm_restrict_domain' => 'Registrierung auf bestimmte Domains einschränken',
     'reg_confirm_restrict_domain_desc' => "Fügen sie eine durch Komma getrennte Liste von Domains hinzu, auf die die Registrierung eingeschränkt werden soll. Benutzern wird eine E-Mail gesendet, um ihre E-Mail Adresse zu bestätigen, bevor sie diese Anwendung nutzen können.\nHinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung ändern.",
     'reg_confirm_restrict_domain_placeholder' => 'Keine Einschränkung gesetzt',
-
     /**
      * Role settings
      */
-
     'roles' => 'Rollen',
     'role_user_roles' => 'Benutzer-Rollen',
     'role_create' => 'Neue Rolle anlegen',
@@ -80,11 +74,9 @@ return [
     'role_update_success' => 'Rolle erfolgreich gespeichert',
     'role_users' => 'Dieser Rolle zugeordnete Benutzer',
     'role_users_none' => 'Bisher sind dieser Rolle keine Benutzer zugeordnet',
-
     /**
      * Users
      */
-
     'users' => 'Benutzer',
     'user_profile' => 'Benutzerprofil',
     'users_add_new' => 'Benutzer hinzufügen',
@@ -98,7 +90,6 @@ return [
     'users_delete_warning' => 'Der Benutzer ":userName" wird aus dem System gelöscht.',
     'users_delete_confirm' => 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?',
     'users_delete_success' => 'Benutzer erfolgreich gelöscht.',
-    'users_books_view_type' => 'Bevorzugtes Display-Layout für Bücher',
     'users_edit' => 'Benutzer bearbeiten',
     'users_edit_profile' => 'Profil bearbeiten',
     'users_edit_success' => 'Benutzer erfolgreich aktualisisert',

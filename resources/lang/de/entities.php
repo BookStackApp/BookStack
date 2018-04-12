@@ -1,6 +1,5 @@
 <?php
 return [
-
     /**
      * Shared
      */
@@ -30,7 +29,6 @@ return [
     'export_html' => 'HTML-Datei',
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
-
     /**
      * Permissions and restrictions
      */
@@ -38,7 +36,6 @@ return [
     'permissions_intro' => 'Wenn individuelle Berechtigungen aktiviert werden, überschreiben diese Einstellungen durch Rollen zugewiesene Berechtigungen.',
     'permissions_enable' => 'Individuelle Berechtigungen aktivieren',
     'permissions_save' => 'Berechtigungen speichern',
-
     /**
      * Search
      */
@@ -63,7 +60,6 @@ return [
     'search_created_after' => 'Erstellt nach',
     'search_set_date' => 'Datum auswählen',
     'search_update' => 'Suche aktualisieren',
-
     /**
      * Books
      */
@@ -99,7 +95,6 @@ return [
     'books_sort_named' => 'Buch ":bookName" sortieren',
     'books_sort_show_other' => 'Andere Bücher anzeigen',
     'books_sort_save' => 'Neue Reihenfolge speichern',
-
     /**
      * Chapters
      */
@@ -124,7 +119,6 @@ return [
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
     'chapters_permissions_success' => 'Kapitel-Berechtigungenen aktualisisert',
     'chapters_search_this' => 'Dieses Kapitel durchsuchen',
-
     /**
      * Pages
      */
@@ -162,6 +156,7 @@ return [
     'pages_md_preview' => 'Vorschau',
     'pages_md_insert_image' => 'Bild einfügen',
     'pages_md_insert_link' => 'Link zu einem Objekt einfügen',
+    'pages_md_insert_drawing' => 'Zeichnung einfügen',
     'pages_not_in_chapter' => 'Seite ist in keinem Kapitel',
     'pages_move' => 'Seite verschieben',
     'pages_move_success' => 'Seite nach ":parentName" verschoben',
@@ -194,11 +189,12 @@ return [
         'message' => ':start :time. Achten Sie darauf, keine Änderungen von anderen Benutzern zu überschreiben!',
     ],
     'pages_draft_discarded' => 'Entwurf verworfen. Der aktuelle Seiteninhalt wurde geladen.',
-
     /**
      * Editor sidebar
      */
     'page_tags' => 'Seiten-Schlagwörter',
+    'chapter_tags' => 'Kapitel-Schlagwörter',
+    'book_tags' => 'Buch-Schlagwörter',
     'tag' => 'Schlagwort',
     'tags' =>  'Schlagwörter',
     'tag_value' => 'Inhalt (Optional)',
@@ -229,7 +225,6 @@ return [
     'attachments_file_uploaded' => 'Datei erfolgreich hochgeladen',
     'attachments_file_updated' => 'Datei erfolgreich aktualisiert',
     'attachments_link_attached' => 'Link erfolgreich der Seite hinzugefügt',
-
     /**
      * Profile View
      */
@@ -238,7 +233,6 @@ return [
     'profile_not_created_pages' => ':userName hat noch keine Seiten erstellt.',
     'profile_not_created_chapters' => ':userName hat noch keine Kapitel erstellt.',
     'profile_not_created_books' => ':userName hat noch keine Bücher erstellt.',
-
     /**
      * Comments
      */
