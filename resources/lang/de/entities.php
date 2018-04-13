@@ -238,6 +238,7 @@ return [
      */
     'comment' => 'Kommentar',
     'comments' => 'Kommentare',
+    'comment_add' => 'Kommentieren',
     'comment_placeholder' => 'Geben Sie hier Ihre Kommentare ein (Markdown unterstützt)',
     'comment_count' => '{0} Keine Kommentare|{1} 1 Kommentar|[2,*] :count Kommentare',
     'comment_save' => 'Kommentar speichern',
