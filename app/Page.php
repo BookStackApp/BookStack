@@ -6,7 +6,6 @@ class Page extends Entity
 
     protected $simpleAttributes = ['name', 'id', 'slug'];
 
-    protected $with = ['book'];
     public $textField = 'text';
 
     /**

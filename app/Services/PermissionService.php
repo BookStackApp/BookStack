@@ -67,13 +67,19 @@ class PermissionService
 
     /**
      * Prepare the local entity cache and ensure it's empty
+     * @param Entity[] $entities
      */
-    protected function readyEntityCache()
+    protected function readyEntityCache($entities = [])
     {
-        $this->entityCache = [
-            'books' => collect(),
-            'chapters' => collect()
-        ];
+        $this->entityCache = [];
+
+        foreach ($entities as $entity) {
+            $type = $entity->getType();
+            if (!isset($this->entityCache[$type])) {
+                $this->entityCache[$type] = collect();
+            }
+            $this->entityCache[$type]->put($entity->id, $entity);
+        }
     }
 
     /**
@@ -83,16 +89,13 @@ class PermissionService
      */
     protected function getBook($bookId)
     {
-        if (isset($this->entityCache['books']) && $this->entityCache['books']->has($bookId)) {
-            return $this->entityCache['books']->get($bookId);
+        if (isset($this->entityCache['book']) && $this->entityCache['book']->has($bookId)) {
+            return $this->entityCache['book']->get($bookId);
         }
 
         $book = $this->book->find($bookId);
         if ($book === null) {
             $book = false;
-        }
-        if (isset($this->entityCache['books'])) {
-            $this->entityCache['books']->put($bookId, $book);
         }
 
         return $book;
@@ -105,16 +108,13 @@ class PermissionService
      */
     protected function getChapter($chapterId)
     {
-        if (isset($this->entityCache['chapters']) && $this->entityCache['chapters']->has($chapterId)) {
-            return $this->entityCache['chapters']->get($chapterId);
+        if (isset($this->entityCache['chapter']) && $this->entityCache['chapter']->has($chapterId)) {
+            return $this->entityCache['chapter']->get($chapterId);
         }
 
         $chapter = $this->chapter->find($chapterId);
         if ($chapter === null) {
             $chapter = false;
-        }
-        if (isset($this->entityCache['chapters'])) {
-            $this->entityCache['chapters']->put($chapterId, $chapter);
         }
 
         return $chapter;
@@ -179,6 +179,7 @@ class PermissionService
      * @param Collection $books
      * @param array $roles
      * @param bool $deleteOld
+     * @throws \Throwable
      */
     protected function buildJointPermissionsForBooks($books, $roles, $deleteOld = false)
     {
@@ -250,7 +251,7 @@ class PermissionService
         $this->deleteManyJointPermissionsForRoles($roles);
 
         // Chunk through all books
-        $this->bookFetchQuery()->chunk(5, function ($books) use ($roles) {
+        $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
     }
@@ -279,6 +280,7 @@ class PermissionService
     /**
      * Delete the entity jointPermissions for a particular entity.
      * @param Entity $entity
+     * @throws \Throwable
      */
     public function deleteJointPermissionsForEntity(Entity $entity)
     {
@@ -288,6 +290,7 @@ class PermissionService
     /**
      * Delete all of the entity jointPermissions for a list of entities.
      * @param Entity[] $entities
+     * @throws \Throwable
      */
     protected function deleteManyJointPermissionsForEntities($entities)
     {
@@ -314,10 +317,11 @@ class PermissionService
      * Create & Save entity jointPermissions for many entities and jointPermissions.
      * @param Collection $entities
      * @param array $roles
+     * @throws \Throwable
      */
     protected function createManyJointPermissions($entities, $roles)
     {
-        $this->readyEntityCache();
+        $this->readyEntityCache($entities);
         $jointPermissions = [];
 
         // Fetch Entity Permissions and create a mapping of entity restricted statuses
@@ -342,7 +346,7 @@ class PermissionService
         // Create a mapping of role permissions
         $rolePermissionMap = [];
         foreach ($roles as $role) {
-            foreach ($role->getRelationValue('permissions') as $permission) {
+            foreach ($role->permissions as $permission) {
                 $rolePermissionMap[$role->getRawAttribute('id') . ':' . $permission->getRawAttribute('name')] = true;
             }
         }
