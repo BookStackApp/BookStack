@@ -1,7 +1,7 @@
 <?php namespace Tests;
 
 use BookStack\Book;
-use BookStack\Services\PermissionService;
+use BookStack\Entity;
 use BookStack\User;
 use BookStack\Repos\EntityRepo;
 
@@ -18,49 +18,20 @@ class RestrictionsTest extends BrowserKitTest
      */
     protected $viewer;
 
-    /**
-     * @var PermissionService
-     */
-    protected $permissionService;
-
     public function setUp()
     {
         parent::setUp();
         $this->user = $this->getEditor();
         $this->viewer = $this->getViewer();
-        $this->permissionService = $this->app[PermissionService::class];
     }
 
-    /**
-     * Manually set some permissions on an entity.
-     * @param \BookStack\Entity $entity
-     * @param $actions
-     */
-    protected function setEntityRestrictions(\BookStack\Entity $entity, $actions)
+    protected function setEntityRestrictions(Entity $entity, $actions = [], $roles = [])
     {
-        $entity->restricted = true;
-        $entity->permissions()->delete();
-
-        $role = $this->user->roles->first();
-        $viewerRole = $this->viewer->roles->first();
-
-        $permissions = [];
-        foreach ($actions as $action) {
-            $permissions[] = [
-                'role_id' => $role->id,
-                'action' => strtolower($action)
-            ];
-            $permissions[] = [
-                'role_id' => $viewerRole->id,
-                'action' => strtolower($action)
-            ];
-        }
-        $entity->permissions()->createMany($permissions);
-
-        $entity->save();
-        $entity->load('permissions');
-        $this->permissionService->buildJointPermissionsForEntity($entity);
-        $entity->load('jointPermissions');
+        $roles = [
+            $this->user->roles->first(),
+            $this->viewer->roles->first(),
+        ];
+        parent::setEntityRestrictions($entity, $actions, $roles);
     }
 
     public function test_book_view_restriction()
