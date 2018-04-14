@@ -1,6 +1,5 @@
 <?php
 return [
-
     /**
      * Image Manager
      */
@@ -20,5 +19,13 @@ return [
     'image_preview' => 'Bildvorschau',
     'image_upload_success' => 'Bild erfolgreich hochgeladen',
     'image_update_success' => 'Bilddetails erfolgreich aktualisiert',
-    'image_delete_success' => 'Bild erfolgreich gelöscht'
+    'image_delete_success' => 'Bild erfolgreich gelöscht',
+    'image_upload_remove' => 'Entfernen',
+    /**
+     * Code editor
+     */
+    'code_editor' => 'Code editieren',
+    'code_language' => 'Code Sprache',
+    'code_content' => 'Code Inhalt',
+    'code_save' => 'Code speichern',
 ];

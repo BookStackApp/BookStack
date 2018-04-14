@@ -10,6 +10,7 @@ return [
     'save' => 'Speichern',
     'continue' => 'Weiter',
     'select' => 'Auswählen',
+    'more' => 'Mehr',
 
     /**
      * Form Labels
@@ -18,7 +19,7 @@ return [
     'description' => 'Beschreibung',
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
-    'cover_image_description' => 'Das Bild sollte eine Auflösung von 300x170px haben.',
+    'cover_image_description' => 'Das Bild sollte eine Auflösung von 440x250px haben.',
 
     /**
      * Actions
@@ -30,12 +31,13 @@ return [
     'edit' => 'Bearbeiten',
     'sort' => 'Sortieren',
     'move' => 'Verschieben',
+    'reply' => 'Antworten',
     'delete' => 'Löschen',
     'search' => 'Suchen',
     'search_clear' => 'Suche löschen',
     'reset' => 'Zurücksetzen',
     'remove' => 'Entfernen',
-
+    'add' => 'Hinzufügen',
 
     /**
      * Misc
@@ -46,6 +48,10 @@ return [
     'back_to_top' => 'nach oben',
     'toggle_details' => 'Details zeigen/verstecken',
     'toggle_thumbnails' => 'Thumbnails zeigen/verstecken',
+    'details' => 'Details',
+    'grid_view' => 'Gitteransicht',
+    'list_view' => 'Listenansicht',
+
     /**
      * Header
      */
