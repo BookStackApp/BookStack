@@ -190,7 +190,7 @@ return [
     'pages_draft_edit_active' => [
         'start_a' => ':count users have started editing this page',
         'start_b' => ':userName has started editing this page',
-        'time_a' => 'since the pages was last updated',
+        'time_a' => 'since the page was last updated',
         'time_b' => 'in the last :minCount minutes',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
@@ -208,7 +208,7 @@ return [
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Add another tag',
     'attachments' => 'Attachments',
-    'attachments_explain' => 'Upload some files or attach some link to display on your page. These are visible in the page sidebar.',
+    'attachments_explain' => 'Upload some files or attach some links to display on your page. These are visible in the page sidebar.',
     'attachments_explain_instant_save' => 'Changes here are saved instantly.',
     'attachments_items' => 'Attached Items',
     'attachments_upload' => 'Upload File',
