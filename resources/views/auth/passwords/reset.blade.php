@@ -7,38 +7,38 @@
     @endif
 @stop
 
-@section('body-class', 'image-cover login')
-
 @section('content')
 
-
     <div class="text-center">
-        <div class="center-box text-left">
-            <h1>{{ trans('auth.reset_password') }}</h1>
+        <div class="card center-box">
+            <h3>@icon('permission') {{ trans('auth.reset_password') }}</h3>
 
-            <form action="{{ baseUrl("/password/reset") }}" method="POST">
-                {!! csrf_field() !!}
-                <input type="hidden" name="token" value="{{ $token }}">
+            <div class="body">
+                <form action="{{ baseUrl("/password/reset") }}" method="POST">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="token" value="{{ $token }}">
 
-                <div class="form-group">
-                    <label for="email">{{ trans('auth.email') }}</label>
-                    @include('form/text', ['name' => 'email'])
-                </div>
+                    <div class="form-group">
+                        <label for="email">{{ trans('auth.email') }}</label>
+                        @include('form/text', ['name' => 'email'])
+                    </div>
 
-                <div class="form-group">
-                    <label for="password">{{ trans('auth.password') }}</label>
-                    @include('form/password', ['name' => 'password'])
-                </div>
+                    <div class="form-group">
+                        <label for="password">{{ trans('auth.password') }}</label>
+                        @include('form/password', ['name' => 'password'])
+                    </div>
 
-                <div class="form-group">
-                    <label for="password_confirmation">{{ trans('auth.password_confirm') }}</label>
-                    @include('form/password', ['name' => 'password_confirmation'])
-                </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">{{ trans('auth.password_confirm') }}</label>
+                        @include('form/password', ['name' => 'password_confirmation'])
+                    </div>
 
-                <div class="from-group">
-                    <button class="button block pos">{{ trans('auth.reset_password') }}</button>
-                </div>
-            </form>
+                    <div class="from-group text-right">
+                        <button class="button primary">{{ trans('auth.reset_password') }}</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 

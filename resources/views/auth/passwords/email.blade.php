@@ -11,23 +11,26 @@
 
 
     <div class="text-center">
-        <div class="center-box text-left">
-            <h1>{{ trans('auth.reset_password') }}</h1>
+        <div class="card center-box">
+            <h3>@icon('permission') {{ trans('auth.reset_password') }}</h3>
 
-            <p class="muted small">{{ trans('auth.reset_password_send_instructions') }}</p>
+            <div class="body">
+                <p class="muted small">{{ trans('auth.reset_password_send_instructions') }}</p>
 
-            <form action="{{ baseUrl("/password/email") }}" method="POST">
-                {!! csrf_field() !!}
+                <form action="{{ baseUrl("/password/email") }}" method="POST">
+                    {!! csrf_field() !!}
 
-                <div class="form-group">
-                    <label for="email">{{ trans('auth.email') }}</label>
-                    @include('form/text', ['name' => 'email'])
-                </div>
+                    <div class="form-group">
+                        <label for="email">{{ trans('auth.email') }}</label>
+                        @include('form/text', ['name' => 'email'])
+                    </div>
 
-                <div class="from-group">
-                    <button class="button block pos">{{ trans('auth.reset_password_send_button') }}</button>
-                </div>
-            </form>
+                    <div class="from-group text-right">
+                        <button class="button primary">{{ trans('auth.reset_password_send_button') }}</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 
