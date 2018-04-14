@@ -21,6 +21,7 @@ return [
     'image_upload_success' => 'Bilden har laddats upp',
     'image_update_success' => 'Bildens uppgifter har ändrats',
     'image_delete_success' => 'Bilden har tagits bort',
+    'image_upload_remove' => 'Radera',
 
     /**
      * Code editor
