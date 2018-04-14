@@ -593,11 +593,69 @@ class PageController extends Controller
     }
 
     /**
+     * Show the view to copy a page.
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function showCopy($bookSlug, $pageSlug)
+    {
+        $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $this->checkOwnablePermission('page-update', $page);
+        session()->flashInput(['name' => $page->name]);
+        return view('pages/copy', [
+            'book' => $page->book,
+            'page' => $page
+        ]);
+    }
+
+    /**
+     * Create a copy of a page within the requested target destination.
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param Request $request
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function copy($bookSlug, $pageSlug, Request $request)
+    {
+        $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $this->checkOwnablePermission('page-update', $page);
+
+        $entitySelection = $request->get('entity_selection', null);
+        if ($entitySelection === null || $entitySelection === '') {
+            $parent = $page->chapter ? $page->chapter : $page->book;
+        } else {
+            $stringExploded = explode(':', $entitySelection);
+            $entityType = $stringExploded[0];
+            $entityId = intval($stringExploded[1]);
+
+            try {
+                $parent = $this->entityRepo->getById($entityType, $entityId);
+            } catch (\Exception $e) {
+                session()->flash(trans('entities.selected_book_chapter_not_found'));
+                return redirect()->back();
+            }
+        }
+
+        $this->checkOwnablePermission('page-create', $parent);
+
+        $pageCopy = $this->entityRepo->copyPage($page, $parent, $request->get('name', ''));
+
+        Activity::add($pageCopy, 'page_create', $pageCopy->book->id);
+        session()->flash('success', trans('entities.pages_copy_success'));
+
+        return redirect($pageCopy->getUrl());
+    }
+
+    /**
      * Set the permissions for this page.
      * @param string $bookSlug
      * @param string $pageSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws NotFoundException
      */
     public function restrict($bookSlug, $pageSlug, Request $request)
     {

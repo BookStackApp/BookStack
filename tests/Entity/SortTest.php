@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
 use BookStack\Book;
+use BookStack\Chapter;
 use BookStack\Page;
 use BookStack\Repos\EntityRepo;
 
@@ -11,7 +12,7 @@ class SortTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->book = \BookStack\Book::first();
+        $this->book = Book::first();
     }
 
     public function test_drafts_do_not_show_up()
@@ -29,9 +30,9 @@ class SortTest extends TestCase
 
     public function test_page_move()
     {
-        $page = \BookStack\Page::first();
+        $page = Page::first();
         $currentBook = $page->book;
-        $newBook = \BookStack\Book::where('id', '!=', $currentBook->id)->first();
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
 
         $resp = $this->asAdmin()->get($page->getUrl() . '/move');
         $resp->assertSee('Move Page');
@@ -39,7 +40,7 @@ class SortTest extends TestCase
         $movePageResp = $this->put($page->getUrl() . '/move', [
             'entity_selection' => 'book:' . $newBook->id
         ]);
-        $page = \BookStack\Page::find($page->id);
+        $page = Page::find($page->id);
 
         $movePageResp->assertRedirect($page->getUrl());
         $this->assertTrue($page->book->id == $newBook->id, 'Page book is now the new book');
@@ -51,10 +52,10 @@ class SortTest extends TestCase
 
     public function test_chapter_move()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $currentBook = $chapter->book;
         $pageToCheck = $chapter->pages->first();
-        $newBook = \BookStack\Book::where('id', '!=', $currentBook->id)->first();
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
 
         $chapterMoveResp = $this->asAdmin()->get($chapter->getUrl() . '/move');
         $chapterMoveResp->assertSee('Move Chapter');
@@ -63,7 +64,7 @@ class SortTest extends TestCase
             'entity_selection' => 'book:' . $newBook->id
         ]);
 
-        $chapter = \BookStack\Chapter::find($chapter->id);
+        $chapter = Chapter::find($chapter->id);
         $moveChapterResp->assertRedirect($chapter->getUrl());
         $this->assertTrue($chapter->book->id === $newBook->id, 'Chapter Book is now the new book');
 
@@ -71,7 +72,7 @@ class SortTest extends TestCase
         $newBookResp->assertSee('moved chapter');
         $newBookResp->assertSee($chapter->name);
 
-        $pageToCheck = \BookStack\Page::find($pageToCheck->id);
+        $pageToCheck = Page::find($pageToCheck->id);
         $this->assertTrue($pageToCheck->book_id === $newBook->id, 'Chapter child page\'s book id has changed to the new book');
         $pageCheckResp = $this->get($pageToCheck->getUrl());
         $pageCheckResp->assertSee($newBook->name);
@@ -118,6 +119,45 @@ class SortTest extends TestCase
         $checkPage = $pagesToMove[1];
         $checkResp = $this->get(Page::find($checkPage->id)->getUrl());
         $checkResp->assertSee($newBook->name);
+    }
+
+    public function test_page_copy()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/copy'));
+        $resp->assertSee('Copy Page');
+
+        $movePageResp = $this->post($page->getUrl('/copy'), [
+            'entity_selection' => 'book:' . $newBook->id,
+            'name' => 'My copied test page'
+        ]);
+
+        $pageCopy = Page::where('name', '=', 'My copied test page')->first();
+
+        $movePageResp->assertRedirect($pageCopy->getUrl());
+        $this->assertTrue($pageCopy->book->id == $newBook->id, 'Page was copied to correct book');
+    }
+
+    public function test_page_copy_with_no_destination()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+
+        $resp = $this->asEditor()->get($page->getUrl('/copy'));
+        $resp->assertSee('Copy Page');
+
+        $movePageResp = $this->post($page->getUrl('/copy'), [
+            'name' => 'My copied test page'
+        ]);
+
+        $pageCopy = Page::where('name', '=', 'My copied test page')->first();
+
+        $movePageResp->assertRedirect($pageCopy->getUrl());
+        $this->assertTrue($pageCopy->book->id == $currentBook->id, 'Page was copied to correct book');
+        $this->assertTrue($pageCopy->id !== $page->id, 'Page copy is not the same instance');
     }
 
 }

@@ -630,16 +630,17 @@ class PermissionService
      * @param string $tableName
      * @param string $entityIdColumn
      * @param string $entityTypeColumn
+     * @param string $action
      * @return mixed
      */
-    public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn)
+    public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn, $action = 'view')
     {
         if ($this->isAdmin()) {
             $this->clean();
             return $query;
         }
 
-        $this->currentAction = 'view';
+        $this->currentAction = $action;
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
 
         $q = $query->where(function ($query) use ($tableDetails) {

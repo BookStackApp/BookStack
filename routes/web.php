@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
         Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
+        Route::get('/{bookSlug}/page/{pageSlug}/copy', 'PageController@showCopy');
+        Route::post('/{bookSlug}/page/{pageSlug}/copy', 'PageController@copy');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
         Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showRestrict');
