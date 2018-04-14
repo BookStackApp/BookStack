@@ -68,13 +68,6 @@
         </div>
     @endif
 
-    <div class="card">
-        <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
-            @include('partials.entity-meta', ['entity' => $book])
-        </div>
-    </div>
-
     @if($book->tags->count() > 0)
         <div class="card tag-display">
             <h3>@icon('tag') {{ trans('entities.book_tags') }}</h3>
@@ -83,6 +76,14 @@
             </div>
         </div>
     @endif
+
+
+    <div class="card">
+        <h3>@icon('info') {{ trans('common.details') }}</h3>
+        <div class="body">
+            @include('partials.entity-meta', ['entity' => $book])
+        </div>
+    </div>
 
     @if(count($activity) > 0)
         <div class="activity card">
