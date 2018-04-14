@@ -8,7 +8,7 @@
 
 @section('body')
 
-    <div class="container">
+    <div class="container small">
         <p>&nbsp;</p>
         <div class="card">
             <h3>@icon('folder') {{ trans('entities.pages_move') }}</h3>

@@ -8,7 +8,7 @@
 
 @section('body')
 
-    <div class="container">
+    <div class="container small">
 
         <div class="card">
             <h3>@icon('folder') {{ trans('entities.chapters_move') }}</h3>
