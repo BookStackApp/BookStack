@@ -585,6 +585,8 @@ class PageController extends Controller
             return redirect()->back();
         }
 
+        $this->checkOwnablePermission('page-create', $parent);
+
         $this->entityRepo->changePageParent($page, $parent);
         Activity::add($page, 'page_move', $page->book->id);
         session()->flash('success', trans('entities.pages_move_success', ['parentName' => $parent->name]));

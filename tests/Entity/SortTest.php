@@ -34,10 +34,10 @@ class SortTest extends TestCase
         $currentBook = $page->book;
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
 
-        $resp = $this->asAdmin()->get($page->getUrl() . '/move');
+        $resp = $this->asEditor()->get($page->getUrl('/move'));
         $resp->assertSee('Move Page');
 
-        $movePageResp = $this->put($page->getUrl() . '/move', [
+        $movePageResp = $this->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
         $page = Page::find($page->id);
@@ -50,6 +50,31 @@ class SortTest extends TestCase
         $newBookResp->assertSee($page->name);
     }
 
+    public function test_page_move_requires_create_permissions_on_parent()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+        $editor = $this->getEditor();
+
+        $this->setEntityRestrictions($newBook, ['view', 'edit', 'delete'], $editor->roles);
+
+        $movePageResp = $this->actingAs($editor)->put($page->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id
+        ]);
+        $this->assertPermissionError($movePageResp);
+
+        $this->setEntityRestrictions($newBook, ['view', 'edit', 'delete', 'create'], $editor->roles);
+        $movePageResp = $this->put($page->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id
+        ]);
+
+        $page = Page::find($page->id);
+        $movePageResp->assertRedirect($page->getUrl());
+
+        $this->assertTrue($page->book->id == $newBook->id, 'Page book is now the new book');
+    }
+
     public function test_chapter_move()
     {
         $chapter = Chapter::first();
@@ -57,10 +82,10 @@ class SortTest extends TestCase
         $pageToCheck = $chapter->pages->first();
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
 
-        $chapterMoveResp = $this->asAdmin()->get($chapter->getUrl() . '/move');
+        $chapterMoveResp = $this->asEditor()->get($chapter->getUrl('/move'));
         $chapterMoveResp->assertSee('Move Chapter');
 
-        $moveChapterResp = $this->put($chapter->getUrl() . '/move', [
+        $moveChapterResp = $this->put($chapter->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
 
@@ -105,7 +130,7 @@ class SortTest extends TestCase
             ];
         }
 
-        $sortResp = $this->asAdmin()->put($newBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)]);
+        $sortResp = $this->asEditor()->put($newBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)]);
         $sortResp->assertRedirect($newBook->getUrl());
         $sortResp->assertStatus(302);
         $this->assertDatabaseHas('chapters', [
