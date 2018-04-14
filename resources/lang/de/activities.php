@@ -36,5 +36,8 @@ return [
     'book_delete_notification'    => 'hat Buch erfolgreich gelöscht:',
     'book_sort'                   => 'hat Buch sortiert:',
     'book_sort_notification'      => 'hat Buch erfolgreich neu sortiert:',
+    
+    // Other
+    'commented_on'                => 'kommentierte',
 
 ];
