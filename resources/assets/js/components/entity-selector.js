@@ -7,7 +7,8 @@ class EntitySelector {
         this.lastClick = 0;
 
         let entityTypes = elem.hasAttribute('entity-types') ? elem.getAttribute('entity-types') : 'page,book,chapter';
-        this.searchUrl = window.baseUrl(`/ajax/search/entities?types=${encodeURIComponent(entityTypes)}`);
+        let entityPermission = elem.hasAttribute('entity-permission') ? elem.getAttribute('entity-permission') : 'view';
+        this.searchUrl = window.baseUrl(`/ajax/search/entities?types=${encodeURIComponent(entityTypes)}&permission=${encodeURIComponent(entityPermission)}`);
 
         this.input = elem.querySelector('[entity-selector-input]');
         this.searchInput = elem.querySelector('[entity-selector-search]');
@@ -68,7 +69,6 @@ class EntitySelector {
 
     onClick(event) {
         let t = event.target;
-        console.log('click', t);
 
         if (t.matches('.entity-list-item  *')) {
             event.preventDefault();

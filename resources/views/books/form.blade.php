@@ -30,9 +30,9 @@
     </div>
 </div>
 
-<div class="form-group" collapsible id="logo-control">
+<div class="form-group" collapsible id="tags-control">
     <div class="collapse-title text-primary" collapsible-trigger>
-        <label for="user-avatar">{{ trans('entities.book_tags') }}</label>
+        <label for="tag-manager">{{ trans('entities.book_tags') }}</label>
     </div>
     <div class="collapse-content" collapsible-content>
         @include('components.tag-manager', ['entity' => isset($book)?$book:null, 'entityType' => 'chapter'])

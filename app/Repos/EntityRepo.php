@@ -594,6 +594,30 @@ class EntityRepo
     }
 
     /**
+     * Get a new draft page instance.
+     * @param Book $book
+     * @param Chapter|bool $chapter
+     * @return Page
+     */
+    public function getDraftPage(Book $book, $chapter = false)
+    {
+        $page = $this->page->newInstance();
+        $page->name = trans('entities.pages_initial_name');
+        $page->created_by = user()->id;
+        $page->updated_by = user()->id;
+        $page->draft = true;
+
+        if ($chapter) {
+            $page->chapter_id = $chapter->id;
+        }
+
+        $book->pages()->save($page);
+        $page = $this->page->find($page->id);
+        $this->permissionService->buildJointPermissionsForEntity($page);
+        return $page;
+    }
+
+    /**
      * Publish a draft page to make it a normal page.
      * Sets the slug and updates the content.
      * @param Page $draftPage
@@ -619,6 +643,43 @@ class EntityRepo
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
         $this->searchService->indexEntity($draftPage);
         return $draftPage;
+    }
+
+    /**
+     * Create a copy of a page in a new location with a new name.
+     * @param Page $page
+     * @param Entity $newParent
+     * @param string $newName
+     * @return Page
+     */
+    public function copyPage(Page $page, Entity $newParent, $newName = '')
+    {
+        $newBook = $newParent->isA('book') ? $newParent : $newParent->book;
+        $newChapter = $newParent->isA('chapter') ? $newParent : null;
+        $copyPage = $this->getDraftPage($newBook, $newChapter);
+        $pageData = $page->getAttributes();
+
+        // Update name
+        if (!empty($newName)) {
+            $pageData['name'] = $newName;
+        }
+
+        // Copy tags from previous page if set
+        if ($page->tags) {
+            $pageData['tags'] = [];
+            foreach ($page->tags as $tag) {
+                $pageData['tags'][] = ['name' => $tag->name, 'value' => $tag->value];
+            }
+        }
+
+        // Set priority
+        if ($newParent->isA('chapter')) {
+            $pageData['priority'] = $this->getNewChapterPriority($newParent);
+        } else {
+            $pageData['priority'] = $this->getNewBookPriority($newParent);
+        }
+
+        return $this->publishPageDraft($copyPage, $pageData);
     }
 
     /**
@@ -803,30 +864,6 @@ class EntityRepo
     {
         $html = $this->renderPage($page);
         return strip_tags($html);
-    }
-
-    /**
-     * Get a new draft page instance.
-     * @param Book $book
-     * @param Chapter|bool $chapter
-     * @return Page
-     */
-    public function getDraftPage(Book $book, $chapter = false)
-    {
-        $page = $this->page->newInstance();
-        $page->name = trans('entities.pages_initial_name');
-        $page->created_by = user()->id;
-        $page->updated_by = user()->id;
-        $page->draft = true;
-
-        if ($chapter) {
-            $page->chapter_id = $chapter->id;
-        }
-
-        $book->pages()->save($page);
-        $page = $this->page->find($page->id);
-        $this->permissionService->buildJointPermissionsForEntity($page);
-        return $page;
     }
 
     /**
