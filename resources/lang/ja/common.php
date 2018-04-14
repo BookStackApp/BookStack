@@ -10,6 +10,7 @@ return [
     'save' => '保存',
     'continue' => '続ける',
     'select' => '選択',
+    'more' => 'その他',
 
     /**
      * Form Labels
@@ -45,6 +46,9 @@ return [
     'no_items' => 'アイテムはありません',
     'back_to_top' => '上に戻る',
     'toggle_details' => '概要の表示切替',
+    'details' => '詳細',
+    'grid_view' => 'グリッド形式',
+    'list_view' => 'リスト形式',
 
     /**
      * Header
