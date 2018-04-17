@@ -364,6 +364,7 @@ ul.pagination {
   padding: $-xs 0;
   color: #555;
   fill: #555;
+	white-space: nowrap;
   text-align: left !important;
   &.wide {
     min-width: 220px;
