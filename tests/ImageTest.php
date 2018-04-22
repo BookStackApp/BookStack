@@ -106,6 +106,29 @@ class ImageTest extends TestCase
         }
     }
 
+    public function test_secure_images_included_in_exports()
+    {
+        config()->set('filesystems.default', 'local_secure');
+        $this->asEditor();
+        $galleryFile = $this->getTestImage('my-secure-test-upload');
+        $page = Page::first();
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload');
+
+        $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $imageUrl = json_decode($upload->getContent(), true)['url'];
+        $page->html .= "<img src=\"{$imageUrl}\">";
+        $page->save();
+        $upload->assertStatus(200);
+
+        $encodedImageContent = base64_encode(file_get_contents($expectedPath));
+        $export = $this->get($page->getUrl('/export/html'));
+        $this->assertTrue(str_contains($export->getContent(), $encodedImageContent), 'Uploaded image in export content');
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
     public function test_system_images_remain_public()
     {
         config()->set('filesystems.default', 'local_secure');
