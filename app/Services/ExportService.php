@@ -9,14 +9,16 @@ class ExportService
 {
 
     protected $entityRepo;
+    protected $imageService;
 
     /**
      * ExportService constructor.
      * @param $entityRepo
      */
-    public function __construct(EntityRepo $entityRepo)
+    public function __construct(EntityRepo $entityRepo, ImageService $imageService)
     {
         $this->entityRepo = $entityRepo;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -24,6 +26,7 @@ class ExportService
      * Includes required CSS & image content. Images are base64 encoded into the HTML.
      * @param Page $page
      * @return mixed|string
+     * @throws \Throwable
      */
     public function pageToContainedHtml(Page $page)
     {
@@ -38,6 +41,7 @@ class ExportService
      * Convert a chapter to a self-contained HTML file.
      * @param Chapter $chapter
      * @return mixed|string
+     * @throws \Throwable
      */
     public function chapterToContainedHtml(Chapter $chapter)
     {
@@ -56,6 +60,7 @@ class ExportService
      * Convert a book to a self-contained HTML file.
      * @param Book $book
      * @return mixed|string
+     * @throws \Throwable
      */
     public function bookToContainedHtml(Book $book)
     {
@@ -71,6 +76,7 @@ class ExportService
      * Convert a page to a PDF file.
      * @param Page $page
      * @return mixed|string
+     * @throws \Throwable
      */
     public function pageToPdf(Page $page)
     {
@@ -85,6 +91,7 @@ class ExportService
      * Convert a chapter to a PDF file.
      * @param Chapter $chapter
      * @return mixed|string
+     * @throws \Throwable
      */
     public function chapterToPdf(Chapter $chapter)
     {
@@ -103,6 +110,7 @@ class ExportService
      * Convert a book to a PDF file
      * @param Book $book
      * @return string
+     * @throws \Throwable
      */
     public function bookToPdf(Book $book)
     {
@@ -118,6 +126,7 @@ class ExportService
      * Convert normal webpage HTML to a PDF.
      * @param $html
      * @return string
+     * @throws \Exception
      */
     protected function htmlToPdf($html)
     {
@@ -146,45 +155,14 @@ class ExportService
         // Replace image src with base64 encoded image strings
         if (isset($imageTagsOutput[0]) && count($imageTagsOutput[0]) > 0) {
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
-                $oldImgString = $imgMatch;
+                $oldImgTagString = $imgMatch;
                 $srcString = $imageTagsOutput[2][$index];
-                $isLocal = strpos(trim($srcString), 'http') !== 0;
-                if ($isLocal) {
-                    $pathString = public_path(trim($srcString, '/'));
-                } else {
-                    $pathString = $srcString;
+                $imageEncoded = $this->imageService->imageUriToBase64($srcString);
+                if ($imageEncoded === null) {
+                    $imageEncoded = $srcString;
                 }
-
-                // Attempt to find local files even if url not absolute
-                $base = baseUrl('/');
-                if (strpos($srcString, $base) === 0) {
-                    $isLocal = true;
-                    $relString = str_replace($base, '', $srcString);
-                    $pathString = public_path(trim($relString, '/'));
-                }
-
-                if ($isLocal && !file_exists($pathString)) {
-                    continue;
-                }
-                try {
-                    if ($isLocal) {
-                        $imageContent = file_get_contents($pathString);
-                    } else {
-                        $ch = curl_init();
-                        curl_setopt_array($ch, [CURLOPT_URL => $pathString, CURLOPT_RETURNTRANSFER => 1, CURLOPT_CONNECTTIMEOUT => 5]);
-                        $imageContent = curl_exec($ch);
-                        $err = curl_error($ch);
-                        curl_close($ch);
-                        if ($err) {
-                            throw new \Exception("Image fetch failed, Received error: " . $err);
-                        }
-                    }
-                    $imageEncoded = 'data:image/' . pathinfo($pathString, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageContent);
-                    $newImageString = str_replace($srcString, $imageEncoded, $oldImgString);
-                } catch (\ErrorException $e) {
-                    $newImageString = '';
-                }
-                $htmlContent = str_replace($oldImgString, $newImageString, $htmlContent);
+                $newImgTagString = str_replace($srcString, $imageEncoded, $oldImgTagString);
+                $htmlContent = str_replace($oldImgTagString, $newImgTagString, $htmlContent);
             }
         }
 

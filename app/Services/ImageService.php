@@ -322,6 +322,52 @@ class ImageService extends UploadService
     }
 
     /**
+     * Convert a image URI to a Base64 encoded string.
+     * Attempts to find locally via set storage method first.
+     * @param string $uri
+     * @return null|string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function imageUriToBase64(string $uri)
+    {
+        $isLocal = strpos(trim($uri), 'http') !== 0;
+
+        // Attempt to find local files even if url not absolute
+        $base = baseUrl('/');
+        if (!$isLocal && strpos($uri, $base) === 0) {
+            $isLocal = true;
+            $uri = str_replace($base, '', $uri);
+        }
+
+        $imageData = null;
+
+        if ($isLocal) {
+            $uri = trim($uri, '/');
+            $storage = $this->getStorage();
+            if ($storage->exists($uri)) {
+                $imageData = $storage->get($uri);
+            }
+        } else {
+            try {
+                $ch = curl_init();
+                curl_setopt_array($ch, [CURLOPT_URL => $uri, CURLOPT_RETURNTRANSFER => 1, CURLOPT_CONNECTTIMEOUT => 5]);
+                $imageData = curl_exec($ch);
+                $err = curl_error($ch);
+                curl_close($ch);
+                if ($err) {
+                    throw new \Exception("Image fetch failed, Received error: " . $err);
+                }
+            } catch (\Exception $e) {}
+        }
+
+        if ($imageData === null) {
+            return null;
+        }
+
+        return 'data:image/' . pathinfo($uri, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageData);
+    }
+
+    /**
      * Gets a public facing url for an image by checking relevant environment variables.
      * @param string $filePath
      * @return string
