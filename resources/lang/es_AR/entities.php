@@ -19,7 +19,6 @@ return [
     'meta_created_name' => 'Creado el  :timeLength por :user',
     'meta_updated' => 'Actualizado el :timeLength',
     'meta_updated_name' => 'Actualizado el :timeLength por :user',
-    'x_pages' => ':count Páginas',
     'entity_select' => 'Seleccione entidad',
     'images' => 'Imágenes',
     'my_recent_drafts' => 'Mis borradores recientes',
@@ -167,6 +166,9 @@ return [
     'pages_not_in_chapter' => 'La página no esá en el capítulo',
     'pages_move' => 'Mover página',
     'pages_move_success' => 'Página movida a ":parentName"',
+    'pages_copy' => 'Copiar página',
+    'pages_copy_desination' => 'Destino de la copia',
+    'pages_copy_success' => 'Página copiada con éxito',
     'pages_permissions' => 'Permisos de página',
     'pages_permissions_success' => 'Permisos de página actualizados',
     'pages_revision' => 'Revisión',
@@ -201,6 +203,8 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Etiquetas de página',
+    'chapter_tags' => 'Etiquetas de capítulo',
+    'book_tags' => 'Etiquetas de libro',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
@@ -246,6 +250,7 @@ return [
      */
     'comment' => 'Comentario',
     'comments' => 'Comentarios',
+    'comment_add' => 'Agregar comentario',
     'comment_placeholder' => 'DEjar un comentario aquí',
     'comment_count' => '{0} Sin Comentarios|{1} 1 Comentario|[2,*] :count Comentarios',
     'comment_save' => 'Guardar comentario',
