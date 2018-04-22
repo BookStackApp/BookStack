@@ -492,14 +492,19 @@ class EntityRepo
     public function createFromInput($type, $input = [], $book = false)
     {
         $isChapter = strtolower($type) === 'chapter';
-        $entity = $this->getEntity($type)->newInstance($input);
-        $entity->slug = $this->findSuitableSlug($type, $entity->name, false, $isChapter ? $book->id : false);
-        $entity->created_by = user()->id;
-        $entity->updated_by = user()->id;
-        $isChapter ? $book->chapters()->save($entity) : $entity->save();
-        $this->permissionService->buildJointPermissionsForEntity($entity);
-        $this->searchService->indexEntity($entity);
-        return $entity;
+        $entityModel = $this->getEntity($type)->newInstance($input);
+        $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $isChapter ? $book->id : false);
+        $entityModel->created_by = user()->id;
+        $entityModel->updated_by = user()->id;
+        $isChapter ? $book->chapters()->save($entityModel) : $entityModel->save();
+
+        if (isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
+        }
+
+        $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $this->searchService->indexEntity($entityModel);
+        return $entityModel;
     }
 
     /**
@@ -518,6 +523,11 @@ class EntityRepo
         $entityModel->fill($input);
         $entityModel->updated_by = user()->id;
         $entityModel->save();
+
+        if (isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
+        }
+
         $this->permissionService->buildJointPermissionsForEntity($entityModel);
         $this->searchService->indexEntity($entityModel);
         return $entityModel;
@@ -584,6 +594,30 @@ class EntityRepo
     }
 
     /**
+     * Get a new draft page instance.
+     * @param Book $book
+     * @param Chapter|bool $chapter
+     * @return Page
+     */
+    public function getDraftPage(Book $book, $chapter = false)
+    {
+        $page = $this->page->newInstance();
+        $page->name = trans('entities.pages_initial_name');
+        $page->created_by = user()->id;
+        $page->updated_by = user()->id;
+        $page->draft = true;
+
+        if ($chapter) {
+            $page->chapter_id = $chapter->id;
+        }
+
+        $book->pages()->save($page);
+        $page = $this->page->find($page->id);
+        $this->permissionService->buildJointPermissionsForEntity($page);
+        return $page;
+    }
+
+    /**
      * Publish a draft page to make it a normal page.
      * Sets the slug and updates the content.
      * @param Page $draftPage
@@ -609,6 +643,43 @@ class EntityRepo
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
         $this->searchService->indexEntity($draftPage);
         return $draftPage;
+    }
+
+    /**
+     * Create a copy of a page in a new location with a new name.
+     * @param Page $page
+     * @param Entity $newParent
+     * @param string $newName
+     * @return Page
+     */
+    public function copyPage(Page $page, Entity $newParent, $newName = '')
+    {
+        $newBook = $newParent->isA('book') ? $newParent : $newParent->book;
+        $newChapter = $newParent->isA('chapter') ? $newParent : null;
+        $copyPage = $this->getDraftPage($newBook, $newChapter);
+        $pageData = $page->getAttributes();
+
+        // Update name
+        if (!empty($newName)) {
+            $pageData['name'] = $newName;
+        }
+
+        // Copy tags from previous page if set
+        if ($page->tags) {
+            $pageData['tags'] = [];
+            foreach ($page->tags as $tag) {
+                $pageData['tags'][] = ['name' => $tag->name, 'value' => $tag->value];
+            }
+        }
+
+        // Set priority
+        if ($newParent->isA('chapter')) {
+            $pageData['priority'] = $this->getNewChapterPriority($newParent);
+        } else {
+            $pageData['priority'] = $this->getNewBookPriority($newParent);
+        }
+
+        return $this->publishPageDraft($copyPage, $pageData);
     }
 
     /**
@@ -774,7 +845,9 @@ class EntityRepo
         $scriptSearchRegex = '/<script.*?>.*?<\/script>/ms';
         $matches = [];
         preg_match_all($scriptSearchRegex, $html, $matches);
-        if (count($matches) === 0) return $html;
+        if (count($matches) === 0) {
+            return $html;
+        }
 
         foreach ($matches[0] as $match) {
             $html = str_replace($match, htmlentities($match), $html);
@@ -791,30 +864,6 @@ class EntityRepo
     {
         $html = $this->renderPage($page);
         return strip_tags($html);
-    }
-
-    /**
-     * Get a new draft page instance.
-     * @param Book $book
-     * @param Chapter|bool $chapter
-     * @return Page
-     */
-    public function getDraftPage(Book $book, $chapter = false)
-    {
-        $page = $this->page->newInstance();
-        $page->name = trans('entities.pages_initial_name');
-        $page->created_by = user()->id;
-        $page->updated_by = user()->id;
-        $page->draft = true;
-
-        if ($chapter) {
-            $page->chapter_id = $chapter->id;
-        }
-
-        $book->pages()->save($page);
-        $page = $this->page->find($page->id);
-        $this->permissionService->buildJointPermissionsForEntity($page);
-        return $page;
     }
 
     /**

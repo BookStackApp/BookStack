@@ -9,29 +9,10 @@
         @endif
     </div>
 
-    <div toolbox-tab-content="tags" id="tag-manager" page-id="{{ $page->id or 0 }}">
+    <div toolbox-tab-content="tags">
         <h4>{{ trans('entities.page_tags') }}</h4>
-        <div class="padded tags">
-            <p class="muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
-
-
-            <draggable :options="{handle: '.handle'}" :list="tags" element="div">
-                <div v-for="(tag, i) in tags" :key="tag.key" class="card drag-card">
-                    <div class="handle" >@icon('grip')</div>
-                    <div>
-                        <autosuggest url="{{ baseUrl('/ajax/tags/suggest/names') }}" type="name" class="outline" :name="getTagFieldName(i, 'name')"
-                                     v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
-                    </div>
-                    <div>
-                        <autosuggest url="{{ baseUrl('/ajax/tags/suggest/values') }}" type="value" class="outline" :name="getTagFieldName(i, 'value')"
-                                     v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"/>
-                    </div>
-                    <div v-show="tags.length !== 1" class="text-center drag-card-action text-neg" @click="removeTag(tag)">@icon('close')</div>
-                </div>
-            </draggable>
-
-            <button @click="addEmptyTag" type="button" class="text-button">{{ trans('entities.tags_add') }}</button>
-
+        <div class="padded">
+            @include('components.tag-manager', ['entity' => $page, 'entityType' => 'page'])
         </div>
     </div>
 

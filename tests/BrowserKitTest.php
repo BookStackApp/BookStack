@@ -12,10 +12,7 @@ abstract class BrowserKitTest extends TestCase
 {
 
     use DatabaseTransactions;
-
-    // Local user instances
-    private $admin;
-    private $editor;
+    use SharedTestHelpers;
 
     /**
      * The base URL to use while testing the application.
@@ -43,38 +40,6 @@ abstract class BrowserKitTest extends TestCase
         return $app;
     }
 
-    /**
-     * Set the current user context to be an admin.
-     * @return $this
-     */
-    public function asAdmin()
-    {
-        return $this->actingAs($this->getAdmin());
-    }
-
-    /**
-     * Get the current admin user.
-     * @return mixed
-     */
-    public function getAdmin() {
-        if($this->admin === null) {
-            $adminRole = Role::getSystemRole('admin');
-            $this->admin = $adminRole->users->first();
-        }
-        return $this->admin;
-    }
-
-    /**
-     * Set the current editor context to be an editor.
-     * @return $this
-     */
-    public function asEditor()
-    {
-        if ($this->editor === null) {
-            $this->editor = $this->getEditor();
-        }
-        return $this->actingAs($this->editor);
-    }
 
     /**
      * Get a user that's not a system user such as the guest user.
@@ -127,28 +92,6 @@ abstract class BrowserKitTest extends TestCase
         $restrictionService->buildJointPermissionsForEntity($entity);
     }
 
-    /**
-     * Get an instance of a user with 'editor' permissions
-     * @param array $attributes
-     * @return mixed
-     */
-    protected function getEditor($attributes = [])
-    {
-        $user = \BookStack\Role::getRole('editor')->users()->first();
-        if (!empty($attributes)) $user->forceFill($attributes)->save();
-        return $user;
-    }
-
-    /**
-     * Get an instance of a user with 'viewer' permissions
-     * @return mixed
-     */
-    protected function getViewer()
-    {
-        $user = \BookStack\Role::getRole('viewer')->users()->first();
-        if (!empty($attributes)) $user->forceFill($attributes)->save();
-        return $user;
-    }
 
     /**
      * Quick way to create a new user without any permissions

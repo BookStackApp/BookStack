@@ -89,16 +89,17 @@ class SearchController extends Controller
     {
         $entityTypes = $request->filled('types') ? collect(explode(',', $request->get('types'))) : collect(['page', 'chapter', 'book']);
         $searchTerm =  $request->get('term', false);
+        $permission = $request->get('permission', 'view');
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
             $searchTerm .= ' {type:'. implode('|', $entityTypes->toArray()) .'}';
-            $entities = $this->searchService->searchEntities($searchTerm)['results'];
+            $entities = $this->searchService->searchEntities($searchTerm, 'all', 1, 20, $permission)['results'];
         } else {
             $entityNames = $entityTypes->map(function ($type) {
                 return 'BookStack\\' . ucfirst($type);
             })->toArray();
-            $entities = $this->viewService->getPopular(20, 0, $entityNames);
+            $entities = $this->viewService->getPopular(20, 0, $entityNames, $permission);
         }
 
         return view('search/entity-ajax-list', ['entities' => $entities]);

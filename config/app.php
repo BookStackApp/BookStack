@@ -4,11 +4,27 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    /**
+     * Set the default view type for various lists. Can be overridden by user preferences.
+     * This will be used for public viewers and users that have not set a preference.
+     */
     'views' => [
         'books' => env('APP_VIEWS_BOOKS', 'list')
     ],
 
+    /**
+     * Allow <script> tags to entered within page content.
+     * <script> tags are escaped by default.
+     * Even when overridden the WYSIWYG editor may still escape script content.
+     */
     'allow_content_scripts' => env('ALLOW_CONTENT_SCRIPTS', false),
+
+    /**
+     * Override the default behaviour for allowing crawlers to crawl the instance.
+     * May be ignored if view has be overridden or modified.
+     * Defaults to null since, if not set, 'app-public' status used instead.
+     */
+    'allow_robots' => env('ALLOW_ROBOTS', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +77,7 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
-    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN'],
+    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
 
     /*
     |--------------------------------------------------------------------------

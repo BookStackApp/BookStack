@@ -84,6 +84,16 @@
         </div>
     @endif
 
+
+    @if($chapter->tags->count() > 0)
+        <div class="card tag-display">
+            <h3>@icon('tag') {{ trans('entities.chapter_tags') }}</h3>
+            <div class="body">
+                @include('components.tag-list', ['entity' => $chapter])
+            </div>
+        </div>
+    @endif
+
     <div class="card">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
         <div class="body">
