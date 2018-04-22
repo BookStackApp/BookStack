@@ -35,6 +35,7 @@ return [
     'cannot_get_image_from_url' => 'No se puede obtener la imagen desde :url',
     'cannot_create_thumbs' => 'El servidor no puede crear la imagen miniatura. Por favor chequee que tiene la extensión GD instalada.',
     'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamañ. Por favor intente con un fichero de menor tamañ.',
+    'uploaded'  => 'El servidor no permite subir archivos de este tamaño. Por favor intente un tamaño menor.',    'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
 
