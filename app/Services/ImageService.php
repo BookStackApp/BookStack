@@ -357,7 +357,8 @@ class ImageService extends UploadService
                 if ($err) {
                     throw new \Exception("Image fetch failed, Received error: " . $err);
                 }
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
 
         if ($imageData === null) {
