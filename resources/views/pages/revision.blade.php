@@ -3,7 +3,7 @@
 @section('sidebar')
     <div class="card">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
+        <div class="body text-small text-muted">
             @include('partials.entity-meta', ['entity' => $revision])
         </div>
     </div>
