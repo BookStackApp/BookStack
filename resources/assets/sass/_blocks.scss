@@ -208,6 +208,12 @@
   }
 }
 
+.sidebar .card {
+  h3, .body, .empty-text {
+    padding: $-s $-m;
+  }
+}
+
 .card.drag-card {
   border: 1px solid #DDD;
   border-radius: 4px;

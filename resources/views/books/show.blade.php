@@ -53,21 +53,6 @@
         </div>
     </div>
 
-    @if($book->restricted)
-        <div class="card">
-            <h3>@icon('permission') {{ trans('entities.permissions') }}</h3>
-            <div class="body">
-                <p class="text-muted">
-                    @if(userCan('restrictions-manage', $book))
-                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
-                    @else
-                        @icon('lock'){{ trans('entities.books_permissions_active') }}
-                    @endif
-                </p>
-            </div>
-        </div>
-    @endif
-
     @if($book->tags->count() > 0)
         <div class="card tag-display">
             <h3>@icon('tag') {{ trans('entities.book_tags') }}</h3>
@@ -78,10 +63,19 @@
     @endif
 
 
-    <div class="card">
+    <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
+        <div class="body text-small text-muted blended-links">
             @include('partials.entity-meta', ['entity' => $book])
+            @if($book->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $book))
+                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 

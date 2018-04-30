@@ -101,6 +101,13 @@ a, .link {
   }
 }
 
+.blended-links a {
+  color: inherit;
+  svg {
+    fill: currentColor;
+  }
+}
+
 /*
  * Other HTML Text Elements
  */
