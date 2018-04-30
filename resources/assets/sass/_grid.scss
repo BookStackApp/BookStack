@@ -55,6 +55,9 @@ body.flexbox {
   background-color: #F2F2F2;
   max-width: 360px;
   min-height: 90vh;
+  section {
+    margin: $-m;
+  }
 }
 .flex.sidebar + .flex.content {
   flex: 3;

@@ -43,6 +43,12 @@
 
 @section('sidebar')
 
+    @if($book->tags->count() > 0)
+        <section>
+            @include('components.tag-list', ['entity' => $book])
+        </section>
+    @endif
+
     <div class="card">
         <div class="body">
             <form v-on:submit.prevent="searchBook" class="search-box">
@@ -52,16 +58,6 @@
             </form>
         </div>
     </div>
-
-    @if($book->tags->count() > 0)
-        <div class="card tag-display">
-            <h3>@icon('tag') {{ trans('entities.book_tags') }}</h3>
-            <div class="body">
-                @include('components.tag-list', ['entity' => $book])
-            </div>
-        </div>
-    @endif
-
 
     <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>

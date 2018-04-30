@@ -47,6 +47,13 @@
 @stop
 
 @section('sidebar')
+
+    @if($chapter->tags->count() > 0)
+        <section>
+            @include('components.tag-list', ['entity' => $chapter])
+        </section>
+    @endif
+
     <div class="card">
         <div class="body">
             <form @submit.prevent="searchBook" class="search-box">
@@ -56,15 +63,6 @@
             </form>
         </div>
     </div>
-
-    @if($chapter->tags->count() > 0)
-        <div class="card tag-display">
-            <h3>@icon('tag') {{ trans('entities.chapter_tags') }}</h3>
-            <div class="body">
-                @include('components.tag-list', ['entity' => $chapter])
-            </div>
-        </div>
-    @endif
 
     <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
