@@ -268,3 +268,33 @@
   padding: $-m;
   border: 1px solid #DDD;
 }
+
+.tag-item {
+  display: inline-flex;
+  margin-bottom: $-xs;
+  margin-right: $-xs;
+  border-radius: 4px;
+  border: 1px solid #CCC;
+  overflow: hidden;
+  font-size: 0.85em;
+  a, a:hover, a:active {
+    padding: 4px 8px;
+    color: #777;
+    transition: background-color ease-in-out 80ms;
+    text-decoration: none;
+  }
+  a:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  svg {
+    fill: #888;
+  }
+  .tag-value {
+    border-left: 1px solid #DDD;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.tag-list div:last-child .tag-item {
+  margin-bottom: 0;
+}

@@ -1,10 +1,6 @@
-<table>
-    <tbody>
-    @foreach($entity->tags as $tag)
-        <tr class="tag">
-            <td @if(!$tag->value) colspan="2" @endif><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%5D') }}">{{ $tag->name }}</a></td>
-            @if($tag->value) <td class="tag-value"><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%3D' . urlencode($tag->value) . '%5D') }}">{{$tag->value}}</a></td> @endif
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+@foreach($entity->tags as $tag)
+    <div class="tag-item primary-background-light">
+        <div class="tag-name"><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%5D') }}">@icon('tag'){{ $tag->name }}</a></div>
+        @if($tag->value) <div class="tag-value"><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%3D' . urlencode($tag->value) . '%5D') }}">{{$tag->value}}</a></div> @endif
+    </div>
+@endforeach

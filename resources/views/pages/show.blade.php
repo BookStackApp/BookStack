@@ -43,12 +43,9 @@
 @section('sidebar')
 
     @if($page->tags->count() > 0)
-        <div class="card tag-display">
-            <h3>@icon('tag') {{ trans('entities.page_tags') }}</h3>
-            <div class="body">
-                @include('components.tag-list', ['entity' => $page])
-            </div>
-        </div>
+        <section>
+            @include('components.tag-list', ['entity' => $page])
+        </section>
     @endif
 
     @if ($page->attachments->count() > 0)
