@@ -1,6 +1,6 @@
 <div class="entity-meta">
     @if($entity->isA('revision'))
-        {{ trans('entities.pages_revision') }}
+        @icon('history'){{ trans('entities.pages_revision') }}
         {{ trans('entities.pages_revisions_number') }}{{ $entity->revision_number == 0 ? '' : $entity->revision_number }}
         <br>
     @endif

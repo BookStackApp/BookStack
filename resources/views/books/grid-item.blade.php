@@ -12,7 +12,7 @@
             <p >{{ $book->getExcerpt(130) }}</p>
         @endif
     </div>
-    <div class="grid-card-footer">
+    <div class="grid-card-footer text-muted text-small">
         <span>@include('partials.entity-meta', ['entity' => $book])</span>
     </div>
 </div>
