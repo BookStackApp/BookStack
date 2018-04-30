@@ -446,3 +446,12 @@ ul.pagination {
     margin: 0;
   }
 }
+
+.card.entity-details {
+  .active-restriction {
+    margin-top: $-xs;
+  }
+  .active-restriction + .active-restriction {
+    margin-top: 0;
+  }
+}

@@ -57,34 +57,6 @@
         </div>
     </div>
 
-    @if($book->restricted || $chapter->restricted)
-        <div class="card">
-            <h3>@icon('permission') {{ trans('entities.permissions') }}</h3>
-            <div class="body">
-                @if($book->restricted)
-                    <p class="text-muted">
-                        @if(userCan('restrictions-manage', $book))
-                            <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.books_permissions_active') }}
-                        @endif
-                    </p>
-                @endif
-
-                @if($chapter->restricted)
-                    <p class="text-muted">
-                        @if(userCan('restrictions-manage', $chapter))
-                            <a href="{{ $chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.chapters_permissions_active') }}
-                        @endif
-                    </p>
-                @endif
-            </div>
-        </div>
-    @endif
-
-
     @if($chapter->tags->count() > 0)
         <div class="card tag-display">
             <h3>@icon('tag') {{ trans('entities.chapter_tags') }}</h3>
@@ -94,10 +66,30 @@
         </div>
     @endif
 
-    <div class="card">
+    <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
+        <div class="body blended-links text-small text-muted">
             @include('partials.entity-meta', ['entity' => $chapter])
+
+            @if($book->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $book))
+                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                    @endif
+                </div>
+            @endif
+
+            @if($chapter->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $chapter))
+                        <a href="{{ $chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.chapters_permissions_active') }}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 
