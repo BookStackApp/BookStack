@@ -5,6 +5,7 @@ use BookStack\Chapter;
 use BookStack\Page;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
+use Carbon\Carbon;
 
 class EntityTest extends BrowserKitTest
 {
@@ -269,6 +270,9 @@ class EntityTest extends BrowserKitTest
     public function test_recently_updated_pages_on_home()
     {
         $page = Page::orderBy('updated_at', 'asc')->first();
+        Page::where('id', '!=', $page->id)->update([
+            'updated_at' => Carbon::now()->subSecond(1)
+        ]);
         $this->asAdmin()->visit('/')
             ->dontSeeInElement('#recently-updated-pages', $page->name);
         $this->visit($page->getUrl() . '/edit')

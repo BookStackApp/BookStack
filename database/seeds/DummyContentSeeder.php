@@ -21,11 +21,11 @@ class DummyContentSeeder extends Seeder
         $role = \BookStack\Role::getRole('viewer');
         $viewerUser->attachRole($role);
 
-        factory(\BookStack\Book::class, 20)->create(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id])
+        factory(\BookStack\Book::class, 5)->create(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id])
             ->each(function($book) use ($editorUser) {
-                $chapters = factory(\BookStack\Chapter::class, 5)->create(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id])
+                $chapters = factory(\BookStack\Chapter::class, 3)->create(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id])
                     ->each(function($chapter) use ($editorUser, $book){
-                        $pages = factory(\BookStack\Page::class, 5)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id, 'book_id' => $book->id]);
+                        $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id, 'book_id' => $book->id]);
                         $chapter->pages()->saveMany($pages);
                     });
                 $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);

@@ -90,4 +90,35 @@ class PublicActionTest extends BrowserKitTest
         $this->dontSee($page->name);
     }
 
+    public function test_robots_effected_by_public_status()
+    {
+        $this->visit('/robots.txt');
+        $this->seeText("User-agent: *\nDisallow: /");
+
+        $this->setSettings(['app-public' => 'true']);
+        $this->visit('/robots.txt');
+
+        $this->seeText("User-agent: *\nDisallow:");
+        $this->dontSeeText("Disallow: /");
+    }
+
+    public function test_robots_effected_by_setting()
+    {
+        $this->visit('/robots.txt');
+        $this->seeText("User-agent: *\nDisallow: /");
+
+        config()->set('app.allow_robots', true);
+        $this->visit('/robots.txt');
+
+        $this->seeText("User-agent: *\nDisallow:");
+        $this->dontSeeText("Disallow: /");
+
+        // Check config overrides app-public setting
+        config()->set('app.allow_robots', false);
+        $this->setSettings(['app-public' => 'true']);
+        $this->visit('/robots.txt');
+
+        $this->seeText("User-agent: *\nDisallow: /");
+    }
+
 }

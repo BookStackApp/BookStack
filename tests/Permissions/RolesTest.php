@@ -16,14 +16,6 @@ class RolesTest extends BrowserKitTest
         $this->user = $this->getViewer();
     }
 
-    protected function getViewer()
-    {
-        $role = \BookStack\Role::getRole('viewer');
-        $viewer = $this->getNewBlankUser();
-        $viewer->attachRole($role);;
-        return $viewer;
-    }
-
     /**
      * Give the given user some permissions.
      * @param \BookStack\User $user

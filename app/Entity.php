@@ -197,9 +197,8 @@ class Entity extends Ownable
      * @param $path
      * @return string
      */
-    public function getUrl($path)
+    public function getUrl($path = '/')
     {
-        return '/';
+        return $path;
     }
-
 }

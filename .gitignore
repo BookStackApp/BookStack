@@ -21,3 +21,4 @@ nbproject
 .buildpath
 .project
 .settings/
+webpack-stats.json

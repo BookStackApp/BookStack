@@ -22,6 +22,7 @@
                     <a dropdown-toggle class="text-primary text-button">@icon('more') {{ trans('common.more') }}</a>
                     <ul>
                         @if(userCan('page-update', $page))
+                            <li><a href="{{ $page->getUrl('/copy') }}" class="text-primary" >@icon('copy'){{ trans('common.copy') }}</a></li>
                             <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" >@icon('folder'){{ trans('common.move') }}</a></li>
                             <li><a href="{{ $page->getUrl('/revisions') }}" class="text-primary">@icon('history'){{ trans('entities.revisions') }}</a></li>
                         @endif
@@ -81,16 +82,7 @@
         <div class="card tag-display">
             <h3>@icon('tag') {{ trans('entities.page_tags') }}</h3>
             <div class="body">
-                <table>
-                    <tbody>
-                    @foreach($page->tags as $tag)
-                        <tr class="tag">
-                            <td @if(!$tag->value) colspan="2" @endif><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%5D') }}">{{ $tag->name }}</a></td>
-                            @if($tag->value) <td class="tag-value"><a href="{{ baseUrl('/search?term=%5B' . urlencode($tag->name) .'%3D' . urlencode($tag->value) . '%5D') }}">{{$tag->value}}</a></td> @endif
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                @include('components.tag-list', ['entity' => $page])
             </div>
         </div>
     @endif
@@ -135,7 +127,7 @@
 @stop
 
 @section('body')
-    <div class="page-content" ng-non-bindable>
+    <div class="page-content" page-display="{{ $page->id }}" ng-non-bindable>
 
         <div class="pointer-container" id="pointer">
             <div class="pointer anim" >
@@ -153,10 +145,4 @@
           @include('comments/comments', ['page' => $page])
       </div>
     @endif
-@stop
-
-@section('scripts')
-    <script>
-        setupPageShow({{$page->id}});
-    </script>
 @stop

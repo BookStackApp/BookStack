@@ -1287,6 +1287,7 @@ div[class^="col-"] img {
     text-align: center;
     justify-content: center;
     width: 28px;
+    flex-grow: 0;
     padding-left: 6px;
     padding-right: 6px; }
     .card.drag-card .handle:hover, .card.drag-card .drag-card-action:hover {
@@ -1294,7 +1295,8 @@ div[class^="col-"] img {
     .card.drag-card .handle .svg-icon, .card.drag-card .drag-card-action .svg-icon {
       margin-right: 0px; }
   .card.drag-card > div .outline input {
-    margin: 12px 0; }
+    margin: 12px 0;
+    width: 100%; }
   .card.drag-card > div.padded {
     padding: 12px 0 !important; }
   .card.drag-card .handle {
@@ -1305,7 +1307,8 @@ div[class^="col-"] img {
     bottom: 0; }
   .card.drag-card > div {
     padding: 0 12px;
-    max-width: 80%; }
+    max-width: 80%;
+    flex: 1; }
 
 .well {
   background-color: #F8F8F8;
@@ -1776,6 +1779,8 @@ input:checked + .toggle-switch {
   .form-group[collapsible].open .collapse-title label:before {
     -webkit-transform: rotate(90deg);
             transform: rotate(90deg); }
+  .form-group[collapsible] + .form-group[collapsible] {
+    margin-top: -13px; }
 
 .inline-input-style, .title-input input[type="text"], .description-input textarea {
   display: block;
@@ -3117,6 +3122,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .comment-box .header .text-muted {
     color: #999; }
 
+#tag-manager .drag-card {
+  max-width: 500px; }
+
 /**
  * Includes the main navigation header and the faded toolbar.
  */
@@ -3687,6 +3695,10 @@ ul.pagination {
   .page-editor .edit-area {
     flex: 1;
     flex-direction: column; }
+  .page-editor .mce-tinymce {
+    box-shadow: none; }
+  .page-editor .mce-top-part::before {
+    box-shadow: none; }
 
 .draft-notification {
   pointer-events: none;
@@ -3942,6 +3954,10 @@ ul.pagination {
 
 .comment-editor .CodeMirror, .comment-editor .CodeMirror-scroll {
   min-height: 175px; }
+
+/* FIXME - Ugly hack to modify the media plugin for TinyMCE */
+.mce-floatpanel[aria-label="Insert/edit media"] .mce-open {
+  display: none; }
 
 [v-cloak] {
   display: none;

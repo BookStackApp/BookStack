@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
-use BookStack\Role;
+use BookStack\Book;
+use BookStack\Chapter;
 use BookStack\Tag;
 use BookStack\Page;
 use BookStack\Services\PermissionService;
@@ -15,26 +16,54 @@ class TagTest extends BrowserKitTest
      * @param Tag[]|bool $tags
      * @return mixed
      */
-    protected function getPageWithTags($tags = false)
+    protected function getEntityWithTags($class, $tags = false)
     {
-        $page = Page::first();
+        $entity = $class::first();
 
         if (!$tags) {
             $tags = factory(Tag::class, $this->defaultTagCount)->make();
         }
 
-        $page->tags()->saveMany($tags);
-        return $page;
+        $entity->tags()->saveMany($tags);
+        return $entity;
     }
 
     public function test_get_page_tags()
     {
-        $page = $this->getPageWithTags();
+        $page = $this->getEntityWithTags(Page::class);
 
         // Add some other tags to check they don't interfere
         factory(Tag::class, $this->defaultTagCount)->create();
 
         $this->asAdmin()->get("/ajax/tags/get/page/" . $page->id)
+            ->shouldReturnJson();
+
+        $json = json_decode($this->response->getContent());
+        $this->assertTrue(count($json) === $this->defaultTagCount, "Returned JSON item count is not as expected");
+    }
+
+    public function test_get_chapter_tags()
+    {
+        $chapter = $this->getEntityWithTags(Chapter::class);
+
+        // Add some other tags to check they don't interfere
+        factory(Tag::class, $this->defaultTagCount)->create();
+
+        $this->asAdmin()->get("/ajax/tags/get/chapter/" . $chapter->id)
+            ->shouldReturnJson();
+
+        $json = json_decode($this->response->getContent());
+        $this->assertTrue(count($json) === $this->defaultTagCount, "Returned JSON item count is not as expected");
+    }
+
+    public function test_get_book_tags()
+    {
+        $book = $this->getEntityWithTags(Book::class);
+
+        // Add some other tags to check they don't interfere
+        factory(Tag::class, $this->defaultTagCount)->create();
+
+        $this->asAdmin()->get("/ajax/tags/get/book/" . $book->id)
             ->shouldReturnJson();
 
         $json = json_decode($this->response->getContent());
@@ -51,7 +80,7 @@ class TagTest extends BrowserKitTest
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'county']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'planet']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'plans']));
-        $page = $this->getPageWithTags($attrs);
+        $page = $this->getEntityWithTags(Page::class, $attrs);
 
         $this->asAdmin()->get('/ajax/tags/suggest/names?search=dog')->seeJsonEquals([]);
         $this->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country', 'county']);
@@ -69,7 +98,7 @@ class TagTest extends BrowserKitTest
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'county', 'value' => 'dog']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'planet', 'value' => 'catapult']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'plans', 'value' => 'dodgy']));
-        $page = $this->getPageWithTags($attrs);
+        $page = $this->getEntityWithTags(Page::class, $attrs);
 
         $this->asAdmin()->get('/ajax/tags/suggest/values?search=ora')->seeJsonEquals([]);
         $this->get('/ajax/tags/suggest/values?search=cat')->seeJsonEquals(['cats', 'cattery', 'catapult']);
@@ -85,7 +114,7 @@ class TagTest extends BrowserKitTest
         $attrs = collect();
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'country']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'color']));
-        $page = $this->getPageWithTags($attrs);
+        $page = $this->getEntityWithTags(Page::class, $attrs);
 
         $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);

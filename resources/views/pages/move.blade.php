@@ -8,7 +8,7 @@
 
 @section('body')
 
-    <div class="container">
+    <div class="container small">
         <p>&nbsp;</p>
         <div class="card">
             <h3>@icon('folder') {{ trans('entities.pages_move') }}</h3>
@@ -17,7 +17,7 @@
                     {!! csrf_field() !!}
                     <input type="hidden" name="_method" value="PUT">
 
-                    @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter'])
+                    @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter', 'entityPermission' => 'page-create'])
 
                     <div class="form-group text-right">
                         <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
