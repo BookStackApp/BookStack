@@ -11,11 +11,6 @@ class UploadService
      */
     protected $fileSystem;
 
-    /**
-     * @var FileSystemInstance
-     */
-    protected $storageInstance;
-
 
     /**
      * FileService constructor.
@@ -32,14 +27,8 @@ class UploadService
      */
     protected function getStorage()
     {
-        if ($this->storageInstance !== null) {
-            return $this->storageInstance;
-        }
-
         $storageType = config('filesystems.default');
-        $this->storageInstance = $this->fileSystem->disk($storageType);
-
-        return $this->storageInstance;
+        return $this->fileSystem->disk($storageType);
     }
 
     /**
@@ -52,14 +41,5 @@ class UploadService
         $files = $this->getStorage()->files($path);
         $folders = $this->getStorage()->directories($path);
         return (count($files) === 0 && count($folders) === 0);
-    }
-
-    /**
-     * Check if using a local filesystem.
-     * @return bool
-     */
-    protected function isLocal()
-    {
-        return strtolower(config('filesystems.default')) === 'local';
     }
 }

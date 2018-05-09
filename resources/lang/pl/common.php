@@ -10,6 +10,7 @@ return [
     'save' => 'Zapisz',
     'continue' => 'Kontynuuj',
     'select' => 'Wybierz',
+    'more' => 'Więcej',
 
     /**
      * Form Labels
@@ -46,6 +47,10 @@ return [
     'no_items' => 'Brak elementów do wyświetlenia',
     'back_to_top' => 'Powrót na górę',
     'toggle_details' => 'Włącz/wyłącz szczegóły',
+    'toggle_thumbnails' => 'Włącz/wyłącz miniatury',
+    'details' => 'Szczegóły',
+    'grid_view' => 'Widok kafelkowy',
+    'list_view' => 'Widok listy',
 
     /**
      * Header

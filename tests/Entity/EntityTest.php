@@ -5,6 +5,7 @@ use BookStack\Chapter;
 use BookStack\Page;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
+use Carbon\Carbon;
 
 class EntityTest extends BrowserKitTest
 {
@@ -139,7 +140,7 @@ class EntityTest extends BrowserKitTest
             // Navigate to chapter create page
             ->visit($book->getUrl())
             ->click('New Chapter')
-            ->seePageIs($book->getUrl() . '/chapter/create')
+            ->seePageIs($book->getUrl() . '/create-chapter')
             // Fill out form
             ->type($chapter->name, '#name')
             ->type($chapter->description, '#description')
@@ -161,7 +162,7 @@ class EntityTest extends BrowserKitTest
             ->visit('/books')
             // Choose to create a book
             ->click('Create New Book')
-            ->seePageIs('/books/create')
+            ->seePageIs('/create-book')
             // Fill out form & save
             ->type($book->name, '#name')
             ->type($book->description, '#description')
@@ -172,7 +173,7 @@ class EntityTest extends BrowserKitTest
 
         // Ensure duplicate names are given different slugs
         $this->asAdmin()
-            ->visit('/books/create')
+            ->visit('/create-book')
             ->type($book->name, '#name')
             ->type($book->description, '#description')
             ->press('Save Book');
@@ -269,6 +270,9 @@ class EntityTest extends BrowserKitTest
     public function test_recently_updated_pages_on_home()
     {
         $page = Page::orderBy('updated_at', 'asc')->first();
+        Page::where('id', '!=', $page->id)->update([
+            'updated_at' => Carbon::now()->subSecond(1)
+        ]);
         $this->asAdmin()->visit('/')
             ->dontSeeInElement('#recently-updated-pages', $page->name);
         $this->visit($page->getUrl() . '/edit')

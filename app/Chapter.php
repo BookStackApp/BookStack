@@ -2,9 +2,9 @@
 
 class Chapter extends Entity
 {
-    protected $fillable = ['name', 'description', 'priority', 'book_id'];
+    public $searchFactor = 1.3;
 
-    protected $with = ['book'];
+    protected $fillable = ['name', 'description', 'priority', 'book_id'];
 
     /**
      * Get the book this chapter is within.

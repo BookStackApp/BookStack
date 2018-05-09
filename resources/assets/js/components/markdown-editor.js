@@ -1,8 +1,8 @@
 const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
-const code = require('../libs/code');
+const code = require('../services/code');
 
-const DrawIO = require('../libs/drawio');
+const DrawIO = require('../services/drawio');
 
 class MarkdownEditor {
 
@@ -255,7 +255,9 @@ class MarkdownEditor {
             let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
             let selectedText = cm.getSelection();
             let placeHolderText = `![${selectedText}](${placeholderImage})`;
+            let cursor = cm.getCursor();
             cm.replaceSelection(placeHolderText);
+            cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 2});
 
             let remoteFilename = "image-" + Date.now() + "." + ext;
             let formData = new FormData();
@@ -264,7 +266,7 @@ class MarkdownEditor {
             window.$http.post('/images/gallery/upload', formData).then(resp => {
                 replaceContent(placeholderImage, resp.data.thumbs.display);
             }).catch(err => {
-                events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', trans('errors.image_upload_error'));
                 replaceContent(placeHolderText, selectedText);
                 console.log(err);
             });

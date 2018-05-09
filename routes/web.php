@@ -1,6 +1,8 @@
 <?php
 
 Route::get('/translations', 'HomeController@getTranslations');
+Route::get('/icon/{iconName}.svg', 'HomeController@getIcon');
+Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
@@ -13,11 +15,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
     });
 
+    Route::get('/create-book', 'BookController@create');
     Route::group(['prefix' => 'books'], function () {
 
         // Books
         Route::get('/', 'BookController@index');
-        Route::get('/create', 'BookController@create');
         Route::post('/', 'BookController@store');
         Route::get('/{slug}/edit', 'BookController@edit');
         Route::put('/{slug}', 'BookController@update');
@@ -34,8 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/export/plaintext', 'BookController@exportPlainText');
 
         // Pages
-        Route::get('/{bookSlug}/page/create', 'PageController@create');
-        Route::post('/{bookSlug}/page/create/guest', 'PageController@createAsGuest');
+        Route::get('/{bookSlug}/create-page', 'PageController@create');
+        Route::post('/{bookSlug}/create-guest-page', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
         Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
@@ -45,6 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
         Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
+        Route::get('/{bookSlug}/page/{pageSlug}/copy', 'PageController@showCopy');
+        Route::post('/{bookSlug}/page/{pageSlug}/copy', 'PageController@copy');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
         Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showRestrict');
@@ -61,9 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
-        Route::post('/{bookSlug}/chapter/{chapterSlug}/page/create/guest', 'PageController@createAsGuest');
-        Route::get('/{bookSlug}/chapter/create', 'ChapterController@create');
-        Route::post('/{bookSlug}/chapter/create', 'ChapterController@store');
+        Route::post('/{bookSlug}/chapter/{chapterSlug}/create-guest-page', 'PageController@createAsGuest');
+        Route::get('/{bookSlug}/create-chapter', 'ChapterController@create');
+        Route::post('/{bookSlug}/create-chapter', 'ChapterController@store');
         Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
         Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@showMove');

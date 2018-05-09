@@ -16,12 +16,13 @@ let componentMapping = {
     'editor-toolbox': require('./editor-toolbox'),
     'image-picker': require('./image-picker'),
     'collapsible': require('./collapsible'),
+    'toggle-switch': require('./toggle-switch'),
+    'page-display': require('./page-display'),
 };
 
 window.components = {};
 
 let componentNames = Object.keys(componentMapping);
-initAll();
 
 /**
  * Initialize components of the given name within the given element.
@@ -54,3 +55,5 @@ function initAll(parentElement) {
 }
 
 window.components.init = initAll;
+
+export default initAll;

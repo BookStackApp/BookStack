@@ -40,13 +40,12 @@ class SearchController extends Controller
         $nextPageLink = baseUrl('/search?term=' . urlencode($searchTerm) . '&page=' . ($page+1));
 
         $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
-        $hasNextPage = $this->searchService->searchEntities($searchTerm, 'all', $page+1, 20)['count'] > 0;
 
         return view('search/all', [
             'entities'   => $results['results'],
             'totalResults' => $results['total'],
             'searchTerm' => $searchTerm,
-            'hasNextPage' => $hasNextPage,
+            'hasNextPage' => $results['has_more'],
             'nextPageLink' => $nextPageLink
         ]);
     }
@@ -90,16 +89,17 @@ class SearchController extends Controller
     {
         $entityTypes = $request->filled('types') ? collect(explode(',', $request->get('types'))) : collect(['page', 'chapter', 'book']);
         $searchTerm =  $request->get('term', false);
+        $permission = $request->get('permission', 'view');
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
             $searchTerm .= ' {type:'. implode('|', $entityTypes->toArray()) .'}';
-            $entities = $this->searchService->searchEntities($searchTerm)['results'];
+            $entities = $this->searchService->searchEntities($searchTerm, 'all', 1, 20, $permission)['results'];
         } else {
             $entityNames = $entityTypes->map(function ($type) {
                 return 'BookStack\\' . ucfirst($type);
             })->toArray();
-            $entities = $this->viewService->getPopular(20, 0, $entityNames);
+            $entities = $this->viewService->getPopular(20, 0, $entityNames, $permission);
         }
 
         return view('search/entity-ajax-list', ['entities' => $entities]);

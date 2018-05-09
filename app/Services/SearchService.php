@@ -64,15 +64,14 @@ class SearchService
      * @param string $searchString
      * @param string $entityType
      * @param int $page
-     * @param int $count
+     * @param int $count - Count of each entity to search, Total returned could can be larger and not guaranteed.
      * @return array[int, Collection];
      */
-    public function searchEntities($searchString, $entityType = 'all', $page = 1, $count = 20)
+    public function searchEntities($searchString, $entityType = 'all', $page = 1, $count = 20, $action = 'view')
     {
         $terms = $this->parseSearchString($searchString);
         $entityTypes = array_keys($this->entities);
         $entityTypesToSearch = $entityTypes;
-        $results = collect();
 
         if ($entityType !== 'all') {
             $entityTypesToSearch = $entityType;
@@ -80,20 +79,27 @@ class SearchService
             $entityTypesToSearch = explode('|', $terms['filters']['type']);
         }
 
+        $results = collect();
         $total = 0;
+        $hasMore = false;
 
         foreach ($entityTypesToSearch as $entityType) {
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
-            $search = $this->searchEntityTable($terms, $entityType, $page, $count);
-            $total += $this->searchEntityTable($terms, $entityType, $page, $count, true);
+            $search = $this->searchEntityTable($terms, $entityType, $page, $count, $action);
+            $entityTotal = $this->searchEntityTable($terms, $entityType, $page, $count, $action, true);
+            if ($entityTotal > $page * $count) {
+                $hasMore = true;
+            }
+            $total += $entityTotal;
             $results = $results->merge($search);
         }
 
         return [
             'total' => $total,
             'count' => count($results),
+            'has_more' => $hasMore,
             'results' => $results->sortByDesc('score')->values()
         ];
     }
@@ -141,12 +147,13 @@ class SearchService
      * @param string $entityType
      * @param int $page
      * @param int $count
+     * @param string $action
      * @param bool $getCount Return the total count of the search
      * @return \Illuminate\Database\Eloquent\Collection|int|static[]
      */
-    public function searchEntityTable($terms, $entityType = 'page', $page = 1, $count = 20, $getCount = false)
+    public function searchEntityTable($terms, $entityType = 'page', $page = 1, $count = 20, $action = 'view', $getCount = false)
     {
-        $query = $this->buildEntitySearchQuery($terms, $entityType);
+        $query = $this->buildEntitySearchQuery($terms, $entityType, $action);
         if ($getCount) {
             return $query->count();
         }
@@ -159,9 +166,10 @@ class SearchService
      * Create a search query for an entity
      * @param array $terms
      * @param string $entityType
+     * @param string $action
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function buildEntitySearchQuery($terms, $entityType = 'page')
+    protected function buildEntitySearchQuery($terms, $entityType = 'page', $action = 'view')
     {
         $entity = $this->getEntity($entityType);
         $entitySelect = $entity->newQuery();
@@ -206,7 +214,7 @@ class SearchService
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, 'view');
+        return $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, $action);
     }
 
 
@@ -322,8 +330,8 @@ class SearchService
     public function indexEntity(Entity $entity)
     {
         $this->deleteEntityTerms($entity);
-        $nameTerms = $this->generateTermArrayFromText($entity->name, 5);
-        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1);
+        $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
+        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
         $terms = array_merge($nameTerms, $bodyTerms);
         foreach ($terms as $index => $term) {
             $terms[$index]['entity_type'] = $entity->getMorphClass();
@@ -340,8 +348,8 @@ class SearchService
     {
         $terms = [];
         foreach ($entities as $entity) {
-            $nameTerms = $this->generateTermArrayFromText($entity->name, 5);
-            $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1);
+            $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
+            $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
             foreach (array_merge($nameTerms, $bodyTerms) as $term) {
                 $term['entity_id'] = $entity->id;
                 $term['entity_type'] = $entity->getMorphClass();

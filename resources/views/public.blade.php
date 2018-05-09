@@ -10,12 +10,10 @@
     <meta charset="utf-8">
 
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" href="{{ versioned_asset('css/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('css/print-styles.css') }}">
-    <link rel="stylesheet" href="{{ baseUrl("/libs/material-design-iconic-font/css/material-design-iconic-font.min.css") }}">
+    <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
+    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Scripts -->
-    <script src="{{ baseUrl("/libs/jquery/jquery.min.js?version=2.1.4") }}"></script>
     @include('partials/custom-styles')
 
     <!-- Custom user content -->
@@ -59,6 +57,6 @@
     @yield('content')
 </section>
 
-<script src="{{ versioned_asset('js/common.js') }}"></script>
+<script src="{{ versioned_asset('dist/app.js') }}"></script>
 </body>
 </html>

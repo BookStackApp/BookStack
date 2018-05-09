@@ -13,7 +13,7 @@
     </div>
 
     <div class="card">
-        <h3><i class="zmdi zmdi-settings-square"></i> {{ trans('settings.app_settings') }}</h3>
+        <h3>@icon('settings') {{ trans('settings.app_settings') }}</h3>
         <div class="body">
             <form action="{{ baseUrl("/settings") }}" method="POST">
             {!! csrf_field() !!}
@@ -88,7 +88,7 @@
                 <div class="form-group">
                     <label for="setting-app-custom-head">{{ trans('settings.app_custom_html') }}</label>
                     <p class="small">{{ trans('settings.app_custom_html_desc') }}</p>
-                    <textarea name="setting-app-custom-head" id="setting-app-custom-head">{{ setting('app-custom-head', '') }}</textarea>
+                    <textarea class="simple-code-input" name="setting-app-custom-head" id="setting-app-custom-head">{{ setting('app-custom-head', '') }}</textarea>
                 </div>
 
                 <div class="form-group text-right">
@@ -101,7 +101,7 @@
     <p>&nbsp;</p>
 
     <div class="card">
-        <h3><i class="zmdi zmdi-accounts-add"></i> {{ trans('settings.reg_settings') }}</h3>
+        <h3>@icon('users-add') {{ trans('settings.reg_settings') }}</h3>
         <div class="body">
             <form action="{{ baseUrl("/settings") }}" method="POST">
                 {!! csrf_field() !!}

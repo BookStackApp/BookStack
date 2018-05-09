@@ -10,6 +10,10 @@
 @import "lists";
 @import "pages";
 
+body {
+  font-family: 'DejaVu Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Roboto", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
 table {
   border-spacing: 0;
   border-collapse: collapse;

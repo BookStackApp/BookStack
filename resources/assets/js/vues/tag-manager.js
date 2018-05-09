@@ -2,7 +2,8 @@ const draggable = require('vuedraggable');
 const autosuggest = require('./components/autosuggest');
 
 let data = {
-    pageId: false,
+    entityId: false,
+    entityType: null,
     tags: [],
 };
 
@@ -48,9 +49,10 @@ let methods = {
 };
 
 function mounted() {
-    this.pageId = Number(this.$el.getAttribute('page-id'));
+    this.entityId = Number(this.$el.getAttribute('entity-id'));
+    this.entityType = this.$el.getAttribute('entity-type');
 
-    let url = window.baseUrl(`/ajax/tags/get/page/${this.pageId}`);
+    let url = window.baseUrl(`/ajax/tags/get/${this.entityType}/${this.entityId}`);
     this.$http.get(url).then(response => {
         let tags = response.data;
         for (let i = 0, len = tags.length; i < len; i++) {

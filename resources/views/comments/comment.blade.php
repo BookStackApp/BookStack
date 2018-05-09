@@ -3,18 +3,18 @@
 
         <div class="float right actions">
             @if(userCan('comment-update', $comment))
-                <button type="button" class="text-button" action="edit" title="{{ trans('common.edit') }}"><i class="zmdi zmdi-edit"></i></button>
+                <button type="button" class="text-button" action="edit" title="{{ trans('common.edit') }}">@icon('edit')</button>
             @endif
             @if(userCan('comment-create-all'))
-                <button type="button" class="text-button" action="reply" title="{{ trans('common.reply') }}"><i class="zmdi zmdi-mail-reply-all"></i></button>
+                <button type="button" class="text-button" action="reply" title="{{ trans('common.reply') }}">@icon('reply')</button>
             @endif
             @if(userCan('comment-delete', $comment))
 
                 <div dropdown class="dropdown-container">
-                    <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}"><i class="zmdi zmdi-delete"></i></button>
+                    <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
                     <ul>
                         <li class="padded"><small class="text-muted">{{trans('entities.comment_delete_confirm')}}</small></li>
-                        <li><a action="delete" class="text-button neg" ><i class="zmdi zmdi-delete"></i>{{ trans('common.delete') }}</a></li>
+                        <li><a action="delete" class="text-button neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
                     </ul>
                 </div>
             @endif
