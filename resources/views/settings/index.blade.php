@@ -80,6 +80,8 @@
                             <label for="setting-app-homepage">{{ trans('settings.app_homepage') }}</label>
                             <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
                             @include('components.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_default'), 'value' => setting('app-homepage')])
+                            <p class="small">{{ trans('settings.app_homepage_books') }}</p>
+                            @include('components.toggle-switch', ['name' => 'setting-app-book-homepage', 'value' => setting('app-book-homepage')])
                         </div>
                     </div>
 

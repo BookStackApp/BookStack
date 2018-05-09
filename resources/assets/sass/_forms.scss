@@ -9,6 +9,8 @@
   color: #666;
   width: 250px;
   max-width: 100%;
+  margin: 6px 6px 6px 0px;
+
   &.neg, &.invalid {
     border: 1px solid $negative;
   }
