@@ -33,22 +33,41 @@ class HomeController extends Controller
         $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
         $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
 
-        // Custom homepage
+
         $customHomepage = false;
-        $homepageSetting = setting('app-homepage');
-        if ($homepageSetting) {
-            $id = intval(explode(':', $homepageSetting)[0]);
-            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
-            $this->entityRepo->renderPage($customHomepage, true);
+        $books = false;
+        $booksViewType = false;
+
+        // Check book homepage
+        $bookHomepageSetting = setting('app-book-homepage');
+        if ($bookHomepageSetting) {
+            $books = $this->entityRepo->getAllPaginated('book', 18);
+            $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
+        } else {
+            // Check custom homepage
+            $homepageSetting = setting('app-homepage');
+            if ($homepageSetting) {
+                $id = intval(explode(':', $homepageSetting)[0]);
+                $customHomepage = $this->entityRepo->getById('page', $id, false, true);
+                $this->entityRepo->renderPage($customHomepage, true);
+            }
         }
 
-        $view = $customHomepage ? 'home-custom' : 'home';
+        $view = 'home';
+        if ($bookHomepageSetting) {
+            $view = 'home-book';
+        } else if ($customHomepage) {
+            $view = 'home-custom';
+        }
+
         return view($view, [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
             'draftPages' => $draftPages,
-            'customHomepage' => $customHomepage
+            'customHomepage' => $customHomepage,
+            'books' => $books,
+            'booksViewType' => $booksViewType
         ]);
     }
 
