@@ -3,7 +3,7 @@
 @section('toolbar')
     <div class="col-xs-6">
         <div class="action-buttons text-left">
-            @include('partials/book-view-toggle', ['booksViewType' => $booksViewType])
+            @include('books/view-toggle', ['booksViewType' => $booksViewType])
         </div>
     </div>
     <div class="col-xs-6 faded">
