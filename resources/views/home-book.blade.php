@@ -4,6 +4,7 @@
     <div class="col-sm-6 faded">
         <div class="action-buttons text-left">
             <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-primary text-button">@icon('expand-text'){{ trans('common.toggle_details') }}</a>
+            @include('partials/book-view-toggle', ['booksViewType' => $booksViewType])
         </div>
     </div>
 @stop
