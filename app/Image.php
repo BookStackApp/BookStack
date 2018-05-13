@@ -28,4 +28,15 @@ class Image extends Ownable
     {
         return $this->hasMany(ImageRevision::class);
     }
+
+    /**
+     * Get the count of revisions made to this image.
+     * Based off numbers on revisions rather than raw count of attached revisions
+     * as they may be cleared up or revisions deleted at some point.
+     * @return int
+     */
+    public function revisionCount()
+    {
+        return intval($this->revisions()->max('revision'));
+    }
 }

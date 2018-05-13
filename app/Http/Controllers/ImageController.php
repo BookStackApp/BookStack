@@ -170,7 +170,7 @@ class ImageController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function replaceDrawing(string $id, Request $request)
+    public function updateDrawing(string $id, Request $request)
     {
         $this->validate($request, [
             'image' => 'required|string'
@@ -182,7 +182,7 @@ class ImageController extends Controller
         $this->checkOwnablePermission('image-update', $image);
 
         try {
-            $image = $this->imageRepo->replaceDrawingContent($image, $imageBase64Data);
+            $image = $this->imageRepo->updateDrawing($image, $imageBase64Data);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);
         }

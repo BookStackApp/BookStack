@@ -160,9 +160,9 @@ class ImageRepo
      * @return Image
      * @throws \BookStack\Exceptions\ImageUploadException
      */
-    public function replaceDrawingContent(Image $image, string $base64Uri)
+    public function updateDrawing(Image $image, string $base64Uri)
     {
-        return $this->imageService->replaceImageDataFromBase64Uri($image, $base64Uri);
+        return $this->imageService->updateImageFromBase64Uri($image, $base64Uri);
     }
 
     /**
@@ -183,13 +183,14 @@ class ImageRepo
 
 
     /**
-     * Destroys an Image object along with its files and thumbnails.
+     * Destroys an Image object along with its revisions, files and thumbnails.
      * @param Image $image
      * @return bool
+     * @throws \Exception
      */
     public function destroyImage(Image $image)
     {
-        $this->imageService->destroyImage($image);
+        $this->imageService->destroy($image);
         return true;
     }
 

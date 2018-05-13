@@ -2,12 +2,12 @@
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
+use BookStack\ImageRevision;
 use BookStack\User;
 use Exception;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
-use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -83,28 +83,19 @@ class ImageService extends UploadService
     }
 
     /**
-     * Replace the data for an image via a Base64 encoded string.
      * @param Image $image
      * @param string $base64Uri
      * @return Image
      * @throws ImageUploadException
      */
-    public function replaceImageDataFromBase64Uri(Image $image, string $base64Uri)
+    public function updateImageFromBase64Uri(Image $image, string $base64Uri)
     {
         $splitData = explode(';base64,', $base64Uri);
         if (count($splitData) < 2) {
             throw new ImageUploadException("Invalid base64 image data provided");
         }
         $data = base64_decode($splitData[1]);
-        $storage = $this->getStorage();
-
-        try {
-            $storage->put($image->path, $data);
-        } catch (Exception $e) {
-            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $image->path]));
-        }
-
-        return $image;
+        return $this->update($image, $data);
     }
 
     /**
@@ -178,13 +169,57 @@ class ImageService extends UploadService
     }
 
     /**
-     * Get the storage path, Dependant of storage type.
+     * Update the content of an existing image.
+     * Uploaded the new image content and creates a revision for the old image content.
      * @param Image $image
-     * @return mixed|string
+     * @param $imageData
+     * @return Image
+     * @throws ImageUploadException
      */
-    protected function getPath(Image $image)
+    private function update(Image $image, $imageData)
     {
-        return $image->path;
+        // Save image revision if not previously exists to ensure we always have
+        // a reference to the image files being uploaded.
+        if ($image->revisions()->count() === 0) {
+            $this->saveImageRevision($image);
+        }
+
+        $pathInfo = pathinfo($image->path);
+        $revisionCount = $image->revisionCount() + 1;
+        $newFileName = preg_replace('/^(.+?)(-v\d+)?$/', '$1-v' . $revisionCount, $pathInfo['filename']);
+
+        $image->path = str_replace_last($pathInfo['filename'], $newFileName, $image->path);
+        $image->url = $this->getPublicUrl($image->path);
+        $image->updated_by = user()->id;
+
+        $storage = $this->getStorage();
+
+        try {
+            $storage->put($image->path, $imageData);
+            $storage->setVisibility($image->path, 'public');
+            $image->save();
+            $this->saveImageRevision($image);
+        } catch (Exception $e) {
+            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $image->path]));
+        }
+        return $image;
+    }
+
+    /**
+     * Save a new revision for an image.
+     * @param Image $image
+     * @return ImageRevision
+     */
+    protected function saveImageRevision(Image $image)
+    {
+        $revision = new ImageRevision();
+        $revision->image_id = $image->id;
+        $revision->path = $image->path;
+        $revision->url = $image->url;
+        $revision->created_by = user()->id;
+        $revision->revision = $image->revisionCount() + 1;
+        $revision->save();
+        return $revision;
     }
 
     /**
@@ -194,7 +229,7 @@ class ImageService extends UploadService
      */
     protected function isGif(Image $image)
     {
-        return strtolower(pathinfo($this->getPath($image), PATHINFO_EXTENSION)) === 'gif';
+        return strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'gif';
     }
 
     /**
@@ -212,11 +247,11 @@ class ImageService extends UploadService
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
         if ($keepRatio && $this->isGif($image)) {
-            return $this->getPublicUrl($this->getPath($image));
+            return $this->getPublicUrl($image->path);
         }
 
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
-        $imagePath = $this->getPath($image);
+        $imagePath = $image->path;
         $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
 
         if ($this->cache->has('images-' . $image->id . '-' . $thumbFilePath) && $this->cache->get('images-' . $thumbFilePath)) {
@@ -262,43 +297,58 @@ class ImageService extends UploadService
      */
     public function getImageData(Image $image)
     {
-        $imagePath = $this->getPath($image);
+        $imagePath = $image->path;
         $storage = $this->getStorage();
         return $storage->get($imagePath);
     }
 
     /**
-     * Destroys an Image object along with its files and thumbnails.
+     * Destroy an image along with its revisions, thumbnails and remaining folders.
      * @param Image $image
-     * @return bool
      * @throws Exception
      */
-    public function destroyImage(Image $image)
+    public function destroy(Image $image)
+    {
+        // Destroy image revisions
+        foreach ($image->revisions as $revision) {
+            $this->destroyImagesFromPath($revision->path);
+            $revision->delete();
+        }
+
+        // Destroy main image
+        $this->destroyImagesFromPath($image->path);
+        $image->delete();
+    }
+
+    /**
+     * Destroys an image at the given path.
+     * Searches for image thumbnails in addition to main provided path..
+     * @param string $path
+     * @return bool
+     */
+    protected function destroyImagesFromPath(string $path)
     {
         $storage = $this->getStorage();
 
-        $imageFolder = dirname($this->getPath($image));
-        $imageFileName = basename($this->getPath($image));
+        $imageFolder = dirname($path);
+        $imageFileName = basename($path);
         $allImages = collect($storage->allFiles($imageFolder));
 
+        // Delete image files
         $imagesToDelete = $allImages->filter(function ($imagePath) use ($imageFileName) {
             $expectedIndex = strlen($imagePath) - strlen($imageFileName);
             return strpos($imagePath, $imageFileName) === $expectedIndex;
         });
-
         $storage->delete($imagesToDelete->all());
 
         // Cleanup of empty folders
-        foreach ($storage->directories($imageFolder) as $directory) {
+        $foldersInvolved = array_merge([$imageFolder], $storage->directories($imageFolder));
+        foreach ($foldersInvolved as $directory) {
             if ($this->isFolderEmpty($directory)) {
                 $storage->deleteDirectory($directory);
             }
         }
-        if ($this->isFolderEmpty($imageFolder)) {
-            $storage->deleteDirectory($imageFolder);
-        }
 
-        $image->delete();
         return true;
     }
 

@@ -210,7 +210,7 @@ class ImageTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
     }
 
-    public function test_drawing_replacing()
+    public function test_drawing_updating()
     {
         $page = Page::first();
         $editor = $this->getEditor();
@@ -234,6 +234,15 @@ class ImageTest extends TestCase
             'created_by' => $editor->id,
             'updated_by' => $editor->id,
         ]);
+
+        // Check a revision has been created
+        $this->assertDatabaseHas('image_revisions', [
+            'image_id' => $image->id,
+            'revision' => 2,
+            'created_by' => $editor->id,
+        ]);
+
+        $image = Image::find($image->id);
 
         $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: '. public_path($image->path));
 

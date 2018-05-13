@@ -16,6 +16,7 @@ class CreateImageRevisionsTable extends Migration
         Schema::create('image_revisions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('image_id');
+            $table->integer('revision');
             $table->string('path');
             $table->string('url');
             $table->integer('created_by');
