@@ -166,7 +166,7 @@ class UserRepo
         // Delete user profile images
         $profileImages = $images = Image::where('type', '=', 'user')->where('created_by', '=', $user->id)->get();
         foreach ($profileImages as $image) {
-            Images::destroyImage($image);
+            Images::destroy($image);
         }
     }
 
