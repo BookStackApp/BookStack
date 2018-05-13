@@ -245,25 +245,27 @@ class ImageController extends Controller
     }
 
     /**
-     * Deletes an image and all thumbnail/image files
+     * Show the usage of an image on pages.
      * @param EntityRepo $entityRepo
-     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function usage(EntityRepo $entityRepo, $id)
+    {
+        $image = $this->imageRepo->getById($id);
+        $pageSearch = $entityRepo->searchForImage($image->url);
+        return response()->json($pageSearch);
+    }
+
+    /**
+     * Deletes an image and all thumbnail/image files
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(EntityRepo $entityRepo, Request $request, $id)
+    public function destroy($id)
     {
         $image = $this->imageRepo->getById($id);
         $this->checkOwnablePermission('image-delete', $image);
-
-        // Check if this image is used on any pages
-        $isForced = in_array($request->get('force', ''), [true, 'true']);
-        if (!$isForced) {
-            $pageSearch = $entityRepo->searchForImage($image->url);
-            if ($pageSearch !== false) {
-                return response()->json($pageSearch, 400);
-            }
-        }
 
         $this->imageRepo->destroyImage($image);
         return response()->json(trans('components.images_deleted'));

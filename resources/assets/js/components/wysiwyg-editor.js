@@ -221,13 +221,25 @@ function codePlugin() {
 
 function drawIoPlugin() {
 
-    const drawIoUrl = 'https://www.draw.io/?embed=1&ui=atlas&spin=1&proto=json';
-    let iframe = null;
     let pageEditor = null;
     let currentNode = null;
 
     function isDrawing(node) {
         return node.hasAttribute('drawio-diagram');
+    }
+
+    function showDrawingManager(mceEditor, selectedNode = null) {
+        // TODO - Handle how image manager links in.
+        // Show image manager
+        window.ImageManager.show(function (image) {
+
+
+            // // Replace the actively selected content with the linked image
+            // let html = `<a href="${image.url}" target="_blank">`;
+            // html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
+            // html += '</a>';
+            // win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+        }, 'drawio');
     }
 
     function showDrawingEditor(mceEditor, selectedNode = null) {
@@ -287,7 +299,12 @@ function drawIoPlugin() {
     window.tinymce.PluginManager.add('drawio', function(editor, url) {
 
         editor.addCommand('drawio', () => {
-            showDrawingEditor(editor);
+            let selectedNode = editor.selection.getNode();
+            if (isDrawing(selectedNode)) {
+                showDrawingManager(editor, selectedNode);
+            } else {
+                showDrawingEditor(editor);
+            }
         });
 
         editor.addButton('drawio', {
@@ -443,7 +460,7 @@ class WysiwygEditor {
                         html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                         html += '</a>';
                         win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-                    });
+                    }, 'gallery');
                 }
 
             },
