@@ -154,6 +154,7 @@ $btt-size: 40px;
   }
   input {
     flex: 5;
+    padding: $-xs $-s;
     &:focus, &:active {
       outline: 0;
     }

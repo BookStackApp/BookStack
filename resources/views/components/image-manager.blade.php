@@ -1,5 +1,5 @@
 <div id="image-manager" image-type="{{ $imageType }}" uploaded-to="{{ $uploaded_to or 0 }}">
-    <div overlay v-cloak @click="hide()">
+    <div overlay v-cloak @click="hide">
         <div class="popup-body" @click.stop="">
 
             <div class="popup-header primary-background">
@@ -40,6 +40,9 @@
                 </div>
 
                 <div class="image-manager-sidebar">
+
+                    <dropzone ref="dropzone" placeholder="{{ trans('components.image_dropzone') }}" :upload-url="uploadUrl" :uploaded-to="uploadedTo" @success="uploadSuccess"></dropzone>
+
                     <div class="inner">
 
                         <div class="image-manager-details anim fadeIn" v-if="selectedImage">
@@ -47,39 +50,43 @@
                             <form @submit.prevent="saveImageDetails">
                                 <div>
                                     <a :href="selectedImage.url" target="_blank" style="display: block;">
-                                        <img :src="selectedImage.thumbs.gallery" :alt="selectedImage.title"
+                                        <img :src="selectedImage.thumbs.display" :alt="selectedImage.title"
                                              :title="selectedImage.name">
                                     </a>
                                 </div>
                                 <div class="form-group">
                                     <label for="name">{{ trans('components.image_image_name') }}</label>
-                                    <input id="name" name="name" v-model="selectedImage.name">
+                                    <input id="name" class="input-base" name="name" v-model="selectedImage.name">
                                 </div>
                             </form>
 
-                            <div v-show="dependantPages">
-                                <p class="text-neg text-small">
-                                    {{ trans('components.image_delete_confirm') }}
-                                </p>
-                                <ul class="text-neg">
-                                    <li v-for="page in dependantPages">
-                                        <a :href="page.url" target="_blank" class="text-neg" v-text="page.name"></a>
-                                    </li>
-                                </ul>
-                            </div>
-
                             <div class="clearfix">
-                                <form class="float left" @submit.prevent="deleteImage">
-                                    <button class="button icon neg">@icon('delete')</button>
-                                </form>
-                                <button class="button pos anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
+                                <div class="float left">
+                                    <button type="button" class="button icon outline" @click="deleteImage">@icon('delete')</button>
+
+                                </div>
+                                <button class="button anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
                                     {{ trans('components.image_select_image') }}
                                 </button>
+                                <div class="clearfix"></div>
+                                <div v-show="dependantPages">
+                                    <p class="text-neg text-small">
+                                        {{ trans('components.image_delete_used') }}
+                                    </p>
+                                    <ul class="text-neg">
+                                        <li v-for="page in dependantPages">
+                                            <a :href="page.url" target="_blank" class="text-neg" v-text="page.name"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div v-show="deleteConfirm" class="text-neg text-small">
+                                    {{ trans('components.image_delete_confirm') }}
+                                </div>
                             </div>
 
                         </div>
 
-                        <dropzone ref="dropzone" placeholder="{{ trans('components.image_dropzone') }}" :upload-url="uploadUrl" :uploaded-to="uploadedTo" @success="uploadSuccess"></dropzone>
+
 
                     </div>
                 </div>
