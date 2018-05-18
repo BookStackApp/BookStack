@@ -61,7 +61,7 @@ return [
     'search_updated_after' => 'Actualizadas después de',
     'search_created_before' => 'Creadas antes de',
     'search_created_after' => 'Creadas después de',
-    'search_set_date' => 'Ajustar Fecha',
+    'search_set_date' => 'fecha',
     'search_update' => 'Actualizar Búsqueda',
 
     /**
