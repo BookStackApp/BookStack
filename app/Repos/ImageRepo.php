@@ -201,7 +201,7 @@ class ImageRepo
      * @throws \BookStack\Exceptions\ImageUploadException
      * @throws \Exception
      */
-    private function loadThumbs(Image $image)
+    protected function loadThumbs(Image $image)
     {
         $image->thumbs = [
             'gallery' => $this->getThumbnail($image, 150, 150),

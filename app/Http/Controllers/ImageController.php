@@ -258,6 +258,18 @@ class ImageController extends Controller
     }
 
     /**
+     * Get the revisions for an image.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getRevisions($id)
+    {
+        $image = $this->imageRepo->getById($id);
+        $revisions = $image->revisions()->orderBy('id', 'desc')->get();
+        return response()->json($revisions);
+    }
+
+    /**
      * Deletes an image and all thumbnail/image files
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
