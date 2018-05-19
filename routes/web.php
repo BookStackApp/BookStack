@@ -98,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/drawing/upload', 'ImageController@uploadDrawing');
         Route::put('/drawing/upload/{id}', 'ImageController@updateDrawing');
         Route::get('/usage/{id}', 'ImageController@usage');
+        Route::get('/revisions/{id}', 'ImageController@getRevisions');
         Route::post('/{type}/upload', 'ImageController@uploadByType');
         Route::get('/{type}/all', 'ImageController@getAllByType');
         Route::get('/{type}/all/{page}', 'ImageController@getAllByType');

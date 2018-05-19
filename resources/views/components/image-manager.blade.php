@@ -47,10 +47,17 @@
 
                         <div class="image-manager-details anim fadeIn" v-if="selectedImage">
 
-                            <form @submit.prevent="saveImageDetails">
-                                <div>
+                            <div v-if="selectedRevision" class="image-manager-viewer">
+                                <a :href="selectedRevision.url" target="_blank" style="display: block;">
+                                    <img :src="selectedRevision.url" :alt="selectedImage.name"
+                                         :title="selectedImage.name">
+                                </a>
+                            </div>
+
+                            <form @submit.prevent="saveImageDetails" v-if="!selectedRevision">
+                                <div class="image-manager-viewer">
                                     <a :href="selectedImage.url" target="_blank" style="display: block;">
-                                        <img :src="selectedImage.thumbs.display" :alt="selectedImage.title"
+                                        <img :src="selectedImage.thumbs.display" :alt="selectedImage.name"
                                              :title="selectedImage.name">
                                     </a>
                                 </div>
@@ -60,7 +67,7 @@
                                 </div>
                             </form>
 
-                            <div class="clearfix">
+                            <div  v-if="!selectedRevision" class="clearfix">
                                 <div class="float left">
                                     <button type="button" class="button icon outline" @click="deleteImage">@icon('delete')</button>
 
@@ -82,6 +89,28 @@
                                 <div v-show="deleteConfirm" class="text-neg text-small">
                                     {{ trans('components.image_delete_confirm') }}
                                 </div>
+                            </div>
+
+                            {{--Revisions View--}}
+                            <div v-show="imageType === 'drawio'">
+                                <hr>
+                                <h5>Revisions</h5>
+                                <table v-if="revisions.length > 0" class="table">
+                                    <tr v-for="(revision, index) in revisions" :key="revision.id" :class="{'primary-background-light': selectedRevision === revision}" @click="selectRevision(revision)">
+                                        <td>
+                                            <span v-text="revision.revision"></span>
+                                            <span class="italic text-muted" v-if="index === 0 && revision.path === selectedImage.path">(Current)</span>
+                                        </td>
+                                        <td class="text-small">
+                                            <span v-text="(new Date(revision.created_at + 'Z')).toLocaleTimeString()"></span>
+                                            <br>
+                                            <span v-text="(new Date(revision.created_at + 'Z')).toLocaleDateString()"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p v-if="revisions.length === 0" class="text-muted italic">
+                                    No revisions found
+                                </p>
                             </div>
 
                         </div>
