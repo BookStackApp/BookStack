@@ -292,7 +292,7 @@ function drawIoPlugin() {
 
         editor.addButton('drawio', {
             tooltip: 'Drawing',
-            image: window.baseUrl('/icon/drawing.svg?color=000000'),
+            image: `data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMDAwMDAiICB4bWxucz0iaHR0cDovL3d3 dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTIzIDdWMWgtNnYySDdWMUgxdjZoMnYx MEgxdjZoNnYtMmgxMHYyaDZ2LTZoLTJWN2gyek0zIDNoMnYySDNWM3ptMiAxOEgzdi0yaDJ2Mnpt MTItMkg3di0ySDVWN2gyVjVoMTB2MmgydjEwaC0ydjJ6bTQgMmgtMnYtMmgydjJ6TTE5IDVWM2gy djJoLTJ6bS01LjI3IDloLTMuNDlsLS43MyAySDcuODlsMy40LTloMS40bDMuNDEgOWgtMS42M2wt Ljc0LTJ6bS0zLjA0LTEuMjZoMi42MUwxMiA4LjkxbC0xLjMxIDMuODN6Ii8+CiAgICA8cGF0aCBk PSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==`,
             cmd: 'drawio'
         });
 
