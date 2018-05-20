@@ -210,47 +210,6 @@ class ImageTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
     }
 
-    public function test_drawing_updating()
-    {
-        $page = Page::first();
-        $editor = $this->getEditor();
-        $this->actingAs($editor);
-
-        $this->postJson('images/drawing/upload', [
-            'uploaded_to' => $page->id,
-            'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDQ4S1RUeKwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12NctNWSAQkwMaACUvkAfCkBmjyhGl4AAAAASUVORK5CYII='
-        ]);
-
-        $image = Image::where('type', '=', 'drawio')->first();
-
-        $replace = $this->putJson("images/drawing/upload/{$image->id}", [
-            'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDCo5iYNs+gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12O0jN/KgASYGFABqXwAZtoBV6Sl3hIAAAAASUVORK5CYII='
-        ]);
-
-        $replace->assertStatus(200);
-        $replace->assertJson([
-            'type' => 'drawio',
-            'uploaded_to' => $page->id,
-            'created_by' => $editor->id,
-            'updated_by' => $editor->id,
-        ]);
-
-        // Check a revision has been created
-        $this->assertDatabaseHas('image_revisions', [
-            'image_id' => $image->id,
-            'revision' => 2,
-            'created_by' => $editor->id,
-        ]);
-
-        $image = Image::find($image->id);
-
-        $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: '. public_path($image->path));
-
-        $testImageData = file_get_contents($this->getTestImageFilePath());
-        $uploadedImageData = file_get_contents(public_path($image->path));
-        $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
-    }
-
     public function test_user_images_deleted_on_user_deletion()
     {
         $editor = $this->getEditor();
