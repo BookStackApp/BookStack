@@ -114,16 +114,16 @@ class ImageService extends UploadService
         $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
-        if ($secureUploads) {
-            $imageName = str_random(16) . '-' . $imageName;
-        }
-
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
 
         while ($storage->exists($imagePath . $imageName)) {
             $imageName = str_random(3) . $imageName;
         }
+
         $fullPath = $imagePath . $imageName;
+        if ($secureUploads) {
+            $fullPath = $imagePath . str_random(16) . '-' . $imageName;
+        }
 
         try {
             $storage->put($fullPath, $imageData);

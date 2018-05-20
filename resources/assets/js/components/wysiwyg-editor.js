@@ -547,7 +547,7 @@ class WysiwygEditor {
                             html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                             html += '</a>';
                             editor.execCommand('mceInsertContent', false, html);
-                        });
+                        }, 'gallery');
                     }
                 });
 
