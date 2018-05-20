@@ -60,7 +60,7 @@ class HomeController extends Controller
             $view = 'home-custom';
         }
 
-        return view($view, [
+        return view('common/' . $view, [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
@@ -150,7 +150,7 @@ class HomeController extends Controller
             $allowRobots = $sitePublic;
         }
         return response()
-            ->view('robots', ['allowRobots' => $allowRobots])
+            ->view('common/robots', ['allowRobots' => $allowRobots])
             ->header('Content-Type', 'text/plain');
     }
 

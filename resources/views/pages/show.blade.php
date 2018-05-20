@@ -118,7 +118,7 @@
 @stop
 
 @section('body')
-    <div class="page-content" page-display="{{ $page->id }}" ng-non-bindable>
+    <div class="page-content" page-display="{{ $page->id }}">
 
         <div class="pointer-container" id="pointer">
             <div class="pointer anim" >
