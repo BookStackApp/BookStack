@@ -1,7 +1,6 @@
 <?php
 
 Route::get('/translations', 'HomeController@getTranslations');
-Route::get('/icon/{iconName}.svg', 'HomeController@getIcon');
 Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...
