@@ -165,32 +165,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Replace the data content of a drawing.
-     * @param string $id
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function updateDrawing(string $id, Request $request)
-    {
-        $this->validate($request, [
-            'image' => 'required|string'
-        ]);
-        $this->checkPermission('image-create-all');
-
-        $imageBase64Data = $request->get('image');
-        $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('image-update', $image);
-
-        try {
-            $image = $this->imageRepo->updateDrawing($image, $imageBase64Data);
-        } catch (ImageUploadException $e) {
-            return response($e->getMessage(), 500);
-        }
-
-        return response()->json($image);
-    }
-
-    /**
      * Get the content of an image based64 encoded.
      * @param $id
      * @return \Illuminate\Http\JsonResponse|mixed
@@ -258,21 +232,10 @@ class ImageController extends Controller
     }
 
     /**
-     * Get the revisions for an image.
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getRevisions($id)
-    {
-        $image = $this->imageRepo->getById($id);
-        $revisions = $image->revisions()->orderBy('id', 'desc')->get();
-        return response()->json($revisions);
-    }
-
-    /**
      * Deletes an image and all thumbnail/image files
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
