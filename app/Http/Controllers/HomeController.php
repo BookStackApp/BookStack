@@ -153,4 +153,12 @@ class HomeController extends Controller
             ->view('robots', ['allowRobots' => $allowRobots])
             ->header('Content-Type', 'text/plain');
     }
+
+    /**
+     * Show the route for 404 responses.
+     */
+    public function getNotFound()
+    {
+        return response()->view('errors/404', [], 404);
+    }
 }
