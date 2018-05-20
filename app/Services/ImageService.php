@@ -3,6 +3,7 @@
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
 use BookStack\User;
+use DB;
 use Exception;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
@@ -16,15 +17,18 @@ class ImageService extends UploadService
     protected $imageTool;
     protected $cache;
     protected $storageUrl;
+    protected $image;
 
     /**
      * ImageService constructor.
-     * @param $imageTool
-     * @param $fileSystem
-     * @param $cache
+     * @param Image $image
+     * @param ImageManager $imageTool
+     * @param FileSystem $fileSystem
+     * @param Cache $cache
      */
-    public function __construct(ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
+    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
     {
+        $this->image = $image;
         $this->imageTool = $imageTool;
         $this->cache = $cache;
         parent::__construct($fileSystem);
@@ -146,7 +150,7 @@ class ImageService extends UploadService
             $imageDetails['updated_by'] = $userId;
         }
 
-        $image = (new Image());
+        $image = $this->image->newInstance();
         $image->forceFill($imageDetails)->save();
         return $image;
     }
@@ -292,6 +296,43 @@ class ImageService extends UploadService
         $image->updated_by = $user->id;
         $image->save();
         return $image;
+    }
+
+
+    /**
+     * Delete gallery and drawings that are not within HTML content of pages or page revisions.
+     * @param bool $checkRevisions
+     * @param array $types
+     * @param bool $dryRun
+     * @return int
+     */
+    public function deleteUnusedImages($checkRevisions = true, $types = ['gallery', 'drawio'], $dryRun = true)
+    {
+        // TODO - The checking here isn't really good enough.
+        // Thumbnails would also need to be searched for as we can't guarantee the full image will be in the content.
+        // Would also be best to simplify the string to not include the base host?
+        $types = array_intersect($types, ['gallery', 'drawio']);
+        $deleteCount = 0;
+        $this->image->newQuery()->whereIn('type', $types)
+            ->chunk(1000, function($images) use ($types, $checkRevisions, &$deleteCount, $dryRun) {
+             foreach ($images as $image) {
+                 $inPage = DB::table('pages')
+                     ->where('html', 'like', '%' . $image->url . '%')->count() > 0;
+                 $inRevision = false;
+                 if ($checkRevisions) {
+                     $inRevision =  DB::table('page_revisions')
+                             ->where('html', 'like', '%' . $image->url . '%')->count() > 0;
+                 }
+
+                 if (!$inPage && !$inRevision) {
+                     $deleteCount++;
+                     if (!$dryRun) {
+                         $this->destroy($image);
+                     }
+                 }
+             }
+        });
+        return $deleteCount;
     }
 
     /**
