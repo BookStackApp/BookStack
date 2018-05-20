@@ -229,16 +229,18 @@ function drawIoPlugin() {
     }
 
     function showDrawingManager(mceEditor, selectedNode = null) {
-        // TODO - Handle how image manager links in.
+        pageEditor = mceEditor;
+        currentNode = selectedNode;
         // Show image manager
         window.ImageManager.show(function (image) {
-
-
-            // // Replace the actively selected content with the linked image
-            // let html = `<a href="${image.url}" target="_blank">`;
-            // html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
-            // html += '</a>';
-            // win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+            if (selectedNode) {
+                let imgElem = selectedNode.querySelector('img');
+                pageEditor.dom.setAttrib(imgElem, 'src', image.url);
+                pageEditor.dom.setAttrib(selectedNode, 'drawio-diagram', image.id);
+            } else {
+                let imgHTML = `<div drawio-diagram="${image.id}" contenteditable="false"><img src="${image.url}"></div>`;
+                pageEditor.insertContent(imgHTML);
+            }
         }, 'drawio');
     }
 
@@ -260,9 +262,9 @@ function drawIoPlugin() {
         if (currentNode) {
             DrawIO.close();
             let imgElem = currentNode.querySelector('img');
-            let drawingId = currentNode.getAttribute('drawio-diagram');
-            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
-                pageEditor.dom.setAttrib(imgElem, 'src', `${resp.data.url}?updated=${Date.now()}`);
+            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
+                pageEditor.dom.setAttrib(imgElem, 'src', resp.data.url);
+                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', resp.data.id);
             }).catch(err => {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
@@ -300,17 +302,23 @@ function drawIoPlugin() {
 
         editor.addCommand('drawio', () => {
             let selectedNode = editor.selection.getNode();
-            if (isDrawing(selectedNode)) {
-                showDrawingManager(editor, selectedNode);
-            } else {
-                showDrawingEditor(editor);
-            }
+            showDrawingEditor(editor, isDrawing(selectedNode) ? selectedNode : null);
         });
 
         editor.addButton('drawio', {
+            type: 'splitbutton',
             tooltip: 'Drawing',
             image: window.baseUrl('/icon/drawing.svg?color=000000'),
-            cmd: 'drawio'
+            cmd: 'drawio',
+            menu: [
+                {
+                    text: 'Drawing Manager',
+                    onclick() {
+                        let selectedNode = editor.selection.getNode();
+                        showDrawingManager(editor, isDrawing(selectedNode) ? selectedNode : null);
+                    }
+                }
+            ]
         });
 
         editor.on('dblclick', event => {

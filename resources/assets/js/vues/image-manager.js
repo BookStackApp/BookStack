@@ -24,9 +24,6 @@ const data = {
     searching: false,
     searchTerm: '',
 
-    revisions: [],
-    selectedRevision: null,
-
     imageUpdateSuccess: false,
     imageDeleteSuccess: false,
     deleteConfirm: false,
@@ -50,9 +47,11 @@ const methods = {
     },
 
     hide() {
+        if (this.$refs.dropzone) {
+            this.$refs.dropzone.onClose();
+        }
         this.showing = false;
         this.selectedImage = false;
-        this.$refs.dropzone.onClose();
         this.$el.children[0].components.overlay.hide();
     },
 
@@ -113,8 +112,6 @@ const methods = {
         let currentTime = Date.now();
         let timeDiff = currentTime - previousClickTime;
         let isDblClick = timeDiff < dblClickTime && image.id === previousClickImage;
-        this.revisions = [];
-        this.selectedRevision = null
 
         if (isDblClick) {
             this.callbackAndHide(image);
@@ -122,11 +119,6 @@ const methods = {
             this.selectedImage = image;
             this.deleteConfirm = false;
             this.dependantPages = false;
-            if (this.imageType === 'drawio') {
-                this.$http.get(window.baseUrl(`/images/revisions/${image.id}`)).then(resp => {
-                    this.revisions = resp.data;
-                })
-            }
         }
 
         previousClickTime = currentTime;
@@ -182,11 +174,6 @@ const methods = {
         this.images.unshift(event.data);
         this.$events.emit('success', trans('components.image_upload_success'));
     },
-
-    selectRevision(revision) {
-        let rev = (this.selectedRevision === revision) ? null : revision;
-        this.selectedRevision = rev;
-    }
 };
 
 const computed = {

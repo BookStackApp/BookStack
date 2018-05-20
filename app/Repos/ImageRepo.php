@@ -153,17 +153,6 @@ class ImageRepo
         return $image;
     }
 
-    /**
-     * Replace the image content of a drawing.
-     * @param Image $image
-     * @param string $base64Uri
-     * @return Image
-     * @throws \BookStack\Exceptions\ImageUploadException
-     */
-    public function updateDrawing(Image $image, string $base64Uri)
-    {
-        return $this->imageService->updateImageFromBase64Uri($image, $base64Uri);
-    }
 
     /**
      * Update the details of an image via an array of properties.
@@ -251,7 +240,7 @@ class ImageRepo
      */
     public function isValidType($type)
     {
-        $validTypes = ['drawing', 'gallery', 'cover', 'system', 'user'];
+        $validTypes = ['gallery', 'cover', 'system', 'user'];
         return in_array($type, $validTypes);
     }
 }

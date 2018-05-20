@@ -2,7 +2,6 @@
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
-use BookStack\ImageRevision;
 use BookStack\User;
 use Exception;
 use Intervention\Image\Exception\NotSupportedException;
@@ -83,22 +82,6 @@ class ImageService extends UploadService
     }
 
     /**
-     * @param Image $image
-     * @param string $base64Uri
-     * @return Image
-     * @throws ImageUploadException
-     */
-    public function updateImageFromBase64Uri(Image $image, string $base64Uri)
-    {
-        $splitData = explode(';base64,', $base64Uri);
-        if (count($splitData) < 2) {
-            throw new ImageUploadException("Invalid base64 image data provided");
-        }
-        $data = base64_decode($splitData[1]);
-        return $this->update($image, $data);
-    }
-
-    /**
      * Gets an image from url and saves it to the database.
      * @param             $url
      * @param string      $type
@@ -168,59 +151,6 @@ class ImageService extends UploadService
         return $image;
     }
 
-    /**
-     * Update the content of an existing image.
-     * Uploaded the new image content and creates a revision for the old image content.
-     * @param Image $image
-     * @param $imageData
-     * @return Image
-     * @throws ImageUploadException
-     */
-    private function update(Image $image, $imageData)
-    {
-        // Save image revision if not previously exists to ensure we always have
-        // a reference to the image files being uploaded.
-        if ($image->revisions()->count() === 0) {
-            $this->saveImageRevision($image);
-        }
-
-        $pathInfo = pathinfo($image->path);
-        $revisionCount = $image->revisionCount() + 1;
-        $newFileName = preg_replace('/^(.+?)(-v\d+)?$/', '$1-v' . $revisionCount, $pathInfo['filename']);
-
-        $image->path = str_replace_last($pathInfo['filename'], $newFileName, $image->path);
-        $image->url = $this->getPublicUrl($image->path);
-        $image->updated_by = user()->id;
-
-        $storage = $this->getStorage();
-
-        try {
-            $storage->put($image->path, $imageData);
-            $storage->setVisibility($image->path, 'public');
-            $image->save();
-            $this->saveImageRevision($image);
-        } catch (Exception $e) {
-            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $image->path]));
-        }
-        return $image;
-    }
-
-    /**
-     * Save a new revision for an image.
-     * @param Image $image
-     * @return ImageRevision
-     */
-    protected function saveImageRevision(Image $image)
-    {
-        $revision = new ImageRevision();
-        $revision->image_id = $image->id;
-        $revision->path = $image->path;
-        $revision->url = $image->url;
-        $revision->created_by = user()->id;
-        $revision->revision = $image->revisionCount() + 1;
-        $revision->save();
-        return $revision;
-    }
 
     /**
      * Checks if the image is a gif. Returns true if it is, else false.
@@ -309,13 +239,6 @@ class ImageService extends UploadService
      */
     public function destroy(Image $image)
     {
-        // Destroy image revisions
-        foreach ($image->revisions as $revision) {
-            $this->destroyImagesFromPath($revision->path);
-            $revision->delete();
-        }
-
-        // Destroy main image
         $this->destroyImagesFromPath($image->path);
         $image->delete();
     }
