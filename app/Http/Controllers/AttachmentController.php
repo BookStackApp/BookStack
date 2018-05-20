@@ -103,7 +103,7 @@ class AttachmentController extends Controller
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
             'name' => 'required|string|min:1|max:255',
-            'link' =>  'url|min:1|max:255'
+            'link' =>  'string|min:1|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -131,7 +131,7 @@ class AttachmentController extends Controller
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
             'name' => 'required|string|min:1|max:255',
-            'link' =>  'required|url|min:1|max:255'
+            'link' =>  'required|string|min:1|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -184,6 +184,7 @@ class AttachmentController extends Controller
      * @param $attachmentId
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws NotFoundException
      */
     public function get($attachmentId)
     {

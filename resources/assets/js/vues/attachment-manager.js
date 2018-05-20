@@ -31,6 +31,9 @@ let methods = {
     },
 
     getFileUrl(file) {
+        if (file.external && file.path.indexOf('http') !== 0) {
+            return file.path;
+        }
         return window.baseUrl(`/attachments/${file.id}`);
     },
 
@@ -79,10 +82,8 @@ let methods = {
     },
 
     checkValidationErrors(groupName, err) {
-        console.error(err);
-        if (typeof err.response.data === "undefined" && typeof err.response.data.validation === "undefined") return;
-        this.errors[groupName] = err.response.data.validation;
-        console.log(this.errors[groupName]);
+        if (typeof err.response.data === "undefined" && typeof err.response.data === "undefined") return;
+        this.errors[groupName] = err.response.data;
     },
 
     getUploadUrl(file) {
@@ -97,6 +98,7 @@ let methods = {
 
     attachNewLink(file) {
         file.uploaded_to = this.pageId;
+        this.errors.link = {};
         this.$http.post(window.baseUrl('/attachments/link'), file).then(resp => {
             this.files.push(resp.data);
             this.file = this.newFile();
