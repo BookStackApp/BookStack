@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "~5.5.22",
         "fideloper/proxy": "~3.3",
         "ext-tidy": "*",
         "intervention/image": "^2.4",

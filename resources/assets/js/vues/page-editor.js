@@ -99,7 +99,7 @@ let methods = {
             lastSave = Date.now();
         }, errorRes => {
             if (draftErroring) return;
-            window.$events('error', trans('errors.page_draft_autosave_fail'));
+            window.$events.emit('error', trans('errors.page_draft_autosave_fail'));
             draftErroring = true;
         });
     },
