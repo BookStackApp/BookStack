@@ -35,10 +35,13 @@ return [
     'cannot_get_image_from_url' => 'Kan inte hämta bild från :url',
     'cannot_create_thumbs' => 'Servern kan inte skapa miniatyrer. Kontrollera att du har PHPs GD-tillägg aktiverat.',
     'server_upload_limit' => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
+    'uploaded'  => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
+    'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
 
     // Attachments
     'attachment_page_mismatch' => 'Fel i sidmatchning vid uppdatering av bilaga',
+    'attachment_not_found' => 'Bilagan hittades ej',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunde inte spara utkastet. Kontrollera att du är ansluten till internet.',

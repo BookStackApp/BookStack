@@ -160,8 +160,9 @@ return [
     'pages_name' => 'Sidans namn',
     'pages_md_editor' => 'Redigerare',
     'pages_md_preview' => 'Förhandsvisa',
-    'pages_md_insert_image' => 'Inoga bild',
+    'pages_md_insert_image' => 'Infoga bild',
     'pages_md_insert_link' => 'Infoga länk',
+    'pages_md_insert_drawing' => 'Infoga teckning',
     'pages_not_in_chapter' => 'Sidan ligger inte i något kapitel',
     'pages_move' => 'Flytta sida',
     'pages_move_success' => 'Sidan har flyttats till ":parentName"',
@@ -199,8 +200,10 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Sidtaggar',
+    'chapter_tags' => 'Kapiteltaggar',
+    'book_tags' => 'Boktaggar',
     'tag' => 'Tagg',
-    'tags' =>  '',
+    'tags' =>  'Taggar',
     'tag_value' => 'Taggvärde (Frivilligt)',
     'tags_explain' => "Lägg till taggar för att kategorisera ditt innehåll bättre. \n Du kan tilldela ett värde till en tagg för ännu bättre organisering.",
     'tags_add' => 'Lägg till ännu en tagg',
@@ -244,6 +247,7 @@ return [
      */
     'comment' => 'Kommentar',
     'comments' => 'Kommentarer',
+    'comment_add' => 'Lägg till kommentar',
     'comment_placeholder' => 'Lämna en kommentar här',
     'comment_count' => '{0} Inga kommentarer|{1} 1 kommentar|[2,*] :count kommentarer',
     'comment_save' => 'Spara kommentar',
