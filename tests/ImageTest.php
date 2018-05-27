@@ -2,6 +2,8 @@
 
 use BookStack\Image;
 use BookStack\Page;
+use BookStack\Repos\EntityRepo;
+use BookStack\Services\ImageService;
 
 class ImageTest extends TestCase
 {
@@ -232,6 +234,61 @@ class ImageTest extends TestCase
             'type' => 'user',
             'created_by' => $editor->id
         ]);
+    }
+
+    public function test_deleted_unused_images()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $imageName = 'unused-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+
+        $upload = $this->uploadImage($imageName, $page->id);
+        $upload->assertStatus(200);
+        $image = Image::where('type', '=', 'gallery')->first();
+
+        $entityRepo = app(EntityRepo::class);
+        $entityRepo->updatePage($page, $page->book_id, [
+            'name' => $page->name,
+            'html' => $page->html . "<img src=\"{$image->url}\">",
+            'summary' => ''
+        ]);
+
+        // Ensure no images are reported as deletable
+        $imageService = app(ImageService::class);
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(0, $toDelete);
+
+        // Save a revision of our page without the image;
+        $entityRepo->updatePage($page, $page->book_id, [
+            'name' => $page->name,
+            'html' => "<p>Hello</p>",
+            'summary' => ''
+        ]);
+
+        // Ensure revision images are picked up okay
+        $imageService = app(ImageService::class);
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(0, $toDelete);
+        $toDelete = $imageService->deleteUnusedImages(false, true);
+        $this->assertCount(1, $toDelete);
+
+        // Check image is found when revisions are destroyed
+        $page->revisions()->delete();
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(1, $toDelete);
+
+        // Check the image is deleted
+        $absPath = public_path($relPath);
+        $this->assertTrue(file_exists($absPath), "Existing uploaded file at path {$absPath} exists");
+        $toDelete = $imageService->deleteUnusedImages(true, false);
+        $this->assertCount(1, $toDelete);
+        $this->assertFalse(file_exists($absPath));
+
+        $this->deleteImage($relPath);
     }
 
 }
