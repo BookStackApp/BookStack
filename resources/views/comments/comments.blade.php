@@ -1,12 +1,11 @@
 <div page-comments page-id="{{ $page->id }}" ng-non-bindable class="comments-list">
-  <h3 comments-title>{{ trans_choice('entities.comment_count', count($page->comments), ['count' => count($page->comments)]) }}</h3>
+  <h5 comments-title class="float left">{{ trans_choice('entities.comment_count', count($page->comments), ['count' => count($page->comments)]) }}</h5>
 
     <div class="comment-container" comment-container>
         @foreach($page->comments as $comment)
             @include('comments.comment', ['comment' => $comment])
         @endforeach
     </div>
-
 
     @if(userCan('comment-create-all'))
 
@@ -33,7 +32,7 @@
         </div>
 
         <div class="form-group" comment-add-button>
-            <button type="button" action="addComment" class="button outline">{{ trans('entities.comment_add') }}</button>
+            <button type="button" action="addComment" class="button outline float right">{{ trans('entities.comment_add') }}</button>
         </div>
     @endif
 

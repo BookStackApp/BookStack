@@ -586,6 +586,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .comment-box {
+  clear: left;
   border: 1px solid #DDD;
   margin-bottom: $-s;
   border-radius: 3px;

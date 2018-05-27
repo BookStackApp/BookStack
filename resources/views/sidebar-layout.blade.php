@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="content flex">
+        <div class="content flex @yield('body-wrap-classes')">
             @yield('body')
         </div>
     </div>

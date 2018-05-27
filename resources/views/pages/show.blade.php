@@ -117,8 +117,11 @@
 
 @stop
 
+@section('body-wrap-classes', 'flex-fill columns')
+
 @section('body')
-    <div class="page-content" page-display="{{ $page->id }}">
+
+    <div class="page-content flex" page-display="{{ $page->id }}">
 
         <div class="pointer-container" id="pointer">
             <div class="pointer anim" >
@@ -129,10 +132,10 @@
         </div>
 
         @include('pages/page-display')
-
     </div>
+
     @if ($commentsEnabled)
-      <div class="container small nopad">
+      <div class="container small nopad comments-container">
           @include('comments/comments', ['page' => $page])
       </div>
     @endif
