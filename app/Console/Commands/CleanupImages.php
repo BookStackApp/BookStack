@@ -4,6 +4,7 @@ namespace BookStack\Console\Commands;
 
 use BookStack\Services\ImageService;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class CleanupImages extends Command
 {
@@ -48,21 +49,35 @@ class CleanupImages extends Command
         $dryRun = $this->option('force') ? false : true;
 
         if (!$dryRun) {
-            $proceed = $this->confirm('This operation is destructive and is not guaranteed to be fully accurate. Ensure you have a backup of your images. Are you sure you want to proceed?');
+            $proceed = $this->confirm("This operation is destructive and is not guaranteed to be fully accurate.\nEnsure you have a backup of your images.\nAre you sure you want to proceed?");
             if (!$proceed) {
                 return;
             }
         }
 
-        $deleteCount = $this->imageService->deleteUnusedImages($checkRevisions, ['gallery', 'drawio'], $dryRun);
+        $deleted = $this->imageService->deleteUnusedImages($checkRevisions, ['gallery', 'drawio'], $dryRun);
+        $deleteCount = count($deleted);
 
         if ($dryRun) {
             $this->comment('Dry run, No images have been deleted');
             $this->comment($deleteCount . ' images found that would have been deleted');
+            $this->showDeletedImages($deleted);
             $this->comment('Run with -f or --force to perform deletions');
             return;
         }
 
+        $this->showDeletedImages($deleted);
         $this->comment($deleteCount . ' images deleted');
+    }
+
+    protected function showDeletedImages($paths)
+    {
+        if ($this->getOutput()->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) return;
+        if (count($paths) > 0) {
+            $this->line('Images to delete:');
+        }
+        foreach ($paths as $path) {
+            $this->line($path);
+        }
     }
 }

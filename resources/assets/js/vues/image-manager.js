@@ -101,6 +101,7 @@ const methods = {
     },
 
     cancelSearch() {
+        if (!this.searching) return;
         this.searching = false;
         this.searchTerm = '';
         this.images = preSearchImages;
