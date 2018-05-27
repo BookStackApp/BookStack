@@ -55,7 +55,7 @@ class CleanupImages extends Command
             }
         }
 
-        $deleted = $this->imageService->deleteUnusedImages($checkRevisions, ['gallery', 'drawio'], $dryRun);
+        $deleted = $this->imageService->deleteUnusedImages($checkRevisions, $dryRun);
         $deleteCount = count($deleted);
 
         if ($dryRun) {

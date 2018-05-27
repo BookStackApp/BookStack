@@ -306,11 +306,11 @@ class ImageService extends UploadService
      *
      * Returns the path of the images that would be/have been deleted.
      * @param bool $checkRevisions
-     * @param array $types
      * @param bool $dryRun
+     * @param array $types
      * @return array
      */
-    public function deleteUnusedImages($checkRevisions = true, $types = ['gallery', 'drawio'], $dryRun = true)
+    public function deleteUnusedImages($checkRevisions = true, $dryRun = true, $types = ['gallery', 'drawio'])
     {
         $types = array_intersect($types, ['gallery', 'drawio']);
         $deletedPaths = [];

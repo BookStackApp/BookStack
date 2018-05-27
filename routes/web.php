@@ -152,6 +152,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'SettingController@index')->name('settings');
         Route::post('/', 'SettingController@update');
 
+        // Maintenance
+        Route::get('/maintenance', 'SettingController@showMaintenance');
+        Route::delete('/maintenance/cleanup-images', 'SettingController@cleanupImages');
+
         // Users
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
