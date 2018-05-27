@@ -221,13 +221,27 @@ function codePlugin() {
 
 function drawIoPlugin() {
 
-    const drawIoUrl = 'https://www.draw.io/?embed=1&ui=atlas&spin=1&proto=json';
-    let iframe = null;
     let pageEditor = null;
     let currentNode = null;
 
     function isDrawing(node) {
         return node.hasAttribute('drawio-diagram');
+    }
+
+    function showDrawingManager(mceEditor, selectedNode = null) {
+        pageEditor = mceEditor;
+        currentNode = selectedNode;
+        // Show image manager
+        window.ImageManager.show(function (image) {
+            if (selectedNode) {
+                let imgElem = selectedNode.querySelector('img');
+                pageEditor.dom.setAttrib(imgElem, 'src', image.url);
+                pageEditor.dom.setAttrib(selectedNode, 'drawio-diagram', image.id);
+            } else {
+                let imgHTML = `<div drawio-diagram="${image.id}" contenteditable="false"><img src="${image.url}"></div>`;
+                pageEditor.insertContent(imgHTML);
+            }
+        }, 'drawio');
     }
 
     function showDrawingEditor(mceEditor, selectedNode = null) {
@@ -248,9 +262,9 @@ function drawIoPlugin() {
         if (currentNode) {
             DrawIO.close();
             let imgElem = currentNode.querySelector('img');
-            let drawingId = currentNode.getAttribute('drawio-diagram');
-            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
-                pageEditor.dom.setAttrib(imgElem, 'src', `${resp.data.url}?updated=${Date.now()}`);
+            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
+                pageEditor.dom.setAttrib(imgElem, 'src', resp.data.url);
+                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', resp.data.id);
             }).catch(err => {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
@@ -287,13 +301,24 @@ function drawIoPlugin() {
     window.tinymce.PluginManager.add('drawio', function(editor, url) {
 
         editor.addCommand('drawio', () => {
-            showDrawingEditor(editor);
+            let selectedNode = editor.selection.getNode();
+            showDrawingEditor(editor, isDrawing(selectedNode) ? selectedNode : null);
         });
 
         editor.addButton('drawio', {
+            type: 'splitbutton',
             tooltip: 'Drawing',
             image: `data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMDAwMDAiICB4bWxucz0iaHR0cDovL3d3 dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTIzIDdWMWgtNnYySDdWMUgxdjZoMnYx MEgxdjZoNnYtMmgxMHYyaDZ2LTZoLTJWN2gyek0zIDNoMnYySDNWM3ptMiAxOEgzdi0yaDJ2Mnpt MTItMkg3di0ySDVWN2gyVjVoMTB2MmgydjEwaC0ydjJ6bTQgMmgtMnYtMmgydjJ6TTE5IDVWM2gy djJoLTJ6bS01LjI3IDloLTMuNDlsLS43MyAySDcuODlsMy40LTloMS40bDMuNDEgOWgtMS42M2wt Ljc0LTJ6bS0zLjA0LTEuMjZoMi42MUwxMiA4LjkxbC0xLjMxIDMuODN6Ii8+CiAgICA8cGF0aCBk PSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==`,
-            cmd: 'drawio'
+            cmd: 'drawio',
+            menu: [
+                {
+                    text: 'Drawing Manager',
+                    onclick() {
+                        let selectedNode = editor.selection.getNode();
+                        showDrawingManager(editor, isDrawing(selectedNode) ? selectedNode : null);
+                    }
+                }
+            ]
         });
 
         editor.on('dblclick', event => {
@@ -443,7 +468,7 @@ class WysiwygEditor {
                         html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                         html += '</a>';
                         win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-                    });
+                    }, 'gallery');
                 }
 
             },
@@ -522,7 +547,7 @@ class WysiwygEditor {
                             html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
                             html += '</a>';
                             editor.execCommand('mceInsertContent', false, html);
-                        });
+                        }, 'gallery');
                     }
                 });
 

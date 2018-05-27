@@ -95,7 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/base64/{id}', 'ImageController@getBase64Image');
         Route::put('/update/{imageId}', 'ImageController@update');
         Route::post('/drawing/upload', 'ImageController@uploadDrawing');
-        Route::put('/drawing/upload/{id}', 'ImageController@replaceDrawing');
+        Route::get('/usage/{id}', 'ImageController@usage');
         Route::post('/{type}/upload', 'ImageController@uploadByType');
         Route::get('/{type}/all', 'ImageController@getAllByType');
         Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
@@ -150,6 +150,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'settings'], function() {
         Route::get('/', 'SettingController@index')->name('settings');
         Route::post('/', 'SettingController@update');
+
+        // Maintenance
+        Route::get('/maintenance', 'SettingController@showMaintenance');
+        Route::delete('/maintenance/cleanup-images', 'SettingController@cleanupImages');
 
         // Users
         Route::get('/users', 'UserController@index');
