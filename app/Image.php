@@ -9,13 +9,15 @@ class Image extends Ownable
 
     /**
      * Get a thumbnail for this image.
-     * @param  int       $width
-     * @param  int       $height
+     * @param  int $width
+     * @param  int $height
      * @param bool|false $keepRatio
      * @return string
+     * @throws \Exception
      */
     public function getThumb($width, $height, $keepRatio = false)
     {
         return Images::getThumbnail($this, $width, $height, $keepRatio);
     }
+
 }

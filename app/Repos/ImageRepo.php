@@ -153,17 +153,6 @@ class ImageRepo
         return $image;
     }
 
-    /**
-     * Replace the image content of a drawing.
-     * @param Image $image
-     * @param string $base64Uri
-     * @return Image
-     * @throws \BookStack\Exceptions\ImageUploadException
-     */
-    public function replaceDrawingContent(Image $image, string $base64Uri)
-    {
-        return $this->imageService->replaceImageDataFromBase64Uri($image, $base64Uri);
-    }
 
     /**
      * Update the details of an image via an array of properties.
@@ -183,13 +172,14 @@ class ImageRepo
 
 
     /**
-     * Destroys an Image object along with its files and thumbnails.
+     * Destroys an Image object along with its revisions, files and thumbnails.
      * @param Image $image
      * @return bool
+     * @throws \Exception
      */
     public function destroyImage(Image $image)
     {
-        $this->imageService->destroyImage($image);
+        $this->imageService->destroy($image);
         return true;
     }
 
@@ -200,7 +190,7 @@ class ImageRepo
      * @throws \BookStack\Exceptions\ImageUploadException
      * @throws \Exception
      */
-    private function loadThumbs(Image $image)
+    protected function loadThumbs(Image $image)
     {
         $image->thumbs = [
             'gallery' => $this->getThumbnail($image, 150, 150),
@@ -250,7 +240,7 @@ class ImageRepo
      */
     public function isValidType($type)
     {
-        $validTypes = ['drawing', 'gallery', 'cover', 'system', 'user'];
+        $validTypes = ['gallery', 'cover', 'system', 'user'];
         return in_array($type, $validTypes);
     }
 }

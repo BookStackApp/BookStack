@@ -2,6 +2,8 @@
 
 use BookStack\Image;
 use BookStack\Page;
+use BookStack\Repos\EntityRepo;
+use BookStack\Services\ImageService;
 
 class ImageTest extends TestCase
 {
@@ -210,38 +212,6 @@ class ImageTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
     }
 
-    public function test_drawing_replacing()
-    {
-        $page = Page::first();
-        $editor = $this->getEditor();
-        $this->actingAs($editor);
-
-        $this->postJson('images/drawing/upload', [
-            'uploaded_to' => $page->id,
-            'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDQ4S1RUeKwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12NctNWSAQkwMaACUvkAfCkBmjyhGl4AAAAASUVORK5CYII='
-        ]);
-
-        $image = Image::where('type', '=', 'drawio')->first();
-
-        $replace = $this->putJson("images/drawing/upload/{$image->id}", [
-            'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDCo5iYNs+gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12O0jN/KgASYGFABqXwAZtoBV6Sl3hIAAAAASUVORK5CYII='
-        ]);
-
-        $replace->assertStatus(200);
-        $replace->assertJson([
-            'type' => 'drawio',
-            'uploaded_to' => $page->id,
-            'created_by' => $editor->id,
-            'updated_by' => $editor->id,
-        ]);
-
-        $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: '. public_path($image->path));
-
-        $testImageData = file_get_contents($this->getTestImageFilePath());
-        $uploadedImageData = file_get_contents(public_path($image->path));
-        $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
-    }
-
     public function test_user_images_deleted_on_user_deletion()
     {
         $editor = $this->getEditor();
@@ -264,6 +234,61 @@ class ImageTest extends TestCase
             'type' => 'user',
             'created_by' => $editor->id
         ]);
+    }
+
+    public function test_deleted_unused_images()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $imageName = 'unused-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+
+        $upload = $this->uploadImage($imageName, $page->id);
+        $upload->assertStatus(200);
+        $image = Image::where('type', '=', 'gallery')->first();
+
+        $entityRepo = app(EntityRepo::class);
+        $entityRepo->updatePage($page, $page->book_id, [
+            'name' => $page->name,
+            'html' => $page->html . "<img src=\"{$image->url}\">",
+            'summary' => ''
+        ]);
+
+        // Ensure no images are reported as deletable
+        $imageService = app(ImageService::class);
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(0, $toDelete);
+
+        // Save a revision of our page without the image;
+        $entityRepo->updatePage($page, $page->book_id, [
+            'name' => $page->name,
+            'html' => "<p>Hello</p>",
+            'summary' => ''
+        ]);
+
+        // Ensure revision images are picked up okay
+        $imageService = app(ImageService::class);
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(0, $toDelete);
+        $toDelete = $imageService->deleteUnusedImages(false, true);
+        $this->assertCount(1, $toDelete);
+
+        // Check image is found when revisions are destroyed
+        $page->revisions()->delete();
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(1, $toDelete);
+
+        // Check the image is deleted
+        $absPath = public_path($relPath);
+        $this->assertTrue(file_exists($absPath), "Existing uploaded file at path {$absPath} exists");
+        $toDelete = $imageService->deleteUnusedImages(true, false);
+        $this->assertCount(1, $toDelete);
+        $this->assertFalse(file_exists($absPath));
+
+        $this->deleteImage($relPath);
     }
 
 }

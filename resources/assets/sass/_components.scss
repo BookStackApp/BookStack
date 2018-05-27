@@ -146,7 +146,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .dropzone-container {
   position: relative;
-  border: 3px dashed #DDD;
+  background-color: #EEE;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23a9a9a9' fill-opacity='0.52' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 .image-manager-list .image {
@@ -163,8 +164,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   transition: all cubic-bezier(.4, 0, 1, 1) 160ms;
   overflow: hidden;
   &.selected {
-    transform: scale3d(0.92, 0.92, 0.92);
-    border: 1px solid #444;
+    //transform: scale3d(0.92, 0.92, 0.92);
+    border: 4px solid #FFF;
+    overflow: hidden;
+    border-radius: 8px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   }
   img {
@@ -210,12 +213,30 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .image-manager-sidebar {
   width: 300px;
   margin-left: 1px;
-  padding: $-m $-l;
   overflow-y: auto;
   overflow-x: hidden;
   border-left: 1px solid #DDD;
+  .inner {
+    padding: $-m;
+  }
+  img {
+    max-width: 100%;
+    max-height: 180px;
+    display: block;
+    margin: 0 auto $-m auto;
+    box-shadow: 0 1px 21px 1px rgba(76, 76, 76, 0.3);
+  }
+  .image-manager-viewer {
+    height: 196px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    a {
+      display: inline-block;
+    }
+  }
   .dropzone-container {
-    margin-top: $-m;
+    border-bottom: 1px solid #DDD;
   }
 }
 
@@ -242,10 +263,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
  * Copyright (c) 2012 Matias Meno <m@tias.me>
  */
 .dz-message {
-  font-size: 1.2em;
-  line-height: 1.1;
+  font-size: 1em;
+  line-height: 2.35;
   font-style: italic;
-  color: #aaa;
+  color: #888;
   text-align: center;
   cursor: pointer;
   padding: $-l $-m;
