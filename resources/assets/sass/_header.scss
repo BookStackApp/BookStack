@@ -16,21 +16,25 @@ header {
   .links {
     display: inline-block;
     vertical-align: top;
-    margin-right: $-xl;
-    @include smaller-than($screen-md) {
-      margin-right: $-m;
-    }
+    margin-left: $-m;
   }
   .links a {
     display: inline-block;
-    padding: $-m $-l;
+    padding: $-m;
     color: #FFF;
     fill: #FFF;
-    &:last-child {
-      padding-right: 0;
+  }
+  .dropdown-container {
+    padding-left: $-m;
+    padding-right: 0;
+  }
+  @include smaller-than($screen-md) {
+    .links a {
+      padding-left: $-s;
+      padding-right: $-s;
     }
-    @include smaller-than($screen-md) {
-      padding: $-m $-s;
+    .dropdown-container {
+      padding-left: $-s;
     }
   }
   .avatar, .user-name {
