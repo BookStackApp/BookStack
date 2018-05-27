@@ -301,38 +301,41 @@ class ImageService extends UploadService
 
     /**
      * Delete gallery and drawings that are not within HTML content of pages or page revisions.
+     * Checks based off of only the image name.
+     * Could be much improved to be more specific but kept it generic for now to be safe.
+     *
+     * Returns the path of the images that would be/have been deleted.
      * @param bool $checkRevisions
      * @param array $types
      * @param bool $dryRun
-     * @return int
+     * @return array
      */
     public function deleteUnusedImages($checkRevisions = true, $types = ['gallery', 'drawio'], $dryRun = true)
     {
-        // TODO - The checking here isn't really good enough.
-        // Thumbnails would also need to be searched for as we can't guarantee the full image will be in the content.
-        // Would also be best to simplify the string to not include the base host?
         $types = array_intersect($types, ['gallery', 'drawio']);
-        $deleteCount = 0;
+        $deletedPaths = [];
+
         $this->image->newQuery()->whereIn('type', $types)
-            ->chunk(1000, function($images) use ($types, $checkRevisions, &$deleteCount, $dryRun) {
+            ->chunk(1000, function($images) use ($types, $checkRevisions, &$deletedPaths, $dryRun) {
              foreach ($images as $image) {
+                 $searchQuery = '%' . basename($image->path) . '%';
                  $inPage = DB::table('pages')
-                     ->where('html', 'like', '%' . $image->url . '%')->count() > 0;
+                         ->where('html', 'like', $searchQuery)->count() > 0;
                  $inRevision = false;
                  if ($checkRevisions) {
                      $inRevision =  DB::table('page_revisions')
-                             ->where('html', 'like', '%' . $image->url . '%')->count() > 0;
+                             ->where('html', 'like', $searchQuery)->count() > 0;
                  }
 
                  if (!$inPage && !$inRevision) {
-                     $deleteCount++;
+                     $deletedPaths[] = $image->path;
                      if (!$dryRun) {
                          $this->destroy($image);
                      }
                  }
              }
         });
-        return $deleteCount;
+        return $deletedPaths;
     }
 
     /**
