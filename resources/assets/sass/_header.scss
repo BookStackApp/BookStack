@@ -90,10 +90,14 @@ header .search-box {
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: #EEE;
+    z-index: 2;
   }
   button {
-    color: #EEE;
     fill: #EEE;
+    z-index: 1;
+    svg {
+      margin-right: 0;
+    }
   }
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #DDD;
