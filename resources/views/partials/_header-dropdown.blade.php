@@ -1,7 +1,7 @@
 <div class="dropdown-container" dropdown>
     <span class="user-name" dropdown-toggle>
         <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
-        <span class="name" ng-non-bindable>{{ $currentUser->getShortName(9) }}</span> @icon('caret-down')
+        <span class="name">{{ $currentUser->getShortName(9) }}</span> @icon('caret-down')
     </span>
     <ul>
         <li>

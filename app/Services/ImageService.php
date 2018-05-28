@@ -3,11 +3,11 @@
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Image;
 use BookStack\User;
+use DB;
 use Exception;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
-use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -17,15 +17,18 @@ class ImageService extends UploadService
     protected $imageTool;
     protected $cache;
     protected $storageUrl;
+    protected $image;
 
     /**
      * ImageService constructor.
-     * @param $imageTool
-     * @param $fileSystem
-     * @param $cache
+     * @param Image $image
+     * @param ImageManager $imageTool
+     * @param FileSystem $fileSystem
+     * @param Cache $cache
      */
-    public function __construct(ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
+    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
     {
+        $this->image = $image;
         $this->imageTool = $imageTool;
         $this->cache = $cache;
         parent::__construct($fileSystem);
@@ -83,31 +86,6 @@ class ImageService extends UploadService
     }
 
     /**
-     * Replace the data for an image via a Base64 encoded string.
-     * @param Image $image
-     * @param string $base64Uri
-     * @return Image
-     * @throws ImageUploadException
-     */
-    public function replaceImageDataFromBase64Uri(Image $image, string $base64Uri)
-    {
-        $splitData = explode(';base64,', $base64Uri);
-        if (count($splitData) < 2) {
-            throw new ImageUploadException("Invalid base64 image data provided");
-        }
-        $data = base64_decode($splitData[1]);
-        $storage = $this->getStorage();
-
-        try {
-            $storage->put($image->path, $data);
-        } catch (Exception $e) {
-            throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $image->path]));
-        }
-
-        return $image;
-    }
-
-    /**
      * Gets an image from url and saves it to the database.
      * @param             $url
      * @param string      $type
@@ -140,16 +118,16 @@ class ImageService extends UploadService
         $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
-        if ($secureUploads) {
-            $imageName = str_random(16) . '-' . $imageName;
-        }
-
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
 
         while ($storage->exists($imagePath . $imageName)) {
             $imageName = str_random(3) . $imageName;
         }
+
         $fullPath = $imagePath . $imageName;
+        if ($secureUploads) {
+            $fullPath = $imagePath . str_random(16) . '-' . $imageName;
+        }
 
         try {
             $storage->put($fullPath, $imageData);
@@ -172,20 +150,11 @@ class ImageService extends UploadService
             $imageDetails['updated_by'] = $userId;
         }
 
-        $image = (new Image());
+        $image = $this->image->newInstance();
         $image->forceFill($imageDetails)->save();
         return $image;
     }
 
-    /**
-     * Get the storage path, Dependant of storage type.
-     * @param Image $image
-     * @return mixed|string
-     */
-    protected function getPath(Image $image)
-    {
-        return $image->path;
-    }
 
     /**
      * Checks if the image is a gif. Returns true if it is, else false.
@@ -194,7 +163,7 @@ class ImageService extends UploadService
      */
     protected function isGif(Image $image)
     {
-        return strtolower(pathinfo($this->getPath($image), PATHINFO_EXTENSION)) === 'gif';
+        return strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'gif';
     }
 
     /**
@@ -212,11 +181,11 @@ class ImageService extends UploadService
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
         if ($keepRatio && $this->isGif($image)) {
-            return $this->getPublicUrl($this->getPath($image));
+            return $this->getPublicUrl($image->path);
         }
 
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
-        $imagePath = $this->getPath($image);
+        $imagePath = $image->path;
         $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
 
         if ($this->cache->has('images-' . $image->id . '-' . $thumbFilePath) && $this->cache->get('images-' . $thumbFilePath)) {
@@ -262,43 +231,51 @@ class ImageService extends UploadService
      */
     public function getImageData(Image $image)
     {
-        $imagePath = $this->getPath($image);
+        $imagePath = $image->path;
         $storage = $this->getStorage();
         return $storage->get($imagePath);
     }
 
     /**
-     * Destroys an Image object along with its files and thumbnails.
+     * Destroy an image along with its revisions, thumbnails and remaining folders.
      * @param Image $image
-     * @return bool
      * @throws Exception
      */
-    public function destroyImage(Image $image)
+    public function destroy(Image $image)
+    {
+        $this->destroyImagesFromPath($image->path);
+        $image->delete();
+    }
+
+    /**
+     * Destroys an image at the given path.
+     * Searches for image thumbnails in addition to main provided path..
+     * @param string $path
+     * @return bool
+     */
+    protected function destroyImagesFromPath(string $path)
     {
         $storage = $this->getStorage();
 
-        $imageFolder = dirname($this->getPath($image));
-        $imageFileName = basename($this->getPath($image));
+        $imageFolder = dirname($path);
+        $imageFileName = basename($path);
         $allImages = collect($storage->allFiles($imageFolder));
 
+        // Delete image files
         $imagesToDelete = $allImages->filter(function ($imagePath) use ($imageFileName) {
             $expectedIndex = strlen($imagePath) - strlen($imageFileName);
             return strpos($imagePath, $imageFileName) === $expectedIndex;
         });
-
         $storage->delete($imagesToDelete->all());
 
         // Cleanup of empty folders
-        foreach ($storage->directories($imageFolder) as $directory) {
+        $foldersInvolved = array_merge([$imageFolder], $storage->directories($imageFolder));
+        foreach ($foldersInvolved as $directory) {
             if ($this->isFolderEmpty($directory)) {
                 $storage->deleteDirectory($directory);
             }
         }
-        if ($this->isFolderEmpty($imageFolder)) {
-            $storage->deleteDirectory($imageFolder);
-        }
 
-        $image->delete();
         return true;
     }
 
@@ -319,6 +296,46 @@ class ImageService extends UploadService
         $image->updated_by = $user->id;
         $image->save();
         return $image;
+    }
+
+
+    /**
+     * Delete gallery and drawings that are not within HTML content of pages or page revisions.
+     * Checks based off of only the image name.
+     * Could be much improved to be more specific but kept it generic for now to be safe.
+     *
+     * Returns the path of the images that would be/have been deleted.
+     * @param bool $checkRevisions
+     * @param bool $dryRun
+     * @param array $types
+     * @return array
+     */
+    public function deleteUnusedImages($checkRevisions = true, $dryRun = true, $types = ['gallery', 'drawio'])
+    {
+        $types = array_intersect($types, ['gallery', 'drawio']);
+        $deletedPaths = [];
+
+        $this->image->newQuery()->whereIn('type', $types)
+            ->chunk(1000, function($images) use ($types, $checkRevisions, &$deletedPaths, $dryRun) {
+             foreach ($images as $image) {
+                 $searchQuery = '%' . basename($image->path) . '%';
+                 $inPage = DB::table('pages')
+                         ->where('html', 'like', $searchQuery)->count() > 0;
+                 $inRevision = false;
+                 if ($checkRevisions) {
+                     $inRevision =  DB::table('page_revisions')
+                             ->where('html', 'like', $searchQuery)->count() > 0;
+                 }
+
+                 if (!$inPage && !$inRevision) {
+                     $deletedPaths[] = $image->path;
+                     if (!$dryRun) {
+                         $this->destroy($image);
+                     }
+                 }
+             }
+        });
+        return $deletedPaths;
     }
 
     /**

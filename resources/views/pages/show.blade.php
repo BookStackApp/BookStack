@@ -41,50 +41,11 @@
 @stop
 
 @section('sidebar')
-    @if($book->restricted || ($page->chapter && $page->chapter->restricted) || $page->restricted)
-        <div class="card">
-            <h3>@icon('permission') {{ trans('entities.permissions') }}</h3>
-            <div class="body">
-                <div class="text-muted">
-
-                    @if($book->restricted)
-                        @if(userCan('restrictions-manage', $book))
-                            <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.books_permissions_active') }}
-                        @endif
-                        <br>
-                    @endif
-
-                    @if($page->chapter && $page->chapter->restricted)
-                        @if(userCan('restrictions-manage', $page->chapter))
-                            <a href="{{ $page->chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.chapters_permissions_active') }}
-                        @endif
-                        <br>
-                    @endif
-
-                    @if($page->restricted)
-                        @if(userCan('restrictions-manage', $page))
-                            <a href="{{ $page->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.pages_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.pages_permissions_active') }}
-                        @endif
-                        <br>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
 
     @if($page->tags->count() > 0)
-        <div class="card tag-display">
-            <h3>@icon('tag') {{ trans('entities.page_tags') }}</h3>
-            <div class="body">
-                @include('components.tag-list', ['entity' => $page])
-            </div>
-        </div>
+        <section>
+            @include('components.tag-list', ['entity' => $page])
+        </section>
     @endif
 
     @if ($page->attachments->count() > 0)
@@ -115,10 +76,40 @@
         </div>
     @endif
 
-    <div class="card">
+    <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
+        <div class="body text-muted text-small blended-links">
             @include('partials.entity-meta', ['entity' => $page])
+
+            @if($book->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $book))
+                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                    @endif
+                </div>
+            @endif
+
+            @if($page->chapter && $page->chapter->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $page->chapter))
+                        <a href="{{ $page->chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.chapters_permissions_active') }}
+                    @endif
+                </div>
+            @endif
+
+            @if($page->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $page))
+                        <a href="{{ $page->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.pages_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.pages_permissions_active') }}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 
@@ -126,8 +117,11 @@
 
 @stop
 
+@section('body-wrap-classes', 'flex-fill columns')
+
 @section('body')
-    <div class="page-content" page-display="{{ $page->id }}" ng-non-bindable>
+
+    <div class="page-content flex" page-display="{{ $page->id }}">
 
         <div class="pointer-container" id="pointer">
             <div class="pointer anim" >
@@ -138,10 +132,10 @@
         </div>
 
         @include('pages/page-display')
-
     </div>
+
     @if ($commentsEnabled)
-      <div class="container small nopad">
+      <div class="container small nopad comments-container">
           @include('comments/comments', ['page' => $page])
       </div>
     @endif

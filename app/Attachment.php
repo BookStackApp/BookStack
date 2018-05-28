@@ -31,6 +31,9 @@ class Attachment extends Ownable
      */
     public function getUrl()
     {
+        if ($this->external && strpos($this->path, 'http') !== 0) {
+            return $this->path;
+        }
         return baseUrl('/attachments/' . $this->id);
     }
 }

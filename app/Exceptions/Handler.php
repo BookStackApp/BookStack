@@ -4,8 +4,6 @@ namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -33,6 +31,7 @@ class Handler extends ExceptionHandler
      *
      * @param  \Exception $e
      * @return mixed
+     * @throws Exception
      */
     public function report(Exception $e)
     {
@@ -65,28 +64,10 @@ class Handler extends ExceptionHandler
 
         // Handle 404 errors with a loaded session to enable showing user-specific information
         if ($this->isExceptionType($e, NotFoundHttpException::class)) {
-            return $this->loadErrorMiddleware($request, function ($request) use ($e) {
-                $message = $e->getMessage() ?: trans('errors.404_page_not_found');
-                return response()->view('errors/404', ['message' => $message], 404);
-            });
+            return \Route::respondWithRoute('fallback');
         }
 
         return parent::render($request, $e);
-    }
-
-    /**
-     * Load the middleware required to show state/session-enabled error pages.
-     * @param Request $request
-     * @param $callback
-     * @return mixed
-     */
-    protected function loadErrorMiddleware(Request $request, $callback)
-    {
-        $middleware = (\Route::getMiddlewareGroups()['web_errors']);
-        return (new Pipeline($this->container))
-            ->send($request)
-            ->through($middleware)
-            ->then($callback);
     }
 
     /**

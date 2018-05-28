@@ -13,7 +13,7 @@
             <div class="body">
                 <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="post">
                     <div class="row">
-                        <div class="col-sm-6" ng-non-bindable>
+                        <div class="col-sm-6">
                             {!! csrf_field() !!}
                             <input type="hidden" name="_method" value="put">
                             @include('users.forms.' . $authMethod, ['model' => $user])
