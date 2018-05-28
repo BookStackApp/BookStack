@@ -33,7 +33,7 @@
     <header id="header">
         <div class="container fluid">
             <div class="row">
-                <div class="col-sm-4" ng-non-bindable>
+                <div class="col-sm-4">
                     <a href="{{ baseUrl('/') }}" class="logo">
                         @if(setting('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ setting('app-logo', '') === '' ? baseUrl('/logo.png') : baseUrl(setting('app-logo', '')) }}" alt="Logo">

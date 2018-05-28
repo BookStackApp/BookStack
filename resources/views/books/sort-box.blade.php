@@ -1,4 +1,4 @@
-<div class="sort-box" data-type="book" data-id="{{ $book->id }}" ng-non-bindable>
+<div class="sort-box" data-type="book" data-id="{{ $book->id }}">
     <h3 class="text-book">@icon('book'){{ $book->name }}</h3>
     <ul class="sortable-page-list sort-list">
         @foreach($bookChildren as $bookChild)

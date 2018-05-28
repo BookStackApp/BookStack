@@ -40,6 +40,9 @@
   margin: 0 auto;
   margin-top: $-xxl;
   overflow-wrap: break-word;
+  &.flex {
+    margin-top: $-m;
+  }
   .align-left {
     text-align: left;
   }
