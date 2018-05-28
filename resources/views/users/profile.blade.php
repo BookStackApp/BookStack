@@ -17,7 +17,7 @@
 
 @section('body')
 
-    <div class="container small" ng-non-bindable>
+    <div class="container small">
 
         <div class="padded-top large"></div>
 

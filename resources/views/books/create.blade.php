@@ -12,7 +12,7 @@
 
 @section('body')
 
-<div ng-non-bindable class="container small">
+<div class="container small">
     <p>&nbsp;</p>
     <div class="card">
         <h3>@icon('add') {{ trans('entities.books_create') }}</h3>

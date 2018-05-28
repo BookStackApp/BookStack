@@ -35,6 +35,7 @@ class PageDisplay {
     }
 
     setupPointer() {
+        if (document.getElementById('pointer') === null) return;
         // Set up pointer
         let $pointer = $('#pointer').detach();
         let pointerShowing = false;

@@ -1,4 +1,4 @@
-<div ng-non-bindable>
+<div>
 
     <h1 class="break-text" v-pre id="bkmrk-page-title">{{$page->name}}</h1>
 
