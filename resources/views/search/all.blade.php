@@ -10,7 +10,6 @@
 
 @section('container-attrs')
     id="search-system"
-   =""
 @stop
 
 @section('sidebar')
