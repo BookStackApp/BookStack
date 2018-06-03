@@ -66,6 +66,17 @@
   }
   h1, h2, h3, h4, h5, h6, pre {
     clear: left;
+
+    .heading-edit-icon {
+      margin-left: 10px;
+      font-size: 0.7em;
+      display: none;
+      line-height: 1em;
+
+      .svg-icon {
+          bottom: 0px;
+      }
+    }
   }
   hr {
     clear: both;
@@ -88,6 +99,16 @@
   }
   del {
     background: #FFECEC;
+  }
+  h1:hover,
+  h2:hover,
+  h3:hover,
+  h4:hover,
+  h5:hover,
+  h6:hover {
+    .heading-edit-icon {
+      display: inline;
+    }
   }
 }
 
