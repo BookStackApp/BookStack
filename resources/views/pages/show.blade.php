@@ -132,6 +132,10 @@
         </div>
 
         @include('pages/page-display')
+
+        @if(userCan('page-update', $page))
+            <a href="{{ $page->getUrl('/edit') }}" class="text-primary text-button heading-edit-icon" style="display: none">@icon('edit')</a>
+        @endif
     </div>
 
     @if ($commentsEnabled)

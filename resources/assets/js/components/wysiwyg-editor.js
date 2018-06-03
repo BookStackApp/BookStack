@@ -497,6 +497,19 @@ class WysiwygEditor {
                     editorChange(html);
                 });
 
+                window.$events.listen('editor-scroll-to-text', textId => {
+                    const element = editor.dom.get(textId)
+                    if (!element) {
+                        return;
+                    }
+
+                    // scroll the element into the view and put the cursor at the end.
+                    element.scrollIntoView();
+                    editor.selection.select(element, true);
+                    editor.selection.collapse(false);
+                    editor.focus();
+                });
+
                 registerEditorShortcuts(editor);
 
                 let wrap;
