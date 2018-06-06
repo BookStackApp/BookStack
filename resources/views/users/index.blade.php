@@ -5,7 +5,7 @@
 @stop
 
 @section('body')
-    <div class="container small" ng-non-bindable>
+    <div class="container small">
         <p>&nbsp;</p>
         <div class="card">
             <h3>@icon('users') {{ trans('settings.users') }}</h3>

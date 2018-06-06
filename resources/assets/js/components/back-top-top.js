@@ -6,6 +6,12 @@ class BackToTop {
         this.targetElem = document.getElementById('header');
         this.showing = false;
         this.breakPoint = 1200;
+
+        if (document.body.classList.contains('flexbox')) {
+            this.elem.style.display = 'none';
+            return;
+        }
+
         this.elem.addEventListener('click', this.scrollToTop.bind(this));
         window.addEventListener('scroll', this.onPageScroll.bind(this));
     }

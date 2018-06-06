@@ -34,6 +34,7 @@ return [
     'app_homepage' => 'Application Homepage',
     'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
     'app_homepage_default' => 'Default homepage view chosen',
+    'app_homepage_books' => 'Or select the books page as your homepage. This will override any page selected as your homepage.',
     'app_disable_comments' => 'Disable comments',
     'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
@@ -49,6 +50,19 @@ return [
     'reg_confirm_restrict_domain' => 'Restrict registration to domain',
     'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
+
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => 'Maintenance',
+    'maint_image_cleanup' => 'Cleanup Images',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
+    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
+    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
     /**
      * Role settings

@@ -52,6 +52,10 @@ class MarkdownEditor {
             let action = button.getAttribute('data-action');
             if (action === 'insertImage') this.actionInsertImage();
             if (action === 'insertLink') this.actionShowLinkSelector();
+            if (action === 'insertDrawing' && event.ctrlKey) {
+                this.actionShowImageManager();
+                return;
+            }
             if (action === 'insertDrawing') this.actionStartDrawing();
         });
 
@@ -293,7 +297,14 @@ class MarkdownEditor {
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
-        });
+        }, 'gallery');
+    }
+
+    actionShowImageManager() {
+        let cursorPos = this.cm.getCursor('from');
+        window.ImageManager.show(image => {
+            this.insertDrawing(image, cursorPos);
+        }, 'drawio');
     }
 
     // Show the popup link selector and insert a link when finished
@@ -324,16 +335,20 @@ class MarkdownEditor {
             };
 
             window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
-                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
-                this.cm.focus();
-                this.cm.replaceSelection(newText);
-                this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                this.insertDrawing(resp.data, cursorPos);
                 DrawIO.close();
             }).catch(err => {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
             });
         });
+    }
+
+    insertDrawing(image, originalCursor) {
+        let newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
+        this.cm.focus();
+        this.cm.replaceSelection(newText);
+        this.cm.setCursor(originalCursor.line, originalCursor.ch + newText.length);
     }
 
     // Show draw.io if enabled and handle save.
@@ -353,8 +368,8 @@ class MarkdownEditor {
                 uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
             };
 
-            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
-                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url + `?updated=${Date.now()}`}"></div>`;
+            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
+                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 let newContent = this.cm.getValue().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
                         return newText;

@@ -35,10 +35,14 @@
 }
 
 .page-content {
+  width: 100%;
   max-width: 840px;
   margin: 0 auto;
   margin-top: $-xxl;
   overflow-wrap: break-word;
+  &.flex {
+    margin-top: $-m;
+  }
   .align-left {
     text-align: left;
   }
@@ -312,6 +316,18 @@
     &.active {
       background-color: #EEE;
     }
+  }
+}
+
+.comments-container {
+  width: 100%;
+  border-top: 1px solid #DDD;
+  margin-top: $-xl;
+  margin-bottom: $-m;
+  h5 {
+    color: #888;
+    font-weight: normal;
+    margin-top: 0.5em;
   }
 }
 

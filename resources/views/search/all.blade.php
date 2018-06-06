@@ -10,7 +10,6 @@
 
 @section('container-attrs')
     id="search-system"
-    ng-non-bindable=""
 @stop
 
 @section('sidebar')

@@ -49,4 +49,23 @@ class HomepageTest extends TestCase
         $homeVisit->assertSee($name);
         $homeVisit->assertStatus(200);
     }
+
+    public function test_set_book_homepage()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'grid');
+
+        $this->setSettings(['app-book-homepage' => true]);
+
+        $this->asEditor();
+        $homeVisit = $this->get('/');
+        $homeVisit->assertSee('Books');
+        $homeVisit->assertSee('book-grid-item grid-card');
+        $homeVisit->assertSee('grid-card-content');
+        $homeVisit->assertSee('grid-card-footer');
+        $homeVisit->assertSee('featured-image-container');
+
+        $this->setSettings(['app-book-homepage' => false]);
+        $this->test_default_homepage_visible();
+    }
 }

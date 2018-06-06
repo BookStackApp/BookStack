@@ -33,22 +33,41 @@ class HomeController extends Controller
         $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
         $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
 
-        // Custom homepage
+
         $customHomepage = false;
-        $homepageSetting = setting('app-homepage');
-        if ($homepageSetting) {
-            $id = intval(explode(':', $homepageSetting)[0]);
-            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
-            $this->entityRepo->renderPage($customHomepage, true);
+        $books = false;
+        $booksViewType = false;
+
+        // Check book homepage
+        $bookHomepageSetting = setting('app-book-homepage');
+        if ($bookHomepageSetting) {
+            $books = $this->entityRepo->getAllPaginated('book', 18);
+            $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
+        } else {
+            // Check custom homepage
+            $homepageSetting = setting('app-homepage');
+            if ($homepageSetting) {
+                $id = intval(explode(':', $homepageSetting)[0]);
+                $customHomepage = $this->entityRepo->getById('page', $id, false, true);
+                $this->entityRepo->renderPage($customHomepage, true);
+            }
         }
 
-        $view = $customHomepage ? 'home-custom' : 'home';
-        return view($view, [
+        $view = 'home';
+        if ($bookHomepageSetting) {
+            $view = 'home-book';
+        } else if ($customHomepage) {
+            $view = 'home-custom';
+        }
+
+        return view('common/' . $view, [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
             'draftPages' => $draftPages,
-            'customHomepage' => $customHomepage
+            'customHomepage' => $customHomepage,
+            'books' => $books,
+            'booksViewType' => $booksViewType
         ]);
     }
 
@@ -90,27 +109,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Get an icon via image request.
-     * Can provide a 'color' parameter with hex value to color the icon.
-     * @param $iconName
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function getIcon($iconName, Request $request)
-    {
-        $attrs = [];
-        if ($request->filled('color')) {
-            $attrs['fill'] = '#' . $request->get('color');
-        }
-
-        $icon = icon($iconName, $attrs);
-        return response($icon, 200, [
-            'Content-Type' => 'image/svg+xml',
-            'Cache-Control' => 'max-age=3600',
-        ]);
-    }
-
-    /**
      * Get custom head HTML, Used in ajax calls to show in editor.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -131,7 +129,15 @@ class HomeController extends Controller
             $allowRobots = $sitePublic;
         }
         return response()
-            ->view('robots', ['allowRobots' => $allowRobots])
+            ->view('common/robots', ['allowRobots' => $allowRobots])
             ->header('Content-Type', 'text/plain');
+    }
+
+    /**
+     * Show the route for 404 responses.
+     */
+    public function getNotFound()
+    {
+        return response()->view('errors/404', [], 404);
     }
 }
