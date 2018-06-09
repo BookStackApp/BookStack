@@ -404,3 +404,37 @@ span.CodeMirror-selectedtext { background: none; }
   width: 100%;
   height: 100%;
 }
+
+/**
+ * Custom Copy Button
+ */
+.CodeMirror-copy {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background-color: #EEE;
+  padding: $-xs;
+  line-height: 0;
+  border: 1px solid #DDD;
+  cursor: pointer;
+  fill: #444;
+  z-index: 5;
+  transition: all ease-in 180ms;
+  user-select: none;
+  opacity: 0.7;
+  svg {
+    transition: transform ease-in 180ms;
+    transform: translateY(0);
+  }
+  &.success {
+    background-color: lighten($positive, 10%);
+    fill: #FFF;
+    svg {
+      transform: translateY(-3px);
+    }
+  }
+}
+.CodeMirror:hover .CodeMirror-copy {
+  user-select: all;
+  opacity: 1;
+}
