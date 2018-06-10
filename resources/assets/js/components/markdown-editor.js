@@ -18,6 +18,13 @@ class MarkdownEditor {
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
         this.init();
+
+        // Scroll to text if needed.
+        const queryParams = (new URL(window.location)).searchParams;
+        const scrollText = queryParams.get('content-text');
+        if (scrollText) {
+            this.scrollToText(scrollText);
+        }
     }
 
     init() {
@@ -385,6 +392,34 @@ class MarkdownEditor {
                 console.log(err);
             });
         });
+    }
+
+    // Scroll to a specified text
+    scrollToText(searchText) {;
+        if (!searchText) {
+            return;
+        }
+        const content = this.cm.getValue();
+        const lines = content.split(/\r?\n/);
+        let lineNumber = -1;
+        for (let i = 0; i !== lines.length; ++i) {
+            const line = lines[i];
+            if (!line) {
+                continue;
+            }
+            if (line.indexOf(searchText) !== -1) {
+                lineNumber = i;
+                break;
+            }
+        }
+
+        if (lineNumber !== -1) {
+            this.cm.scrollIntoView({
+                line: lineNumber,
+                char: lines[lineNumber].length
+            }, 200);
+            this.cm.focus();
+        }
     }
 
 }

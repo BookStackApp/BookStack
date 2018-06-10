@@ -222,7 +222,7 @@ class PageDisplay {
     }
     setupEditOnHeader() {
         const headingEditIcon = document.querySelector('.heading-edit-icon');
-        if (headingEditIcon.length === 0) {
+        if (headingEditIcon === null) {
             // user does not have permission to edit.
             return;
         }
@@ -239,7 +239,10 @@ class PageDisplay {
             const headingId = currHeading.id;
 
             let editIcon = visibleHeadingEditIcon.cloneNode(true);
-            editIcon.href += `#${headingId}`;
+
+            // get the first 50 characters.
+            let queryContent = currHeading.textContent && currHeading.textContent.substring(0, 50);
+            editIcon.href += `?content-id=${headingId}&content-text=${encodeURIComponent(queryContent)}`;
 
             currHeading.appendChild(editIcon);
         }

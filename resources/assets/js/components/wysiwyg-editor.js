@@ -483,22 +483,25 @@ class WysiwygEditor {
             },
             setup: function (editor) {
 
-                editor.on('init ExecCommand change input NodeChange ObjectResized', editorChange);
+                editor.on('ExecCommand change input NodeChange ObjectResized', editorChange);
+
+                editor.on('init', () => {
+                    editorChange();
+                    // Scroll to the content if needed.
+                    const queryParams = (new URL(window.location)).searchParams;
+                    const scrollId = queryParams.get('content-id');
+                    if (scrollId) {
+                        scrollToText(scrollId);
+                    }
+                });
 
                 function editorChange() {
                     let content = editor.getContent();
                     window.$events.emit('editor-html-change', content);
                 }
 
-                window.$events.listen('editor-html-update', html => {
-                    editor.setContent(html);
-                    editor.selection.select(editor.getBody(), true);
-                    editor.selection.collapse(false);
-                    editorChange(html);
-                });
-
-                window.$events.listen('editor-scroll-to-text', textId => {
-                    const element = editor.dom.get(textId)
+                function scrollToText(scrollId) {
+                    const element = editor.dom.get(scrollId)
                     if (!element) {
                         return;
                     }
@@ -508,6 +511,13 @@ class WysiwygEditor {
                     editor.selection.select(element, true);
                     editor.selection.collapse(false);
                     editor.focus();
+                }
+
+                window.$events.listen('editor-html-update', html => {
+                    editor.setContent(html);
+                    editor.selection.select(editor.getBody(), true);
+                    editor.selection.collapse(false);
+                    editorChange(html);
                 });
 
                 registerEditorShortcuts(editor);

@@ -43,13 +43,6 @@ function mounted() {
     window.$events.listen('editor-markdown-change', markdown => {
         this.editorMarkdown = markdown;
     });
-
-    const scrollToText = window.location.hash ? window.location.hash.substr(1) : '';
-    if (scrollToText) {
-        setTimeout(() => {
-            window.$events.emit('editor-scroll-to-text', scrollToText);
-        }, 1000)
-    }
 }
 
 let data = {
