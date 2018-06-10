@@ -416,9 +416,13 @@ class MarkdownEditor {
         if (lineNumber !== -1) {
             this.cm.scrollIntoView({
                 line: lineNumber,
-                char: lines[lineNumber].length
             }, 200);
             this.cm.focus();
+            // set the cursor location.
+            this.cm.setCursor({
+                line: lineNumber,
+                char: lines[lineNumber].length
+            })
         }
     }
 
