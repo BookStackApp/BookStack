@@ -181,6 +181,7 @@ return [
     'pages_revisions_restore' => '恢复',
     'pages_revisions_none' => '此页面没有修订',
     'pages_copy_link' => '复制链接',
+    'pages_edit_content_link' => '编辑内容',
     'pages_permissions_active' => '有效的页面权限',
     'pages_initial_revision' => '初始发布',
     'pages_initial_name' => '新页面',

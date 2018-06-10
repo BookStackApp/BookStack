@@ -179,6 +179,7 @@ return [
     'pages_revisions_restore' => '復元',
     'pages_revisions_none' => 'このページにはリビジョンがありません',
     'pages_copy_link' => 'リンクをコピー',
+    'pages_edit_content_link' => 'コンテンツの編集',
     'pages_permissions_active' => 'ページの権限は有効です',
     'pages_initial_revision' => '初回の公開',
     'pages_initial_name' => '新規ページ',
