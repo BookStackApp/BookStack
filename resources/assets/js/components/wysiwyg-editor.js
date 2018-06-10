@@ -501,7 +501,7 @@ class WysiwygEditor {
                 }
 
                 function scrollToText(scrollId) {
-                    const element = editor.dom.get(scrollId)
+                    const element = editor.dom.get(encodeURIComponent(scrollId).replace(/!/g, '%21'));
                     if (!element) {
                         return;
                     }
