@@ -66,17 +66,6 @@
   }
   h1, h2, h3, h4, h5, h6, pre {
     clear: left;
-
-    .heading-edit-icon {
-      margin-left: 10px;
-      font-size: 0.7em;
-      display: none;
-      line-height: 1em;
-
-      .svg-icon {
-          bottom: 0px;
-      }
-    }
   }
   hr {
     clear: both;
@@ -100,16 +89,6 @@
   del {
     background: #FFECEC;
   }
-  h1:hover,
-  h2:hover,
-  h3:hover,
-  h4:hover,
-  h5:hover,
-  h6:hover {
-    .heading-edit-icon {
-      display: inline;
-    }
-  }
 }
 
 // Page content pointers
@@ -128,8 +107,13 @@
   position: absolute;
   top: -60px;
   background-color:#FFF;
-  width: 272px;
+  width: 275px;
   z-index: 55;
+
+  &.is-page-editable {
+    width: 328px;
+  }
+
   &:before {
     position: absolute;
     left: 50%;
@@ -153,12 +137,13 @@
     width: 172px;
     z-index: 40;
   }
-  input, button {
+  input, button, a {
     position: relative;
     border-radius: 0;
     height: 28px;
     font-size: 12px;
     vertical-align: top;
+    padding: 5px 16px;
   }
   > i {
     color: #888;
@@ -169,10 +154,21 @@
     cursor: pointer;
     user-select: none;
   }
-  .button {
+  .input-group .button {
     line-height: 1;
     margin: 0 0 0 -4px;
     box-shadow: none;
+  }
+  a.button {
+    margin: 0 0 0 0;
+
+    &:hover {
+      fill: #fff;
+    }
+  }
+  .svg-icon {
+    width: 1.2em;
+    height: 1.2em;
   }
 }
 

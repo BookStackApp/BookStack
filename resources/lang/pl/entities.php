@@ -179,6 +179,7 @@ return [
     'pages_revisions_restore' => 'Przywróć',
     'pages_revisions_none' => 'Ta strona nie posiada żadnych rewizji',
     'pages_copy_link' => 'Kopiuj link',
+    'pages_edit_content_link' => 'Edytuj zawartość',
     'pages_permissions_active' => 'Uprawnienia strony aktywne',
     'pages_initial_revision' => 'Wydanie pierwotne',
     'pages_initial_name' => 'Nowa strona',

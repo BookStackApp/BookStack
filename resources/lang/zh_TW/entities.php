@@ -182,6 +182,7 @@ return [
     'pages_revisions_restore' => '恢複',
     'pages_revisions_none' => '此頁面沒有修訂',
     'pages_copy_link' => '複製連結',
+    'pages_edit_content_link' => '编辑内容',
     'pages_permissions_active' => '有效的頁面權限',
     'pages_initial_revision' => '初次發布',
     'pages_initial_name' => '新頁面',

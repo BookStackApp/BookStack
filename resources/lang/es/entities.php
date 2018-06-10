@@ -182,6 +182,7 @@ return [
     'pages_revisions_restore' => 'Restaurar',
     'pages_revisions_none' => 'Esta página no tiene revisiones',
     'pages_copy_link' => 'Copiar Enlace',
+    'pages_edit_content_link' => 'Contenido editado',
     'pages_permissions_active' => 'Permisos de página activos',
     'pages_initial_revision' => 'Publicación inicial',
     'pages_initial_name' => 'Página nueva',

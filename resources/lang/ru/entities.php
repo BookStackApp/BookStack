@@ -181,6 +181,7 @@ return [
     'pages_revisions_restore' => 'Восстановить',
     'pages_revisions_none' => 'У этой страницы нет других версий',
     'pages_copy_link' => 'Копировать ссылку',
+    'pages_edit_content_link' => 'Изменить содержание',
     'pages_permissions_active' => 'Действующие разрешения на страницу',
     'pages_initial_revision' => 'Первоначальное издание',
     'pages_initial_name' => 'Новая страница',
