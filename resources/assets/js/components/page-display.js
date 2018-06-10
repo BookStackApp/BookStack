@@ -11,7 +11,6 @@ class PageDisplay {
         this.setupPointer();
         this.setupStickySidebar();
         this.setupNavHighlighting();
-        this.setupEditOnHeader();
 
         // Check the hash on load
         if (window.location.hash) {
@@ -232,34 +231,6 @@ class PageDisplay {
             }
         }
     }
-    setupEditOnHeader() {
-        const headingEditIcon = document.querySelector('.heading-edit-icon');
-        if (headingEditIcon === null) {
-            // user does not have permission to edit.
-            return;
-        }
-
-        // Create a clone of the edit icon without the hidden class
-        const visibleHeadingEditIcon = headingEditIcon.cloneNode(true);
-        visibleHeadingEditIcon.style.display = '';
-
-        const headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-        // add an edit icon to each header.
-        for (let i = 0; i !== headings.length; ++i) {
-            const currHeading = headings[i];
-            const headingId = currHeading.id;
-
-            let editIcon = visibleHeadingEditIcon.cloneNode(true);
-
-            // get the first 50 characters.
-            let queryContent = currHeading.textContent && currHeading.textContent.substring(0, 50);
-            editIcon.href += `?content-id=${headingId}&content-text=${encodeURIComponent(queryContent)}`;
-
-            currHeading.appendChild(editIcon);
-        }
-    }
-
 }
 
 module.exports = PageDisplay;
