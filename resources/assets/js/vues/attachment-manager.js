@@ -52,7 +52,9 @@ let methods = {
     },
 
     deleteFile(file) {
-        if (!file.deleting) return file.deleting = true;
+        if (!file.deleting) {
+            return this.$set(file, 'deleting', true);
+        }
 
         this.$http.delete(window.baseUrl(`/attachments/${file.id}`)).then(resp => {
             this.$events.emit('success', resp.data.message);
