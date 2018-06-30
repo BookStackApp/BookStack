@@ -1,3 +1,6 @@
+
+import * as Dates from "../services/dates";
+
 const dropzone = require('./components/dropzone');
 
 let page = 0;
@@ -168,7 +171,7 @@ const methods = {
     },
 
     getDate(stringDate) {
-        return new Date(stringDate);
+        return Dates.formatDateTime(new Date(stringDate));
     },
 
     uploadSuccess(event) {
