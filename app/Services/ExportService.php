@@ -188,11 +188,11 @@ class ExportService
             }
         }
 
+        // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
         if ($isPDF) {
             $callback = [$this, 'replaceContentPDF'];
             // Replace video tag in PDF
             $htmlContent = $this->replaceLinkedTags(self::VIDEO_REGEX, $htmlContent, $callback, 'Video');
-            // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
             $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback, 'Video');
             $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback, 'Video');
             $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback, 'Video');
@@ -274,13 +274,14 @@ class ExportService
     }
 
     /**
-     * Can be used to replace certain tags that cause problems.
+     * Can be used to replace certain tags that cause problems such as the TinyMCE video tag
+     * modification that have to be undone.
      * See - https://github.com/tinymce/tinymce/blob/0f7a0f12667bde6eae9377b50b797f4479aa1ac7/src/plugins/media/main/ts/core/UrlPatterns.ts#L22
      * @param String $regex
      * @param String $htmlContent
      * @param Array $callback
      * @param String $dynamicText
-     * @return String
+     * @return String $htmlContent - Modified html content
      */
     protected function replaceLinkedTags($regex, $htmlContent, $callback, $dynamicText = '') {
         $iframeOutput = [];
