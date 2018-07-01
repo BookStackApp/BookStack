@@ -89,6 +89,12 @@
   del {
     background: #FFECEC;
   }
+
+  &.page-revision {
+    pre code {
+      white-space: pre-wrap;
+    }
+  }
 }
 
 // Page content pointers
