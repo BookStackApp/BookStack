@@ -8,6 +8,12 @@ use BookStack\Repos\EntityRepo;
 class ExportService
 {
 
+    const VIDEO_REGEX = "/\<video.*\>\<source.*\ src\=(\")(.*?)(\").*?><\/video>/";
+    const YOUTUBE_REGEX = "/\<iframe.*src\=(\'|\")(\/\/www\.youtube\.com.*?)(\'|\").*?><\/iframe>/";
+    const VIMEO_REGEX = "/\<iframe.*src\=(\'|\")(\/\/player\.vimeo\.com.*?)(\'|\").*?><\/iframe>/";
+    const GOOGLE_MAP_REGEX = "/\<iframe.*src\=(\'|\")(\/\/maps\.google\.com.*?)(\'|\").*?><\/iframe>/";
+    const DAILYMOTION_REGEX = "/\<iframe.*src\=(\'|\")(\/\/www\.dailymotion\.com.*?)(\'|\").*?><\/iframe>/";
+
     protected $entityRepo;
     protected $imageService;
 
@@ -130,7 +136,7 @@ class ExportService
      */
     protected function htmlToPdf($html)
     {
-        $containedHtml = $this->containHtml($html);
+        $containedHtml = $this->containHtml($html, true);
         $useWKHTML = config('snappy.pdf.binary') !== false;
         if ($useWKHTML) {
             $pdf = \SnappyPDF::loadHTML($containedHtml);
@@ -147,7 +153,7 @@ class ExportService
      * @return mixed|string
      * @throws \Exception
      */
-    protected function containHtml($htmlContent)
+    protected function containHtml($htmlContent, $isPDF = false)
     {
         $imageTagsOutput = [];
         preg_match_all("/\<img.*src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
@@ -182,6 +188,23 @@ class ExportService
             }
         }
 
+        if ($isPDF) {
+            $callback = [$this, 'replaceContentPDF'];
+            // Replace video tag in PDF
+            $htmlContent = $this->replaceLinkedTags(self::VIDEO_REGEX, $htmlContent, $callback, 'Video');
+            // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
+            $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback, 'Video');
+            $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback, 'Video');
+            $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback, 'Video');
+            $htmlContent = $this->replaceLinkedTags(self::VIMEO_REGEX, $htmlContent, $callback, 'Video');
+        } else {
+            $callback = [$this, 'replaceContentHtml'];
+            $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback);
+            $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback);
+            $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback);
+            $htmlContent = $this->replaceLinkedTags(self::VIMEO_REGEX, $htmlContent, $callback);
+        }
+
         // Replace any relative links with system domain
         return $htmlContent;
     }
@@ -195,6 +218,16 @@ class ExportService
     public function pageToPlainText(Page $page)
     {
         $html = $this->entityRepo->renderPage($page);
+
+        $callback = [$this, 'replaceContentText'];
+        // Replace video tag in PDF
+        $html = $this->replaceLinkedTags(self::VIDEO_REGEX, $html, $callback, 'Video');
+        // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
+        $html = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $html, $callback, 'Video');
+        $html = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $html, $callback, 'Video');
+        $html = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $html, $callback, 'Video');
+        $html = $this->replaceLinkedTags(self::VIMEO_REGEX, $html, $callback, 'Video');
+
         $text = strip_tags($html);
         // Replace multiple spaces with single spaces
         $text = preg_replace('/\ {2,}/', ' ', $text);
@@ -238,5 +271,57 @@ class ExportService
             }
         }
         return $text;
+    }
+
+    /**
+     * Can be used to replace certain tags that cause problems.
+     * See - https://github.com/tinymce/tinymce/blob/0f7a0f12667bde6eae9377b50b797f4479aa1ac7/src/plugins/media/main/ts/core/UrlPatterns.ts#L22
+     * @param String $regex
+     * @param String $htmlContent
+     * @param Array $callback
+     * @param String $dynamicText
+     * @return String
+     */
+    protected function replaceLinkedTags($regex, $htmlContent, $callback, $dynamicText = '') {
+        $iframeOutput = [];
+        preg_match_all($regex, $htmlContent, $iframeOutput);
+        if (isset($iframeOutput[0]) && count($iframeOutput[0]) > 0) {
+            foreach ($iframeOutput[0] as $index => $iframeMatch) {
+                $htmlContent = call_user_func($callback, $htmlContent, $iframeOutput, $index, $dynamicText);
+            }
+        }
+        return $htmlContent;
+    }
+
+    protected function replaceContentHtml($htmlContent, $iframeOutput, $index) {
+        $srcString = $iframeOutput[2][$index];
+        $newSrcString = $srcString;
+        if (strpos($srcString, 'http') !== 0) {
+            $newSrcString = 'https:' . $srcString;
+        }
+        $htmlContent = str_replace($srcString, $newSrcString, $htmlContent);
+        return $htmlContent;
+    }
+
+    protected function replaceContentPDF($htmlContent, $iframeOutput, $index, $dynamicText) {
+        $srcString = $iframeOutput[2][$index];
+        $newSrcString = $srcString;
+        if (strpos($srcString, 'http') !== 0) {
+            $newSrcString = 'https:' . $srcString;
+        }
+        $finalHtmlString = "$dynamicText: <a href='$newSrcString'>$newSrcString</a>";
+        $htmlContent = str_replace($iframeOutput[0][$index], $finalHtmlString, $htmlContent);
+        return $htmlContent;
+    }
+
+    protected function replaceContentText($htmlContent, $iframeOutput, $index, $dynamicText) {
+        $srcString = $iframeOutput[2][$index];
+        $newSrcString = $srcString;
+        if (strpos($srcString, 'http') !== 0) {
+            $newSrcString = 'https:' . $srcString;
+        }
+        $finalHtmlString = "$dynamicText: $newSrcString";
+        $htmlContent = str_replace($iframeOutput[0][$index], $finalHtmlString, $htmlContent);
+        return $htmlContent;
     }
 }
