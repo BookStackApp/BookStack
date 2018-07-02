@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Exceptions\AuthException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\UserRepo;
+use BookStack\Repos\LdapRepo;
 use BookStack\Services\SocialAuthService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -96,7 +97,14 @@ class LoginController extends Controller
             auth()->login($user);
         }
 
-        $path = session()->pull('url.intended', '/');
+		// ldap groups refresh
+		if (config('services.ldap.user_to_groups') !== false && $request->filled('username')) {
+			$ldapRepo = new LdapRepo($this->userRepo);
+			$ldapRepo->syncGroups($user,$request->input('username'));
+		}
+
+
+		$path = session()->pull('url.intended', '/');
         $path = baseUrl($path, true);
         return redirect($path);
     }
