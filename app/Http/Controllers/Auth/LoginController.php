@@ -97,14 +97,14 @@ class LoginController extends Controller
             auth()->login($user);
         }
 
-		// ldap groups refresh
-		if (config('services.ldap.user_to_groups') !== false && $request->filled('username')) {
-			$ldapRepo = new LdapRepo($this->userRepo);
-			$ldapRepo->syncGroups($user,$request->input('username'));
-		}
+        // ldap groups refresh
+        if (config('services.ldap.user_to_groups') !== false && $request->filled('username')) {
+            $ldapRepo = new LdapRepo($this->userRepo);
+            $ldapRepo->syncGroups($user, $request->input('username'));
+        }
 
 
-		$path = session()->pull('url.intended', '/');
+        $path = session()->pull('url.intended', '/');
         $path = baseUrl($path, true);
         return redirect($path);
     }
