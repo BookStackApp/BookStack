@@ -8,7 +8,7 @@ use BookStack\Repos\EntityRepo;
 class ExportService
 {
 
-    const VIDEO_REGEX = "/\<video.*\>\<source.*\ src\=(\")(.*?)(\").*?><\/video>/";
+    const VIDEO_REGEX = "/\<video.*?\>\<source.*?\ src\=(\")(.*?)(\").*?><\/video>/";
     const YOUTUBE_REGEX = "/\<iframe.*src\=(\'|\")(\/\/www\.youtube\.com.*?)(\'|\").*?><\/iframe>/";
     const VIMEO_REGEX = "/\<iframe.*src\=(\'|\")(\/\/player\.vimeo\.com.*?)(\'|\").*?><\/iframe>/";
     const GOOGLE_MAP_REGEX = "/\<iframe.*src\=(\'|\")(\/\/maps\.google\.com.*?)(\'|\").*?><\/iframe>/";

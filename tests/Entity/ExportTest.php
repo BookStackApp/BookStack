@@ -112,4 +112,27 @@ class ExportTest extends TestCase
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.html');
     }
 
+    public function test_html_export_media_protocol_updated()
+    {
+        $page = Page::first();
+        $page->html = '<p id="bkmrk-%C2%A0-0">&nbsp;</p><p id="bkmrk-%C2%A0-1"><iframe src="//www.youtube.com/embed/LkFt_fp7FmE" width="560" height="314" allowfullscreen="allowfullscreen"></iframe></p><p id="bkmrk-"><iframe src="//player.vimeo.com/video/276396369?title=0&amp;amp;byline=0" width="425" height="350" allowfullscreen="allowfullscreen"></iframe></p><p id="bkmrk--0"><iframe style="border: 0;" src="//maps.google.com/embed?testquery=true" width="600" height="450" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p><p id="bkmrk--1"><iframe src="//www.dailymotion.com/embed/video/x2rqgfm" width="480" height="432" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p><p id="bkmrk-%C2%A0-2">&nbsp;</p>';
+        $page->save();
+
+        $this->asEditor();
+        $resp = $this->get($page->getUrl('/export/html'));
+        $resp->assertStatus(200);
+
+        $checks = [
+            'https://www.youtube.com/embed/LkFt_fp7FmE',
+            'https://player.vimeo.com/video/276396369?title=0&amp;amp;byline=0',
+            'https://maps.google.com/embed?testquery=true',
+            'https://www.dailymotion.com/embed/video/x2rqgfm',
+        ];
+
+        foreach ($checks as $check) {
+            $resp->assertSee($check);
+        }
+
+    }
+
 }
