@@ -150,8 +150,9 @@ class ExportService
     /**
      * Bundle of the contents of a html file to be self-contained.
      * @param $htmlContent
+     * @param bool $isPDF
      * @return mixed|string
-     * @throws \Exception
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function containHtml($htmlContent, $isPDF = false)
     {
@@ -191,21 +192,15 @@ class ExportService
         // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
         if ($isPDF) {
             $callback = [$this, 'replaceContentPDF'];
-            // Replace video tag in PDF
             $htmlContent = $this->replaceLinkedTags(self::VIDEO_REGEX, $htmlContent, $callback, 'Video');
-            $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback, 'Video');
-            $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback, 'Video');
-            $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback, 'Video');
-            $htmlContent = $this->replaceLinkedTags(self::VIMEO_REGEX, $htmlContent, $callback, 'Video');
         } else {
             $callback = [$this, 'replaceContentHtml'];
-            $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback);
-            $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback);
-            $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback);
-            $htmlContent = $this->replaceLinkedTags(self::VIMEO_REGEX, $htmlContent, $callback);
         }
+        $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback, 'Video');
+        $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback, 'Map');
+        $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback, 'Video');
+        $htmlContent = $this->replaceLinkedTags(self::VIMEO_REGEX, $htmlContent, $callback, 'Video');
 
-        // Replace any relative links with system domain
         return $htmlContent;
     }
 
@@ -224,7 +219,7 @@ class ExportService
         $html = $this->replaceLinkedTags(self::VIDEO_REGEX, $html, $callback, 'Video');
         // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
         $html = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $html, $callback, 'Video');
-        $html = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $html, $callback, 'Video');
+        $html = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $html, $callback, 'Map');
         $html = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $html, $callback, 'Video');
         $html = $this->replaceLinkedTags(self::VIMEO_REGEX, $html, $callback, 'Video');
 
@@ -279,22 +274,22 @@ class ExportService
      * See - https://github.com/tinymce/tinymce/blob/0f7a0f12667bde6eae9377b50b797f4479aa1ac7/src/plugins/media/main/ts/core/UrlPatterns.ts#L22
      * @param String $regex
      * @param String $htmlContent
-     * @param Array $callback
-     * @param String $dynamicText
+     * @param array $callback
+     * @param String $contentLabel
      * @return String $htmlContent - Modified html content
      */
-    protected function replaceLinkedTags($regex, $htmlContent, $callback, $dynamicText = '') {
+    protected function replaceLinkedTags($regex, $htmlContent, $callback, $contentLabel = '') {
         $iframeOutput = [];
         preg_match_all($regex, $htmlContent, $iframeOutput);
         if (isset($iframeOutput[0]) && count($iframeOutput[0]) > 0) {
             foreach ($iframeOutput[0] as $index => $iframeMatch) {
-                $htmlContent = call_user_func($callback, $htmlContent, $iframeOutput, $index, $dynamicText);
+                $htmlContent = call_user_func($callback, $htmlContent, $iframeOutput, $index, $contentLabel);
             }
         }
         return $htmlContent;
     }
 
-    protected function replaceContentHtml($htmlContent, $iframeOutput, $index) {
+    protected function replaceContentHtml($htmlContent, $iframeOutput, $index, $contentLabel) {
         $srcString = $iframeOutput[2][$index];
         $newSrcString = $srcString;
         if (strpos($srcString, 'http') !== 0) {
@@ -304,24 +299,24 @@ class ExportService
         return $htmlContent;
     }
 
-    protected function replaceContentPDF($htmlContent, $iframeOutput, $index, $dynamicText) {
+    protected function replaceContentPDF($htmlContent, $iframeOutput, $index, $contentLabel) {
         $srcString = $iframeOutput[2][$index];
         $newSrcString = $srcString;
         if (strpos($srcString, 'http') !== 0) {
             $newSrcString = 'https:' . $srcString;
         }
-        $finalHtmlString = "$dynamicText: <a href='$newSrcString'>$newSrcString</a>";
+        $finalHtmlString = "$contentLabel: <a href='$newSrcString'>$newSrcString</a>";
         $htmlContent = str_replace($iframeOutput[0][$index], $finalHtmlString, $htmlContent);
         return $htmlContent;
     }
 
-    protected function replaceContentText($htmlContent, $iframeOutput, $index, $dynamicText) {
+    protected function replaceContentText($htmlContent, $iframeOutput, $index, $contentLabel) {
         $srcString = $iframeOutput[2][$index];
         $newSrcString = $srcString;
         if (strpos($srcString, 'http') !== 0) {
             $newSrcString = 'https:' . $srcString;
         }
-        $finalHtmlString = "$dynamicText: $newSrcString";
+        $finalHtmlString = "$contentLabel: $newSrcString";
         $htmlContent = str_replace($iframeOutput[0][$index], $finalHtmlString, $htmlContent);
         return $htmlContent;
     }
