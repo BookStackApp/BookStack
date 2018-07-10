@@ -49,9 +49,7 @@
                             @endforeach
                         </div>               
                     </div>
-                    @if((++$indexKey % 3) == 0)
-                        <div class="clearfix"></div>
-                    @endif
+                    
                 @endforeach
             @endif  
     </div>
