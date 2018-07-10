@@ -135,6 +135,12 @@
                         @if(userCan('chapter-create', $book))
                             <a href="{{ $book->getUrl('/create-chapter') }}" class="button outline chapter">@icon('chapter'){{ trans('entities.books_empty_add_chapter') }}</a>
                         @endif
+                        @if(userCan('page-create', $book) && userCan('link-create', $book))
+                            &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
+                        @endif
+                         @if(userCan('link-create', $book))
+                            <a href="{{ $book->getUrl('/create-link') }}" class="button outline link">@icon('link'){{ trans('entities.books_empty_add_link') }}</a>
+                        @endif
                 </div>
             @endif
 

@@ -92,6 +92,7 @@ return [
     'books_empty_or' => 'или',
     'books_empty_sort_current_book' => 'Сортировка текущей книги',
     'books_empty_add_chapter' => 'Добавить главу',
+    'books_empty_add_link' => 'Добавить ссылку',
     'books_permissions_active' => 'действующие разрешения на книгу',
     'books_search_this' => 'Поиск в этой книге',
     'books_navigation' => 'Навигация по книге',

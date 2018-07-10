@@ -92,6 +92,7 @@ return [
     'books_empty_or' => 'or',
     'books_empty_sort_current_book' => 'Sort the current book',
     'books_empty_add_chapter' => 'Add a chapter',
+    'books_empty_add_link' => 'Add a link',
     'books_permissions_active' => 'Book Permissions Active',
     'books_search_this' => 'Search this book',
     'books_navigation' => 'Book Navigation',
