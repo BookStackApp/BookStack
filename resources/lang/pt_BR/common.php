@@ -20,6 +20,7 @@ return [
     'role' => 'Regra',
     'cover_image' => 'Imagem de capa',
     'cover_image_description' => 'Esta imagem deve ser aproximadamente 300x170px.',
+    
     /**
      * Actions
      */
@@ -30,6 +31,7 @@ return [
     'edit' => 'Editar',
     'sort' => 'Ordenar',
     'move' => 'Mover',
+    'copy' => 'Copiar',
     'reply' => 'Responder',
     'delete' => 'Excluir',
     'search' => 'Pesquisar',
@@ -48,6 +50,8 @@ return [
     'toggle_details' => 'Alternar Detalhes',
     'toggle_thumbnails' => 'Alternar Miniaturas',
     'details' => 'Detalhes',
+    'grid_view' => 'Visualização em Grade',
+    'list_view' => 'Visualização em Lista',
 
     /**
      * Header
