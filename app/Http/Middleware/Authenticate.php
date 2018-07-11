@@ -31,7 +31,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            $requireConfirmation = (setting('registration-confirmation') || setting('registration-restrict'));
+            $requireConfirmation = (false || setting('registration-restrict'));
             if ($requireConfirmation && !$this->auth->user()->email_confirmed) {
                 return redirect('/register/confirm/awaiting');
             }

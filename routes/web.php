@@ -192,7 +192,7 @@ Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRe
 Route::get('/login', 'Auth\LoginController@getLogin');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout');
-Route::get('/register', 'Auth\RegisterController@getRegister');
+//Route::get('/register', 'Auth\RegisterController@getRegister');
 Route::get('/register/confirm', 'Auth\RegisterController@getRegisterConfirmation');
 Route::get('/register/confirm/awaiting', 'Auth\RegisterController@showAwaitingConfirmation');
 Route::post('/register/confirm/resend', 'Auth\RegisterController@resendConfirmation');

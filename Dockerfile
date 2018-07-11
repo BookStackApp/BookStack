@@ -4,7 +4,9 @@ ENV BOOKSTACK=BookStack \
     BOOKSTACK_VERSION=0.20.8 \
     BOOKSTACK_HOME="/var/www/bookstack"
 
-RUN apt-get update && apt-get install -y git zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev wget libldap2-dev libtidy-dev \
+ADD . ${BOOKSTACK_HOME}
+
+RUN apt-get update && apt-get install -y git zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev wget libldap2-dev libtidy-dev \
    && docker-php-ext-install pdo pdo_mysql mbstring zip tidy \
    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
    && docker-php-ext-install ldap \
@@ -12,8 +14,8 @@ RUN apt-get update && apt-get install -y git zlib1g-dev libfreetype6-dev libjpeg
    && docker-php-ext-install gd \
    && cd /var/www && curl -sS https://getcomposer.org/installer | php \
    && mv /var/www/composer.phar /usr/local/bin/composer \
-   && wget https://github.com/ParserYa/BookStack/archive/${BOOKSTACK_VERSION}.tar.gz -O ${BOOKSTACK}.tar.gz \
-   && tar -xf ${BOOKSTACK}.tar.gz && mv BookStack-${BOOKSTACK_VERSION} ${BOOKSTACK_HOME} && rm ${BOOKSTACK}.tar.gz  \
+#    && wget https://github.com/ParserYa/BookStack/archive/${BOOKSTACK_VERSION}.tar.gz -O ${BOOKSTACK}.tar.gz \
+#    && tar -xf ${BOOKSTACK}.tar.gz && mv BookStack-${BOOKSTACK_VERSION} ${BOOKSTACK_HOME} && rm ${BOOKSTACK}.tar.gz  \
    && cd $BOOKSTACK_HOME && composer install \
    && chown -R www-data:www-data $BOOKSTACK_HOME \
    && apt-get -y autoremove \

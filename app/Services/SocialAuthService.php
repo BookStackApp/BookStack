@@ -131,12 +131,8 @@ class SocialAuthService
         }
 
         // Otherwise let the user know this social account is not used by anyone.
-        $message = trans('errors.social_account_not_used', ['socialAccount' => title_case($socialDriver)]);
-        if (setting('registration-enabled')) {
-            $message .= trans('errors.social_account_register_instructions', ['socialAccount' => title_case($socialDriver)]);
-        }
-        
-        throw new SocialSignInException($message, '/login');
+        // return redirect()->intended('/');
+        return redirect(baseUrl("/register/service/" . $driver));
     }
 
     /**

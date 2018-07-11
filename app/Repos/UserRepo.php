@@ -149,7 +149,7 @@ class UserRepo
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            'email_confirmed' => false
+            'email_confirmed' => true
         ]);
     }
 

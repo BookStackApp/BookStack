@@ -142,7 +142,7 @@ class RegisterController extends Controller
             $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
             $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
             if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
-                throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/register');
+                throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/login');
             }
         }
 
@@ -151,17 +151,17 @@ class RegisterController extends Controller
             $newUser->socialAccounts()->save($socialAccount);
         }
 
-        if (setting('registration-confirmation') || setting('registration-restrict')) {
-            $newUser->save();
-
-            try {
-                $this->emailConfirmationService->sendConfirmation($newUser);
-            } catch (Exception $e) {
-                session()->flash('error', trans('auth.email_confirm_send_error'));
-            }
-
-            return redirect('/register/confirm');
-        }
+//        if (setting('registration-confirmation') || setting('registration-restrict')) {
+//            $newUser->save();
+//
+//            try {
+//                $this->emailConfirmationService->sendConfirmation($newUser);
+//            } catch (Exception $e) {
+//                session()->flash('error', trans('auth.email_confirm_send_error'));
+//            }
+//
+//            return redirect('/register/confirm');
+//        }
 
         auth()->login($newUser);
         session()->flash('success', trans('auth.register_success'));
