@@ -16,6 +16,8 @@ require('codemirror/mode/toml/toml');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 
+const Clipboard = require("clipboard");
+
 const CodeMirror = require('codemirror');
 
 const modeMap = {
@@ -77,7 +79,7 @@ function highlightElem(elem) {
     elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
     let content = elem.textContent.trim();
 
-    CodeMirror(function(elt) {
+    let cm = CodeMirror(function(elt) {
         elem.parentNode.replaceChild(elt, elem);
     }, {
         value: content,
@@ -85,6 +87,33 @@ function highlightElem(elem) {
         lineNumbers: true,
         theme: getTheme(),
         readOnly: true
+    });
+
+    addCopyIcon(cm);
+}
+
+/**
+ * Add a button to a CodeMirror instance which copies the contents to the clipboard upon click.
+ * @param cmInstance
+ */
+function addCopyIcon(cmInstance) {
+    const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+    const copyButton = document.createElement('div');
+    copyButton.classList.add('CodeMirror-copy');
+    copyButton.innerHTML = copyIcon;
+    cmInstance.display.wrapper.appendChild(copyButton);
+
+    const clipboard = new Clipboard(copyButton, {
+        text: function(trigger) {
+            return cmInstance.getValue()
+        }
+    });
+
+    clipboard.on('success', event => {
+        copyButton.classList.add('success');
+        setTimeout(() => {
+            copyButton.classList.remove('success');
+        }, 360);
     });
 }
 
