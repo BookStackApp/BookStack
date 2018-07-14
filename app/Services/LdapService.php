@@ -26,6 +26,32 @@ class LdapService
     }
 
     /**
+     * Search for attributes for a specific user on the ldap
+     * @param string $userName
+     * @param array $attributes
+     * @return null|array
+     * @throws LdapException
+     */
+    private function getUserWithAttributes($userName, $attributes)
+    {
+        $ldapConnection = $this->getConnection();
+        $this->bindSystemUser($ldapConnection);
+
+        // Find user
+        $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
+        $baseDn = $this->config['base_dn'];
+
+        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
+        $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, $attributes);
+        if ($users['count'] === 0) {
+            return null;
+        }
+
+        return $users[0];
+    }
+
+    /**
      * Get the details of a user from LDAP using the given username.
      * User found via configurable user filter.
      * @param $userName
@@ -34,21 +60,13 @@ class LdapService
      */
     public function getUserDetails($userName)
     {
-        $ldapConnection = $this->getConnection();
-        $this->bindSystemUser($ldapConnection);
-
-        // Find user
-        $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
-        $baseDn = $this->config['base_dn'];
         $emailAttr = $this->config['email_attribute'];
-        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
-        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
-        $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', $emailAttr]);
-        if ($users['count'] === 0) {
+        $user = $this->getUserWithAttributes($userName, ['cn', 'uid', 'dn', $emailAttr]);
+
+        if ($user === null) {
             return null;
         }
 
-        $user = $users[0];
         return [
             'uid'   => (isset($user['uid'])) ? $user['uid'][0] : $user['dn'],
             'name'  => $user['cn'][0],
@@ -161,5 +179,99 @@ class LdapService
             $newAttrs[$newKey] = $attrText;
         }
         return strtr($filterString, $newAttrs);
+    }
+
+    /**
+     * Get the groups a user is a part of on ldap
+     * @param string $userName
+     * @return array|null
+     */
+    public function getUserGroups($userName)
+    {
+        $groupsAttr = $this->config['group_attribute'];
+        $user = $this->getUserWithAttributes($userName, [$groupsAttr]);
+
+        if ($user === null) {
+            return null;
+        }
+
+        $userGroups = $this->groupFilter($user);
+        $userGroups = $this->getGroupsRecursive($userGroups, []);
+        return $userGroups;
+    }
+
+    /**
+     * Get the parent groups of an array of groups
+     * @param array $groupsArray
+     * @param array $checked
+     * @return array
+     */
+    private function getGroupsRecursive($groupsArray, $checked)
+    {
+        $groups_to_add = [];
+        foreach ($groupsArray as $groupName) {
+            if (in_array($groupName, $checked)) {
+                continue;
+            }
+
+            $groupsToAdd = $this->getGroupGroups($groupName);
+            $groups_to_add = array_merge($groups_to_add, $groupsToAdd);
+            $checked[] = $groupName;
+        }
+        $groupsArray = array_unique(array_merge($groupsArray, $groups_to_add), SORT_REGULAR);
+
+        if (!empty($groups_to_add)) {
+            return $this->getGroupsRecursive($groupsArray, $checked);
+        } else {
+            return $groupsArray;
+        }
+    }
+
+    /**
+     * Get the parent groups of a single group
+     * @param string $groupName
+     * @return array
+     */
+    private function getGroupGroups($groupName)
+    {
+        $ldapConnection = $this->getConnection();
+        $this->bindSystemUser($ldapConnection);
+
+        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
+
+        $baseDn = $this->config['base_dn'];
+        $groupsAttr = strtolower($this->config['group_attribute']);
+
+        $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, 'CN='.$groupName, [$groupsAttr]);
+        if ($groups['count'] === 0) {
+            return [];
+        }
+
+        $groupGroups = $this->groupFilter($groups[0]);
+        return $groupGroups;
+    }
+
+    /**
+     * Filter out LDAP CN and DN language in a ldap search return
+     * Gets the base CN (common name) of the string
+     * @param string $ldapSearchReturn
+     * @return array
+     */
+    protected function groupFilter($ldapSearchReturn)
+    {
+        $groupsAttr = strtolower($this->config['group_attribute']);
+        $ldapGroups = [];
+        $count = 0;
+        if (isset($ldapSearchReturn[$groupsAttr]['count'])) {
+            $count = (int) $ldapSearchReturn[$groupsAttr]['count'];
+        }
+        for ($i=0; $i<$count; $i++) {
+            $dnComponents = ldap_explode_dn($ldapSearchReturn[$groupsAttr][$i], 1);
+            if (!in_array($dnComponents[0], $ldapGroups)) {
+                $ldapGroups[] = $dnComponents[0];
+            }
+        }
+        return $ldapGroups;
     }
 }
