@@ -29,6 +29,15 @@ class Page extends Entity
     }
 
     /**
+     * Get the parent item
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent()
+    {
+        return $this->chapter_id ? $this->chapter() : $this->book();
+    }
+
+    /**
      * Get the chapter that this page is in, If applicable.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

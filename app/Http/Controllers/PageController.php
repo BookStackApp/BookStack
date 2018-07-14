@@ -5,7 +5,6 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -38,11 +37,18 @@ class PageController extends Controller
      * @param string $chapterSlug
      * @return Response
      * @internal param bool $pageSlug
+     * @throws NotFoundException
      */
     public function create($bookSlug, $chapterSlug = null)
     {
-        $book = $this->entityRepo->getBySlug('book', $bookSlug);
-        $chapter = $chapterSlug ? $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug) : null;
+        if ($chapterSlug !== null) {
+            $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
+            $book = $chapter->book;
+        } else {
+            $chapter = null;
+            $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        }
+
         $parent = $chapter ? $chapter : $book;
         $this->checkOwnablePermission('page-create', $parent);
 
@@ -52,7 +58,7 @@ class PageController extends Controller
             return redirect($draft->getUrl());
         }
 
-        // Otherwise show edit view
+        // Otherwise show the edit view if they're a guest
         $this->setPageTitle(trans('entities.pages_new'));
         return view('pages/guest-create', ['parent' => $parent]);
     }
@@ -71,8 +77,14 @@ class PageController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $book = $this->entityRepo->getBySlug('book', $bookSlug);
-        $chapter = $chapterSlug ? $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug) : null;
+        if ($chapterSlug !== null) {
+            $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
+            $book = $chapter->book;
+        } else {
+            $chapter = null;
+            $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        }
+
         $parent = $chapter ? $chapter : $book;
         $this->checkOwnablePermission('page-create', $parent);
 
@@ -93,7 +105,7 @@ class PageController extends Controller
     public function editDraft($bookSlug, $pageId)
     {
         $draft = $this->entityRepo->getById('page', $pageId, true);
-        $this->checkOwnablePermission('page-create', $draft->book);
+        $this->checkOwnablePermission('page-create', $draft->parent);
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->signedIn;
@@ -119,12 +131,10 @@ class PageController extends Controller
         ]);
 
         $input = $request->all();
-        $book = $this->entityRepo->getBySlug('book', $bookSlug);
-
         $draftPage = $this->entityRepo->getById('page', $pageId, true);
+        $book = $draftPage->book;
 
-        $chapterId = intval($draftPage->chapter_id);
-        $parent = $chapterId !== 0 ? $this->entityRepo->getById('chapter', $chapterId) : $book;
+        $parent = $draftPage->parent;
         $this->checkOwnablePermission('page-create', $parent);
 
         if ($parent->isA('chapter')) {

@@ -592,4 +592,26 @@ class RestrictionsTest extends BrowserKitTest
                 ->see('You do not have permission')
                 ->seePageIs('/');
     }
+
+    public function test_can_create_page_if_chapter_has_permissions_when_book_not_visible()
+    {
+        $book = Book::first();
+        $this->setEntityRestrictions($book, []);
+        $bookChapter = $book->chapters->first();
+        $this->setEntityRestrictions($bookChapter, ['view']);
+
+        $this->actingAs($this->user)->visit($bookChapter->getUrl())
+            ->dontSee('New Page');
+
+        $this->setEntityRestrictions($bookChapter, ['view', 'create']);
+
+        $this->actingAs($this->user)->visit($bookChapter->getUrl())
+            ->click('New Page')
+            ->seeStatusCode(200)
+            ->type('test page', 'name')
+            ->type('test content', 'html')
+            ->press('Save Page')
+            ->seePageIs($book->getUrl('/page/test-page'))
+            ->seeStatusCode(200);
+    }
 }
