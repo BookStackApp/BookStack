@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <div class="page-content">
+                <div class="page-content page-revision">
                     @include('pages.page-display')
                 </div>
             </div>

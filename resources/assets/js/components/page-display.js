@@ -20,7 +20,7 @@ class PageDisplay {
 
         // Sidebar page nav click event
         $('.sidebar-page-nav').on('click', 'a', event => {
-            goToText(event.target.getAttribute('href').substr(1));
+            this.goToText(event.target.getAttribute('href').substr(1));
         });
     }
 

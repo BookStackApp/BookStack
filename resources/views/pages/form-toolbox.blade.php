@@ -42,8 +42,8 @@
                                             <span class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</span>
                                         </div>
                                     </div>
-                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary" style="padding: 0;">@icon('edit')</div>
-                                    <div @click="deleteFile(file)" class="drag-card-action text-center text-neg" style="padding: 0;">@icon('close')</div>
+                                    <div @click="startEdit(file)" class="drag-card-action text-center text-primary">@icon('edit')</div>
+                                    <div @click="deleteFile(file)" class="drag-card-action text-center text-neg">@icon('close')</div>
                                 </div>
                             </draggable>
                             <p class="small muted" v-if="files.length === 0">
