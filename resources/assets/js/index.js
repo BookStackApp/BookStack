@@ -1,5 +1,4 @@
 // Global Polyfills
-import "@babel/polyfill"
 import "./services/dom-polyfills"
 
 // Url retrieval function

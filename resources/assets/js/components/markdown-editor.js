@@ -395,35 +395,30 @@ class MarkdownEditor {
     }
 
     // Scroll to a specified text
-    scrollToText(searchText) {;
+    scrollToText(searchText) {
         if (!searchText) {
             return;
         }
+
         const content = this.cm.getValue();
         const lines = content.split(/\r?\n/);
-        let lineNumber = -1;
-        for (let i = 0; i !== lines.length; ++i) {
-            const line = lines[i];
-            if (!line) {
-                continue;
-            }
-            if (line.indexOf(searchText) !== -1) {
-                lineNumber = i;
-                break;
-            }
+        let lineNumber = lines.findIndex(line => {
+            return line && line.indexOf(searchText) !== -1;
+        });
+
+        if (lineNumber === -1) {
+            return;
         }
 
-        if (lineNumber !== -1) {
-            this.cm.scrollIntoView({
-                line: lineNumber,
-            }, 200);
-            this.cm.focus();
-            // set the cursor location.
-            this.cm.setCursor({
-                line: lineNumber,
-                char: lines[lineNumber].length
-            })
-        }
+        this.cm.scrollIntoView({
+            line: lineNumber,
+        }, 200);
+        this.cm.focus();
+        // set the cursor location.
+        this.cm.setCursor({
+            line: lineNumber,
+            char: lines[lineNumber].length
+        })
     }
 
 }
