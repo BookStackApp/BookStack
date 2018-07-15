@@ -1,9 +1,7 @@
 <?php namespace BookStack\Repos;
 
-use BookStack\Services\Ldap;
 use BookStack\Services\LdapService;
 use BookStack\Role;
-use BookStack\Repos\UserRepo;
 
 class LdapRepo
 {
@@ -16,8 +14,9 @@ class LdapRepo
     /**
      * LdapRepo constructor.
      * @param \BookStack\Repos\UserRepo $userRepo
+     * @param LdapService $ldapService
      */
-    public function __construct(UserRepo $userRepo)
+    public function __construct(UserRepo $userRepo, LdapService $ldapService)
     {
         $this->config = config('services.ldap');
 
@@ -25,7 +24,7 @@ class LdapRepo
             return false;
         }
 
-        $this->ldapService = new LdapService(new Ldap);
+        $this->ldapService = $ldapService;
         $this->userRepo = $userRepo;
     }
 
