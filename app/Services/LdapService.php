@@ -1,6 +1,9 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Exceptions\LdapException;
+use BookStack\Repos\UserRepo;
+use BookStack\Role;
+use BookStack\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
@@ -14,15 +17,29 @@ class LdapService
     protected $ldap;
     protected $ldapConnection;
     protected $config;
+    protected $userRepo;
+    protected $enabled;
 
     /**
      * LdapService constructor.
      * @param Ldap $ldap
+     * @param UserRepo $userRepo
      */
-    public function __construct(Ldap $ldap)
+    public function __construct(Ldap $ldap, UserRepo $userRepo)
     {
         $this->ldap = $ldap;
         $this->config = config('services.ldap');
+        $this->userRepo = $userRepo;
+        $this->enabled = config('auth.method') === 'ldap';
+    }
+
+    /**
+     * Check if groups should be synced.
+     * @return bool
+     */
+    public function shouldSyncGroups()
+    {
+        return $this->enabled && $this->config['user_to_groups'] !== false;
     }
 
     /**
@@ -185,6 +202,7 @@ class LdapService
      * Get the groups a user is a part of on ldap
      * @param string $userName
      * @return array|null
+     * @throws LdapException
      */
     public function getUserGroups($userName)
     {
@@ -205,6 +223,7 @@ class LdapService
      * @param array $groupsArray
      * @param array $checked
      * @return array
+     * @throws LdapException
      */
     private function getGroupsRecursive($groupsArray, $checked)
     {
@@ -231,6 +250,7 @@ class LdapService
      * Get the parent groups of a single group
      * @param string $groupName
      * @return array
+     * @throws LdapException
      */
     private function getGroupGroups($groupName)
     {
@@ -273,5 +293,49 @@ class LdapService
             }
         }
         return $ldapGroups;
+    }
+
+    /**
+     * Sync the LDAP groups to the user roles for the current user
+     * @param \BookStack\User $user
+     * @throws LdapException
+     * @throws \BookStack\Exceptions\NotFoundException
+     */
+    public function syncGroups(User $user)
+    {
+        $userLdapGroups = $this->getUserGroups($user->external_auth_id);
+        $userLdapGroups = $this->groupNameFilter($userLdapGroups);
+
+        // Get the ids for the roles from the names
+        $ldapGroupsAsRoles = Role::query()->whereIn('name', $userLdapGroups)->pluck('id');
+
+        // Sync groups
+        if ($this->config['remove_from_groups']) {
+            $user->roles()->sync($ldapGroupsAsRoles);
+            $this->userRepo->attachDefaultRole($user);
+        } else {
+            $user->roles()->syncWithoutDetaching($ldapGroupsAsRoles);
+        }
+
+        // make the user an admin?
+        // TODO - Remove
+        if (in_array($this->config['admin'], $userLdapGroups)) {
+            $this->userRepo->attachSystemRole($user, 'admin');
+        }
+    }
+
+    /**
+     * Filter to convert the groups from ldap to the format of the roles name on BookStack
+     * Spaces replaced with -, all lowercase letters
+     * @param array $groups
+     * @return array
+     */
+    private function groupNameFilter(array $groups)
+    {
+        $return = [];
+        foreach ($groups as $groupName) {
+            $return[] = str_replace(' ', '-', strtolower($groupName));
+        }
+        return $return;
     }
 }
