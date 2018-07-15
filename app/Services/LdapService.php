@@ -5,6 +5,7 @@ use BookStack\Repos\UserRepo;
 use BookStack\Role;
 use BookStack\User;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class LdapService
@@ -299,15 +300,13 @@ class LdapService
      * Sync the LDAP groups to the user roles for the current user
      * @param \BookStack\User $user
      * @throws LdapException
-     * @throws \BookStack\Exceptions\NotFoundException
      */
     public function syncGroups(User $user)
     {
         $userLdapGroups = $this->getUserGroups($user->external_auth_id);
-        $userLdapGroups = $this->groupNameFilter($userLdapGroups);
 
         // Get the ids for the roles from the names
-        $ldapGroupsAsRoles = Role::query()->whereIn('name', $userLdapGroups)->pluck('id');
+        $ldapGroupsAsRoles = $this->matchLdapGroupsToSystemsRoles($userLdapGroups);
 
         // Sync groups
         if ($this->config['remove_from_groups']) {
@@ -316,26 +315,55 @@ class LdapService
         } else {
             $user->roles()->syncWithoutDetaching($ldapGroupsAsRoles);
         }
-
-        // make the user an admin?
-        // TODO - Remove
-        if (in_array($this->config['admin'], $userLdapGroups)) {
-            $this->userRepo->attachSystemRole($user, 'admin');
-        }
     }
 
     /**
-     * Filter to convert the groups from ldap to the format of the roles name on BookStack
-     * Spaces replaced with -, all lowercase letters
-     * @param array $groups
-     * @return array
+     * Match an array of group names from LDAP to BookStack system roles.
+     * Formats LDAP group names to be lower-case and hyphenated.
+     * @param array $groupNames
+     * @return \Illuminate\Support\Collection
      */
-    private function groupNameFilter(array $groups)
+    protected function matchLdapGroupsToSystemsRoles(array $groupNames)
     {
-        $return = [];
-        foreach ($groups as $groupName) {
-            $return[] = str_replace(' ', '-', strtolower($groupName));
+        foreach ($groupNames as $i => $groupName) {
+            $groupNames[$i] = str_replace(' ', '-', trim(strtolower($groupName)));
         }
-        return $return;
+
+        $roles = Role::query()->where(function(Builder $query) use ($groupNames) {
+            $query->whereIn('name', $groupNames);
+            foreach ($groupNames as $groupName) {
+                $query->orWhere('external_auth_id', 'LIKE', '%' . $groupName . '%');
+            }
+        })->get();
+
+        $matchedRoles = $roles->filter(function(Role $role) use ($groupNames) {
+            return $this->roleMatchesGroupNames($role, $groupNames);
+        });
+
+        return $matchedRoles->pluck('id');
     }
+
+    /**
+     * Check a role against an array of group names to see if it matches.
+     * Checked against role 'external_auth_id' if set otherwise the name of the role.
+     * @param Role $role
+     * @param array $groupNames
+     * @return bool
+     */
+    protected function roleMatchesGroupNames(Role $role, array $groupNames)
+    {
+        if ($role->external_auth_id) {
+            $externalAuthIds = explode(',', strtolower($role->external_auth_id));
+            foreach ($externalAuthIds as $externalAuthId) {
+                if (in_array(trim($externalAuthId), $groupNames)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        $roleName = str_replace(' ', '-', trim(strtolower($role->display_name)));
+        return in_array($roleName, $groupNames);
+    }
+
 }
