@@ -78,6 +78,7 @@ class PermissionController extends Controller
      * @param $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws PermissionsException
      */
     public function updateRole($id, Request $request)
     {
