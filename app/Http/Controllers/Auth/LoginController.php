@@ -6,6 +6,7 @@ use BookStack\Exceptions\AuthException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\UserRepo;
 use BookStack\Repos\LdapRepo;
+use BookStack\Services\LdapService;
 use BookStack\Services\SocialAuthService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -99,7 +100,7 @@ class LoginController extends Controller
 
         // ldap groups refresh
         if (config('services.ldap.user_to_groups') !== false && $request->filled('username')) {
-            $ldapRepo = new LdapRepo($this->userRepo);
+            $ldapRepo = new LdapRepo($this->userRepo, app(LdapService::class));
             $ldapRepo->syncGroups($user, $request->input('username'));
         }
 
