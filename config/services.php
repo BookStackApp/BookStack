@@ -120,7 +120,6 @@ return [
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),
 		'user_to_groups' => env('LDAP_USER_TO_GROUPS',false),
 		'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
-		'admin' => env('LDAP_ADMIN_GROUP','Domain Admins'),
 		'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS',false),
 	]
 

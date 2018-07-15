@@ -15,6 +15,14 @@
                         <label for="name">{{ trans('settings.role_desc') }}</label>
                         @include('form/text', ['name' => 'description'])
                     </div>
+
+                    @if(config('auth.method') === 'ldap')
+                        <div class="form-group">
+                            <label for="name">{{ trans('settings.role_external_auth_id') }}</label>
+                            @include('form/text', ['name' => 'external_auth_id'])
+                        </div>
+                    @endif
+
                     <h5>{{ trans('settings.role_system') }}</h5>
                     <label>@include('settings/roles/checkbox', ['permission' => 'users-manage']) {{ trans('settings.role_manage_users') }}</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) {{ trans('settings.role_manage_roles') }}</label>

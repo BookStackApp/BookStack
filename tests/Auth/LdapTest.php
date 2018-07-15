@@ -148,8 +148,8 @@ class LdapTest extends BrowserKitTest
 
     public function test_login_maps_roles_and_retains_existsing_roles()
     {
-        $roleToRecieve = factory(Role::class)->create(['name' => 'ldaptester']);
-        $roleToRecieve2 = factory(Role::class)->create(['name' => 'ldaptester-second']);
+        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
+        $roleToReceive2 = factory(Role::class)->create(['name' => 'ldaptester-second', 'display_name' => 'LdapTester Second']);
         $existingRole = factory(Role::class)->create(['name' => 'ldaptester-existing']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
         $this->mockUser->attachRole($existingRole);
@@ -187,11 +187,11 @@ class LdapTest extends BrowserKitTest
         $user = User::where('email', $this->mockUser->email)->first();
         $this->seeInDatabase('role_user', [
             'user_id' => $user->id,
-            'role_id' => $roleToRecieve->id
+            'role_id' => $roleToReceive->id
         ]);
         $this->seeInDatabase('role_user', [
             'user_id' => $user->id,
-            'role_id' => $roleToRecieve2->id
+            'role_id' => $roleToReceive2->id
         ]);
         $this->seeInDatabase('role_user', [
             'user_id' => $user->id,
@@ -201,7 +201,7 @@ class LdapTest extends BrowserKitTest
 
     public function test_login_maps_roles_and_removes_old_roles_if_set()
     {
-        $roleToRecieve = factory(Role::class)->create(['name' => 'ldaptester']);
+        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
         $existingRole = factory(Role::class)->create(['name' => 'ldaptester-existing']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
         $this->mockUser->attachRole($existingRole);
@@ -238,11 +238,63 @@ class LdapTest extends BrowserKitTest
         $user = User::where('email', $this->mockUser->email)->first();
         $this->seeInDatabase('role_user', [
             'user_id' => $user->id,
-            'role_id' => $roleToRecieve->id
+            'role_id' => $roleToReceive->id
         ]);
         $this->dontSeeInDatabase('role_user', [
             'user_id' => $user->id,
             'role_id' => $existingRole->id
+        ]);
+    }
+
+    public function test_external_auth_id_visible_in_roles_page_when_ldap_active()
+    {
+        $role = factory(Role::class)->create(['name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);
+        $this->asAdmin()->visit('/settings/roles/' . $role->id)
+            ->see('ex-auth-a');
+    }
+
+    public function test_login_maps_roles_using_external_auth_ids_if_set()
+    {
+        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'external_auth_id' => 'test-second-param, ex-auth-a']);
+        $roleToNotReceive = factory(Role::class)->create(['name' => 'ldaptester-not-receive', 'display_name' => 'ex-auth-a', 'external_auth_id' => 'test-second-param']);
+
+        app('config')->set([
+            'services.ldap.user_to_groups' => true,
+            'services.ldap.group_attribute' => 'memberOf',
+            'services.ldap.remove_from_groups' => true,
+        ]);
+        $this->mockLdap->shouldReceive('connect')->times(2)->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->times(2);
+        $this->mockLdap->shouldReceive('setOption')->times(4);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$this->mockUser->name],
+                'cn' => [$this->mockUser->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')],
+                'mail' => [$this->mockUser->email],
+                'memberof' => [
+                    'count' => 1,
+                    0 => "cn=ex-auth-a,ou=groups,dc=example,dc=com",
+                ]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
+
+        $this->visit('/login')
+            ->see('Username')
+            ->type($this->mockUser->name, '#username')
+            ->type($this->mockUser->password, '#password')
+            ->press('Log In')
+            ->seePageIs('/');
+
+        $user = User::where('email', $this->mockUser->email)->first();
+        $this->seeInDatabase('role_user', [
+            'user_id' => $user->id,
+            'role_id' => $roleToReceive->id
+        ]);
+        $this->dontSeeInDatabase('role_user', [
+            'user_id' => $user->id,
+            'role_id' => $roleToNotReceive->id
         ]);
     }
 
