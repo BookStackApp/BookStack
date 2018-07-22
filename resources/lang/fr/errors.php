@@ -14,12 +14,13 @@ return [
     'error_user_exists_different_creds' => 'Un utilisateur avec l\'adresse :email existe déjà.',
     'email_already_confirmed' => 'Cet e-mail a déjà été validé, vous pouvez vous connecter.',
     'email_confirmation_invalid' => 'Cette confirmation est invalide. Veuillez essayer de vous inscrire à nouveau.',
-    'email_confirmation_expired' => 'Le jeton de confirmation est perimé. Un nouvel e-mail vous a été envoyé.',
+    'email_confirmation_expired' => 'Le jeton de confirmation est périmé. Un nouvel e-mail vous a été envoyé.',
     'ldap_fail_anonymous' => 'L\'accès LDAP anonyme n\'a pas abouti',
     'ldap_fail_authed' => 'L\'accès LDAP n\'a pas abouti avec cet utilisateur et ce mot de passe',
-    'ldap_extension_not_installed' => 'L\'extention LDAP PHP n\'est pas installée',
+    'ldap_extension_not_installed' => 'L\'extension LDAP PHP n\'est pas installée',
     'ldap_cannot_connect' => 'Impossible de se connecter au serveur LDAP, la connexion initiale a échoué',
     'social_no_action_defined' => 'Pas d\'action définie',
+    'social_login_bad_response' => "Erreur pendant la tentative de connexion à :socialAccount : \n:error",
     'social_account_in_use' => 'Ce compte :socialAccount est déjà utilisé. Essayez de vous connecter via :socialAccount.',
     'social_account_email_in_use' => 'L\'email :email est déjà utilisé. Si vous avez déjà un compte :socialAccount, vous pouvez le joindre à votre profil existant.',
     'social_account_existing' => 'Ce compte :socialAccount est déjà rattaché à votre profil.',
@@ -34,13 +35,17 @@ return [
     'cannot_get_image_from_url' => 'Impossible de récupérer l\'image depuis :url',
     'cannot_create_thumbs' => 'Le serveur ne peut pas créer de miniature, vérifier que l\'extension PHP GD est installée.',
     'server_upload_limit' => 'La taille du fichier est trop grande.',
+    'uploaded'  => 'Le serveur n\'autorise pas l\'envoi d\'un fichier de cette taille. Veuillez essayer avec une taille de fichier réduite.',
     'image_upload_error' => 'Une erreur est survenue pendant l\'envoi de l\'image',
+    'image_upload_type_error' => 'LE format de l\'image envoyée n\'est pas valide',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
+    'attachment_page_mismatch' => 'Page incorrecte durant la mise à jour du fichier joint',
+    'attachment_not_found' => 'Fichier joint non trouvé',
 
     // Pages
     'page_draft_autosave_fail' => 'Le brouillon n\'a pas pu être sauvé. Vérifiez votre connexion internet',
+    'page_custom_home_deletion' => 'Impossible de supprimer une page définie comme page d\'accueil',
 
     // Entities
     'entity_not_found' => 'Entité non trouvée',
