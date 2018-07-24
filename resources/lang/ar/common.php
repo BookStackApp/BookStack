@@ -35,7 +35,7 @@ return [
     'reply' => 'رد',
     'delete' => 'حذف',
     'search' => 'بحث',
-    'search_clear' => 'تصفية البحث',
+    'search_clear' => 'مسح البحث',
     'reset' => 'إعادة تعيين',
     'remove' => 'إزالة',
     'add' => 'إضافة',
