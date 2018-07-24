@@ -24,7 +24,7 @@ return [
     /**
      * Actions
      */
-    'actions' => 'Actions',
+    'actions' => 'Actions', // جار البحث عن الترجمة الأنسب
     'view' => 'عرض',
     'create' => 'إنشاء',
     'update' => 'تحديث',
