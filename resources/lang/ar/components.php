@@ -2,7 +2,7 @@
 return [
 
     /**
-     * Image Manager / قم بإسقاط الصورة أو اضغط هنا للرفع
+     * Image Manager
      */
     'image_select' => 'تحديد صورة',
     'image_all' => 'الكل',

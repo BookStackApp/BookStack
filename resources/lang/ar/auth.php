@@ -58,7 +58,7 @@ return [
 
 
     /**
-     * Email Confirmation // إذا لم يتم إيجاد الرسالة, بإمكانكم إعادة إرسال رسالة التأكيد عن طريق تعبئة النموذج أدناه
+     * Email Confirmation
      */
     'email_confirm_subject' => 'تأكيد بريدكم الإلكتروني لتطبيق :appName',
     'email_confirm_greeting' => 'شكرا لانضمامكم إلى :appName!',
