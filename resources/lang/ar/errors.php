@@ -49,19 +49,19 @@ return [
 
     // Entities
     'entity_not_found' => 'Entity not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
-    'selected_book_not_found' => 'The selected book was not found',
+    'book_not_found' => 'لم يتم العثور على الكتاب',
+    'page_not_found' => 'لم يتم العثور على الصفحة',
+    'chapter_not_found' => 'لم يتم العثور على الفصل',
+    'selected_book_not_found' => 'لم يتم العثور على الكتاب المحدد',
     'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'guests_cannot_save_drafts' => 'لا يمكن حفظ المسودات من قبل الضيوف',
 
     // Users
     'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
     'users_cannot_delete_guest' => 'You cannot delete the guest user',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
+    'role_cannot_be_edited' => 'لا يمكن تعديل هذا الدور',
     'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
     'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
 
@@ -70,13 +70,13 @@ return [
     'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
     'comment_add' => 'An error occurred while adding / updating the comment.',
     'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'empty_comment' => 'لايمكن إضافة تعليق فارغ.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
+    '404_page_not_found' => 'لم يتم العثور على الصفحة',
     'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    'return_home' => 'العودة للصفحة الرئيسية',
+    'error_occurred' => 'حدث خطأ',
+    'app_down' => ':appName لا يعمل حالياً',
+    'back_soon' => 'سيعود للعمل قريباً.',
 ];
