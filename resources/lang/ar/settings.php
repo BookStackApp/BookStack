@@ -8,72 +8,72 @@ return [
      * including users and roles.
      */
 
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => 'الإعدادات',
+    'settings_save' => 'حفظ الإعدادات',
+    'settings_save_success' => 'تم حفظ الإعدادات',
 
     /**
      * App settings
      */
 
-    'app_settings' => 'App Settings',
-    'app_name' => 'Application name',
-    'app_name_desc' => 'This name is shown in the header and any emails.',
-    'app_name_header' => 'Show Application name in header?',
-    'app_public_viewing' => 'Allow public viewing?',
-    'app_secure_images' => 'Enable higher security image uploads?',
-    'app_secure_images_desc' => 'For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.',
-    'app_editor' => 'Page editor',
-    'app_editor_desc' => 'Select which editor will be used by all users to edit pages.',
-    'app_custom_html' => 'Custom HTML head content',
-    'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.',
-    'app_logo' => 'Application logo',
-    'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
-    'app_primary_color' => 'Application primary color',
-    'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
-    'app_homepage' => 'Application Homepage',
-    'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
-    'app_homepage_default' => 'Default homepage view chosen',
-    'app_homepage_books' => 'Or select the books page as your homepage. This will override any page selected as your homepage.',
-    'app_disable_comments' => 'Disable comments',
-    'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
+    'app_settings' => 'إعدادات التطبيق',
+    'app_name' => 'اسم التطبيق',
+    'app_name_desc' => 'سيتم عرض هذا الاسم في الترويسة وفي أي رسالة بريد إلكتروني.',
+    'app_name_header' => 'عرض اسم التطبيق في الترويسة؟',
+    'app_public_viewing' => 'السماح بالعرض على العامة؟',
+    'app_secure_images' => 'Enable higher security image uploads?', // جار البحث عن الترجمة الأنسب
+    'app_secure_images_desc' => 'For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.', // جار البحث عن الترجمة الأنسب
+    'app_editor' => 'محرر الصفحة',
+    'app_editor_desc' => 'الرجاء اختيار محرر النص الذي سيستخدم من قبل جميع المستخدمين لتحرير الصفحات.',
+    'app_custom_html' => 'Custom HTML head content', // جار البحث عن الترجمة الأنسب
+    'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.', // جار البحث عن الترجمة الأنسب
+    'app_logo' => 'شعار التطبيق',
+    'app_logo_desc' => 'يجب أن تكون الصورة بارتفاع 43 بكسل. <br>سيتم تصغير الصور الأكبر من ذلك.',
+    'app_primary_color' => 'اللون الأساسي للتطبيق',
+    'app_primary_color_desc' => 'يجب أن تكون القيمة من نوع hex. <br>اترك الخانة فارغة للرجوع للون الافتراضي.',
+    'app_homepage' => 'الصفحة الرئيسية للتطبيق',
+    'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.', // جار البحث عن الترجمة الأنسب
+    'app_homepage_default' => 'شكل الصفحة الافتراضية المختارة',
+    'app_homepage_books' => 'Or select the books page as your homepage. This will override any page selected as your homepage.', // جار البحث عن الترجمة الأنسب
+    'app_disable_comments' => 'تعطيل التعليقات',
+    'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.', // جار البحث عن الترجمة الأنسب
 
     /**
      * Registration settings
      */
 
-    'reg_settings' => 'Registration Settings',
-    'reg_allow' => 'Allow registration?',
-    'reg_default_role' => 'Default user role after registration',
-    'reg_confirm_email' => 'Require email confirmation?',
-    'reg_confirm_email_desc' => 'If domain restriction is used then email confirmation will be required and the below value will be ignored.',
-    'reg_confirm_restrict_domain' => 'Restrict registration to domain',
-    'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
-    'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
+    'reg_settings' => 'إعدادات التسجيل',
+    'reg_allow' => 'السماح بالتسجيل؟',
+    'reg_default_role' => 'دور المستخدم الأساسي بعد التسجيل',
+    'reg_confirm_email' => 'فرض التأكيد عن طريق البريد الإلكتروني؟',
+    'reg_confirm_email_desc' => 'If domain restriction is used then email confirmation will be required and the below value will be ignored.', // جار البحث عن الترجمة الأنسب
+    'reg_confirm_restrict_domain' => 'تقييد التسجيل على مجال محدد',
+    'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.', // جار البحث عن الترجمة الأنسب
+    'reg_confirm_restrict_domain_placeholder' => 'لم يتم اختيار أي قيود',
 
     /**
      * Maintenance settings
      */
 
-    'maint' => 'Maintenance',
-    'maint_image_cleanup' => 'Cleanup Images',
-    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
-    'maint_image_cleanup_run' => 'Run Cleanup',
-    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
-    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
-    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
+    'maint' => 'الصيانة',
+    'maint_image_cleanup' => 'تنظيف الصور',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.", // جار البحث عن الترجمة الأنسب
+    'maint_image_cleanup_ignore_revisions' => 'تجاهل الصور في المراجعات',
+    'maint_image_cleanup_run' => 'بدء التنظيف',
+    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?', // جار البحث عن الترجمة الأنسب
+    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!', // جار البحث عن الترجمة الأنسب
+    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!', // جار البحث عن الترجمة الأنسب
 
     /**
      * Role settings
      */
 
-    'roles' => 'Roles',
-    'role_user_roles' => 'User Roles',
-    'role_create' => 'Create New Role',
-    'role_create_success' => 'Role successfully created',
-    'role_delete' => 'Delete Role',
-    'role_delete_confirm' => 'This will delete the role with the name \':roleName\'.',
+    'roles' => 'الأدوار',
+    'role_user_roles' => 'أدوار المستخدمين',
+    'role_create' => 'إنشاء دور جديد',
+    'role_create_success' => 'تم إنشاء الدور بنجاح',
+    'role_delete' => 'حذف الدور',
+    'role_delete_confirm' => 'سيتم حذف الدور المسمى \':roleName\'.',
     'role_delete_users_assigned' => 'This role has :userCount users assigned to it. If you would like to migrate the users from this role select a new role below.',
     'role_delete_no_migration' => "Don't migrate users",
     'role_delete_sure' => 'Are you sure you want to delete this role?',
@@ -131,5 +131,5 @@ return [
 
     // Since these labels are already localized this array does not need to be
     // translated in the language-specific files.
-    // DELETE BELOW IF COPIED FROM EN
+    // DELETE BELOW IF COPIED FROM EN (تم الحذف)
 ];
