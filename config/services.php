@@ -108,6 +108,12 @@ return [
         'redirect' => env('APP_URL') . '/login/service/twitch/callback',
         'name'          => 'Twitch',
     ],
+    'discord' => [
+        'client_id' => env('DISCORD_APP_ID'),
+        'client_secret' => env('DISCORD_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/discord/callback',
+        'name' => 'Discord',
+    ],
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
