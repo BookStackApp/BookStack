@@ -1326,9 +1326,9 @@ div[class^="col-"] img {
     border: 1px solid #E84F4F; }
   .input-base.pos, .pos.fake-input, input.pos[type="text"], input.pos[type="number"], input.pos[type="email"], input.pos[type="date"], input.pos[type="search"], input.pos[type="url"], input.pos[type="password"], select.pos, textarea.pos, .input-base.valid, .valid.fake-input, input.valid[type="text"], input.valid[type="number"], input.valid[type="email"], input.valid[type="date"], input.valid[type="search"], input.valid[type="url"], input.valid[type="password"], select.valid, textarea.valid {
     border: 1px solid #52A256; }
-  .input-base.disabled, .disabled.fake-input, input.disabled[type="text"], input.disabled[type="number"], input.disabled[type="email"], input.disabled[type="date"], input.disabled[type="search"], input.disabled[type="url"], input.disabled[type="password"], select.disabled, textarea.disabled, .input-base[disabled], [disabled].fake-input, input[disabled][type="text"], input[disabled][type="number"], input[disabled][type="email"], input[disabled][type="date"], input[disabled][type="search"], input[disabled][type="url"], input[disabled][type="password"], select[disabled], textarea[disabled] {
+  .input-base.disabled, .disabled.fake-input, input.disabled[type="text"], input.disabled[type="number"], input.disabled[type="email"], input.disabled[type="date"], input.disabled[type="search"], input.disabled[type="url"], input.disabled[type="password"], select.disabled, textarea.disabled, .input-base[disabled], .fake-input[disabled], input[disabled][type="text"], input[disabled][type="number"], input[disabled][type="email"], input[disabled][type="date"], input[disabled][type="search"], input[disabled][type="url"], input[disabled][type="password"], select[disabled], textarea[disabled] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==); }
-  .input-base:focus, .fake-input:focus, input[type="text"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="date"]:focus, input[type="search"]:focus, input[type="url"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+  .input-base:focus, .fake-input:focus, input:focus[type="text"], input:focus[type="number"], input:focus[type="email"], input:focus[type="date"], input:focus[type="search"], input:focus[type="url"], input:focus[type="password"], select:focus, textarea:focus {
     outline: 0; }
 
 .fake-input {
@@ -2042,8 +2042,6 @@ ul.pagination {
     padding: 3px 12px;
     border: 1px solid #CCC;
     margin-left: -1px;
-    color: #888;
-    fill: #888;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
@@ -2051,13 +2049,7 @@ ul.pagination {
     ul.pagination a.disabled, ul.pagination span.disabled {
       cursor: not-allowed; }
   ul.pagination li.active span {
-    background-color: rgba(2, 136, 209, 0.8);
-    color: #EEE;
-    fill: #EEE;
-    border-color: rgba(2, 136, 209, 0.8); }
-  ul.pagination a {
-    color: #0288D1;
-    fill: #0288D1; }
+    color: #FFF; }
 
 .compact ul.pagination {
   margin: 0; }
@@ -2262,6 +2254,8 @@ ul.pagination {
     background: #dbffdb; }
   .page-content del {
     background: #FFECEC; }
+  .page-content.page-revision pre code {
+    white-space: pre-wrap; }
 
 .pointer-container {
   position: relative;
@@ -2278,8 +2272,10 @@ ul.pagination {
   position: absolute;
   top: -60px;
   background-color: #FFF;
-  width: 272px;
+  width: 275px;
   z-index: 55; }
+  .pointer.is-page-editable {
+    width: 328px; }
   .pointer:before {
     position: absolute;
     left: 50%;
@@ -2303,12 +2299,13 @@ ul.pagination {
     color: #666;
     width: 172px;
     z-index: 40; }
-  .pointer input, .pointer button {
+  .pointer input, .pointer button, .pointer a {
     position: relative;
     border-radius: 0;
     height: 28px;
     font-size: 12px;
-    vertical-align: top; }
+    vertical-align: top;
+    padding: 5px 16px; }
   .pointer > i {
     color: #888;
     font-size: 18px;
@@ -2319,10 +2316,17 @@ ul.pagination {
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none; }
-  .pointer .button {
+  .pointer .input-group .button {
     line-height: 1;
     margin: 0 0 0 -4px;
     box-shadow: none; }
+  .pointer a.button {
+    margin: 0 0 0 0; }
+    .pointer a.button:hover {
+      fill: #fff; }
+  .pointer .svg-icon {
+    width: 1.2em;
+    height: 1.2em; }
 
 .floating-toolbox {
   background-color: #FFF;
