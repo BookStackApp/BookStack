@@ -166,6 +166,7 @@ return [
     'pages_revisions_restore' => 'Obnoviť',
     'pages_revisions_none' => 'Táto stránka nemá žiadne revízie',
     'pages_copy_link' => 'Kopírovať odkaz',
+    'pages_edit_content_link' => 'Upraviť obsah',
     'pages_permissions_active' => 'Oprávnienia stránky aktívne',
     'pages_initial_revision' => 'Prvé zverejnenie',
     'pages_initial_name' => 'Nová stránka',

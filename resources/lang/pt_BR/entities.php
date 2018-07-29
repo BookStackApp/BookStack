@@ -181,6 +181,7 @@ return [
     'pages_revisions_restore' => 'Restaurar',
     'pages_revisions_none' => 'Essa página não tem revisões',
     'pages_copy_link' => 'Copia Link',
+    'pages_edit_content_link' => 'Editar conteúdo',
     'pages_permissions_active' => 'Permissões de Página Ativas',
     'pages_initial_revision' => 'Publicação Inicial',
     'pages_initial_name' => 'Nova Página',

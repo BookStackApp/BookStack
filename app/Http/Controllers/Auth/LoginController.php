@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Exceptions\AuthException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\UserRepo;
+use BookStack\Services\LdapService;
 use BookStack\Services\SocialAuthService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -36,18 +37,21 @@ class LoginController extends Controller
     protected $redirectAfterLogout = '/login';
 
     protected $socialAuthService;
+    protected $ldapService;
     protected $userRepo;
 
     /**
      * Create a new controller instance.
      *
      * @param SocialAuthService $socialAuthService
+     * @param LdapService $ldapService
      * @param UserRepo $userRepo
      */
-    public function __construct(SocialAuthService $socialAuthService, UserRepo $userRepo)
+    public function __construct(SocialAuthService $socialAuthService, LdapService $ldapService, UserRepo $userRepo)
     {
         $this->middleware('guest', ['only' => ['getLogin', 'postLogin']]);
         $this->socialAuthService = $socialAuthService;
+        $this->ldapService = $ldapService;
         $this->userRepo = $userRepo;
         $this->redirectPath = baseUrl('/');
         $this->redirectAfterLogout = baseUrl('/login');
@@ -96,6 +100,11 @@ class LoginController extends Controller
             auth()->login($user);
         }
 
+        // Sync LDAP groups if required
+        if ($this->ldapService->shouldSyncGroups()) {
+            $this->ldapService->syncGroups($user);
+        }
+
         $path = session()->pull('url.intended', '/');
         $path = baseUrl($path, true);
         return redirect($path);
@@ -125,6 +134,7 @@ class LoginController extends Controller
      * Redirect to the relevant social site.
      * @param $socialDriver
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \BookStack\Exceptions\SocialDriverNotConfigured
      */
     public function getSocialLogin($socialDriver)
     {

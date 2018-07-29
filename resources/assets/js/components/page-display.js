@@ -20,7 +20,7 @@ class PageDisplay {
 
         // Sidebar page nav click event
         $('.sidebar-page-nav').on('click', 'a', event => {
-            goToText(event.target.getAttribute('href').substr(1));
+            this.goToText(event.target.getAttribute('href').substr(1));
         });
     }
 
@@ -74,11 +74,23 @@ class PageDisplay {
             pointerShowing = false;
         });
 
-        let updatePointerContent = () => {
+        let updatePointerContent = ($elem) => {
             let inputText = pointerModeLink ? window.baseUrl(`/link/${this.pageId}#${pointerSectionId}`) : `{{@${this.pageId}#${pointerSectionId}}}`;
             if (pointerModeLink && inputText.indexOf('http') !== 0) inputText = window.location.protocol + "//" + window.location.host + inputText;
 
             $pointer.find('input').val(inputText);
+
+            // update anchor if present
+            const $editAnchor = $pointer.find('#pointer-edit');
+            if ($editAnchor.length !== 0 && $elem) {
+                const editHref = $editAnchor.data('editHref');
+                const element = $elem[0];
+                const elementId = element.id;
+
+                // get the first 50 characters.
+                let queryContent = element.textContent && element.textContent.substring(0, 50);
+                $editAnchor[0].href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
+            }
         };
 
         // Show pointer when selecting a single block of tagged content
@@ -90,7 +102,7 @@ class PageDisplay {
             // Show pointer and set link
             let $elem = $(this);
             pointerSectionId = $elem.attr('id');
-            updatePointerContent();
+            updatePointerContent($elem);
 
             $elem.before($pointer);
             $pointer.show();
@@ -219,7 +231,6 @@ class PageDisplay {
             }
         }
     }
-
 }
 
 module.exports = PageDisplay;

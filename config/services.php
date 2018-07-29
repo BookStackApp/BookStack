@@ -108,6 +108,12 @@ return [
         'redirect' => env('APP_URL') . '/login/service/twitch/callback',
         'name'          => 'Twitch',
     ],
+    'discord' => [
+        'client_id' => env('DISCORD_APP_ID'),
+        'client_secret' => env('DISCORD_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/discord/callback',
+        'name' => 'Discord',
+    ],
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
@@ -118,6 +124,9 @@ return [
         'version' => env('LDAP_VERSION', false),
         'email_attribute' => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),
-    ]
+		'user_to_groups' => env('LDAP_USER_TO_GROUPS',false),
+		'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
+		'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS',false),
+	]
 
 ];

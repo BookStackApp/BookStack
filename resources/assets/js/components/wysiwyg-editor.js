@@ -483,11 +483,34 @@ class WysiwygEditor {
             },
             setup: function (editor) {
 
-                editor.on('init ExecCommand change input NodeChange ObjectResized', editorChange);
+                editor.on('ExecCommand change input NodeChange ObjectResized', editorChange);
+
+                editor.on('init', () => {
+                    editorChange();
+                    // Scroll to the content if needed.
+                    const queryParams = (new URL(window.location)).searchParams;
+                    const scrollId = queryParams.get('content-id');
+                    if (scrollId) {
+                        scrollToText(scrollId);
+                    }
+                });
 
                 function editorChange() {
                     let content = editor.getContent();
                     window.$events.emit('editor-html-change', content);
+                }
+
+                function scrollToText(scrollId) {
+                    const element = editor.dom.get(encodeURIComponent(scrollId).replace(/!/g, '%21'));
+                    if (!element) {
+                        return;
+                    }
+
+                    // scroll the element into the view and put the cursor at the end.
+                    element.scrollIntoView();
+                    editor.selection.select(element, true);
+                    editor.selection.collapse(false);
+                    editor.focus();
                 }
 
                 window.$events.listen('editor-html-update', html => {

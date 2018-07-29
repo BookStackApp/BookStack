@@ -185,6 +185,7 @@ return [
     'pages_revisions_restore' => 'Restore',
     'pages_revisions_none' => 'This page has no revisions',
     'pages_copy_link' => 'Copy Link',
+    'pages_edit_content_link' => 'Edit Content',
     'pages_permissions_active' => 'Page Permissions Active',
     'pages_initial_revision' => 'Initial publish',
     'pages_initial_name' => 'New Page',

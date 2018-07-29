@@ -14,7 +14,7 @@ return [
     'recent_activity' => 'Recente Activiteit',
     'create_now' => 'Maak er zelf één',
     'revisions' => 'Revisies',
-    'meta_revision' => 'Revisie #:revisionCount',	  
+    'meta_revision' => 'Revisie #:revisionCount',
     'meta_created' => 'Aangemaakt :timeLength',
     'meta_created_name' => 'Aangemaakt: :timeLength door :user',
     'meta_updated' => ':timeLength Aangepast',
@@ -44,7 +44,7 @@ return [
      * Search
      */
     'search_results' => 'Zoekresultaten',
-    'search_total_results_found' => ':count resultaten gevonden|:count resultaten gevonden', 
+    'search_total_results_found' => ':count resultaten gevonden|:count resultaten gevonden',
     'search_clear' => 'Zoekopdracht wissen',
     'search_no_pages' => 'Er zijn geen pagina\'s gevonden',
     'search_for_term' => 'Zoeken op :term',
@@ -105,7 +105,7 @@ return [
      */
     'chapter' => 'Hoofdstuk',
     'chapters' => 'Hoofdstukken',
-    'x_chapters' => ':count Hoofdstuk|:count Hoofdstukken',													 
+    'x_chapters' => ':count Hoofdstuk|:count Hoofdstukken',
     'chapters_popular' => 'Populaire Hoofdstukken',
     'chapters_new' => 'Nieuw Hoofdstuk',
     'chapters_create' => 'Hoofdstuk Toevoegen',
@@ -124,14 +124,14 @@ return [
     'chapters_empty' => 'Er zijn geen pagina\'s in dit hoofdstuk aangemaakt.',
     'chapters_permissions_active' => 'Hoofdstuk Permissies Actief',
     'chapters_permissions_success' => 'Hoofdstuk Permissies Bijgewerkt',
-    'chapters_search_this' => 'Doorzoek dit hoofdstuk',											
+    'chapters_search_this' => 'Doorzoek dit hoofdstuk',
 
     /**
      * Pages
      */
     'page' => 'Pagina',
     'pages' => 'Pagina\'s',
-    'x_pages' => ':count Pagina|:count Pagina\'s',											
+    'x_pages' => ':count Pagina|:count Pagina\'s',
     'pages_popular' => 'Populaire Pagina\'s',
     'pages_new' => 'Nieuwe Pagina',
     'pages_attachments' => 'Bijlages',
@@ -168,7 +168,7 @@ return [
     'pages_move_success' => 'Pagina verplaatst naar ":parentName"',
     'pages_permissions' => 'Pagina Permissies',
     'pages_permissions_success' => 'Pagina Permissies bijgwerkt',
-    'pages_revision' => 'Revisie',					   
+    'pages_revision' => 'Revisie',
     'pages_revisions' => 'Pagina Revisies',
     'pages_revisions_named' => 'Pagina Revisies voor :pageName',
     'pages_revision_named' => 'Pagina Revisie voor :pageName',
@@ -182,6 +182,7 @@ return [
     'pages_revisions_restore' => 'Herstellen',
     'pages_revisions_none' => 'Deze pagina heeft geen revisies',
     'pages_copy_link' => 'Link Kopiëren',
+    'pages_edit_content_link' => 'Bewerk inhoud',
     'pages_permissions_active' => 'Pagina Permissies Actief',
     'pages_initial_revision' => 'Eerste publicatie',
     'pages_initial_name' => 'Nieuwe Pagina',
