@@ -4,17 +4,18 @@
   top: 0;
   right: 0;
   margin: $-xl*2 $-xl;
-  padding: $-l $-xl;
+  padding: $-m $-l;
   background-color: #EEE;
   border-radius: 3px;
-  box-shadow: $bs-med;
+  box-shadow: $bs-card;
   z-index: 999999;
   cursor: pointer;
   max-width: 360px;
   transition: transform ease-in-out 280ms;
-  transform: translate3d(580px, 0, 0);
+  transform: translateX(580px);
   display: grid;
-  grid-template-columns: 64px 1fr;
+  grid-template-columns: 42px 1fr;
+  color: #FFF;
   span, svg {
     vertical-align: middle;
     justify-self: center;
@@ -22,9 +23,9 @@
   }
   svg {
     fill: #EEEEEE;
-    width: 4em;
-    height: 4em;
-    padding-right: $-m;
+    width: 2.8rem;
+    height: 2.8rem;
+    padding-right: $-s;
   }
   span {
     vertical-align: middle;
@@ -32,18 +33,15 @@
   }
   &.pos {
     background-color: $positive;
-    color: #EEE;
   }
   &.neg {
     background-color: $negative;
-    color: #EEE;
   }
   &.warning {
     background-color: $secondary;
-    color: #EEE;
   }
   &.showing {
-    transform: translate3d(0, 0, 0);
+    transform: translateX(0);
   }
   &.showing:hover {
     transform: translate3d(0, -2px, 0);
