@@ -127,6 +127,11 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="setting-autosocialregistration-confirmation">{{ trans('settings.reg_auto_social_allow') }}</label>
+                            <p class="small">{{ trans('settings.reg_auto_social_allow_desc') }}</p>
+                            @include('components.toggle-switch', ['name' => 'setting-autosocialregistration-confirmation', 'value' => setting('autosocialregistration-confirmation')])
+                        </div>
+                        <div class="form-group">
                             <label for="setting-registration-confirmation">{{ trans('settings.reg_confirm_email') }}</label>
                             <p class="small">{{ trans('settings.reg_confirm_email_desc') }}</p>
                             @include('components.toggle-switch', ['name' => 'setting-registration-confirmation', 'value' => setting('registration-confirmation')])
