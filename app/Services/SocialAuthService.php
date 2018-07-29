@@ -109,6 +109,40 @@ class SocialAuthService
             return redirect()->intended('/');
         }
 
+        // When a user is not logged in and no matching SocialAccount exists,
+        // If the auto social registration is enabled, attach the social account, create new user and log him in.
+        if (!$isLoggedIn && $socialAccount === null && setting('autosocialregistration-confirmation')) {
+
+            // Fill social account
+            $socialAccount = $this->fillSocialAccount($socialDriver, $socialUser);
+
+            // Create an array of the user data to create a new user instance
+            $userData = [
+                'name' => $socialUser->getName(),
+                'email' => $socialUser->getEmail(),
+                'password' => str_random(30)
+            ];
+
+            // Check domain if domain restriction setting is set
+            if (setting('registration-restrict')) {
+                $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
+                $userEmailDomain = $domain = substr(strrchr($socialUser->getEmail(), "@"), 1);
+                if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
+                    throw new SocialSignInException(trans('auth.registration_email_domain_invalid'), '/login');
+                }
+            }
+
+            // Register new user with autoVerifyEmail set to true and attach the social account
+            $newUser = $this->userRepo->registerNew($userData, true);
+            $newUser->socialAccounts()->save($socialAccount);
+            $newUser->save();
+
+            // Log him in
+            auth()->login($newUser);
+
+            return redirect()->intended('/');
+        }
+
         // When a user is logged in but the social account does not exist,
         // Create the social account and attach it to the user & redirect to the profile page.
         if ($isLoggedIn && $socialAccount === null) {
