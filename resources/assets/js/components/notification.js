@@ -6,11 +6,16 @@ class Notification {
         this.type = elem.getAttribute('notification');
         this.textElem = elem.querySelector('span');
         this.autohide = this.elem.hasAttribute('data-autohide');
+        this.elem.style.display = 'grid';
+
         window.$events.listen(this.type, text => {
             this.show(text);
         });
         elem.addEventListener('click', this.hide.bind(this));
-        if (elem.hasAttribute('data-show')) this.show(this.textElem.textContent);
+
+        if (elem.hasAttribute('data-show')) {
+            setTimeout(() => this.show(this.textElem.textContent), 100);
+        }
 
         this.hideCleanup = this.hideCleanup.bind(this);
     }
