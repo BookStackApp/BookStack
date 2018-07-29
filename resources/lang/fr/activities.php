@@ -15,7 +15,7 @@ return [
     'page_delete'                 => 'a supprimé la page',
     'page_delete_notification'    => 'Page supprimée avec succès',
     'page_restore'                => 'a restauré la page',
-    'page_restore_notification'   => 'Page réstaurée avec succès',
+    'page_restore_notification'   => 'Page restaurée avec succès',
     'page_move'                   => 'a déplacé la page',
 
     // Chapters
@@ -39,5 +39,4 @@ return [
 
     // Other
     'commented_on'                => 'a commenté'
-
 ];
