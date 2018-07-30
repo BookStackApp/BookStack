@@ -140,17 +140,17 @@ class RegisterController extends Controller
     protected function registerUser(array $userData, $socialAccount = false, $socialDriver)
     {
 
-        if (setting('registration-restrict')) {
-            $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
-            $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
-            if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
-                throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/login');
-            }
-        }
         $oldUser = $this->userRepo->getByEmail($userData['email']);
         if ($oldUser !== null) {
             $user = $oldUser;
         } else {
+            if (setting('registration-restrict')) {
+                $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
+                $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
+                if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
+                    throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/login');
+                }
+            }
             $user = $this->userRepo->registerNew($userData);
         }
 
