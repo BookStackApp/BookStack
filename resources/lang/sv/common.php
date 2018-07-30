@@ -31,6 +31,7 @@ return [
     'edit' => 'Redigera',
     'sort' => 'Sortera',
     'move' => 'Flytta',
+    'copy' => 'Kopiera',
     'reply' => 'Svara',
     'delete' => 'Ta bort',
     'search' => 'Sök',
