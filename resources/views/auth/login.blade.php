@@ -31,7 +31,7 @@
 
                 @if(count($socialDrivers) > 0)
                     @foreach($socialDrivers as $driver => $name)
-                        <a id="social-login-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
+                        <a id="social-login-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/register/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
                         </a>

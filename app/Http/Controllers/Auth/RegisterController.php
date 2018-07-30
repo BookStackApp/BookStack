@@ -133,11 +133,13 @@ class RegisterController extends Controller
      * The registrations flow for all users.
      * @param array $userData
      * @param bool|false|SocialAccount $socialAccount
+     * @param bool|string $socialDriver
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
      */
-    protected function registerUser(array $userData, $socialAccount = false)
+    protected function registerUser(array $userData, $socialAccount = false, $socialDriver)
     {
+
         if (setting('registration-restrict')) {
             $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
             $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
@@ -145,26 +147,22 @@ class RegisterController extends Controller
                 throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/login');
             }
         }
-
-        $newUser = $this->userRepo->registerNew($userData);
-        if ($socialAccount) {
-            $newUser->socialAccounts()->save($socialAccount);
+        $oldUser = $this->userRepo->getByEmail($userData['email']);
+        if ($oldUser !== null) {
+            $user = $oldUser;
+        } else {
+            $user = $this->userRepo->registerNew($userData);
         }
 
-//        if (setting('registration-confirmation') || setting('registration-restrict')) {
-//            $newUser->save();
-//
-//            try {
-//                $this->emailConfirmationService->sendConfirmation($newUser);
-//            } catch (Exception $e) {
-//                session()->flash('error', trans('auth.email_confirm_send_error'));
-//            }
-//
-//            return redirect('/register/confirm');
-//        }
-
-        auth()->login($newUser);
-        session()->flash('success', trans('auth.register_success'));
+        if ($socialDriver){
+            $socialAccountExist = $user->hasSocialAccount($socialDriver);
+            if ($socialAccount) {
+                if (!$socialAccountExist) {
+                    $user->socialAccounts()->save($socialAccount);
+                }
+            }
+        }
+        auth()->login($user);
         return redirect($this->redirectPath());
     }
 
@@ -304,6 +302,6 @@ class RegisterController extends Controller
             'email' => $socialUser->getEmail(),
             'password' => str_random(30)
         ];
-        return $this->registerUser($userData, $socialAccount);
+        return $this->registerUser($userData, $socialAccount, $socialDriver);
     }
 }

@@ -72,14 +72,14 @@ class SocialAuthService
 
         // Check social account has not already been used
         if ($this->socialAccount->where('driver_id', '=', $socialUser->getId())->exists()) {
-            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver]), '/login');
+//            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>'asdsaaw']), '/login');
         }
 
-        if ($this->userRepo->getByEmail($socialUser->getEmail())) {
-            $email = $socialUser->getEmail();
-            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver, 'email' => $email]), '/login');
-        }
-
+//        if ($this->userRepo->getByEmail($socialUser->getEmail())) {
+//            $user = $this->userRepo->getByEmail($socialUser->getEmail());
+//            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$this->userRepo->getByEmail($socialUser->getEmail())]), '/login');
+////            $this->userRepo->destroy($user);
+//        }
         return $socialUser;
     }
 
@@ -132,7 +132,11 @@ class SocialAuthService
 
         // Otherwise let the user know this social account is not used by anyone.
         // return redirect()->intended('/');
-        return redirect(baseUrl("/register/service/" . $driver));
+//      return redirect(baseUrl("/register/service/" . $driver));
+//        $this->registerCallback($driver); //wow it's work
+//        session()->put('social-callback', 'register');
+//        $driver = $this->validateDriver($socialDriver);
+        return redirect($currentUser->getEditUrl());
     }
 
     /**
