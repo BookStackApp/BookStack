@@ -80,7 +80,7 @@ return [
     'role_delete_success' => 'تم حذف الدور بنجاح',
     'role_edit' => 'تعديل الدور',
     'role_details' => 'تفاصيل الدور',
-    'role_name' => 'اسم الدور',
+    'role_name' => 'اسم الدور', // test tests
     'role_desc' => 'Short Description of Role',
     'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'System Permissions',
