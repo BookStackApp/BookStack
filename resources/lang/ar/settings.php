@@ -74,7 +74,7 @@ return [
     'role_create_success' => 'تم إنشاء الدور بنجاح',
     'role_delete' => 'حذف الدور',
     'role_delete_confirm' => 'سيتم حذف الدور المسمى \':roleName\'.',
-    'role_delete_users_assigned' => 'This role has :userCount users assigned to it. If you would like to migrate the users from this role select a new role below.',
+    'role_delete_users_assigned' => 'This role has :userCount users assigned to it. If you would like to migrate the users from this role select a new role below.', // جار البحث عن الترجمة الأنسب
     'role_delete_no_migration' => "لا تقم بترجيل المستخدمين",
     'role_delete_sure' => 'تأكيد حذف الدور؟',
     'role_delete_success' => 'تم حذف الدور بنجاح',
@@ -90,27 +90,27 @@ return [
     'role_manage_own_entity_permissions' => 'إدارة الأذونات الخاصة بكتابك أو فصلك أو صفحاتك',
     'role_manage_settings' => 'إدارة إعدادات التطبيق',
     'role_asset' => 'Asset Permissions', // جار البحث عن الترجمة الأنسب
-    'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
+    'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.', // جار البحث عن الترجمة الأنسب
     'role_all' => 'الكل',
     'role_own' => 'Own',
-    'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
-    'role_save' => 'Save Role',
-    'role_update_success' => 'Role successfully updated',
-    'role_users' => 'Users in this role',
-    'role_users_none' => 'No users are currently assigned to this role',
+    'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to', // جار البحث عن الترجمة الأنسب
+    'role_save' => 'حفظ الدور',
+    'role_update_success' => 'تم تحديث الدور بنجاح',
+    'role_users' => 'مستخدمون داخل هذا الدور',
+    'role_users_none' => 'لم يتم تعيين أي مستخدمين لهذا الدور',
 
     /**
      * Users
      */
 
-    'users' => 'Users',
-    'user_profile' => 'User Profile',
-    'users_add_new' => 'Add New User',
-    'users_search' => 'Search Users',
-    'users_role' => 'User Roles',
-    'users_external_auth_id' => 'External Authentication ID',
-    'users_password_warning' => 'Only fill the below if you would like to change your password:',
-    'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
+    'users' => 'المستخدمون',
+    'user_profile' => 'ملف المستخدم',
+    'users_add_new' => 'إضافة مستخدم جديد',
+    'users_search' => 'بحث عن مستخدم',
+    'users_role' => 'أدوار المستخدمين',
+    'users_external_auth_id' => 'External Authentication ID', // جار البحث عن الترجمة الأنسب
+    'users_password_warning' => 'الرجاء ملئ الحقل أدناه فقط في حال أردتم تغيير كلمة المرور:',
+    'users_system_public' => 'هذا المستخدم يمثل أي ضيف يقوم بزيارة شيء يخصك. لا يمكن استخدامه لتسجيل الدخول ولكن يتم تعيينه تلقائياً.',
     'users_delete' => 'Delete User',
     'users_delete_named' => 'Delete user :userName',
     'users_delete_warning' => 'This will fully delete this user with the name \':userName\' from the system.',
