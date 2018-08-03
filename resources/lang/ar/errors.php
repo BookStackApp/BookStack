@@ -15,18 +15,18 @@ return [
     'email_already_confirmed' => 'تم تأكيد البريد الإلكتروني من قبل, الرجاء محاولة تسجيل الدخول.',
     'email_confirmation_invalid' => 'رابط التأكيد غير صحيح أو قد تم استخدامه من قبل, الرجاء محاولة التسجيل من جديد.',
     'email_confirmation_expired' => 'صلاحية رابط التأكيد انتهت, تم إرسال رسالة تأكيد جديدة لعنوان البريد الإلكتروني.',
-    'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind', // جار البحث عن الترجمة الأنسب
-    'ldap_fail_authed' => 'LDAP access failed using given dn & password details', // جار البحث عن الترجمة الأنسب
+    'ldap_fail_anonymous' => 'فشل الوصول إلى LDAP باستخدام الربط المجهول',
+    'ldap_fail_authed' => 'فشل الوصول إلى LDAP باستخدام dn و password المعطاة',
     'ldap_extension_not_installed' => 'لم يتم تثبيت إضافة LDAP PHP',
     'ldap_cannot_connect' => 'لا يمكن الاتصال بخادم ldap, فشل الاتصال المبدئي',
     'social_no_action_defined' => 'لم يتم تعريف أي إجراء',
     'social_login_bad_response' => "حصل خطأ خلال تسجيل الدخول باستخدام :socialAccount \n:error",
-    'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.', // جار البحث عن الترجمة الأنسب
-    'social_account_email_in_use' => 'The email :email is already in use. If you already have an account you can connect your :socialAccount account from your profile settings.', // جار البحث عن الترجمة الأنسب
-    'social_account_existing' => 'This :socialAccount is already attached to your profile.', // جار البحث عن الترجمة الأنسب
-    'social_account_already_used_existing' => 'This :socialAccount account is already used by another user.', // جار البحث عن الترجمة الأنسب
-    'social_account_not_used' => 'This :socialAccount account is not linked to any users. Please attach it in your profile settings. ', // جار البحث عن الترجمة الأنسب
-    'social_account_register_instructions' => 'إذا لم يكن لديك حساب فيمكنك التجسيل باستخدام خيار :socialAccount.',
+    'social_account_in_use' => 'حساب :socialAccount قيد الاستخدام حالياً, الرجاء محاولة الدخول باستخدام خيار :socialAccount.',
+    'social_account_email_in_use' => 'البريد الإلكتروني :email مستخدم. إذا كان لديكم حساب فبإمكانكم ربط حساب :socialAccount من إعدادات ملفكم.',
+    'social_account_existing' => 'تم ربط حساب :socialAccount بملفكم من قبل.',
+    'social_account_already_used_existing' => 'حساب :socialAccount مستخدَم من قبل مستخدم آخر.',
+    'social_account_not_used' => 'حساب :socialAccount غير مرتبط بأي مستخدم. الرجاء ربطه من خلال إعدادات ملفكم. ',
+    'social_account_register_instructions' => 'إذا لم يكن لديكم حساب فيمكنكم التجسيل باستخدام خيار :socialAccount.',
     'social_driver_not_found' => 'Social driver not found', // جار البحث عن الترجمة الأنسب
     'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.', // جار البحث عن الترجمة الأنسب
 
