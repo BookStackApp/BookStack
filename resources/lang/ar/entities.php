@@ -19,7 +19,7 @@ return [
     'meta_created_name' => 'أنشئ :timeLength بواسطة :user',
     'meta_updated' => 'مُحدث :timeLength',
     'meta_updated_name' => 'مُحدث :timeLength بواسطة :user',
-    'entity_select' => 'Entity Select',
+    'entity_select' => 'Entity Select', // جار البحث عن الترجمة الأنسب
     'images' => 'صور',
     'my_recent_drafts' => 'مسوداتي الحديثة',
     'my_recently_viewed' => 'ما عرضته مؤخراً',
@@ -94,7 +94,7 @@ return [
     'books_empty_add_chapter' => 'إضافة فصل',
     'books_permissions_active' => 'أذونات الكتاب مفعلة',
     'books_search_this' => 'البحث في هذا الكتاب',
-    'books_navigation' => 'Book Navigation', // جار البحث عن الترجمة الأنسب
+    'books_navigation' => 'تصفح الكتاب',
     'books_sort' => 'فرز محتويات الكتاب',
     'books_sort_named' => 'فرز كتاب :bookName',
     'books_sort_show_other' => 'عرض كتب أخرى',
@@ -134,7 +134,7 @@ return [
     'pages_popular' => 'صفحات رائجة',
     'pages_new' => 'صفحة جديدة',
     'pages_attachments' => 'مرفقات',
-    'pages_navigation' => 'Page Navigation', // جار البحث عن الترجمة الأنسب
+    'pages_navigation' => 'تصفح الصفحة',
     'pages_delete' => 'حذف الصفحة',
     'pages_delete_named' => 'حذف صفحة :pageName',
     'pages_delete_draft_named' => 'حذف مسودة :pageName',
@@ -144,7 +144,7 @@ return [
     'pages_delete_confirm' => 'تأكيد حذف الصفحة؟',
     'pages_delete_draft_confirm' => 'تأكيد حذف المسودة؟',
     'pages_editing_named' => ':pageName قيد التعديل',
-    'pages_edit_toggle_header' => 'Toggle header', // جار البحث عن الترجمة الأنسب
+    'pages_edit_toggle_header' => 'إظهار / إخفاء الترويسة',
     'pages_edit_save_draft' => 'حفظ المسودة',
     'pages_edit_draft' => 'تعديل مسودة الصفحة',
     'pages_editing_draft' => 'المسودة قيد التعديل',
