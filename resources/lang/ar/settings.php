@@ -111,25 +111,21 @@ return [
     'users_external_auth_id' => 'External Authentication ID', // جار البحث عن الترجمة الأنسب
     'users_password_warning' => 'الرجاء ملئ الحقل أدناه فقط في حال أردتم تغيير كلمة المرور:',
     'users_system_public' => 'هذا المستخدم يمثل أي ضيف يقوم بزيارة شيء يخصك. لا يمكن استخدامه لتسجيل الدخول ولكن يتم تعيينه تلقائياً.',
-    'users_delete' => 'Delete User',
-    'users_delete_named' => 'Delete user :userName',
-    'users_delete_warning' => 'This will fully delete this user with the name \':userName\' from the system.',
-    'users_delete_confirm' => 'Are you sure you want to delete this user?',
-    'users_delete_success' => 'Users successfully removed',
-    'users_edit' => 'Edit User',
-    'users_edit_profile' => 'Edit Profile',
-    'users_edit_success' => 'User successfully updated',
-    'users_avatar' => 'User Avatar',
-    'users_avatar_desc' => 'This image should be approx 256px square.',
-    'users_preferred_language' => 'Preferred Language',
-    'users_social_accounts' => 'Social Accounts',
-    'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
-    'users_social_connect' => 'Connect Account',
-    'users_social_disconnect' => 'Disconnect Account',
-    'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
-    'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
-
-    // Since these labels are already localized this array does not need to be
-    // translated in the language-specific files.
-    // DELETE BELOW IF COPIED FROM EN (تم الحذف)
+    'users_delete' => 'حذف المستخدم',
+    'users_delete_named' => 'حذف المستخدم :userName',
+    'users_delete_warning' => 'سيتم حذف المستخدم \':userName\' بشكل تام من النظام.',
+    'users_delete_confirm' => 'تأكيد حذف المستخدم؟',
+    'users_delete_success' => 'تم حذف المستخدم بنجاح',
+    'users_edit' => 'تعديل المستخدم',
+    'users_edit_profile' => 'تعديل الملف',
+    'users_edit_success' => 'تم تحديث المستخدم بنجاح',
+    'users_avatar' => 'صورة المستخدم',
+    'users_avatar_desc' => 'يجب أن تكون الصورة مربعة ومقاربة لحجم 256 بكسل',
+    'users_preferred_language' => 'اللغة المفضلة',
+    'users_social_accounts' => 'الحسابات الاجتماعية',
+    'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.', // جار البحث عن الترجمة الأنسب
+    'users_social_connect' => 'ربط الحساب',
+    'users_social_disconnect' => 'فصل الحساب',
+    'users_social_connected' => 'تم ربط حساب :socialAccount بملفك بنجاح.',
+    'users_social_disconnected' => 'تم فصل حساب :socialAccount من ملفك بنجاح.',
 ];
