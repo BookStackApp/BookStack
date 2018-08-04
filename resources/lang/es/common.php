@@ -31,6 +31,7 @@ return [
     'edit' => 'Editar',
     'sort' => 'Ordenar',
     'move' => 'Mover',
+    'copy' => 'Copiar',
     'reply' => 'Responder',
     'delete' => 'Borrar',
     'search' => 'Buscar',

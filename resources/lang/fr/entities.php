@@ -19,7 +19,6 @@ return [
     'meta_created_name' => 'Créé :timeLength par :user',
     'meta_updated' => 'Mis à jour :timeLength',
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
-    'x_pages' => ':count pages',
     'entity_select' => 'Sélectionner l\'entité',
     'images' => 'Images',
     'my_recent_drafts' => 'Mes brouillons récents',
@@ -36,7 +35,7 @@ return [
      * Permissions and restrictions
      */
     'permissions' => 'Permissions',
-    'permissions_intro' => 'Une fois activées ces permission prendont la priorité sur tous les sets de permissions pré-existants.',
+    'permissions_intro' => 'Une fois activées ces permissions prendront la priorité sur tous les sets de permissions préexistants.',
     'permissions_enable' => 'Activer les permissions personnalisées',
     'permissions_save' => 'Enregistrer les permissions',
 
@@ -131,6 +130,7 @@ return [
      */
     'page' => 'Page',
     'pages' => 'Pages',
+    'x_pages' => ':count Page|:count Pages',
     'pages_popular' => 'Pages populaires',
     'pages_new' => 'Nouvelle page',
     'pages_attachments' => 'Fichiers joints',
@@ -166,6 +166,9 @@ return [
     'pages_not_in_chapter' => 'La page n\'est pas dans un chapitre',
     'pages_move' => 'Déplacer la page',
     'pages_move_success' => 'Page déplacée à ":parentName"',
+    'pages_copy' => 'Copier la page',
+    'pages_copy_desination' => 'Destination de la copie',
+    'pages_copy_success' => 'Page copiée avec succès',
     'pages_permissions' => 'Permissions de la page',
     'pages_permissions_success' => 'Permissions de la page mises à jour',
     'pages_revision' => 'Révision',
@@ -182,6 +185,7 @@ return [
     'pages_revisions_restore' => 'Restaurer',
     'pages_revisions_none' => 'Cette page n\'a aucune révision',
     'pages_copy_link' => 'Copier le lien',
+    'pages_edit_content_link' => 'Modifier le contenu',
     'pages_permissions_active' => 'Permissions de page actives',
     'pages_initial_revision' => 'Publication initiale',
     'pages_initial_name' => 'Nouvelle page',
@@ -200,10 +204,12 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Mots-clés de la page',
+    'chapter_tags' => 'Mots-clés du chapitre',
+    'book_tags' => 'Mots-clés du livre',
     'tag' => 'Mot-clé',
-    'tags' =>  'Mots-clé',
+    'tags' =>  'Mots-clés',
     'tag_value' => 'Valeur du mot-clé (Optionnel)',
-    'tags_explain' => "Ajouter des mot-clés pour catégoriser votre contenu.",
+    'tags_explain' => "Ajouter des mots-clés pour catégoriser votre contenu.",
     'tags_add' => 'Ajouter un autre mot-clé',
     'attachments' => 'Fichiers joints',
     'attachments_explain' => 'Ajouter des fichiers ou des liens pour les afficher sur votre page. Ils seront affichés dans la barre latérale',
@@ -257,6 +263,6 @@ return [
     'comment_deleted_success' => 'Commentaire supprimé',
     'comment_created_success' => 'Commentaire ajouté',
     'comment_updated_success' => 'Commentaire mis à jour',
-    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire?',
+    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
     'comment_in_reply_to' => 'En réponse à :commentId',
 ];

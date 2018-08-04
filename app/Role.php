@@ -3,7 +3,7 @@
 class Role extends Model
 {
 
-    protected $fillable = ['display_name', 'description'];
+    protected $fillable = ['display_name', 'description', 'external_auth_id'];
 
     /**
      * The roles that belong to the role.

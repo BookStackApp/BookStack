@@ -35,6 +35,8 @@ return [
     'book_delete'                 => 'libro borrado',
     'book_delete_notification'    => 'Libro borrado exitosamente',
     'book_sort'                   => 'libro ordenado',
-    'book_sort_notification'      => 'Libro re-ordenado exitosamente',
+    'book_sort_notification'      => 'Libro reordenado exitosamente',
 
+    // Other
+    'commented_on'                => 'comentada el',
 ];
