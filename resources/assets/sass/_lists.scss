@@ -266,22 +266,13 @@ ul.pagination {
     padding: $-xxs $-s;
     border: 1px solid #CCC;
     margin-left: -1px;
-    color: #888;
-    fill: #888;
     user-select: none;
     &.disabled {
       cursor: not-allowed;
     }
   }
   li.active span {
-    background-color: rgba($primary, 0.8);
-    color: #EEE;
-    fill: #EEE;
-    border-color: rgba($primary, 0.8);
-  }
-  a {
-    color: $primary;
-    fill: $primary;
+    color: #FFF;
   }
 }
 

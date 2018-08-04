@@ -182,6 +182,7 @@ return [
     'pages_revisions_restore' => 'Återställ',
     'pages_revisions_none' => 'Sidan har inga revisioner',
     'pages_copy_link' => 'Kopiera länk',
+    'pages_edit_content_link' => 'Redigera innehåll',
     'pages_permissions_active' => 'Anpassade rättigheter är i bruk',
     'pages_initial_revision' => 'Första publicering',
     'pages_initial_name' => 'Ny sida',

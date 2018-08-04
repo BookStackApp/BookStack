@@ -179,6 +179,7 @@ return [
     'pages_revisions_restore' => 'Wiederherstellen',
     'pages_revisions_none' => 'Diese Seite hat keine älteren Versionen.',
     'pages_copy_link' => 'Link kopieren',
+    'pages_edit_content_link' => 'Inhalt bearbeiten',
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Veröffentlichung',
     'pages_initial_name' => 'Neue Seite',
