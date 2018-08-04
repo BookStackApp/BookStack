@@ -45,6 +45,24 @@
                             <th width="20%">{{ trans('common.delete') }}</th>
                         </tr>
                         <tr>
+                            <td>{{ trans('entities.shelves_long') }}</td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-create-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-view-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-view-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-update-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-update-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-delete-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-delete-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>{{ trans('entities.books') }}</td>
                             <td>
                                 <label>@include('settings/roles/checkbox', ['permission' => 'book-create-all']) {{ trans('settings.role_all') }}</label>

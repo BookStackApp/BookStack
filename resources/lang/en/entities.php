@@ -65,6 +65,12 @@ return [
     'search_update' => 'Update Search',
 
     /**
+     * Shelves
+     */
+    'shelves' => 'Shelves',
+    'shelves_long' => 'BookShelves',
+
+    /**
      * Books
      */
     'book' => 'Book',

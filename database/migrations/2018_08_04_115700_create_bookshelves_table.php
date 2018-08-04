@@ -30,31 +30,31 @@ class CreateBookshelvesTable extends Migration
             $table->index('restricted');
         });
 
-        // Get roles with permissions we need to change
-        $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
-        $editorRole = DB::table('roles')->where('name', '=', 'editor')->first();
-
-        // TODO - Copy existing role permissions from Books
-        $entity = 'BookShelf';
+        // Copy existing role permissions from Books
         $ops = ['View All', 'View Own', 'Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
         foreach ($ops as $op) {
-            $permId = DB::table('permissions')->insertGetId([
-                'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+            $dbOpName = strtolower(str_replace(' ', '-', $op));
+            $roleIdsWithBookPermission = DB::table('role_permissions')
+                ->leftJoin('permission_role', 'role_permissions.id', '=', 'permission_role.permission_id')
+                ->leftJoin('roles', 'roles.id', '=', 'permission_role.role_id')
+                ->where('role_permissions.name', '=', 'book-' . $dbOpName)->get(['roles.id'])->pluck('id');
+
+            $permId = DB::table('role_permissions')->insertGetId([
+                'name' => 'bookshelf-' . $dbOpName,
                 'display_name' => $op . ' ' . 'BookShelves',
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
             ]);
-            // Assign view permission to all current roles
-            DB::table('permission_role')->insert([
-                'role_id' => $adminRoleId,
-                'permission_id' => $permId
-            ]);
-            if ($editorRole !== null) {
-                DB::table('permission_role')->insert([
-                    'role_id' => $editorRole->id,
+
+            $rowsToInsert = $roleIdsWithBookPermission->map(function($roleId) use ($permId) {
+                return [
+                    'role_id' => $roleId,
                     'permission_id' => $permId
-                ]);
-            }
+                ];
+            })->toArray();
+
+            // Assign view permission to all current roles
+            DB::table('permission_role')->insert($rowsToInsert);
         }
     }
 
@@ -65,6 +65,15 @@ class CreateBookshelvesTable extends Migration
      */
     public function down()
     {
+        // Drop created permissions
+        $ops = ['bookshelf-create-all','bookshelf-create-own','bookshelf-delete-all','bookshelf-delete-own','bookshelf-update-all','bookshelf-update-own','bookshelf-view-all','bookshelf-view-own'];
+
+        $permissionIds = DB::table('role_permissions')->whereIn('name', $ops)
+            ->get(['id'])->pluck('id')->toArray();
+        DB::table('permission_role')->whereIn('permission_id', $permissionIds)->delete();
+        DB::table('role_permissions')->whereIn('id', $permissionIds)->delete();
+
+        // Drop shelves table
         Schema::dropIfExists('bookshelves');
     }
 }
