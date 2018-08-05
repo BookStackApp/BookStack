@@ -51,6 +51,19 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '尚未設定限制的網域',
 
     /**
+     * Maintenance settings
+     */
+
+    'maint' => '維護',
+    'maint_image_cleanup' => '清理圖像',
+    'maint_image_cleanup_desc' => "掃描頁面和修訂內容以檢查哪些圖像是正在使用的以及哪些圖像是多余的。確保在運行前創建完整的數據庫和映像備份。",
+    'maint_image_cleanup_ignore_revisions' => '忽略修訂記錄中的圖像',
+    'maint_image_cleanup_run' => '運行清理',
+    'maint_image_cleanup_warning' => '發現了 :count 張可能未使用的圖像。您確定要刪除這些圖像嗎？',
+    'maint_image_cleanup_success' => '找到並刪除了 :count 張可能未使用的圖像！',
+    'maint_image_cleanup_nothing_found' => '找不到未使用的圖像，沒有刪除！',
+
+    /**
      * Role settings
      */
 
