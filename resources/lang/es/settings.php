@@ -82,6 +82,7 @@ return [
     'role_details' => 'Detalles de rol',
     'role_name' => 'Nombre de rol',
     'role_desc' => 'Descripción corta de rol',
+    'role_external_auth_id' => 'ID externo de autenticación',
     'role_system' => 'Permisos de sistema',
     'role_manage_users' => 'Gestionar usuarios',
     'role_manage_roles' => 'Gestionar roles y permisos de roles',
