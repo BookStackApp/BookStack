@@ -23,6 +23,7 @@
         <env name="APP_ENV" value="testing"/>
         <env name="APP_DEBUG" value="false"/>
         <env name="APP_LANG" value="en"/>
+        <env name="APP_AUTO_LANG_PUBLIC" value="true"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
