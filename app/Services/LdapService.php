@@ -202,7 +202,7 @@ class LdapService
     /**
      * Get the groups a user is a part of on ldap
      * @param string $userName
-     * @return array|null
+     * @return array
      * @throws LdapException
      */
     public function getUserGroups($userName)
@@ -211,7 +211,7 @@ class LdapService
         $user = $this->getUserWithAttributes($userName, [$groupsAttr]);
 
         if ($user === null) {
-            return null;
+            return [];
         }
 
         $userGroups = $this->groupFilter($user);

@@ -70,6 +70,7 @@ class LoginController extends Controller
      * @param Authenticatable $user
      * @return \Illuminate\Http\RedirectResponse
      * @throws AuthException
+     * @throws \BookStack\Exceptions\LdapException
      */
     protected function authenticated(Request $request, Authenticatable $user)
     {
