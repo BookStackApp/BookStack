@@ -34,6 +34,7 @@ return [
     'app_homepage' => 'Startsida',
     'app_homepage_desc' => 'Välj en sida att använda som startsida istället för standardvyn. Den valda sidans rättigheter kommer att ignoreras.',
     'app_homepage_default' => 'Vald vy för startsida',
+    'app_homepage_books' => 'Eller välj att ha listan med böcker som startsida. Om du har valt någon annan sida som startsida ovan kommer den inställningen att ignoreras.',
     'app_disable_comments' => 'Inaktivera kommentarer',
     'app_disable_comments_desc' => 'Inaktivera kommentarer på alla sidor i applikationen. Befintliga kommentarer visas inte.',
 
@@ -49,6 +50,19 @@ return [
     'reg_confirm_restrict_domain' => 'Begränsa registrering till viss domän',
     'reg_confirm_restrict_domain_desc' => 'Ange en kommaseparerad lista över e-postdomäner till vilka du vill begränsa registrering. Användare kommer att skickas ett mail för att bekräfta deras e-post innan de får logga in. <br> Notera att användare kommer att kunna ändra sin e-postadress efter lyckad registrering.',
     'reg_confirm_restrict_domain_placeholder' => 'Ingen begränsning satt',
+
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => 'Underhåll',
+    'maint_image_cleanup' => 'Rensa bilder',
+    'maint_image_cleanup_desc' => "Söker igenom innehåll i sidor & revisioner för att se vilka bilder och teckningar som är i bruk och vilka som är överflödiga. Se till att ta en komplett backup av databas och bilder innan du kör detta.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignorera bilder i revisioner',
+    'maint_image_cleanup_run' => 'Kör rensning',
+    'maint_image_cleanup_warning' => 'Hittade :count bilder som potentiellt inte används. Vill du verkligen ta bort dessa bilder?',
+    'maint_image_cleanup_success' => 'Hittade och raderade :count bilder som potentiellt inte används!',
+    'maint_image_cleanup_nothing_found' => 'Hittade inga oanvända bilder, så inget har raderats!',
 
     /**
      * Role settings
@@ -68,6 +82,7 @@ return [
     'role_details' => 'Om rollen',
     'role_name' => 'Rollens namn',
     'role_desc' => 'Kort beskrivning av rollen',
+    'role_external_auth_id' => 'Externa autentiserings-ID:n',
     'role_system' => 'Systemrättigheter',
     'role_manage_users' => 'Hanter användare',
     'role_manage_roles' => 'Hantera roller & rättigheter',
@@ -96,7 +111,6 @@ return [
     'users_external_auth_id' => 'Externt ID för autentisering',
     'users_password_warning' => 'Fyll i nedanstående fält endast om du vill byta lösenord:',
     'users_system_public' => 'Den här användaren representerar eventuella gäster som använder systemet. Den kan inte användas för att logga in utan tilldeles automatiskt.',
-    'users_books_view_type' => 'Layout för visning av böcker',
     'users_delete' => 'Ta bort användare',
     'users_delete_named' => 'Ta bort användaren :userName',
     'users_delete_warning' => 'Detta kommer att ta bort användaren \':userName\' från systemet helt och hållet.',
@@ -113,26 +127,5 @@ return [
     'users_social_connect' => 'Anslut konto',
     'users_social_disconnect' => 'Koppla från konto',
     'users_social_connected' => ':socialAccount har kopplats till ditt konto.',
-    'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.',
-
-    // Since these labels are already localized this array does not need to be
-    // translated in the language-specific files.
-    // DELETE BELOW IF COPIED FROM EN
-    ///////////////////////////////////
-    'language_select' => [
-        'en' => 'English',
-        'de' => 'Deutsch',
-        'es' => 'Español',
-        'es_AR' => 'Español Argentina',
-        'fr' => 'Français',
-        'nl' => 'Nederlands',
-        'pt_BR' => 'Português do Brasil',
-        'sk' => 'Slovensky',
-        'sv' => 'Svenska',
-        'ja' => '日本語',
-        'pl' => 'Polski',
-        'it' => 'Italian',
-        'ru' => 'Русский'
-    ]
-    ///////////////////////////////////
+    'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.'
 ];
