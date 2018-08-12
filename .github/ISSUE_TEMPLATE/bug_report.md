@@ -23,7 +23,7 @@ If applicable, add screenshots to help explain your problem.
 **Your Configuration (please complete the following information):**
  - Exact BookStack Version (Found in settings):
  - PHP Version:
- - Using Docker or reverse proxy (Yes/No): 
+ - Hosting Method (Nginx/Apache/Docker): 
 
 **Additional context**
 Add any other context about the problem here.

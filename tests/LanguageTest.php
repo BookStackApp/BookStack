@@ -31,6 +31,16 @@ class LanguageTest extends TestCase
         $loginPageFrenchReq->assertSee('Se Connecter');
     }
 
+    public function test_public_lang_autodetect_can_be_disabled()
+    {
+        config()->set('app.auto_detect_locale', false);
+        $loginReq = $this->get('/login');
+        $loginReq->assertSee('Log In');
+
+        $loginPageFrenchReq = $this->get('/login', ['Accept-Language' => 'fr']);
+        $loginPageFrenchReq->assertDontSee('Se Connecter');
+    }
+
     public function test_js_endpoint_for_each_language()
     {
 

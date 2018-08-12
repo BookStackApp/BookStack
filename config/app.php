@@ -77,7 +77,20 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
+
     'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto-detect the locale for public users
+    |--------------------------------------------------------------------------
+    |
+    | For public users their locale can be guessed by headers sent by their
+    | browser. This is usually set by users in their browser settings.
+    | If not found the default app locale will be used.
+    |
+    */
+    'auto_detect_locale' => env('APP_AUTO_LANG_PUBLIC', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -245,7 +258,7 @@ return [
         'Activity' => BookStack\Services\Facades\Activity::class,
         'Setting'  => BookStack\Services\Facades\Setting::class,
         'Views'    => BookStack\Services\Facades\Views::class,
-        'Images'   => \BookStack\Services\Facades\Images::class,
+        'Images'   => BookStack\Services\Facades\Images::class,
 
     ],
 
