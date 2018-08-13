@@ -116,6 +116,8 @@ class LdapService
         } catch (\ErrorException $e) {
             $ldapBind = false;
         }
+        
+        $user->_username = $username;
 
         return $ldapBind;
     }
@@ -303,7 +305,9 @@ class LdapService
      */
     public function syncGroups(User $user)
     {
-        $userLdapGroups = $this->getUserGroups($user->external_auth_id);
+        $userLdapGroups = $this->getUserGroups($user->_username);
+        // $user->external_auth_id is formed of CN=XXX,OU=XXX, which can't be used with sAMAccountName in getUserWithAttributes
+        // $userLdapGroups = $this->getUserGroups($user->external_auth_id);
 
         // Get the ids for the roles from the names
         $ldapGroupsAsRoles = $this->matchLdapGroupsToSystemsRoles($userLdapGroups);
