@@ -119,7 +119,6 @@ php artisan cache:clear
 php artisan view:clear
 
 source ~/.profile
-npm install bable-preset-env
 npm install
 npm run production
 
