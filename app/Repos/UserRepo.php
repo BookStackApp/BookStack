@@ -144,7 +144,7 @@ class UserRepo
      * @param array $data
      * @return User
      */
-    public function create(array $data, $autoVerifyEmail)
+    public function create(array $data, $autoVerifyEmail=false)
     {
 
         return $this->user->forceCreate([
