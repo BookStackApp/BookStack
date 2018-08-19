@@ -299,11 +299,12 @@ class LdapService
     /**
      * Sync the LDAP groups to the user roles for the current user
      * @param \BookStack\User $user
+     * @param string $username
      * @throws LdapException
      */
-    public function syncGroups(User $user)
+    public function syncGroups(User $user, string $username)
     {
-        $userLdapGroups = $this->getUserGroups($user->external_auth_id);
+        $userLdapGroups = $this->getUserGroups($username);
 
         // Get the ids for the roles from the names
         $ldapGroupsAsRoles = $this->matchLdapGroupsToSystemsRoles($userLdapGroups);

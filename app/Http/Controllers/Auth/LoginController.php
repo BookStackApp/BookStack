@@ -103,7 +103,7 @@ class LoginController extends Controller
 
         // Sync LDAP groups if required
         if ($this->ldapService->shouldSyncGroups()) {
-            $this->ldapService->syncGroups($user);
+            $this->ldapService->syncGroups($user, $request->get($this->username()));
         }
 
         $path = session()->pull('url.intended', '/');
