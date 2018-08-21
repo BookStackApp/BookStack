@@ -76,7 +76,7 @@ class UserRepo
         return $query->paginate($count);
     }
 
-        /**
+     /**
      * Creates a new user and attaches a role to them.
      * @param array $data
      * @param boolean autoVerifyEmail
