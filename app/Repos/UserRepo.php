@@ -142,6 +142,7 @@ class UserRepo
     /**
      * Create a new basic instance of user.
      * @param array $data
+     * @param boolean $autoVerifyEmail
      * @return User
      */
     public function create(array $data, $autoVerifyEmail=false)
