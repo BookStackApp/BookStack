@@ -33,7 +33,7 @@
     <header id="header">
         <div class="container fluid">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 col-md-3">
                     <a href="{{ baseUrl('/') }}" class="logo">
                         @if(setting('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ setting('app-logo', '') === '' ? baseUrl('/logo.png') : baseUrl(setting('app-logo', '')) }}" alt="Logo">
@@ -43,7 +43,7 @@
                         @endif
                     </a>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-8 col-md-9">
                     <div class="float right">
                         <div class="header-search">
                             <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">

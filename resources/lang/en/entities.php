@@ -69,6 +69,16 @@ return [
      */
     'shelves' => 'Shelves',
     'shelves_long' => 'BookShelves',
+    'shelves_empty' => 'No shelves have been created',
+    'shelves_create' => 'Create New Shelf',
+    'shelves_popular' => 'Popular Shelves',
+    'shelves_new' => 'New Shelves',
+    'shelves_popular_empty' => 'The most popular shelves will appear here.',
+    'shelves_new_empty' => 'The most recently created shelves will appear here.',
+    'shelves_save' => 'Save Shelf',
+    'shelves_books' => 'Books on this shelf',
+    'shelves_add_books' => 'Add books to this shelf',
+    'shelves_drag_books' => 'Drag books here to add them to this shelf',
 
     /**
      * Books
@@ -212,6 +222,7 @@ return [
     'page_tags' => 'Page Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
+    'shelf_tags' => 'Shelf Tags',
     'tag' => 'Tag',
     'tags' =>  'Tags',
     'tag_value' => 'Tag Value (Optional)',

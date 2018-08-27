@@ -1,13 +1,22 @@
 <?php namespace BookStack;
 
 
-class BookShelf extends Entity
+class Bookshelf extends Entity
 {
     protected $table = 'bookshelves';
 
     public $searchFactor = 3;
 
     protected $fillable = ['name', 'description', 'image_id'];
+
+    /**
+     * Get the books in this shelf.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id');
+    }
 
     /**
      * Get the url for this bookshelf.
