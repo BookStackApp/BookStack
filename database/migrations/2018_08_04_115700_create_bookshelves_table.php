@@ -30,6 +30,18 @@ class CreateBookshelvesTable extends Migration
             $table->index('restricted');
         });
 
+        Schema::create('bookshelves_books', function (Blueprint $table) {
+            $table->integer('bookshelf_id')->unsigned();
+            $table->integer('book_id')->unsigned();
+
+            $table->foreign('bookshelf_id')->references('id')->on('bookshelves')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->primary(['bookshelf_id', 'book_id']);
+        });
+
         // Copy existing role permissions from Books
         $ops = ['View All', 'View Own', 'Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
         foreach ($ops as $op) {
@@ -75,5 +87,6 @@ class CreateBookshelvesTable extends Migration
 
         // Drop shelves table
         Schema::dropIfExists('bookshelves');
+        Schema::dropIfExists('bookshelves_books');
     }
 }

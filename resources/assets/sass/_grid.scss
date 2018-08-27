@@ -192,14 +192,49 @@ div[class^="col-"] img {
   flex-direction: column;
   border: 1px solid #ddd;
   min-width: 100px;
+  h2 {
+    width: 100%;
+    font-size: 1.5em;
+    margin: 0 0 10px;
+  }
+  h2 a {
+    display: block;
+    width: 100%;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+  p {
+    font-size: .85em;
+    margin: 0;
+    line-height: 1.6em;
+  }
   .grid-card-content {
     flex: 1;
+    border-top: 0;
+    border-bottom-width: 2px;
   }
   .grid-card-content, .grid-card-footer {
     padding: $-l;
   }
   .grid-card-content + .grid-card-footer {
     padding-top: 0;
+  }
+}
+
+.book-grid-item .grid-card-content h2 a  {
+    color: $color-book;
+    fill: $color-book;
+}
+
+.bookshelf-grid-item .grid-card-content h2 a  {
+  color: $color-bookshelf;
+  fill: $color-bookshelf;
+}
+
+.book-grid-item .grid-card-footer {
+  p.small {
+    font-size: .8em;
+    margin: 0;
   }
 }
 

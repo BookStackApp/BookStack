@@ -204,6 +204,7 @@ class PermissionService
     /**
      * Rebuild the entity jointPermissions for a particular entity.
      * @param Entity $entity
+     * @throws \Throwable
      */
     public function buildJointPermissionsForEntity(Entity $entity)
     {
@@ -214,7 +215,9 @@ class PermissionService
             return;
         }
 
-        $entities[] = $entity->book;
+        if ($entity->book) {
+            $entities[] = $entity->book;
+        }
 
         if ($entity->isA('page') && $entity->chapter_id) {
             $entities[] = $entity->chapter;
@@ -226,13 +229,13 @@ class PermissionService
             }
         }
 
-        $this->deleteManyJointPermissionsForEntities($entities);
         $this->buildJointPermissionsForEntities(collect($entities));
     }
 
     /**
      * Rebuild the entity jointPermissions for a collection of entities.
      * @param Collection $entities
+     * @throws \Throwable
      */
     public function buildJointPermissionsForEntities(Collection $entities)
     {
@@ -412,7 +415,7 @@ class PermissionService
             return $this->createJointPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
         }
 
-        if ($entity->isA('book')) {
+        if ($entity->isA('book') || $entity->isA('bookshelf')) {
             return $this->createJointPermissionDataArray($entity, $role, $action, $roleHasPermission, $roleHasPermissionOwn);
         }
 

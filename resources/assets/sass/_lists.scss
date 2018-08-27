@@ -408,32 +408,3 @@ ul.pagination {
   }
 }
 
-.book-grid-item .grid-card-content {
-  border-top: 0;
-  border-bottom-width: 2px;
-  h2 {
-    width: 100%;
-    font-size: 1.5em;
-    margin: 0 0 10px;
-  }
-  h2 a {
-    display: block;
-    width: 100%;
-    line-height: 1.2;
-    color: #009688;;
-    fill: #009688;;
-    text-decoration: none;
-  }
-  p {
-    font-size: .85em;
-    margin: 0;
-    line-height: 1.6em;
-  }
-}
-
-.book-grid-item .grid-card-footer {
-  p.small {
-    font-size: .8em;
-    margin: 0;
-  }
-}

@@ -1,6 +1,7 @@
 <?php namespace BookStack\Repos;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
@@ -18,6 +19,10 @@ use Illuminate\Support\Collection;
 
 class EntityRepo
 {
+    /**
+     * @var Bookshelf
+     */
+    public $bookshelf;
 
     /**
      * @var Book $book
@@ -67,6 +72,7 @@ class EntityRepo
 
     /**
      * EntityRepo constructor.
+     * @param Bookshelf $bookshelf
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
@@ -77,6 +83,7 @@ class EntityRepo
      * @param SearchService $searchService
      */
     public function __construct(
+        Bookshelf $bookshelf,
         Book $book,
         Chapter $chapter,
         Page $page,
@@ -86,11 +93,13 @@ class EntityRepo
         TagRepo $tagRepo,
         SearchService $searchService
     ) {
+        $this->bookshelf = $bookshelf;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
         $this->pageRevision = $pageRevision;
         $this->entities = [
+            'bookshelf' => $this->bookshelf,
             'page' => $this->page,
             'chapter' => $this->chapter,
             'book' => $this->book
@@ -531,6 +540,23 @@ class EntityRepo
         $this->permissionService->buildJointPermissionsForEntity($entityModel);
         $this->searchService->indexEntity($entityModel);
         return $entityModel;
+    }
+
+    /**
+     * Sync the books assigned to a shelf from a comma-separated list
+     * of book IDs.
+     * @param Bookshelf $shelf
+     * @param string $books
+     */
+    public function updateShelfBooks(Bookshelf $shelf, string $books)
+    {
+        $ids = explode(',', $books);
+        if (count($ids) === 0) {
+            return;
+        }
+
+        $bookIds = $this->entityQuery('book')->whereIn('id', $ids)->get(['id'])->pluck('id');
+        $shelf->books()->sync($bookIds);
     }
 
     /**
@@ -1157,6 +1183,8 @@ class EntityRepo
     /**
      * Destroy the provided book and all its child entities.
      * @param Book $book
+     * @throws NotifyException
+     * @throws \Throwable
      */
     public function destroyBook(Book $book)
     {
@@ -1177,6 +1205,7 @@ class EntityRepo
     /**
      * Destroy a chapter and its relations.
      * @param Chapter $chapter
+     * @throws \Throwable
      */
     public function destroyChapter(Chapter $chapter)
     {
@@ -1198,6 +1227,7 @@ class EntityRepo
      * Destroy a given page along with its dependencies.
      * @param Page $page
      * @throws NotifyException
+     * @throws \Throwable
      */
     public function destroyPage(Page $page)
     {

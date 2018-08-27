@@ -252,13 +252,36 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
-        $viewType = $request->get('book_view_type');
+        $viewType = $request->get('view_type');
         if (!in_array($viewType, ['grid', 'list'])) {
             $viewType = 'list';
         }
 
         $user = $this->user->findOrFail($id);
         setting()->putUser($user, 'books_view_type', $viewType);
+
+        return redirect()->back(302, [], "/settings/users/$id");
+    }
+
+    /**
+     * Update the user's preferred shelf-list display setting.
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function switchShelfView($id, Request $request)
+    {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
+
+        $viewType = $request->get('view_type');
+        if (!in_array($viewType, ['grid', 'list'])) {
+            $viewType = 'list';
+        }
+
+        $user = $this->user->findOrFail($id);
+        setting()->putUser($user, 'bookshelves_view_type', $viewType);
 
         return redirect()->back(302, [], "/settings/users/$id");
     }
