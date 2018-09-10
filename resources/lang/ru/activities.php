@@ -11,9 +11,9 @@ return [
     'page_create'                 => 'создал страницу',
     'page_create_notification'    => 'Страница успешно создана',
     'page_update'                 => 'обновил страницу',
-    'page_update_notification'    => 'Станица успешно обновлена',
+    'page_update_notification'    => 'Страница успешно обновлена',
     'page_delete'                 => 'удалил страницу',
-    'page_delete_notification'    => 'Старница успешно удалена',
+    'page_delete_notification'    => 'Страница успешно удалена',
     'page_restore'                => 'восстановил страницу',
     'page_restore_notification'   => 'Страница успешно восстановлена',
     'page_move'                   => 'переместил страницу',
@@ -22,9 +22,9 @@ return [
     'chapter_create'              => 'создал главу',
     'chapter_create_notification' => 'глава успешно создана',
     'chapter_update'              => 'обновил главу',
-    'chapter_update_notification' => 'Глава успешно обновленна',
+    'chapter_update_notification' => 'Глава успешно обновлена',
     'chapter_delete'              => 'удалил главу',
-    'chapter_delete_notification' => 'Глава успешно удалено',
+    'chapter_delete_notification' => 'Глава успешно удалена',
     'chapter_move'                => 'переместил главу',
 
     // Books
