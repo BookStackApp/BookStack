@@ -14,7 +14,7 @@ return [
     */
 
     'accepted'             => ':attribute должен быть принят.',
-    'active_url'           => ':attribute не является валидным URL.',
+    'active_url'           => ':attribute не является корректным URL.',
     'after'                => ':attribute дата должна быть позже :date.',
     'alpha'                => ':attribute может содержать только буквы.',
     'alpha_dash'           => ':attribute может содержать только буквы, цифры и тире.',
@@ -29,18 +29,18 @@ return [
     ],
     'boolean'              => ':attribute поле может быть только true или false.',
     'confirmed'            => ':attribute подтверждение не совпадает.',
-    'date'                 => ':attribute не корректные данные.',
+    'date'                 => ':attribute некорректные данные.',
     'date_format'          => ':attribute не соответствует формату :format.',
     'different'            => ':attribute и :other должны быть различны.',
-    'digits'               => ':attribute должен быть из :digits цифр.',
+    'digits'               => ':attribute должен состоять из :digits цифр.',
     'digits_between'       => ':attribute должен иметь от :min до :max цифр.',
-    'email'                => ':attribute must be a valid email address.',
+    'email'                => ':attribute должен быть корректным email адресом.',
     'filled'               => ':attribute поле необходимо.',
-    'exists'               => 'выделенный :attribute невалиден.',
-    'image'                => ':attribute must be an image.',
-    'in'                   => 'выделенный :attribute невалиден.',
+    'exists'               => 'выделенный :attribute некорректен.',
+    'image'                => ':attribute должен быть изображением.',
+    'in'                   => 'выделенный :attribute некорректен.',
     'integer'              => ':attribute должно быть целое число.',
-    'ip'                   => ':attribute должен быть валидный IP адрес.',
+    'ip'                   => ':attribute должен быть корректным IP адресом.',
     'max'                  => [
         'numeric' => ':attribute не может быть больше чем :max.',
         'file'    => ':attribute не может быть больше чем :max килобайт.',
@@ -71,7 +71,7 @@ return [
         'array'   => ':attribute должен содержать :size элементов.',
     ],
     'string'               => ':attribute должен быть строкой.',
-    'timezone'             => ':attribute должен быть валидной временной зоной.',
+    'timezone'             => ':attribute должен быть корректным часовым поясом.',
     'unique'               => ':attribute уже есть.',
     'url'                  => ':attribute имеет неправильный формат.',
 
@@ -81,7 +81,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
+    | convention 'attribute.rule' to name the lines. This makes it quick to
     | specify a specific custom language line for a given attribute rule.
     |
     */
@@ -99,7 +99,7 @@ return [
     |
     | The following language lines are used to swap attribute place-holders
     | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
+    | of 'email'. This simply helps us make messages a little cleaner.
     |
     */
 
