@@ -367,7 +367,7 @@ ul.pagination {
     padding: $-xs $-m;
     line-height: 1.2;
   }
-  a {
+  a, button {
     display: block;
     padding: $-xs $-m;
     color: #555;
@@ -381,6 +381,10 @@ ul.pagination {
       display: inline-block;
       width: 16px;
     }
+  }
+  button {
+    width: 100%;
+    text-align: left;
   }
   li.border-bottom {
     border-bottom: 1px solid #DDD;

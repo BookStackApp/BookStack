@@ -49,6 +49,18 @@ class PageRevision extends Model
     }
 
     /**
+     * Get the current revision for the same page if existing
+     * @return \BookStack\PageRevision|null
+     */
+    public function getCurrent()
+    {
+        if ($id = static::where('page_id', '=', $this->page_id)->max('id')) {
+            return static::find($id);
+        }
+        return null;
+    }
+
+    /**
      * Allows checking of the exact class, Used to check entity type.
      * Included here to align with entities in similar use cases.
      * (Yup, Bit of an awkward hack)

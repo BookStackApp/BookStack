@@ -119,6 +119,11 @@ $button-border-radius: 2px;
   &.neg {
     color: $negative;
   }
+  &.link {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .button-group {
