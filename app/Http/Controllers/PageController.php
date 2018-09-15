@@ -2,6 +2,7 @@
 
 use Activity;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\BadRequestException;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
@@ -452,6 +453,38 @@ class PageController extends Controller
         $page = $this->entityRepo->restorePageRevision($page, $page->book, $revisionId);
         Activity::add($page, 'page_restore', $page->book->id);
         return redirect($page->getUrl());
+    }
+
+
+    /**
+     * Deletes a revision using the id of the specified revision.
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param int $revisionId
+     * @throws NotFoundException
+     * @throws BadRequestException
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroyRevision($bookSlug, $pageSlug, $revId)
+    {
+        $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $this->checkOwnablePermission('page-update', $page);
+
+        $revision = $page->revisions()->where('id', '=', $revId)->first();
+        if ($revision === null) {
+            throw new NotFoundException("Revision #{$revId} not found");
+        }
+
+        // Get the current revision for the page
+        $current = $revision->getCurrent();
+
+        // Check if its the latest revision, cannot delete latest revision.
+        if (intval($current->id) === intval($revId)) {
+            throw new BadRequestException("Cannot delete the current revision #{$revId}");
+        }
+
+        $revision->delete();
+        return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
     }
 
     /**
