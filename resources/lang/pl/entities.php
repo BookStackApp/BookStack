@@ -262,5 +262,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Czy na pewno chcesz usunąć tę wersję?',
-    'revision_delete_success' => 'Usunięto wersję'
+    'revision_delete_success' => 'Usunięto wersję',
+    'revision_cannot_delete_latest' => 'Nie można usunąć najnowszej wersji.'
 ];
