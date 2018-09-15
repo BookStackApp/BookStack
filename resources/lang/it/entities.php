@@ -265,4 +265,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Sei sicuro di voler eliminare questa revisione?',
+    'revision_delete_success' => 'Revisione cancellata'
 ];

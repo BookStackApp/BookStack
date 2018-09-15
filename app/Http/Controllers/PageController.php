@@ -484,6 +484,7 @@ class PageController extends Controller
         }
 
         $revision->delete();
+        session()->flash('success', trans('entities.revision_delete_success'));
         return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
     }
 

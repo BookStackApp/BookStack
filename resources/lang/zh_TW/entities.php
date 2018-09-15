@@ -264,4 +264,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => '您確定要刪除此修訂版嗎？',
+    'revision_delete_success' => '修訂刪除'
 ];
