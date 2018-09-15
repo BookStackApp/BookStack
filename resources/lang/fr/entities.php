@@ -265,4 +265,9 @@ return [
     'comment_updated_success' => 'Commentaire mis à jour',
     'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
     'comment_in_reply_to' => 'En réponse à :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision?',
 ];

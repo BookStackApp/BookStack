@@ -259,4 +259,9 @@ return [
     'comment_updated_success' => 'Reactie bijgewerkt',
     'comment_delete_confirm' => 'Zeker reactie verwijderen?',
     'comment_in_reply_to' => 'Antwoord op :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Weet u zeker dat u deze revisie wilt verwijderen?',
 ];

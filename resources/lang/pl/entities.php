@@ -257,4 +257,9 @@ return [
     'comment_updated_success' => 'Komentarz zaktualizowany',
     'comment_delete_confirm' => 'Czy na pewno chcesz usunąc ten komentarz?',
     'comment_in_reply_to' => 'W odpowiedzi na :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Czy na pewno chcesz usunąć tę wersję?',
 ];

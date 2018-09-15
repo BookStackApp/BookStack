@@ -258,4 +258,9 @@ return [
     'comment_updated_success' => 'Comentário editado',
     'comment_delete_confirm' => 'Você tem certeza de que quer deletar este comentário?',
     'comment_in_reply_to' => 'Em resposta à :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
 ];
