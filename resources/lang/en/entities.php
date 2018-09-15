@@ -183,6 +183,7 @@ return [
     'pages_revisions_current' => 'Current Version',
     'pages_revisions_preview' => 'Preview',
     'pages_revisions_restore' => 'Restore',
+    'pages_revisions_delete' => 'Delete',
     'pages_revisions_none' => 'This page has no revisions',
     'pages_copy_link' => 'Copy Link',
     'pages_edit_content_link' => 'Edit Content',
@@ -265,4 +266,9 @@ return [
     'comment_updated_success' => 'Comment updated',
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
 ];

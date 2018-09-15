@@ -257,4 +257,9 @@ return [
     'comment_updated_success' => 'コメントを更新しました',
     'comment_delete_confirm' => '本当にこのコメントを削除しますか?',
     'comment_in_reply_to' => ':commentIdへ返信',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'このリビジョンを削除しますか？',
 ];
