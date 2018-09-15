@@ -263,5 +263,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Вы действительно хотите удалить эту ревизию?',
-    'revision_delete_success' => 'Редактирование удалено'
+    'revision_delete_success' => 'Редактирование удалено',
+    'revision_cannot_delete_latest' => 'Не удается удалить последнюю версию.'
 ];

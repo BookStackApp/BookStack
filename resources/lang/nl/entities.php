@@ -264,5 +264,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Weet u zeker dat u deze revisie wilt verwijderen?',
-    'revision_delete_success' => 'Revisie verwijderd'
+    'revision_delete_success' => 'Revisie verwijderd',
+    'revision_cannot_delete_latest' => 'Kan de laatste revisie niet verwijderen.'
 ];

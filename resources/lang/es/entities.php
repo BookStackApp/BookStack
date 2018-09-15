@@ -270,5 +270,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => '¿Está seguro de que desea eliminar esta revisión?',
-    'revision_delete_success' => 'Revisión eliminada'
+    'revision_delete_success' => 'Revisión eliminada',
+    'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.'
 ];

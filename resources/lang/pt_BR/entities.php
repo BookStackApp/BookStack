@@ -263,5 +263,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
-    'revision_delete_success' => 'Revisão excluída'
+    'revision_delete_success' => 'Revisão excluída',
+    'revision_cannot_delete_latest' => 'Não é possível excluir a revisão mais recente.'
 ];

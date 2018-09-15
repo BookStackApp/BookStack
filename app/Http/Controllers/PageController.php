@@ -2,7 +2,6 @@
 
 use Activity;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\BadRequestException;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\UserRepo;
 use BookStack\Services\ExportService;
@@ -480,7 +479,8 @@ class PageController extends Controller
 
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($current->id) === intval($revId)) {
-            throw new BadRequestException("Cannot delete the current revision #{$revId}");
+            session()->flash('error', trans('entities.revision_cannot_delete_latest'));
+            return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
         }
 
         $revision->delete();

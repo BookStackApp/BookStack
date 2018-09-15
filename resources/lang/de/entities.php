@@ -261,5 +261,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
-    'revision_delete_success' => 'Revision gelöscht'
+    'revision_delete_success' => 'Revision gelöscht',
+    'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
 ];

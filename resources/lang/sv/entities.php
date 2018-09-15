@@ -270,5 +270,6 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
-    'revision_delete_success' => 'Revisionen raderad'
+    'revision_delete_success' => 'Revisionen raderad',
+    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.'
 ];
