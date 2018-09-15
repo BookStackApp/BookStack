@@ -49,7 +49,7 @@
                                         <a href="{{ $revision->getUrl('restore') }}">{{ trans('entities.pages_revisions_restore') }}</a>
                                         <span class="text-muted">&nbsp;|&nbsp;</span>
                                         <div dropdown class="dropdown-container">
-                                            <button type="button" dropdown-toggle class="text-button link">{{ trans('common.delete') }}</button>
+                                            <a dropdown-toggle>{{ trans('common.delete') }}</a>
                                             <ul>
                                                 <li class="padded"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
                                                 <li>

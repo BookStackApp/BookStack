@@ -475,10 +475,10 @@ class PageController extends Controller
         }
 
         // Get the current revision for the page
-        $current = $revision->getCurrent();
+        $currentRevision = $page->getCurrentRevision();
 
         // Check if its the latest revision, cannot delete latest revision.
-        if (intval($current->id) === intval($revId)) {
+        if (intval($currentRevision->id) === intval($revId)) {
             session()->flash('error', trans('entities.revision_cannot_delete_latest'));
             return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
         }

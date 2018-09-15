@@ -46,8 +46,12 @@ class PageRevisionTest extends TestCase
         $this->assertTrue($beforeRevisionCount === ($afterRevisionCount + 1));
 
         // Try to delete the latest revision
-        $revision = $page->revisions->get($page->revisions->count() - 1);
-        $resp = $this->asEditor()->delete($revision->getUrl('/delete/'));
-        $resp->assertSee('Cannot delete the latest revision');
+        $beforeRevisionCount = $page->revisions->count();
+        $currentRevision = $page->getCurrentRevision();
+        $this->asEditor()->delete($currentRevision->getUrl('/delete/'));
+
+        $page = Page::find($page->id);
+        $afterRevisionCount = $page->revisions->count();
+        $this->assertTrue($beforeRevisionCount === $afterRevisionCount);
     }
 }

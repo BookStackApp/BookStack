@@ -183,7 +183,6 @@ return [
     'pages_revisions_current' => 'Current Version',
     'pages_revisions_preview' => 'Preview',
     'pages_revisions_restore' => 'Restore',
-    'pages_revisions_delete' => 'Delete',
     'pages_revisions_none' => 'This page has no revisions',
     'pages_copy_link' => 'Copy Link',
     'pages_edit_content_link' => 'Edit Content',
