@@ -263,4 +263,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Вы действительно хотите удалить эту ревизию?',
+    'revision_delete_success' => 'Редактирование удалено'
 ];

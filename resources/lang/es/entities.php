@@ -270,4 +270,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => '¿Está seguro de que desea eliminar esta revisión?',
+    'revision_delete_success' => 'Revisión eliminada'
 ];

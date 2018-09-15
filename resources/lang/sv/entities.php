@@ -269,5 +269,6 @@ return [
     /**
      * Revision
      */
-    'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?'
+    'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
+    'revision_delete_success' => 'Revisionen raderad'
 ];

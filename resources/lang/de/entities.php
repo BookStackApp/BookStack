@@ -261,4 +261,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
+    'revision_delete_success' => 'Revision gelöscht'
 ];

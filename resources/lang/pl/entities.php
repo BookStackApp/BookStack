@@ -262,4 +262,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Czy na pewno chcesz usunąć tę wersję?',
+    'revision_delete_success' => 'Usunięto wersję'
 ];

@@ -262,4 +262,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'このリビジョンを削除しますか？',
+    'revision_delete_success' => 'リビジョンを削除しました'
 ];
