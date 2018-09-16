@@ -459,7 +459,7 @@ class PageController extends Controller
      * Deletes a revision using the id of the specified revision.
      * @param string $bookSlug
      * @param string $pageSlug
-     * @param int $revisionId
+     * @param int $revId
      * @throws NotFoundException
      * @throws BadRequestException
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -467,7 +467,7 @@ class PageController extends Controller
     public function destroyRevision($bookSlug, $pageSlug, $revId)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-delete', $page);
 
         $revision = $page->revisions()->where('id', '=', $revId)->first();
         if ($revision === null) {
@@ -480,7 +480,7 @@ class PageController extends Controller
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($currentRevision->id) === intval($revId)) {
             session()->flash('error', trans('entities.revision_cannot_delete_latest'));
-            return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
+            return response()->view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page], 400);
         }
 
         $revision->delete();

@@ -21,9 +21,11 @@ class PageRevisionTest extends TestCase
     {
         $page = Page::first();
         $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        $page = Page::find($page->id);
 
+        $page = Page::find($page->id);
+        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
+
+        $page = Page::find($page->id);
         $pageView = $this->get($page->getUrl());
         $pageView->assertSee('Revision #' . $page->revision_count);
     }
@@ -31,12 +33,15 @@ class PageRevisionTest extends TestCase
     public function test_revision_deletion() {
         $page = Page::first();
         $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
+
+        $page = Page::find($page->id);
         $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
+
         $page = Page::find($page->id);
         $beforeRevisionCount = $page->revisions->count();
 
         // Delete the first revision
-        $revision = $page->revisions->get(0);
+        $revision = $page->revisions->get(1);
         $resp = $this->asEditor()->delete($revision->getUrl('/delete/'));
         $resp->assertStatus(200);
 
@@ -48,7 +53,8 @@ class PageRevisionTest extends TestCase
         // Try to delete the latest revision
         $beforeRevisionCount = $page->revisions->count();
         $currentRevision = $page->getCurrentRevision();
-        $this->asEditor()->delete($currentRevision->getUrl('/delete/'));
+        $resp = $this->asEditor()->delete($currentRevision->getUrl('/delete/'));
+        $resp->assertStatus(400);
 
         $page = Page::find($page->id);
         $afterRevisionCount = $page->revisions->count();

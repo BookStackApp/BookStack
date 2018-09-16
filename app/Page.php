@@ -119,9 +119,6 @@ class Page extends Entity
      */
     public function getCurrentRevision()
     {
-        if ($id = PageRevision::where('page_id', '=', $this->id)->max('id')) {
-            return PageRevision::find($id);
-        }
-        return null;
+        return $this->revisions()->first();
     }
 }
