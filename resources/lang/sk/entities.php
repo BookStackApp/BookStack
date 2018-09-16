@@ -232,4 +232,11 @@ return [
     'comments' => 'Komentáre',
     'comment_placeholder' => 'Tu zadajte svoje pripomienky',
     'comment_save' => 'Uložiť komentár',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Naozaj chcete túto revíziu odstrániť?',
+    'revision_delete_success' => 'Revízia bola vymazaná',
+    'revision_cannot_delete_latest' => 'Nie je možné vymazať poslednú revíziu.'
 ];

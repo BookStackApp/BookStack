@@ -258,4 +258,11 @@ return [
     'comment_updated_success' => '评论已更新',
     'comment_delete_confirm' => '你确定要删除这条评论？',
     'comment_in_reply_to' => '回复 :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => '您确定要删除此修订版吗？',
+    'revision_delete_success' => '修订删除',
+    'revision_cannot_delete_latest' => '无法删除最新版本。'
 ];

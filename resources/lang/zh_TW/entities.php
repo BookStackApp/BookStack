@@ -259,4 +259,11 @@ return [
     'comment_updated_success' => '評論已更新',
     'comment_delete_confirm' => '你確定要刪除這條評論？',
     'comment_in_reply_to' => '回覆 :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => '您確定要刪除此修訂版嗎？',
+    'revision_delete_success' => '修訂刪除',
+    'revision_cannot_delete_latest' => '無法刪除最新版本。'
 ];
