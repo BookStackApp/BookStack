@@ -10,9 +10,9 @@
     @include('form/textarea', ['name' => 'description'])
 </div>
 
-<div class="row">
+<div shelf-sort class="row">
     <div class="col-md-6">
-        <div shelf-sort class="form-group">
+        <div  class="form-group">
             <label for="books">{{ trans('entities.shelves_books') }}</label>
             <input type="hidden" id="books-input" name="books"
                    value="{{ isset($shelf) ? $shelf->books->implode('id', ',') : '' }}">
