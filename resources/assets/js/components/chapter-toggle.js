@@ -23,6 +23,7 @@ class ChapterToggle {
             list.style.overflow = '';
             list.style.height = '';
             list.style.transition = '';
+            list.style.display = `block`;
             list.removeEventListener('transitionend', transitionEndBound);
         }
 
