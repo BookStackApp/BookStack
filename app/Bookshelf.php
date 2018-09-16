@@ -11,11 +11,12 @@ class Bookshelf extends Entity
 
     /**
      * Get the books in this shelf.
+     * Should not be used directly since does not take into account permissions.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function books()
     {
-        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id');
+        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')->orderBy('order', 'asc');
     }
 
     /**

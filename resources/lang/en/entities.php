@@ -79,6 +79,14 @@ return [
     'shelves_books' => 'Books on this shelf',
     'shelves_add_books' => 'Add books to this shelf',
     'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_empty_contents' => 'This shelf has no books assigned to it',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Edit Bookshelf :name',
+    'shelves_edit' => 'Edit Bookshelf',
+    'shelves_delete' => 'Delete Bookshelf',
+    'shelves_delete_named' => 'Delete Bookshelf :name',
+    'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
+    'shelves_delete_confirmation' => 'Are you sure you want to delete this bookshelf?',
 
     /**
      * Books

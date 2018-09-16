@@ -2,37 +2,22 @@
 
 @section('toolbar')
     <div class="col-sm-6 col-xs-1  faded">
-        @include('books._breadcrumbs', ['book' => $book])
+        @include('shelves._breadcrumbs', ['shelf' => $shelf])
     </div>
     <div class="col-sm-6 col-xs-11">
         <div class="action-buttons faded">
-            <span dropdown class="dropdown-container">
-                <div dropdown-toggle class="text-button text-primary">@icon('export'){{ trans('entities.export') }}</div>
-                <ul class="wide">
-                    <li><a href="{{ $book->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $book->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $book->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </span>
-            @if(userCan('page-create', $book))
-                <a href="{{ $book->getUrl('/create-page') }}" class="text-pos text-button">@icon('add'){{ trans('entities.pages_new') }}</a>
+            @if(userCan('bookshelf-update', $shelf))
+                <a href="{{ $shelf->getUrl('/edit') }}" class="text-button text-primary">@icon('edit'){{ trans('common.edit') }}</a>
             @endif
-            @if(userCan('chapter-create', $book))
-                <a href="{{ $book->getUrl('/create-chapter') }}" class="text-pos text-button">@icon('add'){{ trans('entities.chapters_new') }}</a>
-            @endif
-            @if(userCan('book-update', $book) || userCan('restrictions-manage', $book) || userCan('book-delete', $book))
+            @if(userCan('restrictions-manage', $shelf) || userCan('bookshelf-delete', $shelf))
                 <div dropdown class="dropdown-container">
                     <a dropdown-toggle class="text-primary text-button">@icon('more'){{ trans('common.more') }}</a>
                     <ul>
-                        @if(userCan('book-update', $book))
-                            <li><a href="{{ $book->getUrl('/edit') }}" class="text-primary">@icon('edit'){{ trans('common.edit') }}</a></li>
-                            <li><a href="{{ $book->getUrl('/sort') }}" class="text-primary">@icon('sort'){{ trans('common.sort') }}</a></li>
+                        @if(userCan('restrictions-manage', $shelf))
+                            <li><a href="{{ $shelf->getUrl('/permissions') }}" class="text-primary">@icon('lock'){{ trans('entities.permissions') }}</a></li>
                         @endif
-                        @if(userCan('restrictions-manage', $book))
-                            <li><a href="{{ $book->getUrl('/permissions') }}" class="text-primary">@icon('lock'){{ trans('entities.permissions') }}</a></li>
-                        @endif
-                        @if(userCan('book-delete', $book))
-                            <li><a href="{{ $book->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
+                        @if(userCan('bookshelf-delete', $shelf))
+                            <li><a href="{{ $shelf->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
                         @endif
                     </ul>
                 </div>
@@ -43,32 +28,22 @@
 
 @section('sidebar')
 
-    @if($book->tags->count() > 0)
+    @if($shelf->tags->count() > 0)
         <section>
-            @include('components.tag-list', ['entity' => $book])
+            @include('components.tag-list', ['entity' => $shelf])
         </section>
     @endif
-
-    <div class="card">
-        <div class="body">
-            <form v-on:submit.prevent="searchBook" class="search-box">
-                <input v-model="searchTerm" v-on:change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.books_search_this') }}">
-                <button type="submit">@icon('search')</button>
-                <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button">@icon('close')</button>
-            </form>
-        </div>
-    </div>
 
     <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
         <div class="body text-small text-muted blended-links">
-            @include('partials.entity-meta', ['entity' => $book])
-            @if($book->restricted)
+            @include('partials.entity-meta', ['entity' => $shelf])
+            @if($shelf->restricted)
                 <div class="active-restriction">
-                    @if(userCan('restrictions-manage', $book))
-                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                    @if(userCan('restrictions-manage', $shelf))
+                        <a href="{{ $shelf->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.shelves_permissions_active') }}</a>
                     @else
-                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                        @icon('lock'){{ trans('entities.shelves_permissions_active') }}
                     @endif
                 </div>
             @endif
@@ -83,53 +58,31 @@
     @endif
 @stop
 
-@section('container-attrs')
-    id="entity-dashboard"
-    entity-id="{{ $book->id }}"
-    entity-type="book"
-@stop
-
 @section('body')
 
     <div class="container small nopad">
-        <h1 class="break-text" v-pre>{{$book->name}}</h1>
-        <div class="book-content" v-show="!searching">
-            <p class="text-muted" v-pre>{!! nl2br(e($book->description)) !!}</p>
-            @if(count($bookChildren) > 0)
-            <div class="page-list" v-pre>
+        <h1 class="break-text">{{$shelf->name}}</h1>
+        <div class="book-content">
+            <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
+            @if(count($books) > 0)
+            <div class="page-list">
                 <hr>
-                @foreach($bookChildren as $childElement)
-                    @if($childElement->isA('chapter'))
-                        @include('chapters/list-item', ['chapter' => $childElement])
-                    @else
-                        @include('pages/list-item', ['page' => $childElement])
-                    @endif
+                @foreach($books as $book)
+                    @include('books/list-item', ['book' => $book])
                     <hr>
                 @endforeach
             </div>
             @else
-                <div class="well">
-                    <p class="text-muted italic">{{ trans('entities.books_empty_contents') }}</p>
-                        @if(userCan('page-create', $book))
-                            <a href="{{ $book->getUrl('/create-page') }}" class="button outline page">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
-                        @endif
-                        @if(userCan('page-create', $book) && userCan('chapter-create', $book))
-                            &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
-                        @endif
-                        @if(userCan('chapter-create', $book))
-                            <a href="{{ $book->getUrl('/create-chapter') }}" class="button outline chapter">@icon('chapter'){{ trans('entities.books_empty_add_chapter') }}</a>
-                        @endif
-                </div>
+            <p>
+                <hr>
+                <span class="text-muted italic">{{ trans('entities.shelves_empty_contents') }}</span>
+                @if(userCan('bookshelf-create', $shelf))
+                    <br>
+                    <a href="{{ $shelf->getUrl('/edit') }}" class="button outline bookshelf">{{ trans('entities.shelves_edit_and_assign') }}</a>
+                @endif
+            </p>
             @endif
 
-        </div>
-        <div class="search-results" v-cloak v-show="searching">
-            <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" v-on:click="clearSearch()" class="text-small">@icon('close'){{ trans('entities.search_clear') }}</a></h3>
-            <div v-if="!searchResults">
-                @include('partials/loading-icon')
-            </div>
-            <div v-html="searchResults"></div>
-        </div>
     </div>
 
 @stop

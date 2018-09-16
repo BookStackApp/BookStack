@@ -2,7 +2,7 @@
 
 @section('toolbar')
     <div class="col-sm-12 faded">
-        @include('books._breadcrumbs', ['book' => $book])
+        @include('shelves._breadcrumbs', ['shelf' => $shelf])
     </div>
 @stop
 
@@ -11,11 +11,11 @@
     <div class="container small">
         <p>&nbsp;</p>
         <div class="card">
-            <h3>@icon('edit') {{ trans('entities.books_edit') }}</h3>
+            <h3>@icon('edit') {{ trans('entities.shelves_edit') }}</h3>
             <div class="body">
-                <form action="{{ $book->getUrl() }}" method="POST">
+                <form action="{{ $shelf->getUrl() }}" method="POST">
                     <input type="hidden" name="_method" value="PUT">
-                    @include('books/form', ['model' => $book])
+                    @include('shelves/form', ['model' => $shelf])
                 </form>
             </div>
         </div>

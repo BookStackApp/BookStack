@@ -23,8 +23,8 @@
                 <div class="scroll-box-item scroll-box-placeholder" style="display: none;">
                     <a href="#" class="text-muted">@icon('book') ...</a>
                 </div>
-                @if (isset($shelf) && count($shelf->books) > 0)
-                    @foreach ($shelf->books as $book)
+                @if (isset($shelfBooks) && count($shelfBooks) > 0)
+                    @foreach ($shelfBooks as $book)
                         <div data-id="{{ $book->id }}" class="scroll-box-item">
                             <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
                         </div>

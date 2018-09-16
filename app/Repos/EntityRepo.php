@@ -341,6 +341,17 @@ class EntityRepo
     }
 
     /**
+     * Get the child items for a chapter sorted by priority but
+     * with draft items floated to the top.
+     * @param Bookshelf $bookshelf
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getBookshelfChildren(Bookshelf $bookshelf)
+    {
+        return $this->permissionService->enforceEntityRestrictions('book', $bookshelf->books())->get();
+    }
+
+    /**
      * Get all child objects of a book.
      * Returns a sorted collection of Pages and Chapters.
      * Loads the book slug onto child elements to prevent access database access for getting the slug.
@@ -551,12 +562,17 @@ class EntityRepo
     public function updateShelfBooks(Bookshelf $shelf, string $books)
     {
         $ids = explode(',', $books);
-        if (count($ids) === 0) {
-            return;
+
+        // Check books exist and match ordering
+        $bookIds = $this->entityQuery('book')->whereIn('id', $ids)->get(['id'])->pluck('id');
+        $syncData = [];
+        foreach ($ids as $index => $id) {
+            if ($bookIds->contains($id)) {
+                $syncData[$id] = ['order' => $index];
+            }
         }
 
-        $bookIds = $this->entityQuery('book')->whereIn('id', $ids)->get(['id'])->pluck('id');
-        $shelf->books()->sync($bookIds);
+        $shelf->books()->sync($syncData);
     }
 
     /**
@@ -1181,6 +1197,17 @@ class EntityRepo
     }
 
     /**
+     * Destroy a bookshelf instance
+     * @param Bookshelf $shelf
+     * @throws \Throwable
+     */
+    public function destroyBookshelf(Bookshelf $shelf)
+    {
+        $this->destroyEntityCommonRelations($shelf);
+        $shelf->delete();
+    }
+
+    /**
      * Destroy the provided book and all its child entities.
      * @param Book $book
      * @throws NotifyException
@@ -1194,11 +1221,7 @@ class EntityRepo
         foreach ($book->chapters as $chapter) {
             $this->destroyChapter($chapter);
         }
-        \Activity::removeEntity($book);
-        $book->views()->delete();
-        $book->permissions()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($book);
-        $this->searchService->deleteEntityTerms($book);
+        $this->destroyEntityCommonRelations($book);
         $book->delete();
     }
 
@@ -1215,11 +1238,7 @@ class EntityRepo
                 $page->save();
             }
         }
-        \Activity::removeEntity($chapter);
-        $chapter->views()->delete();
-        $chapter->permissions()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($chapter);
-        $this->searchService->deleteEntityTerms($chapter);
+        $this->destroyEntityCommonRelations($chapter);
         $chapter->delete();
     }
 
@@ -1231,13 +1250,7 @@ class EntityRepo
      */
     public function destroyPage(Page $page)
     {
-        \Activity::removeEntity($page);
-        $page->views()->delete();
-        $page->tags()->delete();
-        $page->revisions()->delete();
-        $page->permissions()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($page);
-        $this->searchService->deleteEntityTerms($page);
+        $this->destroyEntityCommonRelations($page);
 
         // Check if set as custom homepage
         $customHome = setting('app-homepage', '0:');
@@ -1252,5 +1265,21 @@ class EntityRepo
         }
 
         $page->delete();
+    }
+
+    /**
+     * Destroy or handle the common relations connected to an entity.
+     * @param Entity $entity
+     * @throws \Throwable
+     */
+    protected function destroyEntityCommonRelations(Entity $entity)
+    {
+        \Activity::removeEntity($entity);
+        $entity->views()->delete();
+        $entity->permissions()->delete();
+        $entity->tags()->delete();
+        $entity->comments()->delete();
+        $this->permissionService->deleteJointPermissionsForEntity($entity);
+        $this->searchService->deleteEntityTerms($entity);
     }
 }

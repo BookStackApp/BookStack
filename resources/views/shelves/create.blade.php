@@ -18,7 +18,7 @@
             <h3>@icon('add') {{ trans('entities.shelves_create') }}</h3>
             <div class="body">
                 <form action="{{ baseUrl("/shelves") }}" method="POST" enctype="multipart/form-data">
-                    @include('shelves/form')
+                    @include('shelves/form', ['shelf' => null, 'books' => $books])
                 </form>
             </div>
         </div>
