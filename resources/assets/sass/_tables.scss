@@ -41,6 +41,9 @@ table.table {
   .text-center {
     text-align: center;
   }
+  td.actions {
+    overflow: visible;
+  }
 }
 
 table.no-style {

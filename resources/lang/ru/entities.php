@@ -258,4 +258,11 @@ return [
     'comment_updated_success' => 'Комментарий обновлён',
     'comment_delete_confirm' => 'Вы уверенны, что хотите удалить этот комментарий?',
     'comment_in_reply_to' => 'В ответ на :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Вы действительно хотите удалить эту ревизию?',
+    'revision_delete_success' => 'Редактирование удалено',
+    'revision_cannot_delete_latest' => 'Не удается удалить последнюю версию.'
 ];

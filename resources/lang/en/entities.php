@@ -265,4 +265,11 @@ return [
     'comment_updated_success' => 'Comment updated',
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_delete_success' => 'Revision deleted',
+    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
 ];
