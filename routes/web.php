@@ -19,6 +19,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'shelves'], function() {
         Route::get('/', 'BookshelfController@index');
         Route::post('/', 'BookshelfController@store');
+        Route::get('/{slug}/edit', 'BookshelfController@edit');
+        Route::get('/{slug}/delete', 'BookshelfController@showDelete');
+        Route::get('/{slug}', 'BookshelfController@show');
+        Route::put('/{slug}', 'BookshelfController@update');
+        Route::delete('/{slug}', 'BookshelfController@destroy');
     });
 
     Route::get('/create-book', 'BookController@create');

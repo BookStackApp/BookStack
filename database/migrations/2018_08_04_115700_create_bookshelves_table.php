@@ -33,6 +33,7 @@ class CreateBookshelvesTable extends Migration
         Schema::create('bookshelves_books', function (Blueprint $table) {
             $table->integer('bookshelf_id')->unsigned();
             $table->integer('book_id')->unsigned();
+            $table->integer('order')->unsigned();
 
             $table->foreign('bookshelf_id')->references('id')->on('bookshelves')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -86,7 +87,15 @@ class CreateBookshelvesTable extends Migration
         DB::table('role_permissions')->whereIn('id', $permissionIds)->delete();
 
         // Drop shelves table
-        Schema::dropIfExists('bookshelves');
         Schema::dropIfExists('bookshelves_books');
+        Schema::dropIfExists('bookshelves');
+
+        // Drop related polymorphic items
+        DB::table('activities')->where('entity_type', '=', 'BookStack\Bookshelf')->delete();
+        DB::table('views')->where('viewable_type', '=', 'BookStack\Bookshelf')->delete();
+        DB::table('entity_permissions')->where('restrictable_type', '=', 'BookStack\Bookshelf')->delete();
+        DB::table('tags')->where('entity_type', '=', 'BookStack\Bookshelf')->delete();
+        DB::table('search_terms')->where('entity_type', '=', 'BookStack\Bookshelf')->delete();
+        DB::table('comments')->where('entity_type', '=', 'BookStack\Bookshelf')->delete();
     }
 }
