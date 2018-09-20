@@ -68,7 +68,7 @@ return [
      * Shelves
      */
     'shelves' => 'Shelves',
-    'shelves_long' => 'BookShelves',
+    'shelves_long' => 'Bookshelves',
     'shelves_empty' => 'No shelves have been created',
     'shelves_create' => 'Create New Shelf',
     'shelves_popular' => 'Popular Shelves',
@@ -87,6 +87,13 @@ return [
     'shelves_delete_named' => 'Delete Bookshelf :name',
     'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
     'shelves_delete_confirmation' => 'Are you sure you want to delete this bookshelf?',
+    'shelves_permissions' => 'Bookshelf Permissions',
+    'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
+    'shelves_permissions_active' => 'Bookshelf Permissions Active',
+    'shelves_copy_permissions_to_books' => 'Copy Permissions to Books',
+    'shelves_copy_permissions' => 'Copy Permissions',
+    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
+    'shelves_copy_permission_success' => 'Bookshelf permissions copied to :count books',
 
     /**
      * Books

@@ -189,37 +189,56 @@ class BookshelfController extends Controller
         $this->entityRepo->destroyBookshelf($bookshelf);
         return redirect('/shelves');
     }
-//
-//    /**
-//     * Show the Restrictions view.
-//     * @param $bookSlug
-//     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-//     */
-//    public function showRestrict($bookSlug)
-//    {
-//        $book = $this->entityRepo->getBySlug('book', $bookSlug);
-//        $this->checkOwnablePermission('restrictions-manage', $book);
-//        $roles = $this->userRepo->getRestrictableRoles();
-//        return view('books/restrictions', [
-//            'book' => $book,
-//            'roles' => $roles
-//        ]);
-//    }
-//
-//    /**
-//     * Set the restrictions for this book.
-//     * @param $bookSlug
-//     * @param $bookSlug
-//     * @param Request $request
-//     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-//     */
-//    public function restrict($bookSlug, Request $request)
-//    {
-//        $book = $this->entityRepo->getBySlug('book', $bookSlug);
-//        $this->checkOwnablePermission('restrictions-manage', $book);
-//        $this->entityRepo->updateEntityPermissionsFromRequest($request, $book);
-//        session()->flash('success', trans('entities.books_permissions_updated'));
-//        return redirect($book->getUrl());
-//    }
+
+    /**
+     * Show the Restrictions view.
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \BookStack\Exceptions\NotFoundException
+     */
+    public function showRestrict(string $slug)
+    {
+        $bookshelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $this->checkOwnablePermission('restrictions-manage', $bookshelf);
+
+        $roles = $this->userRepo->getRestrictableRoles();
+        return view('shelves.restrictions', [
+            'shelf' => $bookshelf,
+            'roles' => $roles
+        ]);
+    }
+
+    /**
+     * Set the restrictions for this bookshelf.
+     * @param $slug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \BookStack\Exceptions\NotFoundException
+     */
+    public function restrict(string $slug, Request $request)
+    {
+        $bookshelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $this->checkOwnablePermission('restrictions-manage', $bookshelf);
+
+        $this->entityRepo->updateEntityPermissionsFromRequest($request, $bookshelf);
+        session()->flash('success', trans('entities.shelves_permissions_updated'));
+        return redirect($bookshelf->getUrl());
+    }
+
+    /**
+     * Copy the permissions of a bookshelf to the child books.
+     * @param string $slug
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \BookStack\Exceptions\NotFoundException
+     */
+    public function copyPermissions(string $slug)
+    {
+        $bookshelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $this->checkOwnablePermission('restrictions-manage', $bookshelf);
+
+        $updateCount = $this->entityRepo->copyBookshelfPermissions($bookshelf);
+        session()->flash('success', trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
+        return redirect($bookshelf->getUrl());
+    }
 
 }

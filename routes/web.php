@@ -24,6 +24,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}', 'BookshelfController@show');
         Route::put('/{slug}', 'BookshelfController@update');
         Route::delete('/{slug}', 'BookshelfController@destroy');
+        Route::get('/{slug}/permissions', 'BookshelfController@showRestrict');
+        Route::put('/{slug}/permissions', 'BookshelfController@restrict');
+        Route::post('/{slug}/copy-permissions', 'BookshelfController@copyPermissions');
     });
 
     Route::get('/create-book', 'BookController@create');
