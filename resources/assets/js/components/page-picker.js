@@ -15,15 +15,17 @@ class PagePicker {
     }
 
     setupListeners() {
-        // Select click
-        this.selectButton.addEventListener('click', event => {
-            window.EntitySelectorPopup.show(entity => {
-                this.setValue(entity.id, entity.name);
-            });
-        });
+        this.selectButton.addEventListener('click', this.showPopup.bind(this));
+        this.display.parentElement.addEventListener('click', this.showPopup.bind(this));
 
         this.resetButton.addEventListener('click', event => {
             this.setValue('', '');
+        });
+    }
+
+    showPopup() {
+        window.EntitySelectorPopup.show(entity => {
+            this.setValue(entity.id, entity.name);
         });
     }
 

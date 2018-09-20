@@ -1250,13 +1250,13 @@ class EntityRepo
      */
     public function destroyPage(Page $page)
     {
-        $this->destroyEntityCommonRelations($page);
-
         // Check if set as custom homepage
         $customHome = setting('app-homepage', '0:');
         if (intval($page->id) === intval(explode(':', $customHome)[0])) {
             throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
         }
+
+        $this->destroyEntityCommonRelations($page);
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);

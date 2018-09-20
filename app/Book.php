@@ -68,6 +68,15 @@ class Book extends Entity
     }
 
     /**
+     * Get the shelves this book is contained within.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function shelves()
+    {
+        return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
+    }
+
+    /**
      * Get an excerpt of this book's description to the specified length or less.
      * @param int $length
      * @return string
