@@ -90,6 +90,7 @@ return [
     'role_manage_settings' => 'Manage app settings',
     'role_asset' => 'Asset Permissions',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
+    'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'All',
     'role_own' => 'Own',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',

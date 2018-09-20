@@ -36,6 +36,10 @@
                     <h5>{{ trans('settings.role_asset') }}</h5>
                     <p>{{ trans('settings.role_asset_desc') }}</p>
 
+                    @if (isset($role) && $role->system_name === 'admin')
+                        <p>{{ trans('settings.role_asset_admins') }}</p>
+                    @endif
+
                     <table class="table">
                         <tr>
                             <th width="20%"></th>
