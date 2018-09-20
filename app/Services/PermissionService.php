@@ -60,7 +60,6 @@ class PermissionService
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
-        // TODO - Update so admin still goes through filters
     }
 
     /**
@@ -520,11 +519,6 @@ class PermissionService
      */
     public function checkOwnableUserAccess(Ownable $ownable, $permission)
     {
-        if ($this->isAdmin()) {
-            $this->clean();
-            return true;
-        }
-
         $explodedPermission = explode('-', $permission);
 
         $baseQuery = $ownable->where('id', '=', $ownable->id);
@@ -617,17 +611,16 @@ class PermissionService
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
             ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
 
-        if (!$this->isAdmin()) {
-            $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
-                ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
-                ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
-                ->where(function ($query) {
-                    $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
-                        $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
-                    });
+        // Add joint permission filter
+        $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
+            ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
+            ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
+            ->where(function ($query) {
+                $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
+                    $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
                 });
-            $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
-        }
+            });
+        $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
 
         $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
         $this->clean();
@@ -655,11 +648,6 @@ class PermissionService
             });
         }
 
-        if ($this->isAdmin()) {
-            $this->clean();
-            return $query;
-        }
-
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }
@@ -675,10 +663,6 @@ class PermissionService
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn, $action = 'view')
     {
-        if ($this->isAdmin()) {
-            $this->clean();
-            return $query;
-        }
 
         $this->currentAction = $action;
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
@@ -711,11 +695,6 @@ class PermissionService
      */
     public function filterRelatedPages($query, $tableName, $entityIdColumn)
     {
-        if ($this->isAdmin()) {
-            $this->clean();
-            return $query;
-        }
-
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
@@ -738,19 +717,6 @@ class PermissionService
         });
         $this->clean();
         return $q;
-    }
-
-    /**
-     * Check if the current user is an admin.
-     * @return bool
-     */
-    private function isAdmin()
-    {
-        if ($this->isAdminUser === null) {
-            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasSystemRole('admin') : false;
-        }
-
-        return $this->isAdminUser;
     }
 
     /**
