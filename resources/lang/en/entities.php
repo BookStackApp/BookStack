@@ -223,6 +223,7 @@ return [
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_specific' => 'Specific Page',
 
     /**
      * Editor sidebar

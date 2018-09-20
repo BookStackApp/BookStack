@@ -1,6 +1,7 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\EntityPermission;
@@ -25,6 +26,7 @@ class PermissionService
     public $book;
     public $chapter;
     public $page;
+    public $bookshelf;
 
     protected $db;
 
@@ -38,18 +40,23 @@ class PermissionService
      * PermissionService constructor.
      * @param JointPermission $jointPermission
      * @param EntityPermission $entityPermission
+     * @param Role $role
      * @param Connection $db
+     * @param Bookshelf $bookshelf
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
-     * @param Role $role
      */
-    public function __construct(JointPermission $jointPermission, EntityPermission $entityPermission, Connection $db, Book $book, Chapter $chapter, Page $page, Role $role)
+    public function __construct(
+        JointPermission $jointPermission, EntityPermission $entityPermission, Role $role, Connection $db,
+        Bookshelf $bookshelf, Book $book, Chapter $chapter, Page $page
+    )
     {
         $this->db = $db;
         $this->jointPermission = $jointPermission;
         $this->entityPermission = $entityPermission;
         $this->role = $role;
+        $this->bookshelf = $bookshelf;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
@@ -159,6 +166,12 @@ class PermissionService
         $this->bookFetchQuery()->chunk(5, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
+
+        // Chunk through all bookshelves
+        $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+            ->chunk(50, function ($shelves) use ($roles) {
+            $this->buildJointPermissionsForShelves($shelves, $roles);
+        });
     }
 
     /**
@@ -172,6 +185,20 @@ class PermissionService
         }, 'pages'  => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
         }]);
+    }
+
+    /**
+     * @param Collection $shelves
+     * @param array $roles
+     * @param bool $deleteOld
+     * @throws \Throwable
+     */
+    protected function buildJointPermissionsForShelves($shelves, $roles, $deleteOld = false)
+    {
+        if ($deleteOld) {
+            $this->deleteManyJointPermissionsForEntities($shelves->all());
+        }
+        $this->createManyJointPermissions($shelves, $roles);
     }
 
     /**
@@ -257,6 +284,12 @@ class PermissionService
         $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
+
+        // Chunk through all bookshelves
+        $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+            ->chunk(50, function ($shelves) use ($roles) {
+                $this->buildJointPermissionsForShelves($shelves, $roles);
+            });
     }
 
     /**

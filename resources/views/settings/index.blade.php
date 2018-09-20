@@ -76,12 +76,22 @@
                             <input type="text" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                         </div>
-                        <div class="form-group" id="homepage-control">
+                        <div homepage-control class="form-group" id="homepage-control">
                             <label for="setting-app-homepage">{{ trans('settings.app_homepage') }}</label>
                             <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
-                            @include('components.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_default'), 'value' => setting('app-homepage')])
-                            <p class="small">{{ trans('settings.app_homepage_books') }}</p>
-                            @include('components.toggle-switch', ['name' => 'setting-app-book-homepage', 'value' => setting('app-book-homepage')])
+
+                            <select name="setting-app-homepage-type" id="setting-app-homepage-type">
+                                <option @if(setting('app-homepage-type') === 'default') selected @endif value="default">{{ trans('common.default') }}</option>
+                                <option @if(setting('app-homepage-type') === 'books') selected @endif value="books">{{ trans('entities.books') }}</option>
+                                <option @if(setting('app-homepage-type') === 'bookshelves') selected @endif value="bookshelves">{{ trans('entities.shelves') }}</option>
+                                <option @if(setting('app-homepage-type') === 'page') selected @endif value="page">{{ trans('entities.pages_specific') }}</option>
+                            </select>
+
+                            <br><br>
+
+                            <div page-picker-container style="display: none;">
+                                @include('components.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_select'), 'value' => setting('app-homepage')])
+                            </div>
                         </div>
                     </div>
 

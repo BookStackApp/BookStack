@@ -32,9 +32,8 @@ return [
     'app_primary_color' => 'Application primary color',
     'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
     'app_homepage' => 'Application Homepage',
-    'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
-    'app_homepage_default' => 'Default homepage view chosen',
-    'app_homepage_books' => 'Or select the books page as your homepage. This will override any page selected as your homepage.',
+    'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Disable comments',
     'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
