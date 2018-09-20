@@ -1282,4 +1282,29 @@ class EntityRepo
         $this->permissionService->deleteJointPermissionsForEntity($entity);
         $this->searchService->deleteEntityTerms($entity);
     }
+
+    /**
+     * Copy the permissions of a bookshelf to all child books.
+     * Returns the number of books that had permissions updated.
+     * @param Bookshelf $bookshelf
+     * @return int
+     */
+    public function copyBookshelfPermissions(Bookshelf $bookshelf)
+    {
+        $shelfPermissions = $bookshelf->permissions()->get(['role_id', 'action'])->toArray();
+        $shelfBooks = $bookshelf->books()->get();
+        $updatedBookCount = 0;
+
+        foreach ($shelfBooks as $book) {
+            if (!userCan('restrictions-manage', $book)) continue;
+            $book->permissions()->delete();
+            $book->restricted = $bookshelf->restricted;
+            $book->permissions()->createMany($shelfPermissions);
+            $book->save();
+            $this->permissionService->buildJointPermissionsForEntity($book);
+            $updatedBookCount++;
+        }
+
+        return $updatedBookCount;
+    }
 }
