@@ -152,7 +152,7 @@ class Entity extends Ownable
      */
     public static function getEntityInstance($type)
     {
-        $types = ['Page', 'Book', 'Chapter'];
+        $types = ['Page', 'Book', 'Chapter', 'Bookshelf'];
         $className = str_replace([' ', '-', '_'], '', ucwords($type));
         if (!in_array($className, $types)) {
             return null;
