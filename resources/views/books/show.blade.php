@@ -25,7 +25,7 @@
                     <a dropdown-toggle class="text-primary text-button">@icon('more'){{ trans('common.more') }}</a>
                     <ul>
                         @if(userCan('book-update', $book))
-                            <li><a href="{{$book->getEditUrl()}}" class="text-primary">@icon('edit'){{ trans('common.edit') }}</a></li>
+                            <li><a href="{{ $book->getUrl('/edit') }}" class="text-primary">@icon('edit'){{ trans('common.edit') }}</a></li>
                             <li><a href="{{ $book->getUrl('/sort') }}" class="text-primary">@icon('sort'){{ trans('common.sort') }}</a></li>
                         @endif
                         @if(userCan('restrictions-manage', $book))

@@ -1,26 +1,39 @@
 <?php namespace BookStack;
 
-class Book extends Entity
+
+class Bookshelf extends Entity
 {
-    public $searchFactor = 2;
+    protected $table = 'bookshelves';
+
+    public $searchFactor = 3;
 
     protected $fillable = ['name', 'description', 'image_id'];
 
     /**
-     * Get the url for this book.
+     * Get the books in this shelf.
+     * Should not be used directly since does not take into account permissions.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')->orderBy('order', 'asc');
+    }
+
+    /**
+     * Get the url for this bookshelf.
      * @param string|bool $path
      * @return string
      */
     public function getUrl($path = false)
     {
         if ($path !== false) {
-            return baseUrl('/books/' . urlencode($this->slug) . '/' . trim($path, '/'));
+            return baseUrl('/shelves/' . urlencode($this->slug) . '/' . trim($path, '/'));
         }
-        return baseUrl('/books/' . urlencode($this->slug));
+        return baseUrl('/shelves/' . urlencode($this->slug));
     }
 
     /**
-     * Returns book cover image, if book cover not exists return default cover image.
+     * Returns BookShelf cover image, if cover does not exists return default cover image.
      * @param int $width - Width of the image
      * @param int $height - Height of the image
      * @return string
@@ -50,33 +63,6 @@ class Book extends Entity
     }
 
     /**
-     * Get all pages within this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function pages()
-    {
-        return $this->hasMany(Page::class);
-    }
-
-    /**
-     * Get all chapters within this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function chapters()
-    {
-        return $this->hasMany(Chapter::class);
-    }
-
-    /**
-     * Get the shelves this book is contained within.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function shelves()
-    {
-        return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
-    }
-
-    /**
      * Get an excerpt of this book's description to the specified length or less.
      * @param int $length
      * @return string
@@ -93,6 +79,6 @@ class Book extends Entity
      */
     public function entityRawQuery()
     {
-        return "'BookStack\\\\Book' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text,'' as html, '0' as book_id, '0' as priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
+        return "'BookStack\\\\BookShelf' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text,'' as html, '0' as book_id, '0' as priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
     }
 }

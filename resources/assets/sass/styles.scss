@@ -206,11 +206,31 @@ $btt-size: 40px;
     transition: all ease-in-out 120ms;
     cursor: pointer;
   }
+  &.compact {
+    font-size: 10px;
+    .entity-item-snippet {
+      display: none;
+    }
+  }
 }
 
 .entity-list-item.selected {
   h3, i, p ,a, span {
     color: #EEE;
+  }
+}
+
+.scroll-box {
+  max-height: 250px;
+  overflow-y: scroll;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  .scroll-box-item {
+    padding: $-xs $-m;
+    border-bottom: 1px solid #DDD;
+    &:last-child {
+      border-bottom: 0;
+    }
   }
 }
 

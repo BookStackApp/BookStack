@@ -1,6 +1,7 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\EntityPermission;
@@ -25,6 +26,7 @@ class PermissionService
     public $book;
     public $chapter;
     public $page;
+    public $bookshelf;
 
     protected $db;
 
@@ -38,22 +40,26 @@ class PermissionService
      * PermissionService constructor.
      * @param JointPermission $jointPermission
      * @param EntityPermission $entityPermission
+     * @param Role $role
      * @param Connection $db
+     * @param Bookshelf $bookshelf
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
-     * @param Role $role
      */
-    public function __construct(JointPermission $jointPermission, EntityPermission $entityPermission, Connection $db, Book $book, Chapter $chapter, Page $page, Role $role)
+    public function __construct(
+        JointPermission $jointPermission, EntityPermission $entityPermission, Role $role, Connection $db,
+        Bookshelf $bookshelf, Book $book, Chapter $chapter, Page $page
+    )
     {
         $this->db = $db;
         $this->jointPermission = $jointPermission;
         $this->entityPermission = $entityPermission;
         $this->role = $role;
+        $this->bookshelf = $bookshelf;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
-        // TODO - Update so admin still goes through filters
     }
 
     /**
@@ -159,6 +165,12 @@ class PermissionService
         $this->bookFetchQuery()->chunk(5, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
+
+        // Chunk through all bookshelves
+        $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+            ->chunk(50, function ($shelves) use ($roles) {
+            $this->buildJointPermissionsForShelves($shelves, $roles);
+        });
     }
 
     /**
@@ -172,6 +184,20 @@ class PermissionService
         }, 'pages'  => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
         }]);
+    }
+
+    /**
+     * @param Collection $shelves
+     * @param array $roles
+     * @param bool $deleteOld
+     * @throws \Throwable
+     */
+    protected function buildJointPermissionsForShelves($shelves, $roles, $deleteOld = false)
+    {
+        if ($deleteOld) {
+            $this->deleteManyJointPermissionsForEntities($shelves->all());
+        }
+        $this->createManyJointPermissions($shelves, $roles);
     }
 
     /**
@@ -204,6 +230,7 @@ class PermissionService
     /**
      * Rebuild the entity jointPermissions for a particular entity.
      * @param Entity $entity
+     * @throws \Throwable
      */
     public function buildJointPermissionsForEntity(Entity $entity)
     {
@@ -214,7 +241,9 @@ class PermissionService
             return;
         }
 
-        $entities[] = $entity->book;
+        if ($entity->book) {
+            $entities[] = $entity->book;
+        }
 
         if ($entity->isA('page') && $entity->chapter_id) {
             $entities[] = $entity->chapter;
@@ -226,13 +255,13 @@ class PermissionService
             }
         }
 
-        $this->deleteManyJointPermissionsForEntities($entities);
         $this->buildJointPermissionsForEntities(collect($entities));
     }
 
     /**
      * Rebuild the entity jointPermissions for a collection of entities.
      * @param Collection $entities
+     * @throws \Throwable
      */
     public function buildJointPermissionsForEntities(Collection $entities)
     {
@@ -254,6 +283,12 @@ class PermissionService
         $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
+
+        // Chunk through all bookshelves
+        $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+            ->chunk(50, function ($shelves) use ($roles) {
+                $this->buildJointPermissionsForShelves($shelves, $roles);
+            });
     }
 
     /**
@@ -412,7 +447,7 @@ class PermissionService
             return $this->createJointPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
         }
 
-        if ($entity->isA('book')) {
+        if ($entity->isA('book') || $entity->isA('bookshelf')) {
             return $this->createJointPermissionDataArray($entity, $role, $action, $roleHasPermission, $roleHasPermissionOwn);
         }
 
@@ -484,11 +519,6 @@ class PermissionService
      */
     public function checkOwnableUserAccess(Ownable $ownable, $permission)
     {
-        if ($this->isAdmin()) {
-            $this->clean();
-            return true;
-        }
-
         $explodedPermission = explode('-', $permission);
 
         $baseQuery = $ownable->where('id', '=', $ownable->id);
@@ -581,17 +611,16 @@ class PermissionService
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
             ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
 
-        if (!$this->isAdmin()) {
-            $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
-                ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
-                ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
-                ->where(function ($query) {
-                    $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
-                        $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
-                    });
+        // Add joint permission filter
+        $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
+            ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
+            ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
+            ->where(function ($query) {
+                $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
+                    $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
                 });
-            $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
-        }
+            });
+        $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
 
         $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
         $this->clean();
@@ -619,11 +648,6 @@ class PermissionService
             });
         }
 
-        if ($this->isAdmin()) {
-            $this->clean();
-            return $query;
-        }
-
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }
@@ -639,10 +663,6 @@ class PermissionService
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn, $action = 'view')
     {
-        if ($this->isAdmin()) {
-            $this->clean();
-            return $query;
-        }
 
         $this->currentAction = $action;
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
@@ -675,11 +695,6 @@ class PermissionService
      */
     public function filterRelatedPages($query, $tableName, $entityIdColumn)
     {
-        if ($this->isAdmin()) {
-            $this->clean();
-            return $query;
-        }
-
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
@@ -702,19 +717,6 @@ class PermissionService
         });
         $this->clean();
         return $q;
-    }
-
-    /**
-     * Check if the current user is an admin.
-     * @return bool
-     */
-    private function isAdmin()
-    {
-        if ($this->isAdminUser === null) {
-            $this->isAdminUser = ($this->currentUser()->id !== null) ? $this->currentUser()->hasSystemRole('admin') : false;
-        }
-
-        return $this->isAdminUser;
     }
 
     /**

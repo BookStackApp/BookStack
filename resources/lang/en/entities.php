@@ -65,6 +65,37 @@ return [
     'search_update' => 'Update Search',
 
     /**
+     * Shelves
+     */
+    'shelves' => 'Shelves',
+    'shelves_long' => 'Bookshelves',
+    'shelves_empty' => 'No shelves have been created',
+    'shelves_create' => 'Create New Shelf',
+    'shelves_popular' => 'Popular Shelves',
+    'shelves_new' => 'New Shelves',
+    'shelves_popular_empty' => 'The most popular shelves will appear here.',
+    'shelves_new_empty' => 'The most recently created shelves will appear here.',
+    'shelves_save' => 'Save Shelf',
+    'shelves_books' => 'Books on this shelf',
+    'shelves_add_books' => 'Add books to this shelf',
+    'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_empty_contents' => 'This shelf has no books assigned to it',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Edit Bookshelf :name',
+    'shelves_edit' => 'Edit Bookshelf',
+    'shelves_delete' => 'Delete Bookshelf',
+    'shelves_delete_named' => 'Delete Bookshelf :name',
+    'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
+    'shelves_delete_confirmation' => 'Are you sure you want to delete this bookshelf?',
+    'shelves_permissions' => 'Bookshelf Permissions',
+    'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
+    'shelves_permissions_active' => 'Bookshelf Permissions Active',
+    'shelves_copy_permissions_to_books' => 'Copy Permissions to Books',
+    'shelves_copy_permissions' => 'Copy Permissions',
+    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
+    'shelves_copy_permission_success' => 'Bookshelf permissions copied to :count books',
+
+    /**
      * Books
      */
     'book' => 'Book',
@@ -199,6 +230,7 @@ return [
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_specific' => 'Specific Page',
 
     /**
      * Editor sidebar
@@ -206,6 +238,7 @@ return [
     'page_tags' => 'Page Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
+    'shelf_tags' => 'Shelf Tags',
     'tag' => 'Tag',
     'tags' =>  'Tags',
     'tag_value' => 'Tag Value (Optional)',

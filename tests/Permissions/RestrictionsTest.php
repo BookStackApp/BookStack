@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Entity;
 use BookStack\User;
 use BookStack\Repos\EntityRepo;
@@ -32,6 +33,63 @@ class RestrictionsTest extends BrowserKitTest
             $this->viewer->roles->first(),
         ];
         parent::setEntityRestrictions($entity, $actions, $roles);
+    }
+
+    public function test_bookshelf_view_restriction()
+    {
+        $shelf = Bookshelf::first();
+
+        $this->actingAs($this->user)
+            ->visit($shelf->getUrl())
+            ->seePageIs($shelf->getUrl());
+
+        $this->setEntityRestrictions($shelf, []);
+
+        $this->forceVisit($shelf->getUrl())
+            ->see('Bookshelf not found');
+
+        $this->setEntityRestrictions($shelf, ['view']);
+
+        $this->visit($shelf->getUrl())
+            ->see($shelf->name);
+    }
+
+    public function test_bookshelf_update_restriction()
+    {
+        $shelf = BookShelf::first();
+
+        $this->actingAs($this->user)
+            ->visit($shelf->getUrl('/edit'))
+            ->see('Edit Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->forceVisit($shelf->getUrl('/edit'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->visit($shelf->getUrl('/edit'))
+            ->seePageIs($shelf->getUrl('/edit'));
+    }
+
+    public function test_bookshelf_delete_restriction()
+    {
+        $shelf = Book::first();
+
+        $this->actingAs($this->user)
+            ->visit($shelf->getUrl('/delete'))
+            ->see('Delete Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->forceVisit($shelf->getUrl('/delete'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->visit($shelf->getUrl('/delete'))
+            ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
     }
 
     public function test_book_view_restriction()
@@ -325,6 +383,23 @@ class RestrictionsTest extends BrowserKitTest
             ->seePageIs($pageUrl . '/delete')->see('Delete Page');
     }
 
+    public function test_bookshelf_restriction_form()
+    {
+        $shelf = Bookshelf::first();
+        $this->asAdmin()->visit($shelf->getUrl('/permissions'))
+            ->see('Bookshelf Permissions')
+            ->check('restricted')
+            ->check('restrictions[2][view]')
+            ->press('Save Permissions')
+            ->seeInDatabase('bookshelves', ['id' => $shelf->id, 'restricted' => true])
+            ->seeInDatabase('entity_permissions', [
+                'restrictable_id' => $shelf->id,
+                'restrictable_type' => 'BookStack\Bookshelf',
+                'role_id' => '2',
+                'action' => 'view'
+            ]);
+    }
+
     public function test_book_restriction_form()
     {
         $book = Book::first();
@@ -411,6 +486,44 @@ class RestrictionsTest extends BrowserKitTest
         $this->actingAs($this->user)
             ->visit($chapter->getUrl())
             ->dontSee($page->name);
+    }
+
+    public function test_bookshelf_update_restriction_override()
+    {
+        $shelf = Bookshelf::first();
+
+        $this->actingAs($this->viewer)
+            ->visit($shelf->getUrl('/edit'))
+            ->dontSee('Edit Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->forceVisit($shelf->getUrl('/edit'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->visit($shelf->getUrl('/edit'))
+            ->seePageIs($shelf->getUrl('/edit'));
+    }
+
+    public function test_bookshelf_delete_restriction_override()
+    {
+        $shelf = Bookshelf::first();
+
+        $this->actingAs($this->viewer)
+            ->visit($shelf->getUrl('/delete'))
+            ->dontSee('Delete Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->forceVisit($shelf->getUrl('/delete'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->visit($shelf->getUrl('/delete'))
+            ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
     }
 
     public function test_book_create_restriction_override()

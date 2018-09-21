@@ -18,6 +18,8 @@ let componentMapping = {
     'collapsible': require('./collapsible'),
     'toggle-switch': require('./toggle-switch'),
     'page-display': require('./page-display'),
+    'shelf-sort': require('./shelf-sort'),
+    'homepage-control': require('./homepage-control'),
 };
 
 window.components = {};
