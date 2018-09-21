@@ -1297,7 +1297,9 @@ class EntityRepo
         $updatedBookCount = 0;
 
         foreach ($shelfBooks as $book) {
-            if (!userCan('restrictions-manage', $book)) continue;
+            if (!userCan('restrictions-manage', $book)) {
+                continue;
+            }
             $book->permissions()->delete();
             $book->restricted = $bookshelf->restricted;
             $book->permissions()->createMany($shelfPermissions);

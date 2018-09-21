@@ -240,5 +240,4 @@ class BookshelfController extends Controller
         session()->flash('success', trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
         return redirect($bookshelf->getUrl());
     }
-
 }
