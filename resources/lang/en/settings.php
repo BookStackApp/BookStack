@@ -43,6 +43,8 @@ return [
 
     'reg_settings' => 'Registration Settings',
     'reg_allow' => 'Allow registration?',
+    'reg_auto_social_allow'  => 'Allow auto social registration?',
+    'reg_auto_social_allow_desc' => 'If the social user doesn\'t exist, automatically sign him up. Domain restriction is respected if set. Email is also automatically validated for this kind of social registration.',
     'reg_default_role' => 'Default user role after registration',
     'reg_confirm_email' => 'Require email confirmation?',
     'reg_confirm_email_desc' => 'If domain restriction is used then email confirmation will be required and the below value will be ignored.',
@@ -148,7 +150,7 @@ return [
         'it' => 'Italian',
         'ru' => 'Русский',
         'zh_CN' => '简体中文',
-	    'zh_TW' => '繁體中文'
+        'zh_TW' => '繁體中文'
     ]
     ///////////////////////////////////
 ];
