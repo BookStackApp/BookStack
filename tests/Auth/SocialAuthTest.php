@@ -1,6 +1,6 @@
 <?php namespace Tests;
 
-class SocialAuthTest extends BrowserKitTest
+class SocialAuthTest extends TestCase
 {
 
     public function test_social_registration()
@@ -25,11 +25,11 @@ class SocialAuthTest extends BrowserKitTest
         $mockSocialUser->shouldReceive('getName')->once()->andReturn($user->name);
         $mockSocialUser->shouldReceive('getAvatar')->once()->andReturn('avatar_placeholder');
 
-        $this->visit('/register/service/google');
-        $this->visit('/login/service/google/callback');
-        $this->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email]);
+        $this->get('/register/service/google');
+        $this->get('/login/service/google/callback');
+        $this->assertDatabaseHas('users', ['name' => $user->name, 'email' => $user->email]);
         $user = $user->whereEmail($user->email)->first();
-        $this->seeInDatabase('social_accounts', ['user_id' => $user->id]);
+        $this->assertDatabaseHas('social_accounts', ['user_id' => $user->id]);
     }
 
     public function test_social_login()
@@ -53,17 +53,21 @@ class SocialAuthTest extends BrowserKitTest
         $mockSocialDriver->shouldReceive('redirect')->twice()->andReturn(redirect('/'));
 
         // Test login routes
-        $this->visit('/login')->seeElement('#social-login-google')
-            ->click('#social-login-google')
-            ->seePageIs('/login');
+        $resp = $this->get('/login');
+        $resp->assertElementExists('a#social-login-google[href$="/login/service/google"]');
+        $resp = $this->followingRedirects()->get("/login/service/google");
+        $resp->assertSee('login-form');
 
         // Test social callback
-        $this->visit('/login/service/google/callback')->seePageIs('/login')
-            ->see(trans('errors.social_account_not_used', ['socialAccount' => 'Google']));
+        $resp = $this->followingRedirects()->get('/login/service/google/callback');
+        $resp->assertSee('login-form');
+        $resp->assertSee(trans('errors.social_account_not_used', ['socialAccount' => 'Google']));
 
-        $this->visit('/login')->seeElement('#social-login-github')
-        ->click('#social-login-github')
-        ->seePageIs('/login');
+        $resp = $this->get('/login');
+        $resp->assertElementExists('a#social-login-github[href$="/login/service/github"]');
+        $resp = $this->followingRedirects()->get("/login/service/github");
+        $resp->assertSee('login-form');
+
 
         // Test social callback with matching social account
         \DB::table('social_accounts')->insert([
@@ -71,7 +75,77 @@ class SocialAuthTest extends BrowserKitTest
             'driver' => 'github',
             'driver_id' => 'logintest123'
         ]);
-        $this->visit('/login/service/github/callback')->seePageIs('/');
+        $resp = $this->followingRedirects()->get('/login/service/github/callback');
+        $resp->assertDontSee("login-form");
+    }
+
+    public function test_social_autoregister()
+    {
+        config([
+            'services.google.client_id' => 'abc123', 'services.google.client_secret' => '123abc',
+            'APP_URL' => 'http://localhost'
+        ]);
+
+        $user = factory(\BookStack\User::class)->make();
+        $mockSocialite = \Mockery::mock('Laravel\Socialite\Contracts\Factory');
+        $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
+        $mockSocialDriver = \Mockery::mock('Laravel\Socialite\Contracts\Provider');
+        $mockSocialUser = \Mockery::mock('\Laravel\Socialite\Contracts\User');
+
+        $mockSocialUser->shouldReceive('getId')->times(4)->andReturn(1);
+        $mockSocialUser->shouldReceive('getEmail')->times(2)->andReturn($user->email);
+        $mockSocialUser->shouldReceive('getName')->once()->andReturn($user->name);
+        $mockSocialUser->shouldReceive('getAvatar')->once()->andReturn('avatar_placeholder');
+
+        $mockSocialDriver->shouldReceive('user')->times(2)->andReturn($mockSocialUser);
+        $mockSocialite->shouldReceive('driver')->times(4)->with('google')->andReturn($mockSocialDriver);
+        $mockSocialDriver->shouldReceive('redirect')->twice()->andReturn(redirect('/'));
+
+        $googleAccountNotUsedMessage = trans('errors.social_account_not_used', ['socialAccount' => 'Google']);
+
+        $this->get('/login/service/google');
+        $resp = $this->followingRedirects()->get('/login/service/google/callback');
+        $resp->assertSee($googleAccountNotUsedMessage);
+
+        config(['services.google.auto_register' => true]);
+
+        $this->get('/login/service/google');
+        $resp = $this->followingRedirects()->get('/login/service/google/callback');
+        $resp->assertDontSee($googleAccountNotUsedMessage);
+
+        $this->assertDatabaseHas('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
+        $user = $user->whereEmail($user->email)->first();
+        $this->assertDatabaseHas('social_accounts', ['user_id' => $user->id]);
+    }
+
+    public function test_social_auto_email_confirm()
+    {
+        config([
+            'services.google.client_id' => 'abc123', 'services.google.client_secret' => '123abc',
+            'APP_URL' => 'http://localhost', 'services.google.auto_register' => true, 'services.google.auto_confirm' => true
+        ]);
+
+        $user = factory(\BookStack\User::class)->make();
+        $mockSocialite = \Mockery::mock('Laravel\Socialite\Contracts\Factory');
+        $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
+        $mockSocialDriver = \Mockery::mock('Laravel\Socialite\Contracts\Provider');
+        $mockSocialUser = \Mockery::mock('\Laravel\Socialite\Contracts\User');
+
+        $mockSocialUser->shouldReceive('getId')->times(3)->andReturn(1);
+        $mockSocialUser->shouldReceive('getEmail')->times(2)->andReturn($user->email);
+        $mockSocialUser->shouldReceive('getName')->once()->andReturn($user->name);
+        $mockSocialUser->shouldReceive('getAvatar')->once()->andReturn('avatar_placeholder');
+
+        $mockSocialDriver->shouldReceive('user')->times(1)->andReturn($mockSocialUser);
+        $mockSocialite->shouldReceive('driver')->times(2)->with('google')->andReturn($mockSocialDriver);
+        $mockSocialDriver->shouldReceive('redirect')->once()->andReturn(redirect('/'));
+
+        $this->get('/login/service/google');
+        $this->get('/login/service/google/callback');
+
+        $this->assertDatabaseHas('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => true]);
+        $user = $user->whereEmail($user->email)->first();
+        $this->assertDatabaseHas('social_accounts', ['user_id' => $user->id]);
     }
 
 }
