@@ -76,14 +76,15 @@ class UserRepo
         return $query->paginate($count);
     }
 
-    /**
+     /**
      * Creates a new user and attaches a role to them.
      * @param array $data
+     * @param boolean autoVerifyEmail
      * @return User
      */
-    public function registerNew(array $data)
+    public function registerNew(array $data, $autoVerifyEmail=false)
     {
-        $user = $this->create($data);
+        $user = $this->create($data, $autoVerifyEmail);
         $this->attachDefaultRole($user);
 
         // Get avatar from gravatar and save
@@ -141,15 +142,17 @@ class UserRepo
     /**
      * Create a new basic instance of user.
      * @param array $data
+     * @param boolean $autoVerifyEmail
      * @return User
      */
-    public function create(array $data)
+    public function create(array $data, $autoVerifyEmail=false)
     {
+
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            'email_confirmed' => false
+            'email_confirmed' => $autoVerifyEmail
         ]);
     }
 
