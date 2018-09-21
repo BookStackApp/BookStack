@@ -1,13 +1,12 @@
 <?php namespace BookStack\Services;
 
-use BookStack\Http\Requests\Request;
-use GuzzleHttp\Exception\ClientException;
+use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use BookStack\Exceptions\SocialDriverNotConfigured;
-use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Repos\UserRepo;
 use BookStack\SocialAccount;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialAuthService
 {
@@ -58,18 +57,13 @@ class SocialAuthService
 
     /**
      * Handle the social registration process on callback.
-     * @param $socialDriver
-     * @return \Laravel\Socialite\Contracts\User
-     * @throws SocialDriverNotConfigured
+     * @param string $socialDriver
+     * @param SocialUser $socialUser
+     * @return SocialUser
      * @throws UserRegistrationException
      */
-    public function handleRegistrationCallback($socialDriver)
+    public function handleRegistrationCallback(string $socialDriver, SocialUser $socialUser)
     {
-        $driver = $this->validateDriver($socialDriver);
-
-        // Get user details from social driver
-        $socialUser = $this->socialite->driver($driver)->user();
-
         // Check social account has not already been used
         if ($this->socialAccount->where('driver_id', '=', $socialUser->getId())->exists()) {
             throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver]), '/login');
@@ -84,17 +78,26 @@ class SocialAuthService
     }
 
     /**
-     * Handle the login process on a oAuth callback.
-     * @param $socialDriver
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Get the social user details via the social driver.
+     * @param string $socialDriver
+     * @return SocialUser
      * @throws SocialDriverNotConfigured
-     * @throws SocialSignInException
      */
-    public function handleLoginCallback($socialDriver)
+    public function getSocialUser(string $socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        // Get user details from social driver
-        $socialUser = $this->socialite->driver($driver)->user();
+        return $this->socialite->driver($driver)->user();
+    }
+
+    /**
+     * Handle the login process on a oAuth callback.
+     * @param $socialDriver
+     * @param SocialUser $socialUser
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws SocialSignInAccountNotUsed
+     */
+    public function handleLoginCallback($socialDriver, SocialUser $socialUser)
+    {
         $socialId = $socialUser->getId();
 
         // Get any attached social accounts or users
@@ -106,40 +109,6 @@ class SocialAuthService
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
             auth()->login($socialAccount->user);
-            return redirect()->intended('/');
-        }
-
-        // When a user is not logged in and no matching SocialAccount exists,
-        // If the auto social registration is enabled, attach the social account, create new user and log him in.
-        if (!$isLoggedIn && $socialAccount === null && setting('autosocialregistration-confirmation')) {
-
-            // Fill social account
-            $socialAccount = $this->fillSocialAccount($socialDriver, $socialUser);
-
-            // Create an array of the user data to create a new user instance
-            $userData = [
-                'name' => $socialUser->getName(),
-                'email' => $socialUser->getEmail(),
-                'password' => str_random(30)
-            ];
-
-            // Check domain if domain restriction setting is set
-            if (setting('registration-restrict')) {
-                $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
-                $userEmailDomain = $domain = substr(strrchr($socialUser->getEmail(), "@"), 1);
-                if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
-                    throw new SocialSignInException(trans('auth.registration_email_domain_invalid'), '/login');
-                }
-            }
-
-            // Register new user with autoVerifyEmail set to true and attach the social account
-            $newUser = $this->userRepo->registerNew($userData, true);
-            $newUser->socialAccounts()->save($socialAccount);
-            $newUser->save();
-
-            // Log him in
-            auth()->login($newUser);
-
             return redirect()->intended('/');
         }
 
@@ -170,7 +139,7 @@ class SocialAuthService
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => title_case($socialDriver)]);
         }
         
-        throw new SocialSignInException($message, '/login');
+        throw new SocialSignInAccountNotUsed($message, '/login');
     }
 
     /**
@@ -233,8 +202,28 @@ class SocialAuthService
     }
 
     /**
-     * @param string                            $socialDriver
-     * @param \Laravel\Socialite\Contracts\User $socialUser
+     * Check if the current config for the given driver allows auto-registration.
+     * @param string $driver
+     * @return bool
+     */
+    public function driverAutoRegisterEnabled(string $driver)
+    {
+        return config('services.' . strtolower($driver) . '.auto_register') === true;
+    }
+
+    /**
+     * Check if the current config for the given driver allow email address auto-confirmation.
+     * @param string $driver
+     * @return bool
+     */
+    public function driverAutoConfirmEmailEnabled(string $driver)
+    {
+        return config('services.' . strtolower($driver) . '.auto_confirm') === true;
+    }
+
+    /**
+     * @param string $socialDriver
+     * @param SocialUser $socialUser
      * @return SocialAccount
      */
     public function fillSocialAccount($socialDriver, $socialUser)
