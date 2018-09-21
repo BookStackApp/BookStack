@@ -1288,6 +1288,7 @@ class EntityRepo
      * Returns the number of books that had permissions updated.
      * @param Bookshelf $bookshelf
      * @return int
+     * @throws \Throwable
      */
     public function copyBookshelfPermissions(Bookshelf $bookshelf)
     {
