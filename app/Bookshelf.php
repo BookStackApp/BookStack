@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Bookshelf extends Entity
 {
     protected $table = 'bookshelves';

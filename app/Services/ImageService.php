@@ -316,25 +316,25 @@ class ImageService extends UploadService
         $deletedPaths = [];
 
         $this->image->newQuery()->whereIn('type', $types)
-            ->chunk(1000, function($images) use ($types, $checkRevisions, &$deletedPaths, $dryRun) {
-             foreach ($images as $image) {
-                 $searchQuery = '%' . basename($image->path) . '%';
-                 $inPage = DB::table('pages')
+            ->chunk(1000, function ($images) use ($types, $checkRevisions, &$deletedPaths, $dryRun) {
+                foreach ($images as $image) {
+                    $searchQuery = '%' . basename($image->path) . '%';
+                    $inPage = DB::table('pages')
                          ->where('html', 'like', $searchQuery)->count() > 0;
-                 $inRevision = false;
-                 if ($checkRevisions) {
-                     $inRevision =  DB::table('page_revisions')
+                    $inRevision = false;
+                    if ($checkRevisions) {
+                        $inRevision =  DB::table('page_revisions')
                              ->where('html', 'like', $searchQuery)->count() > 0;
-                 }
+                    }
 
-                 if (!$inPage && !$inRevision) {
-                     $deletedPaths[] = $image->path;
-                     if (!$dryRun) {
-                         $this->destroy($image);
-                     }
-                 }
-             }
-        });
+                    if (!$inPage && !$inRevision) {
+                        $deletedPaths[] = $image->path;
+                        if (!$dryRun) {
+                            $this->destroy($image);
+                        }
+                    }
+                }
+            });
         return $deletedPaths;
     }
 

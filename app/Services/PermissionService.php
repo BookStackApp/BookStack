@@ -48,10 +48,15 @@ class PermissionService
      * @param Page $page
      */
     public function __construct(
-        JointPermission $jointPermission, EntityPermission $entityPermission, Role $role, Connection $db,
-        Bookshelf $bookshelf, Book $book, Chapter $chapter, Page $page
-    )
-    {
+        JointPermission $jointPermission,
+        EntityPermission $entityPermission,
+        Role $role,
+        Connection $db,
+        Bookshelf $bookshelf,
+        Book $book,
+        Chapter $chapter,
+        Page $page
+    ) {
         $this->db = $db;
         $this->jointPermission = $jointPermission;
         $this->entityPermission = $entityPermission;
@@ -169,8 +174,8 @@ class PermissionService
         // Chunk through all bookshelves
         $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
             ->chunk(50, function ($shelves) use ($roles) {
-            $this->buildJointPermissionsForShelves($shelves, $roles);
-        });
+                $this->buildJointPermissionsForShelves($shelves, $roles);
+            });
     }
 
     /**
