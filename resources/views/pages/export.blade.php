@@ -10,6 +10,7 @@
         @endif
     </style>
     @yield('head')
+    @include('partials.custom-head')
 </head>
 <body>
 <div class="container" id="page-show">
