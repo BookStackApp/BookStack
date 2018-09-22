@@ -1,3 +1,7 @@
+const CodeMirror = require('codemirror');
+const Clipboard = require("clipboard");
+
+// Modes
 require('codemirror/mode/css/css');
 require('codemirror/mode/clike/clike');
 require('codemirror/mode/diff/diff');
@@ -16,9 +20,8 @@ require('codemirror/mode/toml/toml');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 
-const Clipboard = require("clipboard");
-
-const CodeMirror = require('codemirror');
+// Addons
+require('codemirror/addon/scroll/scrollpastend');
 
 const modeMap = {
     css: 'css',
@@ -238,7 +241,8 @@ function markdownEditor(elem) {
         mode: "markdown",
         lineNumbers: true,
         theme: getTheme(),
-        lineWrapping: true
+        lineWrapping: true,
+        scrollPastEnd: true,
     });
 }
 
@@ -253,7 +257,6 @@ function getMetaKey() {
 
 module.exports = {
     highlight: highlight,
-    highlightElem: highlightElem,
     wysiwygView: wysiwygView,
     popupEditor: popupEditor,
     setMode: setMode,
