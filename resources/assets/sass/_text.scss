@@ -351,6 +351,7 @@ ul, ol {
 }
 ul {
   padding-left: $-m * 1.3;
+  padding-right: $-m * 1.3;
   list-style: disc;
   ul {
     list-style: circle;
@@ -365,6 +366,7 @@ ul {
 ol {
   list-style: decimal;
   padding-left: $-m * 2;
+  padding-right: $-m * 2;
 }
 
 li.checkbox-item, li.task-list-item {
