@@ -12,13 +12,9 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        $pdo = \DB::connection()->getPdo();
-        $mysqlVersion = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
-        $requiresISAM = strpos($mysqlVersion, '5.5') === 0;
 
-        Schema::create('pages', function (Blueprint $table) use ($requiresISAM) {
-            if($requiresISAM) $table->engine = 'MyISAM';
-            
+
+        Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('book_id');
             $table->integer('chapter_id');

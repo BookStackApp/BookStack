@@ -12,13 +12,7 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        $pdo = \DB::connection()->getPdo();
-        $mysqlVersion = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
-        $requiresISAM = strpos($mysqlVersion, '5.5') === 0;
-
-        Schema::create('books', function (Blueprint $table) use ($requiresISAM) {
-	        if($requiresISAM) $table->engine = 'MyISAM';
-            
+        Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->indexed();
