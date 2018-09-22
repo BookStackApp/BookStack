@@ -4,6 +4,7 @@ use BookStack\Exceptions\FileUploadException;
 use BookStack\Attachment;
 use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+ini_set(‘memory_limit’,’256M’);
 
 class AttachmentService extends UploadService
 {
