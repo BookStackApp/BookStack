@@ -6,9 +6,10 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "ext-tidy": "*",
+        "ext-dom": "*",
         "laravel/framework": "~5.5.42",
         "fideloper/proxy": "~3.3",
-        "ext-tidy": "*",
         "intervention/image": "^2.4",
         "laravel/socialite": "^3.0",
         "league/flysystem-aws-s3-v3": "^1.0",

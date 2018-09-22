@@ -746,10 +746,13 @@ class EntityRepo
         $revision->revision_number = $page->revision_count;
         $revision->save();
 
-        // Clear old revisions
-        if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
-            $this->pageRevision->where('page_id', '=', $page->id)
-                ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
+        $revisionLimit = config('app.revision_limit');
+        if ($revisionLimit !== false) {
+            $revisionsToDelete = $this->pageRevision->where('page_id', '=', $page->id)
+                ->orderBy('created_at', 'desc')->skip(intval($revisionLimit))->take(10)->get(['id']);
+            if ($revisionsToDelete->count() > 0) {
+                $this->pageRevision->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
+            }
         }
 
         return $revision;
