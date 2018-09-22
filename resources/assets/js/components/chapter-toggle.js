@@ -8,52 +8,56 @@ class ChapterToggle {
     }
 
     open() {
-        let list = this.elem.parentNode.querySelector('.inset-list');
+        const list = this.elem.parentNode.querySelector('.inset-list');
 
         this.elem.classList.add('open');
         list.style.display = 'block';
-        list.style.height = '';
-        let height = list.getBoundingClientRect().height;
-        list.style.height = '0px';
+        list.style.maxHeight = '';
+        const maxHeight = list.getBoundingClientRect().height + 10;
+        list.style.maxHeight = '0px';
         list.style.overflow = 'hidden';
-        list.style.transition = 'height ease-in-out 240ms';
+        list.style.transition = 'max-height ease-in-out 240ms';
 
         let transitionEndBound = onTransitionEnd.bind(this);
         function onTransitionEnd() {
             list.style.overflow = '';
-            list.style.height = '';
+            list.style.maxHeight = '';
             list.style.transition = '';
             list.style.display = `block`;
             list.removeEventListener('transitionend', transitionEndBound);
         }
 
         setTimeout(() => {
-            list.style.height = `${height}px`;
-            list.addEventListener('transitionend', transitionEndBound)
+            requestAnimationFrame(() => {
+                list.style.maxHeight = `${maxHeight}px`;
+                list.addEventListener('transitionend', transitionEndBound)
+            });
         }, 1);
     }
 
     close() {
-        let list = this.elem.parentNode.querySelector('.inset-list');
+        const list = this.elem.parentNode.querySelector('.inset-list');
 
-        this.elem.classList.remove('open');
         list.style.display =  'block';
-        list.style.height = list.getBoundingClientRect().height + 'px';
+        this.elem.classList.remove('open');
+        list.style.maxHeight = list.getBoundingClientRect().height + 'px';
         list.style.overflow = 'hidden';
-        list.style.transition = 'height ease-in-out 240ms';
+        list.style.transition = 'max-height ease-in-out 240ms';
 
-        let transitionEndBound = onTransitionEnd.bind(this);
+        const transitionEndBound = onTransitionEnd.bind(this);
         function onTransitionEnd() {
             list.style.overflow = '';
-            list.style.height = '';
+            list.style.maxHeight = '';
             list.style.transition = '';
             list.style.display =  'none';
             list.removeEventListener('transitionend', transitionEndBound);
         }
 
         setTimeout(() => {
-            list.style.height = `0px`;
-            list.addEventListener('transitionend', transitionEndBound)
+            requestAnimationFrame(() => {
+                list.style.maxHeight = `0px`;
+                list.addEventListener('transitionend', transitionEndBound)
+            });
         }, 1);
     }
 
