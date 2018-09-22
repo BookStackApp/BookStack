@@ -500,10 +500,7 @@ class PageController extends Controller
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $page->html = $this->entityRepo->renderPage($page);
         $pdfContent = $this->exportService->pageToPdf($page);
-        return response()->make($pdfContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.pdf'
-        ]);
+        return $this->downloadResponse($pdfContent, $pageSlug . '.pdf');
     }
 
     /**
@@ -517,10 +514,7 @@ class PageController extends Controller
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $page->html = $this->entityRepo->renderPage($page);
         $containedHtml = $this->exportService->pageToContainedHtml($page);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.html'
-        ]);
+        return $this->downloadResponse($containedHtml, $pageSlug . '.html');
     }
 
     /**
@@ -532,11 +526,8 @@ class PageController extends Controller
     public function exportPlainText($bookSlug, $pageSlug)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $containedHtml = $this->exportService->pageToPlainText($page);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.txt'
-        ]);
+        $pageText = $this->exportService->pageToPlainText($page);
+        return $this->downloadResponse($pageText, $pageSlug . '.txt');
     }
 
     /**
