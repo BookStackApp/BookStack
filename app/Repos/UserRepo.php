@@ -95,15 +95,14 @@ class UserRepo
 
     /**
      * Give a user the default role. Used when creating a new user.
-     * @param $user
+     * @param User $user
      */
-    public function attachDefaultRole($user)
+    public function attachDefaultRole(User $user)
     {
         $roleId = setting('registration-role');
-        if ($roleId === false) {
-            $roleId = $this->role->first()->id;
+        if ($roleId !== false && $user->roles()->where('id', '=', $roleId)->count() === 0) {
+            $user->attachRoleId($roleId);
         }
-        $user->attachRoleId($roleId);
     }
 
     /**
