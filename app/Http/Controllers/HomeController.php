@@ -33,42 +33,42 @@ class HomeController extends Controller
         $recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
         $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
 
-
-        $customHomepage = false;
-        $books = false;
-        $booksViewType = false;
-
-        // Check book homepage
-        $bookHomepageSetting = setting('app-book-homepage');
-        if ($bookHomepageSetting) {
-            $books = $this->entityRepo->getAllPaginated('book', 18);
-            $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
-        } else {
-            // Check custom homepage
-            $homepageSetting = setting('app-homepage');
-            if ($homepageSetting) {
-                $id = intval(explode(':', $homepageSetting)[0]);
-                $customHomepage = $this->entityRepo->getById('page', $id, false, true);
-                $this->entityRepo->renderPage($customHomepage, true);
-            }
+        $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
+        $homepageOption = setting('app-homepage-type', 'default');
+        if (!in_array($homepageOption, $homepageOptions)) {
+            $homepageOption = 'default';
         }
 
-        $view = 'home';
-        if ($bookHomepageSetting) {
-            $view = 'home-book';
-        } else if ($customHomepage) {
-            $view = 'home-custom';
-        }
-
-        return view('common/' . $view, [
+        $commonData = [
             'activity' => $activity,
             'recents' => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
             'draftPages' => $draftPages,
-            'customHomepage' => $customHomepage,
-            'books' => $books,
-            'booksViewType' => $booksViewType
-        ]);
+        ];
+
+        if ($homepageOption === 'bookshelves') {
+            $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18);
+            $shelvesViewType = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+            $data = array_merge($commonData, ['shelves' => $shelves, 'shelvesViewType' => $shelvesViewType]);
+            return view('common.home-shelves', $data);
+        }
+
+        if ($homepageOption === 'books') {
+            $books = $this->entityRepo->getAllPaginated('book', 18);
+            $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
+            $data = array_merge($commonData, ['books' => $books, 'booksViewType' => $booksViewType]);
+            return view('common.home-book', $data);
+        }
+
+        if ($homepageOption === 'page') {
+            $homepageSetting = setting('app-homepage', '0:');
+            $id = intval(explode(':', $homepageSetting)[0]);
+            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
+            $this->entityRepo->renderPage($customHomepage, true);
+            return view('common.home-custom', array_merge($commonData, ['customHomepage' => $customHomepage]));
+        }
+
+        return view('common.home', $commonData);
     }
 
     /**

@@ -36,9 +36,10 @@
                                 <td> @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif</td>
                                 <td><small>{{ $revision->created_at->format('jS F, Y H:i:s') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
                                 <td>{{ $revision->summary }}</td>
-                                <td>
+                                <td class="actions">
                                     <a href="{{ $revision->getUrl('changes') }}" target="_blank">{{ trans('entities.pages_revisions_changes') }}</a>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
+
 
                                     @if ($index === 0)
                                         <a target="_blank" href="{{ $page->getUrl() }}"><i>{{ trans('entities.pages_revisions_current') }}</i></a>
@@ -46,6 +47,20 @@
                                         <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
                                         <span class="text-muted">&nbsp;|&nbsp;</span>
                                         <a href="{{ $revision->getUrl('restore') }}">{{ trans('entities.pages_revisions_restore') }}</a>
+                                        <span class="text-muted">&nbsp;|&nbsp;</span>
+                                        <div dropdown class="dropdown-container">
+                                            <a dropdown-toggle>{{ trans('common.delete') }}</a>
+                                            <ul>
+                                                <li class="padded"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
+                                                <li>
+                                                    <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
+                                                        {!! csrf_field() !!}
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <button type="submit" class="text-button neg">@icon('delete'){{ trans('common.delete') }}</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     @endif
                                 </td>
                             </tr>

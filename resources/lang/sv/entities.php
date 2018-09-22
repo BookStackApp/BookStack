@@ -265,4 +265,11 @@ return [
     'comment_updated_success' => 'Kommentaren har uppdaterats',
     'comment_delete_confirm' => 'Är du säker på att du vill ta bort den här kommentaren?',
     'comment_in_reply_to' => 'Som svar på :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
+    'revision_delete_success' => 'Revisionen raderad',
+    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.'
 ];

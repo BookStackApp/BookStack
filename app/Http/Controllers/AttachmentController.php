@@ -201,10 +201,7 @@ class AttachmentController extends Controller
         }
 
         $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
-        return response($attachmentContents, 200, [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'. $attachment->getFileName() .'"'
-        ]);
+        return $this->downloadResponse($attachmentContents, $attachment->getFileName());
     }
 
     /**

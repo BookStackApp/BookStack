@@ -113,7 +113,7 @@ function addCopyIcon(cmInstance) {
         copyButton.classList.add('success');
         setTimeout(() => {
             copyButton.classList.remove('success');
-        }, 360);
+        }, 240);
     });
 }
 
@@ -157,6 +157,7 @@ function wysiwygView(elem) {
 
     newWrap.className = 'CodeMirrorContainer';
     newWrap.setAttribute('data-lang', lang);
+    newWrap.setAttribute('dir', 'ltr');
     newTextArea.style.display = 'none';
     elem.parentNode.replaceChild(newWrap, elem);
 

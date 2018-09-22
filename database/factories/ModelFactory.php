@@ -21,6 +21,14 @@ $factory->define(BookStack\User::class, function ($faker) {
     ];
 });
 
+$factory->define(BookStack\Bookshelf::class, function ($faker) {
+    return [
+        'name' => $faker->sentence,
+        'slug' => str_random(10),
+        'description' => $faker->paragraph
+    ];
+});
+
 $factory->define(BookStack\Book::class, function ($faker) {
     return [
         'name' => $faker->sentence,

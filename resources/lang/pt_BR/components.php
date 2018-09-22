@@ -22,6 +22,7 @@ return [
     'image_upload_success' => 'Upload de imagem efetuado com sucesso',
     'image_update_success' => 'Upload de detalhes da imagem efetuado com sucesso',
     'image_delete_success' => 'Imagem excluída com sucesso',
+    'image_upload_remove' => 'Remover',
 
     /**
      * Code editor

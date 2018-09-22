@@ -14,6 +14,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
     });
 
+    // Shelves
+    Route::get('/create-shelf', 'BookshelfController@create');
+    Route::group(['prefix' => 'shelves'], function() {
+        Route::get('/', 'BookshelfController@index');
+        Route::post('/', 'BookshelfController@store');
+        Route::get('/{slug}/edit', 'BookshelfController@edit');
+        Route::get('/{slug}/delete', 'BookshelfController@showDelete');
+        Route::get('/{slug}', 'BookshelfController@show');
+        Route::put('/{slug}', 'BookshelfController@update');
+        Route::delete('/{slug}', 'BookshelfController@destroy');
+        Route::get('/{slug}/permissions', 'BookshelfController@showRestrict');
+        Route::put('/{slug}/permissions', 'BookshelfController@restrict');
+        Route::post('/{slug}/copy-permissions', 'BookshelfController@copyPermissions');
+    });
+
     Route::get('/create-book', 'BookController@create');
     Route::group(['prefix' => 'books'], function () {
 
@@ -61,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageController@showRevisionChanges');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
+        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageController@destroyRevision');
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
@@ -79,7 +95,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@restrict');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
-
     });
 
     // User Profile routes
@@ -160,6 +175,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users/create', 'UserController@create');
         Route::get('/users/{id}/delete', 'UserController@delete');
         Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
+        Route::patch('/users/{id}/switch-shelf-view', 'UserController@switchShelfView');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');

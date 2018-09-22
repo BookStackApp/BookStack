@@ -19,5 +19,4 @@ class Image extends Ownable
     {
         return Images::getThumbnail($this, $width, $height, $keepRatio);
     }
-
 }

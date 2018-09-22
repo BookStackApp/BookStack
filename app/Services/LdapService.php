@@ -330,14 +330,14 @@ class LdapService
             $groupNames[$i] = str_replace(' ', '-', trim(strtolower($groupName)));
         }
 
-        $roles = Role::query()->where(function(Builder $query) use ($groupNames) {
+        $roles = Role::query()->where(function (Builder $query) use ($groupNames) {
             $query->whereIn('name', $groupNames);
             foreach ($groupNames as $groupName) {
                 $query->orWhere('external_auth_id', 'LIKE', '%' . $groupName . '%');
             }
         })->get();
 
-        $matchedRoles = $roles->filter(function(Role $role) use ($groupNames) {
+        $matchedRoles = $roles->filter(function (Role $role) use ($groupNames) {
             return $this->roleMatchesGroupNames($role, $groupNames);
         });
 
@@ -366,5 +366,4 @@ class LdapService
         $roleName = str_replace(' ', '-', trim(strtolower($role->display_name)));
         return in_array($roleName, $groupNames);
     }
-
 }

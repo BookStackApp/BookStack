@@ -77,8 +77,20 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
+    'locales' => ['en', 'ar', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
 
-    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
+    /*
+    |--------------------------------------------------------------------------
+    | Right-to-left text control
+    |--------------------------------------------------------------------------
+    |
+    | Right-to-left text control is set to false by default since English
+    | is the primary supported application but this may be dynamically
+    | altered by the applications localization system.
+    |
+    */
+
+    'rtl' => false,
 
     /*
     |--------------------------------------------------------------------------

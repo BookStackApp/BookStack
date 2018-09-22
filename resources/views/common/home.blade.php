@@ -10,7 +10,7 @@
 
 @section('body')
 
-    <div class="container">
+    <div class="container" id="home-default">
         <div class="row">
 
             <div class="col-sm-4">

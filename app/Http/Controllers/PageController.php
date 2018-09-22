@@ -454,6 +454,40 @@ class PageController extends Controller
         return redirect($page->getUrl());
     }
 
+
+    /**
+     * Deletes a revision using the id of the specified revision.
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @param int $revId
+     * @throws NotFoundException
+     * @throws BadRequestException
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroyRevision($bookSlug, $pageSlug, $revId)
+    {
+        $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
+        $this->checkOwnablePermission('page-delete', $page);
+
+        $revision = $page->revisions()->where('id', '=', $revId)->first();
+        if ($revision === null) {
+            throw new NotFoundException("Revision #{$revId} not found");
+        }
+
+        // Get the current revision for the page
+        $currentRevision = $page->getCurrentRevision();
+
+        // Check if its the latest revision, cannot delete latest revision.
+        if (intval($currentRevision->id) === intval($revId)) {
+            session()->flash('error', trans('entities.revision_cannot_delete_latest'));
+            return response()->view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page], 400);
+        }
+
+        $revision->delete();
+        session()->flash('success', trans('entities.revision_delete_success'));
+        return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
+    }
+
     /**
      * Exports a page to a PDF.
      * https://github.com/barryvdh/laravel-dompdf
@@ -466,10 +500,7 @@ class PageController extends Controller
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $page->html = $this->entityRepo->renderPage($page);
         $pdfContent = $this->exportService->pageToPdf($page);
-        return response()->make($pdfContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.pdf'
-        ]);
+        return $this->downloadResponse($pdfContent, $pageSlug . '.pdf');
     }
 
     /**
@@ -483,10 +514,7 @@ class PageController extends Controller
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
         $page->html = $this->entityRepo->renderPage($page);
         $containedHtml = $this->exportService->pageToContainedHtml($page);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.html'
-        ]);
+        return $this->downloadResponse($containedHtml, $pageSlug . '.html');
     }
 
     /**
@@ -498,11 +526,8 @@ class PageController extends Controller
     public function exportPlainText($bookSlug, $pageSlug)
     {
         $page = $this->entityRepo->getBySlug('page', $pageSlug, $bookSlug);
-        $containedHtml = $this->exportService->pageToPlainText($page);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $pageSlug . '.txt'
-        ]);
+        $pageText = $this->exportService->pageToPlainText($page);
+        return $this->downloadResponse($pageText, $pageSlug . '.txt');
     }
 
     /**

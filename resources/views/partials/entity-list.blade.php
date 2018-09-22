@@ -8,6 +8,8 @@
                 @include('books/list-item', ['book' => $entity])
             @elseif($entity->isA('chapter'))
                 @include('chapters/list-item', ['chapter' => $entity, 'hidePages' => true])
+            @elseif($entity->isA('bookshelf'))
+                @include('shelves/list-item', ['bookshelf' => $entity])
             @endif
 
             @if($index !== count($entities) - 1)

@@ -80,7 +80,7 @@ class PermissionsRepo
 
     /**
      * Updates an existing role.
-     * Ensure Admin role always has all permissions.
+     * Ensure Admin role always have core permissions.
      * @param $roleId
      * @param $roleData
      * @throws PermissionsException
@@ -90,12 +90,17 @@ class PermissionsRepo
         $role = $this->role->findOrFail($roleId);
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
-        $this->assignRolePermissions($role, $permissions);
-
         if ($role->system_name === 'admin') {
-            $permissions = $this->permission->all()->pluck('id')->toArray();
-            $role->permissions()->sync($permissions);
+            $permissions = array_merge($permissions, [
+                'users-manage',
+                'user-roles-manage',
+                'restrictions-manage-all',
+                'restrictions-manage-own',
+                'settings-manage',
+            ]);
         }
+
+        $this->assignRolePermissions($role, $permissions);
 
         $role->fill($roleData);
         $role->save();

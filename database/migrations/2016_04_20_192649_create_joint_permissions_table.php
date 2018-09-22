@@ -74,10 +74,6 @@ class CreateJointPermissionsTable extends Migration
 
         // Update admin role with system name
         DB::table('roles')->where('name', '=', 'admin')->update(['system_name' => 'admin']);
-
-        // Generate the new entity jointPermissions
-        $restrictionService = app(\BookStack\Services\PermissionService::class);
-        $restrictionService->buildJointPermissions();
     }
 
     /**

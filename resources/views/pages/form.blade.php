@@ -4,6 +4,7 @@
      drawio-enabled="{{ config('services.drawio') ? 'true' : 'false' }}"
      editor-type="{{ setting('app-editor') }}"
      page-id="{{ $model->id or 0 }}"
+     text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
      page-new-draft="{{ $model->draft or 0 }}"
      page-update-draft="{{ $model->isDraft or 0 }}">
 

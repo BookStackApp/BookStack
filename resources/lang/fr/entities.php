@@ -265,4 +265,11 @@ return [
     'comment_updated_success' => 'Commentaire mis à jour',
     'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
     'comment_in_reply_to' => 'En réponse à :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision?',
+    'revision_delete_success' => 'Révision supprimée',
+    'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.'
 ];

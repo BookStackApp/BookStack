@@ -281,6 +281,14 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
   }
 }
 
+.text-bookshelf {
+  color: $color-bookshelf;
+  fill: $color-bookshelf;
+  &:hover {
+    color: $color-bookshelf;
+    fill: $color-bookshelf;
+  }
+}
 .text-book {
   color: $color-book;
   fill: $color-book;
@@ -343,6 +351,7 @@ ul, ol {
 }
 ul {
   padding-left: $-m * 1.3;
+  padding-right: $-m * 1.3;
   list-style: disc;
   ul {
     list-style: circle;
@@ -357,6 +366,7 @@ ul {
 ol {
   list-style: decimal;
   padding-left: $-m * 2;
+  padding-right: $-m * 2;
 }
 
 li.checkbox-item, li.task-list-item {
