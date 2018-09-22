@@ -81,6 +81,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Right-to-left text control
+    |--------------------------------------------------------------------------
+    |
+    | Right-to-left text control is set to false by default since English
+    | is the primary supported application but this may be dynamically
+    | altered by the applications localization system.
+    |
+    */
+
+    'rtl' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Auto-detect the locale for public users
     |--------------------------------------------------------------------------
     |

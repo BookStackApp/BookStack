@@ -8,6 +8,7 @@ class MarkdownEditor {
 
     constructor(elem) {
         this.elem = elem;
+        this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
 
@@ -98,6 +99,9 @@ class MarkdownEditor {
 
     codeMirrorSetup() {
         let cm = this.cm;
+        // Text direction
+        // cm.setOption('direction', this.textDirection);
+        cm.setOption('direction', 'ltr'); // Will force to remain as ltr for now due to issues when HTML is in editor.
         // Custom key commands
         let metaKey = code.getMetaKey();
         const extraKeys = {};
