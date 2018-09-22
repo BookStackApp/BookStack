@@ -136,7 +136,6 @@ abstract class Controller extends BaseController
 
     /**
      * Create the response for when a request fails validation.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  array  $errors
      * @return \Symfony\Component\HttpFoundation\Response
@@ -150,5 +149,19 @@ abstract class Controller extends BaseController
         return redirect()->to($this->getRedirectUrl())
             ->withInput($request->input())
             ->withErrors($errors, $this->errorBag());
+    }
+
+    /**
+     * Create a response that forces a download in the browser.
+     * @param string $content
+     * @param string $fileName
+     * @return \Illuminate\Http\Response
+     */
+    protected function downloadResponse(string $content, string $fileName)
+    {
+        return response()->make($content, 200, [
+            'Content-Type'        => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
+        ]);
     }
 }
