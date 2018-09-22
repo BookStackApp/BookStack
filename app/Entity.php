@@ -168,10 +168,10 @@ class Entity extends Ownable
      */
     public function getShortName($length = 25)
     {
-        if (strlen($this->name) <= $length) {
+        if (mb_strlen($this->name) <= $length) {
             return $this->name;
         }
-        return substr($this->name, 0, $length - 3) . '...';
+        return mb_substr($this->name, 0, $length - 3) . '...';
     }
 
     /**

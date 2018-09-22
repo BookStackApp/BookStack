@@ -372,6 +372,7 @@ ul.pagination {
     padding: $-xs $-m;
     color: #555;
     fill: #555;
+    white-space: nowrap;
     &:hover {
       text-decoration: none;
       background-color: #EEE;
