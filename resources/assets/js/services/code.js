@@ -113,7 +113,7 @@ function addCopyIcon(cmInstance) {
         copyButton.classList.add('success');
         setTimeout(() => {
             copyButton.classList.remove('success');
-        }, 360);
+        }, 240);
     });
 }
 
