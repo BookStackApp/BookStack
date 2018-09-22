@@ -37,6 +37,14 @@ return [
     'book_sort'                   => 'libro ordenado',
     'book_sort_notification'      => 'Libro reordenado exitosamente',
 
+    // Bookshelves
+    'bookshelf_create'            => 'estante creado',
+    'bookshelf_create_notification'    => 'Estante creado exitosamente',
+    'bookshelf_update'                 => 'estante actualizado',
+    'bookshelf_update_notification'    => 'Estante actualizado exitosamente',
+    'bookshelf_delete'                 => 'estante borrado',
+    'bookshelf_delete_notification'    => 'Estante borrado exitosamente',
+
     // Other
     'commented_on'                => 'comentada el',
 ];
