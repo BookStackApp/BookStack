@@ -178,7 +178,7 @@
     display: none;
     padding-left: 0;
   }
-  .sub-menu.open {
+  [chapter-toggle].open + .sub-menu {
     display: block;
   }
 }
