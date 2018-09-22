@@ -72,7 +72,9 @@ class CleanupImages extends Command
 
     protected function showDeletedImages($paths)
     {
-        if ($this->getOutput()->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) return;
+        if ($this->getOutput()->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
+            return;
+        }
         if (count($paths) > 0) {
             $this->line('Images to delete:');
         }

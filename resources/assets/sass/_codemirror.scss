@@ -419,11 +419,12 @@ span.CodeMirror-selectedtext { background: none; }
   cursor: pointer;
   fill: #444;
   z-index: 5;
-  transition: all ease-in 180ms;
+  transition: all ease-in 240ms;
   user-select: none;
-  opacity: 0.7;
+  opacity: 0;
+  pointer-events: none;
   svg {
-    transition: transform ease-in 180ms;
+    transition: transform ease-in 240ms;
     transform: translateY(0);
   }
   &.success {
@@ -437,4 +438,5 @@ span.CodeMirror-selectedtext { background: none; }
 .CodeMirror:hover .CodeMirror-copy {
   user-select: all;
   opacity: 1;
+  pointer-events: all;
 }

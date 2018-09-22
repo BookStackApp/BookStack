@@ -370,6 +370,7 @@ class WysiwygEditor {
 
     constructor(elem) {
         this.elem = elem;
+        this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
 
         this.plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor media";
         this.loadPlugins();
@@ -385,6 +386,14 @@ class WysiwygEditor {
             drawIoPlugin();
             this.plugins += ' drawio';
         }
+        if (this.textDirection === 'rtl') {
+            this.plugins += ' directionality'
+        }
+    }
+
+    getToolBar() {
+        const textDirPlugins = this.textDirection === 'rtl' ? 'ltr rtl' : '';
+        return `undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr drawio media | removeformat code ${textDirPlugins} fullscreen`
     }
 
     getTinyMceConfig() {
@@ -397,6 +406,7 @@ class WysiwygEditor {
             body_class: 'page-content',
             browser_spellcheck: true,
             relative_urls: false,
+            directionality : this.textDirection,
             remove_script_host: false,
             document_base_url: window.baseUrl('/'),
             statusbar: false,
@@ -407,7 +417,7 @@ class WysiwygEditor {
             valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
             plugins: this.plugins,
             imagetools_toolbar: 'imageoptions',
-            toolbar: "undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr drawio media | removeformat code fullscreen",
+            toolbar: this.getToolBar(),
             content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
             style_formats: [
                 {title: "Header Large", format: "h2"},

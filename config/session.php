@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => env('SESSION_COOKIE_NAME', 'bookstack_session'),
 
     /*
     |--------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Bookshelf;
 use BookStack\Page;
 use BookStack\Repos\PermissionsRepo;
 use BookStack\Role;
@@ -14,32 +15,6 @@ class RolesTest extends BrowserKitTest
     {
         parent::setUp();
         $this->user = $this->getViewer();
-    }
-
-    /**
-     * Give the given user some permissions.
-     * @param \BookStack\User $user
-     * @param array $permissions
-     */
-    protected function giveUserPermissions(\BookStack\User $user, $permissions = [])
-    {
-        $newRole = $this->createNewRole($permissions);
-        $user->attachRole($newRole);
-        $user->load('roles');
-        $user->permissions(false);
-    }
-
-    /**
-     * Create a new basic role for testing purposes.
-     * @param array $permissions
-     * @return Role
-     */
-    protected function createNewRole($permissions = [])
-    {
-        $permissionRepo = app(PermissionsRepo::class);
-        $roleData = factory(\BookStack\Role::class)->make()->toArray();
-        $roleData['permissions'] = array_flip($permissions);
-        return $permissionRepo->saveNewRole($roleData);
     }
 
     public function test_admin_can_see_settings()
@@ -201,6 +176,90 @@ class RolesTest extends BrowserKitTest
             $this->actingAs($this->user)->visit($url)
                 ->see($text);
         }
+    }
+
+    public function test_bookshelves_create_all_permissions()
+    {
+        $this->checkAccessPermission('bookshelf-create-all', [
+            '/create-shelf'
+        ], [
+            '/shelves' => 'Create New Shelf'
+        ]);
+
+        $this->visit('/create-shelf')
+            ->type('test shelf', 'name')
+            ->type('shelf desc', 'description')
+            ->press('Save Shelf')
+            ->seePageIs('/shelves/test-shelf');
+    }
+
+    public function test_bookshelves_edit_own_permission()
+    {
+        $otherShelf = Bookshelf::first();
+        $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
+        $ownShelf->forceFill(['created_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
+        $this->regenEntityPermissions($ownShelf);
+
+        $this->checkAccessPermission('bookshelf-update-own', [
+            $ownShelf->getUrl('/edit')
+        ], [
+            $ownShelf->getUrl() => 'Edit'
+        ]);
+
+        $this->visit($otherShelf->getUrl())
+            ->dontSeeInElement('.action-buttons', 'Edit')
+            ->visit($otherShelf->getUrl('/edit'))
+            ->seePageIs('/');
+    }
+
+    public function test_bookshelves_edit_all_permission()
+    {
+        $otherShelf = \BookStack\Bookshelf::first();
+        $this->checkAccessPermission('bookshelf-update-all', [
+            $otherShelf->getUrl('/edit')
+        ], [
+            $otherShelf->getUrl() => 'Edit'
+        ]);
+    }
+
+    public function test_bookshelves_delete_own_permission()
+    {
+        $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
+        $otherShelf = \BookStack\Bookshelf::first();
+        $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
+        $ownShelf->forceFill(['created_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
+        $this->regenEntityPermissions($ownShelf);
+
+        $this->checkAccessPermission('bookshelf-delete-own', [
+            $ownShelf->getUrl('/delete')
+        ], [
+            $ownShelf->getUrl() => 'Delete'
+        ]);
+
+        $this->visit($otherShelf->getUrl())
+            ->dontSeeInElement('.action-buttons', 'Delete')
+            ->visit($otherShelf->getUrl('/delete'))
+            ->seePageIs('/');
+        $this->visit($ownShelf->getUrl())->visit($ownShelf->getUrl('/delete'))
+            ->press('Confirm')
+            ->seePageIs('/shelves')
+            ->dontSee($ownShelf->name);
+    }
+
+    public function test_bookshelves_delete_all_permission()
+    {
+        $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
+        $otherShelf = \BookStack\Bookshelf::first();
+        $this->checkAccessPermission('bookshelf-delete-all', [
+            $otherShelf->getUrl('/delete')
+        ], [
+            $otherShelf->getUrl() => 'Delete'
+        ]);
+
+        $this->visit($otherShelf->getUrl())->visit($otherShelf->getUrl('/delete'))
+            ->press('Confirm')
+            ->seePageIs('/shelves')
+            ->dontSee($otherShelf->name);
     }
 
     public function test_books_create_all_permissions()

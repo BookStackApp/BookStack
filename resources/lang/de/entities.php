@@ -256,4 +256,11 @@ return [
     'comment_updated_success' => 'Kommentar aktualisiert',
     'comment_delete_confirm' => 'Möchten Sie diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
+    'revision_delete_success' => 'Revision gelöscht',
+    'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
 ];

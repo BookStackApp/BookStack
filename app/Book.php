@@ -48,14 +48,6 @@ class Book extends Entity
     {
         return $this->belongsTo(Image::class, 'image_id');
     }
-    /*
-     * Get the edit url for this book.
-     * @return string
-     */
-    public function getEditUrl()
-    {
-        return $this->getUrl() . '/edit';
-    }
 
     /**
      * Get all pages within this book.
@@ -73,6 +65,15 @@ class Book extends Entity
     public function chapters()
     {
         return $this->hasMany(Chapter::class);
+    }
+
+    /**
+     * Get the shelves this book is contained within.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function shelves()
+    {
+        return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
     }
 
     /**
