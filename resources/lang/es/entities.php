@@ -52,11 +52,13 @@ return [
     'search_content_type' => 'Tipo de Contenido',
     'search_exact_matches' => 'Coincidencias Exactas',
     'search_tags' => 'Búsquedas Etiquetadas',
+    'search_options' => 'Opciones',
     'search_viewed_by_me' => 'Vistas por mí',
     'search_not_viewed_by_me' => 'No vistas por mí',
     'search_permissions_set' => 'Permisos ajustados',
     'search_created_by_me' => 'Creadas por mí',
     'search_updated_by_me' => 'Actualizadas por mí',
+    'search_date_options' => 'Opciones de fecha',
     'search_updated_before' => 'Actualizadas antes de',
     'search_updated_after' => 'Actualizadas después de',
     'search_created_before' => 'Creadas antes de',
@@ -67,6 +69,7 @@ return [
         /**
      * Shelves
      */
+    'shelf' => 'Estante',
     'shelves' => 'Estantes',
     'shelves_long' => 'Estantes',
     'shelves_empty' => 'No hay estantes creados',
