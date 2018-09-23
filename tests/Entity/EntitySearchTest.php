@@ -172,7 +172,7 @@ class EntitySearchTest extends TestCase
 
     public function test_ajax_entity_search()
     {
-        $page = Page::all()->last();
+        $page = $this->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);
         $notVisitedPage = Page::first();
 
         // Visit the page to make popular
