@@ -7,7 +7,8 @@ let data = {
         type: {
             page: true,
             chapter: true,
-            book: true
+            book: true,
+            bookshelf: true,
         },
         exactTerms: [],
         tagTerms: [],
@@ -46,11 +47,7 @@ let methods = {
     exactChange() {
         let exactFilter = /"(.+?)"/g;
         this.termString = this.termString.replace(exactFilter, '');
-        let matchesTerm = this.search.exactTerms.filter(term => {
-            return term.trim() !== '';
-        }).map(term => {
-            return `"${term}"`
-        }).join(' ');
+        let matchesTerm = this.search.exactTerms.filter(term =>  term.trim() !== '').map(term => `"${term}"`).join(' ');
         this.appendTerm(matchesTerm);
     },
 
@@ -105,23 +102,24 @@ let methods = {
         let match = searchString.match(typeFilter);
         let type = this.search.type;
         if (!match) {
-            type.page = type.book = type.chapter = true;
+            type.page = type.book = type.chapter = type.bookshelf = true;
             return;
         }
         let splitTypes = match[1].replace(/ /g, '').split('|');
         type.page = (splitTypes.indexOf('page') !== -1);
         type.chapter = (splitTypes.indexOf('chapter') !== -1);
         type.book = (splitTypes.indexOf('book') !== -1);
+        type.bookshelf = (splitTypes.indexOf('bookshelf') !== -1);
     },
 
     typeChange() {
         let typeFilter = /{\s?type:\s?(.*?)\s?}/;
         let type = this.search.type;
-        if (type.page === type.chapter && type.page === type.book) {
+        if (type.page === type.chapter === type.book === type.bookshelf) {
             this.termString = this.termString.replace(typeFilter, '');
             return;
         }
-        let selectedTypes = Object.keys(type).filter(type => {return this.search.type[type];}).join('|');
+        let selectedTypes = Object.keys(type).filter(type => this.search.type[type]).join('|');
         let typeTerm = '{type:'+selectedTypes+'}';
         if (this.termString.match(typeFilter)) {
             this.termString = this.termString.replace(typeFilter, typeTerm);
