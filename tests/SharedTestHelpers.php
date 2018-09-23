@@ -4,6 +4,7 @@ use BookStack\Book;
 use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
+use BookStack\Page;
 use BookStack\Repos\EntityRepo;
 use BookStack\Repos\PermissionsRepo;
 use BookStack\Role;
@@ -112,7 +113,7 @@ trait SharedTestHelpers
     /**
      * Create and return a new test page
      * @param array $input
-     * @return Chapter
+     * @return Page
      */
     public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
         $book = Book::first();
