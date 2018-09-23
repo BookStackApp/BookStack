@@ -409,6 +409,7 @@ class WysiwygEditor {
             directionality : this.textDirection,
             remove_script_host: false,
             document_base_url: window.baseUrl('/'),
+            end_container_on_empty_block: true,
             statusbar: false,
             menubar: false,
             paste_data_images: false,
