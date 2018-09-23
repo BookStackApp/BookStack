@@ -22,7 +22,9 @@
                 <div class="form-group">
                     <label class="inline checkbox text-page"><input type="checkbox" v-on:change="typeChange" v-model="search.type.page" value="page">{{ trans('entities.page') }}</label>
                     <label class="inline checkbox text-chapter"><input type="checkbox" v-on:change="typeChange" v-model="search.type.chapter" value="chapter">{{ trans('entities.chapter') }}</label>
+                    <br>
                     <label class="inline checkbox text-book"><input type="checkbox" v-on:change="typeChange" v-model="search.type.book" value="book">{{ trans('entities.book') }}</label>
+                    <label class="inline checkbox text-bookshelf"><input type="checkbox" v-on:change="typeChange" v-model="search.type.bookshelf" value="bookshelf">{{ trans('entities.shelf') }}</label>
                 </div>
 
                 <h6 class="text-muted">{{ trans('entities.search_exact_matches') }}</h6>

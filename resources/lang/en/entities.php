@@ -69,6 +69,7 @@ return [
     /**
      * Shelves
      */
+    'shelf' => 'Shelf',
     'shelves' => 'Shelves',
     'shelves_long' => 'Bookshelves',
     'shelves_empty' => 'No shelves have been created',
