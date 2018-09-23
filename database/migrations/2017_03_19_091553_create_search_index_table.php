@@ -51,8 +51,6 @@ class CreateSearchIndexTable extends Migration
                 $table->dropIndex('name_search');
             });
         }
-
-        app(\BookStack\Services\SearchService::class)->indexAllEntities();
     }
 
     /**
