@@ -13,6 +13,28 @@ class CreateBookshelvesTable extends Migration
      */
     public function up()
     {
+
+        // Convert the existing entity tables to InnoDB.
+        // Wrapped in try-catch just in the event a different database system is used
+        // which does not support InnoDB but does support all required features
+        // like foreign key references.
+        try {
+            $prefix = DB::getTablePrefix();
+            DB::statement("ALTER TABLE {$prefix}pages ENGINE = InnoDB;");
+            DB::statement("ALTER TABLE {$prefix}chapters ENGINE = InnoDB;");
+            DB::statement("ALTER TABLE {$prefix}books ENGINE = InnoDB;");
+        } catch (Exception $exception) {}
+
+        // Here we have table drops before the creations due to upgrade issues
+        // people were having due to the bookshelves_books table creation failing.
+        if (Schema::hasTable('bookshelves_books')) {
+            Schema::drop('bookshelves_books');
+        }
+
+        if (Schema::hasTable('bookshelves')) {
+            Schema::drop('bookshelves');
+        }
+
         Schema::create('bookshelves', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 200);
@@ -35,12 +57,12 @@ class CreateBookshelvesTable extends Migration
             $table->integer('book_id')->unsigned();
             $table->integer('order')->unsigned();
 
+            $table->primary(['bookshelf_id', 'book_id']);
+
             $table->foreign('bookshelf_id')->references('id')->on('bookshelves')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('book_id')->references('id')->on('books')
                 ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->primary(['bookshelf_id', 'book_id']);
         });
 
         // Copy existing role permissions from Books
