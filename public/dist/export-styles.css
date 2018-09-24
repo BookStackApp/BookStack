@@ -252,6 +252,13 @@ p.secondary, p .secondary, span.secondary, .text-secondary {
     color: #e27b41;
     fill: #e27b41; }
 
+.text-bookshelf {
+  color: #af5a5a;
+  fill: #af5a5a; }
+  .text-bookshelf:hover {
+    color: #af5a5a;
+    fill: #af5a5a; }
+
 .text-book {
   color: #009688;
   fill: #009688; }
@@ -305,6 +312,7 @@ ul, ol {
 
 ul {
   padding-left: 20.8px;
+  padding-right: 20.8px;
   list-style: disc; }
   ul ul {
     list-style: circle;
@@ -315,7 +323,8 @@ ul {
 
 ol {
   list-style: decimal;
-  padding-left: 32px; }
+  padding-left: 32px;
+  padding-right: 32px; }
 
 li.checkbox-item, li.task-list-item {
   list-style: none;
@@ -544,12 +553,39 @@ div[class^="col-"] img {
   flex-direction: column;
   border: 1px solid #ddd;
   min-width: 100px; }
+  .grid-card h2 {
+    width: 100%;
+    font-size: 1.5em;
+    margin: 0 0 10px; }
+  .grid-card h2 a {
+    display: block;
+    width: 100%;
+    line-height: 1.2;
+    text-decoration: none; }
+  .grid-card p {
+    font-size: .85em;
+    margin: 0;
+    line-height: 1.6em; }
   .grid-card .grid-card-content {
-    flex: 1; }
+    flex: 1;
+    border-top: 0;
+    border-bottom-width: 2px; }
   .grid-card .grid-card-content, .grid-card .grid-card-footer {
     padding: 24px; }
   .grid-card .grid-card-content + .grid-card-footer {
     padding-top: 0; }
+
+.book-grid-item .grid-card-content h2 a {
+  color: #009688;
+  fill: #009688; }
+
+.bookshelf-grid-item .grid-card-content h2 a {
+  color: #af5a5a;
+  fill: #af5a5a; }
+
+.book-grid-item .grid-card-footer p.small {
+  font-size: .8em;
+  margin: 0; }
 
 @media screen and (max-width: 800px) {
   .grid.third {
@@ -1613,6 +1649,8 @@ table.table {
     text-align: right; }
   table.table .text-center {
     text-align: center; }
+  table.table td.actions {
+    overflow: visible; }
 
 table.no-style td {
   border: 0;
@@ -1975,7 +2013,7 @@ header .search-box {
   .book-tree .sidebar-page-list .sub-menu {
     display: none;
     padding-left: 0; }
-  .book-tree .sidebar-page-list .sub-menu.open {
+  .book-tree .sidebar-page-list [chapter-toggle].open + .sub-menu {
     display: block; }
 
 .sortable-page-list, .sortable-page-list ul {
@@ -2126,18 +2164,22 @@ ul.pagination {
   .dropdown-container ul li.padded {
     padding: 6px 16px;
     line-height: 1.2; }
-  .dropdown-container ul a {
+  .dropdown-container ul a, .dropdown-container ul button {
     display: block;
     padding: 6px 16px;
     color: #555;
-    fill: #555; }
-    .dropdown-container ul a:hover {
+    fill: #555;
+    white-space: nowrap; }
+    .dropdown-container ul a:hover, .dropdown-container ul button:hover {
       text-decoration: none;
       background-color: #EEE; }
-    .dropdown-container ul a svg {
+    .dropdown-container ul a svg, .dropdown-container ul button svg {
       margin-right: 12px;
       display: inline-block;
       width: 16px; }
+  .dropdown-container ul button {
+    width: 100%;
+    text-align: left; }
   .dropdown-container ul li.border-bottom {
     border-bottom: 1px solid #DDD; }
 
@@ -2157,29 +2199,6 @@ ul.pagination {
     -webkit-transform: scale(1.15);
             transform: scale(1.15);
     opacity: .5; }
-
-.book-grid-item .grid-card-content {
-  border-top: 0;
-  border-bottom-width: 2px; }
-  .book-grid-item .grid-card-content h2 {
-    width: 100%;
-    font-size: 1.5em;
-    margin: 0 0 10px; }
-  .book-grid-item .grid-card-content h2 a {
-    display: block;
-    width: 100%;
-    line-height: 1.2;
-    color: #009688;
-    fill: #009688;
-    text-decoration: none; }
-  .book-grid-item .grid-card-content p {
-    font-size: .85em;
-    margin: 0;
-    line-height: 1.6em; }
-
-.book-grid-item .grid-card-footer p.small {
-  font-size: .8em;
-  margin: 0; }
 
 .page-editor {
   display: flex;
