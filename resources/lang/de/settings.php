@@ -29,6 +29,7 @@ return [
     'app_homepage' => 'Startseite der Anwendung',
     'app_homepage_desc' => 'Wählen Sie eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
     'app_homepage_default' => 'Ausgewählte Startseite',
+    'app_homepage_books' => 'Oder wähle die Buch-Übersicht als Startseite. Das wird die Seiten-Auswahl überschreiben.',
     'app_disable_comments' => 'Kommentare deaktivieren',
     'app_disable_comments_desc' => 'Deaktiviert Kommentare über alle Seiten in der Anwendung. Vorhandene Kommentare werden nicht angezeigt.',
     /**
@@ -42,6 +43,20 @@ return [
     'reg_confirm_restrict_domain' => 'Registrierung auf bestimmte Domains einschränken',
     'reg_confirm_restrict_domain_desc' => "Fügen sie eine durch Komma getrennte Liste von Domains hinzu, auf die die Registrierung eingeschränkt werden soll. Benutzern wird eine E-Mail gesendet, um ihre E-Mail Adresse zu bestätigen, bevor sie diese Anwendung nutzen können.\nHinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung ändern.",
     'reg_confirm_restrict_domain_placeholder' => 'Keine Einschränkung gesetzt',
+    
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => 'Wartung',
+    'maint_image_cleanup' => 'Bilder bereinigen',
+    'maint_image_cleanup_desc' => 'Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstellen Sie vor dem Start ein Backup Ihrer Datenbank und Bilder.',
+    'maint_image_cleanup_ignore_revisions' => 'Bilder in Versionen ignorieren',
+    'maint_image_cleanup_run' => 'Reinigung starten',
+    'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchten Sie diese Bilder löschen?',
+    'maint_image_cleanup_success' => ':count eventuell unbenutze Bilder wurden gefunden und gelöscht.',
+    'maint_image_cleanup_nothing_found' => 'Keine unbenutzen Bilder gefunden. Nichts zu löschen!',
+
     /**
      * Role settings
      */
