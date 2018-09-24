@@ -65,6 +65,10 @@ class CreateBookshelvesTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
         });
 
+        // Delete old bookshelf permissions
+        // Needed to to issues upon upgrade.
+        DB::table('role_permissions')->where('name', 'like', 'bookshelf-%')->delete();
+
         // Copy existing role permissions from Books
         $ops = ['View All', 'View Own', 'Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
         foreach ($ops as $op) {
@@ -81,7 +85,9 @@ class CreateBookshelvesTable extends Migration
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
             ]);
 
-            $rowsToInsert = $roleIdsWithBookPermission->map(function($roleId) use ($permId) {
+            $rowsToInsert = $roleIdsWithBookPermission->filter(function($roleId) {
+                return !is_null($roleId);
+            })->map(function($roleId) use ($permId) {
                 return [
                     'role_id' => $roleId,
                     'permission_id' => $permId
