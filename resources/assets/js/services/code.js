@@ -1,3 +1,7 @@
+const CodeMirror = require('codemirror');
+const Clipboard = require("clipboard");
+
+// Modes
 require('codemirror/mode/css/css');
 require('codemirror/mode/clike/clike');
 require('codemirror/mode/diff/diff');
@@ -16,9 +20,8 @@ require('codemirror/mode/toml/toml');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 
-const Clipboard = require("clipboard");
-
-const CodeMirror = require('codemirror');
+// Addons
+require('codemirror/addon/scroll/scrollpastend');
 
 const modeMap = {
     css: 'css',
@@ -113,7 +116,7 @@ function addCopyIcon(cmInstance) {
         copyButton.classList.add('success');
         setTimeout(() => {
             copyButton.classList.remove('success');
-        }, 360);
+        }, 240);
     });
 }
 
@@ -157,6 +160,7 @@ function wysiwygView(elem) {
 
     newWrap.className = 'CodeMirrorContainer';
     newWrap.setAttribute('data-lang', lang);
+    newWrap.setAttribute('dir', 'ltr');
     newTextArea.style.display = 'none';
     elem.parentNode.replaceChild(newWrap, elem);
 
@@ -237,7 +241,8 @@ function markdownEditor(elem) {
         mode: "markdown",
         lineNumbers: true,
         theme: getTheme(),
-        lineWrapping: true
+        lineWrapping: true,
+        scrollPastEnd: true,
     });
 }
 
@@ -252,7 +257,6 @@ function getMetaKey() {
 
 module.exports = {
     highlight: highlight,
-    highlightElem: highlightElem,
     wysiwygView: wysiwygView,
     popupEditor: popupEditor,
     setMode: setMode,

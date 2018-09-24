@@ -16,10 +16,11 @@ return [
     'email_confirmation_invalid' => 'Esse token de confirmação não é válido ou já foi utilizado. Por favor, tente efetuar o registro novamente.',
     'email_confirmation_expired' => 'O token de confirmação já expirou. Um novo e-mail foi enviado.',
     'ldap_fail_anonymous' => 'O acesso LDAP falhou ao tentar usar o anonymous bind',
-    'ldap_fail_authed' => 'O acesso LDAPfalou ao tentar os detalhes do dn e senha fornecidos',
+    'ldap_fail_authed' => 'O acesso LDAP falhou ao tentar os detalhes do dn e senha fornecidos',
     'ldap_extension_not_installed' => 'As extensões LDAP PHP não estão instaladas',
     'ldap_cannot_connect' => 'Não foi possível conectar ao servidor LDAP. Conexão inicial falhou',
     'social_no_action_defined' => 'Nenhuma ação definida',
+    'social_login_bad_response' => "Erro recebido durante o login :socialAccount: \n:error",
     'social_account_in_use' => 'Essa conta :socialAccount já está em uso. Por favor, tente se logar usando a opção :socialAccount',
     'social_account_email_in_use' => 'O e-mail :email já está e muso. Se você já tem uma conta você poderá se conectar a conta :socialAccount a partir das configurações de seu perfil.',
     'social_account_existing' => 'Essa conta :socialAccount já está atrelada a esse perfil.',
@@ -34,13 +35,16 @@ return [
     'cannot_get_image_from_url' => 'Não foi possivel capturar a imagem a partir de :url',
     'cannot_create_thumbs' => 'O servidor não pôde criar as miniaturas de imagem. Por favor, verifique se a extensão GD PHP está instalada.',
     'server_upload_limit' => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
+    'uploaded' => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
     'image_upload_error' => 'Um erro aconteceu enquanto o servidor tentava efetuar o upload da imagem',
+    'image_upload_type_error' => 'O tipo de imagem que está sendo feito upload é inválido',
 
     // Attachments
     'attachment_page_mismatch' => 'Erro de \'Page mismatch\' durante a atualização do anexo',
+    'attachment_not_found' => 'Anexo não encontrado',
 
     // Pages
-    'page_draft_autosave_fail' => 'Falou ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',
+    'page_draft_autosave_fail' => 'Falhou ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',
     'page_custom_home_deletion' => 'Não pode deletar uma página que está definida como página inicial',
 
     // Entities
@@ -57,7 +61,7 @@ return [
     'users_cannot_delete_guest' => 'Você não pode excluir o usuário convidado',
 
     // Roles
-    'role_cannot_be_edited' => 'Esse perfil não poed ser editado',
+    'role_cannot_be_edited' => 'Esse perfil não pode ser editado',
     'role_system_cannot_be_deleted' => 'Esse perfil é um perfil de sistema e não pode ser excluído',
     'role_registration_default_cannot_delete' => 'Esse perfil não poderá se excluído enquando estiver registrado como o perfil padrão',
 

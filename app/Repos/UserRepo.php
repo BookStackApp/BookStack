@@ -76,14 +76,15 @@ class UserRepo
         return $query->paginate($count);
     }
 
-    /**
+     /**
      * Creates a new user and attaches a role to them.
      * @param array $data
+     * @param boolean $verifyEmail
      * @return User
      */
-    public function registerNew(array $data)
+    public function registerNew(array $data, $verifyEmail = false)
     {
-        $user = $this->create($data);
+        $user = $this->create($data, $verifyEmail);
         $this->attachDefaultRole($user);
 
         // Get avatar from gravatar and save
@@ -94,15 +95,14 @@ class UserRepo
 
     /**
      * Give a user the default role. Used when creating a new user.
-     * @param $user
+     * @param User $user
      */
-    public function attachDefaultRole($user)
+    public function attachDefaultRole(User $user)
     {
         $roleId = setting('registration-role');
-        if ($roleId === false) {
-            $roleId = $this->role->first()->id;
+        if ($roleId !== false && $user->roles()->where('id', '=', $roleId)->count() === 0) {
+            $user->attachRoleId($roleId);
         }
-        $user->attachRoleId($roleId);
     }
 
     /**
@@ -141,15 +141,17 @@ class UserRepo
     /**
      * Create a new basic instance of user.
      * @param array $data
+     * @param boolean $verifyEmail
      * @return User
      */
-    public function create(array $data)
+    public function create(array $data, $verifyEmail = false)
     {
+
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            'email_confirmed' => false
+            'email_confirmed' => $verifyEmail
         ]);
     }
 

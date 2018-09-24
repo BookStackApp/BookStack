@@ -250,10 +250,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $pdfContent = $this->exportService->chapterToPdf($chapter);
-        return response()->make($pdfContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.pdf'
-        ]);
+        return $this->downloadResponse($pdfContent, $chapterSlug . '.pdf');
     }
 
     /**
@@ -266,10 +263,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $containedHtml = $this->exportService->chapterToContainedHtml($chapter);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.html'
-        ]);
+        return $this->downloadResponse($containedHtml, $chapterSlug . '.html');
     }
 
     /**
@@ -281,10 +275,7 @@ class ChapterController extends Controller
     public function exportPlainText($bookSlug, $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
-        $containedHtml = $this->exportService->chapterToPlainText($chapter);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.txt'
-        ]);
+        $chapterText = $this->exportService->chapterToPlainText($chapter);
+        return $this->downloadResponse($chapterText, $chapterSlug . '.txt');
     }
 }

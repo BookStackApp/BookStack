@@ -49,3 +49,8 @@
 .page-content.mce-content-body p {
   line-height: 1.6;
 }
+
+// Fix to prevent 'No color' option from not being clickable.
+.mce-colorbtn-trans {
+  overflow: hidden;
+}

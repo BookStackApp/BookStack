@@ -298,4 +298,53 @@ class LdapTest extends BrowserKitTest
         ]);
     }
 
+    public function test_login_group_mapping_does_not_conflict_with_default_role()
+    {
+        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
+        $roleToReceive2 = factory(Role::class)->create(['name' => 'ldaptester-second', 'display_name' => 'LdapTester Second']);
+        $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
+
+        setting()->put('registration-role', $roleToReceive->id);
+
+        app('config')->set([
+            'services.ldap.user_to_groups' => true,
+            'services.ldap.group_attribute' => 'memberOf',
+            'services.ldap.remove_from_groups' => true,
+        ]);
+        $this->mockLdap->shouldReceive('connect')->times(2)->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->times(2);
+        $this->mockLdap->shouldReceive('setOption')->times(5);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(5)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$this->mockUser->name],
+                'cn' => [$this->mockUser->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')],
+                'mail' => [$this->mockUser->email],
+                'memberof' => [
+                    'count' => 2,
+                    0 => "cn=ldaptester,ou=groups,dc=example,dc=com",
+                    1 => "cn=ldaptester-second,ou=groups,dc=example,dc=com",
+                ]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
+
+        $this->visit('/login')
+            ->see('Username')
+            ->type($this->mockUser->name, '#username')
+            ->type($this->mockUser->password, '#password')
+            ->press('Log In')
+            ->seePageIs('/');
+
+        $user = User::where('email', $this->mockUser->email)->first();
+        $this->seeInDatabase('role_user', [
+            'user_id' => $user->id,
+            'role_id' => $roleToReceive->id
+        ]);
+        $this->seeInDatabase('role_user', [
+            'user_id' => $user->id,
+            'role_id' => $roleToReceive2->id
+        ]);
+    }
+
 }

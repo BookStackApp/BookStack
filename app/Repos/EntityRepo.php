@@ -1,6 +1,7 @@
 <?php namespace BookStack\Repos;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Exceptions\NotFoundException;
@@ -18,6 +19,10 @@ use Illuminate\Support\Collection;
 
 class EntityRepo
 {
+    /**
+     * @var Bookshelf
+     */
+    public $bookshelf;
 
     /**
      * @var Book $book
@@ -67,6 +72,7 @@ class EntityRepo
 
     /**
      * EntityRepo constructor.
+     * @param Bookshelf $bookshelf
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
@@ -77,6 +83,7 @@ class EntityRepo
      * @param SearchService $searchService
      */
     public function __construct(
+        Bookshelf $bookshelf,
         Book $book,
         Chapter $chapter,
         Page $page,
@@ -86,11 +93,13 @@ class EntityRepo
         TagRepo $tagRepo,
         SearchService $searchService
     ) {
+        $this->bookshelf = $bookshelf;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
         $this->pageRevision = $pageRevision;
         $this->entities = [
+            'bookshelf' => $this->bookshelf,
             'page' => $this->page,
             'chapter' => $this->chapter,
             'book' => $this->book
@@ -332,6 +341,17 @@ class EntityRepo
     }
 
     /**
+     * Get the child items for a chapter sorted by priority but
+     * with draft items floated to the top.
+     * @param Bookshelf $bookshelf
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getBookshelfChildren(Bookshelf $bookshelf)
+    {
+        return $this->permissionService->enforceEntityRestrictions('book', $bookshelf->books())->get();
+    }
+
+    /**
      * Get all child objects of a book.
      * Returns a sorted collection of Pages and Chapters.
      * Loads the book slug onto child elements to prevent access database access for getting the slug.
@@ -534,6 +554,28 @@ class EntityRepo
     }
 
     /**
+     * Sync the books assigned to a shelf from a comma-separated list
+     * of book IDs.
+     * @param Bookshelf $shelf
+     * @param string $books
+     */
+    public function updateShelfBooks(Bookshelf $shelf, string $books)
+    {
+        $ids = explode(',', $books);
+
+        // Check books exist and match ordering
+        $bookIds = $this->entityQuery('book')->whereIn('id', $ids)->get(['id'])->pluck('id');
+        $syncData = [];
+        foreach ($ids as $index => $id) {
+            if ($bookIds->contains($id)) {
+                $syncData[$id] = ['order' => $index];
+            }
+        }
+
+        $shelf->books()->sync($syncData);
+    }
+
+    /**
      * Change the book that an entity belongs to.
      * @param string $type
      * @param integer $newBookId
@@ -704,10 +746,13 @@ class EntityRepo
         $revision->revision_number = $page->revision_count;
         $revision->save();
 
-        // Clear old revisions
-        if ($this->pageRevision->where('page_id', '=', $page->id)->count() > 50) {
-            $this->pageRevision->where('page_id', '=', $page->id)
-                ->orderBy('created_at', 'desc')->skip(50)->take(5)->delete();
+        $revisionLimit = config('app.revision_limit');
+        if ($revisionLimit !== false) {
+            $revisionsToDelete = $this->pageRevision->where('page_id', '=', $page->id)
+                ->orderBy('created_at', 'desc')->skip(intval($revisionLimit))->take(10)->get(['id']);
+            if ($revisionsToDelete->count() > 0) {
+                $this->pageRevision->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
+            }
         }
 
         return $revision;
@@ -1155,8 +1200,21 @@ class EntityRepo
     }
 
     /**
+     * Destroy a bookshelf instance
+     * @param Bookshelf $shelf
+     * @throws \Throwable
+     */
+    public function destroyBookshelf(Bookshelf $shelf)
+    {
+        $this->destroyEntityCommonRelations($shelf);
+        $shelf->delete();
+    }
+
+    /**
      * Destroy the provided book and all its child entities.
      * @param Book $book
+     * @throws NotifyException
+     * @throws \Throwable
      */
     public function destroyBook(Book $book)
     {
@@ -1166,17 +1224,14 @@ class EntityRepo
         foreach ($book->chapters as $chapter) {
             $this->destroyChapter($chapter);
         }
-        \Activity::removeEntity($book);
-        $book->views()->delete();
-        $book->permissions()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($book);
-        $this->searchService->deleteEntityTerms($book);
+        $this->destroyEntityCommonRelations($book);
         $book->delete();
     }
 
     /**
      * Destroy a chapter and its relations.
      * @param Chapter $chapter
+     * @throws \Throwable
      */
     public function destroyChapter(Chapter $chapter)
     {
@@ -1186,11 +1241,7 @@ class EntityRepo
                 $page->save();
             }
         }
-        \Activity::removeEntity($chapter);
-        $chapter->views()->delete();
-        $chapter->permissions()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($chapter);
-        $this->searchService->deleteEntityTerms($chapter);
+        $this->destroyEntityCommonRelations($chapter);
         $chapter->delete();
     }
 
@@ -1198,22 +1249,17 @@ class EntityRepo
      * Destroy a given page along with its dependencies.
      * @param Page $page
      * @throws NotifyException
+     * @throws \Throwable
      */
     public function destroyPage(Page $page)
     {
-        \Activity::removeEntity($page);
-        $page->views()->delete();
-        $page->tags()->delete();
-        $page->revisions()->delete();
-        $page->permissions()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($page);
-        $this->searchService->deleteEntityTerms($page);
-
         // Check if set as custom homepage
         $customHome = setting('app-homepage', '0:');
         if (intval($page->id) === intval(explode(':', $customHome)[0])) {
             throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
         }
+
+        $this->destroyEntityCommonRelations($page);
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);
@@ -1222,5 +1268,49 @@ class EntityRepo
         }
 
         $page->delete();
+    }
+
+    /**
+     * Destroy or handle the common relations connected to an entity.
+     * @param Entity $entity
+     * @throws \Throwable
+     */
+    protected function destroyEntityCommonRelations(Entity $entity)
+    {
+        \Activity::removeEntity($entity);
+        $entity->views()->delete();
+        $entity->permissions()->delete();
+        $entity->tags()->delete();
+        $entity->comments()->delete();
+        $this->permissionService->deleteJointPermissionsForEntity($entity);
+        $this->searchService->deleteEntityTerms($entity);
+    }
+
+    /**
+     * Copy the permissions of a bookshelf to all child books.
+     * Returns the number of books that had permissions updated.
+     * @param Bookshelf $bookshelf
+     * @return int
+     * @throws \Throwable
+     */
+    public function copyBookshelfPermissions(Bookshelf $bookshelf)
+    {
+        $shelfPermissions = $bookshelf->permissions()->get(['role_id', 'action'])->toArray();
+        $shelfBooks = $bookshelf->books()->get();
+        $updatedBookCount = 0;
+
+        foreach ($shelfBooks as $book) {
+            if (!userCan('restrictions-manage', $book)) {
+                continue;
+            }
+            $book->permissions()->delete();
+            $book->restricted = $bookshelf->restricted;
+            $book->permissions()->createMany($shelfPermissions);
+            $book->save();
+            $this->permissionService->buildJointPermissionsForEntity($book);
+            $updatedBookCount++;
+        }
+
+        return $updatedBookCount;
     }
 }

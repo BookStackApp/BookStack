@@ -72,4 +72,13 @@ class LanguageTest extends TestCase
         }
     }
 
+    public function test_rtl_config_set_if_lang_is_rtl()
+    {
+        $this->asEditor();
+        $this->assertFalse(config('app.rtl'), "App RTL config should be false by default");
+        setting()->putUser($this->getEditor(), 'language', 'ar');
+        $this->get('/');
+        $this->assertTrue(config('app.rtl'), "App RTL config should have been set to true by middleware");
+    }
+
 }

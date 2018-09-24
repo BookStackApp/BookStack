@@ -35,8 +35,12 @@
         <env name="STORAGE_TYPE" value="local"/>
         <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <env name="GITHUB_AUTO_REGISTER" value=""/>
+        <env name="GITHUB_AUTO_CONFIRM_EMAIL" value=""/>
         <env name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <env name="GOOGLE_AUTO_REGISTER" value=""/>
+        <env name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
         <env name="APP_URL" value="http://bookstack.dev"/>
     </php>
 </phpunit>

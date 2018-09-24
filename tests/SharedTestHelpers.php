@@ -1,9 +1,12 @@
 <?php namespace Tests;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
+use BookStack\Page;
 use BookStack\Repos\EntityRepo;
+use BookStack\Repos\PermissionsRepo;
 use BookStack\Role;
 use BookStack\Services\PermissionService;
 use BookStack\Services\SettingService;
@@ -70,6 +73,25 @@ trait SharedTestHelpers
     }
 
     /**
+     * Regenerate the permission for an entity.
+     * @param Entity $entity
+     */
+    protected function regenEntityPermissions(Entity $entity)
+    {
+        $this->app[PermissionService::class]->buildJointPermissionsForEntity($entity);
+        $entity->load('jointPermissions');
+    }
+
+    /**
+     * Create and return a new bookshelf.
+     * @param array $input
+     * @return Bookshelf
+     */
+    public function newShelf($input = ['name' => 'test shelf', 'description' => 'My new test shelf']) {
+        return $this->app[EntityRepo::class]->createFromInput('bookshelf', $input, false);
+    }
+
+    /**
      * Create and return a new book.
      * @param array $input
      * @return Book
@@ -91,7 +113,7 @@ trait SharedTestHelpers
     /**
      * Create and return a new test page
      * @param array $input
-     * @return Chapter
+     * @return Page
      */
     public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
         $book = Book::first();
@@ -138,6 +160,32 @@ trait SharedTestHelpers
         $entity->load('permissions');
         $this->app[PermissionService::class]->buildJointPermissionsForEntity($entity);
         $entity->load('jointPermissions');
+    }
+
+    /**
+     * Give the given user some permissions.
+     * @param \BookStack\User $user
+     * @param array $permissions
+     */
+    protected function giveUserPermissions(\BookStack\User $user, $permissions = [])
+    {
+        $newRole = $this->createNewRole($permissions);
+        $user->attachRole($newRole);
+        $user->load('roles');
+        $user->permissions(false);
+    }
+
+    /**
+     * Create a new basic role for testing purposes.
+     * @param array $permissions
+     * @return Role
+     */
+    protected function createNewRole($permissions = [])
+    {
+        $permissionRepo = app(PermissionsRepo::class);
+        $roleData = factory(Role::class)->make()->toArray();
+        $roleData['permissions'] = array_flip($permissions);
+        return $permissionRepo->saveNewRole($roleData);
     }
 
 }

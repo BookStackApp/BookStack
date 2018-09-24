@@ -22,7 +22,9 @@
                 <div class="form-group">
                     <label class="inline checkbox text-page"><input type="checkbox" v-on:change="typeChange" v-model="search.type.page" value="page">{{ trans('entities.page') }}</label>
                     <label class="inline checkbox text-chapter"><input type="checkbox" v-on:change="typeChange" v-model="search.type.chapter" value="chapter">{{ trans('entities.chapter') }}</label>
+                    <br>
                     <label class="inline checkbox text-book"><input type="checkbox" v-on:change="typeChange" v-model="search.type.book" value="book">{{ trans('entities.book') }}</label>
+                    <label class="inline checkbox text-bookshelf"><input type="checkbox" v-on:change="typeChange" v-model="search.type.bookshelf" value="bookshelf">{{ trans('entities.shelf') }}</label>
                 </div>
 
                 <h6 class="text-muted">{{ trans('entities.search_exact_matches') }}</h6>
@@ -66,7 +68,7 @@
                 </table>
 
                @if(signedInUser())
-                    <h6 class="text-muted">Options</h6>
+                    <h6 class="text-muted">{{ trans('entities.search_options') }}</h6>
                     <label class="checkbox">
                         <input type="checkbox" v-on:change="optionChange('viewed_by_me')"
                                v-model="search.option.viewed_by_me" value="page">
@@ -94,7 +96,7 @@
                     </label>
                 @endif
 
-                <h6 class="text-muted">Date Options</h6>
+                <h6 class="text-muted">{{ trans('entities.search_date_options') }}</h6>
                 <table cellpadding="0" cellspacing="0" border="0" class="no-style form-table">
                     <tr>
                         <td width="200">{{ trans('entities.search_updated_after') }}</td>

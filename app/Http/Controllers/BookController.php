@@ -299,10 +299,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $pdfContent = $this->exportService->bookToPdf($book);
-        return response()->make($pdfContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.pdf'
-        ]);
+        return $this->downloadResponse($pdfContent, $bookSlug . '.pdf');
     }
 
     /**
@@ -314,10 +311,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $htmlContent = $this->exportService->bookToContainedHtml($book);
-        return response()->make($htmlContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.html'
-        ]);
+        return $this->downloadResponse($htmlContent, $bookSlug . '.html');
     }
 
     /**
@@ -328,10 +322,7 @@ class BookController extends Controller
     public function exportPlainText($bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
-        $htmlContent = $this->exportService->bookToPlainText($book);
-        return response()->make($htmlContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.txt'
-        ]);
+        $textContent = $this->exportService->bookToPlainText($book);
+        return $this->downloadResponse($textContent, $bookSlug . '.txt');
     }
 }

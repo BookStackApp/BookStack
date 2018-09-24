@@ -1,6 +1,7 @@
 <?php namespace BookStack\Services;
 
 use BookStack\Book;
+use BookStack\Bookshelf;
 use BookStack\Chapter;
 use BookStack\Entity;
 use BookStack\Page;
@@ -13,11 +14,16 @@ use Illuminate\Support\Collection;
 class SearchService
 {
     protected $searchTerm;
+    protected $bookshelf;
     protected $book;
     protected $chapter;
     protected $page;
     protected $db;
     protected $permissionService;
+
+    /**
+     * @var Entity[]
+     */
     protected $entities;
 
     /**
@@ -29,20 +35,23 @@ class SearchService
     /**
      * SearchService constructor.
      * @param SearchTerm $searchTerm
+     * @param Bookshelf $bookshelf
      * @param Book $book
      * @param Chapter $chapter
      * @param Page $page
      * @param Connection $db
      * @param PermissionService $permissionService
      */
-    public function __construct(SearchTerm $searchTerm, Book $book, Chapter $chapter, Page $page, Connection $db, PermissionService $permissionService)
+    public function __construct(SearchTerm $searchTerm, Bookshelf $bookshelf, Book $book, Chapter $chapter, Page $page, Connection $db, PermissionService $permissionService)
     {
         $this->searchTerm = $searchTerm;
+        $this->bookshelf = $bookshelf;
         $this->book = $book;
         $this->chapter = $chapter;
         $this->page = $page;
         $this->db = $db;
         $this->entities = [
+            'bookshelf' => $this->bookshelf,
             'page' => $this->page,
             'chapter' => $this->chapter,
             'book' => $this->book
@@ -65,6 +74,7 @@ class SearchService
      * @param string $entityType
      * @param int $page
      * @param int $count - Count of each entity to search, Total returned could can be larger and not guaranteed.
+     * @param string $action
      * @return array[int, Collection];
      */
     public function searchEntities($searchString, $entityType = 'all', $page = 1, $count = 20, $action = 'view')
@@ -370,20 +380,12 @@ class SearchService
     {
         $this->searchTerm->truncate();
 
-        // Chunk through all books
-        $this->book->chunk(1000, function ($books) {
-            $this->indexEntities($books);
-        });
-
-        // Chunk through all chapters
-        $this->chapter->chunk(1000, function ($chapters) {
-            $this->indexEntities($chapters);
-        });
-
-        // Chunk through all pages
-        $this->page->chunk(1000, function ($pages) {
-            $this->indexEntities($pages);
-        });
+        foreach ($this->entities as $entityModel) {
+            $selectFields = ['id', 'name', $entityModel->textField];
+            $entityModel->newQuery()->select($selectFields)->chunk(1000, function ($entities) {
+                $this->indexEntities($entities);
+            });
+        }
     }
 
     /**

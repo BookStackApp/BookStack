@@ -52,17 +52,51 @@ return [
     'search_content_type' => 'Tipo de Contenido',
     'search_exact_matches' => 'Coincidencias Exactas',
     'search_tags' => 'Búsquedas Etiquetadas',
+    'search_options' => 'Opciones',
     'search_viewed_by_me' => 'Vistas por mí',
     'search_not_viewed_by_me' => 'No vistas por mí',
     'search_permissions_set' => 'Permisos ajustados',
     'search_created_by_me' => 'Creadas por mí',
     'search_updated_by_me' => 'Actualizadas por mí',
+    'search_date_options' => 'Opciones de fecha',
     'search_updated_before' => 'Actualizadas antes de',
     'search_updated_after' => 'Actualizadas después de',
     'search_created_before' => 'Creadas antes de',
     'search_created_after' => 'Creadas después de',
     'search_set_date' => 'fecha',
     'search_update' => 'Actualizar Búsqueda',
+
+        /**
+     * Shelves
+     */
+    'shelf' => 'Estante',
+    'shelves' => 'Estantes',
+    'shelves_long' => 'Estantes',
+    'shelves_empty' => 'No hay estantes creados',
+    'shelves_create' => 'Crear estante',
+    'shelves_popular' => 'Estantes populares',
+    'shelves_new' => 'Estantes nuevos',
+    'shelves_popular_empty' => 'Los estantes más populares aparecerán aquí.',
+    'shelves_new_empty' => 'Los libros más recientes aparecerán aquí.',
+    'shelves_save' => 'Guardar estante',
+    'shelves_books' => 'Libros en este estante',
+    'shelves_add_books' => 'Añadir libros a este estante',
+    'shelves_drag_books' => 'Arrastra libros aquí para añadirlos a este estante',
+    'shelves_empty_contents' => 'Este estante no tiene libros asignados',
+    'shelves_edit_and_assign' => 'Editar el estante para asignar libros',
+    'shelves_edit_named' => 'Editar estante :name',
+    'shelves_edit' => 'Editar estante',
+    'shelves_delete' => 'Borrar estante',
+    'shelves_delete_named' => 'Borrar estante :name',
+    'shelves_delete_explain' => "Esto borrará el estante con el nombre ':name'. Los libros que contenga no se borrarán.",
+    'shelves_delete_confirmation' => '¿Está seguro de que desea borrar este estante?',
+    'shelves_permissions' => 'Permisos del estante',
+    'shelves_permissions_updated' => 'Permisos del estante actualizados',
+    'shelves_permissions_active' => 'Permisos del estante activos',
+    'shelves_copy_permissions_to_books' => 'Copiar permisos a los libros',
+    'shelves_copy_permissions' => 'Copiar permisos',
+    'shelves_copy_permissions_explain' => 'Esto aplicará los ajustes de permisos de este estante para todos sus libros. Antes de activarlo, asegúrese de que todos los cambios de permisos para este estante han sido guardados.',
+    'shelves_copy_permission_success' => 'Permisos del estante copiados a :count libros',
 
     /**
      * Books
@@ -199,6 +233,7 @@ return [
         'message' => ':start :time. ¡Ten cuidado de no sobreescribir los cambios del otro usuario!',
     ],
     'pages_draft_discarded' => 'Borrador descartado, el editor ha sido actualizado con el contenido de la página actual',
+    'pages_specific' => 'Página específica',
 
     /**
      * Editor sidebar
@@ -206,6 +241,7 @@ return [
     'page_tags' => 'Etiquetas de Página',
     'chapter_tags' => 'Etiquetas de Capítulo',
     'book_tags' => 'Etiquetas de Libro',
+    'shelf_tags' => 'Etiquetas de Estante',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
@@ -265,4 +301,11 @@ return [
     'comment_updated_success' => 'Comentario actualizado',
     'comment_delete_confirm' => '¿Está seguro de que quiere borrar este comentario?',
     'comment_in_reply_to' => 'En respuesta a :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => '¿Está seguro de que desea eliminar esta revisión?',
+    'revision_delete_success' => 'Revisión eliminada',
+    'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.'
 ];

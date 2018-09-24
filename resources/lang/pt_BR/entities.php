@@ -162,9 +162,13 @@ return [
     'pages_md_preview' => 'Preview',
     'pages_md_insert_image' => 'Inserir Imagem',
     'pages_md_insert_link' => 'Inserir Link para Entidade',
+    'pages_md_insert_drawing' => 'Inserir Desenho',
     'pages_not_in_chapter' => 'Página não está dentro de um Capítulo',
     'pages_move' => 'Mover Página',
     'pages_move_success' => 'Pagina movida para ":parentName"',
+    'pages_copy' => 'Copiar Página',
+    'pages_copy_desination' => 'Destino da Cópia',
+    'pages_copy_success' => 'Página copiada com sucesso',
     'pages_permissions' => 'Permissões de Página',
     'pages_permissions_success' => 'Permissões de Página atualizadas',
     'pages_revision' => 'Revisão',
@@ -200,6 +204,8 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Tags de Página',
+    'chapter_tags' => 'Tags de Capítulo',
+    'book_tags' => 'Tags de Livro',
     'tag' => 'Tag',
     'tags' =>  '',
     'tag_value' => 'Valor da Tag (Opcional)',
@@ -245,6 +251,7 @@ return [
      */
     'comment' => 'Comentário',
     'comments' => 'Comentários',
+    'comment_add' => 'Adicionar Comentário',
     'comment_placeholder' => 'Digite seus comentários aqui',
     'comment_count' => '{0} Nenhum comentário|{1} 1 Comentário|[2,*] :count Comentários',
     'comment_save' => 'Salvar comentário',
@@ -258,4 +265,11 @@ return [
     'comment_updated_success' => 'Comentário editado',
     'comment_delete_confirm' => 'Você tem certeza de que quer deletar este comentário?',
     'comment_in_reply_to' => 'Em resposta à :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
+    'revision_delete_success' => 'Revisão excluída',
+    'revision_cannot_delete_latest' => 'Não é possível excluir a revisão mais recente.'
 ];

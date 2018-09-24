@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class Localization
 {
+
+    protected $rtlLocales = ['ar'];
+
     /**
      * Handle an incoming request.
      *
@@ -21,6 +24,11 @@ class Localization
             $locale = $this->autoDetectLocale($request, $defaultLang);
         } else {
             $locale = setting()->getUser(user(), 'language', $defaultLang);
+        }
+
+        // Set text direction
+        if (in_array($locale, $this->rtlLocales)) {
+            config()->set('app.rtl', true);
         }
 
         app()->setLocale($locale);
