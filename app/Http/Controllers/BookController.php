@@ -204,7 +204,7 @@ class BookController extends Controller
 
         // Get the books involved in the sort
         $bookIdsInvolved = $bookIdsInvolved->unique()->toArray();
-        $booksInvolved = $this->entityRepo->book->newQuery()->whereIn('id', $bookIdsInvolved)->get();
+        $booksInvolved = $this->entityRepo->getManyById('book', $bookIdsInvolved, false, true);
         // Throw permission error if invalid ids or inaccessible books given.
         if (count($bookIdsInvolved) !== count($booksInvolved)) {
             $this->showPermissionError();

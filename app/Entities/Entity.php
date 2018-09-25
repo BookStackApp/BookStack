@@ -7,8 +7,25 @@ use BookStack\Actions\View;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Ownable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/**
+ * Class Entity
+ * The base class for book-like items such as pages, chapters & books.
+ * This is not a database model in itself but extended.
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $slug
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ * @property boolean $restricted
+ *
+ * @package BookStack\Entities
+ */
 class Entity extends Ownable
 {
 

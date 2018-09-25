@@ -212,9 +212,9 @@ class UserRepo
     public function getAssetCounts(User $user)
     {
         return [
-            'pages'    => $this->entityRepo->page->where('created_by', '=', $user->id)->count(),
-            'chapters' => $this->entityRepo->chapter->where('created_by', '=', $user->id)->count(),
-            'books'    => $this->entityRepo->book->where('created_by', '=', $user->id)->count(),
+            'pages'    => $this->entityRepo->getUserTotalCreated('page', $user),
+            'chapters' => $this->entityRepo->getUserTotalCreated('chapter', $user),
+            'books'    => $this->entityRepo->getUserTotalCreated('book', $user),
         ];
     }
 

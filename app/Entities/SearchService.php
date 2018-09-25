@@ -2,24 +2,33 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 
 class SearchService
 {
+    /**
+     * @var SearchTerm
+     */
     protected $searchTerm;
-    protected $bookshelf;
-    protected $book;
-    protected $chapter;
-    protected $page;
-    protected $db;
-    protected $permissionService;
 
     /**
-     * @var Entity[]
+     * @var EntityProvider
      */
-    protected $entities;
+    protected $entityProvider;
+
+    /**
+     * @var Connection
+     */
+    protected $db;
+
+    /**
+     * @var PermissionService
+     */
+    protected $permissionService;
+
 
     /**
      * Acceptable operators to be used in a query
@@ -30,27 +39,15 @@ class SearchService
     /**
      * SearchService constructor.
      * @param SearchTerm $searchTerm
-     * @param Bookshelf $bookshelf
-     * @param \BookStack\Entities\Book $book
-     * @param \BookStack\Entities\Chapter $chapter
-     * @param Page $page
+     * @param EntityProvider $entityProvider
      * @param Connection $db
      * @param PermissionService $permissionService
      */
-    public function __construct(SearchTerm $searchTerm, Bookshelf $bookshelf, Book $book, Chapter $chapter, Page $page, Connection $db, PermissionService $permissionService)
+    public function __construct(SearchTerm $searchTerm, EntityProvider $entityProvider, Connection $db, PermissionService $permissionService)
     {
         $this->searchTerm = $searchTerm;
-        $this->bookshelf = $bookshelf;
-        $this->book = $book;
-        $this->chapter = $chapter;
-        $this->page = $page;
+        $this->entityProvider = $entityProvider;
         $this->db = $db;
-        $this->entities = [
-            'bookshelf' => $this->bookshelf,
-            'page' => $this->page,
-            'chapter' => $this->chapter,
-            'book' => $this->book
-        ];
         $this->permissionService = $permissionService;
     }
 
@@ -75,7 +72,7 @@ class SearchService
     public function searchEntities($searchString, $entityType = 'all', $page = 1, $count = 20, $action = 'view')
     {
         $terms = $this->parseSearchString($searchString);
-        $entityTypes = array_keys($this->entities);
+        $entityTypes = array_keys($this->entityProvider->all());
         $entityTypesToSearch = $entityTypes;
 
         if ($entityType !== 'all') {
@@ -172,17 +169,17 @@ class SearchService
      * @param array $terms
      * @param string $entityType
      * @param string $action
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return EloquentBuilder
      */
     protected function buildEntitySearchQuery($terms, $entityType = 'page', $action = 'view')
     {
-        $entity = $this->getEntity($entityType);
+        $entity = $this->entityProvider->get($entityType);
         $entitySelect = $entity->newQuery();
 
         // Handle normal search terms
         if (count($terms['search']) > 0) {
             $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
-            $subQuery->where('entity_type', '=', 'BookStack\\' . ucfirst($entityType));
+            $subQuery->where('entity_type', '=', $entity->getMorphClass());
             $subQuery->where(function (Builder $query) use ($terms) {
                 foreach ($terms['search'] as $inputTerm) {
                     $query->orWhere('term', 'like', $inputTerm .'%');
@@ -196,9 +193,9 @@ class SearchService
 
         // Handle exact term matching
         if (count($terms['exact']) > 0) {
-            $entitySelect->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($terms, $entity) {
+            $entitySelect->where(function (EloquentBuilder $query) use ($terms, $entity) {
                 foreach ($terms['exact'] as $inputTerm) {
-                    $query->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($inputTerm, $entity) {
+                    $query->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
                         $query->where('name', 'like', '%'.$inputTerm .'%')
                             ->orWhere($entity->textField, 'like', '%'.$inputTerm .'%');
                     });
@@ -286,14 +283,14 @@ class SearchService
 
     /**
      * Apply a tag search term onto a entity query.
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param EloquentBuilder $query
      * @param string $tagTerm
      * @return mixed
      */
-    protected function applyTagSearch(\Illuminate\Database\Eloquent\Builder $query, $tagTerm)
+    protected function applyTagSearch(EloquentBuilder $query, $tagTerm)
     {
         preg_match("/^(.*?)((".$this->getRegexEscapedOperators().")(.*?))?$/", $tagTerm, $tagSplit);
-        $query->whereHas('tags', function (\Illuminate\Database\Eloquent\Builder $query) use ($tagSplit) {
+        $query->whereHas('tags', function (EloquentBuilder $query) use ($tagSplit) {
             $tagName = $tagSplit[1];
             $tagOperator = count($tagSplit) > 2 ? $tagSplit[3] : '';
             $tagValue = count($tagSplit) > 3 ? $tagSplit[4] : '';
@@ -316,16 +313,6 @@ class SearchService
             }
         });
         return $query;
-    }
-
-    /**
-     * Get an entity instance via type.
-     * @param $type
-     * @return Entity
-     */
-    protected function getEntity($type)
-    {
-        return $this->entities[strtolower($type)];
     }
 
     /**
@@ -375,7 +362,7 @@ class SearchService
     {
         $this->searchTerm->truncate();
 
-        foreach ($this->entities as $entityModel) {
+        foreach ($this->entityProvider->all() as $entityModel) {
             $selectFields = ['id', 'name', $entityModel->textField];
             $entityModel->newQuery()->select($selectFields)->chunk(1000, function ($entities) {
                 $this->indexEntities($entities);
@@ -429,7 +416,7 @@ class SearchService
      * Custom entity search filters
      */
 
-    protected function filterUpdatedAfter(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterUpdatedAfter(EloquentBuilder $query, Entity $model, $input)
     {
         try {
             $date = date_create($input);
@@ -439,7 +426,7 @@ class SearchService
         $query->where('updated_at', '>=', $date);
     }
 
-    protected function filterUpdatedBefore(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterUpdatedBefore(EloquentBuilder $query, Entity $model, $input)
     {
         try {
             $date = date_create($input);
@@ -449,7 +436,7 @@ class SearchService
         $query->where('updated_at', '<', $date);
     }
 
-    protected function filterCreatedAfter(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterCreatedAfter(EloquentBuilder $query, Entity $model, $input)
     {
         try {
             $date = date_create($input);
@@ -459,7 +446,7 @@ class SearchService
         $query->where('created_at', '>=', $date);
     }
 
-    protected function filterCreatedBefore(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterCreatedBefore(EloquentBuilder $query, Entity $model, $input)
     {
         try {
             $date = date_create($input);
@@ -469,7 +456,7 @@ class SearchService
         $query->where('created_at', '<', $date);
     }
 
-    protected function filterCreatedBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterCreatedBy(EloquentBuilder $query, Entity $model, $input)
     {
         if (!is_numeric($input) && $input !== 'me') {
             return;
@@ -480,7 +467,7 @@ class SearchService
         $query->where('created_by', '=', $input);
     }
 
-    protected function filterUpdatedBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterUpdatedBy(EloquentBuilder $query, Entity $model, $input)
     {
         if (!is_numeric($input) && $input !== 'me') {
             return;
@@ -491,41 +478,41 @@ class SearchService
         $query->where('updated_by', '=', $input);
     }
 
-    protected function filterInName(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterInName(EloquentBuilder $query, Entity $model, $input)
     {
         $query->where('name', 'like', '%' .$input. '%');
     }
 
-    protected function filterInTitle(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterInTitle(EloquentBuilder $query, Entity $model, $input)
     {
         $this->filterInName($query, $model, $input);
     }
 
-    protected function filterInBody(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterInBody(EloquentBuilder $query, Entity $model, $input)
     {
         $query->where($model->textField, 'like', '%' .$input. '%');
     }
 
-    protected function filterIsRestricted(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterIsRestricted(EloquentBuilder $query, Entity $model, $input)
     {
         $query->where('restricted', '=', true);
     }
 
-    protected function filterViewedByMe(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterViewedByMe(EloquentBuilder $query, Entity $model, $input)
     {
         $query->whereHas('views', function ($query) {
             $query->where('user_id', '=', user()->id);
         });
     }
 
-    protected function filterNotViewedByMe(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterNotViewedByMe(EloquentBuilder $query, Entity $model, $input)
     {
         $query->whereDoesntHave('views', function ($query) {
             $query->where('user_id', '=', user()->id);
         });
     }
 
-    protected function filterSortBy(\Illuminate\Database\Eloquent\Builder $query, Entity $model, $input)
+    protected function filterSortBy(EloquentBuilder $query, Entity $model, $input)
     {
         $functionName = camel_case('sort_by_' . $input);
         if (method_exists($this, $functionName)) {
@@ -538,7 +525,7 @@ class SearchService
      * Sorting filter options
      */
 
-    protected function sortByLastCommented(\Illuminate\Database\Eloquent\Builder $query, Entity $model)
+    protected function sortByLastCommented(EloquentBuilder $query, Entity $model)
     {
         $commentsTable = $this->db->getTablePrefix() . 'comments';
         $morphClass = str_replace('\\', '\\\\', $model->getMorphClass());
