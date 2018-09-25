@@ -1,12 +1,14 @@
 <?php namespace Tests;
 
 
+use BookStack\Entities\Book;
+
 class ActivityTrackingTest extends BrowserKitTest
 {
 
     public function test_recently_viewed_books()
     {
-        $books = \BookStack\Book::all()->take(10);
+        $books = Book::all()->take(10);
 
         $this->asAdmin()->visit('/books')
             ->dontSeeInElement('#recents', $books[0]->name)
@@ -20,7 +22,7 @@ class ActivityTrackingTest extends BrowserKitTest
 
     public function test_popular_books()
     {
-        $books = \BookStack\Book::all()->take(10);
+        $books = Book::all()->take(10);
 
         $this->asAdmin()->visit('/books')
             ->dontSeeInElement('#popular', $books[0]->name)

@@ -1,8 +1,15 @@
 <?php namespace BookStack\Providers;
 
-use BookStack\Services\SettingService;
-use BookStack\Setting;
+use Blade;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
+use BookStack\Settings\SettingService;
+use BookStack\Settings\Setting;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Schema;
 use Validator;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,12 +27,21 @@ class AppServiceProvider extends ServiceProvider
             return in_array($value->getMimeType(), $imageMimes);
         });
 
-        \Blade::directive('icon', function ($expression) {
+        // Custom blade view directives
+        Blade::directive('icon', function ($expression) {
             return "<?php echo icon($expression); ?>";
         });
 
         // Allow longer string lengths after upgrade to utf8mb4
-        \Schema::defaultStringLength(191);
+        Schema::defaultStringLength(191);
+
+        // Set morph-map due to namespace changes
+        Relation::morphMap([
+            'BookStack\\Bookshelf' => Bookshelf::class,
+            'BookStack\\Book' => Book::class,
+            'BookStack\\Chapter' => Chapter::class,
+            'BookStack\\Page' => Page::class,
+        ]);
     }
 
     /**

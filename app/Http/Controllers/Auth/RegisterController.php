@@ -5,11 +5,11 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\EmailConfirmationService;
-use BookStack\Services\SocialAuthService;
-use BookStack\SocialAccount;
-use BookStack\User;
+use BookStack\Auth\UserRepo;
+use BookStack\Auth\Access\EmailConfirmationService;
+use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Auth\SocialAccount;
+use BookStack\Auth\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -48,11 +48,11 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param SocialAuthService $socialAuthService
-     * @param EmailConfirmationService $emailConfirmationService
-     * @param UserRepo $userRepo
+     * @param \BookStack\Auth\Access\SocialAuthService $socialAuthService
+     * @param \BookStack\Auth\EmailConfirmationService $emailConfirmationService
+     * @param \BookStack\Auth\UserRepo $userRepo
      */
-    public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
+    public function __construct(\BookStack\Auth\Access\SocialAuthService $socialAuthService, \BookStack\Auth\Access\EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
         $this->middleware('guest')->only(['getRegister', 'postRegister', 'socialRegister']);
         $this->socialAuthService = $socialAuthService;
@@ -119,7 +119,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      * @param  array  $data
-     * @return User
+     * @return \BookStack\Auth\User
      */
     protected function create(array $data)
     {

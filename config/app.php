@@ -274,10 +274,10 @@ return [
          * Custom
          */
 
-        'Activity' => BookStack\Services\Facades\Activity::class,
-        'Setting'  => BookStack\Services\Facades\Setting::class,
-        'Views'    => BookStack\Services\Facades\Views::class,
-        'Images'   => BookStack\Services\Facades\Images::class,
+        'Activity' => BookStack\Facades\Activity::class,
+        'Setting'  => BookStack\Facades\Setting::class,
+        'Views'    => BookStack\Facades\Views::class,
+        'Images'   => BookStack\Facades\Images::class,
 
     ],
 

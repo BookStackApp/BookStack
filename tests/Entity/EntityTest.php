@@ -1,10 +1,10 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Chapter;
-use BookStack\Page;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\UserRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
+use BookStack\Entities\EntityRepo;
+use BookStack\Auth\UserRepo;
 use Carbon\Carbon;
 
 class EntityTest extends BrowserKitTest

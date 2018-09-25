@@ -1,10 +1,10 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Chapter;
-use BookStack\Tag;
-use BookStack\Page;
-use BookStack\Services\PermissionService;
+use BookStack\Entities\Book;
+use BookStack\Entities\Chapter;
+use BookStack\Actions\Tag;
+use BookStack\Entities\Page;
+use BookStack\Auth\Permissions\PermissionService;
 
 class TagTest extends BrowserKitTest
 {
@@ -13,7 +13,7 @@ class TagTest extends BrowserKitTest
 
     /**
      * Get an instance of a page that has many tags.
-     * @param Tag[]|bool $tags
+     * @param \BookStack\Actions\Tag[]|bool $tags
      * @return mixed
      */
     protected function getEntityWithTags($class, $tags = false)

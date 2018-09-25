@@ -38,7 +38,7 @@ return [
     ],
 
     'stripe'   => [
-        'model'  => BookStack\User::class,
+        'model'  => \BookStack\Auth\User::class,
         'key'    => '',
         'secret' => '',
     ],

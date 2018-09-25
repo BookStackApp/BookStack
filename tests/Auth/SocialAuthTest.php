@@ -6,7 +6,7 @@ class SocialAuthTest extends TestCase
     public function test_social_registration()
     {
         // http://docs.mockery.io/en/latest/reference/startup_methods.html
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(\BookStack\Auth\User::class)->make();
 
         $this->setSettings(['registration-enabled' => 'true']);
         config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
@@ -86,7 +86,7 @@ class SocialAuthTest extends TestCase
             'APP_URL' => 'http://localhost'
         ]);
 
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(\BookStack\Auth\User::class)->make();
         $mockSocialite = \Mockery::mock('Laravel\Socialite\Contracts\Factory');
         $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
         $mockSocialDriver = \Mockery::mock('Laravel\Socialite\Contracts\Provider');
@@ -125,7 +125,7 @@ class SocialAuthTest extends TestCase
             'APP_URL' => 'http://localhost', 'services.google.auto_register' => true, 'services.google.auto_confirm' => true
         ]);
 
-        $user = factory(\BookStack\User::class)->make();
+        $user = factory(\BookStack\Auth\User::class)->make();
         $mockSocialite = \Mockery::mock('Laravel\Socialite\Contracts\Factory');
         $this->app['Laravel\Socialite\Contracts\Factory'] = $mockSocialite;
         $mockSocialDriver = \Mockery::mock('Laravel\Socialite\Contracts\Provider');

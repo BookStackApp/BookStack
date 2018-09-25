@@ -2,9 +2,9 @@
 
 use Activity;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\ExportService;
+use BookStack\Entities\EntityRepo;
+use BookStack\Auth\UserRepo;
+use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -19,8 +19,8 @@ class PageController extends Controller
 
     /**
      * PageController constructor.
-     * @param EntityRepo $entityRepo
-     * @param ExportService $exportService
+     * @param \BookStack\Entities\EntityRepo $entityRepo
+     * @param \BookStack\Entities\ExportService $exportService
      * @param UserRepo $userRepo
      */
     public function __construct(EntityRepo $entityRepo, ExportService $exportService, UserRepo $userRepo)

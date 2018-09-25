@@ -1,9 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\ExportService;
+use BookStack\Entities\EntityRepo;
+use BookStack\Auth\UserRepo;
+use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -19,7 +19,7 @@ class ChapterController extends Controller
      * ChapterController constructor.
      * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
-     * @param ExportService $exportService
+     * @param \BookStack\Entities\ExportService $exportService
      */
     public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
     {

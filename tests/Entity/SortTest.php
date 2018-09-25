@@ -1,9 +1,9 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Chapter;
-use BookStack\Page;
-use BookStack\Repos\EntityRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
+use BookStack\Entities\EntityRepo;
 
 class SortTest extends TestCase
 {

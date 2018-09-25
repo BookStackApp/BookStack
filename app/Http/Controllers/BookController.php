@@ -1,10 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Book;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\ExportService;
+use BookStack\Entities\Book;
+use BookStack\Entities\EntityRepo;
+use BookStack\Auth\UserRepo;
+use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -19,8 +19,8 @@ class BookController extends Controller
     /**
      * BookController constructor.
      * @param EntityRepo $entityRepo
-     * @param UserRepo $userRepo
-     * @param ExportService $exportService
+     * @param \BookStack\Auth\UserRepo $userRepo
+     * @param \BookStack\Entities\ExportService $exportService
      */
     public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
     {

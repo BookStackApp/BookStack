@@ -70,7 +70,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => env('AUTH_METHOD', 'standard') === 'standard' ? 'eloquent' : env('AUTH_METHOD'),
-            'model' => BookStack\User::class,
+            'model' => \BookStack\Auth\User::class,
         ],
 
         // 'users' => [

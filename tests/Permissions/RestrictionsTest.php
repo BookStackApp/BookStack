@@ -1,16 +1,18 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Bookshelf;
-use BookStack\Entity;
-use BookStack\User;
-use BookStack\Repos\EntityRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Entity;
+use BookStack\Auth\User;
+use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Page;
 
 class RestrictionsTest extends BrowserKitTest
 {
 
     /**
-     * @var User
+     * @var \BookStack\Auth\User
      */
     protected $user;
 
@@ -223,7 +225,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_view_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
@@ -248,7 +250,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_create_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
 
         $chapterUrl = $chapter->getUrl();
         $this->actingAs($this->user)
@@ -275,7 +277,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_update_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
@@ -300,7 +302,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_delete_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
@@ -325,7 +327,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_view_restriction()
     {
-        $page = \BookStack\Page::first();
+        $page = \BookStack\Entities\Page::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -345,7 +347,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_update_restriction()
     {
-        $page = \BookStack\Chapter::first();
+        $page = Chapter::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -365,7 +367,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_delete_restriction()
     {
-        $page = \BookStack\Page::first();
+        $page = \BookStack\Entities\Page::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -394,7 +396,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('bookshelves', ['id' => $shelf->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $shelf->id,
-                'restrictable_type' => 'BookStack\Bookshelf',
+                'restrictable_type' => Bookshelf::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'view'
             ]);
@@ -411,7 +413,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('books', ['id' => $book->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $book->id,
-                'restrictable_type' => 'BookStack\Book',
+                'restrictable_type' => Book::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'view'
             ]);
@@ -419,7 +421,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_restriction_form()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $this->asAdmin()->visit($chapter->getUrl() . '/permissions')
             ->see('Chapter Permissions')
             ->check('restricted')
@@ -428,7 +430,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('chapters', ['id' => $chapter->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $chapter->id,
-                'restrictable_type' => 'BookStack\Chapter',
+                'restrictable_type' => Chapter::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'update'
             ]);
@@ -436,7 +438,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_restriction_form()
     {
-        $page = \BookStack\Page::first();
+        $page = \BookStack\Entities\Page::first();
         $this->asAdmin()->visit($page->getUrl() . '/permissions')
             ->see('Page Permissions')
             ->check('restricted')
@@ -445,7 +447,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('pages', ['id' => $page->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $page->id,
-                'restrictable_type' => 'BookStack\Page',
+                'restrictable_type' => Page::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'delete'
             ]);
@@ -453,7 +455,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_pages()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $page = $chapter->pages->first();
         $page2 = $chapter->pages[2];
 
@@ -466,7 +468,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_chapters()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $page = $chapter->pages->first();
 
         $this->setEntityRestrictions($page, []);
@@ -478,7 +480,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_restricted_pages_not_visible_on_chapter_pages()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $page = $chapter->pages->first();
 
         $this->setEntityRestrictions($page, []);

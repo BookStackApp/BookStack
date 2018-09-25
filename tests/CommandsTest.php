@@ -1,9 +1,9 @@
 <?php namespace Tests;
 
-use BookStack\JointPermission;
-use BookStack\Page;
-use BookStack\Repos\EntityRepo;
-use BookStack\User;
+use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Entities\Page;
+use BookStack\Entities\EntityRepo;
+use BookStack\Auth\User;
 
 class CommandsTest extends TestCase
 {

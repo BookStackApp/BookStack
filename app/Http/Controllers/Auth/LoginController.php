@@ -4,9 +4,9 @@ namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Exceptions\AuthException;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\LdapService;
-use BookStack\Services\SocialAuthService;
+use BookStack\Auth\UserRepo;
+use BookStack\Auth\Access\LdapService;
+use BookStack\Auth\Access\SocialAuthService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -43,9 +43,9 @@ class LoginController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param SocialAuthService $socialAuthService
+     * @param \BookStack\Auth\\BookStack\Auth\Access\SocialAuthService $socialAuthService
      * @param LdapService $ldapService
-     * @param UserRepo $userRepo
+     * @param \BookStack\Auth\UserRepo $userRepo
      */
     public function __construct(SocialAuthService $socialAuthService, LdapService $ldapService, UserRepo $userRepo)
     {

@@ -1,7 +1,7 @@
 <?php namespace Tests;
 
-use BookStack\Page;
-use BookStack\Comment;
+use BookStack\Entities\Page;
+use BookStack\Actions\Comment;
 
 class CommentTest extends TestCase
 {
@@ -23,7 +23,7 @@ class CommentTest extends TestCase
         $this->assertDatabaseHas('comments', [
             'local_id' => 1,
             'entity_id' => $page->id,
-            'entity_type' => 'BookStack\\Page',
+            'entity_type' => Page::newModelInstance()->getMorphClass(),
             'text' => $comment->text,
             'parent_id' => 2
         ]);

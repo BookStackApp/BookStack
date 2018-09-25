@@ -1,8 +1,9 @@
 <?php namespace Tests;
 
-use BookStack\Entity;
-use BookStack\Role;
-use BookStack\Services\PermissionService;
+use BookStack\Entities\Entity;
+use BookStack\Auth\Role;
+use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Settings\SettingService;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\BrowserKitTesting\TestCase;
@@ -46,7 +47,7 @@ abstract class BrowserKitTest extends TestCase
      */
     public function getNormalUser()
     {
-        return \BookStack\User::where('system_name', '=', null)->get()->last();
+        return \BookStack\Auth\User::where('system_name', '=', null)->get()->last();
     }
 
     /**
@@ -55,7 +56,7 @@ abstract class BrowserKitTest extends TestCase
      */
     protected function setSettings($settingsArray)
     {
-        $settings = app('BookStack\Services\SettingService');
+        $settings = app(SettingService::class);
         foreach ($settingsArray as $key => $value) {
             $settings->put($key, $value);
         }
@@ -70,9 +71,9 @@ abstract class BrowserKitTest extends TestCase
     protected function createEntityChainBelongingToUser($creatorUser, $updaterUser = false)
     {
         if ($updaterUser === false) $updaterUser = $creatorUser;
-        $book = factory(\BookStack\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
-        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
-        $page = factory(\BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id, 'chapter_id' => $chapter->id]);
+        $book = factory(\BookStack\Entities\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
+        $chapter = factory(\BookStack\Entities\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
+        $page = factory(\BookStack\Entities\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id, 'chapter_id' => $chapter->id]);
         $restrictionService = $this->app[PermissionService::class];
         $restrictionService->buildJointPermissionsForEntity($book);
         return [
@@ -100,7 +101,7 @@ abstract class BrowserKitTest extends TestCase
      */
     protected function getNewBlankUser($attributes = [])
     {
-        $user = factory(\BookStack\User::class)->create($attributes);
+        $user = factory(\BookStack\Auth\User::class)->create($attributes);
         return $user;
     }
 
