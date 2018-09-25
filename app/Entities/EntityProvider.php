@@ -15,27 +15,27 @@ class EntityProvider
     /**
      * @var Bookshelf
      */
-    protected $bookshelf;
+    public $bookshelf;
 
     /**
      * @var Book
      */
-    protected $book;
+    public $book;
 
     /**
      * @var Chapter
      */
-    protected $chapter;
+    public $chapter;
 
     /**
      * @var Page
      */
-    protected $page;
+    public $page;
 
     /**
      * @var PageRevision
      */
-    protected $pageRevision;
+    public $pageRevision;
 
     /**
      * EntityProvider constructor.
@@ -72,6 +72,17 @@ class EntityProvider
             'chapter' => $this->chapter,
             'page' => $this->page,
         ];
+    }
+
+    /**
+     * Get an entity instance by it's basic name.
+     * @param string $type
+     * @return Entity
+     */
+    public function get(string $type)
+    {
+        $type = strtolower($type);
+        return $this->all()[$type];
     }
 
 

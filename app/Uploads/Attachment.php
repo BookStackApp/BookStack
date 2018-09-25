@@ -21,7 +21,7 @@ class Attachment extends Ownable
 
     /**
      * Get the page this file was uploaded to.
-     * @return Page
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function page()
     {

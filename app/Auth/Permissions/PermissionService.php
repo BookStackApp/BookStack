@@ -6,6 +6,7 @@ use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
+use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Page;
 use BookStack\Ownable;
 use Illuminate\Database\Connection;
@@ -21,16 +22,30 @@ class PermissionService
     protected $userRoles = false;
     protected $currentUserModel = false;
 
-    public $book;
-    public $chapter;
-    public $page;
-    public $bookshelf;
-
+    /**
+     * @var Connection
+     */
     protected $db;
 
+    /**
+     * @var JointPermission
+     */
     protected $jointPermission;
+
+    /**
+     * @var Role
+     */
     protected $role;
+
+    /**
+     * @var EntityPermission
+     */
     protected $entityPermission;
+
+    /**
+     * @var EntityProvider
+     */
+    protected $entityProvider;
 
     protected $entityCache;
 
@@ -40,29 +55,20 @@ class PermissionService
      * @param EntityPermission $entityPermission
      * @param Role $role
      * @param Connection $db
-     * @param Bookshelf $bookshelf
-     * @param Book $book
-     * @param \BookStack\Entities\Chapter $chapter
-     * @param \BookStack\Entities\Page $page
+     * @param EntityProvider $entityProvider
      */
     public function __construct(
         JointPermission $jointPermission,
         Permissions\EntityPermission $entityPermission,
         Role $role,
         Connection $db,
-        Bookshelf $bookshelf,
-        Book $book,
-        Chapter $chapter,
-        Page $page
+        EntityProvider $entityProvider
     ) {
         $this->db = $db;
         $this->jointPermission = $jointPermission;
         $this->entityPermission = $entityPermission;
         $this->role = $role;
-        $this->bookshelf = $bookshelf;
-        $this->book = $book;
-        $this->chapter = $chapter;
-        $this->page = $page;
+        $this->entityProvider = $entityProvider;
     }
 
     /**
@@ -102,7 +108,7 @@ class PermissionService
             return $this->entityCache['book']->get($bookId);
         }
 
-        $book = $this->book->find($bookId);
+        $book = $this->entityProvider->book->find($bookId);
         if ($book === null) {
             $book = false;
         }
@@ -121,7 +127,7 @@ class PermissionService
             return $this->entityCache['chapter']->get($chapterId);
         }
 
-        $chapter = $this->chapter->find($chapterId);
+        $chapter = $this->entityProvider->chapter->find($chapterId);
         if ($chapter === null) {
             $chapter = false;
         }
@@ -170,7 +176,7 @@ class PermissionService
         });
 
         // Chunk through all bookshelves
-        $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+        $this->entityProvider->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->buildJointPermissionsForShelves($shelves, $roles);
             });
@@ -182,7 +188,8 @@ class PermissionService
      */
     protected function bookFetchQuery()
     {
-        return $this->book->newQuery()->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
+        return $this->entityProvider->book->newQuery()
+            ->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id']);
         }, 'pages'  => function ($query) {
             $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
@@ -288,7 +295,7 @@ class PermissionService
         });
 
         // Chunk through all bookshelves
-        $this->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+        $this->entityProvider->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->buildJointPermissionsForShelves($shelves, $roles);
             });
@@ -602,7 +609,9 @@ class PermissionService
      */
     public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false)
     {
-        $pageSelect = $this->db->table('pages')->selectRaw($this->page->entityRawQuery($fetchPageContent))->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
+        $entities = $this->entityProvider;
+        $pageSelect = $this->db->table('pages')->selectRaw($entities->page->entityRawQuery($fetchPageContent))
+            ->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
             $query->where('draft', '=', 0);
             if (!$filterDrafts) {
                 $query->orWhere(function ($query) {
@@ -610,7 +619,7 @@ class PermissionService
                 });
             }
         });
-        $chapterSelect = $this->db->table('chapters')->selectRaw($this->chapter->entityRawQuery())->where('book_id', '=', $book_id);
+        $chapterSelect = $this->db->table('chapters')->selectRaw($entities->chapter->entityRawQuery())->where('book_id', '=', $book_id);
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
             ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
 
@@ -701,7 +710,7 @@ class PermissionService
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
-        $pageMorphClass = $this->page->getMorphClass();
+        $pageMorphClass = $this->entityProvider->page->getMorphClass();
         $q = $query->where(function ($query) use ($tableDetails, $pageMorphClass) {
             $query->where(function ($query) use (&$tableDetails, $pageMorphClass) {
                 $query->whereExists(function ($permissionQuery) use (&$tableDetails, $pageMorphClass) {

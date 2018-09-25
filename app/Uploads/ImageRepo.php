@@ -16,7 +16,7 @@ class ImageRepo
      * ImageRepo constructor.
      * @param Image $image
      * @param ImageService $imageService
-     * @param \BookStack\Auth\\BookStack\Auth\Permissions\PermissionService $permissionService
+     * @param \BookStack\Auth\Permissions\PermissionService $permissionService
      * @param \BookStack\Entities\Page $page
      */
     public function __construct(Image $image, ImageService $imageService, PermissionService $permissionService, Page $page)

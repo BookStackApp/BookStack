@@ -3,46 +3,23 @@
 use BookStack\Actions\TagRepo;
 use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\User;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\AttachmentService;
 use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class EntityRepo
 {
-    /**
-     * @var \BookStack\Entities\Bookshelf
-     */
-    public $bookshelf;
 
     /**
-     * @var \BookStack\Entities\Book $book
+     * @var EntityProvider
      */
-    public $book;
-
-    /**
-     * @var Chapter
-     */
-    public $chapter;
-
-    /**
-     * @var Page
-     */
-    public $page;
-
-    /**
-     * @var PageRevision
-     */
-    protected $pageRevision;
-
-    /**
-     * Base entity instances keyed by type
-     * @var []Entity
-     */
-    protected $entities;
+    protected $entityProvider;
 
     /**
      * @var PermissionService
@@ -55,7 +32,7 @@ class EntityRepo
     protected $viewService;
 
     /**
-     * @var \BookStack\Actions\TagRepo
+     * @var TagRepo
      */
     protected $tagRepo;
 
@@ -66,38 +43,20 @@ class EntityRepo
 
     /**
      * EntityRepo constructor.
-     * @param \BookStack\Entities\Bookshelf $bookshelf
-     * @param \BookStack\Entities\Book $book
-     * @param Chapter $chapter
-     * @param \BookStack\Entities\Page $page
-     * @param \BookStack\Entities\PageRevision $pageRevision
+     * @param EntityProvider $entityProvider
      * @param ViewService $viewService
      * @param PermissionService $permissionService
-     * @param \BookStack\Actions\TagRepo $tagRepo
+     * @param TagRepo $tagRepo
      * @param SearchService $searchService
      */
     public function __construct(
-        Bookshelf $bookshelf,
-        Book $book,
-        Chapter $chapter,
-        Page $page,
-        PageRevision $pageRevision,
+        EntityProvider $entityProvider,
         ViewService $viewService,
         PermissionService $permissionService,
         TagRepo $tagRepo,
         SearchService $searchService
     ) {
-        $this->bookshelf = $bookshelf;
-        $this->book = $book;
-        $this->chapter = $chapter;
-        $this->page = $page;
-        $this->pageRevision = $pageRevision;
-        $this->entities = [
-            'bookshelf' => $this->bookshelf,
-            'page' => $this->page,
-            'chapter' => $this->chapter,
-            'book' => $this->book
-        ];
+        $this->entityProvider = $entityProvider;
         $this->viewService = $viewService;
         $this->permissionService = $permissionService;
         $this->tagRepo = $tagRepo;
@@ -105,24 +64,15 @@ class EntityRepo
     }
 
     /**
-     * Get an entity instance via type.
-     * @param $type
-     * @return \BookStack\Entities\Entity
-     */
-    protected function getEntity($type)
-    {
-        return $this->entities[strtolower($type)];
-    }
-
-    /**
      * Base query for searching entities via permission system
      * @param string $type
      * @param bool $allowDrafts
+     * @param string $permission
      * @return \Illuminate\Database\Query\Builder
      */
     protected function entityQuery($type, $allowDrafts = false, $permission = 'view')
     {
-        $q = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type), $permission);
+        $q = $this->permissionService->enforceEntityRestrictions($type, $this->entityProvider->get($type), $permission);
         if (strtolower($type) === 'page' && !$allowDrafts) {
             $q = $q->where('draft', '=', false);
         }
@@ -150,11 +100,31 @@ class EntityRepo
      */
     public function getById($type, $id, $allowDrafts = false, $ignorePermissions = false)
     {
+        $query = $this->entityQuery($type, $allowDrafts);
+
         if ($ignorePermissions) {
-            $entity = $this->getEntity($type);
-            return $entity->newQuery()->find($id);
+            $query = $this->entityProvider->get($type)->newQuery();
         }
-        return $this->entityQuery($type, $allowDrafts)->find($id);
+
+        return $query->find($id);
+    }
+
+    /**
+     * @param string $type
+     * @param []int $ids
+     * @param bool $allowDrafts
+     * @param bool $ignorePermissions
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Collection
+     */
+    public function getManyById($type, $ids, $allowDrafts = false, $ignorePermissions = false)
+    {
+        $query = $this->entityQuery($type, $allowDrafts);
+
+        if ($ignorePermissions) {
+            $query = $this->entityProvider->get($type)->newQuery();
+        }
+
+        return $query->whereIn('id', $ids)->get();
     }
 
     /**
@@ -172,7 +142,7 @@ class EntityRepo
         if (strtolower($type) === 'chapter' || strtolower($type) === 'page') {
             $q = $q->where('book_id', '=', function ($query) use ($bookSlug) {
                 $query->select('id')
-                    ->from($this->book->getTable())
+                    ->from($this->entityProvider->book->getTable())
                     ->where('slug', '=', $bookSlug)->limit(1);
             });
         }
@@ -193,7 +163,7 @@ class EntityRepo
      */
     public function getPageByOldSlug($pageSlug, $bookSlug)
     {
-        $revision = $this->pageRevision->where('slug', '=', $pageSlug)
+        $revision = $this->entityProvider->pageRevision->where('slug', '=', $pageSlug)
             ->whereHas('page', function ($query) {
                 $this->permissionService->enforceEntityRestrictions('page', $query);
             })
@@ -241,7 +211,7 @@ class EntityRepo
      */
     public function getRecentlyCreated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type))
+        $query = $this->permissionService->enforceEntityRestrictions($type, $this->entityProvider->get($type))
             ->orderBy('created_at', 'desc');
         if (strtolower($type) === 'page') {
             $query = $query->where('draft', '=', false);
@@ -262,7 +232,7 @@ class EntityRepo
      */
     public function getRecentlyUpdated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->permissionService->enforceEntityRestrictions($type, $this->getEntity($type))
+        $query = $this->permissionService->enforceEntityRestrictions($type, $this->entityProvider->get($type))
             ->orderBy('updated_at', 'desc');
         if (strtolower($type) === 'page') {
             $query = $query->where('draft', '=', false);
@@ -282,7 +252,7 @@ class EntityRepo
      */
     public function getRecentlyViewed($type, $count = 10, $page = 0)
     {
-        $filter = is_bool($type) ? false : $this->getEntity($type);
+        $filter = is_bool($type) ? false : $this->entityProvider->get($type);
         return $this->viewService->getUserRecentlyViewed($count, $page, $filter);
     }
 
@@ -317,7 +287,7 @@ class EntityRepo
      */
     public function getPopular($type, $count = 10, $page = 0)
     {
-        $filter = is_bool($type) ? false : $this->getEntity($type);
+        $filter = is_bool($type) ? false : $this->entityProvider->get($type);
         return $this->viewService->getPopular($count, $page, $filter);
     }
 
@@ -325,13 +295,26 @@ class EntityRepo
      * Get draft pages owned by the current user.
      * @param int $count
      * @param int $page
+     * @return Collection
      */
     public function getUserDraftPages($count = 20, $page = 0)
     {
-        return $this->page->where('draft', '=', true)
+        return $this->entityProvider->page->where('draft', '=', true)
             ->where('created_by', '=', user()->id)
             ->orderBy('updated_at', 'desc')
             ->skip($count * $page)->take($count)->get();
+    }
+
+    /**
+     * Get the number of entities the given user has created.
+     * @param string $type
+     * @param User $user
+     * @return int
+     */
+    public function getUserTotalCreated(string $type, User $user)
+    {
+        return $this->entityProvider->get($type)
+            ->where('created_by', '=', $user->id)->count();
     }
 
     /**
@@ -362,14 +345,14 @@ class EntityRepo
         $tree = [];
 
         foreach ($q as $index => $rawEntity) {
-            if ($rawEntity->entity_type ===  $this->page->getMorphClass()) {
-                $entities[$index] = $this->page->newFromBuilder($rawEntity);
+            if ($rawEntity->entity_type ===  $this->entityProvider->page->getMorphClass()) {
+                $entities[$index] = $this->entityProvider->page->newFromBuilder($rawEntity);
                 if ($renderPages) {
                     $entities[$index]->html = $rawEntity->html;
                     $entities[$index]->html = $this->renderPage($entities[$index]);
                 };
-            } else if ($rawEntity->entity_type === $this->chapter->getMorphClass()) {
-                $entities[$index] = $this->chapter->newFromBuilder($rawEntity);
+            } else if ($rawEntity->entity_type === $this->entityProvider->chapter->getMorphClass()) {
+                $entities[$index] = $this->entityProvider->chapter->newFromBuilder($rawEntity);
                 $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
                 $parents[$key] = $entities[$index];
                 $parents[$key]->setAttribute('pages', collect());
@@ -384,7 +367,7 @@ class EntityRepo
             if ($entity->chapter_id === 0 || $entity->chapter_id === '0') {
                 continue;
             }
-            $parentKey = $this->chapter->getMorphClass() . ':' . $entity->chapter_id;
+            $parentKey = $this->entityProvider->chapter->getMorphClass() . ':' . $entity->chapter_id;
             if (!isset($parents[$parentKey])) {
                 $tree[] = $entity;
                 continue;
@@ -458,7 +441,7 @@ class EntityRepo
      */
     protected function slugExists($type, $slug, $currentId = false, $bookId = false)
     {
-        $query = $this->getEntity($type)->where('slug', '=', $slug);
+        $query = $this->entityProvider->get($type)->where('slug', '=', $slug);
         if (strtolower($type) === 'page' || strtolower($type) === 'chapter') {
             $query = $query->where('book_id', '=', $bookId);
         }
@@ -470,10 +453,11 @@ class EntityRepo
 
     /**
      * Updates entity restrictions from a request
-     * @param $request
+     * @param Request $request
      * @param \BookStack\Entities\Entity $entity
+     * @throws \Throwable
      */
-    public function updateEntityPermissionsFromRequest($request, Entity $entity)
+    public function updateEntityPermissionsFromRequest(Request $request, Entity $entity)
     {
         $entity->restricted = $request->get('restricted', '') === 'true';
         $entity->permissions()->delete();
@@ -506,7 +490,7 @@ class EntityRepo
     public function createFromInput($type, $input = [], $book = false)
     {
         $isChapter = strtolower($type) === 'chapter';
-        $entityModel = $this->getEntity($type)->newInstance($input);
+        $entityModel = $this->entityProvider->get($type)->newInstance($input);
         $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $isChapter ? $book->id : false);
         $entityModel->created_by = user()->id;
         $entityModel->updated_by = user()->id;
@@ -637,7 +621,7 @@ class EntityRepo
      */
     public function getDraftPage(Book $book, $chapter = false)
     {
-        $page = $this->page->newInstance();
+        $page = $this->entityProvider->page->newInstance();
         $page->name = trans('entities.pages_initial_name');
         $page->created_by = user()->id;
         $page->updated_by = user()->id;
@@ -648,7 +632,7 @@ class EntityRepo
         }
 
         $book->pages()->save($page);
-        $page = $this->page->find($page->id);
+        $page = $this->entityProvider->page->find($page->id);
         $this->permissionService->buildJointPermissionsForEntity($page);
         return $page;
     }
@@ -726,7 +710,7 @@ class EntityRepo
      */
     public function savePageRevision(Page $page, $summary = null)
     {
-        $revision = $this->pageRevision->newInstance($page->toArray());
+        $revision = $this->entityProvider->pageRevision->newInstance($page->toArray());
         if (setting('app-editor') !== 'markdown') {
             $revision->markdown = '';
         }
@@ -742,10 +726,10 @@ class EntityRepo
 
         $revisionLimit = config('app.revision_limit');
         if ($revisionLimit !== false) {
-            $revisionsToDelete = $this->pageRevision->where('page_id', '=', $page->id)
+            $revisionsToDelete = $this->entityProvider->pageRevision->where('page_id', '=', $page->id)
                 ->orderBy('created_at', 'desc')->skip(intval($revisionLimit))->take(10)->get(['id']);
             if ($revisionsToDelete->count() > 0) {
-                $this->pageRevision->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
+                $this->entityProvider->pageRevision->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
             }
         }
 
@@ -1019,7 +1003,7 @@ class EntityRepo
      */
     protected function userUpdatePageDraftsQuery(Page $page, $userId)
     {
-        return $this->pageRevision->where('created_by', '=', $userId)
+        return $this->entityProvider->pageRevision->where('created_by', '=', $userId)
             ->where('type', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->orderBy('created_at', 'desc');
@@ -1084,7 +1068,7 @@ class EntityRepo
      */
     protected function activePageEditingQuery(Page $page, $minRange = null)
     {
-        $query = $this->pageRevision->where('type', '=', 'update_draft')
+        $query = $this->entityProvider->pageRevision->where('type', '=', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->where('updated_at', '>', $page->updated_at)
             ->where('created_by', '!=', user()->id)
@@ -1144,7 +1128,7 @@ class EntityRepo
         if ($drafts->count() > 0) {
             $draft = $drafts->first();
         } else {
-            $draft = $this->pageRevision->newInstance();
+            $draft = $this->entityProvider->pageRevision->newInstance();
             $draft->page_id = $page->id;
             $draft->slug = $page->slug;
             $draft->book_slug = $page->book->slug;
