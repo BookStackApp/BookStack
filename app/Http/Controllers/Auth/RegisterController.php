@@ -2,21 +2,19 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Auth\SocialAccount;
+use BookStack\Auth\User;
+use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Auth\UserRepo;
-use BookStack\Auth\Access\EmailConfirmationService;
-use BookStack\Auth\Access\SocialAuthService;
-use BookStack\Auth\SocialAccount;
-use BookStack\Auth\User;
+use BookStack\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Validator;
-use BookStack\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use Validator;
 
 class RegisterController extends Controller
 {

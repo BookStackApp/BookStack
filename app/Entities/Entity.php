@@ -2,11 +2,11 @@
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\Comment;
+use BookStack\Actions\Tag;
+use BookStack\Actions\View;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Ownable;
-use BookStack\Actions\Tag;
-use BookStack\Actions\View;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Entity extends Ownable

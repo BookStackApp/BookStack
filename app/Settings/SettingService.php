@@ -1,7 +1,5 @@
 <?php namespace BookStack\Settings;
 
-use BookStack\Settings\Setting;
-use BookStack\Auth\User;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 /**

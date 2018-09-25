@@ -1,18 +1,11 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
+use BookStack\Actions\TagRepo;
+use BookStack\Actions\ViewService;
+use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
-use BookStack\Entities\Page;
-use BookStack\Entities\PageRevision;
-use BookStack\Actions\TagRepo;
 use BookStack\Uploads\AttachmentService;
-use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\SearchService;
-use BookStack\Actions\ViewService;
 use Carbon\Carbon;
 use DOMDocument;
 use DOMXPath;

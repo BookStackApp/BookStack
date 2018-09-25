@@ -1,13 +1,12 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Exceptions\ImageUploadException;
-use BookStack\Exceptions\NotFoundException;
 use BookStack\Entities\EntityRepo;
+use BookStack\Exceptions\ImageUploadException;
+use BookStack\Repos\PageRepo;
+use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
-use BookStack\Uploads\Image;
-use BookStack\Repos\PageRepo;
 
 class ImageController extends Controller
 {

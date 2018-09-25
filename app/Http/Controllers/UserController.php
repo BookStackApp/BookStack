@@ -1,11 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use BookStack\Auth\UserRepo;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
+use BookStack\Auth\UserRepo;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {

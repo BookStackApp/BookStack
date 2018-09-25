@@ -1,7 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Exceptions\PermissionsException;
 use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Exceptions\PermissionsException;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller

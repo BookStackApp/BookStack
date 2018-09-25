@@ -1,7 +1,6 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Image;
-use BookStack\Entities\Page;
 
 class Book extends Entity
 {

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Actions;
 
-use BookStack\Actions\Comment;
 use BookStack\Entities\Entity;
 
 /**

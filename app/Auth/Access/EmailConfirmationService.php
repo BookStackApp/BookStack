@@ -1,11 +1,11 @@
 <?php namespace BookStack\Auth\Access;
 
-use BookStack\Notifications\ConfirmEmail;
+use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
-use Carbon\Carbon;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Auth\User;
+use BookStack\Notifications\ConfirmEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Connection as Database;
 
 class EmailConfirmationService

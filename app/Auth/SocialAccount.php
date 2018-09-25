@@ -1,6 +1,5 @@
 <?php namespace BookStack\Auth;
 
-use BookStack\Auth\User;
 use BookStack\Model;
 
 class SocialAccount extends Model

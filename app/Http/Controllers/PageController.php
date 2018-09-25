@@ -1,14 +1,14 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Exceptions\NotFoundException;
-use BookStack\Entities\EntityRepo;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\EntityRepo;
 use BookStack\Entities\ExportService;
+use BookStack\Exceptions\NotFoundException;
+use GatherContent\Htmldiff\Htmldiff;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
-use GatherContent\Htmldiff\Htmldiff;
 
 class PageController extends Controller
 {

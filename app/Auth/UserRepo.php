@@ -4,8 +4,6 @@ use Activity;
 use BookStack\Entities\EntityRepo;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Uploads\Image;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use Exception;
 use Images;
 

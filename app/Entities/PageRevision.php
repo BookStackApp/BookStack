@@ -1,8 +1,7 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Page;
-use BookStack\Model;
 use BookStack\Auth\User;
+use BookStack\Model;
 
 class PageRevision extends Model
 {

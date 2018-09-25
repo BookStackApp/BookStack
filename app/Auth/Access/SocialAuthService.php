@@ -1,11 +1,11 @@
 <?php namespace BookStack\Auth\Access;
 
-use BookStack\Exceptions\SocialSignInAccountNotUsed;
-use Laravel\Socialite\Contracts\Factory as Socialite;
-use BookStack\Exceptions\SocialDriverNotConfigured;
-use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Auth\UserRepo;
 use BookStack\Auth\SocialAccount;
+use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\SocialDriverNotConfigured;
+use BookStack\Exceptions\SocialSignInAccountNotUsed;
+use BookStack\Exceptions\UserRegistrationException;
+use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialAuthService

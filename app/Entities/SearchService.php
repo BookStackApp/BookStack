@@ -1,11 +1,5 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
-use BookStack\Entities\SearchTerm;
 use BookStack\Auth\Permissions\PermissionService;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;

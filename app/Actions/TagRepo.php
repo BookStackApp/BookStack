@@ -1,7 +1,7 @@
 <?php namespace BookStack\Actions;
 
-use BookStack\Entities\Entity;
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\Entity;
 
 /**
  * Class TagRepo

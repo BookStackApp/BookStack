@@ -1,16 +1,13 @@
 <?php namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Permissions;
+use BookStack\Auth\Role;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
-use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Permissions\JointPermission;
-use BookStack\Ownable;
 use BookStack\Entities\Page;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Ownable;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;

@@ -1,9 +1,7 @@
 <?php namespace BookStack\Uploads;
 
-use BookStack\Uploads\Image;
-use BookStack\Entities\Page;
-use BookStack\Uploads\ImageService;
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\Page;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo

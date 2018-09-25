@@ -2,7 +2,6 @@
 
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Model;
-use BookStack\Auth\Permissions\RolePermission;
 
 class Role extends Model
 {

@@ -1,8 +1,8 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Entities\EntityRepo;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\EntityRepo;
 use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
