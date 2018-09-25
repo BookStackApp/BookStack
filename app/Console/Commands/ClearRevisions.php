@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\PageRevision;
+use BookStack\Entities\PageRevision;
 use Illuminate\Console\Command;
 
 class ClearRevisions extends Command

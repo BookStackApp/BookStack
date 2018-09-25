@@ -30,11 +30,11 @@ function versioned_asset($file = '')
 /**
  * Helper method to get the current User.
  * Defaults to public 'Guest' user if not logged in.
- * @return \BookStack\User
+ * @return \BookStack\Auth\User
  */
 function user()
 {
-    return auth()->user() ?: \BookStack\User::getDefault();
+    return auth()->user() ?: \BookStack\Auth\User::getDefault();
 }
 
 /**
@@ -61,7 +61,7 @@ function userCan($permission, Ownable $ownable = null)
     }
 
     // Check permission on ownable item
-    $permissionService = app(\BookStack\Services\PermissionService::class);
+    $permissionService = app(\BookStack\Auth\Permissions\PermissionService::class);
     return $permissionService->checkOwnableUserAccess($ownable, $permission);
 }
 
@@ -69,11 +69,11 @@ function userCan($permission, Ownable $ownable = null)
  * Helper to access system settings.
  * @param $key
  * @param bool $default
- * @return bool|string|\BookStack\Services\SettingService
+ * @return bool|string|\BookStack\Settings\SettingService
  */
 function setting($key = null, $default = false)
 {
-    $settingService = resolve(\BookStack\Services\SettingService::class);
+    $settingService = resolve(\BookStack\Settings\SettingService::class);
     if (is_null($key)) {
         return $settingService;
     }

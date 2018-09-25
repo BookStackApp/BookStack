@@ -1,8 +1,8 @@
 <?php namespace Tests;
 
 
-use BookStack\Chapter;
-use BookStack\Page;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
 
 class ExportTest extends TestCase
 {

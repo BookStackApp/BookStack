@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Activity;
+use BookStack\Actions\Activity;
 use Illuminate\Console\Command;
 
 class ClearActivity extends Command

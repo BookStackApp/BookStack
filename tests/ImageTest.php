@@ -1,9 +1,9 @@
 <?php namespace Tests;
 
-use BookStack\Image;
-use BookStack\Page;
-use BookStack\Repos\EntityRepo;
-use BookStack\Services\ImageService;
+use BookStack\Uploads\Image;
+use BookStack\Entities\Page;
+use BookStack\Entities\EntityRepo;
+use BookStack\Uploads\ImageService;
 
 class ImageTest extends TestCase
 {

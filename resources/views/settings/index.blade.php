@@ -127,9 +127,9 @@
                         <div class="form-group">
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
                             <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
-                                @foreach(\BookStack\Role::all() as $role)
+                                @foreach(\BookStack\Auth\Role::all() as $role)
                                     <option value="{{$role->id}}" data-role-name="{{ $role->name }}"
-                                            @if(setting('registration-role', \BookStack\Role::first()->id) == $role->id) selected @endif
+                                            @if(setting('registration-role', \BookStack\Auth\Role::first()->id) == $role->id) selected @endif
                                     >
                                         {{ $role->display_name }}
                                     </option>

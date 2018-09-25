@@ -2,11 +2,11 @@
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\ImageRepo;
+use BookStack\Entities\EntityRepo;
+use BookStack\Uploads\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
-use BookStack\Image;
+use BookStack\Uploads\Image;
 use BookStack\Repos\PageRepo;
 
 class ImageController extends Controller

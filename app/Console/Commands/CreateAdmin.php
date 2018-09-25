@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Repos\UserRepo;
+use BookStack\Auth\UserRepo;
 use Illuminate\Console\Command;
 
 class CreateAdmin extends Command

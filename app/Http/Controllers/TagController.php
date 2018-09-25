@@ -1,6 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Repos\TagRepo;
+use BookStack\Actions\TagRepo;
 use Illuminate\Http\Request;
 
 class TagController extends Controller

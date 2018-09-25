@@ -7,7 +7,7 @@ class MarkdownTest extends BrowserKitTest
     public function setUp()
     {
         parent::setUp();
-        $this->page = \BookStack\Page::first();
+        $this->page = \BookStack\Entities\Page::first();
     }
 
     protected function setMarkdownEditor()

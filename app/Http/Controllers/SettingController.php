@@ -1,6 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Services\ImageService;
+use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Setting;

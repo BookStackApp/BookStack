@@ -9,8 +9,8 @@ class PageDraftTest extends BrowserKitTest
     public function setUp()
     {
         parent::setUp();
-        $this->page = \BookStack\Page::first();
-        $this->entityRepo = app('\BookStack\Repos\EntityRepo');
+        $this->page = \BookStack\Entities\Page::first();
+        $this->entityRepo = app('\BookStack\Entities\EntityRepo');
     }
 
     public function test_draft_content_shows_if_available()
@@ -48,7 +48,7 @@ class PageDraftTest extends BrowserKitTest
 
     public function test_alert_message_shows_if_someone_else_editing()
     {
-        $nonEditedPage = \BookStack\Page::take(10)->get()->last();
+        $nonEditedPage = \BookStack\Entities\Page::take(10)->get()->last();
         $addedContent = '<p>test message content</p>';
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->dontSeeInField('html', $addedContent);
@@ -67,7 +67,7 @@ class PageDraftTest extends BrowserKitTest
 
     public function test_draft_pages_show_on_homepage()
     {
-        $book = \BookStack\Book::first();
+        $book = \BookStack\Entities\Book::first();
         $this->asAdmin()->visit('/')
             ->dontSeeInElement('#recent-drafts', 'New Page')
             ->visit($book->getUrl() . '/create-page')
@@ -77,7 +77,7 @@ class PageDraftTest extends BrowserKitTest
 
     public function test_draft_pages_not_visible_by_others()
     {
-        $book = \BookStack\Book::first();
+        $book = \BookStack\Entities\Book::first();
         $chapter = $book->chapters->first();
         $newUser = $this->getEditor();
 
