@@ -1,9 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Exceptions\FileUploadException;
-use BookStack\Uploads\Attachment;
-use BookStack\Exceptions\NotFoundException;
 use BookStack\Entities\EntityRepo;
+use BookStack\Exceptions\FileUploadException;
+use BookStack\Exceptions\NotFoundException;
+use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\Request;
 

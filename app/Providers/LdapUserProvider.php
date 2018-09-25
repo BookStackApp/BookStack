@@ -2,9 +2,7 @@
 
 namespace BookStack\Providers;
 
-use BookStack\Auth\Role;
 use BookStack\Auth\Access\LdapService;
-use BookStack\Auth\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 

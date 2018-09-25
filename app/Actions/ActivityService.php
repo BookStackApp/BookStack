@@ -1,6 +1,5 @@
 <?php namespace BookStack\Actions;
 
-use BookStack\Actions\Activity;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Entity;
 use Session;

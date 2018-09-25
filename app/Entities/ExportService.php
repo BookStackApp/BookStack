@@ -1,9 +1,5 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
-use BookStack\Entities\EntityRepo;
 use BookStack\Uploads\ImageService;
 
 class ExportService
@@ -14,7 +10,8 @@ class ExportService
 
     /**
      * ExportService constructor.
-     * @param $entityRepo
+     * @param EntityRepo $entityRepo
+     * @param ImageService $imageService
      */
     public function __construct(EntityRepo $entityRepo, ImageService $imageService)
     {

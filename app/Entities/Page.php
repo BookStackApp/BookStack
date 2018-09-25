@@ -1,10 +1,6 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Attachment;
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
-use BookStack\Entities\PageRevision;
 
 class Page extends Entity
 {

@@ -1,11 +1,8 @@
 <?php namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Permissions;
-use BookStack\Exceptions\PermissionsException;
-use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
-use BookStack\Auth\Permissions\PermissionService;
-use Setting;
+use BookStack\Exceptions\PermissionsException;
 
 class PermissionsRepo
 {

@@ -1,9 +1,5 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
-
 class Chapter extends Entity
 {
     public $searchFactor = 1.3;

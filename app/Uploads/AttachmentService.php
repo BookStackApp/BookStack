@@ -1,8 +1,6 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Exceptions\FileUploadException;
-use BookStack\Uploads\Attachment;
-use BookStack\Uploads\UploadService;
 use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

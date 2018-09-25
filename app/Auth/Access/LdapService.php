@@ -1,11 +1,10 @@
 <?php namespace BookStack\Auth\Access;
 
 use BookStack\Auth\Access;
-use BookStack\Exceptions\LdapException;
-use BookStack\Auth\UserRepo;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Auth\Access\Ldap;
+use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\LdapException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 

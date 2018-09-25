@@ -1,10 +1,8 @@
 <?php namespace BookStack\Auth;
 
-use BookStack\Uploads\Image;
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
-use BookStack\Auth\Role;
-use BookStack\Auth\SocialAccount;
+use BookStack\Uploads\Image;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;

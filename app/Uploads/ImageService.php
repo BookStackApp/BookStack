@@ -1,15 +1,13 @@
 <?php namespace BookStack\Uploads;
 
-use BookStack\Exceptions\ImageUploadException;
-use BookStack\Uploads\Image;
 use BookStack\Auth\User;
-use BookStack\Uploads\UploadService;
+use BookStack\Exceptions\ImageUploadException;
 use DB;
 use Exception;
+use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
-use Illuminate\Contracts\Filesystem\Factory as FileSystem;
-use Illuminate\Contracts\Cache\Repository as Cache;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageService extends UploadService

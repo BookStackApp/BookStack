@@ -2,11 +2,11 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Exceptions\AuthException;
-use BookStack\Http\Controllers\Controller;
-use BookStack\Auth\UserRepo;
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\AuthException;
+use BookStack\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;

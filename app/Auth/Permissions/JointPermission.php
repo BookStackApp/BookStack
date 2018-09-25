@@ -1,8 +1,8 @@
 <?php namespace BookStack\Auth\Permissions;
 
+use BookStack\Auth\Role;
 use BookStack\Entities\Entity;
 use BookStack\Model;
-use BookStack\Auth\Role;
 
 class JointPermission extends Model
 {

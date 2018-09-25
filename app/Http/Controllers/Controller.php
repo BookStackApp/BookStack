@@ -2,13 +2,13 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Auth\User;
 use BookStack\Ownable;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use BookStack\Auth\User;
 
 abstract class Controller extends BaseController
 {

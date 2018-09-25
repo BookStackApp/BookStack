@@ -3,17 +3,17 @@
 namespace BookStack\Providers;
 
 use BookStack\Actions\Activity;
+use BookStack\Actions\ActivityService;
+use BookStack\Actions\View;
+use BookStack\Actions\ViewService;
+use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Settings\Setting;
+use BookStack\Settings\SettingService;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
-use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Actions\ViewService;
-use BookStack\Settings\Setting;
-use BookStack\Actions\View;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Support\ServiceProvider;
-use BookStack\Actions\ActivityService;
-use BookStack\Settings\SettingService;
 use Intervention\Image\ImageManager;
 
 class CustomFacadeProvider extends ServiceProvider
