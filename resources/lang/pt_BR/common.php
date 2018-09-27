@@ -52,6 +52,7 @@ return [
     'details' => 'Detalhes',
     'grid_view' => 'Visualização em Grade',
     'list_view' => 'Visualização em Lista',
+    'default' => 'Padrão',
 
     /**
      * Header
