@@ -37,6 +37,14 @@ return [
     'book_sort'                   => 'livro classificado',
     'book_sort_notification'      => 'Livro reclassificado com sucesso',
 
+    // Bookshelves
+    'bookshelf_create'            => 'prateleira criada',
+    'bookshelf_create_notification'    => 'Prateleira criada com sucesso',
+    'bookshelf_update'                 => 'prateleira atualizada',
+    'bookshelf_update_notification'    => 'Prateleira atualizada com sucesso',
+    'bookshelf_delete'                 => 'prateleira excluída',
+    'bookshelf_delete_notification'    => 'Prateleira excluída com sucesso',    
+
     // Other
     'commented_on'                => 'comentou em',
 ];
