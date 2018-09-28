@@ -33,9 +33,8 @@ return [
     'app_primary_color_desc' => 'Esse valor deverá ser Hexadecimal. <br>Deixe em branco para que o Bookstack assuma a cor padrão.',
     'app_homepage' => 'Página incial',
     'app_homepage_desc' => 'Selecione a página para ser usada como página inicial em vez da padrão. Permissões da página serão ignoradas.',
-    'app_homepage_default' => 'Escolhida página inicial padrão',
+    'app_homepage_select' => 'Selecione uma página',
     'app_disable_comments' => 'Desativar comentários',
-    'app_homepage_books' => 'Ou selecione a página de livros como sua página inicial. Isso substituirá qualquer página selecionada como sua página inicial.',
     'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo. Os comentários existentes não são exibidos.',
 
     /**
@@ -91,6 +90,7 @@ return [
     'role_manage_settings' => 'Gerenciar configurações de app',
     'role_asset' => 'Permissões de Ativos',
     'role_asset_desc' => 'Essas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por essas permissões.',
+    'role_asset_admins' => 'Administradores recebem automaticamente acesso a todo o conteúdo, mas essas opções podem mostrar ou ocultar as opções da UI.',
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelos ativos que você fez upload',
@@ -111,7 +111,6 @@ return [
     'users_external_auth_id' => 'ID de Autenticação Externa',
     'users_password_warning' => 'Preencha os dados abaixo caso queira modificar a sua senha:',
     'users_system_public' => 'Esse usuário representa quaisquer convidados que visitam o aplicativo. Ele não pode ser usado para login.',
-    'users_books_view_type' => 'Layout preferido para mostrar livros',
     'users_delete' => 'Excluir Usuário',
     'users_delete_named' => 'Excluir :userName',
     'users_delete_warning' => 'A ação vai excluir completamente o usuário de nome \':userName\' do sistema.',
