@@ -38,12 +38,12 @@ return [
     'book_sort_notification'      => 'Livro reclassificado com sucesso',
 
     // Bookshelves
-    'bookshelf_create'            => 'prateleira criada',
-    'bookshelf_create_notification'    => 'Prateleira criada com sucesso',
-    'bookshelf_update'                 => 'prateleira atualizada',
-    'bookshelf_update_notification'    => 'Prateleira atualizada com sucesso',
-    'bookshelf_delete'                 => 'prateleira excluída',
-    'bookshelf_delete_notification'    => 'Prateleira excluída com sucesso',    
+    'bookshelf_create'            => 'prateleira de livros criada',
+    'bookshelf_create_notification'    => 'Prateleira de Livros criada com sucesso',
+    'bookshelf_update'                 => 'prateleira de livros atualizada',
+    'bookshelf_update_notification'    => 'Prateleira de Livros atualizada com sucesso',
+    'bookshelf_delete'                 => 'prateleira de livros excluída',
+    'bookshelf_delete_notification'    => 'Prateleira de Livros excluída com sucesso',    
 
     // Other
     'commented_on'                => 'comentou em',
