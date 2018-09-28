@@ -49,6 +49,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entidade não encontrada',
+    'bookshelf_not_found' => 'Prateleira de Livros não encontrada',
     'book_not_found' => 'Livro não encontrado',
     'page_not_found' => 'Página não encontrada',
     'chapter_not_found' => 'Capítulo não encontrado',
