@@ -144,6 +144,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
         'sv' => 'Svenska',
+        'kr' => '한국어',
         'ja' => '日本語',
         'pl' => 'Polski',
         'it' => 'Italian',
