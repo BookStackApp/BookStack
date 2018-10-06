@@ -196,9 +196,13 @@ return [
     'pages_md_preview' => '预览',
     'pages_md_insert_image' => '插入图片',
     'pages_md_insert_link' => '插入实体链接',
+	'pages_md_insert_drawing' => '插入图表',
     'pages_not_in_chapter' => '本页面不在某章节中',
     'pages_move' => '移动页面',
     'pages_move_success' => '页面已移动到「:parentName」',
+	'pages_copy' => '复制页面',
+    'pages_copy_desination' => '复制目的地',
+    'pages_copy_success' => '页面复制完成',
     'pages_permissions' => '页面权限',
     'pages_permissions_success' => '页面权限已更新',
     'pages_revision' => '修订',
@@ -229,13 +233,17 @@ return [
         'message' => ':time，:start。注意不要覆盖对方的更新！',
     ],
     'pages_draft_discarded' => '草稿已丢弃，编辑器已更新到当前页面内容。',
+	'pages_specific' => '具体页面',
 
     /**
      * Editor sidebar
      */
     'page_tags' => '页面标签',
+	'chapter_tags' => '章节标签',
+	'book_tags' => '图书标签',
+    'shelf_tags' => '书架标签',
     'tag' => '标签',
-    'tags' =>  '',
+    'tags' =>  '标签',
     'tag_value' => '标签值 (Optional)',
     'tags_explain' => "添加一些标签以更好地对您的内容进行分类。\n您可以为标签分配一个值，以进行更深入的组织。",
     'tags_add' => '添加另一个标签',
@@ -279,6 +287,7 @@ return [
      */
     'comment' => '评论',
     'comments' => '评论',
+	'comment_add' => '添加评论',
     'comment_placeholder' => '在这里评论',
     'comment_count' => '{0} 无评论|[1,*] :count条评论',
     'comment_save' => '保存评论',
