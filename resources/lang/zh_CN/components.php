@@ -22,6 +22,7 @@ return [
     'image_upload_success' => '图片上传成功',
     'image_update_success' => '图片详细信息更新成功',
     'image_delete_success' => '图片删除成功',
+    'image_upload_remove' => '去掉',
 
     /**
      * Code editor
