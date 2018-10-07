@@ -37,17 +37,17 @@
             </div>
             <div class="col-md-5 text-bigger" id="content-counts">
                 <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
-                <a href="#book">
+                <a href="#book"><!--add book link -->
                 <div class="text-book">
                     @icon('book')  {{ trans_choice('entities.x_books', $assetCounts['books']) }}
                 </div>
                 </a>
-                <a href="#chapter">
+                <a href="#chapter"><!--add chapter link -->
                 <div class="text-chapter">
                     @icon('chapter') {{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}
                 </div>
                 </a>
-                <a href="#page">
+                <a href="#page"><!--add page link -->
                 <div class="text-page">
                     @icon('page') {{ trans_choice('entities.x_pages', $assetCounts['pages']) }}
                 </div>
