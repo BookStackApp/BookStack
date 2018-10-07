@@ -35,13 +35,13 @@ return [
     'cannot_get_image_from_url' => '无法从 :url 中获取图片',
     'cannot_create_thumbs' => '服务器无法创建缩略图，请检查您是否安装了GD PHP扩展。',
     'server_upload_limit' => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
-	'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
+    'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'image_upload_error' => '上传图片时发生错误',
-	'image_upload_type_error' => '上传的图像类型无效',
+    'image_upload_type_error' => '上传的图像类型无效',
 
     // Attachments
     'attachment_page_mismatch' => '附件更新期间的页面不匹配',
-	'attachment_not_found' => '找不到附件',
+    'attachment_not_found' => '找不到附件',
 
     // Pages
     'page_draft_autosave_fail' => '无法保存草稿，确保您在保存页面之前已经连接到互联网',
