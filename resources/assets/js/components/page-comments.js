@@ -1,5 +1,7 @@
 const MarkdownIt = require("markdown-it");
+const mdDefList = require("markdown-it-deflist");
 const md = new MarkdownIt({ html: false });
+md.use(mdDefList);
 
 class PageComments {
 

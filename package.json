@@ -36,6 +36,7 @@
     "jquery-sortable": "^0.9.13",
     "markdown-it": "^8.3.1",
     "markdown-it-task-lists": "^2.0.0",
+    "markdown-it-deflist": "^2.0.0",
     "vue": "^2.2.6",
     "vuedraggable": "^2.14.1"
   },

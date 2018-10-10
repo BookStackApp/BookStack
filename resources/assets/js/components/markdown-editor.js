@@ -1,5 +1,6 @@
 const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
+const mdDefList = require('markdown-it-deflist');
 const code = require('../services/code');
 
 const DrawIO = require('../services/drawio');
@@ -11,6 +12,7 @@ class MarkdownEditor {
         this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
+        this.markdown.use(mdDefList);
 
         this.display = this.elem.querySelector('.markdown-display');
         this.input = this.elem.querySelector('textarea');
