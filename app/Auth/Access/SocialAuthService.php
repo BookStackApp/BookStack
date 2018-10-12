@@ -52,6 +52,9 @@ class SocialAuthService
     public function startRegister($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
+        if ($socialDriver == 'google') {
+            return $this->socialite->driver($driver)->with(['prompt' => 'select_account'])->redirect();
+        }
         return $this->socialite->driver($driver)->redirect();
     }
 
