@@ -137,8 +137,8 @@ return [
     /**
      * Chapters
      */
-    'chapter' => 'Chapter',
-    'chapters' => 'Chapters',
+    'chapter' => '챕터',
+    'chapters' => '챕터',
     'x_chapters' => ':count Chapter|:count Chapters',
     'chapters_popular' => 'Popular Chapters',
     'chapters_new' => 'New Chapter',
