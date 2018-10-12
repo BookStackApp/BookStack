@@ -8,16 +8,16 @@ return [
      * including users and roles.
      */
 
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => '설정',
+    'settings_save' => '설정 저장',
+    'settings_save_success' => '설정이 저장되었습니다.',
 
     /**
      * App settings
      */
 
-    'app_settings' => 'App Settings',
-    'app_name' => 'Application name',
+    'app_settings' => '앱 설정',
+    'app_name' => '어플리케이션 이름',
     'app_name_desc' => 'This name is shown in the header and any emails.',
     'app_name_header' => 'Show Application name in header?',
     'app_public_viewing' => 'Allow public viewing?',
