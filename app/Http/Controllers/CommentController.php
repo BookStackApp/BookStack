@@ -2,7 +2,7 @@
 
 use Activity;
 use BookStack\Actions\CommentRepo;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ class CommentController extends Controller
 
     /**
      * CommentController constructor.
-     * @param \BookStack\Entities\EntityRepo $entityRepo
+     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
      * @param \BookStack\Actions\CommentRepo $commentRepo
      */
     public function __construct(EntityRepo $entityRepo, CommentRepo $commentRepo)

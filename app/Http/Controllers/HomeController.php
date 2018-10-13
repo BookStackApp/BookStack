@@ -1,7 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Response;
 use Views;
 

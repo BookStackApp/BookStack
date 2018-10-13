@@ -1,7 +1,8 @@
 <?php namespace Tests;
 
 use BookStack\Entities\Page;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Repos\PageRepo;
 
 class PageContentTest extends TestCase
 {
@@ -71,9 +72,9 @@ class PageContentTest extends TestCase
     {
         $this->asEditor();
 
-        $entityRepo = $this->app[EntityRepo::class];
+        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $entityRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $pageRevision = $page->revisions->last();
 
         $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
@@ -89,10 +90,10 @@ class PageContentTest extends TestCase
     {
         $this->asEditor();
 
-        $entityRepo = $this->app[EntityRepo::class];
+        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $entityRepo->updatePage($page, $page->book_id, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
-        $entityRepo->updatePage($page, $page->book_id, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $page =  Page::find($page->id);
 
 

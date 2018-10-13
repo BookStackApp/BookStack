@@ -5,7 +5,7 @@ use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Auth\User;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\Page;
 
 class RestrictionsTest extends BrowserKitTest

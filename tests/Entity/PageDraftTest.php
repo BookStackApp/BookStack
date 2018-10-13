@@ -1,16 +1,18 @@
 <?php namespace Tests;
 
 
+use BookStack\Entities\Repos\PageRepo;
+
 class PageDraftTest extends BrowserKitTest
 {
     protected $page;
-    protected $entityRepo;
+    protected $pageRepo;
 
     public function setUp()
     {
         parent::setUp();
         $this->page = \BookStack\Entities\Page::first();
-        $this->entityRepo = app('\BookStack\Entities\EntityRepo');
+        $this->pageRepo = app(PageRepo::class);
     }
 
     public function test_draft_content_shows_if_available()
@@ -20,7 +22,7 @@ class PageDraftTest extends BrowserKitTest
             ->dontSeeInField('html', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
-        $this->entityRepo->updatePageDraft($this->page, ['html' => $newContent]);
+        $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->seeInField('html', $newContent);
     }
@@ -33,7 +35,7 @@ class PageDraftTest extends BrowserKitTest
 
         $newContent = $this->page->html . $addedContent;
         $newUser = $this->getEditor();
-        $this->entityRepo->updatePageDraft($this->page, ['html' => $newContent]);
+        $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
         $this->actingAs($newUser)->visit($this->page->getUrl() . '/edit')
             ->dontSeeInField('html', $newContent);
     }
@@ -41,7 +43,7 @@ class PageDraftTest extends BrowserKitTest
     public function test_alert_message_shows_if_editing_draft()
     {
         $this->asAdmin();
-        $this->entityRepo->updatePageDraft($this->page, ['html' => 'test content']);
+        $this->pageRepo->updatePageDraft($this->page, ['html' => 'test content']);
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->see('You are currently editing a draft');
     }
@@ -55,7 +57,7 @@ class PageDraftTest extends BrowserKitTest
 
         $newContent = $this->page->html . $addedContent;
         $newUser = $this->getEditor();
-        $this->entityRepo->updatePageDraft($this->page, ['html' => $newContent]);
+        $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
         $this->actingAs($newUser)
             ->visit($this->page->getUrl() . '/edit')
