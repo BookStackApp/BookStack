@@ -1,8 +1,9 @@
 <?php namespace Tests;
 
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Entities\Page;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Uploads\ImageService;
 
 class ImageTest extends TestCase
@@ -250,8 +251,8 @@ class ImageTest extends TestCase
         $upload->assertStatus(200);
         $image = Image::where('type', '=', 'gallery')->first();
 
-        $entityRepo = app(EntityRepo::class);
-        $entityRepo->updatePage($page, $page->book_id, [
+        $pageRepo = app(PageRepo::class);
+        $pageRepo->updatePage($page, $page->book_id, [
             'name' => $page->name,
             'html' => $page->html . "<img src=\"{$image->url}\">",
             'summary' => ''
@@ -263,7 +264,7 @@ class ImageTest extends TestCase
         $this->assertCount(0, $toDelete);
 
         // Save a revision of our page without the image;
-        $entityRepo->updatePage($page, $page->book_id, [
+        $pageRepo->updatePage($page, $page->book_id, [
             'name' => $page->name,
             'html' => "<p>Hello</p>",
             'summary' => ''
