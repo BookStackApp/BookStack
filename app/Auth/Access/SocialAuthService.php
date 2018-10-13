@@ -55,7 +55,9 @@ class SocialAuthService
         if ($socialDriver == 'google') {
             return $this->socialite->driver($driver)->with(['prompt' => 'select_account'])->redirect();
         }
-        return $this->socialite->driver($driver)->redirect();
+        else {
+            return $this->socialite->driver($driver)->redirect();
+        }
     }
 
     /**
