@@ -304,7 +304,7 @@ class MarkdownEditor {
         let cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
             let selectedText = this.cm.getSelection();
-            let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
+            let newText = "[![" + (selectedText || image.name) + "](" + image.thumbs.display + ")](" + image.url + ")";
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
