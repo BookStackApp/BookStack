@@ -2,21 +2,22 @@
  * Includes the main navigation header and the faded toolbar.
  */
 
+header .grid {
+  grid-template-columns: auto min-content auto;
+}
+
 header {
+  position: relative;
   display: block;
   z-index: 2;
   top: 0;
   background-color: $primary-dark;
   color: #fff;
   fill: #fff;
-  .padded {
-    padding: $-m;
-  }
   border-bottom: 1px solid #DDD;
   .links {
     display: inline-block;
     vertical-align: top;
-    margin-left: $-m;
   }
   .links a {
     display: inline-block;
@@ -27,15 +28,6 @@ header {
   .dropdown-container {
     padding-left: $-m;
     padding-right: 0;
-  }
-  @include smaller-than($screen-md) {
-    .links a {
-      padding-left: $-s;
-      padding-right: $-s;
-    }
-    .dropdown-container {
-      padding-left: $-s;
-    }
   }
   .avatar, .user-name {
     display: inline-block;
@@ -63,26 +55,16 @@ header {
       padding-top: 4px;
       font-size: 18px;
     }
-    @include smaller-than($screen-md) {
+    @include between($l, $xl) {
       padding-left: $-xs;
       .name {
         display: none;
       }
     }
   }
-  @include smaller-than($screen-sm) {
-    text-align: center;
-    .float.right {
-      float: none;
-    }
-    .links a {
-      padding: $-s;
-    }
-    .user-name {
-      padding-top: $-s;
-    }
-  }
 }
+
+
 
 .header-search {
   display: inline-block;
@@ -115,17 +97,8 @@ header .search-box {
   :-moz-placeholder { /* Firefox 18- */
     color: #DDD;
   }
-  @include smaller-than($screen-lg) {
-    max-width: 250px;
-  }
-  @include smaller-than($l) {
+  @include between($l, $xl) {
     max-width: 200px;
-  }
-}
-
-@include smaller-than($s) {
-  .header-search {
-    display: block;
   }
 }
 
@@ -149,6 +122,73 @@ header .search-box {
   margin: $-xs $-s $-xs 0;
   vertical-align: top;
   height: 43px;
+}
+
+.mobile-menu-toggle {
+  color: #FFF;
+  fill: #FFF;
+  font-size: 2em;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  padding: 0 $-xs;
+  position: absolute;
+  right: $-m;
+  top: 8px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  svg {
+    margin: 0;
+  }
+}
+
+@include smaller-than($l) {
+  header .header-links {
+    display: none;
+    background-color: #FFF;
+    z-index: 10;
+    right: $-m;
+    border-radius: 4px;
+    overflow: hidden;
+    position: absolute;
+    box-shadow: $bs-hover;
+    margin-top: -$-xs;
+    &.show {
+      display: block;
+    }
+  }
+  header .links a, header .dropdown-container ul li a {
+    text-align: left;
+    display: block;
+    padding: $-s $-m;
+    color: $text-dark;
+    fill: $text-dark;
+    svg {
+      margin-right: $-s;
+    }
+    &:hover {
+      background-color: #EEE;
+      color: #444;
+      fill: #444;
+      text-decoration: none;
+    }
+  }
+  header .dropdown-container {
+    display: block;
+    padding-left: 0;
+  }
+  header .links {
+    display: block;
+  }
+  header .dropdown-container ul {
+    display: block !important;
+    position: relative;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+  }
 }
 
 .breadcrumbs span.sep {

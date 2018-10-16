@@ -364,3 +364,30 @@
     display: none;
   }
 }
+
+.entity-icon {
+  font-size: 1.3em;
+  width: 1.88em;
+  height: 1.88em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 1em;
+  position: relative;
+  overflow: hidden;
+  svg {
+    margin: 0;
+    bottom: 0;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    opacity: 0.2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

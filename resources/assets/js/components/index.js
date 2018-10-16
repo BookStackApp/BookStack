@@ -20,6 +20,7 @@ let componentMapping = {
     'page-display': require('./page-display'),
     'shelf-sort': require('./shelf-sort'),
     'homepage-control': require('./homepage-control'),
+    'header-mobile-toggle': require('./header-mobile-toggle'),
 };
 
 window.components = {};

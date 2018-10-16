@@ -219,6 +219,20 @@ class Entity extends Ownable
     }
 
     /**
+     * Get an excerpt of this entity's descriptive content to the specified length.
+     * @param int $length
+     * @return mixed
+     */
+    public function getExcerpt(int $length = 100)
+    {
+        $text = $this->getText();
+        if (mb_strlen($text) > $length) {
+            $text = mb_substr($text, 0, $length-3) . '...';
+        }
+        return  trim($text);
+    }
+
+    /**
      * Return a generalised, common raw query that can be 'unioned' across entities.
      * @return string
      */

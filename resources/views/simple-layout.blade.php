@@ -5,13 +5,7 @@
 @section('content')
 
     <div class="toolbar-container">
-        <div class="faded-small toolbar">
-            <div class="container fluid">
-                <div class="row">
-                    @yield('toolbar')
-                </div>
-            </div>
-        </div>
+        @yield('toolbar')
     </div>
 
 
