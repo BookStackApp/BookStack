@@ -25,32 +25,8 @@
 }
 
 /*
-* Bordering
-*/
-.bordered {
-  border: 1px solid #BBB;
-  &.pos {
-    border-color: $positive;
-  }
-  &.neg {
-    border-color: $negative;
-  }
-  &.primary {
-    border-color: $primary;
-  }
-  &.secondary {
-    border-color: $secondary;
-  }
-  &.thick {
-    border-width: 2px;
-  }
-}
-.rounded {
-  border-radius: 3px;
-}
-
-/*
 * Padding
+* TODO - Remove these older styles
 */
 .nopadding {
   padding: 0;
@@ -94,6 +70,7 @@
 
 /*
 * Margins
+* TODO - Remove these older styles
 */
 .margins {
   margin: $-l;
@@ -125,6 +102,38 @@
     margin-right: $-xl;
   }
 }
+
+@mixin spacing($prop, $propLetter) {
+  @each $sizeLetter, $size in $spacing {
+    .#{$propLetter}-#{$sizeLetter} {
+      #{$prop}: $size;
+    }
+    .#{$propLetter}x-#{$sizeLetter} {
+      #{$prop}-left: $size;
+      #{$prop}-right: $size;
+    }
+    .#{$propLetter}y-#{$sizeLetter} {
+      #{$prop}-top: $size;
+      #{$prop}-bottom: $size;
+    }
+    .#{$propLetter}t-#{$sizeLetter} {
+      #{$prop}-top: $size;
+    }
+    .#{$propLetter}r-#{$sizeLetter} {
+      #{$prop}-right: $size;
+    }
+    .#{$propLetter}b-#{$sizeLetter} {
+      #{$prop}-bottom: $size;
+    }
+    .#{$propLetter}l-#{$sizeLetter} {
+      #{$prop}-left: $size;
+    }
+  }
+
+}
+
+@include spacing('margin', 'm')
+@include spacing('padding', 'p')
 
 
 /**
@@ -183,18 +192,18 @@
 }
 
 .card {
-  margin: $-m;
   background-color: #FFF;
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  padding-bottom: $-xs;
   h3 {
     padding: $-m;
-    border-bottom: 1px solid #E8E8E8;
+    padding-bottom: $-xs;
     margin: 0;
     font-size: $fs-s;
-    color: #888;
-    fill: #888;
+    color: #444;
+    fill: #666;
     font-weight: 400;
-    text-transform: uppercase;
   }
   h3 a {
     line-height: 1;

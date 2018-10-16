@@ -227,20 +227,13 @@
 }
 
 .activity-list-item {
-  padding: $-s 0;
+  padding: $-s $-m;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: $-m;
   color: #888;
   fill: #888;
-  border-bottom: 1px solid #EEE;
   font-size: 0.9em;
-  .left {
-    float: left;
-  }
-  .left + .right {
-    margin-left: 30px + $-s;
-  }
-  &:last-of-type {
-    border-bottom: 0;
-  }
 }
 
 ul.pagination {
@@ -281,9 +274,6 @@ ul.pagination {
 }
 
 .entity-list {
-  > div {
-    padding: $-m 0;
-  }
   h4 {
     margin: 0;
   }
@@ -304,13 +294,29 @@ ul.pagination {
   }
 }
 
-.card .entity-list-item, .card .activity-list-item {
-  padding-left: $-m;
-  padding-right: $-m;
+.entity-list-item {
+  padding: $-s $-m;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: $-m;
+  align-items: top;
+  > .content {
+    padding-top: 2px;
+  }
+  .icon {
+    font-size: 1rem;
+  }
+  h4 a {
+    color: #666;
+  }
+}
+a.entity-list-item:hover {
+  text-decoration: none;
+  background-color: #F2F2F2;
 }
 
 .entity-list.compact {
-  font-size: 0.6em;
+  font-size: 0.6 * $fs-m;
   h4, a {
     line-height: 1.2;
   }
@@ -330,6 +336,11 @@ ul.pagination {
   }
   hr {
     margin: 0;
+  }
+  @include smaller-than($m) {
+    h4 {
+      font-size: 1.666em;
+    }
   }
 }
 

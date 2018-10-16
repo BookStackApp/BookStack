@@ -8,13 +8,15 @@ $max-width: 1400px;
 $xl: 1100px;
 $ipad-width: 1028px; // Is actually 1024 but we go over to ensure functionality.
 $l: 1000px;
-$m: 800px;
+$m: 880px;
 $s: 600px;
 $xs: 400px;
 $xxs: 360px;
 $screen-lg: 1200px;
 $screen-md: 992px;
 $screen-sm: 768px;
+
+$screen-sizes: (('xxs', $xxs), ('xs', $xs), ('s', $s), ('m', $m), ('l', $l), ('xl', $xl));
 
 // Spacing (Margins+Padding)
 $-xxxl: 64px;
@@ -25,6 +27,8 @@ $-m: 16px;
 $-s: 12px;
 $-xs: 6px;
 $-xxs: 3px;
+
+$spacing: (('xxs', $-xxs), ('xs', $-xs), ('s', $-s), ('m', $-m), ('l', $-l), ('xl', $-xl), ('xxl', $-xxl));
 
 // Fonts
 $text: -apple-system, BlinkMacSystemFont,
