@@ -3,8 +3,9 @@
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
 
 class EntityTest extends BrowserKitTest
@@ -193,7 +194,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
         app(UserRepo::class)->destroy($creator);
-        app(EntityRepo::class)->savePageRevision($entities['page']);
+        app(PageRepo::class)->savePageRevision($entities['page']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -206,7 +207,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
         app(UserRepo::class)->destroy($updater);
-        app(EntityRepo::class)->savePageRevision($entities['page']);
+        app(PageRepo::class)->savePageRevision($entities['page']);
 
         $this->checkEntitiesViewable($entities);
     }

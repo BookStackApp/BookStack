@@ -1,5 +1,6 @@
 <?php namespace BookStack\Entities;
 
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Uploads\ImageService;
 
 class ExportService
