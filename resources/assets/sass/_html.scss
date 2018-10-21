@@ -3,14 +3,11 @@
 }
 
 html {
-  background-color: #FFFFFF;
   height: 100%;
   overflow-y: scroll;
+  background-color: #F2F2F2;
   &.flexbox {
     overflow-y: hidden;
-  }
-  &.shaded {
-    background-color: #F2F2F2;
   }
 }
 
@@ -19,9 +16,7 @@ body {
   line-height: 1.6;
   color: #616161;
   -webkit-font-smoothing: antialiased;
-  &.shaded {
-    background-color: #F2F2F2;
-  }
+  background-color: #F2F2F2;
 }
 
 button {

@@ -4,14 +4,8 @@
 
 @section('content')
 
-    <div class="toolbar-container">
-        <div class="faded-small toolbar">
-            <div class="container fluid">
-                <div class="row">
-                    @yield('toolbar')
-                </div>
-            </div>
-        </div>
+    <div class="toolbar px-l py-m">
+        @yield('toolbar')
     </div>
 
 
@@ -20,12 +14,12 @@
         <div sidebar class="sidebar flex print-hidden" id="sidebar">
             <div class="sidebar-toggle primary-background-light">@icon('caret-right-circle')
             </div>
-            <div class="scroll-body">
+            <div class="scroll-body px-m">
                 @yield('sidebar')
             </div>
         </div>
 
-        <div class="content flex @yield('body-wrap-classes')">
+        <div class="content mr-m flex @yield('body-wrap-classes')">
             @yield('body')
         </div>
     </div>

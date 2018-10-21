@@ -15,6 +15,8 @@ header {
   color: #fff;
   fill: #fff;
   border-bottom: 1px solid #DDD;
+  box-shadow: $bs-card;
+  padding: $-xxs 0;
   .links {
     display: inline-block;
     vertical-align: top;
@@ -74,13 +76,16 @@ header .search-box {
   margin-top: 10px;
   input {
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
     color: #EEE;
     z-index: 2;
+    padding-left: 40px;
   }
   button {
     fill: #EEE;
     z-index: 1;
+    left: 16px;
     svg {
       margin-right: 0;
     }
@@ -191,10 +196,20 @@ header .search-box {
   }
 }
 
-.breadcrumbs span.sep {
-  color: #aaa;
-  padding: 0 $-xs;
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+.breadcrumbs .separator {
+  fill: #aaa;
+  font-size: 1.6em;
+  line-height: 0.8;
+  margin: 0 $-xs;
+  margin-top: -2px;
+}
+
 .faded {
   a, button, span, span > div {
     color: #666;
@@ -222,13 +237,24 @@ header .search-box {
   background-color: $primary-faded;
 }
 
-.toolbar-container {
-  background-color: #FFF;
+.toolbar {
+  position: relative;
+  > .grid > div {
+    opacity: 0.8;
+    transition: opacity ease-in-out 120ms;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .text-button {
+    color: #666;
+    fill: #666;
+  }
 }
 
-.breadcrumbs .text-button, .action-buttons .text-button {
+.action-buttons .text-button {
   display: inline-block;
-  padding: $-s;
+  padding: $-xs $-s;
   &:last-child {
     padding-right: 0;
   }
@@ -257,24 +283,11 @@ header .search-box {
 }
 
 @include smaller-than($m) {
-  .breadcrumbs .text-button, .action-buttons .text-button {
+  .action-buttons .text-button {
     padding: $-xs $-xs;
   }
   .action-buttons .dropdown-container:last-child a {
     padding-left: $-xs;
-  }
-  .breadcrumbs .text-button {
-    font-size: 0;
-  }
-  .breadcrumbs .text-button svg {
-    font-size: $fs-m;
-  }
-  .breadcrumbs a i {
-    font-size: $fs-m;
-    padding-right: 0;
-  }
-  .breadcrumbs span.sep {
-    padding: 0 $-xxs;
   }
   .toolbar .col-xs-1:first-child {
     padding-right: 0;

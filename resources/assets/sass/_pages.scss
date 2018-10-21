@@ -41,7 +41,7 @@
   margin-top: $-xxl;
   overflow-wrap: break-word;
   &.flex {
-    margin-top: $-m;
+    margin-top: $-xl;
   }
   .align-left {
     text-align: left;
@@ -380,6 +380,28 @@
     margin: 0;
     bottom: 0;
   }
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    opacity: 0.2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.entity-chip {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9em;
+  border-radius: 2em;
+  position: relative;
+  overflow: hidden;
+  padding: $-xs $-m;
   &:after {
     content: '';
     position: absolute;

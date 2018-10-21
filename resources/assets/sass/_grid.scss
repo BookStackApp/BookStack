@@ -63,7 +63,8 @@ body.flexbox {
   flex: 3;
   background-color: #FFFFFF;
   padding: 0 $-l;
-  border-left: 1px solid #DDD;
+  box-shadow: $bs-card;
+  border-radius: 4px;
   max-width: 100%;
 }
 .flex.sidebar .sidebar-toggle {
@@ -135,6 +136,7 @@ body.flexbox {
     position: fixed;
     top: 0;
     padding-right: $-m;
+    padding-top: $-m;
     width: 30%;
     left: 0;
     height: 100%;
@@ -958,6 +960,7 @@ div[class^="col-"] img {
 }
 
 @include grid-layout('thirds', 3)
+@include grid-layout('halves', 2)
 
 @each $sizeLetter, $size in $screen-sizes {
   @include smaller-than($size) {

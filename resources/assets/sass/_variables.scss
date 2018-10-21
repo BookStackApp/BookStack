@@ -53,7 +53,7 @@ $primary-faded: rgba(21, 101, 192, 0.15);
 // Item Colors
 $color-bookshelf: #af5a5a;
 $color-book: #009688;
-$color-chapter: #ef7c3c;
+$color-chapter: #e56236;
 $color-page: $primary;
 $color-page-draft: #9A60DA;
 
@@ -64,5 +64,5 @@ $text-light: #EEE;
 // Shadows
 $bs-light: 0 0 4px 1px #CCC;
 $bs-med: 0 1px 3px 1px rgba(76, 76, 76, 0.26);
-$bs-card: 0 1px 3px 1px rgba(76, 76, 76, 0.26), 0 1px 12px 0px rgba(76, 76, 76, 0.2);
+$bs-card: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
 $bs-hover: 0 2px 2px 1px rgba(0,0,0,.13);
