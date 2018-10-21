@@ -1,10 +1,10 @@
 @extends('sidebar-layout')
 
 @section('toolbar')
-    <div class="col-sm-8 col-xs-5 faded">
-        @include('pages._breadcrumbs', ['page' => $page])
-    </div>
-    <div class="col-sm-4 col-xs-7 faded">
+    <div class="grid halves">
+        <div>
+            @include('pages._breadcrumbs', ['page' => $page])
+        </div>
         <div class="action-buttons">
             <span dropdown class="dropdown-container">
                 <div dropdown-toggle class="text-button text-primary">@icon('export'){{ trans('entities.export') }}</div>
@@ -49,7 +49,7 @@
     @endif
 
     @if ($page->attachments->count() > 0)
-        <div class="card">
+        <div id="page-attachments" class="card mb-m">
             <h3>@icon('attach') {{ trans('entities.pages_attachments') }}</h3>
             <div class="body">
                 @foreach($page->attachments as $attachment)
@@ -62,7 +62,7 @@
     @endif
 
     @if (isset($pageNav) && count($pageNav))
-        <div class="card">
+        <div id="page-navigation" class="card mb-m">
             <h3>@icon('open-book') {{ trans('entities.pages_navigation') }}</h3>
             <div class="body">
                 <div class="sidebar-page-nav menu">
@@ -76,7 +76,7 @@
         </div>
     @endif
 
-    <div class="card entity-details">
+    <div id="page-details" class="card entity-details mb-m">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
         <div class="body text-muted text-small blended-links">
             @include('partials.entity-meta', ['entity' => $page])
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 
 @stop
 

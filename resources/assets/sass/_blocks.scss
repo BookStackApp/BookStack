@@ -1,28 +1,8 @@
 
 /*
-* This file container all block styling including background shading,
-* margins, paddings & borders.
+* This file container all block styling including margins, paddings & borders.
 */
 
-
-/*
-* Background Shading
-*/
-.shaded {
-  background-color: #f1f1f1;
-  &.pos {
-    background-color: lighten($positive, 40%);
-  }
-  &.neg {
-    background-color: lighten($negative, 20%);
-  }
-  &.primary {
-    background-color: lighten($primary, 40%);
-  }
-  &.secondary {
-    background-color: lighten($secondary, 30%);
-  }
-}
 
 /*
 * Padding
@@ -193,7 +173,7 @@
 
 .card {
   background-color: #FFF;
-  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: $bs-card;
   border-radius: 3px;
   padding-bottom: $-xs;
   h3 {
@@ -218,8 +198,11 @@
 }
 
 .sidebar .card {
-  h3, .body, .empty-text {
+  .body, .empty-text {
     padding: $-s $-m;
+  }
+  h3 + .body {
+    padding-top: $-xs;
   }
 }
 

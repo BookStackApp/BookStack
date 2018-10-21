@@ -1,4 +1,4 @@
-<div class="card book-tree" v-pre>
+<div id="book-tree" class="card book-tree mb-m" v-pre>
     <h3>@icon('book') {{ trans('entities.books_navigation') }}</h3>
     <div class="body">
         <ul class="sidebar-page-list menu">
