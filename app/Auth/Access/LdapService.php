@@ -169,7 +169,13 @@ class LdapService
         }
         $hostName = $ldapServer[0] . ($hasProtocol?':':'') . $ldapServer[1];
         $defaultPort = $ldapServer[0] === 'ldaps' ? 636 : 389;
+
         $ldapConnection = $this->ldap->connect($hostName, count($ldapServer) > 2 ? intval($ldapServer[2]) : $defaultPort);
+
+        // Check if TLS_INSECURE is set
+        if($this->config['tls_insecure']) {
+            $this->ldap->setOption($ldapConnection, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
+        }
 
         if ($ldapConnection === false) {
             throw new LdapException(trans('errors.ldap_cannot_connect'));
