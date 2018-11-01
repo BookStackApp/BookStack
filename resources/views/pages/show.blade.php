@@ -22,6 +22,7 @@
                     <a dropdown-toggle class="text-primary text-button">@icon('more') {{ trans('common.more') }}</a>
                     <ul>
                         @if(userCan('page-update', $page))
+                            <li><a href="{{ $page->getUrl('/copy') }}" class="text-primary" >@icon('copy'){{ trans('common.copy') }}</a></li>
                             <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" >@icon('folder'){{ trans('common.move') }}</a></li>
                             <li><a href="{{ $page->getUrl('/revisions') }}" class="text-primary">@icon('history'){{ trans('entities.revisions') }}</a></li>
                         @endif
@@ -40,50 +41,11 @@
 @stop
 
 @section('sidebar')
-    @if($book->restricted || ($page->chapter && $page->chapter->restricted) || $page->restricted)
-        <div class="card">
-            <h3>@icon('permission') {{ trans('entities.permissions') }}</h3>
-            <div class="body">
-                <div class="text-muted">
-
-                    @if($book->restricted)
-                        @if(userCan('restrictions-manage', $book))
-                            <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.books_permissions_active') }}
-                        @endif
-                        <br>
-                    @endif
-
-                    @if($page->chapter && $page->chapter->restricted)
-                        @if(userCan('restrictions-manage', $page->chapter))
-                            <a href="{{ $page->chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.chapters_permissions_active') }}
-                        @endif
-                        <br>
-                    @endif
-
-                    @if($page->restricted)
-                        @if(userCan('restrictions-manage', $page))
-                            <a href="{{ $page->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.pages_permissions_active') }}</a>
-                        @else
-                            @icon('lock'){{ trans('entities.pages_permissions_active') }}
-                        @endif
-                        <br>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
 
     @if($page->tags->count() > 0)
-        <div class="card tag-display">
-            <h3>@icon('tag') {{ trans('entities.page_tags') }}</h3>
-            <div class="body">
-                @include('components.tag-list', ['entity' => $page])
-            </div>
-        </div>
+        <section>
+            @include('components.tag-list', ['entity' => $page])
+        </section>
     @endif
 
     @if ($page->attachments->count() > 0)
@@ -114,10 +76,40 @@
         </div>
     @endif
 
-    <div class="card">
+    <div class="card entity-details">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
+        <div class="body text-muted text-small blended-links">
             @include('partials.entity-meta', ['entity' => $page])
+
+            @if($book->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $book))
+                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                    @endif
+                </div>
+            @endif
+
+            @if($page->chapter && $page->chapter->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $page->chapter))
+                        <a href="{{ $page->chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.chapters_permissions_active') }}
+                    @endif
+                </div>
+            @endif
+
+            @if($page->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $page))
+                        <a href="{{ $page->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.pages_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.pages_permissions_active') }}
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 
@@ -125,29 +117,32 @@
 
 @stop
 
+@section('body-wrap-classes', 'flex-fill columns')
+
 @section('body')
-    <div class="page-content" ng-non-bindable>
+
+    <div class="page-content flex" page-display="{{ $page->id }}">
 
         <div class="pointer-container" id="pointer">
-            <div class="pointer anim" >
+            <div class="pointer anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
                 <span class="icon text-primary">@icon('link') @icon('include', ['style' => 'display:none;'])</span>
-                <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
-                <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
+                <span class="input-group">
+                    <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
+                    <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
+                </span>
+                @if(userCan('page-update', $page))
+                    <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
+                        class="button icon heading-edit-icon" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
+                @endif
             </div>
         </div>
 
         @include('pages/page-display')
-
     </div>
+
     @if ($commentsEnabled)
-      <div class="container small nopad">
+      <div class="container small nopad comments-container">
           @include('comments/comments', ['page' => $page])
       </div>
     @endif
-@stop
-
-@section('scripts')
-    <script>
-        setupPageShow({{$page->id}});
-    </script>
 @stop

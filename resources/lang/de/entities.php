@@ -1,6 +1,5 @@
 <?php
 return [
-
     /**
      * Shared
      */
@@ -30,7 +29,6 @@ return [
     'export_html' => 'HTML-Datei',
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
-
     /**
      * Permissions and restrictions
      */
@@ -38,7 +36,6 @@ return [
     'permissions_intro' => 'Wenn individuelle Berechtigungen aktiviert werden, überschreiben diese Einstellungen durch Rollen zugewiesene Berechtigungen.',
     'permissions_enable' => 'Individuelle Berechtigungen aktivieren',
     'permissions_save' => 'Berechtigungen speichern',
-
     /**
      * Search
      */
@@ -63,7 +60,6 @@ return [
     'search_created_after' => 'Erstellt nach',
     'search_set_date' => 'Datum auswählen',
     'search_update' => 'Suche aktualisieren',
-
     /**
      * Books
      */
@@ -99,7 +95,6 @@ return [
     'books_sort_named' => 'Buch ":bookName" sortieren',
     'books_sort_show_other' => 'Andere Bücher anzeigen',
     'books_sort_save' => 'Neue Reihenfolge speichern',
-
     /**
      * Chapters
      */
@@ -119,12 +114,14 @@ return [
     'chapters_move' => 'Kapitel verschieben',
     'chapters_move_named' => 'Kapitel ":chapterName" verschieben',
     'chapter_move_success' => 'Das Kapitel wurde in das Buch ":bookName" verschoben.',
+    'pages_copy' => 'Seite kopieren',
+    'pages_copy_desination' => 'Ziel',
+    'pages_copy_success' => 'Seite erfolgreich kopiert',
     'chapters_permissions' => 'Kapitel-Berechtigungen',
     'chapters_empty' => 'Aktuell sind keine Kapitel diesem Buch hinzugefügt worden.',
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
     'chapters_permissions_success' => 'Kapitel-Berechtigungenen aktualisisert',
     'chapters_search_this' => 'Dieses Kapitel durchsuchen',
-
     /**
      * Pages
      */
@@ -162,6 +159,7 @@ return [
     'pages_md_preview' => 'Vorschau',
     'pages_md_insert_image' => 'Bild einfügen',
     'pages_md_insert_link' => 'Link zu einem Objekt einfügen',
+    'pages_md_insert_drawing' => 'Zeichnung einfügen',
     'pages_not_in_chapter' => 'Seite ist in keinem Kapitel',
     'pages_move' => 'Seite verschieben',
     'pages_move_success' => 'Seite nach ":parentName" verschoben',
@@ -181,6 +179,7 @@ return [
     'pages_revisions_restore' => 'Wiederherstellen',
     'pages_revisions_none' => 'Diese Seite hat keine älteren Versionen.',
     'pages_copy_link' => 'Link kopieren',
+    'pages_edit_content_link' => 'Inhalt bearbeiten',
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Veröffentlichung',
     'pages_initial_name' => 'Neue Seite',
@@ -194,11 +193,12 @@ return [
         'message' => ':start :time. Achten Sie darauf, keine Änderungen von anderen Benutzern zu überschreiben!',
     ],
     'pages_draft_discarded' => 'Entwurf verworfen. Der aktuelle Seiteninhalt wurde geladen.',
-
     /**
      * Editor sidebar
      */
     'page_tags' => 'Seiten-Schlagwörter',
+    'chapter_tags' => 'Kapitel-Schlagwörter',
+    'book_tags' => 'Buch-Schlagwörter',
     'tag' => 'Schlagwort',
     'tags' =>  'Schlagwörter',
     'tag_value' => 'Inhalt (Optional)',
@@ -229,7 +229,6 @@ return [
     'attachments_file_uploaded' => 'Datei erfolgreich hochgeladen',
     'attachments_file_updated' => 'Datei erfolgreich aktualisiert',
     'attachments_link_attached' => 'Link erfolgreich der Seite hinzugefügt',
-
     /**
      * Profile View
      */
@@ -238,12 +237,12 @@ return [
     'profile_not_created_pages' => ':userName hat noch keine Seiten erstellt.',
     'profile_not_created_chapters' => ':userName hat noch keine Kapitel erstellt.',
     'profile_not_created_books' => ':userName hat noch keine Bücher erstellt.',
-
     /**
      * Comments
      */
     'comment' => 'Kommentar',
     'comments' => 'Kommentare',
+    'comment_add' => 'Kommentieren',
     'comment_placeholder' => 'Geben Sie hier Ihre Kommentare ein (Markdown unterstützt)',
     'comment_count' => '{0} Keine Kommentare|{1} 1 Kommentar|[2,*] :count Kommentare',
     'comment_save' => 'Kommentar speichern',
@@ -257,4 +256,11 @@ return [
     'comment_updated_success' => 'Kommentar aktualisiert',
     'comment_delete_confirm' => 'Möchten Sie diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
+    'revision_delete_success' => 'Revision gelöscht',
+    'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
 ];

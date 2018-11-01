@@ -181,6 +181,7 @@ return [
     'pages_revisions_restore' => '恢复',
     'pages_revisions_none' => '此页面没有修订',
     'pages_copy_link' => '复制链接',
+    'pages_edit_content_link' => '编辑内容',
     'pages_permissions_active' => '有效的页面权限',
     'pages_initial_revision' => '初始发布',
     'pages_initial_name' => '新页面',
@@ -257,4 +258,11 @@ return [
     'comment_updated_success' => '评论已更新',
     'comment_delete_confirm' => '你确定要删除这条评论？',
     'comment_in_reply_to' => '回复 :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => '您确定要删除此修订版吗？',
+    'revision_delete_success' => '修订删除',
+    'revision_cannot_delete_latest' => '无法删除最新版本。'
 ];

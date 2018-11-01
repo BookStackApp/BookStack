@@ -1,8 +1,8 @@
 <?php namespace Tests;
 
-use BookStack\Attachment;
-use BookStack\Page;
-use BookStack\Services\PermissionService;
+use BookStack\Uploads\Attachment;
+use BookStack\Entities\Page;
+use BookStack\Auth\Permissions\PermissionService;
 
 class AttachmentTest extends TestCase
 {
@@ -44,8 +44,8 @@ class AttachmentTest extends TestCase
      */
     protected function deleteUploads()
     {
-        $fileService = $this->app->make(\BookStack\Services\AttachmentService::class);
-        foreach (\BookStack\Attachment::all() as $file) {
+        $fileService = $this->app->make(\BookStack\Uploads\AttachmentService::class);
+        foreach (\BookStack\Uploads\Attachment::all() as $file) {
             $fileService->deleteFile($file);
         }
     }
@@ -144,7 +144,7 @@ class AttachmentTest extends TestCase
             'uploaded_to' => $page->id,
         ]);
 
-        $attachmentId = \BookStack\Attachment::first()->id;
+        $attachmentId = \BookStack\Uploads\Attachment::first()->id;
 
         $update = $this->call('PUT', 'attachments/' . $attachmentId, [
             'uploaded_to' => $page->id,
@@ -175,7 +175,7 @@ class AttachmentTest extends TestCase
         $filePath = base_path('storage/' . $this->getUploadPath($fileName));
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
 
-        $attachment = \BookStack\Attachment::first();
+        $attachment = \BookStack\Uploads\Attachment::first();
         $this->delete($attachment->getUrl());
 
         $this->assertDatabaseMissing('attachments', [

@@ -16,21 +16,25 @@ header {
   .links {
     display: inline-block;
     vertical-align: top;
-    margin-right: $-xl;
-    @include smaller-than($screen-md) {
-      margin-right: $-m;
-    }
+    margin-left: $-m;
   }
   .links a {
     display: inline-block;
-    padding: $-m $-l;
+    padding: $-m;
     color: #FFF;
     fill: #FFF;
-    &:last-child {
-      padding-right: 0;
+  }
+  .dropdown-container {
+    padding-left: $-m;
+    padding-right: 0;
+  }
+  @include smaller-than($screen-md) {
+    .links a {
+      padding-left: $-s;
+      padding-right: $-s;
     }
-    @include smaller-than($screen-md) {
-      padding: $-m $-s;
+    .dropdown-container {
+      padding-left: $-s;
     }
   }
   .avatar, .user-name {
@@ -90,10 +94,14 @@ header .search-box {
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: #EEE;
+    z-index: 2;
   }
   button {
-    color: #EEE;
     fill: #EEE;
+    z-index: 1;
+    svg {
+      margin-right: 0;
+    }
   }
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #DDD;

@@ -28,7 +28,7 @@
                     <a dropdown-toggle class="text-primary text-button">@icon('more'){{ trans('common.more') }}</a>
                     <ul>
                         @if(userCan('book-update', $book))
-                            <li><a href="{{$book->getEditUrl()}}" class="text-primary">@icon('edit'){{ trans('common.edit') }}</a></li>
+                            <li><a href="{{ $book->getUrl('/edit') }}" class="text-primary">@icon('edit'){{ trans('common.edit') }}</a></li>
                             <li><a href="{{ $book->getUrl('/sort') }}" class="text-primary">@icon('sort'){{ trans('common.sort') }}</a></li>
                         @endif
                         @if(userCan('restrictions-manage', $book))
@@ -46,6 +46,12 @@
 
 @section('sidebar')
 
+    @if($book->tags->count() > 0)
+        <section>
+            @include('components.tag-list', ['entity' => $book])
+        </section>
+    @endif
+
     <div class="card">
         <div class="body">
             <form v-on:submit.prevent="searchBook" class="search-box">
@@ -56,36 +62,21 @@
         </div>
     </div>
 
-    @if($book->restricted)
-        <div class="card">
-            <h3>@icon('permission') {{ trans('entities.permissions') }}</h3>
-            <div class="body">
-                <p class="text-muted">
+    <div class="card entity-details">
+        <h3>@icon('info') {{ trans('common.details') }}</h3>
+        <div class="body text-small text-muted blended-links">
+            @include('partials.entity-meta', ['entity' => $book])
+            @if($book->restricted)
+                <div class="active-restriction">
                     @if(userCan('restrictions-manage', $book))
                         <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
                     @else
                         @icon('lock'){{ trans('entities.books_permissions_active') }}
                     @endif
-                </p>
-            </div>
-        </div>
-    @endif
-
-    <div class="card">
-        <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
-            @include('partials.entity-meta', ['entity' => $book])
+                </div>
+            @endif
         </div>
     </div>
-
-    @if($book->tags->count() > 0)
-        <div class="card tag-display">
-            <h3>@icon('tag') {{ trans('entities.book_tags') }}</h3>
-            <div class="body">
-                @include('components.tag-list', ['entity' => $book])
-            </div>
-        </div>
-    @endif
 
     @if(count($activity) > 0)
         <div class="activity card">

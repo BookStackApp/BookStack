@@ -1,10 +1,5 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Chapter;
-use BookStack\Repos\EntityRepo;
-use BookStack\Role;
-use BookStack\Services\SettingService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -12,9 +7,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
     use DatabaseTransactions;
-
-    protected $admin;
-    protected $editor;
+    use SharedTestHelpers;
 
     /**
      * The base URL to use while testing the application.
@@ -23,100 +16,48 @@ abstract class TestCase extends BaseTestCase
     protected $baseUrl = 'http://localhost';
 
     /**
-     * Set the current user context to be an admin.
+     * Assert a permission error has occurred.
+     * @param TestResponse $response
+     * @return TestCase
+     */
+    protected function assertPermissionError(TestResponse $response)
+    {
+        $response->assertRedirect('/');
+        $this->assertSessionHas('error');
+        session()->remove('error');
+        return $this;
+    }
+
+    /**
+     * Assert the session contains a specific entry.
+     * @param string $key
      * @return $this
      */
-    public function asAdmin()
+    protected function assertSessionHas(string $key)
     {
-        return $this->actingAs($this->getAdmin());
+        $this->assertTrue(session()->has($key), "Session does not contain a [{$key}] entry");
+        return $this;
     }
 
     /**
-     * Get the current admin user.
-     * @return mixed
+     * Override of the get method so we can get visibility of custom TestResponse methods.
+     * @param  string  $uri
+     * @param  array  $headers
+     * @return TestResponse
      */
-    public function getAdmin() {
-        if($this->admin === null) {
-            $adminRole = Role::getSystemRole('admin');
-            $this->admin = $adminRole->users->first();
-        }
-        return $this->admin;
-    }
-
-    /**
-     * Set the current user context to be an editor.
-     * @return $this
-     */
-    public function asEditor()
+    public function get($uri, array $headers = [])
     {
-        return $this->actingAs($this->getEditor());
-    }
-
-
-    /**
-     * Get a editor user.
-     * @return mixed
-     */
-    public function getEditor() {
-        if($this->editor === null) {
-            $editorRole = Role::getRole('editor');
-            $this->editor = $editorRole->users->first();
-        }
-        return $this->editor;
+        return parent::get($uri, $headers);
     }
 
     /**
-     * Get an instance of a user with 'viewer' permissions
-     * @param $attributes
-     * @return mixed
+     * Create the test response instance from the given response.
+     *
+     * @param  \Illuminate\Http\Response $response
+     * @return TestResponse
      */
-    protected function getViewer($attributes = [])
+    protected function createTestResponse($response)
     {
-        $user = \BookStack\Role::getRole('viewer')->users()->first();
-        if (!empty($attributes)) $user->forceFill($attributes)->save();
-        return $user;
-    }
-
-    /**
-     * Create and return a new book.
-     * @param array $input
-     * @return Book
-     */
-    public function newBook($input = ['name' => 'test book', 'description' => 'My new test book']) {
-        return $this->app[EntityRepo::class]->createFromInput('book', $input, false);
-    }
-
-    /**
-     * Create and return a new test chapter
-     * @param array $input
-     * @param Book $book
-     * @return Chapter
-     */
-    public function newChapter($input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book) {
-        return $this->app[EntityRepo::class]->createFromInput('chapter', $input, $book);
-    }
-
-    /**
-     * Create and return a new test page
-     * @param array $input
-     * @return Chapter
-     */
-    public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
-        $book = Book::first();
-        $entityRepo = $this->app[EntityRepo::class];
-        $draftPage = $entityRepo->getDraftPage($book);
-        return $entityRepo->publishPageDraft($draftPage, $input);
-    }
-
-    /**
-     * Quickly sets an array of settings.
-     * @param $settingsArray
-     */
-    protected function setSettings($settingsArray)
-    {
-        $settings = app(SettingService::class);
-        foreach ($settingsArray as $key => $value) {
-            $settings->put($key, $value);
-        }
+        return TestResponse::fromBaseResponse($response);
     }
 }

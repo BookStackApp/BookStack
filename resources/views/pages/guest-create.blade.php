@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container small" ng-non-bindable>
+    <div class="container small">
         <h1>{{ trans('entities.pages_new') }}</h1>
         <form action="{{  $parent->getUrl('/create-guest-page') }}" method="POST">
 

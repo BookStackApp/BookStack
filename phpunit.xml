@@ -23,6 +23,7 @@
         <env name="APP_ENV" value="testing"/>
         <env name="APP_DEBUG" value="false"/>
         <env name="APP_LANG" value="en"/>
+        <env name="APP_AUTO_LANG_PUBLIC" value="true"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
@@ -34,8 +35,12 @@
         <env name="STORAGE_TYPE" value="local"/>
         <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <env name="GITHUB_AUTO_REGISTER" value=""/>
+        <env name="GITHUB_AUTO_CONFIRM_EMAIL" value=""/>
         <env name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <env name="GOOGLE_AUTO_REGISTER" value=""/>
+        <env name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
         <env name="APP_URL" value="http://bookstack.dev"/>
     </php>
 </phpunit>

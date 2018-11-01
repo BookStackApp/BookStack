@@ -37,6 +37,14 @@ return [
     'book_sort'                   => 'sorted book',
     'book_sort_notification'      => 'Book Successfully Re-sorted',
 
+    // Bookshelves
+    'bookshelf_create'            => 'created Bookshelf',
+    'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
+    'bookshelf_update'                 => 'updated bookshelf',
+    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
+    'bookshelf_delete'                 => 'deleted bookshelf',
+    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+
     // Other
     'commented_on'                => 'commented on',
 ];

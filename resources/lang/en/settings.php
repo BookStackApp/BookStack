@@ -19,7 +19,7 @@ return [
     'app_settings' => 'App Settings',
     'app_name' => 'Application name',
     'app_name_desc' => 'This name is shown in the header and any emails.',
-    'app_name_header' => 'Show application name in header?',
+    'app_name_header' => 'Show Application name in header?',
     'app_public_viewing' => 'Allow public viewing?',
     'app_secure_images' => 'Enable higher security image uploads?',
     'app_secure_images_desc' => 'For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.',
@@ -31,9 +31,9 @@ return [
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application primary color',
     'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
-    'app_homepage' => 'Application homepage',
-    'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
-    'app_homepage_default' => 'Default homepage view chosen',
+    'app_homepage' => 'Application Homepage',
+    'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Disable comments',
     'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
@@ -49,6 +49,19 @@ return [
     'reg_confirm_restrict_domain' => 'Restrict registration to domain',
     'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
+
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => 'Maintenance',
+    'maint_image_cleanup' => 'Cleanup Images',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
+    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
+    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
     /**
      * Role settings
@@ -68,6 +81,7 @@ return [
     'role_details' => 'Role Details',
     'role_name' => 'Role Name',
     'role_desc' => 'Short Description of Role',
+    'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'System Permissions',
     'role_manage_users' => 'Manage users',
     'role_manage_roles' => 'Manage roles & role permissions',
@@ -76,6 +90,7 @@ return [
     'role_manage_settings' => 'Manage app settings',
     'role_asset' => 'Asset Permissions',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
+    'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'All',
     'role_own' => 'Own',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
@@ -120,6 +135,7 @@ return [
     ///////////////////////////////////
     'language_select' => [
         'en' => 'English',
+        'ar' => 'العربية',
         'de' => 'Deutsch',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
@@ -132,7 +148,8 @@ return [
         'pl' => 'Polski',
         'it' => 'Italian',
         'ru' => 'Русский',
-        'zh_CN' => '简体中文'
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文'
     ]
     ///////////////////////////////////
 ];

@@ -1,6 +1,4 @@
-const moment = require('moment');
-require('moment/locale/en-gb');
-moment.locale('en-gb');
+import * as Dates from "../services/dates";
 
 let autoSaveFrequency = 30;
 
@@ -96,13 +94,12 @@ let methods = {
         let url = window.baseUrl(`/ajax/page/${this.pageId}/save-draft`);
         window.$http.put(url, data).then(response => {
             draftErroring = false;
-            let updateTime = moment.utc(moment.unix(response.data.timestamp)).toDate();
             if (!this.isNewDraft) this.isUpdateDraft = true;
-            this.draftNotifyChange(response.data.message + moment(updateTime).format('HH:mm'));
+            this.draftNotifyChange(`${response.data.message } ${Dates.utcTimeStampToLocalTime(response.data.timestamp)}`);
             lastSave = Date.now();
         }, errorRes => {
             if (draftErroring) return;
-            window.$events('error', trans('errors.page_draft_autosave_fail'));
+            window.$events.emit('error', trans('errors.page_draft_autosave_fail'));
             draftErroring = true;
         });
     },

@@ -19,7 +19,7 @@ return [
     'meta_created_name' => '作成: :timeLength (:user)',
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
-    'x_pages' => ':countページ',
+    'x_pages' => ':count ページ',
     'entity_select' => 'エンティティ選択',
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
@@ -72,7 +72,9 @@ return [
     'books' => 'ブック',
     'books_empty' => 'まだブックは作成されていません',
     'books_popular' => '人気のブック',
+    'x_books' => ':count ブック',
     'books_recent' => '最近のブック',
+    'books_new' => '新しいブック',
     'books_popular_empty' => 'ここに人気のブックが表示されます。',
     'books_create' => '新しいブックを作成',
     'books_delete' => 'ブックを削除',
@@ -104,6 +106,7 @@ return [
     'chapter' => 'チャプター',
     'chapters' => 'チャプター',
     'chapters_popular' => '人気のチャプター',
+    'x_chapters' => ':count チャプター',
     'chapters_new' => 'チャプターを作成',
     'chapters_create' => 'チャプターを作成',
     'chapters_delete' => 'チャプターを削除',
@@ -176,6 +179,7 @@ return [
     'pages_revisions_restore' => '復元',
     'pages_revisions_none' => 'このページにはリビジョンがありません',
     'pages_copy_link' => 'リンクをコピー',
+    'pages_edit_content_link' => 'コンテンツの編集',
     'pages_permissions_active' => 'ページの権限は有効です',
     'pages_initial_revision' => '初回の公開',
     'pages_initial_name' => '新規ページ',
@@ -239,8 +243,9 @@ return [
      */
     'comment' => 'コメント',
     'comments' => 'コメント',
+    'comment_add' => 'コメント追加',
     'comment_placeholder' => 'コメントを記入してく下さい',
-    'comment_count' => '{0} コメントはありません|{1} コメント(1)|[2,*] コメント(:count)',
+    'comment_count' => '{0} コメントはありません|[1,*] コメント:count件',
     'comment_save' => 'コメントを保存',
     'comment_saving' => 'コメントを保存中...',
     'comment_deleting' => 'コメントを削除中...',
@@ -252,4 +257,11 @@ return [
     'comment_updated_success' => 'コメントを更新しました',
     'comment_delete_confirm' => '本当にこのコメントを削除しますか?',
     'comment_in_reply_to' => ':commentIdへ返信',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'このリビジョンを削除しますか？',
+    'revision_delete_success' => 'リビジョンを削除しました',
+    'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。'
 ];

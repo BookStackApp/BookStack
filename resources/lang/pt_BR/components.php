@@ -13,7 +13,8 @@ return [
     'image_uploaded' => 'Carregado :uploadedDate',
     'image_load_more' => 'Carregar Mais',
     'image_image_name' => 'Nome da Imagem',
-    'image_delete_confirm' => 'Essa imagem é usada nas páginas abaixo. Clique em Excluir novamente para confirmar que você deseja mesmo eliminar a imagem.',
+    'image_delete_used' => 'Essa imagem é usada nas páginas abaixo.',
+    'image_delete_confirm' => 'Clique em Excluir novamente para confirmar que você deseja mesmo eliminar a imagem.',
     'image_select_image' => 'Selecionar Imagem',
     'image_dropzone' => 'Arraste imagens ou clique aqui para fazer upload',
     'images_deleted' => 'Imagens excluídas',
@@ -21,6 +22,7 @@ return [
     'image_upload_success' => 'Upload de imagem efetuado com sucesso',
     'image_update_success' => 'Upload de detalhes da imagem efetuado com sucesso',
     'image_delete_success' => 'Imagem excluída com sucesso',
+    'image_upload_remove' => 'Remover',
 
     /**
      * Code editor

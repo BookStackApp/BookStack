@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/translations', 'HomeController@getTranslations');
-Route::get('/icon/{iconName}.svg', 'HomeController@getIcon');
+Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
@@ -12,6 +12,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'pages'], function() {
         Route::get('/recently-created', 'PageController@showRecentlyCreated');
         Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
+    });
+
+    // Shelves
+    Route::get('/create-shelf', 'BookshelfController@create');
+    Route::group(['prefix' => 'shelves'], function() {
+        Route::get('/', 'BookshelfController@index');
+        Route::post('/', 'BookshelfController@store');
+        Route::get('/{slug}/edit', 'BookshelfController@edit');
+        Route::get('/{slug}/delete', 'BookshelfController@showDelete');
+        Route::get('/{slug}', 'BookshelfController@show');
+        Route::put('/{slug}', 'BookshelfController@update');
+        Route::delete('/{slug}', 'BookshelfController@destroy');
+        Route::get('/{slug}/permissions', 'BookshelfController@showRestrict');
+        Route::put('/{slug}/permissions', 'BookshelfController@restrict');
+        Route::post('/{slug}/copy-permissions', 'BookshelfController@copyPermissions');
     });
 
     Route::get('/create-book', 'BookController@create');
@@ -46,6 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
         Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
+        Route::get('/{bookSlug}/page/{pageSlug}/copy', 'PageController@showCopy');
+        Route::post('/{bookSlug}/page/{pageSlug}/copy', 'PageController@copy');
         Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
         Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
         Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showRestrict');
@@ -59,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageController@showRevisionChanges');
         Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
+        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageController@destroyRevision');
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
@@ -104,7 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/base64/{id}', 'ImageController@getBase64Image');
         Route::put('/update/{imageId}', 'ImageController@update');
         Route::post('/drawing/upload', 'ImageController@uploadDrawing');
-        Route::put('/drawing/upload/{id}', 'ImageController@replaceDrawing');
+        Route::get('/usage/{id}', 'ImageController@usage');
         Route::post('/{type}/upload', 'ImageController@uploadByType');
         Route::get('/{type}/all', 'ImageController@getAllByType');
         Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
@@ -160,11 +178,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'SettingController@index')->name('settings');
         Route::post('/', 'SettingController@update');
 
+        // Maintenance
+        Route::get('/maintenance', 'SettingController@showMaintenance');
+        Route::delete('/maintenance/cleanup-images', 'SettingController@cleanupImages');
+
         // Users
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
         Route::get('/users/{id}/delete', 'UserController@delete');
         Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
+        Route::patch('/users/{id}/switch-shelf-view', 'UserController@switchShelfView');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');
@@ -206,3 +229,5 @@ Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail
 // Password reset routes...
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::fallback('HomeController@getNotFound');

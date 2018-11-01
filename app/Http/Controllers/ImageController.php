@@ -1,13 +1,12 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Exceptions\NotFoundException;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\ImageRepo;
+use BookStack\Repos\PageRepo;
+use BookStack\Uploads\Image;
+use BookStack\Uploads\ImageRepo;
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
-use BookStack\Image;
-use BookStack\Repos\PageRepo;
 
 class ImageController extends Controller
 {
@@ -165,32 +164,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Replace the data content of a drawing.
-     * @param string $id
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function replaceDrawing(string $id, Request $request)
-    {
-        $this->validate($request, [
-            'image' => 'required|string'
-        ]);
-        $this->checkPermission('image-create-all');
-
-        $imageBase64Data = $request->get('image');
-        $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('image-update', $image);
-
-        try {
-            $image = $this->imageRepo->replaceDrawingContent($image, $imageBase64Data);
-        } catch (ImageUploadException $e) {
-            return response($e->getMessage(), 500);
-        }
-
-        return response()->json($image);
-    }
-
-    /**
      * Get the content of an image based64 encoded.
      * @param $id
      * @return \Illuminate\Http\JsonResponse|mixed
@@ -245,25 +218,28 @@ class ImageController extends Controller
     }
 
     /**
-     * Deletes an image and all thumbnail/image files
-     * @param EntityRepo $entityRepo
-     * @param Request $request
-     * @param int $id
+     * Show the usage of an image on pages.
+     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(EntityRepo $entityRepo, Request $request, $id)
+    public function usage(EntityRepo $entityRepo, $id)
+    {
+        $image = $this->imageRepo->getById($id);
+        $pageSearch = $entityRepo->searchForImage($image->url);
+        return response()->json($pageSearch);
+    }
+
+    /**
+     * Deletes an image and all thumbnail/image files
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
     {
         $image = $this->imageRepo->getById($id);
         $this->checkOwnablePermission('image-delete', $image);
-
-        // Check if this image is used on any pages
-        $isForced = in_array($request->get('force', ''), [true, 'true']);
-        if (!$isForced) {
-            $pageSearch = $entityRepo->searchForImage($image->url);
-            if ($pageSearch !== false) {
-                return response()->json($pageSearch, 400);
-            }
-        }
 
         $this->imageRepo->destroyImage($image);
         return response()->json(trans('components.images_deleted'));

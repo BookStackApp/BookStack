@@ -19,7 +19,6 @@ return [
     'meta_created_name' => 'Creado el  :timeLength por :user',
     'meta_updated' => 'Actualizado el :timeLength',
     'meta_updated_name' => 'Actualizado el :timeLength por :user',
-    'x_pages' => ':count Páginas',
     'entity_select' => 'Seleccione entidad',
     'images' => 'Imágenes',
     'my_recent_drafts' => 'Mis borradores recientes',
@@ -125,7 +124,7 @@ return [
     'chapters_permissions_active' => 'Permisos de capítulo activado',
     'chapters_permissions_success' => 'Permisos de capítulo actualizados',
     'chapters_search_this' => 'Buscar en este capítulo',
-    
+
     /**
      * Pages
      */
@@ -167,6 +166,9 @@ return [
     'pages_not_in_chapter' => 'La página no esá en el capítulo',
     'pages_move' => 'Mover página',
     'pages_move_success' => 'Página movida a ":parentName"',
+    'pages_copy' => 'Copiar página',
+    'pages_copy_desination' => 'Destino de la copia',
+    'pages_copy_success' => 'Página copiada con éxito',
     'pages_permissions' => 'Permisos de página',
     'pages_permissions_success' => 'Permisos de página actualizados',
     'pages_revision' => 'Revisión',
@@ -183,6 +185,7 @@ return [
     'pages_revisions_restore' => 'Restaurar',
     'pages_revisions_none' => 'Esta página no tiene revisiones',
     'pages_copy_link' => 'Copiar enlace',
+    'pages_edit_content_link' => 'Contenido editado',
     'pages_permissions_active' => 'Permisos de página activos',
     'pages_initial_revision' => 'Publicación inicial',
     'pages_initial_name' => 'Página nueva',
@@ -201,6 +204,8 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Etiquetas de página',
+    'chapter_tags' => 'Etiquetas de capítulo',
+    'book_tags' => 'Etiquetas de libro',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
@@ -246,6 +251,7 @@ return [
      */
     'comment' => 'Comentario',
     'comments' => 'Comentarios',
+    'comment_add' => 'Agregar comentario',
     'comment_placeholder' => 'DEjar un comentario aquí',
     'comment_count' => '{0} Sin Comentarios|{1} 1 Comentario|[2,*] :count Comentarios',
     'comment_save' => 'Guardar comentario',
@@ -259,4 +265,11 @@ return [
     'comment_updated_success' => 'Comentario actualizado',
     'comment_delete_confirm' => '¿Está seguro que quiere borrar este comentario?',
     'comment_in_reply_to' => 'En respuesta a :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_delete_success' => 'Revisión eliminada',
+    'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.'
 ];

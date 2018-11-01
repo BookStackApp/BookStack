@@ -8,7 +8,7 @@
 
 @section('body')
 
-    <div class="container" ng-non-bindable>
+    <div class="container">
         <p>&nbsp;</p>
         <div class="card">
             <h3>@icon('lock') {{ trans('entities.chapters_permissions') }}</h3>

@@ -1,8 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Repos\EntityRepo;
-use Illuminate\Http\Request;
+use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Response;
 use Views;
 
@@ -27,29 +26,52 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAll('book', false);
-        $pages = $this->entityRepo->getAll('page', false);
+        $books = $this->entityRepo->getAll('book');
+        $pages = $this->entityRepo->getAll('page');
+        $chapters = $this->entityRepo->getAll('chapter');
+        $links = $this->entityRepo->getAll('link');
 
-        $chapters = $this->entityRepo->getAll('chapter', false);
-        $links = $this->entityRepo->getAll('link', false);
-
-        // Custom homepage
-        $customHomepage = false;
-        $homepageSetting = setting('app-homepage');
-        if ($homepageSetting) {
-            $id = intval(explode(':', $homepageSetting)[0]);
-            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
-            $this->entityRepo->renderPage($customHomepage, true);
+        $activity = Activity::latest(10);
+        $draftPages = $this->signedIn ? $this->entityRepo->getUserDraftPages(6) : [];
+        $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
+        //$recents = $this->signedIn ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
+        //$recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
+        $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
+        $homepageOption = setting('app-homepage-type', 'default');
+        if (!in_array($homepageOption, $homepageOptions)) {
+            $homepageOption = 'default';
         }
-
-        $view = $customHomepage ? 'home-custom' : 'home';
-        return view($view, [
+        $commonData = [
+            'activity' => $activity,
+            //'recents' => $recents,
+            //'recentlyUpdatedPages' => $recentlyUpdatedPages,
+            'draftPages' => $draftPages,
             'books' => $books,
             'pages' => $pages,
             'chapters' => $chapters,
-            'links' => $links, 
-            'customHomepage' => $customHomepage
-        ]);
+            'links' => $links,
+        ];
+        if ($homepageOption === 'bookshelves') {
+            $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18);
+            $shelvesViewType = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+            $data = array_merge($commonData, ['shelves' => $shelves, 'shelvesViewType' => $shelvesViewType]);
+            return view('common.home-shelves', $data);
+        }
+        if ($homepageOption === 'books') {
+            $books = $this->entityRepo->getAllPaginated('book', 18);
+            $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
+            $data = array_merge($commonData, ['books' => $books, 'booksViewType' => $booksViewType]);
+            return view('common.home-book', $data);
+        }
+        if ($homepageOption === 'page') {
+            $homepageSetting = setting('app-homepage', '0:');
+            $id = intval(explode(':', $homepageSetting)[0]);
+            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
+            $this->entityRepo->renderPage($customHomepage, true);
+            return view('common.home-custom', array_merge($commonData, ['customHomepage' => $customHomepage]));
+        }
+        return view('common.home', $commonData);
+
     }
 
     /**
@@ -90,32 +112,35 @@ class HomeController extends Controller
     }
 
     /**
-     * Get an icon via image request.
-     * Can provide a 'color' parameter with hex value to color the icon.
-     * @param $iconName
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function getIcon($iconName, Request $request)
-    {
-        $attrs = [];
-        if ($request->filled('color')) {
-            $attrs['fill'] = '#' . $request->get('color');
-        }
-
-        $icon = icon($iconName, $attrs);
-        return response($icon, 200, [
-            'Content-Type' => 'image/svg+xml',
-            'Cache-Control' => 'max-age=3600',
-        ]);
-    }
-
-    /**
      * Get custom head HTML, Used in ajax calls to show in editor.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function customHeadContent()
     {
         return view('partials/custom-head-content');
+    }
+
+    /**
+     * Show the view for /robots.txt
+     * @return $this
+     */
+    public function getRobots()
+    {
+        $sitePublic = setting('app-public', false);
+        $allowRobots = config('app.allow_robots');
+        if ($allowRobots === null) {
+            $allowRobots = $sitePublic;
+        }
+        return response()
+            ->view('common/robots', ['allowRobots' => $allowRobots])
+            ->header('Content-Type', 'text/plain');
+    }
+
+    /**
+     * Show the route for 404 responses.
+     */
+    public function getNotFound()
+    {
+        return response()->view('errors/404', [], 404);
     }
 }

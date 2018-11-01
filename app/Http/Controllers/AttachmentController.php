@@ -1,10 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\FileUploadException;
-use BookStack\Attachment;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Repos\EntityRepo;
-use BookStack\Services\AttachmentService;
+use BookStack\Uploads\Attachment;
+use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -15,7 +15,7 @@ class AttachmentController extends Controller
 
     /**
      * AttachmentController constructor.
-     * @param AttachmentService $attachmentService
+     * @param \BookStack\Uploads\AttachmentService $attachmentService
      * @param Attachment $attachment
      * @param EntityRepo $entityRepo
      */
@@ -103,7 +103,7 @@ class AttachmentController extends Controller
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
             'name' => 'required|string|min:1|max:255',
-            'link' =>  'url|min:1|max:255'
+            'link' =>  'string|min:1|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -131,7 +131,7 @@ class AttachmentController extends Controller
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
             'name' => 'required|string|min:1|max:255',
-            'link' =>  'required|url|min:1|max:255'
+            'link' =>  'required|string|min:1|max:255'
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -184,6 +184,7 @@ class AttachmentController extends Controller
      * @param $attachmentId
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws NotFoundException
      */
     public function get($attachmentId)
     {
@@ -200,10 +201,7 @@ class AttachmentController extends Controller
         }
 
         $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
-        return response($attachmentContents, 200, [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'. $attachment->getFileName() .'"'
-        ]);
+        return $this->downloadResponse($attachmentContents, $attachment->getFileName());
     }
 
     /**

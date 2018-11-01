@@ -160,11 +160,15 @@ return [
     'pages_name' => 'Sidans namn',
     'pages_md_editor' => 'Redigerare',
     'pages_md_preview' => 'Förhandsvisa',
-    'pages_md_insert_image' => 'Inoga bild',
+    'pages_md_insert_image' => 'Infoga bild',
     'pages_md_insert_link' => 'Infoga länk',
+    'pages_md_insert_drawing' => 'Infoga teckning',
     'pages_not_in_chapter' => 'Sidan ligger inte i något kapitel',
     'pages_move' => 'Flytta sida',
     'pages_move_success' => 'Sidan har flyttats till ":parentName"',
+    'pages_copy' => 'Kopiera sida',
+    'pages_copy_desination' => 'Destination',
+    'pages_copy_success' => 'Sidan har kopierats',
     'pages_permissions' => 'Rättigheter för sida',
     'pages_permissions_success' => 'Rättigheterna för sidan har uppdaterats',
     'pages_revision' => 'Revision',
@@ -181,6 +185,7 @@ return [
     'pages_revisions_restore' => 'Återställ',
     'pages_revisions_none' => 'Sidan har inga revisioner',
     'pages_copy_link' => 'Kopiera länk',
+    'pages_edit_content_link' => 'Redigera innehåll',
     'pages_permissions_active' => 'Anpassade rättigheter är i bruk',
     'pages_initial_revision' => 'Första publicering',
     'pages_initial_name' => 'Ny sida',
@@ -199,8 +204,10 @@ return [
      * Editor sidebar
      */
     'page_tags' => 'Sidtaggar',
+    'chapter_tags' => 'Kapiteltaggar',
+    'book_tags' => 'Boktaggar',
     'tag' => 'Tagg',
-    'tags' =>  '',
+    'tags' =>  'Taggar',
     'tag_value' => 'Taggvärde (Frivilligt)',
     'tags_explain' => "Lägg till taggar för att kategorisera ditt innehåll bättre. \n Du kan tilldela ett värde till en tagg för ännu bättre organisering.",
     'tags_add' => 'Lägg till ännu en tagg',
@@ -244,6 +251,7 @@ return [
      */
     'comment' => 'Kommentar',
     'comments' => 'Kommentarer',
+    'comment_add' => 'Lägg till kommentar',
     'comment_placeholder' => 'Lämna en kommentar här',
     'comment_count' => '{0} Inga kommentarer|{1} 1 kommentar|[2,*] :count kommentarer',
     'comment_save' => 'Spara kommentar',
@@ -257,4 +265,11 @@ return [
     'comment_updated_success' => 'Kommentaren har uppdaterats',
     'comment_delete_confirm' => 'Är du säker på att du vill ta bort den här kommentaren?',
     'comment_in_reply_to' => 'Som svar på :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
+    'revision_delete_success' => 'Revisionen raderad',
+    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.'
 ];

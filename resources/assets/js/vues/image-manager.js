@@ -1,3 +1,6 @@
+
+import * as Dates from "../services/dates";
+
 const dropzone = require('./components/dropzone');
 
 let page = 0;
@@ -26,25 +29,32 @@ const data = {
 
     imageUpdateSuccess: false,
     imageDeleteSuccess: false,
+    deleteConfirm: false,
 };
 
 const methods = {
 
-    show(providedCallback) {
+    show(providedCallback, imageType = null) {
         callback = providedCallback;
         this.showing = true;
         this.$el.children[0].components.overlay.show();
 
         // Get initial images if they have not yet been loaded in.
-        if (dataLoaded) return;
+        if (dataLoaded && imageType === this.imageType) return;
+        if (imageType) {
+            this.imageType = imageType;
+            this.resetState();
+        }
         this.fetchData();
         dataLoaded = true;
     },
 
     hide() {
+        if (this.$refs.dropzone) {
+            this.$refs.dropzone.onClose();
+        }
         this.showing = false;
         this.selectedImage = false;
-        this.$refs.dropzone.onClose();
         this.$el.children[0].components.overlay.hide();
     },
 
@@ -62,13 +72,18 @@ const methods = {
     },
 
     setView(viewName) {
+        this.view = viewName;
+        this.resetState();
+        this.fetchData();
+    },
+
+    resetState() {
         this.cancelSearch();
         this.images = [];
         this.hasMore = false;
+        this.deleteConfirm = false;
         page = 0;
-        this.view = viewName;
-        baseUrl = window.baseUrl(`/images/${this.imageType}/${viewName}/`);
-        this.fetchData();
+        baseUrl = window.baseUrl(`/images/${this.imageType}/${this.view}/`);
     },
 
     searchImages() {
@@ -89,6 +104,7 @@ const methods = {
     },
 
     cancelSearch() {
+        if (!this.searching) return;
         this.searching = false;
         this.searchTerm = '';
         this.images = preSearchImages;
@@ -105,6 +121,7 @@ const methods = {
             this.callbackAndHide(image);
         } else {
             this.selectedImage = image;
+            this.deleteConfirm = false;
             this.dependantPages = false;
         }
 
@@ -134,22 +151,27 @@ const methods = {
     },
 
     deleteImage() {
-        let force = this.dependantPages !== false;
-        let url = window.baseUrl('/images/' + this.selectedImage.id);
-        if (force) url += '?force=true';
-        this.$http.delete(url).then(response => {
+
+        if (!this.deleteConfirm) {
+            let url = window.baseUrl(`/images/usage/${this.selectedImage.id}`);
+            this.$http.get(url).then(resp => {
+                this.dependantPages = resp.data;
+            }).catch(console.error).then(() => {
+                this.deleteConfirm = true;
+            });
+            return;
+        }
+
+        this.$http.delete(`/images/${this.selectedImage.id}`).then(resp => {
             this.images.splice(this.images.indexOf(this.selectedImage), 1);
             this.selectedImage = false;
             this.$events.emit('success', trans('components.image_delete_success'));
-        }).catch(error=> {
-            if (error.response.status === 400) {
-                this.dependantPages = error.response.data;
-            }
+            this.deleteConfirm = false;
         });
     },
 
     getDate(stringDate) {
-        return new Date(stringDate);
+        return Dates.formatDateTime(new Date(stringDate));
     },
 
     uploadSuccess(event) {

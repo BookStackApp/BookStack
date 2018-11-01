@@ -179,6 +179,7 @@ return [
     'pages_revisions_restore' => 'Przywróć',
     'pages_revisions_none' => 'Ta strona nie posiada żadnych rewizji',
     'pages_copy_link' => 'Kopiuj link',
+    'pages_edit_content_link' => 'Edytuj zawartość',
     'pages_permissions_active' => 'Uprawnienia strony aktywne',
     'pages_initial_revision' => 'Wydanie pierwotne',
     'pages_initial_name' => 'Nowa strona',
@@ -256,4 +257,11 @@ return [
     'comment_updated_success' => 'Komentarz zaktualizowany',
     'comment_delete_confirm' => 'Czy na pewno chcesz usunąc ten komentarz?',
     'comment_in_reply_to' => 'W odpowiedzi na :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Czy na pewno chcesz usunąć tę wersję?',
+    'revision_delete_success' => 'Usunięto wersję',
+    'revision_cannot_delete_latest' => 'Nie można usunąć najnowszej wersji.'
 ];

@@ -7,7 +7,7 @@ class UserProfileTest extends BrowserKitTest
     public function setUp()
     {
         parent::setUp();
-        $this->user = \BookStack\User::all()->last();
+        $this->user = \BookStack\Auth\User::all()->last();
     }
 
     public function test_profile_page_shows_name()
@@ -87,7 +87,7 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_guest_profile_cannot_be_deleted()
     {
-        $guestUser = \BookStack\User::getDefault();
+        $guestUser = \BookStack\Auth\User::getDefault();
         $this->asAdmin()->visit('/settings/users/' . $guestUser->id . '/delete')
             ->see('Delete User')->see('Guest')
             ->press('Confirm')

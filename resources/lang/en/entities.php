@@ -52,17 +52,51 @@ return [
     'search_content_type' => 'Content Type',
     'search_exact_matches' => 'Exact Matches',
     'search_tags' => 'Tag Searches',
+    'search_options' => 'Options',
     'search_viewed_by_me' => 'Viewed by me',
     'search_not_viewed_by_me' => 'Not viewed by me',
     'search_permissions_set' => 'Permissions set',
     'search_created_by_me' => 'Created by me',
     'search_updated_by_me' => 'Updated by me',
+    'search_date_options' => 'Date Options',
     'search_updated_before' => 'Updated before',
     'search_updated_after' => 'Updated after',
     'search_created_before' => 'Created before',
     'search_created_after' => 'Created after',
     'search_set_date' => 'Set Date',
     'search_update' => 'Update Search',
+
+    /**
+     * Shelves
+     */
+    'shelf' => 'Shelf',
+    'shelves' => 'Shelves',
+    'shelves_long' => 'Bookshelves',
+    'shelves_empty' => 'No shelves have been created',
+    'shelves_create' => 'Create New Shelf',
+    'shelves_popular' => 'Popular Shelves',
+    'shelves_new' => 'New Shelves',
+    'shelves_popular_empty' => 'The most popular shelves will appear here.',
+    'shelves_new_empty' => 'The most recently created shelves will appear here.',
+    'shelves_save' => 'Save Shelf',
+    'shelves_books' => 'Books on this shelf',
+    'shelves_add_books' => 'Add books to this shelf',
+    'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_empty_contents' => 'This shelf has no books assigned to it',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Edit Bookshelf :name',
+    'shelves_edit' => 'Edit Bookshelf',
+    'shelves_delete' => 'Delete Bookshelf',
+    'shelves_delete_named' => 'Delete Bookshelf :name',
+    'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
+    'shelves_delete_confirmation' => 'Are you sure you want to delete this bookshelf?',
+    'shelves_permissions' => 'Bookshelf Permissions',
+    'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
+    'shelves_permissions_active' => 'Bookshelf Permissions Active',
+    'shelves_copy_permissions_to_books' => 'Copy Permissions to Books',
+    'shelves_copy_permissions' => 'Copy Permissions',
+    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
+    'shelves_copy_permission_success' => 'Bookshelf permissions copied to :count books',
 
     /**
      * Books
@@ -167,6 +201,9 @@ return [
     'pages_not_in_chapter' => 'Page is not in a chapter',
     'pages_move' => 'Move Page',
     'pages_move_success' => 'Page moved to ":parentName"',
+    'pages_copy' => 'Copy Page',
+    'pages_copy_desination' => 'Copy Destination',
+    'pages_copy_success' => 'Page successfully copied',
     'pages_permissions' => 'Page Permissions',
     'pages_permissions_success' => 'Page permissions updated',
     'pages_revision' => 'Revision',
@@ -183,6 +220,7 @@ return [
     'pages_revisions_restore' => 'Restore',
     'pages_revisions_none' => 'This page has no revisions',
     'pages_copy_link' => 'Copy Link',
+    'pages_edit_content_link' => 'Edit Content',
     'pages_permissions_active' => 'Page Permissions Active',
     'pages_initial_revision' => 'Initial publish',
     'pages_initial_name' => 'New Page',
@@ -191,11 +229,12 @@ return [
     'pages_draft_edit_active' => [
         'start_a' => ':count users have started editing this page',
         'start_b' => ':userName has started editing this page',
-        'time_a' => 'since the pages was last updated',
+        'time_a' => 'since the page was last updated',
         'time_b' => 'in the last :minCount minutes',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_specific' => 'Specific Page',
 
     /**
      * Editor sidebar
@@ -203,13 +242,14 @@ return [
     'page_tags' => 'Page Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
+    'shelf_tags' => 'Shelf Tags',
     'tag' => 'Tag',
     'tags' =>  'Tags',
     'tag_value' => 'Tag Value (Optional)',
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Add another tag',
     'attachments' => 'Attachments',
-    'attachments_explain' => 'Upload some files or attach some link to display on your page. These are visible in the page sidebar.',
+    'attachments_explain' => 'Upload some files or attach some links to display on your page. These are visible in the page sidebar.',
     'attachments_explain_instant_save' => 'Changes here are saved instantly.',
     'attachments_items' => 'Attached Items',
     'attachments_upload' => 'Upload File',
@@ -263,7 +303,6 @@ return [
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
 
-
     /** 
      * Links
      */
@@ -277,4 +316,10 @@ return [
     'link_delete_confirm' => 'Are you sure you want to delete this link?',
     'links_delete_named' => 'Delete link :linkName',
     'links_editing_named' => 'Edit link :pageName',
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_delete_success' => 'Revision deleted',
+    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
 ];

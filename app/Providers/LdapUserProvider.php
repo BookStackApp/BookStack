@@ -2,9 +2,7 @@
 
 namespace BookStack\Providers;
 
-use BookStack\Role;
-use BookStack\Services\LdapService;
-use BookStack\User;
+use BookStack\Auth\Access\LdapService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
@@ -19,7 +17,7 @@ class LdapUserProvider implements UserProvider
     protected $model;
 
     /**
-     * @var LdapService
+     * @var \BookStack\Auth\LdapService
      */
     protected $ldapService;
 
@@ -27,7 +25,7 @@ class LdapUserProvider implements UserProvider
     /**
      * LdapUserProvider constructor.
      * @param             $model
-     * @param LdapService $ldapService
+     * @param \BookStack\Auth\LdapService $ldapService
      */
     public function __construct($model, LdapService $ldapService)
     {

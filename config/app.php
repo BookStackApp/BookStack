@@ -4,11 +4,34 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    /**
+     * Set the default view type for various lists. Can be overridden by user preferences.
+     * This will be used for public viewers and users that have not set a preference.
+     */
     'views' => [
         'books' => env('APP_VIEWS_BOOKS', 'list')
     ],
 
+    /**
+     * The number of revisions to keep in the database.
+     * Once this limit is reached older revisions will be deleted.
+     * If set to false then a limit will not be enforced.
+     */
+    'revision_limit' => env('REVISION_LIMIT', 50),
+
+    /**
+     * Allow <script> tags to entered within page content.
+     * <script> tags are escaped by default.
+     * Even when overridden the WYSIWYG editor may still escape script content.
+     */
     'allow_content_scripts' => env('ALLOW_CONTENT_SCRIPTS', false),
+
+    /**
+     * Override the default behaviour for allowing crawlers to crawl the instance.
+     * May be ignored if view has be overridden or modified.
+     * Defaults to null since, if not set, 'app-public' status used instead.
+     */
+    'allow_robots' => env('ALLOW_ROBOTS', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,7 +84,32 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
-    'locales' => ['en', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN'],
+    'locales' => ['en', 'ar', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Right-to-left text control
+    |--------------------------------------------------------------------------
+    |
+    | Right-to-left text control is set to false by default since English
+    | is the primary supported application but this may be dynamically
+    | altered by the applications localization system.
+    |
+    */
+
+    'rtl' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto-detect the locale for public users
+    |--------------------------------------------------------------------------
+    |
+    | For public users their locale can be guessed by headers sent by their
+    | browser. This is usually set by users in their browser settings.
+    | If not found the default app locale will be used.
+    |
+    */
+    'auto_detect_locale' => env('APP_AUTO_LANG_PUBLIC', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -226,10 +274,10 @@ return [
          * Custom
          */
 
-        'Activity' => BookStack\Services\Facades\Activity::class,
-        'Setting'  => BookStack\Services\Facades\Setting::class,
-        'Views'    => BookStack\Services\Facades\Views::class,
-        'Images'   => \BookStack\Services\Facades\Images::class,
+        'Activity' => BookStack\Facades\Activity::class,
+        'Setting'  => BookStack\Facades\Setting::class,
+        'Views'    => BookStack\Facades\Views::class,
+        'Images'   => BookStack\Facades\Images::class,
 
     ],
 

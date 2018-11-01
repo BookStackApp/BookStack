@@ -3,7 +3,7 @@
 @section('sidebar')
     <div class="card">
         <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body">
+        <div class="body text-small text-muted">
             @include('partials.entity-meta', ['entity' => $revision])
         </div>
     </div>
@@ -11,10 +11,10 @@
 
 @section('body')
 
-    <div class="container" ng-non-bindable>
+    <div class="container">
         <div class="row">
             <div class="col-md-9">
-                <div class="page-content">
+                <div class="page-content page-revision">
                     @include('pages.page-display')
                 </div>
             </div>

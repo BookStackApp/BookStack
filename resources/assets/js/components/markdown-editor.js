@@ -1,13 +1,14 @@
 const MarkdownIt = require("markdown-it");
 const mdTasksLists = require('markdown-it-task-lists');
-const code = require('../libs/code');
+const code = require('../services/code');
 
-const DrawIO = require('../libs/drawio');
+const DrawIO = require('../services/drawio');
 
 class MarkdownEditor {
 
     constructor(elem) {
         this.elem = elem;
+        this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
 
@@ -18,6 +19,13 @@ class MarkdownEditor {
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
         this.init();
+
+        // Scroll to text if needed.
+        const queryParams = (new URL(window.location)).searchParams;
+        const scrollText = queryParams.get('content-text');
+        if (scrollText) {
+            this.scrollToText(scrollText);
+        }
     }
 
     init() {
@@ -52,6 +60,10 @@ class MarkdownEditor {
             let action = button.getAttribute('data-action');
             if (action === 'insertImage') this.actionInsertImage();
             if (action === 'insertLink') this.actionShowLinkSelector();
+            if (action === 'insertDrawing' && event.ctrlKey) {
+                this.actionShowImageManager();
+                return;
+            }
             if (action === 'insertDrawing') this.actionStartDrawing();
         });
 
@@ -87,6 +99,9 @@ class MarkdownEditor {
 
     codeMirrorSetup() {
         let cm = this.cm;
+        // Text direction
+        // cm.setOption('direction', this.textDirection);
+        cm.setOption('direction', 'ltr'); // Will force to remain as ltr for now due to issues when HTML is in editor.
         // Custom key commands
         let metaKey = code.getMetaKey();
         const extraKeys = {};
@@ -293,7 +308,14 @@ class MarkdownEditor {
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
-        });
+        }, 'gallery');
+    }
+
+    actionShowImageManager() {
+        let cursorPos = this.cm.getCursor('from');
+        window.ImageManager.show(image => {
+            this.insertDrawing(image, cursorPos);
+        }, 'drawio');
     }
 
     // Show the popup link selector and insert a link when finished
@@ -324,16 +346,20 @@ class MarkdownEditor {
             };
 
             window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
-                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
-                this.cm.focus();
-                this.cm.replaceSelection(newText);
-                this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+                this.insertDrawing(resp.data, cursorPos);
                 DrawIO.close();
             }).catch(err => {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
             });
         });
+    }
+
+    insertDrawing(image, originalCursor) {
+        let newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
+        this.cm.focus();
+        this.cm.replaceSelection(newText);
+        this.cm.setCursor(originalCursor.line, originalCursor.ch + newText.length);
     }
 
     // Show draw.io if enabled and handle save.
@@ -353,8 +379,8 @@ class MarkdownEditor {
                 uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
             };
 
-            window.$http.put(window.baseUrl(`/images/drawing/upload/${drawingId}`), data).then(resp => {
-                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url + `?updated=${Date.now()}`}"></div>`;
+            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
+                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 let newContent = this.cm.getValue().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
                         return newText;
@@ -370,6 +396,33 @@ class MarkdownEditor {
                 console.log(err);
             });
         });
+    }
+
+    // Scroll to a specified text
+    scrollToText(searchText) {
+        if (!searchText) {
+            return;
+        }
+
+        const content = this.cm.getValue();
+        const lines = content.split(/\r?\n/);
+        let lineNumber = lines.findIndex(line => {
+            return line && line.indexOf(searchText) !== -1;
+        });
+
+        if (lineNumber === -1) {
+            return;
+        }
+
+        this.cm.scrollIntoView({
+            line: lineNumber,
+        }, 200);
+        this.cm.focus();
+        // set the cursor location.
+        this.cm.setCursor({
+            line: lineNumber,
+            char: lines[lineNumber].length
+        })
     }
 
 }

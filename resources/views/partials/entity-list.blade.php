@@ -1,5 +1,5 @@
 
-<div class="entity-list @if(isset($style)){{ $style }}@endif" ng-non-bindable>
+<div class="entity-list @if(isset($style)){{ $style }}@endif">
     @if(count($entities) > 0)
         @foreach($entities as $index => $entity)
             @if($entity->isA('page'))
@@ -8,6 +8,8 @@
                 @include('books/list-item', ['book' => $entity])
             @elseif($entity->isA('chapter'))
                 @include('chapters/list-item', ['chapter' => $entity, 'hidePages' => true])
+            @elseif($entity->isA('bookshelf'))
+                @include('shelves/list-item', ['bookshelf' => $entity])
             @endif
 
             @if($index !== count($entities) - 1)

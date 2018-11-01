@@ -1,7 +1,10 @@
 <?php namespace Tests;
 
-use BookStack\Image;
-use BookStack\Page;
+use BookStack\Entities\Repos\PageRepo;
+use BookStack\Uploads\Image;
+use BookStack\Entities\Page;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Uploads\ImageService;
 
 class ImageTest extends TestCase
 {
@@ -106,6 +109,29 @@ class ImageTest extends TestCase
         }
     }
 
+    public function test_secure_images_included_in_exports()
+    {
+        config()->set('filesystems.default', 'local_secure');
+        $this->asEditor();
+        $galleryFile = $this->getTestImage('my-secure-test-upload');
+        $page = Page::first();
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload');
+
+        $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $imageUrl = json_decode($upload->getContent(), true)['url'];
+        $page->html .= "<img src=\"{$imageUrl}\">";
+        $page->save();
+        $upload->assertStatus(200);
+
+        $encodedImageContent = base64_encode(file_get_contents($expectedPath));
+        $export = $this->get($page->getUrl('/export/html'));
+        $this->assertTrue(str_contains($export->getContent(), $encodedImageContent), 'Uploaded image in export content');
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
     public function test_system_images_remain_public()
     {
         config()->set('filesystems.default', 'local_secure');
@@ -187,38 +213,6 @@ class ImageTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
     }
 
-    public function test_drawing_replacing()
-    {
-        $page = Page::first();
-        $editor = $this->getEditor();
-        $this->actingAs($editor);
-
-        $this->postJson('images/drawing/upload', [
-            'uploaded_to' => $page->id,
-            'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDQ4S1RUeKwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12NctNWSAQkwMaACUvkAfCkBmjyhGl4AAAAASUVORK5CYII='
-        ]);
-
-        $image = Image::where('type', '=', 'drawio')->first();
-
-        $replace = $this->putJson("images/drawing/upload/{$image->id}", [
-            'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDCo5iYNs+gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12O0jN/KgASYGFABqXwAZtoBV6Sl3hIAAAAASUVORK5CYII='
-        ]);
-
-        $replace->assertStatus(200);
-        $replace->assertJson([
-            'type' => 'drawio',
-            'uploaded_to' => $page->id,
-            'created_by' => $editor->id,
-            'updated_by' => $editor->id,
-        ]);
-
-        $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: '. public_path($image->path));
-
-        $testImageData = file_get_contents($this->getTestImageFilePath());
-        $uploadedImageData = file_get_contents(public_path($image->path));
-        $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
-    }
-
     public function test_user_images_deleted_on_user_deletion()
     {
         $editor = $this->getEditor();
@@ -241,6 +235,61 @@ class ImageTest extends TestCase
             'type' => 'user',
             'created_by' => $editor->id
         ]);
+    }
+
+    public function test_deleted_unused_images()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $imageName = 'unused-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+
+        $upload = $this->uploadImage($imageName, $page->id);
+        $upload->assertStatus(200);
+        $image = Image::where('type', '=', 'gallery')->first();
+
+        $pageRepo = app(PageRepo::class);
+        $pageRepo->updatePage($page, $page->book_id, [
+            'name' => $page->name,
+            'html' => $page->html . "<img src=\"{$image->url}\">",
+            'summary' => ''
+        ]);
+
+        // Ensure no images are reported as deletable
+        $imageService = app(ImageService::class);
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(0, $toDelete);
+
+        // Save a revision of our page without the image;
+        $pageRepo->updatePage($page, $page->book_id, [
+            'name' => $page->name,
+            'html' => "<p>Hello</p>",
+            'summary' => ''
+        ]);
+
+        // Ensure revision images are picked up okay
+        $imageService = app(ImageService::class);
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(0, $toDelete);
+        $toDelete = $imageService->deleteUnusedImages(false, true);
+        $this->assertCount(1, $toDelete);
+
+        // Check image is found when revisions are destroyed
+        $page->revisions()->delete();
+        $toDelete = $imageService->deleteUnusedImages(true, true);
+        $this->assertCount(1, $toDelete);
+
+        // Check the image is deleted
+        $absPath = public_path($relPath);
+        $this->assertTrue(file_exists($absPath), "Existing uploaded file at path {$absPath} exists");
+        $toDelete = $imageService->deleteUnusedImages(true, false);
+        $this->assertCount(1, $toDelete);
+        $this->assertFalse(file_exists($absPath));
+
+        $this->deleteImage($relPath);
     }
 
 }
