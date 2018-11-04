@@ -40,7 +40,7 @@ class SocialAuthService
     public function startLogIn($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->redirectToSocialProvider($driver);
+        return $this->redirectToSocialProvider($driver)->redirect();
     }
 
     /**
@@ -52,7 +52,7 @@ class SocialAuthService
     public function startRegister($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->redirectToSocialProvider($driver);
+        return $this->redirectToSocialProvider($driver)->redirect();
     }
 
     /**
@@ -257,9 +257,9 @@ class SocialAuthService
     {
         if ($driver == 'google' && config('services.google.select_account'))
         {
-            return $this->socialite->driver($driver)->with(['prompt' => 'select_account'])->redirect();
+            return $this->socialite->driver($driver)->with(['prompt' => 'select_account']);
         }
 
-        return $this->socialite->driver($driver)->redirect();
+        return $this->socialite->driver($driver);
     }
 }
