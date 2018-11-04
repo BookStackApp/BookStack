@@ -1,7 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ViewService;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\SearchService;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ class SearchController extends Controller
 
     /**
      * SearchController constructor.
-     * @param EntityRepo $entityRepo
+     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
      * @param ViewService $viewService
      * @param SearchService $searchService
      */

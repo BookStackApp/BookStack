@@ -2,8 +2,9 @@
 
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Page;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\User;
+use BookStack\Entities\Repos\PageRepo;
 
 class CommandsTest extends TestCase
 {
@@ -53,10 +54,10 @@ class CommandsTest extends TestCase
     public function test_clear_revisions_command()
     {
         $this->asEditor();
-        $entityRepo = $this->app[EntityRepo::class];
+        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $entityRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
-        $entityRepo->updatePageDraft($page, ['name' => 'updated page', 'html' => '<p>new content in draft</p>', 'summary' => 'page revision testing']);
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRepo->updatePageDraft($page, ['name' => 'updated page', 'html' => '<p>new content in draft</p>', 'summary' => 'page revision testing']);
 
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,

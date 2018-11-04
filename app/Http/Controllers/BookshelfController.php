@@ -3,7 +3,7 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Bookshelf;
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,7 +18,7 @@ class BookshelfController extends Controller
 
     /**
      * BookController constructor.
-     * @param \BookStack\Entities\EntityRepo $entityRepo
+     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
      * @param UserRepo $userRepo
      * @param \BookStack\Entities\ExportService $exportService
      */

@@ -1,6 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\EntityRepo;
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Repos\PageRepo;
 use BookStack\Uploads\Image;
@@ -219,7 +219,7 @@ class ImageController extends Controller
 
     /**
      * Show the usage of an image on pages.
-     * @param EntityRepo $entityRepo
+     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
