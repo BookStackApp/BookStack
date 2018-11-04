@@ -251,7 +251,6 @@ class SocialAuthService
     /**
      * Provide redirect options per service for the Laravel Socialite driver
      * @param $driver
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectToSocialProvider($driver)
     {
