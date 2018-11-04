@@ -14,12 +14,12 @@
         <div sidebar class="sidebar flex print-hidden" id="sidebar">
             <div class="sidebar-toggle primary-background-light">@icon('caret-right-circle')
             </div>
-            <div class="scroll-body px-m">
+            <div class="scroll-body px-xl">
                 @yield('sidebar')
             </div>
         </div>
 
-        <div class="content mr-m flex @yield('body-wrap-classes')">
+        <div class="content mr-xl flex @yield('body-wrap-classes')">
             @yield('body')
         </div>
     </div>
