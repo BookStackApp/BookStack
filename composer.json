@@ -8,7 +8,7 @@
         "php": ">=7.0.0",
         "ext-tidy": "*",
         "ext-dom": "*",
-        "laravel/framework": "~5.5.42",
+        "laravel/framework": "~5.5.44",
         "fideloper/proxy": "~3.3",
         "intervention/image": "^2.4",
         "laravel/socialite": "^3.0",
