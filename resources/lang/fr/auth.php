@@ -46,7 +46,7 @@ return [
     /**
      * Password Reset
      */
-    'reset_password' => 'Reset Password',
+    'reset_password' => 'Réinitialisation du mot de passe',
     'reset_password_send_instructions' => 'Entrez votre adresse e-mail ci-dessous et un e-mail avec un lien de réinitialisation de mot de passe vous sera envoyé',
     'reset_password_send_button' => 'Envoyer un lien de réinitialisation',
     'reset_password_sent_success' => 'Un lien de réinitialisation a été envoyé à :email.',
