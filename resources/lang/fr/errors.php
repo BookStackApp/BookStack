@@ -49,6 +49,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entité non trouvée',
+    'bookshelf_not_found' => 'Étagère non trouvée',	
     'book_not_found' => 'Livre non trouvé',
     'page_not_found' => 'Page non trouvée',
     'chapter_not_found' => 'Chapitre non trouvé',
@@ -65,6 +66,13 @@ return [
     'role_system_cannot_be_deleted' => 'Ceci est un rôle du système et ne peut pas être supprimé',
     'role_registration_default_cannot_delete' => 'Ce rôle ne peut pas être supprimé tant qu\'il est le rôle par défaut',
 
+    // Comments
+    'comment_list' => 'Une erreur s\'est produite lors de la récupération des commentaires.',
+    'cannot_add_comment_to_draft' => 'Vous ne pouvez pas ajouter de commentaires à un projet.',
+    'comment_add' => 'Une erreur s\'est produite lors de l\'ajout du commentaire.',
+    'comment_delete' => 'Une erreur s\'est produite lors de la suppression du commentaire.',
+    'empty_comment' => 'Impossible d\'ajouter un commentaire vide.',	
+
     // Error pages
     '404_page_not_found' => 'Page non trouvée',
     'sorry_page_not_found' => 'Désolé, cette page n\'a pas pu être trouvée.',
@@ -72,11 +80,4 @@ return [
     'error_occurred' => 'Une erreur est survenue',
     'app_down' => ':appName n\'est pas en service pour le moment',
     'back_soon' => 'Nous serons bientôt de retour.',
-
-    // comments
-    'comment_list' => 'Une erreur s\'est produite lors de la récupération des commentaires.',
-    'cannot_add_comment_to_draft' => 'Vous ne pouvez pas ajouter de commentaires à un projet.',
-    'comment_add' => 'Une erreur s\'est produite lors de l\'ajout du commentaire.',
-    'comment_delete' => 'Une erreur s\'est produite lors de la suppression du commentaire.',
-    'empty_comment' => 'Impossible d\'ajouter un commentaire vide.',
 ];
