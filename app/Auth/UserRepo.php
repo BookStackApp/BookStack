@@ -251,7 +251,7 @@ class UserRepo
         }
 
         try {
-            $avatar = Images::saveUserGravatar($user);
+            $avatar = Images::saveUserGravatar($user, config('services.gravatar_url'));
             $user->avatar()->associate($avatar);
             $user->save();
             return true;
