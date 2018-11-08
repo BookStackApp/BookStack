@@ -15,7 +15,7 @@ return [
     /**
      * Form Labels
      */
-    'name' => '姓名',
+    'name' => '名称',
     'description' => '概要',
     'role' => '角色',
     'cover_image' => '封面图片',
@@ -25,12 +25,13 @@ return [
      * Actions
      */
     'actions' => '操作',
-    'view' => '视图',
+    'view' => '浏览',
     'create' => '创建',
     'update' => '更新',
     'edit' => '编辑',
     'sort' => '排序',
     'move' => '移动',
+   'copy' => '复制',
     'reply' => '回复',
     'delete' => '删除',
     'search' => '搜索',
@@ -49,7 +50,10 @@ return [
     'toggle_details' => '显示/隐藏详细信息',
     'toggle_thumbnails' => '显示/隐藏缩略图',
     'details' => '详细信息',
-
+    'grid_view' => '网格视图',
+    'list_view' => '列表视图',
+    'default' => '默认',
+	
     /**
      * Header
      */
