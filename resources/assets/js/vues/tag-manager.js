@@ -1,5 +1,5 @@
-const draggable = require('vuedraggable');
-const autosuggest = require('./components/autosuggest');
+import draggable from 'vuedraggable';
+import autosuggest from './components/autosuggest';
 
 let data = {
     entityId: false,
@@ -63,6 +63,6 @@ function mounted() {
     });
 }
 
-module.exports = {
+export default {
     data, methods, mounted, components, directives
 };

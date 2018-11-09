@@ -125,4 +125,4 @@ const methods = {
 
 };
 
-module.exports = {template, data, props, methods};
+export default {template, data, props, methods};

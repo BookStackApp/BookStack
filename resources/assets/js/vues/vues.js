@@ -1,17 +1,25 @@
-const Vue = require("vue");
+import Vue from "vue";
 
 function exists(id) {
     return document.getElementById(id) !== null;
 }
 
+import searchSystem from "./search";
+import entityDashboard from "./entity-dashboard";
+import codeEditor from "./code-editor";
+import imageManager from "./image-manager";
+import tagManager from "./tag-manager";
+import attachmentManager from "./attachment-manager";
+import pageEditor from "./page-editor";
+
 let vueMapping = {
-    'search-system': require('./search'),
-    'entity-dashboard': require('./entity-dashboard'),
-    'code-editor': require('./code-editor'),
-    'image-manager': require('./image-manager'),
-    'tag-manager': require('./tag-manager'),
-    'attachment-manager': require('./attachment-manager'),
-    'page-editor': require('./page-editor'),
+    'search-system': searchSystem,
+    'entity-dashboard': entityDashboard,
+    'code-editor': codeEditor,
+    'image-manager': imageManager,
+    'tag-manager': tagManager,
+    'attachment-manager': attachmentManager,
+    'page-editor': pageEditor,
 };
 
 window.vues = {};

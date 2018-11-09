@@ -1,30 +1,51 @@
+import dropdown from "./dropdown";
+import overlay from "./overlay";
+import backToTop from "./back-to-top";
+import notification from "./notification";
+import chapterToggle from "./chapter-toggle";
+import expandToggle from "./expand-toggle";
+import entitySelectorPopup from "./entity-selector-popup";
+import entitySelector from "./entity-selector";
+import sidebar from "./sidebar";
+import pagePicker from "./page-picker";
+import pageComments from "./page-comments";
+import wysiwygEditor from "./wysiwyg-editor";
+import markdownEditor from "./markdown-editor";
+import editorToolbox from "./editor-toolbox";
+import imagePicker from "./image-picker";
+import collapsible from "./collapsible";
+import toggleSwitch from "./toggle-switch";
+import pageDisplay from "./page-display";
+import shelfSort from "./shelf-sort";
+import homepageControl from "./homepage-control";
 
-let componentMapping = {
-    'dropdown': require('./dropdown'),
-    'overlay': require('./overlay'),
-    'back-to-top': require('./back-top-top'),
-    'notification': require('./notification'),
-    'chapter-toggle': require('./chapter-toggle'),
-    'expand-toggle': require('./expand-toggle'),
-    'entity-selector-popup': require('./entity-selector-popup'),
-    'entity-selector': require('./entity-selector'),
-    'sidebar': require('./sidebar'),
-    'page-picker': require('./page-picker'),
-    'page-comments': require('./page-comments'),
-    'wysiwyg-editor': require('./wysiwyg-editor'),
-    'markdown-editor': require('./markdown-editor'),
-    'editor-toolbox': require('./editor-toolbox'),
-    'image-picker': require('./image-picker'),
-    'collapsible': require('./collapsible'),
-    'toggle-switch': require('./toggle-switch'),
-    'page-display': require('./page-display'),
-    'shelf-sort': require('./shelf-sort'),
-    'homepage-control': require('./homepage-control'),
+
+const componentMapping = {
+    'dropdown': dropdown,
+    'overlay': overlay,
+    'back-to-top': backToTop,
+    'notification': notification,
+    'chapter-toggle': chapterToggle,
+    'expand-toggle': expandToggle,
+    'entity-selector-popup': entitySelectorPopup,
+    'entity-selector': entitySelector,
+    'sidebar': sidebar,
+    'page-picker': pagePicker,
+    'page-comments': pageComments,
+    'wysiwyg-editor': wysiwygEditor,
+    'markdown-editor': markdownEditor,
+    'editor-toolbox': editorToolbox,
+    'image-picker': imagePicker,
+    'collapsible': collapsible,
+    'toggle-switch': toggleSwitch,
+    'page-display': pageDisplay,
+    'shelf-sort': shelfSort,
+    'homepage-control': homepageControl,
 };
 
 window.components = {};
 
-let componentNames = Object.keys(componentMapping);
+const componentNames = Object.keys(componentMapping);
 
 /**
  * Initialize components of the given name within the given element.

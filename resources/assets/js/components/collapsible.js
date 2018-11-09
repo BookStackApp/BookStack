@@ -34,4 +34,4 @@ class Collapsible {
 
 }
 
-module.exports = Collapsible;
+export default Collapsible;

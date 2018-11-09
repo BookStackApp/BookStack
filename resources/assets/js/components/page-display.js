@@ -233,4 +233,4 @@ class PageDisplay {
     }
 }
 
-module.exports = PageDisplay;
+export default PageDisplay;

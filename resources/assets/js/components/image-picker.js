@@ -56,4 +56,4 @@ class ImagePicker {
 
 }
 
-module.exports = ImagePicker;
+export default ImagePicker;

@@ -59,4 +59,4 @@ function toggleElem(elem, show) {
     elem.style.display = show ? display : 'none';
 }
 
-module.exports = PagePicker;
+export default PagePicker;
