@@ -94,12 +94,12 @@ function baseUrl($path, $forceAppDomain = false)
     }
 
     $path = trim($path, '/');
-    $trimBase = rtrim(config('app.url'), '/');
+    $base = rtrim(config('app.url'), '/');
 
     // Remove non-specified domain if forced and we have a domain
     if ($isFullUrl && $forceAppDomain) {
-        if (strpos($path, $trimBase) === 0) {
-            $path = trim(substr($path, strlen($trimBase) - 1));
+        if (!empty($base) && strpos($path, $base) === 0) {
+            $path = trim(substr($path, strlen($base) - 1));
         }
         $explodedPath = explode('/', $path);
         $path = implode('/', array_splice($explodedPath, 3));
@@ -110,7 +110,7 @@ function baseUrl($path, $forceAppDomain = false)
         return url($path);
     }
 
-    return $trimBase . '/' . $path;
+    return $base . '/' . $path;
 }
 
 /**
