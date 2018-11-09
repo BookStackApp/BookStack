@@ -56,4 +56,4 @@ class BackToTop {
 
 }
 
-module.exports = BackToTop;
+export default BackToTop;

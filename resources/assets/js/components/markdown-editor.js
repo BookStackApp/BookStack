@@ -1,8 +1,8 @@
-const MarkdownIt = require("markdown-it");
-const mdTasksLists = require('markdown-it-task-lists');
-const code = require('../services/code');
+import MarkdownIt from "markdown-it";
+import mdTasksLists from 'markdown-it-task-lists';
+import code from '../services/code';
 
-const DrawIO = require('../services/drawio');
+import DrawIO from "../services/drawio";
 
 class MarkdownEditor {
 
@@ -427,4 +427,4 @@ class MarkdownEditor {
 
 }
 
-module.exports = MarkdownEditor ;
+export default MarkdownEditor ;

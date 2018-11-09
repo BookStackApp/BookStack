@@ -1,4 +1,4 @@
-const DropZone = require("dropzone");
+import DropZone from "dropzone";
 
 const template = `
     <div class="dropzone-container">
@@ -60,7 +60,7 @@ const methods = {
     }
 };
 
-module.exports = {
+export default {
     template,
     props,
     mounted,

@@ -45,4 +45,4 @@ class DropDown {
 
 }
 
-module.exports = DropDown;
+export default DropDown;

@@ -1,5 +1,5 @@
-const Code = require('../services/code');
-const DrawIO = require('../services/drawio');
+import Code from "../services/code";
+import DrawIO from "../services/drawio";
 
 /**
  * Handle pasting images from clipboard.
@@ -593,4 +593,4 @@ class WysiwygEditor {
 
 }
 
-module.exports = WysiwygEditor;
+export default WysiwygEditor;
