@@ -36,6 +36,14 @@ return [
     'book_delete_notification'    => '图书已删除成功',
     'book_sort'                   => '排序了图书',
     'book_sort_notification'      => '图书已重新排序成功',
+    
+    // Bookshelves
+    'bookshelf_create'            => '创建了书架',
+    'bookshelf_create_notification'    => '书架已成功创建',
+    'bookshelf_update'                 => '更新了书架',
+    'bookshelf_update_notification'    => '书架已成功更新',
+    'bookshelf_delete'                 => '删除了书架',
+    'bookshelf_delete_notification'    => '书架已成功删除',
 
     // Other
     'commented_on'                => '评论',
