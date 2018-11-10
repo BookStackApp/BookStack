@@ -1,5 +1,5 @@
 import CodeMirror from "codemirror";
-import Clipboard from "clipboard";
+import Clipboard from "clipboard/dist/clipboard.min";
 
 // Modes
 import 'codemirror/mode/css/css';
