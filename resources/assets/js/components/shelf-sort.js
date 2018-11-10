@@ -1,3 +1,4 @@
+import "jquery-sortable";
 
 class ShelfSort {
 
@@ -9,9 +10,8 @@ class ShelfSort {
     }
 
     initSortable() {
-        const sortable = require('jquery-sortable');
         const placeHolderContent = this.getPlaceholderHTML();
-
+        // TODO - Load sortable at this point
         return $('.scroll-box').sortable({
             group: 'shelf-books',
             exclude: '.instruction,.scroll-box-placeholder',
@@ -68,4 +68,4 @@ class ShelfSort {
 
 }
 
-module.exports = ShelfSort;
+export default ShelfSort;

@@ -1,7 +1,7 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Bookshelf;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
 
 class BookShelfTest extends TestCase
 {

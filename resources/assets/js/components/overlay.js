@@ -36,4 +36,4 @@ class Overlay {
 
 }
 
-module.exports = Overlay;
+export default Overlay;

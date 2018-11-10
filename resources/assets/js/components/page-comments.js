@@ -1,4 +1,4 @@
-const MarkdownIt = require("markdown-it");
+import MarkdownIt from "markdown-it";
 const md = new MarkdownIt({ html: false });
 
 class PageComments {
@@ -172,4 +172,4 @@ class PageComments {
 
 }
 
-module.exports = PageComments;
+export default PageComments;

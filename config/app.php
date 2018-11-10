@@ -84,7 +84,7 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
-    'locales' => ['en', 'ar', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
+    'locales' => ['en', 'ar', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'kr', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
 
     /*
     |--------------------------------------------------------------------------
@@ -274,10 +274,10 @@ return [
          * Custom
          */
 
-        'Activity' => BookStack\Services\Facades\Activity::class,
-        'Setting'  => BookStack\Services\Facades\Setting::class,
-        'Views'    => BookStack\Services\Facades\Views::class,
-        'Images'   => BookStack\Services\Facades\Images::class,
+        'Activity' => BookStack\Facades\Activity::class,
+        'Setting'  => BookStack\Facades\Setting::class,
+        'Views'    => BookStack\Facades\Views::class,
+        'Images'   => BookStack\Facades\Images::class,
 
     ],
 

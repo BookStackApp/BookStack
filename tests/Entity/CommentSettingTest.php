@@ -5,7 +5,7 @@ class CommentSettingTest extends BrowserKitTest {
 
   public function setUp() {
       parent::setUp();
-      $this->page = \BookStack\Page::first();
+      $this->page = \BookStack\Entities\Page::first();
   }
 
   public function test_comment_disable () {

@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Services\PermissionService;
+use BookStack\Auth\Permissions\PermissionService;
 use Illuminate\Console\Command;
 
 class RegeneratePermissions extends Command
@@ -31,7 +31,7 @@ class RegeneratePermissions extends Command
     /**
      * Create a new command instance.
      *
-     * @param PermissionService $permissionService
+     * @param \BookStack\Auth\\BookStack\Auth\Permissions\PermissionService $permissionService
      */
     public function __construct(PermissionService $permissionService)
     {

@@ -30,11 +30,11 @@ function versioned_asset($file = '')
 /**
  * Helper method to get the current User.
  * Defaults to public 'Guest' user if not logged in.
- * @return \BookStack\User
+ * @return \BookStack\Auth\User
  */
 function user()
 {
-    return auth()->user() ?: \BookStack\User::getDefault();
+    return auth()->user() ?: \BookStack\Auth\User::getDefault();
 }
 
 /**
@@ -61,7 +61,7 @@ function userCan($permission, Ownable $ownable = null)
     }
 
     // Check permission on ownable item
-    $permissionService = app(\BookStack\Services\PermissionService::class);
+    $permissionService = app(\BookStack\Auth\Permissions\PermissionService::class);
     return $permissionService->checkOwnableUserAccess($ownable, $permission);
 }
 
@@ -69,11 +69,11 @@ function userCan($permission, Ownable $ownable = null)
  * Helper to access system settings.
  * @param $key
  * @param bool $default
- * @return bool|string|\BookStack\Services\SettingService
+ * @return bool|string|\BookStack\Settings\SettingService
  */
 function setting($key = null, $default = false)
 {
-    $settingService = resolve(\BookStack\Services\SettingService::class);
+    $settingService = resolve(\BookStack\Settings\SettingService::class);
     if (is_null($key)) {
         return $settingService;
     }
@@ -92,10 +92,15 @@ function baseUrl($path, $forceAppDomain = false)
     if ($isFullUrl && !$forceAppDomain) {
         return $path;
     }
+
     $path = trim($path, '/');
+    $base = rtrim(config('app.url'), '/');
 
     // Remove non-specified domain if forced and we have a domain
     if ($isFullUrl && $forceAppDomain) {
+        if (!empty($base) && strpos($path, $base) === 0) {
+            $path = trim(substr($path, strlen($base) - 1));
+        }
         $explodedPath = explode('/', $path);
         $path = implode('/', array_splice($explodedPath, 3));
     }
@@ -105,7 +110,7 @@ function baseUrl($path, $forceAppDomain = false)
         return url($path);
     }
 
-    return rtrim(config('app.url'), '/') . '/' . $path;
+    return $base . '/' . $path;
 }
 
 /**

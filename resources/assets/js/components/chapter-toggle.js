@@ -69,4 +69,4 @@ class ChapterToggle {
 
 }
 
-module.exports = ChapterToggle;
+export default ChapterToggle;

@@ -1,11 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
-use Exception;
+use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Auth\User;
+use BookStack\Auth\UserRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\SocialAuthService;
-use BookStack\User;
 
 class UserController extends Controller
 {
@@ -16,7 +15,7 @@ class UserController extends Controller
     /**
      * UserController constructor.
      * @param User     $user
-     * @param UserRepo $userRepo
+     * @param \BookStack\Auth\UserRepo $userRepo
      */
     public function __construct(User $user, UserRepo $userRepo)
     {
@@ -101,7 +100,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      * @param  int              $id
-     * @param SocialAuthService $socialAuthService
+     * @param \BookStack\Auth\Access\SocialAuthService $socialAuthService
      * @return Response
      */
     public function edit($id, SocialAuthService $socialAuthService)

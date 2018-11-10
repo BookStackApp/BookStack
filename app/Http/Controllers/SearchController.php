@@ -1,8 +1,8 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Repos\EntityRepo;
-use BookStack\Services\SearchService;
-use BookStack\Services\ViewService;
+use BookStack\Actions\ViewService;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\SearchService;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -13,7 +13,7 @@ class SearchController extends Controller
 
     /**
      * SearchController constructor.
-     * @param EntityRepo $entityRepo
+     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
      * @param ViewService $viewService
      * @param SearchService $searchService
      */
@@ -97,7 +97,7 @@ class SearchController extends Controller
             $entities = $this->searchService->searchEntities($searchTerm, 'all', 1, 20, $permission)['results'];
         } else {
             $entityNames = $entityTypes->map(function ($type) {
-                return 'BookStack\\' . ucfirst($type);
+                return 'BookStack\\' . ucfirst($type); // TODO - Extract this elsewhere, too specific and stringy
             })->toArray();
             $entities = $this->viewService->getPopular(20, 0, $entityNames, $permission);
         }

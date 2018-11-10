@@ -44,4 +44,4 @@ class EntitySelectorPopup {
     }
 }
 
-module.exports = EntitySelectorPopup;
+export default EntitySelectorPopup;

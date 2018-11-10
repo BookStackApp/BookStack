@@ -1,9 +1,9 @@
 <?php namespace Tests;
 
-use BookStack\Bookshelf;
-use BookStack\Page;
-use BookStack\Repos\PermissionsRepo;
-use BookStack\Role;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Page;
+use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Auth\Role;
 use Laravel\BrowserKitTesting\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -24,7 +24,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_cannot_delete_admin_role()
     {
-        $adminRole = \BookStack\Role::getRole('admin');
+        $adminRole = \BookStack\Auth\Role::getRole('admin');
         $deletePageUrl = '/settings/roles/delete/' . $adminRole->id;
         $this->asAdmin()->visit($deletePageUrl)
             ->press('Confirm')
@@ -108,7 +108,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_restrictions_manage_all_permission()
     {
-        $page = \BookStack\Page::take(1)->get()->first();
+        $page = \BookStack\Entities\Page::take(1)->get()->first();
         $this->actingAs($this->user)->visit($page->getUrl())
             ->dontSee('Permissions')
             ->visit($page->getUrl() . '/permissions')
@@ -122,7 +122,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_restrictions_manage_own_permission()
     {
-        $otherUsersPage = \BookStack\Page::first();
+        $otherUsersPage = \BookStack\Entities\Page::first();
         $content = $this->createEntityChainBelongingToUser($this->user);
         // Check can't restrict other's content
         $this->actingAs($this->user)->visit($otherUsersPage->getUrl())
@@ -214,7 +214,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_bookshelves_edit_all_permission()
     {
-        $otherShelf = \BookStack\Bookshelf::first();
+        $otherShelf = \BookStack\Entities\Bookshelf::first();
         $this->checkAccessPermission('bookshelf-update-all', [
             $otherShelf->getUrl('/edit')
         ], [
@@ -225,7 +225,7 @@ class RolesTest extends BrowserKitTest
     public function test_bookshelves_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
-        $otherShelf = \BookStack\Bookshelf::first();
+        $otherShelf = \BookStack\Entities\Bookshelf::first();
         $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
         $ownShelf->forceFill(['created_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
         $this->regenEntityPermissions($ownShelf);
@@ -249,7 +249,7 @@ class RolesTest extends BrowserKitTest
     public function test_bookshelves_delete_all_permission()
     {
         $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
-        $otherShelf = \BookStack\Bookshelf::first();
+        $otherShelf = \BookStack\Entities\Bookshelf::first();
         $this->checkAccessPermission('bookshelf-delete-all', [
             $otherShelf->getUrl('/delete')
         ], [
@@ -279,7 +279,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_books_edit_own_permission()
     {
-        $otherBook = \BookStack\Book::take(1)->get()->first();
+        $otherBook = \BookStack\Entities\Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-update-own', [
             $ownBook->getUrl() . '/edit'
@@ -295,7 +295,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_books_edit_all_permission()
     {
-        $otherBook = \BookStack\Book::take(1)->get()->first();
+        $otherBook = \BookStack\Entities\Book::take(1)->get()->first();
         $this->checkAccessPermission('book-update-all', [
             $otherBook->getUrl() . '/edit'
         ], [
@@ -306,7 +306,7 @@ class RolesTest extends BrowserKitTest
     public function test_books_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['book-update-all']);
-        $otherBook = \BookStack\Book::take(1)->get()->first();
+        $otherBook = \BookStack\Entities\Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-delete-own', [
             $ownBook->getUrl() . '/delete'
@@ -327,7 +327,7 @@ class RolesTest extends BrowserKitTest
     public function test_books_delete_all_permission()
     {
         $this->giveUserPermissions($this->user, ['book-update-all']);
-        $otherBook = \BookStack\Book::take(1)->get()->first();
+        $otherBook = \BookStack\Entities\Book::take(1)->get()->first();
         $this->checkAccessPermission('book-delete-all', [
             $otherBook->getUrl() . '/delete'
         ], [
@@ -342,7 +342,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_chapter_create_own_permissions()
     {
-        $book = \BookStack\Book::take(1)->get()->first();
+        $book = \BookStack\Entities\Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('chapter-create-own', [
             $ownBook->getUrl('/create-chapter')
@@ -364,7 +364,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_chapter_create_all_permissions()
     {
-        $book = \BookStack\Book::take(1)->get()->first();
+        $book = \BookStack\Entities\Book::take(1)->get()->first();
         $this->checkAccessPermission('chapter-create-all', [
             $book->getUrl('/create-chapter')
         ], [
@@ -380,7 +380,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_chapter_edit_own_permission()
     {
-        $otherChapter = \BookStack\Chapter::take(1)->get()->first();
+        $otherChapter = \BookStack\Entities\Chapter::take(1)->get()->first();
         $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-update-own', [
             $ownChapter->getUrl() . '/edit'
@@ -396,7 +396,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_chapter_edit_all_permission()
     {
-        $otherChapter = \BookStack\Chapter::take(1)->get()->first();
+        $otherChapter = \BookStack\Entities\Chapter::take(1)->get()->first();
         $this->checkAccessPermission('chapter-update-all', [
             $otherChapter->getUrl() . '/edit'
         ], [
@@ -407,7 +407,7 @@ class RolesTest extends BrowserKitTest
     public function test_chapter_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['chapter-update-all']);
-        $otherChapter = \BookStack\Chapter::take(1)->get()->first();
+        $otherChapter = \BookStack\Entities\Chapter::take(1)->get()->first();
         $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-delete-own', [
             $ownChapter->getUrl() . '/delete'
@@ -429,7 +429,7 @@ class RolesTest extends BrowserKitTest
     public function test_chapter_delete_all_permission()
     {
         $this->giveUserPermissions($this->user, ['chapter-update-all']);
-        $otherChapter = \BookStack\Chapter::take(1)->get()->first();
+        $otherChapter = \BookStack\Entities\Chapter::take(1)->get()->first();
         $this->checkAccessPermission('chapter-delete-all', [
             $otherChapter->getUrl() . '/delete'
         ], [
@@ -445,8 +445,8 @@ class RolesTest extends BrowserKitTest
 
     public function test_page_create_own_permissions()
     {
-        $book = \BookStack\Book::first();
-        $chapter = \BookStack\Chapter::first();
+        $book = \BookStack\Entities\Book::first();
+        $chapter = \BookStack\Entities\Chapter::first();
 
         $entities = $this->createEntityChainBelongingToUser($this->user);
         $ownBook = $entities['book'];
@@ -470,7 +470,7 @@ class RolesTest extends BrowserKitTest
 
         foreach ($accessUrls as $index => $url) {
             $this->actingAs($this->user)->visit($url);
-            $expectedUrl = \BookStack\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
+            $expectedUrl = \BookStack\Entities\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
             $this->seePageIs($expectedUrl);
         }
 
@@ -492,8 +492,8 @@ class RolesTest extends BrowserKitTest
 
     public function test_page_create_all_permissions()
     {
-        $book = \BookStack\Book::take(1)->get()->first();
-        $chapter = \BookStack\Chapter::take(1)->get()->first();
+        $book = \BookStack\Entities\Book::take(1)->get()->first();
+        $chapter = \BookStack\Entities\Chapter::take(1)->get()->first();
         $baseUrl = $book->getUrl() . '/page';
         $createUrl = $book->getUrl('/create-page');
 
@@ -514,7 +514,7 @@ class RolesTest extends BrowserKitTest
 
         foreach ($accessUrls as $index => $url) {
             $this->actingAs($this->user)->visit($url);
-            $expectedUrl = \BookStack\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
+            $expectedUrl = \BookStack\Entities\Page::where('draft', '=', true)->orderBy('id', 'desc')->first()->getUrl();
             $this->seePageIs($expectedUrl);
         }
 
@@ -533,7 +533,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_page_edit_own_permission()
     {
-        $otherPage = \BookStack\Page::take(1)->get()->first();
+        $otherPage = \BookStack\Entities\Page::take(1)->get()->first();
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-update-own', [
             $ownPage->getUrl() . '/edit'
@@ -549,7 +549,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_page_edit_all_permission()
     {
-        $otherPage = \BookStack\Page::take(1)->get()->first();
+        $otherPage = \BookStack\Entities\Page::take(1)->get()->first();
         $this->checkAccessPermission('page-update-all', [
             $otherPage->getUrl() . '/edit'
         ], [
@@ -560,7 +560,7 @@ class RolesTest extends BrowserKitTest
     public function test_page_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['page-update-all']);
-        $otherPage = \BookStack\Page::take(1)->get()->first();
+        $otherPage = \BookStack\Entities\Page::take(1)->get()->first();
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-delete-own', [
             $ownPage->getUrl() . '/delete'
@@ -582,7 +582,7 @@ class RolesTest extends BrowserKitTest
     public function test_page_delete_all_permission()
     {
         $this->giveUserPermissions($this->user, ['page-update-all']);
-        $otherPage = \BookStack\Page::take(1)->get()->first();
+        $otherPage = \BookStack\Entities\Page::take(1)->get()->first();
         $this->checkAccessPermission('page-delete-all', [
             $otherPage->getUrl() . '/delete'
         ], [
@@ -598,7 +598,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_public_role_visible_in_user_edit_screen()
     {
-        $user = \BookStack\User::first();
+        $user = \BookStack\Auth\User::first();
         $this->asAdmin()->visit('/settings/users/' . $user->id)
             ->seeElement('#roles-admin')
             ->seeElement('#roles-public');
@@ -633,8 +633,8 @@ class RolesTest extends BrowserKitTest
     public function test_image_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
-        $page = \BookStack\Page::first();
-        $image = factory(\BookStack\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $this->user->id, 'updated_by' => $this->user->id]);
+        $page = \BookStack\Entities\Page::first();
+        $image = factory(\BookStack\Uploads\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $this->user->id, 'updated_by' => $this->user->id]);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
             ->seeStatusCode(403);
@@ -650,8 +650,8 @@ class RolesTest extends BrowserKitTest
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
         $admin = $this->getAdmin();
-        $page = \BookStack\Page::first();
-        $image = factory(\BookStack\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
+        $page = \BookStack\Entities\Page::first();
+        $image = factory(\BookStack\Uploads\Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)
             ->seeStatusCode(403);
@@ -672,7 +672,7 @@ class RolesTest extends BrowserKitTest
     {
         // To cover issue fixed in f99c8ff99aee9beb8c692f36d4b84dc6e651e50a.
         $page = Page::first();
-        $viewerRole = \BookStack\Role::getRole('viewer');
+        $viewerRole = \BookStack\Auth\Role::getRole('viewer');
         $viewer = $this->getViewer();
         $this->actingAs($viewer)->visit($page->getUrl())->assertResponseStatus(200);
 
@@ -690,14 +690,14 @@ class RolesTest extends BrowserKitTest
     {
         $admin = $this->getAdmin();
         // Book links
-        $book = factory(\BookStack\Book::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
+        $book = factory(\BookStack\Entities\Book::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
         $this->updateEntityPermissions($book);
         $this->actingAs($this->getViewer())->visit($book->getUrl())
             ->dontSee('Create a new page')
             ->dontSee('Add a chapter');
 
         // Chapter links
-        $chapter = factory(\BookStack\Chapter::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
+        $chapter = factory(\BookStack\Entities\Chapter::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
         $this->updateEntityPermissions($chapter);
         $this->actingAs($this->getViewer())->visit($chapter->getUrl())
             ->dontSee('Create a new page')
@@ -781,7 +781,7 @@ class RolesTest extends BrowserKitTest
     }
 
     private function addComment($page) {
-        $comment = factory(\BookStack\Comment::class)->make();
+        $comment = factory(\BookStack\Actions\Comment::class)->make();
         $url = "/ajax/page/$page->id/comment";
         $request = [
             'text' => $comment->text,
@@ -794,7 +794,7 @@ class RolesTest extends BrowserKitTest
     }
 
     private function updateComment($commentId) {
-        $comment = factory(\BookStack\Comment::class)->make();
+        $comment = factory(\BookStack\Actions\Comment::class)->make();
         $url = "/ajax/comment/$commentId";
         $request = [
             'text' => $comment->text,

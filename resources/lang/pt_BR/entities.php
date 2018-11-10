@@ -52,17 +52,51 @@ return [
     'search_content_type' => 'Tipo de Conteúdo',
     'search_exact_matches' => 'Correspondências Exatas',
     'search_tags' => 'Tags',
+    'search_options' => 'Opções',
     'search_viewed_by_me' => 'Visto por mim',
     'search_not_viewed_by_me' => 'Não visto por mim',
     'search_permissions_set' => 'Permissão definida',
     'search_created_by_me' => 'Criado por mim',
     'search_updated_by_me' => 'Atualizado por mim',
+    'search_date_options' => 'Opções de Data',
     'search_updated_before' => 'Atualizado antes de',
     'search_updated_after' => 'Atualizado depois de',
     'search_created_before' => 'Criado antes de',
     'search_created_after' => 'Criado depois de',
     'search_set_date' => 'Definir data',
     'search_update' => 'Refazer Pesquisa',
+
+    /**
+     * Shelves
+     */
+    'shelf' => 'Prateleira',
+    'shelves' => 'Prateleiras',
+    'shelves_long' => 'Prateleiras de Livros',
+    'shelves_empty' => 'Nenhuma prateleira foi criada',
+    'shelves_create' => 'Criar nova Prateleira',
+    'shelves_popular' => 'Prateleiras populares',
+    'shelves_new' => 'Prateleiras novas',
+    'shelves_popular_empty' => 'As prateleiras mais populares aparecerão aqui.',
+    'shelves_new_empty' => 'As prateleiras criadas mais recentemente aparecerão aqui.',
+    'shelves_save' => 'Salvar Prateleira',
+    'shelves_books' => 'Livros nesta prateleira',
+    'shelves_add_books' => 'Adicionar livros a esta prateleira',
+    'shelves_drag_books' => 'Arraste livros aqui para adicioná-los a esta prateleira',
+    'shelves_empty_contents' => 'Esta prateleira não possui livros atribuídos a ela',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Editar Prateleira de Livros :name',
+    'shelves_edit' => 'Edit Prateleira de Livros',
+    'shelves_delete' => 'Excluir Prateleira de Livros',
+    'shelves_delete_named' => 'Excluir Prateleira de Livros :name',
+    'shelves_delete_explain' => "A ação vai excluír a prateleira de livros com o nome ':name'. Livros contidos não serão excluídos",
+    'shelves_delete_confirmation' => 'Você tem certeza que quer excluir esta prateleira de livros?',
+    'shelves_permissions' => 'Permissões da Prateleira de Livros',
+    'shelves_permissions_updated' => 'Permissões da Prateleira de Livros Atualizada',
+    'shelves_permissions_active' => 'Permissões da Prateleira de Livros Ativadas',
+    'shelves_copy_permissions_to_books' => 'Copiar Permissões para Livros',
+    'shelves_copy_permissions' => 'Copiar Permissões',
+    'shelves_copy_permissions_explain' => 'Isto aplicará as configurações de permissões atuais desta prateleira de livros a todos os livros contidos nela. Antes de ativar, assegure-se de que quaisquer alterações nas permissões desta prateleira de livros tenham sido salvas.',
+    'shelves_copy_permission_success' => 'Permissões da prateleira de livros copiada para :count livros',
 
     /**
      * Books
@@ -199,6 +233,7 @@ return [
         'message' => ':start :time. Tome cuidado para não sobrescrever atualizações de outras pessoas!',
     ],
     'pages_draft_discarded' => 'Rascunho descartado. O editor foi atualizado com a página atualizada',
+    'pages_specific' => 'Página Específica',
 
     /**
      * Editor sidebar
@@ -206,6 +241,7 @@ return [
     'page_tags' => 'Tags de Página',
     'chapter_tags' => 'Tags de Capítulo',
     'book_tags' => 'Tags de Livro',
+    'shelf_tags' => 'Tags de Prateleira',
     'tag' => 'Tag',
     'tags' =>  '',
     'tag_value' => 'Valor da Tag (Opcional)',
