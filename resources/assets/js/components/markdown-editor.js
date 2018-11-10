@@ -272,14 +272,15 @@ class MarkdownEditor {
             let placeHolderText = `![${selectedText}](${placeholderImage})`;
             let cursor = cm.getCursor();
             cm.replaceSelection(placeHolderText);
-            cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 2});
+            cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 3});
 
             let remoteFilename = "image-" + Date.now() + "." + ext;
             let formData = new FormData();
             formData.append('file', file, remoteFilename);
 
             window.$http.post('/images/gallery/upload', formData).then(resp => {
-                replaceContent(placeholderImage, resp.data.thumbs.display);
+                const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
+                replaceContent(placeHolderText, newContent);
             }).catch(err => {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 replaceContent(placeHolderText, selectedText);
@@ -304,7 +305,7 @@ class MarkdownEditor {
         let cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
             let selectedText = this.cm.getSelection();
-            let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
+            let newText = "[![" + (selectedText || image.name) + "](" + image.thumbs.display + ")](" + image.url + ")";
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
