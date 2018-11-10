@@ -52,6 +52,7 @@ return [
     'details' => 'Détails',
     'grid_view' => 'Vue en grille',
     'list_view' => 'Vue en liste',
+    'default' => 'Défaut',
 
     /**
      * Header
