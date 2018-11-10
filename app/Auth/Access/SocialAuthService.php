@@ -40,7 +40,7 @@ class SocialAuthService
     public function startLogIn($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->socialite->driver($driver)->redirect();
+        return $this->redirectToSocialProvider($driver)->redirect();
     }
 
     /**
@@ -52,7 +52,7 @@ class SocialAuthService
     public function startRegister($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->socialite->driver($driver)->redirect();
+        return $this->redirectToSocialProvider($driver)->redirect();
     }
 
     /**
@@ -246,5 +246,19 @@ class SocialAuthService
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => title_case($socialDriver)]));
         return redirect(user()->getEditUrl());
+    }
+
+    /**
+     * Provide redirect options per service for the Laravel Socialite driver
+     * @param $driver
+     */
+    public function redirectToSocialProvider($driver)
+    {
+        if ($driver == 'google' && config('services.google.select_account'))
+        {
+            return $this->socialite->driver($driver)->with(['prompt' => 'select_account']);
+        }
+
+        return $this->socialite->driver($driver);
     }
 }
