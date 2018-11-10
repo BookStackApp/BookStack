@@ -41,6 +41,7 @@
         <env name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
         <env name="GOOGLE_AUTO_REGISTER" value=""/>
         <env name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
+        <env name="GOOGLE_SELECT_ACCOUNT" value=""/>
         <env name="APP_URL" value="http://bookstack.dev"/>
         <env name="DEBUGBAR_ENABLED" value="false"/>
     </php>

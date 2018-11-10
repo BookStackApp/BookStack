@@ -40,7 +40,7 @@ class SocialAuthService
     public function startLogIn($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->redirectToSocialProvider($driver)->redirect();
+        return $this->getSocialDriver($driver)->redirect();
     }
 
     /**
@@ -52,7 +52,7 @@ class SocialAuthService
     public function startRegister($socialDriver)
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->redirectToSocialProvider($driver)->redirect();
+        return $this->getSocialDriver($driver)->redirect();
     }
 
     /**
@@ -250,15 +250,17 @@ class SocialAuthService
 
     /**
      * Provide redirect options per service for the Laravel Socialite driver
-     * @param $driver
+     * @param $driverName
+     * @return \Laravel\Socialite\Contracts\Provider
      */
-    public function redirectToSocialProvider($driver)
+    public function getSocialDriver(string $driverName)
     {
-        if ($driver == 'google' && config('services.google.select_account'))
-        {
-            return $this->socialite->driver($driver)->with(['prompt' => 'select_account']);
+        $driver = $this->socialite->driver($driverName);
+
+        if ($driverName === 'google' && config('services.google.select_account')) {
+            $driver->with(['prompt' => 'select_account']);
         }
 
-        return $this->socialite->driver($driver);
+        return $driver;
     }
 }
