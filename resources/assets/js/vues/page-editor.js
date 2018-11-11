@@ -145,6 +145,6 @@ let computed = {
     }
 };
 
-module.exports = {
+export default {
     mounted, data, methods, computed,
 };

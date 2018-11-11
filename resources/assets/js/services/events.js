@@ -25,4 +25,4 @@ class Events {
     }
 }
 
-module.exports = Events;
+export default Events;

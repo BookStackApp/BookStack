@@ -59,6 +59,7 @@ return [
         'name'          => 'Google',
         'auto_register' => env('GOOGLE_AUTO_REGISTER', false),
         'auto_confirm' => env('GOOGLE_AUTO_CONFIRM_EMAIL', false),
+        'select_account' => env('GOOGLE_SELECT_ACCOUNT', false),
     ],
 
     'slack'   => [

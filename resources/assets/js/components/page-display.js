@@ -1,4 +1,4 @@
-import Clipboard from "clipboard";
+import Clipboard from "clipboard/dist/clipboard.min";
 import Code from "../services/code";
 
 class PageDisplay {
@@ -233,4 +233,4 @@ class PageDisplay {
     }
 }
 
-module.exports = PageDisplay;
+export default PageDisplay;

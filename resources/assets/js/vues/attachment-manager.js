@@ -1,5 +1,5 @@
-const draggable = require('vuedraggable');
-const dropzone = require('./components/dropzone');
+import draggable from "vuedraggable";
+import dropzone from "./components/dropzone";
 
 function mounted() {
     this.pageId = this.$el.getAttribute('page-id');
@@ -137,6 +137,6 @@ let methods = {
 
 };
 
-module.exports = {
+export default {
     data, methods, mounted, components,
 };

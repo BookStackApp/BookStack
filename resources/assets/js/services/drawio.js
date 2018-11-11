@@ -66,4 +66,4 @@ function drawPostMessage(data) {
     iFrame.contentWindow.postMessage(JSON.stringify(data), '*');
 }
 
-module.exports = {show, close};
+export default {show, close};

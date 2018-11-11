@@ -115,4 +115,4 @@ class EntitySelector {
 
 }
 
-module.exports = EntitySelector;
+export default EntitySelector;

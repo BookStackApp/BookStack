@@ -20,7 +20,7 @@ return [
     'role' => '角色',
     'cover_image' => '封面圖片',
     'cover_image_description' => '所使用圖片大小必須是440x250px。',
-    
+
     /**
      * Actions
      */
@@ -31,7 +31,8 @@ return [
     'edit' => '編輯',
     'sort' => '排序',
     'move' => '移動',
-    'reply' => '回複',
+    'copy' => '複製',
+    'reply' => '回覆',
     'delete' => '刪除',
     'search' => '搜尋',
     'search_clear' => '清除搜尋',
@@ -51,6 +52,7 @@ return [
     'details' => '詳細資訊',
     'grid_view' => '縮圖檢視',
     'list_view' => '清單撿視',
+    'default' => '預設',
 
     /**
      * Header

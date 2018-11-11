@@ -188,6 +188,6 @@ function created() {
     this.dateParse(this.termString);
 }
 
-module.exports = {
+export default {
     data, computed, methods, created
 };
