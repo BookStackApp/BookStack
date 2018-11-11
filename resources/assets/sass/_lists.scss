@@ -95,88 +95,66 @@
 }
 
 // Sidebar list
-.book-tree {
-  transition: ease-in-out 240ms;
-  transition-property: right, border;
-}
-.book-tree h4 {
-  padding: $-m $-s 0 $-s;
-  i {
-    padding-right: $-s;
+.book-tree .book.entity-list-item {
+  font-size: 0.6rem;
+  h4 {
+    font-size: 1rem;
+    margin: 0;
   }
 }
 .book-tree .sidebar-page-list {
   list-style: none;
   margin: $-xs 0 0;
   padding-left: 0;
-  border-left: 5px solid $color-book;
-  li a {
-    display: block;
-    border-bottom: none;
-    padding: $-xs 0 $-xs $-s;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  li a i {
-    padding-right: $-xs + 2px;
-  }
-  li, a {
-    display: block;
-  }
-  a.bold {
-    color: #EEE !important;
-    fill: #EEE !important;
-  }
+  padding-right: 0;
+  position: relative;
   ul {
     list-style: none;
+    padding-left: 1rem;
+    padding-right: 0;
+  }
+  .entity-icon {
+    font-size: 12px;
+    z-index: 2;
+    background-color: #FFF;
+  }
+  .entity-list-item-name {
+    font-size: 1em;
     margin: 0;
   }
-  .book {
-    color: $color-book !important;
-    fill: $color-book !important;
-    &.selected {
-      background-color: rgba($color-book, 0.29);
-    }
+  .entity-list-item {
+    font-size: 0.8rem;
   }
-  .chapter {
-    color: $color-chapter !important;
-    fill: $color-chapter !important;
-    &.selected {
-      background-color: rgba($color-chapter, 0.12);
-    }
+  .entity-list-item.selected {
+    background-color: #EEE;
   }
-  .page {
-    color: $color-page !important;
-    fill: $color-page !important;
-    border-bottom: none;
-    &.selected {
-      background-color: rgba($color-page, 0.1);
-    }
+  .chapter-child-menu {
+    font-size: 12px;
+    padding-left: 2rem;
+    margin-top: -.2rem;
   }
   [chapter-toggle] {
-    padding-left: $-s;
+    padding-left: 1.5rem;
+    padding-bottom: .2rem;
   }
-  .list-item-chapter {
-    border-left: 5px solid $color-chapter;
-    margin: 10px 10px;
+  &:after, .sub-menu:after {
+    content: '';
     display: block;
+    position: absolute;
+    left: 1.6rem;
+    top: 1rem;
+    bottom: 1rem;
+    border-left: 2px solid #DDD;
+    opacity: 0.6;
+    z-index: 1;
   }
-  .list-item-page {
-    border-bottom: none;
-    border-left: 5px solid $color-page;
-    margin: 10px 10px;
-  }
-  .list-item-page.draft {
-    border-left: 5px solid $color-page-draft;
-  }
-  .page.draft .page, .list-item-page.draft a.page {
-    color: $color-page-draft !important;
-    fill: $color-page-draft !important;
-  }
-  .sub-menu {
+}
+
+.chapter-child-menu {
+  ul.sub-menu {
     display: none;
     padding-left: 0;
+    position: relative;
   }
   [chapter-toggle].open + .sub-menu {
     display: block;

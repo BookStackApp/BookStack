@@ -136,7 +136,7 @@ class PageDisplay {
 
         // Fix the tree as a sidebar
         function stickTree() {
-            $sidebar.width($bookTreeParent.width() - 32);
+            $sidebar.css('width', $bookTreeParent.width());
             $sidebar.addClass("fixed");
             isFixed = true;
         }
