@@ -34,7 +34,8 @@ return [
     'path_not_writable' => '無法上傳到檔案路徑“:filePath”，請確保它可寫入伺服器。',
     'cannot_get_image_from_url' => '無法從 :url 中獲取圖片',
     'cannot_create_thumbs' => '伺服器無法建立縮圖，請檢查您是否安裝了GD PHP外掛。',
-    'server_upload_limit' => '上傳圖片時發生錯誤。',
+    'server_upload_limit' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
+    'uploaded' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型錯誤',
 
@@ -48,6 +49,7 @@ return [
 
     // Entities
     'entity_not_found' => '未找到實體',
+    'bookshelf_not_found' => '未找到書架',
     'book_not_found' => '未找到圖書',
     'page_not_found' => '未找到頁面',
     'chapter_not_found' => '未找到章節',

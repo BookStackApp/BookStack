@@ -1,4 +1,4 @@
-const codeLib = require('../services/code');
+import codeLib from "../services/code";
 
 const methods = {
     show() {
@@ -37,7 +37,7 @@ const data = {
     callback: null
 };
 
-module.exports = {
+export default {
     methods,
     data
 };

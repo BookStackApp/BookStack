@@ -1,7 +1,5 @@
-
 import * as Dates from "../services/dates";
-
-const dropzone = require('./components/dropzone');
+import dropzone from "./components/dropzone";
 
 let page = 0;
 let previousClickTime = 0;
@@ -193,7 +191,7 @@ function mounted() {
     baseUrl = window.baseUrl('/images/' + this.imageType + '/all/')
 }
 
-module.exports = {
+export default {
     mounted,
     methods,
     data,

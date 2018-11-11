@@ -39,6 +39,6 @@ function mounted() {
     this.type = this.$el.getAttribute('entity-type');
 }
 
-module.exports = {
+export default {
     data, computed, methods, mounted
 };

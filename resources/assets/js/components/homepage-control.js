@@ -19,4 +19,4 @@ class HomepageControl {
 
 }
 
-module.exports = HomepageControl;
+export default HomepageControl;

@@ -148,4 +148,12 @@ class SocialAuthTest extends TestCase
         $this->assertDatabaseHas('social_accounts', ['user_id' => $user->id]);
     }
 
+    public function test_google_select_account_option_changes_redirect_url()
+    {
+        config()->set('services.google.select_account', 'true');
+
+        $resp = $this->get('/login/service/google');
+        $this->assertContains('prompt=select_account', $resp->headers->get('Location'));
+    }
+
 }

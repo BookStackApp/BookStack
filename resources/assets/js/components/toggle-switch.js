@@ -16,4 +16,4 @@ class ToggleSwitch {
 
 }
 
-module.exports = ToggleSwitch;
+export default ToggleSwitch;

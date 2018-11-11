@@ -1,27 +1,27 @@
-const CodeMirror = require('codemirror');
-const Clipboard = require("clipboard");
+import CodeMirror from "codemirror";
+import Clipboard from "clipboard/dist/clipboard.min";
 
 // Modes
-require('codemirror/mode/css/css');
-require('codemirror/mode/clike/clike');
-require('codemirror/mode/diff/diff');
-require('codemirror/mode/go/go');
-require('codemirror/mode/htmlmixed/htmlmixed');
-require('codemirror/mode/javascript/javascript');
-require('codemirror/mode/markdown/markdown');
-require('codemirror/mode/nginx/nginx');
-require('codemirror/mode/php/php');
-require('codemirror/mode/powershell/powershell');
-require('codemirror/mode/python/python');
-require('codemirror/mode/ruby/ruby');
-require('codemirror/mode/shell/shell');
-require('codemirror/mode/sql/sql');
-require('codemirror/mode/toml/toml');
-require('codemirror/mode/xml/xml');
-require('codemirror/mode/yaml/yaml');
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/clike/clike';
+import 'codemirror/mode/diff/diff';
+import 'codemirror/mode/go/go';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/markdown/markdown';
+import 'codemirror/mode/nginx/nginx';
+import 'codemirror/mode/php/php';
+import 'codemirror/mode/powershell/powershell';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/shell/shell';
+import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/toml/toml';
+import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/yaml/yaml';
 
 // Addons
-require('codemirror/addon/scroll/scrollpastend');
+import 'codemirror/addon/scroll/scrollpastend';
 
 const modeMap = {
     css: 'css',
@@ -255,7 +255,7 @@ function getMetaKey() {
     return mac ? "Cmd" : "Ctrl";
 }
 
-module.exports = {
+export default {
     highlight: highlight,
     wysiwygView: wysiwygView,
     popupEditor: popupEditor,
