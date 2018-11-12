@@ -33,8 +33,7 @@ return [
     'app_primary_color_desc' => 'Esto debería ser un valor hexadecimal. <br>Deje el valor vacío para reiniciar al valor por defecto.',
     'app_homepage' => 'Página de inicio de la Aplicación',
     'app_homepage_desc' => 'Seleccione una página de inicio para mostrar en lugar de la vista por defecto. Se ignoran los permisos de página para las páginas seleccionadas.',
-    'app_homepage_default' => 'Página de inicio por defecto seleccionadad',
-    'app_homepage_books' => 'O seleccione la página de libros como su página de inicio. Esto tendrá preferencia sobre cualquier página seleccionada como página de inicio.',
+    'app_homepage_select' => 'Seleccione una página',
     'app_disable_comments' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
@@ -91,6 +90,7 @@ return [
     'role_manage_settings' => 'Gestionar ajustes de activos',
     'role_asset' => 'Permisos de activos',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos a Libros, Capítulos y Páginas sobreescribiran estos permisos.',
+    'role_asset_admins' => 'Los administradores reciben automáticamente acceso a todo el contenido pero estas opciones pueden mostrar u ocultar opciones de UI.',
     'role_all' => 'Todo',
     'role_own' => 'Propio',
     'role_controlled_by_asset' => 'Controlado por el activo al que ha sido subido',
