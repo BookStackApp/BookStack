@@ -55,6 +55,9 @@
                             @if(signedInUser() && userCan('settings-manage'))
                                 <a href="{{ baseUrl('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
                             @endif
+                            @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
+                                <a href="{{ baseUrl('/settings/users') }}">@icon('users'){{ trans('settings.users') }}</a>
+                            @endif
                             @if(!signedInUser())
                                 <a href="{{ baseUrl('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
                             @endif
