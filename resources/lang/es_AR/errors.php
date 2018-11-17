@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'El servidor no permite subir archivos de este tamaño. Por favor intente un tamaño menor.',    'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
+    'file_upload_timeout' => 'La carga del archivo ha caducado.',
 
     // Attachments
     'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',

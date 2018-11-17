@@ -13,8 +13,9 @@ function mounted() {
    let container = this.$el;
    let _this = this;
    this._dz = new DropZone(container, {
-	addRemoveLinks: true,
-	dictRemoveFile: trans('components.image_upload_remove'),
+        addRemoveLinks: true,
+        dictRemoveFile: trans('components.image_upload_remove'),
+        timeout: +window.dropZoneTimeout || 60000,
         url: function() {
             return _this.uploadUrl;
         },
@@ -26,6 +27,10 @@ function mounted() {
                 data.append('_token', token);
                 let uploadedTo = typeof _this.uploadedTo === 'undefined' ? 0 : _this.uploadedTo;
                 data.append('uploaded_to', uploadedTo);
+
+                xhr.ontimeout = function (e) {
+                    _this.$events.emit('error', trans('errors.file_upload_timeout'));
+                }
             });
 
             dz.on('success', function (file, data) {

@@ -35,6 +35,7 @@ return [
     'cannot_create_thumbs' => 'Serwer nie może utworzyć miniaturek. Upewnij się że rozszerzenie GD PHP zostało zainstalowane.',
     'server_upload_limit' => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj udostępnić coś o mniejszym rozmiarze.',
     'image_upload_error' => 'Wystąpił błąd podczas udostępniania obrazka',
+    'file_upload_timeout' => 'Przesyłanie pliku przekroczyło limit czasu.',
 
     // Attachments
     'attachment_page_mismatch' => 'Niezgodność stron podczas aktualizacji załącznika',
