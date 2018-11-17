@@ -38,6 +38,7 @@ return [
     'uploaded'  => '해당 크기의 파일을 업로드하는것이 서버에서 제한됩니다. 파일 사이즈를 작게 줄이거나 서버 설정을 변경하세요.',
     'image_upload_error' => '이미지를 업로드하는 중에 오류가 발생했습니다.',
     'image_upload_type_error' => '업로드중인 이미지 유형이 잘못되었습니다.',
+    'file_upload_timeout' => '파일 업로드가 시간 초과되었습니다.',
 
     // Attachments
     'attachment_page_mismatch' => '첨부 파일 업데이트 중 페이지 불일치하였습니다.',

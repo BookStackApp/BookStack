@@ -37,7 +37,8 @@ return [
     'server_upload_limit' => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
 	'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'image_upload_error' => '上传图片时发生错误',
-	'image_upload_type_error' => '上传的图像类型无效',
+    'image_upload_type_error' => '上传的图像类型无效',
+    'file_upload_timeout' => '文件上传已超时。',
 
     // Attachments
     'attachment_page_mismatch' => '附件更新期间的页面不匹配',
