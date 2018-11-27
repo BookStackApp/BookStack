@@ -111,6 +111,7 @@ return [
     'books_popular_empty' => 'The most popular books will appear here.',
     'books_new_empty' => 'The most recently created books will appear here.',
     'books_create' => 'Create New Book',
+    'books_import' => 'Import New Book',
     'books_delete' => 'Delete Book',
     'books_delete_named' => 'Delete Book :bookName',
     'books_delete_explain' => 'This will delete the book with the name \':bookName\'. All pages and chapters will be removed.',

@@ -10,6 +10,7 @@
         <div class="action-buttons">
             @if($currentUser->can('book-create-all'))
                 <a href="{{ baseUrl("/create-book") }}" class="text-pos text-button">@icon('add'){{ trans('entities.books_create') }}</a>
+                <a href="{{ baseUrl("/import-book") }}" class="text-pos text-button">@icon('add'){{ trans('entities.books_import') }}</a>
             @endif
         </div>
     </div>

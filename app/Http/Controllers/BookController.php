@@ -63,6 +63,17 @@ class BookController extends Controller
     }
 
     /**
+     * Show the form for importing a new book.
+     * @return Response
+     */
+    public function import()
+    {
+        $this->checkPermission('book-create-all');
+        $this->setPageTitle(trans('entities.books_import'));
+        return view('books/import');
+    }
+
+    /**
      * Store a newly created book in storage.
      *
      * @param  Request $request

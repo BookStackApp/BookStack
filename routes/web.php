@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/create-book', 'BookController@create');
+    Route::get('/import-book', 'BookController@import');
     Route::group(['prefix' => 'books'], function () {
 
         // Books

@@ -6,7 +6,7 @@
             <a href="{{ baseUrl('/books') }}" class="text-button">@icon('book'){{ trans('entities.books') }}</a>
             <span class="sep">&raquo;</span>
             <a href="{{ baseUrl('/create-book') }}" class="text-button">@icon('add'){{ trans('entities.books_create') }}</a>
-            <a href="{{ baseUrl('/import-book') }}" class="text-button">@icon('add'){{ trans('entities.books_import') }}</a>
+            <a href="{{ baseUrl('/create-book') }}" class="text-button">@icon('add'){{ trans('entities.books_import') }}</a>
         </div>
     </div>
 @stop
@@ -16,7 +16,7 @@
 <div class="container small">
     <p>&nbsp;</p>
     <div class="card">
-        <h3>@icon('add') {{ trans('entities.books_create') }}</h3>
+        <h3>@icon('add') {{ trans('entities.books_import') }}</h3>
         <div class="body">
             <form action="{{ baseUrl("/books") }}" method="POST" enctype="multipart/form-data">
                 @include('books/form')
