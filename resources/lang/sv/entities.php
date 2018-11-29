@@ -77,6 +77,7 @@ return [
     'books_popular_empty' => 'De mest populära böckerna kommer att visas här.',
     'books_new_empty' => 'De senaste böckerna som skapats kommer att visas här.',
     'books_create' => 'Skapa ny bok',
+    'books_import' => 'Bok import',
     'books_delete' => 'Ta bort bok',
     'books_delete_named' => 'Ta bort boken :bookName',
     'books_delete_explain' => 'Du håller på att ta bort boken \':bookName\'. Alla sidor och kapitel kommer också att tas bort.',

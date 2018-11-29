@@ -77,6 +77,7 @@ return [
 	'books_new' => 'Nieuwe Boeken',
     'books_popular_empty' => 'De meest populaire boeken worden hier weergegeven.',
     'books_create' => 'Nieuw Boek Aanmaken',
+    'books_import' => 'Boekimport',
     'books_delete' => 'Boek Verwijderen',
     'books_delete_named' => 'Verwijder Boek :bookName',
     'books_delete_explain' => 'Deze actie verwijdert het boek \':bookName\', Alle pagina\'s en hoofdstukken worden verwijderd.',

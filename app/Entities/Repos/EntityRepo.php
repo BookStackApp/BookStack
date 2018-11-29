@@ -491,6 +491,33 @@ class EntityRepo
     }
 
     /**
+     * Create a new entity from request input.
+     * Used for books and chapters.
+     * @param string $type
+     * @param string $content
+     * @param array $input
+     * @param bool|Book $book
+     * @return \BookStack\Entities\Entity
+     */
+    public function createFromImport($type, $content, $input = [], $book = false)
+    {
+        $isChapter = strtolower($type) === 'chapter';
+        $entityModel = $this->entityProvider->get($type)->newInstance($input);
+        $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $isChapter ? $book->id : false);
+        $entityModel->created_by = user()->id;
+        $entityModel->updated_by = user()->id;
+        $isChapter ? $book->chapters()->save($entityModel) : $entityModel->save();
+
+        if (isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
+        }
+
+        $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $this->searchService->indexEntity($entityModel);
+        return $entityModel;
+    }
+
+    /**
      * Update entity details from request input.
      * Used for books and chapters
      * @param string $type

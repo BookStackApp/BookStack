@@ -73,6 +73,7 @@ return [
     'books_popular_empty' => 'Die beliebtesten Bücher werden hier angezeigt.',
     'books_new_empty' => 'Die neusten Bücher werden hier angezeigt.',
     'books_create' => 'Neues Buch erstellen',
+    'books_import' => 'Buchimport',
     'books_delete' => 'Buch löschen',
     'books_delete_named' => 'Buch ":bookName" löschen',
     'books_delete_explain' => 'Das Buch ":bookName" wird gelöscht und alle zugehörigen Kapitel und Seiten entfernt.',

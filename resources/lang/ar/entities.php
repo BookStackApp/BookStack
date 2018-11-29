@@ -77,6 +77,7 @@ return [
     'books_popular_empty' => 'الكتب الأكثر رواجاً ستظهر هنا.',
     'books_new_empty' => 'الكتب المنشأة مؤخراً ستظهر هنا.',
     'books_create' => 'إنشاء كتاب جديد',
+    'books_import' => 'استيراد الكتاب',
     'books_delete' => 'حذف الكتاب',
     'books_delete_named' => 'حذف كتاب :bookName',
     'books_delete_explain' => 'سيتم حذف كتاب \':bookName\'. ستتم إزالة جميع الفصول والصفحات.',

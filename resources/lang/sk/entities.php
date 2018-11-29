@@ -66,6 +66,7 @@ return [
     'books_recent' => 'Nedávne knihy',
     'books_popular_empty' => 'Najpopulárnejšie knihy sa objavia tu.',
     'books_create' => 'Vytvoriť novú knihu',
+    'books_import' => 'Importovanie knihy',
     'books_delete' => 'Zmazať knihu',
     'books_delete_named' => 'Zmazať knihu :bookName',
     'books_delete_explain' => 'Toto zmaže knihu s názvom \':bookName\', všetky stránky a kapitoly budú odstránené.',

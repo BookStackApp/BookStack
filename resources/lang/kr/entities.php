@@ -111,6 +111,7 @@ return [
     'books_popular_empty' => '가장 인기있는 책이 여기에 보입니다.',
     'books_new_empty' => '가장 최근에 만든 책이 여기에 표시됩니다.',
     'books_create' => '새로운 책 만들기',
+    'books_import' => '도서 가져 오기',
     'books_delete' => '책 삭제하기',
     'books_delete_named' => ':bookName 책 삭제하기',
     'books_delete_explain' => '\':bookName\' 이름의 책이 삭제됩니다. 모든 페이지와 챕터가 삭제됩니다.',

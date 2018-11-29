@@ -111,6 +111,7 @@ return [
     'books_popular_empty' => '最受歡迎的書本將出現在這裡。',
     'books_new_empty' => '最近建立的書本將出現在這裡。',
     'books_create' => '建立書本',
+    'books_import' => '預訂導入',
     'books_delete' => '刪除書本',
     'books_delete_named' => '刪除書本「:bookName」',
     'books_delete_explain' => '這將刪除書本「:bookName」。所有的章節和頁面都會被刪除。',

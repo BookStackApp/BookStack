@@ -111,6 +111,7 @@ return [
     'books_popular_empty' => '最受欢迎的图书将出现在这里。',
     'books_new_empty' => '最近创建的图书将出现在这里。',
     'books_create' => '创建图书',
+    'books_import' => '预订导入',
     'books_delete' => '删除图书',
     'books_delete_named' => '删除图书「:bookName」',
     'books_delete_explain' => '这将删除图书「:bookName」。所有的章节和页面都会被删除。',

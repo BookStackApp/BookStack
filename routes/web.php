@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Books
         Route::get('/', 'BookController@index');
         Route::post('/', 'BookController@store');
+        Route::post('/import', 'BookController@storeImport');
         Route::get('/{slug}/edit', 'BookController@edit');
         Route::put('/{slug}', 'BookController@update');
         Route::delete('/{id}', 'BookController@destroy');

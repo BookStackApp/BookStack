@@ -77,6 +77,7 @@ return [
     'books_new' => '新しいブック',
     'books_popular_empty' => 'ここに人気のブックが表示されます。',
     'books_create' => '新しいブックを作成',
+    'books_import' => 'ブックのインポート',
     'books_delete' => 'ブックを削除',
     'books_delete_named' => 'ブック「:bookName」を削除',
     'books_delete_explain' => '「:bookName」を削除すると、ブック内のページとチャプターも削除されます。',

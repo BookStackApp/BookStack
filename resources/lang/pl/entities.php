@@ -76,6 +76,7 @@ return [
     'books_recent' => 'Ostatnie księgi',
     'books_popular_empty' => 'Najbardziej popularne księgi zostaną wyświetlone w tym miejscu.',
     'books_create' => 'Utwórz księgę',
+    'books_import' => 'Importuj książkę',
     'books_delete' => 'Usuń księgę',
     'books_delete_named' => 'Usuń księgę :bookName',
     'books_delete_explain' => 'To spowoduje usunięcie księgi \':bookName\', Wszystkie strony i rozdziały zostaną usunięte.',

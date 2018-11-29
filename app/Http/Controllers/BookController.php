@@ -4,10 +4,12 @@ use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Book;
 use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
+
 
 class BookController extends Controller
 {
@@ -71,6 +73,111 @@ class BookController extends Controller
         $this->checkPermission('book-create-all');
         $this->setPageTitle(trans('entities.books_import'));
         return view('books/import');
+    }
+
+    /**
+     * Store a newly created book in storage.
+     *
+     * @param  Request $request
+     * @return Response
+     */
+    public function storeImport(Request $request)
+    {
+
+        if ($request->file('genericXML') != null) {
+            $file = simplexml_load_file($request->file('genericXML')->getRealPath());
+            $data = '';
+
+            foreach($file as $item)
+            {
+                if (strlen($item) > 45){
+                    $data = $data . $item;
+                }
+
+            }
+
+            $bookContent = ($data);
+        }
+
+        if ($request->file('providerXML') != null){
+            $file = simplexml_load_file($request->file('providerXML')->getRealPath());
+
+            // For Wiki exports
+            if ($request->media == "Wiki") {
+
+              // Book content
+              $bookContent = $file->page->revision->text;
+
+              // Filter non text
+              $bookContent = preg_replace("/[^a-zA-Z0-9 newline\r\n]/", "", $bookContent);
+              $bookContent = preg_replace("/T[0-9][0-9]?/", "", $bookContent);
+              $bookContent = preg_replace("/XML/", "", $bookContent);
+              $bookContent = preg_replace("/ELEMENT/", "", $bookContent);
+              $bookContent = preg_replace("/CDATA/", "", $bookContent);
+              $bookContent = preg_replace("/PCDATA/", "", $bookContent);
+              $bookContent = preg_replace("/ P /", "", $bookContent);
+              $bookContent = preg_replace("/DTD/", "", $bookContent);
+              $bookContent = preg_replace("/REQUIRED/", "", $bookContent);
+            }
+
+            // For Evernote exports
+            if ($request->media == "Evernote") {
+
+              // Book content
+              $bookContent = $file->note->content;
+
+              // Filter non text
+              $bookContent = preg_replace("/[^a-zA-Z0-9 ]/", "", $bookContent);
+            }
+
+            // For Checkstyle exports
+            if ($request->media == "Checkstyle") {
+              $data = '';
+
+              // Book content
+              /*
+              foreach($file->module as $item)
+              {
+                  if (strlen($item) > 45){
+                      $data = $data . $item;
+                  }
+
+              }
+              */
+
+              // Filter non text
+              $bookContent = preg_replace("/[^a-zA-Z0-9 newline\r\n]/", "", $file);
+            }
+
+        }
+
+        // Book name and description
+        if ($request->file('providerXML') != null){
+          $bookName = $request->media . " import";
+        }
+
+        else {
+          $bookName = "Generic import";
+        }
+
+        $bookDesc = "Imported " . date("h:i:sa Y.m.d");
+
+        // Upload
+        $this->checkPermission('book-create-all');
+
+        // First create a blank book and then add details
+        $book = $this->entityRepo->createFromImport('book', 'content', $request->all());
+        Activity::add($book, 'book_create', $book->id);
+
+        \DB::table('books')
+            ->where('id', $book->id)
+            ->update(['name' => $bookName,'description' => $bookDesc]);
+
+        $pageRepo = app(PageRepo::class);
+        $draftPage = $pageRepo->getDraftPage($book);
+        $pageRepo->publishPageDraft($draftPage, ['name' => 'material', 'html' => $bookContent]);
+
+        return redirect($book->getUrl());
     }
 
     /**

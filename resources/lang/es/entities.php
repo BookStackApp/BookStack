@@ -111,6 +111,7 @@ return [
     'books_popular_empty' => 'Los libros más populares aparecerán aquí.',
     'books_new_empty' => 'Los libros más recientes aparecerán aquí.',
     'books_create' => 'Crear nuevo libro',
+    'books_import' => 'Importación de libros',
     'books_delete' => 'Borrar libro',
     'books_delete_named' => 'Borrar libro :bookName',
     'books_delete_explain' => 'Esto borrará el libro con el nombre \':bookName\', Todos las páginas y capítulos serán borrados.',

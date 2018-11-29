@@ -77,6 +77,7 @@ return [
     'books_popular_empty' => 'Здесь появятся самые популярные книги.',
     'books_new_empty' => 'Здесь появятся самые последние созданные книги.',
     'books_create' => 'Создать новую книгу',
+    'books_import' => 'Книжный импорт',
     'books_delete' => 'Удалить книгу',
     'books_delete_named' => 'Удалить книгу :bookName',
     'books_delete_explain' => 'Это удалит книги с именем \':bookName\'. Все разделы и страницы будут удалены.',

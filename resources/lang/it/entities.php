@@ -77,6 +77,7 @@ return [
     'books_popular_empty' => 'I libri più popolari appariranno qui.',
     'books_new_empty' => 'I libri creati più di recente appariranno qui.',
     'books_create' => 'Crea Nuovo Libro',
+    'books_import' => "Prenota l'importazione",
     'books_delete' => 'Elimina Libro',
     'books_delete_named' => 'Elimina il libro :bookName',
     'books_delete_explain' => 'Questo eliminerà il libro di nome \':bookName\'. Tutte le pagine e i capitoli saranno rimossi.',

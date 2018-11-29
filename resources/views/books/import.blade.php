@@ -18,8 +18,26 @@
     <div class="card">
         <h3>@icon('add') {{ trans('entities.books_import') }}</h3>
         <div class="body">
-            <form action="{{ baseUrl("/books") }}" method="POST" enctype="multipart/form-data">
-                @include('books/form')
+            <h4> General import </h4>
+            Import book XML file works automatically across many platforms.
+            <form action="{{ baseUrl("/books/import") }}" method="POST" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              Select a file: <input type="file" name="genericXML" required><br />
+              <input type="submit" value="Go"></input>
+            </form>
+            <h4> Specific import </h4>
+            Works with Evernote, Wiki, and Checkstyle.<br /><br />
+
+            <form action="{{ baseUrl("/books/import") }}" method="POST" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <select name="media">
+                  <option>Wiki</option>
+                  <option>Evernote</option>
+                  <option>Checkstyle</option>
+              </select><br /><br />
+
+              Select a file: <input type="file" name="providerXML" required><br />
+              <input type="submit" value="Go"></input>
             </form>
         </div>
     </div>
