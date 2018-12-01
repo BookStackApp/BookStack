@@ -197,6 +197,9 @@ div[class^="col-"] img {
   display: grid;
   grid-column-gap: $-l;
   grid-row-gap: $-l;
+  &.half {
+    grid-template-columns: 1fr 1fr;
+  }
   &.third {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -955,6 +958,9 @@ div[class^="col-"] img {
     padding-right: $-m;
     margin-left: auto;
     margin-right: auto;
+  }
+  &.v-center {
+    align-items: center;
   }
 }
 

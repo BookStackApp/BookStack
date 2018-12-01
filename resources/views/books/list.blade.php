@@ -1,6 +1,28 @@
 
 <div class="content-wrap card {{ $booksViewType === 'list' ? 'thin' : '' }}">
-    <h1 class="list-heading">{{ trans('entities.books') }}</h1>
+    <div class="grid halves v-center">
+        <h1 class="list-heading">{{ trans('entities.books') }}</h1>
+        <div class="text-right">
+
+            <div class="list-sort-container">
+                <div class="list-sort-label">Sort</div>
+                <div class="list-sort">
+                    <div class="list-sort-type dropdown-container" dropdown>
+                        <div dropdown-toggle>Name</div>
+                        <ul>
+                            <li><a href="#">Name</a></li>
+                            <li><a href="#">Created Date</a></li>
+                            <li><a href="#">Popularity</a></li>
+                        </ul>
+                    </div>
+                    <div class="list-sort-dir">
+                        @icon('sort-up')
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
     @if(count($books) > 0)
         @if($booksViewType === 'list')
             <div class="entity-list">
