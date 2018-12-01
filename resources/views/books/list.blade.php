@@ -1,17 +1,27 @@
 
-<div class="container{{ $booksViewType === 'list' ? ' small' : '' }}">
-    <h1>{{ trans('entities.books') }}</h1>
+<div class="content-wrap {{ $booksViewType === 'list' ? 'thin' : '' }}">
+    <h1 class="list-heading px-m">{{ trans('entities.books') }}</h1>
     @if(count($books) > 0)
         @if($booksViewType === 'list')
-            @foreach($books as $book)
-                @include('books/list-item', ['book' => $book])
-                <hr>
-            @endforeach
-            {!! $books->render() !!}
+            <div class="entity-list">
+                @foreach($books as $book)
+                    <a href="{{ $book->getUrl() }}" class="book entity-list-item" data-entity-type="book" data-entity-id="{{$book->id}}">
+                        <div class="entity-list-item-image bg-book" style="background-image: url('{{ $book->getBookCover() }}')">
+                        </div>
+                        <div class="content">
+                            <h4 class="entity-list-item-name break-text">{{ $book->name }}</h4>
+                            <div class="entity-item-snippet">
+                                <p class="text-muted break-text">{{ $book->getExcerpt() }}</p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+                {!! $books->render() !!}
+            </div>
         @else
              <div class="grid third">
                 @foreach($books as $key => $book)
-                        @include('books/grid-item', ['book' => $book])
+                    @include('books.grid-item', ['book' => $book])
                 @endforeach
              </div>
             <div>

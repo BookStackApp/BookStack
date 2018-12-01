@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
-  color: #333;
+  color: #222;
   .subheader {
     font-size: 0.5em;
     line-height: 1em;
@@ -77,6 +77,10 @@ h5, h6 {
   h5 {
     font-size: 1.161616em;
   }
+}
+
+.list-heading {
+  font-size: 2rem;
 }
 
 /*

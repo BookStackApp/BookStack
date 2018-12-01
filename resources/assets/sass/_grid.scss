@@ -59,13 +59,22 @@ body.flexbox {
     margin: $-m;
   }
 }
-.flex.sidebar + .flex.content {
+.flex.sidebar + .flex {
   flex: 3;
+  max-width: 100%;
+}
+.flex.sidebar + .flex .content-wrap {
   background-color: #FFFFFF;
-  padding: 0 $-l;
+  padding: $-l $-xxl;
   box-shadow: $bs-card;
   border-radius: 4px;
-  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  &.thin {
+    width: 940px;
+    max-width: 100%;
+  }
 }
 .flex.sidebar .sidebar-toggle {
   display: none;

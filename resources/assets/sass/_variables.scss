@@ -37,8 +37,8 @@ $text: -apple-system, BlinkMacSystemFont,
 sans-serif;
 $mono: "Lucida Console", "DejaVu Sans Mono", "Ubunto Mono", Monaco, monospace;
 $heading: $text;
-$fs-m: 15px;
-$fs-s: 14px;
+$fs-m: 14px;
+$fs-s: 12px;
 
 // Colours
 $primary: #0288D1;
@@ -53,7 +53,7 @@ $primary-faded: rgba(21, 101, 192, 0.15);
 // Item Colors
 $color-bookshelf: #af5a5a;
 $color-book: #009688;
-$color-chapter: #e56236;
+$color-chapter: #d7804a;
 $color-page: $primary;
 $color-page-draft: #9A60DA;
 

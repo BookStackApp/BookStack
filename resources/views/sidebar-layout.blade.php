@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="toolbar px-l py-m">
+    <div class="toolbar px-xl py-m">
         @yield('toolbar')
     </div>
 
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="content mr-xl flex @yield('body-wrap-classes')">
+        <div class="mr-xl flex @yield('body-wrap-classes')">
             @yield('body')
         </div>
     </div>
