@@ -251,7 +251,8 @@ ul.pagination {
   margin: 0;
 }
 
-.entity-list {
+.entity-list, .icon-list {
+  margin: 0 (-$-m);
   h4 {
     margin: 0;
   }
@@ -272,7 +273,7 @@ ul.pagination {
   }
 }
 
-.entity-list-item {
+.entity-list-item, .icon-list-item {
   padding: $-s $-m;
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -287,9 +288,14 @@ ul.pagination {
   h4 a {
     color: #666;
   }
+  &:hover {
+    text-decoration: none;
+    background-color: #DDD;
+    border-radius: 4px;
+  }
 }
-a.entity-list-item:hover {
-  text-decoration: none;
+
+.card a.entity-list-item:hover {
   background-color: #F2F2F2;
 }
 
@@ -407,5 +413,15 @@ a.entity-list-item:hover {
     transform: scale(1.15);
     opacity: .5;
   }
+}
+
+.action-link-list {
+  //padding: $-s 0;
+}
+.action-link {
+  background: transparent;
+  border: none;
+  color: currentColor;
+  padding: $-m 0;
 }
 

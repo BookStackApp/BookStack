@@ -364,8 +364,8 @@
   }
 }
 
-.entity-icon {
-  font-size: 1.3em;
+.entity-list-item > .icon, .icon-list-item > .icon {
+  font-size: 0.8rem;
   width: 1.88em;
   height: 1.88em;
   display: flex;

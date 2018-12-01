@@ -1,6 +1,6 @@
 
-<div class="content-wrap {{ $booksViewType === 'list' ? 'thin' : '' }}">
-    <h1 class="list-heading px-m">{{ trans('entities.books') }}</h1>
+<div class="content-wrap card {{ $booksViewType === 'list' ? 'thin' : '' }}">
+    <h1 class="list-heading">{{ trans('entities.books') }}</h1>
     @if(count($books) > 0)
         @if($booksViewType === 'list')
             <div class="entity-list">

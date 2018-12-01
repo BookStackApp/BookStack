@@ -64,12 +64,10 @@ body.flexbox {
   max-width: 100%;
 }
 .flex.sidebar + .flex .content-wrap {
-  background-color: #FFFFFF;
   padding: $-l $-xxl;
-  box-shadow: $bs-card;
-  border-radius: 4px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: $-xl;
   overflow: auto;
   &.thin {
     width: 940px;
@@ -156,6 +154,13 @@ body.flexbox {
   }
 }
 
+.tri-layout-left, .tri-layout-right {
+  opacity: 0.8;
+  transition: opacity ease-in-out 120ms;
+  &:hover {
+    opacity: 1;
+  }
+}
 
 /** Rules for all columns */
 div[class^="col-"] img {
