@@ -159,8 +159,8 @@ const methods = {
             });
             return;
         }
-
-        this.$http.delete(`/images/${this.selectedImage.id}`).then(resp => {
+        let url = window.baseUrl(`/images/${this.selectedImage.id}`);
+        this.$http.delete(url).then(resp => {
             this.images.splice(this.images.indexOf(this.selectedImage), 1);
             this.selectedImage = false;
             this.$events.emit('success', trans('components.image_delete_success'));

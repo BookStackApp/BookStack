@@ -8,36 +8,44 @@ return [
      */
 
     // Pages
-    'page_create'                 => 'Seite erstellt',
+    'page_create'                 => 'erstellt Seite',
     'page_create_notification'    => 'Die Seite wurde erfolgreich erstellt.',
-    'page_update'                 => 'Seite aktualisiert',
+    'page_update'                 => 'aktualisiert Seite',
     'page_update_notification'    => 'Die Seite wurde erfolgreich aktualisiert.',
-    'page_delete'                 => 'Seite gelöscht',
+    'page_delete'                 => 'löscht Seite',
     'page_delete_notification'    => 'Die Seite wurde erfolgreich gelöscht.',
-    'page_restore'                => 'Seite wiederhergstellt',
-    'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergstellt.',
-    'page_move'                   => 'Seite verschoben',
+    'page_restore'                => 'stellt Seite wieder her',
+    'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergestellt.',
+    'page_move'                   => 'verschiebt Seite',
+    'page_move_notification'      => 'Die Seite wurde erfolgreich verschoben.',
 
     // Chapters
-    'chapter_create'              => 'Kapitel erstellt',
+    'chapter_create'              => 'erstellt Kapitel',
     'chapter_create_notification' => 'Das Kapitel wurde erfolgreich erstellt.',
-    'chapter_update'              => 'Kapitel aktualisiert',
+    'chapter_update'              => 'aktualisiert Kapitel',
     'chapter_update_notification' => 'Das Kapitel wurde erfolgreich aktualisiert.',
-    'chapter_delete'              => 'Kapitel gelöscht',
+    'chapter_delete'              => 'löscht Kapitel',
     'chapter_delete_notification' => 'Das Kapitel wurde erfolgreich gelöscht.',
-    'chapter_move'                => 'Kapitel verschoben',
+    'chapter_move'                => 'verschiebt Kapitel',
 
     // Books
-    'book_create'                 => 'Buch erstellt',
+    'book_create'                 => 'erstellt Buch',
     'book_create_notification'    => 'Das Buch wurde erfolgreich erstellt.',
-    'book_update'                 => 'Buch aktualisiert',
+    'book_update'                 => 'aktualisiert Buch',
     'book_update_notification'    => 'Das Buch wurde erfolgreich aktualisiert.',
-    'book_delete'                 => 'Buch gelöscht',
+    'book_delete'                 => 'löscht Buch',
     'book_delete_notification'    => 'Das Buch wurde erfolgreich gelöscht.',
-    'book_sort'                   => 'Buch sortiert',
-    'book_sort_notification'      => 'Das Buch wurde erfolgreich neu sortiert.',
-    
-    // Other
-    'commented_on'                => 'kommentierte',
+    'book_sort'                   => 'sortiert Buch',
+    'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert.',
 
+    // Bookshelves
+    'bookshelf_create'                 => 'erstellt Bücherregal',
+    'bookshelf_create_notification'    => 'Das Bücherregal wurde erfolgreich erstellt',
+    'bookshelf_update'                 => 'aktualisiert Bücherregal',
+    'bookshelf_update_notification'    => 'Das Bücherregal wurde erfolgreich aktualisiert',
+    'bookshelf_delete'                 => 'löscht Bücherregal',
+    'bookshelf_delete_notification'    => 'Das Bücherregal wurde erfolgreich gelöscht',
+
+    // Other
+    'commented_on'                => 'kommentiert',
 ];
