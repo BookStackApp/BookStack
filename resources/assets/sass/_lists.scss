@@ -126,7 +126,7 @@
     font-size: 0.8rem;
   }
   .entity-list-item.selected {
-    background-color: #EEE;
+    background-color: #F2F2F2;
   }
   .chapter-child-menu {
     font-size: 12px;
@@ -291,6 +291,13 @@ ul.pagination {
 a.entity-list-item:hover {
   text-decoration: none;
   background-color: #F2F2F2;
+}
+
+.entity-list-item-image {
+  width: 140px;
+  background-size: cover;
+  background-position: 50% 50%;
+  border-radius: 3px;
 }
 
 .entity-list.compact {
