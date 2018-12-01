@@ -1,19 +1,6 @@
-@extends('sidebar-layout')
+@extends('tri-layout')
 
-@section('toolbar')
-    <div class="grid halves">
-        <div class="action-buttons text-left">
-            @include('books.view-toggle', ['booksViewType' => $booksViewType])
-        </div>
-        <div class="action-buttons">
-            @if($currentUser->can('book-create-all'))
-                <a href="{{ baseUrl("/create-book") }}" class="text-pos text-button">@icon('add'){{ trans('entities.books_create') }}</a>
-            @endif
-        </div>
-    </div>
-@stop
-
-@section('sidebar')
+@section('left')
     @if($recents)
         <div id="recents" class="mb-xl">
             <h5>{{ trans('entities.recently_viewed') }}</h5>
@@ -42,4 +29,21 @@
 
 @section('body')
     @include('books.list', ['books' => $books, 'bookViewType' => $booksViewType])
+@stop
+
+@section('right')
+
+    <div class="actions mb-xl px-xl">
+        <h5>Actions</h5>
+        <div class="icon-list text-primary">
+            @if($currentUser->can('book-create-all'))
+                <a href="{{ baseUrl("/create-book") }}" class="icon-list-item">
+                    <span class="icon">@icon('add')</span>
+                    <span>{{ trans('entities.books_create') }}</span>
+                </a>
+            @endif
+            @include('books.view-toggle', ['booksViewType' => $booksViewType])
+        </div>
+    </div>
+
 @stop
