@@ -28,7 +28,7 @@
 @stop
 
 @section('body')
-    @include('books.list', ['books' => $books, 'bookViewType' => $booksViewType])
+    @include('books.list', ['books' => $books, 'view' => $view])
 @stop
 
 @section('right')
@@ -42,7 +42,7 @@
                     <span>{{ trans('entities.books_create') }}</span>
                 </a>
             @endif
-            @include('books.view-toggle', ['booksViewType' => $booksViewType])
+            @include('books.view-toggle', ['view' => $view])
         </div>
     </div>
 

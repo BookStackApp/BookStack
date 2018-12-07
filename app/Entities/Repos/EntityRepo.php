@@ -15,6 +15,7 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\AttachmentService;
 use DOMDocument;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -179,11 +180,27 @@ class EntityRepo
      * Get all entities in a paginated format
      * @param $type
      * @param int $count
+     * @param string $sort
+     * @param string $order
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllPaginated($type, $count = 10)
+    public function getAllPaginated($type, int $count = 10, string $sort = 'name', string $order = 'asc')
     {
-        return $this->entityQuery($type)->orderBy('name', 'asc')->paginate($count);
+        $query = $this->entityQuery($type);
+        $query = $this->addSortToQuery($query, $sort, $order);
+        return $query->paginate($count);
+    }
+
+    protected function addSortToQuery(Builder $query, string $sort = 'name', string $order = 'asc')
+    {
+        $order = ($order === 'asc') ? 'asc' : 'desc';
+        $propertySorts = ['name', 'created_at', 'updated_at'];
+
+        if (in_array($sort, $propertySorts)) {
+            return $query->orderBy($sort, $order);
+        }
+
+        return $query;
     }
 
     /**

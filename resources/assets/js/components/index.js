@@ -19,6 +19,7 @@ import pageDisplay from "./page-display";
 import shelfSort from "./shelf-sort";
 import homepageControl from "./homepage-control";
 import headerMobileToggle from "./header-mobile-toggle";
+import listSortControl from "./list-sort-control";
 
 
 const componentMapping = {
@@ -42,7 +43,8 @@ const componentMapping = {
     'page-display': pageDisplay,
     'shelf-sort': shelfSort,
     'homepage-control': homepageControl,
-     'header-mobile-toggle': headerMobileToggle,
+    'header-mobile-toggle': headerMobileToggle,
+    'list-sort-control': listSortControl,
 };
 
 window.components = {};

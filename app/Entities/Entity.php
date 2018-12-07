@@ -102,6 +102,11 @@ class Entity extends Ownable
         return $this->morphMany(View::class, 'viewable');
     }
 
+    public function viewCountQuery()
+    {
+        return $this->views()->selectRaw('viewable_id, sum(views) as view_count')->groupBy('viewable_id');
+    }
+
     /**
      * Get the Tag models that have been user assigned to this entity.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany

@@ -258,6 +258,9 @@ $btt-size: 40px;
 
 .list-sort-container {
   display: inline-block;
+  form {
+    display: inline-block;
+  }
   .list-sort {
     display: inline-grid;
     margin-left: $-s;

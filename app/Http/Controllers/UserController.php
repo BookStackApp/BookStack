@@ -247,19 +247,7 @@ class UserController extends Controller
      */
     public function switchBookView($id, Request $request)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
-
-        $viewType = $request->get('view_type');
-        if (!in_array($viewType, ['grid', 'list'])) {
-            $viewType = 'list';
-        }
-
-        $user = $this->user->findOrFail($id);
-        setting()->putUser($user, 'books_view_type', $viewType);
-
-        return redirect()->back(302, [], "/settings/users/$id");
+        return $this->switchViewType($id, $request, 'books');
     }
 
     /**
@@ -270,18 +258,72 @@ class UserController extends Controller
      */
     public function switchShelfView($id, Request $request)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        return $this->switchViewType($id, $request, 'bookshelves');
+    }
+
+    /**
+     * For a type of list, switch with stored view type for a user.
+     * @param integer $userId
+     * @param Request $request
+     * @param string $listName
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function switchViewType($userId, Request $request, string $listName)
+    {
+        $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $viewType = $request->get('view_type');
         if (!in_array($viewType, ['grid', 'list'])) {
             $viewType = 'list';
         }
 
-        $user = $this->user->findOrFail($id);
-        setting()->putUser($user, 'bookshelves_view_type', $viewType);
+        $user = $this->user->findOrFail($userId);
+        $key = $listName . '_view_type';
+        setting()->putUser($user, $key, $viewType);
 
-        return redirect()->back(302, [], "/settings/users/$id");
+        return redirect()->back(302, [], "/settings/users/$userId");
     }
+
+    /**
+     * Change the stored sort type for the books view.
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeBooksSort($id, Request $request)
+    {
+        // TODO - Test this endpoint
+        return $this->changeListSort($id, $request, 'books');
+    }
+
+    /**
+     * Changed the stored preference for a list sort order.
+     * @param int $userId
+     * @param Request $request
+     * @param string $listName
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function changeListSort(int $userId, Request $request, string $listName)
+    {
+        $this->checkPermissionOrCurrentUser('users-manage', $userId);
+
+        $sort = $request->get('sort');
+        if (!in_array($sort, ['name', 'created_at', 'updated_at'])) {
+            $sort = 'name';
+        }
+
+        $order = $request->get('order');
+        if (!in_array($order, ['asc', 'desc'])) {
+            $order = 'asc';
+        }
+
+        $user = $this->user->findOrFail($userId);
+        $sortKey = $listName . '_sort';
+        $orderKey = $listName . '_sort_order';
+        setting()->putUser($user, $sortKey, $sort);
+        setting()->putUser($user, $orderKey, $order);
+
+        return redirect()->back(302, [], "/settings/users/$userId");
+    }
+
 }

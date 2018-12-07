@@ -36,18 +36,30 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAllPaginated('book', 18);
+        $view = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books'));
+        $sort = setting()->getUser($this->currentUser, 'books_sort', 'name');
+        $order = setting()->getUser($this->currentUser, 'books_sort_order', 'asc');
+        $sortOptions = [
+            'name' => trans('common.sort_name'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+        ];
+
+        $books = $this->entityRepo->getAllPaginated('book', 18, $sort, $order);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
-        $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
+
         $this->setPageTitle(trans('entities.books'));
         return view('books/index', [
             'books' => $books,
             'recents' => $recents,
             'popular' => $popular,
             'new' => $new,
-            'booksViewType' => $booksViewType
+            'view' => $view,
+            'sort' => $sort,
+            'order' => $order,
+            'sortOptions' => $sortOptions,
         ]);
     }
 
