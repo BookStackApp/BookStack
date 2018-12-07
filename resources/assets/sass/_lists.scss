@@ -369,6 +369,9 @@ ul.pagination {
     padding: $-xs $-m;
     line-height: 1.2;
   }
+  li.active a {
+    font-weight: 600;
+  }
   a, button {
     display: block;
     padding: $-xs $-m;

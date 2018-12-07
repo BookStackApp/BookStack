@@ -176,6 +176,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users/{id}/delete', 'UserController@delete');
         Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
         Route::patch('/users/{id}/switch-shelf-view', 'UserController@switchShelfView');
+        Route::patch('/users/{id}/change-books-sort', 'UserController@changeBooksSort');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');

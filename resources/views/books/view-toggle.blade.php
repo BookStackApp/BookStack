@@ -2,8 +2,8 @@
     <form action="{{ baseUrl("/settings/users/{$currentUser->id}/switch-book-view") }}" method="POST" class="inline">
         {!! csrf_field() !!}
         {!! method_field('PATCH') !!}
-        <input type="hidden" value="{{ $booksViewType === 'list'? 'grid' : 'list' }}" name="view_type">
-        @if ($booksViewType === 'list')
+        <input type="hidden" value="{{ $view === 'list'? 'grid' : 'list' }}" name="view_type">
+        @if ($view === 'list')
             <a onclick="this.closest('form').submit()" type="submit" class="icon-list-item">
                 <span class="icon">@icon('grid')</span>
                 <span>{{ trans('common.grid_view') }}</span>
