@@ -3,6 +3,10 @@
 Route::get('/translations', 'HomeController@getTranslations');
 Route::get('/robots.txt', 'HomeController@getRobots');
 
+Route::feeds('/books/{bookSlug}/' . env('APP_FEED_TOKEN', ''));
+Route::feeds('/books/{bookSlug}/chapter/{chapterSlug}/' . env('APP_FEED_TOKEN', ''));
+Route::feeds('/books/{bookSlug}/page/{pageSlug}/' . env('APP_FEED_TOKEN', ''));
+
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
 

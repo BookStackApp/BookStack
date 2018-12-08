@@ -16,6 +16,8 @@
     <!-- Scripts -->
     <script src="{{ baseUrl('/translations') }}"></script>
 
+    <link rel="alternate" type="application/atom+xml" title="Änderungen" href="{{ Request::url() }}/{{ env('APP_FEED_TOKEN'), 'test' }}/feed">
+    
     @yield('head')
 
     @include('partials/custom-styles')
