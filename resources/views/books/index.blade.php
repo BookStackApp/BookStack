@@ -33,7 +33,7 @@
 
 @section('right')
 
-    <div class="actions mb-xl px-xl">
+    <div class="actions mb-xl">
         <h5>Actions</h5>
         <div class="icon-list text-primary">
             @if($currentUser->can('book-create-all'))

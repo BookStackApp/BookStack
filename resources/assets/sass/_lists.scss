@@ -304,6 +304,9 @@ ul.pagination {
   background-size: cover;
   background-position: 50% 50%;
   border-radius: 3px;
+  @include smaller-than($m) {
+    width: 80px;
+  }
 }
 
 .entity-list.compact {
