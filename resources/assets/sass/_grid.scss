@@ -50,107 +50,83 @@ body.flexbox {
   flex: 1;
 }
 
-.flex.sidebar {
-  flex: 1;
-  background-color: #F2F2F2;
-  max-width: 420px;
-  min-height: 90vh;
-  section {
-    margin: $-m;
-  }
-}
-.flex.sidebar + .flex {
-  flex: 3;
-  max-width: 100%;
-}
-.flex.sidebar + .flex .content-wrap {
-  padding: $-l $-xxl;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: $-xl;
-  overflow: auto;
-  &.thin {
-    width: 940px;
-    max-width: 100%;
-  }
-}
-.flex.sidebar .sidebar-toggle {
-  display: none;
-}
 
-@include smaller-than($xl) {
-  body.sidebar-layout {
-    padding-left: 30px;
+.tri-layout-container {
+  display: grid;
+  grid-template-columns: 1fr minmax(auto, 940px) 1fr;
+  grid-template-areas: "a b c";
+  grid-column-gap: $-xl;
+  padding-right: $-xl;
+  padding-left: $-xl;
+  .tri-layout-right {
+    grid-area: c;
   }
-  .flex.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 100;
-    padding-right: 30px;
-    width: 360px;
-    box-shadow: none;
-    transform: translate3d(-330px, 0, 0);
-    transition: transform ease-in-out 120ms;
-    display: flex;
-    flex-direction: column;
+  .tri-layout-left {
+    grid-area: a;
   }
-  .flex.sidebar.open {
-    box-shadow: 1px 2px 2px 1px rgba(0,0,0,.10);
-    transform: translate3d(0, 0, 0);
-    .sidebar-toggle i {
-      transform: rotate(180deg);
+  .tri-layout-middle {
+    grid-area: b;
+  }
+  .content-wrap.card {
+    padding: $-l $-xxl;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: $-xl;
+    overflow: auto;
+    &.thin {
+      width: 940px;
+      max-width: 100%;
     }
-  }
-  .flex.sidebar .sidebar-toggle {
-    display: block;
-    position: absolute;
-    opacity: 0.9;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 30px;
-    fill: #666;
-    font-size: 20px;
-    vertical-align: middle;
-    text-align: center;
-    border: 1px solid #DDD;
-    border-top: 1px solid #BBB;
-    padding-top: $-m;
-    cursor: pointer;
-    svg {
-      opacity: 0.5;
-      transition: all ease-in-out 120ms;
-      margin: 0;
-    }
-    &:hover i {
-      opacity: 1;
-    }
-  }
-  .sidebar .scroll-body {
-    flex: 1;
-    overflow-y: scroll;
-  }
-  #sidebar .scroll-body.fixed {
-    width: auto !important;
   }
 }
-
-@include larger-than($xl) {
-  #sidebar .scroll-body.fixed {
-    z-index: 5;
-    position: fixed;
-    top: 0;
-    padding-top: $-m;
-    width: 30%;
-    left: 0;
-    height: 100%;
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    //background-color: $primary-faded;
-    border-left: 1px solid #DDD;
-    &::-webkit-scrollbar { width: 0 !important }
+@include smaller-than($xxl) {
+  .tri-layout-container {
+    grid-template-areas:  "c b b"
+                          "a b b";
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: max-content min-content;
+    .content-wrap.card {
+      padding: $-l $-l;
+    }
+  }
+}
+@include smaller-than($l) {
+  .tri-layout-container {
+    grid-template-areas:  none;
+    grid-template-columns: 10% 90%;
+    grid-column-gap: 0;
+    padding-right: $-l;
+    padding-left: $-l;
+    .tri-layout-right, .tri-layout-left {
+      opacity: 0.6;
+      z-index: 0;
+    }
+    .tri-layout-left > *, .tri-layout-right > * {
+      pointer-events: none;
+    }
+    .tri-layout-right, .tri-layout-left, .tri-layout-middle {
+      grid-area: none;
+      grid-column: 1/3;
+      grid-row: 1;
+    }
+    .tri-layout-middle {
+      grid-row: 1/3;
+      grid-column: 2/3;
+      z-index: 1;
+      transition: transform ease-in-out 240ms;
+    }
+    .tri-layout-left {
+      grid-row: 2;
+    }
+    &.mobile-open {
+      overflow: hidden;
+      .tri-layout-middle {
+        transform: translateX(90%);
+      }
+      .tri-layout-right  > *, .tri-layout-left > * {
+        pointer-events: auto;
+      }
+    }
   }
 }
 
@@ -168,7 +144,7 @@ div[class^="col-"] img {
 }
 
 .container {
-  max-width: $max-width;
+  max-width: $xxl;
   margin-left: auto;
   margin-right: auto;
   padding-left: $-m;
@@ -953,7 +929,7 @@ div[class^="col-"] img {
   grid-column-gap: $-m;
   grid-row-gap: 0;
   &.contained {
-    max-width: $max-width;
+    max-width: $xxl;
     padding-left: $-m;
     padding-right: $-m;
     margin-left: auto;

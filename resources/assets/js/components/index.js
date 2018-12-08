@@ -20,6 +20,7 @@ import shelfSort from "./shelf-sort";
 import homepageControl from "./homepage-control";
 import headerMobileToggle from "./header-mobile-toggle";
 import listSortControl from "./list-sort-control";
+import triLayout from "./tri-layout";
 
 
 const componentMapping = {
@@ -45,6 +46,7 @@ const componentMapping = {
     'homepage-control': homepageControl,
     'header-mobile-toggle': headerMobileToggle,
     'list-sort-control': listSortControl,
+    'tri-layout': triLayout,
 };
 
 window.components = {};

@@ -8,24 +8,19 @@
         @yield('toolbar')
     </div>
 
-    <div class="flex-fill flex" @yield('container-attrs') >
+    <div class="tri-layout-container" tri-layout @yield('container-attrs') >
 
-        <div sidebar class="sidebar flex print-hidden tri-layout-left" id="sidebar">
-            <div class="sidebar-toggle primary-background-light">@icon('caret-right-circle')
-            </div>
-            <div class="scroll-body px-xl">
-                @yield('left')
-            </div>
+        <div class="tri-layout-left print-hidden " id="sidebar">
+            @yield('left')
         </div>
 
-        <div class="flex @yield('body-wrap-classes')">
+        <div class="@yield('body-wrap-classes') tri-layout-middle">
             @yield('body')
         </div>
 
-        <div class="flex tri-layout-right">
+        <div class="tri-layout-right print-hidden">
             @yield('right')
         </div>
     </div>
-
 
 @stop
