@@ -204,17 +204,21 @@ div[class^="col-"] img {
   display: flex;
   flex-direction: column;
   border: 1px solid #ddd;
+  margin-bottom: $-l;
+  border-radius: 4px;
+  overflow: hidden;
   min-width: 100px;
+  color: $text-dark;
+  transition: border-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
+  &:hover {
+    color: $text-dark;
+    text-decoration: none;
+    box-shadow: $bs-card;
+  }
   h2 {
     width: 100%;
     font-size: 1.5em;
     margin: 0 0 10px;
-  }
-  h2 a {
-    display: block;
-    width: 100%;
-    line-height: 1.2;
-    text-decoration: none;
   }
   p {
     font-size: .85em;
@@ -232,11 +236,6 @@ div[class^="col-"] img {
   .grid-card-content + .grid-card-footer {
     padding-top: 0;
   }
-}
-
-.book-grid-item .grid-card-content h2 a  {
-    color: $color-book;
-    fill: $color-book;
 }
 
 .bookshelf-grid-item .grid-card-content h2 a  {
