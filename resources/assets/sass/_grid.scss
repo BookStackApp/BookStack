@@ -55,9 +55,10 @@ body.flexbox {
   display: grid;
   grid-template-columns: 1fr minmax(auto, 940px) 1fr;
   grid-template-areas: "a b c";
-  grid-column-gap: $-xl;
-  padding-right: $-xl;
-  padding-left: $-xl;
+  .tri-layout-right-contents, .tri-layout-left-contents {
+    padding-right: $-xl;
+    padding-left: $-xl;
+  }
   .tri-layout-right {
     grid-area: c;
   }
@@ -85,18 +86,36 @@ body.flexbox {
                           "a b b";
     grid-template-columns: 1fr 3fr;
     grid-template-rows: max-content min-content;
+    padding-right: $-l;
     .content-wrap.card {
       padding: $-l $-l;
     }
   }
 }
+@include larger-than($xxl) {
+  .tri-layout-left-contents, .tri-layout-right-contents {
+    position: sticky;
+    top: $-m;
+    max-height: 100vh;
+    overflow-y: scroll;
+    overflow-x: visible;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
 @include smaller-than($l) {
   .tri-layout-container {
     grid-template-areas:  none;
     grid-template-columns: 10% 90%;
     grid-column-gap: 0;
-    padding-right: $-l;
-    padding-left: $-l;
+    .tri-layout-left-contents, .tri-layout-right-contents {
+      padding-left: $-m;
+      padding-right: $-m;
+    }
     .tri-layout-right, .tri-layout-left {
       opacity: 0.6;
       z-index: 0;

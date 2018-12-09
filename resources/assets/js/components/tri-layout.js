@@ -18,7 +18,9 @@ class TriLayout {
     }
 
     updateLayout() {
-        const newLayout = (window.innerWidth <= 1000) ? 'mobile' : 'desktop';
+        let newLayout = 'tablet';
+        if (window.innerWidth <= 1000) newLayout =  'mobile';
+        if (window.innerWidth >= 1400) newLayout =  'desktop';
         if (newLayout === this.lastLayoutType) return;
 
         if (this.onDestroy) {
@@ -28,7 +30,7 @@ class TriLayout {
 
         if (newLayout === 'desktop') {
             this.setupDesktop();
-        } else {
+        } else if (newLayout === 'mobile') {
             this.setupMobile();
         }
 
@@ -50,7 +52,7 @@ class TriLayout {
     }
 
     setupDesktop() {
-        // TODO
+        //
     }
 
     /**
