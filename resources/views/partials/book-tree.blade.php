@@ -1,11 +1,12 @@
-<div id="book-tree" class="card book-tree mb-m" v-pre>
+<div id="book-tree" class="book-tree mb-xl" v-pre>
+    <h5>{{ trans('entities.books_navigation') }}</h5>
     @if (userCan('view', $book))
-        @include('partials.entity-list-item-basic', ['entity' => $book, 'classes' => ($current->matches($book)? 'selected' : '')])
-    @else
-        <h3>@icon('book') {{ trans('entities.books_navigation') }}</h3>
+        <div class="entity-list">
+            @include('partials.entity-list-item-basic', ['entity' => $book, 'classes' => ($current->matches($book)? 'selected' : '')])
+        </div>
     @endif
 
-    <ul class="sidebar-page-list menu">
+    <ul class="sidebar-page-list menu entity-list">
 
         @foreach($sidebarTree as $bookChild)
             <li class="list-item-{{ $bookChild->getClassName() }} {{ $bookChild->getClassName() }} {{ $bookChild->isA('page') && $bookChild->draft ? 'draft' : '' }}">

@@ -38,11 +38,7 @@
   width: 100%;
   max-width: 840px;
   margin: 0 auto;
-  margin-top: $-xxl;
   overflow-wrap: break-word;
-  &.flex {
-    margin-top: $-xl;
-  }
   .align-left {
     text-align: left;
   }
@@ -342,15 +338,10 @@
   }
 }
 
-.comments-container {
-  width: 100%;
-  margin-top: $-xl;
-  margin-bottom: $-m;
-  h5 {
-    color: #888;
-    font-weight: normal;
-    margin-top: 0.5em;
-  }
+.comments-container h5 {
+  color: #888;
+  font-weight: normal;
+  margin-top: 0.5em;
 }
 
 .comment-editor .CodeMirror, .comment-editor .CodeMirror-scroll {
@@ -401,6 +392,8 @@
   position: relative;
   overflow: hidden;
   padding: $-xs $-m;
+  color: #666;
+  fill: currentColor;
   &:after {
     content: '';
     position: absolute;
