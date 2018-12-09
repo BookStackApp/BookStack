@@ -11,7 +11,8 @@
         @endif
     </div>
     <div class="grid-card-footer text-muted text-small">
-        {{--<span>@include('partials.entity-meta', ['entity' => $book])</span>--}}
-        {{--TODO - Add in meta details, in list view too--}}
+        @icon('star')<span title="{{$book->created_at->toDayDateTimeString()}}">{{ trans('entities.meta_created', ['timeLength' => $book->created_at->diffForHumans()]) }}</span>
+        <br>
+        @icon('edit')<span title="{{ $book->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $book->updated_at->diffForHumans()]) }}</span>
     </div>
 </a>

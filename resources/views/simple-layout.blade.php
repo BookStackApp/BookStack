@@ -8,7 +8,6 @@
         @yield('toolbar')
     </div>
 
-
     <div class="flex-fill flex">
         <div class="content flex">
             <div class="scroll-body">

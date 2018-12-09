@@ -50,6 +50,13 @@ body.flexbox {
   flex: 1;
 }
 
+.content-wrap.card {
+  padding: $-l $-xxl;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $-xl;
+  overflow: auto;
+}
 
 .tri-layout-container {
   display: grid;
@@ -67,17 +74,6 @@ body.flexbox {
   }
   .tri-layout-middle {
     grid-area: b;
-  }
-  .content-wrap.card {
-    padding: $-l $-xxl;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: $-xl;
-    overflow: auto;
-    &.thin {
-      width: 940px;
-      max-width: 100%;
-    }
   }
 }
 @include smaller-than($xxl) {
@@ -97,6 +93,7 @@ body.flexbox {
     position: sticky;
     top: $-m;
     max-height: 100vh;
+    min-height: 50vh;
     overflow-y: scroll;
     overflow-x: visible;
     scrollbar-width: none;
@@ -150,7 +147,7 @@ body.flexbox {
 }
 
 .tri-layout-left, .tri-layout-right {
-  opacity: 0.8;
+  opacity: 0.7;
   transition: opacity ease-in-out 120ms;
   &:hover {
     opacity: 1;

@@ -271,6 +271,9 @@ ul.pagination {
     color: $color-page-draft;
     fill: $color-page-draft;
   }
+  > .dropdown-container {
+    display: block;
+  }
 }
 
 .entity-list-item, .icon-list-item {

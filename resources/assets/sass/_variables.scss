@@ -26,7 +26,7 @@ $-s: 12px;
 $-xs: 6px;
 $-xxs: 3px;
 
-$spacing: (('xxs', $-xxs), ('xs', $-xs), ('s', $-s), ('m', $-m), ('l', $-l), ('xl', $-xl), ('xxl', $-xxl));
+$spacing: (('none', 0), ('xxs', $-xxs), ('xs', $-xs), ('s', $-s), ('m', $-m), ('l', $-l), ('xl', $-xl), ('xxl', $-xxl));
 
 // Fonts
 $text: -apple-system, BlinkMacSystemFont,

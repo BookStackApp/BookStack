@@ -206,11 +206,9 @@ input:checked + .toggle-switch {
 }
 
 .form-group[collapsible] {
-  margin-left: -$-m;
-  margin-right: -$-m;
   padding: 0 $-m;
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
+  border: 1px solid #DDD;
+  border-radius: 4px;
   .collapse-title {
     margin-left: -$-m;
     margin-right: -$-m;
@@ -237,9 +235,6 @@ input:checked + .toggle-switch {
   }
   &.open .collapse-title label:before {
     transform: rotate(90deg);
-  }
-  &+.form-group[collapsible] {
-    margin-top: -($-s + 1);
   }
 }
 

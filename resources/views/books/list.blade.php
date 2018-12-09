@@ -1,5 +1,5 @@
 
-<div class="content-wrap card {{ $view === 'list' ? 'thin' : '' }}">
+<div class="content-wrap card">
     <div class="grid halves v-center">
         <h1 class="list-heading">{{ trans('entities.books') }}</h1>
         <div class="text-right">
@@ -12,18 +12,8 @@
         @if($view === 'list')
             <div class="entity-list">
                 @foreach($books as $book)
-                    <a href="{{ $book->getUrl() }}" class="book entity-list-item" data-entity-type="book" data-entity-id="{{$book->id}}">
-                        <div class="entity-list-item-image bg-book" style="background-image: url('{{ $book->getBookCover() }}')">
-                        </div>
-                        <div class="content">
-                            <h4 class="entity-list-item-name break-text">{{ $book->name }}</h4>
-                            <div class="entity-item-snippet">
-                                <p class="text-muted break-text">{{ $book->getExcerpt() }}</p>
-                            </div>
-                        </div>
-                    </a>
+                    @include('books.list-item', ['book' => $book])
                 @endforeach
-                {!! $books->render() !!}
             </div>
         @else
              <div class="grid third">
@@ -31,10 +21,10 @@
                     @include('books.grid-item', ['book' => $book])
                 @endforeach
              </div>
-            <div>
-                {!! $books->render() !!}
-            </div>
         @endif
+        <div>
+            {!! $books->render() !!}
+        </div>
     @else
         <p class="text-muted">{{ trans('entities.books_empty') }}</p>
         @if(userCan('books-create-all'))

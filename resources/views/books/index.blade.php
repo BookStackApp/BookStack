@@ -1,5 +1,7 @@
 @extends('tri-layout')
 
+@section('container-classes', 'mt-xl')
+
 @section('left')
     @if($recents)
         <div id="recents" class="mb-xl">
