@@ -68,7 +68,7 @@ class Activity extends Model implements Feedable
             $link = $this->entity->getUrl();
         }
         
-        if ($this->key == 'page_update') {
+        if ($this->key == 'page_update' AND $this->entity->revisions->count() > 0) {
             $rev = $this->entity->revisions->first();
             $summary .= ' | <a href="' . $rev->getUrl('changes') . '">' . trans('entities.pages_revisions_changes') . '</a>' ;
             $link = $rev->getUrl('changes');
