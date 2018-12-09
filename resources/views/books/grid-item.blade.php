@@ -1,18 +1,17 @@
-<div class="book-grid-item grid-card"  data-entity-type="book" data-entity-id="{{$book->id}}">
-    <div class="featured-image-container">
-        <a href="{{$book->getUrl()}}" title="{{$book->name}}">
-            <img src="{{$book->getBookCover()}}" alt="{{$book->name}}">
-        </a>
+<a href="{{$book->getUrl()}}" class="grid-card"  data-entity-type="book" data-entity-id="{{$book->id}}">
+    <div class="featured-image-container bg-book">
+        <img src="{{$book->getBookCover()}}" alt="{{$book->name}}">
     </div>
     <div class="grid-card-content">
-        <h2><a class="break-text" href="{{$book->getUrl()}}" title="{{$book->name}}">{{$book->getShortName(35)}}</a></h2>
+        <h2>{{$book->getShortName(35)}}</h2>
         @if(isset($book->searchSnippet))
-            <p >{!! $book->searchSnippet !!}</p>
+            <p class="text-muted">{!! $book->searchSnippet !!}</p>
         @else
-            <p >{{ $book->getExcerpt(130) }}</p>
+            <p class="text-muted">{{ $book->getExcerpt(130) }}</p>
         @endif
     </div>
     <div class="grid-card-footer text-muted text-small">
-        <span>@include('partials.entity-meta', ['entity' => $book])</span>
+        {{--<span>@include('partials.entity-meta', ['entity' => $book])</span>--}}
+        {{--TODO - Add in meta details, in list view too--}}
     </div>
-</div>
+</a>
