@@ -25,11 +25,14 @@ In regards to development philosophy, BookStack has a relaxed, open & positive a
 
 All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
-* [Node.js](https://nodejs.org/en/) v6.9+
+* [Node.js](https://nodejs.org/en/) v10.0+
 
 SASS is used to help the CSS development and the JavaScript is run through babel to allow for writing ES6 code. This is done using webpack. To run the build task you can use the following commands:
 
 ``` bash
+# Install NPM Dependencies
+npm install
+
 # Build assets for development
 npm run build
 
