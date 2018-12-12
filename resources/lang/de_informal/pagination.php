@@ -1,0 +1,6 @@
+<?php
+
+// Extends 'de'
+return [
+    //
+];
