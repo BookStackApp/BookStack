@@ -1,7 +1,8 @@
 <?php
-$de_formal = (include resource_path() . '/lang/de/' . basename(__FILE__));
 
-$de_informal = [
+// Extends 'de'
+return [
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -13,6 +14,7 @@ $de_informal = [
     |
     */
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuche es in :seconds Sekunden erneut.',
+
     /**
      * Login & Register
      */
@@ -20,6 +22,7 @@ $de_informal = [
     'register_confirm' => 'Bitte prüfe Deinen Posteingang und bestätig die Registrierung.',
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für Deine Registrierung! Die Daten sind gespeichert und Du bist angemeldet.',
+
     /**
      * Password Reset
      */
@@ -28,6 +31,7 @@ $de_informal = [
     'reset_password_success' => 'Dein Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_text' => 'Du erhältsts diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',
     'email_reset_not_requested' => 'Wenn Du das nicht warst, brauchst Du nichts weiter zu tun.',
+
     /**
      * Email Confirmation
      */
@@ -41,5 +45,3 @@ $de_informal = [
     'email_not_confirmed_click_link' => 'Bitte klicke auf den Link in der E-Mail, die Du nach der Registrierung erhalten hast.',
     'email_not_confirmed_resend' => 'Wenn Du die E-Mail nicht erhalten hast, kannst Du die Nachricht erneut anfordern. Fülle hierzu bitte das folgende Formular aus:',
 ];
-
-return array_replace($de_formal, $de_informal);

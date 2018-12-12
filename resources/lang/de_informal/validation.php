@@ -1,8 +1,6 @@
 <?php
-$de_formal = (include resource_path() . '/lang/de/' . basename(__FILE__));
 
-$de_informal = [
-
+// Extends 'de'
+return [
+    //
 ];
-
-return array_replace($de_formal, $de_informal);
