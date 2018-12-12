@@ -7,9 +7,6 @@ $de_informal = [
      */
     'image_delete_confirm' => 'Bitte klicke erneut auf löschen, wenn Du dieses Bild wirklich entfernen möchtest.',
     'image_dropzone' => 'Ziehe Bilder hierher oder klicke hier, um ein Bild auszuwählen',
-    /**
-     * Code editor
-     */
 ];
 
 return array_replace($de_formal, $de_informal);

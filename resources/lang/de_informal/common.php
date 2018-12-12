@@ -2,27 +2,6 @@
 $de_formal = (include resource_path() . '/lang/de/' . basename(__FILE__));
 
 $de_informal = [
-
-    /**
-     * Buttons
-     */
-
-    /**
-     * Form Labels
-     */
-
-    /**
-     * Actions
-     */
-
-    /**
-     * Misc
-     */
-
-    /**
-     * Header
-     */
-
     /**
      * Email Content
      */
