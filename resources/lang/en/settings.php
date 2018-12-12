@@ -136,7 +136,8 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'de' => 'Deutsch',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
