@@ -9,14 +9,6 @@ $de_informal = [
     'no_pages_recently_created' => 'Du hast bisher keine Seiten angelegt.',
     'no_pages_recently_updated' => 'Du hast bisher keine Seiten aktualisiert.',
     /**
-     * Permissions and restrictions
-     */
-
-    /**
-     * Search
-     */
-
-    /**
      * Books
      */
     'books_delete_confirmation' => 'Bist Du sicher, dass Du dieses Buch löschen möchtest?',
@@ -48,15 +40,10 @@ $de_informal = [
     'attachments_explain_link' => 'Wenn Du keine Datei hochladen möchtest, kannst Du stattdessen einen Link hinzufügen. Dieser Link kann auf eine andere Seite oder eine Datei im Internet verweisen.',
     'attachments_edit_drop_upload' => 'Ziehe Dateien hierher, um diese hochzuladen und zu überschreiben',
     /**
-     * Profile View
-     */
-    
-    /**
      * Comments
      */
     'comment_placeholder' => 'Gib hier Deine Kommentare ein (Markdown unterstützt)',
     'comment_delete_confirm' => 'Möchtst Du diesen Kommentar wirklich löschen?',
-
     /**
      * Revision
      */

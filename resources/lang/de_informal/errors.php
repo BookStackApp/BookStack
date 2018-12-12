@@ -2,9 +2,6 @@
 $de_formal = (include resource_path() . '/lang/de/' . basename(__FILE__));
 
 $de_informal = [
-    /**
-     * Error text strings.
-     */
     // Pages
     'permission' => 'Du hast keine Berechtigung, auf diese Seite zuzugreifen.',
     'permissionJson' => 'Du hast keine Berechtigung, die angeforderte Aktion auszuführen.',
@@ -19,16 +16,12 @@ $de_informal = [
     'path_not_writable' => 'Die Datei kann nicht in den angegebenen Pfad :filePath hochgeladen werden. Stelle sicher, dass dieser Ordner auf dem Server beschreibbar ist.',
     'cannot_create_thumbs' => 'Der Server kann keine Vorschau-Bilder erzeugen. Bitte prüfe, ob die GD PHP-Erweiterung installiert ist.',
     'server_upload_limit' => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuche es mit einer kleineren Datei.',
-    // Attachments
     // Pages
     'page_draft_autosave_fail' => 'Fehler beim Speichern des Entwurfs. Stelle sicher, dass Du mit dem Internet verbunden bist, bevor Du den Entwurf dieser Seite speicherst.',
     'page_custom_home_deletion' => 'Eine als Startseite gesetzte Seite kann nicht gelöscht werden.',
-    // Entities
     // Users
     'users_cannot_delete_only_admin' => 'Du kannst den einzigen Administrator nicht löschen.',
     'users_cannot_delete_guest' => 'Du kannst den Gast-Benutzer nicht löschen',
-    // Roles
-    // Comments
     // Error pages
     'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Du angefordert hast, wurde nicht gefunden.',
 ];

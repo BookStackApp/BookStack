@@ -15,15 +15,10 @@ $de_informal = [
     'app_homepage_desc' => 'Wähle eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
     'app_homepage_books' => 'Oder wähle die Buch-Übersicht als Startseite. Das wird die Seiten-Auswahl überschreiben.',
     /**
-     * Registration settings
-     */
-    
-    /**
      * Maintenance settings
      */
     'maint_image_cleanup_desc' => 'Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstelle vor dem Start ein Backup Deiner Datenbank und Bilder.',
     'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchtest Du diese Bilder löschen?',
-
     /**
      * Role settings
      */
