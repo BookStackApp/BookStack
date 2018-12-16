@@ -113,10 +113,10 @@ return [
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
 
-    // Since these labels are already localized this array does not need to be
-    // translated in the language-specific files.
-    // DELETE BELOW IF COPIED FROM EN
-    ///////////////////////////////////
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
@@ -137,5 +137,5 @@ return [
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文'
     ]
-    ///////////////////////////////////
+    //!////////////////////////////////
 ];

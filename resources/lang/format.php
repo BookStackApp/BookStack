@@ -15,7 +15,7 @@ if (count($args) < 2) {
 
 $lang = formatLocale($args[0]);
 $fileName = explode('.', $args[1])[0];
-$filesNames = [$fileName];
+$fileNames = [$fileName];
 if ($fileName === '--all') {
     $fileNames = getTranslationFileNames();
 }
@@ -43,9 +43,10 @@ function formatFileContents(string $lang, string $fileName) : string {
     // Start formatted content
     $formatted = [];
     $mode = 'header';
+    $skipArray = false;
     $arrayKeys = [];
 
-    foreach($enLines as $index => $line) {
+    foreach ($enLines as $index => $line) {
         $trimLine = trim($line);
         if ($mode === 'header') {
             $formatted[$index] = $line;
@@ -54,6 +55,18 @@ function formatFileContents(string $lang, string $fileName) : string {
 
         if ($mode === 'body') {
             $matches = [];
+            $arrayEndMatch = preg_match('/]\s*,\s*$/', $trimLine);
+
+            if ($skipArray) {
+                if ($arrayEndMatch) $skipArray = false;
+                continue;
+            }
+
+            // Comment to ignore
+            if (strpos($trimLine, '//!') === 0) {
+                $formatted[$index] = "";
+                continue;
+            }
 
             // Comment
             if (strpos($trimLine, '//') === 0) {
@@ -63,9 +76,13 @@ function formatFileContents(string $lang, string $fileName) : string {
 
             // Arrays
             $arrayStartMatch = preg_match('/^\'(.*)\'\s+?=>\s+?\[(\],)?\s*?$/', $trimLine, $matches);
-            $arrayEndMatch = preg_match('/]\s*,\s*$/', $trimLine);
+
             $indent = count($arrayKeys) + 1;
             if ($arrayStartMatch === 1) {
+                if ($fileName === 'settings' && $matches[1] === 'language_select') {
+                    $skipArray = true;
+                    continue;
+                }
                 $arrayKeys[] = $matches[1];
                 $formatted[$index] = str_repeat(" ", $indent * 4) . str_pad("'{$matches[1]}'", $longestKeyLength) . "=> [";
                 if ($arrayEndMatch !== 1) continue;
@@ -82,7 +99,7 @@ function formatFileContents(string $lang, string $fileName) : string {
             }
 
             // Translation
-            $translationMatch = preg_match('/^\'(.*)\'\s+?=>\s+?\'(.*)?\'.+?$/', $trimLine, $matches);
+            $translationMatch = preg_match('/^\'(.*)\'\s+?=>\s+?[\'"](.*)?[\'"].+?$/', $trimLine, $matches);
             if ($translationMatch === 1) {
                 $key = $matches[1];
                 $keys = array_merge($arrayKeys, [$key]);
@@ -137,8 +154,14 @@ function formatFileContents(string $lang, string $fileName) : string {
  * @return string
  */
 function formatTranslationLine(string $key, string $value, int $indent = 1, int $keyPad = 1) : string {
-    $escapedValue = str_replace("'", "\\'", $value);
-    return str_repeat(" ", $indent * 4) . str_pad("'{$key}'", $keyPad, ' ') ."=> '{$escapedValue}',";
+    $start = str_repeat(" ", $indent * 4) . str_pad("'{$key}'", $keyPad, ' ');
+    if (strpos($value, "\n") !== false) {
+        $escapedValue = '"' .  str_replace("\n", '\n', $value)  . '"';
+        $escapedValue = '"' .  str_replace('"', '\"', $escapedValue)  . '"';
+    } else {
+        $escapedValue = "'" . str_replace("'", "\\'", $value) . "'";
+    }
+    return "{$start} => {$escapedValue},";
 }
 
 /**
@@ -153,7 +176,7 @@ function calculateKeyPadding(array $array) : int {
         $keyLen = strlen($key);
         $top = max($top, $keyLen);
     }
-    return $top + 3;
+    return min(35, $top + 2);
 }
 
 /**
