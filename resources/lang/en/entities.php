@@ -1,9 +1,11 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'Recently Created',
     'recently_created_pages' => 'Recently Created Pages',
     'recently_updated_pages' => 'Recently Updated Pages',
@@ -31,17 +33,13 @@ return [
     'export_pdf' => 'PDF File',
     'export_text' => 'Plain Text File',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => 'Permissions',
     'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
     'permissions_enable' => 'Enable Custom Permissions',
     'permissions_save' => 'Save Permissions',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => 'Search Results',
     'search_total_results_found' => ':count result found|:count total results found',
     'search_clear' => 'Clear Search',
@@ -66,9 +64,7 @@ return [
     'search_set_date' => 'Set Date',
     'search_update' => 'Update Search',
 
-    /**
-     * Shelves
-     */
+    // Shelves
     'shelf' => 'Shelf',
     'shelves' => 'Shelves',
     'shelves_long' => 'Bookshelves',
@@ -98,9 +94,7 @@ return [
     'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
     'shelves_copy_permission_success' => 'Bookshelf permissions copied to :count books',
 
-    /**
-     * Books
-     */
+    // Books
     'book' => 'Book',
     'books' => 'Books',
     'x_books' => ':count Book|:count Books',
@@ -134,9 +128,7 @@ return [
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'Chapter',
     'chapters' => 'Chapters',
     'x_chapters' => ':count Chapter|:count Chapters',
@@ -159,9 +151,7 @@ return [
     'chapters_permissions_success' => 'Chapter Permissions Updated',
     'chapters_search_this' => 'Search this chapter',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'Page',
     'pages' => 'Pages',
     'x_pages' => ':count Page|:count Pages',
@@ -235,9 +225,7 @@ return [
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
     'pages_specific' => 'Specific Page',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'Page Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
@@ -273,18 +261,14 @@ return [
     'attachments_file_updated' => 'File successfully updated',
     'attachments_link_attached' => 'Link successfully attached to page',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => 'User for :time',
     'profile_created_content' => 'Created Content',
     'profile_not_created_pages' => ':userName has not created any pages',
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any books',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'Comment',
     'comments' => 'Comments',
     'comment_add' => 'Add Comment',
@@ -302,9 +286,7 @@ return [
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
 
-    /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
     'revision_delete_success' => 'Revision deleted',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
