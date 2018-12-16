@@ -52,7 +52,7 @@ const modeMap = {
     sh: 'shell',
     bash: 'shell',
     toml: 'toml',
-    sql: 'sql',
+    sql: 'text/x-sql',
     xml: 'xml',
     yaml: 'yaml',
     yml: 'yaml',
