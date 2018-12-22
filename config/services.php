@@ -19,6 +19,7 @@ return [
     'gravatar' => env('GRAVATAR', !env('DISABLE_EXTERNAL_SERVICES', false)),
     'drawio' => env('DRAWIO', !env('DISABLE_EXTERNAL_SERVICES', false)),
 
+    'gravatar_url' => env('GRAVATAR_URL', false),
 
     'callback_url' => env('APP_URL', false),
 
