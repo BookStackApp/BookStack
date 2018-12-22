@@ -25,11 +25,14 @@ In regards to development philosophy, BookStack has a relaxed, open & positive a
 
 All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
-* [Node.js](https://nodejs.org/en/) v6.9+
+* [Node.js](https://nodejs.org/en/) v10.0+
 
 SASS is used to help the CSS development and the JavaScript is run through babel to allow for writing ES6 code. This is done using webpack. To run the build task you can use the following commands:
 
 ``` bash
+# Install NPM Dependencies
+npm install
+
 # Build assets for development
 npm run build
 
@@ -40,7 +43,7 @@ npm run production
 npm run dev
 ```
 
-BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. To use you will need PHPUnit installed and accessible via command line. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the following database name, user name and password defined as `bookstack-test`. You will have to create that database and credentials before testing.
+BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. To use you will need PHPUnit 6 installed and accessible via command line, Directly running the composer-installed version will not work. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the following database name, user name and password defined as `bookstack-test`. You will have to create that database and credentials before testing.
 
 The testing database will also need migrating and seeding beforehand. This can be done with the following commands:
 
@@ -53,7 +56,7 @@ Once done you can run `phpunit` in the application root directory to run all tes
 
 ## Translations
 
-As part of BookStack v0.14 support for translations has been built in. All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
+All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
 
 You will also need to add the language to the `locales` array in the `config/app.php` file.
 
@@ -70,7 +73,7 @@ php resources/lang/check.php pt_BR
 
 Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
 
-## Contributing & Maintenence
+## Contributing & Maintenance
 
 Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
 

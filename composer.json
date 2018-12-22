@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "ext-json": "*",
         "ext-tidy": "*",
         "ext-dom": "*",
         "laravel/framework": "~5.5.44",
