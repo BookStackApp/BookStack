@@ -92,7 +92,7 @@ class UserController extends Controller
             $user->roles()->sync($roles);
         }
 
-        $this->userRepo->downloadGravatarToUserAvatar($user);
+        $this->userRepo->downloadAndAssignUserAvatar($user);
 
         return redirect('/settings/users');
     }
