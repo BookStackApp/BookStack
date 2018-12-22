@@ -5,10 +5,13 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.0.5",
         "ext-json": "*",
         "ext-tidy": "*",
         "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
         "laravel/framework": "~5.5.44",
         "fideloper/proxy": "~3.3",
         "intervention/image": "^2.4",
@@ -83,7 +86,7 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "platform": {
-            "php": "7.0"
+            "php": "7.0.5"
         }
     }
 }
