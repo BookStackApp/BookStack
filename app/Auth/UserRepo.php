@@ -85,9 +85,7 @@ class UserRepo
     {
         $user = $this->create($data, $verifyEmail);
         $this->attachDefaultRole($user);
-
-        // Get avatar from gravatar and save
-        $this->downloadGravatarToUserAvatar($user);
+        $this->downloadAndAssignUserAvatar($user);
 
         return $user;
     }
@@ -238,25 +236,24 @@ class UserRepo
     }
 
     /**
-     * Get a gravatar image for a user and set it as their avatar.
-     * Does not run if gravatar disabled in config.
+     * Get an avatar image for a user and set it as their avatar.
+     * Returns early if avatars disabled or not set in config.
      * @param User $user
      * @return bool
      */
-    public function downloadGravatarToUserAvatar(User $user)
+    public function downloadAndAssignUserAvatar(User $user)
     {
-        // Get avatar from gravatar and save
-        if (!config('services.gravatar')) {
+        if (!Images::avatarFetchEnabled()) {
             return false;
         }
 
         try {
-            $avatar = Images::saveUserGravatar($user, config('services.gravatar_url'));
+            $avatar = Images::saveUserAvatar($user);
             $user->avatar()->associate($avatar);
             $user->save();
             return true;
         } catch (Exception $e) {
-            \Log::error('Failed to save user gravatar image');
+            \Log::error('Failed to save user avatar image');
             return false;
         }
     }

@@ -279,30 +279,51 @@ class ImageService extends UploadService
     }
 
     /**
-     * Save a gravatar image and set a the profile image for a user.
+     * Save an avatar image from an external service.
      * @param \BookStack\Auth\User $user
-     * @param null|string $gravatarUrl
      * @param int $size
-     * @return mixed
+     * @return Image
      * @throws Exception
      */
-    public function saveUserGravatar(User $user, $gravatarUrl, $size = 500)
+    public function saveUserAvatar(User $user, $size = 500)
     {
-        if (!is_string($gravatarUrl) || empty($gravatarUrl)) {
-            $gravatarUrl = 'https://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon';
-        }
+        $avatarUrl = $this->getAvatarUrl();
         $email = strtolower(trim($user->email));
-        $gravatarUrl = str_replace('%{hash}', md5($email), $gravatarUrl);
-        $gravatarUrl = str_replace('%{size}', $size, $gravatarUrl);
-        $gravatarUrl = str_replace('%{email}', urlencode($email), $gravatarUrl);
-        $imageName = str_replace(' ', '-', $user->name . '-gravatar.png');
-        $image = $this->saveNewFromUrl($gravatarUrl, 'user', $imageName);
+
+        $replacements = [
+            '${hash}' => md5($email),
+            '${size}' => $size,
+            '${email}' => urlencode($email),
+        ];
+
+        $userAvatarUrl = strtr($avatarUrl, $replacements);
+        $imageName = str_replace(' ', '-', $user->name . '-avatar.png');
+        $image = $this->saveNewFromUrl($userAvatarUrl, 'user', $imageName);
         $image->created_by = $user->id;
         $image->updated_by = $user->id;
         $image->save();
+
         return $image;
     }
 
+    /**
+     * Check if fetching external avatars is enabled.
+     * @return bool
+     */
+    public function avatarFetchEnabled()
+    {
+        $fetchUrl = $this->getAvatarUrl();
+        return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
+    }
+
+    /**
+     * Get the URL to fetch avatars from.
+     * @return string|mixed
+     */
+    protected function getAvatarUrl()
+    {
+        return trim(config('services.avatar_url'));
+    }
 
     /**
      * Delete gallery and drawings that are not within HTML content of pages or page revisions.
