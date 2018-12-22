@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Sign up',
     'log_in' => 'Log in',
     'log_in_with' => 'Login with :socialDriver',
@@ -43,23 +37,18 @@ return [
     'register_success' => 'Thanks for signing up! You are now registered and signed in.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Reset Password',
     'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
     'reset_password_send_button' => 'Send Reset Link',
     'reset_password_sent_success' => 'A password reset link has been sent to :email.',
     'reset_password_success' => 'Your password has been successfully reset.',
-
     'email_reset_subject' => 'Reset your :appName password',
     'email_reset_text' => 'You are receiving this email because we received a password reset request for your account.',
     'email_reset_not_requested' => 'If you did not request a password reset, no further action is required.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Confirm your email on :appName',
     'email_confirm_greeting' => 'Thanks for joining :appName!',
     'email_confirm_text' => 'Please confirm your email address by clicking the button below:',

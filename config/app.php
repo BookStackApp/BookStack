@@ -84,7 +84,7 @@ return [
     */
 
     'locale' => env('APP_LANG', 'en'),
-    'locales' => ['en', 'ar', 'de', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'kr', 'ja', 'pl', 'it', 'ru', 'zh_CN', 'zh_TW'],
+    'locales' => ['en', 'ar', 'de', 'de_informal', 'es', 'es_AR', 'fr', 'nl', 'pt_BR', 'sk', 'sv', 'kr', 'ja', 'pl', 'it', 'ru', 'uk', 'zh_CN', 'zh_TW'],
 
     /*
     |--------------------------------------------------------------------------
@@ -187,7 +187,6 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
@@ -205,6 +204,7 @@ return [
          * Application Service Providers...
          */
         BookStack\Providers\PaginationServiceProvider::class,
+        BookStack\Providers\TranslationServiceProvider::class,
 
         BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\AppServiceProvider::class,

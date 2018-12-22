@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'You do not have permission to access the requested page.',
@@ -81,4 +79,5 @@ return [
     'error_occurred' => 'An Error Occurred',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
+
 ];
