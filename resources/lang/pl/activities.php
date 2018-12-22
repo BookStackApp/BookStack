@@ -15,7 +15,7 @@ return [
     'page_delete'                 => 'usunięto stronę',
     'page_delete_notification'    => 'Strona usunięta pomyślnie',
     'page_restore'                => 'przywrócono stronę',
-    'page_restore_notification'   => 'Stronga przywrócona pomyślnie',
+    'page_restore_notification'   => 'Strona przywrócona pomyślnie',
     'page_move'                   => 'przeniesiono stronę',
 
     // Chapters
@@ -28,13 +28,23 @@ return [
     'chapter_move'                => 'przeniesiono rozdział',
 
     // Books
-    'book_create'                 => 'utworzono księgę',
-    'book_create_notification'    => 'Księga utworzona pomyślnie',
-    'book_update'                 => 'zaktualizowano księgę',
-    'book_update_notification'    => 'Księga zaktualizowana pomyślnie',
-    'book_delete'                 => 'usunięto księgę',
-    'book_delete_notification'    => 'Księga usunięta pomyślnie',
-    'book_sort'                   => 'posortowano księgę',
-    'book_sort_notification'      => 'Księga posortowana pomyślnie',
+    'book_create'                 => 'utworzono podręcznik',
+    'book_create_notification'    => 'Podręcznik utworzony pomyślnie',
+    'book_update'                 => 'zaktualizowano podręcznik',
+    'book_update_notification'    => 'Podręcznik zaktualizowany pomyślnie',
+    'book_delete'                 => 'usunięto podręcznik',
+    'book_delete_notification'    => 'Podręcznik usunięty pomyślnie',
+    'book_sort'                   => 'posortowano podręcznik',
+    'book_sort_notification'      => 'Podręcznik posortowany pomyślnie',
 
+    // Bookshelves
+    'bookshelf_create'            => 'utworzono półkę',
+    'bookshelf_create_notification'    => 'Półka utworzona pomyślnie',
+    'bookshelf_update'                 => 'zaktualizowano półkę',
+    'bookshelf_update_notification'    => 'Półka zaktualizowana pomyślnie',
+    'bookshelf_delete'                 => 'usunięto półkę',
+    'bookshelf_delete_notification'    => 'Półka usunięta pomyślnie',
+
+    // Other
+    'commented_on'                => 'skomentował',
 ];
