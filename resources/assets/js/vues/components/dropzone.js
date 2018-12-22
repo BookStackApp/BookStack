@@ -10,26 +10,27 @@ const props = ['placeholder', 'uploadUrl', 'uploadedTo'];
 
 // TODO - Remove jQuery usage
 function mounted() {
-   let container = this.$el;
-   let _this = this;
+   const container = this.$el;
+   const _this = this;
    this._dz = new DropZone(container, {
         addRemoveLinks: true,
         dictRemoveFile: trans('components.image_upload_remove'),
-        timeout: +window.dropZoneTimeout || 60000,
+        timeout: Number(window.uploadTimeout) || 60000,
         url: function() {
             return _this.uploadUrl;
         },
         init: function () {
-            let dz = this;
+            const dz = this;
 
             dz.on('sending', function (file, xhr, data) {
-                let token = window.document.querySelector('meta[name=token]').getAttribute('content');
+                const token = window.document.querySelector('meta[name=token]').getAttribute('content');
                 data.append('_token', token);
-                let uploadedTo = typeof _this.uploadedTo === 'undefined' ? 0 : _this.uploadedTo;
+                const uploadedTo = typeof _this.uploadedTo === 'undefined' ? 0 : _this.uploadedTo;
                 data.append('uploaded_to', uploadedTo);
 
                 xhr.ontimeout = function (e) {
-                    _this.$events.emit('error', trans('errors.file_upload_timeout'));
+                    dz.emit('complete', file);
+                    dz.emit('error', file, trans('errors.file_upload_timeout'));
                 }
             });
 
@@ -47,8 +48,11 @@ function mounted() {
                     $(file.previewElement).find('[data-dz-errormessage]').text(message);
                 }
 
-                if (xhr && xhr.status === 413) setMessage(trans('errors.server_upload_limit'));
-                else if (errorMessage.file) setMessage(errorMessage.file);
+                if (xhr && xhr.status === 413) {
+                    setMessage(trans('errors.server_upload_limit'))
+                } else if (errorMessage.file) {
+                    setMessage(errorMessage.file);
+                }
 
             });
         }
