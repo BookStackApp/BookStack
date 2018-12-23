@@ -21,9 +21,7 @@ return [
     'drawio' => env('DRAWIO', !env('DISABLE_EXTERNAL_SERVICES', false)),
 
     // URL for fetching avatars
-    'avatar_url' => env('AVATAR_URL',
-        env('DISABLE_EXTERNAL_SERVICES', false) ? false : 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon'
-    ),
+    'avatar_url' => env('AVATAR_URL', ''),
 
     // Callback URL for social authentication methods
     'callback_url' => env('APP_URL', false),
