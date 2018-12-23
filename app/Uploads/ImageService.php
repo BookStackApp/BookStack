@@ -1,6 +1,7 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Auth\User;
+use BookStack\Exceptions\HttpFetchException;
 use BookStack\Exceptions\ImageUploadException;
 use DB;
 use Exception;
@@ -17,6 +18,7 @@ class ImageService extends UploadService
     protected $cache;
     protected $storageUrl;
     protected $image;
+    protected $http;
 
     /**
      * ImageService constructor.
@@ -24,12 +26,14 @@ class ImageService extends UploadService
      * @param ImageManager $imageTool
      * @param FileSystem $fileSystem
      * @param Cache $cache
+     * @param HttpFetcher $http
      */
-    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
+    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache, HttpFetcher $http)
     {
         $this->image = $image;
         $this->imageTool = $imageTool;
         $this->cache = $cache;
+        $this->http = $http;
         parent::__construct($fileSystem);
     }
 
@@ -95,8 +99,9 @@ class ImageService extends UploadService
     private function saveNewFromUrl($url, $type, $imageName = false)
     {
         $imageName = $imageName ? $imageName : basename($url);
-        $imageData = file_get_contents($url);
-        if ($imageData === false) {
+        try {
+            $imageData = $this->http->fetch($url);
+        } catch (HttpFetchException $exception) {
             throw new \Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
         }
         return $this->saveNew($imageName, $imageData, $type);
@@ -322,7 +327,13 @@ class ImageService extends UploadService
      */
     protected function getAvatarUrl()
     {
-        return trim(config('services.avatar_url'));
+        $url = trim(config('services.avatar_url'));
+
+        if (empty($url) && !config('services.disable_services')) {
+            $url = 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon';
+        }
+
+        return $url;
     }
 
     /**
@@ -392,14 +403,7 @@ class ImageService extends UploadService
             }
         } else {
             try {
-                $ch = curl_init();
-                curl_setopt_array($ch, [CURLOPT_URL => $uri, CURLOPT_RETURNTRANSFER => 1, CURLOPT_CONNECTTIMEOUT => 5]);
-                $imageData = curl_exec($ch);
-                $err = curl_error($ch);
-                curl_close($ch);
-                if ($err) {
-                    throw new \Exception("Image fetch failed, Received error: " . $err);
-                }
+                $imageData = $this->http->fetch($uri);
             } catch (\Exception $e) {
             }
         }
