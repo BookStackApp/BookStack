@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'No tiene permisos para visualizar la página solicitada.',
@@ -81,4 +79,5 @@ return [
     'error_occurred' => 'Ha ocurrido un error',
     'app_down' => 'La aplicación :appName se encuentra caída en este momento',
     'back_soon' => 'Volverá a estar operativa pronto.',
+
 ];

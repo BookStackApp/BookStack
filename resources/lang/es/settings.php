@@ -1,21 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Ajustes',
     'settings_save' => 'Guardar ajustes',
     'settings_save_success' => 'Ajustes guardados',
 
-    /**
-     * App settings
-     */
-
+    // App Settings
     'app_settings' => 'Ajustes de la aplicación',
     'app_name' => 'Nombre de la aplicación',
     'app_name_desc' => 'Este nombre se muestra en la cabecera y en cualquier correo electrónico',
@@ -37,10 +33,7 @@ return [
     'app_disable_comments' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilita los comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Ajustes de registro',
     'reg_allow' => '¿Permitir registro?',
     'reg_default_role' => 'Rol de usuario por defecto después del registro',
@@ -50,10 +43,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los dominio a los que les gustaría restringir el registro de usuarios. A los usuarios les será enviado un correo electrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Tenga en cuenta que los usuarios podrán cambiar sus direcciones de correo electrónico después de registrarse exitosamente.',
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings
     'maint' => 'Mantenimiento',
     'maint_image_cleanup' => 'Limpiar imágenes',
     'maint_image_cleanup_desc' => "Analiza las páginas y sus revisiones para comprobar qué imágenes y dibujos están siendo utilizadas y cuales no son necesarias. Asegúrate de crear una copia completa de la base de datos y de las imágenes antes de lanzar esta opción.",
@@ -63,10 +53,7 @@ return [
     'maint_image_cleanup_success' => '¡Se han encontrado y borrado :count imágenes posiblemente no utilizadas!',
     'maint_image_cleanup_nothing_found' => '¡No se han encontrado imágenes sin utilizar, no se han borrado imágenes!',
 
-    /**
-     * Role settings
-     */
-
+    // Role Settings
     'roles' => 'Roles',
     'role_user_roles' => 'Roles de usuario',
     'role_create' => 'Crear nuevo rol',
@@ -99,10 +86,7 @@ return [
     'role_users' => 'Usuarios en este rol',
     'role_users_none' => 'No hay usuarios asignados a este rol',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Usuarios',
     'user_profile' => 'Perfil de usuario',
     'users_add_new' => 'Agregar nuevo usuario',

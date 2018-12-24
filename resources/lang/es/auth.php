@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Las credenciales no concuerdan con nuestros registros.',
     'throttle' => 'Demasiados intentos fallidos de conexión. Por favor intente nuevamente en :seconds segundos.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Registrarse',
     'log_in' => 'Acceder',
     'log_in_with' => 'Acceder con :socialDriver',
@@ -43,23 +37,18 @@ return [
     'register_success' => '¡Gracias por registrarse! Ahora se encuentra registrado y logueado.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Resetear Contraseña',
     'reset_password_send_instructions' => 'Introduzca su correo electrónico a continuación y le será enviado un correo con un link para la restauración',
     'reset_password_send_button' => 'Enviar Enlace de Reseteo',
     'reset_password_sent_success' => 'Un enlace para resetear la contraseña ha sido enviado a :email.',
     'reset_password_success' => 'Su password ha sido reseteado de manera éxitosa.',
-
     'email_reset_subject' => 'Resetee la contraseña de :appName',
     'email_reset_text' => 'Está recibiendo este correo electrónico debido a que recibimos una solicitud de reseteo de contraseña de su cuenta.',
     'email_reset_not_requested' => 'Si no ha solicitado un reseteo de la contraseña, no es requerida ninguna acción por su parte.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Confirme su correo electrónico en :appName',
     'email_confirm_greeting' => '¡Gracias por unirse a :appName!',
     'email_confirm_text' => 'Por favor confirme su dirección de correo electrónico haciendo click en el siguiente botón:',
