@@ -38,6 +38,7 @@ return [
     'uploaded' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型錯誤',
+    'file_upload_timeout' => '文件上傳已超時。',
 
     // Attachments
     'attachment_page_mismatch' => '附件更新期間的頁面不符合',

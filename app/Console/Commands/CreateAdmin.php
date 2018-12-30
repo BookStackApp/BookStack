@@ -76,7 +76,7 @@ class CreateAdmin extends Command
 
         $user = $this->userRepo->create(['email' => $email, 'name' => $name, 'password' => $password]);
         $this->userRepo->attachSystemRole($user, 'admin');
-        $this->userRepo->downloadGravatarToUserAvatar($user);
+        $this->userRepo->downloadAndAssignUserAvatar($user);
         $user->email_confirmed = true;
         $user->save();
 

@@ -1,11 +1,7 @@
-<?php
+<?php namespace BookStack\Notifications;
 
-namespace BookStack\Notifications;
 
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
-
-class ResetPassword extends Notification
+class ResetPassword extends MailNotification
 {
     /**
      * The password reset token.
@@ -25,24 +21,13 @@ class ResetPassword extends Notification
     }
 
     /**
-     * Get the notification's channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array|string
-     */
-    public function via($notifiable)
-    {
-        return ['mail'];
-    }
-
-    /**
      * Build the mail representation of the notification.
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail()
     {
-        return (new MailMessage)
+            return $this->newMailMessage()
             ->subject(trans('auth.email_reset_subject', ['appName' => setting('app-name')]))
             ->line(trans('auth.email_reset_text'))
             ->action(trans('auth.reset_password'), baseUrl('password/reset/' . $this->token))

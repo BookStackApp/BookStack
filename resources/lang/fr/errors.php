@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'Le serveur n\'autorise pas l\'envoi d\'un fichier de cette taille. Veuillez essayer avec une taille de fichier réduite.',
     'image_upload_error' => 'Une erreur est survenue pendant l\'envoi de l\'image',
     'image_upload_type_error' => 'LE format de l\'image envoyée n\'est pas valide',
+    'file_upload_timeout' => 'Le téléchargement du fichier a expiré.',
 
     // Attachments
     'attachment_page_mismatch' => 'Page incorrecte durant la mise à jour du fichier joint',

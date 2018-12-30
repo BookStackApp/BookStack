@@ -123,4 +123,15 @@ class ExportTest extends TestCase
         $resp->assertSee($customHeadContent);
     }
 
+    public function test_page_html_export_use_absolute_dates()
+    {
+        $page = Page::first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertSee($page->created_at->toDayDateTimeString());
+        $resp->assertDontSee($page->created_at->diffForHumans());
+        $resp->assertSee($page->updated_at->toDayDateTimeString());
+        $resp->assertDontSee($page->updated_at->diffForHumans());
+    }
+
 }

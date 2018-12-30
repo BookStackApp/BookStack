@@ -31,6 +31,20 @@ class LdapTest extends BrowserKitTest
         $this->mockUser = factory(User::class)->make();
     }
 
+    protected function mockEscapes($times = 1)
+    {
+        $this->mockLdap->shouldReceive('escape')->times($times)->andReturnUsing(function($val) {
+            return ldap_escape($val);
+        });
+    }
+
+    protected function mockExplodes($times = 1)
+    {
+        $this->mockLdap->shouldReceive('explodeDn')->times($times)->andReturnUsing(function($dn, $withAttrib) {
+            return ldap_explode_dn($dn, $withAttrib);
+        });
+    }
+
     public function test_login()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
@@ -44,6 +58,7 @@ class LdapTest extends BrowserKitTest
                 'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
+        $this->mockEscapes(4);
 
         $this->visit('/login')
             ->see('Username')
@@ -73,6 +88,7 @@ class LdapTest extends BrowserKitTest
                 'mail' => [$this->mockUser->email]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true);
+        $this->mockEscapes(2);
 
         $this->visit('/login')
             ->see('Username')
@@ -97,6 +113,7 @@ class LdapTest extends BrowserKitTest
                 'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true, true, false);
+        $this->mockEscapes(2);
 
         $this->visit('/login')
             ->see('Username')
@@ -146,7 +163,7 @@ class LdapTest extends BrowserKitTest
             ->dontSee('External Authentication');
     }
 
-    public function test_login_maps_roles_and_retains_existsing_roles()
+    public function test_login_maps_roles_and_retains_existing_roles()
     {
         $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
         $roleToReceive2 = factory(Role::class)->create(['name' => 'ldaptester-second', 'display_name' => 'LdapTester Second']);
@@ -176,6 +193,8 @@ class LdapTest extends BrowserKitTest
                 ]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
+        $this->mockEscapes(5);
+        $this->mockExplodes(6);
 
         $this->visit('/login')
             ->see('Username')
@@ -227,6 +246,8 @@ class LdapTest extends BrowserKitTest
                 ]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
+        $this->mockEscapes(4);
+        $this->mockExplodes(2);
 
         $this->visit('/login')
             ->see('Username')
@@ -279,6 +300,8 @@ class LdapTest extends BrowserKitTest
                 ]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
+        $this->mockEscapes(4);
+        $this->mockExplodes(2);
 
         $this->visit('/login')
             ->see('Username')
@@ -328,6 +351,8 @@ class LdapTest extends BrowserKitTest
                 ]
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
+        $this->mockEscapes(5);
+        $this->mockExplodes(6);
 
         $this->visit('/login')
             ->see('Username')

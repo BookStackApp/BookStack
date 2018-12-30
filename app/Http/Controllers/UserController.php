@@ -3,6 +3,7 @@
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\UserUpdateException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -15,7 +16,7 @@ class UserController extends Controller
     /**
      * UserController constructor.
      * @param User     $user
-     * @param \BookStack\Auth\UserRepo $userRepo
+     * @param UserRepo $userRepo
      */
     public function __construct(User $user, UserRepo $userRepo)
     {
@@ -59,6 +60,7 @@ class UserController extends Controller
      * Store a newly created user in storage.
      * @param  Request $request
      * @return Response
+     * @throws UserUpdateException
      */
     public function store(Request $request)
     {
@@ -89,10 +91,10 @@ class UserController extends Controller
 
         if ($request->filled('roles')) {
             $roles = $request->get('roles');
-            $user->roles()->sync($roles);
+            $this->userRepo->setUserRoles($user, $roles);
         }
 
-        $this->userRepo->downloadGravatarToUserAvatar($user);
+        $this->userRepo->downloadAndAssignUserAvatar($user);
 
         return redirect('/settings/users');
     }
@@ -122,8 +124,9 @@ class UserController extends Controller
     /**
      * Update the specified user in storage.
      * @param  Request $request
-     * @param  int     $id
+     * @param  int $id
      * @return Response
+     * @throws UserUpdateException
      */
     public function update(Request $request, $id)
     {
@@ -140,13 +143,13 @@ class UserController extends Controller
             'setting'          => 'array'
         ]);
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         $user->fill($request->all());
 
         // Role updates
         if (userCan('users-manage') && $request->filled('roles')) {
             $roles = $request->get('roles');
-            $user->roles()->sync($roles);
+            $this->userRepo->setUserRoles($user, $roles);
         }
 
         // Password updates
@@ -185,7 +188,7 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
         return view('users/delete', ['user' => $user]);
     }
@@ -194,6 +197,7 @@ class UserController extends Controller
      * Remove the specified user from storage.
      * @param  int $id
      * @return Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -279,7 +283,7 @@ class UserController extends Controller
             $viewType = 'list';
         }
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         setting()->putUser($user, 'bookshelves_view_type', $viewType);
 
         return redirect()->back(302, [], "/settings/users/$id");
