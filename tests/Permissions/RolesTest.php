@@ -78,6 +78,28 @@ class RolesTest extends BrowserKitTest
             ->dontSee($testRoleUpdateName);
     }
 
+    public function test_admin_role_cannot_be_removed_if_last_admin()
+    {
+        $adminRole = Role::where('system_name', '=', 'admin')->first();
+        $adminUser = $this->getAdmin();
+        $adminRole->users()->where('id', '!=', $adminUser->id)->delete();
+        $this->assertEquals($adminRole->users()->count(), 1);
+
+        $viewerRole = $this->getViewer()->roles()->first();
+
+        $editUrl = '/settings/users/' . $adminUser->id;
+        $this->actingAs($adminUser)->put($editUrl, [
+            'name' => $adminUser->name,
+            'email' => $adminUser->email,
+            'roles' => [
+                'viewer' => strval($viewerRole->id),
+            ]
+        ])->followRedirects();
+
+        $this->seePageIs($editUrl);
+        $this->see('This user is the only user assigned to the administrator role');
+    }
+
     public function test_manage_user_permission()
     {
         $this->actingAs($this->user)->visit('/settings/users')

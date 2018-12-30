@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;
 use Exception;
 use Images;
@@ -42,7 +43,7 @@ class UserRepo
      */
     public function getById($id)
     {
-        return $this->user->findOrFail($id);
+        return $this->user->newQuery()->findOrFail($id);
     }
 
     /**
@@ -136,6 +137,40 @@ class UserRepo
     }
 
     /**
+     * Set the assigned user roles via an array of role IDs.
+     * @param User $user
+     * @param array $roles
+     * @throws UserUpdateException
+     */
+    public function setUserRoles(User $user, array $roles)
+    {
+        if ($this->demotingLastAdmin($user, $roles)) {
+            throw new UserUpdateException(trans('errors.role_cannot_remove_only_admin'), $user->getEditUrl());
+        }
+
+        $user->roles()->sync($roles);
+    }
+
+    /**
+     * Check if the given user is the last admin and their new roles no longer
+     * contains the admin role.
+     * @param User $user
+     * @param array $newRoles
+     * @return bool
+     */
+    protected function demotingLastAdmin(User $user, array $newRoles) : bool
+    {
+        if ($this->isOnlyAdmin($user)) {
+            $adminRole = $this->role->getSystemRole('admin');
+            if (!in_array(strval($adminRole->id), $newRoles)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Create a new basic instance of user.
      * @param array $data
      * @param boolean $verifyEmail
@@ -143,7 +178,6 @@ class UserRepo
      */
     public function create(array $data, $verifyEmail = false)
     {
-
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
