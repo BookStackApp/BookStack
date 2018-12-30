@@ -1,21 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Settings',
     'settings_save' => 'Save Settings',
     'settings_save_success' => 'Settings saved',
 
-    /**
-     * App settings
-     */
-
+    // App Settings
     'app_settings' => 'App Settings',
     'app_name' => 'Application name',
     'app_name_desc' => 'This name is shown in the header and any emails.',
@@ -37,10 +33,7 @@ return [
     'app_disable_comments' => 'Disable comments',
     'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Registration Settings',
     'reg_allow' => 'Allow registration?',
     'reg_default_role' => 'Default user role after registration',
@@ -50,10 +43,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Cleanup Images',
     'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
@@ -63,10 +53,7 @@ return [
     'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
     'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
-    /**
-     * Role settings
-     */
-
+    // Role Settings
     'roles' => 'Roles',
     'role_user_roles' => 'User Roles',
     'role_create' => 'Create New Role',
@@ -99,10 +86,7 @@ return [
     'role_users' => 'Users in this role',
     'role_users_none' => 'No users are currently assigned to this role',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Users',
     'user_profile' => 'User Profile',
     'users_add_new' => 'Add New User',
@@ -129,14 +113,15 @@ return [
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
 
-    // Since these labels are already localized this array does not need to be
-    // translated in the language-specific files.
-    // DELETE BELOW IF COPIED FROM EN
-    ///////////////////////////////////
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'de' => 'Deutsch',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
@@ -149,8 +134,9 @@ return [
         'pl' => 'Polski',
         'it' => 'Italian',
         'ru' => 'Русский',
+        'uk' => 'Українська',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文'
     ]
-    ///////////////////////////////////
+    //!////////////////////////////////
 ];

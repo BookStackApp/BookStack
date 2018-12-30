@@ -107,6 +107,7 @@ class LdapService
         if ($ldapUser === null) {
             return false;
         }
+
         if ($ldapUser['uid'] !== $user->external_auth_id) {
             return false;
         }
@@ -169,6 +170,16 @@ class LdapService
         }
         $hostName = $ldapServer[0] . ($hasProtocol?':':'') . $ldapServer[1];
         $defaultPort = $ldapServer[0] === 'ldaps' ? 636 : 389;
+
+        /*
+         * Check if TLS_INSECURE is set. The handle is set to NULL due to the nature of
+         * the LDAP_OPT_X_TLS_REQUIRE_CERT option. It can only be set globally and not
+         * per handle.
+         */
+        if($this->config['tls_insecure']) {
+            $this->ldap->setOption(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
+        }
+
         $ldapConnection = $this->ldap->connect($hostName, count($ldapServer) > 2 ? intval($ldapServer[2]) : $defaultPort);
 
         if ($ldapConnection === false) {
@@ -195,7 +206,7 @@ class LdapService
         $newAttrs = [];
         foreach ($attrs as $key => $attrText) {
             $newKey = '${' . $key . '}';
-            $newAttrs[$newKey] = $attrText;
+            $newAttrs[$newKey] = $this->ldap->escape($attrText);
         }
         return strtr($filterString, $newAttrs);
     }
@@ -265,7 +276,8 @@ class LdapService
         $baseDn = $this->config['base_dn'];
         $groupsAttr = strtolower($this->config['group_attribute']);
 
-        $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, 'CN='.$groupName, [$groupsAttr]);
+        $groupFilter = 'CN=' . $this->ldap->escape($groupName);
+        $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $groupFilter, [$groupsAttr]);
         if ($groups['count'] === 0) {
             return [];
         }
@@ -277,23 +289,26 @@ class LdapService
     /**
      * Filter out LDAP CN and DN language in a ldap search return
      * Gets the base CN (common name) of the string
-     * @param string $ldapSearchReturn
+     * @param array $userGroupSearchResponse
      * @return array
      */
-    protected function groupFilter($ldapSearchReturn)
+    protected function groupFilter(array $userGroupSearchResponse)
     {
         $groupsAttr = strtolower($this->config['group_attribute']);
         $ldapGroups = [];
         $count = 0;
-        if (isset($ldapSearchReturn[$groupsAttr]['count'])) {
-            $count = (int) $ldapSearchReturn[$groupsAttr]['count'];
+
+        if (isset($userGroupSearchResponse[$groupsAttr]['count'])) {
+            $count = (int) $userGroupSearchResponse[$groupsAttr]['count'];
         }
+
         for ($i=0; $i<$count; $i++) {
-            $dnComponents = ldap_explode_dn($ldapSearchReturn[$groupsAttr][$i], 1);
+            $dnComponents = $this->ldap->explodeDn($userGroupSearchResponse[$groupsAttr][$i], 1);
             if (!in_array($dnComponents[0], $ldapGroups)) {
                 $ldapGroups[] = $dnComponents[0];
             }
         }
+
         return $ldapGroups;
     }
 
