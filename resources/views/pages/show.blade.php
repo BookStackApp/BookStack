@@ -17,11 +17,11 @@
             @if(userCan('page-update', $page))
                 <a href="{{ $page->getUrl('/edit') }}" class="text-primary text-button" >@icon('edit'){{ trans('common.edit') }}</a>
             @endif
-            @if(userCan('page-create-own') || userCan('page-create-all') || userCan('page-update', $page) || userCan('restrictions-manage', $page) || userCan('page-delete', $page))
+            @if((userCan('page-view', $page) && userCanCreatePage()) || userCan('page-update', $page) || userCan('restrictions-manage', $page) || userCan('page-delete', $page))
                 <div dropdown class="dropdown-container">
                     <a dropdown-toggle class="text-primary text-button">@icon('more') {{ trans('common.more') }}</a>
                     <ul>
-                        @if(userCan('page-create-own') || userCan('page-create-all'))
+                        @if(userCanCreatePage())
                             <li><a href="{{ $page->getUrl('/copy') }}" class="text-primary" >@icon('copy'){{ trans('common.copy') }}</a></li>
                         @endif
                         @if(userCan('page-update', $page))

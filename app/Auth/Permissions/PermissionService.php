@@ -557,6 +557,33 @@ class PermissionService
     }
 
     /**
+     * Checks if a user has a book or chapter available to create a page
+     * @param Ownable $ownable
+     * @param $permission
+     * @return bool
+     */
+    public function checkAvailableCreatePageAccess()
+    {
+        $userRoleIds = $this->currentUser()->roles()->pluck('id')->toArray();
+        $userId = $this->currentUser()->id;
+
+
+        $canCreatePage = $this->db->table('joint_permissions')
+            ->where('action', '=', 'page-create')
+            ->whereIn('role_id', $userRoleIds)
+            ->where(function ($query) use ($userId) {
+                $query->where('has_permission', '=', 1)
+                ->orWhere(function ($query2) use ($userId) {
+                    $query2->where('has_permission_own', '=', 1)
+                    ->where('created_by', '=', $userId);
+                });       
+            })
+            ->get()->count() > 0;
+
+        return $canCreatePage;
+    }
+
+    /**
      * Check if an entity has restrictions set on itself or its
      * parent tree.
      * @param \BookStack\Entities\Entity $entity
