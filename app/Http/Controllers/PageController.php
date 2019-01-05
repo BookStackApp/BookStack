@@ -586,6 +586,7 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-delete', $page);
         return view('pages/move', [
             'book' => $page->book,
             'page' => $page
@@ -604,6 +605,7 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-delete', $page);
 
         $entitySelection = $request->get('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {
