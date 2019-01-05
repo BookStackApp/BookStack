@@ -599,23 +599,47 @@ class EntityRepo
     }
 
     /**
-     * Render the page for viewing, Parsing and performing features such as page transclusion.
+     * Render the page for viewing
      * @param Page $page
-     * @param bool $ignorePermissions
-     * @return mixed|string
+     * @param bool $blankIncludes
+     * @return string
      */
-    public function renderPage(Page $page, $ignorePermissions = false)
+    public function renderPage(Page $page, bool $blankIncludes = false) : string
     {
         $content = $page->html;
+
         if (!config('app.allow_content_scripts')) {
             $content = $this->escapeScripts($content);
         }
 
-        $matches = [];
-        preg_match_all("/{{@\s?([0-9].*?)}}/", $content, $matches);
-        if (count($matches[0]) === 0) {
-            return $content;
+        if ($blankIncludes) {
+            $content = $this->blankPageIncludes($content);
+        } else {
+            $content = $this->parsePageIncludes($content);
         }
+
+        return $content;
+    }
+
+    /**
+     * Remove any page include tags within the given HTML.
+     * @param string $html
+     * @return string
+     */
+    protected function blankPageIncludes(string $html) : string
+    {
+        return preg_replace("/{{@\s?([0-9].*?)}}/", '', $html);
+    }
+
+    /**
+     * Parse any include tags "{{@<page_id>#section}}" to be part of the page.
+     * @param string $html
+     * @return mixed|string
+     */
+    protected function parsePageIncludes(string $html) : string
+    {
+        $matches = [];
+        preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
 
         $topLevelTags = ['table', 'ul', 'ol'];
         foreach ($matches[1] as $index => $includeId) {
@@ -625,14 +649,14 @@ class EntityRepo
                 continue;
             }
 
-            $matchedPage = $this->getById('page', $pageId, false, $ignorePermissions);
+            $matchedPage = $this->getById('page', $pageId);
             if ($matchedPage === null) {
-                $content = str_replace($matches[0][$index], '', $content);
+                $html = str_replace($matches[0][$index], '', $html);
                 continue;
             }
 
             if (count($splitInclude) === 1) {
-                $content = str_replace($matches[0][$index], $matchedPage->html, $content);
+                $html = str_replace($matches[0][$index], $matchedPage->html, $html);
                 continue;
             }
 
@@ -640,7 +664,7 @@ class EntityRepo
             $doc->loadHTML(mb_convert_encoding('<body>'.$matchedPage->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
             $matchingElem = $doc->getElementById($splitInclude[1]);
             if ($matchingElem === null) {
-                $content = str_replace($matches[0][$index], '', $content);
+                $html = str_replace($matches[0][$index], '', $html);
                 continue;
             }
             $innerContent = '';
@@ -652,25 +676,22 @@ class EntityRepo
                     $innerContent .= $doc->saveHTML($childNode);
                 }
             }
-            $content = str_replace($matches[0][$index], trim($innerContent), $content);
+            $html = str_replace($matches[0][$index], trim($innerContent), $html);
         }
 
-        return $content;
+        return $html;
     }
 
     /**
      * Escape script tags within HTML content.
      * @param string $html
-     * @return mixed
+     * @return string
      */
-    protected function escapeScripts(string $html)
+    protected function escapeScripts(string $html) : string
     {
         $scriptSearchRegex = '/<script.*?>.*?<\/script>/ms';
         $matches = [];
         preg_match_all($scriptSearchRegex, $html, $matches);
-        if (count($matches) === 0) {
-            return $html;
-        }
 
         foreach ($matches[0] as $match) {
             $html = str_replace($match, htmlentities($match), $html);
