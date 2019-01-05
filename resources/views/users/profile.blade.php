@@ -37,21 +37,27 @@
             </div>
             <div class="col-md-5 text-bigger" id="content-counts">
                 <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
-                <div class="text-book">
-                    @icon('book')  {{ trans_choice('entities.x_books', $assetCounts['books']) }}
-                </div>
-                <div class="text-chapter">
-                    @icon('chapter') {{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}
-                </div>
-                <div class="text-page">
-                    @icon('page') {{ trans_choice('entities.x_pages', $assetCounts['pages']) }}
-                </div>
+                <a href="#book">
+                    <div class="text-book">
+                        @icon('book')  {{ trans_choice('entities.x_books', $assetCounts['books']) }}
+                    </div>
+                </a>
+                <a href="#chapter">
+                    <div class="text-chapter">
+                        @icon('chapter') {{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}
+                    </div>
+                </a>
+                <a href="#page">
+                    <div class="text-page">
+                        @icon('page') {{ trans_choice('entities.x_pages', $assetCounts['pages']) }}
+                    </div>
+                </a>
             </div>
         </div>
 
 
         <hr class="even">
-
+        <a name="page"></a>
         <h3>{{ trans('entities.recently_created_pages') }}</h3>
         @if (count($recentlyCreated['pages']) > 0)
             @include('partials/entity-list', ['entities' => $recentlyCreated['pages']])
@@ -60,7 +66,7 @@
         @endif
 
         <hr class="even">
-
+        <a name="chapter"></a>
         <h3>{{ trans('entities.recently_created_chapters') }}</h3>
         @if (count($recentlyCreated['chapters']) > 0)
             @include('partials/entity-list', ['entities' => $recentlyCreated['chapters']])
@@ -69,7 +75,7 @@
         @endif
 
         <hr class="even">
-
+        <a name="book"></a>
         <h3>{{ trans('entities.recently_created_books') }}</h3>
         @if (count($recentlyCreated['books']) > 0)
             @include('partials/entity-list', ['entities' => $recentlyCreated['books']])
