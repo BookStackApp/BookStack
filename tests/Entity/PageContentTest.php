@@ -40,15 +40,18 @@ class PageContentTest extends TestCase
     {
         $page = Page::first();
         $secondPage = Page::where('id', '!=', $page->id)->first();
+
         $this->asEditor();
-        $page->html = "<p>{{@$secondPage->id}}</p>";
+        $includeTag = '{{@' . $secondPage->id . '}}';
+        $page->html = '<p>' . $includeTag . '</p>';
 
         $resp = $this->put($page->getUrl(), ['name' => $page->name, 'html' => $page->html, 'summary' => '']);
 
         $resp->assertStatus(302);
 
         $page = Page::find($page->id);
-        $this->assertContains("{{@$secondPage->id}}", $page->html);
+        $this->assertContains($includeTag, $page->html);
+        $this->assertEquals('', $page->text);
     }
 
     public function test_page_includes_do_not_break_tables()
