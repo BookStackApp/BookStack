@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Services\SearchService;
+use BookStack\Entities\SearchService;
 use Illuminate\Console\Command;
 
 class RegenerateSearch extends Command
@@ -26,7 +26,7 @@ class RegenerateSearch extends Command
     /**
      * Create a new command instance.
      *
-     * @param SearchService $searchService
+     * @param \BookStack\Entities\SearchService $searchService
      */
     public function __construct(SearchService $searchService)
     {

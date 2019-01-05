@@ -8,36 +8,44 @@ return [
      */
 
     // Pages
-    'page_create'                 => 'hat Seite erstellt:',
-    'page_create_notification'    => 'hat Seite erfolgreich erstellt:',
-    'page_update'                 => 'hat Seite aktualisiert:',
-    'page_update_notification'    => 'hat Seite erfolgreich aktualisiert:',
-    'page_delete'                 => 'hat Seite gelöscht:',
-    'page_delete_notification'    => 'hat Seite erfolgreich gelöscht:',
-    'page_restore'                => 'hat Seite wiederhergstellt:',
-    'page_restore_notification'   => 'hat Seite erfolgreich wiederhergstellt:',
-    'page_move'                   => 'hat Seite verschoben:',
+    'page_create'                 => 'erstellt Seite',
+    'page_create_notification'    => 'Die Seite wurde erfolgreich erstellt.',
+    'page_update'                 => 'aktualisiert Seite',
+    'page_update_notification'    => 'Die Seite wurde erfolgreich aktualisiert.',
+    'page_delete'                 => 'löscht Seite',
+    'page_delete_notification'    => 'Die Seite wurde erfolgreich gelöscht.',
+    'page_restore'                => 'stellt Seite wieder her',
+    'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergestellt.',
+    'page_move'                   => 'verschiebt Seite',
+    'page_move_notification'      => 'Die Seite wurde erfolgreich verschoben.',
 
     // Chapters
-    'chapter_create'              => 'hat Kapitel erstellt:',
-    'chapter_create_notification' => 'hat Kapitel erfolgreich erstellt:',
-    'chapter_update'              => 'hat Kapitel aktualisiert:',
-    'chapter_update_notification' => 'hat Kapitel erfolgreich aktualisiert:',
-    'chapter_delete'              => 'hat Kapitel gelöscht',
-    'chapter_delete_notification' => 'hat Kapitel erfolgreich gelöscht:',
-    'chapter_move'                => 'hat Kapitel verschoben:',
+    'chapter_create'              => 'erstellt Kapitel',
+    'chapter_create_notification' => 'Das Kapitel wurde erfolgreich erstellt.',
+    'chapter_update'              => 'aktualisiert Kapitel',
+    'chapter_update_notification' => 'Das Kapitel wurde erfolgreich aktualisiert.',
+    'chapter_delete'              => 'löscht Kapitel',
+    'chapter_delete_notification' => 'Das Kapitel wurde erfolgreich gelöscht.',
+    'chapter_move'                => 'verschiebt Kapitel',
 
     // Books
-    'book_create'                 => 'hat Buch erstellt:',
-    'book_create_notification'    => 'hat Buch erfolgreich erstellt:',
-    'book_update'                 => 'hat Buch aktualisiert:',
-    'book_update_notification'    => 'hat Buch erfolgreich aktualisiert:',
-    'book_delete'                 => 'hat Buch gelöscht:',
-    'book_delete_notification'    => 'hat Buch erfolgreich gelöscht:',
-    'book_sort'                   => 'hat Buch sortiert:',
-    'book_sort_notification'      => 'hat Buch erfolgreich neu sortiert:',
-    
-    // Other
-    'commented_on'                => 'kommentierte',
+    'book_create'                 => 'erstellt Buch',
+    'book_create_notification'    => 'Das Buch wurde erfolgreich erstellt.',
+    'book_update'                 => 'aktualisiert Buch',
+    'book_update_notification'    => 'Das Buch wurde erfolgreich aktualisiert.',
+    'book_delete'                 => 'löscht Buch',
+    'book_delete_notification'    => 'Das Buch wurde erfolgreich gelöscht.',
+    'book_sort'                   => 'sortiert Buch',
+    'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert.',
 
+    // Bookshelves
+    'bookshelf_create'                 => 'erstellt Bücherregal',
+    'bookshelf_create_notification'    => 'Das Bücherregal wurde erfolgreich erstellt',
+    'bookshelf_update'                 => 'aktualisiert Bücherregal',
+    'bookshelf_update_notification'    => 'Das Bücherregal wurde erfolgreich aktualisiert',
+    'bookshelf_delete'                 => 'löscht Bücherregal',
+    'bookshelf_delete_notification'    => 'Das Bücherregal wurde erfolgreich gelöscht',
+
+    // Other
+    'commented_on'                => 'kommentiert',
 ];

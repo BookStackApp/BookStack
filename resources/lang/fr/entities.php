@@ -19,7 +19,6 @@ return [
     'meta_created_name' => 'Créé :timeLength par :user',
     'meta_updated' => 'Mis à jour :timeLength',
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
-    'x_pages' => ':count pages',
     'entity_select' => 'Sélectionner l\'entité',
     'images' => 'Images',
     'my_recent_drafts' => 'Mes brouillons récents',
@@ -36,7 +35,7 @@ return [
      * Permissions and restrictions
      */
     'permissions' => 'Permissions',
-    'permissions_intro' => 'Une fois activées ces permission prendont la priorité sur tous les sets de permissions pré-existants.',
+    'permissions_intro' => 'Une fois activées ces permissions prendront la priorité sur tous les sets de permissions préexistants.',
     'permissions_enable' => 'Activer les permissions personnalisées',
     'permissions_save' => 'Enregistrer les permissions',
 
@@ -53,17 +52,51 @@ return [
     'search_content_type' => 'Type de contenu',
     'search_exact_matches' => 'Correspondances exactes',
     'search_tags' => 'Recherche par tags',
+    'search_options' => 'Options',
     'search_viewed_by_me' => 'Vu par moi',
     'search_not_viewed_by_me' => 'Non vu par moi',
     'search_permissions_set' => 'Ensemble d\'autorisations',
     'search_created_by_me' => 'Créé par moi',
     'search_updated_by_me' => 'Mis à jour par moi',
+    'search_date_options' => 'Recherche par date',
     'search_updated_before' => 'Mis à jour avant',
     'search_updated_after' => 'Mis à jour après',
     'search_created_before' => 'Créé avant',
     'search_created_after' => 'Créé après',
     'search_set_date' => 'Choisir la date',
     'search_update' => 'Actualiser la recherche',
+
+    /**
+     * Shelves
+     */
+    'shelf' => 'Étagère',
+    'shelves' => 'Étagères',
+    'shelves_long' => 'Étagères',
+    'shelves_empty' => 'Aucune étagère n\'a été créée',
+    'shelves_create' => 'Créer une nouvelle étagère',
+    'shelves_popular' => 'Étagères populaires',
+    'shelves_new' => 'Nouvelles Étagères',
+    'shelves_popular_empty' => 'Les étagères les plus populaires apparaîtront ici.',
+    'shelves_new_empty' => 'Les étagères les plus récentes apparaitront ici.',
+    'shelves_save' => 'Enregistrer l\'étagère',
+    'shelves_books' => 'Livres sur cette étagère',
+    'shelves_add_books' => 'Ajouter des livres sur cette étagère',
+    'shelves_drag_books' => 'Déposez des livres ici pour les ajouter a cette étagère',
+    'shelves_empty_contents' => 'Aucun livre n\'a été assigné à cette étagère',
+    'shelves_edit_and_assign' => 'Modifier cette étagère pour y ajouter des livres',
+    'shelves_edit_named' => 'Modifier l\'étagère :name',
+    'shelves_edit' => 'Modifier l\'étagère',
+    'shelves_delete' => 'Supprimer l\'étagère',
+    'shelves_delete_named' => 'Supprimer l\'étagère :name',
+    'shelves_delete_explain' => "Ceci va supprimer l\'étagère nommée \':bookName\'. Les livres contenus dans cette étagère ne seront pas supprimés.",
+    'shelves_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer cette étagère ?',
+    'shelves_permissions' => 'Permissions de l\'étagère',
+    'shelves_permissions_updated' => 'Permissions de l\'étagère mises à jour',
+    'shelves_permissions_active' => 'Permissions de l\'étagère activées',
+    'shelves_copy_permissions_to_books' => 'Copier les permissions vers les livres',
+    'shelves_copy_permissions' => 'Copier les permissions',
+    'shelves_copy_permissions_explain' => 'Ceci va appliquer les permissions actuelles de cette étagère à tous les livres qu\'elle contient. Avant de  continuer, assurez-vous que toutes les permissions de cette étagère ont été sauvegardées.',
+    'shelves_copy_permission_success' => 'Permissions de l\'étagère transférées à :count livres',
 
     /**
      * Books
@@ -131,6 +164,7 @@ return [
      */
     'page' => 'Page',
     'pages' => 'Pages',
+    'x_pages' => ':count Page|:count Pages',
     'pages_popular' => 'Pages populaires',
     'pages_new' => 'Nouvelle page',
     'pages_attachments' => 'Fichiers joints',
@@ -166,6 +200,9 @@ return [
     'pages_not_in_chapter' => 'La page n\'est pas dans un chapitre',
     'pages_move' => 'Déplacer la page',
     'pages_move_success' => 'Page déplacée à ":parentName"',
+    'pages_copy' => 'Copier la page',
+    'pages_copy_desination' => 'Destination de la copie',
+    'pages_copy_success' => 'Page copiée avec succès',
     'pages_permissions' => 'Permissions de la page',
     'pages_permissions_success' => 'Permissions de la page mises à jour',
     'pages_revision' => 'Révision',
@@ -182,6 +219,7 @@ return [
     'pages_revisions_restore' => 'Restaurer',
     'pages_revisions_none' => 'Cette page n\'a aucune révision',
     'pages_copy_link' => 'Copier le lien',
+    'pages_edit_content_link' => 'Modifier le contenu',
     'pages_permissions_active' => 'Permissions de page actives',
     'pages_initial_revision' => 'Publication initiale',
     'pages_initial_name' => 'Nouvelle page',
@@ -195,15 +233,19 @@ return [
         'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
     ],
     'pages_draft_discarded' => 'Brouillon écarté, la page est dans sa version actuelle.',
+    'pages_specific' => 'Page Spécifique',
 
     /**
      * Editor sidebar
      */
     'page_tags' => 'Mots-clés de la page',
+    'chapter_tags' => 'Mots-clés du chapitre',
+    'book_tags' => 'Mots-clés du livre',
+    'shelf_tags' => 'Mots-clés de l\'étagère',
     'tag' => 'Mot-clé',
-    'tags' =>  'Mots-clé',
+    'tags' =>  'Mots-clés',
     'tag_value' => 'Valeur du mot-clé (Optionnel)',
-    'tags_explain' => "Ajouter des mot-clés pour catégoriser votre contenu.",
+    'tags_explain' => "Ajouter des mots-clés pour catégoriser votre contenu.",
     'tags_add' => 'Ajouter un autre mot-clé',
     'attachments' => 'Fichiers joints',
     'attachments_explain' => 'Ajouter des fichiers ou des liens pour les afficher sur votre page. Ils seront affichés dans la barre latérale',
@@ -257,6 +299,13 @@ return [
     'comment_deleted_success' => 'Commentaire supprimé',
     'comment_created_success' => 'Commentaire ajouté',
     'comment_updated_success' => 'Commentaire mis à jour',
-    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire?',
+    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
     'comment_in_reply_to' => 'En réponse à :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision?',
+    'revision_delete_success' => 'Révision supprimée',
+    'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.'
 ];

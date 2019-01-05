@@ -15,7 +15,7 @@ return [
     'page_delete'                 => 'a supprimé la page',
     'page_delete_notification'    => 'Page supprimée avec succès',
     'page_restore'                => 'a restauré la page',
-    'page_restore_notification'   => 'Page réstaurée avec succès',
+    'page_restore_notification'   => 'Page restaurée avec succès',
     'page_move'                   => 'a déplacé la page',
 
     // Chapters
@@ -37,7 +37,14 @@ return [
     'book_sort'                   => 'a réordonné le livre',
     'book_sort_notification'      => 'Livre réordonné avec succès',
 
+    // Bookshelves
+    'bookshelf_create'                 => 'a créé l\'étagère',
+    'bookshelf_create_notification'    => 'Étagère créée avec succès',
+    'bookshelf_update'                 => 'a modifié l\'étagère',
+    'bookshelf_update_notification'    => 'Étagère modifiée avec succès',
+    'bookshelf_delete'                 => 'a supprimé l\'étagère',
+    'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
+
     // Other
     'commented_on'                => 'a commenté'
-
 ];

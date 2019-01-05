@@ -2,20 +2,19 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Exceptions\ConfirmationEmailException;
+use BookStack\Auth\SocialAccount;
+use BookStack\Auth\User;
+use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\EmailConfirmationService;
-use BookStack\Services\SocialAuthService;
-use BookStack\SocialAccount;
-use BookStack\User;
+use BookStack\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Laravel\Socialite\Contracts\User as SocialUser;
 use Validator;
-use BookStack\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -47,11 +46,11 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param SocialAuthService $socialAuthService
-     * @param EmailConfirmationService $emailConfirmationService
-     * @param UserRepo $userRepo
+     * @param \BookStack\Auth\Access\SocialAuthService $socialAuthService
+     * @param \BookStack\Auth\EmailConfirmationService $emailConfirmationService
+     * @param \BookStack\Auth\UserRepo $userRepo
      */
-    public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
+    public function __construct(\BookStack\Auth\Access\SocialAuthService $socialAuthService, \BookStack\Auth\Access\EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
         $this->middleware('guest')->only(['getRegister', 'postRegister', 'socialRegister']);
         $this->socialAuthService = $socialAuthService;
@@ -118,7 +117,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      * @param  array  $data
-     * @return User
+     * @return \BookStack\Auth\User
      */
     protected function create(array $data)
     {
@@ -133,25 +132,28 @@ class RegisterController extends Controller
      * The registrations flow for all users.
      * @param array $userData
      * @param bool|false|SocialAccount $socialAccount
+     * @param bool $emailVerified
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
      */
-    protected function registerUser(array $userData, $socialAccount = false)
+    protected function registerUser(array $userData, $socialAccount = false, $emailVerified = false)
     {
-        if (setting('registration-restrict')) {
-            $restrictedEmailDomains = explode(',', str_replace(' ', '', setting('registration-restrict')));
+        $registrationRestrict = setting('registration-restrict');
+
+        if ($registrationRestrict) {
+            $restrictedEmailDomains = explode(',', str_replace(' ', '', $registrationRestrict));
             $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
             if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
                 throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/register');
             }
         }
 
-        $newUser = $this->userRepo->registerNew($userData);
+        $newUser = $this->userRepo->registerNew($userData, $emailVerified);
         if ($socialAccount) {
             $newUser->socialAccounts()->save($socialAccount);
         }
 
-        if (setting('registration-confirmation') || setting('registration-restrict')) {
+        if ((setting('registration-confirmation') || $registrationRestrict) && !$emailVerified) {
             $newUser->save();
 
             try {
@@ -250,7 +252,6 @@ class RegisterController extends Controller
      * @throws SocialSignInException
      * @throws UserRegistrationException
      * @throws \BookStack\Exceptions\SocialDriverNotConfigured
-     * @throws ConfirmationEmailException
      */
     public function socialCallback($socialDriver, Request $request)
     {
@@ -267,12 +268,24 @@ class RegisterController extends Controller
         }
 
         $action = session()->pull('social-callback');
+
+        // Attempt login or fall-back to register if allowed.
+        $socialUser = $this->socialAuthService->getSocialUser($socialDriver);
         if ($action == 'login') {
-            return $this->socialAuthService->handleLoginCallback($socialDriver);
+            try {
+                return $this->socialAuthService->handleLoginCallback($socialDriver, $socialUser);
+            } catch (SocialSignInAccountNotUsed $exception) {
+                if ($this->socialAuthService->driverAutoRegisterEnabled($socialDriver)) {
+                    return $this->socialRegisterCallback($socialDriver, $socialUser);
+                }
+                throw $exception;
+            }
         }
+
         if ($action == 'register') {
-            return $this->socialRegisterCallback($socialDriver);
+            return $this->socialRegisterCallback($socialDriver, $socialUser);
         }
+
         return redirect()->back();
     }
 
@@ -288,15 +301,16 @@ class RegisterController extends Controller
 
     /**
      * Register a new user after a registration callback.
-     * @param $socialDriver
+     * @param string $socialDriver
+     * @param SocialUser $socialUser
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws UserRegistrationException
-     * @throws \BookStack\Exceptions\SocialDriverNotConfigured
      */
-    protected function socialRegisterCallback($socialDriver)
+    protected function socialRegisterCallback(string $socialDriver, SocialUser $socialUser)
     {
-        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver);
+        $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver, $socialUser);
         $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
+        $emailVerified = $this->socialAuthService->driverAutoConfirmEmailEnabled($socialDriver);
 
         // Create an array of the user data to create a new user instance
         $userData = [
@@ -304,6 +318,6 @@ class RegisterController extends Controller
             'email' => $socialUser->getEmail(),
             'password' => str_random(30)
         ];
-        return $this->registerUser($userData, $socialAccount);
+        return $this->registerUser($userData, $socialAccount, $emailVerified);
     }
 }

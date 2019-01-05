@@ -2,18 +2,19 @@
 
 namespace BookStack\Providers;
 
-use BookStack\Activity;
-use BookStack\Image;
-use BookStack\Services\ImageService;
-use BookStack\Services\PermissionService;
-use BookStack\Services\ViewService;
-use BookStack\Setting;
-use BookStack\View;
+use BookStack\Actions\Activity;
+use BookStack\Actions\ActivityService;
+use BookStack\Actions\View;
+use BookStack\Actions\ViewService;
+use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Settings\Setting;
+use BookStack\Settings\SettingService;
+use BookStack\Uploads\HttpFetcher;
+use BookStack\Uploads\Image;
+use BookStack\Uploads\ImageService;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Support\ServiceProvider;
-use BookStack\Services\ActivityService;
-use BookStack\Services\SettingService;
 use Intervention\Image\ImageManager;
 
 class CustomFacadeProvider extends ServiceProvider
@@ -61,7 +62,8 @@ class CustomFacadeProvider extends ServiceProvider
                 $this->app->make(Image::class),
                 $this->app->make(ImageManager::class),
                 $this->app->make(Factory::class),
-                $this->app->make(Repository::class)
+                $this->app->make(Repository::class),
+                $this->app->make(HttpFetcher::class)
             );
         });
     }

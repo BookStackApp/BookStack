@@ -15,6 +15,14 @@
                         <label for="name">{{ trans('settings.role_desc') }}</label>
                         @include('form/text', ['name' => 'description'])
                     </div>
+
+                    @if(config('auth.method') === 'ldap')
+                        <div class="form-group">
+                            <label for="name">{{ trans('settings.role_external_auth_id') }}</label>
+                            @include('form/text', ['name' => 'external_auth_id'])
+                        </div>
+                    @endif
+
                     <h5>{{ trans('settings.role_system') }}</h5>
                     <label>@include('settings/roles/checkbox', ['permission' => 'users-manage']) {{ trans('settings.role_manage_users') }}</label>
                     <label>@include('settings/roles/checkbox', ['permission' => 'user-roles-manage']) {{ trans('settings.role_manage_roles') }}</label>
@@ -28,6 +36,10 @@
                     <h5>{{ trans('settings.role_asset') }}</h5>
                     <p>{{ trans('settings.role_asset_desc') }}</p>
 
+                    @if (isset($role) && $role->system_name === 'admin')
+                        <p>{{ trans('settings.role_asset_admins') }}</p>
+                    @endif
+
                     <table class="table">
                         <tr>
                             <th width="20%"></th>
@@ -35,6 +47,24 @@
                             <th width="20%">{{ trans('common.view') }}</th>
                             <th width="20%">{{ trans('common.edit') }}</th>
                             <th width="20%">{{ trans('common.delete') }}</th>
+                        </tr>
+                        <tr>
+                            <td>{{ trans('entities.shelves_long') }}</td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-create-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-view-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-view-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-update-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-update-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
+                            <td>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-delete-own']) {{ trans('settings.role_own') }}</label>
+                                <label>@include('settings/roles/checkbox', ['permission' => 'bookshelf-delete-all']) {{ trans('settings.role_all') }}</label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{ trans('entities.books') }}</td>

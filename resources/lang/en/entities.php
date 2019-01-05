@@ -1,9 +1,11 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'Recently Created',
     'recently_created_pages' => 'Recently Created Pages',
     'recently_updated_pages' => 'Recently Updated Pages',
@@ -31,17 +33,13 @@ return [
     'export_pdf' => 'PDF File',
     'export_text' => 'Plain Text File',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => 'Permissions',
     'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
     'permissions_enable' => 'Enable Custom Permissions',
     'permissions_save' => 'Save Permissions',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => 'Search Results',
     'search_total_results_found' => ':count result found|:count total results found',
     'search_clear' => 'Clear Search',
@@ -52,11 +50,13 @@ return [
     'search_content_type' => 'Content Type',
     'search_exact_matches' => 'Exact Matches',
     'search_tags' => 'Tag Searches',
+    'search_options' => 'Options',
     'search_viewed_by_me' => 'Viewed by me',
     'search_not_viewed_by_me' => 'Not viewed by me',
     'search_permissions_set' => 'Permissions set',
     'search_created_by_me' => 'Created by me',
     'search_updated_by_me' => 'Updated by me',
+    'search_date_options' => 'Date Options',
     'search_updated_before' => 'Updated before',
     'search_updated_after' => 'Updated after',
     'search_created_before' => 'Created before',
@@ -64,9 +64,37 @@ return [
     'search_set_date' => 'Set Date',
     'search_update' => 'Update Search',
 
-    /**
-     * Books
-     */
+    // Shelves
+    'shelf' => 'Shelf',
+    'shelves' => 'Shelves',
+    'shelves_long' => 'Bookshelves',
+    'shelves_empty' => 'No shelves have been created',
+    'shelves_create' => 'Create New Shelf',
+    'shelves_popular' => 'Popular Shelves',
+    'shelves_new' => 'New Shelves',
+    'shelves_popular_empty' => 'The most popular shelves will appear here.',
+    'shelves_new_empty' => 'The most recently created shelves will appear here.',
+    'shelves_save' => 'Save Shelf',
+    'shelves_books' => 'Books on this shelf',
+    'shelves_add_books' => 'Add books to this shelf',
+    'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_empty_contents' => 'This shelf has no books assigned to it',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Edit Bookshelf :name',
+    'shelves_edit' => 'Edit Bookshelf',
+    'shelves_delete' => 'Delete Bookshelf',
+    'shelves_delete_named' => 'Delete Bookshelf :name',
+    'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
+    'shelves_delete_confirmation' => 'Are you sure you want to delete this bookshelf?',
+    'shelves_permissions' => 'Bookshelf Permissions',
+    'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
+    'shelves_permissions_active' => 'Bookshelf Permissions Active',
+    'shelves_copy_permissions_to_books' => 'Copy Permissions to Books',
+    'shelves_copy_permissions' => 'Copy Permissions',
+    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
+    'shelves_copy_permission_success' => 'Bookshelf permissions copied to :count books',
+
+    // Books
     'book' => 'Book',
     'books' => 'Books',
     'x_books' => ':count Book|:count Books',
@@ -100,9 +128,7 @@ return [
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'Chapter',
     'chapters' => 'Chapters',
     'x_chapters' => ':count Chapter|:count Chapters',
@@ -125,9 +151,7 @@ return [
     'chapters_permissions_success' => 'Chapter Permissions Updated',
     'chapters_search_this' => 'Search this chapter',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'Page',
     'pages' => 'Pages',
     'x_pages' => ':count Page|:count Pages',
@@ -185,6 +209,7 @@ return [
     'pages_revisions_restore' => 'Restore',
     'pages_revisions_none' => 'This page has no revisions',
     'pages_copy_link' => 'Copy Link',
+    'pages_edit_content_link' => 'Edit Content',
     'pages_permissions_active' => 'Page Permissions Active',
     'pages_initial_revision' => 'Initial publish',
     'pages_initial_name' => 'New Page',
@@ -198,13 +223,13 @@ return [
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_specific' => 'Specific Page',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'Page Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
+    'shelf_tags' => 'Shelf Tags',
     'tag' => 'Tag',
     'tags' =>  'Tags',
     'tag_value' => 'Tag Value (Optional)',
@@ -236,18 +261,14 @@ return [
     'attachments_file_updated' => 'File successfully updated',
     'attachments_link_attached' => 'Link successfully attached to page',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => 'User for :time',
     'profile_created_content' => 'Created Content',
     'profile_not_created_pages' => ':userName has not created any pages',
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any books',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'Comment',
     'comments' => 'Comments',
     'comment_add' => 'Add Comment',
@@ -264,4 +285,9 @@ return [
     'comment_updated_success' => 'Comment updated',
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
     'comment_in_reply_to' => 'In reply to :commentId',
+
+    // Revision
+    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_delete_success' => 'Revision deleted',
+    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
 ];

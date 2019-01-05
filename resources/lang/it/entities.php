@@ -182,6 +182,7 @@ return [
     'pages_revisions_restore' => 'Ripristina',
     'pages_revisions_none' => 'Questa pagina non ha versioni',
     'pages_copy_link' => 'Copia Link',
+    'pages_edit_content_link' => 'Modifica contenuto',
     'pages_permissions_active' => 'Permessi Pagina Attivi',
     'pages_initial_revision' => 'Pubblicazione iniziale',
     'pages_initial_name' => 'Nuova Pagina',
@@ -259,4 +260,11 @@ return [
     'comment_updated_success' => 'Commento aggiornato',
     'comment_delete_confirm' => 'Sei sicuro di voler elminare questo commento?',
     'comment_in_reply_to' => 'In risposta a :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Sei sicuro di voler eliminare questa revisione?',
+    'revision_delete_success' => 'Revisione cancellata',
+    'revision_cannot_delete_latest' => 'Impossibile eliminare l\'ultima revisione.'
 ];

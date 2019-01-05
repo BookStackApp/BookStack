@@ -107,4 +107,4 @@ class Translator {
 
 }
 
-module.exports = Translator;
+export default Translator;

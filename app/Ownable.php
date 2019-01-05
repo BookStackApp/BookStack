@@ -1,5 +1,7 @@
 <?php namespace BookStack;
 
+use BookStack\Auth\User;
+
 abstract class Ownable extends Model
 {
     /**

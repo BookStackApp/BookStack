@@ -13,4 +13,4 @@ class Sidebar {
 
 }
 
-module.exports = Sidebar;
+export default Sidebar;

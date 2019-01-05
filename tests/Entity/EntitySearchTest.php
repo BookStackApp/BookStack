@@ -1,20 +1,29 @@
 <?php namespace Tests;
 
 
-use BookStack\Chapter;
-use BookStack\Page;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
 
 class EntitySearchTest extends TestCase
 {
 
     public function test_page_search()
     {
-        $book = \BookStack\Book::all()->first();
+        $book = \BookStack\Entities\Book::all()->first();
         $page = $book->pages->first();
 
         $search = $this->asEditor()->get('/search?term=' . urlencode($page->name));
         $search->assertSee('Search Results');
         $search->assertSee($page->name);
+    }
+
+    public function test_bookshelf_search()
+    {
+        $shelf = Bookshelf::first();
+        $search = $this->asEditor()->get('/search?term=' . urlencode(mb_substr($shelf->name, 0, 3)) . '  {type:bookshelf}');
+        $search->assertStatus(200);
+        $search->assertSee($shelf->name);
     }
 
     public function test_invalid_page_search()
@@ -45,7 +54,7 @@ class EntitySearchTest extends TestCase
 
     public function test_book_search()
     {
-        $book = \BookStack\Book::first();
+        $book = \BookStack\Entities\Book::first();
         $page = $book->pages->last();
         $chapter = $book->chapters->last();
 
@@ -58,7 +67,7 @@ class EntitySearchTest extends TestCase
 
     public function test_chapter_search()
     {
-        $chapter = \BookStack\Chapter::has('pages')->first();
+        $chapter = \BookStack\Entities\Chapter::has('pages')->first();
         $page = $chapter->pages[0];
 
         $pageTestResp = $this->asEditor()->get('/search/chapter/' . $chapter->id . '?term=' . urlencode($page->name));
@@ -68,11 +77,11 @@ class EntitySearchTest extends TestCase
     public function test_tag_search()
     {
         $newTags = [
-            new \BookStack\Tag([
+            new \BookStack\Actions\Tag([
                 'name' => 'animal',
                 'value' => 'cat'
             ]),
-            new \BookStack\Tag([
+            new \BookStack\Actions\Tag([
                 'name' => 'color',
                 'value' => 'red'
             ])
@@ -163,7 +172,7 @@ class EntitySearchTest extends TestCase
 
     public function test_ajax_entity_search()
     {
-        $page = Page::all()->last();
+        $page = $this->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);
         $notVisitedPage = Page::first();
 
         // Visit the page to make popular

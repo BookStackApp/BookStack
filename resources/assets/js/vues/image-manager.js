@@ -1,7 +1,5 @@
-
 import * as Dates from "../services/dates";
-
-const dropzone = require('./components/dropzone');
+import dropzone from "./components/dropzone";
 
 let page = 0;
 let previousClickTime = 0;
@@ -161,8 +159,8 @@ const methods = {
             });
             return;
         }
-
-        this.$http.delete(`/images/${this.selectedImage.id}`).then(resp => {
+        let url = window.baseUrl(`/images/${this.selectedImage.id}`);
+        this.$http.delete(url).then(resp => {
             this.images.splice(this.images.indexOf(this.selectedImage), 1);
             this.selectedImage = false;
             this.$events.emit('success', trans('components.image_delete_success'));
@@ -193,7 +191,7 @@ function mounted() {
     baseUrl = window.baseUrl('/images/' + this.imageType + '/all/')
 }
 
-module.exports = {
+export default {
     mounted,
     methods,
     data,

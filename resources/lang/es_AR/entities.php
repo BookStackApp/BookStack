@@ -52,17 +52,51 @@ return [
     'search_content_type' => 'Tipo de contenido',
     'search_exact_matches' => 'Coincidencias exactas',
     'search_tags' => 'Búsquedas de etiquetas',
+    'search_options' => 'Opciones',
     'search_viewed_by_me' => 'Vistos por mí',
     'search_not_viewed_by_me' => 'No vistos por mí',
     'search_permissions_set' => 'Permisos establecidos',
     'search_created_by_me' => 'Creado por mí',
     'search_updated_by_me' => 'Actualizado por mí',
+    'search_date_options' => 'Opciones de fecha',
     'search_updated_before' => 'Actualizado antes de',
     'search_updated_after' => 'Actualizado después de',
     'search_created_before' => 'Creado antes de',
     'search_created_after' => 'Creado después de',
     'search_set_date' => 'Esablecer fecha',
     'search_update' => 'Actualizar búsqueda',
+
+    /**
+     * Shelves
+     */
+    'shelf' => 'Estante',
+    'shelves' => 'Estantes',
+    'shelves_long' => 'Estantes de libros',
+    'shelves_empty' => 'No se crearon estantes',
+    'shelves_create' => 'Crear un estante nuevo',
+    'shelves_popular' => 'Estantes Populares',
+    'shelves_new' => 'Estantes Nuevos',
+    'shelves_popular_empty' => 'Los estantes más populares aparecerán aquí.',
+    'shelves_new_empty' => 'Los estantes mas nuevos aparecerán aquí.',
+    'shelves_save' => 'Guardar estantes',
+    'shelves_books' => 'Libros en este estante',
+    'shelves_add_books' => 'Agregar libros en este estante',
+    'shelves_drag_books' => 'Arrastre los libros aquí para agregarlos a este estante',
+    'shelves_empty_contents' => 'Este estante no tiene libros asignados a él',
+    'shelves_edit_and_assign' => 'Editar el estante para asignar libros',
+    'shelves_edit_named' => 'Editar Estante :name',
+    'shelves_edit' => 'Editar Estante',
+    'shelves_delete' => 'Eliminar Estante',
+    'shelves_delete_named' => 'Eliminar Estante :name',
+    'shelves_delete_explain' => "Esta acción eliminará el estante con el nombre ':name'. Los libros contenidos en él no se eliminarán.",
+    'shelves_delete_confirmation' => '¿Está seguro que quiere eliminar este estante?',
+    'shelves_permissions' => 'Permisos del Estante',
+    'shelves_permissions_updated' => 'Permisos del Estante actualizados',
+    'shelves_permissions_active' => 'Permisos Activos del Estante',
+    'shelves_copy_permissions_to_books' => 'Copiar Permisos a los Libros',
+    'shelves_copy_permissions' => 'Copiar Permisos',
+    'shelves_copy_permissions_explain' => 'Esta acción aplicará los permisos de este estante a todos los libros contenidos en él. Antes de activarlos, asegúrese que los cambios a los permisos de este estante estén guardados.',
+    'shelves_copy_permission_success' => 'Se copiaron los permisos del estante a :count libros',
 
     /**
      * Books
@@ -124,7 +158,7 @@ return [
     'chapters_permissions_active' => 'Permisos de capítulo activado',
     'chapters_permissions_success' => 'Permisos de capítulo actualizados',
     'chapters_search_this' => 'Buscar en este capítulo',
-    
+
     /**
      * Pages
      */
@@ -185,6 +219,7 @@ return [
     'pages_revisions_restore' => 'Restaurar',
     'pages_revisions_none' => 'Esta página no tiene revisiones',
     'pages_copy_link' => 'Copiar enlace',
+    'pages_edit_content_link' => 'Contenido editado',
     'pages_permissions_active' => 'Permisos de página activos',
     'pages_initial_revision' => 'Publicación inicial',
     'pages_initial_name' => 'Página nueva',
@@ -198,6 +233,8 @@ return [
         'message' => ':start :time. Ten cuidado de no sobreescribir los cambios del otro usuario',
     ],
     'pages_draft_discarded' => 'Borrador descartado, el editor ha sido actualizado con el contenido de la página actual',
+    'pages_specific' => 'Página Específica',
+
 
     /**
      * Editor sidebar
@@ -205,6 +242,7 @@ return [
     'page_tags' => 'Etiquetas de página',
     'chapter_tags' => 'Etiquetas de capítulo',
     'book_tags' => 'Etiquetas de libro',
+    'shelf_tags' => 'Shelf Tags',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
@@ -264,4 +302,11 @@ return [
     'comment_updated_success' => 'Comentario actualizado',
     'comment_delete_confirm' => '¿Está seguro que quiere borrar este comentario?',
     'comment_in_reply_to' => 'En respuesta a :commentId',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_delete_success' => 'Revisión eliminada',
+    'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.'
 ];

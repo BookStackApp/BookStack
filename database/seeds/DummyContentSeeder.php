@@ -12,33 +12,39 @@ class DummyContentSeeder extends Seeder
     public function run()
     {
         // Create an editor user
-        $editorUser = factory(\BookStack\User::class)->create();
-        $editorRole = \BookStack\Role::getRole('editor');
+        $editorUser = factory(\BookStack\Auth\User::class)->create();
+        $editorRole = \BookStack\Auth\Role::getRole('editor');
         $editorUser->attachRole($editorRole);
 
         // Create a viewer user
-        $viewerUser = factory(\BookStack\User::class)->create();
-        $role = \BookStack\Role::getRole('viewer');
+        $viewerUser = factory(\BookStack\Auth\User::class)->create();
+        $role = \BookStack\Auth\Role::getRole('viewer');
         $viewerUser->attachRole($role);
 
-        factory(\BookStack\Book::class, 5)->create(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id])
-            ->each(function($book) use ($editorUser) {
-                $chapters = factory(\BookStack\Chapter::class, 3)->create(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id])
-                    ->each(function($chapter) use ($editorUser, $book){
-                        $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id, 'book_id' => $book->id]);
+        $byData = ['created_by' => $editorUser->id, 'updated_by' => $editorUser->id];
+
+        factory(\BookStack\Entities\Book::class, 5)->create($byData)
+            ->each(function($book) use ($editorUser, $byData) {
+                $chapters = factory(\BookStack\Entities\Chapter::class, 3)->create($byData)
+                    ->each(function($chapter) use ($editorUser, $book, $byData){
+                        $pages = factory(\BookStack\Entities\Page::class, 3)->make(array_merge($byData, ['book_id' => $book->id]));
                         $chapter->pages()->saveMany($pages);
                     });
-                $pages = factory(\BookStack\Page::class, 3)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
+                $pages = factory(\BookStack\Entities\Page::class, 3)->make($byData);
                 $book->chapters()->saveMany($chapters);
                 $book->pages()->saveMany($pages);
             });
 
-        $largeBook = factory(\BookStack\Book::class)->create(['name' => 'Large book' . str_random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
-        $pages = factory(\BookStack\Page::class, 200)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
-        $chapters = factory(\BookStack\Chapter::class, 50)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
+        $largeBook = factory(\BookStack\Entities\Book::class)->create(array_merge($byData, ['name' => 'Large book' . str_random(10)]));
+        $pages = factory(\BookStack\Entities\Page::class, 200)->make($byData);
+        $chapters = factory(\BookStack\Entities\Chapter::class, 50)->make($byData);
         $largeBook->pages()->saveMany($pages);
         $largeBook->chapters()->saveMany($chapters);
-        app(\BookStack\Services\PermissionService::class)->buildJointPermissions();
-        app(\BookStack\Services\SearchService::class)->indexAllEntities();
+
+        $shelves = factory(\BookStack\Entities\Bookshelf::class, 10)->create($byData);
+        $largeBook->shelves()->attach($shelves->pluck('id'));
+
+        app(\BookStack\Auth\Permissions\PermissionService::class)->buildJointPermissions();
+        app(\BookStack\Entities\SearchService::class)->indexAllEntities();
     }
 }

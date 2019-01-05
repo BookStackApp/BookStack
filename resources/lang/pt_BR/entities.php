@@ -52,17 +52,51 @@ return [
     'search_content_type' => 'Tipo de Conteúdo',
     'search_exact_matches' => 'Correspondências Exatas',
     'search_tags' => 'Tags',
+    'search_options' => 'Opções',
     'search_viewed_by_me' => 'Visto por mim',
     'search_not_viewed_by_me' => 'Não visto por mim',
     'search_permissions_set' => 'Permissão definida',
     'search_created_by_me' => 'Criado por mim',
     'search_updated_by_me' => 'Atualizado por mim',
+    'search_date_options' => 'Opções de Data',
     'search_updated_before' => 'Atualizado antes de',
     'search_updated_after' => 'Atualizado depois de',
     'search_created_before' => 'Criado antes de',
     'search_created_after' => 'Criado depois de',
     'search_set_date' => 'Definir data',
     'search_update' => 'Refazer Pesquisa',
+
+    /**
+     * Shelves
+     */
+    'shelf' => 'Prateleira',
+    'shelves' => 'Prateleiras',
+    'shelves_long' => 'Prateleiras de Livros',
+    'shelves_empty' => 'Nenhuma prateleira foi criada',
+    'shelves_create' => 'Criar nova Prateleira',
+    'shelves_popular' => 'Prateleiras populares',
+    'shelves_new' => 'Prateleiras novas',
+    'shelves_popular_empty' => 'As prateleiras mais populares aparecerão aqui.',
+    'shelves_new_empty' => 'As prateleiras criadas mais recentemente aparecerão aqui.',
+    'shelves_save' => 'Salvar Prateleira',
+    'shelves_books' => 'Livros nesta prateleira',
+    'shelves_add_books' => 'Adicionar livros a esta prateleira',
+    'shelves_drag_books' => 'Arraste livros aqui para adicioná-los a esta prateleira',
+    'shelves_empty_contents' => 'Esta prateleira não possui livros atribuídos a ela',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Editar Prateleira de Livros :name',
+    'shelves_edit' => 'Edit Prateleira de Livros',
+    'shelves_delete' => 'Excluir Prateleira de Livros',
+    'shelves_delete_named' => 'Excluir Prateleira de Livros :name',
+    'shelves_delete_explain' => "A ação vai excluír a prateleira de livros com o nome ':name'. Livros contidos não serão excluídos",
+    'shelves_delete_confirmation' => 'Você tem certeza que quer excluir esta prateleira de livros?',
+    'shelves_permissions' => 'Permissões da Prateleira de Livros',
+    'shelves_permissions_updated' => 'Permissões da Prateleira de Livros Atualizada',
+    'shelves_permissions_active' => 'Permissões da Prateleira de Livros Ativadas',
+    'shelves_copy_permissions_to_books' => 'Copiar Permissões para Livros',
+    'shelves_copy_permissions' => 'Copiar Permissões',
+    'shelves_copy_permissions_explain' => 'Isto aplicará as configurações de permissões atuais desta prateleira de livros a todos os livros contidos nela. Antes de ativar, assegure-se de que quaisquer alterações nas permissões desta prateleira de livros tenham sido salvas.',
+    'shelves_copy_permission_success' => 'Permissões da prateleira de livros copiada para :count livros',
 
     /**
      * Books
@@ -162,9 +196,13 @@ return [
     'pages_md_preview' => 'Preview',
     'pages_md_insert_image' => 'Inserir Imagem',
     'pages_md_insert_link' => 'Inserir Link para Entidade',
+    'pages_md_insert_drawing' => 'Inserir Desenho',
     'pages_not_in_chapter' => 'Página não está dentro de um Capítulo',
     'pages_move' => 'Mover Página',
     'pages_move_success' => 'Pagina movida para ":parentName"',
+    'pages_copy' => 'Copiar Página',
+    'pages_copy_desination' => 'Destino da Cópia',
+    'pages_copy_success' => 'Página copiada com sucesso',
     'pages_permissions' => 'Permissões de Página',
     'pages_permissions_success' => 'Permissões de Página atualizadas',
     'pages_revision' => 'Revisão',
@@ -181,6 +219,7 @@ return [
     'pages_revisions_restore' => 'Restaurar',
     'pages_revisions_none' => 'Essa página não tem revisões',
     'pages_copy_link' => 'Copia Link',
+    'pages_edit_content_link' => 'Editar conteúdo',
     'pages_permissions_active' => 'Permissões de Página Ativas',
     'pages_initial_revision' => 'Publicação Inicial',
     'pages_initial_name' => 'Nova Página',
@@ -194,11 +233,15 @@ return [
         'message' => ':start :time. Tome cuidado para não sobrescrever atualizações de outras pessoas!',
     ],
     'pages_draft_discarded' => 'Rascunho descartado. O editor foi atualizado com a página atualizada',
+    'pages_specific' => 'Página Específica',
 
     /**
      * Editor sidebar
      */
     'page_tags' => 'Tags de Página',
+    'chapter_tags' => 'Tags de Capítulo',
+    'book_tags' => 'Tags de Livro',
+    'shelf_tags' => 'Tags de Prateleira',
     'tag' => 'Tag',
     'tags' =>  '',
     'tag_value' => 'Valor da Tag (Opcional)',
@@ -244,6 +287,7 @@ return [
      */
     'comment' => 'Comentário',
     'comments' => 'Comentários',
+    'comment_add' => 'Adicionar Comentário',
     'comment_placeholder' => 'Digite seus comentários aqui',
     'comment_count' => '{0} Nenhum comentário|{1} 1 Comentário|[2,*] :count Comentários',
     'comment_save' => 'Salvar comentário',
@@ -257,4 +301,11 @@ return [
     'comment_updated_success' => 'Comentário editado',
     'comment_delete_confirm' => 'Você tem certeza de que quer deletar este comentário?',
     'comment_in_reply_to' => 'Em resposta à :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
+    'revision_delete_success' => 'Revisão excluída',
+    'revision_cannot_delete_latest' => 'Não é possível excluir a revisão mais recente.'
 ];

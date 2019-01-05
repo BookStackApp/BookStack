@@ -33,7 +33,7 @@ return [
     'app_primary_color_desc' => '請使用十六進位數值。<br>保留空白則重置回預設配色。',
     'app_homepage' => 'App首頁',
     'app_homepage_desc' => '選擇要做為首頁的頁面，這將會替換預設首頁，而且這個頁面的權限設定將被忽略。',
-    'app_homepage_default' => '預設首頁選擇',
+    'app_homepage_select' => '預設首頁選擇',
     'app_disable_comments' => '關閉評論',
     'app_disable_comments_desc' => '在App的所有頁面上關閉評論，已經存在的評論也不會顯示。',
 
@@ -49,6 +49,19 @@ return [
     'reg_confirm_restrict_domain' => '網域名稱限制',
     'reg_confirm_restrict_domain_desc' => '輸入您想要限制註冊的Email域域名稱列表，用逗號隔開。在被允許與本系統連結之前，使用者會收到一封Email來確認他們的位址。<br>注意，使用者在註冊成功後可以修改他們的Email位址。',
     'reg_confirm_restrict_domain_placeholder' => '尚未設定限制的網域',
+
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => '維護',
+    'maint_image_cleanup' => '清理圖像',
+    'maint_image_cleanup_desc' => "掃描頁面和修訂內容以檢查哪些圖像是正在使用的以及哪些圖像是多余的。確保在運行前創建完整的數據庫和映像備份。",
+    'maint_image_cleanup_ignore_revisions' => '忽略修訂記錄中的圖像',
+    'maint_image_cleanup_run' => '運行清理',
+    'maint_image_cleanup_warning' => '發現了 :count 張可能未使用的圖像。您確定要刪除這些圖像嗎？',
+    'maint_image_cleanup_success' => '找到並刪除了 :count 張可能未使用的圖像！',
+    'maint_image_cleanup_nothing_found' => '找不到未使用的圖像，沒有刪除！',
 
     /**
      * Role settings
@@ -68,6 +81,7 @@ return [
     'role_details' => '角色詳細資訊',
     'role_name' => '角色名',
     'role_desc' => '角色簡述',
+    'role_external_auth_id' => '外部身份驗證ID',
     'role_system' => '系統權限',
     'role_manage_users' => '管理使用者',
     'role_manage_roles' => '管理角色與角色權限',
@@ -76,6 +90,7 @@ return [
     'role_manage_settings' => '管理App設定',
     'role_asset' => '資源項目',
     'role_asset_desc' => '對系統內資源的預設權限將由這裡的權限控制。若有單獨設定在書本、章節和頁面上的權限，將會覆蓋這裡的權限設定。',
+    'role_asset_admins' => '管理員會自動獲得對所有內容的存取權限，但這些選項可能會顯示或隱藏UI的選項。',
     'role_all' => '全部',
     'role_own' => '擁有',
     'role_controlled_by_asset' => '依據隸屬的資源來決定',
@@ -96,7 +111,6 @@ return [
     'users_external_auth_id' => '外部身份驗證ID',
     'users_password_warning' => '如果您想更改密碼，請填寫以下內容：',
     'users_system_public' => '此使用者代表進入您的App的任何訪客。它不能用於登入，而是自動分配。',
-    //'users_books_view_type' => '圖書瀏覽佈局偏好',
     'users_delete' => '刪除使用者',
     'users_delete_named' => '刪除使用者 :userName',
     'users_delete_warning' => '這將從系統中完全刪除名為 \':userName\' 的使用者。',

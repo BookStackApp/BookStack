@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Services\ImageService;
+use BookStack\Uploads\ImageService;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -30,7 +30,7 @@ class CleanupImages extends Command
 
     /**
      * Create a new command instance.
-     * @param ImageService $imageService
+     * @param \BookStack\Uploads\ImageService $imageService
      */
     public function __construct(ImageService $imageService)
     {
@@ -72,7 +72,9 @@ class CleanupImages extends Command
 
     protected function showDeletedImages($paths)
     {
-        if ($this->getOutput()->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) return;
+        if ($this->getOutput()->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
+            return;
+        }
         if (count($paths) > 0) {
             $this->line('Images to delete:');
         }

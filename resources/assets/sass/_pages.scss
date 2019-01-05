@@ -89,6 +89,12 @@
   del {
     background: #FFECEC;
   }
+
+  &.page-revision {
+    pre code {
+      white-space: pre-wrap;
+    }
+  }
 }
 
 // Page content pointers
@@ -107,8 +113,13 @@
   position: absolute;
   top: -60px;
   background-color:#FFF;
-  width: 272px;
+  width: 275px;
   z-index: 55;
+
+  &.is-page-editable {
+    width: 328px;
+  }
+
   &:before {
     position: absolute;
     left: 50%;
@@ -132,12 +143,13 @@
     width: 172px;
     z-index: 40;
   }
-  input, button {
+  input, button, a {
     position: relative;
     border-radius: 0;
     height: 28px;
     font-size: 12px;
     vertical-align: top;
+    padding: 5px 16px;
   }
   > i {
     color: #888;
@@ -148,10 +160,21 @@
     cursor: pointer;
     user-select: none;
   }
-  .button {
+  .input-group .button {
     line-height: 1;
     margin: 0 0 0 -4px;
     box-shadow: none;
+  }
+  a.button {
+    margin: 0 0 0 0;
+
+    &:hover {
+      fill: #fff;
+    }
+  }
+  .svg-icon {
+    width: 1.2em;
+    height: 1.2em;
   }
 }
 

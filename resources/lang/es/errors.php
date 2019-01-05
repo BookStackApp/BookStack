@@ -7,7 +7,7 @@ return [
      */
 
     // Permissions
-    'permission' => 'UNo tiene permisos para visualizar la página solicitada.',
+    'permission' => 'No tiene permisos para visualizar la página solicitada.',
     'permissionJson' => 'No tiene permisos para ejecutar la acción solicitada.',
 
     // Auth
@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'El servidor no permite la subida de ficheros de este tamaño. Intente subir un fichero de menor tamaño.',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen que se quiere subir no es válido',
+    'file_upload_timeout' => 'La carga del archivo ha caducado.',
 
     // Attachments
     'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',
@@ -49,6 +50,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entidad no encontrada',
+    'bookshelf_not_found' => 'Estante no encontrado',
     'book_not_found' => 'Libro no encontrado',
     'page_not_found' => 'Página no encontrada',
     'chapter_not_found' => 'Capítulo no encontrado',
@@ -65,7 +67,7 @@ return [
     'role_system_cannot_be_deleted' => 'Este rol es un rol de sistema y no puede ser borrado',
     'role_registration_default_cannot_delete' => 'Este rol no puede ser borrado mientras sea el rol por defecto de nuevos registros',
 
-     // Comments
+    // Comments
     'comment_list' => 'Se ha producido un error al buscar los comentarios.',
     'cannot_add_comment_to_draft' => 'No puedes añadir comentarios a un borrador.',
     'comment_add' => 'Se ha producido un error al añadir el comentario.',

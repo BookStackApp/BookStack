@@ -10,6 +10,7 @@
         @endif
     </style>
     @yield('head')
+    @include('partials.custom-head')
 </head>
 <body>
 <div class="container" id="page-show">
@@ -22,7 +23,7 @@
                 <hr>
 
                 <div class="text-muted text-small">
-                    @include('partials.entity-meta', ['entity' => $page])
+                    @include('partials.entity-export-meta', ['entity' => $page])
                 </div>
 
             </div>

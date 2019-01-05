@@ -1,10 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\FileUploadException;
-use BookStack\Attachment;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Repos\EntityRepo;
-use BookStack\Services\AttachmentService;
+use BookStack\Uploads\Attachment;
+use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -15,7 +15,7 @@ class AttachmentController extends Controller
 
     /**
      * AttachmentController constructor.
-     * @param AttachmentService $attachmentService
+     * @param \BookStack\Uploads\AttachmentService $attachmentService
      * @param Attachment $attachment
      * @param EntityRepo $entityRepo
      */
@@ -201,10 +201,7 @@ class AttachmentController extends Controller
         }
 
         $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
-        return response($attachmentContents, 200, [
-            'Content-Type' => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="'. $attachment->getFileName() .'"'
-        ]);
+        return $this->downloadResponse($attachmentContents, $attachment->getFileName());
     }
 
     /**

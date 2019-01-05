@@ -1,12 +1,16 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Chapter;
-use BookStack\Entity;
-use BookStack\Repos\EntityRepo;
-use BookStack\Role;
-use BookStack\Services\PermissionService;
-use BookStack\Services\SettingService;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Entity;
+use BookStack\Entities\Page;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Auth\Role;
+use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\Repos\PageRepo;
+use BookStack\Settings\SettingService;
 
 trait SharedTestHelpers
 {
@@ -64,9 +68,28 @@ trait SharedTestHelpers
      */
     protected function getViewer($attributes = [])
     {
-        $user = \BookStack\Role::getRole('viewer')->users()->first();
+        $user = \BookStack\Auth\Role::getRole('viewer')->users()->first();
         if (!empty($attributes)) $user->forceFill($attributes)->save();
         return $user;
+    }
+
+    /**
+     * Regenerate the permission for an entity.
+     * @param Entity $entity
+     */
+    protected function regenEntityPermissions(Entity $entity)
+    {
+        app(PermissionService::class)->buildJointPermissionsForEntity($entity);
+        $entity->load('jointPermissions');
+    }
+
+    /**
+     * Create and return a new bookshelf.
+     * @param array $input
+     * @return \BookStack\Entities\Bookshelf
+     */
+    public function newShelf($input = ['name' => 'test shelf', 'description' => 'My new test shelf']) {
+        return app(EntityRepo::class)->createFromInput('bookshelf', $input, false);
     }
 
     /**
@@ -75,29 +98,29 @@ trait SharedTestHelpers
      * @return Book
      */
     public function newBook($input = ['name' => 'test book', 'description' => 'My new test book']) {
-        return $this->app[EntityRepo::class]->createFromInput('book', $input, false);
+        return app(EntityRepo::class)->createFromInput('book', $input, false);
     }
 
     /**
      * Create and return a new test chapter
      * @param array $input
      * @param Book $book
-     * @return Chapter
+     * @return \BookStack\Entities\Chapter
      */
     public function newChapter($input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book) {
-        return $this->app[EntityRepo::class]->createFromInput('chapter', $input, $book);
+        return app(EntityRepo::class)->createFromInput('chapter', $input, $book);
     }
 
     /**
      * Create and return a new test page
      * @param array $input
-     * @return Chapter
+     * @return Page
      */
     public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
         $book = Book::first();
-        $entityRepo = $this->app[EntityRepo::class];
-        $draftPage = $entityRepo->getDraftPage($book);
-        return $entityRepo->publishPageDraft($draftPage, $input);
+        $pageRepo = app(PageRepo::class);
+        $draftPage = $pageRepo->getDraftPage($book);
+        return $pageRepo->publishPageDraft($draftPage, $input);
     }
 
     /**
@@ -138,6 +161,32 @@ trait SharedTestHelpers
         $entity->load('permissions');
         $this->app[PermissionService::class]->buildJointPermissionsForEntity($entity);
         $entity->load('jointPermissions');
+    }
+
+    /**
+     * Give the given user some permissions.
+     * @param \BookStack\Auth\User $user
+     * @param array $permissions
+     */
+    protected function giveUserPermissions(\BookStack\Auth\User $user, $permissions = [])
+    {
+        $newRole = $this->createNewRole($permissions);
+        $user->attachRole($newRole);
+        $user->load('roles');
+        $user->permissions(false);
+    }
+
+    /**
+     * Create a new basic role for testing purposes.
+     * @param array $permissions
+     * @return Role
+     */
+    protected function createNewRole($permissions = [])
+    {
+        $permissionRepo = app(PermissionsRepo::class);
+        $roleData = factory(Role::class)->make()->toArray();
+        $roleData['permissions'] = array_flip($permissions);
+        return $permissionRepo->saveNewRole($roleData);
     }
 
 }

@@ -1,10 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Book;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\ExportService;
+use BookStack\Auth\UserRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -19,8 +19,8 @@ class BookController extends Controller
     /**
      * BookController constructor.
      * @param EntityRepo $entityRepo
-     * @param UserRepo $userRepo
-     * @param ExportService $exportService
+     * @param \BookStack\Auth\UserRepo $userRepo
+     * @param \BookStack\Entities\ExportService $exportService
      */
     public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
     {
@@ -204,7 +204,7 @@ class BookController extends Controller
 
         // Get the books involved in the sort
         $bookIdsInvolved = $bookIdsInvolved->unique()->toArray();
-        $booksInvolved = $this->entityRepo->book->newQuery()->whereIn('id', $bookIdsInvolved)->get();
+        $booksInvolved = $this->entityRepo->getManyById('book', $bookIdsInvolved, false, true);
         // Throw permission error if invalid ids or inaccessible books given.
         if (count($bookIdsInvolved) !== count($booksInvolved)) {
             $this->showPermissionError();
@@ -299,10 +299,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $pdfContent = $this->exportService->bookToPdf($book);
-        return response()->make($pdfContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.pdf'
-        ]);
+        return $this->downloadResponse($pdfContent, $bookSlug . '.pdf');
     }
 
     /**
@@ -314,10 +311,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $htmlContent = $this->exportService->bookToContainedHtml($book);
-        return response()->make($htmlContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.html'
-        ]);
+        return $this->downloadResponse($htmlContent, $bookSlug . '.html');
     }
 
     /**
@@ -328,10 +322,7 @@ class BookController extends Controller
     public function exportPlainText($bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
-        $htmlContent = $this->exportService->bookToPlainText($book);
-        return response()->make($htmlContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $bookSlug . '.txt'
-        ]);
+        $textContent = $this->exportService->bookToPlainText($book);
+        return $this->downloadResponse($textContent, $bookSlug . '.txt');
     }
 }

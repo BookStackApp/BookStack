@@ -1,15 +1,18 @@
 <?php namespace Tests;
 
-use BookStack\Book;
-use BookStack\Entity;
-use BookStack\User;
-use BookStack\Repos\EntityRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Entity;
+use BookStack\Auth\User;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Page;
 
 class RestrictionsTest extends BrowserKitTest
 {
 
     /**
-     * @var User
+     * @var \BookStack\Auth\User
      */
     protected $user;
 
@@ -32,6 +35,63 @@ class RestrictionsTest extends BrowserKitTest
             $this->viewer->roles->first(),
         ];
         parent::setEntityRestrictions($entity, $actions, $roles);
+    }
+
+    public function test_bookshelf_view_restriction()
+    {
+        $shelf = Bookshelf::first();
+
+        $this->actingAs($this->user)
+            ->visit($shelf->getUrl())
+            ->seePageIs($shelf->getUrl());
+
+        $this->setEntityRestrictions($shelf, []);
+
+        $this->forceVisit($shelf->getUrl())
+            ->see('Bookshelf not found');
+
+        $this->setEntityRestrictions($shelf, ['view']);
+
+        $this->visit($shelf->getUrl())
+            ->see($shelf->name);
+    }
+
+    public function test_bookshelf_update_restriction()
+    {
+        $shelf = BookShelf::first();
+
+        $this->actingAs($this->user)
+            ->visit($shelf->getUrl('/edit'))
+            ->see('Edit Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->forceVisit($shelf->getUrl('/edit'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->visit($shelf->getUrl('/edit'))
+            ->seePageIs($shelf->getUrl('/edit'));
+    }
+
+    public function test_bookshelf_delete_restriction()
+    {
+        $shelf = Book::first();
+
+        $this->actingAs($this->user)
+            ->visit($shelf->getUrl('/delete'))
+            ->see('Delete Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->forceVisit($shelf->getUrl('/delete'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->visit($shelf->getUrl('/delete'))
+            ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
     }
 
     public function test_book_view_restriction()
@@ -165,7 +225,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_view_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
@@ -190,7 +250,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_create_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
 
         $chapterUrl = $chapter->getUrl();
         $this->actingAs($this->user)
@@ -217,7 +277,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_update_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
@@ -242,7 +302,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_delete_restriction()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
@@ -267,7 +327,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_view_restriction()
     {
-        $page = \BookStack\Page::first();
+        $page = \BookStack\Entities\Page::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -287,7 +347,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_update_restriction()
     {
-        $page = \BookStack\Chapter::first();
+        $page = Chapter::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -307,7 +367,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_delete_restriction()
     {
-        $page = \BookStack\Page::first();
+        $page = \BookStack\Entities\Page::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -325,6 +385,23 @@ class RestrictionsTest extends BrowserKitTest
             ->seePageIs($pageUrl . '/delete')->see('Delete Page');
     }
 
+    public function test_bookshelf_restriction_form()
+    {
+        $shelf = Bookshelf::first();
+        $this->asAdmin()->visit($shelf->getUrl('/permissions'))
+            ->see('Bookshelf Permissions')
+            ->check('restricted')
+            ->check('restrictions[2][view]')
+            ->press('Save Permissions')
+            ->seeInDatabase('bookshelves', ['id' => $shelf->id, 'restricted' => true])
+            ->seeInDatabase('entity_permissions', [
+                'restrictable_id' => $shelf->id,
+                'restrictable_type' => Bookshelf::newModelInstance()->getMorphClass(),
+                'role_id' => '2',
+                'action' => 'view'
+            ]);
+    }
+
     public function test_book_restriction_form()
     {
         $book = Book::first();
@@ -336,7 +413,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('books', ['id' => $book->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $book->id,
-                'restrictable_type' => 'BookStack\Book',
+                'restrictable_type' => Book::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'view'
             ]);
@@ -344,7 +421,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_chapter_restriction_form()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $this->asAdmin()->visit($chapter->getUrl() . '/permissions')
             ->see('Chapter Permissions')
             ->check('restricted')
@@ -353,7 +430,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('chapters', ['id' => $chapter->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $chapter->id,
-                'restrictable_type' => 'BookStack\Chapter',
+                'restrictable_type' => Chapter::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'update'
             ]);
@@ -361,7 +438,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_restriction_form()
     {
-        $page = \BookStack\Page::first();
+        $page = \BookStack\Entities\Page::first();
         $this->asAdmin()->visit($page->getUrl() . '/permissions')
             ->see('Page Permissions')
             ->check('restricted')
@@ -370,7 +447,7 @@ class RestrictionsTest extends BrowserKitTest
             ->seeInDatabase('pages', ['id' => $page->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
                 'restrictable_id' => $page->id,
-                'restrictable_type' => 'BookStack\Page',
+                'restrictable_type' => Page::newModelInstance()->getMorphClass(),
                 'role_id' => '2',
                 'action' => 'delete'
             ]);
@@ -378,7 +455,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_pages()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $page = $chapter->pages->first();
         $page2 = $chapter->pages[2];
 
@@ -391,7 +468,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_chapters()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $page = $chapter->pages->first();
 
         $this->setEntityRestrictions($page, []);
@@ -403,7 +480,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_restricted_pages_not_visible_on_chapter_pages()
     {
-        $chapter = \BookStack\Chapter::first();
+        $chapter = Chapter::first();
         $page = $chapter->pages->first();
 
         $this->setEntityRestrictions($page, []);
@@ -411,6 +488,44 @@ class RestrictionsTest extends BrowserKitTest
         $this->actingAs($this->user)
             ->visit($chapter->getUrl())
             ->dontSee($page->name);
+    }
+
+    public function test_bookshelf_update_restriction_override()
+    {
+        $shelf = Bookshelf::first();
+
+        $this->actingAs($this->viewer)
+            ->visit($shelf->getUrl('/edit'))
+            ->dontSee('Edit Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->forceVisit($shelf->getUrl('/edit'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->visit($shelf->getUrl('/edit'))
+            ->seePageIs($shelf->getUrl('/edit'));
+    }
+
+    public function test_bookshelf_delete_restriction_override()
+    {
+        $shelf = Bookshelf::first();
+
+        $this->actingAs($this->viewer)
+            ->visit($shelf->getUrl('/delete'))
+            ->dontSee('Delete Book');
+
+        $this->setEntityRestrictions($shelf, ['view', 'update']);
+
+        $this->forceVisit($shelf->getUrl('/delete'))
+            ->see('You do not have permission')->seePageIs('/');
+
+        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+
+        $this->visit($shelf->getUrl('/delete'))
+            ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
     }
 
     public function test_book_create_restriction_override()
@@ -591,5 +706,27 @@ class RestrictionsTest extends BrowserKitTest
                 ->followRedirects()
                 ->see('You do not have permission')
                 ->seePageIs('/');
+    }
+
+    public function test_can_create_page_if_chapter_has_permissions_when_book_not_visible()
+    {
+        $book = Book::first();
+        $this->setEntityRestrictions($book, []);
+        $bookChapter = $book->chapters->first();
+        $this->setEntityRestrictions($bookChapter, ['view']);
+
+        $this->actingAs($this->user)->visit($bookChapter->getUrl())
+            ->dontSee('New Page');
+
+        $this->setEntityRestrictions($bookChapter, ['view', 'create']);
+
+        $this->actingAs($this->user)->visit($bookChapter->getUrl())
+            ->click('New Page')
+            ->seeStatusCode(200)
+            ->type('test page', 'name')
+            ->type('test content', 'html')
+            ->press('Save Page')
+            ->seePageIs($book->getUrl('/page/test-page'))
+            ->seeStatusCode(200);
     }
 }

@@ -20,11 +20,7 @@
 
     @include('partials/custom-styles')
 
-    @if(setting('app-custom-head') && \Route::currentRouteName() !== 'settings')
-        <!-- Custom user content -->
-        {!! setting('app-custom-head') !!}
-        <!-- End custom user content -->
-    @endif
+    @include('partials.custom-head')
 </head>
 <body class="@yield('body-class')" ng-app="bookStack">
 
@@ -33,7 +29,7 @@
     <header id="header">
         <div class="container fluid">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 col-md-3">
                     <a href="{{ baseUrl('/') }}" class="logo">
                         @if(setting('app-logo', '') !== 'none')
                             <img class="logo-image" src="{{ setting('app-logo', '') === '' ? baseUrl('/logo.png') : baseUrl(setting('app-logo', '')) }}" alt="Logo">
@@ -43,7 +39,7 @@
                         @endif
                     </a>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-8 col-md-9">
                     <div class="float right">
                         <div class="header-search">
                             <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">
@@ -52,6 +48,9 @@
                             </form>
                         </div>
                         <div class="links text-center">
+                            @if(userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
+                                <a href="{{ baseUrl('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
+                            @endif
                             <a href="{{ baseUrl('/books') }}">@icon('book'){{ trans('entities.books') }}</a>
                             @if(signedInUser() && userCan('settings-manage'))
                                 <a href="{{ baseUrl('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>

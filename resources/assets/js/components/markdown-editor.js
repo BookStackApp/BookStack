@@ -1,13 +1,14 @@
-const MarkdownIt = require("markdown-it");
-const mdTasksLists = require('markdown-it-task-lists');
-const code = require('../services/code');
+import MarkdownIt from "markdown-it";
+import mdTasksLists from 'markdown-it-task-lists';
+import code from '../services/code';
 
-const DrawIO = require('../services/drawio');
+import DrawIO from "../services/drawio";
 
 class MarkdownEditor {
 
     constructor(elem) {
         this.elem = elem;
+        this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
 
@@ -18,6 +19,13 @@ class MarkdownEditor {
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
         this.init();
+
+        // Scroll to text if needed.
+        const queryParams = (new URL(window.location)).searchParams;
+        const scrollText = queryParams.get('content-text');
+        if (scrollText) {
+            this.scrollToText(scrollText);
+        }
     }
 
     init() {
@@ -91,6 +99,9 @@ class MarkdownEditor {
 
     codeMirrorSetup() {
         let cm = this.cm;
+        // Text direction
+        // cm.setOption('direction', this.textDirection);
+        cm.setOption('direction', 'ltr'); // Will force to remain as ltr for now due to issues when HTML is in editor.
         // Custom key commands
         let metaKey = code.getMetaKey();
         const extraKeys = {};
@@ -261,14 +272,15 @@ class MarkdownEditor {
             let placeHolderText = `![${selectedText}](${placeholderImage})`;
             let cursor = cm.getCursor();
             cm.replaceSelection(placeHolderText);
-            cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 2});
+            cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 3});
 
             let remoteFilename = "image-" + Date.now() + "." + ext;
             let formData = new FormData();
             formData.append('file', file, remoteFilename);
 
             window.$http.post('/images/gallery/upload', formData).then(resp => {
-                replaceContent(placeholderImage, resp.data.thumbs.display);
+                const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
+                replaceContent(placeHolderText, newContent);
             }).catch(err => {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 replaceContent(placeHolderText, selectedText);
@@ -293,7 +305,7 @@ class MarkdownEditor {
         let cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
             let selectedText = this.cm.getSelection();
-            let newText = "![" + (selectedText || image.name) + "](" + image.thumbs.display + ")";
+            let newText = "[![" + (selectedText || image.name) + "](" + image.thumbs.display + ")](" + image.url + ")";
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
@@ -387,6 +399,33 @@ class MarkdownEditor {
         });
     }
 
+    // Scroll to a specified text
+    scrollToText(searchText) {
+        if (!searchText) {
+            return;
+        }
+
+        const content = this.cm.getValue();
+        const lines = content.split(/\r?\n/);
+        let lineNumber = lines.findIndex(line => {
+            return line && line.indexOf(searchText) !== -1;
+        });
+
+        if (lineNumber === -1) {
+            return;
+        }
+
+        this.cm.scrollIntoView({
+            line: lineNumber,
+        }, 200);
+        this.cm.focus();
+        // set the cursor location.
+        this.cm.setCursor({
+            line: lineNumber,
+            char: lines[lineNumber].length
+        })
+    }
+
 }
 
-module.exports = MarkdownEditor ;
+export default MarkdownEditor ;

@@ -51,6 +51,19 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '尚未设置限制',
 
     /**
+     * Maintenance settings
+     */
+
+    'maint' => '维护',
+    'maint_image_cleanup' => '清理图像',
+    'maint_image_cleanup_desc' => "扫描页面和修订内容以检查哪些图像是正在使用的以及哪些图像是多余的。确保在运行前创建完整的数据库和映像备份。",
+    'maint_image_cleanup_ignore_revisions' => '忽略修订记录中的图像',
+    'maint_image_cleanup_run' => '运行清理',
+    'maint_image_cleanup_warning' => '发现了 :count 张可能未使用的图像。您确定要删除这些图像吗？',
+    'maint_image_cleanup_success' => '找到并删除了 :count 张可能未使用的图像！',
+    'maint_image_cleanup_nothing_found' => '找不到未使用的图像，没有删除！',
+
+    /**
      * Role settings
      */
 
@@ -68,6 +81,7 @@ return [
     'role_details' => '角色详细信息',
     'role_name' => '角色名',
     'role_desc' => '角色简述',
+	'role_external_auth_id' => '外部身份认证ID',
     'role_system' => '系统权限',
     'role_manage_users' => '管理用户',
     'role_manage_roles' => '管理角色与角色权限',
@@ -76,6 +90,7 @@ return [
     'role_manage_settings' => '管理App设置',
     'role_asset' => '资源许可',
     'role_asset_desc' => '对系统内资源的默认访问许可将由这些权限控制。单独设置在书籍，章节和页面上的权限将覆盖这里的权限设定。',
+	'role_asset_admins' => '管理员可自动获得对所有内容的访问权限，但这些选项可能会显示或隐藏UI选项。',
     'role_all' => '全部的',
     'role_own' => '拥有的',
     'role_controlled_by_asset' => '由其所在的资源来控制',
@@ -96,7 +111,6 @@ return [
     'users_external_auth_id' => '外部身份认证ID',
     'users_password_warning' => '如果您想更改密码，请填写以下内容：',
     'users_system_public' => '此用户代表访问您的App的任何访客。它不能用于登录，而是自动分配。',
-    'users_books_view_type' => '图书浏览布局偏好',
     'users_delete' => '删除用户',
     'users_delete_named' => '删除用户 :userName',
     'users_delete_warning' => '这将从系统中完全删除名为 \':userName\' 的用户。',

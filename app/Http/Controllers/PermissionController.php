@@ -1,7 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Exceptions\PermissionsException;
-use BookStack\Repos\PermissionsRepo;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -11,7 +11,7 @@ class PermissionController extends Controller
 
     /**
      * PermissionController constructor.
-     * @param PermissionsRepo $permissionsRepo
+     * @param \BookStack\Auth\Permissions\PermissionsRepo $permissionsRepo
      */
     public function __construct(PermissionsRepo $permissionsRepo)
     {
@@ -78,6 +78,7 @@ class PermissionController extends Controller
      * @param $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws PermissionsException
      */
     public function updateRole($id, Request $request)
     {

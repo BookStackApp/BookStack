@@ -1,21 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Settings',
     'settings_save' => 'Save Settings',
     'settings_save_success' => 'Settings saved',
 
-    /**
-     * App settings
-     */
-
+    // App Settings
     'app_settings' => 'App Settings',
     'app_name' => 'Application name',
     'app_name_desc' => 'This name is shown in the header and any emails.',
@@ -32,16 +28,12 @@ return [
     'app_primary_color' => 'Application primary color',
     'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
     'app_homepage' => 'Application Homepage',
-    'app_homepage_desc' => 'Select a page to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
-    'app_homepage_default' => 'Default homepage view chosen',
-    'app_homepage_books' => 'Or select the books page as your homepage. This will override any page selected as your homepage.',
+    'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Disable comments',
     'app_disable_comments_desc' => 'Disable comments across all pages in the application. Existing comments are not shown.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Registration Settings',
     'reg_allow' => 'Allow registration?',
     'reg_default_role' => 'Default user role after registration',
@@ -51,10 +43,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Cleanup Images',
     'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
@@ -64,10 +53,7 @@ return [
     'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
     'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
-    /**
-     * Role settings
-     */
-
+    // Role Settings
     'roles' => 'Roles',
     'role_user_roles' => 'User Roles',
     'role_create' => 'Create New Role',
@@ -82,6 +68,7 @@ return [
     'role_details' => 'Role Details',
     'role_name' => 'Role Name',
     'role_desc' => 'Short Description of Role',
+    'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'System Permissions',
     'role_manage_users' => 'Manage users',
     'role_manage_roles' => 'Manage roles & role permissions',
@@ -90,6 +77,7 @@ return [
     'role_manage_settings' => 'Manage app settings',
     'role_asset' => 'Asset Permissions',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
+    'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'All',
     'role_own' => 'Own',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
@@ -98,10 +86,7 @@ return [
     'role_users' => 'Users in this role',
     'role_users_none' => 'No users are currently assigned to this role',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Users',
     'user_profile' => 'User Profile',
     'users_add_new' => 'Add New User',
@@ -128,13 +113,15 @@ return [
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
 
-    // Since these labels are already localized this array does not need to be
-    // translated in the language-specific files.
-    // DELETE BELOW IF COPIED FROM EN
-    ///////////////////////////////////
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
     'language_select' => [
         'en' => 'English',
-        'de' => 'Deutsch',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
@@ -142,12 +129,14 @@ return [
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
         'sv' => 'Svenska',
+        'kr' => '한국어',
         'ja' => '日本語',
         'pl' => 'Polski',
         'it' => 'Italian',
         'ru' => 'Русский',
+        'uk' => 'Українська',
         'zh_CN' => '简体中文',
-	    'zh_TW' => '繁體中文'
+        'zh_TW' => '繁體中文'
     ]
-    ///////////////////////////////////
+    //!////////////////////////////////
 ];

@@ -20,6 +20,7 @@ return [
     'role' => 'Rôle',
     'cover_image' => 'Image de couverture',
     'cover_image_description' => 'Cette image doit être environ 300x170px.',
+    
     /**
      * Actions
      */
@@ -30,6 +31,7 @@ return [
     'edit' => 'Editer',
     'sort' => 'Trier',
     'move' => 'Déplacer',
+    'copy' => 'Copier',
     'reply' => 'Répondre',
     'delete' => 'Supprimer',
     'search' => 'Chercher',
@@ -37,7 +39,6 @@ return [
     'reset' => 'Réinitialiser',
     'remove' => 'Enlever',
     'add' => 'Ajouter',
-
 
     /**
      * Misc
@@ -51,6 +52,7 @@ return [
     'details' => 'Détails',
     'grid_view' => 'Vue en grille',
     'list_view' => 'Vue en liste',
+    'default' => 'Défaut',
 
     /**
      * Header

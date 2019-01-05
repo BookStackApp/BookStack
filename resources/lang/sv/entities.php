@@ -166,6 +166,9 @@ return [
     'pages_not_in_chapter' => 'Sidan ligger inte i något kapitel',
     'pages_move' => 'Flytta sida',
     'pages_move_success' => 'Sidan har flyttats till ":parentName"',
+    'pages_copy' => 'Kopiera sida',
+    'pages_copy_desination' => 'Destination',
+    'pages_copy_success' => 'Sidan har kopierats',
     'pages_permissions' => 'Rättigheter för sida',
     'pages_permissions_success' => 'Rättigheterna för sidan har uppdaterats',
     'pages_revision' => 'Revision',
@@ -182,6 +185,7 @@ return [
     'pages_revisions_restore' => 'Återställ',
     'pages_revisions_none' => 'Sidan har inga revisioner',
     'pages_copy_link' => 'Kopiera länk',
+    'pages_edit_content_link' => 'Redigera innehåll',
     'pages_permissions_active' => 'Anpassade rättigheter är i bruk',
     'pages_initial_revision' => 'Första publicering',
     'pages_initial_name' => 'Ny sida',
@@ -261,4 +265,11 @@ return [
     'comment_updated_success' => 'Kommentaren har uppdaterats',
     'comment_delete_confirm' => 'Är du säker på att du vill ta bort den här kommentaren?',
     'comment_in_reply_to' => 'Som svar på :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
+    'revision_delete_success' => 'Revisionen raderad',
+    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.'
 ];

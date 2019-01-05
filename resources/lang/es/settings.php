@@ -32,8 +32,8 @@ return [
     'app_primary_color' => 'Color primario de la aplicación',
     'app_primary_color_desc' => 'Esto debería ser un valor hexadecimal. <br>Deje el valor vacío para restaurar al valor por defecto.',
     'app_homepage' => 'Página de inicio',
-    'app_homepage_desc' => 'Elija la página que se mostrará al inicio en lugar de la vista predeterminada. Se ignorarán los permisos de la página seleccionada.',
-    'app_homepage_default' => 'Página de inicio seleccionada',
+    'app_homepage_desc' => 'Elija la vista que se mostrará en la página de inicio en lugar de la vista predeterminada. Se ignorarán los permisos de la página seleccionada.',
+    'app_homepage_select' => 'Elija una página',
     'app_disable_comments' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilita los comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
@@ -49,6 +49,19 @@ return [
     'reg_confirm_restrict_domain' => 'Restringir registro al dominio',
     'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los dominio a los que les gustaría restringir el registro de usuarios. A los usuarios les será enviado un correo electrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Tenga en cuenta que los usuarios podrán cambiar sus direcciones de correo electrónico después de registrarse exitosamente.',
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
+
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => 'Mantenimiento',
+    'maint_image_cleanup' => 'Limpiar imágenes',
+    'maint_image_cleanup_desc' => "Analiza las páginas y sus revisiones para comprobar qué imágenes y dibujos están siendo utilizadas y cuales no son necesarias. Asegúrate de crear una copia completa de la base de datos y de las imágenes antes de lanzar esta opción.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignorar imágenes en revisiones',
+    'maint_image_cleanup_run' => 'Lanzar limpieza',
+    'maint_image_cleanup_warning' => 'Se han encontrado :count imágenes posiblemente no utilizadas . ¿Estás seguro de querer borrar estas imágenes?',
+    'maint_image_cleanup_success' => '¡Se han encontrado y borrado :count imágenes posiblemente no utilizadas!',
+    'maint_image_cleanup_nothing_found' => '¡No se han encontrado imágenes sin utilizar, no se han borrado imágenes!',
 
     /**
      * Role settings
@@ -68,6 +81,7 @@ return [
     'role_details' => 'Detalles de rol',
     'role_name' => 'Nombre de rol',
     'role_desc' => 'Descripción corta de rol',
+    'role_external_auth_id' => 'ID externo de autenticación',
     'role_system' => 'Permisos de sistema',
     'role_manage_users' => 'Gestionar usuarios',
     'role_manage_roles' => 'Gestionar roles y permisos de roles',
@@ -76,6 +90,7 @@ return [
     'role_manage_settings' => 'Gestionar ajustes de la aplicación',
     'role_asset' => 'Permisos de contenido',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los contenidos del sistema. Los permisos de Libros, Capítulos y Páginas sobreescribiran estos permisos.',
+    'role_asset_admins' => 'A los administradores se les asigna automáticamente permisos para acceder a todo el contenido pero estas opciones podrían mostrar u ocultar opciones de la interfaz.',
     'role_all' => 'Todo',
     'role_own' => 'Propio',
     'role_controlled_by_asset' => 'Controlado por el contenido al que ha sido subido',

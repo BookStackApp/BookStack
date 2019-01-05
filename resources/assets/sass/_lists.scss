@@ -178,7 +178,7 @@
     display: none;
     padding-left: 0;
   }
-  .sub-menu.open {
+  [chapter-toggle].open + .sub-menu {
     display: block;
   }
 }
@@ -266,22 +266,13 @@ ul.pagination {
     padding: $-xxs $-s;
     border: 1px solid #CCC;
     margin-left: -1px;
-    color: #888;
-    fill: #888;
     user-select: none;
     &.disabled {
       cursor: not-allowed;
     }
   }
   li.active span {
-    background-color: rgba($primary, 0.8);
-    color: #EEE;
-    fill: #EEE;
-    border-color: rgba($primary, 0.8);
-  }
-  a {
-    color: $primary;
-    fill: $primary;
+    color: #FFF;
   }
 }
 
@@ -376,11 +367,12 @@ ul.pagination {
     padding: $-xs $-m;
     line-height: 1.2;
   }
-  a {
+  a, button {
     display: block;
     padding: $-xs $-m;
     color: #555;
     fill: #555;
+    white-space: nowrap;
     &:hover {
       text-decoration: none;
       background-color: #EEE;
@@ -390,6 +382,10 @@ ul.pagination {
       display: inline-block;
       width: 16px;
     }
+  }
+  button {
+    width: 100%;
+    text-align: left;
   }
   li.border-bottom {
     border-bottom: 1px solid #DDD;
@@ -417,32 +413,3 @@ ul.pagination {
   }
 }
 
-.book-grid-item .grid-card-content {
-  border-top: 0;
-  border-bottom-width: 2px;
-  h2 {
-    width: 100%;
-    font-size: 1.5em;
-    margin: 0 0 10px;
-  }
-  h2 a {
-    display: block;
-    width: 100%;
-    line-height: 1.2;
-    color: #009688;;
-    fill: #009688;;
-    text-decoration: none;
-  }
-  p {
-    font-size: .85em;
-    margin: 0;
-    line-height: 1.6em;
-  }
-}
-
-.book-grid-item .grid-card-footer {
-  p.small {
-    font-size: .8em;
-    margin: 0;
-  }
-}

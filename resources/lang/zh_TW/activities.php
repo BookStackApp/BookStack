@@ -37,6 +37,14 @@ return [
     'book_sort'                   => '排序了圖書',
     'book_sort_notification'      => '圖書已重新排序成功',
 
+    // Bookshelves
+    'bookshelf_create'            => '建立了書架',
+    'bookshelf_create_notification'    => '書架已建立成功',
+    'bookshelf_update'                 => '更新了書架',
+    'bookshelf_update_notification'    => '書架已更新成功',
+    'bookshelf_delete'                 => '刪除了書架',
+    'bookshelf_delete_notification'    => '書架已刪除成功',
+
     // Other
     'commented_on'                => '評論',
 ];

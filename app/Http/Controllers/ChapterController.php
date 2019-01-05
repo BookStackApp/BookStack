@@ -1,9 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Repos\EntityRepo;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\ExportService;
+use BookStack\Auth\UserRepo;
+use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -19,7 +19,7 @@ class ChapterController extends Controller
      * ChapterController constructor.
      * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
-     * @param ExportService $exportService
+     * @param \BookStack\Entities\ExportService $exportService
      */
     public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
     {
@@ -250,10 +250,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $pdfContent = $this->exportService->chapterToPdf($chapter);
-        return response()->make($pdfContent, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.pdf'
-        ]);
+        return $this->downloadResponse($pdfContent, $chapterSlug . '.pdf');
     }
 
     /**
@@ -266,10 +263,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $containedHtml = $this->exportService->chapterToContainedHtml($chapter);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.html'
-        ]);
+        return $this->downloadResponse($containedHtml, $chapterSlug . '.html');
     }
 
     /**
@@ -281,10 +275,7 @@ class ChapterController extends Controller
     public function exportPlainText($bookSlug, $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
-        $containedHtml = $this->exportService->chapterToPlainText($chapter);
-        return response()->make($containedHtml, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $chapterSlug . '.txt'
-        ]);
+        $chapterText = $this->exportService->chapterToPlainText($chapter);
+        return $this->downloadResponse($chapterText, $chapterSlug . '.txt');
     }
 }

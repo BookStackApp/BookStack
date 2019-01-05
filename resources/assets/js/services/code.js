@@ -1,24 +1,27 @@
-require('codemirror/mode/css/css');
-require('codemirror/mode/clike/clike');
-require('codemirror/mode/diff/diff');
-require('codemirror/mode/go/go');
-require('codemirror/mode/htmlmixed/htmlmixed');
-require('codemirror/mode/javascript/javascript');
-require('codemirror/mode/markdown/markdown');
-require('codemirror/mode/nginx/nginx');
-require('codemirror/mode/php/php');
-require('codemirror/mode/powershell/powershell');
-require('codemirror/mode/python/python');
-require('codemirror/mode/ruby/ruby');
-require('codemirror/mode/shell/shell');
-require('codemirror/mode/sql/sql');
-require('codemirror/mode/toml/toml');
-require('codemirror/mode/xml/xml');
-require('codemirror/mode/yaml/yaml');
+import CodeMirror from "codemirror";
+import Clipboard from "clipboard/dist/clipboard.min";
 
-const Clipboard = require("clipboard");
+// Modes
+import 'codemirror/mode/css/css';
+import 'codemirror/mode/clike/clike';
+import 'codemirror/mode/diff/diff';
+import 'codemirror/mode/go/go';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/markdown/markdown';
+import 'codemirror/mode/nginx/nginx';
+import 'codemirror/mode/php/php';
+import 'codemirror/mode/powershell/powershell';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/shell/shell';
+import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/toml/toml';
+import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/yaml/yaml';
 
-const CodeMirror = require('codemirror');
+// Addons
+import 'codemirror/addon/scroll/scrollpastend';
 
 const modeMap = {
     css: 'css',
@@ -49,7 +52,7 @@ const modeMap = {
     sh: 'shell',
     bash: 'shell',
     toml: 'toml',
-    sql: 'sql',
+    sql: 'text/x-sql',
     xml: 'xml',
     yaml: 'yaml',
     yml: 'yaml',
@@ -113,7 +116,7 @@ function addCopyIcon(cmInstance) {
         copyButton.classList.add('success');
         setTimeout(() => {
             copyButton.classList.remove('success');
-        }, 360);
+        }, 240);
     });
 }
 
@@ -157,6 +160,7 @@ function wysiwygView(elem) {
 
     newWrap.className = 'CodeMirrorContainer';
     newWrap.setAttribute('data-lang', lang);
+    newWrap.setAttribute('dir', 'ltr');
     newTextArea.style.display = 'none';
     elem.parentNode.replaceChild(newWrap, elem);
 
@@ -237,7 +241,8 @@ function markdownEditor(elem) {
         mode: "markdown",
         lineNumbers: true,
         theme: getTheme(),
-        lineWrapping: true
+        lineWrapping: true,
+        scrollPastEnd: true,
     });
 }
 
@@ -250,9 +255,8 @@ function getMetaKey() {
     return mac ? "Cmd" : "Ctrl";
 }
 
-module.exports = {
+export default {
     highlight: highlight,
-    highlightElem: highlightElem,
     wysiwygView: wysiwygView,
     popupEditor: popupEditor,
     setMode: setMode,

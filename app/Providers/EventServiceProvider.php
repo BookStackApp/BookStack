@@ -2,7 +2,6 @@
 
 namespace BookStack\Providers;
 
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
@@ -20,6 +19,7 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Okta\OktaExtendSocialite@handle',
             'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
             'SocialiteProviders\Twitch\TwitchExtendSocialite@handle',
+            'SocialiteProviders\Discord\DiscordExtendSocialite@handle',
         ],
     ];
 

@@ -33,7 +33,7 @@ return [
     'app_primary_color_desc' => 'Esse valor deverá ser Hexadecimal. <br>Deixe em branco para que o Bookstack assuma a cor padrão.',
     'app_homepage' => 'Página incial',
     'app_homepage_desc' => 'Selecione a página para ser usada como página inicial em vez da padrão. Permissões da página serão ignoradas.',
-    'app_homepage_default' => 'Escolhida página inicial padrão',
+    'app_homepage_select' => 'Selecione uma página',
     'app_disable_comments' => 'Desativar comentários',
     'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo. Os comentários existentes não são exibidos.',
 
@@ -49,6 +49,19 @@ return [
     'reg_confirm_restrict_domain' => 'Restringir registro ao domínio',
     'reg_confirm_restrict_domain_desc' => 'Entre com uma lista de domínios de e-mails separados por vírgula para os quais você deseja restringir os registros. Será enviado um e-mail de confirmação para o usuário validar o e-mail antes de ser permitido interação com a aplicação. <br> Note que os usuários serão capazes de alterar o e-mail cadastrado após o sucesso na confirmação do registro.',
     'reg_confirm_restrict_domain_placeholder' => 'Nenhuma restrição configurada',
+
+    /**
+     * Maintenance settings
+     */
+
+    'maint' => 'Manutenção',
+    'maint_image_cleanup' => 'Limpeza de Imagens',
+    'maint_image_cleanup_desc' => "Examina páginas & revisa o conteúdo para verificar quais imagens e desenhos estão atualmente em uso e quais imagens são redundantes. Certifique-se de criar um backup completo do banco de dados e imagens antes de executar isso.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignorar imagens em revisões',
+    'maint_image_cleanup_run' => 'Executar Limpeza',
+    'maint_image_cleanup_warning' => ':count imagens potencialmente não utilizadas foram encontradas. Tem certeza de que deseja excluir estas imagens?',
+    'maint_image_cleanup_success' => ':count imagens potencialmente não utilizadas foram encontradas e excluídas!',
+    'maint_image_cleanup_nothing_found' => 'Nenhuma imagem não utilizada foi encontrada, nada foi excluído!',
 
     /**
      * Role settings
@@ -68,6 +81,7 @@ return [
     'role_details' => 'Detalhes do Perfil',
     'role_name' => 'Nome do Perfil',
     'role_desc' => 'Descrição Curta do Perfil',
+    'role_external_auth_id' => 'IDs de Autenticação Externa',
     'role_system' => 'Permissões do Sistema',
     'role_manage_users' => 'Gerenciar Usuários',
     'role_manage_roles' => 'Gerenciar Perfis & Permissões de Perfis',
@@ -76,6 +90,7 @@ return [
     'role_manage_settings' => 'Gerenciar configurações de app',
     'role_asset' => 'Permissões de Ativos',
     'role_asset_desc' => 'Essas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por essas permissões.',
+    'role_asset_admins' => 'Administradores recebem automaticamente acesso a todo o conteúdo, mas essas opções podem mostrar ou ocultar as opções da UI.',
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelos ativos que você fez upload',
@@ -96,7 +111,6 @@ return [
     'users_external_auth_id' => 'ID de Autenticação Externa',
     'users_password_warning' => 'Preencha os dados abaixo caso queira modificar a sua senha:',
     'users_system_public' => 'Esse usuário representa quaisquer convidados que visitam o aplicativo. Ele não pode ser usado para login.',
-    'users_books_view_type' => 'Layout preferido para mostrar livros',
     'users_delete' => 'Excluir Usuário',
     'users_delete_named' => 'Excluir :userName',
     'users_delete_warning' => 'A ação vai excluir completamente o usuário de nome \':userName\' do sistema.',

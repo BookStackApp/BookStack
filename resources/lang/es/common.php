@@ -31,6 +31,7 @@ return [
     'edit' => 'Editar',
     'sort' => 'Ordenar',
     'move' => 'Mover',
+    'copy' => 'Copiar',
     'reply' => 'Responder',
     'delete' => 'Borrar',
     'search' => 'Buscar',
@@ -51,6 +52,7 @@ return [
     'details' => 'Detalles',
     'grid_view' => 'Vista en Cuadrícula',
     'list_view' => 'Vista en Lista',
+    'default' => 'Predeterminada',
 
     /**
      * Header

@@ -1,7 +1,8 @@
 <?php namespace Tests;
 
 use BookStack\Notifications\ConfirmEmail;
-use BookStack\User;
+use BookStack\Auth\User;
+use BookStack\Settings\SettingService;
 use Illuminate\Support\Facades\Notification;
 
 class AuthTest extends BrowserKitTest
@@ -21,7 +22,7 @@ class AuthTest extends BrowserKitTest
 
     public function test_public_viewing()
     {
-        $settings = app('BookStack\Services\SettingService');
+        $settings = app(SettingService::class);
         $settings->put('app-public', 'true');
         $this->visit('/')
             ->seePageIs('/')
@@ -248,7 +249,7 @@ class AuthTest extends BrowserKitTest
 
     public function test_user_cannot_be_deleted_if_last_admin()
     {
-        $adminRole = \BookStack\Role::getRole('admin');
+        $adminRole = \BookStack\Auth\Role::getRole('admin');
         // Ensure we currently only have 1 admin user
         $this->assertEquals(1, $adminRole->users()->count());
         $user = $adminRole->users->first();

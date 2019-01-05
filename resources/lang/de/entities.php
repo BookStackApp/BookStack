@@ -179,6 +179,7 @@ return [
     'pages_revisions_restore' => 'Wiederherstellen',
     'pages_revisions_none' => 'Diese Seite hat keine älteren Versionen.',
     'pages_copy_link' => 'Link kopieren',
+    'pages_edit_content_link' => 'Inhalt bearbeiten',
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Veröffentlichung',
     'pages_initial_name' => 'Neue Seite',
@@ -255,4 +256,11 @@ return [
     'comment_updated_success' => 'Kommentar aktualisiert',
     'comment_delete_confirm' => 'Möchten Sie diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
+
+    /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
+    'revision_delete_success' => 'Revision gelöscht',
+    'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
 ];

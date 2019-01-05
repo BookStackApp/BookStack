@@ -179,6 +179,7 @@ return [
     'pages_revisions_restore' => '復元',
     'pages_revisions_none' => 'このページにはリビジョンがありません',
     'pages_copy_link' => 'リンクをコピー',
+    'pages_edit_content_link' => 'コンテンツの編集',
     'pages_permissions_active' => 'ページの権限は有効です',
     'pages_initial_revision' => '初回の公開',
     'pages_initial_name' => '新規ページ',
@@ -256,4 +257,11 @@ return [
     'comment_updated_success' => 'コメントを更新しました',
     'comment_delete_confirm' => '本当にこのコメントを削除しますか?',
     'comment_in_reply_to' => ':commentIdへ返信',
+
+     /**
+     * Revision
+     */
+    'revision_delete_confirm' => 'このリビジョンを削除しますか？',
+    'revision_delete_success' => 'リビジョンを削除しました',
+    'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。'
 ];

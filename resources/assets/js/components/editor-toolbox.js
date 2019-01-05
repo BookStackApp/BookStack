@@ -44,4 +44,4 @@ class EditorToolbox {
 
 }
 
-module.exports = EditorToolbox;
+export default EditorToolbox;

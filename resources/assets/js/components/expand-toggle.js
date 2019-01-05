@@ -62,4 +62,4 @@ class ExpandToggle {
 
 }
 
-module.exports = ExpandToggle;
+export default ExpandToggle;

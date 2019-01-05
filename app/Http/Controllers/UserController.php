@@ -1,11 +1,11 @@
 <?php namespace BookStack\Http\Controllers;
 
-use Exception;
+use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Auth\User;
+use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\UserUpdateException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use BookStack\Repos\UserRepo;
-use BookStack\Services\SocialAuthService;
-use BookStack\User;
 
 class UserController extends Controller
 {
@@ -60,6 +60,7 @@ class UserController extends Controller
      * Store a newly created user in storage.
      * @param  Request $request
      * @return Response
+     * @throws UserUpdateException
      */
     public function store(Request $request)
     {
@@ -90,10 +91,10 @@ class UserController extends Controller
 
         if ($request->filled('roles')) {
             $roles = $request->get('roles');
-            $user->roles()->sync($roles);
+            $this->userRepo->setUserRoles($user, $roles);
         }
 
-        $this->userRepo->downloadGravatarToUserAvatar($user);
+        $this->userRepo->downloadAndAssignUserAvatar($user);
 
         return redirect('/settings/users');
     }
@@ -101,7 +102,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      * @param  int              $id
-     * @param SocialAuthService $socialAuthService
+     * @param \BookStack\Auth\Access\SocialAuthService $socialAuthService
      * @return Response
      */
     public function edit($id, SocialAuthService $socialAuthService)
@@ -123,8 +124,9 @@ class UserController extends Controller
     /**
      * Update the specified user in storage.
      * @param  Request $request
-     * @param  int     $id
+     * @param  int $id
      * @return Response
+     * @throws UserUpdateException
      */
     public function update(Request $request, $id)
     {
@@ -141,13 +143,13 @@ class UserController extends Controller
             'setting'          => 'array'
         ]);
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         $user->fill($request->all());
 
         // Role updates
         if (userCan('users-manage') && $request->filled('roles')) {
             $roles = $request->get('roles');
-            $user->roles()->sync($roles);
+            $this->userRepo->setUserRoles($user, $roles);
         }
 
         // Password updates
@@ -186,7 +188,7 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
         return view('users/delete', ['user' => $user]);
     }
@@ -195,6 +197,7 @@ class UserController extends Controller
      * Remove the specified user from storage.
      * @param  int $id
      * @return Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -252,13 +255,36 @@ class UserController extends Controller
             return $this->currentUser->id == $id;
         });
 
-        $viewType = $request->get('book_view_type');
+        $viewType = $request->get('view_type');
         if (!in_array($viewType, ['grid', 'list'])) {
             $viewType = 'list';
         }
 
         $user = $this->user->findOrFail($id);
         setting()->putUser($user, 'books_view_type', $viewType);
+
+        return redirect()->back(302, [], "/settings/users/$id");
+    }
+
+    /**
+     * Update the user's preferred shelf-list display setting.
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function switchShelfView($id, Request $request)
+    {
+        $this->checkPermissionOr('users-manage', function () use ($id) {
+            return $this->currentUser->id == $id;
+        });
+
+        $viewType = $request->get('view_type');
+        if (!in_array($viewType, ['grid', 'list'])) {
+            $viewType = 'list';
+        }
+
+        $user = $this->userRepo->getById($id);
+        setting()->putUser($user, 'bookshelves_view_type', $viewType);
 
         return redirect()->back(302, [], "/settings/users/$id");
     }
