@@ -109,6 +109,16 @@ class RolesTest extends BrowserKitTest
             ->seePageIs('/settings/users');
     }
 
+    public function test_manage_users_permission_shows_link_in_header_if_does_not_have_settings_manage_permision()
+    {
+        $usersLink = 'href="'.url('/settings/users') . '"';
+        $this->actingAs($this->user)->visit('/')->dontSee($usersLink);
+        $this->giveUserPermissions($this->user, ['users-manage']);
+        $this->actingAs($this->user)->visit('/')->see($usersLink);
+        $this->giveUserPermissions($this->user, ['settings-manage', 'users-manage']);
+        $this->actingAs($this->user)->visit('/')->dontSee($usersLink);
+    }
+
     public function test_user_roles_manage_permission()
     {
         $this->actingAs($this->user)->visit('/settings/roles')
