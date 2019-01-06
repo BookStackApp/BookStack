@@ -22,7 +22,8 @@ return [
     // Set the default view type for various lists. Can be overridden by user preferences.
     // These will be used for public viewers and users that have not set a preference.
     'views' => [
-        'books' => env('APP_VIEWS_BOOKS', 'list')
+        'books' => env('APP_VIEWS_BOOKS', 'list'),
+        'bookshelves' => env('APP_VIEWS_BOOKSHELVES', 'grid'),
     ],
 
     // The number of revisions to keep in the database.
