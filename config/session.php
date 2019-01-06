@@ -14,7 +14,6 @@ return [
     // Options: file, cookie, database, redis, memcached, array
     'driver' => env('SESSION_DRIVER', 'file'),
 
-
     // Session lifetime, in minutes
     'lifetime' => env('SESSION_LIFETIME', 120),
 
