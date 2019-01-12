@@ -79,6 +79,7 @@ class HomeController extends Controller
     {
         $locale = app()->getLocale();
         $cacheKey = 'GLOBAL_TRANSLATIONS_' . $locale;
+
         if (cache()->has($cacheKey) && config('app.env') !== 'development') {
             $resp = cache($cacheKey);
         } else {
@@ -89,15 +90,6 @@ class HomeController extends Controller
                 'entities' => trans('entities'),
                 'errors' => trans('errors')
             ];
-            if ($locale !== 'en') {
-                $enTrans = [
-                    'common' => trans('common', [], 'en'),
-                    'components' => trans('components', [], 'en'),
-                    'entities' => trans('entities', [], 'en'),
-                    'errors' => trans('errors', [], 'en')
-                ];
-                $translations = array_replace_recursive($enTrans, $translations);
-            }
             $resp = 'window.translations = ' . json_encode($translations);
             cache()->put($cacheKey, $resp, 120);
         }

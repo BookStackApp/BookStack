@@ -1,9 +1,10 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
+    // Buttons
     'cancel' => 'Cancelar',
     'confirm' => 'Confirmar',
     'back' => 'Atrás',
@@ -12,18 +13,14 @@ return [
     'select' => 'Seleccionar',
     'more' => 'Más',
 
-    /**
-     * Form Labels
-     */
+    // Form Labels
     'name' => 'Nombre',
     'description' => 'Descripción',
     'role' => 'Rol',
     'cover_image' => 'Imagen de portada',
     'cover_image_description' => 'Esta imagen debe ser aproximadamente de 440x250px.',
 
-    /**
-     * Actions
-     */
+    // Actions
     'actions' => 'Acciones',
     'view' => 'Ver',
     'create' => 'Crear',
@@ -40,9 +37,7 @@ return [
     'remove' => 'Remover',
     'add' => 'Añadir',
 
-    /**
-     * Misc
-     */
+    // Misc
     'deleted_user' => 'Usuario borrado',
     'no_activity' => 'Ninguna actividad para mostrar',
     'no_items' => 'No hay elementos disponibles',
@@ -54,15 +49,11 @@ return [
     'list_view' => 'Vista en Lista',
     'default' => 'Predeterminada',
 
-    /**
-     * Header
-     */
+    // Header
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
 
-    /**
-     * Email Content
-     */
+    // Email Content
     'email_action_help' => 'Si está teniendo problemas clicando en el botón ":actionText", copie y pegue la siguiente URL en su navegador web:',
     'email_rights' => 'Todos los derechos reservados',
 ];

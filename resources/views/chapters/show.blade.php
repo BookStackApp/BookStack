@@ -20,11 +20,11 @@
             @if(userCan('chapter-update', $chapter))
                 <a href="{{ $chapter->getUrl('/edit') }}" class="text-primary text-button">@icon('edit'){{ trans('common.edit') }}</a>
             @endif
-            @if(userCan('chapter-update', $chapter) || userCan('restrictions-manage', $chapter) || userCan('chapter-delete', $chapter))
+            @if((userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter) )|| userCan('restrictions-manage', $chapter) || userCan('chapter-delete', $chapter))
                 <div dropdown class="dropdown-container">
                     <a dropdown-toggle class="text-primary text-button">@icon('more') {{ trans('common.more') }}</a>
                     <ul>
-                        @if(userCan('chapter-update', $chapter))
+                        @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
                             <li><a href="{{ $chapter->getUrl('/move') }}" class="text-primary">@icon('folder'){{ trans('common.move') }}</a></li>
                         @endif
                         @if(userCan('restrictions-manage', $chapter))

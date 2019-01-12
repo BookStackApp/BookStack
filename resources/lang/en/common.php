@@ -1,9 +1,10 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
+    // Buttons
     'cancel' => 'Cancel',
     'confirm' => 'Confirm',
     'back' => 'Back',
@@ -12,18 +13,14 @@ return [
     'select' => 'Select',
     'more' => 'More',
 
-    /**
-     * Form Labels
-     */
+    // Form Labels
     'name' => 'Name',
     'description' => 'Description',
     'role' => 'Role',
     'cover_image' => 'Cover image',
     'cover_image_description' => 'This image should be approx 440x250px.',
     
-    /**
-     * Actions
-     */
+    // Actions
     'actions' => 'Actions',
     'view' => 'View',
     'create' => 'Create',
@@ -40,9 +37,7 @@ return [
     'remove' => 'Remove',
     'add' => 'Add',
 
-    /**
-     * Misc
-     */
+    // Misc
     'deleted_user' => 'Deleted User',
     'no_activity' => 'No activity to show',
     'no_items' => 'No items available',
@@ -54,15 +49,11 @@ return [
     'list_view' => 'List View',
     'default' => 'Default',
 
-    /**
-     * Header
-     */
+    // Header
     'view_profile' => 'View Profile',
     'edit_profile' => 'Edit Profile',
 
-    /**
-     * Email Content
-     */
+    // Email Content
     'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
     'email_rights' => 'All rights reserved',
 ];

@@ -1,6 +1,7 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Auth\User;
+use BookStack\Exceptions\HttpFetchException;
 use BookStack\Exceptions\ImageUploadException;
 use DB;
 use Exception;
@@ -17,6 +18,7 @@ class ImageService extends UploadService
     protected $cache;
     protected $storageUrl;
     protected $image;
+    protected $http;
 
     /**
      * ImageService constructor.
@@ -24,12 +26,14 @@ class ImageService extends UploadService
      * @param ImageManager $imageTool
      * @param FileSystem $fileSystem
      * @param Cache $cache
+     * @param HttpFetcher $http
      */
-    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
+    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache, HttpFetcher $http)
     {
         $this->image = $image;
         $this->imageTool = $imageTool;
         $this->cache = $cache;
+        $this->http = $http;
         parent::__construct($fileSystem);
     }
 
@@ -95,8 +99,9 @@ class ImageService extends UploadService
     private function saveNewFromUrl($url, $type, $imageName = false)
     {
         $imageName = $imageName ? $imageName : basename($url);
-        $imageData = file_get_contents($url);
-        if ($imageData === false) {
+        try {
+            $imageData = $this->http->fetch($url);
+        } catch (HttpFetchException $exception) {
             throw new \Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
         }
         return $this->saveNew($imageName, $imageData, $type);
@@ -279,24 +284,57 @@ class ImageService extends UploadService
     }
 
     /**
-     * Save a gravatar image and set a the profile image for a user.
+     * Save an avatar image from an external service.
      * @param \BookStack\Auth\User $user
      * @param int $size
-     * @return mixed
+     * @return Image
      * @throws Exception
      */
-    public function saveUserGravatar(User $user, $size = 500)
+    public function saveUserAvatar(User $user, $size = 500)
     {
-        $emailHash = md5(strtolower(trim($user->email)));
-        $url = 'https://www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
-        $imageName = str_replace(' ', '-', $user->name . '-gravatar.png');
-        $image = $this->saveNewFromUrl($url, 'user', $imageName);
+        $avatarUrl = $this->getAvatarUrl();
+        $email = strtolower(trim($user->email));
+
+        $replacements = [
+            '${hash}' => md5($email),
+            '${size}' => $size,
+            '${email}' => urlencode($email),
+        ];
+
+        $userAvatarUrl = strtr($avatarUrl, $replacements);
+        $imageName = str_replace(' ', '-', $user->name . '-avatar.png');
+        $image = $this->saveNewFromUrl($userAvatarUrl, 'user', $imageName);
         $image->created_by = $user->id;
         $image->updated_by = $user->id;
         $image->save();
+
         return $image;
     }
 
+    /**
+     * Check if fetching external avatars is enabled.
+     * @return bool
+     */
+    public function avatarFetchEnabled()
+    {
+        $fetchUrl = $this->getAvatarUrl();
+        return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
+    }
+
+    /**
+     * Get the URL to fetch avatars from.
+     * @return string|mixed
+     */
+    protected function getAvatarUrl()
+    {
+        $url = trim(config('services.avatar_url'));
+
+        if (empty($url) && !config('services.disable_services')) {
+            $url = 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon';
+        }
+
+        return $url;
+    }
 
     /**
      * Delete gallery and drawings that are not within HTML content of pages or page revisions.
@@ -365,14 +403,7 @@ class ImageService extends UploadService
             }
         } else {
             try {
-                $ch = curl_init();
-                curl_setopt_array($ch, [CURLOPT_URL => $uri, CURLOPT_RETURNTRANSFER => 1, CURLOPT_CONNECTTIMEOUT => 5]);
-                $imageData = curl_exec($ch);
-                $err = curl_error($ch);
-                curl_close($ch);
-                if ($err) {
-                    throw new \Exception("Image fetch failed, Received error: " . $err);
-                }
+                $imageData = $this->http->fetch($uri);
             } catch (\Exception $e) {
             }
         }

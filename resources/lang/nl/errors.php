@@ -35,6 +35,7 @@ return [
     'cannot_create_thumbs' => 'De server kon geen thumbnails maken. Controleer of je de GD PHP extensie geïnstalleerd hebt.',
     'server_upload_limit' => 'Het afbeeldingsformaat is te groot. Probeer een kleinere bestandsgrootte.',
     'image_upload_error' => 'Er ging iets fout bij het uploaden van de afbeelding',
+    'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
 
     // Attachments
     'attachment_page_mismatch' => 'Bij het bijwerken van de bijlage bleek de pagina onjuist',

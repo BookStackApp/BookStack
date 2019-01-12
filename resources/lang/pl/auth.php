@@ -10,8 +10,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Wprowadzone poświadczenia są nieprawidłowe.',
+    'throttle' => 'Zbyt wiele prób logowania. Spróbuj ponownie za :seconds s.',
 
     /**
      * Login & Register
@@ -24,13 +24,13 @@ return [
 
     'name' => 'Imię',
     'username' => 'Nazwa użytkownika',
-    'email' => 'Email',
+    'email' => 'E-mail',
     'password' => 'Hasło',
     'password_confirm' => 'Potwierdzenie hasła',
     'password_hint' => 'Musi mieć więcej niż 5 znaków',
-    'forgot_password' => 'Przypomnij hasło',
+    'forgot_password' => 'Zapomniałem hasła',
     'remember_me' => 'Zapamiętaj mnie',
-    'ldap_email_hint' => 'Wprowadź adres email dla tego konta.',
+    'ldap_email_hint' => 'Wprowadź adres e-mail dla tego konta.',
     'create_account' => 'Utwórz konto',
     'social_login' => 'Logowanie za pomocą konta społecznościowego',
     'social_registration' => 'Rejestracja za pomocą konta społecznościowego',
@@ -40,7 +40,7 @@ return [
     'register_confirm' => 'Sprawdź podany adres e-mail i kliknij w link, by uzyskać dostęp do :appName.',
     'registrations_disabled' => 'Rejestracja jest obecnie zablokowana.',
     'registration_email_domain_invalid' => 'Adresy e-mail z tej domeny nie mają dostępu do tej aplikacji',
-    'register_success' => 'Dziękujemy za rejestrację! Zalogowano Cię automatycznie.',
+    'register_success' => 'Dziękujemy za rejestrację! Zostałeś zalogowany automatycznie.',
 
 
     /**
@@ -60,16 +60,16 @@ return [
     /**
      * Email Confirmation
      */
-    'email_confirm_subject' => 'Potwierdź swój adres email w :appName',
+    'email_confirm_subject' => 'Potwierdź swój adres e-mail w :appName',
     'email_confirm_greeting' => 'Dziękujemy za dołączenie do :appName!',
     'email_confirm_text' => 'Prosimy byś potwierdził swoje hasło klikając przycisk poniżej:',
-    'email_confirm_action' => 'Potwierdź email',
+    'email_confirm_action' => 'Potwierdź e-mail',
     'email_confirm_send_error' => 'Wymagane jest potwierdzenie hasła, lecz wiadomość nie mogła zostać wysłana. Skontaktuj się z administratorem w celu upewnienia się, że skrzynka została skonfigurowana prawidłowo.',
-    'email_confirm_success' => 'Adres email został potwierdzony!',
-    'email_confirm_resent' => 'Wiadomość potwierdzająca została wysłana, sprawdź swoją skrzynkę.',
+    'email_confirm_success' => 'Adres e-mail został potwierdzony!',
+    'email_confirm_resent' => 'E-mail z potwierdzeniem został wysłany ponownie, sprawdź swoją skrzynkę odbiorczą.',
 
-    'email_not_confirmed' => 'Adres email niepotwierdzony',
-    'email_not_confirmed_text' => 'Twój adres email nie został jeszcze potwierdzony.',
+    'email_not_confirmed' => 'Adres e-mail nie został potwierdzony',
+    'email_not_confirmed_text' => 'Twój adres e-mail nie został jeszcze potwierdzony.',
     'email_not_confirmed_click_link' => 'Aby potwierdzić swoje konto kliknij w link wysłany w wiadomości po rejestracji.',
     'email_not_confirmed_resend' => 'Jeśli wiadomość do Ciebie nie dotarła możesz wysłać ją ponownie wypełniając formularz poniżej.',
     'email_not_confirmed_resend_button' => 'Wyślij ponownie wiadomość z potwierdzeniem',

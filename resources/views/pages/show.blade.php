@@ -23,7 +23,9 @@
                     <ul>
                         @if(userCan('page-update', $page))
                             <li><a href="{{ $page->getUrl('/copy') }}" class="text-primary" >@icon('copy'){{ trans('common.copy') }}</a></li>
-                            <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" >@icon('folder'){{ trans('common.move') }}</a></li>
+                            @if(userCan('page-delete', $page))
+                                <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" >@icon('folder'){{ trans('common.move') }}</a></li>
+                            @endif
                             <li><a href="{{ $page->getUrl('/revisions') }}" class="text-primary">@icon('history'){{ trans('entities.revisions') }}</a></li>
                         @endif
                         @if(userCan('restrictions-manage', $page))
