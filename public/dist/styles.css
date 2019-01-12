@@ -2119,6 +2119,9 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
 .mce-colorbtn-trans {
   overflow: hidden; }
 
+.mce-content-body .CodeMirrorContainer > .CodeMirror {
+  pointer-events: none; }
+
 /* BASICS */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
