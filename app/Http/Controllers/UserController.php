@@ -281,7 +281,7 @@ class UserController extends Controller
             $viewType = 'list';
         }
 
-        $user = $this->userRepo->getById($id);
+        $user = $this->userRepo->getById($userId);
         $key = $listName . '_view_type';
         setting()->putUser($user, $key, $viewType);
 

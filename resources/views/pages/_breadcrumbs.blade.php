@@ -1,5 +1,5 @@
-@include('partials.breadcrumbs', [
-        'page' => $page,
-        'chapter' => $page->hasChapter() ? $page->chapter : null,
-        'book' => $page->book,
-])
+@include('partials.breadcrumbs', ['crumbs' => [
+        $page->book,
+        $page->hasChapter() ? $page->chapter : null,
+        $page,
+]])
