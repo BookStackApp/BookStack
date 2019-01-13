@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
     'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
+    'file_upload_timeout' => 'Filuppladdningen har tagits ut.',
 
     // Attachments
     'attachment_page_mismatch' => 'Fel i sidmatchning vid uppdatering av bilaga',

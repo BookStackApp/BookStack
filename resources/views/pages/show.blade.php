@@ -140,10 +140,12 @@
                     <span class="icon">@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>
                 </a>
-                <a href="{{ $page->getUrl('/move') }}" class="icon-list-item">
-                    <span class="icon">@icon('folder')</span>
-                    <span>{{ trans('common.move') }}</span>
-                </a>
+                @if(userCan('page-delete', $page))
+	                <a href="{{ $page->getUrl('/move') }}" class="icon-list-item">
+	                    <span class="icon">@icon('folder')</span>
+	                    <span>{{ trans('common.move') }}</span>
+	                </a>
+                @endif
                 <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
                     <span class="icon">@icon('history')</span>
                     <span>{{ trans('entities.revisions') }}</span>

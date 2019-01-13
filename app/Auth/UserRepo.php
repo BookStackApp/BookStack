@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;
 use Exception;
 use Images;
@@ -42,7 +43,7 @@ class UserRepo
      */
     public function getById($id)
     {
-        return $this->user->findOrFail($id);
+        return $this->user->newQuery()->findOrFail($id);
     }
 
     /**
@@ -85,9 +86,7 @@ class UserRepo
     {
         $user = $this->create($data, $verifyEmail);
         $this->attachDefaultRole($user);
-
-        // Get avatar from gravatar and save
-        $this->downloadGravatarToUserAvatar($user);
+        $this->downloadAndAssignUserAvatar($user);
 
         return $user;
     }
@@ -138,6 +137,40 @@ class UserRepo
     }
 
     /**
+     * Set the assigned user roles via an array of role IDs.
+     * @param User $user
+     * @param array $roles
+     * @throws UserUpdateException
+     */
+    public function setUserRoles(User $user, array $roles)
+    {
+        if ($this->demotingLastAdmin($user, $roles)) {
+            throw new UserUpdateException(trans('errors.role_cannot_remove_only_admin'), $user->getEditUrl());
+        }
+
+        $user->roles()->sync($roles);
+    }
+
+    /**
+     * Check if the given user is the last admin and their new roles no longer
+     * contains the admin role.
+     * @param User $user
+     * @param array $newRoles
+     * @return bool
+     */
+    protected function demotingLastAdmin(User $user, array $newRoles) : bool
+    {
+        if ($this->isOnlyAdmin($user)) {
+            $adminRole = $this->role->getSystemRole('admin');
+            if (!in_array(strval($adminRole->id), $newRoles)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Create a new basic instance of user.
      * @param array $data
      * @param boolean $verifyEmail
@@ -145,7 +178,6 @@ class UserRepo
      */
     public function create(array $data, $verifyEmail = false)
     {
-
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
@@ -238,25 +270,24 @@ class UserRepo
     }
 
     /**
-     * Get a gravatar image for a user and set it as their avatar.
-     * Does not run if gravatar disabled in config.
+     * Get an avatar image for a user and set it as their avatar.
+     * Returns early if avatars disabled or not set in config.
      * @param User $user
      * @return bool
      */
-    public function downloadGravatarToUserAvatar(User $user)
+    public function downloadAndAssignUserAvatar(User $user)
     {
-        // Get avatar from gravatar and save
-        if (!config('services.gravatar')) {
+        if (!Images::avatarFetchEnabled()) {
             return false;
         }
 
         try {
-            $avatar = Images::saveUserGravatar($user);
+            $avatar = Images::saveUserAvatar($user);
             $user->avatar()->associate($avatar);
             $user->save();
             return true;
         } catch (Exception $e) {
-            \Log::error('Failed to save user gravatar image');
+            \Log::error('Failed to save user avatar image');
             return false;
         }
     }

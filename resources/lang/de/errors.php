@@ -32,6 +32,8 @@ return [
     'server_upload_limit' => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuchen Sie es mit einer kleineren Datei.',
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
+    'file_upload_timeout' => 'Der Upload der Datei ist abgelaufen.',
+
     // Attachments
     'attachment_page_mismatch' => 'Die Seite stimmte nach dem Hochladen des Anhangs nicht überein.',
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',

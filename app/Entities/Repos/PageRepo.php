@@ -194,9 +194,9 @@ class PageRepo extends EntityRepo
      * @param \BookStack\Entities\Page $page
      * @return string
      */
-    public function pageToPlainText(Page $page)
+    protected function pageToPlainText(Page $page) : string
     {
-        $html = $this->renderPage($page);
+        $html = $this->renderPage($page, true);
         return strip_tags($html);
     }
 

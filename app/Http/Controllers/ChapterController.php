@@ -161,6 +161,7 @@ class ChapterController extends Controller
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->setPageTitle(trans('entities.chapters_move_named', ['chapterName' => $chapter->getShortName()]));
         $this->checkOwnablePermission('chapter-update', $chapter);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
         return view('chapters/move', [
             'chapter' => $chapter,
             'book' => $chapter->book
@@ -179,6 +180,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
 
         $entitySelection = $request->get('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {

@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'No tiene permisos para visualizar la página solicitada.',
@@ -38,6 +36,7 @@ return [
     'uploaded'  => 'El servidor no permite la subida de ficheros de este tamaño. Intente subir un fichero de menor tamaño.',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen que se quiere subir no es válido',
+    'file_upload_timeout' => 'La carga del archivo ha caducado.',
 
     // Attachments
     'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',
@@ -80,4 +79,5 @@ return [
     'error_occurred' => 'Ha ocurrido un error',
     'app_down' => 'La aplicación :appName se encuentra caída en este momento',
     'back_soon' => 'Volverá a estar operativa pronto.',
+
 ];
