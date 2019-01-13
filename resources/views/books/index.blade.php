@@ -36,7 +36,7 @@
 @section('right')
 
     <div class="actions mb-xl">
-        <h5>Actions</h5>
+        <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
             @if($currentUser->can('book-create-all'))
                 <a href="{{ baseUrl("/create-book") }}" class="icon-list-item">

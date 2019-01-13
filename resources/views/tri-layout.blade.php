@@ -4,11 +4,11 @@
 
 @section('content')
 
-    <div class="toolbar px-xl">
-        @yield('toolbar')
-    </div>
+    {{--<div class="toolbar px-xl">--}}
+        {{--@yield('toolbar')--}}
+    {{--</div>--}}
 
-    <div class="tri-layout-container @yield('container-classes')" tri-layout @yield('container-attrs') >
+    <div class="tri-layout-container mt-xl" tri-layout @yield('container-attrs') >
 
         <div class="tri-layout-left print-hidden " id="sidebar">
             <div class="tri-layout-left-contents">

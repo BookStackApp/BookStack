@@ -1,63 +1,17 @@
-.page-list {
-  h4 {
-    margin: $-l 0 $-xs 0;
-    font-size: 1.666em;
+
+.book-contents .entity-list-item {
+  .icon {
+    margin-top: $-xs;
   }
-  a.chapter {
-    color: $color-chapter;
+  p {
+    margin-bottom: 0;
+  }
+  .inner-page {
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .inset-list {
     display: none;
-    overflow: hidden;
-  }
-  h5 {
-    display: block;
-    margin: $-s 0 0 0;
-    border-left: 5px solid $color-page;
-    padding: $-xs 0 $-xs $-m;
-    font-size: 1.1em;
-    font-weight: normal;
-    &.draft {
-      border-left-color: $color-page-draft;
-    }
-  }
-  .entity-list-item {
-    margin-bottom: $-m;
-  }
-  hr {
-    margin-top: 0;
-  }
-  .page, .chapter, .book {
-    padding-left: $-l;
-  }
-  .page {
-    border-left: 5px solid $color-page;
-  }
-  .page.draft {
-    border-left: 5px solid $color-page-draft;
-    .text-page {
-      color: $color-page-draft;
-      fill: $color-page-draft;
-    }
-  }
-  .chapter {
-    border-left: 5px solid $color-chapter;
-  }
-  .book {
-    border-left: 5px solid $color-book;
-  }
-  .meta {
-    margin-top: -$-m;
-    font-size: 0.95em;
-  }
-  .meta span {
-    margin-right: $-s;
-  }
-}
-
-@include smaller-than($s) {
-  .page-list h4 {
-    font-size: 1.333em;
   }
 }
 
@@ -205,13 +159,16 @@
 }
 
 .activity-list-item {
-  padding: $-s $-m;
+  padding: $-s 0;
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-column-gap: $-m;
   color: #888;
   fill: #888;
   font-size: 0.9em;
+}
+.card .activity-list-item {
+  padding: $-s $-m;
 }
 
 ul.pagination {
@@ -298,8 +255,11 @@ ul.pagination {
   }
 }
 
-.card a.entity-list-item:hover {
+.card .entity-list-item:hover {
   background-color: #F2F2F2;
+}
+.card .entity-list-item .entity-list-item:hover {
+  background-color: #EEEEEE;
 }
 
 .entity-list-item-image {

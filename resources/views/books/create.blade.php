@@ -2,14 +2,11 @@
 
 @section('body')
     <div class="container small">
-        <div class="breadcrumbs my-l">
-            <a href="{{  baseUrl('/books')  }}" class="">
-                @icon('book'){{ trans('entities.books') }}
-            </a>
-            <div class="separator">@icon('chevron-right')</div>
-            <a href="{{  baseUrl('/create-book')  }}" class="">
-                @icon('add'){{ trans('entities.books_create') }}
-            </a>
+        <div class="my-l">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                '/books' => trans('entities.books'),
+                '/create-book' => trans('entities.books_create')
+            ]])
         </div>
 
         <div class="content-wrap card">

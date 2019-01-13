@@ -56,6 +56,7 @@ body.flexbox {
   margin-right: auto;
   margin-bottom: $-xl;
   overflow: auto;
+  min-height: 60vh;
 }
 
 .tri-layout-container {
@@ -63,8 +64,11 @@ body.flexbox {
   grid-template-columns: 1fr minmax(auto, 940px) 1fr;
   grid-template-areas: "a b c";
   .tri-layout-right-contents, .tri-layout-left-contents {
-    padding-right: $-xl;
-    padding-left: $-xl;
+    padding-right: 3vw;
+    padding-left: 3vw;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .tri-layout-right {
     grid-area: c;
@@ -113,7 +117,7 @@ body.flexbox {
       padding-left: $-m;
       padding-right: $-m;
     }
-    .tri-layout-right, .tri-layout-left {
+    .tri-layout-right-contents > div, .tri-layout-left-contents > div {
       opacity: 0.6;
       z-index: 0;
     }
@@ -146,8 +150,8 @@ body.flexbox {
   }
 }
 
-.tri-layout-left, .tri-layout-right {
-  opacity: 0.7;
+.tri-layout-left-contents > div, .tri-layout-right-contents > div {
+  opacity: 0.6;
   transition: opacity ease-in-out 120ms;
   &:hover {
     opacity: 1;
