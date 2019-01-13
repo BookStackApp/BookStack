@@ -9,6 +9,7 @@ use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
+use BookStack\Uploads\HttpFetcher;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use Illuminate\Contracts\Cache\Repository;
@@ -61,7 +62,8 @@ class CustomFacadeProvider extends ServiceProvider
                 $this->app->make(Image::class),
                 $this->app->make(ImageManager::class),
                 $this->app->make(Factory::class),
-                $this->app->make(Repository::class)
+                $this->app->make(Repository::class),
+                $this->app->make(HttpFetcher::class)
             );
         });
     }

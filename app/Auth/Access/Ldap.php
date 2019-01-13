@@ -92,4 +92,27 @@ class Ldap
     {
         return ldap_bind($ldapConnection, $bindRdn, $bindPassword);
     }
+
+    /**
+     * Explode a LDAP dn string into an array of components.
+     * @param string $dn
+     * @param int $withAttrib
+     * @return array
+     */
+    public function explodeDn(string $dn, int $withAttrib)
+    {
+        return ldap_explode_dn($dn, $withAttrib);
+    }
+
+    /**
+     * Escape a string for use in an LDAP filter.
+     * @param string $value
+     * @param string $ignore
+     * @param int $flags
+     * @return string
+     */
+    public function escape(string $value, string $ignore = "", int $flags = 0)
+    {
+        return ldap_escape($value, $ignore, $flags);
+    }
 }

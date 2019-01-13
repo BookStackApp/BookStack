@@ -54,3 +54,8 @@
 .mce-colorbtn-trans {
   overflow: hidden;
 }
+
+// Fix to prevent CodeMirror focus events throwing TinyMCE cursor position.
+.mce-content-body .CodeMirrorContainer > .CodeMirror {
+  pointer-events: none;
+}

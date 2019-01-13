@@ -28,8 +28,14 @@
                     @if(signedInUser() && userCan('settings-manage'))
                         <a href="{{ baseUrl('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
                     @endif
+                    @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
+                        <a href="{{ baseUrl('/settings/users') }}">@icon('users'){{ trans('settings.users') }}</a>
+                    @endif
                     @if(!signedInUser())
-                        <a href="{{ baseUrl('/login') }}">@icon('login'){{ trans('auth.log_in') }}</a>
+                        @if(setting('registration-enabled', false))
+                            <a href="{{ baseUrl("/register") }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
+                        @endif
+                        <a href="{{ baseUrl('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
                     @endif
                 </div>
                 @if(signedInUser())

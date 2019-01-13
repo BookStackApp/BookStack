@@ -1,17 +1,7 @@
-<?php
+<?php namespace BookStack\Notifications;
 
-namespace BookStack\Notifications;
-
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
-
-class ConfirmEmail extends Notification implements ShouldQueue
+class ConfirmEmail extends MailNotification
 {
-
-    use Queueable;
-    
     public $token;
 
     /**
@@ -24,17 +14,6 @@ class ConfirmEmail extends Notification implements ShouldQueue
     }
 
     /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
-    {
-        return ['mail'];
-    }
-
-    /**
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
@@ -43,10 +22,10 @@ class ConfirmEmail extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         $appName = ['appName' => setting('app-name')];
-        return (new MailMessage)
-                    ->subject(trans('auth.email_confirm_subject', $appName))
-                    ->greeting(trans('auth.email_confirm_greeting', $appName))
-                    ->line(trans('auth.email_confirm_text'))
-                    ->action(trans('auth.email_confirm_action'), baseUrl('/register/confirm/' . $this->token));
+        return $this->newMailMessage()
+                ->subject(trans('auth.email_confirm_subject', $appName))
+                ->greeting(trans('auth.email_confirm_greeting', $appName))
+                ->line(trans('auth.email_confirm_text'))
+                ->action(trans('auth.email_confirm_action'), baseUrl('/register/confirm/' . $this->token));
     }
 }
