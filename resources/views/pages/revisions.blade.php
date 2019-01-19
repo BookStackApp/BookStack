@@ -34,7 +34,7 @@
                                     @endif
                                 </td>
                                 <td> @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif</td>
-                                <td><small>{{ $revision->created_at->format('jS F, Y H:i:s') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
+                                <td><small>{{ $revision->created_at->formatLocalized('%e %B %Y %H:%M:%S') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
                                 <td>{{ $revision->summary }}</td>
                                 <td class="actions">
                                     <a href="{{ $revision->getUrl('changes') }}" target="_blank">{{ trans('entities.pages_revisions_changes') }}</a>
