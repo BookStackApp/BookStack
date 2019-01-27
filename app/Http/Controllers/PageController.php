@@ -495,13 +495,15 @@ class PageController extends Controller
      * https://github.com/barryvdh/laravel-dompdf
      * @param string $bookSlug
      * @param string $pageSlug
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function exportPdf($bookSlug, $pageSlug)
+    public function exportPdf($bookSlug, $pageSlug, Request $request)
     {
+        $isTesting = $request->query('isTesting');
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $page->html = $this->pageRepo->renderPage($page);
-        $pdfContent = $this->exportService->pageToPdf($page);
+        $pdfContent = $this->exportService->pageToPdf($page, !empty($isTesting));
         return $this->downloadResponse($pdfContent, $pageSlug . '.pdf');
     }
 

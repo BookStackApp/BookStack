@@ -2,15 +2,14 @@
 
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Uploads\ImageService;
+use BookStack\Exceptions\ExportException;
 
 class ExportService
 {
-
-    const VIDEO_REGEX = "/\<video.*?\>\<source.*?\ src\=(\")(.*?)(\").*?><\/video>/";
-    const YOUTUBE_REGEX = "/\<iframe.*src\=(\'|\")(\/\/www\.youtube\.com.*?)(\'|\").*?><\/iframe>/";
-    const VIMEO_REGEX = "/\<iframe.*src\=(\'|\")(\/\/player\.vimeo\.com.*?)(\'|\").*?><\/iframe>/";
-    const GOOGLE_MAP_REGEX = "/\<iframe.*src\=(\'|\")(\/\/maps\.google\.com.*?)(\'|\").*?><\/iframe>/";
-    const DAILYMOTION_REGEX = "/\<iframe.*src\=(\'|\")(\/\/www\.dailymotion\.com.*?)(\'|\").*?><\/iframe>/";
+    protected $contentMatching = [
+        'video' => ["www.youtube.com", "player.vimeo.com", "www.dailymotion.com"],
+        'map' => ['maps.google.com']
+    ];
 
     protected $entityRepo;
     protected $imageService;
@@ -80,16 +79,17 @@ class ExportService
     /**
      * Convert a page to a PDF file.
      * @param Page $page
+     * @param bool $isTesting
      * @return mixed|string
      * @throws \Throwable
      */
-    public function pageToPdf(Page $page)
+    public function pageToPdf(Page $page, bool $isTesting = false)
     {
         $this->entityRepo->renderPage($page);
         $html = view('pages/pdf', [
             'page' => $page
         ])->render();
-        return $this->htmlToPdf($html);
+        return $this->htmlToPdf($html, $isTesting);
     }
 
     /**
@@ -130,12 +130,16 @@ class ExportService
     /**
      * Convert normal webpage HTML to a PDF.
      * @param $html
+     * @param $isTesting
      * @return string
      * @throws \Exception
      */
-    protected function htmlToPdf($html)
+    protected function htmlToPdf($html, $isTesting = false)
     {
         $containedHtml = $this->containHtml($html, true);
+        if ($isTesting) {
+            return $containedHtml;
+        }
         $useWKHTML = config('snappy.pdf.binary') !== false;
         if ($useWKHTML) {
             $pdf = \SnappyPDF::loadHTML($containedHtml);
@@ -151,56 +155,62 @@ class ExportService
      * @param $htmlContent
      * @param bool $isPDF
      * @return mixed|string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \BookStack\Exceptions\ExportException
      */
-    protected function containHtml($htmlContent, $isPDF = false)
+    protected function containHtml(string $htmlContent, bool $isPDF = false) : string
     {
-        $imageTagsOutput = [];
-        preg_match_all("/\<img.*src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
+        $dom = $this->getDOM($htmlContent);
+        if ($dom === false) {
+            throw new ExportException(trans('errors.dom_parse_error'));
+        }
 
-        // Replace image src with base64 encoded image strings
-        if (isset($imageTagsOutput[0]) && count($imageTagsOutput[0]) > 0) {
-            foreach ($imageTagsOutput[0] as $index => $imgMatch) {
-                $oldImgTagString = $imgMatch;
-                $srcString = $imageTagsOutput[2][$index];
-                $imageEncoded = $this->imageService->imageUriToBase64($srcString);
-                if ($imageEncoded === null) {
-                    $imageEncoded = $srcString;
-                }
-                $newImgTagString = str_replace($srcString, $imageEncoded, $oldImgTagString);
-                $htmlContent = str_replace($oldImgTagString, $newImgTagString, $htmlContent);
+        // replace image src with base64 encoded image strings
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $img) {
+            $base64String = $this->imageService->imageUriToBase64($img->getAttribute('src'));
+            if ($base64String !== null) {
+                $img->setAttribute('src', $base64String);
+                $dom->saveHTML($img);
             }
         }
 
-        $linksOutput = [];
-        preg_match_all("/\<a.*href\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $linksOutput);
-
-        // Replace image src with base64 encoded image strings
-        if (isset($linksOutput[0]) && count($linksOutput[0]) > 0) {
-            foreach ($linksOutput[0] as $index => $linkMatch) {
-                $oldLinkString = $linkMatch;
-                $srcString = $linksOutput[2][$index];
-                if (strpos(trim($srcString), 'http') !== 0) {
-                    $newSrcString = url($srcString);
-                    $newLinkString = str_replace($srcString, $newSrcString, $oldLinkString);
-                    $htmlContent = str_replace($oldLinkString, $newLinkString, $htmlContent);
-                }
+        // replace all relative hrefs.
+        $links = $dom->getElementsByTagName('a');
+        foreach ($links as $link) {
+            $href = $link->getAttribute('href');
+            if (strpos(trim($href), 'http') !== 0) {
+                $newHref = url($href);
+                $link->setAttribute('href', $newHref);
+                $dom->saveHTML($link);
             }
         }
 
-        // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
-        if ($isPDF) {
-            $callback = [$this, 'replaceContentPDF'];
-            $htmlContent = $this->replaceLinkedTags(self::VIDEO_REGEX, $htmlContent, $callback, 'Video');
-        } else {
-            $callback = [$this, 'replaceContentHtml'];
-        }
-        $htmlContent = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $htmlContent, $callback, 'Video');
-        $htmlContent = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $htmlContent, $callback, 'Map');
-        $htmlContent = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $htmlContent, $callback, 'Video');
-        $htmlContent = $this->replaceLinkedTags(self::VIMEO_REGEX, $htmlContent, $callback, 'Video');
+        // replace all src in video, audio and iframe tags
+        $xmlDoc = new \DOMXPath($dom);
+        $srcElements = $xmlDoc->query('//video | //audio | //iframe');
+        foreach ($srcElements as $element) {
+            $element = $this->fixRelativeSrc($element);
+            $dom->saveHTML($element);
 
-        return $htmlContent;
+            if ($isPDF) {
+                $src = $element->getAttribute('src');
+                $label = $this->getContentLabel($src);
+
+                $div = $dom->createElement('div');
+                $textNode = $dom->createTextNode($label);
+
+                $anchor = $dom->createElement('a');
+                $anchor->setAttribute('href', $src);
+                $anchor->textContent = $src;
+
+                $div->appendChild($textNode);
+                $div->appendChild($anchor);
+
+                $element->parentNode->replaceChild($div, $element);
+            }
+        }
+
+        return $dom->saveHTML();
     }
 
     /**
@@ -208,21 +218,43 @@ class ExportService
      * This method filters any bad looking content to provide a nice final output.
      * @param Page $page
      * @return mixed
+     * @throws \BookStack\Exceptions\ExportException
      */
     public function pageToPlainText(Page $page)
     {
         $html = $this->entityRepo->renderPage($page);
+        $dom = $this->getDom($html);
 
-        $callback = [$this, 'replaceContentText'];
-        // Replace video tag in PDF
-        $html = $this->replaceLinkedTags(self::VIDEO_REGEX, $html, $callback, 'Video');
-        // Replace problems caused by TinyMCE removing the protocol for YouTube, Google Maps, DailyMotion and Vimeo
-        $html = $this->replaceLinkedTags(self::YOUTUBE_REGEX, $html, $callback, 'Video');
-        $html = $this->replaceLinkedTags(self::GOOGLE_MAP_REGEX, $html, $callback, 'Map');
-        $html = $this->replaceLinkedTags(self::DAILYMOTION_REGEX, $html, $callback, 'Video');
-        $html = $this->replaceLinkedTags(self::VIMEO_REGEX, $html, $callback, 'Video');
+        if ($dom === false) {
+            throw new ExportException(trans('errors.dom_parse_error'));
+        }
 
-        $text = strip_tags($html);
+        // handle anchor tags.
+        $links = $dom->getElementsByTagName('a');
+        foreach ($links as $link) {
+            $href = $link->getAttribute('href');
+            if (strpos(trim($href), 'http') !== 0) {
+                $newHref = url($href);
+                $link->setAttribute('href', $newHref);
+            }
+
+            $link->textContent = trim($link->textContent . " ($href)");
+            $dom->saveHTML();
+        }
+
+        $xmlDoc = new \DOMXPath($dom);
+        $srcElements = $xmlDoc->query('//video | //audio | //iframe | //img');
+        foreach ($srcElements as $element) {
+            $element = $this->fixRelativeSrc($element);
+            $fixedSrc = $element->getAttribute('src');
+            $label = $this->getContentLabel($fixedSrc);
+            $finalLabel = "\n\n$label $fixedSrc\n\n";
+
+            $textNode = $dom->createTextNode($finalLabel);
+            $element->parentNode->replaceChild($textNode, $element);
+        }
+
+        $text = strip_tags($dom->saveHTML());
         // Replace multiple spaces with single spaces
         $text = preg_replace('/\ {2,}/', ' ', $text);
         // Reduce multiple horrid whitespace characters.
@@ -267,56 +299,36 @@ class ExportService
         return $text;
     }
 
-    /**
-     * Can be used to replace certain tags that cause problems such as the TinyMCE video tag
-     * modification that have to be undone.
-     * See - https://github.com/tinymce/tinymce/blob/0f7a0f12667bde6eae9377b50b797f4479aa1ac7/src/plugins/media/main/ts/core/UrlPatterns.ts#L22
-     * @param String $regex
-     * @param String $htmlContent
-     * @param array $callback
-     * @param String $contentLabel
-     * @return String $htmlContent - Modified html content
-     */
-    protected function replaceLinkedTags($regex, $htmlContent, $callback, $contentLabel = '') {
-        $iframeOutput = [];
-        preg_match_all($regex, $htmlContent, $iframeOutput);
-        if (isset($iframeOutput[0]) && count($iframeOutput[0]) > 0) {
-            foreach ($iframeOutput[0] as $index => $iframeMatch) {
-                $htmlContent = call_user_func($callback, $htmlContent, $iframeOutput, $index, $contentLabel);
+    protected function getDom(string $htmlContent) : \DOMDocument
+    {
+        // See - https://stackoverflow.com/a/17559716/903324
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($htmlContent);
+        libxml_clear_errors();
+        return $dom;
+    }
+
+    protected function fixRelativeSrc(\DOMElement $element): \DOMElement
+    {
+        $src = $element->getAttribute('src');
+        if (strpos(trim($src), 'http') !== 0) {
+            $newSrc = 'https:' . $src;
+            $element->setAttribute('src', $newSrc);
+        }
+        return $element;
+    }
+
+
+    protected function getContentLabel(string $src) : string
+    {
+        foreach ($this->contentMatching as $key => $possibleValues) {
+            foreach ($possibleValues as $value) {
+                if (strpos($src, $value)) {
+                    return trans("entities.$key");
+                }
             }
         }
-        return $htmlContent;
-    }
-
-    protected function replaceContentHtml($htmlContent, $iframeOutput, $index, $contentLabel) {
-        $srcString = $iframeOutput[2][$index];
-        $newSrcString = $srcString;
-        if (strpos($srcString, 'http') !== 0) {
-            $newSrcString = 'https:' . $srcString;
-        }
-        $htmlContent = str_replace($srcString, $newSrcString, $htmlContent);
-        return $htmlContent;
-    }
-
-    protected function replaceContentPDF($htmlContent, $iframeOutput, $index, $contentLabel) {
-        $srcString = $iframeOutput[2][$index];
-        $newSrcString = $srcString;
-        if (strpos($srcString, 'http') !== 0) {
-            $newSrcString = 'https:' . $srcString;
-        }
-        $finalHtmlString = "$contentLabel: <a href='$newSrcString'>$newSrcString</a>";
-        $htmlContent = str_replace($iframeOutput[0][$index], $finalHtmlString, $htmlContent);
-        return $htmlContent;
-    }
-
-    protected function replaceContentText($htmlContent, $iframeOutput, $index, $contentLabel) {
-        $srcString = $iframeOutput[2][$index];
-        $newSrcString = $srcString;
-        if (strpos($srcString, 'http') !== 0) {
-            $newSrcString = 'https:' . $srcString;
-        }
-        $finalHtmlString = "$contentLabel: $newSrcString";
-        $htmlContent = str_replace($iframeOutput[0][$index], $finalHtmlString, $htmlContent);
-        return $htmlContent;
+        return trans('entities.embedded_content');
     }
 }

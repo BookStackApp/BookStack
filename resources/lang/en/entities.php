@@ -289,5 +289,11 @@ return [
     // Revision
     'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
     'revision_delete_success' => 'Revision deleted',
-    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
+    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.',
+
+    // PDF / Text Embeds
+    'video' => 'Video: ',
+    'map' => 'Map: ',
+    'embedded_content' => 'Embedded Content: '
+
 ];

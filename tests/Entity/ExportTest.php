@@ -157,4 +157,29 @@ class ExportTest extends TestCase
 
     }
 
+    public function test_pdf_export_no_video_iframe() {
+        $page = Page::first();
+        $page->html = '<p id="bkmrk-%C2%A0-0">&nbsp;</p>' .
+            '<p id="bkmrk-%C2%A0-1"><iframe src="//www.youtube.com/embed/LkFt_fp7FmE" width="560" height="314" allowfullscreen="allowfullscreen"></iframe></p>' .
+            '<p id="bkmrk-"><video src="//player.vimeo.com/video/276396369?title=0&amp;amp;byline=0" width="425" height="350" allowfullscreen="allowfullscreen"></video></p>' .
+            '<p id="bkmrk--0"><iframe style="border: 0;" src="//maps.google.com/embed?testquery=true" width="600" height="450" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>' .
+            '<p id="bkmrk--1"><iframe src="//www.dailymotion.com/embed/video/x2rqgfm" width="480" height="432" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>' .
+            '<p id="bkmrk-%C2%A0-2">&nbsp;</p>';
+
+        $page->save();
+
+        $this->asEditor();
+        $resp = $this->get($page->getUrl('/export/pdf?isTesting=true'));
+        $resp->assertStatus(200);
+
+        $checks = [
+            '</video>',
+            '</iframe>'
+        ];
+
+        foreach ($checks as $check) {
+            $resp->assertDontSee($check);
+        }
+    }
+
 }

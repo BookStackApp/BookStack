@@ -81,4 +81,7 @@ return [
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
 
+    // Export errors
+    'dom_parse_error' => 'There was an error while exporting the page. This maybe caused due to the HTML structure of the page.'
+
 ];
