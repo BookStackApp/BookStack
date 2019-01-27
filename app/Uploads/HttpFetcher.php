@@ -30,5 +30,4 @@ class HttpFetcher
 
         return $data;
     }
-
 }
