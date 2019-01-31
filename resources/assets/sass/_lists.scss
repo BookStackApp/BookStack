@@ -91,6 +91,9 @@
     padding-left: 1.5rem;
     padding-bottom: .2rem;
   }
+  .icon {
+    z-index: 2;
+  }
   &:after, .sub-menu:after {
     content: '';
     display: block;
@@ -100,7 +103,7 @@
     bottom: 1rem;
     border-left: 2px solid #DDD;
     opacity: 0.6;
-    z-index: 1;
+    z-index: 0;
   }
 }
 

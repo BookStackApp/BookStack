@@ -275,12 +275,12 @@ class BookController extends Controller
      * @param $bookSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showRestrict($bookSlug)
+    public function showPermissions($bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
         $roles = $this->userRepo->getRestrictableRoles();
-        return view('books/restrictions', [
+        return view('books.permissions', [
             'book' => $book,
             'roles' => $roles
         ]);
@@ -289,11 +289,12 @@ class BookController extends Controller
     /**
      * Set the restrictions for this book.
      * @param $bookSlug
-     * @param $bookSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \BookStack\Exceptions\NotFoundException
+     * @throws \Throwable
      */
-    public function restrict($bookSlug, Request $request)
+    public function permissions($bookSlug, Request $request)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);

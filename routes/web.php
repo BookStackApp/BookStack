@@ -40,8 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{id}', 'BookController@destroy');
         Route::get('/{slug}/sort-item', 'BookController@getSortItem');
         Route::get('/{slug}', 'BookController@show');
-        Route::get('/{bookSlug}/permissions', 'BookController@showRestrict');
-        Route::put('/{bookSlug}/permissions', 'BookController@restrict');
+        Route::get('/{bookSlug}/permissions', 'BookController@showPermissions');
+        Route::put('/{bookSlug}/permissions', 'BookController@permissions');
         Route::get('/{slug}/delete', 'BookController@showDelete');
         Route::get('/{bookSlug}/sort', 'BookController@sort');
         Route::put('/{bookSlug}/sort', 'BookController@saveSort');
