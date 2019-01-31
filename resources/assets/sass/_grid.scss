@@ -57,6 +57,9 @@ body.flexbox {
   margin-bottom: $-xl;
   overflow: auto;
   min-height: 60vh;
+  &.auto-height {
+    min-height: 0;
+  }
 }
 
 .tri-layout-container {
@@ -199,6 +202,14 @@ div[class^="col-"] img {
   &.third {
     grid-template-columns: 1fr 1fr 1fr;
   }
+  &.left-focus {
+    grid-template-columns: 2fr 1fr;
+  }
+  &.large-gap {
+    grid-column-gap: $-xl;
+    grid-row-gap: $-xl;
+    justify-items: start;
+  }
 }
 
 .grid-card {
@@ -254,6 +265,9 @@ div[class^="col-"] img {
 @include smaller-than($m) {
   .grid.third {
     grid-template-columns: 1fr 1fr;
+  }
+  .grid.left-focus {
+    grid-template-columns: 1fr;
   }
 }
 

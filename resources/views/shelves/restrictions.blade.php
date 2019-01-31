@@ -13,7 +13,7 @@
         <div class="card">
             <h3>@icon('lock') {{ trans('entities.shelves_permissions') }}</h3>
             <div class="body">
-                @include('form/restriction-form', ['model' => $shelf])
+                @include('form.entity-permissions', ['model' => $shelf])
             </div>
         </div>
 

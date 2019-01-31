@@ -8,7 +8,6 @@
         @include('form/checkbox', ['name' => 'restricted', 'label' => trans('entities.permissions_enable')])
     </div>
 
-
     <table class="table">
         <tr>
             <th>{{ trans('common.role') }}</th>
@@ -29,6 +28,6 @@
 
     <div class="text-right">
         <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-        <button type="submit" class="button pos">{{ trans('entities.permissions_save') }}</button>
+        <button type="submit" class="button primary">{{ trans('entities.permissions_save') }}</button>
     </div>
 </form>

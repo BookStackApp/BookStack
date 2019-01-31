@@ -13,7 +13,7 @@
         <div class="card">
             <h3>@icon('lock') {{ trans('entities.chapters_permissions') }}</h3>
             <div class="body">
-                @include('form/restriction-form', ['model' => $chapter])
+                @include('form.entity-permissions', ['model' => $chapter])
             </div>
         </div>
     </div>

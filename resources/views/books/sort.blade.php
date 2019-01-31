@@ -1,53 +1,54 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    <div class="col-sm-12 faded">
-        @include('books._breadcrumbs', ['book' => $book])
-    </div>
-@stop
-
 @section('body')
 
     <div class="container">
 
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <h3>@icon('sort') {{ trans('entities.books_sort') }}</h3>
-                    <div class="body">
-                        <div id="sort-boxes">
-                            @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
-                        </div>
-
-                        <form action="{{ $book->getUrl('/sort') }}" method="POST">
-                            {!! csrf_field() !!}
-                            <input type="hidden" name="_method" value="PUT">
-                            <input type="hidden" id="sort-tree-input" name="sort-tree">
-                            <div class="list">
-                                <a href="{{ $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                                <button class="button pos" type="submit">{{ trans('entities.books_sort_save') }}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            @if(count($books) > 1)
-            <div class="col-md-4">
-                <div class="card">
-                    <h3>@icon('book') {{ trans('entities.books_sort_show_other') }}</h3>
-                    <div class="body" id="additional-books">
-                        @foreach($books as $otherBook)
-                            @if($otherBook->id !== $book->id)
-                                <div>
-                                    <a href="{{ $otherBook->getUrl('/sort-item') }}" class="text-book">@icon('book'){{ $otherBook->name }}</a>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            @endif
+        <div class="my-l">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                $book,
+                $book->getUrl('/sort') => trans('entities.books_sort')
+            ]])
         </div>
+
+        <div class="grid left-focus large-gap">
+            <div>
+                <div class="card content-wrap">
+                    <h1 class="list-heading">{{ trans('entities.books_sort') }}</h1>
+                    <div id="sort-boxes">
+                        @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
+                    </div>
+
+                    <form action="{{ $book->getUrl('/sort') }}" method="POST">
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" id="sort-tree-input" name="sort-tree">
+                        <div class="list text-right">
+                            <a href="{{ $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+                            <button class="button primary" type="submit">{{ trans('entities.books_sort_save') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                @if(count($books) > 1)
+                    <div class="card content-wrap">
+                        <h2 class="list-heading">{{ trans('entities.books_sort_show_other') }}</h2>
+                        <div id="additional-books">
+                            @foreach($books as $otherBook)
+                                @if($otherBook->id !== $book->id)
+                                    <div>
+                                        <a href="{{ $otherBook->getUrl('/sort-item') }}" class="text-book">@icon('book'){{ $otherBook->name }}</a>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+
     </div>
 
 @stop
