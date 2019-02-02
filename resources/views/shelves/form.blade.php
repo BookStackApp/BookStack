@@ -1,5 +1,5 @@
-
 {{ csrf_field() }}
+
 <div class="form-group title-input">
     <label for="name">{{ trans('common.name') }}</label>
     @include('form/text', ['name' => 'name'])
@@ -80,5 +80,5 @@
 
 <div class="form-group text-right">
     <a href="{{ isset($shelf) ? $shelf->getUrl() : baseUrl('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
-    <button type="submit" class="button pos">{{ trans('entities.shelves_save') }}</button>
+    <button type="submit" class="button primary">{{ trans('entities.shelves_save') }}</button>
 </div>

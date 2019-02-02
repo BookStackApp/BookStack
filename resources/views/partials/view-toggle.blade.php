@@ -1,5 +1,5 @@
 <div>
-    <form action="{{ baseUrl("/settings/users/{$currentUser->id}/switch-book-view") }}" method="POST" class="inline">
+    <form action="{{ baseUrl("/settings/users/{$currentUser->id}/switch-${type}-view") }}" method="POST" class="inline">
         {!! csrf_field() !!}
         {!! method_field('PATCH') !!}
         <input type="hidden" value="{{ $view === 'list'? 'grid' : 'list' }}" name="view_type">

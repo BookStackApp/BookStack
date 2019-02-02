@@ -202,6 +202,8 @@ return [
     'pages_revisions_created_by' => 'Created By',
     'pages_revisions_date' => 'Revision Date',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Revision #:id',
+    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
     'pages_revisions_changelog' => 'Changelog',
     'pages_revisions_changes' => 'Changes',
     'pages_revisions_current' => 'Current Version',
