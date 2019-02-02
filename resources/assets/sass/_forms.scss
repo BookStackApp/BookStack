@@ -139,57 +139,59 @@ input[type=date] {
 }
 
 .toggle-switch {
-  display: inline-block;
-  background-color: #BBB;
-  width: 36px;
-  height: 14px;
-  border-radius: 7px;
-  position: relative;
-  transition: all ease-in-out 120ms;
-  cursor: pointer;
   user-select: none;
-  &:after {
-    content: '';
-    display: block;
-    position: relative;
-    left: 0;
-    margin-top: -3px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #fafafa;
-    border: 1px solid #CCC;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-    transition: all ease-in-out 120ms;
-  }
-  &.active {
-    background-color: rgba($positive, 0.4);
-    &:after {
-      left: 16px;
-      background-color: $positive;
-      border: darken($positive, 20%);
+  display: inline-grid;
+  grid-template-columns: (16px + $-s) 1fr;
+  align-items: center;
+  margin: $-m 0;
+  .custom-checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    display: inline-block;
+    border: 2px solid #999;
+    overflow: hidden;
+    fill: #888;
+    .svg-icon {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      bottom: auto;
+      top: -1.5px;
+      left: 0;
+      transition: transform ease-in-out 120ms;
+      transform: scale(0);
+      transform-origin: center center;
     }
   }
-}
-.toggle-switch-checkbox {
-  display: none;
-}
-input:checked + .toggle-switch {
-  background-color: rgba($positive, 0.4);
-  &:after {
-    left: 16px;
-    background-color: $positive;
-    border: darken($positive, 20%);
+  input[type=checkbox] {
+    display: none;
+  }
+  input[type=checkbox]:checked + .custom-checkbox .svg-icon {
+    transform: scale(1);
+  }
+  .custom-checkbox:hover {
+    background-color: rgba(0, 0, 0, 0.05);
   }
 }
 
 .form-group {
   margin-bottom: $-s;
-  textarea {
-    display: block;
-    width: 100%;
-    min-height: 64px;
+}
+
+.setting-list > div {
+  border-bottom: 1px solid #DDD;
+  padding: $-xl 0;
+  &:last-child {
+    border-bottom: none;
   }
+}
+.setting-list-label {
+  color: #444;
+  font-size: 1rem;
+}
+.setting-list-label + p.small {
+  margin-bottom: 0;
 }
 
 .simple-code-input {
@@ -197,6 +199,8 @@ input:checked + .toggle-switch {
   font-family: monospace;
   font-size: 12px;
   min-height: 100px;
+  display: block;
+  width: 100%;
 }
 
 .form-group {

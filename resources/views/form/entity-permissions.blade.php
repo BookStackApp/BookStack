@@ -8,6 +8,8 @@
         @include('form/checkbox', ['name' => 'restricted', 'label' => trans('entities.permissions_enable')])
     </div>
 
+    {{--TODO - Add global and role "Select All" options--}}
+
     <table class="table">
         <tr>
             <th>{{ trans('common.role') }}</th>

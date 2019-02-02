@@ -1,5 +1,7 @@
 @extends('simple-layout')
 
+{{--TODO--}}
+
 @section('toolbar')
     @include('settings/navbar', ['selected' => 'users'])
 @stop

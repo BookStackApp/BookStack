@@ -396,3 +396,18 @@ ul.pagination {
   padding: $-m 0;
 }
 
+.active-link-list {
+  a {
+    display: inline-block;
+    padding: $-s;
+  }
+  a:not(.active) {
+    color: #444;
+    fill: #444;
+  }
+  a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    text-decoration: none;
+  }
+}
