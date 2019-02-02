@@ -14,8 +14,8 @@ return [
     // App Settings
     'app_settings' => 'App Settings',
     'app_name' => 'Application name',
-    'app_name_desc' => 'This name is shown in the header and any emails.',
-    'app_name_header' => 'Show Application name in header?',
+    'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
+    'app_name_header' => 'Show name in header',
     'app_public_viewing' => 'Allow public viewing?',
     'app_secure_images' => 'Enable higher security image uploads?',
     'app_secure_images_desc' => 'For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.',

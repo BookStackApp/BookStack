@@ -3,15 +3,15 @@ class ToggleSwitch {
 
     constructor(elem) {
         this.elem = elem;
-        this.input = elem.querySelector('input');
+        this.input = elem.querySelector('input[type=hidden]');
+        this.checkbox = elem.querySelector('input[type=checkbox]');
 
-        this.elem.onclick = this.onClick.bind(this);
+        this.checkbox.addEventListener('change', this.onClick.bind(this));
     }
 
     onClick(event) {
-        let checked = this.input.value !== 'true';
+        let checked = this.checkbox.checked;
         this.input.value = checked ? 'true' : 'false';
-        checked ? this.elem.classList.add('active') : this.elem.classList.remove('active');
     }
 
 }

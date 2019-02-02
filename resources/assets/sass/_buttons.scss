@@ -31,7 +31,8 @@ $button-border-radius: 2px;
   font-size: $fs-m;
   line-height: 1.4em;
   padding: $-xs*1.3 $-m;
-  margin: $-xs $-xs $-xs 0;
+  margin-top: $-xs;
+  margin-bottom: $-xs;
   display: inline-block;
   border: none;
   font-weight: 400;
@@ -60,6 +61,10 @@ $button-border-radius: 2px;
   &.muted-light {
     @include generate-button-colors(#666, #e4e4e4);
   }
+}
+
+.button + .button {
+  margin-left: $-s;
 }
 
 .button.outline {

@@ -60,6 +60,9 @@ body.flexbox {
   &.auto-height {
     min-height: 0;
   }
+  &.fill-width {
+    width: 100%;
+  }
 }
 
 .tri-layout-container {
@@ -211,7 +214,6 @@ div[class^="col-"] img {
   &.large-gap {
     grid-column-gap: $-xl;
     grid-row-gap: $-xl;
-    justify-items: start;
   }
 }
 
@@ -271,6 +273,12 @@ div[class^="col-"] img {
   }
   .grid.left-focus, .grid.right-focus {
     grid-template-columns: 1fr;
+  }
+  .grid.right-focus.reverse-collapse > *:nth-child(2) {
+    order: 0;
+  }
+  .grid.right-focus.reverse-collapse > *:nth-child(1) {
+    order: 1;
   }
 }
 
