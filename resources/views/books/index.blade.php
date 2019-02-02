@@ -44,7 +44,7 @@
                     <span>{{ trans('entities.books_create') }}</span>
                 </a>
             @endif
-            @include('books.view-toggle', ['view' => $view])
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
         </div>
     </div>
 

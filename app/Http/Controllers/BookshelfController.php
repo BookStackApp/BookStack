@@ -40,15 +40,15 @@ class BookshelfController extends Controller
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('bookshelf', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('bookshelf', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('bookshelf', 4, 0);
-        $shelvesViewType = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+        $view = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
 
         $this->setPageTitle(trans('entities.shelves'));
-        return view('shelves/index', [
+        return view('shelves.index', [
             'shelves' => $shelves,
             'recents' => $recents,
             'popular' => $popular,
             'new' => $new,
-            'shelvesViewType' => $shelvesViewType
+            'view' => $view
         ]);
     }
 
@@ -61,7 +61,7 @@ class BookshelfController extends Controller
         $this->checkPermission('bookshelf-create-all');
         $books = $this->entityRepo->getAll('book', false, 'update');
         $this->setPageTitle(trans('entities.shelves_create'));
-        return view('shelves/create', ['books' => $books]);
+        return view('shelves.create', ['books' => $books]);
     }
 
     /**
@@ -100,7 +100,7 @@ class BookshelfController extends Controller
         Views::add($bookshelf);
 
         $this->setPageTitle($bookshelf->getShortName());
-        return view('shelves/show', [
+        return view('shelves.show', [
             'shelf' => $bookshelf,
             'books' => $books,
             'activity' => Activity::entityActivity($bookshelf, 20, 0)
@@ -126,7 +126,7 @@ class BookshelfController extends Controller
         });
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $bookshelf->getShortName()]));
-        return view('shelves/edit', [
+        return view('shelves.edit', [
             'shelf' => $bookshelf,
             'books' => $books,
             'shelfBooks' => $shelfBooks,
@@ -170,7 +170,7 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('bookshelf-delete', $bookshelf);
 
         $this->setPageTitle(trans('entities.shelves_delete_named', ['name' => $bookshelf->getShortName()]));
-        return view('shelves/delete', ['shelf' => $bookshelf]);
+        return view('shelves.delete', ['shelf' => $bookshelf]);
     }
 
     /**

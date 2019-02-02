@@ -214,13 +214,14 @@ class ChapterController extends Controller
      * @param $bookSlug
      * @param $chapterSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function showRestrict($bookSlug, $chapterSlug)
+    public function showPermissions($bookSlug, $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
         $roles = $this->userRepo->getRestrictableRoles();
-        return view('chapters/restrictions', [
+        return view('chapters.permissions', [
             'chapter' => $chapter,
             'roles' => $roles
         ]);
@@ -232,8 +233,10 @@ class ChapterController extends Controller
      * @param $chapterSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \BookStack\Exceptions\NotFoundException
+     * @throws \Throwable
      */
-    public function restrict($bookSlug, $chapterSlug, Request $request)
+    public function permissions($bookSlug, $chapterSlug, Request $request)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);

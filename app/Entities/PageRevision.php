@@ -62,4 +62,5 @@ class PageRevision extends Model
     {
         return $type === 'revision';
     }
+
 }

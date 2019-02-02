@@ -1,8 +1,10 @@
 
-<div class="container{{ $shelvesViewType === 'list' ? ' small' : '' }}">
+<div class="container{{ $view === 'list' ? ' small' : '' }}">
+    {{--TODO - Align with books page, Have sorting operations--}}
+    {{--TODO - Create unique list item--}}
     <h1>{{ trans('entities.shelves') }}</h1>
     @if(count($shelves) > 0)
-        @if($shelvesViewType === 'grid')
+        @if($view === 'grid')
             <div class="grid third">
                 @foreach($shelves as $key => $shelf)
                     @include('shelves/grid-item', ['bookshelf' => $shelf])

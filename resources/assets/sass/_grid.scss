@@ -205,6 +205,9 @@ div[class^="col-"] img {
   &.left-focus {
     grid-template-columns: 2fr 1fr;
   }
+  &.right-focus {
+    grid-template-columns: 1fr 2fr;
+  }
   &.large-gap {
     grid-column-gap: $-xl;
     grid-row-gap: $-xl;
@@ -266,7 +269,7 @@ div[class^="col-"] img {
   .grid.third {
     grid-template-columns: 1fr 1fr;
   }
-  .grid.left-focus {
+  .grid.left-focus, .grid.right-focus {
     grid-template-columns: 1fr;
   }
 }
