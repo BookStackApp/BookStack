@@ -7,7 +7,7 @@
         <div class="my-l">
             @include('partials.breadcrumbs', ['crumbs' => [
                 $book,
-                $book->getUrl() => trans('entities.books_edit')
+                $book->getUrl('/edit') => trans('entities.books_edit')
             ]])
         </div>
 

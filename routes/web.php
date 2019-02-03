@@ -10,7 +10,6 @@ Route::group(['middleware' => 'auth'], function () {
         ->where('path', '.*$');
 
     Route::group(['prefix' => 'pages'], function() {
-        Route::get('/recently-created', 'PageController@showRecentlyCreated');
         Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
     });
 
@@ -24,8 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}', 'BookshelfController@show');
         Route::put('/{slug}', 'BookshelfController@update');
         Route::delete('/{slug}', 'BookshelfController@destroy');
-        Route::get('/{slug}/permissions', 'BookshelfController@showRestrict');
-        Route::put('/{slug}/permissions', 'BookshelfController@restrict');
+        Route::get('/{slug}/permissions', 'BookshelfController@showPermissions');
+        Route::put('/{slug}/permissions', 'BookshelfController@permissions');
         Route::post('/{slug}/copy-permissions', 'BookshelfController@copyPermissions');
     });
 
@@ -176,7 +175,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users/{id}/delete', 'UserController@delete');
         Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
         Route::patch('/users/{id}/switch-shelf-view', 'UserController@switchShelfView');
-        Route::patch('/users/{id}/change-books-sort', 'UserController@changeBooksSort');
+        Route::patch('/users/{id}/change-sort/{type}', 'UserController@changeSort');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');

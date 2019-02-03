@@ -1,20 +1,27 @@
 
-<div class="container{{ $view === 'list' ? ' small' : '' }}">
-    {{--TODO - Align with books page, Have sorting operations--}}
+<div class="content-wrap card">
     {{--TODO - Create unique list item--}}
-    <h1>{{ trans('entities.shelves') }}</h1>
+
+    <div class="grid half v-center">
+        <h1 class="list-heading">{{ trans('entities.shelves') }}</h1>
+        <div class="text-right">
+            @include('partials.sort', ['options' => $sortOptions, 'order' => $order, 'sort' => $sort, 'type' => 'bookshelves'])
+        </div>
+    </div>
+
     @if(count($shelves) > 0)
-        @if($view === 'grid')
-            <div class="grid third">
-                @foreach($shelves as $key => $shelf)
-                    @include('shelves/grid-item', ['bookshelf' => $shelf])
+        @if($view === 'list')
+            <div class="entity-list">
+                @foreach($shelves as $shelf)
+                    @include('shelves.list-item', ['shelf' => $shelf])
                 @endforeach
             </div>
         @else
-            @foreach($shelves as $shelf)
-                @include('shelves/list-item', ['bookshelf' => $shelf])
-                <hr>
-            @endforeach
+            <div class="grid third">
+                @foreach($shelves as $key => $shelf)
+                    @include('shelves.grid-item', ['shelf' => $shelf])
+                @endforeach
+            </div>
         @endif
         <div>
             {!! $shelves->render() !!}
@@ -25,4 +32,5 @@
             <a href="{{ baseUrl("/create-shelf") }}" class="button outline">@icon('edit'){{ trans('entities.create_now') }}</a>
         @endif
     @endif
+
 </div>

@@ -1,10 +1,10 @@
 
 <div class="content-wrap card">
-    <div class="grid halves v-center">
+    <div class="grid half v-center">
         <h1 class="list-heading">{{ trans('entities.books') }}</h1>
         <div class="text-right">
 
-            @include('partials.sort', ['options' => $sortOptions, 'order' => $order, 'sort' => $sort])
+            @include('partials.sort', ['options' => $sortOptions, 'order' => $order, 'sort' => $sort, 'type' => 'books'])
 
         </div>
     </div>

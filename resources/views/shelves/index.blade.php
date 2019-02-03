@@ -1,9 +1,7 @@
 @extends('tri-layout')
 
 @section('body')
-    <div class="content-wrap card">
-        @include('shelves.list', ['shelves' => $shelves, 'view' => $view])
-    </div>
+    @include('shelves.list', ['shelves' => $shelves, 'view' => $view])
 @stop
 
 @section('right')
@@ -25,13 +23,13 @@
 
 @section('left')
     @if($recents)
-        <div id="recents-shelves">
+        <div id="recents" class="mb-xl">
             <h5>{{ trans('entities.recently_viewed') }}</h5>
             @include('partials.entity-list', ['entities' => $recents, 'style' => 'compact'])
         </div>
     @endif
 
-    <div id="popular-shelves">
+    <div id="popular" class="mb-xl">
         <h5>{{ trans('entities.shelves_popular') }}</h5>
         @if(count($popular) > 0)
             @include('partials.entity-list', ['entities' => $popular, 'style' => 'compact'])
@@ -40,7 +38,7 @@
         @endif
     </div>
 
-    <div id="new-shelves">
+    <div id="new" class="mb-xl">
         <h5>{{ trans('entities.shelves_new') }}</h5>
         @if(count($new) > 0)
             @include('partials.entity-list', ['entities' => $new, 'style' => 'compact'])

@@ -289,15 +289,20 @@ class UserController extends Controller
     }
 
     /**
-     * Change the stored sort type for the books view.
-     * @param $id
+     * Change the stored sort type for a particular view.
+     * @param string $id
+     * @param string $type
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeBooksSort($id, Request $request)
+    public function changeSort(string $id, string $type, Request $request)
     {
         // TODO - Test this endpoint
-        return $this->changeListSort($id, $request, 'books');
+        $validSortTypes = ['books', 'bookshelves'];
+        if (!in_array($type, $validSortTypes)) {
+            return redirect()->back(500);
+        }
+        return $this->changeListSort($id, $request, $type);
     }
 
     /**

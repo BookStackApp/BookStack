@@ -98,7 +98,7 @@ label {
   line-height: 1.4em;
   font-size: 0.94em;
   font-weight: 400;
-  color: #999;
+  color: #666;
   padding-bottom: 2px;
   margin-bottom: 0.2em;
   &.inline {
@@ -149,9 +149,10 @@ input[type=date] {
     height: 16px;
     border-radius: 2px;
     display: inline-block;
-    border: 2px solid #999;
+    border: 2px solid currentColor;
+    opacity: 0.6;
     overflow: hidden;
-    fill: #888;
+    fill: currentColor;
     .svg-icon {
       width: 100%;
       height: 100%;
@@ -172,7 +173,11 @@ input[type=date] {
   }
   .custom-checkbox:hover {
     background-color: rgba(0, 0, 0, 0.05);
+    opacity: 0.8;
   }
+}
+.toggle-switch-list .toggle-switch {
+  margin: $-xs 0;
 }
 
 .form-group {
@@ -192,6 +197,14 @@ input[type=date] {
 }
 .setting-list-label + p.small {
   margin-bottom: 0;
+}
+.setting-list-label + .grid {
+  margin-top: $-m;
+}
+.setting-list .grid {
+  input[type=text], input[type=email], input[type=password], select {
+    width: 100%;
+  }
 }
 
 .simple-code-input {

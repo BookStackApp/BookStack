@@ -4,7 +4,7 @@
     <div class="container small">
 
         <div class="py-m">
-            @include('settings/navbar', ['selected' => 'users'])
+            @include('settings.navbar', ['selected' => 'users'])
         </div>
 
         <div class="card content-wrap">

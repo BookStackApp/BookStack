@@ -36,11 +36,22 @@ class BookshelfController extends Controller
      */
     public function index()
     {
-        $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18);
+
+        $view = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+
+        $sort = setting()->getUser($this->currentUser, 'bookshelves_sort', 'name');
+        $order = setting()->getUser($this->currentUser, 'bookshelves_sort_order', 'asc');
+        $sortOptions = [
+            'name' => trans('common.sort_name'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+        ];
+
+        $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18, $sort, $order);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('bookshelf', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('bookshelf', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('bookshelf', 4, 0);
-        $view = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+
 
         $this->setPageTitle(trans('entities.shelves'));
         return view('shelves.index', [
@@ -48,7 +59,10 @@ class BookshelfController extends Controller
             'recents' => $recents,
             'popular' => $popular,
             'new' => $new,
-            'view' => $view
+            'view' => $view,
+            'sort' => $sort,
+            'order' => $order,
+            'sortOptions' => $sortOptions,
         ]);
     }
 
@@ -103,7 +117,7 @@ class BookshelfController extends Controller
         return view('shelves.show', [
             'shelf' => $bookshelf,
             'books' => $books,
-            'activity' => Activity::entityActivity($bookshelf, 20, 0)
+            'activity' => Activity::entityActivity($bookshelf, 20, 1)
         ]);
     }
 
@@ -190,31 +204,32 @@ class BookshelfController extends Controller
     }
 
     /**
-     * Show the Restrictions view.
-     * @param $slug
+     * Show the permissions view.
+     * @param string $slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function showRestrict(string $slug)
+    public function showPermissions(string $slug)
     {
         $bookshelf = $this->entityRepo->getBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('restrictions-manage', $bookshelf);
 
         $roles = $this->userRepo->getRestrictableRoles();
-        return view('shelves.restrictions', [
+        return view('shelves.permissions', [
             'shelf' => $bookshelf,
             'roles' => $roles
         ]);
     }
 
     /**
-     * Set the restrictions for this bookshelf.
-     * @param $slug
+     * Set the permissions for this bookshelf.
+     * @param string $slug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \BookStack\Exceptions\NotFoundException
+     * @throws \Throwable
      */
-    public function restrict(string $slug, Request $request)
+    public function permissions(string $slug, Request $request)
     {
         $bookshelf = $this->entityRepo->getBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('restrictions-manage', $bookshelf);

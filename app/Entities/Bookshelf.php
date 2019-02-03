@@ -50,6 +50,7 @@ class Bookshelf extends Entity
      */
     public function getBookCover($width = 440, $height = 250)
     {
+        // TODO - Make generic, focused on books right now, Perhaps set-up a better image
         $default = baseUrl('/book_default_cover.png');
         if (!$this->image_id) {
             return $default;
@@ -64,7 +65,7 @@ class Bookshelf extends Entity
     }
 
     /**
-     * Get the cover image of the book
+     * Get the cover image of the shelf
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function cover()

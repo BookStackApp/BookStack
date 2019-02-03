@@ -1,34 +1,47 @@
-<div class="form-group">
-    <label for="name">{{ trans('auth.name') }}</label>
-    @include('form.text', ['name' => 'name'])
+
+<div class="pt-m">
+    <label class="setting-list-label">{{ trans('settings.users_details') }}</label>
+    <p class="small">{{ trans('settings.users_details_desc') }}</p>
+    <div class="grid half mt-m large-gap">
+        <div>
+            <label for="name">{{ trans('auth.name') }}</label>
+            @include('form.text', ['name' => 'name'])
+        </div>
+        <div>
+            <label for="email">{{ trans('auth.email') }}</label>
+            @include('form.text', ['name' => 'email'])
+        </div>
+    </div>
 </div>
 
-<div class="form-group">
-    <label for="email">{{ trans('auth.email') }}</label>
-    @include('form.text', ['name' => 'email'])
-</div>
 
 @if(userCan('users-manage'))
-    <div class="form-group">
-        <label for="role">{{ trans('settings.users_role') }}</label>
-        @include('form/role-checkboxes', ['name' => 'roles', 'roles' => $roles])
+    <div>
+        <label for="role" class="setting-list-label">{{ trans('settings.users_role') }}</label>
+        <p class="small">{{ trans('settings.users_role_desc') }}</p>
+        <div class="mt-m">
+            @include('form/role-checkboxes', ['name' => 'roles', 'roles' => $roles])
+        </div>
     </div>
 @endif
 
-@if(isset($model))
-    <div class="form-group">
-        <span class="text-muted">
+
+<div>
+    <label class="setting-list-label">{{ trans('settings.users_password') }}</label>
+    <p class="small">{{ trans('settings.users_password_desc') }}</p>
+    @if(isset($model))
+        <p class="small">
             {{ trans('settings.users_password_warning') }}
-        </span>
+        </p>
+    @endif
+    <div class="grid half mt-m large-gap">
+        <div>
+            <label for="password">{{ trans('auth.password') }}</label>
+            @include('form.password', ['name' => 'password'])
+        </div>
+        <div>
+            <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
+            @include('form.password', ['name' => 'password-confirm'])
+        </div>
     </div>
-@endif
-
-<div class="form-group">
-    <label for="password">{{ trans('auth.password') }}</label>
-    @include('form.password', ['name' => 'password'])
-</div>
-
-<div class="form-group">
-    <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
-    @include('form.password', ['name' => 'password-confirm'])
 </div>
