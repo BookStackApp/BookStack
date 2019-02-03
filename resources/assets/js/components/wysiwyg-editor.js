@@ -419,7 +419,7 @@ class WysiwygEditor {
             plugins: this.plugins,
             imagetools_toolbar: 'imageoptions',
             toolbar: this.getToolBar(),
-            content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
+            content_style: "html, body {background: #FFF;} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
             style_formats: [
                 {title: "Header Large", format: "h2"},
                 {title: "Header Medium", format: "h3"},
