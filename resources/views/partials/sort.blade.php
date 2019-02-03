@@ -4,7 +4,7 @@
 ?>
 <div class="list-sort-container" list-sort-control>
     <div class="list-sort-label">{{ trans('common.sort') }}</div>
-    <form action="{{ baseUrl("/settings/users/{$currentUser->id}/change-books-sort") }}" method="post">
+    <form action="{{ baseUrl("/settings/users/{$currentUser->id}/change-sort/{$type}") }}" method="post">
 
         {!! csrf_field() !!}
         {!! method_field('PATCH') !!}

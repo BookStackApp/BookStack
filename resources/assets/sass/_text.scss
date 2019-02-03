@@ -149,8 +149,8 @@ em, i, .italic {
 }
 
 small, p.small, span.small, .text-small {
-  font-size: 0.8em;
-  color: lighten($text-dark, 20%);
+  font-size: 0.85em;
+  color: lighten($text-dark, 10%);
   small, p.small, span.small, .text-small {
     font-size: 1em;
   }

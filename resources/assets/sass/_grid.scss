@@ -50,6 +50,16 @@ body.flexbox {
   flex: 1;
 }
 
+.dual-column-content {
+  columns: 2;
+}
+
+@include smaller-than($m) {
+  .dual-column-content {
+    columns: 1;
+  }
+}
+
 .content-wrap.card {
   padding: $-l $-xxl;
   margin-left: auto;
@@ -62,6 +72,12 @@ body.flexbox {
   }
   &.fill-width {
     width: 100%;
+  }
+}
+
+@include smaller-than($m) {
+  .content-wrap.card {
+    padding: $-m $-l;
   }
 }
 
@@ -271,8 +287,12 @@ div[class^="col-"] img {
   .grid.third {
     grid-template-columns: 1fr 1fr;
   }
-  .grid.left-focus, .grid.right-focus {
+  .grid.half, .grid.left-focus, .grid.right-focus {
     grid-template-columns: 1fr;
+  }
+  .grid.large-gap {
+    grid-column-gap: $-m;
+    grid-row-gap: $-m;
   }
   .grid.right-focus.reverse-collapse > *:nth-child(2) {
     order: 0;

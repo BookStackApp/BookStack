@@ -538,20 +538,6 @@ class PageController extends Controller
      * Show a listing of recently created pages
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showRecentlyCreated()
-    {
-        // TODO - Still exist?
-        $pages = $this->pageRepo->getRecentlyCreatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-created'));
-        return view('pages.detailed-listing', [
-            'title' => trans('entities.recently_created_pages'),
-            'pages' => $pages
-        ]);
-    }
-
-    /**
-     * Show a listing of recently created pages
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function showRecentlyUpdated()
     {
         // TODO - Still exist?
