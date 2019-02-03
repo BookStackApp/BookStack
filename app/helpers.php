@@ -41,9 +41,17 @@ function user()
  * Check if current user is a signed in user.
  * @return bool
  */
-function signedInUser()
+function signedInUser() : bool
 {
     return auth()->user() && !auth()->user()->isDefault();
+}
+
+/**
+ * Check if the current user has general access.
+ * @return bool
+ */
+function hasAppAccess() : bool {
+    return !auth()->guest() || setting('app-public');
 }
 
 /**

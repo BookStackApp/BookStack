@@ -176,8 +176,13 @@ input[type=date] {
     opacity: 0.8;
   }
 }
-.toggle-switch-list .toggle-switch {
-  margin: $-xs 0;
+.toggle-switch-list {
+  .toggle-switch {
+    margin: $-xs 0;
+  }
+  &.compact .toggle-switch {
+    margin: 1px 0;
+  }
 }
 
 .form-group {
@@ -201,7 +206,8 @@ input[type=date] {
 .setting-list-label + .grid {
   margin-top: $-m;
 }
-.setting-list .grid {
+
+.setting-list .grid, .stretch-inputs {
   input[type=text], input[type=email], input[type=password], select {
     width: 100%;
   }
@@ -327,13 +333,6 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     border-bottom: 2px solid #AAA;
     outline: 0;
   }
-}
-
-#login-form label[for="remember"] {
-  margin: 0;
-}
-#login-form label.toggle-switch {
-  margin-left: $-xl;
 }
 
 .image-picker img {

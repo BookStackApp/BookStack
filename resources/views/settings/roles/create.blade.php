@@ -2,7 +2,7 @@
 
 @section('body')
 
-    <div class="container">
+    <div class="container small">
 
         <div class="py-m">
             @include('settings.navbar', ['selected' => 'roles'])

@@ -149,11 +149,8 @@ em, i, .italic {
 }
 
 small, p.small, span.small, .text-small {
-  font-size: 0.85em;
+  font-size: 0.75rem;
   color: lighten($text-dark, 10%);
-  small, p.small, span.small, .text-small {
-    font-size: 1em;
-  }
 }
 
 sup, .superscript {

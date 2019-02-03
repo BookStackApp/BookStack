@@ -200,6 +200,9 @@ div[class^="col-"] img {
   &.small {
     max-width: 840px;
   }
+  &.very-small {
+    max-width: 480px;
+  }
   &.nopad {
     padding-left: 0;
     padding-right: 0;

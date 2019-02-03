@@ -1,44 +1,48 @@
-@extends('public')
-
-@section('header-buttons')
-    @if(setting('registration-enabled', false))
-        <a href="{{ baseUrl("/register") }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
-    @endif
-@stop
+@extends('simple-layout')
 
 @section('content')
 
-    <div class="text-center">
-        <div class="card center-box">
-            <h3>@icon('login') {{ title_case(trans('auth.log_in')) }}</h3>
+    <div class="container very-small">
 
-            <div class="body">
-                <form action="{{ baseUrl("/login") }}" method="POST" id="login-form">
-                    {!! csrf_field() !!}
+        <div class="my-l">&nbsp;</div>
 
+        <div class="card content-wrap">
+            <h1 class="list-heading">{{ title_case(trans('auth.log_in')) }}</h1>
+
+            <form action="{{ baseUrl("/login") }}" method="POST" id="login-form" class="mt-l">
+                {!! csrf_field() !!}
+
+                <div class="stretch-inputs">
                     @include('auth/forms/login/' . $authMethod)
+                </div>
 
-                    <div class="form-group">
-                        <label for="remember" class="inline">{{ trans('auth.remember_me') }}</label>
-                        <input type="checkbox" id="remember" name="remember"  class="toggle-switch-checkbox">
-                        <label for="remember" class="toggle-switch"></label>
+                <div class="grid half large-gap v-center">
+                    <div class="text-left ml-xxs">
+                        @include('components.custom-checkbox', [
+                            'name' => 'remember',
+                            'checked' => false,
+                            'value' => 'on',
+                            'label' => trans('auth.remember_me'),
+                        ])
                     </div>
-
-                    <div class="from-group">
-                        <button class="button block pos" tabindex="3">@icon('login') {{ title_case(trans('auth.log_in')) }}</button>
+                    <div class="text-right">
+                        <button class="button primary" tabindex="3">{{ title_case(trans('auth.log_in')) }}</button>
                     </div>
-                </form>
+                </div>
 
-                @if(count($socialDrivers) > 0)
-                    <hr class="margin-top">
-                    @foreach($socialDrivers as $driver => $name)
+            </form>
+
+            @if(count($socialDrivers) > 0)
+                <hr class="my-l">
+                @foreach($socialDrivers as $driver => $name)
+                    <div>
                         <a id="social-login-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
                         </a>
-                    @endforeach
-                @endif
-            </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 
