@@ -14,7 +14,7 @@
                 <input type="hidden" name="_method" value="PUT">
 
                 <div class="setting-list">
-                    @include('users.forms.' . $authMethod, ['model' => $user])
+                    @include('users.form', ['model' => $user, 'authMethod' => $authMethod])
 
                     <div class="grid half large-gap">
                         <div>
@@ -35,9 +35,12 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half large-gap v-center">
                         <div>
                             <label for="user-language" class="setting-list-label">{{ trans('settings.users_preferred_language') }}</label>
+                            <p class="small">
+                                {{ trans('settings.users_preferred_language_desc') }}
+                            </p>
                         </div>
                         <div>
                             <select name="setting[language]" id="user-language">

@@ -26,7 +26,7 @@ class PermissionController extends Controller
     {
         $this->checkPermission('user-roles-manage');
         $roles = $this->permissionsRepo->getAllRoles();
-        return view('settings/roles/index', ['roles' => $roles]);
+        return view('settings.roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -36,7 +36,7 @@ class PermissionController extends Controller
     public function createRole()
     {
         $this->checkPermission('user-roles-manage');
-        return view('settings/roles/create');
+        return view('settings.roles.create');
     }
 
     /**
@@ -70,7 +70,7 @@ class PermissionController extends Controller
         if ($role->hidden) {
             throw new PermissionsException(trans('errors.role_cannot_be_edited'));
         }
-        return view('settings/roles/edit', ['role' => $role]);
+        return view('settings.roles.edit', ['role' => $role]);
     }
 
     /**
@@ -106,7 +106,7 @@ class PermissionController extends Controller
         $roles = $this->permissionsRepo->getAllRolesExcept($role);
         $blankRole = $role->newInstance(['display_name' => trans('settings.role_delete_no_migration')]);
         $roles->prepend($blankRole);
-        return view('settings/roles/delete', ['role' => $role, 'roles' => $roles]);
+        return view('settings.roles.delete', ['role' => $role, 'roles' => $roles]);
     }
 
     /**

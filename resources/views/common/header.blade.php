@@ -1,5 +1,6 @@
 <header id="header" header-mobile-toggle>
     <div class="grid break-l mx-l">
+
         <div>
             <a href="{{ baseUrl('/') }}" class="logo">
                 @if(setting('app-logo', '') !== 'none')
@@ -11,26 +12,33 @@
             </a>
             <div class="mobile-menu-toggle hide-over-l">@icon('more')</div>
         </div>
+
         <div class="header-search hide-under-l">
+            @if (hasAppAccess())
             <form action="{{ baseUrl('/search') }}" method="GET" class="search-box">
                 <button id="header-search-box-button" type="submit">@icon('search') </button>
                 <input id="header-search-box-input" type="text" name="term" tabindex="2" placeholder="{{ trans('common.search') }}" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
             </form>
+            @endif
         </div>
+
         <div class="text-right">
             <div class="header-links">
                 <div class="links text-center">
-                    <a class="hide-over-l" href="{{ baseUrl('/search') }}">@icon('search'){{ trans('common.search') }}</a>
-                    @if(userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
-                        <a href="{{ baseUrl('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
+                    @if (hasAppAccess())
+                        <a class="hide-over-l" href="{{ baseUrl('/search') }}">@icon('search'){{ trans('common.search') }}</a>
+                        @if(userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
+                            <a href="{{ baseUrl('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
+                        @endif
+                        <a href="{{ baseUrl('/books') }}">@icon('book'){{ trans('entities.books') }}</a>
+                        @if(signedInUser() && userCan('settings-manage'))
+                            <a href="{{ baseUrl('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
+                        @endif
+                        @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
+                            <a href="{{ baseUrl('/settings/users') }}">@icon('users'){{ trans('settings.users') }}</a>
+                        @endif
                     @endif
-                    <a href="{{ baseUrl('/books') }}">@icon('book'){{ trans('entities.books') }}</a>
-                    @if(signedInUser() && userCan('settings-manage'))
-                        <a href="{{ baseUrl('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
-                    @endif
-                    @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
-                        <a href="{{ baseUrl('/settings/users') }}">@icon('users'){{ trans('settings.users') }}</a>
-                    @endif
+
                     @if(!signedInUser())
                         @if(setting('registration-enabled', false))
                             <a href="{{ baseUrl("/register") }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
@@ -60,5 +68,6 @@
                 @endif
             </div>
         </div>
+
     </div>
 </header>

@@ -15,7 +15,7 @@
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
-                    @include('users.forms.' . $authMethod)
+                    @include('users.form')
                 </div>
 
                 <div class="form-group text-right">
