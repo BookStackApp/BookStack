@@ -176,8 +176,8 @@ class LdapService
          * the LDAP_OPT_X_TLS_REQUIRE_CERT option. It can only be set globally and not
          * per handle.
          */
-        if($this->config['tls_insecure']) {
-            $this->ldap->setOption(NULL, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
+        if ($this->config['tls_insecure']) {
+            $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
         $ldapConnection = $this->ldap->connect($hostName, count($ldapServer) > 2 ? intval($ldapServer[2]) : $defaultPort);
