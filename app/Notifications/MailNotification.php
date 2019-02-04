@@ -31,5 +31,4 @@ class MailNotification extends Notification implements ShouldQueue
             'text' => 'vendor.notifications.email-plain'
         ]);
     }
-
 }
