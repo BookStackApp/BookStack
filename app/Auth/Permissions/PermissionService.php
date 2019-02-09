@@ -190,10 +190,10 @@ class PermissionService
     {
         return $this->entityProvider->book->newQuery()
             ->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
-            $query->select(['id', 'restricted', 'created_by', 'book_id']);
-        }, 'pages'  => function ($query) {
-            $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
-        }]);
+                $query->select(['id', 'restricted', 'created_by', 'book_id']);
+            }, 'pages'  => function ($query) {
+                $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+            }]);
     }
 
     /**
@@ -612,13 +612,13 @@ class PermissionService
         $entities = $this->entityProvider;
         $pageSelect = $this->db->table('pages')->selectRaw($entities->page->entityRawQuery($fetchPageContent))
             ->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
-            $query->where('draft', '=', 0);
-            if (!$filterDrafts) {
-                $query->orWhere(function ($query) {
-                    $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
-                });
-            }
-        });
+                $query->where('draft', '=', 0);
+                if (!$filterDrafts) {
+                    $query->orWhere(function ($query) {
+                        $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
+                    });
+                }
+            });
         $chapterSelect = $this->db->table('chapters')->selectRaw($entities->chapter->entityRawQuery())->where('book_id', '=', $book_id);
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
             ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);

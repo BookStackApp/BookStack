@@ -9,8 +9,7 @@ A platform for storing and organising information and documentation. General inf
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
 * [Documentation](https://www.bookstackapp.com/docs)
 * [Demo Instance](https://demo.bookstackapp.com)
-  * *Username: `admin@example.com`*
-  * *Password: `password`*
+    * [Admin Login](https://demo.bookstackapp.com/login?email=admin@example.com&password=password)
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 
 ## Project Definition
@@ -19,7 +18,7 @@ BookStack is an opinionated wiki system that provides a pleasant and simple out 
 
 BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
 
-In regards to development philosophy, BookStack has a relaxed, open & positive approach. Put simply, At the end of the day this is free software developed and maintained by people donating their own free time.
+In regards to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
 
 ## Development & Testing
 
@@ -85,15 +84,15 @@ PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr
 
 ### Pull Requests
 
-Pull requests are very welcome. If the scope of your pull request is large it may be best to open the pull request early or create an issue for it to discuss how it will fit in to the project and plan out the merge.
+Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge.
 
-Pull requests should be created from the `master` branch and should be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
+Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
 
 If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
 ## Website, Docs & Blog
 
-The website project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
+The website which contains the project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
 
 ## License
 
@@ -117,7 +116,6 @@ These are the great open-source projects used to help build BookStack:
 * [clipboard.js](https://clipboardjs.com/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
-* [Moment.js](http://momentjs.com/)
 * [BarryVD](https://github.com/barryvdh)
     * [Debugbar](https://github.com/barryvdh/laravel-debugbar)
     * [Dompdf](https://github.com/barryvdh/laravel-dompdf)

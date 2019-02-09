@@ -7,7 +7,39 @@ use Illuminate\Http\Request;
 class Localization
 {
 
+    /**
+     * Array of right-to-left locales
+     * @var array
+     */
     protected $rtlLocales = ['ar'];
+
+    /**
+     * Map of BookStack locale names to best-estimate system locale names.
+     * @var array
+     */
+    protected $localeMap = [
+        'ar' => 'ar',
+        'de' => 'de_DE',
+        'de_informal' => 'de_DE',
+        'en' => 'en_GB',
+        'es' => 'es_ES',
+        'es_AR' => 'es_AR',
+        'fr' => 'fr_FR',
+        'it' => 'it_IT',
+        'ja' => 'ja',
+        'kr' => 'ko_KR',
+        'nl' => 'nl_NL',
+        'pl' => 'pl_PL',
+        'pt_BR' => 'pt_BR',
+        'pt_BR' => 'pt_BR',
+        'ru' => 'ru',
+        'sk' => 'sk_SK',
+        'sv' => 'sv_SE',
+        'uk' => 'uk_UA',
+        'uk' => 'uk_UA',
+        'zh_CN' => 'zh_CN',
+        'zh_TW' => 'zh_TW',
+    ];
 
     /**
      * Handle an incoming request.
@@ -31,8 +63,11 @@ class Localization
             config()->set('app.rtl', true);
         }
 
+
+
         app()->setLocale($locale);
         Carbon::setLocale($locale);
+        $this->setSystemDateLocale($locale);
         return $next($request);
     }
 
@@ -52,5 +87,19 @@ class Localization
             }
         }
         return $default;
+    }
+
+    /**
+     * Set the system date locale for localized date formatting.
+     * Will try both the standard locale name and the UTF8 variant.
+     * @param string $locale
+     */
+    protected function setSystemDateLocale(string $locale)
+    {
+        $systemLocale = $this->localeMap[$locale] ?? $locale;
+        $set = setlocale(LC_TIME, $systemLocale);
+        if ($set === false) {
+            setlocale(LC_TIME, $systemLocale . '.utf8');
+        }
     }
 }

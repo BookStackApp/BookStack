@@ -123,20 +123,21 @@ class PageDisplay {
 
     setupStickySidebar() {
         // Make the sidebar stick in view on scroll
-        let $window = $(window);
-        let $sidebar = $("#sidebar .scroll-body");
-        let $bookTreeParent = $sidebar.parent();
+        const $window = $(window);
+        const $sidebar = $("#sidebar .scroll-body");
+        const $sidebarContainer = $sidebar.parent();
+        const sidebarHeight = $sidebar.height() + 32;
 
         // Check the page is scrollable and the content is taller than the tree
-        let pageScrollable = ($(document).height() > ($window.height() + 40)) && ($sidebar.height() < $('.page-content').height());
+        const pageScrollable = ($(document).height() > ($window.height() + 40)) && (sidebarHeight < $('.page-content').height());
 
         // Get current tree's width and header height
-        let headerHeight = $("#header").height() + $(".toolbar").height();
+        const headerHeight = $("#header").height() + $(".toolbar").height();
         let isFixed = $window.scrollTop() > headerHeight;
 
         // Fix the tree as a sidebar
         function stickTree() {
-            $sidebar.css('width', $bookTreeParent.width());
+            $sidebar.width($sidebarContainer.width() + 15);
             $sidebar.addClass("fixed");
             isFixed = true;
         }
