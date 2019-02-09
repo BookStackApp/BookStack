@@ -1,6 +1,5 @@
 <?php namespace BookStack\Translation;
 
-
 class Translator extends \Illuminate\Translation\Translator
 {
 
@@ -70,5 +69,4 @@ class Translator extends \Illuminate\Translation\Translator
     {
         return $this->baseLocaleMap[$locale] ?? null;
     }
-
 }

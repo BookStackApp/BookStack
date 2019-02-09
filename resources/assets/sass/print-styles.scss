@@ -16,6 +16,14 @@ body {
   margin: 0 auto;
 }
 
+.flex-fill {
+  display: block;
+}
+
+.flex.sidebar + .flex.content {
+  border-left: none;
+}
+
 .print-hidden {
   display: none;
 }
@@ -31,4 +39,8 @@ h2 {
   line-height: 1;
   margin-top: 0.6em;
   margin-bottom: 0.3em;
+}
+
+.comments-container {
+  display: none;
 }
