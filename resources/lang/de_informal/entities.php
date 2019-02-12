@@ -14,7 +14,7 @@ return [
      */
     'shelves_delete_explain' => "Du bist im Begriff das Bücherregal mit dem Namen ':name' zu löschen. Enthaltene Bücher werden nicht gelöscht.",
     'shelves_delete_confirmation' => 'Bist du sicher, dass du dieses Bücherregal löschen willst?',
-    'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfe vor der Aktivierung, ob alle Berechtigungsänderungen am aktuellen Buch gespeichert wurden.',
+    'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfe vor der Aktivierung, ob alle Berechtigungsänderungen am aktuellen Regal gespeichert wurden.',
     
     /**
      * Books
