@@ -60,6 +60,39 @@ return [
     'search_created_after' => 'Erstellt nach',
     'search_set_date' => 'Datum auswählen',
     'search_update' => 'Suche aktualisieren',
+    
+    /*
+     * Shelves
+     */
+    'shelf' => 'Regal',
+    'shelves' => 'Regale',
+    'shelves_long' => 'Bücherregal',
+    'shelves_empty' => 'Es wurden noch keine Regale angelegt',
+    'shelves_create' => 'Erzeuge ein Regal',
+    'shelves_popular' => 'Beliebte Regale',
+    'shelves_new' => 'Kürzlich erstellte Regale',
+    'shelves_popular_empty' => 'Die beliebtesten Regale werden hier angezeigt.',
+    'shelves_new_empty' => 'Die neusten Regale werden hier angezeigt.',
+    'shelves_save' => 'Regal speichern',
+    'shelves_books' => 'Bücher in diesem Regal',
+    'shelves_add_books' => 'Buch zu diesem Regal hinzufügen',
+    'shelves_drag_books' => 'Bücher hier hin ziehen um sie dem Regal hinzuzufügen',
+    'shelves_empty_contents' => 'Diesem Regal sind keine Bücher zugewiesen',
+    'shelves_edit_and_assign' => 'Regal bearbeiten um Bücher hinzuzufügen',
+    'shelves_edit_named' => 'Bücherregal :name bearbeiten',
+    'shelves_edit' => 'Bücherregal bearbeiten',
+    'shelves_delete' => 'Bücherregal löschen',
+    'shelves_delete_named' => 'Bücherregal :name löschen',
+    'shelves_delete_explain' => "Sie sind im Begriff das Bücherregal mit dem Namen ':name' zu löschen. Enthaltene Bücher werden nicht gelöscht.",
+    'shelves_delete_confirmation' => 'Sind Sie sicher, dass Sie dieses Bücherregal löschen wollen?',
+    'shelves_permissions' => 'Regal-Berechtigungen',
+    'shelves_permissions_updated' => 'Regal-Berechtigungen aktualisiert',
+    'shelves_permissions_active' => 'Regal-Berechtigungen aktiv',
+    'shelves_copy_permissions_to_books' => 'Kopiere die Berechtigungen zum Buch',
+    'shelves_copy_permissions' => 'Berechtigungen kopieren',
+    'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfe vor der Aktivierung ob alle Berechtigungsänderungen am aktuellen Buch gespeichert wurden.',
+    'shelves_copy_permission_success' => 'Regal-Berechtigungen wurden zu :count Büchern kopiert',
+    
     /**
      * Books
      */
