@@ -90,7 +90,7 @@ return [
     'shelves_permissions_active' => 'Regal-Berechtigungen aktiv',
     'shelves_copy_permissions_to_books' => 'Kopiere die Berechtigungen zum Buch',
     'shelves_copy_permissions' => 'Berechtigungen kopieren',
-    'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfe vor der Aktivierung ob alle Berechtigungsänderungen am aktuellen Buch gespeichert wurden.',
+    'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfen Sie vor der Aktivierung, ob alle Berechtigungsänderungen am aktuellen Regal gespeichert wurden.',
     'shelves_copy_permission_success' => 'Regal-Berechtigungen wurden zu :count Büchern kopiert',
     
     /**
