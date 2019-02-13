@@ -653,34 +653,19 @@ class EntityRepo
     public function renderInternalLinks($content, $ignorePermissions = false)
     {
         $matches = [];
-        preg_match_all('/<a .*href\="{{{*@([0-9]*)}}}*"/', $content, $matches);
+        preg_match_all('/{{([a-z]+)@([0-9]+)}}"/', $content, $matches);
         if (count($matches[0]) === 0) {
             return $content;
         }
 
-        foreach($matches[1] as $index => $entityId){
-            preg_match('/href=".*"/', $matches[0][$index], $hrefMatches);
-            $hrefAttribute = $hrefMatches[0];
-            $openBracketCount = substr_count($hrefAttribute, '{', 6);
-            $closeBracketCount = substr_count($hrefAttribute, '}', 6);
+        foreach($matches[1] as $index => $matchedType){
+            $entityId = $matches[2][$index];
+            $fullMatch = $matches[0][$index];
 
-            $matchedEntity = null;
-            if ($openBracketCount === $closeBracketCount){
-                if ($openBracketCount === 2){
-                    $matchedEntity = $this->getById('page', $entityId, false, $ignorePermissions);
-                }elseif ($openBracketCount === 3){
-                    $matchedEntity = $this->getById('chapter', $entityId, false, $ignorePermissions);
-                }elseif ($openBracketCount === 4){
-                    $matchedEntity = $this->getById('book', $entityId, false, $ignorePermissions);
-                }
-            }
-
-            if ($matchedEntity === null) {
-                $emptyLink = preg_replace('/href=".*"/', 'href="#"', $matches[0][$index]);
-                $content = str_replace($matches[0][$index], $emptyLink, $content);
-            } else {
-                $newLink = preg_replace('/href=".*"/', 'href="'.$matchedEntity->getUrl().'"', $matches[0][$index]);
-                $content = str_replace($matches[0][$index], $newLink, $content);
+            if (in_array($matchedType, ['page', 'chapter', 'book'])) {
+                $matchedEntity = $this->getById($matchedType, $entityId, false, $ignorePermissions);
+                $newLink = ($matchedEntity === null) ? '#' : $matchedEntity->getUrl();
+                $content = str_replace($fullMatch, $newLink, $content);
             }
         }
 
