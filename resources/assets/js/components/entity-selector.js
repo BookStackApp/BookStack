@@ -99,7 +99,7 @@ class EntitySelector {
 
         let link = item.querySelector('.entity-list-item-link').getAttribute('href');
         let name = item.querySelector('.entity-list-item-name').textContent;
-        let data = {id: Number(id), name: name, link: link};
+        let data = {id: Number(id), name: name, link: link, type: type};
 
         if (isDblClick) window.$events.emit('entity-select-confirm', data);
         if (isSelected) window.$events.emit('entity-select-change', data);

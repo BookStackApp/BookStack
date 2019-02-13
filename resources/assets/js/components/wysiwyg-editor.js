@@ -454,7 +454,7 @@ class WysiwygEditor {
                 if (type === 'file') {
                     window.EntitySelectorPopup.show(function(entity) {
                         let originalField = win.document.getElementById(field_name);
-                        originalField.value = entity.link;
+                        originalField.value = 'bookstackapp:' + entity.type + ':' + entity.id;
                         $(originalField).closest('.mce-form').find('input').eq(2).val(entity.name);
                     });
                 }

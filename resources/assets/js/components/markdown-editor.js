@@ -12,6 +12,43 @@ class MarkdownEditor {
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
 
+        this.refstore = {
+            page: new Set(),
+            chapter: new Set(),
+            book: new Set(),
+            thumb: new Set(),
+            image: new Set(),
+            clear: function () {
+                this.page.clear();
+                this.chapter.clear();
+                this.book.clear();
+                this.thumb.clear();
+                this.image.clear();
+            }
+        };
+
+        let internal = {
+            validateLink: this.markdown.validateLink,
+            normalizeLink: this.markdown.normalizeLink,
+            refStore: this.refstore
+        };
+
+        this.markdown.validateLink = function (url) {
+            let linkMatch = url.match('bookstackapp:([a-z]+):([0-9]+)');
+            if (linkMatch) {
+                return true;
+            }
+            return internal.validateLink(url);
+        }
+        this.markdown.normalizeLink = function (url) {
+            let linkMatch = url.match('bookstackapp:([a-z]+):([0-9]+)');
+            if (linkMatch && (['page', 'book', 'chapter', 'thumb', 'image'].includes(linkMatch[1]))) {
+                console.log(linkMatch[1], linkMatch[2]);
+                internal.refStore[linkMatch[1]].add(linkMatch[2]);
+            }
+            return internal.normalizeLink(url);
+        }
+
         this.display = this.elem.querySelector('.markdown-display');
         this.input = this.elem.querySelector('textarea');
         this.htmlInput = this.elem.querySelector('input[name=html]');
@@ -79,7 +116,17 @@ class MarkdownEditor {
     updateAndRender() {
         let content = this.cm.getValue();
         this.input.value = content;
+
+        this.refstore.clear();
         let html = this.markdown.render(content);
+        let display = this.display;
+
+        this.refstore.thumb.forEach(imageId => {
+            window.$http.get(window.baseUrl(`/images/thumb/${imageId}/840/0/false`)).then(resp => {
+                display.innerHTML = display.innerHTML.replace(new RegExp(`bookstackapp:thumb:${imageId}`, 'g'), resp.data.url);
+            });
+        });
+
         window.$events.emit('editor-html-change', html);
         window.$events.emit('editor-markdown-change', content);
         this.display.innerHTML = html;
@@ -305,7 +352,7 @@ class MarkdownEditor {
         let cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
             let selectedText = this.cm.getSelection();
-            let newText = "[![" + (selectedText || image.name) + "](" + image.thumbs.display + ")](" + image.url + ")";
+            let newText = `[![${(selectedText || image.name)}](bookstackapp:thumb:${image.id})](bookstackapp:image:${image.id})`;
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
@@ -324,7 +371,7 @@ class MarkdownEditor {
         let cursorPos = this.cm.getCursor('from');
         window.EntitySelectorPopup.show(entity => {
             let selectedText = this.cm.getSelection() || entity.name;
-            let newText = `[${selectedText}](${entity.link})`;
+            let newText = `[${selectedText}](bookstackapp:${entity.type}:${entity.id})`;
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
