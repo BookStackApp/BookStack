@@ -14,6 +14,7 @@ use BookStack\Entities\SearchService;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\AttachmentService;
+use BookStack\Uploads\ImageRepo;
 use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -42,6 +43,11 @@ class EntityRepo
     protected $tagRepo;
 
     /**
+     * @var ImageRepo;
+     */
+    protected $imageRepo;
+
+    /**
      * @var SearchService
      */
     protected $searchService;
@@ -52,6 +58,7 @@ class EntityRepo
      * @param ViewService $viewService
      * @param PermissionService $permissionService
      * @param TagRepo $tagRepo
+     * @param ImageRepo $imageRepo
      * @param SearchService $searchService
      */
     public function __construct(
@@ -59,12 +66,14 @@ class EntityRepo
         ViewService $viewService,
         PermissionService $permissionService,
         TagRepo $tagRepo,
+        ImageRepo $imageRepo,
         SearchService $searchService
     ) {
         $this->entityProvider = $entityProvider;
         $this->viewService = $viewService;
         $this->permissionService = $permissionService;
         $this->tagRepo = $tagRepo;
+        $this->imageRepo = $imageRepo;
         $this->searchService = $searchService;
     }
 
@@ -653,7 +662,8 @@ class EntityRepo
     public function renderInternalLinks($content, $ignorePermissions = false)
     {
         $matches = [];
-        preg_match_all('/{{([a-z]+)@([0-9]+)}}"/', $content, $matches);
+        preg_match_all('/bookstackapp:([a-z]+):([0-9]+)/', $content, $matches);
+
         if (count($matches[0]) === 0) {
             return $content;
         }
@@ -665,6 +675,18 @@ class EntityRepo
             if (in_array($matchedType, ['page', 'chapter', 'book'])) {
                 $matchedEntity = $this->getById($matchedType, $entityId, false, $ignorePermissions);
                 $newLink = ($matchedEntity === null) ? '#' : $matchedEntity->getUrl();
+                $content = str_replace($fullMatch, $newLink, $content);
+            }
+
+            if ($matchedType == 'image') {
+                $matchedImage = $this->imageRepo->getById($entityId);
+                $newLink = ($matchedImage === null) ? '#' : $matchedImage->url;
+                $content = str_replace($fullMatch, $newLink, $content);
+            }
+
+            if ($matchedType == 'thumb') {
+                $matchedImage = $this->imageRepo->getById($entityId);
+                $newLink = ($matchedImage === null) ? '#' : $matchedImage->getThumb(840, 0, true);
                 $content = str_replace($fullMatch, $newLink, $content);
             }
         }
