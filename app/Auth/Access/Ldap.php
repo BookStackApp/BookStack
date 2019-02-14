@@ -17,7 +17,11 @@ class Ldap
      */
     public function connect($hostName, $port)
     {
-        return ldap_connect($hostName, $port);
+        if(strpos($hostName,":")===NULL) {
+            return ldap_connect($hostName,$port);
+        } else {
+            return ldap_connect($hostName.":".$port);
+        }
     }
 
     /**
