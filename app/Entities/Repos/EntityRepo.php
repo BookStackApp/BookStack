@@ -18,6 +18,7 @@ use BookStack\Uploads\ImageRepo;
 use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\URL;
 
 class EntityRepo
 {
@@ -664,9 +665,9 @@ class EntityRepo
         $matches = [];
         preg_match_all('/bookstackapp:([a-z]+):([0-9]+)/', $content, $matches);
 
-        if (count($matches[0]) === 0) {
+        /*if (count($matches[0]) === 0) {
             return $content;
-        }
+        }*/
 
         foreach($matches[1] as $index => $matchedType){
             $entityId = $matches[2][$index];
@@ -689,6 +690,13 @@ class EntityRepo
                 $newLink = ($matchedImage === null) ? '#' : $matchedImage->getThumb(840, 0, true);
                 $content = str_replace($fullMatch, $newLink, $content);
             }
+        }
+
+        preg_match_all('/bookstackapp:ref:([a-z\-\/]+)/', $content, $matches);
+
+        foreach($matches[1] as $index => $refURL) {
+            $fullMatch = $matches[0][$index];
+            $content = str_replace($fullMatch, url()->to($refURL), $content);
         }
 
         return $content;
