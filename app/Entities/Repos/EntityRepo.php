@@ -182,15 +182,26 @@ class EntityRepo
      * @param int $count
      * @param string $sort
      * @param string $order
+     * @param null|callable $queryAddition
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllPaginated($type, int $count = 10, string $sort = 'name', string $order = 'asc')
+    public function getAllPaginated($type, int $count = 10, string $sort = 'name', string $order = 'asc', $queryAddition = null)
     {
         $query = $this->entityQuery($type);
         $query = $this->addSortToQuery($query, $sort, $order);
+        if ($queryAddition) {
+            $queryAddition($query);
+        }
         return $query->paginate($count);
     }
 
+    /**
+     * Add sorting operations to an entity query.
+     * @param Builder $query
+     * @param string $sort
+     * @param string $order
+     * @return Builder
+     */
     protected function addSortToQuery(Builder $query, string $sort = 'name', string $order = 'asc')
     {
         $order = ($order === 'asc') ? 'asc' : 'desc';

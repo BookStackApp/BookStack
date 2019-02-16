@@ -307,14 +307,43 @@ ul.pagination {
   background-color: #EEEEEE;
 }
 
+.entity-list-item-children {
+  padding: $-m;
+  > div {
+    overflow: hidden;
+    padding: $-xs 0;
+    margin-top: -$-xs;
+  }
+  .entity-chip {
+    text-overflow: ellipsis;
+    height: 2.5em;
+    overflow: hidden;
+    text-align: left;
+    display: block;
+    white-space: nowrap;
+  }
+}
+
 .entity-list-item-image {
   align-self: stretch;
   width: 140px;
+  flex: none;
   background-size: cover;
   background-position: 50% 50%;
   border-radius: 3px;
   position: relative;
   margin-right: $-l;
+
+  .svg-icon {
+    color: #FFF;
+    fill: #FFF;
+    font-size: 2rem;
+    margin-right: 0;
+    position: absolute;
+    bottom: $-xs;
+    left: $-xs;
+  }
+
   @include smaller-than($m) {
     width: 80px;
   }

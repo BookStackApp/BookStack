@@ -38,7 +38,7 @@ class Book extends Entity
      */
     public function getBookCover($width = 440, $height = 250)
     {
-        $default = baseUrl('/book_default_cover.png');
+        $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
         if (!$this->image_id) {
             return $default;
         }
