@@ -12,7 +12,10 @@
     @if(count($shelves) > 0)
         @if($view === 'list')
             <div class="entity-list">
-                @foreach($shelves as $shelf)
+                @foreach($shelves as $index => $shelf)
+                    @if ($index !== 0)
+                        <hr class="my-m">
+                    @endif
                     @include('shelves.list-item', ['shelf' => $shelf])
                 @endforeach
             </div>

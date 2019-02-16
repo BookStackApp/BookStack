@@ -47,7 +47,9 @@ class BookshelfController extends Controller
             'updated_at' => trans('common.sort_updated_at'),
         ];
 
-        $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18, $sort, $order);
+        $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18, $sort, $order, function($query) {
+            $query->with(['books']);
+        });
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('bookshelf', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('bookshelf', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('bookshelf', 4, 0);

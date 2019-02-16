@@ -51,7 +51,7 @@ class Bookshelf extends Entity
     public function getBookCover($width = 440, $height = 250)
     {
         // TODO - Make generic, focused on books right now, Perhaps set-up a better image
-        $default = baseUrl('/book_default_cover.png');
+        $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
         if (!$this->image_id) {
             return $default;
         }
