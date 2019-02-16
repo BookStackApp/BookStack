@@ -66,21 +66,21 @@
 
             @if(userCan('bookshelf-update', $shelf))
                 <a href="{{ $shelf->getUrl('/edit') }}" class="icon-list-item">
-                    <span class="icon">@icon('edit')</span>
+                    <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
 
             @if(userCan('restrictions-manage', $shelf))
                 <a href="{{ $shelf->getUrl('/permissions') }}" class="icon-list-item">
-                    <span class="icon">@icon('lock')</span>
+                    <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
 
             @if(userCan('bookshelf-delete', $shelf))
                 <a href="{{ $shelf->getUrl('/delete') }}" class="icon-list-item">
-                    <span class="icon">@icon('delete')</span>
+                    <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif

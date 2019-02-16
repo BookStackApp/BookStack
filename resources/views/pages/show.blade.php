@@ -119,7 +119,7 @@
             {{--Export--}}
             <div dropdown class="dropdown-container block">
                 <div dropdown-toggle class="icon-list-item">
-                    <span class="icon">@icon('export')</span>
+                    <span>@icon('export')</span>
                     <span>{{ trans('entities.export') }}</span>
                 </div>
                 <ul class="wide">
@@ -132,33 +132,33 @@
             {{--User Actions--}}
             @if(userCan('page-update', $page))
                 <a href="{{ $page->getUrl('/edit') }}" class="icon-list-item">
-                    <span class="icon">@icon('edit')</span>
+                    <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
                 <a href="{{ $page->getUrl('/copy') }}" class="icon-list-item">
-                    <span class="icon">@icon('copy')</span>
+                    <span>@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>
                 </a>
                 @if(userCan('page-delete', $page))
 	                <a href="{{ $page->getUrl('/move') }}" class="icon-list-item">
-	                    <span class="icon">@icon('folder')</span>
+	                    <span>@icon('folder')</span>
 	                    <span>{{ trans('common.move') }}</span>
 	                </a>
                 @endif
                 <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
-                    <span class="icon">@icon('history')</span>
+                    <span>@icon('history')</span>
                     <span>{{ trans('entities.revisions') }}</span>
                 </a>
             @endif
             @if(userCan('restrictions-manage', $page))
                 <a href="{{ $page->getUrl('/permissions') }}" class="icon-list-item">
-                    <span class="icon">@icon('lock')</span>
+                    <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
             @if(userCan('page-delete', $page))
                 <a href="{{ $page->getUrl('/delete') }}" class="icon-list-item">
-                    <span class="icon">@icon('delete')</span>
+                    <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif

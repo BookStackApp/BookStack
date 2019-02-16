@@ -9,7 +9,7 @@
 
         <form action="{{ baseUrl("/settings/roles/{$role->id}") }}" method="POST">
             <input type="hidden" name="_method" value="PUT">
-            @include('settings/roles/form', ['model' => $role, 'title' => trans('settings.role_edit'), 'icon' => 'edit'])
+            @include('settings.roles.form', ['model' => $role, 'title' => trans('settings.role_edit'), 'icon' => 'edit'])
         </form>
     </div>
 

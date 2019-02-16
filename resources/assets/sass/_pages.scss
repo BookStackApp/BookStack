@@ -356,7 +356,7 @@
   }
 }
 
-.entity-list-item > .icon, .icon-list-item > .icon {
+.entity-list-item > span:first-child, .icon-list-item > span:first-child {
   font-size: 0.8rem;
   width: 1.88em;
   height: 1.88em;
