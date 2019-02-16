@@ -1,7 +1,5 @@
 @extends('simple-layout')
 
-{{--TODO - Looks strange--}}
-
 @section('body')
     <div class="container small">
 
@@ -25,14 +23,21 @@
                     </div>
                 @endif
 
-                <p class="text-neg">
-                    <strong>{{ trans('settings.role_delete_sure') }}</strong>
-                </p>
-
-                <div class="form-group text-right">
-                    <a href="{{ baseUrl("/settings/roles/{$role->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                <div class="grid half v-center">
+                    <div>
+                        <p class="text-neg">
+                            <strong>{{ trans('settings.role_delete_sure') }}</strong>
+                        </p>
+                    </div>
+                    <div>
+                        <div class="form-group text-right">
+                            <a href="{{ baseUrl("/settings/roles/{$role->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                            <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                        </div>
+                    </div>
                 </div>
+
+
             </form>
         </div>
 

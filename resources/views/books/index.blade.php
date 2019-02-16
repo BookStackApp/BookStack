@@ -40,7 +40,7 @@
         <div class="icon-list text-primary">
             @if($currentUser->can('book-create-all'))
                 <a href="{{ baseUrl("/create-book") }}" class="icon-list-item">
-                    <span class="icon">@icon('add')</span>
+                    <span>@icon('add')</span>
                     <span>{{ trans('entities.books_create') }}</span>
                 </a>
             @endif

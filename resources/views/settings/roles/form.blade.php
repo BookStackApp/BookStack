@@ -199,7 +199,7 @@
     <div class="form-group text-right">
         <a href="{{ baseUrl("/settings/roles") }}" class="button outline">{{ trans('common.cancel') }}</a>
         @if (isset($role) && $role->id)
-            <a href="{{ baseUrl("/settings.roles.delete/{$role->id}") }}" class="button outline">{{ trans('settings.role_delete') }}</a>
+            <a href="{{ baseUrl("/settings/roles/delete/{$role->id}") }}" class="button outline">{{ trans('settings.role_delete') }}</a>
         @endif
         <button type="submit" class="button primary">{{ trans('settings.role_save') }}</button>
     </div>

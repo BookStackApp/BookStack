@@ -61,7 +61,7 @@
 
             <div dropdown class="dropdown-container">
                 <div dropdown-toggle class="icon-list-item">
-                    <span class="icon">@icon('export')</span>
+                    <span>@icon('export')</span>
                     <span>{{ trans('entities.export') }}</span>
                 </div>
                 <ul class="wide">
@@ -73,38 +73,38 @@
 
             @if(userCan('page-create', $chapter))
                 <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item">
-                    <span class="icon">@icon('add')</span>
+                    <span>@icon('add')</span>
                     <span>{{ trans('entities.pages_new') }}</span>
                 </a>
             @endif
             @if(userCan('chapter-update', $chapter))
                 <a href="{{ $chapter->getUrl('/edit') }}" class="icon-list-item">
-                    <span class="icon">@icon('edit')</span>
+                    <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
             @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
                 <a href="{{ $chapter->getUrl('/move') }}" class="icon-list-item">
-                    <span class="icon">@icon('folder')</span>
+                    <span>@icon('folder')</span>
                     <span>{{ trans('common.move') }}</span>
                 </a>
             @endif
             @if(userCan('restrictions-manage', $chapter))
                 <a href="{{ $chapter->getUrl('/permissions') }}" class="icon-list-item">
-                    <span class="icon">@icon('lock')</span>
+                    <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
             @if(userCan('chapter-delete', $chapter))
                 <a href="{{ $chapter->getUrl('/delete') }}" class="icon-list-item">
-                    <span class="icon">@icon('delete')</span>
+                    <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif
 
             {{--@if(userCan('page-create', $book))--}}
                 {{--<a href="{{ $book->getUrl('/create-page') }}" class="icon-list-item">--}}
-                    {{--<span class="icon">@icon('add')</span>--}}
+                    {{--<span>@icon('add')</span>--}}
                     {{--<span>{{ trans('entities.pages_new') }}</span>--}}
                 {{--</a>--}}
             {{--@endif--}}

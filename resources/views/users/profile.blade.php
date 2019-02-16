@@ -35,15 +35,15 @@
                             <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
                             <div class="icon-list">
                                 <a href="#recent-books" class="text-book icon-list-item">
-                                    <span class="icon">@icon('book')</span>
+                                    <span>@icon('book')</span>
                                     <span>{{ trans_choice('entities.x_books', $assetCounts['books']) }}</span>
                                 </a>
                                 <a href="#recent-chapters" class="text-chapter icon-list-item">
-                                    <span class="icon">@icon('chapter')</span>
+                                    <span>@icon('chapter')</span>
                                     <span>{{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}</span>
                                 </a>
                                 <a href="#recent-pages" class="text-page icon-list-item">
-                                    <span class="icon">@icon('page')</span>
+                                    <span>@icon('page')</span>
                                     <span>{{ trans_choice('entities.x_pages', $assetCounts['pages']) }}</span>
                                 </a>
                             </div>

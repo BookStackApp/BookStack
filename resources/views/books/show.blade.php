@@ -59,7 +59,7 @@
         <div class="icon-list text-primary">
             <div dropdown class="dropdown-container">
                 <div dropdown-toggle class="icon-list-item">
-                    <span class="icon">@icon('export')</span>
+                    <span>@icon('export')</span>
                     <span>{{ trans('entities.export') }}</span>
                 </div>
                 <ul class="wide">
@@ -71,35 +71,35 @@
 
             @if(userCan('page-create', $book))
                 <a href="{{ $book->getUrl('/create-page') }}" class="icon-list-item">
-                    <span class="icon">@icon('add')</span>
+                    <span>@icon('add')</span>
                     <span>{{ trans('entities.pages_new') }}</span>
                 </a>
             @endif
             @if(userCan('chapter-create', $book))
                 <a href="{{ $book->getUrl('/create-chapter') }}" class="icon-list-item">
-                    <span class="icon">@icon('add')</span>
+                    <span>@icon('add')</span>
                     <span>{{ trans('entities.chapters_new') }}</span>
                 </a>
             @endif
             @if(userCan('book-update', $book))
                 <a href="{{ $book->getUrl('/edit') }}" class="icon-list-item">
-                    <span class="icon">@icon('edit')</span>
+                    <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
                 <a href="{{ $book->getUrl('/sort') }}" class="icon-list-item">
-                    <span class="icon">@icon('sort')</span>
+                    <span>@icon('sort')</span>
                     <span>{{ trans('common.sort') }}</span>
                 </a>
             @endif
             @if(userCan('restrictions-manage', $book))
                 <a href="{{ $book->getUrl('/permissions') }}" class="icon-list-item">
-                    <span class="icon">@icon('lock')</span>
+                    <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
             @if(userCan('book-delete', $book))
                 <a href="{{ $book->getUrl('/delete') }}" class="icon-list-item">
-                    <span class="icon">@icon('delete')</span>
+                    <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif

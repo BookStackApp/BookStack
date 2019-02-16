@@ -4,15 +4,15 @@
         {!! method_field('PATCH') !!}
         <input type="hidden" value="{{ $view === 'list'? 'grid' : 'list' }}" name="view_type">
         @if ($view === 'list')
-            <a onclick="this.closest('form').submit()" type="submit" class="icon-list-item">
+            <button type="submit" class="icon-list-item text-primary">
                 <span class="icon">@icon('grid')</span>
                 <span>{{ trans('common.grid_view') }}</span>
-            </a>
+            </button>
         @else
-            <a onclick="this.closest('form').submit()" type="submit" class="icon-list-item">
-                <span class="icon">@icon('list')</span>
+            <button type="submit" class="icon-list-item text-primary">
+                <span>@icon('list')</span>
                 <span>{{ trans('common.list_view') }}</span>
-            </a>
+            </button>
         @endif
     </form>
 </div>

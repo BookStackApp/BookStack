@@ -250,18 +250,24 @@ ul.pagination {
 
 .entity-list-item, .icon-list-item {
   padding: $-s $-m;
-  display: grid;
-  grid-template-columns: min-content 1fr;
-  grid-column-gap: $-m;
-  align-items: top;
-  > .content {
-    padding-top: 2px;
-  }
-  .icon {
-    font-size: 1rem;
-  }
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
   h4 a {
     color: #666;
+  }
+  > span:first-child {
+    margin-right: $-m;
+    flex-basis: 1.88em;
+    flex: none;
+  }
+  > span:last-child {
+    flex: 1;
+    text-align: left;
   }
   &:hover {
     text-decoration: none;
@@ -278,10 +284,13 @@ ul.pagination {
 }
 
 .entity-list-item-image {
+  align-self: stretch;
   width: 140px;
   background-size: cover;
   background-position: 50% 50%;
   border-radius: 3px;
+  position: relative;
+  margin-right: $-l;
   @include smaller-than($m) {
     width: 80px;
   }
