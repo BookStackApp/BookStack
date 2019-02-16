@@ -208,8 +208,8 @@ class PageDisplay {
             let pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
 
             // observe each heading
-            for (let i = 0; i !== headings.length; ++i) {
-                pageNavObserver.observe(headings[i]);
+            for (let heading of headings) {
+                pageNavObserver.observe(heading);
             }
         }
 
@@ -221,14 +221,9 @@ class PageDisplay {
         }
 
         function toggleAnchorHighlighting(elementId, shouldHighlight) {
-            let anchorsToHighlight = pageNav.querySelectorAll('a[href="#' + elementId + '"]');
-            for (let i = 0; i < anchorsToHighlight.length; i++) {
-                // Change below to use classList.toggle when IE support is dropped.
-                if (shouldHighlight) {
-                    anchorsToHighlight[i].classList.add('current-heading');
-                } else {
-                    anchorsToHighlight[i].classList.remove('current-heading');
-                }
+            const anchorsToHighlight = pageNav.querySelectorAll('a[href="#' + elementId + '"]');
+            for (let anchor of anchorsToHighlight) {
+                anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
             }
         }
     }

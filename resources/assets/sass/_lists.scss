@@ -16,35 +16,59 @@
 }
 
 .sidebar-page-nav {
-  $nav-indent: $-s;
+  $nav-indent: $-m;
   list-style: none;
   margin: $-s 0 $-m 2px;
-  border-left: 2px dotted #BBB;
+  position: relative;
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 2px;
+    top: 5px;
+    bottom: 5px;
+    z-index: 0;
+  }
   li {
-    padding-left: $-s;
     margin-bottom: 4px;
     font-size: 0.95em;
+    position: relative;
   }
   .h1 {
-    margin-left: -2px;
+    padding-left: $nav-indent;
   }
   .h2 {
-    margin-left: -2px;
+    padding-left: $nav-indent;
   }
   .h3 {
-    margin-left: $nav-indent;
+    padding-left: $nav-indent * 2;
   }
   .h4 {
-    margin-left: $nav-indent*2;
+    padding-left: $nav-indent * 2.5;
   }
   .h5 {
-    margin-left: $nav-indent*3;
+    padding-left: $nav-indent*3;
   }
   .h6 {
-    margin-left: $nav-indent*4;
+    padding-left: $nav-indent*3.5;
   }
   .current-heading {
     font-weight: bold;
+  }
+  li:not(.current-heading) .sidebar-page-nav-bullet {
+    background-color: #BBB !important;
+  }
+  .sidebar-page-nav-bullet {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    left: -2px;
+    top: 30%;
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px #F2F2F2;
+    z-index: 1;
   }
 }
 
