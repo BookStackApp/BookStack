@@ -63,7 +63,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-disable-comments',
                                 'value' => setting('app-disable-comments'),
-                                'label' => trans('settings.app_disable_comments'),
+                                'label' => trans('settings.app_disable_comments_toggle'),
                             ])
                         </div>
                     </div>
@@ -192,7 +192,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-registration-enabled',
                                 'value' => setting('registration-enabled'),
-                                'label' => trans('settings.reg_enable')
+                                'label' => trans('settings.reg_enable_toggle')
                             ])
 
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
