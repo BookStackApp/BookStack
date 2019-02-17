@@ -16,7 +16,10 @@
             $page->$book,
             $page->chapter,
             $page,
-            $page->getUrl('/revisions') => trans('entities.pages_revisions'),
+            $page->getUrl('/revisions') => [
+                'text' => trans('entities.pages_revisions'),
+                'icon' => 'history',
+            ],
             $revision->getUrl('/changes') => $diff ? trans('entities.pages_revisions_numbered_changes', ['id' => $revision->id]) : null,
             $revision->getUrl() => !$diff ? trans('entities.pages_revisions_numbered', ['id' => $revision->id]) : null,
         ]])

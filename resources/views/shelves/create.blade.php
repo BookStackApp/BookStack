@@ -4,10 +4,16 @@
 
     <div class="container small">
 
-        <div class="my-l">
+        <div class="my-s">
             @include('partials.breadcrumbs', ['crumbs' => [
-                '/shelves' => trans('entities.shelves'),
-                '/create-shelf' => trans('entities.shelves_create')
+                '/shelves' => [
+                    'text' => trans('entities.shelves'),
+                    'icon' => 'bookshelf',
+                ],
+                '/create-shelf' => [
+                    'text' => trans('entities.shelves_create'),
+                    'icon' => 'add',
+                ]
             ]])
         </div>
 

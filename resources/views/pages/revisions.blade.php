@@ -3,12 +3,15 @@
 @section('body')
     <div class="container">
 
-        <div class="my-l">
+        <div class="my-s">
             @include('partials.breadcrumbs', ['crumbs' => [
                 $page->book,
                 $page->chapter,
                 $page,
-                $page->getUrl('/revisions') => trans('entities.pages_revisions')
+                $page->getUrl('/revisions') => [
+                    'text' => trans('entities.pages_revisions'),
+                    'icon' => 'history',
+                ]
             ]])
         </div>
 

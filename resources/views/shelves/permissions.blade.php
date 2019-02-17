@@ -4,10 +4,13 @@
 
     <div class="container small">
 
-        <div class="my-l">
+        <div class="my-s">
             @include('partials.breadcrumbs', ['crumbs' => [
                 $shelf,
-                $shelf->getUrl('/permissions') => trans('entities.shelves_permissions')
+                $shelf->getUrl('/permissions') => [
+                    'text' => trans('entities.shelves_permissions'),
+                    'icon' => 'lock',
+                ]
             ]])
         </div>
 

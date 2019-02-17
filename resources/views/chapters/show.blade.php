@@ -9,7 +9,10 @@
 @section('body')
 
     <div class="mb-m">
-        @include('chapters._breadcrumbs', ['chapter' => $chapter])
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $chapter->book,
+            $chapter,
+        ]])
     </div>
 
     <div class="content-wrap card">

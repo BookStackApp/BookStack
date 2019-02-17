@@ -3,7 +3,11 @@
 @section('body')
 
     <div class="mb-m">
-        @include('pages._breadcrumbs', ['page' => $page])
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $page->book,
+            $page->hasChapter() ? $page->chapter : null,
+            $page,
+        ]])
     </div>
 
     <div class="content-wrap card">
