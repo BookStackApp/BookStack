@@ -1,5 +1,7 @@
 @extends('simple-layout')
 
+{{--TODO - Load books in via selector interface--}}
+
 @section('body')
 
     <div class="container">
@@ -7,7 +9,10 @@
         <div class="my-l">
             @include('partials.breadcrumbs', ['crumbs' => [
                 $book,
-                $book->getUrl('/sort') => trans('entities.books_sort')
+                $book->getUrl('/sort') => [
+                    'text' => trans('entities.books_sort'),
+                    'icon' => 'sort',
+                ]
             ]])
         </div>
 
@@ -16,7 +21,7 @@
                 <div class="card content-wrap">
                     <h1 class="list-heading">{{ trans('entities.books_sort') }}</h1>
                     <div id="sort-boxes">
-                        @include('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
+                        @include('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
                     </div>
 
                     <form action="{{ $book->getUrl('/sort') }}" method="POST">
@@ -58,49 +63,66 @@
     <script>
         $(document).ready(function() {
 
-            var sortableOptions = {
+            const $container = $('#sort-boxes');
+
+            // Sortable options
+            const sortableOptions = {
                 group: 'serialization',
-                onDrop: function($item, container, _super) {
-                    var pageMap = buildEntityMap();
-                    $('#sort-tree-input').val(JSON.stringify(pageMap));
+                containerSelector: 'ul',
+                itemPath: '',
+                itemSelector: 'li',
+                onDrop: function ($item, container, _super) {
+                    updateMapInput();
                     _super($item, container);
                 },
-                isValidTarget: function  ($item, container) {
+                isValidTarget: function ($item, container) {
                     // Prevent nested chapters
-                    return !($item.is('[data-type="chapter"]') && container.target.closest('li').attr('data-type') == 'chapter');
+                    return !($item.is('[data-type="chapter"]') && container.target.closest('li').attr('data-type') === 'chapter');
                 }
             };
 
-            var group = $('.sort-list').sortable(sortableOptions);
+            // Create our sortable group
+            let group = $('.sort-list').sortable(sortableOptions);
 
+            // Add additional books into the view on select.
             $('#additional-books').on('click', 'a', function(e) {
                 e.preventDefault();
-                var $link = $(this);
-                var url = $link.attr('href');
+
+                const $link = $(this);
+                const url = $link.attr('href');
                 $.get(url, function(data) {
-                    $('#sort-boxes').append(data);
+                    $container.append(data);
                     group.sortable("destroy");
-                    $('.sort-list').sortable(sortableOptions);
+                    group = $('.sort-list').sortable(sortableOptions);
                 });
                 $link.remove();
             });
+
+            /**
+             * Update the input with our sort data.
+             */
+            function updateMapInput() {
+                const pageMap = buildEntityMap();
+                $('#sort-tree-input').val(JSON.stringify(pageMap));
+            }
 
             /**
              * Build up a mapping of entities with their ordering and nesting.
              * @returns {Array}
              */
             function buildEntityMap() {
-                var entityMap = [];
-                var $lists = $('.sort-list');
+                const entityMap = [];
+                const $lists = $('.sort-list');
                 $lists.each(function(listIndex) {
-                    var list = $(this);
-                    var bookId = list.closest('[data-type="book"]').attr('data-id');
-                    var $directChildren = list.find('> [data-type="page"], > [data-type="chapter"]');
+                    const $list = $(this);
+                    const bookId = $list.closest('[data-type="book"]').attr('data-id');
+                    const $directChildren = $list.find('> [data-type="page"], > [data-type="chapter"]');
                     $directChildren.each(function(directChildIndex) {
-                        var $childElem = $(this);
-                        var type = $childElem.attr('data-type');
-                        var parentChapter = false;
-                        var childId = $childElem.attr('data-id');
+                        const $childElem = $(this);
+                        const type = $childElem.attr('data-type');
+                        const parentChapter = false;
+                        const childId = $childElem.attr('data-id');
+
                         entityMap.push({
                             id: childId,
                             sort: directChildIndex,
@@ -108,8 +130,9 @@
                             type: type,
                             book: bookId
                         });
-                        $chapterChildren = $childElem.find('[data-type="page"]').each(function(pageIndex) {
-                            var $chapterChild = $(this);
+
+                        $childElem.find('[data-type="page"]').each(function(pageIndex) {
+                            const $chapterChild = $(this);
                             entityMap.push({
                                 id: $chapterChild.attr('data-id'),
                                 sort: pageIndex,
@@ -118,10 +141,73 @@
                                 book: bookId
                             });
                         });
+
                     });
                 });
                 return entityMap;
             }
+
+
+            // Auto sort control
+            const sortOperations = {
+                name: function(a, b) {
+                    const aName = a.getAttribute('data-name').trim().toLowerCase();
+                    const bName = b.getAttribute('data-name').trim().toLowerCase();
+                    return aName.localeCompare(bName);
+                },
+                created: function(a, b) {
+                    const aTime = Number(a.getAttribute('data-created'));
+                    const bTime = Number(b.getAttribute('data-created'));
+                    return bTime - aTime;
+                },
+                updated: function(a, b) {
+                    const aTime = Number(a.getAttribute('data-update'));
+                    const bTime = Number(b.getAttribute('data-update'));
+                    return bTime - aTime;
+                },
+                chaptersFirst: function(a, b) {
+                    const aType = a.getAttribute('data-type');
+                    const bType = b.getAttribute('data-type');
+                    if (aType === bType) {
+                        return 0;
+                    }
+                    return (aType === 'chapter' ? -1 : 1);
+                },
+                chaptersLast: function(a, b) {
+                    const aType = a.getAttribute('data-type');
+                    const bType = b.getAttribute('data-type');
+                    if (aType === bType) {
+                        return 0;
+                    }
+                    return (aType === 'chapter' ? 1 : -1);
+                },
+            };
+
+            let lastSort = '';
+            let reverse = false;
+            const reversableTypes = ['name', 'created', 'updated'];
+
+            $container.on('click', '.sort-box-options [data-sort]', function(event) {
+                event.preventDefault();
+                const $sortLists = $(this).closest('.sort-box').find('ul');
+                const sort = $(this).attr('data-sort');
+
+                reverse = (lastSort === sort) ? !reverse : false;
+                let sortFunction = sortOperations[sort];
+                if (reverse && reversableTypes.includes(sort)) {
+                   sortFunction = function(a, b) {
+                       return 0 - sortOperations[sort](a, b)
+                   };
+                }
+
+                $sortLists.each(function() {
+                    const $list = $(this);
+                    $list.children('li').sort(sortFunction).appendTo($list);
+                });
+
+                lastSort = sort;
+                updateMapInput();
+            });
 
         });
     </script>

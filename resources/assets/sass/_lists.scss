@@ -145,26 +145,41 @@
 // Sortable Lists
 .sortable-page-list, .sortable-page-list ul {
   list-style: none;
-  background-color: #FFF;
 }
 .sort-box {
   margin-bottom: $-m;
-  padding: 0 $-l 0 $-l;
-  border-left: 4px solid $color-book;
+  border: 2px solid rgba($color-book, 0.6);
+  padding: $-m $-xl;
+  border-radius: 4px;
+}
+.sort-box-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.sort-box-options .button {
+  margin-left: 0;
 }
 .sortable-page-list {
   margin-left: 0;
+  padding: 0;
+  .entity-list-item > span:first-child {
+    align-self: flex-start;
+  }
+  .entity-list-item > div {
+    display: block;
+    flex: 1;
+  }
   > ul {
     margin-left: 0;
   }
   ul {
-    margin-bottom: 0;
+    margin-bottom: $-m;
     margin-top: 0;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+    padding-left: $-m;
   }
   li {
     border: 1px solid #DDD;
-    padding: $-xs $-s;
     margin-top: -1px;
     min-height: 38px;
     &.text-chapter {
@@ -278,7 +293,6 @@ ul.pagination {
   align-items: center;
   background-color: transparent;
   border: 0;
-  cursor: pointer;
   width: 100%;
   position: relative;
   h4 a {
@@ -293,14 +307,18 @@ ul.pagination {
     flex: 1;
     text-align: left;
   }
-  &:hover {
+  &:not(.no-hover) {
+    cursor: pointer;
+  }
+  &:not(.no-hover):hover {
     text-decoration: none;
     background-color: #DDD;
     border-radius: 4px;
   }
 }
 
-.card .entity-list-item:hover {
+
+.card .entity-list-item:not(.no-hover):hover {
   background-color: #F2F2F2;
 }
 .card .entity-list-item .entity-list-item:hover {
