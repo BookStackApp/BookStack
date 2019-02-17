@@ -12,7 +12,11 @@
             <a href="{{  baseUrl($key)  }}">
                 {{ $crumb }}
             </a>
-        @else
+        @elseif (is_array($crumb))
+            <a href="{{  baseUrl($key)  }}">
+                @icon($crumb['icon']) {{ $crumb['text'] }}
+            </a>
+        @elseif($crumb instanceof \BookStack\Entities\Entity)
             <a href="{{ $crumb->getUrl() }}" class="text-{{$crumb->getType()}}">
                 @icon($crumb->getType()){{ $crumb->getShortName() }}
             </a>

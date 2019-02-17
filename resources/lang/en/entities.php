@@ -125,6 +125,11 @@ return [
     'books_navigation' => 'Book Navigation',
     'books_sort' => 'Sort Book Contents',
     'books_sort_named' => 'Sort Book :bookName',
+    'books_sort_name' => 'Sort by Name',
+    'books_sort_created' => 'Sort by Created Date',
+    'books_sort_updated' => 'Sort by Updated Date',
+    'books_sort_chapters_first' => 'Chapters First',
+    'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
 
