@@ -6,7 +6,7 @@
 
     <div class="container">
 
-        <div class="my-l">
+        <div class="my-s">
             @include('partials.breadcrumbs', ['crumbs' => [
                 $book,
                 $book->getUrl('/sort') => [

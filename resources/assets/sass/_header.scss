@@ -200,14 +200,24 @@ header .search-box {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.breadcrumbs .separator {
-  fill: #aaa;
-  font-size: 1.6em;
-  line-height: 0.8;
-  margin: 0 $-xs;
-  margin-top: -2px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  .icon-list-item {
+    width: auto;
+    padding-top: $-xs;
+    padding-bottom: $-xs;
+    &:not(:hover) {
+      color: #666;
+      fill: #888;
+    }
+  }
+  .separator {
+    display: inline-block;
+    fill: #aaa;
+    font-size: 1.6em;
+    line-height: 0.8;
+    margin: -2px 0 0;
+  }
 }
 
 .faded {

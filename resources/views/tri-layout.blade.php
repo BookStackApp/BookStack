@@ -8,9 +8,9 @@
         {{--@yield('toolbar')--}}
     {{--</div>--}}
 
-    <div class="tri-layout-container mt-xl" tri-layout @yield('container-attrs') >
+    <div class="tri-layout-container mt-m" tri-layout @yield('container-attrs') >
 
-        <div class="tri-layout-left print-hidden " id="sidebar">
+        <div class="tri-layout-left print-hidden pt-m" id="sidebar">
             <div class="tri-layout-left-contents">
                 @yield('left')
             </div>
@@ -20,7 +20,7 @@
             @yield('body')
         </div>
 
-        <div class="tri-layout-right print-hidden">
+        <div class="tri-layout-right print-hidden pt-m">
             <div class="tri-layout-right-contents">
                 @yield('right')
             </div>

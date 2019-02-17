@@ -2,10 +2,16 @@
 
 @section('body')
     <div class="container small">
-        <div class="my-l">
+        <div class="my-s">
             @include('partials.breadcrumbs', ['crumbs' => [
-                '/books' => trans('entities.books'),
-                '/create-book' => trans('entities.books_create')
+                '/books' => [
+                    'text' => trans('entities.books'),
+                    'icon' => 'book'
+                ],
+                '/create-book' => [
+                    'text' => trans('entities.books_create'),
+                    'icon' => 'add'
+                ]
             ]])
         </div>
 

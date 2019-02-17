@@ -4,11 +4,14 @@
 
     <div class="container small">
 
-        <div class="my-l">
+        <div class="my-s">
             @include('partials.breadcrumbs', ['crumbs' => [
                 $book,
                 $chapter,
-                $chapter->getUrl('/edit') => trans('entities.chapters_edit')
+                $chapter->getUrl('/edit') => [
+                    'text' => trans('entities.chapters_edit'),
+                    'icon' => 'edit'
+                ]
             ]])
         </div>
 
