@@ -8,6 +8,12 @@
 
 @section('body')
 
+    <div class="mb-s">
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $book,
+        ]])
+    </div>
+
     <div class="content-wrap card">
         <h1 class="break-text" v-pre>{{$book->name}}</h1>
         <div class="book-content" v-show="!searching">

@@ -6,7 +6,7 @@ class DropDown {
 
     constructor(elem) {
         this.container = elem;
-        this.menu = elem.querySelector('ul');
+        this.menu = elem.querySelector('ul, [dropdown-menu]');
         this.toggle = elem.querySelector('[dropdown-toggle]');
         this.setupListeners();
     }
