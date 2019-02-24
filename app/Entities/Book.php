@@ -70,6 +70,15 @@ class Book extends Entity
     }
 
     /**
+     * Get the direct child pages of this book.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function directPages()
+    {
+        return $this->pages()->where('chapter_id', '=', '0');
+    }
+
+    /**
      * Get all chapters within this book.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

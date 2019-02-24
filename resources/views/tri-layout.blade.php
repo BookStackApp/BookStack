@@ -7,6 +7,7 @@
     {{--<div class="toolbar px-xl">--}}
         {{--@yield('toolbar')--}}
     {{--</div>--}}
+    {{--TODO - Cleanup toolbar usage--}}
 
     <div class="tri-layout-container mt-m" tri-layout @yield('container-attrs') >
 

@@ -3,6 +3,7 @@
 use BookStack\Actions\ViewService;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\SearchService;
+use BookStack\Exceptions\NotFoundException;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -103,5 +104,46 @@ class SearchController extends Controller
         }
 
         return view('search/entity-ajax-list', ['entities' => $entities]);
+    }
+
+    /**
+     * Search siblings items in the system.
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     */
+    public function searchSiblings(Request $request)
+    {
+        $type = $request->get('entity_type', null);
+        $id = $request->get('entity_id', null);
+
+        $entity = $this->entityRepo->getById($type, $id);
+        if (!$entity) {
+            return $this->jsonError(trans('errors.entity_not_found'), 404);
+        }
+
+        $entities = [];
+
+        // Page in chapter
+        if ($entity->isA('page') && $entity->chapter) {
+            $entities = $this->entityRepo->getChapterChildren($entity->chapter);
+        }
+
+        // Page in book or chapter
+        if (($entity->isA('page') && !$entity->chapter) || $entity->isA('chapter')) {
+            $entities = $this->entityRepo->getBookDirectChildren($entity->book);
+        }
+
+        // Book in shelf
+        // TODO - When shelve tracking added, Update below if criteria
+
+        // Book
+        if ($entity->isA('book')) {
+            $entities = $this->entityRepo->getAll('book');
+        }
+
+        // Shelve
+        // TODO - When shelve tracking added
+
+        return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
 }

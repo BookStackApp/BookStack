@@ -342,6 +342,18 @@ class EntityRepo
     }
 
     /**
+     * Get the direct children of a book.
+     * @param Book $book
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getBookDirectChildren(Book $book)
+    {
+        $pages = $this->permissionService->enforceEntityRestrictions('page', $book->directPages())->get();
+        $chapters = $this->permissionService->enforceEntityRestrictions('chapters', $book->chapters())->get();
+        return collect()->concat($pages)->concat($chapters)->sortBy('priority')->sortByDesc('draft');
+    }
+
+    /**
      * Get all child objects of a book.
      * Returns a sorted collection of Pages and Chapters.
      * Loads the book slug onto child elements to prevent access database access for getting the slug.

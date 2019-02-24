@@ -220,6 +220,50 @@ header .search-box {
   }
 }
 
+.breadcrumb-listing {
+  position: relative;
+  .breadcrumb-listing-toggle {
+    padding: 6px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    &:hover {
+      border-color: #DDD;
+    }
+  }
+  .svg-icon {
+    margin-right: 0;
+  }
+}
+
+.breadcrumb-listing-dropdown {
+  box-shadow: $bs-med;
+  overflow: hidden;
+  min-height: 100px;
+  width: 240px;
+  display: none;
+  position: absolute;
+  z-index: 80;
+  right: -$-m;
+  .breadcrumb-listing-search .svg-icon {
+    position: absolute;
+    left: $-s;
+    top: 11px;
+    fill: #888;
+    pointer-events: none;
+  }
+  .breadcrumb-listing-entity-list {
+    max-height: 400px;
+    overflow-y: scroll;
+    text-align: left;
+  }
+  input {
+    padding-left: $-xl;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #DDD;
+  }
+}
+
 .faded {
   a, button, span, span > div {
     color: #666;

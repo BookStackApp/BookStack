@@ -340,10 +340,6 @@ span.sep {
 /**
   * Icons
   */
-i {
-  padding-right: $-xs;
-}
-
 .svg-icon {
   width: 1em;
   height: 1em;
@@ -351,5 +347,6 @@ i {
   position: relative;
   bottom: -0.105em;
   margin-right: $-xs;
+  pointer-events: none;
 }
 
