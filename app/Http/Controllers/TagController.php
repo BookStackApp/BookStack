@@ -54,4 +54,34 @@ class TagController extends Controller
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
         return response()->json($suggestions);
     }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(){
+        $tags = $this->tagRepo->getForIndex(false);
+
+        return view('tags/index', [
+            'tags' => $tags
+        ]);
+
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search($searchTerm){
+        $tags = $this->tagRepo->getForIndex($searchTerm);
+
+        return view('tags/search', [
+            'tags' => $tags,
+            'searchTerm' => $searchTerm
+        ]);
+
+    }
+
 }

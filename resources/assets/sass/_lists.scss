@@ -413,3 +413,32 @@ ul.pagination {
   }
 }
 
+
+//Tags grid view
+.tag.grid {
+	grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+	grid-column-gap: 0px;
+}
+
+.taggroup {
+	border-bottom: 1px #dddddd solid;
+	overflow-x: auto;
+}
+
+.taggroup h4 {
+	margin-top: 0px;
+	max-height: 200px;
+}
+
+.tag.content {
+
+	background-color: #FFFFFF;
+	padding: 0 24px;
+	border-left: 1px solid #DDD;
+	max-width: 100%;
+
+	> h1 {
+		display: inline-block;
+	}
+
+}

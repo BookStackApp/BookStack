@@ -59,6 +59,23 @@ class TagRepo
     }
 
     /**
+     * Get all tags for a particular entity.
+     * @param string $entityType
+     * @param int $entityId
+     * @return mixed
+     */
+    public function getForIndex($searchTerm = false)
+    {
+        $query = $this->tag->select('*', \DB::raw('count(*) as count'))->groupBy('name');
+
+        if ($searchTerm) {
+            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'desc');
+        }
+        $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        return $query->get(['id, name']);
+    }
+
+    /**
      * Get tag name suggestions from scanning existing tag names.
      * If no search term is given the 50 most popular tag names are provided.
      * @param $searchTerm

@@ -160,6 +160,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
     Route::get('/custom-head-content', 'HomeController@customHeadContent');
+    Route::get('/tags/', 'TagController@index');
+    Route::get('/tags/{id}', 'TagController@search');
 
     // Settings
     Route::group(['prefix' => 'settings'], function() {
