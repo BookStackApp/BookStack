@@ -38,8 +38,9 @@
                             <div class="form-group">
                                 <label for="user-language">{{ trans('settings.users_preferred_language') }}</label>
                                 <select name="setting[language]" id="user-language">
+
                                     @foreach(trans('settings.language_select') as $lang => $label)
-                                        <option @if(setting()->getUser($user, 'language') === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
+                                        <option @if(setting()->getUser($user, 'language', config('app.default_locale')) === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
                                     @endforeach
                                 </select>
                             </div>
