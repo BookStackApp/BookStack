@@ -51,6 +51,7 @@ return [
     'toggle_thumbnails' => 'Thumbnails zeigen/verstecken',
     'details' => 'Details',
     'grid_view' => 'Gitteransicht',
+    'list_tag' => 'Schlagwort Liste',
     'list_view' => 'Listenansicht',
 
     /**

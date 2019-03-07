@@ -1,9 +1,14 @@
 @extends('sidebar-layout')
 
 @section('toolbar')
-    <div class="col-xs-6">
+    <div class="col-xs-1">
         <div class="action-buttons text-left">
             @include('books/view-toggle', ['booksViewType' => $booksViewType])
+        </div>
+    </div>
+    <div class="col-xs-5">
+        <div class="action-buttons text-pos text-left">
+            <a href="{{baseUrl('/tags')}}" class="text-pos text-button">@icon('tag'){{ trans('common.list_tag') }}</a>
         </div>
     </div>
     <div class="col-xs-6 faded">

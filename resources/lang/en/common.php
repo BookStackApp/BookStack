@@ -47,6 +47,7 @@ return [
     'details' => 'Details',
     'grid_view' => 'Grid View',
     'list_view' => 'List View',
+    'list_tag' => 'List Tags',
     'default' => 'Default',
 
     // Header

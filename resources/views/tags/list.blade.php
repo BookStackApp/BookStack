@@ -18,6 +18,6 @@
                 @include('tags/list-item', ['tag' => $tag])
             @endforeach
     @else
-        <p class="text-muted">Tag not found</p>
+        <p class="text-muted">{{ trans('common.no_items') }}</p>
     @endif
 </div>
