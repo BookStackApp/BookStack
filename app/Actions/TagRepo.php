@@ -69,7 +69,7 @@ class TagRepo
         $query = $this->tag->select('*', \DB::raw('count(*) as count'))->groupBy('name');
 
         if ($searchTerm) {
-            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'desc');
+            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'ASC');
         }
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
         return $query->get(['id, name']);
