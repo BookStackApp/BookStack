@@ -8,7 +8,11 @@ class MarkdownEditor {
 
     constructor(elem) {
         this.elem = elem;
-        this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
+
+        const pageEditor = document.getElementById('page-editor');
+        this.pageId = pageEditor.getAttribute('page-id');
+        this.textDirection = pageEditor.getAttribute('text-direction');
+
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
 
@@ -98,7 +102,9 @@ class MarkdownEditor {
     }
 
     codeMirrorSetup() {
-        let cm = this.cm;
+        const cm = this.cm;
+        const context = this;
+
         // Text direction
         // cm.setOption('direction', this.textDirection);
         cm.setOption('direction', 'ltr'); // Will force to remain as ltr for now due to issues when HTML is in editor.
@@ -266,17 +272,18 @@ class MarkdownEditor {
             }
 
             // Insert image into markdown
-            let id = "image-" + Math.random().toString(16).slice(2);
-            let placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
-            let selectedText = cm.getSelection();
-            let placeHolderText = `![${selectedText}](${placeholderImage})`;
-            let cursor = cm.getCursor();
+            const id = "image-" + Math.random().toString(16).slice(2);
+            const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
+            const selectedText = cm.getSelection();
+            const placeHolderText = `![${selectedText}](${placeholderImage})`;
+            const cursor = cm.getCursor();
             cm.replaceSelection(placeHolderText);
             cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 3});
 
-            let remoteFilename = "image-" + Date.now() + "." + ext;
-            let formData = new FormData();
+            const remoteFilename = "image-" + Date.now() + "." + ext;
+            const formData = new FormData();
             formData.append('file', file, remoteFilename);
+            formData.append('uploaded_to', context.pageId);
 
             window.$http.post('/images/gallery/upload', formData).then(resp => {
                 const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
@@ -302,7 +309,7 @@ class MarkdownEditor {
     }
 
     actionInsertImage() {
-        let cursorPos = this.cm.getCursor('from');
+        const cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
             let selectedText = this.cm.getSelection();
             let newText = "[![" + (selectedText || image.name) + "](" + image.thumbs.display + ")](" + image.url + ")";
@@ -313,7 +320,7 @@ class MarkdownEditor {
     }
 
     actionShowImageManager() {
-        let cursorPos = this.cm.getCursor('from');
+        const cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
             this.insertDrawing(image, cursorPos);
         }, 'drawio');
@@ -321,7 +328,7 @@ class MarkdownEditor {
 
     // Show the popup link selector and insert a link when finished
     actionShowLinkSelector() {
-        let cursorPos = this.cm.getCursor('from');
+        const cursorPos = this.cm.getCursor('from');
         window.EntitySelectorPopup.show(entity => {
             let selectedText = this.cm.getSelection() || entity.name;
             let newText = `[${selectedText}](${entity.link})`;
@@ -357,7 +364,7 @@ class MarkdownEditor {
     }
 
     insertDrawing(image, originalCursor) {
-        let newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
+        const newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
         this.cm.focus();
         this.cm.replaceSelection(newText);
         this.cm.setCursor(originalCursor.line, originalCursor.ch + newText.length);
@@ -365,9 +372,13 @@ class MarkdownEditor {
 
     // Show draw.io if enabled and handle save.
     actionEditDrawing(imgContainer) {
-        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true') return;
-        let cursorPos = this.cm.getCursor('from');
-        let drawingId = imgContainer.getAttribute('drawio-diagram');
+        const drawingDisabled = document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true';
+        if (drawingDisabled) {
+            return;
+        }
+
+        const cursorPos = this.cm.getCursor('from');
+        const drawingId = imgContainer.getAttribute('drawio-diagram');
 
         DrawIO.show(() => {
             return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
