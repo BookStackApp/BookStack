@@ -210,7 +210,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager-sidebar {
   width: 300px;
-  margin-left: 1px;
   overflow-y: auto;
   overflow-x: hidden;
   border-left: 1px solid #DDD;
@@ -524,8 +523,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   font-size: 12px;
   line-height: 1.2;
   top: 88px;
-  left: -26px;
-  width: 148px;
+  left: -12px;
+  width: 160px;
   background: $negative;
   padding: $-xs;
   color: white;
@@ -535,7 +534,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   content: '';
   position: absolute;
   top: -6px;
-  left: 64px;
+  left: 44px;
   width: 0;
   height: 0;
   border-left: 6px solid transparent;
