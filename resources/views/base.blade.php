@@ -48,7 +48,7 @@
                             </form>
                         </div>
                         <div class="links text-center">
-                            @if(userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
+                            @if(userCanOnAny('view', \BookStack\Entities\Bookshelf::class) || userCan('bookshelf-view-own'))
                                 <a href="{{ baseUrl('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
                             @endif
                             <a href="{{ baseUrl('/books') }}">@icon('book'){{ trans('entities.books') }}</a>
