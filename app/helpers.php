@@ -1,5 +1,6 @@
 <?php
 
+use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Ownable;
 
 /**
@@ -50,30 +51,31 @@ function signedInUser()
  * Check if the current user has a permission.
  * If an ownable element is passed in the jointPermissions are checked against
  * that particular item.
- * @param $permission
+ * @param string $permission
  * @param Ownable $ownable
  * @return mixed
  */
-function userCan($permission, Ownable $ownable = null)
+function userCan(string $permission, Ownable $ownable = null)
 {
     if ($ownable === null) {
         return user() && user()->can($permission);
     }
 
     // Check permission on ownable item
-    $permissionService = app(\BookStack\Auth\Permissions\PermissionService::class);
+    $permissionService = app(PermissionService::class);
     return $permissionService->checkOwnableUserAccess($ownable, $permission);
 }
 
 /**
- * Check if the current user has the ability to create a page for an existing object
+ * Check if the current user has the given permission
+ * on any item in the system.
+ * @param string $permission
  * @return bool
  */
-function userCanCreatePage()
+function userCanOnAny(string $permission)
 {
-    // Check for create page permissions
-    $permissionService = app(\BookStack\Auth\Permissions\PermissionService::class);
-    return $permissionService->checkAvailableCreatePageAccess();
+    $permissionService = app(PermissionService::class);
+    return $permissionService->checkUserHasPermissionOnAnything($permission);
 }
 
 /**

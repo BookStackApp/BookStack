@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Auth\Role;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
@@ -237,6 +238,37 @@ class SortTest extends TestCase
         $movePageResp->assertRedirect($pageCopy->getUrl());
         $this->assertTrue($pageCopy->book->id == $currentBook->id, 'Page was copied to correct book');
         $this->assertTrue($pageCopy->id !== $page->id, 'Page copy is not the same instance');
+    }
+
+    public function test_page_can_be_copied_without_edit_permission()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+        $viewer = $this->getViewer();
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl());
+        $resp->assertDontSee($page->getUrl('/copy'));
+
+        $newBook->created_by = $viewer->id;
+        $newBook->save();
+        $this->giveUserPermissions($viewer, ['page-create-own']);
+        $this->regenEntityPermissions($newBook);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl());
+        $resp->assertSee($page->getUrl('/copy'));
+
+        $movePageResp = $this->post($page->getUrl('/copy'), [
+            'entity_selection' => 'book:' . $newBook->id,
+            'name' => 'My copied test page'
+        ]);
+        $movePageResp->assertRedirect();
+
+        $this->assertDatabaseHas('pages', [
+            'name' => 'My copied test page',
+            'created_by' => $viewer->id,
+            'book_id' => $newBook->id,
+        ]);
     }
 
 }
