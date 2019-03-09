@@ -66,6 +66,17 @@ function userCan($permission, Ownable $ownable = null)
 }
 
 /**
+ * Check if the current user has the ability to create a page for an existing object
+ * @return bool
+ */
+function userCanCreatePage()
+{
+    // Check for create page permissions
+    $permissionService = app(\BookStack\Auth\Permissions\PermissionService::class);
+    return $permissionService->checkAvailableCreatePageAccess();
+}
+
+/**
  * Helper to access system settings.
  * @param $key
  * @param bool $default
