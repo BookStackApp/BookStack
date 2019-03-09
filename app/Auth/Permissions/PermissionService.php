@@ -557,6 +557,32 @@ class PermissionService
     }
 
     /**
+     * Checks if a user has the given permission for any items in the system.
+     * @param string $permission
+     * @return bool
+     */
+    public function checkUserHasPermissionOnAnything(string $permission)
+    {
+        $userRoleIds = $this->currentUser()->roles()->select('id')->pluck('id')->toArray();
+        $userId = $this->currentUser()->id;
+
+        $canCreatePage = $this->db->table('joint_permissions')
+            ->where('action', '=', $permission)
+            ->whereIn('role_id', $userRoleIds)
+            ->where(function ($query) use ($userId) {
+                $query->where('has_permission', '=', 1)
+                ->orWhere(function ($query2) use ($userId) {
+                    $query2->where('has_permission_own', '=', 1)
+                    ->where('created_by', '=', $userId);
+                });       
+            })
+            ->get()->count() > 0;
+
+        $this->clean();
+        return $canCreatePage;
+    }
+
+    /**
      * Check if an entity has restrictions set on itself or its
      * parent tree.
      * @param \BookStack\Entities\Entity $entity
