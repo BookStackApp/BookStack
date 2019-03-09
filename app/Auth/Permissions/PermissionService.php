@@ -557,19 +557,17 @@ class PermissionService
     }
 
     /**
-     * Checks if a user has a book or chapter available to create a page
-     * @param Ownable $ownable
-     * @param $permission
+     * Checks if a user has the given permission for any items in the system.
+     * @param string $permission
      * @return bool
      */
-    public function checkAvailableCreatePageAccess()
+    public function checkUserHasPermissionOnAnything(string $permission)
     {
-        $userRoleIds = $this->currentUser()->roles()->pluck('id')->toArray();
+        $userRoleIds = $this->currentUser()->roles()->select('id')->pluck('id')->toArray();
         $userId = $this->currentUser()->id;
 
-
         $canCreatePage = $this->db->table('joint_permissions')
-            ->where('action', '=', 'page-create')
+            ->where('action', '=', $permission)
             ->whereIn('role_id', $userRoleIds)
             ->where(function ($query) use ($userId) {
                 $query->where('has_permission', '=', 1)
@@ -580,6 +578,7 @@ class PermissionService
             })
             ->get()->count() > 0;
 
+        $this->clean();
         return $canCreatePage;
     }
 
