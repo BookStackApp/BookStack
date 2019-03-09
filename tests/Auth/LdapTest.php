@@ -375,6 +375,7 @@ class LdapTest extends BrowserKitTest
 
     public function test_login_uses_specified_display_name_attribute()
     {
+        $originalAttribute = config('services.ldap.display_name_attribute');
         app('config')->set([
             'services.ldap.display_name_attribute' => 'displayName'
         ]);
@@ -407,12 +408,13 @@ class LdapTest extends BrowserKitTest
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name, 'name' => 'displayNameAttribute']);
         
         app('config')->set([
-            'services.ldap.display_name_attribute' => 'cn'
+            'services.ldap.display_name_attribute' => $originalAttribute
         ]);
     }
 
     public function test_login_uses_default_display_name_attribute_if_specified_not_present()
     {
+        $originalAttribute = config('services.ldap.display_name_attribute');
         app('config')->set([
             'services.ldap.display_name_attribute' => 'displayName'
         ]);
@@ -444,7 +446,7 @@ class LdapTest extends BrowserKitTest
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name, 'name' => $this->mockUser->name]);
     
         app('config')->set([
-            'services.ldap.display_name_attribute' => 'cn'
+            'services.ldap.display_name_attribute' => $originalAttribute
         ]);
     }
 
