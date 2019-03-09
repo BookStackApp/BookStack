@@ -1,6 +1,7 @@
 <?php
 
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\Entity;
 use BookStack\Ownable;
 
 /**
@@ -70,12 +71,13 @@ function userCan(string $permission, Ownable $ownable = null)
  * Check if the current user has the given permission
  * on any item in the system.
  * @param string $permission
+ * @param string|null $entityClass
  * @return bool
  */
-function userCanOnAny(string $permission)
+function userCanOnAny(string $permission, string $entityClass = null)
 {
     $permissionService = app(PermissionService::class);
-    return $permissionService->checkUserHasPermissionOnAnything($permission);
+    return $permissionService->checkUserHasPermissionOnAnything($permission, $entityClass);
 }
 
 /**
