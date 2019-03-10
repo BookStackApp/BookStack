@@ -88,12 +88,30 @@ class LdapService
             return null;
         }
 
+        $userCn = $this->getUserResponseProperty($user, 'cn', null);
         return [
-            'uid'   => (isset($user['uid'])) ? $user['uid'][0] : $user['dn'],
-            'name'  => (isset($user[$displayNameAttr])) ? (is_array($user[$displayNameAttr]) ? $user[$displayNameAttr][0] : $user[$displayNameAttr]) : $user['cn'][0],
+            'uid'   => $this->getUserResponseProperty($user, 'uid', $user['dn']),
+            'name' => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
             'dn'    => $user['dn'],
-            'email' => (isset($user[$emailAttr])) ? (is_array($user[$emailAttr]) ? $user[$emailAttr][0] : $user[$emailAttr]) : null
+            'email' => $this->getUserResponseProperty($user, $emailAttr, null),
         ];
+    }
+
+    /**
+     * Get a property from an LDAP user response fetch.
+     * Handles properties potentially being part of an array.
+     * @param array $userDetails
+     * @param string $propertyKey
+     * @param $defaultValue
+     * @return mixed
+     */
+    protected function getUserResponseProperty(array $userDetails, string $propertyKey, $defaultValue)
+    {
+        if (isset($userDetails[$propertyKey])) {
+            return (is_array($userDetails[$propertyKey]) ? $userDetails[$propertyKey][0] : $userDetails[$propertyKey]);
+        }
+
+        return $defaultValue;
     }
 
     /**
