@@ -2245,12 +2245,17 @@ ul.pagination {
     float: left !important;
     margin: 6px 12px 6px 0; }
   .page-content .align-right {
-    float: right !important; }
+    text-align: right !important; }
   .page-content img.align-right, .page-content table.align-right {
-    text-align: right;
+    float: right !important;
     margin: 6px 0 6px 12px; }
   .page-content .align-center {
     text-align: center; }
+  .page-content img.align-center {
+    display: block; }
+  .page-content img.align-center, .page-content table.align-center {
+    margin-left: auto;
+    margin-right: auto; }
   .page-content img {
     max-width: 100%;
     height: auto; }

@@ -2876,7 +2876,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager-sidebar {
   width: 300px;
-  margin-left: 1px;
   overflow-y: auto;
   overflow-x: hidden;
   border-left: 1px solid #DDD; }
@@ -3178,8 +3177,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   font-size: 12px;
   line-height: 1.2;
   top: 88px;
-  left: -26px;
-  width: 148px;
+  left: -12px;
+  width: 160px;
   background: #E84F4F;
   padding: 6px;
   color: white; }
@@ -3188,7 +3187,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   content: '';
   position: absolute;
   top: -6px;
-  left: 64px;
+  left: 44px;
   width: 0;
   height: 0;
   border-left: 6px solid transparent;
@@ -3841,12 +3840,17 @@ ul.pagination {
     float: left !important;
     margin: 6px 12px 6px 0; }
   .page-content .align-right {
-    float: right !important; }
+    text-align: right !important; }
   .page-content img.align-right, .page-content table.align-right {
-    text-align: right;
+    float: right !important;
     margin: 6px 0 6px 12px; }
   .page-content .align-center {
     text-align: center; }
+  .page-content img.align-center {
+    display: block; }
+  .page-content img.align-center, .page-content table.align-center {
+    margin-left: auto;
+    margin-right: auto; }
   .page-content img {
     max-width: 100%;
     height: auto; }
