@@ -141,6 +141,7 @@ return [
         'user_filter' => env('LDAP_USER_FILTER', '(&(uid=${user}))'),
         'version' => env('LDAP_VERSION', false),
         'email_attribute' => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
+        'display_name_attribute' => env('LDAP_DISPLAY_NAME_ATTRIBUTE', 'cn'),
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),
 		'user_to_groups' => env('LDAP_USER_TO_GROUPS',false),
 		'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),

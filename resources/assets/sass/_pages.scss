@@ -48,14 +48,21 @@
     margin: $-xs $-s $-xs 0;
   }
   .align-right {
-    float: right !important;
+    text-align: right !important;
   }
   img.align-right, table.align-right {
-    text-align: right;
+    float: right !important;
     margin: $-xs 0 $-xs $-s;
   }
   .align-center {
     text-align: center;
+  }
+  img.align-center {
+    display: block;
+  }
+  img.align-center, table.align-center {
+    margin-left: auto;
+    margin-right: auto;
   }
   img {
     max-width: 100%;
