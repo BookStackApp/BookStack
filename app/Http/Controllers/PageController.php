@@ -616,7 +616,7 @@ class PageController extends Controller
     public function showCopy($bookSlug, $pageSlug)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-view', $page);
         session()->flashInput(['name' => $page->name]);
         return view('pages.copy', [
             'book' => $page->book,
@@ -635,7 +635,7 @@ class PageController extends Controller
     public function copy($bookSlug, $pageSlug, Request $request)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-view', $page);
 
         $entitySelection = $request->get('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {

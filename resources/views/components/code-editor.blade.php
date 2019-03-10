@@ -21,7 +21,9 @@
                             <a @click="updateLanguage('Java')">Java</a>
                             <a @click="updateLanguage('JavaScript')">JavaScript</a>
                             <a @click="updateLanguage('JSON')">JSON</a>
+                            <a @click="updateLanguage('Lua')">Lua</a>
                             <a @click="updateLanguage('PHP')">PHP</a>
+                            <a @click="updateLanguage('Powershell')">Powershell</a>
                             <a @click="updateLanguage('MarkDown')">MarkDown</a>
                             <a @click="updateLanguage('Nginx')">Nginx</a>
                             <a @click="updateLanguage('Python')">Python</a>

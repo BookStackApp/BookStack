@@ -8,6 +8,7 @@ import 'codemirror/mode/diff/diff';
 import 'codemirror/mode/go/go';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/lua/lua';
 import 'codemirror/mode/markdown/markdown';
 import 'codemirror/mode/nginx/nginx';
 import 'codemirror/mode/php/php';
@@ -38,12 +39,13 @@ const modeMap = {
     javascript: 'javascript',
     json: {name: 'javascript', json: true},
     js: 'javascript',
-    php: 'php',
+    lua: 'lua',
     md: 'markdown',
     mdown: 'markdown',
     markdown: 'markdown',
     nginx: 'nginx',
     powershell: 'powershell',
+    php: 'php',
     py: 'python',
     python: 'python',
     ruby: 'ruby',

@@ -41,6 +41,7 @@ class SettingService
         if ($default === false) {
             $default = config('setting-defaults.' . $key, false);
         }
+
         if (isset($this->localCache[$key])) {
             return $this->localCache[$key];
         }
