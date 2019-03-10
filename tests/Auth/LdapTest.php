@@ -23,6 +23,7 @@ class LdapTest extends BrowserKitTest
             'auth.method' => 'ldap',
             'services.ldap.base_dn' => 'dc=ldap,dc=local',
             'services.ldap.email_attribute' => 'mail',
+            'services.ldap.display_name_attribute' => 'cn',
             'services.ldap.user_to_groups' => false,
             'auth.providers.users.driver' => 'ldap',
         ]);
@@ -369,6 +370,83 @@ class LdapTest extends BrowserKitTest
         $this->seeInDatabase('role_user', [
             'user_id' => $user->id,
             'role_id' => $roleToReceive2->id
+        ]);
+    }
+
+    public function test_login_uses_specified_display_name_attribute()
+    {
+        $originalAttribute = config('services.ldap.display_name_attribute');
+        app('config')->set([
+            'services.ldap.display_name_attribute' => 'displayName'
+        ]);
+
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(4);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$this->mockUser->name],
+                'cn' => [$this->mockUser->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')],
+                'displayName' => 'displayNameAttribute'
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
+        $this->mockEscapes(4);
+
+        $this->visit('/login')
+            ->see('Username')
+            ->type($this->mockUser->name, '#username')
+            ->type($this->mockUser->password, '#password')
+            ->press('Log In')
+            ->seePageIs('/login')->see('Please enter an email to use for this account.');
+
+        $this->type($this->mockUser->email, '#email')
+            ->press('Log In')
+            ->seePageIs('/')
+            ->see('displayNameAttribute')
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name, 'name' => 'displayNameAttribute']);
+        
+        app('config')->set([
+            'services.ldap.display_name_attribute' => $originalAttribute
+        ]);
+    }
+
+    public function test_login_uses_default_display_name_attribute_if_specified_not_present()
+    {
+        $originalAttribute = config('services.ldap.display_name_attribute');
+        app('config')->set([
+            'services.ldap.display_name_attribute' => 'displayName'
+        ]);
+
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(4);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$this->mockUser->name],
+                'cn' => [$this->mockUser->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
+        $this->mockEscapes(4);
+
+        $this->visit('/login')
+            ->see('Username')
+            ->type($this->mockUser->name, '#username')
+            ->type($this->mockUser->password, '#password')
+            ->press('Log In')
+            ->seePageIs('/login')->see('Please enter an email to use for this account.');
+
+        $this->type($this->mockUser->email, '#email')
+            ->press('Log In')
+            ->seePageIs('/')
+            ->see($this->mockUser->name)
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name, 'name' => $this->mockUser->name]);
+    
+        app('config')->set([
+            'services.ldap.display_name_attribute' => $originalAttribute
         ]);
     }
 

@@ -80,7 +80,9 @@ class LdapService
     public function getUserDetails($userName)
     {
         $emailAttr = $this->config['email_attribute'];
-        $user = $this->getUserWithAttributes($userName, ['cn', 'uid', 'dn', $emailAttr]);
+        $displayNameAttr = $this->config['display_name_attribute'];
+
+        $user = $this->getUserWithAttributes($userName, ['cn', 'uid', 'dn', $emailAttr, $displayNameAttr]);
 
         if ($user === null) {
             return null;
@@ -88,7 +90,7 @@ class LdapService
 
         return [
             'uid'   => (isset($user['uid'])) ? $user['uid'][0] : $user['dn'],
-            'name'  => $user['cn'][0],
+            'name'  => (isset($user[$displayNameAttr])) ? (is_array($user[$displayNameAttr]) ? $user[$displayNameAttr][0] : $user[$displayNameAttr]) : $user['cn'][0],
             'dn'    => $user['dn'],
             'email' => (isset($user[$emailAttr])) ? (is_array($user[$emailAttr]) ? $user[$emailAttr][0] : $user[$emailAttr]) : null
         ];
