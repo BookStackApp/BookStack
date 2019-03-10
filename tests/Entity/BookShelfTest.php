@@ -1,5 +1,7 @@
 <?php namespace Tests;
 
+use BookStack\Auth\Role;
+use BookStack\Auth\User;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 
@@ -24,6 +26,22 @@ class BookShelfTest extends TestCase
         $viewer->roles()->delete();
         $this->giveUserPermissions($viewer, ['bookshelf-view-own']);
         $resp = $this->actingAs($viewer)->get('/');
+        $resp->assertElementContains('header', 'Shelves');
+    }
+
+    public function test_shelves_shows_in_header_if_have_any_shelve_view_permission()
+    {
+        $user = factory(User::class)->create();
+        $this->giveUserPermissions($user, ['image-create-all']);
+        $shelf = Bookshelf::first();
+        $userRole = $user->roles()->first();
+
+        $resp = $this->actingAs($user)->get('/');
+        $resp->assertElementNotContains('header', 'Shelves');
+
+        $this->setEntityRestrictions($shelf, ['view'], [$userRole]);
+
+        $resp = $this->get('/');
         $resp->assertElementContains('header', 'Shelves');
     }
 

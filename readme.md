@@ -9,8 +9,7 @@ A platform for storing and organising information and documentation. General inf
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
 * [Documentation](https://www.bookstackapp.com/docs)
 * [Demo Instance](https://demo.bookstackapp.com)
-  * *Username: `admin@example.com`*
-  * *Password: `password`*
+    * [Admin Login](https://demo.bookstackapp.com/login?email=admin@example.com&password=password)
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 
 ## Project Definition
@@ -19,7 +18,30 @@ BookStack is an opinionated wiki system that provides a pleasant and simple out 
 
 BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
 
-In regards to development philosophy, BookStack has a relaxed, open & positive approach. Put simply, At the end of the day this is free software developed and maintained by people donating their own free time.
+In regards to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
+
+## Road Map
+
+Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
+
+- **Design Revamp** *[(In Progress)](https://github.com/BookStackApp/BookStack/pull/1153)*
+    - *A more organised modern design to clean things up, make BookStack more efficient to use and increase mobile usability.*
+- **Platform REST API**
+    - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
+- **Editor Alignment & Review**
+    - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
+- **Permission System Review**
+    - *Improvement in how permissions are applied and a review of the efficiency of the permission & roles system.*
+- **Installation & Deployment Process Revamp**
+    - *Creation of a streamlined & secure process for users to deploy & update BookStack with reduced development requirements (No git or composer requirement).*
+
+## Release Versioning & Process
+
+BookStack releases are each assigned a version number, such as "v0.25.2", in the format `v<phase>.<feature>.<patch>`. A change only in the `patch` number indicates a fairly minor release that mainly contains fixes and therefore is very unlikely to cause breakages upon update. A change in the `feature` number indicates a release which will generally bring new features in addition to fixes and enhancements. These releases have a small chance of introducing breaking changes upon update so it's worth checking for any notes in the [update guide](https://www.bookstackapp.com/docs/admin/updates/). A change in the `phase` indicates a much large change in BookStack that will likely incur breakages requiring manual intervention.
+
+Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed. 
+
+For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](http://eepurl.com/cmmq5j).
 
 ## Development & Testing
 
@@ -85,15 +107,15 @@ PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr
 
 ### Pull Requests
 
-Pull requests are very welcome. If the scope of your pull request is large it may be best to open the pull request early or create an issue for it to discuss how it will fit in to the project and plan out the merge.
+Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge.
 
-Pull requests should be created from the `master` branch and should be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
+Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
 
 If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
 ## Website, Docs & Blog
 
-The website project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
+The website which contains the project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
 
 ## License
 
@@ -117,7 +139,6 @@ These are the great open-source projects used to help build BookStack:
 * [clipboard.js](https://clipboardjs.com/)
 * [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
-* [Moment.js](http://momentjs.com/)
 * [BarryVD](https://github.com/barryvdh)
     * [Debugbar](https://github.com/barryvdh/laravel-debugbar)
     * [Dompdf](https://github.com/barryvdh/laravel-dompdf)

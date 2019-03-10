@@ -2,4 +2,6 @@
 
 use Exception;
 
-class HttpFetchException extends Exception {}
+class HttpFetchException extends Exception
+{
+}

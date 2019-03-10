@@ -190,10 +190,10 @@ class PermissionService
     {
         return $this->entityProvider->book->newQuery()
             ->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
-            $query->select(['id', 'restricted', 'created_by', 'book_id']);
-        }, 'pages'  => function ($query) {
-            $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
-        }]);
+                $query->select(['id', 'restricted', 'created_by', 'book_id']);
+            }, 'pages'  => function ($query) {
+                $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+            }]);
     }
 
     /**
@@ -557,6 +557,39 @@ class PermissionService
     }
 
     /**
+     * Checks if a user has the given permission for any items in the system.
+     * Can be passed an entity instance to filter on a specific type.
+     * @param string $permission
+     * @param string $entityClass
+     * @return bool
+     */
+    public function checkUserHasPermissionOnAnything(string $permission, string $entityClass = null)
+    {
+        $userRoleIds = $this->currentUser()->roles()->select('id')->pluck('id')->toArray();
+        $userId = $this->currentUser()->id;
+
+        $permissionQuery = $this->db->table('joint_permissions')
+            ->where('action', '=', $permission)
+            ->whereIn('role_id', $userRoleIds)
+            ->where(function ($query) use ($userId) {
+                $query->where('has_permission', '=', 1)
+                    ->orWhere(function ($query2) use ($userId) {
+                        $query2->where('has_permission_own', '=', 1)
+                            ->where('created_by', '=', $userId);
+                    });
+        }) ;
+
+        if (!is_null($entityClass)) {
+            $entityInstance = app()->make($entityClass);
+            $permissionQuery = $permissionQuery->where('entity_type', '=', $entityInstance->getMorphClass());
+        }
+
+        $hasPermission = $permissionQuery->count() > 0;
+        $this->clean();
+        return $hasPermission;
+    }
+
+    /**
      * Check if an entity has restrictions set on itself or its
      * parent tree.
      * @param \BookStack\Entities\Entity $entity
@@ -612,13 +645,13 @@ class PermissionService
         $entities = $this->entityProvider;
         $pageSelect = $this->db->table('pages')->selectRaw($entities->page->entityRawQuery($fetchPageContent))
             ->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
-            $query->where('draft', '=', 0);
-            if (!$filterDrafts) {
-                $query->orWhere(function ($query) {
-                    $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
-                });
-            }
-        });
+                $query->where('draft', '=', 0);
+                if (!$filterDrafts) {
+                    $query->orWhere(function ($query) {
+                        $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
+                    });
+                }
+            });
         $chapterSelect = $this->db->table('chapters')->selectRaw($entities->chapter->entityRawQuery())->where('book_id', '=', $book_id);
         $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
             ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);

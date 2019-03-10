@@ -84,6 +84,4 @@ class EntityProvider
         $type = strtolower($type);
         return $this->all()[$type];
     }
-
-
 }
