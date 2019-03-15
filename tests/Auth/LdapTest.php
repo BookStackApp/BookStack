@@ -365,7 +365,7 @@ class LdapTest extends BrowserKitTest
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
                 'dn' => ['dc=test' . config('services.ldap.base_dn')],
-                'displayName' => 'displayNameAttribute'
+                'displayname' => 'displayNameAttribute'
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
         $this->mockEscapes(4);

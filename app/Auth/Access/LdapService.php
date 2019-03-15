@@ -80,7 +80,7 @@ class LdapService
     public function getUserDetails($userName)
     {
         $emailAttr = $this->config['email_attribute'];
-        $displayNameAttr = $this->config['display_name_attribute'];
+        $displayNameAttr = strtolower($this->config['display_name_attribute']);
 
         $user = $this->getUserWithAttributes($userName, ['cn', 'uid', 'dn', $emailAttr, $displayNameAttr]);
 
