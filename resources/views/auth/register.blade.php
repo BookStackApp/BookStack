@@ -26,7 +26,7 @@
                     @include('form/password', ['name' => 'password', 'placeholder' => trans('auth.password_hint')])
                 </div>
 
-                <div class="grid half large-gap v-center mt-m">
+                <div class="grid half collapse-xs large-gap v-center mt-m">
                     <div class="text-small">
                         <a href="{{ baseUrl('/login') }}">Already have an account?</a>
                     </div>
@@ -42,7 +42,7 @@
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
-                        <a id="social-register-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/register/service/" . $driver) }}">
+                        <a id="social-register-{{$driver}}" class="button block outline svg text-left" href="{{ baseUrl("/register/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}
                         </a>

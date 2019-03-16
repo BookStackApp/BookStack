@@ -2,7 +2,7 @@
     <?php $breadcrumbCount = 0; ?>
 
     {{--Show top level item--}}
-    @if (count($crumbs) > 0 && $crumbs[0] instanceof  \BookStack\Entities\Book)
+    @if (count($crumbs) > 0 && array_first($crumbs) instanceof  \BookStack\Entities\Book)
         <a href="{{  baseUrl('/books')  }}" class="icon-list-item">
             <span>@icon('books')</span>
             <span>{{ trans('entities.books') }}</span>

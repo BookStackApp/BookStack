@@ -16,7 +16,7 @@
                     @include('auth/forms/login/' . $authMethod)
                 </div>
 
-                <div class="grid half large-gap v-center">
+                <div class="grid half collapse-xs large-gap v-center">
                     <div class="text-left ml-xxs">
                         @include('components.custom-checkbox', [
                             'name' => 'remember',
@@ -36,7 +36,7 @@
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
-                        <a id="social-login-{{$driver}}" class="button block muted-light svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
+                        <a id="social-login-{{$driver}}" class="button outline block svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
                         </a>

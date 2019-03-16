@@ -257,7 +257,7 @@ div[class^="col-"] img {
     margin: 0 0 10px;
   }
   p {
-    font-size: .85em;
+    font-size: .7rem;
     margin: 0;
     line-height: 1.6em;
   }
@@ -293,6 +293,9 @@ div[class^="col-"] img {
   .grid.half, .grid.left-focus, .grid.right-focus {
     grid-template-columns: 1fr;
   }
+  .grid.half.collapse-xs {
+    grid-template-columns: 1fr 1fr;
+  }
   .grid.large-gap {
     grid-column-gap: $-m;
     grid-row-gap: $-m;
@@ -307,6 +310,12 @@ div[class^="col-"] img {
 
 @include smaller-than($s) {
   .grid.third {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include smaller-than($xs) {
+  .grid.half.collapse-xs {
     grid-template-columns: 1fr;
   }
 }
