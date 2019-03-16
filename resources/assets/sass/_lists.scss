@@ -462,6 +462,10 @@ ul.pagination {
 .featured-image-container {
   position: relative;
   overflow: hidden;
+  min-height: 140px;
+  background-size: cover;
+  background-position: 50% 50%;
+  transition: opacity ease-in-out 240ms;
   a {
     display: block;
   }
@@ -470,11 +474,21 @@ ul.pagination {
     width: 100%;
     max-width: 100%;
     height: auto;
-    transition: all .5s ease-in-out;
   }
 }
-.grid-card:hover .featured-image-container img {
-  transform: scale(1.15);
+.featured-image-container-wrap {
+  position: relative;
+  .svg-icon {
+    color: #FFF;
+    fill: #FFF;
+    font-size: 2rem;
+    margin-right: 0;
+    position: absolute;
+    bottom: 10px;
+    left: 6px;
+  }
+}
+.grid-card:hover .featured-image-container {
   opacity: .5;
 }
 

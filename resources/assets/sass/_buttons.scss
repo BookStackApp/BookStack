@@ -58,9 +58,6 @@ $button-border-radius: 2px;
   &.muted {
     @include generate-button-colors(#EEE, #AAA);
   }
-  &.muted-light {
-    @include generate-button-colors(#666, #e4e4e4);
-  }
 }
 
 .button + .button {
