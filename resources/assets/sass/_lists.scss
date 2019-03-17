@@ -1,7 +1,11 @@
 
 .book-contents .entity-list-item {
   .icon {
-    margin-top: $-xs;
+    width: 30px;
+    border-radius: 4px;
+    justify-self: stretch;
+    align-self: stretch;
+    height: auto;
   }
   p {
     margin-bottom: 0;
@@ -10,8 +14,60 @@
     padding-top: 0;
     padding-bottom: 0;
   }
-  .inset-list {
-    display: none;
+}
+
+.entity-list-item + .chapter-expansion {
+  display: flex;
+  padding: 0 $-m $-m $-m;
+  align-items: center;
+  border: 0;
+  width: 100%;
+  position: relative;
+  > .icon {
+    width: 30px;
+    height: auto;
+    border-radius: 0 0 4px 4px;
+    align-self: stretch;
+    flex-shrink: 0;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: currentColor;
+      content: '';
+      opacity: 0.2;
+    }
+  }
+  > .content {
+    flex: 1;
+  }
+  .chapter-expansion-toggle {
+    border-radius: 0 4px 4px 0;
+    padding: $-xs $-m;
+  }
+  .chapter-expansion-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+}
+
+.entity-list-item.has-children {
+  padding-bottom: 0;
+  > .icon {
+    border-radius: 4px 4px 0 0;
+  }
+}
+
+.inset-list {
+  display: none;
+  .entity-list-item-name {
+    font-size: 1rem;
+  }
+  .entity-list-item-children {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
@@ -355,7 +411,7 @@ ul.pagination {
   .svg-icon {
     color: #FFF;
     fill: #FFF;
-    font-size: 2rem;
+    font-size: 1.66rem;
     margin-right: 0;
     position: absolute;
     bottom: $-xs;
@@ -365,6 +421,10 @@ ul.pagination {
   @include smaller-than($m) {
     width: 80px;
   }
+}
+
+.chapter > .entity-list-item-image {
+  width: 60px;
 }
 
 .entity-list.compact {
