@@ -8,6 +8,7 @@ use BookStack\Entities\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\ServiceProvider;
 use Schema;
 use Validator;
@@ -21,6 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Custom validation methods
+        Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
+            $validImageExtensions = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff', 'webp'];
+            return in_array(strtolower($value->getClientOriginalExtension()), $validImageExtensions);
+        });
+
+
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
             return "<?php echo icon($expression); ?>";
