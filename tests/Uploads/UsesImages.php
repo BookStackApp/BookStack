@@ -1,6 +1,8 @@
 <?php namespace Tests\Uploads;
 
 
+use Illuminate\Http\UploadedFile;
+
 trait UsesImages
 {
     /**
@@ -15,11 +17,11 @@ trait UsesImages
     /**
      * Get a test image that can be uploaded
      * @param $fileName
-     * @return \Illuminate\Http\UploadedFile
+     * @return UploadedFile
      */
     protected function getTestImage($fileName)
     {
-        return new \Illuminate\Http\UploadedFile($this->getTestImageFilePath(), $fileName, 'image/png', 5238);
+        return new UploadedFile($this->getTestImageFilePath(), $fileName, 'image/png', 5238, null, true);
     }
 
     /**
@@ -46,12 +48,14 @@ trait UsesImages
      * Uploads an image with the given name.
      * @param $name
      * @param int $uploadedTo
+     * @param string $contentType
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    protected function uploadImage($name, $uploadedTo = 0)
+    protected function uploadImage($name, $uploadedTo = 0, $contentType = 'image/png')
     {
         $file = $this->getTestImage($name);
-        return $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+        return $this->withHeader('Content-Type', $contentType)
+            ->call('POST', '/images/gallery/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
     }
 
     /**
