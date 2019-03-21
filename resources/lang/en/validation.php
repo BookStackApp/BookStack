@@ -33,6 +33,7 @@ return [
     'filled'               => 'The :attribute field is required.',
     'exists'               => 'The selected :attribute is invalid.',
     'image'                => 'The :attribute must be an image.',
+    'image_extension'      => 'The :attribute must have a valid & supported image extension.',
     'in'                   => 'The selected :attribute is invalid.',
     'integer'              => 'The :attribute must be an integer.',
     'ip'                   => 'The :attribute must be a valid IP address.',

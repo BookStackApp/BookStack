@@ -119,7 +119,7 @@ class ImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => 'mimes:jpeg,png,gif,bmp,webp,tiff'
+            'file' => 'image_extension|mimes:jpeg,png,gif,bmp,webp,tiff'
         ]);
 
         if (!$this->imageRepo->isValidType($type)) {

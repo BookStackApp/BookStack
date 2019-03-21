@@ -61,13 +61,35 @@ class ImageTest extends TestCase
         ]);
     }
 
+    public function test_php_like_files_cannot_be_uploaded()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $fileName = 'bad.phtml';
+        $relPath = $this->getTestImagePath('gallery', $fileName);
+        $this->deleteImage($relPath);
+
+        $file = $this->getTestImage($fileName);
+        $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $file], []);
+        $upload->assertStatus(302);
+
+        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
+
+        $this->assertDatabaseMissing('images', [
+            'type' => 'gallery',
+            'name' => $fileName
+        ]);
+    }
+
     public function test_secure_images_uploads_to_correct_place()
     {
         config()->set('filesystems.default', 'local_secure');
         $this->asEditor();
-        $galleryFile = $this->getTestImage('my-secure-test-upload');
+        $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::first();
-        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload');
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload.png');
 
         $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $upload->assertStatus(200);
@@ -83,9 +105,9 @@ class ImageTest extends TestCase
     {
         config()->set('filesystems.default', 'local_secure');
         $this->asEditor();
-        $galleryFile = $this->getTestImage('my-secure-test-upload');
+        $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::first();
-        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload');
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload.png');
 
         $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $imageUrl = json_decode($upload->getContent(), true)['url'];
@@ -106,9 +128,9 @@ class ImageTest extends TestCase
     {
         config()->set('filesystems.default', 'local_secure');
         $this->asEditor();
-        $galleryFile = $this->getTestImage('my-system-test-upload');
+        $galleryFile = $this->getTestImage('my-system-test-upload.png');
         $page = Page::first();
-        $expectedPath = public_path('uploads/images/system/' . Date('Y-m-M') . '/my-system-test-upload');
+        $expectedPath = public_path('uploads/images/system/' . Date('Y-m-M') . '/my-system-test-upload.png');
 
         $upload = $this->call('POST', '/images/system/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $upload->assertStatus(200);
