@@ -23,14 +23,14 @@ return [
     'chapter_update_notification' => 'Kapitola byla úspěšně aktualizována',
     'chapter_delete'              => 'smazaná kapitola',
     'chapter_delete_notification' => 'Kapitola byla úspěšně smazána',
-    'chapter_move'                => 'přesunutá kapiltola',
+    'chapter_move'                => 'přesunutá kapitola',
 
     // Books
     'book_create'                 => 'vytvořená kniha',
     'book_create_notification'    => 'Kniha byla úspěšně vytvořena',
     'book_update'                 => 'aktualizovaná kniha',
     'book_update_notification'    => 'Kniha byla úspěšně aktualizována',
-    'book_delete'                 => 'smzaná kniha',
+    'book_delete'                 => 'smazaná kniha',
     'book_delete_notification'    => 'Kniha byla úspěšně smazána',
     'book_sort'                   => 'seřazená kniha',
     'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
@@ -38,7 +38,7 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'vytvořená knihovna',
     'bookshelf_create_notification'    => 'Knihovna úspěšně vytvořena',
-    'bookshelf_update'                 => 'aktualizaovaná knihovna',
+    'bookshelf_update'                 => 'aktualizovaná knihovna',
     'bookshelf_update_notification'    => 'Knihovna byla úspěšně aktualizována',
     'bookshelf_delete'                 => 'smazaná knihovna',
     'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',

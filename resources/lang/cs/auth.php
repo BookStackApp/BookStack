@@ -22,19 +22,19 @@ return [
     'password' => 'Heslo',
     'password_confirm' => 'Potvrdit heslo',
     'password_hint' => 'Musí mít víc než 5 znaků',
-    'forgot_password' => 'Zapoměli jste heslo?',
+    'forgot_password' => 'Zapomněli jste heslo?',
     'remember_me' => 'Neodhlašovat',
-    'ldap_email_hint' => 'Zadejte email, který chete přiřadit k tomuto účtu.',
+    'ldap_email_hint' => 'Zadejte email, který chcete přiřadit k tomuto účtu.',
     'create_account' => 'Vytvořit účet',
     'social_login' => 'Přihlášení přes sociální sítě',
     'social_registration' => 'Registrace přes sociální sítě',
     'social_registration_text' => 'Registrovat a přihlásit se přes jinou službu',
 
     'register_thanks' => 'Díky za registraci!',
-    'register_confirm' => 'Zkontrolujte prosím váč email a klikněte na potvrzovací tlačítko pro dokončení registrce do :appName.',
+    'register_confirm' => 'Zkontrolujte prosím váš email a klikněte na potvrzovací tlačítko pro dokončení registrace do :appName.',
     'registrations_disabled' => 'Registrace jsou momentálně pozastaveny',
     'registration_email_domain_invalid' => 'Registrace z této emailové domény nejsou povoleny.',
-    'register_success' => 'Díky za registraci! Jste registrovaní a přihlhášení.',
+    'register_success' => 'Díky za registraci! Jste registrovaní a přihlášení.',
 
 
     // Password Reset
@@ -51,7 +51,7 @@ return [
     // Email Confirmation
     'email_confirm_subject' => 'Potvrďte vaši emailovou adresu pro :appName',
     'email_confirm_greeting' => 'Díky že jste se přidali do :appName!',
-    'email_confirm_text' => 'Prosíme potvrďtě funkčnost vaší emailové adresy kliknutím na tlačítko níže:',
+    'email_confirm_text' => 'Prosíme potvrďte funkčnost vaší emailové adresy kliknutím na tlačítko níže:',
     'email_confirm_action' => 'Potvrdit emailovou adresu',
     'email_confirm_send_error' => 'Potvrzení emailové adresy je vyžadováno, ale systém vám nedokázal odeslat email. Kontaktujte správce aby to dal do kupy a potvrzovací email vám dorazil.',
     'email_confirm_success' => 'Vaše emailová adresa byla potvrzena!',
@@ -60,6 +60,6 @@ return [
     'email_not_confirmed' => 'Emailová adresa nebyla potvrzena',
     'email_not_confirmed_text' => 'Vaše emailová adresa nebyla dosud potvrzena.',
     'email_not_confirmed_click_link' => 'Klikněte na odkaz v emailu který jsme vám zaslali ihned po registraci.',
-    'email_not_confirmed_resend' => 'Pokud nemůžete nalézt email v příchozí poště, můžete si jej něchat poslat znovu pomocí formuláře níže.',
+    'email_not_confirmed_resend' => 'Pokud nemůžete nalézt email v příchozí poště, můžete si jej nechat poslat znovu pomocí formuláře níže.',
     'email_not_confirmed_resend_button' => 'Znovu poslat email pro potvrzení emailové adresy',
 ];
