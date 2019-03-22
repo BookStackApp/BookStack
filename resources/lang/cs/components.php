@@ -17,7 +17,7 @@ return [
     'image_delete_used' => 'Tento obrázek je použit v následujících stránkách.',
     'image_delete_confirm' => 'Stisknětě smazat ještě jednou pro potvrzení smazání tohoto obrázku.',
     'image_select_image' => 'Zvolte obrázek',
-    'image_dropzone' => 'Přetáhněte sem obrázky myší nebo sem kliknětě pro vybrání souboru.',
+    'image_dropzone' => 'Přetáhněte sem obrázky myší nebo sem klikněte pro vybrání souboru.',
     'images_deleted' => 'Obrázky smazány',
     'image_preview' => 'Náhled obrázku',
     'image_upload_success' => 'Obrázek byl úspěšně nahrán',
