@@ -8,13 +8,17 @@ import 'codemirror/mode/diff/diff';
 import 'codemirror/mode/go/go';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/julia/julia';
 import 'codemirror/mode/lua/lua';
+import 'codemirror/mode/haskell/haskell';
 import 'codemirror/mode/markdown/markdown';
+import 'codemirror/mode/mllike/mllike';
 import 'codemirror/mode/nginx/nginx';
 import 'codemirror/mode/php/php';
 import 'codemirror/mode/powershell/powershell';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/ruby/ruby';
+import 'codemirror/mode/rust/rust';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/toml/toml';
@@ -35,21 +39,29 @@ const modeMap = {
     csharp: 'text/x-csharp',
     diff: 'diff',
     go: 'go',
+    haskell: 'haskell',
+    hs: 'haskell',
     html: 'htmlmixed',
     javascript: 'javascript',
     json: {name: 'javascript', json: true},
     js: 'javascript',
+    jl: 'julia',
+    julia: 'julia',
     lua: 'lua',
     md: 'markdown',
     mdown: 'markdown',
     markdown: 'markdown',
+    ml: 'mllike',
     nginx: 'nginx',
     powershell: 'powershell',
+    ocaml: 'mllike',
     php: 'php',
     py: 'python',
     python: 'python',
     ruby: 'ruby',
+    rust: 'rust',
     rb: 'ruby',
+    rs: 'rust',
     shell: 'shell',
     sh: 'shell',
     bash: 'shell',
