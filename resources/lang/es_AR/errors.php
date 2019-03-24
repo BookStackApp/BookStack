@@ -66,6 +66,7 @@ return [
     'role_cannot_be_edited' => 'Este rol no puede ser editado',
     'role_system_cannot_be_deleted' => 'Este rol es un rol de sistema y no puede ser borrado',
     'role_registration_default_cannot_delete' => 'Este rol no puede ser borrado mientras sea el rol por defecto de registro',
+    'role_cannot_remove_only_admin' => 'Este usuario es el único asignado al rol de administrador. Asigne el rol de administrador a otro usuario antes de intentar eliminarlo.',
 
     // Comments
     'comment_list' => 'Se produjo un error al obtener los comentarios.',
