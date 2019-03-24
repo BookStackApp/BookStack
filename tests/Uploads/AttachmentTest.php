@@ -29,16 +29,6 @@ class AttachmentTest extends TestCase
     }
 
     /**
-     * Get the expected upload path for a file.
-     * @param $fileName
-     * @return string
-     */
-    protected function getUploadPath($fileName)
-    {
-        return 'uploads/files/' . Date('Y-m-M') . '/' . $fileName;
-    }
-
-    /**
      * Delete all uploaded files.
      * To assist with cleanup.
      */
@@ -64,15 +54,32 @@ class AttachmentTest extends TestCase
             'order' => 1,
             'created_by' => $admin->id,
             'updated_by' => $admin->id,
-            'path' => $this->getUploadPath($fileName)
         ];
 
         $upload = $this->uploadFile($fileName, $page->id);
         $upload->assertStatus(200);
+
+        $attachment = Attachment::query()->orderBy('id', 'desc')->first();
+        $expectedResp['path'] = $attachment->path;
+
         $upload->assertJson($expectedResp);
         $this->assertDatabaseHas('attachments', $expectedResp);
 
         $this->deleteUploads();
+    }
+
+    public function test_file_upload_does_not_use_filename()
+    {
+        $page = Page::first();
+        $fileName = 'upload_test_file.txt';
+
+
+        $upload = $this->asAdmin()->uploadFile($fileName, $page->id);
+        $upload->assertStatus(200);
+
+        $attachment = Attachment::query()->orderBy('id', 'desc')->first();
+        $this->assertNotContains($fileName, $attachment->path);
+        $this->assertStringEndsWith('.txt', $attachment->path);
     }
 
     public function test_file_display_and_access()
@@ -172,7 +179,8 @@ class AttachmentTest extends TestCase
         $fileName = 'deletion_test.txt';
         $this->uploadFile($fileName, $page->id);
 
-        $filePath = base_path('storage/' . $this->getUploadPath($fileName));
+        $attachment = Attachment::query()->orderBy('id', 'desc')->first();
+        $filePath = storage_path($attachment->path);
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
 
         $attachment = \BookStack\Uploads\Attachment::first();
@@ -193,7 +201,8 @@ class AttachmentTest extends TestCase
         $fileName = 'deletion_test.txt';
         $this->uploadFile($fileName, $page->id);
 
-        $filePath = base_path('storage/' . $this->getUploadPath($fileName));
+        $attachment = Attachment::query()->orderBy('id', 'desc')->first();
+        $filePath = storage_path($attachment->path);
 
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
         $this->assertDatabaseHas('attachments', [

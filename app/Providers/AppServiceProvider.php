@@ -28,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
             return in_array(strtolower($value->getClientOriginalExtension()), $validImageExtensions);
         });
 
+        Validator::extend('no_double_extension', function ($attribute, $value, $parameters, $validator) {
+            $uploadName = $value->getClientOriginalName();
+            return substr_count($uploadName, '.') < 2;
+        });
+
 
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
