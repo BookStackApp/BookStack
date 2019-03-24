@@ -101,6 +101,38 @@ return [
     'books_sort_save' => 'Сохранить новый порядок',
 
     /**
+     * Shelves
+     */
+    'shelf' => 'Полка',
+    'shelves' => 'Полки',
+    'shelves_long' => 'Книжные полки',
+    'shelves_empty' => 'Полки не созданы',
+    'shelves_create' => 'Создать новую полку',
+    'shelves_popular' => 'Популярные полки',
+    'shelves_new' => 'Новые полки',
+    'shelves_popular_empty' => 'Популярные полки появятся здесь.',
+    'shelves_new_empty' => 'Последние созданные полки появятся здесь.',
+    'shelves_save' => 'Сохранить полку',
+    'shelves_books' => 'Книги из этой полки',
+    'shelves_add_books' => 'Добавить книгу в эту полку',
+    'shelves_drag_books' => 'Перетащите книгу сюда, чтобы добавить на эту полку',
+    'shelves_empty_contents' => 'На этой полке нет книг',
+    'shelves_edit_and_assign' => 'Изменить полку для привязки книг',
+    'shelves_edit_named' => 'Редактировать полку :name',
+    'shelves_edit' => 'Редактировать книжную полку',
+    'shelves_delete' => 'Удалить книжную полку',
+    'shelves_delete_named' => 'Удалить книжную полку :name',
+    'shelves_delete_explain' => "Это приведет к удалению полки с именем ':name'. Привязанные книги удалены не будут.",
+    'shelves_delete_confirmation' => 'Вы уверены, что хотите удалить эту полку?',
+    'shelves_permissions' => 'Доступы к книжной полке',
+    'shelves_permissions_updated' => 'Доступы к книжной полке обновлены',
+    'shelves_permissions_active' => 'Доступы к книжной полке активны',
+    'shelves_copy_permissions_to_books' => 'Наследовать доступы книгам',
+    'shelves_copy_permissions' => 'Копировать доступы',
+    'shelves_copy_permissions_explain' => 'Это применит текущие настройки доступов этой книжной полки ко всем книгам, содержащимся внутри. Перед активацией убедитесь, что все изменения в доступах этой книжной полки сохранены.',
+    'shelves_copy_permission_success' => 'Доступы книжной полки скопированы для :count books',
+
+    /**
      * Chapters
      */
     'chapter' => 'Глава',
@@ -206,6 +238,7 @@ return [
     'page_tags' => 'Теги страницы',
     'chapter_tags' => 'Теги главы',
     'book_tags' => 'Теги книги',
+    'shelf_tags' => 'Теги полки',
     'tag' => 'Тег',
     'tags' =>  'Теги',
     'tag_value' => 'Значение тега (опционально)',
