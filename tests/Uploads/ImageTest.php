@@ -76,11 +76,23 @@ class ImageTest extends TestCase
         $upload->assertStatus(302);
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
+    }
 
-        $this->assertDatabaseMissing('images', [
-            'type' => 'gallery',
-            'name' => $fileName
-        ]);
+    public function test_files_with_double_extensions_cannot_be_uploaded()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $fileName = 'bad.phtml.png';
+        $relPath = $this->getTestImagePath('gallery', $fileName);
+        $this->deleteImage($relPath);
+
+        $file = $this->getTestImage($fileName);
+        $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $file], []);
+        $upload->assertStatus(302);
+
+        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded double extension file was uploaded but should have been stopped');
     }
 
     public function test_secure_images_uploads_to_correct_place()
