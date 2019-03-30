@@ -74,6 +74,7 @@ return [
     'timezone'             => 'El atributo :attribute debe ser una zona válida.',
     'unique'               => 'El atributo :attribute ya ha sido tomado.',
     'url'                  => 'El atributo :attribute tiene un formato inválid.',
+    'is_image'             => 'El atributo :attribute debe ser una imagen válida.',
 
     /*
     |--------------------------------------------------------------------------
