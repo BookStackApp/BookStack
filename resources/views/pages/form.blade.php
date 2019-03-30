@@ -12,47 +12,43 @@
 
     {{--Header Bar--}}
     <div class="faded-small toolbar">
-        <div class="container fluid">
-            <div class="row">
-                <div class="col-sm-4 faded">
-                    <div class="action-buttons text-left">
-                        <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back'){{ trans('common.back') }}</a>
-                        <a onclick="$('body>header').slideToggle();" class="text-button text-primary">@icon('swap-vertical'){{ trans('entities.pages_edit_toggle_header') }}</a>
-                    </div>
-                </div>
-                <div class="col-sm-4 faded text-center">
+        <div class="grid third v-center">
 
-                    <div v-show="draftsEnabled" dropdown class="dropdown-container draft-display">
-                        <a dropdown-toggle class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
-                        @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
-                        <ul>
-                            <li>
-                                <a @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</a>
-                            </li>
-                            <li v-if="isNewDraft">
-                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
-                            </li>
-                            <li v-if="isUpdateDraft">
-                                <a type="button" @click="discardDraft" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4 faded">
-                    <div class="action-buttons" v-cloak>
-                        <div dropdown class="dropdown-container">
-                            <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
-                            <ul class="wide">
-                                <li class="padded">
-                                    <p class="text-muted">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
-                                    <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
-                                </li>
-                            </ul>
-                        </div>
+            <div class="action-buttons text-left px-m py-xs">
+                <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back'){{ trans('common.back') }}</a>
+                <a onclick="$('body>header').slideToggle();" class="text-button text-primary">@icon('swap-vertical'){{ trans('entities.pages_edit_toggle_header') }}</a>
+            </div>
 
-                        <button type="submit" id="save-button" class="text-button text-pos">@icon('save'){{ trans('entities.pages_save') }}</button>
-                    </div>
+            <div class="text-center px-m py-xs">
+                <div v-show="draftsEnabled" dropdown class="dropdown-container draft-display text">
+                    <a dropdown-toggle class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
+                    @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
+                    <ul>
+                        <li>
+                            <a @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</a>
+                        </li>
+                        <li v-if="isNewDraft">
+                            <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
+                        </li>
+                        <li v-if="isUpdateDraft">
+                            <a type="button" @click="discardDraft" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+
+            <div class="action-buttons px-m py-xs" v-cloak>
+                <div dropdown class="dropdown-container">
+                    <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
+                    <ul class="wide">
+                        <li class="padded">
+                            <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
+                            <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
+                        </li>
+                    </ul>
+                </div>
+
+                <button type="submit" id="save-button" class="text-button text-pos">@icon('save'){{ trans('entities.pages_save') }}</button>
             </div>
         </div>
     </div>

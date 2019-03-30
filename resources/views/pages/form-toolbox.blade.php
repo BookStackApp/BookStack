@@ -65,7 +65,7 @@
                                 <input type="text"  placeholder="{{ trans('entities.attachments_link_url_hint') }}" v-model="file.link">
                                 <p class="small neg" v-for="error in errors.link.link" v-text="error"></p>
                             </div>
-                            <button @click.prevent="attachNewLink(file)" class="button pos">{{ trans('entities.attach') }}</button>
+                            <button @click.prevent="attachNewLink(file)" class="button primary">{{ trans('entities.attach') }}</button>
 
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                     </div>
 
                     <button type="button" class="button outline" @click="cancelEdit">{{ trans('common.back') }}</button>
-                    <button @click.enter.prevent="updateFile(fileToEdit)" class="button pos">{{ trans('common.save') }}</button>
+                    <button @click.enter.prevent="updateFile(fileToEdit)" class="button primary">{{ trans('common.save') }}</button>
                 </div>
 
             </div>

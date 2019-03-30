@@ -14,7 +14,7 @@
             <div chapter-toggle class="text-muted chapter-expansion-toggle">@icon('caret-right') <span>{{ trans_choice('entities.x_pages', $chapter->pages->count()) }}</span></div>
             <div class="inset-list">
                 <div class="entity-list-item-children">
-                    @include('partials.entity-list-basic', ['entities' => $chapter->pages])
+                    @include('partials.entity-list', ['entities' => $chapter->pages])
                 </div>
             </div>
         </div>

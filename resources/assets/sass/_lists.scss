@@ -6,6 +6,7 @@
     justify-self: stretch;
     align-self: stretch;
     height: auto;
+    margin-right: $-l;
   }
   .icon:after {
     opacity: 0.5;
@@ -185,7 +186,7 @@
     margin-left: -1rem;
   }
   [chapter-toggle] {
-    padding-left: 1.5rem;
+    padding-left: .7rem;
     padding-bottom: .2rem;
   }
   .entity-list-item .icon {
