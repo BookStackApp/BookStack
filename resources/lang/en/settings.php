@@ -146,6 +146,7 @@ return [
         'nl' => 'Nederlands',
         'pt_BR' => 'Português do Brasil',
         'sk' => 'Slovensky',
+        'cs' => 'Česky',
         'sv' => 'Svenska',
         'kr' => '한국어',
         'ja' => '日本語',
