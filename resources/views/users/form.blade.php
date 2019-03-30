@@ -11,7 +11,7 @@
     @if($authMethod === 'ldap' || $authMethod === 'system')
         <p class="small">{{ trans('settings.users_details_desc_no_email') }}</p>
     @endif
-    <div class="grid half mt-m large-gap">
+    <div class="grid half mt-m gap-xl">
         <div>
             <label for="name">{{ trans('auth.name') }}</label>
             @include('form.text', ['name' => 'name'])
@@ -26,7 +26,7 @@
 </div>
 
 @if($authMethod === 'ldap' && userCan('users-manage'))
-    <div class="grid half large-gap v-center">
+    <div class="grid half gap-xl v-center">
         <div>
             <label class="setting-list-label">{{ trans('settings.users_external_auth_id') }}</label>
             <p class="small">{{ trans('settings.users_external_auth_id_desc') }}</p>
@@ -56,7 +56,7 @@
                 {{ trans('settings.users_password_warning') }}
             </p>
         @endif
-        <div class="grid half mt-m large-gap">
+        <div class="grid half mt-m gap-xl">
             <div>
                 <label for="password">{{ trans('auth.password') }}</label>
                 @include('form.password', ['name' => 'password'])

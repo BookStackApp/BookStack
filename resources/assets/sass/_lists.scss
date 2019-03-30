@@ -1,11 +1,17 @@
 
 .book-contents .entity-list-item {
   .icon {
-    width: 30px;
-    border-radius: 4px;
+    width: 4px;
+    border-radius: 1px;
     justify-self: stretch;
     align-self: stretch;
     height: auto;
+  }
+  .icon:after {
+    opacity: 0.5;
+  }
+  .icon svg {
+    display: none;
   }
   p {
     margin-bottom: 0;
@@ -24,9 +30,9 @@
   width: 100%;
   position: relative;
   > .icon {
-    width: 30px;
+    width: 4px;
     height: auto;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 1px 1px;
     align-self: stretch;
     flex-shrink: 0;
     &:before {
@@ -37,8 +43,14 @@
       height: 1px;
       background-color: currentColor;
       content: '';
-      opacity: 0.2;
+      opacity: 0.5;
     }
+    &:after {
+      opacity: 0.5;
+    }
+  }
+  .icon svg {
+    display: none;
   }
   > .content {
     flex: 1;
@@ -50,7 +62,6 @@
   .chapter-expansion-toggle:hover {
     background-color: rgba(0, 0, 0, 0.06);
   }
-
 }
 
 .entity-list-item.has-children {
@@ -368,8 +379,15 @@ ul.pagination {
   }
   &:not(.no-hover):hover {
     text-decoration: none;
-    background-color: #DDD;
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
+  }
+  &.outline-hover {
+    border: 1px solid transparent;
+  }
+  &.outline-hover:hover {
+    background-color: transparent;
+    border-color: rgba(0, 0, 0, 0.1);
   }
 }
 

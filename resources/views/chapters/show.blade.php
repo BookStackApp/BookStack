@@ -132,7 +132,7 @@
     @endif
 
     <div class="mb-xl">
-        <form @submit.prevent="searchBook" class="search-box">
+        <form @submit.prevent="searchBook" class="search-box flexible">
             <input v-model="searchTerm" @change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.chapters_search_this') }}">
             <button type="submit">@icon('search')</button>
             <button v-if="searching" v-cloak class="text-neg" @click="clearSearch()" type="button">@icon('close')</button>

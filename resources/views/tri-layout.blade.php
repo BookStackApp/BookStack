@@ -9,7 +9,7 @@
     {{--</div>--}}
     {{--TODO - Cleanup toolbar usage--}}
 
-    <div class="tri-layout-container mt-m" tri-layout @yield('container-attrs') >
+    <div class="tri-layout-container" tri-layout @yield('container-attrs') >
 
         <div class="tri-layout-left print-hidden pt-m" id="sidebar">
             <div class="tri-layout-left-contents">
@@ -18,7 +18,9 @@
         </div>
 
         <div class="@yield('body-wrap-classes') tri-layout-middle">
-            @yield('body')
+            <div class="tri-layout-middle-contents">
+                @yield('body')
+            </div>
         </div>
 
         <div class="tri-layout-right print-hidden pt-m">

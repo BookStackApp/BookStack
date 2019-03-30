@@ -16,7 +16,7 @@
                 <div class="setting-list">
                     @include('users.form', ['model' => $user, 'authMethod' => $authMethod])
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label for="user-avatar" class="setting-list-label">{{ trans('settings.users_avatar') }}</label>
                             <p class="small">{{ trans('settings.users_avatar_desc') }}</p>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap v-center">
+                    <div class="grid half gap-xl v-center">
                         <div>
                             <label for="user-language" class="setting-list-label">{{ trans('settings.users_preferred_language') }}</label>
                             <p class="small">

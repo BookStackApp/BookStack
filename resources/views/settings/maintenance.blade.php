@@ -16,7 +16,7 @@
 
     <div id="image-cleanup" class="card content-wrap auto-height">
         <h2 class="list-heading">{{ trans('settings.maint_image_cleanup') }}</h2>
-        <div class="grid half large-gap">
+        <div class="grid half gap-xl">
             <div>
                 <p class="small muted">{{ trans('settings.maint_image_cleanup_desc') }}</p>
             </div>

@@ -7,7 +7,7 @@
         <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-muted">@icon('expand-text'){{ trans('common.toggle_details') }}</a>
     </div>
 
-    <div class="grid contained third large-gap" id="home-default">
+    <div class="grid contained third gap-xxl" id="home-default">
         <div>
             @if(count($draftPages) > 0)
                 <div id="recent-drafts" class="card mb-xl">
