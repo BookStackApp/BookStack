@@ -2,6 +2,10 @@
 
 @section('container-classes', 'mt-xl')
 
+@section('body')
+    @include('books.list', ['books' => $books, 'view' => $view])
+@stop
+
 @section('left')
     @if($recents)
         <div id="recents" class="mb-xl">
@@ -27,10 +31,6 @@
             <div class="body text-muted">{{ trans('entities.books_new_empty') }}</div>
         @endif
     </div>
-@stop
-
-@section('body')
-    @include('books.list', ['books' => $books, 'view' => $view])
 @stop
 
 @section('right')

@@ -54,12 +54,17 @@
   transition: all ease-in-out 180ms;
   user-select: none;
   svg[data-icon="caret-right"] {
+    margin-right: 0;
+    font-size: 1rem;
     transition: all ease-in-out 180ms;
     transform: rotate(0deg);
-    transform-origin: 25% 50%;
+    transform-origin: 50% 50%;
   }
   &.open svg[data-icon="caret-right"] {
     transform: rotate(90deg);
+  }
+  svg[data-icon="caret-right"] + * {
+    margin-left: $-xs;
   }
 }
 

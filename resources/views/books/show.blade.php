@@ -60,6 +60,23 @@
 
 @section('right')
 
+    <div class="mb-xl">
+        <h5>{{ trans('common.details') }}</h5>
+        <div class="text-small text-muted blended-links">
+            @include('partials.entity-meta', ['entity' => $book])
+            @if($book->restricted)
+                <div class="active-restriction">
+                    @if(userCan('restrictions-manage', $book))
+                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                    @else
+                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                    @endif
+                </div>
+            @endif
+        </div>
+    </div>
+
+
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
@@ -128,22 +145,6 @@
             <button type="submit">@icon('search')</button>
             <button v-if="searching" v-cloak class="text-neg" v-on:click="clearSearch()" type="button">@icon('close')</button>
         </form>
-    </div>
-
-    <div class="mb-xl">
-        <h5>{{ trans('common.details') }}</h5>
-        <div class="text-small text-muted blended-links">
-            @include('partials.entity-meta', ['entity' => $book])
-            @if($book->restricted)
-                <div class="active-restriction">
-                    @if(userCan('restrictions-manage', $book))
-                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
-                    @else
-                        @icon('lock'){{ trans('entities.books_permissions_active') }}
-                    @endif
-                </div>
-            @endif
-        </div>
     </div>
 
     @if(count($activity) > 0)

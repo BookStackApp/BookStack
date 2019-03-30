@@ -48,12 +48,15 @@
     @endif
 
     @if ($page->attachments->count() > 0)
-        <div id="page-attachments" class="mb-xl">
+        <div id="page-attachments" class="mb-l">
             <h5>{{ trans('entities.pages_attachments') }}</h5>
             <div class="body">
                 @foreach($page->attachments as $attachment)
-                    <div class="attachment">
-                        <a href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif>@icon($attachment->external ? 'export' : 'file'){{ $attachment->name }}</a>
+                    <div class="attachment icon-list">
+                        <a class="icon-list-item py-xs" href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif>
+                            <span class="icon">@icon($attachment->external ? 'export' : 'file')</span>
+                            <span>{{ $attachment->name }}</span>
+                        </a>
                     </div>
                 @endforeach
             </div>
@@ -76,9 +79,13 @@
         </div>
     @endif
 
+    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+@stop
+
+@section('right')
     <div id="page-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
-        <div class="body text-muted text-small blended-links">
+        <div class="body text-small blended-links">
             @include('partials.entity-meta', ['entity' => $page])
 
             @if($book->restricted)
@@ -113,10 +120,6 @@
         </div>
     </div>
 
-    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
-@stop
-
-@section('right')
     <div class="actions mb-xl">
         <h5>Actions</h5>
 

@@ -2,6 +2,12 @@
 
 @section('body')
 
+    <div class="mb-s">
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $shelf,
+        ]])
+    </div>
+
     <div class="card content-wrap">
         <h1 class="break-text">{{$shelf->name}}</h1>
         <div class="book-content">

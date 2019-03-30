@@ -1,6 +1,5 @@
 
-<div class="content-wrap card">
-    {{--TODO - Create unique list item--}}
+<div class="content-wrap mt-m card">
 
     <div class="grid half v-center">
         <h1 class="list-heading">{{ trans('entities.shelves') }}</h1>
