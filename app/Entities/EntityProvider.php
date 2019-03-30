@@ -84,4 +84,23 @@ class EntityProvider
         $type = strtolower($type);
         return $this->all()[$type];
     }
+
+    /**
+     * Get the morph classes, as an array, for a single or multiple types.
+     * @param string|array $types
+     * @return array<string>
+     */
+    public function getMorphClasses($types)
+    {
+        if (is_string($types)) {
+            $types = [$types];
+        }
+
+        $morphClasses = [];
+        foreach ($types as $type) {
+            $model = $this->get($type);
+            $morphClasses[] = $model->getMorphClass();
+        }
+        return $morphClasses;
+    }
 }

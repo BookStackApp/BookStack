@@ -198,10 +198,10 @@
     border-radius: 1px;
     opacity: 0.6;
   }
-  .entity-list-item  .icon:after {
+  .entity-list-item .icon:after {
     opacity: 1;
   }
-  .entity-list-item  .icon svg {
+  .entity-list-item .icon svg {
     display: none;
   }
 }
@@ -399,6 +399,15 @@ ul.pagination {
   }
 }
 
+.entity-list-item-path-sep {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  top: 1px;
+  svg {
+    margin-right: 0;
+  }
+}
 
 .card .entity-list-item:not(.no-hover):hover {
   background-color: #F2F2F2;

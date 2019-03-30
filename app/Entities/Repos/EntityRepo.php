@@ -293,15 +293,14 @@ class EntityRepo
 
     /**
      * Get the most popular entities base on all views.
-     * @param string|bool $type
+     * @param string $type
      * @param int $count
      * @param int $page
      * @return mixed
      */
-    public function getPopular($type, $count = 10, $page = 0)
+    public function getPopular(string $type, int $count = 10, int $page = 0)
     {
-        $filter = is_bool($type) ? false : $this->entityProvider->get($type);
-        return $this->viewService->getPopular($count, $page, $filter);
+        return $this->viewService->getPopular($count, $page, $type);
     }
 
     /**

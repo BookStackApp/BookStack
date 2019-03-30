@@ -187,22 +187,21 @@ $btt-size: 40px;
     overflow-y: scroll;
     height: 400px;
     background-color: #EEEEEE;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .entity-list-item {
+    background-color: #FFF;
+  }
+  .entity-list-item p {
+    margin-bottom: 0;
+  }
+  .entity-list-item.selected {
+    background-color: rgba(0, 0, 0, 0.15) !important;
   }
   .loading {
     height: 400px;
     padding-top: $-l;
-  }
-  .entity-list > p {
-    text-align: center;
-    padding-top: $-l;
-    font-size: 1.333em;
-  }
-  .entity-list > div {
-    padding-left: $-m;
-    padding-right: $-m;
-    background-color: #FFF;
-    transition: all ease-in-out 120ms;
-    cursor: pointer;
   }
   &.compact {
     font-size: 10px;
