@@ -85,7 +85,7 @@
 .sidebar-page-nav {
   $nav-indent: $-m;
   list-style: none;
-  margin: $-s 0 $-m 2px;
+  margin: $-s 0 $-m $-xs;
   position: relative;
   &:after {
     content: '';
@@ -140,61 +140,68 @@
 }
 
 // Sidebar list
-.book-tree .book.entity-list-item {
-  font-size: 0.6rem;
-  h4 {
-    font-size: 1rem;
-    margin: 0;
-  }
-}
-.book-tree .sidebar-page-list {
+.book-tree .sidebar-page-list  {
   list-style: none;
-  margin: $-xs 0 0;
+  margin: $-xs -$-s 0 -$-s;
   padding-left: 0;
   padding-right: 0;
   position: relative;
+
+  &:after, .sub-menu:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: $-m;
+    top: 1rem;
+    bottom: 1rem;
+    border-left: 4px solid rgba(0, 0, 0, 0.1);
+    z-index: 0;
+  }
+
   ul {
     list-style: none;
     padding-left: 1rem;
     padding-right: 0;
   }
-  .entity-icon {
-    font-size: 12px;
-    z-index: 2;
-    background-color: #FFF;
+  .entity-list-item {
+    padding-top: $-xxs;
+    padding-bottom: $-xxs;
+    .content {
+      padding-top: $-xs;
+      padding-bottom: $-xs;
+    }
+  }
+  .entity-list-item.no-hover {
+    margin-top: -$-xs;
+    padding-right: 0;
   }
   .entity-list-item-name {
     font-size: 1em;
     margin: 0;
   }
-  .entity-list-item {
-    font-size: 0.8rem;
-  }
-  .entity-list-item.selected {
-    background-color: #F2F2F2;
-  }
   .chapter-child-menu {
-    font-size: 12px;
-    padding-left: 2rem;
+    font-size: .8rem;
     margin-top: -.2rem;
+    margin-left: -1rem;
   }
   [chapter-toggle] {
     padding-left: 1.5rem;
     padding-bottom: .2rem;
   }
-  .icon {
+  .entity-list-item .icon {
     z-index: 2;
-  }
-  &:after, .sub-menu:after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 1.6rem;
-    top: 1rem;
-    bottom: 1rem;
-    border-left: 2px solid #DDD;
+    width: 4px;
+    height: auto;
+    align-self: stretch;
+    flex-shrink: 0;
+    border-radius: 1px;
     opacity: 0.6;
-    z-index: 0;
+  }
+  .entity-list-item  .icon:after {
+    opacity: 1;
+  }
+  .entity-list-item  .icon svg {
+    display: none;
   }
 }
 
