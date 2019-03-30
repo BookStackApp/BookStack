@@ -9,7 +9,7 @@
             &nbsp;
         </div>
 
-        <div class="grid right-focus reverse-collapse large-gap">
+        <div class="grid right-focus reverse-collapse gap-xl">
             <div>
                 <div>
                     <h5>{{ trans('entities.search_filters') }}</h5>

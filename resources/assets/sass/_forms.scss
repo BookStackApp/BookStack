@@ -322,6 +322,9 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     width: 300px;
     max-width: 100%;
   }
+  &.flexible input {
+    width: 100%;
+  }
 }
 
 .outline > input {

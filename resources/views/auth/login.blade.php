@@ -16,7 +16,7 @@
                     @include('auth/forms/login/' . $authMethod)
                 </div>
 
-                <div class="grid half collapse-xs large-gap v-center">
+                <div class="grid half collapse-xs gap-xl v-center">
                     <div class="text-left ml-xxs">
                         @include('components.custom-checkbox', [
                             'name' => 'remember',

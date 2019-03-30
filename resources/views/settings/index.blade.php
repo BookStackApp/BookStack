@@ -21,7 +21,7 @@
                 <div class="setting-list">
 
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label for="setting-app-public" class="setting-list-label">{{ trans('settings.app_public_access') }}</label>
                             <p class="small">{!! trans('settings.app_public_access_desc') !!}</p>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.app_secure_images') }}</label>
                             <p class="small">{{ trans('settings.app_secure_images_desc') }}</p>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.app_disable_comments') }}</label>
                             <p class="small">{!! trans('settings.app_disable_comments_desc') !!}</p>
@@ -84,7 +84,7 @@
 
                 <div class="setting-list">
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label for="setting-app-name" class="setting-list-label">{{ trans('settings.app_name') }}</label>
                             <p class="small">{{ trans('settings.app_name_desc') }}</p>
@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.app_editor') }}</label>
                             <p class="small">{{ trans('settings.app_editor_desc') }}</p>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.app_logo') }}</label>
                             <p class="small">{!! trans('settings.app_logo_desc') !!}</p>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
                             <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
 
-                    <div homepage-control id="homepage-control" class="grid half large-gap">
+                    <div homepage-control id="homepage-control" class="grid half gap-xl">
                         <div>
                             <label for="setting-app-homepage" class="setting-list-label">{{ trans('settings.app_homepage') }}</label>
                             <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
@@ -183,7 +183,7 @@
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.reg_enable') }}</label>
                             <p class="small">{!! trans('settings.reg_enable_desc') !!}</p>
@@ -208,7 +208,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label for="setting-registration-restrict" class="setting-list-label">{{ trans('settings.reg_confirm_restrict_domain') }}</label>
                             <p class="small">{!! trans('settings.reg_confirm_restrict_domain_desc') !!}</p>
@@ -218,7 +218,7 @@
                         </div>
                     </div>
 
-                    <div class="grid half large-gap">
+                    <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.reg_email_confirmation') }}</label>
                             <p class="small">{{ trans('settings.reg_confirm_email_desc') }}</p>

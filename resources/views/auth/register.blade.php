@@ -26,7 +26,7 @@
                     @include('form/password', ['name' => 'password', 'placeholder' => trans('auth.password_hint')])
                 </div>
 
-                <div class="grid half collapse-xs large-gap v-center mt-m">
+                <div class="grid half collapse-xs gap-xl v-center mt-m">
                     <div class="text-small">
                         <a href="{{ baseUrl('/login') }}">Already have an account?</a>
                     </div>
