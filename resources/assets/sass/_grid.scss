@@ -89,9 +89,11 @@ body.flexbox {
   grid-column-gap: $-xxl;
   .tri-layout-right {
     grid-area: c;
+    min-width: 0;
   }
   .tri-layout-left {
     grid-area: a;
+    min-width: 0;
   }
   .tri-layout-middle {
     grid-area: b;

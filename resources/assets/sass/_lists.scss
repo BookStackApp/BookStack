@@ -170,6 +170,7 @@
     .content {
       padding-top: $-xs;
       padding-bottom: $-xs;
+      max-width: calc(100% - 20px);
     }
   }
   .entity-list-item.no-hover {
