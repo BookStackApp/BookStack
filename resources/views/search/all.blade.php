@@ -192,7 +192,7 @@
                     <h1 class="list-heading">{{ trans('entities.search_results') }}</h1>
                     <h6 class="text-muted">{{ trans_choice('entities.search_total_results_found', $totalResults, ['count' => $totalResults]) }}</h6>
                     <div class="book-contents">
-                        @include('partials.entity-list', ['entities' => $entities])
+                        @include('partials.entity-list', ['entities' => $entities, 'showPath' => true])
                     </div>
                     @if($hasNextPage)
                         <div class="text-right mt-m">

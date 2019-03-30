@@ -6,4 +6,3 @@
         <div entity-selector-results></div>
     </div>
 </div>
-{{--TODO--}}
