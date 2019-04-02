@@ -77,21 +77,42 @@ class BookController extends Controller
      * Show the form for creating a new book.
      * @return Response
      */
-    public function create()
+    public function create($shelfSlug = null)
     {
+        if ($shelfSlug !== null) {
+            $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
+            $this->checkOwnablePermission('bookshelf-update', $bookshelf);
+        } else {
+            $bookshelf = null;
+        }
+
         $this->checkPermission('book-create-all');
         $this->setPageTitle(trans('entities.books_create'));
-        return view('books.create');
+        return view('books.create', [
+            'bookshelf' => $bookshelf
+        ]);
     }
 
     /**
      * Store a newly created book in storage.
      *
-     * @param  Request $request
+     * @param Request $request
+     * @param $shelfSlug
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $shelfSlug = null)
     {
+        if ($shelfSlug !== null) {
+            $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
+            $this->checkOwnablePermission('bookshelf-update', $bookshelf);
+
+            $shelfBooks = $this->entityRepo->getBookshelfChildren($bookshelf);
+            $shelfBookIds = $shelfBooks->pluck('id');
+            
+        } else {
+            $bookshelf = null;
+        }
+
         $this->checkPermission('book-create-all');
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -99,6 +120,19 @@ class BookController extends Controller
         ]);
         $book = $this->entityRepo->createFromInput('book', $request->all());
         Activity::add($book, 'book_create', $book->id);
+
+        if ($bookshelf) {
+            $shelfBookIds = $shelfBookIds->toArray();
+            array_unshift($shelfBookIds, $book->id);
+
+            $shelfBookIds = implode(',', $shelfBookIds);
+
+            $this->entityRepo->updateShelfBooks($bookshelf, $shelfBookIds);
+            Activity::add($bookshelf, 'bookshelf_update');
+
+            return redirect($bookshelf->getUrl());
+        }
+
         return redirect($book->getUrl());
     }
 
