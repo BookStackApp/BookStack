@@ -99,9 +99,11 @@ class BookShelfTest extends TestCase
     {
         $shelf = Bookshelf::first();
         $resp = $this->asAdmin()->get($shelf->getUrl());
+        $resp->assertSee($shelf->getUrl('/create-book'));
         $resp->assertSee($shelf->getUrl('/edit'));
         $resp->assertSee($shelf->getUrl('/permissions'));
         $resp->assertSee($shelf->getUrl('/delete'));
+        $resp->assertElementContains('a', 'Create New Book');
         $resp->assertElementContains('a', 'Edit');
         $resp->assertElementContains('a', 'Permissions');
         $resp->assertElementContains('a', 'Delete');
@@ -146,6 +148,14 @@ class BookShelfTest extends TestCase
 
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[0]->id]);
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[1]->id]);
+    }
+
+    public function test_shelf_create_new_book()
+    {
+        $shelf = Bookshelf::first();
+        $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
+
+        $resp->assertSeeText('Create New Book');
     }
 
     public function test_shelf_delete()
