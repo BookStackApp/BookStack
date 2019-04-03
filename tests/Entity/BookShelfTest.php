@@ -155,7 +155,19 @@ class BookShelfTest extends TestCase
         $shelf = Bookshelf::first();
         $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
 
-        $resp->assertSeeText('Create New Book');
+        $resp->assertSee('Create New Book');
+        $resp->assertSee($shelf->getShortName());
+
+        $testName = 'Test Book in Shelf Name';
+
+        $createBookResp = $this->asEditor()->post($shelf->getUrl('/create-book'), [
+            'name' => $testName,
+            'description' => 'Book in shelf description'
+        ]);
+
+        $resp = $this->asEditor()->get($shelf->getUrl());
+
+        $resp->assertSee($testName);
     }
 
     public function test_shelf_delete()
