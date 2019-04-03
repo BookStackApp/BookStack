@@ -577,7 +577,7 @@ class PermissionService
                         $query2->where('has_permission_own', '=', 1)
                             ->where('created_by', '=', $userId);
                     });
-        }) ;
+            });
 
         if (!is_null($entityClass)) {
             $entityInstance = app()->make($entityClass);

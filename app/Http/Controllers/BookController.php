@@ -108,7 +108,6 @@ class BookController extends Controller
 
             $shelfBooks = $this->entityRepo->getBookshelfChildren($bookshelf);
             $shelfBookIds = $shelfBooks->pluck('id');
-            
         } else {
             $bookshelf = null;
         }
