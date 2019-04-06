@@ -203,6 +203,13 @@ $btt-size: 40px;
     height: 400px;
     padding-top: $-l;
   }
+  .entity-selector-add button {
+    margin: 0;
+    display: block;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #DDD;
+  }
   &.compact {
     font-size: 10px;
     .entity-item-snippet {

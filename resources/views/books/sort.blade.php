@@ -1,7 +1,5 @@
 @extends('simple-layout')
 
-{{--TODO - Load books in via selector interface--}}
-
 @section('body')
 
     <div class="container">
@@ -19,7 +17,7 @@
         <div class="grid left-focus gap-xl">
             <div>
                 <div class="card content-wrap">
-                    <h1 class="list-heading">{{ trans('entities.books_sort') }}</h1>
+                    <h1 class="list-heading mb-l">{{ trans('entities.books_sort') }}</h1>
                     <div id="sort-boxes">
                         @include('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
                     </div>
@@ -37,20 +35,12 @@
             </div>
 
             <div>
-                @if(count($books) > 1)
-                    <div class="card content-wrap">
-                        <h2 class="list-heading">{{ trans('entities.books_sort_show_other') }}</h2>
-                        <div id="additional-books">
-                            @foreach($books as $otherBook)
-                                @if($otherBook->id !== $book->id)
-                                    <div>
-                                        <a href="{{ $otherBook->getUrl('/sort-item') }}" class="text-book">@icon('book'){{ $otherBook->name }}</a>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
+                <div class="card content-wrap">
+                    <h2 class="list-heading mb-m">{{ trans('entities.books_sort_show_other') }}</h2>
+
+                    @include('components.entity-selector', ['name' => 'books_list', 'selectorSize' => 'compact', 'entityTypes' => 'book', 'entityPermission' => 'update', 'showAdd' => true])
+
+                </div>
             </div>
         </div>
 
@@ -84,18 +74,17 @@
             // Create our sortable group
             let group = $('.sort-list').sortable(sortableOptions);
 
-            // Add additional books into the view on select.
-            $('#additional-books').on('click', 'a', function(e) {
-                e.preventDefault();
+            // Add book on selection confirm
+            window.$events.listen('entity-select-confirm', function(entityInfo) {
+                const alreadyAdded = $container.find(`[data-type="book"][data-id="${entityInfo.id}"]`).length > 0;
+                if (alreadyAdded) return;
 
-                const $link = $(this);
-                const url = $link.attr('href');
-                $.get(url, function(data) {
-                    $container.append(data);
+                const entitySortItemUrl = entityInfo.link + '/sort-item';
+                window.$http.get(entitySortItemUrl).then(resp => {
+                    $container.append(resp.data);
                     group.sortable("destroy");
                     group = $('.sort-list').sortable(sortableOptions);
                 });
-                $link.remove();
             });
 
             /**
@@ -185,7 +174,7 @@
 
             let lastSort = '';
             let reverse = false;
-            const reversableTypes = ['name', 'created', 'updated'];
+            const reversibleTypes = ['name', 'created', 'updated'];
 
             $container.on('click', '.sort-box-options [data-sort]', function(event) {
                 event.preventDefault();
@@ -194,7 +183,7 @@
 
                 reverse = (lastSort === sort) ? !reverse : false;
                 let sortFunction = sortOperations[sort];
-                if (reverse && reversableTypes.includes(sort)) {
+                if (reverse && reversibleTypes.includes(sort)) {
                    sortFunction = function(a, b) {
                        return 0 - sortOperations[sort](a, b)
                    };

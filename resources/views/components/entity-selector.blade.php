@@ -4,5 +4,11 @@
         <input type="text" placeholder="{{ trans('common.search') }}" entity-selector-search>
         <div class="text-center loading" entity-selector-loading>@include('partials.loading-icon')</div>
         <div entity-selector-results></div>
+        @if($showAdd)
+            <div class="entity-selector-add">
+                <button entity-selector-add-button type="button"
+                        class="button outline">@icon('add'){{ trans('common.add') }}</button>
+            </div>
+        @endif
     </div>
 </div>
