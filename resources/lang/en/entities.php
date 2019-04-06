@@ -11,6 +11,7 @@ return [
     'recently_updated_pages' => 'Recently Updated Pages',
     'recently_created_chapters' => 'Recently Created Chapters',
     'recently_created_books' => 'Recently Created Books',
+    'recently_created_shelves' => 'Recently Created Shelves',
     'recently_update' => 'Recently Updated',
     'recently_viewed' => 'Recently Viewed',
     'recent_activity' => 'Recent Activity',
@@ -67,6 +68,7 @@ return [
     // Shelves
     'shelf' => 'Shelf',
     'shelves' => 'Shelves',
+    'x_shelves' => ':count Shelf|:count Shelves',
     'shelves_long' => 'Bookshelves',
     'shelves_empty' => 'No shelves have been created',
     'shelves_create' => 'Create New Shelf',
@@ -274,6 +276,7 @@ return [
     'profile_not_created_pages' => ':userName has not created any pages',
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any books',
+    'profile_not_created_shelves' => ':userName has not created any shelves',
 
     // Comments
     'comment' => 'Comment',
