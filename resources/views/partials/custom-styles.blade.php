@@ -2,7 +2,7 @@
     header, [back-to-top], .primary-background {
         background-color: {{ setting('app-color') }} !important;
     }
-    .faded-small, .primary-background-light {
+    .primary-background-light {
         background-color: {{ setting('app-color-light') }};
     }
     .button-base, .button, input[type="button"], input[type="submit"] {
