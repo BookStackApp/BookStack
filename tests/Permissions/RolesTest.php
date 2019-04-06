@@ -632,8 +632,8 @@ class RolesTest extends BrowserKitTest
     {
         $user = \BookStack\Auth\User::first();
         $this->asAdmin()->visit('/settings/users/' . $user->id)
-            ->seeElement('#roles-admin')
-            ->seeElement('#roles-public');
+            ->seeElement('[name="roles[admin]"]')
+            ->seeElement('[name="roles[public]"]');
     }
 
     public function test_public_role_visible_in_role_listing()

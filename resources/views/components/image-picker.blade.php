@@ -1,4 +1,4 @@
-<div class="image-picker" image-picker="{{$name}}" data-default-image="{{ $defaultImage }}" data-resize-height="{{ $resizeHeight }}" data-resize-width="{{ $resizeWidth }}" data-current-id="{{ $currentId or '' }}" data-resize-crop="{{ $resizeCrop or '' }}">
+<div class="image-picker" image-picker="{{$name}}" data-default-image="{{ $defaultImage }}" data-resize-height="{{ $resizeHeight }}" data-resize-width="{{ $resizeWidth }}" data-current-id="{{ $currentId ?? '' }}" data-resize-crop="{{ $resizeCrop ?? '' }}">
 
     <div class="grid half">
         <div class="text-center">

@@ -123,7 +123,7 @@ class HomeController extends Controller
      */
     public function customHeadContent()
     {
-        return view('partials/custom-head-content');
+        return view('partials.custom-head-content');
     }
 
     /**
@@ -138,7 +138,7 @@ class HomeController extends Controller
             $allowRobots = $sitePublic;
         }
         return response()
-            ->view('common/robots', ['allowRobots' => $allowRobots])
+            ->view('common.robots', ['allowRobots' => $allowRobots])
             ->header('Content-Type', 'text/plain');
     }
 
@@ -147,6 +147,6 @@ class HomeController extends Controller
      */
     public function getNotFound()
     {
-        return response()->view('errors/404', [], 404);
+        return response()->view('errors.404', [], 404);
     }
 }
