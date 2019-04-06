@@ -1,4 +1,4 @@
-<div id="image-manager" image-type="{{ $imageType }}" uploaded-to="{{ $uploaded_to or 0 }}">
+<div id="image-manager" image-type="{{ $imageType }}" uploaded-to="{{ $uploaded_to ?? 0 }}">
     <div overlay v-cloak @click="hide">
         <div class="popup-body" @click.stop="">
 

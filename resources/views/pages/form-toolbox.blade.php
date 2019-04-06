@@ -17,7 +17,7 @@
     </div>
 
     @if(userCan('attachment-create-all'))
-        <div toolbox-tab-content="files" id="attachment-manager" page-id="{{ $page->id or 0 }}">
+        <div toolbox-tab-content="files" id="attachment-manager" page-id="{{ $page->id ?? 0 }}">
             <h4>{{ trans('entities.attachments') }}</h4>
             <div class="padded files">
 
