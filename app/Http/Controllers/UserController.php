@@ -41,7 +41,7 @@ class UserController extends Controller
         $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
         $this->setPageTitle(trans('settings.users'));
         $users->appends($listDetails);
-        return view('users/index', ['users' => $users, 'listDetails' => $listDetails]);
+        return view('users.index', ['users' => $users, 'listDetails' => $listDetails]);
     }
 
     /**
@@ -53,7 +53,7 @@ class UserController extends Controller
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
         $roles = $this->userRepo->getAllRoles();
-        return view('users/create', ['authMethod' => $authMethod, 'roles' => $roles]);
+        return view('users.create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
-        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
+        return view('users.edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -190,7 +190,7 @@ class UserController extends Controller
 
         $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
-        return view('users/delete', ['user' => $user]);
+        return view('users.delete', ['user' => $user]);
     }
 
     /**
@@ -232,10 +232,12 @@ class UserController extends Controller
     public function showProfilePage($id)
     {
         $user = $this->userRepo->getById($id);
+
         $userActivity = $this->userRepo->getActivity($user);
         $recentlyCreated = $this->userRepo->getRecentlyCreated($user, 5, 0);
         $assetCounts = $this->userRepo->getAssetCounts($user);
-        return view('users/profile', [
+
+        return view('users.profile', [
             'user' => $user,
             'activity' => $userActivity,
             'recentlyCreated' => $recentlyCreated,

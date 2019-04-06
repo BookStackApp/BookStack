@@ -1,9 +1,5 @@
 @extends('simple-layout')
 
-{{--TODO - Include links to search based on this user being the creator for each entity type--}}
-{{--Linking either the "Created content" items or as "View All" links next to headers--}}
-{{--TODO - Add shelves?--}}
-
 @section('body')
 
     <div class="container pt-xl">
@@ -13,13 +9,13 @@
             <div>
                 <div id="recent-user-activity" class="mb-xl">
                     <h5>{{ trans('entities.recent_activity') }}</h5>
-                    @include('partials/activity-list', ['activity' => $activity])
+                    @include('partials.activity-list', ['activity' => $activity])
                 </div>
             </div>
 
             <div>
                 <div class="card content-wrap auto-height">
-                    <div class="grid left-focus v-center">
+                    <div class="grid half v-center">
                         <div>
                             <div class="mr-m float left">
                                 <img class="avatar square huge" src="{{ $user->getAvatar(120) }}" alt="{{ $user->name }}">
@@ -33,19 +29,27 @@
                         </div>
                         <div id="content-counts">
                             <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
-                            <div class="icon-list">
-                                <a href="#recent-books" class="text-book icon-list-item">
-                                    <span>@icon('book')</span>
-                                    <span>{{ trans_choice('entities.x_books', $assetCounts['books']) }}</span>
-                                </a>
-                                <a href="#recent-chapters" class="text-chapter icon-list-item">
-                                    <span>@icon('chapter')</span>
-                                    <span>{{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}</span>
-                                </a>
-                                <a href="#recent-pages" class="text-page icon-list-item">
-                                    <span>@icon('page')</span>
-                                    <span>{{ trans_choice('entities.x_pages', $assetCounts['pages']) }}</span>
-                                </a>
+                            <div class="grid half v-center">
+                                <div class="icon-list">
+                                    <a href="#recent-pages" class="text-page icon-list-item">
+                                        <span>@icon('page')</span>
+                                        <span>{{ trans_choice('entities.x_pages', $assetCounts['pages']) }}</span>
+                                    </a>
+                                    <a href="#recent-chapters" class="text-chapter icon-list-item">
+                                        <span>@icon('chapter')</span>
+                                        <span>{{ trans_choice('entities.x_chapters', $assetCounts['chapters']) }}</span>
+                                    </a>
+                                </div>
+                                <div class="icon-list">
+                                    <a href="#recent-books" class="text-book icon-list-item">
+                                        <span>@icon('book')</span>
+                                        <span>{{ trans_choice('entities.x_books', $assetCounts['books']) }}</span>
+                                    </a>
+                                    <a href="#recent-shelves" class="text-bookshelf icon-list-item">
+                                        <span>@icon('bookshelf')</span>
+                                        <span>{{ trans_choice('entities.x_shelves', $assetCounts['shelves']) }}</span>
+                                    </a>
+                                </div>
                             </div>
 
                         </div>
@@ -53,29 +57,58 @@
                 </div>
 
                 <div class="card content-wrap auto-height book-contents">
-                    <h2 id="recent-pages" class="list-heading">{{ trans('entities.recently_created_pages') }}</h2>
+                    <h2 id="recent-pages" class="list-heading">
+                        {{ trans('entities.recently_created_pages') }}
+                        @if (count($recentlyCreated['pages']) > 0)
+                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:page}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                        @endif
+                    </h2>
                     @if (count($recentlyCreated['pages']) > 0)
-                        @include('partials/entity-list', ['entities' => $recentlyCreated['pages']])
+                        @include('partials.entity-list', ['entities' => $recentlyCreated['pages'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_pages', ['userName' => $user->name]) }}</p>
                     @endif
                 </div>
 
                 <div class="card content-wrap auto-height book-contents">
-                    <h2 id="recent-chapters" class="list-heading">{{ trans('entities.recently_created_chapters') }}</h2>
+                    <h2 id="recent-chapters" class="list-heading">
+                        {{ trans('entities.recently_created_chapters') }}
+                        @if (count($recentlyCreated['chapters']) > 0)
+                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:chapter}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                        @endif
+                    </h2>
                     @if (count($recentlyCreated['chapters']) > 0)
-                        @include('partials/entity-list', ['entities' => $recentlyCreated['chapters']])
+                        @include('partials.entity-list', ['entities' => $recentlyCreated['chapters'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_chapters', ['userName' => $user->name]) }}</p>
                     @endif
                 </div>
 
                 <div class="card content-wrap auto-height book-contents">
-                    <h2 id="recent-books" class="list-heading">{{ trans('entities.recently_created_books') }}</h2>
+                    <h2 id="recent-books" class="list-heading">
+                        {{ trans('entities.recently_created_books') }}
+                        @if (count($recentlyCreated['books']) > 0)
+                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:book}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                        @endif
+                    </h2>
                     @if (count($recentlyCreated['books']) > 0)
-                        @include('partials/entity-list', ['entities' => $recentlyCreated['books']])
+                        @include('partials.entity-list', ['entities' => $recentlyCreated['books'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_books', ['userName' => $user->name]) }}</p>
+                    @endif
+                </div>
+
+                <div class="card content-wrap auto-height book-contents">
+                    <h2 id="recent-shelves" class="list-heading">
+                        {{ trans('entities.recently_created_shelves') }}
+                        @if (count($recentlyCreated['shelves']) > 0)
+                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:bookshelf}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                        @endif
+                    </h2>
+                    @if (count($recentlyCreated['shelves']) > 0)
+                        @include('partials.entity-list', ['entities' => $recentlyCreated['shelves'], 'showPath' => true])
+                    @else
+                        <p class="text-muted">{{ trans('entities.profile_not_created_shelves', ['userName' => $user->name]) }}</p>
                     @endif
                 </div>
             </div>

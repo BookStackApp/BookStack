@@ -23,6 +23,7 @@ return [
     // Actions
     'actions' => 'Actions',
     'view' => 'View',
+    'view_all' => 'View All',
     'create' => 'Create',
     'update' => 'Update',
     'edit' => 'Edit',
