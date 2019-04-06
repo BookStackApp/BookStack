@@ -1,18 +1,26 @@
-@extends('sidebar-layout')
-
-@section('toolbar')
-    <div class="col-sm-6 faded">
-        <div class="action-buttons text-left">
-            <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-primary text-button">@icon('expand-text'){{ trans('common.toggle_details') }}</a>
-            @include('shelves/view-toggle', ['shelvesViewType' => $shelvesViewType])
-        </div>
-    </div>
-@stop
-
-@section('sidebar')
-    @include('common/home-sidebar')
-@stop
+@extends('simple-layout')
 
 @section('body')
-    @include('shelves/list', ['shelves' => $shelves, 'shelvesViewType' => $shelvesViewType])
+    <div class="container mt-m">
+        <div class="grid right-focus gap-xl">
+            <div>
+
+                <div class="actions mb-xl">
+                    <h5>{{ trans('common.actions') }}</h5>
+                    <div class="icon-list text-primary">
+                        @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
+                        <a expand-toggle=".entity-list.compact .entity-item-snippet" class="icon-list-item">
+                            <span>@icon('expand-text')</span>
+                            <span>{{ trans('common.toggle_details') }}</span>
+                        </a>
+                    </div>
+                </div>
+
+                @include('common.home-sidebar')
+            </div>
+            <div>
+                @include('shelves.list', ['shelves' => $shelves, 'view' => $view])
+            </div>
+        </div>
+    </div>
 @stop
