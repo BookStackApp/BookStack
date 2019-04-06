@@ -161,15 +161,17 @@ class BookController extends Controller
      * Shows the view which allows pages to be re-ordered and sorted.
      * @param string $bookSlug
      * @return \Illuminate\View\View
+     * @throws \BookStack\Exceptions\NotFoundException
      */
     public function sort($bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-update', $book);
+
         $bookChildren = $this->entityRepo->getBookChildren($book, true);
-        $books = $this->entityRepo->getAll('book', false, 'update');
+
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
-        return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
+        return view('books/sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**

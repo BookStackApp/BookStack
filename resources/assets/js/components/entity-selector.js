@@ -5,6 +5,7 @@ class EntitySelector {
         this.elem = elem;
         this.search = '';
         this.lastClick = 0;
+        this.selectedItemData = null;
 
         const entityTypes = elem.hasAttribute('entity-types') ? elem.getAttribute('entity-types') : 'page,book,chapter';
         const entityPermission = elem.hasAttribute('entity-permission') ? elem.getAttribute('entity-permission') : 'view';
@@ -14,6 +15,7 @@ class EntitySelector {
         this.searchInput = elem.querySelector('[entity-selector-search]');
         this.loading = elem.querySelector('[entity-selector-loading]');
         this.resultsContainer = elem.querySelector('[entity-selector-results]');
+        this.addButton = elem.querySelector('[entity-selector-add-button]');
 
         this.elem.addEventListener('click', this.onClick.bind(this));
 
@@ -30,6 +32,15 @@ class EntitySelector {
         this.searchInput.addEventListener('keydown', event => {
             if (event.keyCode === 13) event.preventDefault();
         });
+
+        if (this.addButton) {
+            this.addButton.addEventListener('click', event => {
+                if (this.selectedItemData) {
+                    this.confirmSelection(this.selectedItemData);
+                    this.unselectAll();
+                }
+            });
+        }
 
         this.showLoading();
         this.initialLoad();
@@ -86,24 +97,29 @@ class EntitySelector {
         this.unselectAll();
         this.input.value = isSelected ? `${type}:${id}` : '';
 
+        const link = item.getAttribute('href');
+        const name = item.querySelector('.entity-list-item-name').textContent;
+        const data = {id: Number(id), name: name, link: link};
+
         if (isSelected) {
             item.classList.add('selected');
+            this.selectedItemData = data;
         } else {
             window.$events.emit('entity-select-change', null)
         }
 
         if (!isDblClick && !isSelected) return;
 
-        const link = item.getAttribute('href');
-        const name = item.querySelector('.entity-list-item-name').textContent;
-        const data = {id: Number(id), name: name, link: link};
-
         if (isDblClick) {
-            window.$events.emit('entity-select-confirm', data)
+            this.confirmSelection(data);
         }
         if (isSelected) {
             window.$events.emit('entity-select-change', data)
         }
+    }
+
+    confirmSelection(data) {
+        window.$events.emit('entity-select-confirm', data);
     }
 
     unselectAll() {
@@ -111,6 +127,7 @@ class EntitySelector {
         for (let selectedElem of selected) {
             selectedElem.classList.remove('selected', 'primary-background');
         }
+        this.selectedItemData = null;
     }
 
 }
