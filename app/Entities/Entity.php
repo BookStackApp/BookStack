@@ -234,7 +234,7 @@ class Entity extends Ownable
         if (mb_strlen($text) > $length) {
             $text = mb_substr($text, 0, $length-3) . '...';
         }
-        return  trim($text);
+        return trim($text);
     }
 
     /**

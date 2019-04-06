@@ -101,7 +101,7 @@ class Book extends Entity
      * @param int $length
      * @return string
      */
-    public function getExcerpt($length = 100)
+    public function getExcerpt(int $length = 100)
     {
         $description = $this->description;
         return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
