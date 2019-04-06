@@ -4,11 +4,6 @@
 
 @section('content')
 
-    {{--<div class="toolbar px-xl">--}}
-        {{--@yield('toolbar')--}}
-    {{--</div>--}}
-    {{--TODO - Cleanup toolbar usage--}}
-
     <div class="tri-layout-container" tri-layout @yield('container-attrs') >
 
         <div class="tri-layout-left print-hidden pt-m" id="sidebar">

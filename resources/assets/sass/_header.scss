@@ -284,13 +284,6 @@ header .search-box {
   padding: $-s;
 }
 
-.faded-small {
-  color: #000;
-  fill: #000;
-  font-size: 0.9em;
-  background-color: $primary-faded;
-}
-
 .toolbar {
   position: relative;
   > .grid > div {
@@ -360,7 +353,4 @@ header .search-box {
       border-bottom: 2px solid $primary;
     }
   }
-}
-.faded-small .nav-tabs a {
-  padding: $-s $-m;
 }

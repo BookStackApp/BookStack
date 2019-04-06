@@ -11,7 +11,7 @@
     {{ csrf_field() }}
 
     {{--Header Bar--}}
-    <div class="faded-small toolbar">
+    <div class="primary-background-light toolbar">
         <div class="grid third v-center">
 
             <div class="action-buttons text-left px-m py-xs">
