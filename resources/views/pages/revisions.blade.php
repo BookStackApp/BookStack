@@ -55,7 +55,7 @@
                                     <div dropdown class="dropdown-container">
                                         <a dropdown-toggle>{{ trans('common.delete') }}</a>
                                         <ul>
-                                            <li class="padded"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
+                                            <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
                                                     {!! csrf_field() !!}

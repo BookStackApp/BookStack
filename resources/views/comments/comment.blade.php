@@ -13,7 +13,7 @@
                 <div dropdown class="dropdown-container">
                     <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
                     <ul>
-                        <li class="padded"><small class="text-muted">{{trans('entities.comment_delete_confirm')}}</small></li>
+                        <li class="px-l"><small class="text-muted">{{trans('entities.comment_delete_confirm')}}</small></li>
                         <li><a action="delete" class="text-button neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
                     </ul>
                 </div>

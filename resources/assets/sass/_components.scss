@@ -142,6 +142,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 #entity-selector-wrap .popup-body .form-group {
   margin: 0;
 }
+.popup-body .entity-selector-container {
+  flex: 1;
+}
 
 .image-manager-body {
   min-height: 70vh;

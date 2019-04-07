@@ -11,7 +11,7 @@
 
     <div toolbox-tab-content="tags">
         <h4>{{ trans('entities.page_tags') }}</h4>
-        <div class="padded">
+        <div class="px-l">
             @include('components.tag-manager', ['entity' => $page, 'entityType' => 'page'])
         </div>
     </div>
@@ -19,7 +19,7 @@
     @if(userCan('attachment-create-all'))
         <div toolbox-tab-content="files" id="attachment-manager" page-id="{{ $page->id ?? 0 }}">
             <h4>{{ trans('entities.attachments') }}</h4>
-            <div class="padded files">
+            <div class="px-l files">
 
                 <div id="file-list" v-show="!fileToEdit">
                     <p class="muted small">{{ trans('entities.attachments_explain') }} <span class="secondary">{{ trans('entities.attachments_explain_instant_save') }}</span></p>
@@ -34,7 +34,7 @@
                             <draggable style="width: 100%;" :options="{handle: '.handle'}" @change="fileSortUpdate" :list="files" element="div">
                                 <div v-for="(file, index) in files" :key="file.id" class="card drag-card">
                                     <div class="handle">@icon('grip')</div>
-                                    <div class="padded">
+                                    <div class="py-s">
                                         <a :href="getFileUrl(file)" target="_blank" v-text="file.name"></a>
                                         <div v-if="file.deleting">
                                             <span class="neg small">{{ trans('entities.attachments_delete_confirm') }}</span>

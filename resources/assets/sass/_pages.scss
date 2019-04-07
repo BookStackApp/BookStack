@@ -243,13 +243,6 @@
     min-height: 0px;
     overflow-y: scroll;
   }
-  div[toolbox-tab-content] .padded {
-    flex: 1;
-    padding-top: 0;
-  }
-  div[toolbox-tab-content] .padded.files {
-	overflow-x: hidden;
-  }
   h4 {
     font-size: 24px;
     margin: $-m 0 0 0;

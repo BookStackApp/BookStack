@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group entity-selector-container">
     <div entity-selector class="entity-selector {{$selectorSize ?? ''}}" entity-types="{{ $entityTypes ?? 'book,chapter,page' }}" entity-permission="{{ $entityPermission ?? 'view' }}">
         <input type="hidden" entity-selector-input name="{{$name}}" value="">
         <input type="text" placeholder="{{ trans('common.search') }}" entity-selector-search>

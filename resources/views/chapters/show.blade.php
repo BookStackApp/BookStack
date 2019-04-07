@@ -131,24 +131,9 @@
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif
-
-            {{--@if(userCan('page-create', $book))--}}
-                {{--<a href="{{ $book->getUrl('/create-page') }}" class="icon-list-item">--}}
-                    {{--<span>@icon('add')</span>--}}
-                    {{--<span>{{ trans('entities.pages_new') }}</span>--}}
-                {{--</a>--}}
-            {{--@endif--}}
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-xs-9 faded">
-        <div class="action-buttons">
-
         </div>
     </div>
 @stop
-
-
 
 @section('left')
 

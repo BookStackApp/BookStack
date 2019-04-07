@@ -59,11 +59,11 @@ class ViewService
      * @param string $action - used for permission checking
      * @return Collection
      */
-    public function getPopular(int $count = 10, int $page = 0, $filterModels = null, $action = 'view')
+    public function getPopular(int $count = 10, int $page = 0, $filterModels = null, string $action = 'view')
     {
-        // TODO - Standardise input filter
         $skipCount = $count * $page;
-        $query = $this->permissionService->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type', $action)
+        $query = $this->permissionService
+            ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type', $action)
             ->select('*', 'viewable_id', 'viewable_type', \DB::raw('SUM(views) as view_count'))
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');

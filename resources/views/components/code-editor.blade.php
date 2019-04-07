@@ -7,7 +7,7 @@
                 <button class="overlay-close neg corner-button button" @click="hide()">x</button>
             </div>
 
-            <div class="padded popup-content">
+            <div class="p-l popup-content">
                 <div class="form-group">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
                     <div class="lang-options">

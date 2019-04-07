@@ -41,7 +41,7 @@
                 <div dropdown class="dropdown-container">
                     <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
                     <ul class="wide">
-                        <li class="padded">
+                        <li class="px-l py-m">
                             <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
                             <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
                         </li>

@@ -4,7 +4,6 @@ use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Repos\EntityRepo;
-use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -14,19 +13,16 @@ class BookshelfController extends Controller
 
     protected $entityRepo;
     protected $userRepo;
-    protected $exportService;
 
     /**
      * BookController constructor.
-     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
+     * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
-     * @param \BookStack\Entities\ExportService $exportService
      */
-    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
+    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo)
     {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
-        $this->exportService = $exportService;
         parent::__construct();
     }
 

@@ -1,5 +1,5 @@
 <header id="header" header-mobile-toggle>
-    <div class="grid break-l mx-l">
+    <div class="grid mx-l">
 
         <div>
             <a href="{{ baseUrl('/') }}" class="logo">
