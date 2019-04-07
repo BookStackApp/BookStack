@@ -12,7 +12,7 @@
 
                 <div class="form-group">
                     <label for="email">{{ trans('auth.email') }}</label>
-                    @include('form/text', ['name' => 'email'])
+                    @include('form.text', ['name' => 'email'])
                 </div>
 
                 <div class="from-group text-right mt-m">

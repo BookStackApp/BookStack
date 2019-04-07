@@ -3,7 +3,7 @@
     <div class="activity-list">
         @foreach($activity as $activityItem)
             <div class="activity-list-item">
-                @include('partials/activity-item', ['activity' => $activityItem])
+                @include('partials.activity-item', ['activity' => $activityItem])
             </div>
         @endforeach
     </div>

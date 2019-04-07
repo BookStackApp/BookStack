@@ -5,7 +5,7 @@
 
     <div class="grid left-focus v-center">
         <div class="py-m">
-            @include('settings/navbar', ['selected' => 'maintenance'])
+            @include('settings.navbar', ['selected' => 'maintenance'])
         </div>
         <div class="text-right mb-l px-m">
             <br>

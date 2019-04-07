@@ -176,7 +176,7 @@ class RegisterController extends Controller
      */
     public function getRegisterConfirmation()
     {
-        return view('auth/register-confirm');
+        return view('auth.register-confirm');
     }
 
     /**
@@ -204,7 +204,7 @@ class RegisterController extends Controller
      */
     public function showAwaitingConfirmation()
     {
-        return view('auth/user-unconfirmed');
+        return view('auth.user-unconfirmed');
     }
 
     /**

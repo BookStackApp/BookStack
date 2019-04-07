@@ -56,7 +56,7 @@
     {{--Title input--}}
     <div class="title-input page-title clearfix" v-pre>
         <div class="input">
-            @include('form/text', ['name' => 'name', 'placeholder' => trans('entities.pages_title')])
+            @include('form.text', ['name' => 'name', 'placeholder' => trans('entities.pages_title')])
         </div>
     </div>
 

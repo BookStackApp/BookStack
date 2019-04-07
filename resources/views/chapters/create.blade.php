@@ -16,7 +16,7 @@
         <div class="content-wrap card">
             <h1 class="list-heading">{{ trans('entities.chapters_create') }}</h1>
             <form action="{{ $book->getUrl('/create-chapter') }}" method="POST">
-                @include('chapters/form')
+                @include('chapters.form')
             </form>
         </div>
 
