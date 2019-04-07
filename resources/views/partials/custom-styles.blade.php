@@ -12,8 +12,13 @@
     .nav-tabs a.selected, .nav-tabs .tab-item.selected {
         border-bottom-color: {{ setting('app-color') }};
     }
-    .text-primary, .text-primary-hover:hover, .text-primary:hover, a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
+    .text-primary, .text-primary-hover:hover, .text-primary:hover {
         color: {{ setting('app-color') }} !important;
-        fill: {{ setting('app-color') }} !important;;
+        fill: {{ setting('app-color') }} !important;
+    }
+
+    a, a:hover, a:focus, .text-button, .text-button:hover, .text-button:focus {
+        color: {{ setting('app-color') }};
+        fill: {{ setting('app-color') }};
     }
 </style>
