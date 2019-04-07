@@ -30,7 +30,7 @@
         @yield('content')
     </section>
 
-    <div back-to-top>
+    <div back-to-top class="primary-background">
         <div class="inner">
             @icon('chevron-up') <span>{{ trans('common.back_to_top') }}</span>
         </div>

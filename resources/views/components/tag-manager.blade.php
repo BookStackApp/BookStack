@@ -1,6 +1,6 @@
 <div id="tag-manager" entity-id="{{ isset($entity) ? $entity->id : 0 }}" entity-type="{{ $entity ? $entity->getType() : $entityType }}">
     <div class="tags">
-        <p class="muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
+        <p class="text-muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
 
 
         <draggable :options="{handle: '.handle'}" :list="tags" element="div">

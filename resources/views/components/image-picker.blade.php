@@ -7,11 +7,11 @@
         <div class="text-center">
             <button class="button outline small" type="button" data-action="show-image-manager">{{ trans('components.image_select_image') }}</button>
             <br>
-            <button class="text-button muted" data-action="reset-image" type="button">{{ trans('common.reset') }}</button>
+            <button class="text-button text-muted" data-action="reset-image" type="button">{{ trans('common.reset') }}</button>
 
             @if ($showRemove)
                 <span class="sep">|</span>
-                <button class="text-button muted" data-action="remove-image" type="button">{{ trans('common.remove') }}</button>
+                <button class="text-button text-muted" data-action="remove-image" type="button">{{ trans('common.remove') }}</button>
             @endif
         </div>
     </div>

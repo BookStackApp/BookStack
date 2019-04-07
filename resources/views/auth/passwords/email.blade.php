@@ -5,7 +5,7 @@
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ trans('auth.reset_password') }}</h1>
 
-            <p class="muted small">{{ trans('auth.reset_password_send_instructions') }}</p>
+            <p class="text-muted small">{{ trans('auth.reset_password_send_instructions') }}</p>
 
             <form action="{{ baseUrl("/password/email") }}" method="POST" class="stretch-inputs">
                 {!! csrf_field() !!}

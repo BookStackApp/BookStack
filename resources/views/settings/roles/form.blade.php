@@ -48,7 +48,7 @@
             <p>{{ trans('settings.role_asset_desc') }}</p>
 
             @if (isset($role) && $role->system_name === 'admin')
-                <p class="text-secondary">{{ trans('settings.role_asset_admins') }}</p>
+                <p class="text-warn">{{ trans('settings.role_asset_admins') }}</p>
             @endif
 
             <table class="table toggle-switch-list compact">

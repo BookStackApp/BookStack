@@ -26,18 +26,18 @@
                     @endforeach
                 </div>
             @else
-                {{--TODO--}}
-                <div v-pre class="well">
+                {{--TODO - Empty States --}}
+                <div v-pre>
                     <p class="text-muted italic">{{ trans('entities.chapters_empty') }}</p>
                     <p>
                         @if(userCan('page-create', $chapter))
-                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline page">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
+                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
                         @endif
                         @if(userCan('page-create', $chapter) && userCan('book-update', $book))
                             &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp; &nbsp;
                         @endif
                         @if(userCan('book-update', $book))
-                            <a href="{{ $book->getUrl('/sort') }}" class="button outline book">@icon('book'){{ trans('entities.books_empty_sort_current_book') }}</a>
+                            <a href="{{ $book->getUrl('/sort') }}" class="button outline">@icon('book'){{ trans('entities.books_empty_sort_current_book') }}</a>
                         @endif
                     </p>
                 </div>

@@ -48,7 +48,7 @@
                     </ul>
                 </div>
 
-                <button type="submit" id="save-button" class="text-button text-pos">@icon('save'){{ trans('entities.pages_save') }}</button>
+                <button type="submit" id="save-button" class="text-button text-pos-hover">@icon('save'){{ trans('entities.pages_save') }}</button>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
         @if(setting('app-editor') === 'wysiwyg')
             <div wysiwyg-editor class="flex-fill flex">
                 <textarea id="html-editor"  name="html" rows="5" v-pre
-                    @if($errors->has('html')) class="neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
+                    @if($errors->has('html')) class="text-neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
             </div>
 
             @if($errors->has('html'))
@@ -95,7 +95,7 @@
 
                     <div markdown-input class="flex flex-fill">
                         <textarea  id="markdown-editor-input"  name="markdown" rows="5"
-                            @if($errors->has('markdown')) class="neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
+                            @if($errors->has('markdown')) class="text-neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
                     </div>
 
                 </div>

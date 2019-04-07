@@ -1,12 +1,7 @@
-/*
-* This file contains styling for custom block formats.
-*/
-
 
 /**
  * Callouts
  */
-
 .callout {
   border-left: 3px solid #BBB;
   background-color: #EEE;
@@ -58,14 +53,17 @@
   }
 }
 
+/**
+ * Card-style blocks
+ */
+
 .card {
   background-color: #FFF;
   box-shadow: $bs-card;
   border-radius: 3px;
   border: 1px solid transparent;
   h3 {
-    padding: $-m;
-    padding-bottom: $-xs;
+    padding: $-m $-m $-xs;
     margin: 0;
     font-size: $fs-m;
     color: #222;
@@ -84,21 +82,11 @@
   }
 }
 
-.sidebar .card {
-  .body, .empty-text {
-    padding: $-s $-m;
-  }
-  h3 + .body {
-    padding-top: $-xs;
-  }
-}
-
 .card.drag-card {
   border: 1px solid #DDD;
   border-radius: 4px;
   display: flex;
-  padding: 0;
-  padding-left: $-s + 28px;
+  padding: 0 0 0 ($-s + 28px);
   margin: $-s 0;
   position: relative;
   .drag-card-action {
@@ -106,14 +94,12 @@
   }
   .handle, .drag-card-action {
     display: flex;
-    padding: 0;
     align-items: center;
     text-align: center;
     justify-content: center;
     width: 28px;
     flex-grow: 0;
-    padding-left: $-xs;
-    padding-right: $-xs;
+    padding: 0 $-xs;
     &:hover {
       background-color: #EEE;
     }
@@ -137,42 +123,6 @@
     max-width: 80%;
     flex: 1;
   }
-}
-
-.well {
-  background-color: #F8F8F8;
-  padding: $-m;
-  border: 1px solid #DDD;
-}
-
-.tag-item {
-  display: inline-flex;
-  margin-bottom: $-xs;
-  margin-right: $-xs;
-  border-radius: 4px;
-  border: 1px solid #CCC;
-  overflow: hidden;
-  font-size: 0.85em;
-  a, a:hover, a:active {
-    padding: 4px 8px;
-    color: #777;
-    transition: background-color ease-in-out 80ms;
-    text-decoration: none;
-  }
-  a:hover {
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  svg {
-    fill: #888;
-  }
-  .tag-value {
-    border-left: 1px solid #DDD;
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-}
-
-.tag-list div:last-child .tag-item {
-  margin-bottom: 0;
 }
 
 .grid-card {
@@ -243,4 +193,37 @@
   .content-wrap.card {
     padding: $-m $-l;
   }
+}
+
+/**
+ * Tags
+ */
+.tag-item {
+  display: inline-flex;
+  margin-bottom: $-xs;
+  margin-right: $-xs;
+  border-radius: 4px;
+  border: 1px solid #CCC;
+  overflow: hidden;
+  font-size: 0.85em;
+  a, a:hover, a:active {
+    padding: 4px 8px;
+    color: #777;
+    transition: background-color ease-in-out 80ms;
+    text-decoration: none;
+  }
+  a:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  svg {
+    fill: #888;
+  }
+  .tag-value {
+    border-left: 1px solid #DDD;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.tag-list div:last-child .tag-item {
+  margin-bottom: 0;
 }

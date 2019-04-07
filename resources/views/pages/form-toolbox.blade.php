@@ -22,7 +22,7 @@
             <div class="px-l files">
 
                 <div id="file-list" v-show="!fileToEdit">
-                    <p class="muted small">{{ trans('entities.attachments_explain') }} <span class="secondary">{{ trans('entities.attachments_explain_instant_save') }}</span></p>
+                    <p class="text-muted small">{{ trans('entities.attachments_explain') }} <span class="text-warn">{{ trans('entities.attachments_explain_instant_save') }}</span></p>
 
                     <div class="tab-container">
                         <div class="nav-tabs">
@@ -37,7 +37,7 @@
                                     <div class="py-s">
                                         <a :href="getFileUrl(file)" target="_blank" v-text="file.name"></a>
                                         <div v-if="file.deleting">
-                                            <span class="neg small">{{ trans('entities.attachments_delete_confirm') }}</span>
+                                            <span class="text-neg small">{{ trans('entities.attachments_delete_confirm') }}</span>
                                             <br>
                                             <span class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</span>
                                         </div>
@@ -46,7 +46,7 @@
                                     <div @click="deleteFile(file)" class="drag-card-action text-center text-neg">@icon('close')</div>
                                 </div>
                             </draggable>
-                            <p class="small muted" v-if="files.length === 0">
+                            <p class="small text-muted" v-if="files.length === 0">
                                 {{ trans('entities.attachments_no_files') }}
                             </p>
                         </div>
@@ -54,16 +54,16 @@
                             <dropzone placeholder="{{ trans('entities.attachments_dropzone') }}" :upload-url="getUploadUrl()" :uploaded-to="pageId" @success="uploadSuccess"></dropzone>
                         </div>
                         <div v-show="tab === 'link'" @keypress.enter.prevent="attachNewLink(file)">
-                            <p class="muted small">{{ trans('entities.attachments_explain_link') }}</p>
+                            <p class="text-muted small">{{ trans('entities.attachments_explain_link') }}</p>
                             <div class="form-group">
                                 <label for="attachment-via-link">{{ trans('entities.attachments_link_name') }}</label>
                                 <input type="text" placeholder="{{ trans('entities.attachments_link_name') }}" v-model="file.name">
-                                <p class="small neg" v-for="error in errors.link.name" v-text="error"></p>
+                                <p class="small text-neg" v-for="error in errors.link.name" v-text="error"></p>
                             </div>
                             <div class="form-group">
                                 <label for="attachment-via-link">{{ trans('entities.attachments_link_url') }}</label>
                                 <input type="text"  placeholder="{{ trans('entities.attachments_link_url_hint') }}" v-model="file.link">
-                                <p class="small neg" v-for="error in errors.link.link" v-text="error"></p>
+                                <p class="small text-neg" v-for="error in errors.link.link" v-text="error"></p>
                             </div>
                             <button @click.prevent="attachNewLink(file)" class="button primary">{{ trans('entities.attach') }}</button>
 
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <label for="attachment-name-edit">{{ trans('entities.attachments_edit_file_name') }}</label>
                         <input type="text" id="attachment-name-edit" placeholder="{{ trans('entities.attachments_edit_file_name') }}" v-model="fileToEdit.name">
-                        <p class="small neg" v-for="error in errors.edit.name" v-text="error"></p>
+                        <p class="small text-neg" v-for="error in errors.edit.name" v-text="error"></p>
                     </div>
 
                     <div class="tab-container">
@@ -94,7 +94,7 @@
                             <div class="form-group">
                                 <label for="attachment-link-edit">{{ trans('entities.attachments_link_url') }}</label>
                                 <input type="text" id="attachment-link-edit" placeholder="{{ trans('entities.attachment_link') }}" v-model="fileToEdit.link">
-                                <p class="small neg" v-for="error in errors.edit.link" v-text="error"></p>
+                                <p class="small text-neg" v-for="error in errors.edit.link" v-text="error"></p>
                             </div>
                         </div>
                     </div>

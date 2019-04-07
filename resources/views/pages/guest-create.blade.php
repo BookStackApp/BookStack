@@ -1,5 +1,7 @@
 @extends('base')
 
+{{--TODO - Check design of this view--}}
+
 @section('content')
 
     <div class="container small">
@@ -14,8 +16,8 @@
             </div>
 
             <div class="form-group">
-                <a href="{{ $parent->getUrl() }}" class="button muted">{{ trans('common.cancel') }}</a>
-                <button type="submit" class="button pos">{{ trans('common.continue') }}</button>
+                <a href="{{ $parent->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+                <button type="submit" class="button primary">{{ trans('common.continue') }}</button>
             </div>
 
         </form>
