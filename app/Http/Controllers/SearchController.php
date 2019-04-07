@@ -42,7 +42,7 @@ class SearchController extends Controller
 
         $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
 
-        return view('search/all', [
+        return view('search.all', [
             'entities'   => $results['results'],
             'totalResults' => $results['total'],
             'searchTerm' => $searchTerm,
@@ -63,7 +63,7 @@ class SearchController extends Controller
     {
         $term = $request->get('term', '');
         $results = $this->searchService->searchBook($bookId, $term);
-        return view('partials/entity-list', ['entities' => $results]);
+        return view('partials.entity-list', ['entities' => $results]);
     }
 
     /**
@@ -77,7 +77,7 @@ class SearchController extends Controller
     {
         $term = $request->get('term', '');
         $results = $this->searchService->searchChapter($chapterId, $term);
-        return view('partials/entity-list', ['entities' => $results]);
+        return view('partials.entity-list', ['entities' => $results]);
     }
 
     /**

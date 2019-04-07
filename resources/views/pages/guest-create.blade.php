@@ -12,7 +12,7 @@
 
             <div class="form-group title-input">
                 <label for="name">{{ trans('entities.pages_name') }}</label>
-                @include('form/text', ['name' => 'name'])
+                @include('form.text', ['name' => 'name'])
             </div>
 
             <div class="form-group">

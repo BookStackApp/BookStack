@@ -5,7 +5,7 @@
     <div class="container small">
 
         <div class="py-m">
-            @include('settings/navbar', ['selected' => 'roles'])
+            @include('settings.navbar', ['selected' => 'roles'])
         </div>
 
         <div class="card content-wrap auto-height">

@@ -48,7 +48,7 @@
             {{--TODO--}}
             <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" @click="clearSearch()" class="text-small">@icon('close'){{ trans('entities.search_clear') }}</a></h3>
             <div v-if="!searchResults">
-                @include('partials/loading-icon')
+                @include('partials.loading-icon')
             </div>
             <div v-html="searchResults"></div>
         </div>
@@ -151,7 +151,7 @@
         </form>
     </div>
 
-    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 @stop
 
 

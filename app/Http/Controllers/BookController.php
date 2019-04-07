@@ -51,7 +51,7 @@ class BookController extends Controller
         $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
 
         $this->setPageTitle(trans('entities.books'));
-        return view('books/index', [
+        return view('books.index', [
             'books' => $books,
             'recents' => $recents,
             'popular' => $popular,
@@ -71,7 +71,7 @@ class BookController extends Controller
     {
         $this->checkPermission('book-create-all');
         $this->setPageTitle(trans('entities.books_create'));
-        return view('books/create');
+        return view('books.create');
     }
 
     /**
@@ -104,7 +104,7 @@ class BookController extends Controller
         $bookChildren = $this->entityRepo->getBookChildren($book);
         Views::add($book);
         $this->setPageTitle($book->getShortName());
-        return view('books/show', [
+        return view('books.show', [
             'book' => $book,
             'current' => $book,
             'bookChildren' => $bookChildren,
@@ -122,7 +122,7 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named', ['bookName'=>$book->getShortName()]));
-        return view('books/edit', ['book' => $book, 'current' => $book]);
+        return view('books.edit', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -154,7 +154,7 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle(trans('entities.books_delete_named', ['bookName'=>$book->getShortName()]));
-        return view('books/delete', ['book' => $book, 'current' => $book]);
+        return view('books.delete', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -171,7 +171,7 @@ class BookController extends Controller
         $bookChildren = $this->entityRepo->getBookChildren($book, true);
 
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
-        return view('books/sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
+        return view('books.sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**
@@ -184,7 +184,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $bookChildren = $this->entityRepo->getBookChildren($book);
-        return view('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
+        return view('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**

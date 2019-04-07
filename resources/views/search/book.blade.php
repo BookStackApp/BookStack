@@ -2,7 +2,7 @@
     @if(count($pages) > 0)
         @foreach($pages as $pageIndex => $page)
             <div class="anim searchResult" style="animation-delay: {{$pageIndex*50 . 'ms'}};">
-                @include('pages/list-item', ['page' => $page])
+                @include('pages.list-item', ['page' => $page])
                 <hr>
             </div>
         @endforeach
@@ -15,7 +15,7 @@
     <div class="page-list">
         @foreach($chapters as $chapterIndex => $chapter)
             <div class="anim searchResult" style="animation-delay: {{($chapterIndex+count($pages))*50 . 'ms'}};">
-                @include('chapters/list-item', ['chapter' => $chapter, 'hidePages' => true])
+                @include('chapters.list-item', ['chapter' => $chapter, 'hidePages' => true])
                 <hr>
             </div>
         @endforeach

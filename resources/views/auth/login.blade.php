@@ -13,7 +13,7 @@
                 {!! csrf_field() !!}
 
                 <div class="stretch-inputs">
-                    @include('auth/forms/login/' . $authMethod)
+                    @include('auth.forms.login.' . $authMethod)
                 </div>
 
                 <div class="grid half collapse-xs gap-xl v-center">

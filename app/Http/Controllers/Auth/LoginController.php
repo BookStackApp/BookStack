@@ -128,7 +128,7 @@ class LoginController extends Controller
             ]);
         }
 
-        return view('auth/login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
+        return view('auth.login', ['socialDrivers' => $socialDrivers, 'authMethod' => $authMethod]);
     }
 
     /**

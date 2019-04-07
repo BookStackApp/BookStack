@@ -15,7 +15,7 @@
             @if(count($books) > 0)
                 <div class="entity-list">
                     @foreach($books as $book)
-                        @include('books/list-item', ['book' => $book])
+                        @include('books.list-item', ['book' => $book])
                     @endforeach
                 </div>
             @else
