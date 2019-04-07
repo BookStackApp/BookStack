@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Book;
+use BookStack\Entities\EntityContextManager;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
@@ -15,18 +16,25 @@ class BookController extends Controller
     protected $entityRepo;
     protected $userRepo;
     protected $exportService;
+    protected $entityContextManager;
 
     /**
      * BookController constructor.
      * @param EntityRepo $entityRepo
-     * @param \BookStack\Auth\UserRepo $userRepo
-     * @param \BookStack\Entities\ExportService $exportService
+     * @param UserRepo $userRepo
+     * @param ExportService $exportService
+     * @param EntityContextManager $entityContextManager
      */
-    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
-    {
+    public function __construct(
+        EntityRepo $entityRepo,
+        UserRepo $userRepo,
+        ExportService $exportService,
+        EntityContextManager $entityContextManager
+    ) {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
         $this->exportService = $exportService;
+        $this->entityContextManager = $entityContextManager;
         parent::__construct();
     }
 
@@ -49,6 +57,8 @@ class BookController extends Controller
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
+
+        $this->entityContextManager->clearShelfContext();
 
         $this->setPageTitle(trans('entities.books'));
         return view('books.index', [
@@ -95,14 +105,22 @@ class BookController extends Controller
     /**
      * Display the specified book.
      * @param $slug
+     * @param Request $request
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function show($slug)
+    public function show($slug, Request $request)
     {
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-view', $book);
+
         $bookChildren = $this->entityRepo->getBookChildren($book);
+
         Views::add($book);
+        if ($request->has('shelf')) {
+            $this->entityContextManager->setShelfContext(intval($request->get('shelf')));
+        }
+
         $this->setPageTitle($book->getShortName());
         return view('books.show', [
             'book' => $book,

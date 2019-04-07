@@ -3,12 +3,14 @@
 use Blade;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
+use BookStack\Entities\BreadcrumbsViewComposer;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Schema;
 use Validator;
@@ -33,7 +35,6 @@ class AppServiceProvider extends ServiceProvider
             return substr_count($uploadName, '.') < 2;
         });
 
-
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
             return "<?php echo icon($expression); ?>";
@@ -49,6 +50,9 @@ class AppServiceProvider extends ServiceProvider
             'BookStack\\Chapter' => Chapter::class,
             'BookStack\\Page' => Page::class,
         ]);
+
+        // View Composers
+        View::composer('partials.breadcrumbs', BreadcrumbsViewComposer::class);
     }
 
     /**

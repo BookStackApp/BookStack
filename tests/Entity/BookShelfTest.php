@@ -185,4 +185,30 @@ class BookShelfTest extends TestCase
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);
     }
 
+    public function test_bookshelves_show_in_breadcrumbs_if_in_context()
+    {
+        $shelf = Bookshelf::first();
+        $shelfBook = $shelf->books()->first();
+        $shelfPage = $shelfBook->pages()->first();
+        $this->asAdmin();
+
+        $bookVisit = $this->get($shelfBook->getUrl());
+        $bookVisit->assertElementNotContains('.breadcrumbs', 'Shelves');
+        $bookVisit->assertElementNotContains('.breadcrumbs', $shelf->getShortName());
+
+        $this->get($shelf->getUrl());
+        $bookVisit = $this->get($shelfBook->getUrl());
+        $bookVisit->assertElementContains('.breadcrumbs', 'Shelves');
+        $bookVisit->assertElementContains('.breadcrumbs', $shelf->getShortName());
+
+        $pageVisit = $this->get($shelfPage->getUrl());
+        $pageVisit->assertElementContains('.breadcrumbs', 'Shelves');
+        $pageVisit->assertElementContains('.breadcrumbs', $shelf->getShortName());
+
+        $this->get('/books');
+        $pageVisit = $this->get($shelfPage->getUrl());
+        $pageVisit->assertElementNotContains('.breadcrumbs', 'Shelves');
+        $pageVisit->assertElementNotContains('.breadcrumbs', $shelf->getShortName());
+    }
+
 }
