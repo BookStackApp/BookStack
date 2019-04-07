@@ -92,4 +92,14 @@ class Bookshelf extends Entity
     {
         return "'BookStack\\\\BookShelf' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text,'' as html, '0' as book_id, '0' as priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
     }
+
+    /**
+     * Check if this shelf contains the given book.
+     * @param Book $book
+     * @return bool
+     */
+    public function contains(Book $book)
+    {
+        return $this->books()->where('id', '=', $book->id)->count() > 0;
+    }
 }

@@ -1,35 +1,45 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ViewService;
+use BookStack\Entities\EntityContextManager;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\SearchService;
 use BookStack\Exceptions\NotFoundException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {
     protected $entityRepo;
     protected $viewService;
     protected $searchService;
+    protected $entityContextManager;
 
     /**
      * SearchController constructor.
-     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
+     * @param EntityRepo $entityRepo
      * @param ViewService $viewService
      * @param SearchService $searchService
+     * @param EntityContextManager $entityContextManager
      */
-    public function __construct(EntityRepo $entityRepo, ViewService $viewService, SearchService $searchService)
-    {
+    public function __construct(
+        EntityRepo $entityRepo,
+        ViewService $viewService,
+        SearchService $searchService,
+        EntityContextManager $entityContextManager
+    ) {
         $this->entityRepo = $entityRepo;
         $this->viewService = $viewService;
         $this->searchService = $searchService;
+        $this->entityContextManager = $entityContextManager;
         parent::__construct();
     }
 
     /**
      * Searches all entities.
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return View
      * @internal param string $searchTerm
      */
     public function search(Request $request)
@@ -56,7 +66,7 @@ class SearchController extends Controller
      * Searches all entities within a book.
      * @param Request $request
      * @param integer $bookId
-     * @return \Illuminate\View\View
+     * @return View
      * @internal param string $searchTerm
      */
     public function searchBook(Request $request, $bookId)
@@ -70,7 +80,7 @@ class SearchController extends Controller
      * Searches all entities within a chapter.
      * @param Request $request
      * @param integer $chapterId
-     * @return \Illuminate\View\View
+     * @return View
      * @internal param string $searchTerm
      */
     public function searchChapter(Request $request, $chapterId)
@@ -106,7 +116,7 @@ class SearchController extends Controller
     /**
      * Search siblings items in the system.
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * @return Factory|View|mixed
      */
     public function searchSiblings(Request $request)
     {
@@ -130,16 +140,21 @@ class SearchController extends Controller
             $entities = $this->entityRepo->getBookDirectChildren($entity->book);
         }
 
-        // Book in shelf
-        // TODO - When shelve tracking added, Update below if criteria
-
         // Book
+        // Gets just the books in a shelf if shelf is in context
         if ($entity->isA('book')) {
-            $entities = $this->entityRepo->getAll('book');
+            $contextShelf = $this->entityContextManager->getContextualShelfForBook($entity);
+            if ($contextShelf) {
+                $entities = $this->entityRepo->getBookshelfChildren($contextShelf);
+            } else {
+                $entities = $this->entityRepo->getAll('book');
+            }
         }
 
         // Shelve
-        // TODO - When shelve tracking added
+        if ($entity->isA('bookshelf')) {
+            $entities = $this->entityRepo->getAll('bookshelf');
+        }
 
         return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
     }

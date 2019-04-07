@@ -25,10 +25,8 @@ class BreadcrumbListing {
     onSearch() {
         const input = this.searchInput.value.toLowerCase().trim();
         const listItems = this.entityListElem.querySelectorAll('.entity-list-item');
-        console.log(listItems);
         for (let listItem of listItems) {
             const match = !input || listItem.textContent.toLowerCase().includes(input);
-            console.log(match);
             listItem.style.display = match ? 'flex' : 'none';
         }
     }
