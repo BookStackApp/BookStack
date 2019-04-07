@@ -1,104 +1,66 @@
+
 /*
- * Text colors
+ * Status text colors
  */
-p.pos, p .pos, span.pos, .text-pos {
-  color: $positive;
-  fill: $positive;
-  &:hover {
-    color: $positive;
-    fill: $positive;
-  }
+.text-pos, .text-pos:hover, .text-pos-hover:hover {
+  color: $positive !important;
+  fill: $positive !important;
 }
 
-p.neg, p .neg, span.neg, .text-neg {
-  color: $negative;
-  fill: $negative;
-  &:hover {
-    color: $negative;
-    fill: $negative;
-  }
+.text-warn, .text-warn:hover, .text-warn-hover:hover {
+  color: $warning !important;
+  fill: $warning !important;
 }
 
-p.muted, p .muted, span.muted, .text-muted {
-  color: lighten($text-dark, 26%);
-  fill: lighten($text-dark, 26%);
+.text-neg, .text-neg:hover, .text-neg-hover:hover  {
+  color: $negative !important;
+  fill: $negative !important;
+}
+
+/*
+ * Style text colors
+ */
+.text-primary, .text-primary:hover, .text-primary-hover:hover  {
+  color: $primary !important;
+  fill: $primary !important;
+}
+
+.text-muted {
+  color: lighten($text-dark, 26%) !important;
+  fill: lighten($text-dark, 26%) !important;
   &.small, .small {
-    color: lighten($text-dark, 32%);
-    fill: lighten($text-dark, 32%);
+    color: lighten($text-dark, 32%) !important;
+    fill: lighten($text-dark, 32%) !important;
   }
 }
 
-p.primary, p .primary, span.primary, .text-primary {
-  color: $primary;
-  fill: $primary;
-  &:hover {
-    color: $primary;
-    fill: $primary;
-  }
-}
-
-p.secondary, p .secondary, span.secondary, .text-secondary {
-  color: $secondary;
-  fill: $secondary;
-  &:hover {
-    color: $secondary;
-    fill: $secondary;
-  }
-}
-
-.text-bookshelf {
+/*
+ * Entity text colors
+ */
+.text-bookshelf, .text-bookshelf:hover {
   color: $color-bookshelf;
   fill: $color-bookshelf;
-  &:hover {
-    color: $color-bookshelf;
-    fill: $color-bookshelf;
-  }
 }
-.text-book {
+.text-book, .text-book:hover {
   color: $color-book;
   fill: $color-book;
-  &:hover {
-    color: $color-book;
-    fill: $color-book;
-  }
 }
-.text-page {
+.text-page, .text-page:hover {
   color: $color-page;
   fill: $color-page;
-  &:hover {
-    color: $color-page;
-    fill: $color-page;
-  }
-  &.draft {
-    color: $color-page-draft;
-    fill: $color-page-draft;
-  }
-  &.draft:hover {
-    color: $color-page-draft;
-    fill: $color-page-draft;
-  }
 }
-.text-chapter {
+.text-page.draft, .text-page.draft:hover {
+  color: $color-page-draft;
+  fill: $color-page-draft;
+}
+.text-chapter, .text-chapter:hover {
   color: $color-chapter;
   fill: $color-chapter;
-  &:hover {
-    color: $color-chapter;
-    fill: $color-chapter;
-  }
-}
-.faded .text-book:hover {
-  color: $color-book !important;
-  fill: $color-book !important;
-}
-.faded .text-chapter:hover {
-  color: $color-chapter !important;
-  fill: $color-chapter !important;
-}
-.faded .text-page:hover {
-  color: $color-page !important;
-  fill: $color-page !important;
 }
 
+/*
+ * Entity background colors
+ */
 .bg-book {
   background-color: $color-book;
 }

@@ -60,7 +60,7 @@
                                                 <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
                                                     {!! csrf_field() !!}
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="text-button neg">@icon('delete'){{ trans('common.delete') }}</button>
+                                                    <button type="submit" class="text-button text-neg">@icon('delete'){{ trans('common.delete') }}</button>
                                                 </form>
                                             </li>
                                         </ul>

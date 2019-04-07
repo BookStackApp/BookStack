@@ -1,6 +1,6 @@
 
 @if($authMethod === 'system' && $user->system_name == 'public')
-    <p class="mb-none text-secondary">{{ trans('settings.users_system_public') }}</p>
+    <p class="mb-none text-warn">{{ trans('settings.users_system_public') }}</p>
 @endif
 
 <div class="pt-m">

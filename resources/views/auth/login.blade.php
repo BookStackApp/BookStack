@@ -36,7 +36,7 @@
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
-                        <a id="social-login-{{$driver}}" class="button outline block svg text-left" href="{{ baseUrl("/login/service/" . $driver) }}">
+                        <a id="social-login-{{$driver}}" class="button outline block svg" href="{{ baseUrl("/login/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
                         </a>

@@ -8,12 +8,3 @@
 @mixin between($min, $max) {
   @media screen and (min-width: $min) and (max-width: $max) { @content; }
 }
-@mixin clearfix() {
-  &:after {
-    display: block;
-    content: '';
-    font-size: 0;
-    clear: both;
-    position: relative;
-  }
-}

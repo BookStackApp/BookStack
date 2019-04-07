@@ -20,11 +20,12 @@
                 </div>
             @else
                 <p>
+                    {{-- TODO - Empty Shelf State--}}
                     <hr>
                     <span class="text-muted italic">{{ trans('entities.shelves_empty_contents') }}</span>
                     @if(userCan('bookshelf-create', $shelf))
                         <br/>
-                        <a href="{{ $shelf->getUrl('/edit') }}" class="button outline bookshelf">{{ trans('entities.shelves_edit_and_assign') }}</a>
+                        <a href="{{ $shelf->getUrl('/edit') }}" class="button outline">{{ trans('entities.shelves_edit_and_assign') }}</a>
                     @endif
                 </p>
             @endif

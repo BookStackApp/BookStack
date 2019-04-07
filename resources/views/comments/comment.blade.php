@@ -13,8 +13,8 @@
                 <div dropdown class="dropdown-container">
                     <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
                     <ul>
-                        <li class="px-l"><small class="text-muted">{{trans('entities.comment_delete_confirm')}}</small></li>
-                        <li><a action="delete" class="text-button neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
+                        <li class="px-m"><small class="text-muted">{{trans('entities.comment_delete_confirm')}}</small></li>
+                        <li><a action="delete" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
                     </ul>
                 </div>
             @endif
@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group text-right">
                     <button type="button" class="button outline" action="closeUpdateForm">{{ trans('common.cancel') }}</button>
-                    <button type="submit" class="button pos">{{ trans('entities.comment_save') }}</button>
+                    <button type="submit" class="button primary">{{ trans('entities.comment_save') }}</button>
                 </div>
                 <div class="form-group loading" style="display: none;">
                     @include('partials.loading-icon', ['text' => trans('entities.comment_saving')])

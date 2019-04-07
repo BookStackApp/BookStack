@@ -35,6 +35,9 @@
   &.right-focus {
     grid-template-columns: 1fr 3fr;
   }
+  &.gap-y-xs {
+    grid-row-gap: $-xs;
+  }
   &.gap-xl {
     grid-column-gap: $-xl;
     grid-row-gap: $-xl;

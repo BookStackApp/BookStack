@@ -1,4 +1,4 @@
-<header id="header" header-mobile-toggle>
+<header id="header" header-mobile-toggle class="primary-background">
     <div class="grid mx-l">
 
         <div>

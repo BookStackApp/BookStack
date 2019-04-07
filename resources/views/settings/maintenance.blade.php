@@ -18,7 +18,7 @@
         <h2 class="list-heading">{{ trans('settings.maint_image_cleanup') }}</h2>
         <div class="grid half gap-xl">
             <div>
-                <p class="small muted">{{ trans('settings.maint_image_cleanup_desc') }}</p>
+                <p class="small text-muted">{{ trans('settings.maint_image_cleanup_desc') }}</p>
             </div>
             <div>
                 <form method="POST" action="{{ baseUrl('/settings/maintenance/cleanup-images') }}">
@@ -26,7 +26,7 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <div>
                         @if(session()->has('cleanup-images-warning'))
-                            <p class="text neg">
+                            <p class="text-neg">
                                 {{ session()->get('cleanup-images-warning') }}
                             </p>
                             <input type="hidden" name="ignore_revisions" value="{{ session()->getOldInput('ignore_revisions', 'false') }}">

@@ -4,7 +4,7 @@
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.code_editor') }}</div>
-                <button class="overlay-close neg corner-button button" @click="hide()">x</button>
+                <button class="popup-header-close" @click="hide()">x</button>
             </div>
 
             <div class="p-l popup-content">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="button pos" @click="save()">{{ trans('components.code_save') }}</button>
+                    <button type="button" class="button primary" @click="save()">{{ trans('components.code_save') }}</button>
                 </div>
 
             </div>

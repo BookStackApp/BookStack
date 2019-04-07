@@ -9,7 +9,7 @@
         </div>
     </div>
 </a>
-<div class="entity-shelf-books grid third entity-list-item-children">
+<div class="entity-shelf-books grid third gap-y-xs entity-list-item-children">
     @foreach($shelf->books as $book)
         <div>
             <a href="{{ $book->getUrl() }}" class="entity-chip text-book">
