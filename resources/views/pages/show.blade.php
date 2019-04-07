@@ -32,7 +32,7 @@
     </div>
 
     @if ($commentsEnabled)
-        <div class="container small nopad comments-container mb-l">
+        <div class="container small p-none comments-container mb-l">
             @include('comments.comments', ['page' => $page])
             <div class="clearfix"></div>
         </div>

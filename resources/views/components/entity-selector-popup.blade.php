@@ -1,6 +1,6 @@
 <div id="entity-selector-wrap">
     <div overlay entity-selector-popup>
-        <div class="popup-body small flex-child">
+        <div class="popup-body small">
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('entities.entity_select') }}</div>
                 <button type="button" class="corner-button neg button overlay-close">x</button>

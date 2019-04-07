@@ -6,6 +6,12 @@ header .grid {
   grid-template-columns: auto min-content auto;
 }
 
+@include smaller-than($l) {
+  header .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 header {
   position: relative;
   display: block;
@@ -335,9 +341,6 @@ header .search-box {
   }
   .action-buttons .dropdown-container:last-child a {
     padding-left: $-xs;
-  }
-  .toolbar .col-xs-1:first-child {
-    padding-right: 0;
   }
 }
 

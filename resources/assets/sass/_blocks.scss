@@ -1,119 +1,6 @@
-
 /*
-* This file container all block styling including margins, paddings & borders.
+* This file contains styling for custom block formats.
 */
-
-
-/*
-* Padding
-* TODO - Remove these older styles
-*/
-.nopadding {
-  padding: 0;
-}
-.padded {
-  padding: $-l;
-  &.large {
-    padding: $-xl;
-  }
-  >h1, >h2, >h3, >h4 {
-    &:first-child {
-      margin-top: 0.1em;
-    }
-  }
-}
-.padded-vertical, .padded-top {
-  padding-top: $-m;
-  &.large {
-    padding-top: $-xl;
-  }
-}
-
-.padded-vertical, .padded-bottom {
-  padding-bottom: $-m;
-  &.large {
-    padding-bottom: $-xl;
-  }
-}
-.padded-horizontal, .padded-left {
-  padding-left: $-m;
-  &.large {
-    padding-left: $-xl;
-  }
-}
-.padded-horizontal, .padded-right {
-  padding-right: $-m;
-  &.large {
-    padding-right: $-xl;
-  }
-}
-
-/*
-* Margins
-* TODO - Remove these older styles
-*/
-.margins {
-  margin: $-l;
-  &.large {
-    margin: $-xl;
-  }
-}
-.margins-vertical, .margin-top {
-  margin-top: $-m;
-  &.large {
-    margin-top: $-xl;
-  }
-}
-.margins-vertical, .margin-bottom {
-  margin-bottom: $-m;
-  &.large {
-    margin-bottom: $-xl;
-  }
-}
-.margins-horizontal, .margin-left {
-  margin-left: $-m;
-  &.large {
-    margin-left: $-xl;
-  }
-}
-.margins-horizontal, .margin-right {
-  margin-right: $-m;
-  &.large {
-    margin-right: $-xl;
-  }
-}
-
-@mixin spacing($prop, $propLetter) {
-  @each $sizeLetter, $size in $spacing {
-    .#{$propLetter}-#{$sizeLetter} {
-      #{$prop}: $size !important;
-    }
-    .#{$propLetter}x-#{$sizeLetter} {
-      #{$prop}-left: $size !important;
-      #{$prop}-right: $size !important;
-    }
-    .#{$propLetter}y-#{$sizeLetter} {
-      #{$prop}-top: $size !important;
-      #{$prop}-bottom: $size !important;
-    }
-    .#{$propLetter}t-#{$sizeLetter} {
-      #{$prop}-top: $size !important;
-    }
-    .#{$propLetter}r-#{$sizeLetter} {
-      #{$prop}-right: $size !important;
-    }
-    .#{$propLetter}b-#{$sizeLetter} {
-      #{$prop}-bottom: $size !important;
-    }
-    .#{$propLetter}l-#{$sizeLetter} {
-      #{$prop}-left: $size !important;
-    }
-  }
-
-}
-
-@include spacing('margin', 'm')
-@include spacing('padding', 'p')
 
 
 /**
@@ -238,9 +125,6 @@
     margin: $-s 0;
     width: 100%;
   }
-  > div.padded {
-    padding: $-s 0 !important;
-  }
   .handle {
     background-color: #EEE;
     left: 0;
@@ -289,4 +173,74 @@
 
 .tag-list div:last-child .tag-item {
   margin-bottom: 0;
+}
+
+.grid-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  margin-bottom: $-l;
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 100px;
+  color: $text-dark;
+  transition: border-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
+  &:hover {
+    color: $text-dark;
+    text-decoration: none;
+    box-shadow: $bs-card;
+  }
+  h2 {
+    width: 100%;
+    font-size: 1.5em;
+    margin: 0 0 10px;
+  }
+  p {
+    font-size: .7rem;
+    margin: 0;
+    line-height: 1.6em;
+  }
+  .grid-card-content {
+    flex: 1;
+    border-top: 0;
+    border-bottom-width: 2px;
+  }
+  .grid-card-content, .grid-card-footer {
+    padding: $-l;
+  }
+  .grid-card-content + .grid-card-footer {
+    padding-top: 0;
+  }
+}
+
+.bookshelf-grid-item .grid-card-content h2 a  {
+  color: $color-bookshelf;
+  fill: $color-bookshelf;
+}
+
+.book-grid-item .grid-card-footer {
+  p.small {
+    font-size: .8em;
+    margin: 0;
+  }
+}
+
+.content-wrap.card {
+  padding: $-l $-xxl;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $-xl;
+  overflow: auto;
+  min-height: 60vh;
+  &.auto-height {
+    min-height: 0;
+  }
+  &.fill-width {
+    width: 100%;
+  }
+}
+@include smaller-than($m) {
+  .content-wrap.card {
+    padding: $-m $-l;
+  }
 }

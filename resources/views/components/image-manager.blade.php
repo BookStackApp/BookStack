@@ -10,12 +10,10 @@
             <div class="flex-fill image-manager-body">
 
                 <div class="image-manager-content">
-                    <div v-if="imageType === 'gallery'" class="container">
-                        <div class="image-manager-header primary-background-light row nav-tabs">
-                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_all_title') }}" :class="{selected: (view=='all')}" @click="setView('all')">@icon('images') {{ trans('components.image_all') }}</div>
-                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_book_title') }}" :class="{selected: (view=='book')}" @click="setView('book')">@icon('book', ['class' => 'text-book svg-icon']) {{ trans('entities.book') }}</div>
-                            <div class="col-xs-4 tab-item" title="{{ trans('components.image_page_title') }}" :class="{selected: (view=='page')}" @click="setView('page')">@icon('page', ['class' => 'text-page svg-icon']) {{ trans('entities.page') }}</div>
-                        </div>
+                    <div v-if="imageType === 'gallery'" class="image-manager-header primary-background-light nav-tabs grid third">
+                        <div class="tab-item" title="{{ trans('components.image_all_title') }}" :class="{selected: (view=='all')}" @click="setView('all')">@icon('images') {{ trans('components.image_all') }}</div>
+                        <div class="tab-item" title="{{ trans('components.image_book_title') }}" :class="{selected: (view=='book')}" @click="setView('book')">@icon('book', ['class' => 'text-book svg-icon']) {{ trans('entities.book') }}</div>
+                        <div class="tab-item" title="{{ trans('components.image_page_title') }}" :class="{selected: (view=='page')}" @click="setView('page')">@icon('page', ['class' => 'text-page svg-icon']) {{ trans('entities.page') }}</div>
                     </div>
                     <div v-show="view === 'all'" >
                         <form @submit.prevent="searchImages" class="contained-search-box">
