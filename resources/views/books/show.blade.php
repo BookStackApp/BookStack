@@ -29,18 +29,25 @@
                     @endforeach
                 </div>
             @else
-                <div>
-                    {{--TODO - Empty States --}}
-                    <p class="text-muted italic">{{ trans('entities.books_empty_contents') }}</p>
-                    @if(userCan('page-create', $book))
-                        <a href="{{ $book->getUrl('/create-page') }}" class="button outline">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
-                    @endif
-                    @if(userCan('page-create', $book) && userCan('chapter-create', $book))
-                        &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp;&nbsp;
-                    @endif
-                    @if(userCan('chapter-create', $book))
-                        <a href="{{ $book->getUrl('/create-chapter') }}" class="button outline">@icon('chapter'){{ trans('entities.books_empty_add_chapter') }}</a>
-                    @endif
+                <div class="mt-xl" v-pre>
+                    <hr>
+                    <p class="text-muted italic mb-m mt-xl">{{ trans('entities.books_empty_contents') }}</p>
+
+                    <div class="icon-list block inline">
+                        @if(userCan('page-create', $book))
+                            <a href="{{ $book->getUrl('/create-page') }}" class="icon-list-item text-page">
+                                <span class="icon">@icon('page')</span>
+                                <span>{{ trans('entities.books_empty_create_page') }}</span>
+                            </a>
+                        @endif
+                        @if(userCan('chapter-create', $book))
+                            <a href="{{ $book->getUrl('/create-chapter') }}" class="icon-list-item text-chapter">
+                                <span class="icon">@icon('chapter')</span>
+                                <span>{{ trans('entities.books_empty_add_chapter') }}</span>
+                            </a>
+                        @endif
+                    </div>
+
                 </div>
             @endif
         </div>
