@@ -1,5 +1,13 @@
 <div page-comments page-id="{{ $page->id }}" class="comments-list">
-    <h5 comments-title>{{ trans_choice('entities.comment_count', count($page->comments), ['count' => count($page->comments)]) }}</h5>
+    <div comment-count-bar class="grid half left-focus v-center">
+        <h5 comments-title>{{ trans_choice('entities.comment_count', count($page->comments), ['count' => count($page->comments)]) }}</h5>
+        @if (count($page->comments) === 0)
+            <div class="text-right" comment-add-button-container>
+                <button type="button" action="addComment"
+                        class="button outline">{{ trans('entities.comment_add') }}</button>
+            </div>
+        @endif
+    </div>
 
     <div class="comment-container" comment-container>
         @foreach($page->comments as $comment)
@@ -9,6 +17,13 @@
 
     @if(userCan('comment-create-all'))
         @include('comments.create')
+    @endif
+
+    @if (count($page->comments) > 0)
+        <div class="text-right" comment-add-button-container>
+            <button type="button" action="addComment"
+                    class="button outline">{{ trans('entities.comment_add') }}</button>
+        </div>
     @endif
 
 </div>

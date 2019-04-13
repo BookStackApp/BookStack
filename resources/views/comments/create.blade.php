@@ -27,8 +27,3 @@
         </form>
     </div>
 </div>
-
-<div class="form-group text-right" comment-add-button>
-    <button type="button" action="addComment"
-            class="button outline">{{ trans('entities.comment_add') }}</button>
-</div>
