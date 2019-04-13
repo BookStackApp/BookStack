@@ -60,6 +60,10 @@ return [
     'view_profile' => 'View Profile',
     'edit_profile' => 'Edit Profile',
 
+    // Layout tabs
+    'tab_info' => 'Info',
+    'tab_content' => 'Content',
+
     // Email Content
     'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
     'email_rights' => 'All rights reserved',

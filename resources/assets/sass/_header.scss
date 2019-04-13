@@ -9,13 +9,14 @@ header .grid {
 @include smaller-than($l) {
   header .grid {
     grid-template-columns: 1fr;
+    grid-row-gap: 0;
   }
 }
 
 header {
   position: relative;
   display: block;
-  z-index: 2;
+  z-index: 6;
   top: 0;
   background-color: $primary-dark;
   color: #fff;
@@ -202,6 +203,25 @@ header .search-box {
   }
 }
 
+.tri-layout-mobile-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: #FFF;
+  border-bottom: 1px solid #DDD;
+  box-shadow: $bs-card;
+}
+.tri-layout-mobile-tab {
+  text-align: center;
+  border-bottom: 3px solid #BBB;
+  &:first-child {
+    border-right: 1px solid #DDD;
+  }
+  &.active {
+    border-bottom-color: currentColor;
+  }
+}
+
 .breadcrumbs {
   display: flex;
   flex-direction: row;
@@ -223,6 +243,18 @@ header .search-box {
   }
   &:hover {
     opacity: 1;
+  }
+}
+
+@include smaller-than($l) {
+  .breadcrumbs .icon-list-item {
+    padding: $-xs;
+    > span + span {
+      display: none;
+    }
+    > span:first-child {
+      margin-right: 0;
+    }
   }
 }
 
