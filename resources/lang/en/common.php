@@ -11,6 +11,7 @@ return [
     'save' => 'Save',
     'continue' => 'Continue',
     'select' => 'Select',
+    'toggle_all' => 'Toggle All',
     'more' => 'More',
 
     // Form Labels

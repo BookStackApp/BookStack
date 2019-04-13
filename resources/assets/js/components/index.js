@@ -22,6 +22,7 @@ import headerMobileToggle from "./header-mobile-toggle";
 import listSortControl from "./list-sort-control";
 import triLayout from "./tri-layout";
 import breadcrumbListing from "./breadcrumb-listing";
+import permissionsTable from "./permissions-table";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -48,6 +49,7 @@ const componentMapping = {
     'list-sort-control': listSortControl,
     'tri-layout': triLayout,
     'breadcrumb-listing': breadcrumbListing,
+    'permissions-table': permissionsTable,
 };
 
 window.components = {};

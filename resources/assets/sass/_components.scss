@@ -647,3 +647,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 #tag-manager .drag-card {
   max-width: 500px;
 }
+
+.permissions-table [permissions-table-toggle-all-in-row] {
+  display: none;
+}
+.permissions-table tr:hover [permissions-table-toggle-all-in-row] {
+  display: inline;
+}
