@@ -44,14 +44,7 @@
             @endif
         </div>
 
-        <div class="search-results" v-cloak v-show="searching">
-            {{--TODO--}}
-            <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" @click="clearSearch()" class="text-small">@icon('close'){{ trans('entities.search_clear') }}</a></h3>
-            <div v-if="!searchResults">
-                @include('partials.loading-icon')
-            </div>
-            <div v-html="searchResults"></div>
-        </div>
+        @include('partials.entity-dashboard-search-results')
     </div>
 
 @stop
@@ -137,19 +130,13 @@
 
 @section('left')
 
+    @include('partials.entity-dashboard-search-box')
+
     @if($chapter->tags->count() > 0)
         <div class="mb-xl">
             @include('components.tag-list', ['entity' => $chapter])
         </div>
     @endif
-
-    <div class="mb-xl">
-        <form @submit.prevent="searchBook" class="search-box flexible">
-            <input v-model="searchTerm" @change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.chapters_search_this') }}">
-            <button type="submit">@icon('search')</button>
-            <button v-if="searching" v-cloak class="text-neg" @click="clearSearch()" type="button">@icon('close')</button>
-        </form>
-    </div>
 
     @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 @stop
