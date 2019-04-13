@@ -124,18 +124,6 @@
         <h5>Actions</h5>
 
         <div class="icon-list text-primary">
-            {{--Export--}}
-            <div dropdown class="dropdown-container block">
-                <div dropdown-toggle class="icon-list-item">
-                    <span>@icon('export')</span>
-                    <span>{{ trans('entities.export') }}</span>
-                </div>
-                <ul class="wide">
-                    <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </div>
 
             {{--User Actions--}}
             @if(userCan('page-update', $page))
@@ -174,6 +162,21 @@
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif
+
+            <hr class="primary-background"/>
+
+            {{--Export--}}
+            <div dropdown class="dropdown-container block">
+                <div dropdown-toggle class="icon-list-item">
+                    <span>@icon('export')</span>
+                    <span>{{ trans('entities.export') }}</span>
+                </div>
+                <ul class="wide">
+                    <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                    <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                    <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                </ul>
+            </div>
         </div>
 
     </div>

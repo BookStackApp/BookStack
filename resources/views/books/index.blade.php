@@ -38,13 +38,14 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
-            @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
             @if($currentUser->can('book-create-all'))
                 <a href="{{ baseUrl("/create-book") }}" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.books_create') }}</span>
                 </a>
             @endif
+
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
         </div>
     </div>
 

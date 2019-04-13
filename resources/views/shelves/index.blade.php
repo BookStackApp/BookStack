@@ -9,13 +9,13 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
-            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
             @if($currentUser->can('bookshelf-create-all'))
                 <a href="{{ baseUrl("/create-shelf") }}" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.shelves_create') }}</span>
                 </a>
             @endif
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
         </div>
     </div>
 

@@ -87,24 +87,15 @@
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
 
-            <div dropdown class="dropdown-container">
-                <div dropdown-toggle class="icon-list-item">
-                    <span>@icon('export')</span>
-                    <span>{{ trans('entities.export') }}</span>
-                </div>
-                <ul class="wide">
-                    <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </div>
-
             @if(userCan('page-create', $chapter))
                 <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.pages_new') }}</span>
                 </a>
             @endif
+
+            <hr class="primary-background"/>
+
             @if(userCan('chapter-update', $chapter))
                 <a href="{{ $chapter->getUrl('/edit') }}" class="icon-list-item">
                     <span>@icon('edit')</span>
@@ -129,6 +120,20 @@
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif
+
+            <hr class="primary-background"/>
+
+            <div dropdown class="dropdown-container">
+                <div dropdown-toggle class="icon-list-item">
+                    <span>@icon('export')</span>
+                    <span>{{ trans('entities.export') }}</span>
+                </div>
+                <ul class="wide">
+                    <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                    <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                    <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                </ul>
+            </div>
         </div>
     </div>
 @stop
