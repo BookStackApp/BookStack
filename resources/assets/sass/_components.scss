@@ -604,27 +604,26 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .comment-box {
-  clear: left;
   border: 1px solid #DDD;
-  margin-bottom: $-s;
-  border-radius: 3px;
+  border-radius: 4px;
+  background-color: #FFF;
   .content {
-    padding: $-s;
     font-size: 0.666em;
     p, ul, ol {
       font-size: $fs-m;
       margin: .5em 0;
     }
   }
-  .reply-row {
-    padding: $-xs $-s;
+  .actions {
+    opacity: 0;
+    transition: opacity ease-in-out 120ms;
+  }
+  &:hover .actions {
+    opacity: 1;
   }
 }
 
 .comment-box .header {
-  padding: $-xs $-s;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #DDD;
   .meta {
     img, a, span {
       display: inline-block;

@@ -54,7 +54,7 @@ class PageComments {
         commentElem.querySelector('[comment-edit-container]').style.display = 'block';
         let textArea = commentElem.querySelector('[comment-edit-container] textarea');
         let lineCount = textArea.value.split('\n').length;
-        textArea.style.height = (lineCount * 20) + 'px';
+        textArea.style.height = ((lineCount * 20) + 40) + 'px';
         this.editingComment = commentElem;
     }
 
