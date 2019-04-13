@@ -19,15 +19,18 @@
                     @endforeach
                 </div>
             @else
-                <p>
-                    {{-- TODO - Empty Shelf State--}}
+                <div class="mt-xl">
                     <hr>
-                    <span class="text-muted italic">{{ trans('entities.shelves_empty_contents') }}</span>
-                    @if(userCan('bookshelf-create', $shelf))
-                        <br/>
-                        <a href="{{ $shelf->getUrl('/edit') }}" class="button outline">{{ trans('entities.shelves_edit_and_assign') }}</a>
-                    @endif
-                </p>
+                    <p class="text-muted italic mt-xl mb-m">{{ trans('entities.shelves_empty_contents') }}</p>
+                    <div class="icon-list inline block">
+                        @if(userCan('bookshelf-update', $shelf))
+                            <a href="{{ $shelf->getUrl('/edit') }}" class="icon-list-item text-bookshelf">
+                                <span class="icon">@icon('edit')</span>
+                                <span>{{ trans('entities.shelves_edit_and_assign') }}</span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
             @endif
         </div>
     </div>

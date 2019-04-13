@@ -26,20 +26,25 @@
                     @endforeach
                 </div>
             @else
-                {{--TODO - Empty States --}}
-                <div v-pre>
-                    <p class="text-muted italic">{{ trans('entities.chapters_empty') }}</p>
-                    <p>
+                <div class="mt-xl" v-pre>
+                    <hr>
+                    <p class="text-muted italic mb-m mt-xl">{{ trans('entities.chapters_empty') }}</p>
+
+                    <div class="icon-list block inline">
                         @if(userCan('page-create', $chapter))
-                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
-                        @endif
-                        @if(userCan('page-create', $chapter) && userCan('book-update', $book))
-                            &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp; &nbsp;
+                            <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item text-page">
+                                <span class="icon">@icon('page')</span>
+                                <span>{{ trans('entities.books_empty_create_page') }}</span>
+                            </a>
                         @endif
                         @if(userCan('book-update', $book))
-                            <a href="{{ $book->getUrl('/sort') }}" class="button outline">@icon('book'){{ trans('entities.books_empty_sort_current_book') }}</a>
+                            <a href="{{ $book->getUrl('/sort') }}" class="icon-list-item text-book">
+                                <span class="icon">@icon('book')</span>
+                                <span>{{ trans('entities.books_empty_sort_current_book') }}</span>
+                            </a>
                         @endif
-                    </p>
+                    </div>
+
                 </div>
             @endif
         </div>
