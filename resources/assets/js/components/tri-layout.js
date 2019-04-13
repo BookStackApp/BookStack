@@ -3,18 +3,23 @@ class TriLayout {
 
     constructor(elem) {
         this.elem = elem;
-        this.middle = elem.querySelector('.tri-layout-middle');
-        this.right = elem.querySelector('.tri-layout-right');
-        this.left = elem.querySelector('.tri-layout-left');
 
         this.lastLayoutType = 'none';
         this.onDestroy = null;
+        this.scrollCache = {
+            'content': 0,
+            'info': 0,
+        };
+        this.lastTabShown = 'content';
 
+        // Bind any listeners
+        this.mobileTabClick = this.mobileTabClick.bind(this);
 
+        // Watch layout changes
         this.updateLayout();
         window.addEventListener('resize', event => {
             this.updateLayout();
-        });
+        }, {passive: true});
     }
 
     updateLayout() {
@@ -38,16 +43,15 @@ class TriLayout {
     }
 
     setupMobile() {
-        const mobileSidebarClickBound = this.mobileSidebarClick.bind(this);
-        const mobileContentClickBound = this.mobileContentClick.bind(this);
-        this.left.addEventListener('click', mobileSidebarClickBound);
-        this.right.addEventListener('click', mobileSidebarClickBound);
-        this.middle.addEventListener('click', mobileContentClickBound);
+        const layoutTabs = document.querySelectorAll('[tri-layout-mobile-tab]');
+        for (let tab of layoutTabs) {
+            tab.addEventListener('click', this.mobileTabClick);
+        }
 
         this.onDestroy = () => {
-            this.left.removeEventListener('click', mobileSidebarClickBound);
-            this.right.removeEventListener('click', mobileSidebarClickBound);
-            this.middle.removeEventListener('click', mobileContentClickBound);
+            for (let tab of layoutTabs) {
+                tab.removeEventListener('click', this.mobileTabClick);
+            }
         }
     }
 
@@ -55,27 +59,35 @@ class TriLayout {
         //
     }
 
-    /**
-     * Slide the main content back into view if clicked and
-     * currently slid out of view.
-     * @param event
-     */
-    mobileContentClick(event) {
-        this.elem.classList.remove('mobile-open');
-    }
 
     /**
-     * On sidebar click, Show the content by sliding the main content out.
+     * Action to run when the mobile info toggle bar is clicked/tapped
      * @param event
      */
-    mobileSidebarClick(event) {
-        if (this.elem.classList.contains('mobile-open')) {
-            this.elem.classList.remove('mobile-open');
-        } else {
-            event.preventDefault();
-            event.stopPropagation();
-            this.elem.classList.add('mobile-open');
+    mobileTabClick(event) {
+        const tab = event.target.getAttribute('tri-layout-mobile-tab');
+        this.scrollCache[this.lastTabShown] = document.documentElement.scrollTop;
+
+        // Set tab status
+        const activeTabs = document.querySelectorAll('.tri-layout-mobile-tab.active');
+        for (let tab of activeTabs) {
+            tab.classList.remove('active');
         }
+        event.target.classList.add('active');
+
+        // Toggle section
+        const showInfo = (tab === 'info');
+        this.elem.classList.toggle('show-info', showInfo);
+
+        // Set the scroll position from cache
+        const pageHeader = document.querySelector('header');
+        const defaultScrollTop = pageHeader.getBoundingClientRect().bottom;
+        document.documentElement.scrollTop = this.scrollCache[tab] || defaultScrollTop;
+        setTimeout(() => {
+            document.documentElement.scrollTop = this.scrollCache[tab] || defaultScrollTop;
+        }, 50);
+
+        this.lastTabShown = tab;
     }
 
 }
