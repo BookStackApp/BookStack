@@ -21,6 +21,13 @@
   text-align: center;
 }
 
+@include smaller-than($l) {
+  .mce-container-body.mce-flow-layout {
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+}
+
 .edit-area.flex > div > .mce-tinymce.mce-container.mce-panel {
   flex: 1 1 auto;
   display: flex !important;

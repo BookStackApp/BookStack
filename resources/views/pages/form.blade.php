@@ -11,12 +11,12 @@
     {{ csrf_field() }}
 
     {{--Header Bar--}}
-    <div class="primary-background-light toolbar">
+    <div class="primary-background-light toolbar page-edit-toolbar">
         <div class="grid third v-center">
 
             <div class="action-buttons text-left px-m py-xs">
-                <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back'){{ trans('common.back') }}</a>
-                <a onclick="$('body>header').slideToggle();" class="text-button text-primary">@icon('swap-vertical'){{ trans('entities.pages_edit_toggle_header') }}</a>
+                <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back')<span class="hide-under-l">{{ trans('common.back') }}</span></a>
+                <a onclick="$('body>header').slideToggle();" class="text-button text-primary">@icon('swap-vertical')<span class="hide-under-l">{{ trans('entities.pages_edit_toggle_header') }}</span></a>
             </div>
 
             <div class="text-center px-m py-xs">
@@ -48,7 +48,7 @@
                     </ul>
                 </div>
 
-                <button type="submit" id="save-button" class="text-button text-pos-hover">@icon('save'){{ trans('entities.pages_save') }}</button>
+                <button type="submit" id="save-button" class="float-left text-primary text-button text-pos-hover">@icon('save')<span>{{ trans('entities.pages_save') }}</span></button>
             </div>
         </div>
     </div>
