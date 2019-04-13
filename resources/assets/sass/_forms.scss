@@ -325,6 +325,10 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   &.flexible input {
     width: 100%;
   }
+  .search-box-cancel {
+    left: auto;
+    right: 0;
+  }
 }
 
 .outline > input {
