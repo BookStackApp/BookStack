@@ -55,10 +55,10 @@
                     <th width="20%">
                         <a href="#" permissions-table-toggle-all class="text-small text-primary">{{ trans('common.toggle_all') }}</a>
                     </th>
-                    <th width="20%">{{ trans('common.create') }}</th>
-                    <th width="20%">{{ trans('common.view') }}</th>
-                    <th width="20%">{{ trans('common.edit') }}</th>
-                    <th width="20%">{{ trans('common.delete') }}</th>
+                    <th width="20%" permissions-table-toggle-all-in-column>{{ trans('common.create') }}</th>
+                    <th width="20%" permissions-table-toggle-all-in-column>{{ trans('common.view') }}</th>
+                    <th width="20%" permissions-table-toggle-all-in-column>{{ trans('common.edit') }}</th>
+                    <th width="20%" permissions-table-toggle-all-in-column>{{ trans('common.delete') }}</th>
                 </tr>
                 <tr>
                     <td>
