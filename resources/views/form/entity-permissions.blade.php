@@ -11,16 +11,20 @@
         ])
     </div>
 
-    {{--TODO - Add global and role "Select All" options--}}
-
-    <table class="table toggle-switch-list">
+    <table permissions-table class="table permissions-table toggle-switch-list">
         <tr>
             <th>{{ trans('common.role') }}</th>
-            <th @if($model->isA('page')) colspan="3" @else colspan="4" @endif>{{ trans('common.actions') }}</th>
+            <th @if($model->isA('page')) colspan="3" @else colspan="4" @endif>
+                {{ trans('common.actions') }}
+                <a href="#" permissions-table-toggle-all class="text-small ml-m text-primary">{{ trans('common.toggle_all') }}</a>
+            </th>
         </tr>
         @foreach($roles as $role)
             <tr>
-                <td>{{ $role->display_name }}</td>
+                <td width="33%" class="pt-m">
+                    {{ $role->display_name }}
+                    <a href="#" permissions-table-toggle-all-in-row class="text-small float right ml-m text-primary">{{ trans('common.toggle_all') }}</a>
+                </td>
                 <td>@include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.view'), 'action' => 'view'])</td>
                 @if(!$model->isA('page'))
                     <td>@include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.create'), 'action' => 'create'])</td>
