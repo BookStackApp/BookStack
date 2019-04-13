@@ -363,6 +363,17 @@ ul.pagination {
   }
 }
 
+.icon-list hr {
+  margin: $-s $-m;
+  max-width: 140px;
+  opacity: 0.25;
+  height: 1.1px;
+}
+
+.icon-list hr + hr, .icon-list hr:first-child, .icon-list hr:last-child {
+  display: none;
+}
+
 .entity-list-item, .icon-list-item {
   padding: $-s $-m;
   display: flex;
