@@ -19,6 +19,39 @@
   }
 }
 
+@include smaller-than($l) {
+  .page-edit-toolbar {
+    overflow-x: scroll;
+    overflow-y: visible;
+    z-index: 4;
+  }
+  .page-edit-toolbar .grid.third {
+    display: block;
+    white-space: nowrap;
+    > div {
+      display: inline-block;
+    }
+  }
+}
+
+@include smaller-than($l) {
+  .page-edit-toolbar #save-button {
+    position: fixed;
+    z-index: 30;
+    background-color: #FFF;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    right: $-m;
+    bottom: $-xs;
+    box-shadow: $bs-med;
+    span {
+      display: none;
+    }
+  }
+}
+
 .draft-notification {
   pointer-events: none;
   transform: scale(0);

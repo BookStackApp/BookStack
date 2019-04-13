@@ -322,21 +322,6 @@ header .search-box {
   padding: $-s;
 }
 
-.toolbar {
-  position: relative;
-  > .grid > div {
-    opacity: 0.8;
-    transition: opacity ease-in-out 120ms;
-    &:hover {
-      opacity: 1;
-    }
-  }
-  .text-button {
-    color: #666;
-    fill: #666;
-  }
-}
-
 .action-buttons .text-button {
   display: inline-block;
   padding: $-xs $-s;

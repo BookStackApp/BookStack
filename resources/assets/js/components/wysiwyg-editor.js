@@ -517,6 +517,16 @@ class WysiwygEditor {
                     if (scrollId) {
                         scrollToText(scrollId);
                     }
+
+                    // Override for touch events to allow scroll on mobile
+                    const container = editor.getContainer();
+                    const toolbarButtons = container.querySelectorAll('.mce-btn');
+                    for (let button of toolbarButtons) {
+                        button.addEventListener('touchstart', event => {
+                            event.stopPropagation();
+                        });
+                    }
+                    window.editor = editor;
                 });
 
                 function editorChange() {
@@ -600,6 +610,7 @@ class WysiwygEditor {
 
                 // Paste image-uploads
                 editor.on('paste', event => editorPaste(event, editor, context));
+
             }
         };
     }
