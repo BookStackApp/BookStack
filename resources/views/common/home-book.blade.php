@@ -9,10 +9,7 @@
                     <h5>{{ trans('common.actions') }}</h5>
                     <div class="icon-list text-primary">
                         @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
-                        <a expand-toggle=".entity-list.compact .entity-item-snippet" class="icon-list-item">
-                            <span>@icon('expand-text')</span>
-                            <span>{{ trans('common.toggle_details') }}</span>
-                        </a>
+                        @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
                     </div>
                 </div>
 

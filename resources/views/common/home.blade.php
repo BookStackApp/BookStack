@@ -1,10 +1,11 @@
 @extends('simple-layout')
 
-
 @section('body')
 
-    <div class="container px-xl py-l">
-        <a expand-toggle=".entity-list.compact .entity-item-snippet" class="text-muted">@icon('expand-text'){{ trans('common.toggle_details') }}</a>
+    <div class="container px-xl py-s">
+        <div class="icon-list inline block">
+            @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
+        </div>
     </div>
 
     <div class="container" id="home-default">

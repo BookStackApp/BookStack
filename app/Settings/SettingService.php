@@ -68,6 +68,17 @@ class SettingService
     }
 
     /**
+     * Get a value for the current logged-in user.
+     * @param $key
+     * @param bool $default
+     * @return bool|string
+     */
+    public function getForCurrentUser($key, $default = false)
+    {
+        return $this->getUser(auth()->user(), $key, $default);
+    }
+
+    /**
      * Gets a setting value from the cache or database.
      * Looks at the system defaults if not cached or in database.
      * @param $key

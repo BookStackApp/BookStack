@@ -8,10 +8,7 @@
                 <div class="actions mb-xl">
                     <h5>{{ trans('common.actions') }}</h5>
                     <div class="icon-list text-primary">
-                        <a expand-toggle=".entity-list.compact .entity-item-snippet" class="icon-list-item">
-                            <span>@icon('expand-text')</span>
-                            <span>{{ trans('common.toggle_details') }}</span>
-                        </a>
+                        @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
                     </div>
                 </div>
 
