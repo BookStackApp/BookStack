@@ -79,9 +79,9 @@
         @if(setting('app-editor') === 'markdown')
             <div v-pre id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
 
-                <div class="markdown-editor-wrap">
+                <div class="markdown-editor-wrap active">
                     <div class="editor-toolbar">
-                        <span class="float left">{{ trans('entities.pages_md_editor') }}</span>
+                        <span class="float left editor-toolbar-label">{{ trans('entities.pages_md_editor') }}</span>
                         <div class="float right buttons">
                             @if(config('services.drawio'))
                                 <button class="text-button" type="button" data-action="insertDrawing">@icon('drawing'){{ trans('entities.pages_md_insert_drawing') }}</button>
@@ -102,7 +102,7 @@
 
                 <div class="markdown-editor-wrap">
                     <div class="editor-toolbar">
-                        <div class="">{{ trans('entities.pages_md_preview') }}</div>
+                        <div class="editor-toolbar-label">{{ trans('entities.pages_md_preview') }}</div>
                     </div>
                     <div class="markdown-display page-content">
                     </div>

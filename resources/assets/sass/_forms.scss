@@ -63,6 +63,34 @@
   }
 }
 
+@include smaller-than($m) {
+  #markdown-editor {
+    flex-direction: column;
+  }
+  #markdown-editor .markdown-editor-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  #markdown-editor .editor-toolbar {
+    padding: 0;
+  }
+  #markdown-editor .editor-toolbar > * {
+    padding: $-xs $-s;
+  }
+  .editor-toolbar-label {
+    float: none !important;
+    border-bottom: 1px solid #DDD;
+    display: block;
+  }
+  .markdown-editor-wrap:not(.active) .editor-toolbar + div, .markdown-editor-wrap:not(.active) .editor-toolbar .buttons {
+    display: none;
+  }
+  #markdown-editor .markdown-editor-wrap:not(.active) {
+    flex-grow: 0;
+    flex: none;
+  }
+}
+
 .markdown-display {
   padding: 0 $-m 0;
   margin-left: -1px;

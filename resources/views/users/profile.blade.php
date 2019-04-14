@@ -29,7 +29,7 @@
                         </div>
                         <div id="content-counts">
                             <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
-                            <div class="grid half v-center">
+                            <div class="grid half v-center no-row-gap">
                                 <div class="icon-list">
                                     <a href="#recent-pages" class="text-page icon-list-item">
                                         <span>@icon('page')</span>

@@ -3,7 +3,7 @@
 @section('body')
 <div class="container small">
 
-    <div class="grid left-focus v-center">
+    <div class="grid left-focus v-center no-row-gap">
         <div class="py-m">
             @include('settings.navbar', ['selected' => 'maintenance'])
         </div>

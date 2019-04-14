@@ -8,6 +8,7 @@
   .edit-area {
     flex: 1;
     flex-direction: column;
+    z-index: 1;
   }
 
   .mce-tinymce {
