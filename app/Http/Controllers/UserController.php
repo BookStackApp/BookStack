@@ -299,12 +299,33 @@ class UserController extends Controller
      */
     public function changeSort(string $id, string $type, Request $request)
     {
-        // TODO - Test this endpoint
         $validSortTypes = ['books', 'bookshelves'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
         return $this->changeListSort($id, $request, $type);
+    }
+
+    /**
+     * Update the stored section expansion preference for the given user.
+     * @param string $id
+     * @param string $key
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function updateExpansionPreference(string $id, string $key, Request $request)
+    {
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
+        $keyWhitelist = ['home-details'];
+        if (!in_array($key, $keyWhitelist)) {
+            return response("Invalid key", 500);
+        }
+
+        $newState = $request->get('expand', 'false');
+
+        $user = $this->user->findOrFail($id);
+        setting()->putUser($user, 'section_expansion#' . $key, $newState);
+        return response("", 204);
     }
 
     /**

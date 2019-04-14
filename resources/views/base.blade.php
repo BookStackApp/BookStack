@@ -20,6 +20,7 @@
     @include('partials.custom-styles')
     @include('partials.custom-head')
 
+    @stack('head')
 </head>
 <body class="@yield('body-class')">
 
