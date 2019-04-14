@@ -55,13 +55,13 @@
                         </span>
                         <ul>
                             <li>
-                                <a href="{{ baseUrl("/user/{$currentUser->id}") }}" class="text-primary">@icon('user'){{ trans('common.view_profile') }}</a>
+                                <a href="{{ baseUrl("/user/{$currentUser->id}") }}">@icon('user'){{ trans('common.view_profile') }}</a>
                             </li>
                             <li>
-                                <a href="{{ baseUrl("/settings/users/{$currentUser->id}") }}" class="text-primary">@icon('edit'){{ trans('common.edit_profile') }}</a>
+                                <a href="{{ baseUrl("/settings/users/{$currentUser->id}") }}">@icon('edit'){{ trans('common.edit_profile') }}</a>
                             </li>
                             <li>
-                                <a href="{{ baseUrl('/logout') }}" class="text-neg">@icon('logout'){{ trans('auth.logout') }}</a>
+                                <a href="{{ baseUrl('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
                             </li>
                         </ul>
                     </div>

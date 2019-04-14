@@ -53,6 +53,9 @@
     grid-row-gap: 0;
     grid-column-gap: 0;
   }
+  &.no-row-gap {
+    grid-row-gap: 0;
+  }
 }
 
 @include smaller-than($m) {
@@ -216,9 +219,6 @@ body.flexbox {
     grid-template-columns: 1fr 3fr;
     grid-template-rows: max-content min-content;
     padding-right: $-l;
-    .content-wrap.card {
-      padding: $-l $-xl;
-    }
   }
 }
 @include larger-than($xxl) {

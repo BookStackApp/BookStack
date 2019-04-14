@@ -1,6 +1,6 @@
 <div class="comment-box mb-m" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id}}" id="comment{{$comment->local_id}}">
     <div class="header p-s">
-        <div class="grid half">
+        <div class="grid half no-gap v-center">
             <div class="meta">
                 <a href="#comment{{$comment->local_id}}" class="text-muted">#{{$comment->local_id}}</a>
                 &nbsp;&nbsp;

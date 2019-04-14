@@ -8,7 +8,7 @@
     </div>
 
     <div class="container" id="home-default">
-        <div class="grid third gap-xxl" >
+        <div class="grid third gap-xxl no-row-gap" >
             <div>
                 @if(count($draftPages) > 0)
                     <div id="recent-drafts" class="card mb-xl">

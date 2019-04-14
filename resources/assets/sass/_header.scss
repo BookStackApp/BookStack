@@ -145,12 +145,13 @@ header .search-box {
   padding: 0 $-xs;
   position: absolute;
   right: $-m;
-  top: 8px;
+  top: 13px;
   line-height: 1;
   cursor: pointer;
   user-select: none;
   svg {
     margin: 0;
+    bottom: -2px;
   }
 }
 
@@ -299,6 +300,17 @@ header .search-box {
     border-radius: 0;
     border: 0;
     border-bottom: 1px solid #DDD;
+  }
+}
+
+@include smaller-than($m) {
+  .breadcrumb-listing-dropdown {
+    position: fixed;
+    right: auto;
+    left: $-m;
+  }
+  .breadcrumb-listing-dropdown .breadcrumb-listing-entity-list {
+    max-height: 240px;
   }
 }
 

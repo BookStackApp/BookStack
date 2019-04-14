@@ -189,9 +189,19 @@
     width: 100%;
   }
 }
+@include smaller-than($xxl) {
+  .content-wrap.card {
+    padding: $-l $-xl;
+  }
+}
 @include smaller-than($m) {
   .content-wrap.card {
     padding: $-m $-l;
+  }
+}
+@include smaller-than($s) {
+  .content-wrap.card {
+    padding: $-m $-s;
   }
 }
 
