@@ -15,6 +15,7 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\AttachmentService;
 use DOMDocument;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -179,11 +180,38 @@ class EntityRepo
      * Get all entities in a paginated format
      * @param $type
      * @param int $count
+     * @param string $sort
+     * @param string $order
+     * @param null|callable $queryAddition
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllPaginated($type, $count = 10)
+    public function getAllPaginated($type, int $count = 10, string $sort = 'name', string $order = 'asc', $queryAddition = null)
     {
-        return $this->entityQuery($type)->orderBy('name', 'asc')->paginate($count);
+        $query = $this->entityQuery($type);
+        $query = $this->addSortToQuery($query, $sort, $order);
+        if ($queryAddition) {
+            $queryAddition($query);
+        }
+        return $query->paginate($count);
+    }
+
+    /**
+     * Add sorting operations to an entity query.
+     * @param Builder $query
+     * @param string $sort
+     * @param string $order
+     * @return Builder
+     */
+    protected function addSortToQuery(Builder $query, string $sort = 'name', string $order = 'asc')
+    {
+        $order = ($order === 'asc') ? 'asc' : 'desc';
+        $propertySorts = ['name', 'created_at', 'updated_at'];
+
+        if (in_array($sort, $propertySorts)) {
+            return $query->orderBy($sort, $order);
+        }
+
+        return $query;
     }
 
     /**
@@ -265,15 +293,14 @@ class EntityRepo
 
     /**
      * Get the most popular entities base on all views.
-     * @param string|bool $type
+     * @param string $type
      * @param int $count
      * @param int $page
      * @return mixed
      */
-    public function getPopular($type, $count = 10, $page = 0)
+    public function getPopular(string $type, int $count = 10, int $page = 0)
     {
-        $filter = is_bool($type) ? false : $this->entityProvider->get($type);
-        return $this->viewService->getPopular($count, $page, $filter);
+        return $this->viewService->getPopular($count, $page, $type);
     }
 
     /**
@@ -311,6 +338,18 @@ class EntityRepo
     public function getBookshelfChildren(Bookshelf $bookshelf)
     {
         return $this->permissionService->enforceEntityRestrictions('book', $bookshelf->books())->get();
+    }
+
+    /**
+     * Get the direct children of a book.
+     * @param Book $book
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getBookDirectChildren(Book $book)
+    {
+        $pages = $this->permissionService->enforceEntityRestrictions('page', $book->directPages())->get();
+        $chapters = $this->permissionService->enforceEntityRestrictions('chapters', $book->chapters())->get();
+        return collect()->concat($pages)->concat($chapters)->sortBy('priority')->sortByDesc('draft');
     }
 
     /**

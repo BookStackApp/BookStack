@@ -36,26 +36,6 @@
   }
 }
 
-.anim.menuIn {
-  transform-origin: 100% 0%;
-  animation-name: menuIn;
-  animation-duration: 120ms;
-  animation-delay: 0s;
-  animation-timing-function: cubic-bezier(.62, .28, .23, .99);
-}
-
-@keyframes menuIn {
-  from {
-    opacity: 0;
-    transform: scale3d(0, 0, 1);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
-}
-
 @keyframes loadingBob {
   0% {
     transform: translate3d(0, 0, 0);
@@ -89,8 +69,4 @@
   animation-duration: 180ms;
   animation-delay: 0s;
   animation-timing-function: cubic-bezier(.62, .28, .23, .99);
-}
-
-.selectFade {
-  transition: background-color ease-in-out 3000ms;
 }

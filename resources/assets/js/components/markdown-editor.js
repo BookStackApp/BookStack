@@ -71,6 +71,19 @@ class MarkdownEditor {
             if (action === 'insertDrawing') this.actionStartDrawing();
         });
 
+        // Mobile section toggling
+        this.elem.addEventListener('click', event => {
+            const toolbarLabel = event.target.closest('.editor-toolbar-label');
+            if (!toolbarLabel) return;
+
+            const currentActiveSections = this.elem.querySelectorAll('.markdown-editor-wrap');
+            for (let activeElem of currentActiveSections) {
+                activeElem.classList.remove('active');
+            }
+
+            toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
+        });
+
         window.$events.listen('editor-markdown-update', value => {
             this.cm.setValue(value);
             this.updateAndRender();

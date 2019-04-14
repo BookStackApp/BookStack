@@ -1,44 +1,4 @@
-@extends('sidebar-layout')
-
-@section('toolbar')
-    <div class="col-sm-6 col-xs-3 faded" v-pre>
-        @include('chapters._breadcrumbs', ['chapter' => $chapter])
-    </div>
-    <div class="col-sm-6 col-xs-9 faded">
-        <div class="action-buttons">
-            <span dropdown class="dropdown-container">
-                <div dropdown-toggle class="text-button text-primary">@icon('export'){{ trans('entities.export') }}</div>
-                <ul class="wide">
-                    <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </span>
-            @if(userCan('page-create', $chapter))
-                <a href="{{ $chapter->getUrl('/create-page') }}" class="text-pos text-button">@icon('add'){{ trans('entities.pages_new') }}</a>
-            @endif
-            @if(userCan('chapter-update', $chapter))
-                <a href="{{ $chapter->getUrl('/edit') }}" class="text-primary text-button">@icon('edit'){{ trans('common.edit') }}</a>
-            @endif
-            @if((userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter) )|| userCan('restrictions-manage', $chapter) || userCan('chapter-delete', $chapter))
-                <div dropdown class="dropdown-container">
-                    <a dropdown-toggle class="text-primary text-button">@icon('more') {{ trans('common.more') }}</a>
-                    <ul>
-                        @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
-                            <li><a href="{{ $chapter->getUrl('/move') }}" class="text-primary">@icon('folder'){{ trans('common.move') }}</a></li>
-                        @endif
-                        @if(userCan('restrictions-manage', $chapter))
-                            <li><a href="{{ $chapter->getUrl('/permissions') }}" class="text-primary">@icon('lock'){{ trans('entities.permissions') }}</a></li>
-                        @endif
-                        @if(userCan('chapter-delete', $chapter))
-                            <li><a href="{{ $chapter->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
-                        @endif
-                    </ul>
-                </div>
-            @endif
-        </div>
-    </div>
-@stop
+@extends('tri-layout')
 
 @section('container-attrs')
     id="entity-dashboard"
@@ -46,27 +6,59 @@
     entity-type="chapter"
 @stop
 
-@section('sidebar')
+@section('body')
 
-    @if($chapter->tags->count() > 0)
-        <section>
-            @include('components.tag-list', ['entity' => $chapter])
-        </section>
-    @endif
-
-    <div class="card">
-        <div class="body">
-            <form @submit.prevent="searchBook" class="search-box">
-                <input v-model="searchTerm" @change="checkSearchForm()" type="text" name="term" placeholder="{{ trans('entities.chapters_search_this') }}">
-                <button type="submit">@icon('search')</button>
-                <button v-if="searching" v-cloak class="text-neg" @click="clearSearch()" type="button">@icon('close')</button>
-            </form>
-        </div>
+    <div class="mb-m">
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $chapter->book,
+            $chapter,
+        ]])
     </div>
 
-    <div class="card entity-details">
-        <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body blended-links text-small text-muted">
+    <div class="content-wrap card">
+        <h1 class="break-text" v-pre>{{ $chapter->name }}</h1>
+        <div class="chapter-content" v-show="!searching">
+            <p v-pre class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
+            @if(count($pages) > 0)
+                <div v-pre class="entity-list book-contents">
+                    @foreach($pages as $page)
+                        @include('pages.list-item', ['page' => $page])
+                    @endforeach
+                </div>
+            @else
+                <div class="mt-xl" v-pre>
+                    <hr>
+                    <p class="text-muted italic mb-m mt-xl">{{ trans('entities.chapters_empty') }}</p>
+
+                    <div class="icon-list block inline">
+                        @if(userCan('page-create', $chapter))
+                            <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item text-page">
+                                <span class="icon">@icon('page')</span>
+                                <span>{{ trans('entities.books_empty_create_page') }}</span>
+                            </a>
+                        @endif
+                        @if(userCan('book-update', $book))
+                            <a href="{{ $book->getUrl('/sort') }}" class="icon-list-item text-book">
+                                <span class="icon">@icon('book')</span>
+                                <span>{{ trans('entities.books_empty_sort_current_book') }}</span>
+                            </a>
+                        @endif
+                    </div>
+
+                </div>
+            @endif
+        </div>
+
+        @include('partials.entity-dashboard-search-results')
+    </div>
+
+@stop
+
+@section('right')
+
+    <div class="mb-xl">
+        <h5>{{ trans('common.details') }}</h5>
+        <div class="blended-links text-small text-muted">
             @include('partials.entity-meta', ['entity' => $chapter])
 
             @if($book->restricted)
@@ -91,49 +83,72 @@
         </div>
     </div>
 
-    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
-@stop
+    <div class="actions mb-xl">
+        <h5>{{ trans('common.actions') }}</h5>
+        <div class="icon-list text-primary">
 
-@section('body')
-
-    <div class="container small nopad">
-        <h1 class="break-text" v-pre>{{ $chapter->name }}</h1>
-        <div class="chapter-content" v-show="!searching">
-            <p v-pre class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
-
-            @if(count($pages) > 0)
-                <div v-pre class="page-list">
-                    <hr>
-                    @foreach($pages as $page)
-                        @include('pages/list-item', ['page' => $page])
-                        <hr>
-                    @endforeach
-                </div>
-            @else
-                <div v-pre class="well">
-                    <p class="text-muted italic">{{ trans('entities.chapters_empty') }}</p>
-                    <p>
-                        @if(userCan('page-create', $chapter))
-                            <a href="{{ $chapter->getUrl('/create-page') }}" class="button outline page">@icon('page'){{ trans('entities.books_empty_create_page') }}</a>
-                        @endif
-                        @if(userCan('page-create', $chapter) && userCan('book-update', $book))
-                            &nbsp;&nbsp;<em class="text-muted">-{{ trans('entities.books_empty_or') }}-</em>&nbsp;&nbsp; &nbsp;
-                        @endif
-                        @if(userCan('book-update', $book))
-                            <a href="{{ $book->getUrl('/sort') }}" class="button outline book">@icon('book'){{ trans('entities.books_empty_sort_current_book') }}</a>
-                        @endif
-                    </p>
-                </div>
+            @if(userCan('page-create', $chapter))
+                <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item">
+                    <span>@icon('add')</span>
+                    <span>{{ trans('entities.pages_new') }}</span>
+                </a>
             @endif
-        </div>
 
-        <div class="search-results" v-cloak v-show="searching">
-            <h3 class="text-muted">{{ trans('entities.search_results') }} <a v-if="searching" @click="clearSearch()" class="text-small">@icon('close'){{ trans('entities.search_clear') }}</a></h3>
-            <div v-if="!searchResults">
-                @include('partials/loading-icon')
+            <hr class="primary-background"/>
+
+            @if(userCan('chapter-update', $chapter))
+                <a href="{{ $chapter->getUrl('/edit') }}" class="icon-list-item">
+                    <span>@icon('edit')</span>
+                    <span>{{ trans('common.edit') }}</span>
+                </a>
+            @endif
+            @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
+                <a href="{{ $chapter->getUrl('/move') }}" class="icon-list-item">
+                    <span>@icon('folder')</span>
+                    <span>{{ trans('common.move') }}</span>
+                </a>
+            @endif
+            @if(userCan('restrictions-manage', $chapter))
+                <a href="{{ $chapter->getUrl('/permissions') }}" class="icon-list-item">
+                    <span>@icon('lock')</span>
+                    <span>{{ trans('entities.permissions') }}</span>
+                </a>
+            @endif
+            @if(userCan('chapter-delete', $chapter))
+                <a href="{{ $chapter->getUrl('/delete') }}" class="icon-list-item">
+                    <span>@icon('delete')</span>
+                    <span>{{ trans('common.delete') }}</span>
+                </a>
+            @endif
+
+            <hr class="primary-background"/>
+
+            <div dropdown class="dropdown-container">
+                <div dropdown-toggle class="icon-list-item">
+                    <span>@icon('export')</span>
+                    <span>{{ trans('entities.export') }}</span>
+                </div>
+                <ul class="wide">
+                    <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                    <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                    <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                </ul>
             </div>
-            <div v-html="searchResults"></div>
         </div>
     </div>
-
 @stop
+
+@section('left')
+
+    @include('partials.entity-dashboard-search-box')
+
+    @if($chapter->tags->count() > 0)
+        <div class="mb-xl">
+            @include('components.tag-list', ['entity' => $chapter])
+        </div>
+    @endif
+
+    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+@stop
+
+

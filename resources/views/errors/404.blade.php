@@ -1,36 +1,45 @@
 @extends('simple-layout')
 
 @section('content')
-<div class="container">
+<div class="container mt-l">
 
-    <p>&nbsp;</p>
-
-    <div class="card">
-        <h3>@icon('danger') {{ $message or trans('errors.404_page_not_found') }}</h3>
-        <div class="body">
-            <h5>{{ trans('errors.sorry_page_not_found') }}</h5>
-            <p><a href="{{ baseUrl('/') }}" class="button outline">{{ trans('errors.return_home') }}</a></p>
+    <div class="card mb-xl px-l pb-xl pt-l">
+        <div class="grid half v-center">
+            <div>
+                <h1 class="list-heading">{{ $message ?? trans('errors.404_page_not_found') }}</h1>
+                <h5>{{ trans('errors.sorry_page_not_found') }}</h5>
+            </div>
+            <div class="text-right">
+                <a href="{{ baseUrl('/') }}" class="button outline">{{ trans('errors.return_home') }}</a>
+            </div>
         </div>
+
     </div>
 
     @if (setting('app-public') || !user()->isDefault())
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <h3 class="text-muted">@icon('page') {{ trans('entities.pages_popular') }}</h3>
-                    @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, [\BookStack\Entities\Page::class]), 'style' => 'compact'])
+        <div class="grid third gap-xxl">
+            <div>
+                <div class="card mb-xl">
+                    <h3>{{ trans('entities.pages_popular') }}</h3>
+                    <div class="px-m">
+                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, 'page'), 'style' => 'compact'])
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h3 class="text-muted">@icon('book') {{ trans('entities.books_popular') }}</h3>
-                    @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, [\BookStack\Entities\Book::class]), 'style' => 'compact'])
+            <div>
+                <div class="card mb-xl">
+                    <h3>{{ trans('entities.books_popular') }}</h3>
+                    <div class="px-m">
+                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, 'book'), 'style' => 'compact'])
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h3 class="text-muted">@icon('chapter') {{ trans('entities.chapters_popular') }}</h3>
-                    @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, [\BookStack\Entities\Chapter::class]), 'style' => 'compact'])
+            <div>
+                <div class="card mb-xl">
+                    <h3>{{ trans('entities.chapters_popular') }}</h3>
+                    <div class="px-m">
+                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, 'chapter'), 'style' => 'compact'])
+                    </div>
                 </div>
             </div>
         </div>

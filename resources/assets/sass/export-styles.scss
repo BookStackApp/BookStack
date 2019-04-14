@@ -1,8 +1,9 @@
 @import "variables";
 @import "mixins";
+@import "spacing";
 @import "html";
 @import "text";
-@import "grid";
+@import "layout";
 @import "blocks";
 @import "forms";
 @import "tables";
@@ -12,11 +13,18 @@
 
 body {
   font-family: 'DejaVu Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Roboto", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background-color: #FFF;
+  margin: 0;
+  padding: 0;
 }
 
 table {
   border-spacing: 0;
   border-collapse: collapse;
+}
+
+.page-content {
+  overflow: hidden;
 }
 
 // Prevent code block overflow on export

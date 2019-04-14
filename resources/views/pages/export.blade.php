@@ -13,22 +13,20 @@
     @include('partials.custom-head')
 </head>
 <body>
-<div class="container" id="page-show">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="page-content">
 
-                @include('pages.page-display')
+<div id="page-show">
+    <div class="page-content">
 
-                <hr>
+        @include('pages.page-display')
 
-                <div class="text-muted text-small">
-                    @include('partials.entity-export-meta', ['entity' => $page])
-                </div>
+        <hr>
 
-            </div>
+        <div class="text-muted text-small">
+            @include('partials.entity-export-meta', ['entity' => $page])
         </div>
+
     </div>
 </div>
+
 </body>
 </html>

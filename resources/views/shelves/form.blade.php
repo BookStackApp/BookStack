@@ -1,48 +1,44 @@
-
 {{ csrf_field() }}
+
 <div class="form-group title-input">
     <label for="name">{{ trans('common.name') }}</label>
-    @include('form/text', ['name' => 'name'])
+    @include('form.text', ['name' => 'name'])
 </div>
 
 <div class="form-group description-input">
     <label for="description">{{ trans('common.description') }}</label>
-    @include('form/textarea', ['name' => 'description'])
+    @include('form.textarea', ['name' => 'description'])
 </div>
 
-<div shelf-sort class="row">
-    <div class="col-md-6">
-        <div  class="form-group">
-            <label for="books">{{ trans('entities.shelves_books') }}</label>
-            <input type="hidden" id="books-input" name="books"
-                   value="{{ isset($shelf) ? $shelf->books->implode('id', ',') : '' }}">
-            <div class="scroll-box">
-                <div class="scroll-box-item text-small text-muted instruction">
-                    {{ trans('entities.shelves_drag_books') }}
-                </div>
-                <div class="scroll-box-item scroll-box-placeholder" style="display: none;">
-                    <a href="#" class="text-muted">@icon('book') ...</a>
-                </div>
-                @if (isset($shelfBooks) && count($shelfBooks) > 0)
-                    @foreach ($shelfBooks as $book)
-                        <div data-id="{{ $book->id }}" class="scroll-box-item">
-                            <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
-                        </div>
-                    @endforeach
-                @endif
+<div shelf-sort class="grid half gap-xl">
+    <div class="form-group">
+        <label for="books">{{ trans('entities.shelves_books') }}</label>
+        <input type="hidden" id="books-input" name="books"
+               value="{{ isset($shelf) ? $shelf->books->implode('id', ',') : '' }}">
+        <div class="scroll-box">
+            <div class="scroll-box-item text-small text-muted instruction">
+                {{ trans('entities.shelves_drag_books') }}
             </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="books">{{ trans('entities.shelves_add_books') }}</label>
-            <div class="scroll-box">
-                @foreach ($books as $book)
+            <div class="scroll-box-item scroll-box-placeholder" style="display: none;">
+                <a href="#" class="text-muted">@icon('book') ...</a>
+            </div>
+            @if (isset($shelfBooks) && count($shelfBooks) > 0)
+                @foreach ($shelfBooks as $book)
                     <div data-id="{{ $book->id }}" class="scroll-box-item">
                         <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
                     </div>
                 @endforeach
-            </div>
+            @endif
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="books">{{ trans('entities.shelves_add_books') }}</label>
+        <div class="scroll-box">
+            @foreach ($books as $book)
+                <div data-id="{{ $book->id }}" class="scroll-box-item">
+                    <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -80,5 +76,5 @@
 
 <div class="form-group text-right">
     <a href="{{ isset($shelf) ? $shelf->getUrl() : baseUrl('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
-    <button type="submit" class="button pos">{{ trans('entities.shelves_save') }}</button>
+    <button type="submit" class="button primary">{{ trans('entities.shelves_save') }}</button>
 </div>

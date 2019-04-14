@@ -124,6 +124,20 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Check if the current user has a permission or bypass if the provided user
+     * id matches the current user.
+     * @param string $permissionName
+     * @param int $userId
+     * @return bool
+     */
+    protected function checkPermissionOrCurrentUser(string $permissionName, int $userId)
+    {
+        return $this->checkPermissionOr($permissionName, function() use ($userId) {
+            return $userId === $this->currentUser->id;
+        });
+    }
+
+    /**
      * Send back a json error message.
      * @param string $messageText
      * @param int $statusCode

@@ -103,17 +103,6 @@ class Page extends Entity
     }
 
     /**
-     * Get an excerpt of this page's content to the specified length.
-     * @param int $length
-     * @return mixed
-     */
-    public function getExcerpt($length = 100)
-    {
-        $text = strlen($this->text) > $length ? substr($this->text, 0, $length-3) . '...' : $this->text;
-        return mb_convert_encoding($text, 'UTF-8');
-    }
-
-    /**
      * Return a generalised, common raw query that can be 'unioned' across entities.
      * @param bool $withContent
      * @return string

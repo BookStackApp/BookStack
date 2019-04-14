@@ -704,7 +704,7 @@ class PermissionService
      * @param string $entityIdColumn
      * @param string $entityTypeColumn
      * @param string $action
-     * @return mixed
+     * @return QueryBuilder
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn, $action = 'view')
     {

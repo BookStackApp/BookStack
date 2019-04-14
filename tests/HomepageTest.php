@@ -62,7 +62,7 @@ class HomepageTest extends TestCase
         $this->asEditor();
         $homeVisit = $this->get('/');
         $homeVisit->assertSee('Books');
-        $homeVisit->assertSee('book-grid-item grid-card');
+        $homeVisit->assertSee('grid-card');
         $homeVisit->assertSee('grid-card-content');
         $homeVisit->assertSee('grid-card-footer');
         $homeVisit->assertSee('featured-image-container');

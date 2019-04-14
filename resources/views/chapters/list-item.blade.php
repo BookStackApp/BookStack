@@ -1,31 +1,22 @@
-<div class="chapter entity-list-item" data-entity-type="chapter" data-entity-id="{{$chapter->id}}">
-    <h4>
-        @if (isset($showPath) && $showPath)
-            <a href="{{ $chapter->book->getUrl() }}" class="text-book">
-                @icon('book'){{ $chapter->book->getShortName() }}
-            </a>
-            <span class="text-muted">&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</span>
-        @endif
-        <a href="{{ $chapter->getUrl() }}" class="text-chapter entity-list-item-link">
-            @icon('chapter')<span class="entity-list-item-name break-text">{{ $chapter->name }}</span>
-        </a>
-    </h4>
-
-    <div class="entity-item-snippet">
-        @if(isset($chapter->searchSnippet))
-            <p class="text-muted break-text">{!! $chapter->searchSnippet !!}</p>
-        @else
-            <p class="text-muted break-text">{{ $chapter->getExcerpt() }}</p>
-        @endif
-    </div>
-
-
-    @if(!isset($hidePages) && count($chapter->pages) > 0)
-        <p chapter-toggle class="text-muted">@icon('caret-right') @icon('page') <span>{{ trans_choice('entities.x_pages', $chapter->pages->count()) }}</span></p>
-        <div class="inset-list">
-            @foreach($chapter->pages as $page)
-                <h5 class="@if($page->draft) draft @endif"><a href="{{ $page->getUrl() }}" class="text-page @if($page->draft) draft @endif">@icon('page'){{$page->name}}</a></h5>
-            @endforeach
+<a href="{{ $chapter->getUrl() }}" class="chapter entity-list-item @if($chapter->hasChildren()) has-children @endif" data-entity-type="chapter" data-entity-id="{{$chapter->id}}">
+    <span class="icon text-chapter">@icon('chapter')</span>
+    <div class="content">
+        <h4 class="entity-list-item-name break-text">{{ $chapter->name }}</h4>
+        <div class="entity-item-snippet">
+            <p class="text-muted break-text mb-s">{{ $chapter->getExcerpt() }}</p>
         </div>
-    @endif
-</div>
+    </div>
+</a>
+@if ($chapter->hasChildren())
+    <div class="chapter chapter-expansion">
+        <span class="icon text-chapter">@icon('page')</span>
+        <div class="content">
+            <div chapter-toggle class="text-muted chapter-expansion-toggle">@icon('caret-right') <span>{{ trans_choice('entities.x_pages', $chapter->pages->count()) }}</span></div>
+            <div class="inset-list">
+                <div class="entity-list-item-children">
+                    @include('partials.entity-list', ['entities' => $chapter->pages])
+                </div>
+            </div>
+        </div>
+    </div>
+@endif

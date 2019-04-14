@@ -54,12 +54,17 @@
   transition: all ease-in-out 180ms;
   user-select: none;
   svg[data-icon="caret-right"] {
+    margin-right: 0;
+    font-size: 1rem;
     transition: all ease-in-out 180ms;
     transform: rotate(0deg);
-    transform-origin: 25% 50%;
+    transform-origin: 50% 50%;
   }
   &.open svg[data-icon="caret-right"] {
     transform: rotate(90deg);
+  }
+  svg[data-icon="caret-right"] + * {
+    margin-left: $-xs;
   }
 }
 
@@ -110,7 +115,7 @@
   }
 }
 
-.corner-button {
+.popup-footer button, .popup-header-close {
   position: absolute;
   top: 0;
   right: 0;
@@ -118,6 +123,16 @@
   height: 40px;
   border-radius: 0;
   box-shadow: none;
+  &:active {
+    outline: 0;
+  }
+}
+.popup-header-close {
+  background-color: transparent;
+  border: 0;
+  color: #FFF;
+  font-size: 16px;
+  padding: 0 $-m;
 }
 
 .popup-header, .popup-footer {
@@ -130,12 +145,18 @@
     padding: 8px $-m;
   }
 }
+.popup-footer {
+  margin-top: 1px;
+}
 body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   height: 444px;
   min-height: 444px;
 }
 #entity-selector-wrap .popup-body .form-group {
   margin: 0;
+}
+.popup-body .entity-selector-container {
+  flex: 1;
 }
 
 .image-manager-body {
@@ -583,27 +604,26 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .comment-box {
-  clear: left;
   border: 1px solid #DDD;
-  margin-bottom: $-s;
-  border-radius: 3px;
+  border-radius: 4px;
+  background-color: #FFF;
   .content {
-    padding: $-s;
     font-size: 0.666em;
     p, ul, ol {
       font-size: $fs-m;
       margin: .5em 0;
     }
   }
-  .reply-row {
-    padding: $-xs $-s;
+  .actions {
+    opacity: 0;
+    transition: opacity ease-in-out 120ms;
+  }
+  &:hover .actions {
+    opacity: 1;
   }
 }
 
 .comment-box .header {
-  padding: $-xs $-s;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #DDD;
   .meta {
     img, a, span {
       display: inline-block;
@@ -626,4 +646,11 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 #tag-manager .drag-card {
   max-width: 500px;
+}
+
+.permissions-table [permissions-table-toggle-all-in-row] {
+  display: none;
+}
+.permissions-table tr:hover [permissions-table-toggle-all-in-row] {
+  display: inline;
 }

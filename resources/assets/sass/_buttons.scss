@@ -1,15 +1,14 @@
+button {
+  font-size: 100%;
+}
 
 @mixin generate-button-colors($textColor, $backgroundColor) {
   background-color: $backgroundColor;
   color: $textColor;
   fill: $textColor;
-  text-transform: uppercase;
   border: 1px solid $backgroundColor;
-  vertical-align: top;
   &:hover {
     background-color: lighten($backgroundColor, 8%);
-    //box-shadow: $bs-med;
-    text-decoration: none;
     color: $textColor;
   }
   &:active {
@@ -18,7 +17,6 @@
   &:focus {
     background-color: lighten($backgroundColor, 4%);
     box-shadow: $bs-light;
-    text-decoration: none;
     color: $textColor;
   }
 }
@@ -26,42 +24,36 @@
 // Button Specific Variables
 $button-border-radius: 2px;
 
-.button-base {
+.button  {
   text-decoration: none;
-  font-size: $fs-m;
+  font-size: 0.85rem;
   line-height: 1.4em;
   padding: $-xs*1.3 $-m;
-  margin: $-xs $-xs $-xs 0;
+  margin-top: $-xs;
+  margin-bottom: $-xs;
   display: inline-block;
-  border: none;
   font-weight: 400;
   outline: 0;
   border-radius: $button-border-radius;
   cursor: pointer;
-  transition: all ease-in-out 120ms;
-  box-shadow: 0;
-  @include generate-button-colors(#EEE, $primary);
-}
-
-.button, input[type="button"], input[type="submit"]  {
-  @extend .button-base;
-  &.pos {
-    @include generate-button-colors(#EEE, $positive);
+  transition: background-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
+  box-shadow: none;
+  background-color: $primary;
+  color: #FFF;
+  fill: #FFF;
+  text-transform: uppercase;
+  border: 1px solid $primary;
+  vertical-align: top;
+  &:hover, &:focus {
+    text-decoration: none;
   }
-  &.neg {
-    @include generate-button-colors(#EEE, $negative);
-  }
-  &.secondary {
-    @include generate-button-colors(#EEE, $secondary);
-  }
-  &.muted {
-    @include generate-button-colors(#EEE, #AAA);
-  }
-  &.muted-light {
-    @include generate-button-colors(#666, #e4e4e4);
+  &:active {
+    background-color: darken($primary, 8%);
   }
 }
-
+.button.primary {
+  @include generate-button-colors(#FFFFFF, $primary);
+}
 .button.outline {
   background-color: transparent;
   color: #888;
@@ -71,78 +63,38 @@ $button-border-radius: 2px;
     box-shadow: none;
     background-color: #EEE;
   }
-  &.page {
-    border-color: $color-page;
-    color: $color-page;
-    fill: $color-page;
-    &:hover, &:focus, &:active {
-      background-color: $color-page;
-      color: #FFF;
-      fill: #FFF;
-    }
-  }
-  &.chapter {
-    border-color: $color-chapter;
-    color: $color-chapter;
-    fill: $color-chapter;
-    &:hover, &:focus, &:active {
-      background-color: $color-chapter;
-      color: #FFF;
-      fill: #FFF;
-    }
-  }
-  &.book {
-    border-color: $color-book;
-    color: $color-book;
-    fill: $color-book;
-    &:hover, &:focus, &:active {
-      background-color: $color-book;
-      color: #FFF;
-      fill: #FFF;
-    }
-  }
+}
+
+.button + .button {
+  margin-left: $-s;
+}
+
+.button.small {
+  font-size: 0.75rem;
+  padding: $-xs*1.2 $-s;
 }
 
 .text-button {
-  @extend .link;
+  cursor: pointer;
   background-color: transparent;
   padding: 0;
   margin: 0;
   border: none;
   user-select: none;
+  font-size: 0.75rem;
+  line-height: 1.4em;
   &:focus, &:active {
     outline: 0;
   }
   &:hover {
     text-decoration: none;
   }
-  &.neg {
-    color: $negative;
-  }
-}
-
-.button-group {
-  @include clearfix;
-  .button, button[type="button"] {
-    margin: $-xs 0 $-xs 0;
-    float: left;
-    border-radius: 0;
-    &:first-child {
-      border-radius: $button-border-radius 0 0 $button-border-radius;
-    }
-    &:last-child {
-      border-radius: 0 $button-border-radius $button-border-radius 0;
-    }
-  }
 }
 
 .button.block {
   width: 100%;
-  text-align: center;
+  text-align: left;
   display: block;
-  &.text-left {
-    text-align: left;
-  }
 }
 
 .button.icon {
@@ -160,9 +112,7 @@ $button-border-radius: 2px;
     width: 24px;
     height: 24px;
   }
-  padding: $-s $-m;
-  padding-bottom: $-s - 2px;
-  padding-left: $-m*2 + 24px;
+  padding: $-s $-m ($-s - 2px) ($-m*2 + 24px);
 }
 
 .button[disabled] {

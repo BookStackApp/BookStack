@@ -5,15 +5,17 @@ class EntitySelector {
         this.elem = elem;
         this.search = '';
         this.lastClick = 0;
+        this.selectedItemData = null;
 
-        let entityTypes = elem.hasAttribute('entity-types') ? elem.getAttribute('entity-types') : 'page,book,chapter';
-        let entityPermission = elem.hasAttribute('entity-permission') ? elem.getAttribute('entity-permission') : 'view';
+        const entityTypes = elem.hasAttribute('entity-types') ? elem.getAttribute('entity-types') : 'page,book,chapter';
+        const entityPermission = elem.hasAttribute('entity-permission') ? elem.getAttribute('entity-permission') : 'view';
         this.searchUrl = window.baseUrl(`/ajax/search/entities?types=${encodeURIComponent(entityTypes)}&permission=${encodeURIComponent(entityPermission)}`);
 
         this.input = elem.querySelector('[entity-selector-input]');
         this.searchInput = elem.querySelector('[entity-selector-search]');
         this.loading = elem.querySelector('[entity-selector-loading]');
         this.resultsContainer = elem.querySelector('[entity-selector-results]');
+        this.addButton = elem.querySelector('[entity-selector-add-button]');
 
         this.elem.addEventListener('click', this.onClick.bind(this));
 
@@ -26,9 +28,19 @@ class EntitySelector {
                 this.searchEntities(this.searchInput.value);
             }, 200);
         });
+
         this.searchInput.addEventListener('keydown', event => {
             if (event.keyCode === 13) event.preventDefault();
         });
+
+        if (this.addButton) {
+            this.addButton.addEventListener('click', event => {
+                if (this.selectedItemData) {
+                    this.confirmSelection(this.selectedItemData);
+                    this.unselectAll();
+                }
+            });
+        }
 
         this.showLoading();
         this.initialLoad();
@@ -53,7 +65,7 @@ class EntitySelector {
 
     searchEntities(searchTerm) {
         this.input.value = '';
-        let url = this.searchUrl + `&term=${encodeURIComponent(searchTerm)}`;
+        let url = `${this.searchUrl}&term=${encodeURIComponent(searchTerm)}`;
         window.$http.get(url).then(resp => {
             this.resultsContainer.innerHTML = resp.data;
             this.hideLoading();
@@ -68,49 +80,54 @@ class EntitySelector {
     }
 
     onClick(event) {
-        let t = event.target;
-
-        if (t.matches('.entity-list-item  *')) {
+        const listItem = event.target.closest('[data-entity-type]');
+        if (listItem) {
             event.preventDefault();
             event.stopPropagation();
-            let item = t.closest('[data-entity-type]');
-            this.selectItem(item);
-        } else if (t.matches('[data-entity-type]')) {
-            this.selectItem(t)
+            this.selectItem(listItem);
         }
-
     }
 
     selectItem(item) {
-        let isDblClick = this.isDoubleClick();
-        let type = item.getAttribute('data-entity-type');
-        let id = item.getAttribute('data-entity-id');
-        let isSelected = !item.classList.contains('selected') || isDblClick;
+        const isDblClick = this.isDoubleClick();
+        const type = item.getAttribute('data-entity-type');
+        const id = item.getAttribute('data-entity-id');
+        const isSelected = (!item.classList.contains('selected') || isDblClick);
 
         this.unselectAll();
         this.input.value = isSelected ? `${type}:${id}` : '';
 
-        if (!isSelected) window.$events.emit('entity-select-change', null);
+        const link = item.getAttribute('href');
+        const name = item.querySelector('.entity-list-item-name').textContent;
+        const data = {id: Number(id), name: name, link: link};
+
         if (isSelected) {
             item.classList.add('selected');
-            item.classList.add('primary-background');
+            this.selectedItemData = data;
+        } else {
+            window.$events.emit('entity-select-change', null)
         }
+
         if (!isDblClick && !isSelected) return;
 
-        let link = item.querySelector('.entity-list-item-link').getAttribute('href');
-        let name = item.querySelector('.entity-list-item-name').textContent;
-        let data = {id: Number(id), name: name, link: link};
+        if (isDblClick) {
+            this.confirmSelection(data);
+        }
+        if (isSelected) {
+            window.$events.emit('entity-select-change', data)
+        }
+    }
 
-        if (isDblClick) window.$events.emit('entity-select-confirm', data);
-        if (isSelected) window.$events.emit('entity-select-change', data);
+    confirmSelection(data) {
+        window.$events.emit('entity-select-confirm', data);
     }
 
     unselectAll() {
         let selected = this.elem.querySelectorAll('.selected');
-        for (let i = 0, len = selected.length; i < len; i++) {
-            selected[i].classList.remove('selected');
-            selected[i].classList.remove('primary-background');
+        for (let selectedElem of selected) {
+            selectedElem.classList.remove('selected', 'primary-background');
         }
+        this.selectedItemData = null;
     }
 
 }

@@ -1,28 +1,27 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    <div class="col-sm-8 faded">
-        <div class="breadcrumbs">
-            <a href="{{ baseUrl('/books') }}" class="text-button">@icon('book'){{ trans('entities.books') }}</a>
-            <span class="sep">&raquo;</span>
-            <a href="{{ baseUrl('/create-book') }}" class="text-button">@icon('add'){{ trans('entities.books_create') }}</a>
-        </div>
-    </div>
-@stop
-
 @section('body')
+    <div class="container small">
+        <div class="my-s">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                '/books' => [
+                    'text' => trans('entities.books'),
+                    'icon' => 'book'
+                ],
+                '/create-book' => [
+                    'text' => trans('entities.books_create'),
+                    'icon' => 'add'
+                ]
+            ]])
+        </div>
 
-<div class="container small">
-    <p>&nbsp;</p>
-    <div class="card">
-        <h3>@icon('add') {{ trans('entities.books_create') }}</h3>
-        <div class="body">
+        <div class="content-wrap card">
+            <h1 class="list-heading">{{ trans('entities.books_create') }}</h1>
             <form action="{{ baseUrl("/books") }}" method="POST" enctype="multipart/form-data">
-                @include('books/form')
+                @include('books.form')
             </form>
         </div>
     </div>
-</div>
-<p class="margin-top large"><br></p>
+
     @include('components.image-manager', ['imageType' => 'cover'])
 @stop
