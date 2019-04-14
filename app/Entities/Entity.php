@@ -102,6 +102,11 @@ class Entity extends Ownable
         return $this->morphMany(View::class, 'viewable');
     }
 
+    public function viewCountQuery()
+    {
+        return $this->views()->selectRaw('viewable_id, sum(views) as view_count')->groupBy('viewable_id');
+    }
+
     /**
      * Get the Tag models that have been user assigned to this entity.
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
@@ -216,6 +221,20 @@ class Entity extends Ownable
     public function getText()
     {
         return $this->{$this->textField};
+    }
+
+    /**
+     * Get an excerpt of this entity's descriptive content to the specified length.
+     * @param int $length
+     * @return mixed
+     */
+    public function getExcerpt(int $length = 100)
+    {
+        $text = $this->getText();
+        if (mb_strlen($text) > $length) {
+            $text = mb_substr($text, 0, $length-3) . '...';
+        }
+        return trim($text);
     }
 
     /**

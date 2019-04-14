@@ -2,7 +2,7 @@ const path = require('path');
 const dev = process.env.NODE_ENV !== 'production';
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const config = {
     target: 'web',
@@ -35,12 +35,15 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [{
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {}
+                    },
+                    {
                         loader: "css-loader", options: {
-                            sourceMap: dev
-                        }
+                        sourceMap: dev
+                    }
                     }, {
                         loader: 'postcss-loader',
                         options: {
@@ -54,13 +57,15 @@ const config = {
                         loader: "sass-loader", options: {
                             sourceMap: dev
                         }
-                    }]
-                })
+                    }
+                ]
             }
         ]
     },
     plugins: [
-        new ExtractTextPlugin("[name].css"),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
     ]
 };
 

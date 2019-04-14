@@ -54,7 +54,7 @@ class PageComments {
         commentElem.querySelector('[comment-edit-container]').style.display = 'block';
         let textArea = commentElem.querySelector('[comment-edit-container] textarea');
         let lineCount = textArea.value.split('\n').length;
-        textArea.style.height = (lineCount * 20) + 'px';
+        textArea.style.height = ((lineCount * 20) + 40) + 'px';
         this.editingComment = commentElem;
     }
 
@@ -88,6 +88,7 @@ class PageComments {
             commentElem.parentNode.removeChild(commentElem);
             window.$events.emit('success', window.trans('entities.comment_deleted_success'));
             this.updateCount();
+            this.hideForm();
         });
     }
 
@@ -129,7 +130,7 @@ class PageComments {
     showForm() {
         this.formContainer.style.display = 'block';
         this.formContainer.parentNode.style.display = 'block';
-        this.elem.querySelector('[comment-add-button]').style.display = 'none';
+        this.elem.querySelector('[comment-add-button-container]').style.display = 'none';
         this.formInput.focus();
         window.scrollToElement(this.formInput);
     }
@@ -137,7 +138,18 @@ class PageComments {
     hideForm() {
         this.formContainer.style.display = 'none';
         this.formContainer.parentNode.style.display = 'none';
-        this.elem.querySelector('[comment-add-button]').style.display = 'block';
+        const addButtonContainer = this.elem.querySelector('[comment-add-button-container]');
+        if (this.getCommentCount() > 0) {
+            this.elem.appendChild(addButtonContainer)
+        } else {
+            const countBar = this.elem.querySelector('[comment-count-bar]');
+            countBar.appendChild(addButtonContainer);
+        }
+        addButtonContainer.style.display = 'block';
+    }
+
+    getCommentCount() {
+        return this.elem.querySelectorAll('.comment-box[comment]').length;
     }
 
     setReply(commentElem) {

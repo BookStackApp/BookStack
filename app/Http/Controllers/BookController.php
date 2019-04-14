@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Book;
+use BookStack\Entities\EntityContextManager;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
@@ -15,18 +16,25 @@ class BookController extends Controller
     protected $entityRepo;
     protected $userRepo;
     protected $exportService;
+    protected $entityContextManager;
 
     /**
      * BookController constructor.
      * @param EntityRepo $entityRepo
-     * @param \BookStack\Auth\UserRepo $userRepo
-     * @param \BookStack\Entities\ExportService $exportService
+     * @param UserRepo $userRepo
+     * @param ExportService $exportService
+     * @param EntityContextManager $entityContextManager
      */
-    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, ExportService $exportService)
-    {
+    public function __construct(
+        EntityRepo $entityRepo,
+        UserRepo $userRepo,
+        ExportService $exportService,
+        EntityContextManager $entityContextManager
+    ) {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
         $this->exportService = $exportService;
+        $this->entityContextManager = $entityContextManager;
         parent::__construct();
     }
 
@@ -36,18 +44,32 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->entityRepo->getAllPaginated('book', 18);
+        $view = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books'));
+        $sort = setting()->getUser($this->currentUser, 'books_sort', 'name');
+        $order = setting()->getUser($this->currentUser, 'books_sort_order', 'asc');
+        $sortOptions = [
+            'name' => trans('common.sort_name'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+        ];
+
+        $books = $this->entityRepo->getAllPaginated('book', 18, $sort, $order);
         $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('book', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('book', 4, 0);
-        $booksViewType = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books', 'list'));
+
+        $this->entityContextManager->clearShelfContext();
+
         $this->setPageTitle(trans('entities.books'));
-        return view('books/index', [
+        return view('books.index', [
             'books' => $books,
             'recents' => $recents,
             'popular' => $popular,
             'new' => $new,
-            'booksViewType' => $booksViewType
+            'view' => $view,
+            'sort' => $sort,
+            'order' => $order,
+            'sortOptions' => $sortOptions,
         ]);
     }
 
@@ -59,7 +81,7 @@ class BookController extends Controller
     {
         $this->checkPermission('book-create-all');
         $this->setPageTitle(trans('entities.books_create'));
-        return view('books/create');
+        return view('books.create');
     }
 
     /**
@@ -83,20 +105,28 @@ class BookController extends Controller
     /**
      * Display the specified book.
      * @param $slug
+     * @param Request $request
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function show($slug)
+    public function show($slug, Request $request)
     {
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-view', $book);
+
         $bookChildren = $this->entityRepo->getBookChildren($book);
+
         Views::add($book);
+        if ($request->has('shelf')) {
+            $this->entityContextManager->setShelfContext(intval($request->get('shelf')));
+        }
+
         $this->setPageTitle($book->getShortName());
-        return view('books/show', [
+        return view('books.show', [
             'book' => $book,
             'current' => $book,
             'bookChildren' => $bookChildren,
-            'activity' => Activity::entityActivity($book, 20, 0)
+            'activity' => Activity::entityActivity($book, 20, 1)
         ]);
     }
 
@@ -110,7 +140,7 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named', ['bookName'=>$book->getShortName()]));
-        return view('books/edit', ['book' => $book, 'current' => $book]);
+        return view('books.edit', ['book' => $book, 'current' => $book]);
     }
 
     /**
@@ -142,22 +172,24 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle(trans('entities.books_delete_named', ['bookName'=>$book->getShortName()]));
-        return view('books/delete', ['book' => $book, 'current' => $book]);
+        return view('books.delete', ['book' => $book, 'current' => $book]);
     }
 
     /**
      * Shows the view which allows pages to be re-ordered and sorted.
      * @param string $bookSlug
      * @return \Illuminate\View\View
+     * @throws \BookStack\Exceptions\NotFoundException
      */
     public function sort($bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-update', $book);
+
         $bookChildren = $this->entityRepo->getBookChildren($book, true);
-        $books = $this->entityRepo->getAll('book', false, 'update');
+
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
-        return view('books/sort', ['book' => $book, 'current' => $book, 'books' => $books, 'bookChildren' => $bookChildren]);
+        return view('books.sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**
@@ -170,7 +202,7 @@ class BookController extends Controller
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $bookChildren = $this->entityRepo->getBookChildren($book);
-        return view('books/sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
+        return view('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**
@@ -263,12 +295,12 @@ class BookController extends Controller
      * @param $bookSlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showRestrict($bookSlug)
+    public function showPermissions($bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
         $roles = $this->userRepo->getRestrictableRoles();
-        return view('books/restrictions', [
+        return view('books.permissions', [
             'book' => $book,
             'roles' => $roles
         ]);
@@ -277,11 +309,12 @@ class BookController extends Controller
     /**
      * Set the restrictions for this book.
      * @param $bookSlug
-     * @param $bookSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \BookStack\Exceptions\NotFoundException
+     * @throws \Throwable
      */
-    public function restrict($bookSlug, Request $request)
+    public function permissions($bookSlug, Request $request)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);

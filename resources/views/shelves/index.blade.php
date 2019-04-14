@@ -1,48 +1,49 @@
-@extends('sidebar-layout')
+@extends('tri-layout')
 
-@section('toolbar')
-    <div class="col-xs-6 faded">
-        <div class="action-buttons text-left">
-            @include('shelves/view-toggle', ['shelvesViewType' => $shelvesViewType])
-        </div>
-    </div>
-    <div class="col-xs-6 faded">
-        <div class="action-buttons">
-            @if($currentUser->can('bookshelf-create-all'))
-                <a href="{{ baseUrl("/create-shelf") }}" class="text-pos text-button">@icon('add'){{ trans('entities.shelves_create') }}</a>
-            @endif
-        </div>
-    </div>
+@section('body')
+    @include('shelves.list', ['shelves' => $shelves, 'view' => $view])
 @stop
 
-@section('sidebar')
+@section('right')
+
+    <div class="actions mb-xl">
+        <h5>{{ trans('common.actions') }}</h5>
+        <div class="icon-list text-primary">
+            @if($currentUser->can('bookshelf-create-all'))
+                <a href="{{ baseUrl("/create-shelf") }}" class="icon-list-item">
+                    <span>@icon('add')</span>
+                    <span>{{ trans('entities.shelves_create') }}</span>
+                </a>
+            @endif
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
+        </div>
+    </div>
+
+@stop
+
+@section('left')
     @if($recents)
-        <div id="recents" class="card">
-            <h3>@icon('view') {{ trans('entities.recently_viewed') }}</h3>
-            @include('partials/entity-list', ['entities' => $recents, 'style' => 'compact'])
+        <div id="recents" class="mb-xl">
+            <h5>{{ trans('entities.recently_viewed') }}</h5>
+            @include('partials.entity-list', ['entities' => $recents, 'style' => 'compact'])
         </div>
     @endif
 
-    <div id="popular" class="card">
-        <h3>@icon('popular') {{ trans('entities.shelves_popular') }}</h3>
+    <div id="popular" class="mb-xl">
+        <h5>{{ trans('entities.shelves_popular') }}</h5>
         @if(count($popular) > 0)
-            @include('partials/entity-list', ['entities' => $popular, 'style' => 'compact'])
+            @include('partials.entity-list', ['entities' => $popular, 'style' => 'compact'])
         @else
-            <div class="body text-muted">{{ trans('entities.shelves_popular_empty') }}</div>
+            <div class="text-muted">{{ trans('entities.shelves_popular_empty') }}</div>
         @endif
     </div>
 
-    <div id="new" class="card">
-        <h3>@icon('star-circle') {{ trans('entities.shelves_new') }}</h3>
+    <div id="new" class="mb-xl">
+        <h5>{{ trans('entities.shelves_new') }}</h5>
         @if(count($new) > 0)
-            @include('partials/entity-list', ['entities' => $new, 'style' => 'compact'])
+            @include('partials.entity-list', ['entities' => $new, 'style' => 'compact'])
         @else
-            <div class="body text-muted">{{ trans('entities.shelves_new_empty') }}</div>
+            <div class="text-muted">{{ trans('entities.shelves_new_empty') }}</div>
         @endif
     </div>
-@stop
-
-@section('body')
-    @include('shelves/list', ['shelves' => $shelves, 'shelvesViewType' => $shelvesViewType])
-    <p><br></p>
 @stop

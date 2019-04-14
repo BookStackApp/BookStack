@@ -41,7 +41,7 @@ class UserController extends Controller
         $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
         $this->setPageTitle(trans('settings.users'));
         $users->appends($listDetails);
-        return view('users/index', ['users' => $users, 'listDetails' => $listDetails]);
+        return view('users.index', ['users' => $users, 'listDetails' => $listDetails]);
     }
 
     /**
@@ -53,7 +53,7 @@ class UserController extends Controller
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
         $roles = $this->userRepo->getAllRoles();
-        return view('users/create', ['authMethod' => $authMethod, 'roles' => $roles]);
+        return view('users.create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
-        return view('users/edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
+        return view('users.edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
@@ -190,7 +190,7 @@ class UserController extends Controller
 
         $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
-        return view('users/delete', ['user' => $user]);
+        return view('users.delete', ['user' => $user]);
     }
 
     /**
@@ -232,10 +232,12 @@ class UserController extends Controller
     public function showProfilePage($id)
     {
         $user = $this->userRepo->getById($id);
+
         $userActivity = $this->userRepo->getActivity($user);
         $recentlyCreated = $this->userRepo->getRecentlyCreated($user, 5, 0);
         $assetCounts = $this->userRepo->getAssetCounts($user);
-        return view('users/profile', [
+
+        return view('users.profile', [
             'user' => $user,
             'activity' => $userActivity,
             'recentlyCreated' => $recentlyCreated,
@@ -251,19 +253,7 @@ class UserController extends Controller
      */
     public function switchBookView($id, Request $request)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
-
-        $viewType = $request->get('view_type');
-        if (!in_array($viewType, ['grid', 'list'])) {
-            $viewType = 'list';
-        }
-
-        $user = $this->user->findOrFail($id);
-        setting()->putUser($user, 'books_view_type', $viewType);
-
-        return redirect()->back(302, [], "/settings/users/$id");
+        return $this->switchViewType($id, $request, 'books');
     }
 
     /**
@@ -274,18 +264,98 @@ class UserController extends Controller
      */
     public function switchShelfView($id, Request $request)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        return $this->switchViewType($id, $request, 'bookshelves');
+    }
+
+    /**
+     * For a type of list, switch with stored view type for a user.
+     * @param integer $userId
+     * @param Request $request
+     * @param string $listName
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function switchViewType($userId, Request $request, string $listName)
+    {
+        $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $viewType = $request->get('view_type');
         if (!in_array($viewType, ['grid', 'list'])) {
             $viewType = 'list';
         }
 
-        $user = $this->userRepo->getById($id);
-        setting()->putUser($user, 'bookshelves_view_type', $viewType);
+        $user = $this->userRepo->getById($userId);
+        $key = $listName . '_view_type';
+        setting()->putUser($user, $key, $viewType);
 
-        return redirect()->back(302, [], "/settings/users/$id");
+        return redirect()->back(302, [], "/settings/users/$userId");
     }
+
+    /**
+     * Change the stored sort type for a particular view.
+     * @param string $id
+     * @param string $type
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeSort(string $id, string $type, Request $request)
+    {
+        $validSortTypes = ['books', 'bookshelves'];
+        if (!in_array($type, $validSortTypes)) {
+            return redirect()->back(500);
+        }
+        return $this->changeListSort($id, $request, $type);
+    }
+
+    /**
+     * Update the stored section expansion preference for the given user.
+     * @param string $id
+     * @param string $key
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function updateExpansionPreference(string $id, string $key, Request $request)
+    {
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
+        $keyWhitelist = ['home-details'];
+        if (!in_array($key, $keyWhitelist)) {
+            return response("Invalid key", 500);
+        }
+
+        $newState = $request->get('expand', 'false');
+
+        $user = $this->user->findOrFail($id);
+        setting()->putUser($user, 'section_expansion#' . $key, $newState);
+        return response("", 204);
+    }
+
+    /**
+     * Changed the stored preference for a list sort order.
+     * @param int $userId
+     * @param Request $request
+     * @param string $listName
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function changeListSort(int $userId, Request $request, string $listName)
+    {
+        $this->checkPermissionOrCurrentUser('users-manage', $userId);
+
+        $sort = $request->get('sort');
+        if (!in_array($sort, ['name', 'created_at', 'updated_at'])) {
+            $sort = 'name';
+        }
+
+        $order = $request->get('order');
+        if (!in_array($order, ['asc', 'desc'])) {
+            $order = 'asc';
+        }
+
+        $user = $this->user->findOrFail($userId);
+        $sortKey = $listName . '_sort';
+        $orderKey = $listName . '_sort_order';
+        setting()->putUser($user, $sortKey, $sort);
+        setting()->putUser($user, $orderKey, $order);
+
+        return redirect()->back(302, [], "/settings/users/$userId");
+    }
+
 }

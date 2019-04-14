@@ -1,182 +1,217 @@
-.page-list {
-  h4 {
-    margin: $-l 0 $-xs 0;
-    font-size: 1.666em;
+
+.book-contents .entity-list-item {
+  .icon {
+    width: 4px;
+    border-radius: 1px;
+    justify-self: stretch;
+    align-self: stretch;
+    height: auto;
+    margin-right: $-l;
   }
-  a.chapter {
-    color: $color-chapter;
+  .icon:after {
+    opacity: 0.5;
   }
-  .inset-list {
+  .icon svg {
     display: none;
-    overflow: hidden;
   }
-  h5 {
-    display: block;
-    margin: $-s 0 0 0;
-    border-left: 5px solid $color-page;
-    padding: $-xs 0 $-xs $-m;
-    font-size: 1.1em;
-    font-weight: normal;
-    &.draft {
-      border-left-color: $color-page-draft;
-    }
+  p {
+    margin-bottom: 0;
   }
-  .entity-list-item {
-    margin-bottom: $-m;
-  }
-  hr {
-    margin-top: 0;
-  }
-  .page, .chapter, .book {
-    padding-left: $-l;
-  }
-  .page {
-    border-left: 5px solid $color-page;
-  }
-  .page.draft {
-    border-left: 5px solid $color-page-draft;
-    .text-page {
-      color: $color-page-draft;
-      fill: $color-page-draft;
-    }
-  }
-  .chapter {
-    border-left: 5px solid $color-chapter;
-  }
-  .book {
-    border-left: 5px solid $color-book;
-  }
-  .meta {
-    margin-top: -$-m;
-    font-size: 0.95em;
-  }
-  .meta span {
-    margin-right: $-s;
+  .inner-page {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
-@include smaller-than($s) {
-  .page-list h4 {
-    font-size: 1.333em;
+.entity-list-item + .chapter-expansion {
+  display: flex;
+  padding: 0 $-m $-m $-m;
+  align-items: center;
+  border: 0;
+  width: 100%;
+  position: relative;
+  > .icon {
+    width: 4px;
+    height: auto;
+    border-radius: 0 0 1px 1px;
+    align-self: stretch;
+    flex-shrink: 0;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: currentColor;
+      content: '';
+      opacity: 0.5;
+    }
+    &:after {
+      opacity: 0.5;
+    }
+  }
+  .icon svg {
+    display: none;
+  }
+  > .content {
+    flex: 1;
+  }
+  .chapter-expansion-toggle {
+    border-radius: 0 4px 4px 0;
+    padding: $-xs $-m;
+  }
+  .chapter-expansion-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+.entity-list-item.has-children {
+  padding-bottom: 0;
+  > .icon {
+    border-radius: 4px 4px 0 0;
+  }
+}
+
+.inset-list {
+  display: none;
+  .entity-list-item-name {
+    font-size: 1rem;
+  }
+  .entity-list-item-children {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
 .sidebar-page-nav {
-  $nav-indent: $-s;
+  $nav-indent: $-m;
   list-style: none;
-  margin: $-s 0 $-m 2px;
-  border-left: 2px dotted #BBB;
+  margin: $-s 0 $-m $-xs;
+  position: relative;
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 2px;
+    top: 5px;
+    bottom: 5px;
+    z-index: 0;
+  }
   li {
-    padding-left: $-s;
     margin-bottom: 4px;
     font-size: 0.95em;
+    position: relative;
   }
   .h1 {
-    margin-left: -2px;
+    padding-left: $nav-indent;
   }
   .h2 {
-    margin-left: -2px;
+    padding-left: $nav-indent;
   }
   .h3 {
-    margin-left: $nav-indent;
+    padding-left: $nav-indent * 2;
   }
   .h4 {
-    margin-left: $nav-indent*2;
+    padding-left: $nav-indent * 2.5;
   }
   .h5 {
-    margin-left: $nav-indent*3;
+    padding-left: $nav-indent*3;
   }
   .h6 {
-    margin-left: $nav-indent*4;
+    padding-left: $nav-indent*3.5;
   }
   .current-heading {
     font-weight: bold;
   }
+  li:not(.current-heading) .sidebar-page-nav-bullet {
+    background-color: #BBB !important;
+  }
+  .sidebar-page-nav-bullet {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    left: -2px;
+    top: 30%;
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px #F2F2F2;
+    z-index: 1;
+  }
 }
 
 // Sidebar list
-.book-tree {
-  transition: ease-in-out 240ms;
-  transition-property: right, border;
-}
-.book-tree h4 {
-  padding: $-m $-s 0 $-s;
-  i {
-    padding-right: $-s;
-  }
-}
-.book-tree .sidebar-page-list {
+.book-tree .sidebar-page-list  {
   list-style: none;
-  margin: $-xs 0 0;
+  margin: $-xs -$-s 0 -$-s;
   padding-left: 0;
-  border-left: 5px solid $color-book;
-  li a {
+  padding-right: 0;
+  position: relative;
+
+  &:after, .sub-menu:after {
+    content: '';
     display: block;
-    border-bottom: none;
-    padding: $-xs 0 $-xs $-s;
-    &:hover {
-      text-decoration: none;
-    }
+    position: absolute;
+    left: $-m;
+    top: 1rem;
+    bottom: 1rem;
+    border-left: 4px solid rgba(0, 0, 0, 0.1);
+    z-index: 0;
   }
-  li a i {
-    padding-right: $-xs + 2px;
-  }
-  li, a {
-    display: block;
-  }
-  a.bold {
-    color: #EEE !important;
-    fill: #EEE !important;
-  }
+
   ul {
     list-style: none;
+    padding-left: 1rem;
+    padding-right: 0;
+  }
+  .entity-list-item {
+    padding-top: $-xxs;
+    padding-bottom: $-xxs;
+    .content {
+      padding-top: $-xs;
+      padding-bottom: $-xs;
+      max-width: calc(100% - 20px);
+    }
+  }
+  .entity-list-item.no-hover {
+    margin-top: -$-xs;
+    padding-right: 0;
+  }
+  .entity-list-item-name {
+    font-size: 1em;
     margin: 0;
   }
-  .book {
-    color: $color-book !important;
-    fill: $color-book !important;
-    &.selected {
-      background-color: rgba($color-book, 0.29);
-    }
-  }
-  .chapter {
-    color: $color-chapter !important;
-    fill: $color-chapter !important;
-    &.selected {
-      background-color: rgba($color-chapter, 0.12);
-    }
-  }
-  .page {
-    color: $color-page !important;
-    fill: $color-page !important;
-    border-bottom: none;
-    &.selected {
-      background-color: rgba($color-page, 0.1);
-    }
+  .chapter-child-menu {
+    font-size: .8rem;
+    margin-top: -.2rem;
+    margin-left: -1rem;
   }
   [chapter-toggle] {
-    padding-left: $-s;
+    padding-left: .7rem;
+    padding-bottom: .2rem;
   }
-  .list-item-chapter {
-    border-left: 5px solid $color-chapter;
-    margin: 10px 10px;
-    display: block;
+  .entity-list-item .icon {
+    z-index: 2;
+    width: 4px;
+    height: auto;
+    align-self: stretch;
+    flex-shrink: 0;
+    border-radius: 1px;
+    opacity: 0.6;
   }
-  .list-item-page {
-    border-bottom: none;
-    border-left: 5px solid $color-page;
-    margin: 10px 10px;
+  .entity-list-item .icon:after {
+    opacity: 1;
   }
-  .list-item-page.draft {
-    border-left: 5px solid $color-page-draft;
+  .entity-list-item .icon svg {
+    display: none;
   }
-  .page.draft .page, .list-item-page.draft a.page {
-    color: $color-page-draft !important;
-    fill: $color-page-draft !important;
-  }
-  .sub-menu {
+}
+
+.chapter-child-menu {
+  ul.sub-menu {
     display: none;
     padding-left: 0;
+    position: relative;
   }
   [chapter-toggle].open + .sub-menu {
     display: block;
@@ -186,26 +221,41 @@
 // Sortable Lists
 .sortable-page-list, .sortable-page-list ul {
   list-style: none;
-  background-color: #FFF;
 }
 .sort-box {
   margin-bottom: $-m;
-  padding: 0 $-l 0 $-l;
-  border-left: 4px solid $color-book;
+  border: 2px solid rgba($color-book, 0.6);
+  padding: $-m $-xl;
+  border-radius: 4px;
+}
+.sort-box-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.sort-box-options .button {
+  margin-left: 0;
 }
 .sortable-page-list {
   margin-left: 0;
+  padding: 0;
+  .entity-list-item > span:first-child {
+    align-self: flex-start;
+  }
+  .entity-list-item > div {
+    display: block;
+    flex: 1;
+  }
   > ul {
     margin-left: 0;
   }
   ul {
-    margin-bottom: 0;
+    margin-bottom: $-m;
     margin-top: 0;
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+    padding-left: $-m;
   }
   li {
     border: 1px solid #DDD;
-    padding: $-xs $-s;
     margin-top: -1px;
     min-height: 38px;
     &.text-chapter {
@@ -228,18 +278,26 @@
 
 .activity-list-item {
   padding: $-s 0;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: $-m;
   color: #888;
   fill: #888;
-  border-bottom: 1px solid #EEE;
   font-size: 0.9em;
-  .left {
-    float: left;
-  }
-  .left + .right {
-    margin-left: 30px + $-s;
-  }
-  &:last-of-type {
-    border-bottom: 0;
+}
+.card .activity-list-item {
+  padding: $-s $-m;
+}
+
+.user-list-item {
+  display: inline-grid;
+  padding: $-s;
+  grid-template-columns: min-content 1fr;
+  grid-column-gap: $-m;
+  font-size: 0.9em;
+  align-items: center;
+  > div:first-child {
+    line-height: 0;
   }
 }
 
@@ -280,10 +338,8 @@ ul.pagination {
   margin: 0;
 }
 
-.entity-list {
-  > div {
-    padding: $-m 0;
-  }
+.entity-list, .icon-list {
+  margin: 0 (-$-m);
   h4 {
     margin: 0;
   }
@@ -302,15 +358,125 @@ ul.pagination {
     color: $color-page-draft;
     fill: $color-page-draft;
   }
+  > .dropdown-container {
+    display: block;
+  }
 }
 
-.card .entity-list-item, .card .activity-list-item {
-  padding-left: $-m;
-  padding-right: $-m;
+.icon-list hr {
+  margin: $-s $-m;
+  max-width: 140px;
+  opacity: 0.25;
+  height: 1.1px;
+}
+
+.icon-list hr + hr, .icon-list hr:first-child, .icon-list hr:last-child {
+  display: none;
+}
+
+.entity-list-item, .icon-list-item {
+  padding: $-s $-m;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+  position: relative;
+  word-break: break-word;
+  h4 a {
+    color: #666;
+  }
+  > span:first-child {
+    margin-right: $-m;
+    flex-basis: 1.88em;
+    flex: none;
+  }
+  > span:last-child {
+    flex: 1;
+    text-align: left;
+  }
+  &:not(.no-hover) {
+    cursor: pointer;
+  }
+  &:not(.no-hover):hover {
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+  }
+  &.outline-hover {
+    border: 1px solid transparent;
+  }
+  &.outline-hover:hover {
+    background-color: transparent;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.entity-list-item-path-sep {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  top: 1px;
+  svg {
+    margin-right: 0;
+  }
+}
+
+.card .entity-list-item:not(.no-hover):hover {
+  background-color: #F2F2F2;
+}
+.card .entity-list-item .entity-list-item:hover {
+  background-color: #EEEEEE;
+}
+
+.entity-list-item-children {
+  padding: $-m;
+  > div {
+    overflow: hidden;
+    padding: $-xs 0;
+    margin-top: -$-xs;
+  }
+  .entity-chip {
+    text-overflow: ellipsis;
+    height: 2.5em;
+    overflow: hidden;
+    text-align: left;
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+.entity-list-item-image {
+  align-self: stretch;
+  width: 140px;
+  flex: none;
+  background-size: cover;
+  background-position: 50% 50%;
+  border-radius: 3px;
+  position: relative;
+  margin-right: $-l;
+
+  .svg-icon {
+    color: #FFF;
+    fill: #FFF;
+    font-size: 1.66rem;
+    margin-right: 0;
+    position: absolute;
+    bottom: $-xs;
+    left: $-xs;
+  }
+
+  @include smaller-than($m) {
+    width: 80px;
+  }
+}
+
+.chapter > .entity-list-item-image {
+  width: 60px;
 }
 
 .entity-list.compact {
-  font-size: 0.6em;
+  font-size: 0.6 * $fs-m;
   h4, a {
     line-height: 1.2;
   }
@@ -330,6 +496,11 @@ ul.pagination {
   }
   hr {
     margin: 0;
+  }
+  @include smaller-than($m) {
+    h4 {
+      font-size: 1.666em;
+    }
   }
 }
 
@@ -363,9 +534,8 @@ ul.pagination {
     color: #999;
     fill: #999;
   }
-  li.padded {
-    padding: $-xs $-m;
-    line-height: 1.2;
+  li.active a {
+    font-weight: 600;
   }
   a, button {
     display: block;
@@ -396,7 +566,10 @@ ul.pagination {
 .featured-image-container {
   position: relative;
   overflow: hidden;
-  background: #F2F2F2;
+  min-height: 140px;
+  background-size: cover;
+  background-position: 50% 50%;
+  transition: opacity ease-in-out 240ms;
   a {
     display: block;
   }
@@ -405,11 +578,46 @@ ul.pagination {
     width: 100%;
     max-width: 100%;
     height: auto;
-    transition: all .5s ease-in-out;
-  }
-  img:hover {
-    transform: scale(1.15);
-    opacity: .5;
   }
 }
+.featured-image-container-wrap {
+  position: relative;
+  .svg-icon {
+    color: #FFF;
+    fill: #FFF;
+    font-size: 2rem;
+    margin-right: 0;
+    position: absolute;
+    bottom: 10px;
+    left: 6px;
+  }
+}
+.grid-card:hover .featured-image-container {
+  opacity: .5;
+}
 
+.action-link-list {
+  //padding: $-s 0;
+}
+.action-link {
+  background: transparent;
+  border: none;
+  color: currentColor;
+  padding: $-m 0;
+}
+
+.active-link-list {
+  a {
+    display: inline-block;
+    padding: $-s;
+  }
+  a:not(.active) {
+    color: #444;
+    fill: #444;
+  }
+  a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    text-decoration: none;
+  }
+}

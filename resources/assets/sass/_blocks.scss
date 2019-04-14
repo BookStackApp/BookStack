@@ -1,136 +1,7 @@
 
-/*
-* This file container all block styling including background shading,
-* margins, paddings & borders.
-*/
-
-
-/*
-* Background Shading
-*/
-.shaded {
-  background-color: #f1f1f1;
-  &.pos {
-    background-color: lighten($positive, 40%);
-  }
-  &.neg {
-    background-color: lighten($negative, 20%);
-  }
-  &.primary {
-    background-color: lighten($primary, 40%);
-  }
-  &.secondary {
-    background-color: lighten($secondary, 30%);
-  }
-}
-
-/*
-* Bordering
-*/
-.bordered {
-  border: 1px solid #BBB;
-  &.pos {
-    border-color: $positive;
-  }
-  &.neg {
-    border-color: $negative;
-  }
-  &.primary {
-    border-color: $primary;
-  }
-  &.secondary {
-    border-color: $secondary;
-  }
-  &.thick {
-    border-width: 2px;
-  }
-}
-.rounded {
-  border-radius: 3px;
-}
-
-/*
-* Padding
-*/
-.nopadding {
-  padding: 0;
-}
-.padded {
-  padding: $-l;
-  &.large {
-    padding: $-xl;
-  }
-  >h1, >h2, >h3, >h4 {
-    &:first-child {
-      margin-top: 0.1em;
-    }
-  }
-}
-.padded-vertical, .padded-top {
-  padding-top: $-m;
-  &.large {
-    padding-top: $-xl;
-  }
-}
-
-.padded-vertical, .padded-bottom {
-  padding-bottom: $-m;
-  &.large {
-    padding-bottom: $-xl;
-  }
-}
-.padded-horizontal, .padded-left {
-  padding-left: $-m;
-  &.large {
-    padding-left: $-xl;
-  }
-}
-.padded-horizontal, .padded-right {
-  padding-right: $-m;
-  &.large {
-    padding-right: $-xl;
-  }
-}
-
-/*
-* Margins
-*/
-.margins {
-  margin: $-l;
-  &.large {
-    margin: $-xl;
-  }
-}
-.margins-vertical, .margin-top {
-  margin-top: $-m;
-  &.large {
-    margin-top: $-xl;
-  }
-}
-.margins-vertical, .margin-bottom {
-  margin-bottom: $-m;
-  &.large {
-    margin-bottom: $-xl;
-  }
-}
-.margins-horizontal, .margin-left {
-  margin-left: $-m;
-  &.large {
-    margin-left: $-xl;
-  }
-}
-.margins-horizontal, .margin-right {
-  margin-right: $-m;
-  &.large {
-    margin-right: $-xl;
-  }
-}
-
-
 /**
  * Callouts
  */
-
 .callout {
   border-left: 3px solid #BBB;
   background-color: #EEE;
@@ -182,19 +53,22 @@
   }
 }
 
+/**
+ * Card-style blocks
+ */
+
 .card {
-  margin: $-m;
   background-color: #FFF;
-  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: $bs-card;
+  border-radius: 3px;
+  border: 1px solid transparent;
   h3 {
-    padding: $-m;
-    border-bottom: 1px solid #E8E8E8;
+    padding: $-m $-m $-xs;
     margin: 0;
-    font-size: $fs-s;
-    color: #888;
-    fill: #888;
+    font-size: $fs-m;
+    color: #222;
+    fill: #222;
     font-weight: 400;
-    text-transform: uppercase;
   }
   h3 a {
     line-height: 1;
@@ -208,18 +82,11 @@
   }
 }
 
-.sidebar .card {
-  h3, .body, .empty-text {
-    padding: $-s $-m;
-  }
-}
-
 .card.drag-card {
   border: 1px solid #DDD;
   border-radius: 4px;
   display: flex;
-  padding: 0;
-  padding-left: $-s + 28px;
+  padding: 0 0 0 ($-s + 28px);
   margin: $-s 0;
   position: relative;
   .drag-card-action {
@@ -227,14 +94,12 @@
   }
   .handle, .drag-card-action {
     display: flex;
-    padding: 0;
     align-items: center;
     text-align: center;
     justify-content: center;
     width: 28px;
     flex-grow: 0;
-    padding-left: $-xs;
-    padding-right: $-xs;
+    padding: 0 $-xs;
     &:hover {
       background-color: #EEE;
     }
@@ -245,9 +110,6 @@
   > div .outline input {
     margin: $-s 0;
     width: 100%;
-  }
-  > div.padded {
-    padding: $-s 0 !important;
   }
   .handle {
     background-color: #EEE;
@@ -263,12 +125,89 @@
   }
 }
 
-.well {
-  background-color: #F8F8F8;
-  padding: $-m;
-  border: 1px solid #DDD;
+.grid-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  margin-bottom: $-l;
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 100px;
+  color: $text-dark;
+  transition: border-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
+  &:hover {
+    color: $text-dark;
+    text-decoration: none;
+    box-shadow: $bs-card;
+  }
+  h2 {
+    width: 100%;
+    font-size: 1.5em;
+    margin: 0 0 10px;
+  }
+  p {
+    font-size: .7rem;
+    margin: 0;
+    line-height: 1.6em;
+  }
+  .grid-card-content {
+    flex: 1;
+    border-top: 0;
+    border-bottom-width: 2px;
+  }
+  .grid-card-content, .grid-card-footer {
+    padding: $-l;
+  }
+  .grid-card-content + .grid-card-footer {
+    padding-top: 0;
+  }
 }
 
+.bookshelf-grid-item .grid-card-content h2 a  {
+  color: $color-bookshelf;
+  fill: $color-bookshelf;
+}
+
+.book-grid-item .grid-card-footer {
+  p.small {
+    font-size: .8em;
+    margin: 0;
+  }
+}
+
+.content-wrap.card {
+  padding: $-m $-xxl;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $-xl;
+  overflow: auto;
+  min-height: 60vh;
+  &.auto-height {
+    min-height: 0;
+  }
+  &.fill-width {
+    width: 100%;
+  }
+}
+@include smaller-than($xxl) {
+  .content-wrap.card {
+    padding: $-l $-xl;
+  }
+}
+@include smaller-than($m) {
+  .content-wrap.card {
+    padding: $-m $-l;
+  }
+}
+@include smaller-than($s) {
+  .content-wrap.card {
+    padding: $-m $-s;
+  }
+}
+
+/**
+ * Tags
+ */
 .tag-item {
   display: inline-flex;
   margin-bottom: $-xs;

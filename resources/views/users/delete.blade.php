@@ -1,27 +1,30 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    @include('settings/navbar', ['selected' => 'users'])
-@stop
-
 @section('body')
-
     <div class="container small">
-        <p>&nbsp;</p>
-        <div class="card">
-            <h3>@icon('delete') {{ trans('settings.users_delete') }}</h3>
-            <div class="body">
-                <p>{{ trans('settings.users_delete_warning', ['userName' => $user->name]) }}</p>
-                <p class="text-neg">{{ trans('settings.users_delete_confirm') }}</p>
 
-                <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="POST">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <a href="{{ baseUrl("/settings/users/{$user->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button neg">{{ trans('common.confirm') }}</button>
-                </form>
+        <div class="py-m">
+            @include('settings.navbar', ['selected' => 'users'])
+        </div>
+
+        <div class="card content-wrap auto-height">
+            <h1 class="list-heading">{{ trans('settings.users_delete') }}</h1>
+
+            <p>{{ trans('settings.users_delete_warning', ['userName' => $user->name]) }}</p>
+
+            <div class="grid half">
+                <p class="text-neg"><strong>{{ trans('settings.users_delete_confirm') }}</strong></p>
+                <div>
+                    <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="POST" class="text-right">
+                        {!! csrf_field() !!}
+
+                        <input type="hidden" name="_method" value="DELETE">
+                        <a href="{{ baseUrl("/settings/users/{$user->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                        <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                    </form>
+                </div>
             </div>
+
         </div>
     </div>
-
 @stop

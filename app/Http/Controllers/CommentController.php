@@ -54,7 +54,7 @@ class CommentController extends Controller
         $this->checkPermission('comment-create-all');
         $comment = $this->commentRepo->create($page, $request->only(['html', 'text', 'parent_id']));
         Activity::add($page, 'commented_on', $page->book->id);
-        return view('comments/comment', ['comment' => $comment]);
+        return view('comments.comment', ['comment' => $comment]);
     }
 
     /**
@@ -75,7 +75,7 @@ class CommentController extends Controller
         $this->checkOwnablePermission('comment-update', $comment);
 
         $comment = $this->commentRepo->update($comment, $request->only(['html', 'text']));
-        return view('comments/comment', ['comment' => $comment]);
+        return view('comments.comment', ['comment' => $comment]);
     }
 
     /**

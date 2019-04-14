@@ -6,7 +6,7 @@ class Overlay {
         elem.addEventListener('click', event => {
              if (event.target === elem) return this.hide();
         });
-        let closeButtons = elem.querySelectorAll('.overlay-close');
+        let closeButtons = elem.querySelectorAll('.popup-header-close');
         for (let i=0; i < closeButtons.length; i++) {
             closeButtons[i].addEventListener('click', this.hide.bind(this));
         }

@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Auth\User;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,7 +20,10 @@ class SettingController extends Controller
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
-        return view('settings/index', ['version' => $version]);
+        return view('settings.index', [
+            'version' => $version,
+            'guestUser' => User::getDefault()
+        ]);
     }
 
     /**
@@ -57,7 +61,7 @@ class SettingController extends Controller
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
-        return view('settings/maintenance', ['version' => $version]);
+        return view('settings.maintenance', ['version' => $version]);
     }
 
     /**
