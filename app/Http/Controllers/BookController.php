@@ -75,15 +75,16 @@ class BookController extends Controller
 
     /**
      * Show the form for creating a new book.
+     * @param string $shelfSlug
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function create($shelfSlug = null)
+    public function create(string $shelfSlug = null)
     {
+        $bookshelf = null;
         if ($shelfSlug !== null) {
             $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
-        } else {
-            $bookshelf = null;
         }
 
         $this->checkPermission('book-create-all');
@@ -97,39 +98,30 @@ class BookController extends Controller
      * Store a newly created book in storage.
      *
      * @param Request $request
-     * @param $shelfSlug
+     * @param string $shelfSlug
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function store(Request $request, $shelfSlug = null)
+    public function store(Request $request, string $shelfSlug = null)
     {
-        if ($shelfSlug !== null) {
-            $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
-            $this->checkOwnablePermission('bookshelf-update', $bookshelf);
-
-            $shelfBooks = $this->entityRepo->getBookshelfChildren($bookshelf);
-            $shelfBookIds = $shelfBooks->pluck('id');
-        } else {
-            $bookshelf = null;
-        }
-
         $this->checkPermission('book-create-all');
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
+
+        $bookshelf = null;
+        if ($shelfSlug !== null) {
+            $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
+            $this->checkOwnablePermission('bookshelf-update', $bookshelf);
+        }
+
         $book = $this->entityRepo->createFromInput('book', $request->all());
         Activity::add($book, 'book_create', $book->id);
 
         if ($bookshelf) {
-            $shelfBookIds = $shelfBookIds->toArray();
-            array_unshift($shelfBookIds, $book->id);
-
-            $shelfBookIds = implode(',', $shelfBookIds);
-
-            $this->entityRepo->updateShelfBooks($bookshelf, $shelfBookIds);
+            $this->entityRepo->appendBookToShelf($bookshelf, $book);
             Activity::add($bookshelf, 'bookshelf_update');
-
-            return redirect($bookshelf->getUrl());
         }
 
         return redirect($book->getUrl());
