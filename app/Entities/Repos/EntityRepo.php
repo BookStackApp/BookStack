@@ -715,6 +715,7 @@ class EntityRepo
             }
 
             $doc = new DOMDocument();
+            libxml_use_internal_errors(true);
             $doc->loadHTML(mb_convert_encoding('<body>'.$matchedPage->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
             $matchingElem = $doc->getElementById($splitInclude[1]);
             if ($matchingElem === null) {
@@ -730,6 +731,7 @@ class EntityRepo
                     $innerContent .= $doc->saveHTML($childNode);
                 }
             }
+            libxml_clear_errors();
             $html = str_replace($matches[0][$index], trim($innerContent), $html);
         }
 

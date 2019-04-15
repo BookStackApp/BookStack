@@ -143,4 +143,20 @@ class PageContentTest extends TestCase
         $pageView->assertDontSee(htmlentities($script));
     }
 
+    public function test_duplicate_ids_does_not_break_page_render()
+    {
+        $this->asEditor();
+        $pageA = Page::first();
+        $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
+
+        $content = '<ul id="bkmrk-xxx-%28"></ul> <ul id="bkmrk-xxx-%28"></ul>';
+        $pageA->html = $content;
+        $pageA->save();
+
+        $pageB->html = '<ul id="bkmrk-xxx-%28"></ul> <p>{{@'. $pageA->id .'#test}}</p>';
+        $pageB->save();
+
+        $pageView = $this->get($pageB->getUrl());
+        $pageView->assertSuccessful();
+    }
 }
