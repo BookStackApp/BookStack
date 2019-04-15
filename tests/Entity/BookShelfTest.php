@@ -48,7 +48,7 @@ class BookShelfTest extends TestCase
     public function test_shelves_page_contains_create_link()
     {
         $resp = $this->asEditor()->get('/shelves');
-        $resp->assertElementContains('a', 'Create New Shelf');
+        $resp->assertElementContains('a', 'New Shelf');
     }
 
     public function test_shelves_create()
@@ -99,9 +99,11 @@ class BookShelfTest extends TestCase
     {
         $shelf = Bookshelf::first();
         $resp = $this->asAdmin()->get($shelf->getUrl());
+        $resp->assertSee($shelf->getUrl('/create-book'));
         $resp->assertSee($shelf->getUrl('/edit'));
         $resp->assertSee($shelf->getUrl('/permissions'));
         $resp->assertSee($shelf->getUrl('/delete'));
+        $resp->assertElementContains('a', 'New Book');
         $resp->assertElementContains('a', 'Edit');
         $resp->assertElementContains('a', 'Permissions');
         $resp->assertElementContains('a', 'Delete');
@@ -146,6 +148,32 @@ class BookShelfTest extends TestCase
 
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[0]->id]);
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[1]->id]);
+    }
+
+    public function test_shelf_create_new_book()
+    {
+        $shelf = Bookshelf::first();
+        $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
+
+        $resp->assertSee('Create New Book');
+        $resp->assertSee($shelf->getShortName());
+
+        $testName = 'Test Book in Shelf Name';
+
+        $createBookResp = $this->asEditor()->post($shelf->getUrl('/create-book'), [
+            'name' => $testName,
+            'description' => 'Book in shelf description'
+        ]);
+        $createBookResp->assertRedirect();
+
+        $newBook = Book::query()->orderBy('id', 'desc')->first();
+        $this->assertDatabaseHas('bookshelves_books', [
+            'bookshelf_id' => $shelf->id,
+            'book_id' => $newBook->id,
+        ]);
+
+        $resp = $this->asEditor()->get($shelf->getUrl());
+        $resp->assertSee($testName);
     }
 
     public function test_shelf_delete()

@@ -75,30 +75,55 @@ class BookController extends Controller
 
     /**
      * Show the form for creating a new book.
+     * @param string $shelfSlug
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function create()
+    public function create(string $shelfSlug = null)
     {
+        $bookshelf = null;
+        if ($shelfSlug !== null) {
+            $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
+            $this->checkOwnablePermission('bookshelf-update', $bookshelf);
+        }
+
         $this->checkPermission('book-create-all');
         $this->setPageTitle(trans('entities.books_create'));
-        return view('books.create');
+        return view('books.create', [
+            'bookshelf' => $bookshelf
+        ]);
     }
 
     /**
      * Store a newly created book in storage.
      *
-     * @param  Request $request
+     * @param Request $request
+     * @param string $shelfSlug
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function store(Request $request)
+    public function store(Request $request, string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000'
         ]);
+
+        $bookshelf = null;
+        if ($shelfSlug !== null) {
+            $bookshelf = $this->entityRepo->getBySlug('bookshelf', $shelfSlug);
+            $this->checkOwnablePermission('bookshelf-update', $bookshelf);
+        }
+
         $book = $this->entityRepo->createFromInput('book', $request->all());
         Activity::add($book, 'book_create', $book->id);
+
+        if ($bookshelf) {
+            $this->entityRepo->appendBookToShelf($bookshelf, $book);
+            Activity::add($bookshelf, 'bookshelf_update');
+        }
+
         return redirect($book->getUrl());
     }
 
