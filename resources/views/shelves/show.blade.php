@@ -24,7 +24,7 @@
                     <p class="text-muted italic mt-xl mb-m">{{ trans('entities.shelves_empty_contents') }}</p>
                     <div class="icon-list inline block">
                         @if($currentUser->can('book-create-all'))
-                            <a href="{{ $shelf->getUrl('/create-book') }}" class="icon-list-item text-bookshelf">
+                            <a href="{{ $shelf->getUrl('/create-book') }}" class="icon-list-item">
                                 <span class="icon">@icon('add')</span>
                                 <span>{{ trans('entities.books_create') }}</span>
                             </a>
@@ -79,6 +79,13 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
+
+            @if($currentUser->can('book-create-all'))
+                <a href="{{ $shelf->getUrl('/create-book') }}" class="icon-list-item">
+                    <span class="icon">@icon('add')</span>
+                    <span>{{ trans('entities.books_create') }}</span>
+                </a>
+            @endif
 
             @if(userCan('bookshelf-update', $shelf))
                 <a href="{{ $shelf->getUrl('/edit') }}" class="icon-list-item">
