@@ -26,7 +26,9 @@ class Bookshelf extends Entity
      */
     public function books()
     {
-        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')->orderBy('order', 'asc');
+        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
+            ->withPivot('order')
+            ->orderBy('order', 'asc');
     }
 
     /**
