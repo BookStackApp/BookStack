@@ -215,7 +215,7 @@ class RolesTest extends BrowserKitTest
         $this->checkAccessPermission('bookshelf-create-all', [
             '/create-shelf'
         ], [
-            '/shelves' => 'Create New Shelf'
+            '/shelves' => 'New Shelf'
         ]);
 
         $this->visit('/create-shelf')

@@ -578,6 +578,21 @@ class EntityRepo
     }
 
     /**
+     * Append a Book to a BookShelf.
+     * @param Bookshelf $shelf
+     * @param Book $book
+     */
+    public function appendBookToShelf(Bookshelf $shelf, Book $book)
+    {
+        if ($shelf->contains($book)) {
+            return;
+        }
+
+        $maxOrder = $shelf->books()->max('order');
+        $shelf->books()->attach($book->id, ['order' => $maxOrder + 1]);
+    }
+
+    /**
      * Change the book that an entity belongs to.
      * @param string $type
      * @param integer $newBookId

@@ -48,7 +48,7 @@ class BookShelfTest extends TestCase
     public function test_shelves_page_contains_create_link()
     {
         $resp = $this->asEditor()->get('/shelves');
-        $resp->assertElementContains('a', 'Create New Shelf');
+        $resp->assertElementContains('a', 'New Shelf');
     }
 
     public function test_shelves_create()
@@ -103,7 +103,7 @@ class BookShelfTest extends TestCase
         $resp->assertSee($shelf->getUrl('/edit'));
         $resp->assertSee($shelf->getUrl('/permissions'));
         $resp->assertSee($shelf->getUrl('/delete'));
-        $resp->assertElementContains('a', 'Create New Book');
+        $resp->assertElementContains('a', 'New Book');
         $resp->assertElementContains('a', 'Edit');
         $resp->assertElementContains('a', 'Permissions');
         $resp->assertElementContains('a', 'Delete');
@@ -164,9 +164,15 @@ class BookShelfTest extends TestCase
             'name' => $testName,
             'description' => 'Book in shelf description'
         ]);
+        $createBookResp->assertRedirect();
+
+        $newBook = Book::query()->orderBy('id', 'desc')->first();
+        $this->assertDatabaseHas('bookshelves_books', [
+            'bookshelf_id' => $shelf->id,
+            'book_id' => $newBook->id,
+        ]);
 
         $resp = $this->asEditor()->get($shelf->getUrl());
-
         $resp->assertSee($testName);
     }
 

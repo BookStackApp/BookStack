@@ -12,7 +12,7 @@
             @if($currentUser->can('bookshelf-create-all'))
                 <a href="{{ baseUrl("/create-shelf") }}" class="icon-list-item">
                     <span>@icon('add')</span>
-                    <span>{{ trans('entities.shelves_create') }}</span>
+                    <span>{{ trans('entities.shelves_new_action') }}</span>
                 </a>
             @endif
             @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
