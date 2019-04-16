@@ -409,4 +409,41 @@ class LdapTest extends BrowserKitTest
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name, 'name' => $this->mockUser->name]);
     }
 
+    protected function checkLdapReceivesCorrectDetails($serverString, $expectedHost, $expectedPort)
+    {
+        app('config')->set([
+            'services.ldap.server' => $serverString
+        ]);
+
+        // Standard mocks
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)->andReturn(['count' => 1, 0 => [
+            'uid' => [$this->mockUser->name],
+            'cn' => [$this->mockUser->name],
+            'dn' => ['dc=test' . config('services.ldap.base_dn')]
+        ]]);
+        $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true);
+        $this->mockEscapes(2);
+
+        $this->mockLdap->shouldReceive('connect')->once()
+            ->with($expectedHost, $expectedPort)->andReturn($this->resourceId);
+        $this->mockUserLogin();
+    }
+
+    public function test_ldap_port_provided_on_host_if_host_is_full_uri()
+    {
+        $hostName = 'ldaps://bookstack:8080';
+        $this->checkLdapReceivesCorrectDetails($hostName, $hostName, 389);
+    }
+
+    public function test_ldap_port_parsed_from_server_if_host_is_not_full_uri()
+    {
+        $this->checkLdapReceivesCorrectDetails('ldap.bookstack.com:8080', 'ldap.bookstack.com', 8080);
+    }
+
+    public function test_default_ldap_port_used_if_not_in_server_string_and_not_uri()
+    {
+        $this->checkLdapReceivesCorrectDetails('ldap.bookstack.com', 'ldap.bookstack.com', 389);
+    }
 }
