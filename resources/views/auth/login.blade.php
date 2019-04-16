@@ -9,7 +9,7 @@
         <div class="card content-wrap">
             <h1 class="list-heading">{{ title_case(trans('auth.log_in')) }}</h1>
 
-            <form action="{{ baseUrl("/login") }}" method="POST" id="login-form" class="mt-l">
+            <form action="{{ baseUrl('/login') }}" method="POST" id="login-form" class="mt-l">
                 {!! csrf_field() !!}
 
                 <div class="stretch-inputs">
