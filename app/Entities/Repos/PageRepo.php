@@ -139,6 +139,7 @@ class PageRepo extends EntityRepo
         if ($htmlText == '') {
             return $htmlText;
         }
+
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));

@@ -159,4 +159,21 @@ class PageContentTest extends TestCase
         $pageView = $this->get($pageB->getUrl());
         $pageView->assertSuccessful();
     }
+
+    public function test_duplicate_ids_fixed_on_page_save()
+    {
+        $this->asEditor();
+        $page = Page::first();
+
+        $content = '<p id="bkmrk-test">test a</p>'."\n".'<p id="bkmrk-test">test b</p>';
+        $pageSave = $this->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => $content,
+            'summary' => ''
+        ]);
+        $pageSave->assertRedirect();
+
+        $updatedPage = Page::where('id', '=', $page->id)->first();
+        $this->assertEquals(substr_count($updatedPage->html, "bkmrk-test\""), 1);
+    }
 }
