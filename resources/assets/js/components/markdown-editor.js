@@ -64,7 +64,7 @@ class MarkdownEditor {
             let action = button.getAttribute('data-action');
             if (action === 'insertImage') this.actionInsertImage();
             if (action === 'insertLink') this.actionShowLinkSelector();
-            if (action === 'insertDrawing' && event.ctrlKey) {
+            if (action === 'insertDrawing' && (event.ctrlKey || event.metaKey)) {
                 this.actionShowImageManager();
                 return;
             }
