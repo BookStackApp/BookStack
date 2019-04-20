@@ -299,6 +299,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'Revision deleted',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
 ];

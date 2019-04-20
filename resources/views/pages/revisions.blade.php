@@ -50,7 +50,20 @@
                                 @else
                                     <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
-                                    <a href="{{ $revision->getUrl('restore') }}">{{ trans('entities.pages_revisions_restore') }}</a>
+                                    <a href="{{ $revision->getUrl('restore') }}"></a>
+                                    <div dropdown class="dropdown-container">
+                                        <a dropdown-toggle>{{ trans('entities.pages_revisions_restore') }}</a>
+                                        <ul>
+                                            <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_restore_confirm')}}</small></li>
+                                            <li>
+                                                <form action="{{ $revision->getUrl('/restore') }}" method="POST">
+                                                    {!! csrf_field() !!}
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    <button type="submit" class="text-button text-primary">@icon('history'){{ trans('entities.pages_revisions_restore') }}</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
                                     <div dropdown class="dropdown-container">
                                         <a dropdown-toggle>{{ trans('common.delete') }}</a>
