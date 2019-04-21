@@ -2,6 +2,7 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Page;
+use BookStack\Http\Requests\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
@@ -44,12 +45,12 @@ class ImageRepo
      * @param $query
      * @param int $page
      * @param int $pageSize
+     * @param bool $filterOnPage
      * @return array
      */
     private function returnPaginated($query, $page = 0, $pageSize = 24)
     {
-        $images = $this->restrictionService->filterRelatedPages($query, 'images', 'uploaded_to');
-        $images = $images->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
+        $images = $query->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 
         $returnImages = $images->take(24);
@@ -68,15 +69,20 @@ class ImageRepo
      * @param string $type
      * @param int $page
      * @param int $pageSize
-     * @param bool|int $userFilter
+     * @param int $uploadedTo
      * @return array
      */
-    public function getPaginatedByType($type, $page = 0, $pageSize = 24, $userFilter = false)
+    public function getPaginatedByType(string $type, int $page = 0, int $pageSize = 24, int $uploadedTo = null)
     {
-        $images = $this->image->where('type', '=', strtolower($type));
+        $images = $this->image->newQuery()->where('type', '=', strtolower($type));
 
-        if ($userFilter !== false) {
-            $images = $images->where('created_by', '=', $userFilter);
+        if ($uploadedTo !== null) {
+            $images = $images->where('uploaded_to', '=', $uploadedTo);
+        }
+
+        // Filter by page access if gallery
+        if ($type === 'gallery') {
+            $images = $this->restrictionService->filterRelatedPages($images, 'images', 'uploaded_to');
         }
 
         return $this->returnPaginated($images, $page, $pageSize);
@@ -90,9 +96,17 @@ class ImageRepo
      * @param string $searchTerm
      * @return array
      */
-    public function searchPaginatedByType($type, $searchTerm, $page = 0, $pageSize = 24)
+    public function searchPaginatedByType(Request $request, $type, $searchTerm, $page = 0, $pageSize = 24)
     {
-        $images = $this->image->where('type', '=', strtolower($type))->where('name', 'LIKE', '%' . $searchTerm . '%');
+        // TODO - Filter by uploaded_to
+        $images = $this->image->newQuery()
+            ->where('type', '=', strtolower($type))
+            ->where('name', 'LIKE', '%' . $searchTerm . '%');
+
+        if ($type === 'gallery') {
+            $images = $this->restrictionService->filterRelatedPages($images, 'images', 'uploaded_to');
+        }
+
         return $this->returnPaginated($images, $page, $pageSize);
     }
 
@@ -118,6 +132,7 @@ class ImageRepo
             $images = $images->whereIn('uploaded_to', $validPageIds);
         }
 
+        $images = $this->restrictionService->filterRelatedPages($images, 'images', 'uploaded_to');
         return $this->returnPaginated($images, $pageNum, $pageSize);
     }
 

@@ -59,7 +59,7 @@ const methods = {
     fetchData() {
         let url = baseUrl + page;
         let query = {};
-        if (this.uploadedTo !== false) query.page_id = this.uploadedTo;
+        if (this.uploadedTo !== false) query.uploaded_to = this.uploadedTo;
         if (this.searching) query.term = this.searchTerm;
 
         this.$http.get(url, {params: query}).then(response => {
@@ -133,7 +133,7 @@ const methods = {
     },
 
     saveImageDetails() {
-        let url = window.baseUrl(`/images/update/${this.selectedImage.id}`);
+        let url = window.baseUrl(`/images/${this.selectedImage.id}`);
         this.$http.put(url, this.selectedImage).then(response => {
             this.$events.emit('success', trans('components.image_update_success'));
         }).catch(error => {

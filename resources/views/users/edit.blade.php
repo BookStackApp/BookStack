@@ -87,5 +87,5 @@
         @endif
     </div>
 
-    @include('components.image-manager', ['imageType' => 'user'])
+    @include('components.image-manager', ['imageType' => 'user', 'uploaded_to' => $user->id])
 @stop
