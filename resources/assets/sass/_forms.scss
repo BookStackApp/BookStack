@@ -251,7 +251,7 @@ input[type=date] {
 }
 
 .form-group {
-  .text-pos, .text-neg {
+  div.text-pos, div.text-neg, p.text-post, p.text-neg {
     padding: $-xs 0;
   }
 }
