@@ -105,19 +105,28 @@ Route::group(['middleware' => 'auth'], function () {
     // Image routes
     Route::group(['prefix' => 'images'], function() {
         // Get for user images
-        Route::get('/user/all', 'ImageController@getAllForUserType');
-        Route::get('/user/all/{page}', 'ImageController@getAllForUserType');
+//        Route::get('/user/all', 'ImageController@getAllForUserType');
+//        Route::get('/user/all/{page}', 'ImageController@getAllForUserType');
         // Standard get, update and deletion for all types
         Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
         Route::get('/base64/{id}', 'ImageController@getBase64Image');
-        Route::put('/update/{imageId}', 'ImageController@update');
-        Route::post('/drawing/upload', 'ImageController@uploadDrawing');
         Route::get('/usage/{id}', 'ImageController@usage');
-        Route::post('/{type}/upload', 'ImageController@uploadByType');
         Route::get('/{type}/all', 'ImageController@getAllByType');
         Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
         Route::get('/{type}/search/{page}', 'ImageController@searchByType');
         Route::get('/gallery/{filter}/{page}', 'ImageController@getGalleryFiltered');
+
+        // TODO - Remove use of abstract "Type" variable (Above)
+        // TODO - Clearly define each endpoint so logic for each is clear
+        // TODO - Move into per-type controllers
+        // TODO - Test and fully think about permissions and each stage
+        Route::post('/drawio', 'ImageController@uploadDrawioImage');
+        Route::post('/gallery', 'ImageController@uploadGalleryImage');
+        Route::post('/user', 'ImageController@uploadUserImage');
+        Route::post('/system', 'ImageController@uploadSystemImage');
+        Route::post('/cover', 'ImageController@uploadCoverImage');
+
+        Route::put('/{id}', 'ImageController@update');
         Route::delete('/{id}', 'ImageController@destroy');
     });
 

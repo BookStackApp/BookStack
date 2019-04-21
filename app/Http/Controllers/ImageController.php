@@ -45,13 +45,21 @@ class ImageController extends Controller
 
     /**
      * Get all images for a specific type, Paginated
+     * @param Request $request
      * @param string $type
      * @param int $page
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllByType($type, $page = 0)
+    public function getAllByType(Request $request, $type, $page = 0)
     {
-        $imgData = $this->imageRepo->getPaginatedByType($type, $page);
+        $uploadedToFilter = $request->get('uploaded_to', null);
+
+        // For user profile request, check access to user images
+        if ($type === 'user') {
+            $this->checkPermissionOrCurrentUser('users-manage', $uploadedToFilter ?? 0);
+        }
+
+        $imgData = $this->imageRepo->getPaginatedByType($type, $page, 24, $uploadedToFilter);
         return response()->json($imgData);
     }
 
@@ -74,17 +82,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Get all images for a user.
-     * @param int $page
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllForUserType($page = 0)
-    {
-        $imgData = $this->imageRepo->getPaginatedByType('user', $page, 24, $this->currentUser->id);
-        return response()->json($imgData);
-    }
-
-    /**
      * Get gallery images with a specific filter such as book or page
      * @param $filter
      * @param int $page
@@ -94,7 +91,7 @@ class ImageController extends Controller
     public function getGalleryFiltered(Request $request, $filter, $page = 0)
     {
         $this->validate($request, [
-            'page_id' => 'required|integer'
+            'uploaded_to' => 'required|integer'
         ]);
 
         $validFilters = collect(['page', 'book']);
@@ -102,10 +99,55 @@ class ImageController extends Controller
             return response('Invalid filter', 500);
         }
 
-        $pageId = $request->get('page_id');
+        $pageId = $request->get('uploaded_to');
         $imgData = $this->imageRepo->getGalleryFiltered(strtolower($filter), $pageId, $page, 24);
 
         return response()->json($imgData);
+    }
+
+    public function uploadGalleryImage(Request $request)
+    {
+        // TODO
+    }
+
+    public function uploadUserImage(Request $request)
+    {
+        // TODO
+    }
+
+    public function uploadSystemImage(Request $request)
+    {
+        // TODO
+    }
+
+    public function uploadCoverImage(Request $request)
+    {
+        // TODO
+    }
+
+    /**
+     * Upload a draw.io image into the system.
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function uploadDrawioImage(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|string',
+            'uploaded_to' => 'required|integer'
+        ]);
+        $uploadedTo = $request->get('uploaded_to', 0);
+        $page = $this->
+        $this->checkPermission('image-create-all');
+        $imageBase64Data = $request->get('image');
+
+        try {
+            $image = $this->imageRepo->saveDrawing($imageBase64Data, $uploadedTo);
+        } catch (ImageUploadException $e) {
+            return response($e->getMessage(), 500);
+        }
+
+        return response()->json($image);
     }
 
     /**
@@ -130,6 +172,12 @@ class ImageController extends Controller
 
         try {
             $uploadedTo = $request->get('uploaded_to', 0);
+
+            // For user profile request, check access to user images
+            if ($type === 'user') {
+                $this->checkPermissionOrCurrentUser('users-manage', $uploadedTo ?? 0);
+            }
+
             $image = $this->imageRepo->saveNew($imageUpload, $type, $uploadedTo);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);
@@ -137,31 +185,6 @@ class ImageController extends Controller
 
         return response()->json($image);
     }
-
-    /**
-     * Upload a drawing to the system.
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function uploadDrawing(Request $request)
-    {
-        $this->validate($request, [
-            'image' => 'required|string',
-            'uploaded_to' => 'required|integer'
-        ]);
-        $this->checkPermission('image-create-all');
-        $imageBase64Data = $request->get('image');
-
-        try {
-            $uploadedTo = $request->get('uploaded_to', 0);
-            $image = $this->imageRepo->saveDrawing($imageBase64Data, $uploadedTo);
-        } catch (ImageUploadException $e) {
-            return response($e->getMessage(), 500);
-        }
-
-        return response()->json($image);
-    }
-
     /**
      * Get the content of an image based64 encoded.
      * @param $id
@@ -199,19 +222,21 @@ class ImageController extends Controller
 
     /**
      * Update image details
-     * @param integer $imageId
+     * @param integer $id
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function update($imageId, Request $request)
+    public function update($id, Request $request)
     {
         $this->validate($request, [
             'name' => 'required|min:2|string'
         ]);
-        $image = $this->imageRepo->getById($imageId);
+
+        $image = $this->imageRepo->getById($id);
         $this->checkOwnablePermission('image-update', $image);
+
         $image = $this->imageRepo->updateImageDetails($image, $request->all());
         return response()->json($image);
     }

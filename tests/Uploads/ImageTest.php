@@ -217,18 +217,97 @@ class ImageTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, "Uploaded image file data does not match our test image as expected");
     }
 
+    protected function getTestProfileImage()
+    {
+        $imageName = 'profile.png';
+        $relPath = $this->getTestImagePath('user', $imageName);
+        $this->deleteImage($relPath);
+
+        return $this->getTestImage($imageName);
+    }
+
+    public function test_user_image_upload()
+    {
+        $editor = $this->getEditor();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $file = $this->getTestProfileImage();
+        $this->call('POST', '/images/user/upload', ['uploaded_to' => $editor->id], [], ['file' => $file], []);
+
+        $this->assertDatabaseHas('images', [
+            'type' => 'user',
+            'uploaded_to' => $editor->id,
+            'created_by' => $admin->id,
+        ]);
+    }
+
+    public function test_standard_user_with_manage_users_permission_can_view_other_profile_images()
+    {
+        $editor = $this->getEditor();
+        $this->giveUserPermissions($editor, ['users-manage']);
+
+        $admin = $this->getAdmin();
+
+        $this->actingAs($admin);
+        $file = $this->getTestProfileImage();
+        $this->call('POST', '/images/user/upload', ['uploaded_to' => $admin->id], [], ['file' => $file], []);
+
+        $expectedJson = [
+            'name' => 'profile.png',
+            'uploaded_to' => $admin->id,
+            'type' => 'user'
+        ];
+
+        $this->actingAs($editor);
+        $adminImagesGet = $this->get("/images/user/all/0?uploaded_to=" . $admin->id);
+        $adminImagesGet->assertStatus(200)->assertJsonFragment($expectedJson);
+
+        $allImagesGet = $this->get("/images/user/all/0");
+        $allImagesGet->assertStatus(200)->assertJsonFragment($expectedJson);
+    }
+
+    public function test_standard_user_cant_view_other_profile_images()
+    {
+        $editor = $this->getEditor();
+        $admin = $this->getAdmin();
+
+        $this->actingAs($admin);
+        $file = $this->getTestProfileImage();
+        $this->call('POST', '/images/user/upload', ['uploaded_to' => $admin->id], [], ['file' => $file], []);
+
+        $this->actingAs($editor);
+        $adminImagesGet = $this->get("/images/user/all/0?uploaded_to=" . $admin->id);
+        $adminImagesGet->assertStatus(302);
+
+        $allImagesGet = $this->get("/images/user/all/0");
+        $allImagesGet->assertStatus(302);
+    }
+
+    public function test_standard_user_cant_upload_other_profile_images()
+    {
+        $editor = $this->getEditor();
+        $admin = $this->getAdmin();
+
+        $this->actingAs($editor);
+        $file = $this->getTestProfileImage();
+        $upload = $this->call('POST', '/images/user/upload', ['uploaded_to' => $admin->id], [], ['file' => $file], []);
+        $upload->assertStatus(302);
+
+        $this->assertDatabaseMissing('images', [
+            'type' => 'user',
+            'uploaded_to' => $admin->id,
+        ]);
+    }
+
     public function test_user_images_deleted_on_user_deletion()
     {
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $imageName = 'profile.png';
-        $relPath = $this->getTestImagePath('gallery', $imageName);
-        $this->deleteImage($relPath);
-
-        $file = $this->getTestImage($imageName);
-        $this->call('POST', '/images/user/upload', [], [], ['file' => $file], []);
-        $this->call('POST', '/images/user/upload', [], [], ['file' => $file], []);
+        $file = $this->getTestProfileImage();
+        $this->call('POST', '/images/user/upload', ['uploaded_to' => $editor->id], [], ['file' => $file], []);
+        $this->call('POST', '/images/user/upload', ['uploaded_to' => $editor->id], [], ['file' => $file], []);
 
         $profileImages = Image::where('type', '=', 'user')->where('created_by', '=', $editor->id)->get();
         $this->assertTrue($profileImages->count() === 2, "Found profile images does not match upload count");
@@ -238,6 +317,10 @@ class ImageTest extends TestCase
         $this->assertDatabaseMissing('images', [
             'type' => 'user',
             'created_by' => $editor->id
+        ]);
+        $this->assertDatabaseMissing('images', [
+            'type' => 'user',
+            'uploaded_to' => $editor->id
         ]);
     }
 
