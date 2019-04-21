@@ -120,7 +120,7 @@ class PageContentTest extends TestCase
         $this->asEditor();
         $page = Page::first();
 
-        $content = '<p id="bkmrk-test">test a</p>'."\n".'<p id="bkmrk-test">test b</p>';
+        $content = '<ul id="bkmrk-test"><li>test a</li><li><ul id="bkmrk-test"><li>test b</li></ul></li></ul>';
         $pageSave = $this->put($page->getUrl(), [
             'name' => $page->name,
             'html' => $content,
