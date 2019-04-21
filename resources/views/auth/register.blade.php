@@ -5,7 +5,7 @@
 
         <div class="my-l">&nbsp;</div>
 
-        <div class="card content-wrap">
+        <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ title_case(trans('auth.sign_up')) }}</h1>
 
             <form action="{{ baseUrl("/register") }}" method="POST" class="mt-l stretch-inputs">
@@ -28,7 +28,7 @@
 
                 <div class="grid half collapse-xs gap-xl v-center mt-m">
                     <div class="text-small">
-                        <a href="{{ baseUrl('/login') }}">Already have an account?</a>
+                        <a href="{{ baseUrl('/login') }}">{{ trans('auth.already_have_account') }}</a>
                     </div>
                     <div class="from-group text-right">
                         <button class="button primary">{{ trans('auth.create_account') }}</button>
