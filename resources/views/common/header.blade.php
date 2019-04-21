@@ -41,7 +41,7 @@
 
                     @if(!signedInUser())
                         @if(setting('registration-enabled', false))
-                            <a href="{{ baseUrl("/register") }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
+                            <a href="{{ baseUrl('/register') }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
                         @endif
                         <a href="{{ baseUrl('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
                     @endif
