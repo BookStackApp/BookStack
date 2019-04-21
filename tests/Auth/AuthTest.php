@@ -69,6 +69,31 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register');
     }
 
+    public function test_registration_validation()
+    {
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        $this->visit('/register')
+            ->type('1', '#name')
+            ->type('1', '#email')
+            ->type('1', '#password')
+            ->press('Create Account')
+            ->see('The name must be at least 2 characters.')
+            ->see('The email must be a valid email address.')
+            ->see('The password must be at least 6 characters.')
+            ->seePageIs('/register');
+    }
+
+    public function test_sign_up_link_on_login()
+    {
+        $this->visit('/login')
+            ->dontSee('Sign up');
+
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        $this->visit('/login')
+            ->see('Sign up');
+    }
 
     public function test_confirmed_registration()
     {
