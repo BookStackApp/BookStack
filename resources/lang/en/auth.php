@@ -26,6 +26,8 @@ return [
     'remember_me' => 'Remember Me',
     'ldap_email_hint' => 'Please enter an email to use for this account.',
     'create_account' => 'Create Account',
+    'already_have_account' => 'Already have an account?',
+    'dont_have_account' => 'Don\'t have an account?',
     'social_login' => 'Social Login',
     'social_registration' => 'Social Registration',
     'social_registration_text' => 'Register and sign in using another service.',
