@@ -7,6 +7,7 @@ use BookStack\Entities\Page;
 use BookStack\Entities\PageRevision;
 use Carbon\Carbon;
 use DOMDocument;
+use DOMElement;
 use DOMXPath;
 
 class PageRepo extends EntityRepo
@@ -129,8 +130,7 @@ class PageRepo extends EntityRepo
     }
 
     /**
-     * Formats a page's html to be tagged correctly
-     * within the system.
+     * Formats a page's html to be tagged correctly within the system.
      * @param string $htmlText
      * @return string
      */
@@ -148,37 +148,17 @@ class PageRepo extends EntityRepo
         $body = $container->childNodes->item(0);
         $childNodes = $body->childNodes;
 
-        // Ensure no duplicate ids are used
-        $idArray = [];
-
+        // Set ids on top-level nodes
+        $idMap = [];
         foreach ($childNodes as $index => $childNode) {
-            /** @var \DOMElement $childNode */
-            if (get_class($childNode) !== 'DOMElement') {
-                continue;
-            }
+            $this->setUniqueId($childNode, $idMap);
+        }
 
-            // Overwrite id if not a BookStack custom id
-            if ($childNode->hasAttribute('id')) {
-                $id = $childNode->getAttribute('id');
-                if (strpos($id, 'bkmrk') === 0 && array_search($id, $idArray) === false) {
-                    $idArray[] = $id;
-                    continue;
-                };
-            }
-
-            // Create an unique id for the element
-            // Uses the content as a basis to ensure output is the same every time
-            // the same content is passed through.
-            $contentId = 'bkmrk-' . substr(strtolower(preg_replace('/\s+/', '-', trim($childNode->nodeValue))), 0, 20);
-            $newId = urlencode($contentId);
-            $loopIndex = 0;
-            while (in_array($newId, $idArray)) {
-                $newId = urlencode($contentId . '-' . $loopIndex);
-                $loopIndex++;
-            }
-
-            $childNode->setAttribute('id', $newId);
-            $idArray[] = $newId;
+        // Ensure no duplicate ids within child items
+        $xPath = new DOMXPath($doc);
+        $idElems = $xPath->query('//body//*//*[@id]');
+        foreach ($idElems as $domElem) {
+            $this->setUniqueId($domElem, $idMap);
         }
 
         // Generate inner html as a string
@@ -188,6 +168,41 @@ class PageRepo extends EntityRepo
         }
 
         return $html;
+    }
+
+    /**
+     * Set a unique id on the given DOMElement.
+     * A map for existing ID's should be passed in to check for current existence.
+     * @param DOMElement $element
+     * @param array $idMap
+     */
+    protected function setUniqueId($element, array &$idMap)
+    {
+        if (get_class($element) !== 'DOMElement') {
+            return;
+        }
+
+        // Overwrite id if not a BookStack custom id
+        $existingId = $element->getAttribute('id');
+        if (strpos($existingId, 'bkmrk') === 0 && !isset($idMap[$existingId])) {
+            $idMap[$existingId] = true;
+            return;
+        }
+
+        // Create an unique id for the element
+        // Uses the content as a basis to ensure output is the same every time
+        // the same content is passed through.
+        $contentId = 'bkmrk-' . substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
+        $newId = urlencode($contentId);
+        $loopIndex = 0;
+
+        while (isset($idMap[$newId])) {
+            $newId = urlencode($contentId . '-' . $loopIndex);
+            $loopIndex++;
+        }
+
+        $element->setAttribute('id', $newId);
+        $idMap[$newId] = true;
     }
 
     /**
