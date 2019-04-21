@@ -6,7 +6,7 @@
 
         <div class="my-l">&nbsp;</div>
 
-        <div class="card content-wrap">
+        <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ title_case(trans('auth.log_in')) }}</h1>
 
             <form action="{{ baseUrl('/login') }}" method="POST" id="login-form" class="mt-l">
@@ -25,6 +25,7 @@
                             'label' => trans('auth.remember_me'),
                         ])
                     </div>
+
                     <div class="text-right">
                         <button class="button primary" tabindex="3">{{ title_case(trans('auth.log_in')) }}</button>
                     </div>
@@ -42,6 +43,13 @@
                         </a>
                     </div>
                 @endforeach
+            @endif
+
+            @if(setting('registration-enabled', false))
+                <div class="text-center">
+                    <hr class="my-l">
+                    <a href="{{ baseUrl('/register') }}">{{ trans('auth.dont_have_account') }}</a>
+                </div>
             @endif
         </div>
     </div>
