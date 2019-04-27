@@ -1,5 +1,8 @@
 <?php
 
+// TODO - Replace this with setting-level handling
+// Since won't be part of image manager handling
+
 namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Exceptions\ImageUploadException;

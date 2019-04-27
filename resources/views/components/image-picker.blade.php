@@ -17,4 +17,6 @@
     </div>
 
     <input type="hidden" name="{{$name}}" id="{{$name}}" value="{{ isset($currentId) && ($currentId !== 0 && $currentId !== false) ? $currentId : $currentImage}}">
+{{--    TODO - Revamp to be custom file upload button, instead of being linked to image manager--}}
+{{--    TODO - Remove image manager use where this is used and clean image manager for drawing/gallery use.--}}
 </div>

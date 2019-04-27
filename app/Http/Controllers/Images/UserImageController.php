@@ -2,6 +2,9 @@
 
 namespace BookStack\Http\Controllers\Images;
 
+// TODO - Replace this with user-controller-level handling
+// Since won't be part of image manager handling
+
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;

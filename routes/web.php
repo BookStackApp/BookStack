@@ -105,41 +105,25 @@ Route::group(['middleware' => 'auth'], function () {
     // Image routes
     Route::group(['prefix' => 'images'], function () {
 
-        // Get for user images
-//        Route::get('/user/all', 'ImageController@getAllForUserType');
-//        Route::get('/user/all/{page}', 'ImageController@getAllForUserType');
-
+        // TODO - Check auth on these
+        // TODO - Maybe check types for only gallery or drawing
         // Standard get, update and deletion for all types
         Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
         Route::get('/base64/{id}', 'ImageController@getBase64Image');
         Route::get('/usage/{id}', 'ImageController@usage');
-//        Route::get('/{type}/all', 'ImageController@getAllByType');
-//        Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
-//        Route::get('/{type}/search/{page}', 'ImageController@searchByType');
-//        Route::get('/gallery/{filter}/{page}', 'ImageController@getGalleryFiltered');
 
         // Gallery
         Route::get('/gallery', 'Images\GalleryImageController@list');
         Route::post('/gallery', 'Images\GalleryImageController@create');
+
         // Drawio
         Route::get('/drawio', 'Images\DrawioImageController@list');
         Route::post('/drawio', 'Images\DrawioImageController@create');
-        // User
-        Route::get('/user', 'Images\UserImageController@list');
-        Route::post('/user', 'Images\UserImageController@create');
-        // System
-        Route::get('/system', 'Images\SystemImageController@list');
-        Route::post('/system', 'Images\SystemImageController@create');
-        // Cover
-        Route::get('/cover_{entity}', 'Images\CoverImageController@list');
-        Route::post('/cover_{entity}', 'Images\CoverImageController@create');
 
-        // TODO - Remove use of abstract "Type" variable (Above)
-        // TODO - Clearly define each endpoint so logic for each is clear
-        // TODO - Move into per-type controllers
-        // TODO - Test and fully think about permissions and each stage
-        Route::post('/cover', 'ImageController@uploadCoverImage');
 
+        // TODO - Check auth on these
+        // TODO - Maybe check types for only gallery or drawing
+        // Or add to gallery/drawio controllers
         Route::put('/{id}', 'ImageController@update');
         Route::delete('/{id}', 'ImageController@destroy');
     });
