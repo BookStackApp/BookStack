@@ -23,5 +23,4 @@
         </div>
     </div>
 
-    @include('components.image-manager', ['imageType' => 'cover_bookshelf', 'uploaded_to' => $shelf->id])
 @stop

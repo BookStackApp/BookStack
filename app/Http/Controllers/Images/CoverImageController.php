@@ -2,6 +2,10 @@
 
 namespace BookStack\Http\Controllers\Images;
 
+// TODO - Replace this with entity-level handling
+// Since won't be part of image manager handling
+// Added some to bookshelf controller already
+
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\ImageUploadException;
