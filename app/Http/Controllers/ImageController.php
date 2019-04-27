@@ -81,35 +81,6 @@ class ImageController extends Controller
         return response()->json($imgData);
     }
 
-    /**
-     * Get gallery images with a specific filter such as book or page
-     * @param $filter
-     * @param int $page
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function getGalleryFiltered(Request $request, $filter, $page = 0)
-    {
-        $this->validate($request, [
-            'uploaded_to' => 'required|integer'
-        ]);
-
-        $validFilters = collect(['page', 'book']);
-        if (!$validFilters->contains($filter)) {
-            return response('Invalid filter', 500);
-        }
-
-        $pageId = $request->get('uploaded_to');
-        $imgData = $this->imageRepo->getGalleryFiltered(strtolower($filter), $pageId, $page, 24);
-
-        return response()->json($imgData);
-    }
-
-    public function uploadGalleryImage(Request $request)
-    {
-        // TODO
-    }
-
     public function uploadUserImage(Request $request)
     {
         // TODO

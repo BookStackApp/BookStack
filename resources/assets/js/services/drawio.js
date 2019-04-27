@@ -66,4 +66,13 @@ function drawPostMessage(data) {
     iFrame.contentWindow.postMessage(JSON.stringify(data), '*');
 }
 
-export default {show, close};
+async function upload(imageData, pageUploadedToId) {
+    let data = {
+        image: imageData,
+        uploaded_to: pageUploadedToId,
+    };
+    const resp = await window.$http.post(window.baseUrl(`/images/drawio`), data);
+    return resp.data;
+}
+
+export default {show, close, upload};

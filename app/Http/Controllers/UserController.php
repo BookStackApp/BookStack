@@ -107,9 +107,7 @@ class UserController extends Controller
      */
     public function edit($id, SocialAuthService $socialAuthService)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->user->findOrFail($id);
 
@@ -131,9 +129,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $this->validate($request, [
             'name'             => 'min:2',
@@ -184,9 +180,7 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
@@ -202,9 +196,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
 
