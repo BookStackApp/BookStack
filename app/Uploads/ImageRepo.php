@@ -3,6 +3,7 @@
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Page;
 use BookStack\Http\Requests\Request;
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
@@ -20,7 +21,12 @@ class ImageRepo
      * @param \BookStack\Auth\Permissions\PermissionService $permissionService
      * @param \BookStack\Entities\Page $page
      */
-    public function __construct(Image $image, ImageService $imageService, PermissionService $permissionService, Page $page)
+    public function __construct(
+        Image $image,
+        ImageService $imageService,
+        PermissionService $permissionService,
+        Page $page
+    )
     {
         $this->image = $image;
         $this->imageService = $imageService;
@@ -48,92 +54,104 @@ class ImageRepo
      * @param bool $filterOnPage
      * @return array
      */
-    private function returnPaginated($query, $page = 0, $pageSize = 24)
+    private function returnPaginated($query, $page = 1, $pageSize = 24)
     {
-        $images = $query->orderBy('created_at', 'desc')->skip($pageSize * $page)->take($pageSize + 1)->get();
+        $images = $query->orderBy('created_at', 'desc')->skip($pageSize * ($page - 1))->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 
-        $returnImages = $images->take(24);
+        $returnImages = $images->take($pageSize);
         $returnImages->each(function ($image) {
             $this->loadThumbs($image);
         });
 
         return [
             'images'  => $returnImages,
-            'hasMore' => $hasMore
+            'has_more' => $hasMore
         ];
     }
 
     /**
-     * Gets a load images paginated, filtered by image type.
+     * Fetch a list of images in a paginated format, filtered by image type.
+     * Can be filtered by uploaded to and also by name.
      * @param string $type
      * @param int $page
      * @param int $pageSize
      * @param int $uploadedTo
+     * @param string|null $search
+     * @param callable|null $whereClause
      * @return array
      */
-    public function getPaginatedByType(string $type, int $page = 0, int $pageSize = 24, int $uploadedTo = null)
+    public function getPaginatedByType(
+        string $type,
+        int $page = 0,
+        int $pageSize = 24,
+        int $uploadedTo = null,
+        string $search = null,
+        callable $whereClause = null
+    )
     {
-        $images = $this->image->newQuery()->where('type', '=', strtolower($type));
+        $imageQuery = $this->image->newQuery()->where('type', '=', strtolower($type));
 
         if ($uploadedTo !== null) {
-            $images = $images->where('uploaded_to', '=', $uploadedTo);
+            $imageQuery = $imageQuery->where('uploaded_to', '=', $uploadedTo);
+        }
+
+        if ($search !== null) {
+            $imageQuery = $imageQuery->where('name', 'LIKE', '%' . $search . '%');
         }
 
         // Filter by page access if gallery
         if ($type === 'gallery') {
-            $images = $this->restrictionService->filterRelatedPages($images, 'images', 'uploaded_to');
+            $imageQuery = $this->restrictionService->filterRelatedEntity('page', $imageQuery, 'images', 'uploaded_to');
         }
 
-        return $this->returnPaginated($images, $page, $pageSize);
+        // Filter by entity if cover
+        if (strpos($type, 'cover_') === 0) {
+            $entityType = explode('_', $type)[1];
+            $imageQuery = $this->restrictionService->filterRelatedEntity($entityType, $imageQuery, 'images', 'uploaded_to');
+        }
+
+        if ($whereClause !== null) {
+            $imageQuery = $imageQuery->where($whereClause);
+        }
+
+        return $this->returnPaginated($imageQuery, $page, $pageSize);
     }
 
     /**
-     * Search for images by query, of a particular type.
+     * Get paginated gallery images within a specific page or book.
      * @param string $type
+     * @param string $filterType
      * @param int $page
      * @param int $pageSize
-     * @param string $searchTerm
+     * @param int|null $uploadedTo
+     * @param string|null $search
      * @return array
      */
-    public function searchPaginatedByType(Request $request, $type, $searchTerm, $page = 0, $pageSize = 24)
+    public function getEntityFiltered(
+        string $type,
+        string $filterType = null,
+        int $page = 0,
+        int $pageSize = 24,
+        int $uploadedTo = null,
+        string $search = null
+    )
     {
-        // TODO - Filter by uploaded_to
-        $images = $this->image->newQuery()
-            ->where('type', '=', strtolower($type))
-            ->where('name', 'LIKE', '%' . $searchTerm . '%');
+        $contextPage = $this->page->findOrFail($uploadedTo);
+        $parentFilter = null;
 
-        if ($type === 'gallery') {
-            $images = $this->restrictionService->filterRelatedPages($images, 'images', 'uploaded_to');
+        if ($filterType === 'book' || $filterType === 'page') {
+            $parentFilter = function(Builder $query) use ($filterType, $contextPage) {
+                if ($filterType === 'page') {
+                    $query->where('uploaded_to', '=', $contextPage->id);
+                } elseif ($filterType === 'book') {
+                    $validPageIds = $contextPage->book->pages()->get(['id'])->pluck('id')->toArray();
+                    $query->whereIn('uploaded_to', $validPageIds);
+                }
+            };
         }
 
-        return $this->returnPaginated($images, $page, $pageSize);
-    }
-
-    /**
-     * Get gallery images with a particular filter criteria such as
-     * being within the current book or page.
-     * @param $filter
-     * @param $pageId
-     * @param int $pageNum
-     * @param int $pageSize
-     * @return array
-     */
-    public function getGalleryFiltered($filter, $pageId, $pageNum = 0, $pageSize = 24)
-    {
-        $images = $this->image->where('type', '=', 'gallery');
-
-        $page = $this->page->findOrFail($pageId);
-
-        if ($filter === 'page') {
-            $images = $images->where('uploaded_to', '=', $page->id);
-        } elseif ($filter === 'book') {
-            $validPageIds = $page->book->pages->pluck('id')->toArray();
-            $images = $images->whereIn('uploaded_to', $validPageIds);
-        }
-
-        $images = $this->restrictionService->filterRelatedPages($images, 'images', 'uploaded_to');
-        return $this->returnPaginated($images, $pageNum, $pageSize);
+        return $this->getPaginatedByType($type, $page, $pageSize, null, $search, $parentFilter);
     }
 
     /**
@@ -253,7 +271,17 @@ class ImageRepo
      */
     public function isValidType($type)
     {
+        // TODO - To delete?
         $validTypes = ['gallery', 'cover', 'system', 'user'];
         return in_array($type, $validTypes);
+    }
+
+    /**
+     * Get the validation rules for image files.
+     * @return string
+     */
+    public function getImageValidationRules()
+    {
+        return 'image_extension|no_double_extension|mimes:jpeg,png,gif,bmp,webp,tiff';
     }
 }

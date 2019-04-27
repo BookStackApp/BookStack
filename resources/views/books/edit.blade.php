@@ -23,5 +23,5 @@
         </div>
     </div>
 
-    @include('components.image-manager', ['imageType' => 'cover'])
+    @include('components.image-manager', ['imageType' => 'cover', 'uploaded_to'])
 @stop

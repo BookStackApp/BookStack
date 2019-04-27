@@ -10,12 +10,12 @@
             <div class="flex-fill image-manager-body">
 
                 <div class="image-manager-content">
-                    <div v-if="imageType === 'gallery'" class="image-manager-header primary-background-light nav-tabs grid third">
-                        <div class="tab-item" title="{{ trans('components.image_all_title') }}" :class="{selected: (view=='all')}" @click="setView('all')">@icon('images') {{ trans('components.image_all') }}</div>
-                        <div class="tab-item" title="{{ trans('components.image_book_title') }}" :class="{selected: (view=='book')}" @click="setView('book')">@icon('book', ['class' => 'text-book svg-icon']) {{ trans('entities.book') }}</div>
-                        <div class="tab-item" title="{{ trans('components.image_page_title') }}" :class="{selected: (view=='page')}" @click="setView('page')">@icon('page', ['class' => 'text-page svg-icon']) {{ trans('entities.page') }}</div>
+                    <div v-if="imageType === 'gallery' || imageType === 'drawio'" class="image-manager-header primary-background-light nav-tabs grid third">
+                        <div class="tab-item" title="{{ trans('components.image_all_title') }}" :class="{selected: !filter}" @click="setFilterType(null)">@icon('images') {{ trans('components.image_all') }}</div>
+                        <div class="tab-item" title="{{ trans('components.image_book_title') }}" :class="{selected: (filter=='book')}" @click="setFilterType('book')">@icon('book', ['class' => 'text-book svg-icon']) {{ trans('entities.book') }}</div>
+                        <div class="tab-item" title="{{ trans('components.image_page_title') }}" :class="{selected: (filter=='page')}" @click="setFilterType('page')">@icon('page', ['class' => 'text-page svg-icon']) {{ trans('entities.page') }}</div>
                     </div>
-                    <div v-show="view === 'all'" >
+                    <div>
                         <form @submit.prevent="searchImages" class="contained-search-box">
                             <input placeholder="{{ trans('components.image_search_hint') }}" v-model="searchTerm">
                             <button :class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" @click="cancelSearch()" class="text-button cancel">@icon('close')</button>
@@ -63,7 +63,7 @@
                                     <button type="button" class="button icon outline" @click="deleteImage">@icon('delete')</button>
 
                                 </div>
-                                <button class="button anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
+                                <button class="button primary anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
                                     {{ trans('components.image_select_image') }}
                                 </button>
                                 <div class="clearfix"></div>
