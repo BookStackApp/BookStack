@@ -762,7 +762,7 @@ class EntityRepo
      */
     public function searchForImage($imageString)
     {
-        $pages = $this->entityQuery('page')->where('html', 'like', '%' . $imageString . '%')->get();
+        $pages = $this->entityQuery('page')->where('html', 'like', '%' . $imageString . '%')->get(['id', 'name', 'slug', 'book_id']);
         foreach ($pages as $page) {
             $page->url = $page->getUrl();
             $page->html = '';

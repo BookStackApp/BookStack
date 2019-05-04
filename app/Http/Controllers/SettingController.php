@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\User;
+use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -8,6 +9,19 @@ use Setting;
 
 class SettingController extends Controller
 {
+    protected $imageRepo;
+
+    /**
+     * SettingController constructor.
+     * @param $imageRepo
+     */
+    public function __construct(ImageRepo $imageRepo)
+    {
+        $this->imageRepo = $imageRepo;
+        parent::__construct();
+    }
+
+
     /**
      * Display a listing of the settings.
      * @return Response
@@ -35,6 +49,9 @@ class SettingController extends Controller
     {
         $this->preventAccessForDemoUsers();
         $this->checkPermission('settings-manage');
+        $this->validate($request, [
+            'app_logo' => $this->imageRepo->getImageValidationRules(),
+        ]);
 
         // Cycles through posted settings and update them
         foreach ($request->all() as $name => $value) {
@@ -42,7 +59,21 @@ class SettingController extends Controller
                 continue;
             }
             $key = str_replace('setting-', '', trim($name));
-            Setting::put($key, $value);
+            setting()->put($key, $value);
+        }
+
+        // Update logo image if set
+        if ($request->has('app_logo')) {
+            $logoFile = $request->file('app_logo');
+            $this->imageRepo->destroyByType('system');
+            $image = $this->imageRepo->saveNew($logoFile, 'system', 0, null, 86);
+            setting()->put('app-logo', $image->url);
+        }
+
+        // Clear logo image if requested
+        if ($request->get('app_logo_reset', null)) {
+            $this->imageRepo->destroyByType('system');
+            setting()->remove('app-logo');
         }
 
         session()->flash('success', trans('settings.settings_save_success'));

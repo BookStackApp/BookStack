@@ -33,5 +33,4 @@
         </div>
     </div>
 
-    @include('components.image-manager', ['imageType' => 'cover'])
 @stop

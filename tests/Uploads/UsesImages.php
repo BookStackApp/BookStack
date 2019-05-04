@@ -1,6 +1,7 @@
 <?php namespace Tests\Uploads;
 
 
+use BookStack\Entities\Page;
 use Illuminate\Http\UploadedFile;
 
 trait UsesImages
@@ -41,7 +42,7 @@ trait UsesImages
      */
     protected function getTestImagePath($type, $fileName)
     {
-        return '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/' . $fileName;
+        return '/uploads/images/' . $type . '/' . Date('Y-m') . '/' . $fileName;
     }
 
     /**
@@ -55,7 +56,33 @@ trait UsesImages
     {
         $file = $this->getTestImage($name);
         return $this->withHeader('Content-Type', $contentType)
-            ->call('POST', '/images/gallery/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+            ->call('POST', '/images/gallery', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+    }
+
+    /**
+     * Upload a new gallery image.
+     * Returns the image name.
+     * Can provide a page to relate the image to.
+     * @param Page|null $page
+     * @return array
+     */
+    protected function uploadGalleryImage(Page $page = null)
+    {
+        if ($page === null) {
+            $page = Page::query()->first();
+        }
+
+        $imageName = 'first-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+
+        $upload = $this->uploadImage($imageName, $page->id);
+        $upload->assertStatus(200);
+        return [
+            'name' => $imageName,
+            'path' => $relPath,
+            'page' => $page
+        ];
     }
 
     /**

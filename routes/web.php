@@ -6,7 +6,8 @@ Route::get('/robots.txt', 'HomeController@getRobots');
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/uploads/images/{path}', 'ImageController@showImage')
+    // Secure images routing
+    Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')
         ->where('path', '.*$');
 
     Route::group(['prefix' => 'pages'], function() {
@@ -103,22 +104,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/{userId}', 'UserController@showProfilePage');
 
     // Image routes
-    Route::group(['prefix' => 'images'], function() {
-        // Get for user images
-        Route::get('/user/all', 'ImageController@getAllForUserType');
-        Route::get('/user/all/{page}', 'ImageController@getAllForUserType');
-        // Standard get, update and deletion for all types
-        Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
-        Route::get('/base64/{id}', 'ImageController@getBase64Image');
-        Route::put('/update/{imageId}', 'ImageController@update');
-        Route::post('/drawing/upload', 'ImageController@uploadDrawing');
-        Route::get('/usage/{id}', 'ImageController@usage');
-        Route::post('/{type}/upload', 'ImageController@uploadByType');
-        Route::get('/{type}/all', 'ImageController@getAllByType');
-        Route::get('/{type}/all/{page}', 'ImageController@getAllByType');
-        Route::get('/{type}/search/{page}', 'ImageController@searchByType');
-        Route::get('/gallery/{filter}/{page}', 'ImageController@getGalleryFiltered');
-        Route::delete('/{id}', 'ImageController@destroy');
+    Route::group(['prefix' => 'images'], function () {
+
+        // Gallery
+        Route::get('/gallery', 'Images\GalleryImageController@list');
+        Route::post('/gallery', 'Images\GalleryImageController@create');
+
+        // Drawio
+        Route::get('/drawio', 'Images\DrawioImageController@list');
+        Route::get('/drawio/base64/{id}', 'Images\DrawioImageController@getAsBase64');
+        Route::post('/drawio', 'Images\DrawioImageController@create');
+
+        // Shared gallery & draw.io endpoint
+        Route::get('/usage/{id}', 'Images\ImageController@usage');
+        Route::put('/{id}', 'Images\ImageController@update');
+        Route::delete('/{id}', 'Images\ImageController@destroy');
     });
 
     // Attachments routes
