@@ -75,4 +75,14 @@ async function upload(imageData, pageUploadedToId) {
     return resp.data;
 }
 
-export default {show, close, upload};
+/**
+ * Load an existing image, by fetching it as Base64 from the system.
+ * @param drawingId
+ * @returns {Promise<string>}
+ */
+async function load(drawingId) {
+    const resp = await window.$http.get(window.baseUrl(`/images/drawio/base64/${drawingId}`));
+    return `data:image/png;base64,${resp.data.content}`;
+}
+
+export default {show, close, upload, load};

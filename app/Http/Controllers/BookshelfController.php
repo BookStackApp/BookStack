@@ -86,8 +86,9 @@ class BookshelfController extends Controller
 
     /**
      * Store a newly created bookshelf in storage.
-     * @param  Request $request
+     * @param Request $request
      * @return Response
+     * @throws \BookStack\Exceptions\ImageUploadException
      */
     public function store(Request $request)
     {
@@ -284,9 +285,16 @@ class BookshelfController extends Controller
         $this->entityRepo->updateShelfBooks($shelf, $request->get('books', ''));
 
         // Update the cover image if in request
-        if ($request->has('image') && userCan('image-create-all')) {
-            $image = $this->imageRepo->saveNew($request->file('image'), 'cover', $shelf->id);
+        if ($request->has('image')) {
+            $newImage = $request->file('image');
+            $image = $this->imageRepo->saveNew($newImage, 'cover_shelf', $shelf->id, 512, 512, true);
             $shelf->image_id = $image->id;
+            $shelf->save();
+        }
+
+        if ($request->has('image_reset')) {
+            $this->imageRepo->destroyImage($shelf->cover);
+            $shelf->image_id = 0;
             $shelf->save();
         }
     }

@@ -6,6 +6,7 @@ use BookStack\Entities\Book;
 use BookStack\Entities\EntityContextManager;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\ExportService;
+use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -17,6 +18,7 @@ class BookController extends Controller
     protected $userRepo;
     protected $exportService;
     protected $entityContextManager;
+    protected $imageRepo;
 
     /**
      * BookController constructor.
@@ -24,17 +26,20 @@ class BookController extends Controller
      * @param UserRepo $userRepo
      * @param ExportService $exportService
      * @param EntityContextManager $entityContextManager
+     * @param ImageRepo $imageRepo
      */
     public function __construct(
         EntityRepo $entityRepo,
         UserRepo $userRepo,
         ExportService $exportService,
-        EntityContextManager $entityContextManager
+        EntityContextManager $entityContextManager,
+        ImageRepo $imageRepo
     ) {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;
         $this->exportService = $exportService;
         $this->entityContextManager = $entityContextManager;
+        $this->imageRepo = $imageRepo;
         parent::__construct();
     }
 
@@ -101,13 +106,15 @@ class BookController extends Controller
      * @param string $shelfSlug
      * @return Response
      * @throws \BookStack\Exceptions\NotFoundException
+     * @throws \BookStack\Exceptions\ImageUploadException
      */
     public function store(Request $request, string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'description' => 'string|max:1000'
+            'description' => 'string|max:1000',
+            'image' => $this->imageRepo->getImageValidationRules(),
         ]);
 
         $bookshelf = null;
@@ -117,6 +124,7 @@ class BookController extends Controller
         }
 
         $book = $this->entityRepo->createFromInput('book', $request->all());
+        $this->bookUpdateActions($book, $request);
         Activity::add($book, 'book_create', $book->id);
 
         if ($bookshelf) {
@@ -170,20 +178,27 @@ class BookController extends Controller
 
     /**
      * Update the specified book in storage.
-     * @param  Request $request
+     * @param Request $request
      * @param          $slug
      * @return Response
+     * @throws \BookStack\Exceptions\ImageUploadException
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, string $slug)
     {
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'description' => 'string|max:1000'
+            'description' => 'string|max:1000',
+            'image' => $this->imageRepo->getImageValidationRules(),
         ]);
+
          $book = $this->entityRepo->updateFromInput('book', $book, $request->all());
+         $this->bookUpdateActions($book, $request);
+
          Activity::add($book, 'book_update', $book->id);
+
          return redirect($book->getUrl());
     }
 
@@ -311,7 +326,12 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         Activity::addMessage('book_delete', 0, $book->name);
+
+        if ($book->cover) {
+            $this->imageRepo->destroyImage($book->cover);
+        }
         $this->entityRepo->destroyBook($book);
+
         return redirect('/books');
     }
 
@@ -382,5 +402,29 @@ class BookController extends Controller
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $textContent = $this->exportService->bookToPlainText($book);
         return $this->downloadResponse($textContent, $bookSlug . '.txt');
+    }
+
+    /**
+     * Common actions to run on book update.
+     * Handles updating the cover image.
+     * @param Book $book
+     * @param Request $request
+     * @throws \BookStack\Exceptions\ImageUploadException
+     */
+    protected function bookUpdateActions(Book $book, Request $request)
+    {
+        // Update the cover image if in request
+        if ($request->has('image')) {
+            $newImage = $request->file('image');
+            $image = $this->imageRepo->saveNew($newImage, 'cover_book', $book->id, 512, 512, true);
+            $book->image_id = $image->id;
+            $book->save();
+        }
+
+        if ($request->has('image_reset')) {
+            $this->imageRepo->destroyImage($book->cover);
+            $book->image_id = 0;
+            $book->save();
+        }
     }
 }

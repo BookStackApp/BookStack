@@ -9,7 +9,7 @@
 
         <div class="card content-wrap">
             <h1 class="list-heading">{{ $user->id === $currentUser->id ? trans('settings.users_edit_profile') : trans('settings.users_edit') }}</h1>
-            <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="post">
+            <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="post" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="PUT">
 
@@ -29,7 +29,7 @@
                                 'defaultImage' => baseUrl('/user_avatar.png'),
                                 'currentImage' => $user->getAvatar(80),
                                 'currentId' => $user->image_id,
-                                'name' => 'image_id',
+                                'name' => 'profile_image',
                                 'imageClass' => 'avatar large'
                             ])
                         </div>
@@ -87,5 +87,4 @@
         @endif
     </div>
 
-    @include('components.image-manager', ['imageType' => 'user', 'uploaded_to' => $user->id])
 @stop

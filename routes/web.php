@@ -6,7 +6,8 @@ Route::get('/robots.txt', 'HomeController@getRobots');
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/uploads/images/{path}', 'ImageController@showImage')
+    // Secure images routing
+    Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')
         ->where('path', '.*$');
 
     Route::group(['prefix' => 'pages'], function() {
@@ -105,27 +106,19 @@ Route::group(['middleware' => 'auth'], function () {
     // Image routes
     Route::group(['prefix' => 'images'], function () {
 
-        // TODO - Check auth on these
-        // TODO - Maybe check types for only gallery or drawing
-        // Standard get, update and deletion for all types
-        Route::get('/thumb/{id}/{width}/{height}/{crop}', 'ImageController@getThumbnail');
-        Route::get('/base64/{id}', 'ImageController@getBase64Image');
-        Route::get('/usage/{id}', 'ImageController@usage');
-
         // Gallery
         Route::get('/gallery', 'Images\GalleryImageController@list');
         Route::post('/gallery', 'Images\GalleryImageController@create');
 
         // Drawio
         Route::get('/drawio', 'Images\DrawioImageController@list');
+        Route::get('/drawio/base64/{id}', 'Images\DrawioImageController@getAsBase64');
         Route::post('/drawio', 'Images\DrawioImageController@create');
 
-
-        // TODO - Check auth on these
-        // TODO - Maybe check types for only gallery or drawing
-        // Or add to gallery/drawio controllers
-        Route::put('/{id}', 'ImageController@update');
-        Route::delete('/{id}', 'ImageController@destroy');
+        // Shared gallery & draw.io endpoint
+        Route::get('/usage/{id}', 'Images\ImageController@usage');
+        Route::put('/{id}', 'Images\ImageController@update');
+        Route::delete('/{id}', 'Images\ImageController@destroy');
     });
 
     // Attachments routes

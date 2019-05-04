@@ -64,4 +64,26 @@ class DrawioImageController extends Controller
         return response()->json($image);
     }
 
+    /**
+     * Get the content of an image based64 encoded.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
+    public function getAsBase64($id)
+    {
+        $image = $this->imageRepo->getById($id);
+        $page = $image->getPage();
+        if ($image === null || $image->type !== 'drawio' || !userCan('page-view', $page)) {
+            return $this->jsonError("Image data could not be found");
+        }
+
+        $imageData = $this->imageRepo->getImageData($image);
+        if ($imageData === null) {
+            return $this->jsonError("Image data could not be found");
+        }
+        return response()->json([
+            'content' => base64_encode($imageData)
+        ]);
+    }
+
 }
