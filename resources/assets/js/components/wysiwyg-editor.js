@@ -299,9 +299,7 @@ function drawIoPlugin() {
         }
 
         let drawingId = currentNode.getAttribute('drawio-diagram');
-        return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
-            return `data:image/png;base64,${resp.data.content}`;
-        });
+        return DrawIO.load(drawingId);
     }
 
     window.tinymce.PluginManager.add('drawio', function(editor, url) {

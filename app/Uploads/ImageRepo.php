@@ -2,7 +2,6 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Page;
-use BookStack\Http\Requests\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -38,7 +37,7 @@ class ImageRepo
     /**
      * Get an image with the given id.
      * @param $id
-     * @return mixed
+     * @return Image
      */
     public function getById($id)
     {
@@ -100,16 +99,8 @@ class ImageRepo
             $imageQuery = $imageQuery->where('name', 'LIKE', '%' . $search . '%');
         }
 
-        // Filter by page access if gallery
-        if ($type === 'gallery') {
-            $imageQuery = $this->restrictionService->filterRelatedEntity('page', $imageQuery, 'images', 'uploaded_to');
-        }
-
-        // Filter by entity if cover
-        if (strpos($type, 'cover_') === 0) {
-            $entityType = explode('_', $type)[1];
-            $imageQuery = $this->restrictionService->filterRelatedEntity($entityType, $imageQuery, 'images', 'uploaded_to');
-        }
+        // Filter by page access
+        $imageQuery = $this->restrictionService->filterRelatedEntity('page', $imageQuery, 'images', 'uploaded_to');
 
         if ($whereClause !== null) {
             $imageQuery = $imageQuery->where($whereClause);
@@ -157,15 +148,17 @@ class ImageRepo
     /**
      * Save a new image into storage and return the new image.
      * @param UploadedFile $uploadFile
-     * @param  string $type
+     * @param string $type
      * @param int $uploadedTo
+     * @param int|null $resizeWidth
+     * @param int|null $resizeHeight
+     * @param bool $keepRatio
      * @return Image
      * @throws \BookStack\Exceptions\ImageUploadException
-     * @throws \Exception
      */
-    public function saveNew(UploadedFile $uploadFile, $type, $uploadedTo = 0)
+    public function saveNew(UploadedFile $uploadFile, $type, $uploadedTo = 0, int $resizeWidth = null, int $resizeHeight = null, bool $keepRatio = true)
     {
-        $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo);
+        $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo, $resizeWidth, $resizeHeight, $keepRatio);
         $this->loadThumbs($image);
         return $image;
     }
@@ -208,10 +201,25 @@ class ImageRepo
      * @return bool
      * @throws \Exception
      */
-    public function destroyImage(Image $image)
+    public function destroyImage(Image $image = null)
     {
-        $this->imageService->destroy($image);
+        if ($image) {
+            $this->imageService->destroy($image);
+        }
         return true;
+    }
+
+    /**
+     * Destroy all images of a certain type.
+     * @param string $imageType
+     * @throws \Exception
+     */
+    public function destroyByType(string $imageType)
+    {
+        $images = $this->image->where('type', '=', $imageType)->get();
+        foreach ($images as $image) {
+            $this->destroyImage($image);
+        }
     }
 
 
@@ -241,7 +249,7 @@ class ImageRepo
      * @throws \BookStack\Exceptions\ImageUploadException
      * @throws \Exception
      */
-    public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
+    protected function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
         try {
             return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
@@ -262,18 +270,6 @@ class ImageRepo
         } catch (\Exception $exception) {
             return null;
         }
-    }
-
-    /**
-     * Check if the provided image type is valid.
-     * @param $type
-     * @return bool
-     */
-    public function isValidType($type)
-    {
-        // TODO - To delete?
-        $validTypes = ['gallery', 'cover', 'system', 'user'];
-        return in_array($type, $validTypes);
     }
 
     /**

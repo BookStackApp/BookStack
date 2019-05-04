@@ -79,7 +79,7 @@
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.app_customization') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST">
+            <form action="{{ baseUrl("/settings") }}" method="POST" enctype="multipart/form-data">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -119,14 +119,12 @@
                         </div>
                         <div>
                             @include('components.image-picker', [
-                                     'resizeHeight' => '43',
-                                     'resizeWidth' => '200',
-                                     'showRemove' => true,
+                                     'removeName' => 'setting-app-logo',
+                                     'removeValue' => 'none',
                                      'defaultImage' => baseUrl('/logo.png'),
                                      'currentImage' => setting('app-logo'),
-                                     'name' => 'setting-app-logo',
+                                     'name' => 'app_logo',
                                      'imageClass' => 'logo-image',
-                                     'currentId' => false
                                  ])
                         </div>
                     </div>

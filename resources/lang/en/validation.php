@@ -71,6 +71,7 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
+    'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
     // Custom validation lines
     'custom' => [
