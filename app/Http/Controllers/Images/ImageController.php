@@ -103,7 +103,7 @@ class ImageController extends Controller
      */
     protected function checkImagePermission(Image $image)
     {
-        if ($image->type !== 'drawio' || $image->type !== 'gallery') {
+        if ($image->type !== 'drawio' && $image->type !== 'gallery') {
             $this->showPermissionError();
         }
 
