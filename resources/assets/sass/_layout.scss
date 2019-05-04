@@ -140,6 +140,10 @@ body.flexbox {
   display: inline-block;
 }
 
+.hidden {
+  display: none;
+}
+
 .float {
   float: left;
   &.right {

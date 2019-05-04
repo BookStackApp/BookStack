@@ -257,39 +257,38 @@ function drawIoPlugin() {
         DrawIO.show(drawingInit, updateContent);
     }
 
-    function updateContent(pngData) {
-        let id = "image-" + Math.random().toString(16).slice(2);
-        let loadingImage = window.baseUrl('/loading.gif');
-        let data = {
-            image: pngData,
-            uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
-        };
+    async function updateContent(pngData) {
+        const id = "image-" + Math.random().toString(16).slice(2);
+        const loadingImage = window.baseUrl('/loading.gif');
+        const pageId = Number(document.getElementById('page-editor').getAttribute('page-id'));
 
         // Handle updating an existing image
         if (currentNode) {
             DrawIO.close();
             let imgElem = currentNode.querySelector('img');
-            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
-                pageEditor.dom.setAttrib(imgElem, 'src', resp.data.url);
-                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', resp.data.id);
-            }).catch(err => {
+            try {
+                const img = await DrawIO.upload(pngData, pageId);
+                pageEditor.dom.setAttrib(imgElem, 'src', img.url);
+                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
+            } catch (err) {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
-            });
+            }
             return;
         }
 
-        setTimeout(() => {
+        setTimeout(async () => {
             pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
             DrawIO.close();
-            window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
-                pageEditor.dom.setAttrib(id, 'src', resp.data.url);
-                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', resp.data.id);
-            }).catch(err => {
+            try {
+                const img = await DrawIO.upload(pngData, pageId);
+                pageEditor.dom.setAttrib(id, 'src', img.url);
+                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
+            } catch (err) {
                 pageEditor.dom.remove(id);
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
-            });
+            }
         }, 5);
     }
 
@@ -300,9 +299,7 @@ function drawIoPlugin() {
         }
 
         let drawingId = currentNode.getAttribute('drawio-diagram');
-        return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
-            return `data:image/png;base64,${resp.data.content}`;
-        });
+        return DrawIO.load(drawingId);
     }
 
     window.tinymce.PluginManager.add('drawio', function(editor, url) {

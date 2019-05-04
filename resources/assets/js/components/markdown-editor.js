@@ -394,9 +394,7 @@ class MarkdownEditor {
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
         DrawIO.show(() => {
-            return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
-                return `data:image/png;base64,${resp.data.content}`;
-            });
+            return DrawIO.load(drawingId);
         }, (pngData) => {
 
             let data = {

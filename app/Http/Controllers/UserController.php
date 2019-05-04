@@ -4,6 +4,7 @@ use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\UserUpdateException;
+use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,16 +13,19 @@ class UserController extends Controller
 
     protected $user;
     protected $userRepo;
+    protected $imageRepo;
 
     /**
      * UserController constructor.
-     * @param User     $user
+     * @param User $user
      * @param UserRepo $userRepo
+     * @param ImageRepo $imageRepo
      */
-    public function __construct(User $user, UserRepo $userRepo)
+    public function __construct(User $user, UserRepo $userRepo, ImageRepo $imageRepo)
     {
         $this->user = $user;
         $this->userRepo = $userRepo;
+        $this->imageRepo = $imageRepo;
         parent::__construct();
     }
 
@@ -107,9 +111,7 @@ class UserController extends Controller
      */
     public function edit($id, SocialAuthService $socialAuthService)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->user->findOrFail($id);
 
@@ -123,24 +125,24 @@ class UserController extends Controller
 
     /**
      * Update the specified user in storage.
-     * @param  Request $request
-     * @param  int $id
+     * @param Request $request
+     * @param int $id
      * @return Response
      * @throws UserUpdateException
+     * @throws \BookStack\Exceptions\ImageUploadException
      */
     public function update(Request $request, $id)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $this->validate($request, [
             'name'             => 'min:2',
             'email'            => 'min:2|email|unique:users,email,' . $id,
             'password'         => 'min:5|required_with:password_confirm',
             'password-confirm' => 'same:password|required_with:password',
-            'setting'          => 'array'
+            'setting'          => 'array',
+            'profile_image'    => $this->imageRepo->getImageValidationRules(),
         ]);
 
         $user = $this->userRepo->getById($id);
@@ -170,10 +172,23 @@ class UserController extends Controller
             }
         }
 
+        // Save profile image if in request
+        if ($request->has('profile_image')) {
+            $imageUpload = $request->file('profile_image');
+            $this->imageRepo->destroyImage($user->avatar);
+            $image = $this->imageRepo->saveNew($imageUpload, 'user', $user->id);
+            $user->image_id = $image->id;
+        }
+
+        // Delete the profile image if set to
+        if ($request->has('profile_image_reset')) {
+            $this->imageRepo->destroyImage($user->avatar);
+        }
+
         $user->save();
         session()->flash('success', trans('settings.users_edit_success'));
 
-        $redirectUrl = userCan('users-manage') ? '/settings/users' : '/settings/users/' . $user->id;
+        $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
         return redirect($redirectUrl);
     }
 
@@ -184,9 +199,7 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
@@ -202,9 +215,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->preventAccessForDemoUsers();
-        $this->checkPermissionOr('users-manage', function () use ($id) {
-            return $this->currentUser->id == $id;
-        });
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
 
