@@ -98,7 +98,6 @@ class UserController extends Controller
             $this->userRepo->setUserRoles($user, $roles);
         }
 
-        // TODO - Check this uses new profile assignment
         $this->userRepo->downloadAndAssignUserAvatar($user);
 
         return redirect('/settings/users');

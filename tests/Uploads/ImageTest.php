@@ -17,14 +17,10 @@ class ImageTest extends TestCase
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
-        $imageName = 'first-image.png';
-        $relPath = $this->getTestImagePath('gallery', $imageName);
-        $this->deleteImage($relPath);
+        $imgDetails = $this->uploadGalleryImage($page);
+        $relPath = $imgDetails['path'];
 
-        $upload = $this->uploadImage($imageName, $page->id);
-        $upload->assertStatus(200);
-
-        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image not found at path: '. public_path($relPath));
+        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: '. public_path($relPath));
 
         $this->deleteImage($relPath);
 
@@ -35,8 +31,91 @@ class ImageTest extends TestCase
             'path' => $relPath,
             'created_by' => $admin->id,
             'updated_by' => $admin->id,
-            'name' => $imageName
+            'name' => $imgDetails['name'],
         ]);
+    }
+
+    public function test_image_edit()
+    {
+        $editor = $this->getEditor();
+        $this->actingAs($editor);
+
+        $imgDetails = $this->uploadGalleryImage();
+        $image = Image::query()->first();
+
+        $newName = str_random();
+        $update = $this->put('/images/' . $image->id, ['name' => $newName]);
+        $update->assertSuccessful();
+        $update->assertJson([
+            'id' => $image->id,
+            'name' => $newName,
+            'type' => 'gallery',
+        ]);
+
+        $this->deleteImage($imgDetails['path']);
+
+        $this->assertDatabaseHas('images', [
+            'type' => 'gallery',
+            'name' => $newName
+        ]);
+    }
+
+    public function test_gallery_get_list_format()
+    {
+        $this->asEditor();
+
+        $imgDetails = $this->uploadGalleryImage();
+        $image = Image::query()->first();
+
+        $emptyJson = ['images' => [], 'has_more' => false];
+        $resultJson = [
+            'images' => [
+                [
+                    'id' => $image->id,
+                    'name' => $imgDetails['name'],
+                ]
+            ],
+            'has_more' => false,
+        ];
+
+        $pageId = $imgDetails['page']->id;
+        $firstPageRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}");
+        $firstPageRequest->assertSuccessful()->assertJson($resultJson);
+
+        $secondPageRequest = $this->get("/images/gallery?page=2&uploaded_to={$pageId}");
+        $secondPageRequest->assertSuccessful()->assertExactJson($emptyJson);
+
+        $namePartial = substr($imgDetails['name'], 0, 3);
+        $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
+        $searchHitRequest->assertSuccessful()->assertJson($resultJson);
+
+        $namePartial = str_random(16);
+        $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
+        $searchHitRequest->assertSuccessful()->assertExactJson($emptyJson);
+    }
+
+    public function test_image_usage()
+    {
+        $page = Page::first();
+        $editor = $this->getEditor();
+        $this->actingAs($editor);
+
+        $imgDetails = $this->uploadGalleryImage($page);
+
+        $image = Image::query()->first();
+        $page->html = '<img src="'.$image->url.'">';
+        $page->save();
+
+        $usage = $this->get('/images/usage/' . $image->id);
+        $usage->assertSuccessful();
+        $usage->assertJson([
+            [
+                'id' => $page->id,
+                'name' => $page->name
+            ]
+        ]);
+
+        $this->deleteImage($imgDetails['path']);
     }
 
     public function test_php_files_cannot_be_uploaded()
@@ -50,7 +129,7 @@ class ImageTest extends TestCase
         $this->deleteImage($relPath);
 
         $file = $this->getTestImage($fileName);
-        $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $file], []);
+        $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
@@ -72,7 +151,7 @@ class ImageTest extends TestCase
         $this->deleteImage($relPath);
 
         $file = $this->getTestImage($fileName);
-        $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $file], []);
+        $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
@@ -89,7 +168,7 @@ class ImageTest extends TestCase
         $this->deleteImage($relPath);
 
         $file = $this->getTestImage($fileName);
-        $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $file], []);
+        $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded double extension file was uploaded but should have been stopped');
@@ -101,9 +180,9 @@ class ImageTest extends TestCase
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::first();
-        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload.png');
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m') . '/my-secure-test-upload.png');
 
-        $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $upload->assertStatus(200);
 
         $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: '. $expectedPath);
@@ -119,9 +198,9 @@ class ImageTest extends TestCase
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::first();
-        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m-M') . '/my-secure-test-upload.png');
+        $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m') . '/my-secure-test-upload.png');
 
-        $upload = $this->call('POST', '/images/gallery/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $imageUrl = json_decode($upload->getContent(), true)['url'];
         $page->html .= "<img src=\"{$imageUrl}\">";
         $page->save();
@@ -139,13 +218,12 @@ class ImageTest extends TestCase
     public function test_system_images_remain_public()
     {
         config()->set('filesystems.default', 'local_secure');
-        $this->asEditor();
+        $this->asAdmin();
         $galleryFile = $this->getTestImage('my-system-test-upload.png');
-        $page = Page::first();
-        $expectedPath = public_path('uploads/images/system/' . Date('Y-m-M') . '/my-system-test-upload.png');
+        $expectedPath = public_path('uploads/images/system/' . Date('Y-m') . '/my-system-test-upload.png');
 
-        $upload = $this->call('POST', '/images/system/upload', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
-        $upload->assertStatus(200);
+        $upload = $this->call('POST', '/settings', [], [], ['app_logo' => $galleryFile], []);
+        $upload->assertRedirect('/settings');
 
         $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: '. $expectedPath);
 
@@ -183,8 +261,10 @@ class ImageTest extends TestCase
 
         $this->uploadImage($imageName, $page->id);
         $image = Image::first();
+        $image->type = 'drawio';
+        $image->save();
 
-        $imageGet = $this->getJson("/images/base64/{$image->id}");
+        $imageGet = $this->getJson("/images/drawio/base64/{$image->id}");
         $imageGet->assertJson([
             'content' => 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDCo5iYNs+gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12O0jN/KgASYGFABqXwAZtoBV6Sl3hIAAAAASUVORK5CYII='
         ]);
@@ -196,7 +276,7 @@ class ImageTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $upload = $this->postJson('images/drawing/upload', [
+        $upload = $this->postJson('images/drawio', [
             'uploaded_to' => $page->id,
             'image' => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDCo5iYNs+gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12O0jN/KgASYGFABqXwAZtoBV6Sl3hIAAAAASUVORK5CYII='
         ]);
@@ -233,70 +313,12 @@ class ImageTest extends TestCase
         $this->actingAs($admin);
 
         $file = $this->getTestProfileImage();
-        $this->call('POST', '/images/user/upload', ['uploaded_to' => $editor->id], [], ['file' => $file], []);
+        $this->call('PUT', '/settings/users/' . $editor->id, [], [], ['profile_image' => $file], []);
 
         $this->assertDatabaseHas('images', [
             'type' => 'user',
             'uploaded_to' => $editor->id,
             'created_by' => $admin->id,
-        ]);
-    }
-
-    public function test_standard_user_with_manage_users_permission_can_view_other_profile_images()
-    {
-        $editor = $this->getEditor();
-        $this->giveUserPermissions($editor, ['users-manage']);
-
-        $admin = $this->getAdmin();
-
-        $this->actingAs($admin);
-        $file = $this->getTestProfileImage();
-        $this->call('POST', '/images/user/upload', ['uploaded_to' => $admin->id], [], ['file' => $file], []);
-
-        $expectedJson = [
-            'name' => 'profile.png',
-            'uploaded_to' => $admin->id,
-            'type' => 'user'
-        ];
-
-        $this->actingAs($editor);
-        $adminImagesGet = $this->get("/images/user/all/0?uploaded_to=" . $admin->id);
-        $adminImagesGet->assertStatus(200)->assertJsonFragment($expectedJson);
-
-        $allImagesGet = $this->get("/images/user/all/0");
-        $allImagesGet->assertStatus(200)->assertJsonFragment($expectedJson);
-    }
-
-    public function test_standard_user_cant_view_other_profile_images()
-    {
-        $editor = $this->getEditor();
-        $admin = $this->getAdmin();
-
-        $this->actingAs($admin);
-        $file = $this->getTestProfileImage();
-        $this->call('POST', '/images/user/upload', ['uploaded_to' => $admin->id], [], ['file' => $file], []);
-
-        $this->actingAs($editor);
-        $adminImagesGet = $this->get("/images/user/all/0?uploaded_to=" . $admin->id);
-        $adminImagesGet->assertStatus(302);
-
-        $allImagesGet = $this->get("/images/user/all/0");
-        $allImagesGet->assertStatus(302);
-    }
-
-    public function test_standard_user_cant_upload_other_profile_images()
-    {
-        $editor = $this->getEditor();
-        $admin = $this->getAdmin();
-
-        $this->actingAs($editor);
-        $file = $this->getTestProfileImage();
-        $upload = $this->call('POST', '/images/user/upload', ['uploaded_to' => $admin->id], [], ['file' => $file], []);
-        $upload->assertStatus(302);
-
-        $this->assertDatabaseMissing('images', [
-            'type' => 'user',
-            'uploaded_to' => $admin->id,
         ]);
     }
 
@@ -306,14 +328,17 @@ class ImageTest extends TestCase
         $this->actingAs($editor);
 
         $file = $this->getTestProfileImage();
-        $this->call('POST', '/images/user/upload', ['uploaded_to' => $editor->id], [], ['file' => $file], []);
-        $this->call('POST', '/images/user/upload', ['uploaded_to' => $editor->id], [], ['file' => $file], []);
+        $this->call('PUT', '/settings/users/' . $editor->id, [], [], ['profile_image' => $file], []);
 
         $profileImages = Image::where('type', '=', 'user')->where('created_by', '=', $editor->id)->get();
-        $this->assertTrue($profileImages->count() === 2, "Found profile images does not match upload count");
+        $this->assertTrue($profileImages->count() === 1, "Found profile images does not match upload count");
+
+        $imagePath = public_path($profileImages->first()->path);
+        $this->assertTrue(file_exists($imagePath));
 
         $userDelete = $this->asAdmin()->delete("/settings/users/{$editor->id}");
         $userDelete->assertStatus(302);
+
         $this->assertDatabaseMissing('images', [
             'type' => 'user',
             'created_by' => $editor->id
@@ -322,6 +347,8 @@ class ImageTest extends TestCase
             'type' => 'user',
             'uploaded_to' => $editor->id
         ]);
+
+        $this->assertFalse(file_exists($imagePath));
     }
 
     public function test_deleted_unused_images()

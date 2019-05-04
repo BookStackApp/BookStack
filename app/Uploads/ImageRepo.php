@@ -232,8 +232,8 @@ class ImageRepo
     protected function loadThumbs(Image $image)
     {
         $image->thumbs = [
-            'gallery' => $this->getThumbnail($image, 150, 150),
-            'display' => $this->getThumbnail($image, 840, 0, true)
+            'gallery' => $this->getThumbnail($image, 150, 150, false),
+            'display' => $this->getThumbnail($image, 840, null, true)
         ];
     }
 

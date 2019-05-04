@@ -235,7 +235,7 @@ class ImageService extends UploadService
      * @return string
      * @throws ImageUploadException
      */
-    protected function resizeImage(string $imageData, $width = 220, $height = null, $keepRatio = true)
+    protected function resizeImage(string $imageData, $width = 220, $height = null, bool $keepRatio = true)
     {
         try {
             $thumb = $this->imageTool->make($imageData);
@@ -336,6 +336,7 @@ class ImageService extends UploadService
         $image = $this->saveNewFromUrl($userAvatarUrl, 'user', $imageName);
         $image->created_by = $user->id;
         $image->updated_by = $user->id;
+        $image->uploaded_to = $user->id;
         $image->save();
 
         return $image;
