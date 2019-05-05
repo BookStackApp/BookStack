@@ -224,7 +224,7 @@ class UserRepo
      */
     public function getRecentlyCreated(User $user, $count = 20)
     {
-        $createdByUserQuery = function(Builder $query) use ($user) {
+        $createdByUserQuery = function (Builder $query) use ($user) {
             $query->where('created_by', '=', $user->id);
         };
 

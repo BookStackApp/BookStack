@@ -61,5 +61,4 @@ class GalleryImageController extends Controller
 
         return response()->json($image);
     }
-
 }

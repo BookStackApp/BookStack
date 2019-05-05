@@ -52,7 +52,8 @@ function signedInUser() : bool
  * Check if the current user has general access.
  * @return bool
  */
-function hasAppAccess() : bool {
+function hasAppAccess() : bool
+{
     return !auth()->guest() || setting('app-public');
 }
 

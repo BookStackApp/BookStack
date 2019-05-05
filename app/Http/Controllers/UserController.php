@@ -368,5 +368,4 @@ class UserController extends Controller
 
         return redirect()->back(302, [], "/settings/users/$userId");
     }
-
 }

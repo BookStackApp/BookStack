@@ -132,7 +132,7 @@ abstract class Controller extends BaseController
      */
     protected function checkPermissionOrCurrentUser(string $permissionName, int $userId)
     {
-        return $this->checkPermissionOr($permissionName, function() use ($userId) {
+        return $this->checkPermissionOr($permissionName, function () use ($userId) {
             return $userId === $this->currentUser->id;
         });
     }

@@ -25,8 +25,7 @@ class ImageRepo
         ImageService $imageService,
         PermissionService $permissionService,
         Page $page
-    )
-    {
+    ) {
         $this->image = $image;
         $this->imageService = $imageService;
         $this->restrictionService = $permissionService;
@@ -87,8 +86,7 @@ class ImageRepo
         int $uploadedTo = null,
         string $search = null,
         callable $whereClause = null
-    )
-    {
+    ) {
         $imageQuery = $this->image->newQuery()->where('type', '=', strtolower($type));
 
         if ($uploadedTo !== null) {
@@ -126,13 +124,12 @@ class ImageRepo
         int $pageSize = 24,
         int $uploadedTo = null,
         string $search = null
-    )
-    {
+    ) {
         $contextPage = $this->page->findOrFail($uploadedTo);
         $parentFilter = null;
 
         if ($filterType === 'book' || $filterType === 'page') {
-            $parentFilter = function(Builder $query) use ($filterType, $contextPage) {
+            $parentFilter = function (Builder $query) use ($filterType, $contextPage) {
                 if ($filterType === 'page') {
                     $query->where('uploaded_to', '=', $contextPage->id);
                 } elseif ($filterType === 'book') {

@@ -37,7 +37,6 @@ class EntityContextManager
             if ($shelf && $shelf->contains($book)) {
                 return $shelf;
             }
-
         }
         return null;
     }
@@ -58,5 +57,4 @@ class EntityContextManager
     {
         $this->session->forget($this->KEY_SHELF_CONTEXT_ID);
     }
-
 }
