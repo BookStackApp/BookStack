@@ -108,13 +108,17 @@ class ActivityService
         if ($entity->isA('book')) {
             $query = $this->activity->where('book_id', '=', $entity->id);
         } else {
-            $query = $this->activity->where('entity_type', '=', get_class($entity))
+            $query = $this->activity->where('entity_type', '=', $entity->getMorphClass())
                 ->where('entity_id', '=', $entity->id);
         }
         
         $activity = $this->permissionService
             ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')->with(['entity', 'user.avatar'])->skip($count * ($page - 1))->take($count)->get();
+            ->orderBy('created_at', 'desc')
+            ->with(['entity', 'user.avatar'])
+            ->skip($count * ($page - 1))
+            ->take($count)
+            ->get();
 
         return $this->filterSimilar($activity);
     }

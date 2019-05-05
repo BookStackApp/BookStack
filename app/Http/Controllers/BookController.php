@@ -415,6 +415,7 @@ class BookController extends Controller
     {
         // Update the cover image if in request
         if ($request->has('image')) {
+            $this->imageRepo->destroyImage($book->cover);
             $newImage = $request->file('image');
             $image = $this->imageRepo->saveNew($newImage, 'cover_book', $book->id, 512, 512, true);
             $book->image_id = $image->id;

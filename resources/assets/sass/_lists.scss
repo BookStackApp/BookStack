@@ -456,6 +456,10 @@ ul.pagination {
   position: relative;
   margin-right: $-l;
 
+  &.entity-list-item-image-wide {
+    width: 220px;
+  }
+
   .svg-icon {
     color: #FFF;
     fill: #FFF;
