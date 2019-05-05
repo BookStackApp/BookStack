@@ -14,7 +14,7 @@
     content: '';
     width: 1.2em;
     height: 1.2em;
-    left: $-xs + 1px;
+    left: $-xs + 2px;
     top: 50%;
     margin-top: -9px;
     display: inline-block;
@@ -24,7 +24,7 @@
   }
   &.success {
     border-left-color: $positive;
-    background-color: lighten($positive, 45%);
+    background-color: lighten($positive, 68%);
     color: darken($positive, 16%);
   }
   &.success:before {
@@ -32,7 +32,7 @@
   }
   &.danger {
     border-left-color: $negative;
-    background-color: lighten($negative, 34%);
+    background-color: lighten($negative, 56%);
     color: darken($negative, 20%);
   }
   &.danger:before {
@@ -41,12 +41,12 @@
   &.info {
     border-left-color: $info;
     background-color: lighten($info, 50%);
-    color: darken($info, 16%);
+    color: darken($info, 20%);
   }
   &.warning {
     border-left-color: $warning;
-    background-color: lighten($warning, 36%);
-    color: darken($warning, 16%);
+    background-color: lighten($warning, 50%);
+    color: darken($warning, 20%);
   }
   &.warning:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiNjUzMWMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEgMjFoMjJMMTIgMiAxIDIxem0xMi0zaC0ydi0yaDJ2MnptMC00aC0ydi00aDJ2NHoiLz48L3N2Zz4=");
@@ -62,17 +62,6 @@
   box-shadow: $bs-card;
   border-radius: 3px;
   border: 1px solid transparent;
-  h3 {
-    padding: $-m $-m $-xs;
-    margin: 0;
-    font-size: $fs-m;
-    color: #222;
-    fill: #222;
-    font-weight: 400;
-  }
-  h3 a {
-    line-height: 1;
-  }
   .body, p.empty-text {
     padding: $-m;
   }
@@ -80,6 +69,18 @@
     word-wrap: break-word;
     word-break: break-word;
   }
+}
+
+.card-title {
+  padding: $-m $-m $-xs;
+  margin: 0;
+  font-size: $fs-m;
+  color: #222;
+  fill: #222;
+  font-weight: 400;
+}
+.card-title a {
+  line-height: 1;
 }
 
 .card.drag-card {

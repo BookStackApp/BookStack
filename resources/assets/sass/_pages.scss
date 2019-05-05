@@ -8,7 +8,7 @@
   .edit-area {
     flex: 1;
     flex-direction: column;
-    z-index: 1;
+    z-index: 10;
   }
 
   .mce-tinymce {
@@ -24,7 +24,7 @@
   .page-edit-toolbar {
     overflow-x: scroll;
     overflow-y: visible;
-    z-index: 4;
+    z-index: 12;
   }
   .page-edit-toolbar .grid.third {
     display: block;
@@ -80,7 +80,7 @@
   }
   img.align-left, table.align-left {
     float: left !important;
-    margin: $-xs $-s $-xs 0;
+    margin: $-xs $-m $-m 0;
   }
   .align-right {
     text-align: right !important;
