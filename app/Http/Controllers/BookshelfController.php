@@ -124,6 +124,7 @@ class BookshelfController extends Controller
         $this->entityContextManager->setShelfContext($shelf->id);
 
         $this->setPageTitle($shelf->getShortName());
+
         return view('shelves.show', [
             'shelf' => $shelf,
             'books' => $books,
@@ -287,6 +288,7 @@ class BookshelfController extends Controller
         // Update the cover image if in request
         if ($request->has('image')) {
             $newImage = $request->file('image');
+            $this->imageRepo->destroyImage($shelf->cover);
             $image = $this->imageRepo->saveNew($newImage, 'cover_shelf', $shelf->id, 512, 512, true);
             $shelf->image_id = $image->id;
             $shelf->save();

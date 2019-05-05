@@ -150,8 +150,8 @@
                     return bTime - aTime;
                 },
                 updated: function(a, b) {
-                    const aTime = Number(a.getAttribute('data-update'));
-                    const bTime = Number(b.getAttribute('data-update'));
+                    const aTime = Number(a.getAttribute('data-updated'));
+                    const bTime = Number(b.getAttribute('data-updated'));
                     return bTime - aTime;
                 },
                 chaptersFirst: function(a, b) {
