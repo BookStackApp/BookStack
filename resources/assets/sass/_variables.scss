@@ -43,9 +43,9 @@ $fs-s: 12px;
 // Colours
 $primary: #0288D1;
 $primary-dark: #0288D1;
-$secondary: #e27b41;
-$positive: #52A256;
-$negative: #E84F4F;
+$secondary: #cf4d03;
+$positive: #0f7d15;
+$negative: #ab0f0e;
 $info: $primary;
 $warning: $secondary;
 $primary-faded: rgba(21, 101, 192, 0.15);
@@ -64,5 +64,6 @@ $text-light: #EEE;
 // Shadows
 $bs-light: 0 0 4px 1px #CCC;
 $bs-med: 0 1px 3px 1px rgba(76, 76, 76, 0.26);
+$bs-large: 0 1px 6px 1px rgba(22, 22, 22, 0.2);
 $bs-card: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
 $bs-hover: 0 2px 2px 1px rgba(0,0,0,.13);
