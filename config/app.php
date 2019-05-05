@@ -46,7 +46,7 @@ return [
     'url' => env('APP_URL', '') === 'http://bookstack.dev' ? '' : env('APP_URL', ''),
 
     // Application timezone for back-end date functions.
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     // Default locale to use
     'locale' => env('APP_LANG', 'en'),
