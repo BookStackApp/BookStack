@@ -1,5 +1,6 @@
 <?php namespace BookStack\Entities\Repos;
 
+use Activity;
 use BookStack\Actions\TagRepo;
 use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
@@ -15,9 +16,13 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\AttachmentService;
 use DOMDocument;
+use DOMNode;
+use DOMXPath;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class EntityRepo
 {
@@ -102,7 +107,7 @@ class EntityRepo
      * @param integer $id
      * @param bool $allowDrafts
      * @param bool $ignorePermissions
-     * @return \BookStack\Entities\Entity
+     * @return Entity
      */
     public function getById($type, $id, $allowDrafts = false, $ignorePermissions = false)
     {
@@ -120,7 +125,7 @@ class EntityRepo
      * @param []int $ids
      * @param bool $allowDrafts
      * @param bool $ignorePermissions
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Collection
+     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|Collection
      */
     public function getManyById($type, $ids, $allowDrafts = false, $ignorePermissions = false)
     {
@@ -138,7 +143,7 @@ class EntityRepo
      * @param string $type
      * @param string $slug
      * @param string|bool $bookSlug
-     * @return \BookStack\Entities\Entity
+     * @return Entity
      * @throws NotFoundException
      */
     public function getBySlug($type, $slug, $bookSlug = false)
@@ -183,7 +188,7 @@ class EntityRepo
      * @param string $sort
      * @param string $order
      * @param null|callable $queryAddition
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return LengthAwarePaginator
      */
     public function getAllPaginated($type, int $count = 10, string $sort = 'name', string $order = 'asc', $queryAddition = null)
     {
@@ -332,7 +337,7 @@ class EntityRepo
     /**
      * Get the child items for a chapter sorted by priority but
      * with draft items floated to the top.
-     * @param \BookStack\Entities\Bookshelf $bookshelf
+     * @param Bookshelf $bookshelf
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getBookshelfChildren(Bookshelf $bookshelf)
@@ -356,7 +361,7 @@ class EntityRepo
      * Get all child objects of a book.
      * Returns a sorted collection of Pages and Chapters.
      * Loads the book slug onto child elements to prevent access database access for getting the slug.
-     * @param \BookStack\Entities\Book $book
+     * @param Book $book
      * @param bool $filterDrafts
      * @param bool $renderPages
      * @return mixed
@@ -406,7 +411,7 @@ class EntityRepo
     /**
      * Get the child items for a chapter sorted by priority but
      * with draft items floated to the top.
-     * @param \BookStack\Entities\Chapter $chapter
+     * @param Chapter $chapter
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getChapterChildren(Chapter $chapter)
@@ -418,7 +423,7 @@ class EntityRepo
 
     /**
      * Get the next sequential priority for a new child element in the given book.
-     * @param \BookStack\Entities\Book $book
+     * @param Book $book
      * @return int
      */
     public function getNewBookPriority(Book $book)
@@ -429,7 +434,7 @@ class EntityRepo
 
     /**
      * Get a new priority for a new page to be added to the given chapter.
-     * @param \BookStack\Entities\Chapter $chapter
+     * @param Chapter $chapter
      * @return int
      */
     public function getNewChapterPriority(Chapter $chapter)
@@ -478,8 +483,8 @@ class EntityRepo
     /**
      * Updates entity restrictions from a request
      * @param Request $request
-     * @param \BookStack\Entities\Entity $entity
-     * @throws \Throwable
+     * @param Entity $entity
+     * @throws Throwable
      */
     public function updateEntityPermissionsFromRequest(Request $request, Entity $entity)
     {
@@ -509,7 +514,7 @@ class EntityRepo
      * @param string $type
      * @param array $input
      * @param bool|Book $book
-     * @return \BookStack\Entities\Entity
+     * @return Entity
      */
     public function createFromInput($type, $input = [], $book = false)
     {
@@ -533,9 +538,9 @@ class EntityRepo
      * Update entity details from request input.
      * Used for books and chapters
      * @param string $type
-     * @param \BookStack\Entities\Entity $entityModel
+     * @param Entity $entityModel
      * @param array $input
-     * @return \BookStack\Entities\Entity
+     * @return Entity
      */
     public function updateFromInput($type, Entity $entityModel, $input = [])
     {
@@ -558,7 +563,7 @@ class EntityRepo
     /**
      * Sync the books assigned to a shelf from a comma-separated list
      * of book IDs.
-     * @param \BookStack\Entities\Bookshelf $shelf
+     * @param Bookshelf $shelf
      * @param string $books
      */
     public function updateShelfBooks(Bookshelf $shelf, string $books)
@@ -598,7 +603,7 @@ class EntityRepo
      * @param integer $newBookId
      * @param Entity $entity
      * @param bool $rebuildPermissions
-     * @return \BookStack\Entities\Entity
+     * @return Entity
      */
     public function changeBook($type, $newBookId, Entity $entity, $rebuildPermissions = false)
     {
@@ -745,13 +750,35 @@ class EntityRepo
      */
     protected function escapeScripts(string $html) : string
     {
-        $scriptSearchRegex = '/<script.*?>.*?<\/script>/ms';
-        $matches = [];
-        preg_match_all($scriptSearchRegex, $html, $matches);
-
-        foreach ($matches[0] as $match) {
-            $html = str_replace($match, htmlentities($match), $html);
+        if ($html == '') {
+            return $html;
         }
+
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+
+        // Remove standard script tags
+        $scriptElems = $xPath->query('//body//*//script');
+        foreach ($scriptElems as $scriptElem) {
+            $scriptElem->parentNode->removeChild($scriptElem);
+        }
+
+        // Remove 'on*' attributes
+        $onAttributes = $xPath->query('//body//*/@*[starts-with(name(), \'on\')]');
+        foreach ($onAttributes as $attr) {
+            /** @var \DOMAttr $attr*/
+            $attrName = $attr->nodeName;
+            $attr->parentNode->removeAttribute($attrName);
+        }
+
+        $html = '';
+        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
+        foreach ($topElems as $child) {
+            $html .= $doc->saveHTML($child);
+        }
+
         return $html;
     }
 
@@ -773,8 +800,8 @@ class EntityRepo
 
     /**
      * Destroy a bookshelf instance
-     * @param \BookStack\Entities\Bookshelf $shelf
-     * @throws \Throwable
+     * @param Bookshelf $shelf
+     * @throws Throwable
      */
     public function destroyBookshelf(Bookshelf $shelf)
     {
@@ -784,9 +811,9 @@ class EntityRepo
 
     /**
      * Destroy the provided book and all its child entities.
-     * @param \BookStack\Entities\Book $book
+     * @param Book $book
      * @throws NotifyException
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function destroyBook(Book $book)
     {
@@ -802,8 +829,8 @@ class EntityRepo
 
     /**
      * Destroy a chapter and its relations.
-     * @param \BookStack\Entities\Chapter $chapter
-     * @throws \Throwable
+     * @param Chapter $chapter
+     * @throws Throwable
      */
     public function destroyChapter(Chapter $chapter)
     {
@@ -821,7 +848,7 @@ class EntityRepo
      * Destroy a given page along with its dependencies.
      * @param Page $page
      * @throws NotifyException
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function destroyPage(Page $page)
     {
@@ -844,12 +871,12 @@ class EntityRepo
 
     /**
      * Destroy or handle the common relations connected to an entity.
-     * @param \BookStack\Entities\Entity $entity
-     * @throws \Throwable
+     * @param Entity $entity
+     * @throws Throwable
      */
     protected function destroyEntityCommonRelations(Entity $entity)
     {
-        \Activity::removeEntity($entity);
+        Activity::removeEntity($entity);
         $entity->views()->delete();
         $entity->permissions()->delete();
         $entity->tags()->delete();
@@ -861,9 +888,9 @@ class EntityRepo
     /**
      * Copy the permissions of a bookshelf to all child books.
      * Returns the number of books that had permissions updated.
-     * @param \BookStack\Entities\Bookshelf $bookshelf
+     * @param Bookshelf $bookshelf
      * @return int
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function copyBookshelfPermissions(Bookshelf $bookshelf)
     {

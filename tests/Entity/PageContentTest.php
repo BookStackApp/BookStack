@@ -71,17 +71,30 @@ class PageContentTest extends TestCase
         $pageResp->assertSee($content);
     }
 
-    public function test_page_content_scripts_escaped_by_default()
+    public function test_page_content_scripts_removed_by_default()
     {
         $this->asEditor();
         $page = Page::first();
-        $script = '<script>console.log("hello-test")</script>';
+        $script = 'abc123<script>console.log("hello-test")</script>abc123';
         $page->html = "escape {$script}";
         $page->save();
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee($script);
-        $pageView->assertSee(htmlentities($script));
+        $pageView->assertSee('abc123abc123');
+    }
+
+    public function test_page_inline_on_attributes_removed_by_default()
+    {
+        $this->asEditor();
+        $page = Page::first();
+        $script = '<p onmouseenter="console.log(\'test\')">Hello</p>';
+        $page->html = "escape {$script}";
+        $page->save();
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee('<p>Hello</p>');
     }
 
     public function test_page_content_scripts_show_when_configured()
@@ -89,13 +102,29 @@ class PageContentTest extends TestCase
         $this->asEditor();
         $page = Page::first();
         config()->push('app.allow_content_scripts', 'true');
-        $script = '<script>console.log("hello-test")</script>';
+
+        $script = 'abc123<script>console.log("hello-test")</script>abc123';
         $page->html = "no escape {$script}";
         $page->save();
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertSee($script);
-        $pageView->assertDontSee(htmlentities($script));
+        $pageView->assertDontSee('abc123abc123');
+    }
+
+    public function test_page_inline_on_attributes_show_if_configured()
+    {
+        $this->asEditor();
+        $page = Page::first();
+        config()->push('app.allow_content_scripts', 'true');
+
+        $script = '<p onmouseenter="console.log(\'test\')">Hello</p>';
+        $page->html = "escape {$script}";
+        $page->save();
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee($script);
+        $pageView->assertDontSee('<p>Hello</p>');
     }
 
     public function test_duplicate_ids_does_not_break_page_render()
