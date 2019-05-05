@@ -53,7 +53,7 @@
                             <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
                             <span class="name">{{ $currentUser->getShortName(9) }}</span> @icon('caret-down')
                         </span>
-                        <ul>
+                        <ul class="dropdown-menu">
                             <li>
                                 <a href="{{ baseUrl("/user/{$currentUser->id}") }}">@icon('user'){{ trans('common.view_profile') }}</a>
                             </li>

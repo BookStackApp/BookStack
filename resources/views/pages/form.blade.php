@@ -20,10 +20,10 @@
             </div>
 
             <div class="text-center px-m py-xs">
-                <div v-show="draftsEnabled" dropdown class="dropdown-container draft-display text">
-                    <a dropdown-toggle class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
+                <div v-show="draftsEnabled" dropdown dropdown-move-menu class="dropdown-container draft-display text">
+                    <a dropdown-toggle  class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
                     @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
-                    <ul>
+                    <ul class="dropdown-menu">
                         <li>
                             <a @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</a>
                         </li>
@@ -38,14 +38,15 @@
             </div>
 
             <div class="action-buttons px-m py-xs" v-cloak>
-                <div dropdown class="dropdown-container">
+                <div dropdown dropdown-move-menu class="dropdown-container">
                     <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
-                    <ul class="wide">
+                    <ul class="wide dropdown-menu">
                         <li class="px-l py-m">
                             <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
                             <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
                         </li>
                     </ul>
+                    <span>{{-- Prevents button jumping on menu show --}}</span>
                 </div>
 
                 <button type="submit" id="save-button" class="float-left text-primary text-button text-pos-hover">@icon('save')<span>{{ trans('entities.pages_save') }}</span></button>
