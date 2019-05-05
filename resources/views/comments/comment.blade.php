@@ -29,7 +29,7 @@
                 @if(userCan('comment-delete', $comment))
                     <div dropdown class="dropdown-container">
                         <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
-                        <ul>
+                        <ul class="dropdown-menu">
                             <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
                             <li><a action="delete" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
                         </ul>

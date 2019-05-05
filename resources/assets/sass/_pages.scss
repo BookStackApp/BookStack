@@ -20,7 +20,7 @@
   }
 }
 
-@include smaller-than($l) {
+@include smaller-than($m) {
   .page-edit-toolbar {
     overflow-x: scroll;
     overflow-y: visible;
@@ -35,18 +35,21 @@
   }
 }
 
-@include smaller-than($l) {
+@include smaller-than($m) {
   .page-edit-toolbar #save-button {
     position: fixed;
     z-index: 30;
-    background-color: #FFF;
     border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    font-size: 16px;
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
     right: $-m;
-    bottom: $-xs;
-    box-shadow: $bs-med;
+    bottom: $-s;
+    box-shadow: $bs-hover;
+    background-color: currentColor;
+    svg {
+      fill: #FFF;
+    }
     span {
       display: none;
     }

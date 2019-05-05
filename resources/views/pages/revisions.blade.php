@@ -53,7 +53,7 @@
                                     <a href="{{ $revision->getUrl('restore') }}"></a>
                                     <div dropdown class="dropdown-container">
                                         <a dropdown-toggle>{{ trans('entities.pages_revisions_restore') }}</a>
-                                        <ul>
+                                        <ul class="dropdown-menu">
                                             <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_restore_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/restore') }}" method="POST">
@@ -67,7 +67,7 @@
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
                                     <div dropdown class="dropdown-container">
                                         <a dropdown-toggle>{{ trans('common.delete') }}</a>
-                                        <ul>
+                                        <ul class="dropdown-menu">
                                             <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
