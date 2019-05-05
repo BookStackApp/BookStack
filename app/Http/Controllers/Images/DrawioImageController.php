@@ -85,5 +85,4 @@ class DrawioImageController extends Controller
             'content' => base64_encode($imageData)
         ]);
     }
-
 }

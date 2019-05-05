@@ -73,8 +73,7 @@ class ImageService extends UploadService
         int $resizeWidth = null,
         int $resizeHeight = null,
         bool $keepRatio = true
-    )
-    {
+    ) {
         $imageName = $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
