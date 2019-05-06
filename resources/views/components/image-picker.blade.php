@@ -1,17 +1,32 @@
-<div class="image-picker" image-picker="{{$name}}" data-default-image="{{ $defaultImage }}" data-resize-height="{{ $resizeHeight }}" data-resize-width="{{ $resizeWidth }}" data-current-id="{{ $currentId or '' }}" data-resize-crop="{{ $resizeCrop or '' }}">
+<div class="image-picker @if($errors->has($name)) has-error @endif"
+     image-picker="{{$name}}"
+     data-default-image="{{ $defaultImage }}">
 
-    <div>
-        <img @if($currentImage && $currentImage !== 'none') src="{{$currentImage}}" @else src="{{$defaultImage}}" @endif  class="{{$imageClass}} @if($currentImage=== 'none') none @endif" alt="{{ trans('components.image_preview') }}">
+    <div class="grid half">
+        <div class="text-center">
+            <img @if($currentImage && $currentImage !== 'none') src="{{$currentImage}}" @else src="{{$defaultImage}}" @endif  class="{{$imageClass}} @if($currentImage=== 'none') none @endif" alt="{{ trans('components.image_preview') }}">
+        </div>
+        <div class="text-center">
+
+            <label for="{{ $name }}" class="button outline">{{ trans('components.image_select_image') }}</label>
+            <input type="file" class="hidden" accept="image/*" name="{{ $name }}" id="{{ $name }}">
+            <input type="hidden" data-reset-input name="{{ $name }}_reset" value="true" disabled="disabled">
+            @if(isset($removeName))
+                <input type="hidden" data-remove-input name="{{ $removeName }}" value="{{ $removeValue }}" disabled="disabled">
+            @endif
+
+            <br>
+            <button class="text-button text-muted" data-action="reset-image" type="button">{{ trans('common.reset') }}</button>
+
+            @if(isset($removeName))
+                <span class="sep">|</span>
+                <button class="text-button text-muted" data-action="remove-image" type="button">{{ trans('common.remove') }}</button>
+            @endif
+        </div>
     </div>
 
-    <button class="button" type="button" data-action="show-image-manager">{{ trans('components.image_select_image') }}</button>
-    <br>
-    <button class="text-button" data-action="reset-image" type="button">{{ trans('common.reset') }}</button>
-
-    @if ($showRemove)
-        <span class="sep">|</span>
-        <button class="text-button neg" data-action="remove-image" type="button">{{ trans('common.remove') }}</button>
+    @if($errors->has($name))
+        <div class="text-neg text-small">{{ $errors->first($name) }}</div>
     @endif
 
-    <input type="hidden" name="{{$name}}" id="{{$name}}" value="{{ isset($currentId) && ($currentId !== 0 && $currentId !== false) ? $currentId : $currentImage}}">
 </div>

@@ -70,7 +70,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|min:2|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6',
         ]);
@@ -176,7 +176,7 @@ class RegisterController extends Controller
      */
     public function getRegisterConfirmation()
     {
-        return view('auth/register-confirm');
+        return view('auth.register-confirm');
     }
 
     /**
@@ -204,7 +204,7 @@ class RegisterController extends Controller
      */
     public function showAwaitingConfirmation()
     {
-        return view('auth/user-unconfirmed');
+        return view('auth.user-unconfirmed');
     }
 
     /**

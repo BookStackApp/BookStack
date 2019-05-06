@@ -61,7 +61,7 @@ class PageController extends Controller
 
         // Otherwise show the edit view if they're a guest
         $this->setPageTitle(trans('entities.pages_new'));
-        return view('pages/guest-create', ['parent' => $parent]);
+        return view('pages.guest-create', ['parent' => $parent]);
     }
 
     /**
@@ -110,7 +110,7 @@ class PageController extends Controller
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->signedIn;
-        return view('pages/edit', [
+        return view('pages.edit', [
             'page' => $draft,
             'book' => $draft->book,
             'isDraft' => true,
@@ -184,7 +184,7 @@ class PageController extends Controller
 
         Views::add($page);
         $this->setPageTitle($page->getShortName());
-        return view('pages/show', [
+        return view('pages.show', [
             'page' => $page,'book' => $page->book,
             'current' => $page,
             'sidebarTree' => $sidebarTree,
@@ -239,7 +239,7 @@ class PageController extends Controller
         }
 
         $draftsEnabled = $this->signedIn;
-        return view('pages/edit', [
+        return view('pages.edit', [
             'page' => $page,
             'book' => $page->book,
             'current' => $page,
@@ -317,7 +317,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName'=>$page->getShortName()]));
-        return view('pages/delete', ['book' => $page->book, 'page' => $page, 'current' => $page]);
+        return view('pages.delete', ['book' => $page->book, 'page' => $page, 'current' => $page]);
     }
 
 
@@ -333,7 +333,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getById('page', $pageId, true);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName'=>$page->getShortName()]));
-        return view('pages/delete', ['book' => $page->book, 'page' => $page, 'current' => $page]);
+        return view('pages.delete', ['book' => $page->book, 'page' => $page, 'current' => $page]);
     }
 
     /**
@@ -377,12 +377,13 @@ class PageController extends Controller
      * @param string $bookSlug
      * @param string $pageSlug
      * @return \Illuminate\View\View
+     * @throws NotFoundException
      */
     public function showRevisions($bookSlug, $pageSlug)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName'=>$page->getShortName()]));
-        return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
+        return view('pages.revisions', ['page' => $page, 'current' => $page]);
     }
 
     /**
@@ -403,9 +404,10 @@ class PageController extends Controller
         $page->fill($revision->toArray());
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
 
-        return view('pages/revision', [
+        return view('pages.revision', [
             'page' => $page,
             'book' => $page->book,
+            'diff' => null,
             'revision' => $revision
         ]);
     }
@@ -432,7 +434,7 @@ class PageController extends Controller
         $page->fill($revision->toArray());
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
 
-        return view('pages/revision', [
+        return view('pages.revision', [
             'page' => $page,
             'book' => $page->book,
             'diff' => $diff,
@@ -482,12 +484,12 @@ class PageController extends Controller
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($currentRevision->id) === intval($revId)) {
             session()->flash('error', trans('entities.revision_cannot_delete_latest'));
-            return response()->view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page], 400);
+            return response()->view('pages.revisions', ['page' => $page, 'book' => $page->book, 'current' => $page], 400);
         }
 
         $revision->delete();
         session()->flash('success', trans('entities.revision_delete_success'));
-        return view('pages/revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
+        return view('pages.revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
     }
 
     /**
@@ -536,42 +538,13 @@ class PageController extends Controller
      * Show a listing of recently created pages
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showRecentlyCreated()
-    {
-        $pages = $this->pageRepo->getRecentlyCreatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-created'));
-        return view('pages/detailed-listing', [
-            'title' => trans('entities.recently_created_pages'),
-            'pages' => $pages
-        ]);
-    }
-
-    /**
-     * Show a listing of recently created pages
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function showRecentlyUpdated()
     {
+        // TODO - Still exist?
         $pages = $this->pageRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-updated'));
-        return view('pages/detailed-listing', [
+        return view('pages.detailed-listing', [
             'title' => trans('entities.recently_updated_pages'),
             'pages' => $pages
-        ]);
-    }
-
-    /**
-     * Show the Restrictions view.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showRestrict($bookSlug, $pageSlug)
-    {
-        $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
-        $this->checkOwnablePermission('restrictions-manage', $page);
-        $roles = $this->userRepo->getRestrictableRoles();
-        return view('pages/restrictions', [
-            'page'  => $page,
-            'roles' => $roles
         ]);
     }
 
@@ -586,7 +559,8 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
-        return view('pages/move', [
+        $this->checkOwnablePermission('page-delete', $page);
+        return view('pages.move', [
             'book' => $page->book,
             'page' => $page
         ]);
@@ -604,6 +578,7 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-delete', $page);
 
         $entitySelection = $request->get('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {
@@ -641,9 +616,9 @@ class PageController extends Controller
     public function showCopy($bookSlug, $pageSlug)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-view', $page);
         session()->flashInput(['name' => $page->name]);
-        return view('pages/copy', [
+        return view('pages.copy', [
             'book' => $page->book,
             'page' => $page
         ]);
@@ -660,7 +635,7 @@ class PageController extends Controller
     public function copy($bookSlug, $pageSlug, Request $request)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-view', $page);
 
         $entitySelection = $request->get('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {
@@ -689,14 +664,33 @@ class PageController extends Controller
     }
 
     /**
+     * Show the Permissions view.
+     * @param string $bookSlug
+     * @param string $pageSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws NotFoundException
+     */
+    public function showPermissions($bookSlug, $pageSlug)
+    {
+        $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
+        $this->checkOwnablePermission('restrictions-manage', $page);
+        $roles = $this->userRepo->getRestrictableRoles();
+        return view('pages.permissions', [
+            'page'  => $page,
+            'roles' => $roles
+        ]);
+    }
+
+    /**
      * Set the permissions for this page.
      * @param string $bookSlug
      * @param string $pageSlug
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws NotFoundException
+     * @throws \Throwable
      */
-    public function restrict($bookSlug, $pageSlug, Request $request)
+    public function permissions($bookSlug, $pageSlug, Request $request)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);

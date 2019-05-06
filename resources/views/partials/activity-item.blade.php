@@ -1,13 +1,13 @@
 
 {{--Requires an Activity item with the name $activity passed in--}}
 
-@if($activity->user)
-    <div class="left">
-        <img class="avatar" src="{{ $activity->user->getAvatar(30) }}" alt="{{ $activity->user->name }}">
-    </div>
-@endif
+<div>
+    @if($activity->user)
+    <img class="avatar" src="{{ $activity->user->getAvatar(30) }}" alt="{{ $activity->user->name }}">
+    @endif
+</div>
 
-<div class="right" v-pre>
+<div v-pre>
     @if($activity->user)
         <a href="{{ $activity->user->getProfileUrl() }}">{{ $activity->user->name }}</a>
     @else

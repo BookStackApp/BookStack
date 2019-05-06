@@ -41,6 +41,7 @@ class SettingService
         if ($default === false) {
             $default = config('setting-defaults.' . $key, false);
         }
+
         if (isset($this->localCache[$key])) {
             return $this->localCache[$key];
         }
@@ -60,7 +61,21 @@ class SettingService
      */
     public function getUser($user, $key, $default = false)
     {
+        if ($user->isDefault()) {
+            return session()->get($key, $default);
+        }
         return $this->get($this->userKey($user->id, $key), $default);
+    }
+
+    /**
+     * Get a value for the current logged-in user.
+     * @param $key
+     * @param bool $default
+     * @return bool|string
+     */
+    public function getForCurrentUser($key, $default = false)
+    {
+        return $this->getUser(user(), $key, $default);
     }
 
     /**
@@ -179,6 +194,9 @@ class SettingService
      */
     public function putUser($user, $key, $value)
     {
+        if ($user->isDefault()) {
+            return session()->put($key, $value);
+        }
         return $this->put($this->userKey($user->id, $key), $value);
     }
 

@@ -3,8 +3,13 @@ class ExpandToggle {
 
     constructor(elem) {
         this.elem = elem;
-        this.isOpen = false;
+
+        // Component state
+        this.isOpen = elem.getAttribute('expand-toggle-is-open') === 'yes';
+        this.updateEndpoint = elem.getAttribute('expand-toggle-update-endpoint');
         this.selector = elem.getAttribute('expand-toggle');
+
+        // Listener setup
         elem.addEventListener('click', this.click.bind(this));
     }
 
@@ -53,11 +58,20 @@ class ExpandToggle {
 
     click(event) {
         event.preventDefault();
-        let matchingElems = document.querySelectorAll(this.selector);
-        for (let i = 0, len = matchingElems.length; i < len; i++) {
-            this.isOpen ?  this.close(matchingElems[i]) : this.open(matchingElems[i]);
+
+        const matchingElems = document.querySelectorAll(this.selector);
+        for (let match of matchingElems) {
+            this.isOpen ?  this.close(match) : this.open(match);
         }
+
         this.isOpen = !this.isOpen;
+        this.updateSystemAjax(this.isOpen);
+    }
+
+    updateSystemAjax(isOpen) {
+        window.$http.patch(this.updateEndpoint, {
+            expand: isOpen ? 'true' : 'false'
+        });
     }
 
 }

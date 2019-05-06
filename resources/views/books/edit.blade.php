@@ -1,24 +1,25 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    <div class="col-sm-12 faded">
-        @include('books._breadcrumbs', ['book' => $book])
-    </div>
-@stop
-
 @section('body')
 
     <div class="container small">
-        <p>&nbsp;</p>
-        <div class="card">
-            <h3>@icon('edit') {{ trans('entities.books_edit') }}</h3>
-            <div class="body">
-                <form action="{{ $book->getUrl() }}" method="POST">
-                    <input type="hidden" name="_method" value="PUT">
-                    @include('books/form', ['model' => $book])
-                </form>
-            </div>
+
+        <div class="my-s">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                $book,
+                $book->getUrl('/edit') => [
+                    'text' => trans('entities.books_edit'),
+                    'icon' => 'edit',
+                ]
+            ]])
+        </div>
+
+        <div class="content-wrap card">
+            <h1 class="list-heading">{{ trans('entities.books_edit') }}</h1>
+            <form action="{{ $book->getUrl() }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT">
+                @include('books.form', ['model' => $book])
+            </form>
         </div>
     </div>
-@include('components.image-manager', ['imageType' => 'cover'])
 @stop

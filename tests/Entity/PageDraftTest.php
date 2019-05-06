@@ -87,13 +87,13 @@ class PageDraftTest extends BrowserKitTest
             ->visit($book->getUrl() . '/create-page')
             ->visit($chapter->getUrl() . '/create-page')
             ->visit($book->getUrl())
-            ->seeInElement('.page-list', 'New Page');
+            ->seeInElement('.book-contents', 'New Page');
         
         $this->asAdmin()
             ->visit($book->getUrl())
-            ->dontSeeInElement('.page-list', 'New Page')
+            ->dontSeeInElement('.book-contents', 'New Page')
             ->visit($chapter->getUrl())
-            ->dontSeeInElement('.page-list', 'New Page');
+            ->dontSeeInElement('.book-contents', 'New Page');
     }
 
 }

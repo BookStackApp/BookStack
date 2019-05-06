@@ -1,6 +1,7 @@
 <?php namespace BookStack\Auth;
 
 use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Model;
 
 class Role extends Model
@@ -13,7 +14,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->orderBy('name', 'asc');
     }
 
     /**
@@ -30,7 +31,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permissions\RolePermission::class, 'permission_role', 'role_id', 'permission_id');
+        return $this->belongsToMany(RolePermission::class, 'permission_role', 'role_id', 'permission_id');
     }
 
     /**
@@ -51,18 +52,18 @@ class Role extends Model
 
     /**
      * Add a permission to this role.
-     * @param \BookStack\Auth\Permissions\RolePermission $permission
+     * @param RolePermission $permission
      */
-    public function attachPermission(Permissions\RolePermission $permission)
+    public function attachPermission(RolePermission $permission)
     {
         $this->permissions()->attach($permission->id);
     }
 
     /**
      * Detach a single permission from this role.
-     * @param \BookStack\Auth\Permissions\RolePermission $permission
+     * @param RolePermission $permission
      */
-    public function detachPermission(Permissions\RolePermission $permission)
+    public function detachPermission(RolePermission $permission)
     {
         $this->permissions()->detach($permission->id);
     }

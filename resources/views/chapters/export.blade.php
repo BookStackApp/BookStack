@@ -24,32 +24,28 @@
     @include('partials.custom-head')
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="page-content">
 
-                <h1 style="font-size: 4.8em">{{$chapter->name}}</h1>
+<div class="page-content">
 
-                <p>{{ $chapter->description }}</p>
+    <h1 style="font-size: 4.8em">{{$chapter->name}}</h1>
 
-                @if(count($pages) > 0)
-                <ul class="contents">
-                    @foreach($pages as $page)
-                        <li><a href="#page-{{$page->id}}">{{ $page->name }}</a></li>
-                    @endforeach
-                </ul>
-                @endif
+    <p>{{ $chapter->description }}</p>
 
-                @foreach($pages as $page)
-                    <div class="page-break"></div>
-                    <h1 id="page-{{$page->id}}">{{ $page->name }}</h1>
-                    {!! $page->html !!}
-                @endforeach
+    @if(count($pages) > 0)
+        <ul class="contents">
+            @foreach($pages as $page)
+                <li><a href="#page-{{$page->id}}">{{ $page->name }}</a></li>
+            @endforeach
+        </ul>
+    @endif
 
-            </div>
-        </div>
-    </div>
+    @foreach($pages as $page)
+        <div class="page-break"></div>
+        <h1 id="page-{{$page->id}}">{{ $page->name }}</h1>
+        {!! $page->html !!}
+    @endforeach
+
 </div>
+
 </body>
 </html>

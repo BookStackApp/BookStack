@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
-  color: #555;
+  color: #222;
   .subheader {
     font-size: 0.5em;
     line-height: 1em;
@@ -55,7 +55,6 @@ h5 {
 }
 
 h5, h6 {
-  font-weight: 500;
   line-height: 1.2em;
   margin-top: 0.78571429em;
   margin-bottom: 0.66em;
@@ -79,10 +78,18 @@ h5, h6 {
   }
 }
 
+.list-heading {
+  font-size: 2rem;
+}
+
+h2.list-heading {
+  font-size: 1.333rem;
+}
+
 /*
  * Link styling
  */
-a, .link {
+a {
   color: $primary;
   cursor: pointer;
   text-decoration: none;
@@ -141,11 +148,8 @@ em, i, .italic {
 }
 
 small, p.small, span.small, .text-small {
-  font-size: 0.8em;
-  color: lighten($text-dark, 20%);
-  small, p.small, span.small, .text-small {
-    font-size: 1em;
-  }
+  font-size: 0.75rem;
+  color: lighten($text-dark, 10%);
 }
 
 sup, .superscript {
@@ -232,106 +236,6 @@ pre code {
   font-size: 1em;
   display: block;
   line-height: 1.6;
-}
-/*
- * Text colors
- */
-p.pos, p .pos, span.pos, .text-pos {
-  color: $positive;
-  fill: $positive;
-  &:hover {
-    color: $positive;
-    fill: $positive;
-  }
-}
-
-p.neg, p .neg, span.neg, .text-neg {
-  color: $negative;
-  fill: $negative;
-  &:hover {
-    color: $negative;
-    fill: $negative;
-  }
-}
-
-p.muted, p .muted, span.muted, .text-muted {
-	color: lighten($text-dark, 26%);
-	fill: lighten($text-dark, 26%);
-    &.small, .small {
-      color: lighten($text-dark, 32%);
-      fill: lighten($text-dark, 32%);
-    }
-}
-
-p.primary, p .primary, span.primary, .text-primary {
-	color: $primary;
-	fill: $primary;
-  &:hover {
-    color: $primary;
-    fill: $primary;
-  }
-}
-
-p.secondary, p .secondary, span.secondary, .text-secondary {
-	color: $secondary;
-	fill: $secondary;
-  &:hover {
-    color: $secondary;
-    fill: $secondary;
-  }
-}
-
-.text-bookshelf {
-  color: $color-bookshelf;
-  fill: $color-bookshelf;
-  &:hover {
-    color: $color-bookshelf;
-    fill: $color-bookshelf;
-  }
-}
-.text-book {
-  color: $color-book;
-  fill: $color-book;
-  &:hover {
-    color: $color-book;
-    fill: $color-book;
-  }
-}
-.text-page {
-  color: $color-page;
-  fill: $color-page;
-  &:hover {
-    color: $color-page;
-    fill: $color-page;
-  }
-  &.draft {
-    color: $color-page-draft;
-    fill: $color-page-draft;
-  }
-  &.draft:hover {
-    color: $color-page-draft;
-    fill: $color-page-draft;
-  }
-}
-.text-chapter {
-  color: $color-chapter;
-  fill: $color-chapter;
-  &:hover {
-    color: $color-chapter;
-    fill: $color-chapter;
-  }
-}
-.faded .text-book:hover {
-  color: $color-book !important;
-  fill: $color-book !important;
-}
-.faded .text-chapter:hover {
-  color: $color-chapter !important;
-  fill: $color-chapter !important;
-}
-.faded .text-page:hover {
-  color: $color-page !important;
-  fill: $color-page !important;
 }
 
 span.highlight {
@@ -435,10 +339,6 @@ span.sep {
 /**
   * Icons
   */
-i {
-  padding-right: $-xs;
-}
-
 .svg-icon {
   width: 1em;
   height: 1em;
@@ -446,5 +346,6 @@ i {
   position: relative;
   bottom: -0.105em;
   margin-right: $-xs;
+  pointer-events: none;
 }
 

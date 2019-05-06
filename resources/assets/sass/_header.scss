@@ -2,21 +2,31 @@
  * Includes the main navigation header and the faded toolbar.
  */
 
+header .grid {
+  grid-template-columns: auto min-content auto;
+}
+
+@include smaller-than($l) {
+  header .grid {
+    grid-template-columns: 1fr;
+    grid-row-gap: 0;
+  }
+}
+
 header {
+  position: relative;
   display: block;
-  z-index: 2;
+  z-index: 6;
   top: 0;
   background-color: $primary-dark;
   color: #fff;
   fill: #fff;
-  .padded {
-    padding: $-m;
-  }
   border-bottom: 1px solid #DDD;
+  box-shadow: $bs-card;
+  padding: $-xxs 0;
   .links {
     display: inline-block;
     vertical-align: top;
-    margin-left: $-m;
   }
   .links a {
     display: inline-block;
@@ -27,15 +37,6 @@ header {
   .dropdown-container {
     padding-left: $-m;
     padding-right: 0;
-  }
-  @include smaller-than($screen-md) {
-    .links a {
-      padding-left: $-s;
-      padding-right: $-s;
-    }
-    .dropdown-container {
-      padding-left: $-s;
-    }
   }
   .avatar, .user-name {
     display: inline-block;
@@ -63,26 +64,16 @@ header {
       padding-top: 4px;
       font-size: 18px;
     }
-    @include smaller-than($screen-md) {
+    @include between($l, $xl) {
       padding-left: $-xs;
       .name {
         display: none;
       }
     }
   }
-  @include smaller-than($screen-sm) {
-    text-align: center;
-    .float.right {
-      float: none;
-    }
-    .links a {
-      padding: $-s;
-    }
-    .user-name {
-      padding-top: $-s;
-    }
-  }
 }
+
+
 
 .header-search {
   display: inline-block;
@@ -92,13 +83,16 @@ header .search-box {
   margin-top: 10px;
   input {
     background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
     color: #EEE;
     z-index: 2;
+    padding-left: 40px;
   }
   button {
     fill: #EEE;
     z-index: 1;
+    left: 16px;
     svg {
       margin-right: 0;
     }
@@ -115,17 +109,8 @@ header .search-box {
   :-moz-placeholder { /* Firefox 18- */
     color: #DDD;
   }
-  @include smaller-than($screen-lg) {
-    max-width: 250px;
-  }
-  @include smaller-than($l) {
+  @include between($l, $xl) {
     max-width: 200px;
-  }
-}
-
-@include smaller-than($s) {
-  .header-search {
-    display: block;
   }
 }
 
@@ -151,10 +136,185 @@ header .search-box {
   height: 43px;
 }
 
-.breadcrumbs span.sep {
-  color: #aaa;
+.mobile-menu-toggle {
+  color: #FFF;
+  fill: #FFF;
+  font-size: 2em;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
   padding: 0 $-xs;
+  position: absolute;
+  right: $-m;
+  top: 13px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  svg {
+    margin: 0;
+    bottom: -2px;
+  }
 }
+
+@include smaller-than($l) {
+  header .header-links {
+    display: none;
+    background-color: #FFF;
+    z-index: 10;
+    right: $-m;
+    border-radius: 4px;
+    overflow: hidden;
+    position: absolute;
+    box-shadow: $bs-hover;
+    margin-top: -$-xs;
+    &.show {
+      display: block;
+    }
+  }
+  header .links a, header .dropdown-container ul li a {
+    text-align: left;
+    display: block;
+    padding: $-s $-m;
+    color: $text-dark;
+    fill: $text-dark;
+    svg {
+      margin-right: $-s;
+    }
+    &:hover {
+      background-color: #EEE;
+      color: #444;
+      fill: #444;
+      text-decoration: none;
+    }
+  }
+  header .dropdown-container {
+    display: block;
+    padding-left: 0;
+  }
+  header .links {
+    display: block;
+  }
+  header .dropdown-container ul {
+    display: block !important;
+    position: relative;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+  }
+}
+
+.tri-layout-mobile-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: #FFF;
+  border-bottom: 1px solid #DDD;
+  box-shadow: $bs-card;
+}
+.tri-layout-mobile-tab {
+  text-align: center;
+  border-bottom: 3px solid #BBB;
+  cursor: pointer;
+  &:first-child {
+    border-right: 1px solid #DDD;
+  }
+  &.active {
+    border-bottom-color: currentColor;
+  }
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  opacity: 0.7;
+  .icon-list-item {
+    width: auto;
+    padding-top: $-xs;
+    padding-bottom: $-xs;
+  }
+  .separator {
+    display: inline-block;
+    fill: #aaa;
+    font-size: 1.6em;
+    line-height: 0.8;
+    margin: -2px 0 0;
+  }
+  &:hover {
+    opacity: 1;
+  }
+}
+
+@include smaller-than($l) {
+  .breadcrumbs .icon-list-item {
+    padding: $-xs;
+    > span + span {
+      display: none;
+    }
+    > span:first-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.breadcrumb-listing {
+  position: relative;
+  .breadcrumb-listing-toggle {
+    padding: 6px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    &:hover {
+      border-color: #DDD;
+    }
+  }
+  .svg-icon {
+    margin-right: 0;
+  }
+}
+
+.breadcrumb-listing-dropdown {
+  box-shadow: $bs-med;
+  overflow: hidden;
+  min-height: 100px;
+  width: 240px;
+  display: none;
+  position: absolute;
+  z-index: 80;
+  right: -$-m;
+  .breadcrumb-listing-search .svg-icon {
+    position: absolute;
+    left: $-s;
+    top: 11px;
+    fill: #888;
+    pointer-events: none;
+  }
+  .breadcrumb-listing-entity-list {
+    max-height: 400px;
+    overflow-y: scroll;
+    text-align: left;
+  }
+  input {
+    padding-left: $-xl;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #DDD;
+  }
+}
+
+@include smaller-than($m) {
+  .breadcrumb-listing-dropdown {
+    position: fixed;
+    right: auto;
+    left: $-m;
+  }
+  .breadcrumb-listing-dropdown .breadcrumb-listing-entity-list {
+    max-height: 240px;
+  }
+}
+
 .faded {
   a, button, span, span > div {
     color: #666;
@@ -175,20 +335,9 @@ header .search-box {
   padding: $-s;
 }
 
-.faded-small {
-  color: #000;
-  fill: #000;
-  font-size: 0.9em;
-  background-color: $primary-faded;
-}
-
-.toolbar-container {
-  background-color: #FFF;
-}
-
-.breadcrumbs .text-button, .action-buttons .text-button {
+.action-buttons .text-button {
   display: inline-block;
-  padding: $-s;
+  padding: $-xs $-s;
   &:last-child {
     padding-right: 0;
   }
@@ -217,27 +366,11 @@ header .search-box {
 }
 
 @include smaller-than($m) {
-  .breadcrumbs .text-button, .action-buttons .text-button {
+  .action-buttons .text-button {
     padding: $-xs $-xs;
   }
   .action-buttons .dropdown-container:last-child a {
     padding-left: $-xs;
-  }
-  .breadcrumbs .text-button {
-    font-size: 0;
-  }
-  .breadcrumbs .text-button svg {
-    font-size: $fs-m;
-  }
-  .breadcrumbs a i {
-    font-size: $fs-m;
-    padding-right: 0;
-  }
-  .breadcrumbs span.sep {
-    padding: 0 $-xxs;
-  }
-  .toolbar .col-xs-1:first-child {
-    padding-right: 0;
   }
 }
 
@@ -253,7 +386,4 @@ header .search-box {
       border-bottom: 2px solid $primary;
     }
   }
-}
-.faded-small .nav-tabs a {
-  padding: $-s $-m;
 }

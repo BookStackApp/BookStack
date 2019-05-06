@@ -1,6 +1,7 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Auth\User;
+use BookStack\Exceptions\HttpFetchException;
 use BookStack\Exceptions\ImageUploadException;
 use DB;
 use Exception;
@@ -8,6 +9,7 @@ use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageService extends UploadService
@@ -17,6 +19,7 @@ class ImageService extends UploadService
     protected $cache;
     protected $storageUrl;
     protected $image;
+    protected $http;
 
     /**
      * ImageService constructor.
@@ -24,12 +27,14 @@ class ImageService extends UploadService
      * @param ImageManager $imageTool
      * @param FileSystem $fileSystem
      * @param Cache $cache
+     * @param HttpFetcher $http
      */
-    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
+    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache, HttpFetcher $http)
     {
         $this->image = $image;
         $this->imageTool = $imageTool;
         $this->cache = $cache;
+        $this->http = $http;
         parent::__construct($fileSystem);
     }
 
@@ -53,15 +58,29 @@ class ImageService extends UploadService
     /**
      * Saves a new image from an upload.
      * @param UploadedFile $uploadedFile
-     * @param  string $type
+     * @param string $type
      * @param int $uploadedTo
+     * @param int|null $resizeWidth
+     * @param int|null $resizeHeight
+     * @param bool $keepRatio
      * @return mixed
      * @throws ImageUploadException
      */
-    public function saveNewFromUpload(UploadedFile $uploadedFile, $type, $uploadedTo = 0)
-    {
+    public function saveNewFromUpload(
+        UploadedFile $uploadedFile,
+        string $type,
+        int $uploadedTo = 0,
+        int $resizeWidth = null,
+        int $resizeHeight = null,
+        bool $keepRatio = true
+    ) {
         $imageName = $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
+
+        if ($resizeWidth !== null || $resizeHeight !== null) {
+            $imageData = $this->resizeImage($imageData, $resizeWidth, $resizeHeight, $keepRatio);
+        }
+
         return $this->saveNew($imageName, $imageData, $type, $uploadedTo);
     }
 
@@ -95,8 +114,9 @@ class ImageService extends UploadService
     private function saveNewFromUrl($url, $type, $imageName = false)
     {
         $imageName = $imageName ? $imageName : basename($url);
-        $imageData = file_get_contents($url);
-        if ($imageData === false) {
+        try {
+            $imageData = $this->http->fetch($url);
+        } catch (HttpFetchException $exception) {
             throw new \Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
         }
         return $this->saveNew($imageName, $imageData, $type);
@@ -117,7 +137,7 @@ class ImageService extends UploadService
         $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
-        $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
+        $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m') . '/';
 
         while ($storage->exists($imagePath . $imageName)) {
             $imageName = str_random(3) . $imageName;
@@ -196,8 +216,28 @@ class ImageService extends UploadService
             return $this->getPublicUrl($thumbFilePath);
         }
 
+        $thumbData = $this->resizeImage($storage->get($imagePath), $width, $height, $keepRatio);
+
+        $storage->put($thumbFilePath, $thumbData);
+        $storage->setVisibility($thumbFilePath, 'public');
+        $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
+
+        return $this->getPublicUrl($thumbFilePath);
+    }
+
+    /**
+     * Resize image data.
+     * @param string $imageData
+     * @param int $width
+     * @param int $height
+     * @param bool $keepRatio
+     * @return string
+     * @throws ImageUploadException
+     */
+    protected function resizeImage(string $imageData, $width = 220, $height = null, bool $keepRatio = true)
+    {
         try {
-            $thumb = $this->imageTool->make($storage->get($imagePath));
+            $thumb = $this->imageTool->make($imageData);
         } catch (Exception $e) {
             if ($e instanceof \ErrorException || $e instanceof NotSupportedException) {
                 throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
@@ -206,20 +246,14 @@ class ImageService extends UploadService
         }
 
         if ($keepRatio) {
-            $thumb->resize($width, null, function ($constraint) {
+            $thumb->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
         } else {
             $thumb->fit($width, $height);
         }
-
-        $thumbData = (string)$thumb->encode();
-        $storage->put($thumbFilePath, $thumbData);
-        $storage->setVisibility($thumbFilePath, 'public');
-        $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
-
-        return $this->getPublicUrl($thumbFilePath);
+        return (string)$thumb->encode();
     }
 
     /**
@@ -279,24 +313,58 @@ class ImageService extends UploadService
     }
 
     /**
-     * Save a gravatar image and set a the profile image for a user.
+     * Save an avatar image from an external service.
      * @param \BookStack\Auth\User $user
      * @param int $size
-     * @return mixed
+     * @return Image
      * @throws Exception
      */
-    public function saveUserGravatar(User $user, $size = 500)
+    public function saveUserAvatar(User $user, $size = 500)
     {
-        $emailHash = md5(strtolower(trim($user->email)));
-        $url = 'https://www.gravatar.com/avatar/' . $emailHash . '?s=' . $size . '&d=identicon';
-        $imageName = str_replace(' ', '-', $user->name . '-gravatar.png');
-        $image = $this->saveNewFromUrl($url, 'user', $imageName);
+        $avatarUrl = $this->getAvatarUrl();
+        $email = strtolower(trim($user->email));
+
+        $replacements = [
+            '${hash}' => md5($email),
+            '${size}' => $size,
+            '${email}' => urlencode($email),
+        ];
+
+        $userAvatarUrl = strtr($avatarUrl, $replacements);
+        $imageName = str_replace(' ', '-', $user->name . '-avatar.png');
+        $image = $this->saveNewFromUrl($userAvatarUrl, 'user', $imageName);
         $image->created_by = $user->id;
         $image->updated_by = $user->id;
+        $image->uploaded_to = $user->id;
         $image->save();
+
         return $image;
     }
 
+    /**
+     * Check if fetching external avatars is enabled.
+     * @return bool
+     */
+    public function avatarFetchEnabled()
+    {
+        $fetchUrl = $this->getAvatarUrl();
+        return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
+    }
+
+    /**
+     * Get the URL to fetch avatars from.
+     * @return string|mixed
+     */
+    protected function getAvatarUrl()
+    {
+        $url = trim(config('services.avatar_url'));
+
+        if (empty($url) && !config('services.disable_services')) {
+            $url = 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon';
+        }
+
+        return $url;
+    }
 
     /**
      * Delete gallery and drawings that are not within HTML content of pages or page revisions.
@@ -365,14 +433,7 @@ class ImageService extends UploadService
             }
         } else {
             try {
-                $ch = curl_init();
-                curl_setopt_array($ch, [CURLOPT_URL => $uri, CURLOPT_RETURNTRANSFER => 1, CURLOPT_CONNECTTIMEOUT => 5]);
-                $imageData = curl_exec($ch);
-                $err = curl_error($ch);
-                curl_close($ch);
-                if ($err) {
-                    throw new \Exception("Image fetch failed, Received error: " . $err);
-                }
+                $imageData = $this->http->fetch($uri);
             } catch (\Exception $e) {
             }
         }

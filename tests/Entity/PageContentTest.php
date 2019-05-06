@@ -40,15 +40,18 @@ class PageContentTest extends TestCase
     {
         $page = Page::first();
         $secondPage = Page::where('id', '!=', $page->id)->first();
+
         $this->asEditor();
-        $page->html = "<p>{{@$secondPage->id}}</p>";
+        $includeTag = '{{@' . $secondPage->id . '}}';
+        $page->html = '<p>' . $includeTag . '</p>';
 
         $resp = $this->put($page->getUrl(), ['name' => $page->name, 'html' => $page->html, 'summary' => '']);
 
         $resp->assertStatus(302);
 
         $page = Page::find($page->id);
-        $this->assertContains("{{@$secondPage->id}}", $page->html);
+        $this->assertContains($includeTag, $page->html);
+        $this->assertEquals('', $page->text);
     }
 
     public function test_page_includes_do_not_break_tables()
@@ -68,62 +71,30 @@ class PageContentTest extends TestCase
         $pageResp->assertSee($content);
     }
 
-    public function test_page_revision_views_viewable()
-    {
-        $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
-        $page = Page::first();
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
-        $pageRevision = $page->revisions->last();
-
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
-        $revisionView->assertStatus(200);
-        $revisionView->assertSee('new content');
-
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
-        $revisionView->assertStatus(200);
-        $revisionView->assertSee('new content');
-    }
-
-    public function test_page_revision_restore_updates_content()
-    {
-        $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
-        $page = Page::first();
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
-        $page =  Page::find($page->id);
-
-
-        $pageView = $this->get($page->getUrl());
-        $pageView->assertDontSee('abc123');
-        $pageView->assertDontSee('def456');
-
-        $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $restoreReq = $this->get($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
-        $page =  Page::find($page->id);
-
-        $restoreReq->assertStatus(302);
-        $restoreReq->assertRedirect($page->getUrl());
-
-        $pageView = $this->get($page->getUrl());
-        $pageView->assertSee('abc123');
-        $pageView->assertSee('def456');
-    }
-
-    public function test_page_content_scripts_escaped_by_default()
+    public function test_page_content_scripts_removed_by_default()
     {
         $this->asEditor();
         $page = Page::first();
-        $script = '<script>console.log("hello-test")</script>';
+        $script = 'abc123<script>console.log("hello-test")</script>abc123';
         $page->html = "escape {$script}";
         $page->save();
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee($script);
-        $pageView->assertSee(htmlentities($script));
+        $pageView->assertSee('abc123abc123');
+    }
+
+    public function test_page_inline_on_attributes_removed_by_default()
+    {
+        $this->asEditor();
+        $page = Page::first();
+        $script = '<p onmouseenter="console.log(\'test\')">Hello</p>';
+        $page->html = "escape {$script}";
+        $page->save();
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee('<p>Hello</p>');
     }
 
     public function test_page_content_scripts_show_when_configured()
@@ -131,13 +102,62 @@ class PageContentTest extends TestCase
         $this->asEditor();
         $page = Page::first();
         config()->push('app.allow_content_scripts', 'true');
-        $script = '<script>console.log("hello-test")</script>';
+
+        $script = 'abc123<script>console.log("hello-test")</script>abc123';
         $page->html = "no escape {$script}";
         $page->save();
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertSee($script);
-        $pageView->assertDontSee(htmlentities($script));
+        $pageView->assertDontSee('abc123abc123');
     }
 
+    public function test_page_inline_on_attributes_show_if_configured()
+    {
+        $this->asEditor();
+        $page = Page::first();
+        config()->push('app.allow_content_scripts', 'true');
+
+        $script = '<p onmouseenter="console.log(\'test\')">Hello</p>';
+        $page->html = "escape {$script}";
+        $page->save();
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee($script);
+        $pageView->assertDontSee('<p>Hello</p>');
+    }
+
+    public function test_duplicate_ids_does_not_break_page_render()
+    {
+        $this->asEditor();
+        $pageA = Page::first();
+        $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
+
+        $content = '<ul id="bkmrk-xxx-%28"></ul> <ul id="bkmrk-xxx-%28"></ul>';
+        $pageA->html = $content;
+        $pageA->save();
+
+        $pageB->html = '<ul id="bkmrk-xxx-%28"></ul> <p>{{@'. $pageA->id .'#test}}</p>';
+        $pageB->save();
+
+        $pageView = $this->get($pageB->getUrl());
+        $pageView->assertSuccessful();
+    }
+
+    public function test_duplicate_ids_fixed_on_page_save()
+    {
+        $this->asEditor();
+        $page = Page::first();
+
+        $content = '<ul id="bkmrk-test"><li>test a</li><li><ul id="bkmrk-test"><li>test b</li></ul></li></ul>';
+        $pageSave = $this->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => $content,
+            'summary' => ''
+        ]);
+        $pageSave->assertRedirect();
+
+        $updatedPage = Page::where('id', '=', $page->id)->first();
+        $this->assertEquals(substr_count($updatedPage->html, "bkmrk-test\""), 1);
+    }
 }

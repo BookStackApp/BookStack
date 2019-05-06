@@ -66,4 +66,23 @@ function drawPostMessage(data) {
     iFrame.contentWindow.postMessage(JSON.stringify(data), '*');
 }
 
-export default {show, close};
+async function upload(imageData, pageUploadedToId) {
+    let data = {
+        image: imageData,
+        uploaded_to: pageUploadedToId,
+    };
+    const resp = await window.$http.post(window.baseUrl(`/images/drawio`), data);
+    return resp.data;
+}
+
+/**
+ * Load an existing image, by fetching it as Base64 from the system.
+ * @param drawingId
+ * @returns {Promise<string>}
+ */
+async function load(drawingId) {
+    const resp = await window.$http.get(window.baseUrl(`/images/drawio/base64/${drawingId}`));
+    return `data:image/png;base64,${resp.data.content}`;
+}
+
+export default {show, close, upload, load};

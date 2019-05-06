@@ -1,18 +1,29 @@
 
-<div class="container{{ $shelvesViewType === 'list' ? ' small' : '' }}">
-    <h1>{{ trans('entities.shelves') }}</h1>
+<div class="content-wrap mt-m card">
+
+    <div class="grid half v-center">
+        <h1 class="list-heading">{{ trans('entities.shelves') }}</h1>
+        <div class="text-right">
+            @include('partials.sort', ['options' => $sortOptions, 'order' => $order, 'sort' => $sort, 'type' => 'bookshelves'])
+        </div>
+    </div>
+
     @if(count($shelves) > 0)
-        @if($shelvesViewType === 'grid')
-            <div class="grid third">
-                @foreach($shelves as $key => $shelf)
-                    @include('shelves/grid-item', ['bookshelf' => $shelf])
+        @if($view === 'list')
+            <div class="entity-list">
+                @foreach($shelves as $index => $shelf)
+                    @if ($index !== 0)
+                        <hr class="my-m">
+                    @endif
+                    @include('shelves.list-item', ['shelf' => $shelf])
                 @endforeach
             </div>
         @else
-            @foreach($shelves as $shelf)
-                @include('shelves/list-item', ['bookshelf' => $shelf])
-                <hr>
-            @endforeach
+            <div class="grid third">
+                @foreach($shelves as $key => $shelf)
+                    @include('shelves.grid-item', ['shelf' => $shelf])
+                @endforeach
+            </div>
         @endif
         <div>
             {!! $shelves->render() !!}
@@ -23,4 +34,5 @@
             <a href="{{ baseUrl("/create-shelf") }}" class="button outline">@icon('edit'){{ trans('entities.create_now') }}</a>
         @endif
     @endif
+
 </div>

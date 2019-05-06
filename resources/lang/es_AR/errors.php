@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'El servidor no permite subir archivos de este tamaño. Por favor intente un tamaño menor.',    'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
+    'file_upload_timeout' => 'La carga del archivo ha caducado.',
 
     // Attachments
     'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',
@@ -65,6 +66,7 @@ return [
     'role_cannot_be_edited' => 'Este rol no puede ser editado',
     'role_system_cannot_be_deleted' => 'Este rol es un rol de sistema y no puede ser borrado',
     'role_registration_default_cannot_delete' => 'Este rol no puede ser borrado mientras sea el rol por defecto de registro',
+    'role_cannot_remove_only_admin' => 'Este usuario es el único asignado al rol de administrador. Asigne el rol de administrador a otro usuario antes de intentar eliminarlo.',
 
     // Comments
     'comment_list' => 'Se produjo un error al obtener los comentarios.',

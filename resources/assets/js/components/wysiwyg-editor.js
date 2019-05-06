@@ -4,22 +4,24 @@ import DrawIO from "../services/drawio";
 /**
  * Handle pasting images from clipboard.
  * @param {ClipboardEvent} event
+ * @param {WysiwygEditor} wysiwygComponent
  * @param editor
  */
-function editorPaste(event, editor) {
+function editorPaste(event, editor, wysiwygComponent) {
     if (!event.clipboardData || !event.clipboardData.items) return;
-    let items = event.clipboardData.items;
 
-    for (let i = 0; i < items.length; i++) {
-        if (items[i].type.indexOf("image") === -1) continue;
+    for (let clipboardItem of event.clipboardData.items) {
+        if (clipboardItem.type.indexOf("image") === -1) continue;
         event.preventDefault();
 
-        let id = "image-" + Math.random().toString(16).slice(2);
-        let loadingImage = window.baseUrl('/loading.gif');
-        let file = items[i].getAsFile();
+        const id = "image-" + Math.random().toString(16).slice(2);
+        const loadingImage = window.baseUrl('/loading.gif');
+        const file = clipboardItem.getAsFile();
+
         setTimeout(() => {
             editor.insertContent(`<p><img src="${loadingImage}" id="${id}"></p>`);
-            uploadImageFile(file).then(resp => {
+
+            uploadImageFile(file, wysiwygComponent).then(resp => {
                 editor.dom.setAttrib(id, 'src', resp.thumbs.display);
             }).catch(err => {
                 editor.dom.remove(id);
@@ -33,9 +35,12 @@ function editorPaste(event, editor) {
 /**
  * Upload an image file to the server
  * @param {File} file
+ * @param {WysiwygEditor} wysiwygComponent
  */
-function uploadImageFile(file) {
-    if (file === null || file.type.indexOf('image') !== 0) return Promise.reject(`Not an image file`);
+async function uploadImageFile(file, wysiwygComponent) {
+    if (file === null || file.type.indexOf('image') !== 0) {
+        throw new Error(`Not an image file`);
+    }
 
     let ext = 'png';
     if (file.name) {
@@ -43,11 +48,13 @@ function uploadImageFile(file) {
         if (fileNameMatches.length > 1) ext = fileNameMatches[1];
     }
 
-    let remoteFilename = "image-" + Date.now() + "." + ext;
-    let formData = new FormData();
+    const remoteFilename = "image-" + Date.now() + "." + ext;
+    const formData = new FormData();
     formData.append('file', file, remoteFilename);
+    formData.append('uploaded_to', wysiwygComponent.pageId);
 
-    return window.$http.post(window.baseUrl('/images/gallery/upload'), formData).then(resp => (resp.data));
+    const resp = await window.$http.post(window.baseUrl('/images/gallery/upload'), formData);
+    return resp.data;
 }
 
 function registerEditorShortcuts(editor) {
@@ -250,39 +257,38 @@ function drawIoPlugin() {
         DrawIO.show(drawingInit, updateContent);
     }
 
-    function updateContent(pngData) {
-        let id = "image-" + Math.random().toString(16).slice(2);
-        let loadingImage = window.baseUrl('/loading.gif');
-        let data = {
-            image: pngData,
-            uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
-        };
+    async function updateContent(pngData) {
+        const id = "image-" + Math.random().toString(16).slice(2);
+        const loadingImage = window.baseUrl('/loading.gif');
+        const pageId = Number(document.getElementById('page-editor').getAttribute('page-id'));
 
         // Handle updating an existing image
         if (currentNode) {
             DrawIO.close();
             let imgElem = currentNode.querySelector('img');
-            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
-                pageEditor.dom.setAttrib(imgElem, 'src', resp.data.url);
-                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', resp.data.id);
-            }).catch(err => {
+            try {
+                const img = await DrawIO.upload(pngData, pageId);
+                pageEditor.dom.setAttrib(imgElem, 'src', img.url);
+                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
+            } catch (err) {
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
-            });
+            }
             return;
         }
 
-        setTimeout(() => {
+        setTimeout(async () => {
             pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
             DrawIO.close();
-            window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
-                pageEditor.dom.setAttrib(id, 'src', resp.data.url);
-                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', resp.data.id);
-            }).catch(err => {
+            try {
+                const img = await DrawIO.upload(pngData, pageId);
+                pageEditor.dom.setAttrib(id, 'src', img.url);
+                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
+            } catch (err) {
                 pageEditor.dom.remove(id);
                 window.$events.emit('error', trans('errors.image_upload_error'));
                 console.log(err);
-            });
+            }
         }, 5);
     }
 
@@ -293,9 +299,7 @@ function drawIoPlugin() {
         }
 
         let drawingId = currentNode.getAttribute('drawio-diagram');
-        return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
-            return `data:image/png;base64,${resp.data.content}`;
-        });
+        return DrawIO.load(drawingId);
     }
 
     window.tinymce.PluginManager.add('drawio', function(editor, url) {
@@ -370,7 +374,10 @@ class WysiwygEditor {
 
     constructor(elem) {
         this.elem = elem;
-        this.textDirection = document.getElementById('page-editor').getAttribute('text-direction');
+
+        const pageEditor = document.getElementById('page-editor');
+        this.pageId = pageEditor.getAttribute('page-id');
+        this.textDirection = pageEditor.getAttribute('text-direction');
 
         this.plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor media";
         this.loadPlugins();
@@ -397,6 +404,9 @@ class WysiwygEditor {
     }
 
     getTinyMceConfig() {
+
+        const context = this;
+
         return {
             selector: '#html-editor',
             content_css: [
@@ -419,7 +429,7 @@ class WysiwygEditor {
             plugins: this.plugins,
             imagetools_toolbar: 'imageoptions',
             toolbar: this.getToolBar(),
-            content_style: "body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
+            content_style: "html, body {background: #FFF;} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
             style_formats: [
                 {title: "Header Large", format: "h2"},
                 {title: "Header Medium", format: "h3"},
@@ -504,6 +514,16 @@ class WysiwygEditor {
                     if (scrollId) {
                         scrollToText(scrollId);
                     }
+
+                    // Override for touch events to allow scroll on mobile
+                    const container = editor.getContainer();
+                    const toolbarButtons = container.querySelectorAll('.mce-btn');
+                    for (let button of toolbarButtons) {
+                        button.addEventListener('touchstart', event => {
+                            event.stopPropagation();
+                        });
+                    }
+                    window.editor = editor;
                 });
 
                 function editorChange() {
@@ -586,7 +606,8 @@ class WysiwygEditor {
                 });
 
                 // Paste image-uploads
-                editor.on('paste', event => editorPaste(event, editor));
+                editor.on('paste', event => editorPaste(event, editor, context));
+
             }
         };
     }

@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
     'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
+    'file_upload_timeout' => 'Filuppladdningen har tagits ut.',
 
     // Attachments
     'attachment_page_mismatch' => 'Fel i sidmatchning vid uppdatering av bilaga',
@@ -49,6 +50,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Innehållet hittades inte',
+    'bookshelf_not_found' => 'Hyllan hittades inte',
     'book_not_found' => 'Boken hittades inte',
     'page_not_found' => 'Sidan hittades inte',
     'chapter_not_found' => 'Kapitlet hittades inte',
@@ -64,6 +66,7 @@ return [
     'role_cannot_be_edited' => 'Den här rollen kan inte redigeras',
     'role_system_cannot_be_deleted' => 'Det här är en systemroll och kan därför inte tas bort',
     'role_registration_default_cannot_delete' => 'Det går inte att ta bort rollen medan den används som standardroll.',
+    'role_cannot_remove_only_admin' => 'Detta är den enda användaren med administratörsroll. Gör någon annan användare till administratör innan du tar bort denna.',
 
     // Comments
     'comment_list' => 'Ett fel inträffade då kommentarer skulle hämtas.',

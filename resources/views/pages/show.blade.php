@@ -1,46 +1,45 @@
-@extends('sidebar-layout')
+@extends('tri-layout')
 
-@section('toolbar')
-    <div class="col-sm-8 col-xs-5 faded">
-        @include('pages._breadcrumbs', ['page' => $page])
+@section('body')
+
+    <div class="mb-m">
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $page->book,
+            $page->hasChapter() ? $page->chapter : null,
+            $page,
+        ]])
     </div>
-    <div class="col-sm-4 col-xs-7 faded">
-        <div class="action-buttons">
-            <span dropdown class="dropdown-container">
-                <div dropdown-toggle class="text-button text-primary">@icon('export'){{ trans('entities.export') }}</div>
-                <ul class="wide">
-                    <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </span>
-            @if(userCan('page-update', $page))
-                <a href="{{ $page->getUrl('/edit') }}" class="text-primary text-button" >@icon('edit'){{ trans('common.edit') }}</a>
-            @endif
-            @if(userCan('page-update', $page) || userCan('restrictions-manage', $page) || userCan('page-delete', $page))
-                <div dropdown class="dropdown-container">
-                    <a dropdown-toggle class="text-primary text-button">@icon('more') {{ trans('common.more') }}</a>
-                    <ul>
-                        @if(userCan('page-update', $page))
-                            <li><a href="{{ $page->getUrl('/copy') }}" class="text-primary" >@icon('copy'){{ trans('common.copy') }}</a></li>
-                            <li><a href="{{ $page->getUrl('/move') }}" class="text-primary" >@icon('folder'){{ trans('common.move') }}</a></li>
-                            <li><a href="{{ $page->getUrl('/revisions') }}" class="text-primary">@icon('history'){{ trans('entities.revisions') }}</a></li>
-                        @endif
-                        @if(userCan('restrictions-manage', $page))
-                            <li><a href="{{ $page->getUrl('/permissions') }}" class="text-primary">@icon('lock'){{ trans('entities.permissions') }}</a></li>
-                        @endif
-                        @if(userCan('page-delete', $page))
-                            <li><a href="{{ $page->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
-                        @endif
-                    </ul>
-                </div>
-            @endif
 
+    <div class="content-wrap card">
+        <div class="page-content flex" page-display="{{ $page->id }}">
+
+            <div class="pointer-container" id="pointer">
+                <div class="pointer anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
+                    <span class="icon text-primary">@icon('link') @icon('include', ['style' => 'display:none;'])</span>
+                    <span class="input-group">
+                    <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
+                    <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
+                </span>
+                    @if(userCan('page-update', $page))
+                        <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
+                           class="button icon heading-edit-icon" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
+                    @endif
+                </div>
+            </div>
+
+            @include('pages.page-display')
         </div>
     </div>
+
+    @if ($commentsEnabled)
+        <div class="container small p-none comments-container mb-l">
+            @include('comments.comments', ['page' => $page])
+            <div class="clearfix"></div>
+        </div>
+    @endif
 @stop
 
-@section('sidebar')
+@section('left')
 
     @if($page->tags->count() > 0)
         <section>
@@ -49,12 +48,15 @@
     @endif
 
     @if ($page->attachments->count() > 0)
-        <div class="card">
-            <h3>@icon('attach') {{ trans('entities.pages_attachments') }}</h3>
+        <div id="page-attachments" class="mb-l">
+            <h5>{{ trans('entities.pages_attachments') }}</h5>
             <div class="body">
                 @foreach($page->attachments as $attachment)
-                    <div class="attachment">
-                        <a href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif>@icon($attachment->external ? 'export' : 'file'){{ $attachment->name }}</a>
+                    <div class="attachment icon-list">
+                        <a class="icon-list-item py-xs" href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif>
+                            <span class="icon">@icon($attachment->external ? 'export' : 'file')</span>
+                            <span>{{ $attachment->name }}</span>
+                        </a>
                     </div>
                 @endforeach
             </div>
@@ -62,13 +64,14 @@
     @endif
 
     @if (isset($pageNav) && count($pageNav))
-        <div class="card">
-            <h3>@icon('open-book') {{ trans('entities.pages_navigation') }}</h3>
+        <div id="page-navigation" class="mb-xl">
+            <h5>{{ trans('entities.pages_navigation') }}</h5>
             <div class="body">
                 <div class="sidebar-page-nav menu">
                     @foreach($pageNav as $navItem)
                         <li class="page-nav-item h{{ $navItem['level'] }}">
                             <a href="{{ $navItem['link'] }}">{{ $navItem['text'] }}</a>
+                            <div class="primary-background sidebar-page-nav-bullet"></div>
                         </li>
                     @endforeach
                 </div>
@@ -76,9 +79,13 @@
         </div>
     @endif
 
-    <div class="card entity-details">
-        <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body text-muted text-small blended-links">
+    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+@stop
+
+@section('right')
+    <div id="page-details" class="entity-details mb-xl">
+        <h5>{{ trans('common.details') }}</h5>
+        <div class="body text-small blended-links">
             @include('partials.entity-meta', ['entity' => $page])
 
             @if($book->restricted)
@@ -113,36 +120,64 @@
         </div>
     </div>
 
-    @include('partials/book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    <div class="actions mb-xl">
+        <h5>Actions</h5>
 
-@stop
+        <div class="icon-list text-primary">
 
-@section('body-wrap-classes', 'flex-fill columns')
-
-@section('body')
-
-    <div class="page-content flex" page-display="{{ $page->id }}">
-
-        <div class="pointer-container" id="pointer">
-            <div class="pointer anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
-                <span class="icon text-primary">@icon('link') @icon('include', ['style' => 'display:none;'])</span>
-                <span class="input-group">
-                    <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
-                    <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
-                </span>
-                @if(userCan('page-update', $page))
-                    <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
-                        class="button icon heading-edit-icon" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
+            {{--User Actions--}}
+            @if(userCan('page-update', $page))
+                <a href="{{ $page->getUrl('/edit') }}" class="icon-list-item">
+                    <span>@icon('edit')</span>
+                    <span>{{ trans('common.edit') }}</span>
+                </a>
+            @endif
+            @if(userCanOnAny('page-create'))
+                <a href="{{ $page->getUrl('/copy') }}" class="icon-list-item">
+                    <span>@icon('copy')</span>
+                    <span>{{ trans('common.copy') }}</span>
+                </a>
+            @endif
+            @if(userCan('page-update', $page))
+                @if(userCan('page-delete', $page))
+	                <a href="{{ $page->getUrl('/move') }}" class="icon-list-item">
+	                    <span>@icon('folder')</span>
+	                    <span>{{ trans('common.move') }}</span>
+	                </a>
                 @endif
+                <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
+                    <span>@icon('history')</span>
+                    <span>{{ trans('entities.revisions') }}</span>
+                </a>
+            @endif
+            @if(userCan('restrictions-manage', $page))
+                <a href="{{ $page->getUrl('/permissions') }}" class="icon-list-item">
+                    <span>@icon('lock')</span>
+                    <span>{{ trans('entities.permissions') }}</span>
+                </a>
+            @endif
+            @if(userCan('page-delete', $page))
+                <a href="{{ $page->getUrl('/delete') }}" class="icon-list-item">
+                    <span>@icon('delete')</span>
+                    <span>{{ trans('common.delete') }}</span>
+                </a>
+            @endif
+
+            <hr class="primary-background"/>
+
+            {{--Export--}}
+            <div dropdown class="dropdown-container block">
+                <div dropdown-toggle class="icon-list-item">
+                    <span>@icon('export')</span>
+                    <span>{{ trans('entities.export') }}</span>
+                </div>
+                <ul class="dropdown-menu wide">
+                    <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
+                    <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
+                    <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
+                </ul>
             </div>
         </div>
 
-        @include('pages/page-display')
     </div>
-
-    @if ($commentsEnabled)
-      <div class="container small nopad comments-container">
-          @include('comments/comments', ['page' => $page])
-      </div>
-    @endif
 @stop

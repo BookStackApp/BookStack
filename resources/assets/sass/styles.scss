@@ -1,9 +1,11 @@
 @import "reset";
 @import "variables";
 @import "mixins";
+@import "spacing";
 @import "html";
 @import "text";
-@import "grid";
+@import "colors";
+@import "layout";
 @import "blocks";
 @import "buttons";
 @import "tables";
@@ -94,17 +96,6 @@ $loadingSize: 10px;
   }
 }
 
-
-// Search results
-.search-results > h3 a {
-  font-size: 0.66em;
-  color: $primary;
-  padding-left: $-m;
-  i {
-    padding-right: $-s;
-  }
-}
-
 // Back to top link
 $btt-size: 40px;
 [back-to-top] {
@@ -186,34 +177,34 @@ $btt-size: 40px;
     overflow-y: scroll;
     height: 400px;
     background-color: #EEEEEE;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .entity-list-item {
+    background-color: #FFF;
+  }
+  .entity-list-item p {
+    margin-bottom: 0;
+  }
+  .entity-list-item.selected {
+    background-color: rgba(0, 0, 0, 0.15) !important;
   }
   .loading {
     height: 400px;
     padding-top: $-l;
   }
-  .entity-list > p {
-    text-align: center;
-    padding-top: $-l;
-    font-size: 1.333em;
-  }
-  .entity-list > div {
-    padding-left: $-m;
-    padding-right: $-m;
-    background-color: #FFF;
-    transition: all ease-in-out 120ms;
-    cursor: pointer;
+  .entity-selector-add button {
+    margin: 0;
+    display: block;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #DDD;
   }
   &.compact {
     font-size: 10px;
     .entity-item-snippet {
       display: none;
     }
-  }
-}
-
-.entity-list-item.selected {
-  h3, i, p ,a, span {
-    color: #EEE;
   }
 }
 
@@ -231,18 +222,6 @@ $btt-size: 40px;
   }
 }
 
-.center-box {
-  margin: $-xxl auto 0 auto;
-  width: 420px;
-  max-width: 100%;
-  display: inline-block;
-  text-align: left;
-  vertical-align: top;
-  input {
-    width: 100%;
-  }
-}
-
 .fullscreen {
   border:0;
   position:fixed;
@@ -253,4 +232,40 @@ $btt-size: 40px;
   width:100%;
   height:100%;
   z-index: 150;
+}
+
+.list-sort-container {
+  display: inline-block;
+  form {
+    display: inline-block;
+  }
+  .list-sort {
+    display: inline-grid;
+    margin-left: $-s;
+    grid-template-columns: 120px 40px;
+    border: 2px solid #DDD;
+    border-radius: 4px;
+  }
+  .list-sort-label {
+    font-weight: bold;
+    display: inline-block;
+    color: #888;
+  }
+  .list-sort-type {
+    text-align: left;
+  }
+  .list-sort-type, .list-sort-dir {
+    padding: $-xs $-s;
+    cursor: pointer;
+  }
+  .list-sort-dir {
+    border-left: 2px solid #DDD;
+    fill: #888;
+    .svg-icon {
+      transition: transform ease-in-out 120ms;
+    }
+    &:hover .svg-icon {
+      transform: rotate(180deg);
+    }
+  }
 }

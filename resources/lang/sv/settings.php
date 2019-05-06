@@ -33,8 +33,7 @@ return [
     'app_primary_color_desc' => 'Detta ska vara en hexadimal färgkod. <br>Lämna tomt för att återställa standardfärgen.',
     'app_homepage' => 'Startsida',
     'app_homepage_desc' => 'Välj en sida att använda som startsida istället för standardvyn. Den valda sidans rättigheter kommer att ignoreras.',
-    'app_homepage_default' => 'Vald vy för startsida',
-    'app_homepage_books' => 'Eller välj att ha listan med böcker som startsida. Om du har valt någon annan sida som startsida ovan kommer den inställningen att ignoreras.',
+    'app_homepage_select' => 'Välj en sida',
     'app_disable_comments' => 'Inaktivera kommentarer',
     'app_disable_comments_desc' => 'Inaktivera kommentarer på alla sidor i applikationen. Befintliga kommentarer visas inte.',
 
@@ -91,6 +90,7 @@ return [
     'role_manage_settings' => 'Hantera appinställningar',
     'role_asset' => 'Tillgång till innehåll',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',
+    'role_asset_admins' => 'Administratörer har automatisk tillgång till allt innehåll men dessa alternativ kan visa och dölja vissa gränssnittselement',
     'role_all' => 'Alla',
     'role_own' => 'Egna',
     'role_controlled_by_asset' => 'Kontrolleras av den sida de laddas upp till',

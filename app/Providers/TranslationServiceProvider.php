@@ -1,6 +1,5 @@
 <?php namespace BookStack\Providers;
 
-
 use BookStack\Translation\Translator;
 
 class TranslationServiceProvider extends \Illuminate\Translation\TranslationServiceProvider
