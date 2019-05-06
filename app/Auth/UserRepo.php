@@ -3,8 +3,10 @@
 use Activity;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Images;
 
 class UserRepo
@@ -42,12 +44,12 @@ class UserRepo
      */
     public function getById($id)
     {
-        return $this->user->findOrFail($id);
+        return $this->user->newQuery()->findOrFail($id);
     }
 
     /**
      * Get all the users with their permissions.
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @return Builder|static
      */
     public function getAllUsers()
     {
@@ -58,7 +60,7 @@ class UserRepo
      * Get all the users with their permissions in a paginated format.
      * @param int $count
      * @param $sortData
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @return Builder|static
      */
     public function getAllUsersPaginatedAndSorted($count, $sortData)
     {
@@ -85,9 +87,7 @@ class UserRepo
     {
         $user = $this->create($data, $verifyEmail);
         $this->attachDefaultRole($user);
-
-        // Get avatar from gravatar and save
-        $this->downloadGravatarToUserAvatar($user);
+        $this->downloadAndAssignUserAvatar($user);
 
         return $user;
     }
@@ -138,6 +138,40 @@ class UserRepo
     }
 
     /**
+     * Set the assigned user roles via an array of role IDs.
+     * @param User $user
+     * @param array $roles
+     * @throws UserUpdateException
+     */
+    public function setUserRoles(User $user, array $roles)
+    {
+        if ($this->demotingLastAdmin($user, $roles)) {
+            throw new UserUpdateException(trans('errors.role_cannot_remove_only_admin'), $user->getEditUrl());
+        }
+
+        $user->roles()->sync($roles);
+    }
+
+    /**
+     * Check if the given user is the last admin and their new roles no longer
+     * contains the admin role.
+     * @param User $user
+     * @param array $newRoles
+     * @return bool
+     */
+    protected function demotingLastAdmin(User $user, array $newRoles) : bool
+    {
+        if ($this->isOnlyAdmin($user)) {
+            $adminRole = $this->role->getSystemRole('admin');
+            if (!in_array(strval($adminRole->id), $newRoles)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Create a new basic instance of user.
      * @param array $data
      * @param boolean $verifyEmail
@@ -145,7 +179,6 @@ class UserRepo
      */
     public function create(array $data, $verifyEmail = false)
     {
-
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
@@ -165,7 +198,7 @@ class UserRepo
         $user->delete();
         
         // Delete user profile images
-        $profileImages = $images = Image::where('type', '=', 'user')->where('created_by', '=', $user->id)->get();
+        $profileImages = Image::where('type', '=', 'user')->where('uploaded_to', '=', $user->id)->get();
         foreach ($profileImages as $image) {
             Images::destroy($image);
         }
@@ -191,16 +224,15 @@ class UserRepo
      */
     public function getRecentlyCreated(User $user, $count = 20)
     {
+        $createdByUserQuery = function (Builder $query) use ($user) {
+            $query->where('created_by', '=', $user->id);
+        };
+
         return [
-            'pages'    => $this->entityRepo->getRecentlyCreated('page', $count, 0, function ($query) use ($user) {
-                $query->where('created_by', '=', $user->id);
-            }),
-            'chapters' => $this->entityRepo->getRecentlyCreated('chapter', $count, 0, function ($query) use ($user) {
-                $query->where('created_by', '=', $user->id);
-            }),
-            'books'    => $this->entityRepo->getRecentlyCreated('book', $count, 0, function ($query) use ($user) {
-                $query->where('created_by', '=', $user->id);
-            })
+            'pages'    => $this->entityRepo->getRecentlyCreated('page', $count, 0, $createdByUserQuery),
+            'chapters' => $this->entityRepo->getRecentlyCreated('chapter', $count, 0, $createdByUserQuery),
+            'books'    => $this->entityRepo->getRecentlyCreated('book', $count, 0, $createdByUserQuery),
+            'shelves'  => $this->entityRepo->getRecentlyCreated('bookshelf', $count, 0, $createdByUserQuery)
         ];
     }
 
@@ -215,6 +247,7 @@ class UserRepo
             'pages'    => $this->entityRepo->getUserTotalCreated('page', $user),
             'chapters' => $this->entityRepo->getUserTotalCreated('chapter', $user),
             'books'    => $this->entityRepo->getUserTotalCreated('book', $user),
+            'shelves'    => $this->entityRepo->getUserTotalCreated('bookshelf', $user),
         ];
     }
 
@@ -224,7 +257,7 @@ class UserRepo
      */
     public function getAllRoles()
     {
-        return $this->role->all();
+        return $this->role->newQuery()->orderBy('name', 'asc')->get();
     }
 
     /**
@@ -238,25 +271,24 @@ class UserRepo
     }
 
     /**
-     * Get a gravatar image for a user and set it as their avatar.
-     * Does not run if gravatar disabled in config.
+     * Get an avatar image for a user and set it as their avatar.
+     * Returns early if avatars disabled or not set in config.
      * @param User $user
      * @return bool
      */
-    public function downloadGravatarToUserAvatar(User $user)
+    public function downloadAndAssignUserAvatar(User $user)
     {
-        // Get avatar from gravatar and save
-        if (!config('services.gravatar')) {
+        if (!Images::avatarFetchEnabled()) {
             return false;
         }
 
         try {
-            $avatar = Images::saveUserGravatar($user);
+            $avatar = Images::saveUserAvatar($user);
             $user->avatar()->associate($avatar);
             $user->save();
             return true;
         } catch (Exception $e) {
-            \Log::error('Failed to save user gravatar image');
+            \Log::error('Failed to save user avatar image');
             return false;
         }
     }

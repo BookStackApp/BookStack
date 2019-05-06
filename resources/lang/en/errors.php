@@ -36,6 +36,7 @@ return [
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'image_upload_error' => 'An error occurred uploading the image',
     'image_upload_type_error' => 'The image type being uploaded is invalid',
+    'file_upload_timeout' => 'The file upload has timed out.',
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update',
@@ -63,6 +64,7 @@ return [
     'role_cannot_be_edited' => 'This role cannot be edited',
     'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
     'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
+    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
     'comment_list' => 'An error occurred while fetching the comments.',

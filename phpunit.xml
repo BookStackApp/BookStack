@@ -31,6 +31,7 @@
         <env name="MAIL_DRIVER" value="log"/>
         <env name="AUTH_METHOD" value="standard"/>
         <env name="DISABLE_EXTERNAL_SERVICES" value="true"/>
+        <env name="AVATAR_URL" value=""/>
         <env name="LDAP_VERSION" value="3"/>
         <env name="STORAGE_TYPE" value="local"/>
         <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>

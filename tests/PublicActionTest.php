@@ -14,6 +14,24 @@ class PublicActionTest extends BrowserKitTest
         $this->visit($page->getUrl())->seePageIs('/login');
     }
 
+    public function test_login_link_visible()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $this->visit('/')->see(url('/login'));
+    }
+
+    public function test_register_link_visible_when_enabled()
+    {
+        $this->setSettings(['app-public' => 'true']);
+
+        $this->visit('/')->see(url('/login'));
+        $this->visit('/')->dontSee(url('/register'));
+
+        $this->setSettings(['app-public' => 'true', 'registration-enabled' => 'true']);
+        $this->visit('/')->see(url('/login'));
+        $this->visit('/')->see(url('/register'));
+    }
+
     public function test_books_viewable()
     {
         $this->setSettings(['app-public' => 'true']);

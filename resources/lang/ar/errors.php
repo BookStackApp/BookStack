@@ -38,6 +38,7 @@ return [
     'uploaded'  => 'الخادم لا يسمح برفع ملفات بهذا الحجم. الرجاء محاولة الرفع بحجم أصغر.',
     'image_upload_error' => 'حدث خطأ خلال رفع الصورة',
     'image_upload_type_error' => 'صيغة الصورة المرفوعة غير صالحة',
+    'file_upload_timeout' => 'انتهت عملية تحميل الملف.',
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update', // جار البحث عن الترجمة الأنسب

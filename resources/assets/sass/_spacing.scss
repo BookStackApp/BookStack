@@ -1,0 +1,32 @@
+// Here we generate spacing utility classes for our sizes for all box sides and axis.
+// These will output to classes like .px-m (Padding on x-axis, medium size) or .mr-l (Margin right, large size)
+
+@mixin spacing($prop, $propLetter) {
+  @each $sizeLetter, $size in $spacing {
+    .#{$propLetter}-#{$sizeLetter} {
+      #{$prop}: $size !important;
+    }
+    .#{$propLetter}x-#{$sizeLetter} {
+      #{$prop}-left: $size !important;
+      #{$prop}-right: $size !important;
+    }
+    .#{$propLetter}y-#{$sizeLetter} {
+      #{$prop}-top: $size !important;
+      #{$prop}-bottom: $size !important;
+    }
+    .#{$propLetter}t-#{$sizeLetter} {
+      #{$prop}-top: $size !important;
+    }
+    .#{$propLetter}r-#{$sizeLetter} {
+      #{$prop}-right: $size !important;
+    }
+    .#{$propLetter}b-#{$sizeLetter} {
+      #{$prop}-bottom: $size !important;
+    }
+    .#{$propLetter}l-#{$sizeLetter} {
+      #{$prop}-left: $size !important;
+    }
+  }
+}
+@include spacing('margin', 'm')
+@include spacing('padding', 'p')

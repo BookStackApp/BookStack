@@ -37,6 +37,7 @@ return [
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
     'image_upload_type_error' => 'Il tipo di immagine in upload non è valido',
+    'file_upload_timeout' => 'Il caricamento del file è scaduto.',
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update',

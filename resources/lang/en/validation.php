@@ -33,6 +33,7 @@ return [
     'filled'               => 'The :attribute field is required.',
     'exists'               => 'The selected :attribute is invalid.',
     'image'                => 'The :attribute must be an image.',
+    'image_extension'      => 'The :attribute must have a valid & supported image extension.',
     'in'                   => 'The selected :attribute is invalid.',
     'integer'              => 'The :attribute must be an integer.',
     'ip'                   => 'The :attribute must be a valid IP address.',
@@ -49,6 +50,7 @@ return [
         'string'  => 'The :attribute must be at least :min characters.',
         'array'   => 'The :attribute must have at least :min items.',
     ],
+    'no_double_extension'  => 'The :attribute must only have a single file extension.',
     'not_in'               => 'The selected :attribute is invalid.',
     'numeric'              => 'The :attribute must be a number.',
     'regex'                => 'The :attribute format is invalid.',
@@ -69,6 +71,7 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
+    'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
     // Custom validation lines
     'custom' => [

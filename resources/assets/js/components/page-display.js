@@ -123,20 +123,21 @@ class PageDisplay {
 
     setupStickySidebar() {
         // Make the sidebar stick in view on scroll
-        let $window = $(window);
-        let $sidebar = $("#sidebar .scroll-body");
-        let $bookTreeParent = $sidebar.parent();
+        const $window = $(window);
+        const $sidebar = $("#sidebar .scroll-body");
+        const $sidebarContainer = $sidebar.parent();
+        const sidebarHeight = $sidebar.height() + 32;
 
         // Check the page is scrollable and the content is taller than the tree
-        let pageScrollable = ($(document).height() > ($window.height() + 40)) && ($sidebar.height() < $('.page-content').height());
+        const pageScrollable = ($(document).height() > ($window.height() + 40)) && (sidebarHeight < $('.page-content').height());
 
         // Get current tree's width and header height
-        let headerHeight = $("#header").height() + $(".toolbar").height();
+        const headerHeight = $("#header").height() + $(".toolbar").height();
         let isFixed = $window.scrollTop() > headerHeight;
 
         // Fix the tree as a sidebar
         function stickTree() {
-            $sidebar.width($bookTreeParent.width() + 15);
+            $sidebar.width($sidebarContainer.width() + 15);
             $sidebar.addClass("fixed");
             isFixed = true;
         }
@@ -183,9 +184,9 @@ class PageDisplay {
 
     setupNavHighlighting() {
         // Check if support is present for IntersectionObserver
-        if (!'IntersectionObserver' in window ||
-            !'IntersectionObserverEntry' in window ||
-            !'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+        if (!('IntersectionObserver' in window) ||
+            !('IntersectionObserverEntry' in window) ||
+            !('intersectionRatio' in window.IntersectionObserverEntry.prototype)) {
             return;
         }
 
@@ -207,8 +208,8 @@ class PageDisplay {
             let pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
 
             // observe each heading
-            for (let i = 0; i !== headings.length; ++i) {
-                pageNavObserver.observe(headings[i]);
+            for (let heading of headings) {
+                pageNavObserver.observe(heading);
             }
         }
 
@@ -220,14 +221,9 @@ class PageDisplay {
         }
 
         function toggleAnchorHighlighting(elementId, shouldHighlight) {
-            let anchorsToHighlight = pageNav.querySelectorAll('a[href="#' + elementId + '"]');
-            for (let i = 0; i < anchorsToHighlight.length; i++) {
-                // Change below to use classList.toggle when IE support is dropped.
-                if (shouldHighlight) {
-                    anchorsToHighlight[i].classList.add('current-heading');
-                } else {
-                    anchorsToHighlight[i].classList.remove('current-heading');
-                }
+            const anchorsToHighlight = pageNav.querySelectorAll('a[href="#' + elementId + '"]');
+            for (let anchor of anchorsToHighlight) {
+                anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
             }
         }
     }

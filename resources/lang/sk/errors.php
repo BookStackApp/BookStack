@@ -35,6 +35,7 @@ return [
     'cannot_create_thumbs' => 'Server nedokáže vytvoriť náhľady. Skontrolujte prosím, či máte nainštalované GD rozšírenie PHP.',
     'server_upload_limit' => 'Server nedovoľuje nahrávanie súborov s takouto veľkosťou. Skúste prosím menší súbor.',
     'image_upload_error' => 'Pri nahrávaní obrázka nastala chyba',
+    'file_upload_timeout' => 'Nahrávanie súboru vypršalo.',
 
     // Attachments
     'attachment_page_mismatch' => 'Page mismatch during attachment update',

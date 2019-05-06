@@ -5,14 +5,18 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.0.5",
         "ext-json": "*",
         "ext-tidy": "*",
         "ext-dom": "*",
+        "ext-xml": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
+        "ext-curl": "*",
         "laravel/framework": "~5.5.44",
         "fideloper/proxy": "~3.3",
         "intervention/image": "^2.4",
-        "laravel/socialite": "^3.0",
+        "laravel/socialite": "3.0.x-dev",
         "league/flysystem-aws-s3-v3": "^1.0",
         "barryvdh/laravel-dompdf": "^0.8.1",
         "predis/predis": "^1.1",
@@ -83,7 +87,7 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "platform": {
-            "php": "7.0"
+            "php": "7.0.5"
         }
     }
 }

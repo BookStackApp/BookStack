@@ -44,7 +44,7 @@ class AttachmentService extends UploadService
     public function saveNewUpload(UploadedFile $uploadedFile, $page_id)
     {
         $attachmentName = $uploadedFile->getClientOriginalName();
-        $attachmentPath = $this->putFileInStorage($attachmentName, $uploadedFile);
+        $attachmentPath = $this->putFileInStorage($uploadedFile);
         $largestExistingOrder = Attachment::where('uploaded_to', '=', $page_id)->max('order');
 
         $attachment = Attachment::forceCreate([
@@ -75,7 +75,7 @@ class AttachmentService extends UploadService
         }
 
         $attachmentName = $uploadedFile->getClientOriginalName();
-        $attachmentPath = $this->putFileInStorage($attachmentName, $uploadedFile);
+        $attachmentPath = $this->putFileInStorage($uploadedFile);
 
         $attachment->name = $attachmentName;
         $attachment->path = $attachmentPath;
@@ -174,19 +174,18 @@ class AttachmentService extends UploadService
 
     /**
      * Store a file in storage with the given filename
-     * @param $attachmentName
      * @param UploadedFile $uploadedFile
      * @return string
      * @throws FileUploadException
      */
-    protected function putFileInStorage($attachmentName, UploadedFile $uploadedFile)
+    protected function putFileInStorage(UploadedFile $uploadedFile)
     {
         $attachmentData = file_get_contents($uploadedFile->getRealPath());
 
         $storage = $this->getStorage();
         $basePath = 'uploads/files/' . Date('Y-m-M') . '/';
 
-        $uploadFileName = $attachmentName;
+        $uploadFileName = str_random(16) . '.' . $uploadedFile->getClientOriginalExtension();
         while ($storage->exists($basePath . $uploadFileName)) {
             $uploadFileName = str_random(3) . $uploadFileName;
         }

@@ -53,9 +53,9 @@ class Chapter extends Entity
      * @param int $length
      * @return string
      */
-    public function getExcerpt($length = 100)
+    public function getExcerpt(int $length = 100)
     {
-        $description = $this->description;
+        $description = $this->text ?? $this->description;
         return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
     }
 
@@ -66,5 +66,14 @@ class Chapter extends Entity
     public function entityRawQuery()
     {
         return "'BookStack\\\\Chapter' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text, '' as html, book_id, priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
+    }
+
+    /**
+     * Check if this chapter has any child pages.
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return count($this->pages) > 0;
     }
 }

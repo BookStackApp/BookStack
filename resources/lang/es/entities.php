@@ -1,9 +1,11 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'Recientemente creado',
     'recently_created_pages' => 'Páginas recientemente creadas',
     'recently_updated_pages' => 'Páginas recientemente actualizadas',
@@ -31,17 +33,13 @@ return [
     'export_pdf' => 'Archivo PDF',
     'export_text' => 'Archivo de texto',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => 'Permisos',
     'permissions_intro' => 'Una vez habilitado, estos permisos tendrán prioridad por encima de cualquier permiso establecido.',
     'permissions_enable' => 'Habilitar permisos personalizados',
     'permissions_save' => 'Guardar permisos',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => 'Resultados de búsqueda',
     'search_total_results_found' => 'Se han encontrado :count resultados|Se han encontrado :count resultados en total',
     'search_clear' => 'Limpiar resultados',
@@ -66,9 +64,7 @@ return [
     'search_set_date' => 'fecha',
     'search_update' => 'Actualizar Búsqueda',
 
-        /**
-     * Shelves
-     */
+    // Shelves
     'shelf' => 'Estante',
     'shelves' => 'Estantes',
     'shelves_long' => 'Estantes',
@@ -98,9 +94,7 @@ return [
     'shelves_copy_permissions_explain' => 'Esto aplicará los ajustes de permisos de este estante para todos sus libros. Antes de activarlo, asegúrese de que todos los cambios de permisos para este estante han sido guardados.',
     'shelves_copy_permission_success' => 'Permisos del estante copiados a :count libros',
 
-    /**
-     * Books
-     */
+    // Books
     'book' => 'Libro',
     'books' => 'Libros',
     'x_books' => ':count Libro|:count Libros',
@@ -134,9 +128,7 @@ return [
     'books_sort_show_other' => 'Mostrar otros libros',
     'books_sort_save' => 'Guardar nuevo orden',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'Capítulo',
     'chapters' => 'Capítulos',
     'x_chapters' => ':count Capítulo|:count Capítulos',
@@ -159,9 +151,7 @@ return [
     'chapters_permissions_success' => 'Permisos de capítulo actualizados',
     'chapters_search_this' => 'Buscar este capítulo',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'Página',
     'pages' => 'Páginas',
     'x_pages' => ':count Página|:count Páginas',
@@ -235,9 +225,7 @@ return [
     'pages_draft_discarded' => 'Borrador descartado, el editor ha sido actualizado con el contenido de la página actual',
     'pages_specific' => 'Página específica',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'Etiquetas de Página',
     'chapter_tags' => 'Etiquetas de Capítulo',
     'book_tags' => 'Etiquetas de Libro',
@@ -273,18 +261,14 @@ return [
     'attachments_file_updated' => 'Fichero actualizado éxitosamente',
     'attachments_link_attached' => 'Enlace agregado éxitosamente a la ágina',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => 'Usuario para :time',
     'profile_created_content' => 'Contenido creado',
     'profile_not_created_pages' => ':userName no ha creado ninguna página',
     'profile_not_created_chapters' => ':userName no ha creado ningún capítulo',
     'profile_not_created_books' => ':userName no ha creado ningún libro',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'Comentario',
     'comments' => 'Comentarios',
     'comment_add' => 'Añadir Comentario',
@@ -302,9 +286,7 @@ return [
     'comment_delete_confirm' => '¿Está seguro de que quiere borrar este comentario?',
     'comment_in_reply_to' => 'En respuesta a :commentId',
 
-    /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => '¿Está seguro de que desea eliminar esta revisión?',
     'revision_delete_success' => 'Revisión eliminada',
     'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.'

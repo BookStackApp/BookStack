@@ -1,22 +1,29 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    <div class="col-sm-12 faded">
-        @include('shelves._breadcrumbs', ['shelf' => $shelf])
-    </div>
-@stop
-
 @section('body')
 
     <div class="container small">
-        <p>&nbsp;</p>
-        <div class="card">
-            <h3>@icon('delete') {{ trans('entities.shelves_delete') }}</h3>
-            <div class="body">
-                <p>{{ trans('entities.shelves_delete_explain', ['name' => $shelf->name]) }}</p>
-                <p class="text-neg">{{ trans('entities.shelves_delete_confirmation') }}</p>
 
-                <form action="{{ $shelf->getUrl() }}" method="POST">
+        <div class="my-s">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                $shelf,
+                $shelf->getUrl('/delete') => [
+                    'text' => trans('entities.shelves_delete'),
+                    'icon' => 'delete',
+                ]
+            ]])
+        </div>
+
+        <div class="card content-wrap auto-height">
+            <h1 class="list-heading">{{ trans('entities.shelves_delete') }}</h1>
+            <p>{{ trans('entities.shelves_delete_explain', ['name' => $shelf->name]) }}</p>
+
+            <div class="grid half">
+                <p class="text-neg">
+                    <strong>{{ trans('entities.shelves_delete_confirmation') }}</strong>
+                </p>
+
+                <form action="{{ $shelf->getUrl() }}" method="POST" class="text-right">
                     {!! csrf_field() !!}
                     <input type="hidden" name="_method" value="DELETE">
 
@@ -24,6 +31,8 @@
                     <button type="submit" class="button">{{ trans('common.confirm') }}</button>
                 </form>
             </div>
+
+
         </div>
     </div>
 

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Notifications;
 
-
 class ResetPassword extends MailNotification
 {
     /**
