@@ -64,11 +64,24 @@ class MarkdownEditor {
             let action = button.getAttribute('data-action');
             if (action === 'insertImage') this.actionInsertImage();
             if (action === 'insertLink') this.actionShowLinkSelector();
-            if (action === 'insertDrawing' && event.ctrlKey) {
+            if (action === 'insertDrawing' && (event.ctrlKey || event.metaKey)) {
                 this.actionShowImageManager();
                 return;
             }
             if (action === 'insertDrawing') this.actionStartDrawing();
+        });
+
+        // Mobile section toggling
+        this.elem.addEventListener('click', event => {
+            const toolbarLabel = event.target.closest('.editor-toolbar-label');
+            if (!toolbarLabel) return;
+
+            const currentActiveSections = this.elem.querySelectorAll('.markdown-editor-wrap');
+            for (let activeElem of currentActiveSections) {
+                activeElem.classList.remove('active');
+            }
+
+            toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
         });
 
         window.$events.listen('editor-markdown-update', value => {
@@ -381,9 +394,7 @@ class MarkdownEditor {
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
         DrawIO.show(() => {
-            return window.$http.get(window.baseUrl(`/images/base64/${drawingId}`)).then(resp => {
-                return `data:image/png;base64,${resp.data.content}`;
-            });
+            return DrawIO.load(drawingId);
         }, (pngData) => {
 
             let data = {

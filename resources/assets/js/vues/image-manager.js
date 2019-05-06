@@ -1,7 +1,7 @@
 import * as Dates from "../services/dates";
 import dropzone from "./components/dropzone";
 
-let page = 0;
+let page = 1;
 let previousClickTime = 0;
 let previousClickImage = 0;
 let dataLoaded = false;
@@ -20,7 +20,7 @@ const data = {
     selectedImage: false,
     dependantPages: false,
     showing: false,
-    view: 'all',
+    filter: null,
     hasMore: false,
     searching: false,
     searchTerm: '',
@@ -56,32 +56,37 @@ const methods = {
         this.$el.children[0].components.overlay.hide();
     },
 
-    fetchData() {
-        let url = baseUrl + page;
-        let query = {};
-        if (this.uploadedTo !== false) query.page_id = this.uploadedTo;
-        if (this.searching) query.term = this.searchTerm;
+    async fetchData() {
+        let query = {
+            page,
+            search: this.searching ? this.searchTerm : null,
+            uploaded_to: this.uploadedTo || null,
+            filter_type: this.filter,
+        };
 
-        this.$http.get(url, {params: query}).then(response => {
-            this.images = this.images.concat(response.data.images);
-            this.hasMore = response.data.hasMore;
-            page++;
-        });
+        const {data} = await this.$http.get(baseUrl, {params: query});
+        this.images = this.images.concat(data.images);
+        this.hasMore = data.has_more;
+        page++;
     },
 
-    setView(viewName) {
-        this.view = viewName;
+    setFilterType(filterType) {
+        this.filter = filterType;
         this.resetState();
         this.fetchData();
     },
 
     resetState() {
         this.cancelSearch();
+        this.resetListView();
+        this.deleteConfirm = false;
+        baseUrl = window.baseUrl(`/images/${this.imageType}`);
+    },
+
+    resetListView() {
         this.images = [];
         this.hasMore = false;
-        this.deleteConfirm = false;
-        page = 0;
-        baseUrl = window.baseUrl(`/images/${this.imageType}/${this.view}/`);
+        page = 1;
     },
 
     searchImages() {
@@ -94,10 +99,7 @@ const methods = {
         }
 
         this.searching = true;
-        this.images = [];
-        this.hasMore = false;
-        page = 0;
-        baseUrl = window.baseUrl(`/images/${this.imageType}/search/`);
+        this.resetListView();
         this.fetchData();
     },
 
@@ -110,10 +112,10 @@ const methods = {
     },
 
     imageSelect(image) {
-        let dblClickTime = 300;
-        let currentTime = Date.now();
-        let timeDiff = currentTime - previousClickTime;
-        let isDblClick = timeDiff < dblClickTime && image.id === previousClickImage;
+        const dblClickTime = 300;
+        const currentTime = Date.now();
+        const timeDiff = currentTime - previousClickTime;
+        const isDblClick = timeDiff < dblClickTime && image.id === previousClickImage;
 
         if (isDblClick) {
             this.callbackAndHide(image);
@@ -132,11 +134,11 @@ const methods = {
         this.hide();
     },
 
-    saveImageDetails() {
-        let url = window.baseUrl(`/images/update/${this.selectedImage.id}`);
-        this.$http.put(url, this.selectedImage).then(response => {
-            this.$events.emit('success', trans('components.image_update_success'));
-        }).catch(error => {
+    async saveImageDetails() {
+        let url = window.baseUrl(`/images/${this.selectedImage.id}`);
+        try {
+            await this.$http.put(url, this.selectedImage)
+        } catch (error) {
             if (error.response.status === 422) {
                 let errors = error.response.data;
                 let message = '';
@@ -145,27 +147,29 @@ const methods = {
                 });
                 this.$events.emit('error', message);
             }
-        });
+        }
     },
 
-    deleteImage() {
+    async deleteImage() {
 
         if (!this.deleteConfirm) {
-            let url = window.baseUrl(`/images/usage/${this.selectedImage.id}`);
-            this.$http.get(url).then(resp => {
-                this.dependantPages = resp.data;
-            }).catch(console.error).then(() => {
-                this.deleteConfirm = true;
-            });
+            const url = window.baseUrl(`/images/usage/${this.selectedImage.id}`);
+            try {
+                const {data} = await this.$http.get(url);
+                this.dependantPages = data;
+            } catch (error) {
+                console.error(error);
+            }
+            this.deleteConfirm = true;
             return;
         }
-        let url = window.baseUrl(`/images/${this.selectedImage.id}`);
-        this.$http.delete(url).then(resp => {
-            this.images.splice(this.images.indexOf(this.selectedImage), 1);
-            this.selectedImage = false;
-            this.$events.emit('success', trans('components.image_delete_success'));
-            this.deleteConfirm = false;
-        });
+
+        const url = window.baseUrl(`/images/${this.selectedImage.id}`);
+        await this.$http.delete(url);
+        this.images.splice(this.images.indexOf(this.selectedImage), 1);
+        this.selectedImage = false;
+        this.$events.emit('success', trans('components.image_delete_success'));
+        this.deleteConfirm = false;
     },
 
     getDate(stringDate) {
@@ -180,7 +184,7 @@ const methods = {
 
 const computed = {
     uploadUrl() {
-        return window.baseUrl(`/images/${this.imageType}/upload`);
+        return window.baseUrl(`/images/${this.imageType}`);
     }
 };
 
@@ -188,7 +192,7 @@ function mounted() {
     window.ImageManager = this;
     this.imageType = this.$el.getAttribute('image-type');
     this.uploadedTo = this.$el.getAttribute('uploaded-to');
-    baseUrl = window.baseUrl('/images/' + this.imageType + '/all/')
+    baseUrl = window.baseUrl('/images/' + this.imageType)
 }
 
 export default {

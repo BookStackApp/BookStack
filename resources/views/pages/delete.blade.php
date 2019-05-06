@@ -1,28 +1,43 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    <div class="col-sm-12 faded">
-        @include('pages._breadcrumbs', ['page' => $page])
-    </div>
-@stop
-
 @section('body')
 
     <div class="container small">
-        <p>&nbsp;</p>
-        <div class="card">
-            <h3>@icon('delete') {{ $page->draft ? trans('entities.pages_delete_draft') : trans('entities.pages_delete') }}</h3>
-            <div class="body">
-                <p class="text-neg">{{ $page->draft ? trans('entities.pages_delete_draft_confirm'): trans('entities.pages_delete_confirm') }}</p>
 
-                <form action="{{ $page->getUrl() }}" method="POST">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <div class="form-group">
-                        <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                        <button type="submit" class="button neg">{{ trans('common.confirm') }}</button>
-                    </div>
-                </form>
+        <div class="my-s">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                $page->book,
+                $page->chapter,
+                $page,
+                $page->getUrl('/delete') => [
+                    'text' => trans('entities.pages_delete'),
+                    'icon' => 'delete',
+                ]
+            ]])
+        </div>
+
+        <div class="card content-wrap auto-height">
+            <h1 class="list-heading">{{ $page->draft ? trans('entities.pages_delete_draft') : trans('entities.pages_delete') }}</h1>
+
+
+            <div class="grid half v-center">
+                <div>
+                    <p class="text-neg">
+                        <strong>
+                            {{ $page->draft ? trans('entities.pages_delete_draft_confirm'): trans('entities.pages_delete_confirm') }}
+                        </strong>
+                    </p>
+                </div>
+                <div>
+                    <form action="{{ $page->getUrl() }}" method="POST">
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <div class="form-group text-right">
+                            <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+                            <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

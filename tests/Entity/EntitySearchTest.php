@@ -197,11 +197,11 @@ class EntitySearchTest extends TestCase
 
         $pageSearch = $this->get('/ajax/search/entities?term=' . urlencode($page->name));
         $pageSearch->assertSee($page->name);
-        $pageSearch->assertSee($chapter->getShortName());
-        $pageSearch->assertSee($page->book->getShortName());
+        $pageSearch->assertSee($chapter->getShortName(42));
+        $pageSearch->assertSee($page->book->getShortName(42));
 
         $chapterSearch = $this->get('/ajax/search/entities?term=' . urlencode($chapter->name));
         $chapterSearch->assertSee($chapter->name);
-        $chapterSearch->assertSee($chapter->book->getShortName());
+        $chapterSearch->assertSee($chapter->book->getShortName(42));
     }
 }

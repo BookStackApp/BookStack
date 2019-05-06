@@ -1,21 +1,15 @@
-<div class="entity-list @if(isset($style)){{ $style }}@endif">
+<div class="entity-list">
     @if(count($entities) > 0)
         @foreach($entities as $index => $entity)
-            @if($entity->isA('page'))
-                @include('pages/list-item', ['page' => $entity, 'showPath' => true])
-            @elseif($entity->isA('book'))
-                @include('books/list-item', ['book' => $entity])
-            @elseif($entity->isA('chapter'))
-                @include('chapters/list-item', ['chapter' => $entity, 'hidePages' => true, 'showPath' => true])
-            @endif
 
+            @include('partials.entity-list-item', ['entity' => $entity, 'showPath' => true])
             @if($index !== count($entities) - 1)
                 <hr>
             @endif
 
         @endforeach
     @else
-        <p class="text-muted">
+        <p class="text-muted text-large p-xl">
             {{ trans('common.no_items') }}
         </p>
     @endif

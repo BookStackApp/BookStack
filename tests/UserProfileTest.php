@@ -59,9 +59,9 @@ class UserProfileTest extends BrowserKitTest
         \Activity::add($entities['page'], 'page_create', $entities['book']->id);
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
-            ->seeInElement('#recent-activity', 'updated book')
-            ->seeInElement('#recent-activity', 'created page')
-            ->seeInElement('#recent-activity', $entities['page']->name);
+            ->seeInElement('#recent-user-activity', 'updated book')
+            ->seeInElement('#recent-user-activity', 'created page')
+            ->seeInElement('#recent-user-activity', $entities['page']->name);
     }
 
     public function test_clicking_user_name_in_activity_leads_to_profile_page()
@@ -103,7 +103,7 @@ class UserProfileTest extends BrowserKitTest
         $this->actingAs($editor)
             ->visit('/books')
             ->pageNotHasElement('.featured-image-container')
-            ->pageHasElement('.content .entity-list-item');
+            ->pageHasElement('.content-wrap .entity-list-item');
     }
 
     public function test_books_view_is_grid()
