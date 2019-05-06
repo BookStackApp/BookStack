@@ -16,7 +16,7 @@ return [
     'sign_up_with' => 'Зареєструватись з :socialDriver',
     'logout' => 'Вихід',
 
-    'name' => 'Ім’я',
+    'name' => 'Ім\'я',
     'username' => 'Логін',
     'email' => 'Email',
     'password' => 'Пароль',
