@@ -1,9 +1,7 @@
 <?php
 /**
- * Text used for 'Entities' (Document Structure Elements) such as
- * Books, Shelves, Chapters & Pages
- * Текст використовується для "об'єктів" (елементів структури документів), таких як
- * Книги, Полиці, Розділи та Сторінки
+ * Text used for 'Entities' (Document Structure Elements) such as / Текст використовується для "об'єктів" (елементів структури документів), таких як
+ * Books, Shelves, Chapters & Pages / Книги, Полиці, Розділи та Сторінки
  */
 return [
 
@@ -13,6 +11,7 @@ return [
     'recently_updated_pages' => 'Нещодавно оновлені сторінки',
     'recently_created_chapters' => 'Нещодавно створені розділи',
     'recently_created_books' => 'Нещодавно створені книги',
+    'recently_created_shelves' => 'Нещодавно створені полиці',
     'recently_update' => 'Недавно оновлено',
     'recently_viewed' => 'Недавно переглянуто',
     'recent_activity' => 'Остання активність',
@@ -37,7 +36,7 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Дозволи',
-    'permissions_intro' => 'Після ввімкнення ці дозволи будуть мати пріоритет над усіма дозволеними ролями.',
+    'permissions_intro' => 'Після ввімкнення ці дозволи будуть мати вищий пріоритет ніж інші дозволи ролей.',
     'permissions_enable' => 'Увімкнути спеціальні дозволи',
     'permissions_save' => 'Зберегти дозволи',
 
@@ -69,11 +68,13 @@ return [
     // Shelves
     'shelf' => 'Полиця',
     'shelves' => 'Полиці',
+    'x_shelves' => ':count Полиця|:count Полиць',
     'shelves_long' => 'Книжкові полиці',
     'shelves_empty' => 'Жодних полиць не було створено',
     'shelves_create' => 'Створити нову полицю',
     'shelves_popular' => 'Популярні полиці',
     'shelves_new' => 'Нові полиці',
+    'shelves_new_action' => 'Нова полиця',
     'shelves_popular_empty' => 'Найпопулярніші полиці з\'являться тут.',
     'shelves_new_empty' => 'Тут будуть з\'являтися останні створені полиці.',
     'shelves_save' => 'Зберегти полицю',
@@ -104,6 +105,7 @@ return [
     'books_popular' => 'Популярні книги',
     'books_recent' => 'Останні книги',
     'books_new' => 'Нові книги',
+    'books_new_action' => 'Нова книга',
     'books_popular_empty' => 'Найпопулярніші книги з\'являться тут.',
     'books_new_empty' => 'Найновіші книги з\'являться тут.',
     'books_create' => 'Створити нову книгу',
@@ -119,7 +121,6 @@ return [
     'books_permissions_updated' => 'Дозволи на книгу оновлено',
     'books_empty_contents' => 'Для цієї книги не створено жодної сторінки або розділів.',
     'books_empty_create_page' => 'Створити нову сторінку',
-    'books_empty_or' => 'або',
     'books_empty_sort_current_book' => 'Сортувати поточну книгу',
     'books_empty_add_chapter' => 'Додати розділ',
     'books_permissions_active' => 'Діючі дозволи на книгу',
@@ -127,6 +128,11 @@ return [
     'books_navigation' => 'Навігація по книзі',
     'books_sort' => 'Сортувати вміст книги',
     'books_sort_named' => 'Сортувати книгу :bookName',
+    'books_sort_name' => 'Сортувати за назвою',
+    'books_sort_created' => 'Сортувати за датою створення',
+    'books_sort_updated' => 'Сортувати за датою оновлення',
+    'books_sort_chapters_first' => 'Спершу розділи',
+    'books_sort_chapters_last' => 'Розділи в кінці',
     'books_sort_show_other' => 'Показати інші книги',
     'books_sort_save' => 'Зберегти нове замовлення',
 
@@ -204,6 +210,8 @@ return [
     'pages_revisions_created_by' => 'Створена',
     'pages_revisions_date' => 'Дата версії',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Версія #:id',
+    'pages_revisions_numbered_changes' => 'Зміни версії #:id',
     'pages_revisions_changelog' => 'Історія змін',
     'pages_revisions_changes' => 'Зміни',
     'pages_revisions_current' => 'Поточна версія',
@@ -218,7 +226,7 @@ return [
     'pages_editing_draft_notification' => 'Ви наразі редагуєте чернетку, що була збережена останньою :timeDiff.',
     'pages_draft_edited_notification' => 'З того часу ця сторінка була оновлена. Рекомендуємо відмовитися від цього проекту.',
     'pages_draft_edit_active' => [
-        'start_a' => ':count користувачі(в) почала редагувати цю сторінку',
+        'start_a' => ':count користувачі(в) почали редагувати цю сторінку',
         'start_b' => ':userName розпочав редагування цієї сторінки',
         'time_a' => 'з моменту останньої оновлення сторінки',
         'time_b' => 'за останні :minCount хвилин',
@@ -269,6 +277,7 @@ return [
     'profile_not_created_pages' => ':userName не створив жодної сторінки',
     'profile_not_created_chapters' => ':userName не створив жодного розділу',
     'profile_not_created_books' => ':userName не створив жодної книги',
+    'profile_not_created_shelves' => ':userName не створив жодної полиці',
 
     // Comments
     'comment' => 'Коментар',
@@ -290,6 +299,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Ви впевнені, що хочете видалити цю версію?',
+    'revision_restore_confirm' => 'Дійсно відновити цю версію? Вміст поточної сторінки буде замінено.',
     'revision_delete_success' => 'Версія видалена',
     'revision_cannot_delete_latest' => 'Неможливо видалити останню версію.'
 ];
