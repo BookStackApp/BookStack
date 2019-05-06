@@ -11,6 +11,7 @@ return [
     'save' => 'Guardar',
     'continue' => 'Continuar',
     'select' => 'Seleccionar',
+    'toggle_all' => 'Marcarlos todos',
     'more' => 'Más',
 
     // Form Labels
@@ -23,6 +24,7 @@ return [
     // Actions
     'actions' => 'Acciones',
     'view' => 'Ver',
+    'view_all' => 'Ver todos',
     'create' => 'Crear',
     'update' => 'Actualizar',
     'edit' => 'Editar',
@@ -36,6 +38,11 @@ return [
     'reset' => 'Resetear',
     'remove' => 'Remover',
     'add' => 'Añadir',
+
+    // Sort Options
+    'sort_name' => 'Nombre',
+    'sort_created_at' => 'Fecha de Creación',
+    'sort_updated_at' => 'Fecha de Modificación',
 
     // Misc
     'deleted_user' => 'Usuario borrado',
@@ -52,6 +59,10 @@ return [
     // Header
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
+
+    // Layout tabs
+    'tab_info' => 'Información',
+    'tab_content' => 'Contenido',
 
     // Email Content
     'email_action_help' => 'Si está teniendo problemas clicando en el botón ":actionText", copie y pegue la siguiente URL en su navegador web:',

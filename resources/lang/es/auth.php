@@ -26,6 +26,8 @@ return [
     'remember_me' => 'Recordarme',
     'ldap_email_hint' => 'Por favor introduzca un mail para utilizar con esta cuenta.',
     'create_account' => 'Crear una Cuenta',
+    'already_have_account' => '¿Ya tienes una cuenta?',
+    'dont_have_account' => '¿No tienes una cuenta?',
     'social_login' => 'Login Social',
     'social_registration' => 'Registro Social',
     'social_registration_text' => 'Registrar y entrar utilizando otro servicio.',
