@@ -1,13 +1,9 @@
 <?php
 /**
- * Validation Lines
- * The following language lines contain the default error messages used by
- * the validator class. Some of these rules have multiple versions such
- * as the size rules. Feel free to tweak each of these messages here.
- * Стрічки перевірки
- * Наступні мовні лінії містять повідомлення про помилку за замовчуванням, 
- * що використовуються класом валідатора. Деякі з цих правил мають кілька версій,
- * таких як правила розмірів. Ви можете налаштувати кожен з цих повідомлень тут.
+ * Validation Lines / Стрічки перевірки
+ * The following language lines contain the default error messages used by / Наступні мовні лінії містять повідомлення про помилку за замовчуванням, 
+ * the validator class. Some of these rules have multiple versions such / що використовуються класом валідатора. Деякі з цих правил мають кілька версій,
+ * as the size rules. Feel free to tweak each of these messages here. / таких як правила розмірів. Ви можете налаштувати кожен з цих повідомлень тут.
  */
 return [
 
@@ -37,6 +33,7 @@ return [
     'filled'               => ':attribute поле обов\'язкове.',
     'exists'               => 'Вибраний :attribute недійсний.',
     'image'                => ':attribute повинен бути зображенням.',
+    'image_extension'      => ':attribute повинен мати дійсне та підтримуване розширення зображення.',
     'in'                   => 'Вибраний :attribute недійсний.',
     'integer'              => ':attribute повинен бути цілим числом.',
     'ip'                   => ':attribute повинна бути дійсною IP-адресою.',
@@ -53,6 +50,7 @@ return [
         'string'  => ':attribute повинен бути принаймні :min символів.',
         'array'   => ':attribute повинен містити принаймні :min елементів.',
     ],
+    'no_double_extension'  => ':attribute повинен мати тільки одне розширення файлу.',
     'not_in'               => 'Вибраний :attribute недійсний.',
     'numeric'              => ':attribute повинен бути числом.',
     'regex'                => ':attribute формат недійсний.',
@@ -73,6 +71,7 @@ return [
     'timezone'             => ':attribute повинен бути дійсною зоною.',
     'unique'               => ':attribute вже є.',
     'url'                  => ':attribute формат недійсний.',
+    'uploaded'             => 'Не вдалося завантажити файл. Сервер може не приймати файли такого розміру.',
 
     // Custom validation lines
     'custom' => [
