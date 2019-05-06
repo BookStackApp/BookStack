@@ -40,7 +40,7 @@ return [
     'add' => 'Додати',
     
     // Sort Options
-    'sort_name' => 'Ім’я',
+    'sort_name' => 'Ім\'я',
     'sort_created_at' => 'Дата створення',
     'sort_updated_at' => 'Дата оновлення',
 
