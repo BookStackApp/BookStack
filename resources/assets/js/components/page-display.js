@@ -184,9 +184,9 @@ class PageDisplay {
 
     setupNavHighlighting() {
         // Check if support is present for IntersectionObserver
-        if (!'IntersectionObserver' in window ||
-            !'IntersectionObserverEntry' in window ||
-            !'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+        if (!('IntersectionObserver' in window) ||
+            !('IntersectionObserverEntry' in window) ||
+            !('intersectionRatio' in window.IntersectionObserverEntry.prototype)) {
             return;
         }
 
