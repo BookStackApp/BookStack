@@ -14,7 +14,7 @@ class DropDown {
     }
 
     show(event) {
-        this.hide();
+        this.hideAll();
 
         this.menu.style.display = 'block';
         this.menu.classList.add('anim', 'menuIn');
@@ -42,6 +42,12 @@ class DropDown {
         if (input !== null) input.focus();
 
         event.stopPropagation();
+    }
+
+    hideAll() {
+        for (let dropdown of window.components.dropdown) {
+            dropdown.hide();
+        }
     }
 
     hide() {
