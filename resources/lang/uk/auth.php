@@ -1,10 +1,8 @@
 <?php
 /**
  * Authentication Language Lines
- * The following language lines are used during authentication for various
- * messages that we need to display to the user.
- * Під час автентифікації використовуються наступні лінії мов для різних повідомлень
- * які нам потрібно показати користувачеві.
+ * The following language lines are used during authentication for various / Під час автентифікації використовуються наступні лінії мов для різних повідомлень
+ * messages that we need to display to the user. / які нам потрібно показати користувачеві.
  */
 return [
 
@@ -28,6 +26,8 @@ return [
     'remember_me' => 'Запам’ятати мене',
     'ldap_email_hint' => 'Введіть email для цього облікового запису.',
     'create_account' => 'Створити обліковий запис',
+    'already_have_account' => 'Вже є обліковий запис?',
+    'dont_have_account' => 'Немає облікового запису?',
     'social_login' => 'Вхід через соціальну мережу',
     'social_registration' => 'Реєстрація через соціальну мережу',
     'social_registration_text' => 'Реєстрація і вхід через інший сервіс',
@@ -35,7 +35,7 @@ return [
     'register_thanks' => 'Дякуємо за реєстрацію!',
     'register_confirm' => 'Будь ласка, перевірте свою електронну пошту та натисніть кнопку підтвердження, щоб отримати доступ до :appName.',
     'registrations_disabled' => 'Реєстрацію вимкнено',
-    'registration_email_domain_invalid' => 'Цей домен електронної пошти не має доступу до реєстрації',
+    'registration_email_domain_invalid' => 'Цей домен електронної пошти заборонений для реєстрації',
     'register_success' => 'Дякуємо за реєстрацію! Ви зареєстровані та ввійшли в систему.',
 
 
