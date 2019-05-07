@@ -10,6 +10,7 @@ return [
     'save' => 'Spara',
     'continue' => 'Fortsätt',
     'select' => 'Välj',
+    'toggle_all' => 'Ändra alla',
     'more' => 'Mer',
 
     /**
@@ -26,6 +27,7 @@ return [
      */
     'actions' => 'Åtgärder',
     'view' => 'Visa',
+    'view_all' => 'Visa alla',
     'create' => 'Skapa',
     'update' => 'Uppdatera',
     'edit' => 'Redigera',
@@ -39,6 +41,13 @@ return [
     'reset' => 'Återställ',
     'remove' => 'Radera',
     'add' => 'Lägg till',
+
+    /**
+     * Sort Options
+     */
+    'sort_name' => 'Namn',
+    'sort_created_at' => 'Skapad',
+    'sort_updated_at' => 'Uppdaterad',
 
     /**
      * Misc
@@ -59,6 +68,12 @@ return [
      */
     'view_profile' => 'Visa profil',
     'edit_profile' => 'Redigera profil',
+
+    /**
+     * Layout tabs
+     */
+    'tab_info' => 'Information',
+    'tab_content' => 'Innehåll',
 
     /**
      * Email Content
