@@ -1218,7 +1218,7 @@ body.flexbox {
 
 @media screen and (max-width: 1400px) {
   .content-wrap.card {
-    padding: 24px 32px; } }
+    padding: 16px 32px; } }
 
 @media screen and (max-width: 880px) {
   .content-wrap.card {
