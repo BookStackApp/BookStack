@@ -298,7 +298,7 @@ class MarkdownEditor {
             formData.append('file', file, remoteFilename);
             formData.append('uploaded_to', context.pageId);
 
-            window.$http.post('/images/gallery/upload', formData).then(resp => {
+            window.$http.post('/images/gallery', formData).then(resp => {
                 const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
                 replaceContent(placeHolderText, newContent);
             }).catch(err => {
@@ -366,7 +366,7 @@ class MarkdownEditor {
                 uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
             };
 
-            window.$http.post(window.baseUrl('/images/drawing/upload'), data).then(resp => {
+            window.$http.post(window.baseUrl('/images/drawio'), data).then(resp => {
                 this.insertDrawing(resp.data, cursorPos);
                 DrawIO.close();
             }).catch(err => {
@@ -402,7 +402,7 @@ class MarkdownEditor {
                 uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
             };
 
-            window.$http.post(window.baseUrl(`/images/drawing/upload`), data).then(resp => {
+            window.$http.post(window.baseUrl(`/images/drawio`), data).then(resp => {
                 let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 let newContent = this.cm.getValue().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
