@@ -1,5 +1,7 @@
 <?php namespace Tests;
 
+use BookStack\Entities\Bookshelf;
+
 class HomepageTest extends TestCase
 {
 
@@ -88,5 +90,34 @@ class HomepageTest extends TestCase
 
         $this->setSettings(['app-homepage-type' => false]);
         $this->test_default_homepage_visible();
+    }
+
+    public function test_shelves_list_homepage_adheres_to_book_visibility_permissions()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'bookshelves_view_type', 'list');
+        $this->setSettings(['app-homepage-type' => 'bookshelves']);
+        $this->asEditor();
+
+        $shelf = Bookshelf::query()->first();
+        $book = $shelf->books()->first();
+
+        // Ensure initially visible
+        $homeVisit = $this->get('/');
+        $homeVisit->assertElementContains('.content-wrap', $shelf->name);
+        $homeVisit->assertElementContains('.content-wrap', $book->name);
+
+        // Ensure book no longer visible without view permission
+        $editor->roles()->detach();
+        $this->giveUserPermissions($editor, ['bookshelf-view-all']);
+        $homeVisit = $this->get('/');
+        $homeVisit->assertElementContains('.content-wrap', $shelf->name);
+        $homeVisit->assertElementNotContains('.content-wrap', $book->name);
+
+        // Ensure is visible again with entity-level view permission
+        $this->setEntityRestrictions($book, ['view'], [$editor->roles()->first()]);
+        $homeVisit = $this->get('/');
+        $homeVisit->assertElementContains('.content-wrap', $shelf->name);
+        $homeVisit->assertElementContains('.content-wrap', $book->name);
     }
 }

@@ -67,6 +67,9 @@ class HomeController extends Controller
 
         if ($homepageOption === 'bookshelves') {
             $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18, $commonData['sort'], $commonData['order']);
+            foreach ($shelves as $shelf) {
+                $shelf->books = $this->entityRepo->getBookshelfChildren($shelf);
+            }
             $data = array_merge($commonData, ['shelves' => $shelves]);
             return view('common.home-shelves', $data);
         }
