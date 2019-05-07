@@ -32,6 +32,8 @@ return [
     'remember_me' => 'Kom ihåg mig',
     'ldap_email_hint' => 'Vänligen ange en e-postadress att använda till kontot.',
     'create_account' => 'Skapa konto',
+    'already_have_account' => 'Har du redan en användare?',
+    'dont_have_account' => 'Har du ingen användare?',
     'social_login' => 'Logga in genom socialt medie',
     'social_registration' => 'Registrera dig genom socialt media',
     'social_registration_text' => 'Registrera dig och logga in genom en annan tjänst.',

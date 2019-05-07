@@ -9,6 +9,7 @@ return [
     'recently_updated_pages' => 'Sidor som uppdaterats nyligen',
     'recently_created_chapters' => 'Kapitel som skapats nyligen',
     'recently_created_books' => 'Böcker som skapats nyligen',
+    'recently_created_shelves' => 'Hyllor som skapats nyligen',
     'recently_update' => 'Nyligen uppdaterat',
     'recently_viewed' => 'Nyligen läst',
     'recent_activity' => 'Aktivitet',
@@ -76,6 +77,7 @@ return [
     'books_popular' => 'Populära böcker',
     'books_recent' => 'Nya böcker',
     'books_new' => 'Nya böcker',
+    'books_new_action' => 'Ny bok',
     'books_popular_empty' => 'De mest populära böckerna kommer att visas här.',
     'books_new_empty' => 'De senaste böckerna som skapats kommer att visas här.',
     'books_create' => 'Skapa ny bok',
@@ -91,7 +93,6 @@ return [
     'books_permissions_updated' => 'Bokens rättigheter har uppdaterats',
     'books_empty_contents' => 'Det finns inga sidor eller kapitel i den här boken.',
     'books_empty_create_page' => 'Skapa en ny sida',
-    'books_empty_or' => 'eller',
     'books_empty_sort_current_book' => 'Sortera aktuell bok',
     'books_empty_add_chapter' => 'Lägg till kapitel',
     'books_permissions_active' => 'Anpassade rättigheter är i bruk',
@@ -99,6 +100,11 @@ return [
     'books_navigation' => 'Navigering',
     'books_sort' => 'Sortera bokens innehåll',
     'books_sort_named' => 'Sortera boken :bookName',
+    'books_sort_name' => 'Sortera utifrån namn',
+    'books_sort_created' => 'Sortera utifrån skapelse',
+    'books_sort_updated' => 'Sortera utifrån uppdatering',
+    'books_sort_chapters_first' => 'Kapitel först',
+    'books_sort_chapters_last' => 'Kapitel sist',
     'books_sort_show_other' => 'Visa andra böcker',
     'books_sort_save' => 'Spara ordning',
 
@@ -180,6 +186,8 @@ return [
     'pages_revisions_created_by' => 'Skapad av',
     'pages_revisions_date' => 'Revisionsdatum',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Revision #:id',
+    'pages_revisions_numbered_changes' => 'Revision #:id ändringar',
     'pages_revisions_changelog' => 'Ändringslogg',
     'pages_revisions_changes' => 'Ändringar',
     'pages_revisions_current' => 'Nuvarande version',
@@ -208,11 +216,13 @@ return [
      */
     'shelf' => 'Hylla',
     'shelves' => 'Hyllor',
+    'x_shelves' => ':count hylla|:count hyllor',
     'shelves_long' => 'Bokhyllor',
     'shelves_empty' => 'Du har inte skapat någon hylla',
     'shelves_create' => 'Skapa ny hylla',
     'shelves_popular' => 'Populära hyllor',
-    'shelves_new' => 'Ny hylla',
+    'shelves_new' => 'Nya hyllor',
+    'shelves_new_action' => 'Ny hylla',
     'shelves_popular_empty' => 'De populäraste hyllorna kommer hamna här',
     'shelves_new_empty' => 'De senast skapade hyllorna kommer hamna här',
     'shelves_save' => 'Spara hylla',
@@ -281,6 +291,7 @@ return [
     'profile_not_created_pages' => ':userName har inte skapat några sidor',
     'profile_not_created_chapters' => ':userName har inte skapat några kapitel',
     'profile_not_created_books' => ':userName har inte skapat några böcker',
+    'profile_not_created_shelves' => ':userName har inte skapat några hyllor',
 
     /**
      * Comments
@@ -307,5 +318,6 @@ return [
      */
     'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
     'revision_delete_success' => 'Revisionen raderad',
-    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.'
+    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.',
+    'revision_restore_confirm' => 'Är du säker på att du vill använda denna revision? Det nuvarande innehållet kommer att ersättas.'
 ];

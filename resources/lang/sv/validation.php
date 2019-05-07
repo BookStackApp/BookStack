@@ -12,7 +12,6 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-
     'accepted'             => ':attribute måste godkännas.',
     'active_url'           => ':attribute är inte en giltig URL.',
     'after'                => ':attribute måste vara efter :date.',
@@ -76,6 +75,7 @@ return [
     'timezone'             => ':attribute måste vara en giltig tidszon.',
     'unique'               => ':attribute är upptaget',
     'url'                  => 'Formatet på :attribute är ogiltigt.',
+    'uploaded'             => 'Filen kunde inte laddas upp. Servern kanske inte tillåter filer med denna storlek.',
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,6 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Lösenordet måste bekräftas',
@@ -104,7 +103,6 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-
     'attributes' => [],
 
 ];
