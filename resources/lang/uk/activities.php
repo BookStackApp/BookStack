@@ -1,9 +1,7 @@
 <?php
 /**
- * Activity text strings.
- * Is used for all the text within activity logs & notifications.
- * Текстові рядки активності.
- * Використовується для всього тексту в журналах активності та сповіщеннях.
+ * Activity text strings. / Текстові рядки активності.
+ * Is used for all the text within activity logs & notifications. / Використовується для всього тексту в журналах активності та сповіщеннях.
  */
 return [
 

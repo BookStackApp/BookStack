@@ -1,7 +1,6 @@
 <?php
 /**
- * Common elements found throughout many areas of BookStack.
- * Загальні елементи, використовуються в багатьох областях BookStack.
+ * Common elements found throughout many areas of BookStack. / Загальні елементи, використовуються в багатьох областях BookStack.
  */
 return [
 
@@ -12,6 +11,7 @@ return [
     'save' => 'Зберегти',
     'continue' => 'Продовжити',
     'select' => 'Вибрати',
+    'toggle_all' => 'Увімкнути все',
     'more' => 'Ще',
 
     // Form Labels
@@ -23,7 +23,8 @@ return [
     
     // Actions
     'actions' => 'Дії',
-    'view' => 'Перегляд',
+    'view' => 'Подивитись',
+    'view_all' => 'Подивитись все',
     'create' => 'Створити',
     'update' => 'Оновити',
     'edit' => 'Редагувати',
@@ -37,6 +38,11 @@ return [
     'reset' => 'Скинути',
     'remove' => 'Видалити',
     'add' => 'Додати',
+    
+    // Sort Options
+    'sort_name' => 'Ім\'я',
+    'sort_created_at' => 'Дата створення',
+    'sort_updated_at' => 'Дата оновлення',
 
     // Misc
     'deleted_user' => 'Видалений користувач',
@@ -53,6 +59,10 @@ return [
     // Header
     'view_profile' => 'Переглянути профіль',
     'edit_profile' => 'Редагувати профіль',
+    
+    // Layout tabs
+    'tab_info' => 'Інфо',
+    'tab_content' => 'Вміст',
 
     // Email Content
     'email_action_help' => 'Якщо у вас виникають проблеми при натисканні кнопки ":actionText", скопіюйте та вставте URL у свій веб-браузер:',
