@@ -1,7 +1,6 @@
 <?php
 /**
- * Text used in custom JavaScript driven components.
- * Текст використовується в індивідуальних компонентах, керованих JavaScript.
+ * Text used in custom JavaScript driven components. / Текст використовується в індивідуальних компонентах, керованих JavaScript.
  */
 return [
 

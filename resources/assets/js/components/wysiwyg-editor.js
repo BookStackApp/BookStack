@@ -53,7 +53,7 @@ async function uploadImageFile(file, wysiwygComponent) {
     formData.append('file', file, remoteFilename);
     formData.append('uploaded_to', wysiwygComponent.pageId);
 
-    const resp = await window.$http.post(window.baseUrl('/images/gallery/upload'), formData);
+    const resp = await window.$http.post(window.baseUrl('/images/gallery'), formData);
     return resp.data;
 }
 
