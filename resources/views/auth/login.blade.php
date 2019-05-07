@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button class="button primary" tabindex="3">{{ title_case(trans('auth.log_in')) }}</button>
+                        <button class="button primary" tabindex="1">{{ title_case(trans('auth.log_in')) }}</button>
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@
             @endif
 
             @if(setting('registration-enabled', false))
-                <div class="text-center">
+                <div class="text-center pb-s">
                     <hr class="my-l">
                     <a href="{{ baseUrl('/register') }}">{{ trans('auth.dont_have_account') }}</a>
                 </div>
