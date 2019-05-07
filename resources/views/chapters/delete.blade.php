@@ -1,29 +1,35 @@
 @extends('simple-layout')
 
-@section('toolbar')
-    <div class="col-sm-12 faded">
-        @include('chapters._breadcrumbs', ['chapter' => $chapter])
-    </div>
-@stop
-
 @section('body')
 
     <div class="container small">
-        <p>&nbsp;</p>
-        <div class="card">
-            <h3>@icon('delete') {{ trans('entities.chapters_delete') }}</h3>
 
-            <div class="body">
-                <p>{{ trans('entities.chapters_delete_explain', ['chapterName' => $chapter->name]) }}</p>
-                <p class="text-neg">{{ trans('entities.chapters_delete_confirm') }}</p>
+        <div class="my-s">
+            @include('partials.breadcrumbs', ['crumbs' => [
+                $chapter->book,
+                $chapter,
+                $chapter->getUrl('/delete') => [
+                    'text' => trans('entities.chapters_delete'),
+                    'icon' => 'delete',
+                ]
+            ]])
+        </div>
 
-                <form action="{{ $chapter->getUrl() }}" method="POST">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="DELETE">
+        <div class="card content-wrap auto-height">
+            <h1 class="list-heading">{{ trans('entities.chapters_delete') }}</h1>
+            <p>{{ trans('entities.chapters_delete_explain', ['chapterName' => $chapter->name]) }}</p>
+            <p class="text-neg"><strong>{{ trans('entities.chapters_delete_confirm') }}</strong></p>
+
+            <form action="{{ $chapter->getUrl() }}" method="POST">
+
+                {!! csrf_field() !!}
+                <input type="hidden" name="_method" value="DELETE">
+
+                <div class="text-right">
                     <a href="{{ $chapter->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button neg">{{ trans('common.confirm') }}</button>
-                </form>
-            </div>
+                    <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                </div>
+            </form>
         </div>
     </div>
 

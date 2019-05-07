@@ -1,42 +1,59 @@
-@extends('sidebar-layout')
+@extends('tri-layout')
 
-@section('toolbar')
-    <div class="col-sm-6 col-xs-1  faded">
-        @include('shelves._breadcrumbs', ['shelf' => $shelf])
+@section('body')
+
+    <div class="mb-s">
+        @include('partials.breadcrumbs', ['crumbs' => [
+            $shelf,
+        ]])
     </div>
-    <div class="col-sm-6 col-xs-11">
-        <div class="action-buttons faded">
-            @if(userCan('bookshelf-update', $shelf))
-                <a href="{{ $shelf->getUrl('/edit') }}" class="text-button text-primary">@icon('edit'){{ trans('common.edit') }}</a>
-            @endif
-            @if(userCan('restrictions-manage', $shelf) || userCan('bookshelf-delete', $shelf))
-                <div dropdown class="dropdown-container">
-                    <a dropdown-toggle class="text-primary text-button">@icon('more'){{ trans('common.more') }}</a>
-                    <ul>
-                        @if(userCan('restrictions-manage', $shelf))
-                            <li><a href="{{ $shelf->getUrl('/permissions') }}" class="text-primary">@icon('lock'){{ trans('entities.permissions') }}</a></li>
+
+    <div class="card content-wrap">
+        <h1 class="break-text">{{$shelf->name}}</h1>
+        <div class="book-content">
+            <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
+            @if(count($books) > 0)
+                <div class="entity-list">
+                    @foreach($books as $book)
+                        @include('books.list-item', ['book' => $book])
+                    @endforeach
+                </div>
+            @else
+                <div class="mt-xl">
+                    <hr>
+                    <p class="text-muted italic mt-xl mb-m">{{ trans('entities.shelves_empty_contents') }}</p>
+                    <div class="icon-list inline block">
+                        @if(userCan('book-create-all') && userCan('bookshelf-update', $shelf))
+                            <a href="{{ $shelf->getUrl('/create-book') }}" class="icon-list-item text-book">
+                                <span class="icon">@icon('add')</span>
+                                <span>{{ trans('entities.books_create') }}</span>
+                            </a>
                         @endif
-                        @if(userCan('bookshelf-delete', $shelf))
-                            <li><a href="{{ $shelf->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('common.delete') }}</a></li>
+                        @if(userCan('bookshelf-update', $shelf))
+                            <a href="{{ $shelf->getUrl('/edit') }}" class="icon-list-item text-bookshelf">
+                                <span class="icon">@icon('edit')</span>
+                                <span>{{ trans('entities.shelves_edit_and_assign') }}</span>
+                            </a>
                         @endif
-                    </ul>
+                    </div>
                 </div>
             @endif
         </div>
     </div>
+
 @stop
 
-@section('sidebar')
+@section('left')
 
     @if($shelf->tags->count() > 0)
-        <section>
+        <div id="tags" class="mb-xl">
             @include('components.tag-list', ['entity' => $shelf])
-        </section>
+        </div>
     @endif
 
-    <div class="card entity-details">
-        <h3>@icon('info') {{ trans('common.details') }}</h3>
-        <div class="body text-small text-muted blended-links">
+    <div id="details" class="mb-xl">
+        <h5>{{ trans('common.details') }}</h5>
+        <div class="text-small text-muted blended-links">
             @include('partials.entity-meta', ['entity' => $shelf])
             @if($shelf->restricted)
                 <div class="active-restriction">
@@ -51,38 +68,52 @@
     </div>
 
     @if(count($activity) > 0)
-        <div class="activity card">
-            <h3>@icon('time') {{ trans('entities.recent_activity') }}</h3>
-            @include('partials/activity-list', ['activity' => $activity])
+        <div class="mb-xl">
+            <h5>{{ trans('entities.recent_activity') }}</h5>
+            @include('partials.activity-list', ['activity' => $activity])
         </div>
     @endif
 @stop
 
-@section('body')
+@section('right')
+    <div class="actions mb-xl">
+        <h5>{{ trans('common.actions') }}</h5>
+        <div class="icon-list text-primary">
 
-    <div class="container small nopad">
-        <h1 class="break-text">{{$shelf->name}}</h1>
-        <div class="book-content">
-            <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
-            @if(count($books) > 0)
-            <div class="page-list">
-                <hr>
-                @foreach($books as $book)
-                    @include('books/list-item', ['book' => $book])
-                    <hr>
-                @endforeach
-            </div>
-            @else
-            <p>
-                <hr>
-                <span class="text-muted italic">{{ trans('entities.shelves_empty_contents') }}</span>
-                @if(userCan('bookshelf-create', $shelf))
-                    <br>
-                    <a href="{{ $shelf->getUrl('/edit') }}" class="button outline bookshelf">{{ trans('entities.shelves_edit_and_assign') }}</a>
-                @endif
-            </p>
+            @if(userCan('book-create-all') && userCan('bookshelf-update', $shelf))
+                <a href="{{ $shelf->getUrl('/create-book') }}" class="icon-list-item">
+                    <span class="icon">@icon('add')</span>
+                    <span>{{ trans('entities.books_new_action') }}</span>
+                </a>
             @endif
 
-    </div>
+            <hr class="primary-background">
 
+            @if(userCan('bookshelf-update', $shelf))
+                <a href="{{ $shelf->getUrl('/edit') }}" class="icon-list-item">
+                    <span>@icon('edit')</span>
+                    <span>{{ trans('common.edit') }}</span>
+                </a>
+            @endif
+
+            @if(userCan('restrictions-manage', $shelf))
+                <a href="{{ $shelf->getUrl('/permissions') }}" class="icon-list-item">
+                    <span>@icon('lock')</span>
+                    <span>{{ trans('entities.permissions') }}</span>
+                </a>
+            @endif
+
+            @if(userCan('bookshelf-delete', $shelf))
+                <a href="{{ $shelf->getUrl('/delete') }}" class="icon-list-item">
+                    <span>@icon('delete')</span>
+                    <span>{{ trans('common.delete') }}</span>
+                </a>
+            @endif
+
+        </div>
+    </div>
 @stop
+
+
+
+

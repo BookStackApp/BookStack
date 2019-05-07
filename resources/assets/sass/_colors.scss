@@ -1,0 +1,72 @@
+
+/*
+ * Status text colors
+ */
+.text-pos, .text-pos:hover, .text-pos-hover:hover {
+  color: $positive !important;
+  fill: $positive !important;
+}
+
+.text-warn, .text-warn:hover, .text-warn-hover:hover {
+  color: $warning !important;
+  fill: $warning !important;
+}
+
+.text-neg, .text-neg:hover, .text-neg-hover:hover  {
+  color: $negative !important;
+  fill: $negative !important;
+}
+
+/*
+ * Style text colors
+ */
+.text-primary, .text-primary:hover, .text-primary-hover:hover  {
+  color: $primary !important;
+  fill: $primary !important;
+}
+
+.text-muted {
+  color: lighten($text-dark, 26%) !important;
+  fill: lighten($text-dark, 26%) !important;
+  &.small, .small {
+    color: lighten($text-dark, 32%) !important;
+    fill: lighten($text-dark, 32%) !important;
+  }
+}
+
+/*
+ * Entity text colors
+ */
+.text-bookshelf, .text-bookshelf:hover {
+  color: $color-bookshelf;
+  fill: $color-bookshelf;
+}
+.text-book, .text-book:hover {
+  color: $color-book;
+  fill: $color-book;
+}
+.text-page, .text-page:hover {
+  color: $color-page;
+  fill: $color-page;
+}
+.text-page.draft, .text-page.draft:hover {
+  color: $color-page-draft;
+  fill: $color-page-draft;
+}
+.text-chapter, .text-chapter:hover {
+  color: $color-chapter;
+  fill: $color-chapter;
+}
+
+/*
+ * Entity background colors
+ */
+.bg-book {
+  background-color: $color-book;
+}
+.bg-chapter {
+  background-color: $color-chapter;
+}
+.bg-shelf {
+  background-color: $color-bookshelf;
+}

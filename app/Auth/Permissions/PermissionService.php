@@ -577,7 +577,7 @@ class PermissionService
                         $query2->where('has_permission_own', '=', 1)
                             ->where('created_by', '=', $userId);
                     });
-        }) ;
+            });
 
         if (!is_null($entityClass)) {
             $entityInstance = app()->make($entityClass);
@@ -704,7 +704,7 @@ class PermissionService
      * @param string $entityIdColumn
      * @param string $entityTypeColumn
      * @param string $action
-     * @return mixed
+     * @return QueryBuilder
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn, $action = 'view')
     {
@@ -732,18 +732,21 @@ class PermissionService
     }
 
     /**
-     * Filters pages that are a direct relation to another item.
+     * Add conditions to a query to filter the selection to related entities
+     * where permissions are granted.
+     * @param $entityType
      * @param $query
      * @param $tableName
      * @param $entityIdColumn
      * @return mixed
      */
-    public function filterRelatedPages($query, $tableName, $entityIdColumn)
+    public function filterRelatedEntity($entityType, $query, $tableName, $entityIdColumn)
     {
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
-        $pageMorphClass = $this->entityProvider->page->getMorphClass();
+        $pageMorphClass = $this->entityProvider->get($entityType)->getMorphClass();
+
         $q = $query->where(function ($query) use ($tableDetails, $pageMorphClass) {
             $query->where(function ($query) use (&$tableDetails, $pageMorphClass) {
                 $query->whereExists(function ($permissionQuery) use (&$tableDetails, $pageMorphClass) {
@@ -761,7 +764,9 @@ class PermissionService
                 });
             })->orWhere($tableDetails['entityIdColumn'], '=', 0);
         });
+
         $this->clean();
+
         return $q;
     }
 

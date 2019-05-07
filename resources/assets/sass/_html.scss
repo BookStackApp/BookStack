@@ -3,27 +3,18 @@
 }
 
 html {
-  background-color: #FFFFFF;
   height: 100%;
   overflow-y: scroll;
+  background-color: #F2F2F2;
   &.flexbox {
     overflow-y: hidden;
-  }
-  &.shaded {
-    background-color: #F2F2F2;
   }
 }
 
 body {
   font-size: $fs-m;
   line-height: 1.6;
-  color: #616161;
+  color: #444;
   -webkit-font-smoothing: antialiased;
-  &.shaded {
-    background-color: #F2F2F2;
-  }
-}
-
-button {
-  font-size: 100%;
+  background-color: #F2F2F2;
 }

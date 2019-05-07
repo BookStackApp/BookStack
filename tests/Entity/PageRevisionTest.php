@@ -1,11 +1,55 @@
 <?php namespace Entity;
 
-
 use BookStack\Entities\Page;
+use BookStack\Entities\Repos\PageRepo;
 use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
 {
+    public function test_page_revision_views_viewable()
+    {
+        $this->asEditor();
+
+        $pageRepo = app(PageRepo::class);
+        $page = Page::first();
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRevision = $page->revisions->last();
+
+        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView->assertStatus(200);
+        $revisionView->assertSee('new content');
+
+        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
+        $revisionView->assertStatus(200);
+        $revisionView->assertSee('new content');
+    }
+
+    public function test_page_revision_restore_updates_content()
+    {
+        $this->asEditor();
+
+        $pageRepo = app(PageRepo::class);
+        $page = Page::first();
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
+        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $page =  Page::find($page->id);
+
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee('abc123');
+        $pageView->assertDontSee('def456');
+
+        $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
+        $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $page =  Page::find($page->id);
+
+        $restoreReq->assertStatus(302);
+        $restoreReq->assertRedirect($page->getUrl());
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee('abc123');
+        $pageView->assertSee('def456');
+    }
 
     public function test_page_revision_count_increments_on_update()
     {

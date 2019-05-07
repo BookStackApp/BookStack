@@ -4,54 +4,50 @@ class ImagePicker {
     constructor(elem) {
         this.elem = elem;
         this.imageElem = elem.querySelector('img');
-        this.input = elem.querySelector('input');
+        this.imageInput = elem.querySelector('input[type=file]');
+        this.resetInput = elem.querySelector('input[data-reset-input]');
+        this.removeInput = elem.querySelector('input[data-remove-input]');
 
-        this.isUsingIds = elem.getAttribute('data-current-id') !== '';
-        this.isResizing = elem.getAttribute('data-resize-height') && elem.getAttribute('data-resize-width');
-        this.isResizeCropping = elem.getAttribute('data-resize-crop') !== '';
+        this.defaultImage = elem.getAttribute('data-default-image');
 
-        let selectButton = elem.querySelector('button[data-action="show-image-manager"]');
-        selectButton.addEventListener('click', this.selectImage.bind(this));
-
-        let resetButton = elem.querySelector('button[data-action="reset-image"]');
+        const resetButton = elem.querySelector('button[data-action="reset-image"]');
         resetButton.addEventListener('click', this.reset.bind(this));
 
-        let removeButton = elem.querySelector('button[data-action="remove-image"]');
+        const removeButton = elem.querySelector('button[data-action="remove-image"]');
         if (removeButton) {
             removeButton.addEventListener('click', this.removeImage.bind(this));
         }
+
+        this.imageInput.addEventListener('change', this.fileInputChange.bind(this));
     }
 
-    selectImage() {
-        window.ImageManager.show(image => {
-            if (!this.isResizing) {
-                this.setImage(image);
-                return;
-            }
+    fileInputChange() {
+        this.resetInput.setAttribute('disabled', 'disabled');
+        if (this.removeInput) {
+            this.removeInput.setAttribute('disabled', 'disabled');
+        }
 
-            let requestString = '/images/thumb/' + image.id + '/' + this.elem.getAttribute('data-resize-width') + '/' + this.elem.getAttribute('data-resize-height') + '/' + (this.isResizeCropping ? 'true' : 'false');
-
-            window.$http.get(window.baseUrl(requestString)).then(resp => {
-                image.url = resp.data.url;
-                this.setImage(image);
-            });
-        });
+        for (let file of this.imageInput.files) {
+            this.imageElem.src = window.URL.createObjectURL(file);
+        }
+        this.imageElem.classList.remove('none');
     }
 
     reset() {
-        this.setImage({id: 0, url: this.elem.getAttribute('data-default-image')});
-    }
-
-    setImage(image) {
-        this.imageElem.src = image.url;
-        this.input.value = this.isUsingIds ? image.id : image.url;
+        this.imageInput.value = '';
+        this.imageElem.src = this.defaultImage;
+        this.resetInput.removeAttribute('disabled');
+        if (this.removeInput) {
+            this.removeInput.setAttribute('disabled', 'disabled');
+        }
         this.imageElem.classList.remove('none');
     }
 
     removeImage() {
-        this.imageElem.src = this.elem.getAttribute('data-default-image');
+        this.imageInput.value = '';
         this.imageElem.classList.add('none');
-        this.input.value = 'none';
+        this.removeInput.removeAttribute('disabled');
+        this.resetInput.setAttribute('disabled', 'disabled');
     }
 
 }

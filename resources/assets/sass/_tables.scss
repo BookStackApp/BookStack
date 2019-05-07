@@ -19,13 +19,13 @@ table {
 
 table.table {
   width: 100%;
-  tr {
-    border-bottom: 1px solid #DDD;
+  tr td, tr th {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
   th, td {
     text-align: left;
     border: none;
-    padding: $-xs $-xs;
+    padding: $-s $-s;
     vertical-align: middle;
     margin: 0;
   }
@@ -43,6 +43,9 @@ table.table {
   }
   td.actions {
     overflow: visible;
+  }
+  a {
+    display: inline-block;
   }
 }
 

@@ -11,6 +11,7 @@ return [
     'recently_updated_pages' => 'Recently Updated Pages',
     'recently_created_chapters' => 'Recently Created Chapters',
     'recently_created_books' => 'Recently Created Books',
+    'recently_created_shelves' => 'Recently Created Shelves',
     'recently_update' => 'Recently Updated',
     'recently_viewed' => 'Recently Viewed',
     'recent_activity' => 'Recent Activity',
@@ -67,11 +68,13 @@ return [
     // Shelves
     'shelf' => 'Shelf',
     'shelves' => 'Shelves',
+    'x_shelves' => ':count Shelf|:count Shelves',
     'shelves_long' => 'Bookshelves',
     'shelves_empty' => 'No shelves have been created',
     'shelves_create' => 'Create New Shelf',
     'shelves_popular' => 'Popular Shelves',
     'shelves_new' => 'New Shelves',
+    'shelves_new_action' => 'New Shelf',
     'shelves_popular_empty' => 'The most popular shelves will appear here.',
     'shelves_new_empty' => 'The most recently created shelves will appear here.',
     'shelves_save' => 'Save Shelf',
@@ -102,6 +105,7 @@ return [
     'books_popular' => 'Popular Books',
     'books_recent' => 'Recent Books',
     'books_new' => 'New Books',
+    'books_new_action' => 'New Book',
     'books_popular_empty' => 'The most popular books will appear here.',
     'books_new_empty' => 'The most recently created books will appear here.',
     'books_create' => 'Create New Book',
@@ -117,7 +121,6 @@ return [
     'books_permissions_updated' => 'Book Permissions Updated',
     'books_empty_contents' => 'No pages or chapters have been created for this book.',
     'books_empty_create_page' => 'Create a new page',
-    'books_empty_or' => 'or',
     'books_empty_sort_current_book' => 'Sort the current book',
     'books_empty_add_chapter' => 'Add a chapter',
     'books_permissions_active' => 'Book Permissions Active',
@@ -125,6 +128,11 @@ return [
     'books_navigation' => 'Book Navigation',
     'books_sort' => 'Sort Book Contents',
     'books_sort_named' => 'Sort Book :bookName',
+    'books_sort_name' => 'Sort by Name',
+    'books_sort_created' => 'Sort by Created Date',
+    'books_sort_updated' => 'Sort by Updated Date',
+    'books_sort_chapters_first' => 'Chapters First',
+    'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
 
@@ -202,6 +210,8 @@ return [
     'pages_revisions_created_by' => 'Created By',
     'pages_revisions_date' => 'Revision Date',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Revision #:id',
+    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
     'pages_revisions_changelog' => 'Changelog',
     'pages_revisions_changes' => 'Changes',
     'pages_revisions_current' => 'Current Version',
@@ -267,6 +277,7 @@ return [
     'profile_not_created_pages' => ':userName has not created any pages',
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any books',
+    'profile_not_created_shelves' => ':userName has not created any shelves',
 
     // Comments
     'comment' => 'Comment',
@@ -288,6 +299,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
+    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'Revision deleted',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
 ];
