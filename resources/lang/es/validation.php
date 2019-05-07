@@ -33,6 +33,7 @@ return [
     'filled'               => 'El campo :attribute es requerido.',
     'exists'               => 'El :attribute seleccionado es inválido.',
     'image'                => 'El :attribute debe ser una imagen.',
+    'image_extension'      => 'El :attribute debe tener una extensión de imagen válida y soportada.',
     'in'                   => 'El selected :attribute es inválio.',
     'integer'              => 'El :attribute debe ser un entero.',
     'ip'                   => 'El :attribute debe ser una dirección IP válida.',
@@ -49,6 +50,7 @@ return [
         'string'  => 'El :attribute debe ser al menos :min caracteres.',
         'array'   => 'El :attribute debe tener como mínimo :min items.',
     ],
+    'no_double_extension'  => 'El :attribute solo debe tener una extensión de archivo.',
     'not_in'               => 'El :attribute seleccionado es inválio.',
     'numeric'              => 'El :attribute debe ser numérico.',
     'regex'                => 'El formato de :attribute es inválido',
@@ -69,6 +71,7 @@ return [
     'timezone'             => 'El atributo :attribute debe ser una zona válida.',
     'unique'               => 'El atributo :attribute ya ha sido tomado.',
     'url'                  => 'El atributo :attribute tiene un formato inválido.',
+    'uploaded'             => 'El archivo no ha podido subirse. Es posible que el servidor no acepte archivos de este tamaño.',
 
     // Custom validation lines
     'custom' => [
