@@ -76,6 +76,7 @@ return [
     'timezone'             => ':attribute måste vara en giltig tidszon.',
     'unique'               => ':attribute är upptaget',
     'url'                  => 'Formatet på :attribute är ogiltigt.',
+    'uploaded'             => 'Filen kunde inte laddas upp. Servern kanske inte tillåter filer med denna storlek.',
 
     /*
     |--------------------------------------------------------------------------
