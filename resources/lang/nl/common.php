@@ -25,11 +25,14 @@ return [
      */
     'actions' => 'Acties',
     'view' => 'Bekijk',
+    'view_all' => 'Bekijk alle',
     'create' => 'Aanmaken',
     'update' => 'Update',
     'edit' => 'Bewerk',
     'sort' => 'Sorteer',
     'move' => 'Verplaats',
+    'copy' => 'Kopiëren',
+    'reply' => 'Beantwoorden',
     'delete' => 'Verwijder',
     'search' => 'Zoek',
     'search_clear' => 'Zoekopdracht wissen',
@@ -37,6 +40,11 @@ return [
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
 
+     // Sort Options
+    'sort_name' => 'Naam',
+    'sort_created_at' => 'Aanmaakdatum',
+    'sort_updated_at' => 'Gewijzigd op',
+    
     /**
      * Misc
      */
