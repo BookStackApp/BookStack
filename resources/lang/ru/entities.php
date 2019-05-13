@@ -105,11 +105,13 @@ return [
      */
     'shelf' => 'Полка',
     'shelves' => 'Полки',
+    'x_shelves' => ':count полок|:count полок',
     'shelves_long' => 'Книжные полки',
     'shelves_empty' => 'Полки не созданы',
     'shelves_create' => 'Создать новую полку',
     'shelves_popular' => 'Популярные полки',
     'shelves_new' => 'Новые полки',
+    'shelves_new_action' => 'Новая полка',
     'shelves_popular_empty' => 'Популярные полки появятся здесь.',
     'shelves_new_empty' => 'Последние созданные полки появятся здесь.',
     'shelves_save' => 'Сохранить полку',
