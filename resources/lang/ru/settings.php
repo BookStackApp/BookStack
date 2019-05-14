@@ -1,21 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Настройки',
     'settings_save' => 'Сохранить настройки',
     'settings_save_success' => 'Настройки сохранены',
 
-    /**
-     * App settings
-     */
-
+    // App Settings
     'app_customization' => 'Настройки',
     'app_features_security' => 'Функции & Безопасность',
     'app_name' => 'Имя приложения',
@@ -39,32 +35,25 @@ return [
     'app_primary_color_desc' => 'Значение должно быть указано в hex-формате. <br>Оставьте пустым чтобы использовать цвет по умолчанию.',
     'app_homepage' => 'Стартовая страница приложения',
     'app_homepage_desc' => 'Выберите страницу, которая будет отображаться на главной странице вместо стандартной. Права на страницы игнорируются для выбранных страниц.',
-    'app_homepage_default' => 'Выбрана домашняя страница по умолчанию',
-    'app_homepage_books' => 'Или выберите страницу со списком книг в качестве главной страницы. Это будет иметь приоритет над любой другой страницей.',
+    'app_homepage_select' => 'Выберите страницу',
     'app_disable_comments' => 'Отключение комментов',
     'app_disable_comments_toggle' => 'Отключить комментарии',
     'app_disable_comments_desc' => 'Отключение комментов на всех страницах. Существующие комментарии отображаться не будут.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Настройки регистрации',
     'reg_enable' => 'Разрешить регистрацияю',
     'reg_enable_toggle' => 'Разрешить регистрацию'
     'reg_enable_desc' => 'Если регистрация разрешена, пользователь сможет зарегистрироваться в системе самомтоятельно. При регистрации назначается роль пользователя по умолчанию',
     'reg_default_role' => 'Роль пользователя по умолчанию после регистрации',
-    'reg_confirm_email' => 'Подтверждение по электронной почте?',
+    'reg_email_confirmation' => 'Подтверждение электонной почты',
     'reg_email_confirmation_toggle' => 'Требовать подтверждение по электронной почте',
     'reg_confirm_email_desc' => 'Если используется ограничение по домену, подтверждение будет обязательно, а этот пункт проигнорирован.',
     'reg_confirm_restrict_domain' => 'Ограничить регистрацию по домену',
     'reg_confirm_restrict_domain_desc' => 'Введите список доменов почты через запятую, для которых разрешена регистрация. Пользователям будет отправлено письмо для подтверждения адреса перед входом в приложение. <br> Обратите внимание, что пользователи смогут изменить свои адреса уже после регистрации.',
     'reg_confirm_restrict_domain_placeholder' => 'Без ограничений',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings
     'maint' => 'Обслуживание',
     'maint_image_cleanup' => 'Очистка изображений',
     'maint_image_cleanup_desc' => 'Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.',
@@ -74,10 +63,7 @@ return [
     'maint_image_cleanup_success' => ':count возможно бесполезных изображений было найдено и удалено!',
     'maint_image_cleanup_nothing_found' => 'Не найдено ни одного бесполезного изображения!',
 
-    /**
-     * Role settings
-     */
-
+    // Role Settings
     'roles' => 'Роли',
     'role_user_roles' => 'Роли пользователя',
     'role_create' => 'Добавить роль',
@@ -110,10 +96,7 @@ return [
     'role_users' => 'Пользователи с данной ролью',
     'role_users_none' => 'Нет пользователей с данной ролью',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Пользователи',
     'user_profile' => 'Профиль пользователя',
     'users_add_new' => 'Добавить пользователя',
