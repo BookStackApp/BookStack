@@ -59,7 +59,7 @@
 }
 
 @include smaller-than($m) {
-  .grid.third {
+  .grid.third:not(.no-break) {
     grid-template-columns: 1fr 1fr;
   }
   .grid.half:not(.no-break), .grid.left-focus:not(.no-break), .grid.right-focus:not(.no-break) {
@@ -81,7 +81,7 @@
 }
 
 @include smaller-than($s) {
-  .grid.third {
+  .grid.third:not(.no-break) {
     grid-template-columns: 1fr;
   }
 }

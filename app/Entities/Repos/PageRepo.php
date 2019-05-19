@@ -422,25 +422,29 @@ class PageRepo extends EntityRepo
             return [];
         }
 
-        $tree = collect([]);
-        foreach ($headers as $header) {
-            $text = $header->nodeValue;
-            $tree->push([
+        $tree = collect($headers)->map(function($header) {
+            $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
+            if (strlen($text) > 30) {
+                $text = substr($text, 0, 27) . '...';
+            }
+
+            return [
                 'nodeName' => strtolower($header->nodeName),
                 'level' => intval(str_replace('h', '', $header->nodeName)),
                 'link' => '#' . $header->getAttribute('id'),
-                'text' => strlen($text) > 30 ? substr($text, 0, 27) . '...' : $text
-            ]);
-        }
+                'text' => $text,
+            ];
+        })->filter(function($header) {
+            return strlen($header['text']) > 0;
+        });
 
         // Normalise headers if only smaller headers have been used
-        if (count($tree) > 0) {
-            $minLevel = $tree->pluck('level')->min();
-            $tree = $tree->map(function ($header) use ($minLevel) {
-                $header['level'] -= ($minLevel - 2);
-                return $header;
-            });
-        }
+        $minLevel = $tree->pluck('level')->min();
+        $tree = $tree->map(function ($header) use ($minLevel) {
+            $header['level'] -= ($minLevel - 2);
+            return $header;
+        });
+
         return $tree->toArray();
     }
 

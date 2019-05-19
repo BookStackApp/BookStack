@@ -8,11 +8,20 @@ import DrawIO from "../services/drawio";
  * @param editor
  */
 function editorPaste(event, editor, wysiwygComponent) {
-    if (!event.clipboardData || !event.clipboardData.items) return;
+    const clipboardItems = event.clipboardData.items;
+    if (!event.clipboardData || !clipboardItems) return;
 
-    for (let clipboardItem of event.clipboardData.items) {
-        if (clipboardItem.type.indexOf("image") === -1) continue;
-        event.preventDefault();
+    // Don't handle if clipboard includes text content
+    for (let clipboardItem of clipboardItems) {
+        if (clipboardItem.type.includes('text/')) {
+            return;
+        }
+    }
+
+    for (let clipboardItem of clipboardItems) {
+        if (!clipboardItem.type.includes("image")) {
+            continue;
+        }
 
         const id = "image-" + Math.random().toString(16).slice(2);
         const loadingImage = window.baseUrl('/loading.gif');
