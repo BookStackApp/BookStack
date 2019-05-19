@@ -180,9 +180,20 @@ class MarkdownEditor {
 
         // Handle image paste
         cm.on('paste', (cm, event) => {
-            if (!event.clipboardData || !event.clipboardData.items) return;
-            for (let i = 0; i < event.clipboardData.items.length; i++) {
-                uploadImage(event.clipboardData.items[i].getAsFile());
+            const clipboardItems = event.clipboardData.items;
+            if (!event.clipboardData || !clipboardItems) return;
+
+            // Don't handle if clipboard includes text content
+            for (let clipboardItem of clipboardItems) {
+                if (clipboardItem.type.includes('text/')) {
+                    return;
+                }
+            }
+
+            for (let clipboardItem of clipboardItems) {
+                if (clipboardItem.type.includes("image")) {
+                    uploadImage(clipboardItem.getAsFile());
+                }
             }
         });
 

@@ -36,6 +36,14 @@ return [
     'book_delete_notification'    => 'Boek Succesvol Verwijderd',
     'book_sort'                   => 'sorteerde boek',
     'book_sort_notification'      => 'Boek Succesvol Gesorteerd',
+    
+    // Bookshelves
+    'bookshelf_create'                 => 'maakte Boekenplank',
+    'bookshelf_create_notification'    => 'Boekenplank Succesvol Aangemaakt',
+    'bookshelf_update'                 => 'veranderde boekenplank',
+    'bookshelf_update_notification'    => 'Boekenplank Succesvol Bijgewerkt',
+    'bookshelf_delete'                 => 'verwijderde boekenplank',
+    'bookshelf_delete_notification'    => 'Boekenplank Succesvol Verwijderd',
 
     // Other
     'commented_on'                => 'reactie op',												
