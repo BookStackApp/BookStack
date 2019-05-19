@@ -40,6 +40,11 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
+    
+    // Sort Options
+    'sort_name' => 'По имени',
+    'sort_created_at' => 'По дате создания',
+    'sort_updated_at' => 'По дате обновления',
 
     /**
      * Misc
@@ -47,18 +52,23 @@ return [
     'deleted_user' => 'Удаленный пользователь',
     'no_activity' => 'Нет действий для просмотра',
     'no_items' => 'Нет доступных элементов',
-    'back_to_top' => 'Вернуться наверх',
+    'back_to_top' => 'Наверх',
     'toggle_details' => 'Подробности',
     'toggle_thumbnails' => 'Миниатюры',
     'details' => 'Детали',
     'grid_view' => 'Вид сеткой',
     'list_view' => 'Вид списком',
+    'default' => 'По умолчанию',
 
     /**
      * Header
      */
     'view_profile' => 'Просмотреть профиль',
     'edit_profile' => 'Редактировать профиль',
+    
+    // Layout tabs
+    'tab_info' => 'Информация',
+    'tab_content' => 'Содержание',
 
     /**
      * Email Content
