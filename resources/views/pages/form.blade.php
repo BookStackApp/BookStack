@@ -12,7 +12,7 @@
 
     {{--Header Bar--}}
     <div class="primary-background-light toolbar page-edit-toolbar">
-        <div class="grid third v-center">
+        <div class="grid third no-break v-center">
 
             <div class="action-buttons text-left px-m py-xs">
                 <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back')<span class="hide-under-l">{{ trans('common.back') }}</span></a>
@@ -49,7 +49,7 @@
                     <span>{{-- Prevents button jumping on menu show --}}</span>
                 </div>
 
-                <button type="submit" id="save-button" class="float-left text-primary text-button text-pos-hover">@icon('save')<span>{{ trans('entities.pages_save') }}</span></button>
+                <button type="submit" id="save-button" class="float-left text-primary text-button text-pos-hover hide-under-m">@icon('save')<span>{{ trans('entities.pages_save') }}</span></button>
             </div>
         </div>
     </div>
@@ -120,4 +120,6 @@
         @endif
 
     </div>
+
+    <button type="submit" id="save-button-mobile" title="{{ trans('entities.pages_save') }}" class="text-primary text-button hide-over-m page-save-mobile-button">@icon('save')</button>
 </div>
