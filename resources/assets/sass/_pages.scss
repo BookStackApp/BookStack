@@ -20,11 +20,10 @@
   }
 }
 
-@include smaller-than($m) {
+@include smaller-than($s) {
   .page-edit-toolbar {
     overflow-x: scroll;
     overflow-y: visible;
-    z-index: 12;
   }
   .page-edit-toolbar .grid.third {
     display: block;
@@ -35,24 +34,21 @@
   }
 }
 
-@include smaller-than($m) {
-  .page-edit-toolbar #save-button {
-    position: fixed;
-    z-index: 30;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    font-size: 24px;
-    right: $-m;
-    bottom: $-s;
-    box-shadow: $bs-hover;
-    background-color: currentColor;
-    svg {
-      fill: #FFF;
-    }
-    span {
-      display: none;
-    }
+.page-save-mobile-button {
+  position: fixed;
+  z-index: 30;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  right: $-m;
+  bottom: $-s;
+  box-shadow: $bs-hover;
+  background-color: currentColor;
+  text-align: center;
+  svg {
+    fill: #FFF;
+    margin-right: 0;
   }
 }
 
