@@ -230,7 +230,7 @@ class ImageRepo
     {
         $image->thumbs = [
             'gallery' => $this->getThumbnail($image, 150, 150, false),
-            'display' => $this->getThumbnail($image, 840, null, true)
+            'display' => $this->getThumbnail($image, 1680, null, true)
         ];
     }
 
