@@ -1,26 +1,23 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ * 
+ * Líneas de lenguaje para autenticación
+ * Las siguientes líneas de lenguaje se utilizan para mostrar mensajes al usuario durante la autenticación.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Las credenciales no concuerdan con nuestros registros.',
     'throttle' => 'Demasiados intentos fallidos de conexión. Por favor intente nuevamente en :seconds segundos.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register - Ingreso y Registro
     'sign_up' => 'Registrarse',
     'log_in' => 'Acceder',
     'log_in_with' => 'Acceder con :socialDriver',
     'sign_up_with' => 'Registrarse con :socialDriver',
-    'logout' => 'Logout',
+    'logout' => 'Salir',
 
     'name' => 'Nombre',
     'username' => 'Nombre de usuario',
@@ -32,6 +29,8 @@ return [
     'remember_me' => 'Recordarme',
     'ldap_email_hint' => 'Por favor introduzca un correo electrónico para utilizar con esta cuenta.',
     'create_account' => 'Crear una cuenta',
+    'already_have_account' => '¿Ya tiene una cuenta?',
+    'dont_have_account' => '¿No tiene una cuenta?',
     'social_login' => 'Acceso con cuenta Social',
     'social_registration' => 'Registro con cuenta Social',
     'social_registration_text' => 'Registrar y entrar utilizando otro servicio.',
@@ -43,9 +42,7 @@ return [
     'register_success' => '¡Gracias por registrarse! Ahora se encuentra registrado y ha accedido a la aplicación.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset - Restablecer Contraseña
     'reset_password' => 'Restablecer la contraseña',
     'reset_password_send_instructions' => 'Introduzca su correo electrónico a continuación y se le enviará un correo electrónico con un enlace para la restauración',
     'reset_password_send_button' => 'Enviar enlace de restauración',
@@ -57,9 +54,7 @@ return [
     'email_reset_not_requested' => 'Si ud. no solicitó un cambio de contraseña, no se requiere ninguna acción.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation - Confirmación de correo electrónico
     'email_confirm_subject' => 'Confirme su correo electrónico en :appName',
     'email_confirm_greeting' => '¡Gracias por unirse a :appName!',
     'email_confirm_text' => 'Por favor confirme su dirección de correo electrónico presionando en el siguiente botón:',
