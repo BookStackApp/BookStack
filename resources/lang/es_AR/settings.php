@@ -1,27 +1,33 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ * 
+ * Cadenas de texto de la configuración
+ * Contiene todas las cadenas de texto usadas en la sección de configuración general
+ * de BookStack, incluyendo usuarios y roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages - Mensajes Comunes
     'settings' => 'Ajustes',
     'settings_save' => 'Guardar ajustes',
     'settings_save_success' => 'Ajustes guardados',
 
-    /**
-     * App settings
-     */
-
-    'app_settings' => 'Ajustes de Aplicación',
+    // App Settings - Configuraciones de la aplicación
+    'app_customization' => 'Personalización',
+    'app_features_security' => 'Características y Seguridad',
     'app_name' => 'Nombre de aplicación',
     'app_name_desc' => 'Este nombre se muestra en la cabecera y en cualquier correo electrónico de la aplicación',
     'app_name_header' => '¿Mostrar el nombre de la aplicación en la cabecera?',
+    'app_public_access' => 'Acceso Público',
+    'app_public_access_desc' => 'Habilitar esta opción permitirá a los visitantes, que no estén autenticados, acceder al contenido en la instancia de BookStack.',
+    'app_public_access_desc_guest' => 'El acceso de visitantes públicos se puede controlar mediante el usuario "Guest/Invitado".',
+    'app_public_access_toggle' => 'Permitir el acceso público',
     'app_public_viewing' => '¿Permitir vista pública?',
     'app_secure_images' => '¿Habilitar mayor seguridad para subir imágenes?',
+    'app_secure_images_toggle' => 'Habilitar seguridad alta para subir imágenes',
     'app_secure_images_desc' => 'Por razones de rendimiento, todas las imágenes son públicas. Esta opción agrega una cadena larga difícil de adivinar, asegúrese que los índices de directorios no están habilitados para prevenir el acceso fácil a las imágenes.',
     'app_editor' => 'Editor de página',
     'app_editor_desc' => 'Seleccione cuál editor será usado por todos los usuarios para editar páginas.',
@@ -35,25 +41,23 @@ return [
     'app_homepage_desc' => 'Seleccione una página de inicio para mostrar en lugar de la vista por defecto. Se ignoran los permisos de página para las páginas seleccionadas.',
     'app_homepage_select' => 'Seleccione una página',
     'app_disable_comments' => 'Deshabilitar comentarios',
+    'app_disable_comments_toggle' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration settings - Configuraciones de registro
     'reg_settings' => 'Ajustes de registro',
-    'reg_allow' => '¿Permitir registro?',
+    'reg_enable' => 'Habilitar Registro',
+    'reg_enable_toggle' => 'Habilitar registro',
+    'reg_enable_desc' => 'Cuando se habilita el registro, el usuario podrá crear su usuario en la aplicación. Con el regsitro, se le otorga un rol de usuario único y por defecto.',
     'reg_default_role' => 'Rol de usuario por defecto despúes del registro',
-    'reg_confirm_email' => '¿Requerir correo electrónico de confirmación?',
+    'reg_email_confirmation' => 'Confirmación de correo electrónico',
+    'reg_email_confirmation_toggle' => 'Requerir confirmación de correo electrónico',
     'reg_confirm_email_desc' => 'Si se utiliza la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y se ignorará el valor a continuación.',
     'reg_confirm_restrict_domain' => 'Restringir registro al dominio',
     'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los correos electrónicos del dominio a los que les gustaría restringir el registro por dominio. A los usuarios les será enviado un correo elctrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Note que a los usuarios se les permitirá cambiar sus direcciones de correo electrónico luego de un registro éxioso.',
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings - Configuraciones de mantenimiento
     'maint' => 'Mantenimiento',
     'maint_image_cleanup' => 'Limpiar imágenes',
     'maint_image_cleanup_desc' => "Analizar contenido de páginas y revisiones para detectar cuáles imágenes y dibujos están en uso y cuáles son redundantes. Asegúrese de crear un respaldo completo de imágenes y base de datos antes de ejecutar esta tarea.",
@@ -63,10 +67,7 @@ return [
     'maint_image_cleanup_success' => 'Se encontraron y se eliminaron :count imágenes pontencialmente sin uso!',
     'maint_image_cleanup_nothing_found' => 'No se encotraron imágenes sin usar, Nada eliminado!',
 
-    /**
-     * Role settings
-     */
-
+    // Role settings - Configuraciones de roles
     'roles' => 'Roles',
     'role_user_roles' => 'Roles de usuario',
     'role_create' => 'Crear nuevo rol',
@@ -99,16 +100,20 @@ return [
     'role_users' => 'Usuarios en este rol',
     'role_users_none' => 'No hay usuarios asignados a este rol',
 
-    /**
-     * Users
-     */
-
+    // Users - Usuarios
     'users' => 'Usuarios',
     'user_profile' => 'Perfil de usuario',
     'users_add_new' => 'Agregar nuevo usuario',
     'users_search' => 'Buscar usuarios',
+    'users_details' => 'Detalles del usuario',
+    'users_details_desc' => 'Asigne un nombre de visualización y una dirección de correo electrónico para este usuario. La dirección de correo electrónico se usará pra ingresar a la aplicación.',
+    'users_details_desc_no_email' => 'Asigne un nombre de visualización a este usuario para que los demás puedan reconocerlo.',
     'users_role' => 'Roles de usuario',
+    'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
+    'users_password' => 'User Password',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 5 characters long.',
     'users_external_auth_id' => 'ID externo de autenticación',
+    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your LDAP system.',
     'users_password_warning' => 'Solo rellene a continuación si desea cambiar su password:',
     'users_system_public' => 'Este usuario representa cualquier usuario invitado que visita la aplicación. No puede utilizarse para hacer login sino que es asignado automáticamente.',
     'users_delete' => 'Borrar usuario',
@@ -122,6 +127,7 @@ return [
     'users_avatar' => 'Avatar del usuario',
     'users_avatar_desc' => 'Esta imagen debe ser de aproximadamente 256px por lado.',
     'users_preferred_language' => 'Lenguaje preferido',
+    'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
     'users_social_accounts' => 'Cuentas sociales',
     'users_social_accounts_info' => 'Aquí puede conectar sus otras cuentas para un acceso rápido y más fácil. Desconectando una cuenta aquí no revoca accesos ya autorizados. Revoque el acceso desde los ajustes de perfil en la cuenta social conectada.',
     'users_social_connect' => 'Conectar cuenta',
