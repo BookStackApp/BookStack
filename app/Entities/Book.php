@@ -104,7 +104,7 @@ class Book extends Entity
     public function getExcerpt(int $length = 100)
     {
         $description = $this->description;
-        return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
+        return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
     }
 
     /**

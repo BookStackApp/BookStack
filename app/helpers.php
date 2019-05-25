@@ -123,7 +123,7 @@ function baseUrl($path, $forceAppDomain = false)
     // Remove non-specified domain if forced and we have a domain
     if ($isFullUrl && $forceAppDomain) {
         if (!empty($base) && strpos($path, $base) === 0) {
-            $path = substr($path, strlen($base));
+            $path = mb_substr($path, mb_strlen($base));
         } else {
             $explodedPath = explode('/', $path);
             $path = implode('/', array_splice($explodedPath, 3));

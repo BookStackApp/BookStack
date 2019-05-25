@@ -216,12 +216,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getShortName($chars = 8)
     {
-        if (strlen($this->name) <= $chars) {
+        if (mb_strlen($this->name) <= $chars) {
             return $this->name;
         }
 
         $splitName = explode(' ', $this->name);
-        if (strlen($splitName[0]) <= $chars) {
+        if (mb_strlen($splitName[0]) <= $chars) {
             return $splitName[0];
         }
 

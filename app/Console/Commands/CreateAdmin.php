@@ -49,7 +49,7 @@ class CreateAdmin extends Command
         if (empty($email)) {
             $email = $this->ask('Please specify an email address for the new admin user');
         }
-        if (strlen($email) < 5 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (mb_strlen($email) < 5 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return $this->error('Invalid email address provided');
         }
 
@@ -61,7 +61,7 @@ class CreateAdmin extends Command
         if (empty($name)) {
             $name = $this->ask('Please specify an name for the new admin user');
         }
-        if (strlen($name) < 2) {
+        if (mb_strlen($name) < 2) {
             return $this->error('Invalid name provided');
         }
 
@@ -69,7 +69,7 @@ class CreateAdmin extends Command
         if (empty($password)) {
             $password = $this->secret('Please specify a password for the new admin user');
         }
-        if (strlen($password) < 5) {
+        if (mb_strlen($password) < 5) {
             return $this->error('Invalid password provided, Must be at least 5 characters');
         }
 

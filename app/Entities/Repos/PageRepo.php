@@ -192,7 +192,7 @@ class PageRepo extends EntityRepo
         // Create an unique id for the element
         // Uses the content as a basis to ensure output is the same every time
         // the same content is passed through.
-        $contentId = 'bkmrk-' . substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
+        $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
         $newId = urlencode($contentId);
         $loopIndex = 0;
 
@@ -424,8 +424,8 @@ class PageRepo extends EntityRepo
 
         $tree = collect($headers)->map(function($header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
-            if (strlen($text) > 30) {
-                $text = substr($text, 0, 27) . '...';
+            if (mb_strlen($text) > 30) {
+                $text = mb_substr($text, 0, 27) . '...';
             }
 
             return [
@@ -435,7 +435,7 @@ class PageRepo extends EntityRepo
                 'text' => $text,
             ];
         })->filter(function($header) {
-            return strlen($header['text']) > 0;
+            return mb_strlen($header['text']) > 0;
         });
 
         // Normalise headers if only smaller headers have been used
