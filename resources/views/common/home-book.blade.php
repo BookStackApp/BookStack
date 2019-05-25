@@ -1,23 +1,19 @@
-@extends('simple-layout')
+@extends('tri-layout')
 
 @section('body')
-    <div class="container mt-m">
-        <div class="grid right-focus gap-xl">
-            <div>
+    @include('books.list', ['books' => $books, 'view' => $view])
+@stop
 
-                <div class="actions mb-xl">
-                    <h5>{{ trans('common.actions') }}</h5>
-                    <div class="icon-list text-primary">
-                        @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
-                        @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
-                    </div>
-                </div>
+@section('left')
+    @include('common.home-sidebar')
+@stop
 
-                @include('common.home-sidebar')
-            </div>
-            <div>
-                @include('books.list', ['books' => $books, 'view' => $view])
-            </div>
+@section('right')
+    <div class="actions mb-xl">
+        <h5>{{ trans('common.actions') }}</h5>
+        <div class="icon-list text-primary">
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
+            @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
         </div>
     </div>
 @stop
