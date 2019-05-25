@@ -66,28 +66,44 @@ class TriLayout {
      */
     mobileTabClick(event) {
         const tab = event.target.getAttribute('tri-layout-mobile-tab');
+        this.showTab(tab);
+    }
+
+    /**
+     * Show the content tab.
+     * Used by the page-display component.
+     */
+    showContent() {
+        this.showTab('content');
+    }
+
+    /**
+     * Show the given tab
+     * @param tabName
+     */
+    showTab(tabName) {
         this.scrollCache[this.lastTabShown] = document.documentElement.scrollTop;
 
         // Set tab status
-        const activeTabs = document.querySelectorAll('.tri-layout-mobile-tab.active');
-        for (let tab of activeTabs) {
-            tab.classList.remove('active');
+        const tabs = document.querySelectorAll('.tri-layout-mobile-tab');
+        for (let tab of tabs) {
+            const isActive = (tab.getAttribute('tri-layout-mobile-tab') === tabName);
+            tab.classList.toggle('active', isActive);
         }
-        event.target.classList.add('active');
 
         // Toggle section
-        const showInfo = (tab === 'info');
+        const showInfo = (tabName === 'info');
         this.elem.classList.toggle('show-info', showInfo);
 
         // Set the scroll position from cache
         const pageHeader = document.querySelector('header');
         const defaultScrollTop = pageHeader.getBoundingClientRect().bottom;
-        document.documentElement.scrollTop = this.scrollCache[tab] || defaultScrollTop;
+        document.documentElement.scrollTop = this.scrollCache[tabName] || defaultScrollTop;
         setTimeout(() => {
-            document.documentElement.scrollTop = this.scrollCache[tab] || defaultScrollTop;
+            document.documentElement.scrollTop = this.scrollCache[tabName] || defaultScrollTop;
         }, 50);
 
-        this.lastTabShown = tab;
+        this.lastTabShown = tabName;
     }
 
 }

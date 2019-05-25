@@ -20,6 +20,7 @@ class PageDisplay {
 
         // Sidebar page nav click event
         $('.sidebar-page-nav').on('click', 'a', event => {
+            window.components['tri-layout'][0].showContent();
             this.goToText(event.target.getAttribute('href').substr(1));
         });
     }
