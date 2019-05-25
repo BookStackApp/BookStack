@@ -76,6 +76,20 @@ class ExportTest extends TestCase
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.html"');
     }
 
+    public function test_book_html_export_shows_chapter_descriptions()
+    {
+        $chapterDesc = 'My custom test chapter description ' . str_random(12);
+        $chapter = Chapter::query()->first();
+        $chapter->description = $chapterDesc;
+        $chapter->save();
+
+        $book = $chapter->book;
+        $this->asEditor();
+
+        $resp = $this->get($book->getUrl('/export/html'));
+        $resp->assertSee($chapterDesc);
+    }
+
     public function test_chapter_text_export()
     {
         $chapter = Chapter::first();

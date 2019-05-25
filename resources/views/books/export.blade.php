@@ -58,7 +58,7 @@
         <h1 id="{{$bookChild->getType()}}-{{$bookChild->id}}">{{ $bookChild->name }}</h1>
 
         @if($bookChild->isA('chapter'))
-            <p>{{ $bookChild->description }}</p>
+            <p>{{ $bookChild->text }}</p>
 
             @if(count($bookChild->pages) > 0)
                 @foreach($bookChild->pages as $page)
