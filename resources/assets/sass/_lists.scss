@@ -164,14 +164,20 @@
     padding-left: 1rem;
     padding-right: 0;
   }
+
   .entity-list-item {
     padding-top: $-xxs;
     padding-bottom: $-xxs;
+    background-clip: content-box;
+    border-radius: 0 3px 3px 0;
     .content {
       padding-top: $-xs;
       padding-bottom: $-xs;
       max-width: calc(100% - 20px);
     }
+  }
+  .entity-list-item.selected {
+    background-color: rgba(0, 0, 0, 0.08);
   }
   .entity-list-item.no-hover {
     margin-top: -$-xs;
