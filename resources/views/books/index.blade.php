@@ -1,7 +1,5 @@
 @extends('tri-layout')
 
-@section('container-classes', 'mt-xl')
-
 @section('body')
     @include('books.list', ['books' => $books, 'view' => $view])
 @stop

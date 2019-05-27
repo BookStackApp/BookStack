@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Entities\Page;
 use BookStack\Notifications\ConfirmEmail;
 use BookStack\Auth\User;
 use BookStack\Settings\SettingService;
@@ -332,6 +333,17 @@ class AuthTest extends BrowserKitTest
         $this->visit('/password/email')
             ->seeLink('Log in')
             ->seeLink('Sign up');
+    }
+
+    public function test_login_redirects_to_initially_requested_url_correctly()
+    {
+        config()->set('app.url', 'http://localhost');
+        $page = Page::query()->first();
+
+        $this->visit($page->getUrl())
+            ->seePageUrlIs(baseUrl('/login'));
+        $this->login('admin@admin.com', 'password')
+            ->seePageUrlIs($page->getUrl());
     }
 
     /**

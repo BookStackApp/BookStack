@@ -142,7 +142,7 @@ class RegisterController extends Controller
 
         if ($registrationRestrict) {
             $restrictedEmailDomains = explode(',', str_replace(' ', '', $registrationRestrict));
-            $userEmailDomain = $domain = substr(strrchr($userData['email'], "@"), 1);
+            $userEmailDomain = $domain = mb_substr(mb_strrchr($userData['email'], "@"), 1);
             if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
                 throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), '/register');
             }

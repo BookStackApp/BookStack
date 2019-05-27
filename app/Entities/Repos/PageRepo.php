@@ -192,7 +192,7 @@ class PageRepo extends EntityRepo
         // Create an unique id for the element
         // Uses the content as a basis to ensure output is the same every time
         // the same content is passed through.
-        $contentId = 'bkmrk-' . substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
+        $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
         $newId = urlencode($contentId);
         $loopIndex = 0;
 
@@ -422,25 +422,29 @@ class PageRepo extends EntityRepo
             return [];
         }
 
-        $tree = collect([]);
-        foreach ($headers as $header) {
-            $text = $header->nodeValue;
-            $tree->push([
+        $tree = collect($headers)->map(function($header) {
+            $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
+            if (mb_strlen($text) > 30) {
+                $text = mb_substr($text, 0, 27) . '...';
+            }
+
+            return [
                 'nodeName' => strtolower($header->nodeName),
                 'level' => intval(str_replace('h', '', $header->nodeName)),
                 'link' => '#' . $header->getAttribute('id'),
-                'text' => strlen($text) > 30 ? substr($text, 0, 27) . '...' : $text
-            ]);
-        }
+                'text' => $text,
+            ];
+        })->filter(function($header) {
+            return mb_strlen($header['text']) > 0;
+        });
 
         // Normalise headers if only smaller headers have been used
-        if (count($tree) > 0) {
-            $minLevel = $tree->pluck('level')->min();
-            $tree = $tree->map(function ($header) use ($minLevel) {
-                $header['level'] -= ($minLevel - 2);
-                return $header;
-            });
-        }
+        $minLevel = $tree->pluck('level')->min();
+        $tree = $tree->map(function ($header) use ($minLevel) {
+            $header['level'] -= ($minLevel - 2);
+            return $header;
+        });
+
         return $tree->toArray();
     }
 
