@@ -181,7 +181,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: $-xl;
-  overflow: auto;
+  overflow: initial;
   min-height: 60vh;
   &.auto-height {
     min-height: 0;
@@ -202,7 +202,7 @@
 }
 @include smaller-than($s) {
   .content-wrap.card {
-    padding: $-m $-s;
+    padding: $-m $-m;
   }
 }
 
