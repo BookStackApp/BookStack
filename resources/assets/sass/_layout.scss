@@ -257,10 +257,6 @@ body.flexbox {
       padding-left: $-m;
       padding-right: $-m;
     }
-    .tri-layout-right-contents > div, .tri-layout-left-contents > div {
-      opacity: 0.6;
-      z-index: 0;
-    }
     .tri-layout-left > *, .tri-layout-right > * {
       display: none;
       pointer-events: none;
@@ -298,19 +294,18 @@ body.flexbox {
   .tri-layout-mobile-tabs {
     display: none;
   }
+  .tri-layout-left-contents > div, .tri-layout-right-contents > div {
+    opacity: 0.6;
+    transition: opacity ease-in-out 120ms;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 @include smaller-than($m) {
   .tri-layout-container {
     margin-left: 0;
     margin-right: 0;
-  }
-}
-
-.tri-layout-left-contents > div, .tri-layout-right-contents > div {
-  opacity: 0.6;
-  transition: opacity ease-in-out 120ms;
-  &:hover {
-    opacity: 1;
   }
 }
