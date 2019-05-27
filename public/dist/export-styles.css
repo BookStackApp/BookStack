@@ -628,6 +628,54 @@ li.checkbox-item, li.task-list-item {
 .text-right {
   text-align: right; }
 
+@media screen and (min-width: 360px) {
+  .text-xxs-center {
+    text-align: center; }
+  .text-xxs-left {
+    text-align: left; }
+  .text-xxs-right {
+    text-align: right; } }
+
+@media screen and (min-width: 400px) {
+  .text-xs-center {
+    text-align: center; }
+  .text-xs-left {
+    text-align: left; }
+  .text-xs-right {
+    text-align: right; } }
+
+@media screen and (min-width: 600px) {
+  .text-s-center {
+    text-align: center; }
+  .text-s-left {
+    text-align: left; }
+  .text-s-right {
+    text-align: right; } }
+
+@media screen and (min-width: 880px) {
+  .text-m-center {
+    text-align: center; }
+  .text-m-left {
+    text-align: left; }
+  .text-m-right {
+    text-align: right; } }
+
+@media screen and (min-width: 1000px) {
+  .text-l-center {
+    text-align: center; }
+  .text-l-left {
+    text-align: left; }
+  .text-l-right {
+    text-align: right; } }
+
+@media screen and (min-width: 1100px) {
+  .text-xl-center {
+    text-align: center; }
+  .text-xl-left {
+    text-align: left; }
+  .text-xl-right {
+    text-align: right; } }
+
 .text-bigger {
   font-size: 1.1em; }
 
@@ -714,7 +762,7 @@ span.sep {
     grid-row-gap: 0; }
 
 @media screen and (max-width: 880px) {
-  .grid.third {
+  .grid.third:not(.no-break) {
     grid-template-columns: 1fr 1fr; }
   .grid.half:not(.no-break), .grid.left-focus:not(.no-break), .grid.right-focus:not(.no-break) {
     grid-template-columns: 1fr; }
@@ -729,7 +777,7 @@ span.sep {
     order: 1; } }
 
 @media screen and (max-width: 600px) {
-  .grid.third {
+  .grid.third:not(.no-break) {
     grid-template-columns: 1fr; } }
 
 @media screen and (max-width: 400px) {
@@ -914,9 +962,6 @@ body.flexbox {
     .tri-layout-container .tri-layout-left-contents, .tri-layout-container .tri-layout-right-contents {
       padding-left: 16px;
       padding-right: 16px; }
-    .tri-layout-container .tri-layout-right-contents > div, .tri-layout-container .tri-layout-left-contents > div {
-      opacity: 0.6;
-      z-index: 0; }
     .tri-layout-container .tri-layout-left > *, .tri-layout-container .tri-layout-right > * {
       display: none;
       pointer-events: none; }
@@ -946,18 +991,17 @@ body.flexbox {
 
 @media screen and (min-width: 1000px) {
   .tri-layout-mobile-tabs {
-    display: none; } }
+    display: none; }
+  .tri-layout-left-contents > div, .tri-layout-right-contents > div {
+    opacity: 0.6;
+    transition: opacity ease-in-out 120ms; }
+    .tri-layout-left-contents > div:hover, .tri-layout-right-contents > div:hover {
+      opacity: 1; } }
 
 @media screen and (max-width: 880px) {
   .tri-layout-container {
     margin-left: 0;
     margin-right: 0; } }
-
-.tri-layout-left-contents > div, .tri-layout-right-contents > div {
-  opacity: 0.6;
-  transition: opacity ease-in-out 120ms; }
-  .tri-layout-left-contents > div:hover, .tri-layout-right-contents > div:hover {
-    opacity: 1; }
 
 /**
  * Callouts
@@ -1108,7 +1152,7 @@ body.flexbox {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 32px;
-  overflow: auto;
+  overflow: initial;
   min-height: 60vh; }
   .content-wrap.card.auto-height {
     min-height: 0; }
@@ -1125,7 +1169,7 @@ body.flexbox {
 
 @media screen and (max-width: 600px) {
   .content-wrap.card {
-    padding: 16px 12px; } }
+    padding: 16px 16px; } }
 
 /**
  * Tags
@@ -1961,11 +2005,15 @@ header .search-box {
     padding-right: 0; }
   .book-tree .sidebar-page-list .entity-list-item {
     padding-top: 3px;
-    padding-bottom: 3px; }
+    padding-bottom: 3px;
+    background-clip: content-box;
+    border-radius: 0 3px 3px 0; }
     .book-tree .sidebar-page-list .entity-list-item .content {
       padding-top: 6px;
       padding-bottom: 6px;
       max-width: calc(100% - 20px); }
+  .book-tree .sidebar-page-list .entity-list-item.selected {
+    background-color: rgba(0, 0, 0, 0.08); }
   .book-tree .sidebar-page-list .entity-list-item.no-hover {
     margin-top: -6px;
     padding-right: 0; }
@@ -2342,33 +2390,31 @@ ul.pagination {
   .page-editor .mce-top-part::before {
     box-shadow: none; }
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 600px) {
   .page-edit-toolbar {
     overflow-x: scroll;
-    overflow-y: visible;
-    z-index: 12; }
+    overflow-y: visible; }
   .page-edit-toolbar .grid.third {
     display: block;
     white-space: nowrap; }
     .page-edit-toolbar .grid.third > div {
       display: inline-block; } }
 
-@media screen and (max-width: 880px) {
-  .page-edit-toolbar #save-button {
-    position: fixed;
-    z-index: 30;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    font-size: 24px;
-    right: 16px;
-    bottom: 12px;
-    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.13);
-    background-color: currentColor; }
-    .page-edit-toolbar #save-button svg {
-      fill: #FFF; }
-    .page-edit-toolbar #save-button span {
-      display: none; } }
+.page-save-mobile-button {
+  position: fixed;
+  z-index: 30;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  right: 16px;
+  bottom: 12px;
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.13);
+  background-color: currentColor;
+  text-align: center; }
+  .page-save-mobile-button svg {
+    fill: #FFF;
+    margin-right: 0; }
 
 .draft-notification {
   pointer-events: none;
