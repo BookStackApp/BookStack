@@ -38,10 +38,14 @@ class HomepageTest extends TestCase
         $name = 'My custom homepage';
         $content = str_repeat('This is the body content of my custom homepage.', 20);
         $customPage = $this->newPage(['name' => $name, 'html' => $content]);
-        $this->setSettings(['app-homepage' => $customPage->id]);
+        $this->setSettings([
+            'app-homepage' => $customPage->id,
+            'app-homepage-type' => 'page'
+        ]);
 
         $homeVisit = $this->get('/');
         $homeVisit->assertSee($name);
+        $homeVisit->assertElementNotExists('#home-default');
 
         $pageDeleteReq = $this->delete($customPage->getUrl());
         $pageDeleteReq->assertStatus(302);
@@ -52,6 +56,23 @@ class HomepageTest extends TestCase
         $homeVisit = $this->get('/');
         $homeVisit->assertSee($name);
         $homeVisit->assertStatus(200);
+    }
+
+    public function test_custom_homepage_can_be_deleted_once_custom_homepage_no_longer_used()
+    {
+        $this->asEditor();
+        $name = 'My custom homepage';
+        $content = str_repeat('This is the body content of my custom homepage.', 20);
+        $customPage = $this->newPage(['name' => $name, 'html' => $content]);
+        $this->setSettings([
+            'app-homepage' => $customPage->id,
+            'app-homepage-type' => 'default'
+        ]);
+
+        $pageDeleteReq = $this->delete($customPage->getUrl());
+        $pageDeleteReq->assertStatus(302);
+        $pageDeleteReq->assertSessionHas('success');
+        $pageDeleteReq->assertSessionMissing('error');
     }
 
     public function test_set_book_homepage()

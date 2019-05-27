@@ -852,10 +852,13 @@ class EntityRepo
      */
     public function destroyPage(Page $page)
     {
-        // Check if set as custom homepage
+        // Check if set as custom homepage & remove setting if not used or throw error if active
         $customHome = setting('app-homepage', '0:');
         if (intval($page->id) === intval(explode(':', $customHome)[0])) {
-            throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
+            if (setting('app-homepage-type') === 'page') {
+                throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
+            }
+            setting()->remove('app-homepage');
         }
 
         $this->destroyEntityCommonRelations($page);
