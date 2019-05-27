@@ -291,13 +291,25 @@ li.checkbox-item, li.task-list-item {
 .text-center {
   text-align: center;
 }
-
 .text-left {
   text-align: left;
 }
-
 .text-right {
   text-align: right;
+}
+
+@each $sizeLetter, $size in $screen-sizes {
+  @include larger-than($size) {
+    .text-#{$sizeLetter}-center {
+      text-align: center;
+    }
+    .text-#{$sizeLetter}-left {
+      text-align: left;
+    }
+    .text-#{$sizeLetter}-right {
+      text-align: right;
+    }
+  }
 }
 
 .text-bigger {
