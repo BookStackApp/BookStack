@@ -16,6 +16,26 @@ class BreadcrumbListing {
 
         this.toggleElem.addEventListener('click', this.onShow.bind(this));
         this.searchInput.addEventListener('input', this.onSearch.bind(this));
+        this.elem.addEventListener('keydown', this.keyDown.bind(this));
+    }
+
+    keyDown(event) {
+        if (event.key === 'ArrowDown') {
+            this.listFocusChange(1);
+            event.preventDefault();
+        } else if  (event.key === 'ArrowUp') {
+            this.listFocusChange(-1);
+            event.preventDefault();
+        }
+    }
+
+    listFocusChange(indexChange = 1) {
+        const links = Array.from(this.entityListElem.querySelectorAll('a:not(.hidden)'));
+        const currentFocused = this.entityListElem.querySelector('a:focus');
+        const currentFocusedIndex = links.indexOf(currentFocused);
+        const defaultFocus = (indexChange > 0) ? links[0] : this.searchInput;
+        const nextElem = links[currentFocusedIndex + indexChange] || defaultFocus;
+        nextElem.focus();
     }
 
     onShow() {
@@ -28,6 +48,7 @@ class BreadcrumbListing {
         for (let listItem of listItems) {
             const match = !input || listItem.textContent.toLowerCase().includes(input);
             listItem.style.display = match ? 'flex' : 'none';
+            listItem.classList.toggle('hidden', !match);
         }
     }
 
