@@ -23,6 +23,7 @@ import listSortControl from "./list-sort-control";
 import triLayout from "./tri-layout";
 import breadcrumbListing from "./breadcrumb-listing";
 import permissionsTable from "./permissions-table";
+import customCheckbox from "./custom-checkbox";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -50,6 +51,7 @@ const componentMapping = {
     'tri-layout': triLayout,
     'breadcrumb-listing': breadcrumbListing,
     'permissions-table': permissionsTable,
+    'custom-checkbox': customCheckbox,
 };
 
 window.components = {};

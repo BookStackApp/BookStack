@@ -22,6 +22,7 @@
                             'name' => 'remember',
                             'checked' => false,
                             'value' => 'on',
+                            'tabindex' => 1,
                             'label' => trans('auth.remember_me'),
                         ])
                     </div>

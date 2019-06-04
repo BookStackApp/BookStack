@@ -6,12 +6,11 @@ class ToggleSwitch {
         this.input = elem.querySelector('input[type=hidden]');
         this.checkbox = elem.querySelector('input[type=checkbox]');
 
-        this.checkbox.addEventListener('change', this.onClick.bind(this));
+        this.checkbox.addEventListener('change', this.stateChange.bind(this));
     }
 
-    onClick(event) {
-        let checked = this.checkbox.checked;
-        this.input.value = checked ? 'true' : 'false';
+    stateChange() {
+        this.input.value = (this.checkbox.checked ? 'true' : 'false');
     }
 
 }
