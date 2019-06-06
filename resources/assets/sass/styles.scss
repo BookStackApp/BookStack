@@ -216,10 +216,21 @@ $btt-size: 40px;
   .scroll-box-item {
     padding: $-xs $-m;
     border-bottom: 1px solid #DDD;
+    border-top: 1px solid #DDD;
+    margin-top: -1px;
     &:last-child {
       border-bottom: 0;
     }
   }
+}
+
+.scroll-box[data-instruction]:before {
+  content: attr(data-instruction);
+  padding: $-xs $-m;
+  border-bottom: 1px solid #DDD;
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
 }
 
 .fullscreen {
