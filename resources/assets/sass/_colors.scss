@@ -59,8 +59,11 @@
 }
 
 /*
- * Entity background colors
+ * Standard & Entity background colors
  */
+.bg-white {
+  background-color: #FFFFFF;
+}
 .bg-book {
   background-color: $color-book;
 }
