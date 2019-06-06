@@ -16,7 +16,6 @@
 
             <div class="action-buttons text-left px-m py-xs">
                 <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back')<span class="hide-under-l">{{ trans('common.back') }}</span></a>
-                <a onclick="$('body>header').slideToggle();" class="text-button text-primary">@icon('swap-vertical')<span class="hide-under-l">{{ trans('entities.pages_edit_toggle_header') }}</span></a>
             </div>
 
             <div class="text-center px-m py-xs">
