@@ -142,7 +142,7 @@ These are the great open-source projects used to help build BookStack:
 * [CodeMirror](https://codemirror.net)
 * [Vue.js](http://vuejs.org/)
 * [Axios](https://github.com/mzabriskie/axios)
-* [jQuery Sortable](https://johnny.github.io/jquery-sortable/)
+* [Sortable](https://github.com/SortableJS/Sortable) & [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
 * [Google Material Icons](https://material.io/icons/)
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [clipboard.js](https://clipboardjs.com/)
