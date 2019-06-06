@@ -15,13 +15,7 @@
         <label for="books">{{ trans('entities.shelves_books') }}</label>
         <input type="hidden" id="books-input" name="books"
                value="{{ isset($shelf) ? $shelf->books->implode('id', ',') : '' }}">
-        <div class="scroll-box">
-            <div class="scroll-box-item text-small text-muted instruction">
-                {{ trans('entities.shelves_drag_books') }}
-            </div>
-            <div class="scroll-box-item scroll-box-placeholder" style="display: none;">
-                <a href="#" class="text-muted">@icon('book') ...</a>
-            </div>
+        <div class="scroll-box" shelf-sort-assigned-books data-instruction="{{ trans('entities.shelves_drag_books') }}">
             @if (isset($shelfBooks) && count($shelfBooks) > 0)
                 @foreach ($shelfBooks as $book)
                     <div data-id="{{ $book->id }}" class="scroll-box-item">
