@@ -25,6 +25,7 @@ import breadcrumbListing from "./breadcrumb-listing";
 import permissionsTable from "./permissions-table";
 import customCheckbox from "./custom-checkbox";
 import bookSort from "./book-sort";
+import settingAppColorPicker from "./setting-app-color-picker";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -54,6 +55,7 @@ const componentMapping = {
     'permissions-table': permissionsTable,
     'custom-checkbox': customCheckbox,
     'book-sort': bookSort,
+    'setting-app-color-picker': settingAppColorPicker,
 };
 
 window.components = {};

@@ -158,12 +158,17 @@ table.form-table {
   }
 }
 
-input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="search"], input[type="url"], input[type="password"], select, textarea {
+input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="search"], input[type="url"],
+input[type="color"], input[type="password"], select, textarea {
   @extend .input-base;
 }
 
 input[type=date] {
   width: 190px;
+}
+
+input[type=color] {
+  height: 60px;
 }
 
 .toggle-switch {

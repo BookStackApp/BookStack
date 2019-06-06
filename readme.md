@@ -146,7 +146,6 @@ These are the great open-source projects used to help build BookStack:
 * [Google Material Icons](https://material.io/icons/)
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [clipboard.js](https://clipboardjs.com/)
-* [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
 * [BarryVD](https://github.com/barryvdh)
     * [Debugbar](https://github.com/barryvdh/laravel-debugbar)
