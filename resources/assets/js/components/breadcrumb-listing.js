@@ -60,7 +60,7 @@ class BreadcrumbListing {
             'entity_type': this.entityType,
         };
 
-        window.$http.get('/search/entity/siblings', {params}).then(resp => {
+        window.$http.get('/search/entity/siblings', params).then(resp => {
             this.entityListElem.innerHTML = resp.data;
         }).catch(err => {
             console.error(err);

@@ -113,11 +113,13 @@ const methods = {
      */
     getSuggestions(input, params) {
         params.search = input;
-        let cacheKey = `${this.url}:${JSON.stringify(params)}`;
+        const cacheKey = `${this.url}:${JSON.stringify(params)}`;
 
-        if (typeof ajaxCache[cacheKey] !== "undefined") return Promise.resolve(ajaxCache[cacheKey]);
+        if (typeof ajaxCache[cacheKey] !== "undefined") {
+            return Promise.resolve(ajaxCache[cacheKey]);
+        }
 
-        return this.$http.get(this.url, {params}).then(resp => {
+        return this.$http.get(this.url, params).then(resp => {
             ajaxCache[cacheKey] = resp.data;
             return resp.data;
         });

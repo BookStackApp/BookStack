@@ -25,3 +25,24 @@ export function debounce(func, wait, immediate) {
         if (callNow) func.apply(context, args);
     };
 };
+
+/**
+ * Scroll and highlight an element.
+ * @param {HTMLElement} element
+ */
+export function scrollAndHighlightElement(element) {
+    if (!element) return;
+    element.scrollIntoView({behavior: 'smooth'});
+
+    const color = document.getElementById('custom-styles').getAttribute('data-color-light');
+    const initColor = window.getComputedStyle(element).getPropertyValue('background-color');
+    element.style.backgroundColor = color;
+    setTimeout(() => {
+        element.classList.add('selectFade');
+        element.style.backgroundColor = initColor;
+    }, 10);
+    setTimeout(() => {
+        element.classList.remove('selectFade');
+        element.style.backgroundColor = '';
+    }, 3000);
+}
