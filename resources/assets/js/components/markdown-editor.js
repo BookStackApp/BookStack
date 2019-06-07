@@ -1,6 +1,7 @@
 import MarkdownIt from "markdown-it";
 import mdTasksLists from 'markdown-it-task-lists';
 import code from '../services/code';
+import {debounce} from "../services/util";
 
 import DrawIO from "../services/drawio";
 
@@ -104,14 +105,11 @@ class MarkdownEditor {
     }
 
     onMarkdownScroll(lineCount) {
-        let elems = this.display.children;
+        const elems = this.display.children;
         if (elems.length <= lineCount) return;
 
-        let topElem = (lineCount === -1) ? elems[elems.length-1] : elems[lineCount];
-        // TODO - Replace jQuery
-        $(this.display).animate({
-            scrollTop: topElem.offsetTop
-        }, {queue: false, duration: 200, easing: 'linear'});
+        const topElem = (lineCount === -1) ? elems[elems.length-1] : elems[lineCount];
+        topElem.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth'});
     }
 
     codeMirrorSetup() {
@@ -160,8 +158,7 @@ class MarkdownEditor {
             this.updateAndRender();
         });
 
-        // Handle scroll to sync display view
-        cm.on('scroll', instance => {
+        const onScrollDebounced = debounce((instance) => {
             // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
             let scroll = instance.getScrollInfo();
             let atEnd = scroll.top + scroll.clientHeight === scroll.height;
@@ -176,6 +173,11 @@ class MarkdownEditor {
             let doc = parser.parseFromString(this.markdown.render(range), 'text/html');
             let totalLines = doc.documentElement.querySelectorAll('body > *');
             this.onMarkdownScroll(totalLines.length);
+        }, 100);
+
+        // Handle scroll to sync display view
+        cm.on('scroll', instance => {
+            onScrollDebounced(instance);
         });
 
         // Handle image paste
