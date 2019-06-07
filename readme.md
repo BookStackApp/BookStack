@@ -137,11 +137,9 @@ The great people that have worked to build and improve BookStack can [be seen he
 These are the great open-source projects used to help build BookStack:
 
 * [Laravel](http://laravel.com/)
-* [jQuery](https://jquery.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [CodeMirror](https://codemirror.net)
 * [Vue.js](http://vuejs.org/)
-* [Axios](https://github.com/mzabriskie/axios)
 * [Sortable](https://github.com/SortableJS/Sortable) & [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
 * [Google Material Icons](https://material.io/icons/)
 * [Dropzone.js](http://www.dropzonejs.com/)

@@ -1,6 +1,7 @@
 import Clipboard from "clipboard/dist/clipboard.min";
 import Code from "../services/code";
 import * as DOM from "../services/dom";
+import {scrollAndHighlightElement} from "../services/util";
 
 class PageDisplay {
 
@@ -20,10 +21,12 @@ class PageDisplay {
 
         // Sidebar page nav click event
         const sidebarPageNav = document.querySelector('.sidebar-page-nav');
-        DOM.onChildEvent(sidebarPageNav, 'a', 'click', (event, child) => {
-            window.components['tri-layout'][0].showContent();
-            this.goToText(child.getAttribute('href').substr(1));
-        });
+        if (sidebarPageNav) {
+            DOM.onChildEvent(sidebarPageNav, 'a', 'click', (event, child) => {
+                window.components['tri-layout'][0].showContent();
+                this.goToText(child.getAttribute('href').substr(1));
+            });
+        }
     }
 
     goToText(text) {
@@ -35,11 +38,11 @@ class PageDisplay {
         });
 
         if (idElem !== null) {
-            window.scrollAndHighlight(idElem);
+            scrollAndHighlightElement(idElem);
         } else {
             const textElem = DOM.findText('.page-content > div > *', text);
             if (textElem) {
-                window.scrollAndHighlight(textElem);
+                scrollAndHighlightElement(textElem);
             }
         }
     }

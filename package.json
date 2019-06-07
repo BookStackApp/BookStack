@@ -21,11 +21,9 @@
     "webpack-cli": "^3.3.2"
   },
   "dependencies": {
-    "axios": "^0.19.0",
     "clipboard": "^2.0.4",
     "codemirror": "^5.47.0",
     "dropzone": "^5.5.1",
-    "jquery": "^3.4.1",
     "markdown-it": "^8.4.2",
     "markdown-it-task-lists": "^2.1.1",
     "sortablejs": "^1.9.0",

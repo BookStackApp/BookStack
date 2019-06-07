@@ -1,4 +1,6 @@
 import MarkdownIt from "markdown-it";
+import {scrollAndHighlightElement} from "../services/util";
+
 const md = new MarkdownIt({ html: false });
 
 class PageComments {
@@ -25,8 +27,8 @@ class PageComments {
     handleAction(event) {
         let actionElem = event.target.closest('[action]');
         if (event.target.matches('a[href^="#"]')) {
-            let id = event.target.href.split('#')[1];
-            window.scrollAndHighlight(document.querySelector('#' + id));
+            const id = event.target.href.split('#')[1];
+            scrollAndHighlightElement(document.querySelector('#' + id));
         }
         if (actionElem === null) return;
         event.preventDefault();
@@ -132,7 +134,7 @@ class PageComments {
         this.formContainer.parentNode.style.display = 'block';
         this.elem.querySelector('[comment-add-button-container]').style.display = 'none';
         this.formInput.focus();
-        window.scrollToElement(this.formInput);
+        this.formInput.scrollIntoView({behavior: "smooth"});
     }
 
     hideForm() {
