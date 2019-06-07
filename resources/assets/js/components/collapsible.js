@@ -1,3 +1,5 @@
+import {slideDown, slideUp} from "../services/animations";
+
 /**
  * Collapsible
  * Provides some simple logic to allow collapsible sections.
@@ -16,12 +18,12 @@ class Collapsible {
 
     open() {
         this.elem.classList.add('open');
-        $(this.content).slideDown(400);
+        slideDown(this.content, 300);
     }
 
     close() {
         this.elem.classList.remove('open');
-        $(this.content).slideUp(400);
+        slideUp(this.content, 300);
     }
 
     toggle() {
