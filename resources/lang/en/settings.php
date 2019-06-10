@@ -29,6 +29,7 @@ return [
     'app_editor_desc' => 'Select which editor will be used by all users to edit pages.',
     'app_custom_html' => 'Custom HTML Head Content',
     'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.',
+    'app_custom_html_warning' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Application Logo',
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
