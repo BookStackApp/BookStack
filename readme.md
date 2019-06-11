@@ -24,9 +24,7 @@ In regards to development philosophy, BookStack has a relaxed, open & positive a
 
 Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
 
-- **Design Revamp** *[(In Progress)](https://github.com/BookStackApp/BookStack/pull/1153)*
-    - *A more organised modern design to clean things up, make BookStack more efficient to use and increase mobile usability.*
-- **Platform REST API**
+- **Platform REST API** *(In Design)*
     - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
 - **Editor Alignment & Review**
     - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
