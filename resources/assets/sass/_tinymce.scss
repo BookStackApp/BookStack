@@ -47,6 +47,8 @@
       display: flex !important;
       flex-direction: column;
       align-items: stretch;
+      -webkit-overflow-scrolling:touch;
+      overflow:auto;
       iframe {
         flex: 1;
       }
