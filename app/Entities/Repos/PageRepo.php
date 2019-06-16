@@ -438,10 +438,10 @@ class PageRepo extends EntityRepo
             return mb_strlen($header['text']) > 0;
         });
 
-        // Normalise headers if only smaller headers have been used
-        $minLevel = $tree->pluck('level')->min();
-        $tree = $tree->map(function ($header) use ($minLevel) {
-            $header['level'] -= ($minLevel - 2);
+        // Shift headers if only smaller headers have been used
+        $levelChange = ($tree->pluck('level')->min() - 1);
+        $tree = $tree->map(function ($header) use ($levelChange) {
+            $header['level'] -= ($levelChange);
             return $header;
         });
 
