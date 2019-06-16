@@ -56,7 +56,7 @@
                 <div class="sidebar-page-nav menu">
                     @foreach($pageNav as $navItem)
                         <li class="page-nav-item h{{ $navItem['level'] }}">
-                            <a href="{{ $navItem['link'] }}">{{ $navItem['text'] }}</a>
+                            <a href="{{ $navItem['link'] }}" class="limit-text block">{{ $navItem['text'] }}</a>
                             <div class="primary-background sidebar-page-nav-bullet"></div>
                         </li>
                     @endforeach

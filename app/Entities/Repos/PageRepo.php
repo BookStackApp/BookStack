@@ -424,9 +424,7 @@ class PageRepo extends EntityRepo
 
         $tree = collect($headers)->map(function($header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
-            if (mb_strlen($text) > 30) {
-                $text = mb_substr($text, 0, 27) . '...';
-            }
+            $text = mb_substr($text, 0, 100);
 
             return [
                 'nodeName' => strtolower($header->nodeName),
