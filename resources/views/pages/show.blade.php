@@ -11,22 +11,8 @@
     </div>
 
     <div class="content-wrap card">
-        <div class="page-content flex" page-display="{{ $page->id }}">
-
-            <div class="pointer-container" id="pointer">
-                <div class="pointer anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
-                    <span class="icon text-primary">@icon('link') @icon('include', ['style' => 'display:none;'])</span>
-                    <span class="input-group">
-                    <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
-                    <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
-                </span>
-                    @if(userCan('page-update', $page))
-                        <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
-                           class="button icon heading-edit-icon" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
-                    @endif
-                </div>
-            </div>
-
+        <div class="page-content" page-display="{{ $page->id }}">
+            @include('pages.pointer', ['page' => $page])
             @include('pages.page-display')
         </div>
     </div>
