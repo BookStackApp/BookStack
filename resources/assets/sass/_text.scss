@@ -329,6 +329,12 @@ li.checkbox-item, li.task-list-item {
   overflow-wrap: break-word;
 }
 
+.limit-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /**
  * Grouping
  */
