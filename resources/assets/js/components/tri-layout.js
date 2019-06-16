@@ -74,14 +74,14 @@ class TriLayout {
      * Used by the page-display component.
      */
     showContent() {
-        this.showTab('content');
+        this.showTab('content', false);
     }
 
     /**
      * Show the given tab
      * @param tabName
      */
-    showTab(tabName) {
+    showTab(tabName, scroll = true) {
         this.scrollCache[this.lastTabShown] = document.documentElement.scrollTop;
 
         // Set tab status
@@ -96,12 +96,14 @@ class TriLayout {
         this.elem.classList.toggle('show-info', showInfo);
 
         // Set the scroll position from cache
-        const pageHeader = document.querySelector('header');
-        const defaultScrollTop = pageHeader.getBoundingClientRect().bottom;
-        document.documentElement.scrollTop = this.scrollCache[tabName] || defaultScrollTop;
-        setTimeout(() => {
+        if (scroll) {
+            const pageHeader = document.querySelector('header');
+            const defaultScrollTop = pageHeader.getBoundingClientRect().bottom;
             document.documentElement.scrollTop = this.scrollCache[tabName] || defaultScrollTop;
-        }, 50);
+            setTimeout(() => {
+                document.documentElement.scrollTop = this.scrollCache[tabName] || defaultScrollTop;
+            }, 50);
+        }
 
         this.lastTabShown = tabName;
     }
