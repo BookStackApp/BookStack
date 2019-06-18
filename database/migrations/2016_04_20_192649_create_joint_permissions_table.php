@@ -43,8 +43,8 @@ class CreateJointPermissionsTable extends Migration
         // Create the new public role
         $publicRoleData = [
             'name' => 'public',
-            'display_name' => 'Public',
-            'description' => 'The role given to public visitors if allowed',
+            'display_name' => __('migrations.roles.public.display_name'),
+            'description' => __('migrations.roles.public.description'),
             'system_name' => 'public',
             'hidden' => true,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
@@ -58,11 +58,11 @@ class CreateJointPermissionsTable extends Migration
         $publicRoleId = DB::table('roles')->insertGetId($publicRoleData);
 
         // Add new view permissions to public role
-        $entities = ['Book', 'Page', 'Chapter'];
-        $ops = ['View All', 'View Own'];
+        $entities = ['book', 'page', 'chapter'];
+        $ops = ['view-all', 'view-own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $name = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
+                $name = $entity . '-' . $op;
                 $permission = DB::table('role_permissions')->where('name', '=', $name)->first();
                 // Assign view permission to public
                 DB::table('permission_role')->insert([

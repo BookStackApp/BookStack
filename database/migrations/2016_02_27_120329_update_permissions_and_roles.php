@@ -21,11 +21,11 @@ class UpdatePermissionsAndRoles extends Migration
 
         // Create & attach new admin permissions
         $permissionsToCreate = [
-            'settings-manage' => 'Manage Settings',
-            'users-manage' => 'Manage Users',
-            'user-roles-manage' => 'Manage Roles & Permissions',
-            'restrictions-manage-all' => 'Manage All Entity Permissions',
-            'restrictions-manage-own' => 'Manage Entity Permissions On Own Content'
+            'settings-manage' => __('migrations.permissions.settings-manage'),
+            'users-manage' => __('migrations.permissions.users-manage'),
+            'user-roles-manage' => __('migrations.permissions.user-roles-manage'),
+            'restrictions-manage-all' => __('migrations.permissions.restrictions-manage-all'),
+            'restrictions-manage-own' => __('migrations.permissions.restrictions-manage-own'),
         ];
         foreach ($permissionsToCreate as $name => $displayName) {
             $permissionId = DB::table('permissions')->insertGetId([
@@ -41,13 +41,13 @@ class UpdatePermissionsAndRoles extends Migration
         }
 
         // Create & attach new entity permissions
-        $entities = ['Book', 'Page', 'Chapter', 'Image'];
-        $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
+        $entities = ['book', 'page', 'chapter', 'image'];
+        $ops = ['create-all', 'create-own', 'update-all', 'update-own', 'delete-all', 'delete-own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
@@ -80,13 +80,13 @@ class UpdatePermissionsAndRoles extends Migration
         $permissions = DB::table('permissions')->delete();
 
         // Create default CRUD permissions and allocate to admins and editors
-        $entities = ['Book', 'Page', 'Chapter', 'Image'];
-        $ops = ['Create', 'Update', 'Delete'];
+        $entities = ['book', 'page', 'chapter', 'image'];
+        $ops = ['create', 'update', 'delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower($op),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
@@ -98,13 +98,13 @@ class UpdatePermissionsAndRoles extends Migration
         }
 
         // Create admin permissions
-        $entities = ['Settings', 'User'];
-        $ops = ['Create', 'Update', 'Delete'];
+        $entities = ['settings', 'user'];
+        $ops = ['create', 'update', 'delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower($op),
-                    'display_name' => $op . ' ' . $entity,
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);

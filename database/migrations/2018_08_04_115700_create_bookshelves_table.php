@@ -70,7 +70,8 @@ class CreateBookshelvesTable extends Migration
         DB::table('role_permissions')->where('name', 'like', 'bookshelf-%')->delete();
 
         // Copy existing role permissions from Books
-        $ops = ['View All', 'View Own', 'Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
+        $entity = 'bookshelf';
+        $ops = ['view-all', 'view-own', 'create-all', 'create-own', 'update-all', 'update-own', 'delete-all', 'delete-own'];
         foreach ($ops as $op) {
             $dbOpName = strtolower(str_replace(' ', '-', $op));
             $roleIdsWithBookPermission = DB::table('role_permissions')
@@ -79,8 +80,8 @@ class CreateBookshelvesTable extends Migration
                 ->where('role_permissions.name', '=', 'book-' . $dbOpName)->get(['roles.id'])->pluck('id');
 
             $permId = DB::table('role_permissions')->insertGetId([
-                'name' => 'bookshelf-' . $dbOpName,
-                'display_name' => $op . ' ' . 'BookShelves',
+                'name' => $entity . '-' . $op,
+                'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
             ]);

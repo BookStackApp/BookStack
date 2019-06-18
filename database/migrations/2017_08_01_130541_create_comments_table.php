@@ -31,12 +31,12 @@ class CreateCommentsTable extends Migration
             // Assign new comment permissions to admin role
             $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
             // Create & attach new entity permissions
-            $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
-            $entity = 'Comment';
+            $ops = ['create-all', 'create-own', 'update-all', 'update-own', 'delete-all', 'delete-own'];
+            $entity = 'comment';
             foreach ($ops as $op) {
                 $permissionId = DB::table('role_permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
@@ -58,10 +58,10 @@ class CreateCommentsTable extends Migration
     {
         Schema::dropIfExists('comments');
         // Delete comment role permissions
-        $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
-        $entity = 'Comment';
+        $ops = ['create-all', 'create-own', 'update-all', 'update-own', 'delete-all', 'delete-own'];
+        $entity = 'comment';
         foreach ($ops as $op) {
-            $permName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
+            $permName = $entity . '-' . $op;
             DB::table('role_permissions')->where('name', '=', $permName)->delete();
         }
     }

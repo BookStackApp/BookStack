@@ -34,12 +34,12 @@ class CreateAttachmentsTable extends Migration
         $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
 
         // Create & attach new entity permissions
-        $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
-        $entity = 'Attachment';
+        $entity = 'attachment';
+        $ops = ['create-all', 'create-own', 'update-all', 'update-own', 'delete-all', 'delete-own'];
         foreach ($ops as $op) {
             $permissionId = DB::table('role_permissions')->insertGetId([
-                'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
-                'display_name' => $op . ' ' . $entity . 's',
+                'name' => $entity . '-' . $op,
+                'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
             ]);

@@ -15,13 +15,13 @@ class AddViewPermissionsToRoles extends Migration
         $currentRoles = DB::table('roles')->get();
 
         // Create new view permission
-        $entities = ['Book', 'Page', 'Chapter'];
-        $ops = ['View All', 'View Own'];
+        $entities = ['book', 'page', 'chapter'];
+        $ops = ['view-all', 'view-own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);

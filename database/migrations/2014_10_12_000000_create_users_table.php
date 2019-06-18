@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
 
         // Create the initial admin user
         DB::table('users')->insert([
-            'name' => 'Admin',
+            'name' => __('migrations.users.admin'),
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),

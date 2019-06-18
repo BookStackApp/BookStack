@@ -70,35 +70,35 @@ class AddRolesAndPermissions extends Migration
         // Create default roles
         $adminId = DB::table('roles')->insertGetId([
             'name' => 'admin',
-            'display_name' => 'Admin',
-            'description' => 'Administrator of the whole application',
+            'display_name' => __('migrations.roles.admin.display_name'),
+            'description' => __('migrations.roles.admin.description'),
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
         $editorId = DB::table('roles')->insertGetId([
             'name' => 'editor',
-            'display_name' => 'Editor',
-            'description' => 'User can edit Books, Chapters & Pages',
+            'display_name' => __('migrations.roles.editor.display_name'),
+            'description' => __('migrations.roles.editor.description'),
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
         $viewerId = DB::table('roles')->insertGetId([
             'name' => 'viewer',
-            'display_name' => 'Viewer',
-            'description' => 'User can view books & their content behind authentication',
+            'display_name' => __('migrations.roles.viewer.display_name'),
+            'description' => __('migrations.roles.viewer.description'),
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
 
         // Create default CRUD permissions and allocate to admins and editors
-        $entities = ['Book', 'Page', 'Chapter', 'Image'];
-        $ops = ['Create', 'Update', 'Delete'];
+        $entities = ['book', 'page', 'chapter', 'image'];
+        $ops = ['create', 'update', 'delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $newPermId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower($op),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
@@ -110,13 +110,13 @@ class AddRolesAndPermissions extends Migration
         }
 
         // Create admin permissions
-        $entities = ['Settings', 'User'];
-        $ops = ['Create', 'Update', 'Delete'];
+        $entities = ['settings', 'user'];
+        $ops = ['create', 'update', 'delete'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $newPermId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower($op),
-                    'display_name' => $op . ' ' . $entity,
+                    'name' => $entity . '-' . $op,
+                    'display_name' => __('migrations.permissions.ops.' . $op) . ' ' . __('migrations.permissions.entities.' . $entity),
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
