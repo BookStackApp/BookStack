@@ -34,6 +34,7 @@ return [
     'pages_delete_draft_confirm' => 'Bist Du sicher, dass Du diesen Seitenentwurf löschen möchtest?',
     'pages_edit_enter_changelog_desc' => 'Bitte gib eine kurze Zusammenfassung Deiner Änderungen ein',
     'pages_editing_draft_notification' => 'Du bearbeitest momenten einen Entwurf, der zuletzt :timeDiff gespeichert wurde.',
+    'pages_draft_edited_notification' => 'Diese Seite wurde seit diesem Zeitpunkt verändert. Wir empfehlen Dir, diesen Entwurf zu verwerfen.',
     'pages_draft_edit_active' => [
         'start_a' => ':count Benutzer bearbeiten derzeit diese Seite.',
         'start_b' => ':userName bearbeitet jetzt diese Seite.',
