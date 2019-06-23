@@ -11,6 +11,17 @@ class DummyContentSeeder extends Seeder
      */
     public function run()
     {
+        // Create admin user
+        $adminUser = new \BookStack\Auth\User();
+        $adminUser->name = 'Admin User';
+        $adminUser->email = 'admin@test.local';
+        $adminUser->password = Hash::make('admin');
+        $adminUser->email_confirmed = true;
+        $adminUser->setRememberToken(str_random(10));
+        $adminUser->save();
+        $adminRole = \BookStack\Auth\Role::getRole('admin');
+        $adminUser->attachRole($adminRole);
+
         // Create an editor user
         $editorUser = factory(\BookStack\Auth\User::class)->create();
         $editorRole = \BookStack\Auth\Role::getRole('editor');
