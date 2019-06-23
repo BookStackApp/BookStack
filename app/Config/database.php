@@ -92,6 +92,18 @@ return [
             'strict'    => false,
         ],
 
+        'mysql_docker_dev' => [
+            'driver'    => 'mysql',
+            'host'      => 'db',
+            'database'  => 'bookstack-test',
+            'username'  => 'bookstack-test',
+            'password'  => 'bookstack-test',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
