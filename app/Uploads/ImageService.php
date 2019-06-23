@@ -45,9 +45,9 @@ class ImageService extends UploadService
      */
     protected function getStorage($type = '')
     {
-        $storageType = config('filesystems.default');
+        $storageType = config('filesystems.images');
 
-        // Override default location if set to local public to ensure not visible.
+        // Ensure system images (App logo) are uploaded to a public space
         if ($type === 'system' && $storageType === 'local_secure') {
             $storageType = 'local';
         }
@@ -458,7 +458,7 @@ class ImageService extends UploadService
             // Get the standard public s3 url if s3 is set as storage type
             // Uses the nice, short URL if bucket name has no periods in otherwise the longer
             // region-based url will be used to prevent http issues.
-            if ($storageUrl == false && config('filesystems.default') === 's3') {
+            if ($storageUrl == false && config('filesystems.images') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
                 if (strpos($storageDetails['bucket'], '.') === false) {
                     $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
