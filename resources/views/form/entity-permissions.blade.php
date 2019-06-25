@@ -1,4 +1,4 @@
-<form action="{{ $model->getUrl('/permissions') }}" method="POST">
+<form action="{{ $model->getUrl('/permissions') }}" method="POST" entity-permissions-editor>
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 
@@ -11,7 +11,7 @@
         ])
     </div>
 
-    <table permissions-table class="table permissions-table toggle-switch-list">
+    <table permissions-table class="table permissions-table toggle-switch-list" style="{{ !$model->restricted ? 'display: none' : '' }}">
         <tr>
             <th>{{ trans('common.role') }}</th>
             <th @if($model->isA('page')) colspan="3" @else colspan="4" @endif>
