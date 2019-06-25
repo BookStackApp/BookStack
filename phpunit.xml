@@ -34,8 +34,8 @@
         <env name="AVATAR_URL" value=""/>
         <env name="LDAP_VERSION" value="3"/>
         <env name="STORAGE_TYPE" value="local"/>
-        <env name="ATTACHMENT_STORAGE_TYPE" value="local"/>
-        <env name="IMAGE_STORAGE_TYPE" value="local"/>
+        <env name="STORAGE_ATTACHMENT_TYPE" value="local"/>
+        <env name="STORAGE_IMAGE_TYPE" value="local"/>
         <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
         <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
         <env name="GITHUB_AUTO_REGISTER" value=""/>
