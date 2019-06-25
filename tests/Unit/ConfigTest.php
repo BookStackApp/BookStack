@@ -16,6 +16,8 @@ class ConfigTest extends TestCase
 
         $this->checkEnvConfigResult('STORAGE_IMAGE_TYPE', 's3', 'filesystems.images', 's3');
         $this->checkEnvConfigResult('STORAGE_IMAGE_TYPE', null, 'filesystems.images', 'local_secure');
+
+        putenv('STORAGE_TYPE=local');
     }
 
     public function test_filesystem_attachments_falls_back_to_storage_type_var()
@@ -24,6 +26,8 @@ class ConfigTest extends TestCase
 
         $this->checkEnvConfigResult('STORAGE_ATTACHMENT_TYPE', 's3', 'filesystems.attachments', 's3');
         $this->checkEnvConfigResult('STORAGE_ATTACHMENT_TYPE', null, 'filesystems.attachments', 'local_secure');
+
+        putenv('STORAGE_TYPE=local');
     }
 
     public function test_app_url_blank_if_old_default_value()
@@ -45,10 +49,12 @@ class ConfigTest extends TestCase
      */
     protected function checkEnvConfigResult(string $envName, $envVal, string $configKey, string $expectedResult)
     {
+        $originalVal = getenv($envName);
         $envString = $envName . (is_null($envVal) ? '' : '=') . ($envVal ?? '');
         putenv($envString);
         $this->refreshApplication();
         $this->assertEquals($expectedResult, config($configKey));
+        putenv($envString = $envName . (empty($originalVal) ? '' : '=') . ($originalVal ?? ''));
     }
 
 }
