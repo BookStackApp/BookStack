@@ -17,7 +17,6 @@ class ImageService extends UploadService
 
     protected $imageTool;
     protected $cache;
-    protected $storageUrl;
     protected $image;
     protected $http;
 
@@ -158,7 +157,7 @@ class ImageService extends UploadService
         $imageDetails = [
             'name'       => $imageName,
             'path'       => $fullPath,
-            'url'        => $this->getPublicUrl($fullPath),
+            'url'        => $this->getPublicUrl($type, $fullPath),
             'type'       => $type,
             'uploaded_to' => $uploadedTo
         ];
@@ -200,7 +199,7 @@ class ImageService extends UploadService
     public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
     {
         if ($keepRatio && $this->isGif($image)) {
-            return $this->getPublicUrl($image->path);
+            return $this->getPublicUrl($image->type, $image->path);
         }
 
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
@@ -208,12 +207,12 @@ class ImageService extends UploadService
         $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
 
         if ($this->cache->has('images-' . $image->id . '-' . $thumbFilePath) && $this->cache->get('images-' . $thumbFilePath)) {
-            return $this->getPublicUrl($thumbFilePath);
+            return $this->getPublicUrl($image->type, $thumbFilePath);
         }
 
         $storage = $this->getStorage($image->type);
         if ($storage->exists($thumbFilePath)) {
-            return $this->getPublicUrl($thumbFilePath);
+            return $this->getPublicUrl($image->type, $thumbFilePath);
         }
 
         $thumbData = $this->resizeImage($storage->get($imagePath), $width, $height, $keepRatio);
@@ -222,7 +221,7 @@ class ImageService extends UploadService
         $storage->setVisibility($thumbFilePath, 'public');
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
 
-        return $this->getPublicUrl($thumbFilePath);
+        return $this->getPublicUrl($image->type, $thumbFilePath);
     }
 
     /**
@@ -447,29 +446,13 @@ class ImageService extends UploadService
 
     /**
      * Gets a public facing url for an image by checking relevant environment variables.
+     * @param string $type
      * @param string $filePath
      * @return string
      */
-    private function getPublicUrl($filePath)
+    private function getPublicUrl($type, $filePath)
     {
-        if ($this->storageUrl === null) {
-            $storageUrl = config('filesystems.url');
-
-            // Get the standard public s3 url if s3 is set as storage type
-            // Uses the nice, short URL if bucket name has no periods in otherwise the longer
-            // region-based url will be used to prevent http issues.
-            if ($storageUrl == false && config('filesystems.images') === 's3') {
-                $storageDetails = config('filesystems.disks.s3');
-                if (strpos($storageDetails['bucket'], '.') === false) {
-                    $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
-                } else {
-                    $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
-                }
-            }
-            $this->storageUrl = $storageUrl;
-        }
-
-        $basePath = ($this->storageUrl == false) ? baseUrl('/') : $this->storageUrl;
-        return rtrim($basePath, '/') . $filePath;
+        $storage = $this->getStorage($type);
+        return $storage->url($filePath);
     }
 }

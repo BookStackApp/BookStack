@@ -119,6 +119,9 @@ return [
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
         BookStack\Providers\CustomFacadeProvider::class,
+
+        // Register GCS storage
+        mix5003\GCSProvider\GoogleCloudStorageServiceProvider::class,
     ],
 
     /*

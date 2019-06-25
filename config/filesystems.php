@@ -59,6 +59,14 @@ return [
             'use_path_style_endpoint' => env('STORAGE_S3_ENDPOINT', null) !== null,
         ],
 
+        'gcs' => [
+            'driver' => 'gcs',
+            'projectId' => env('STORAGE_GCS_PROJECT_ID', 'your-project-id'),
+            'bucket' => env('STORAGE_GCS_BUCKET', 'your-bucket'),
+        ] + // Only add those parameters if not empty
+        (env('STORAGE_GCS_URL', '') == '' ? [] : ['url' => env('STORAGE_GCS_URL', '')]) +
+        (env('STORAGE_GCS_KEY_FILE_PATH', '') == '' ? [] : ['keyFilePath' => env('STORAGE_GCS_KEY_FILE_PATH', '')]),
+
         'rackspace' => [
             'driver'    => 'rackspace',
             'username'  => 'your-username',
