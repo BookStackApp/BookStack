@@ -294,6 +294,7 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
+    'revision_restore_confirm' => 'Sind Sie sicher, dass Sie diese Revision wiederherstellen möchten? Der momentane Inhalt der Seite wird dann ersetzt.',
     'revision_delete_success' => 'Revision gelöscht',
     'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
 ];

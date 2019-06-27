@@ -63,4 +63,5 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Bist Du sicher, dass Du diese Revision löschen möchtest?',
+    'revision_restore_confirm' => 'Bist Du sicher, dass Du diese Revision wiederherstellen möchtest? Der momentane Inhalt der Seite wird dann ersetzt.',
 ];
