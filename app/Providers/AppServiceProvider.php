@@ -9,7 +9,6 @@ use BookStack\Entities\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Schema;
