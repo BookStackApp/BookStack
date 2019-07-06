@@ -126,7 +126,7 @@ return [
     'users_preferred_language' => 'Preferred Language',
     'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
     'users_social_accounts' => 'Social Accounts',
-    'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
+    'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not revoke previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Connect Account',
     'users_social_disconnect' => 'Disconnect Account',
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
