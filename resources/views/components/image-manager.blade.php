@@ -1,4 +1,13 @@
 <div id="image-manager" image-type="{{ $imageType }}" uploaded-to="{{ $uploaded_to ?? 0 }}">
+
+    @exposeTranslations([
+        'components.image_delete_success',
+        'components.image_upload_success',
+        'errors.server_upload_limit',
+        'components.image_upload_remove',
+        'components.file_upload_timeout',
+    ])
+
     <div overlay v-cloak @click="hide">
         <div class="popup-body" @click.stop="">
 
