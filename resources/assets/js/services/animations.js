@@ -1,4 +1,19 @@
 /**
+ * Fade out the given element.
+ * @param {Element} element
+ * @param {Number} animTime
+ * @param {Function|null} onComplete
+ */
+export function fadeOut(element, animTime = 400, onComplete = null) {
+    animateStyles(element, {
+        opacity: ['1', '0']
+    }, animTime, () => {
+        element.style.display = 'none';
+        if (onComplete) onComplete();
+    });
+}
+
+/**
  * Hide the element by sliding the contents upwards.
  * @param {Element} element
  * @param {Number} animTime
