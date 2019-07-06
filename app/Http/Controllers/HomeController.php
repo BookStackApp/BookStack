@@ -92,35 +92,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Get a js representation of the current translations
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
-     */
-    public function getTranslations()
-    {
-        $locale = app()->getLocale();
-        $cacheKey = 'GLOBAL_TRANSLATIONS_' . $locale;
-
-        if (cache()->has($cacheKey) && config('app.env') !== 'development') {
-            $resp = cache($cacheKey);
-        } else {
-            $translations = [
-                // Get only translations which might be used in JS
-                'common' => trans('common'),
-                'components' => trans('components'),
-                'entities' => trans('entities'),
-                'errors' => trans('errors')
-            ];
-            $resp = 'window.translations = ' . json_encode($translations);
-            cache()->put($cacheKey, $resp, 120);
-        }
-
-        return response($resp, 200, [
-            'Content-Type' => 'application/javascript'
-        ]);
-    }
-
-    /**
      * Get custom head HTML, Used in ajax calls to show in editor.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

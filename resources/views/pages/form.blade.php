@@ -1,4 +1,3 @@
-
 <div class="page-editor flex-fill flex" id="page-editor"
      drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
      drawio-enabled="{{ config('services.drawio') ? 'true' : 'false' }}"
@@ -8,7 +7,14 @@
      page-new-draft="{{ $model->draft ?? 0 }}"
      page-update-draft="{{ $model->isDraft ?? 0 }}">
 
-    {{ csrf_field() }}
+    @exposeTranslations([
+        'entities.pages_editing_draft',
+        'entities.pages_editing_page',
+        'errors.page_draft_autosave_fail',
+        'entities.pages_editing_page',
+        'entities.pages_draft_discarded',
+        'entities.pages_edit_set_changelog',
+    ])
 
     {{--Header Bar--}}
     <div class="primary-background-light toolbar page-edit-toolbar">
@@ -65,57 +71,12 @@
 
         {{--WYSIWYG Editor--}}
         @if(setting('app-editor') === 'wysiwyg')
-            <div wysiwyg-editor class="flex-fill flex">
-                <textarea id="html-editor"  name="html" rows="5" v-pre
-                    @if($errors->has('html')) class="text-neg" @endif>@if(isset($model) || old('html')){{htmlspecialchars( old('html') ? old('html') : $model->html)}}@endif</textarea>
-            </div>
-
-            @if($errors->has('html'))
-                <div class="text-neg text-small">{{ $errors->first('html') }}</div>
-            @endif
+            @include('pages.wysiwyg-editor', ['model' => $model])
         @endif
 
         {{--Markdown Editor--}}
         @if(setting('app-editor') === 'markdown')
-            <div v-pre id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
-
-                <div class="markdown-editor-wrap active">
-                    <div class="editor-toolbar">
-                        <span class="float left editor-toolbar-label">{{ trans('entities.pages_md_editor') }}</span>
-                        <div class="float right buttons">
-                            @if(config('services.drawio'))
-                                <button class="text-button" type="button" data-action="insertDrawing">@icon('drawing'){{ trans('entities.pages_md_insert_drawing') }}</button>
-                                &nbsp;|&nbsp
-                            @endif
-                            <button class="text-button" type="button" data-action="insertImage">@icon('image'){{ trans('entities.pages_md_insert_image') }}</button>
-                            &nbsp;|&nbsp;
-                            <button class="text-button" type="button" data-action="insertLink">@icon('link'){{ trans('entities.pages_md_insert_link') }}</button>
-                        </div>
-                    </div>
-
-                    <div markdown-input class="flex flex-fill">
-                        <textarea  id="markdown-editor-input"  name="markdown" rows="5"
-                            @if($errors->has('markdown')) class="text-neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
-                    </div>
-
-                </div>
-
-                <div class="markdown-editor-wrap">
-                    <div class="editor-toolbar">
-                        <div class="editor-toolbar-label">{{ trans('entities.pages_md_preview') }}</div>
-                    </div>
-                    <div class="markdown-display page-content">
-                    </div>
-                </div>
-                <input type="hidden" name="html"/>
-
-            </div>
-
-
-
-            @if($errors->has('markdown'))
-                <div class="text-neg text-small">{{ $errors->first('markdown') }}</div>
-            @endif
+            @include('pages.markdown-editor', ['model' => $model])
         @endif
 
     </div>

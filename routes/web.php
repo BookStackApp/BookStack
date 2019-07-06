@@ -1,6 +1,5 @@
 <?php
 
-Route::get('/translations', 'HomeController@getTranslations');
 Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...

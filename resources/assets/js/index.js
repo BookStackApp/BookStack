@@ -16,7 +16,7 @@ window.$events = eventManager;
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
 import Translations from "./services/translations"
-const translator = new Translations(window.translations);
+const translator = new Translations();
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
 

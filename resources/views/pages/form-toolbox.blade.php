@@ -18,6 +18,17 @@
 
     @if(userCan('attachment-create-all'))
         <div toolbox-tab-content="files" id="attachment-manager" page-id="{{ $page->id ?? 0 }}">
+
+            @exposeTranslations([
+                'entities.attachments_file_uploaded',
+                'entities.attachments_file_updated',
+                'entities.attachments_link_attached',
+                'entities.attachments_updated_success',
+                'errors.server_upload_limit',
+                'components.image_upload_remove',
+                'components.file_upload_timeout',
+            ])
+
             <h4>{{ trans('entities.attachments') }}</h4>
             <div class="px-l files">
 

@@ -13,14 +13,17 @@
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
-    <!-- Scripts -->
-    <script src="{{ baseUrl('/translations') }}"></script>
-
     @yield('head')
+
+    <!-- Custom Styles & Head Content -->
     @include('partials.custom-styles')
     @include('partials.custom-head')
 
     @stack('head')
+
+    <!-- Translations for JS -->
+    @stack('translations')
+
 </head>
 <body class="@yield('body-class')">
 
