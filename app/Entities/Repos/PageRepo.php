@@ -69,6 +69,10 @@ class PageRepo extends EntityRepo
             $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $page->template = ($input['template'] === 'true');
+        }
+
         // Update with new details
         $userId = user()->id;
         $page->fill($input);
@@ -85,8 +89,9 @@ class PageRepo extends EntityRepo
         $this->userUpdatePageDraftsQuery($page, $userId)->delete();
 
         // Save a revision after updating
-        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $input['summary'] !== null) {
-            $this->savePageRevision($page, $input['summary']);
+        $summary = $input['summary'] ?? null;
+        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $summary !== null) {
+            $this->savePageRevision($page, $summary);
         }
 
         $this->searchService->indexEntity($page);
@@ -298,6 +303,10 @@ class PageRepo extends EntityRepo
         // Save page tags if present
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
+        }
+
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $draftPage->template = ($input['template'] === 'true');
         }
 
         $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
