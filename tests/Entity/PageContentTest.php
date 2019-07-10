@@ -84,6 +84,31 @@ class PageContentTest extends TestCase
         $pageView->assertSee('abc123abc123');
     }
 
+    public function test_more_complex_content_script_escaping_scenarios()
+    {
+        $checks = [
+            "<p>Some script</p><script>alert('cat')</script>",
+            "<div><div><div><div><p>Some script</p><script>alert('cat')</script></div></div></div></div>",
+            "<p>Some script<script>alert('cat')</script></p>",
+            "<p>Some script <div><script>alert('cat')</script></div></p>",
+            "<p>Some script <script><div>alert('cat')</script></div></p>",
+            "<p>Some script <script><div>alert('cat')</script><script><div>alert('cat')</script></p><script><div>alert('cat')</script>",
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertElementNotContains('.page-content', '<script>');
+            $pageView->assertElementNotContains('.page-content', '</script>');
+        }
+
+    }
+
     public function test_page_inline_on_attributes_removed_by_default()
     {
         $this->asEditor();
@@ -95,6 +120,29 @@ class PageContentTest extends TestCase
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee($script);
         $pageView->assertSee('<p>Hello</p>');
+    }
+
+    public function test_more_complex_inline_on_attributes_escaping_scenarios()
+    {
+        $checks = [
+            '<p onclick="console.log(\'test\')">Hello</p>',
+            '<div>Lorem ipsum dolor sit amet.</div><p onclick="console.log(\'test\')">Hello</p>',
+            '<div>Lorem ipsum dolor sit amet.<p onclick="console.log(\'test\')">Hello</p></div>',
+            '<div><div><div><div>Lorem ipsum dolor sit amet.<p onclick="console.log(\'test\')">Hello</p></div></div></div></div>',
+            '<div onclick="console.log(\'test\')">Lorem ipsum dolor sit amet.</div><p onclick="console.log(\'test\')">Hello</p><div></div>',
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertElementNotContains('.page-content', 'onclick');
+        }
+
     }
 
     public function test_page_content_scripts_show_when_configured()
