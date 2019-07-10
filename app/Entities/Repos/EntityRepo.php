@@ -760,13 +760,13 @@ class EntityRepo
         $xPath = new DOMXPath($doc);
 
         // Remove standard script tags
-        $scriptElems = $xPath->query('//body//*//script');
+        $scriptElems = $xPath->query('//script');
         foreach ($scriptElems as $scriptElem) {
             $scriptElem->parentNode->removeChild($scriptElem);
         }
 
         // Remove 'on*' attributes
-        $onAttributes = $xPath->query('//body//*/@*[starts-with(name(), \'on\')]');
+        $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
         foreach ($onAttributes as $attr) {
             /** @var \DOMAttr $attr*/
             $attrName = $attr->nodeName;
