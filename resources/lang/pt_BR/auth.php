@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'As credenciais fornecidas não puderam ser validadas em nossos registros..',
     'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Registrar-se',
     'log_in' => 'Entrar',
     'log_in_with' => 'Entrar com :socialDriver',
@@ -32,6 +26,8 @@ return [
     'remember_me' => 'Lembrar de mim',
     'ldap_email_hint' => 'Por favor, digite um e-mail para essa conta.',
     'create_account' => 'Criar conta',
+    'already_have_account' => 'Você já possui uma conta?',
+    'dont_have_account' => 'Não possui uma conta?',
     'social_login' => 'Login social',
     'social_registration' => 'Registro social',
     'social_registration_text' => 'Registre e entre usando outro serviço.',
@@ -43,23 +39,18 @@ return [
     'register_success' => 'Obrigado por se registrar! Você agora encontra-se registrado e logado..',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Resetar senha',
     'reset_password_send_instructions' => 'Digite seu e-mail abaixo e o sistema enviará uma mensagem com o link de reset de senha.',
     'reset_password_send_button' => 'Enviar o link de reset de senha',
     'reset_password_sent_success' => 'Um link de reset de senha foi enviado para :email.',
     'reset_password_success' => 'Sua senha foi resetada com sucesso.',
-
     'email_reset_subject' => 'Resetar a senha de :appName',
     'email_reset_text' => 'Você recebeu esse e-mail pois recebemos uma solicitação de reset de senha para sua conta.',
     'email_reset_not_requested' => 'Caso não tenha sido você a solicitar o reset de senha, ignore esse e-mail.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Confirme seu e-mail para :appName',
     'email_confirm_greeting' => 'Obrigado por se registrar em :appName!',
     'email_confirm_text' => 'Por favor, confirme seu endereço de e-mail clicando no botão abaixo:',
