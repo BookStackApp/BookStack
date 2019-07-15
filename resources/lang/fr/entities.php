@@ -9,6 +9,7 @@ return [
     'recently_updated_pages' => 'Pages mises à jour récemment',
     'recently_created_chapters' => 'Chapitres créés récemment',
     'recently_created_books' => 'Livres créés récemment',
+    'recently_created_shelves' => 'Étagères créés récemment',
     'recently_update' => 'Mis à jour récemment',
     'recently_viewed' => 'Vus récemment',
     'recent_activity' => 'Activité récente',
@@ -71,11 +72,13 @@ return [
      */
     'shelf' => 'Étagère',
     'shelves' => 'Étagères',
+    'x_shelves' => ':count Étagère|:count Étagères',
     'shelves_long' => 'Étagères',
     'shelves_empty' => 'Aucune étagère n\'a été créée',
     'shelves_create' => 'Créer une nouvelle étagère',
     'shelves_popular' => 'Étagères populaires',
     'shelves_new' => 'Nouvelles Étagères',
+    'shelves_new_action' => 'Nouvelle Étagère',
     'shelves_popular_empty' => 'Les étagères les plus populaires apparaîtront ici.',
     'shelves_new_empty' => 'Les étagères les plus récentes apparaitront ici.',
     'shelves_save' => 'Enregistrer l\'étagère',
@@ -108,6 +111,7 @@ return [
     'books_popular' => 'Livres populaires',
     'books_recent' => 'Livres récents',
     'books_new' => 'Nouveaux livres',
+    'books_new_action' => 'Nouveau livre',
     'books_popular_empty' => 'Les livres les plus populaires apparaîtront ici.',
     'books_new_empty' => 'Les livres les plus récents apparaitront ici.',
     'books_create' => 'Créer un nouveau livre',
@@ -131,6 +135,11 @@ return [
     'books_navigation' => 'Navigation dans le livre',
     'books_sort' => 'Trier les contenus du livre',
     'books_sort_named' => 'Trier le livre :bookName',
+    'books_sort_name' => 'Trier par le nom',
+    'books_sort_created' => 'Trier par la date de création',
+    'books_sort_updated' => 'Trier par la date de mise à jour',
+    'books_sort_chapters_first' => 'Les chapitres en premier',
+    'books_sort_chapters_last' => 'Les chapitres en dernier',
     'books_sort_show_other' => 'Afficher d\'autres livres',
     'books_sort_save' => 'Enregistrer l\'ordre',
 
@@ -281,6 +290,7 @@ return [
     'profile_not_created_pages' => ':userName n\'a pas créé de page',
     'profile_not_created_chapters' => ':userName n\'a pas créé de chapitre',
     'profile_not_created_books' => ':userName n\'a pas créé de livre',
+    'profile_not_created_shelves' => ':userName n\'a pas créé d\'étagère',
 
     /**
      * Comments
