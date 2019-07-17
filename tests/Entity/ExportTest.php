@@ -3,6 +3,7 @@
 
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
+use BookStack\Uploads\HttpFetcher;
 
 class ExportTest extends TestCase
 {
@@ -146,6 +147,19 @@ class ExportTest extends TestCase
         $resp->assertDontSee($page->created_at->diffForHumans());
         $resp->assertSee($page->updated_at->toDayDateTimeString());
         $resp->assertDontSee($page->updated_at->diffForHumans());
+    }
+
+    public function test_page_export_sets_right_data_type_for_svg_embeds()
+    {
+        $page = Page::first();
+        $page->html = '<img src="http://example.com/image.svg">';
+        $page->save();
+
+        $this->asEditor();
+        $this->mockHttpFetch('<svg></svg>');
+        $resp = $this->get($page->getUrl('/export/html'));
+        $resp->assertStatus(200);
+        $resp->assertSee('<img src="data:image/svg+xml;base64');
     }
 
 }
