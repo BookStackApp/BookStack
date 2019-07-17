@@ -11,6 +11,7 @@ use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
+use BookStack\Uploads\HttpFetcher;
 
 trait SharedTestHelpers
 {
@@ -187,6 +188,20 @@ trait SharedTestHelpers
         $roleData = factory(Role::class)->make()->toArray();
         $roleData['permissions'] = array_flip($permissions);
         return $permissionRepo->saveNewRole($roleData);
+    }
+
+    /**
+     * Mock the HttpFetcher service and return the given data on fetch.
+     * @param $returnData
+     * @param int $times
+     */
+    protected function mockHttpFetch($returnData, int $times = 1)
+    {
+        $mockHttp = \Mockery::mock(HttpFetcher::class);
+        $this->app[HttpFetcher::class] = $mockHttp;
+        $mockHttp->shouldReceive('fetch')
+            ->times($times)
+            ->andReturn($returnData);
     }
 
 }

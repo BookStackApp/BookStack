@@ -442,7 +442,12 @@ class ImageService extends UploadService
             return null;
         }
 
-        return 'data:image/' . pathinfo($uri, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageData);
+        $extension = pathinfo($uri, PATHINFO_EXTENSION);
+        if ($extension === 'svg') {
+            $extension = 'svg+xml';
+        }
+
+        return 'data:image/' . $extension . ';base64,' . base64_encode($imageData);
     }
 
     /**
