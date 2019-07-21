@@ -112,6 +112,7 @@ function setting($key = null, $default = false)
  */
 function baseUrl($path, $forceAppDomain = false)
 {
+    return url($path);
     $isFullUrl = strpos($path, 'http') === 0;
     if ($isFullUrl && !$forceAppDomain) {
         return $path;

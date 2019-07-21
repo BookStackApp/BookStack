@@ -106,9 +106,7 @@ class LoginController extends Controller
             $this->ldapService->syncGroups($user, $request->get($this->username()));
         }
 
-        $path = session()->pull('url.intended', '/');
-        $path = baseUrl($path, true);
-        return redirect($path);
+        return redirect()->intended('/');
     }
 
     /**

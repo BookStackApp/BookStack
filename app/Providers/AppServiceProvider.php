@@ -8,6 +8,7 @@ use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
+use BookStack\UrlGenerator;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -72,5 +73,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SettingService::class, function ($app) {
             return new SettingService($app->make(Setting::class), $app->make('Illuminate\Contracts\Cache\Repository'));
         });
+
+        $this->app->bind(
+            \Illuminate\Contracts\Routing\UrlGenerator::class,
+            UrlGenerator::class
+        );
     }
 }
