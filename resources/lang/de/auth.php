@@ -30,6 +30,8 @@ return [
     'remember_me' => 'Angemeldet bleiben',
     'ldap_email_hint' => 'Bitte geben Sie eine E-Mail-Adresse ein, um diese mit dem Account zu nutzen.',
     'create_account' => 'Account registrieren',
+    'already_have_account' => 'Bereits ein Konto erstellt?',
+    'dont_have_account' => 'Noch kein Konto erstellt?',
     'social_login' => 'Mit Sozialem Netzwerk anmelden',
     'social_registration' => 'Mit Sozialem Netzwerk registrieren',
     'social_registration_text' => 'Mit einer dieser Dienste registrieren oder anmelden',
