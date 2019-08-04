@@ -18,8 +18,8 @@
         <p class="small">{{ trans('common.cover_image_description') }}</p>
 
         @include('components.image-picker', [
-            'defaultImage' => baseUrl('/book_default_cover.png'),
-            'currentImage' => (isset($model) && $model->cover) ? $model->getBookCover() : baseUrl('/book_default_cover.png') ,
+            'defaultImage' => url('/book_default_cover.png'),
+            'currentImage' => (isset($model) && $model->cover) ? $model->getBookCover() : url('/book_default_cover.png') ,
             'name' => 'image',
             'imageClass' => 'cover'
         ])
@@ -36,6 +36,6 @@
 </div>
 
 <div class="form-group text-right">
-    <a href="{{ isset($book) ? $book->getUrl() : baseUrl('/books') }}" class="button outline">{{ trans('common.cancel') }}</a>
+    <a href="{{ isset($book) ? $book->getUrl() : url('/books') }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button primary">{{ trans('entities.books_save') }}</button>
 </div>

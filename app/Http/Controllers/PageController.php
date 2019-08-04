@@ -541,7 +541,7 @@ class PageController extends Controller
     public function showRecentlyUpdated()
     {
         // TODO - Still exist?
-        $pages = $this->pageRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-updated'));
+        $pages = $this->pageRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(url('/pages/recently-updated'));
         return view('pages.detailed-listing', [
             'title' => trans('entities.recently_updated_pages'),
             'pages' => $pages

@@ -28,7 +28,7 @@
     @else
         <p class="text-muted">{{ trans('entities.books_empty') }}</p>
         @if(userCan('books-create-all'))
-            <a href="{{ baseUrl("/create-book") }}" class="text-pos">@icon('edit'){{ trans('entities.create_now') }}</a>
+            <a href="{{ url("/create-book") }}" class="text-pos">@icon('edit'){{ trans('entities.create_now') }}</a>
         @endif
     @endif
 </div>

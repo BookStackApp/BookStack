@@ -8,11 +8,11 @@ use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
-use BookStack\UrlGenerator;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Schema;
+use URL;
 use Validator;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Set root URL
+        URL::forceRootUrl(config('app.url'));
+
         // Custom validation methods
         Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
             $validImageExtensions = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff', 'webp'];
@@ -73,10 +76,5 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SettingService::class, function ($app) {
             return new SettingService($app->make(Setting::class), $app->make('Illuminate\Contracts\Cache\Repository'));
         });
-
-        $this->app->bind(
-            \Illuminate\Contracts\Routing\UrlGenerator::class,
-            UrlGenerator::class
-        );
     }
 }

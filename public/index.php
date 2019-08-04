@@ -34,6 +34,7 @@ require __DIR__.'/../bootstrap/init.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
+$app->alias('request', \BookStack\Http\Request::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,7 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
+    $request = \BookStack\Http\Request::capture()
 );
 
 $response->send();
