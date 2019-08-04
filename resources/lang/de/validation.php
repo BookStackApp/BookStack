@@ -38,6 +38,7 @@ return [
     'filled'               => ':attribute ist erforderlich.',
     'exists'               => ':attribute ist ungültig.',
     'image'                => ':attribute muss ein Bild sein.',
+    'image_extension'      => ':attribute muss eine gültige und unterstützte Bild-Dateiendung haben.',
     'in'                   => ':attribute ist ungültig.',
     'integer'              => ':attribute muss eine Zahl sein.',
     'ip'                   => ':attribute muss eine valide IP-Adresse sein.',
@@ -54,6 +55,7 @@ return [
         'string'  => ':attribute muss mindestens :min Zeichen lang sein.',
         'array'   => ':attribute muss mindesten :min Elemente enthalten.',
     ],
+    'no_double_extension'  => ':attribute darf nur eine gültige Dateiendung',
     'not_in'               => ':attribute ist ungültig.',
     'numeric'              => ':attribute muss eine Zahl sein.',
     'regex'                => ':attribute ist in einem ungültigen Format.',
@@ -74,6 +76,7 @@ return [
     'timezone'             => ':attribute muss eine valide zeitzone sein.',
     'unique'               => ':attribute wird bereits verwendet.',
     'url'                  => ':attribute ist kein valides Format.',
+    'uploaded'             => 'Die Datei konnte nicht hochgeladen werden. Der Server akzeptiert möglicherweise keine Dateien dieser Größe.',
 
     /*
     |--------------------------------------------------------------------------
@@ -89,6 +92,9 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],
+        'password-confirm' => [
+            'required_with' => 'Passwortbestätigung erforderlich',
         ],
     ],
 

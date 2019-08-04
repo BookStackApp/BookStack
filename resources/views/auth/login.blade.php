@@ -9,7 +9,7 @@
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ title_case(trans('auth.log_in')) }}</h1>
 
-            <form action="{{ baseUrl('/login') }}" method="POST" id="login-form" class="mt-l">
+            <form action="{{ url('/login') }}" method="POST" id="login-form" class="mt-l">
                 {!! csrf_field() !!}
 
                 <div class="stretch-inputs">
@@ -38,7 +38,7 @@
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
-                        <a id="social-login-{{$driver}}" class="button outline block svg" href="{{ baseUrl("/login/service/" . $driver) }}">
+                        <a id="social-login-{{$driver}}" class="button outline block svg" href="{{ url("/login/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.log_in_with', ['socialDriver' => $name]) }}
                         </a>
@@ -49,7 +49,7 @@
             @if(setting('registration-enabled', false))
                 <div class="text-center pb-s">
                     <hr class="my-l">
-                    <a href="{{ baseUrl('/register') }}">{{ trans('auth.dont_have_account') }}</a>
+                    <a href="{{ url('/register') }}">{{ trans('auth.dont_have_account') }}</a>
                 </div>
             @endif
         </div>

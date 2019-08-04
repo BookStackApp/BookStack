@@ -30,6 +30,7 @@ return [
     'cannot_get_image_from_url' => 'Bild konnte nicht von der URL :url geladen werden.',
     'cannot_create_thumbs' => 'Der Server kann keine Vorschau-Bilder erzeugen. Bitte prüfen Sie, ob die GD PHP-Erweiterung installiert ist.',
     'server_upload_limit' => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuchen Sie es mit einer kleineren Datei.',
+    'uploaded'  => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuchen Sie es mit einer kleineren Datei.',
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
     'file_upload_timeout' => 'Der Upload der Datei ist abgelaufen.',
@@ -43,6 +44,7 @@ return [
     // Entities
     'entity_not_found' => 'Eintrag nicht gefunden',
     'book_not_found' => 'Buch nicht gefunden',
+    'bookshelf_not_found' => 'Regal nicht gefunden',
     'page_not_found' => 'Seite nicht gefunden',
     'chapter_not_found' => 'Kapitel nicht gefunden',
     'selected_book_not_found' => 'Das gewählte Buch wurde nicht gefunden.',
@@ -55,6 +57,8 @@ return [
     'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden.',
     'role_system_cannot_be_deleted' => 'Dies ist eine Systemrolle und kann nicht gelöscht werden',
     'role_registration_default_cannot_delete' => 'Diese Rolle kann nicht gelöscht werden, solange sie als Standardrolle für neue Registrierungen gesetzt ist',
+    'role_cannot_remove_only_admin' => 'Dieser Benutzer ist der einzige Benutzer, welchem die Administratorrolle zugeordnet ist. Ordnen Sie die Administratorrolle einem anderen Benutzer zu, bevor Sie versuchen, sie hier zu entfernen.',
+
     // Comments
     'comment_list' => 'Beim Abrufen der Kommentare ist ein Fehler aufgetreten.',
     'cannot_add_comment_to_draft' => 'Du kannst keine Kommentare zu einem Entwurf hinzufügen.',

@@ -47,8 +47,8 @@
         <p class="small">{{ trans('common.cover_image_description') }}</p>
 
         @include('components.image-picker', [
-            'defaultImage' => baseUrl('/book_default_cover.png'),
-            'currentImage' => (isset($shelf) && $shelf->cover) ? $shelf->getBookCover() : baseUrl('/book_default_cover.png') ,
+            'defaultImage' => url('/book_default_cover.png'),
+            'currentImage' => (isset($shelf) && $shelf->cover) ? $shelf->getBookCover() : url('/book_default_cover.png') ,
             'name' => 'image',
             'imageClass' => 'cover'
         ])
@@ -65,6 +65,6 @@
 </div>
 
 <div class="form-group text-right">
-    <a href="{{ isset($shelf) ? $shelf->getUrl() : baseUrl('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
+    <a href="{{ isset($shelf) ? $shelf->getUrl() : url('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button primary">{{ trans('entities.shelves_save') }}</button>
 </div>

@@ -20,6 +20,10 @@
   }
 }
 
+body.mce-fullscreen .page-editor .edit-area {
+  z-index: 12;
+}
+
 @include smaller-than($s) {
   .page-edit-toolbar {
     overflow-x: scroll;

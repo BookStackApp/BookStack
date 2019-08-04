@@ -17,7 +17,6 @@ return [
     'page_restore'                => 'stellt Seite wieder her',
     'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergestellt.',
     'page_move'                   => 'verschiebt Seite',
-    'page_move_notification'      => 'Die Seite wurde erfolgreich verschoben.',
 
     // Chapters
     'chapter_create'              => 'erstellt Kapitel',
