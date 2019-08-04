@@ -45,10 +45,6 @@ return [
     // and used by BookStack in URL generation.
     'url' => env('APP_URL', '') === 'http://bookstack.dev' ? '' : env('APP_URL', ''),
 
-    // Rewrite URL, Used to rewrite the base of request URLs
-    // for scenarios
-    'url_base_rewrite' => env('APP_URL_BASE_REWRITE', null),
-
     // Application timezone for back-end date functions.
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
