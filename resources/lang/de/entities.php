@@ -8,6 +8,7 @@ return [
     'recently_updated_pages' => 'Kürzlich aktualisierte Seiten',
     'recently_created_chapters' => 'Kürzlich angelegte Kapitel',
     'recently_created_books' => 'Kürzlich angelegte Bücher',
+    'recently_created_shelves' => 'Kürzlich angelegte Regale',
     'recently_update' => 'Kürzlich aktualisiert',
     'recently_viewed' => 'Kürzlich angesehen',
     'recent_activity' => 'Kürzliche Aktivität',
@@ -49,28 +50,32 @@ return [
     'search_content_type' => 'Inhaltstyp',
     'search_exact_matches' => 'Exakte Treffer',
     'search_tags' => 'Nach Schlagwort suchen',
+    'search_options' => 'Optionen',
     'search_viewed_by_me' => 'Schon von mir angesehen',
     'search_not_viewed_by_me' => 'Noch nicht von mir angesehen',
     'search_permissions_set' => 'Berechtigungen gesetzt',
     'search_created_by_me' => 'Von mir erstellt',
     'search_updated_by_me' => 'Von mir aktualisiert',
+    'search_date_options' => 'Datums Optionen',
     'search_updated_before' => 'Aktualisiert vor',
     'search_updated_after' => 'Aktualisiert nach',
     'search_created_before' => 'Erstellt vor',
     'search_created_after' => 'Erstellt nach',
     'search_set_date' => 'Datum auswählen',
     'search_update' => 'Suche aktualisieren',
-    
+
     /*
      * Shelves
      */
     'shelf' => 'Regal',
     'shelves' => 'Regale',
+    'x_shelves' => ':count Regal|:count Regale',
     'shelves_long' => 'Bücherregal',
     'shelves_empty' => 'Es wurden noch keine Regale angelegt',
     'shelves_create' => 'Erzeuge ein Regal',
     'shelves_popular' => 'Beliebte Regale',
     'shelves_new' => 'Kürzlich erstellte Regale',
+    'shelves_new_action' => 'Neues Regal',
     'shelves_popular_empty' => 'Die beliebtesten Regale werden hier angezeigt.',
     'shelves_new_empty' => 'Die neusten Regale werden hier angezeigt.',
     'shelves_save' => 'Regal speichern',
@@ -92,7 +97,7 @@ return [
     'shelves_copy_permissions' => 'Berechtigungen kopieren',
     'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfen Sie vor der Aktivierung, ob alle Berechtigungsänderungen am aktuellen Regal gespeichert wurden.',
     'shelves_copy_permission_success' => 'Regal-Berechtigungen wurden zu :count Büchern kopiert',
-    
+
     /**
      * Books
      */
@@ -103,6 +108,7 @@ return [
     'books_popular' => 'Beliebte Bücher',
     'books_recent' => 'Kürzlich angesehene Bücher',
     'books_new' => 'Neue Bücher',
+    'books_new_action' => 'Neues Buch',
     'books_popular_empty' => 'Die beliebtesten Bücher werden hier angezeigt.',
     'books_new_empty' => 'Die neusten Bücher werden hier angezeigt.',
     'books_create' => 'Neues Buch erstellen',
@@ -118,7 +124,6 @@ return [
     'books_permissions_updated' => 'Buch-Berechtigungen aktualisiert',
     'books_empty_contents' => 'Es sind noch keine Seiten oder Kapitel zu diesem Buch hinzugefügt worden.',
     'books_empty_create_page' => 'Neue Seite anlegen',
-    'books_empty_or' => 'oder',
     'books_empty_sort_current_book' => 'Aktuelles Buch sortieren',
     'books_empty_add_chapter' => 'Neues Kapitel hinzufügen',
     'books_permissions_active' => 'Buch-Berechtigungen aktiv',
@@ -126,6 +131,11 @@ return [
     'books_navigation' => 'Buchnavigation',
     'books_sort' => 'Buchinhalte sortieren',
     'books_sort_named' => 'Buch ":bookName" sortieren',
+    'books_sort_name' => 'Sortieren nach Namen',
+    'books_sort_created' => 'Sortieren nach Erstellungsdatum',
+    'books_sort_updated' => 'Sortieren nach Aktualisierungsdatum',
+    'books_sort_chapters_first' => 'Kapitel zuerst',
+    'books_sort_chapters_last' => 'Kapitel zuletzt',
     'books_sort_show_other' => 'Andere Bücher anzeigen',
     'books_sort_save' => 'Neue Reihenfolge speichern',
     /**
@@ -232,6 +242,7 @@ return [
     'page_tags' => 'Seiten-Schlagwörter',
     'chapter_tags' => 'Kapitel-Schlagwörter',
     'book_tags' => 'Buch-Schlagwörter',
+    'shelf_tags' => 'Regal-Schlagwörter',
     'tag' => 'Schlagwort',
     'tags' =>  'Schlagwörter',
     'tag_value' => 'Inhalt (Optional)',
@@ -270,6 +281,7 @@ return [
     'profile_not_created_pages' => ':userName hat noch keine Seiten erstellt.',
     'profile_not_created_chapters' => ':userName hat noch keine Kapitel erstellt.',
     'profile_not_created_books' => ':userName hat noch keine Bücher erstellt.',
+    'profile_not_created_shelves' => ':userName hat noch keine Regale erstellt.',
     /**
      * Comments
      */
@@ -294,6 +306,7 @@ return [
      * Revision
      */
     'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
+    'revision_restore_confirm' => 'Sind Sie sicher, dass Sie diese Revision wiederherstellen wollen? Der aktuelle Seiteninhalt wird ersetzt.',
     'revision_delete_success' => 'Revision gelöscht',
     'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
 ];
