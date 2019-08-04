@@ -10,6 +10,7 @@ return [
     'save' => 'Speichern',
     'continue' => 'Weiter',
     'select' => 'Auswählen',
+    'toggle_all' => 'Alle umschalten',
     'more' => 'Mehr',
 
     /**
@@ -26,6 +27,7 @@ return [
      */
     'actions' => 'Aktionen',
     'view' => 'Anzeigen',
+    'view_all' => 'Alle anzeigen',
     'create' => 'Anlegen',
     'update' => 'Aktualisieren',
     'edit' => 'Bearbeiten',
@@ -40,6 +42,11 @@ return [
     'remove' => 'Entfernen',
     'add' => 'Hinzufügen',
 
+    // Sort Options
+    'sort_name' => 'Name',
+    'sort_created_at' => 'Erstellungsdatum',
+    'sort_updated_at' => 'Aktualisierungsdatum',
+
     /**
      * Misc
      */
@@ -52,12 +59,17 @@ return [
     'details' => 'Details',
     'grid_view' => 'Gitteransicht',
     'list_view' => 'Listenansicht',
+    'default' => 'Voreinstellung',
 
     /**
      * Header
      */
     'view_profile' => 'Profil ansehen',
     'edit_profile' => 'Profil bearbeiten',
+
+    // Layout tabs
+    'tab_info' => 'Info',
+    'tab_content' => 'Inhalt',
 
     /**
      * Email Content

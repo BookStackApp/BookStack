@@ -7,11 +7,11 @@
             <div v-for="(tag, i) in tags" :key="tag.key" class="card drag-card">
                 <div class="handle" >@icon('grip')</div>
                 <div>
-                    <autosuggest url="{{ baseUrl('/ajax/tags/suggest/names') }}" type="name" class="outline" :name="getTagFieldName(i, 'name')"
+                    <autosuggest url="{{ url('/ajax/tags/suggest/names') }}" type="name" class="outline" :name="getTagFieldName(i, 'name')"
                                  v-model="tag.name" @input="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag') }}"/>
                 </div>
                 <div>
-                    <autosuggest url="{{ baseUrl('/ajax/tags/suggest/values') }}" type="value" class="outline" :name="getTagFieldName(i, 'value')"
+                    <autosuggest url="{{ url('/ajax/tags/suggest/values') }}" type="value" class="outline" :name="getTagFieldName(i, 'value')"
                                  v-model="tag.value" @change="tagChange(tag)" @blur="tagBlur(tag)" placeholder="{{ trans('entities.tag_value') }}"/>
                 </div>
                 <div v-show="tags.length !== 1" class="text-center drag-card-action text-neg" @click="removeTag(tag)">@icon('close')</div>

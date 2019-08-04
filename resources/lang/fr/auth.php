@@ -32,6 +32,8 @@ return [
     'remember_me' => 'Se souvenir de moi',
     'ldap_email_hint' => "Merci d'entrer une adresse e-mail pour ce compte",
     'create_account' => 'Créer un compte',
+    'already_have_account' => 'Vous avez déjà un compte?',
+    'dont_have_account' => 'Vous n\'avez pas de compte?',
     'social_login' => 'Social Login',
     'social_registration' => 'Enregistrement Social',
     'social_registration_text' => "S'inscrire et se connecter avec un réseau social",

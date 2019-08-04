@@ -8,7 +8,7 @@
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ title_case(trans('auth.sign_up')) }}</h1>
 
-            <form action="{{ baseUrl("/register") }}" method="POST" class="mt-l stretch-inputs">
+            <form action="{{ url("/register") }}" method="POST" class="mt-l stretch-inputs">
                 {!! csrf_field() !!}
 
                 <div class="form-group">
@@ -28,7 +28,7 @@
 
                 <div class="grid half collapse-xs gap-xl v-center mt-m">
                     <div class="text-small">
-                        <a href="{{ baseUrl('/login') }}">{{ trans('auth.already_have_account') }}</a>
+                        <a href="{{ url('/login') }}">{{ trans('auth.already_have_account') }}</a>
                     </div>
                     <div class="from-group text-right">
                         <button class="button primary">{{ trans('auth.create_account') }}</button>
@@ -42,7 +42,7 @@
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
-                        <a id="social-register-{{$driver}}" class="button block outline svg" href="{{ baseUrl("/register/service/" . $driver) }}">
+                        <a id="social-register-{{$driver}}" class="button block outline svg" href="{{ url("/register/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             {{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}
                         </a>

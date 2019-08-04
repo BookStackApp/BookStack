@@ -31,7 +31,7 @@
     @else
         <p class="text-muted">{{ trans('entities.shelves_empty') }}</p>
         @if(userCan('bookshelf-create-all'))
-            <a href="{{ baseUrl("/create-shelf") }}" class="button outline">@icon('edit'){{ trans('entities.create_now') }}</a>
+            <a href="{{ url("/create-shelf") }}" class="button outline">@icon('edit'){{ trans('entities.create_now') }}</a>
         @endif
     @endif
 

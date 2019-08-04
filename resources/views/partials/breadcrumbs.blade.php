@@ -3,7 +3,7 @@
 
     {{-- Show top level books item --}}
     @if (count($crumbs) > 0 && array_first($crumbs) instanceof  \BookStack\Entities\Book)
-        <a href="{{  baseUrl('/books')  }}" class="text-book icon-list-item outline-hover">
+        <a href="{{  url('/books')  }}" class="text-book icon-list-item outline-hover">
             <span>@icon('books')</span>
             <span>{{ trans('entities.books') }}</span>
         </a>
@@ -12,7 +12,7 @@
 
     {{-- Show top level shelves item --}}
     @if (count($crumbs) > 0 && array_first($crumbs) instanceof  \BookStack\Entities\Bookshelf)
-        <a href="{{  baseUrl('/shelves')  }}" class="text-bookshelf icon-list-item outline-hover">
+        <a href="{{  url('/shelves')  }}" class="text-bookshelf icon-list-item outline-hover">
             <span>@icon('bookshelf')</span>
             <span>{{ trans('entities.shelves') }}</span>
         </a>
@@ -30,11 +30,11 @@
         @endif
 
         @if (is_string($crumb))
-            <a href="{{  baseUrl($key)  }}">
+            <a href="{{  url($key)  }}">
                 {{ $crumb }}
             </a>
         @elseif (is_array($crumb))
-            <a href="{{  baseUrl($key)  }}" class="icon-list-item outline-hover">
+            <a href="{{  url($key)  }}" class="icon-list-item outline-hover">
                 <span>@icon($crumb['icon'])</span>
                 <span>{{ $crumb['text'] }}</span>
             </a>

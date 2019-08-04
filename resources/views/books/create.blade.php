@@ -27,7 +27,7 @@
 
         <div class="content-wrap card">
             <h1 class="list-heading">{{ trans('entities.books_create') }}</h1>
-            <form action="{{ isset($bookshelf) ? $bookshelf->getUrl('/create-book') : baseUrl('/books') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ isset($bookshelf) ? $bookshelf->getUrl('/create-book') : url('/books') }}" method="POST" enctype="multipart/form-data">
                 @include('books.form')
             </form>
         </div>

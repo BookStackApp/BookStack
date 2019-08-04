@@ -341,7 +341,7 @@ class AuthTest extends BrowserKitTest
         $page = Page::query()->first();
 
         $this->visit($page->getUrl())
-            ->seePageUrlIs(baseUrl('/login'));
+            ->seePageUrlIs(url('/login'));
         $this->login('admin@admin.com', 'password')
             ->seePageUrlIs($page->getUrl());
     }

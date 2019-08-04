@@ -34,7 +34,7 @@
 
             <div>
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title"><a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
+                    <h3 class="card-title"><a class="no-color" href="{{ url("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('partials.entity-list', [
                         'entities' => $recentlyUpdatedPages,

@@ -38,6 +38,7 @@ return [
     'filled'               => ':attribute est un champ requis.',
     'exists'               => 'L\'attribut :attribute est invalide.',
     'image'                => ':attribute doit être une image.',
+    'image_extension'      => ':attribute doit avoir une extension d\'image valide et supportée.',
     'in'                   => 'L\'attribut :attribute est invalide.',
     'integer'              => ':attribute doit être un chiffre entier.',
     'ip'                   => ':attribute doit être une adresse IP valide.',
@@ -54,6 +55,7 @@ return [
         'string'  => ':attribute doit contenir au moins :min caractères.',
         'array'   => ':attribute doit contenir au moins :min éléments.',
     ],
+    'no_double_extension'  => ':attribute ne doit avoir qu\'une seule extension de fichier.',
     'not_in'               => 'L\'attribut sélectionné :attribute est invalide.',
     'numeric'              => ':attribute doit être un nombre.',
     'regex'                => ':attribute a un format invalide.',
@@ -74,6 +76,7 @@ return [
     'timezone'             => ':attribute doit être une zone valide.',
     'unique'               => ':attribute est déjà utilisé.',
     'url'                  => ':attribute a un format invalide.',
+    'uploaded'             => 'Le fichier n\'a pas pu être envoyé. Le serveur peut ne pas accepter des fichiers de cette taille.',
 
     /*
     |--------------------------------------------------------------------------

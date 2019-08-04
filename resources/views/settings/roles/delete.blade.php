@@ -12,7 +12,7 @@
 
             <p>{{ trans('settings.role_delete_confirm', ['roleName' => $role->display_name]) }}</p>
 
-            <form action="{{ baseUrl("/settings/roles/delete/{$role->id}") }}" method="POST">
+            <form action="{{ url("/settings/roles/delete/{$role->id}") }}" method="POST">
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="DELETE">
 
@@ -31,7 +31,7 @@
                     </div>
                     <div>
                         <div class="form-group text-right">
-                            <a href="{{ baseUrl("/settings/roles/{$role->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                            <a href="{{ url("/settings/roles/{$role->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
                             <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
                         </div>
                     </div>

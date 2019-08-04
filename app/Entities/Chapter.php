@@ -42,10 +42,13 @@ class Chapter extends Entity
     public function getUrl($path = false)
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
+        $fullPath = '/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug);
+
         if ($path !== false) {
-            return baseUrl('/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug) . '/' . trim($path, '/'));
+            $fullPath .= '/' . trim($path, '/');
         }
-        return baseUrl('/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug));
+
+        return url($fullPath);
     }
 
     /**

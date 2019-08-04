@@ -6,7 +6,7 @@
     <!-- Meta -->
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
-    <meta name="base-url" content="{{ baseUrl('/') }}">
+    <meta name="base-url" content="{{ url('/') }}">
     <meta charset="utf-8">
 
     <!-- Styles and Fonts -->

@@ -11,7 +11,7 @@
         <div class="card content-wrap">
             <h1 class="list-heading">{{ trans('settings.users_add_new') }}</h1>
 
-            <form action="{{ baseUrl("/settings/users/create") }}" method="post">
+            <form action="{{ url("/settings/users/create") }}" method="post">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <a href="{{  baseUrl($currentUser->can('users-manage') ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                    <a href="{{  url($currentUser->can('users-manage') ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
                     <button class="button primary" type="submit">{{ trans('common.save') }}</button>
                 </div>
 
