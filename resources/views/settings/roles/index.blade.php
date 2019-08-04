@@ -14,7 +14,7 @@
                 <h1 class="list-heading">{{ trans('settings.role_user_roles') }}</h1>
 
                 <div class="text-right">
-                    <a href="{{ baseUrl("/settings/roles/new") }}" class="button outline">{{ trans('settings.role_create') }}</a>
+                    <a href="{{ url("/settings/roles/new") }}" class="button outline">{{ trans('settings.role_create') }}</a>
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
                 </tr>
                 @foreach($roles as $role)
                     <tr>
-                        <td><a href="{{ baseUrl("/settings/roles/{$role->id}") }}">{{ $role->display_name }}</a></td>
+                        <td><a href="{{ url("/settings/roles/{$role->id}") }}">{{ $role->display_name }}</a></td>
                         <td>{{ $role->description }}</td>
                         <td class="text-center">{{ $role->users->count() }}</td>
                     </tr>

@@ -29,7 +29,7 @@ class ResetPassword extends MailNotification
             return $this->newMailMessage()
             ->subject(trans('auth.email_reset_subject', ['appName' => setting('app-name')]))
             ->line(trans('auth.email_reset_text'))
-            ->action(trans('auth.reset_password'), baseUrl('password/reset/' . $this->token))
+            ->action(trans('auth.reset_password'), url('password/reset/' . $this->token))
             ->line(trans('auth.email_reset_not_requested'));
     }
 }

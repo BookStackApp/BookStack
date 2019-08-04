@@ -417,7 +417,7 @@ class ImageService extends UploadService
         $isLocal = strpos(trim($uri), 'http') !== 0;
 
         // Attempt to find local files even if url not absolute
-        $base = baseUrl('/');
+        $base = url('/');
         if (!$isLocal && strpos($uri, $base) === 0) {
             $isLocal = true;
             $uri = str_replace($base, '', $uri);
@@ -474,7 +474,7 @@ class ImageService extends UploadService
             $this->storageUrl = $storageUrl;
         }
 
-        $basePath = ($this->storageUrl == false) ? baseUrl('/') : $this->storageUrl;
+        $basePath = ($this->storageUrl == false) ? url('/') : $this->storageUrl;
         return rtrim($basePath, '/') . $filePath;
     }
 }

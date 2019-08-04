@@ -10,7 +10,7 @@
                 <h5>{{ trans('errors.sorry_page_not_found') }}</h5>
             </div>
             <div class="text-right">
-                <a href="{{ baseUrl('/') }}" class="button outline">{{ trans('errors.return_home') }}</a>
+                <a href="{{ url('/') }}" class="button outline">{{ trans('errors.return_home') }}</a>
             </div>
         </div>
 

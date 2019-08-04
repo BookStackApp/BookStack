@@ -168,14 +168,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getAvatar($size = 50)
     {
-        $default = baseUrl('/user_avatar.png');
+        $default = url('/user_avatar.png');
         $imageId = $this->image_id;
         if ($imageId === 0 || $imageId === '0' || $imageId === null) {
             return $default;
         }
 
         try {
-            $avatar = $this->avatar ? baseUrl($this->avatar->getThumb($size, $size, false)) : $default;
+            $avatar = $this->avatar ? url($this->avatar->getThumb($size, $size, false)) : $default;
         } catch (\Exception $err) {
             $avatar = $default;
         }
@@ -197,7 +197,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getEditUrl()
     {
-        return baseUrl('/settings/users/' . $this->id);
+        return url('/settings/users/' . $this->id);
     }
 
     /**
@@ -206,7 +206,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getProfileUrl()
     {
-        return baseUrl('/user/' . $this->id);
+        return url('/user/' . $this->id);
     }
 
     /**

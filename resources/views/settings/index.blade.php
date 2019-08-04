@@ -15,7 +15,7 @@
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.app_features_security') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST">
+            <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -27,7 +27,7 @@
                             <p class="small">{!! trans('settings.app_public_access_desc') !!}</p>
                             @if(userCan('users-manage'))
                                 <p class="small mb-none">
-                                    <a href="{{ baseUrl($guestUser->getEditUrl()) }}">{!! trans('settings.app_public_access_desc_guest') !!}</a>
+                                    <a href="{{ url($guestUser->getEditUrl()) }}">{!! trans('settings.app_public_access_desc_guest') !!}</a>
                                 </p>
                             @endif
                         </div>
@@ -79,7 +79,7 @@
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.app_customization') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url("/settings") }}" method="POST" enctype="multipart/form-data">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -121,7 +121,7 @@
                             @include('components.image-picker', [
                                      'removeName' => 'setting-app-logo',
                                      'removeValue' => 'none',
-                                     'defaultImage' => baseUrl('/logo.png'),
+                                     'defaultImage' => url('/logo.png'),
                                      'currentImage' => setting('app-logo'),
                                      'name' => 'app_logo',
                                      'imageClass' => 'logo-image',
@@ -180,7 +180,7 @@
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.reg_settings') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST">
+            <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">

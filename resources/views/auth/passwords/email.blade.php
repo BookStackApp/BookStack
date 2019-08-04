@@ -7,7 +7,7 @@
 
             <p class="text-muted small">{{ trans('auth.reset_password_send_instructions') }}</p>
 
-            <form action="{{ baseUrl("/password/email") }}" method="POST" class="stretch-inputs">
+            <form action="{{ url("/password/email") }}" method="POST" class="stretch-inputs">
                 {!! csrf_field() !!}
 
                 <div class="form-group">

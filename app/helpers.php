@@ -1,8 +1,9 @@
 <?php
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Entity;
+use BookStack\Auth\User;
 use BookStack\Ownable;
+use BookStack\Settings\SettingService;
 
 /**
  * Get the path to a versioned file.
@@ -11,7 +12,7 @@ use BookStack\Ownable;
  * @return string
  * @throws Exception
  */
-function versioned_asset($file = '')
+function versioned_asset($file = '') : string
 {
     static $version = null;
 
@@ -26,17 +27,17 @@ function versioned_asset($file = '')
     }
 
     $path = $file . '?version=' . urlencode($version) . $additional;
-    return baseUrl($path);
+    return url($path);
 }
 
 /**
  * Helper method to get the current User.
  * Defaults to public 'Guest' user if not logged in.
- * @return \BookStack\Auth\User
+ * @return User
  */
-function user()
+function user() : User
 {
-    return auth()->user() ?: \BookStack\Auth\User::getDefault();
+    return auth()->user() ?: User::getDefault();
 }
 
 /**
@@ -63,9 +64,9 @@ function hasAppAccess() : bool
  * that particular item.
  * @param string $permission
  * @param Ownable $ownable
- * @return mixed
+ * @return bool
  */
-function userCan(string $permission, Ownable $ownable = null)
+function userCan(string $permission, Ownable $ownable = null) : bool
 {
     if ($ownable === null) {
         return user() && user()->can($permission);
@@ -83,7 +84,7 @@ function userCan(string $permission, Ownable $ownable = null)
  * @param string|null $entityClass
  * @return bool
  */
-function userCanOnAny(string $permission, string $entityClass = null)
+function userCanOnAny(string $permission, string $entityClass = null) : bool
 {
     $permissionService = app(PermissionService::class);
     return $permissionService->checkUserHasPermissionOnAnything($permission, $entityClass);
@@ -93,11 +94,11 @@ function userCanOnAny(string $permission, string $entityClass = null)
  * Helper to access system settings.
  * @param $key
  * @param bool $default
- * @return bool|string|\BookStack\Settings\SettingService
+ * @return bool|string|SettingService
  */
 function setting($key = null, $default = false)
 {
-    $settingService = resolve(\BookStack\Settings\SettingService::class);
+    $settingService = resolve(SettingService::class);
     if (is_null($key)) {
         return $settingService;
     }
@@ -105,72 +106,15 @@ function setting($key = null, $default = false)
 }
 
 /**
- * Helper to create url's relative to the applications root path.
- * @param string $path
- * @param bool $forceAppDomain
- * @return string
- */
-function baseUrl($path, $forceAppDomain = false)
-{
-    return url($path);
-    $isFullUrl = strpos($path, 'http') === 0;
-    if ($isFullUrl && !$forceAppDomain) {
-        return $path;
-    }
-
-    $path = trim($path, '/');
-    $base = rtrim(config('app.url'), '/');
-
-    // Remove non-specified domain if forced and we have a domain
-    if ($isFullUrl && $forceAppDomain) {
-        if (!empty($base) && strpos($path, $base) === 0) {
-            $path = mb_substr($path, mb_strlen($base));
-        } else {
-            $explodedPath = explode('/', $path);
-            $path = implode('/', array_splice($explodedPath, 3));
-        }
-    }
-
-    // Return normal url path if not specified in config
-    if (config('app.url') === '') {
-        return url($path);
-    }
-
-    return $base . '/' . ltrim($path, '/');
-}
-
-/**
- * Get an instance of the redirector.
- * Overrides the default laravel redirect helper.
- * Ensures it redirects even when the app is in a subdirectory.
- *
- * @param  string|null  $to
- * @param  int     $status
- * @param  array   $headers
- * @param  bool    $secure
- * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
- */
-function redirect($to = null, $status = 302, $headers = [], $secure = null)
-{
-    if (is_null($to)) {
-        return app('redirect');
-    }
-
-    $to = baseUrl($to);
-
-    return app('redirect')->to($to, $status, $headers, $secure);
-}
-
-/**
  * Get a path to a theme resource.
  * @param string $path
- * @return string|boolean
+ * @return string
  */
-function theme_path($path = '')
+function theme_path($path = '') : string
 {
     $theme = config('view.theme');
     if (!$theme) {
-        return false;
+        return '';
     }
 
     return base_path('themes/' . $theme .($path ? DIRECTORY_SEPARATOR.$path : $path));
@@ -242,5 +186,5 @@ function sortUrl($path, $data, $overrideData = [])
         return $path;
     }
 
-    return baseUrl($path . '?' . implode('&', $queryStringSections));
+    return url($path . '?' . implode('&', $queryStringSections));
 }

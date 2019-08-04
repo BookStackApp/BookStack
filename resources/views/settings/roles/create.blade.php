@@ -8,7 +8,7 @@
             @include('settings.navbar', ['selected' => 'roles'])
         </div>
 
-        <form action="{{ baseUrl("/settings/roles/new") }}" method="POST">
+        <form action="{{ url("/settings/roles/new") }}" method="POST">
             @include('settings.roles.form', ['title' => trans('settings.role_create')])
         </form>
     </div>

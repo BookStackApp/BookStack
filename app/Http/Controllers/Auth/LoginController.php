@@ -53,8 +53,8 @@ class LoginController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->ldapService = $ldapService;
         $this->userRepo = $userRepo;
-        $this->redirectPath = baseUrl('/');
-        $this->redirectAfterLogout = baseUrl('/login');
+        $this->redirectPath = url('/');
+        $this->redirectAfterLogout = url('/login');
         parent::__construct();
     }
 
