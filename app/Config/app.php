@@ -106,6 +106,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        Aacotroneo\Saml2\Saml2ServiceProvider::class,
 
 
         // BookStack replacement service providers (Extends Laravel)
