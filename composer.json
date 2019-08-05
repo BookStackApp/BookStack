@@ -28,7 +28,8 @@
         "socialiteproviders/gitlab": "^3.0",
         "socialiteproviders/twitch": "^3.0",
         "socialiteproviders/discord": "^2.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "aacotroneo/laravel-saml2": "^1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
