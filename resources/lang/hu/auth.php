@@ -51,7 +51,7 @@ return [
 
 
     // Email Confirmation
-    'email_confirm_subject' => ':appName alklamazásban beállított email címet meg kell erősíteni',
+    'email_confirm_subject' => ':appName alkalmazásban beállított email címet meg kell erősíteni',
     'email_confirm_greeting' => ':appName köszöni a csatlakozást!',
     'email_confirm_text' => 'Az email címet a lenti gombra kattintva lehet megerősíteni:',
     'email_confirm_action' => 'Email megerősítése',
