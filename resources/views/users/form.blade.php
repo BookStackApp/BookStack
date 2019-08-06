@@ -19,7 +19,7 @@
         <div>
             @if($authMethod !== 'ldap' || userCan('users-manage'))
                 <label for="email">{{ trans('auth.email') }}</label>
-                @include('form.text', ['name' => 'email'])
+                @include('form.text', ['name' => 'email', 'disabled' => !userCan('users-manage')])
             @endif
         </div>
     </div>
