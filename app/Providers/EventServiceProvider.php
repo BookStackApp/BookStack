@@ -4,6 +4,7 @@ namespace BookStack\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
+use Aacotroneo\Saml2\Events\Saml2LoginEvent;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Twitch\TwitchExtendSocialite@handle',
             'SocialiteProviders\Discord\DiscordExtendSocialite@handle',
         ],
+        Saml2LoginEvent::class => [
+            'BookStack\Listeners\Saml2LoginEventListener@handle',
+        ]
     ];
 
     /**

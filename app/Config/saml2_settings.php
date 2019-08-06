@@ -29,7 +29,7 @@ return $settings = array(
      * which middleware group to use for the saml routes
      * Laravel 5.2 will need a group which includes StartSession
      */
-    'routesMiddleware' => [],
+    'routesMiddleware' => ['saml'],
 
     /**
      * Indicates how the parameters will be
@@ -101,6 +101,8 @@ return $settings = array(
             // using HTTP-POST binding.
             // Leave blank to use the 'saml_acs' route
             'url' => '',
+
+            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
         ),
         // Specifies info about where and how the <Logout Response> message MUST be
         // returned to the requester, in this case our SP.
@@ -138,7 +140,16 @@ return $settings = array(
         // 'certFingerprint' => '',
     ),
 
-
+    /***
+     *   OneLogin compression settings
+     *
+     */
+    'compress' => array(
+        /** Whether requests should be GZ encoded */
+        'requests' => true,
+        /** Whether responses should be GZ compressed */
+        'responses' => true,
+    ),
 
     /***
      *
