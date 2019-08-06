@@ -146,7 +146,12 @@ class UserController extends Controller
         ]);
 
         $user = $this->userRepo->getById($id);
-        $user->fill($request->all());
+        $user->fill($request->except(['email']));
+
+        // Email updates
+        if (userCan('users-manage') && $request->filled('email')) {
+            $user->email = $request->get('email');
+        }
 
         // Role updates
         if (userCan('users-manage') && $request->filled('roles')) {
