@@ -80,6 +80,7 @@ class PageContentTest extends TestCase
         $page->save();
 
         $pageView = $this->get($page->getUrl());
+        $pageView->assertStatus(200);
         $pageView->assertDontSee($script);
         $pageView->assertSee('abc123abc123');
     }
@@ -103,8 +104,38 @@ class PageContentTest extends TestCase
             $page->save();
 
             $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
             $pageView->assertElementNotContains('.page-content', '<script>');
             $pageView->assertElementNotContains('.page-content', '</script>');
+        }
+
+    }
+
+    public function test_iframe_js_and_base64_urls_are_removed()
+    {
+        $checks = [
+            '<iframe src="javascript:alert(document.cookie)"></iframe>',
+            '<iframe SRC=" javascript: alert(document.cookie)"></iframe>',
+            '<iframe src="data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
+            '<iframe src=" data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
+
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<iframe>');
+            $pageView->assertElementNotContains('.page-content', '</iframe>');
+            $pageView->assertElementNotContains('.page-content', 'src=');
+            $pageView->assertElementNotContains('.page-content', 'javascript:');
+            $pageView->assertElementNotContains('.page-content', 'data:');
+            $pageView->assertElementNotContains('.page-content', 'base64');
         }
 
     }
@@ -118,6 +149,7 @@ class PageContentTest extends TestCase
         $page->save();
 
         $pageView = $this->get($page->getUrl());
+        $pageView->assertStatus(200);
         $pageView->assertDontSee($script);
         $pageView->assertSee('<p>Hello</p>');
     }
@@ -130,6 +162,7 @@ class PageContentTest extends TestCase
             '<div>Lorem ipsum dolor sit amet.<p onclick="console.log(\'test\')">Hello</p></div>',
             '<div><div><div><div>Lorem ipsum dolor sit amet.<p onclick="console.log(\'test\')">Hello</p></div></div></div></div>',
             '<div onclick="console.log(\'test\')">Lorem ipsum dolor sit amet.</div><p onclick="console.log(\'test\')">Hello</p><div></div>',
+            '<a a="<img src=1 onerror=\'alert(1)\'> ',
         ];
 
         $this->asEditor();
@@ -140,6 +173,7 @@ class PageContentTest extends TestCase
             $page->save();
 
             $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
             $pageView->assertElementNotContains('.page-content', 'onclick');
         }
 
