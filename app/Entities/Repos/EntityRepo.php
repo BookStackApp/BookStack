@@ -765,6 +765,12 @@ class EntityRepo
             $scriptElem->parentNode->removeChild($scriptElem);
         }
 
+        // Remove data or JavaScript iFrames
+        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')]');
+        foreach ($badIframes as $badIframe) {
+            $badIframe->parentNode->removeChild($badIframe);
+        }
+
         // Remove 'on*' attributes
         $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
         foreach ($onAttributes as $attr) {
