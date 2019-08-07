@@ -5,7 +5,6 @@ use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\LdapException;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class LdapService

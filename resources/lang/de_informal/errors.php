@@ -9,6 +9,7 @@ return [
     // Auth
     'email_already_confirmed' => 'Die E-Mail-Adresse ist bereits bestätigt. Bitte melde dich an.',
     'email_confirmation_invalid' => 'Der Bestätigungslink ist nicht gültig oder wurde bereits verwendet. Bitte registriere dich erneut.',
+    'saml_already_logged_in' => 'Du bist bereits angemeldet',
     'social_account_in_use' => 'Dieses :socialAccount-Konto wird bereits verwendet. Bitte melde dich mit dem :socialAccount-Konto an.',
     'social_account_email_in_use' => 'Die E-Mail-Adresse ":email" ist bereits registriert. Wenn Du bereits registriert bist, kannst Du Dein :socialAccount-Konto in Deinen Profil-Einstellungen verknüpfen.',
     'social_account_not_used' => 'Dieses :socialAccount-Konto ist bisher keinem Benutzer zugeordnet. Du kannst das in Deinen Profil-Einstellungen tun.',

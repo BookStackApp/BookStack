@@ -15,6 +15,8 @@ return [
     'ldap_fail_authed' => 'LDAP-Zugriff mit DN und Passwort ist fehlgeschlagen',
     'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert.',
     'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf.',
+    'saml_already_logged_in' => 'Sie sind bereits angemeldet',
+    'saml_user_not_registered' => 'Kein Benutzer mit ID :name registriert und die automatische Registrierung ist deaktiviert',
     'social_no_action_defined' => 'Es ist keine Aktion definiert',
     'social_login_bad_response' => "Fehler bei der :socialAccount-Anmeldung: \n:error",
     'social_account_in_use' => 'Dieses :socialAccount-Konto wird bereits verwendet. Bitte melden Sie sich mit dem :socialAccount-Konto an.',
