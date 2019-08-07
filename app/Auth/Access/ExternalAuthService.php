@@ -2,6 +2,7 @@
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class ExternalAuthService
 {
@@ -57,19 +58,19 @@ class ExternalAuthService
     /**
      * Sync the groups to the user roles for the current user
      * @param \BookStack\Auth\User $user
-     * @param array $samlAttributes
+     * @param array $userGroups
      */
     public function syncWithGroups(User $user, array $userGroups)
     {
         // Get the ids for the roles from the names
-        $samlGroupsAsRoles = $this->matchGroupsToSystemsRoles($userSamlGroups);
+        $groupsAsRoles = $this->matchGroupsToSystemsRoles($userGroups);
 
         // Sync groups
         if ($this->config['remove_from_groups']) {
-            $user->roles()->sync($samlGroupsAsRoles);
+            $user->roles()->sync($groupsAsRoles);
             $this->userRepo->attachDefaultRole($user);
         } else {
-            $user->roles()->syncWithoutDetaching($samlGroupsAsRoles);
+            $user->roles()->syncWithoutDetaching($groupsAsRoles);
         }
     }
 }

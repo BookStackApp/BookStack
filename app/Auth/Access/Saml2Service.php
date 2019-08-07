@@ -5,8 +5,6 @@ use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\SamlException;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Log;
 
 
 /**
@@ -118,6 +116,27 @@ class Saml2Service extends Access\ExternalAuthService
     }
 
     /**
+     *  For an array of strings, return a default for an empty array,
+     *  a string for an array with one element and the full array for
+     *  more than one element.
+     *
+     *  @param array $data
+     *  @param $defaultValue
+     *  @return string
+     */
+    protected function simplifyValue(array $data, $defaultValue) {
+        switch (count($data)) {
+            case 0:
+                $data = $defaultValue;
+                break;
+            case 1:
+                $data = $data[0];
+                break;
+        }
+        return $data;
+    }
+
+    /**
      * Get a property from an SAML response.
      * Handles properties potentially being an array.
      * @param array $userDetails
@@ -128,16 +147,9 @@ class Saml2Service extends Access\ExternalAuthService
     protected function getSamlResponseAttribute(array $samlAttributes, string $propertyKey, $defaultValue)
     {
         if (isset($samlAttributes[$propertyKey])) {
-            $data = $samlAttributes[$propertyKey];
-            if (is_array($data)) {
-              if (count($data) == 0) {
-                $data = $defaultValue;
-              } else if (count($data) == 1) {
-                $data = $data[0];
-              }
-            }
+            $data = $this->simplifyValue($samlAttributes[$propertyKey], $defaultValue);
         } else {
-          $data = $defaultValue;
+            $data = $defaultValue;
         }
 
         return $data;
@@ -190,6 +202,7 @@ class Saml2Service extends Access\ExternalAuthService
      *  they exist, optionally registering them automatically.
      *  @param string $samlID
      *  @param array $samlAttributes
+     *  @throws SamlException
      */
     public function processLoginCallback($samlID, $samlAttributes)
     {
@@ -197,12 +210,14 @@ class Saml2Service extends Access\ExternalAuthService
         $isLoggedIn = auth()->check();
 
         if ($isLoggedIn) {
-            logger()->error("Already logged in");
+            throw new SamlException(trans('errors.saml_already_logged_in'), '/login');
         } else {
             $user = $this->getOrRegisterUser($userDetails);
             if ($user === null) {
-                logger()->error("User does not exist");
+                throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['uid']]), '/login');
             } else {
+                $groups = $this->getUserGroups($samlAttributes);
+                $this->syncWithGroups($user, $groups);
                 auth()->login($user);
             }
         }
