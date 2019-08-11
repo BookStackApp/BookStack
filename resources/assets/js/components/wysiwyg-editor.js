@@ -557,7 +557,6 @@ class WysiwygEditor {
                 });
 
                 function editorChange() {
-                    console.log('CHANGE');
                     let content = editor.getContent();
                     window.$events.emit('editor-html-change', content);
                 }
