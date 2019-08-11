@@ -158,6 +158,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/search/chapter/{bookId}', 'SearchController@searchChapter');
     Route::get('/search/entity/siblings', 'SearchController@searchSiblings');
 
+    Route::get('/templates', 'PageTemplateController@list');
+    Route::get('/templates/{templateId}', 'PageTemplateController@get');
+
     // Other Pages
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');

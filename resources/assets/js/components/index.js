@@ -27,6 +27,7 @@ import customCheckbox from "./custom-checkbox";
 import bookSort from "./book-sort";
 import settingAppColorPicker from "./setting-app-color-picker";
 import entityPermissionsEditor from "./entity-permissions-editor";
+import templateManager from "./template-manager";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -57,7 +58,8 @@ const componentMapping = {
     'custom-checkbox': customCheckbox,
     'book-sort': bookSort,
     'setting-app-color-picker': settingAppColorPicker,
-    'entity-permissions-editor': entityPermissionsEditor
+    'entity-permissions-editor': entityPermissionsEditor,
+    'template-manager': templateManager,
 };
 
 window.components = {};

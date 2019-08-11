@@ -91,6 +91,7 @@ class MarkdownEditor {
         });
 
         this.codeMirrorSetup();
+        this.listenForBookStackEditorEvents();
     }
 
     // Update the input content and render the display.
@@ -461,6 +462,37 @@ class MarkdownEditor {
         })
     }
 
+    listenForBookStackEditorEvents() {
+
+        function getContentToInsert({html, markdown}) {
+            return markdown || html;
+        }
+
+        // Replace editor content
+        window.$events.listen('editor::replace', (eventContent) => {
+            const markdown = getContentToInsert(eventContent);
+            this.cm.setValue(markdown);
+        });
+
+        // Append editor content
+        window.$events.listen('editor::append', (eventContent) => {
+            const cursorPos = this.cm.getCursor('from');
+            const markdown = getContentToInsert(eventContent);
+            const content = this.cm.getValue() + '\n' + markdown;
+            this.cm.setValue(content);
+            this.cm.setCursor(cursorPos.line, cursorPos.ch);
+        });
+
+        // Prepend editor content
+        window.$events.listen('editor::prepend', (eventContent) => {
+            const cursorPos = this.cm.getCursor('from');
+            const markdown = getContentToInsert(eventContent);
+            const content = markdown + '\n' + this.cm.getValue();
+            this.cm.setValue(content);
+            const prependLineCount = markdown.split('\n').length;
+            this.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
+        });
+    }
 }
 
 export default MarkdownEditor ;

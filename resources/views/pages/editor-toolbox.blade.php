@@ -24,9 +24,8 @@
         <h4>{{ trans('entities.templates') }}</h4>
 
         <div class="px-l">
-            @include('pages.templates-manager', ['page' => $page])
+            @include('pages.template-manager', ['page' => $page, 'templates' => $templates])
         </div>
-
 
     </div>
 

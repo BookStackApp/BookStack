@@ -656,3 +656,31 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .permissions-table tr:hover [permissions-table-toggle-all-in-row] {
   display: inline;
 }
+
+.template-item {
+  cursor: pointer;
+  position: relative;
+  &:hover, .template-item-actions button:hover {
+    background-color: #F2F2F2;
+  }
+  .template-item-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #DDD;
+  }
+  .template-item-actions button {
+    cursor: pointer;
+    flex: 1;
+    background: #FFF;
+    border: 0;
+    border-top: 1px solid #DDD;
+  }
+  .template-item-actions button:first-child {
+    border-top: 0;
+  }
+}
