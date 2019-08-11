@@ -110,11 +110,14 @@ class PageController extends Controller
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->signedIn;
+        $templates = $this->pageRepo->getPageTemplates(10);
+
         return view('pages.edit', [
             'page' => $draft,
             'book' => $draft->book,
             'isDraft' => true,
-            'draftsEnabled' => $draftsEnabled
+            'draftsEnabled' => $draftsEnabled,
+            'templates' => $templates,
         ]);
     }
 
@@ -239,11 +242,14 @@ class PageController extends Controller
         }
 
         $draftsEnabled = $this->signedIn;
+        $templates = $this->pageRepo->getPageTemplates(10);
+
         return view('pages.edit', [
             'page' => $page,
             'book' => $page->book,
             'current' => $page,
-            'draftsEnabled' => $draftsEnabled
+            'draftsEnabled' => $draftsEnabled,
+            'templates' => $templates,
         ]);
     }
 
