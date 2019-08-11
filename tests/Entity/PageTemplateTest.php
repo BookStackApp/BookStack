@@ -74,7 +74,7 @@ class PageTemplateTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $toBeTemplates = Page::query()->take(12)->get();
+        $toBeTemplates = Page::query()->orderBy('name', 'asc')->take(12)->get();
         $page = $toBeTemplates->first();
 
         $emptyTemplatesFetch = $this->get('/templates');
