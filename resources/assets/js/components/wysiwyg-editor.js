@@ -378,6 +378,27 @@ function customHrPlugin() {
 }
 
 
+function listenForBookStackEditorEvents(editor) {
+
+    // Replace editor content
+    window.$events.listen('editor::replace', ({html}) => {
+        editor.setContent(html);
+    });
+
+    // Append editor content
+    window.$events.listen('editor::append', ({html}) => {
+        const content = editor.getContent() + html;
+        editor.setContent(content);
+    });
+
+    // Prepend editor content
+    window.$events.listen('editor::prepend', ({html}) => {
+        const content = html + editor.getContent();
+        editor.setContent(content);
+    });
+
+}
+
 class WysiwygEditor {
 
     constructor(elem) {
@@ -536,6 +557,7 @@ class WysiwygEditor {
                 });
 
                 function editorChange() {
+                    console.log('CHANGE');
                     let content = editor.getContent();
                     window.$events.emit('editor-html-change', content);
                 }
@@ -553,6 +575,10 @@ class WysiwygEditor {
                     editor.focus();
                 }
 
+                listenForBookStackEditorEvents(editor);
+
+                // TODO - Update to standardise across both editors
+                // Use events within listenForBookStackEditorEvents instead (Different event signature)
                 window.$events.listen('editor-html-update', html => {
                     editor.setContent(html);
                     editor.selection.select(editor.getBody(), true);

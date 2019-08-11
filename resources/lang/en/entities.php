@@ -233,6 +233,7 @@ return [
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
     'pages_specific' => 'Specific Page',
+    'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
     'page_tags' => 'Page Tags',
@@ -269,6 +270,12 @@ return [
     'attachments_file_uploaded' => 'File successfully uploaded',
     'attachments_file_updated' => 'File successfully updated',
     'attachments_link_attached' => 'Link successfully attached to page',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
     // Profile View
     'profile_user_for_x' => 'User for :time',

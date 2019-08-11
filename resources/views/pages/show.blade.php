@@ -103,6 +103,12 @@
                     @endif
                 </div>
             @endif
+
+            @if($page->template)
+                <div>
+                    @icon('template'){{ trans('entities.pages_is_template') }}
+                </div>
+            @endif
         </div>
     </div>
 

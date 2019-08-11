@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
+use Illuminate\Support\Collection;
 
 class PageRepo extends EntityRepo
 {
@@ -69,6 +70,10 @@ class PageRepo extends EntityRepo
             $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $page->template = ($input['template'] === 'true');
+        }
+
         // Update with new details
         $userId = user()->id;
         $page->fill($input);
@@ -85,8 +90,9 @@ class PageRepo extends EntityRepo
         $this->userUpdatePageDraftsQuery($page, $userId)->delete();
 
         // Save a revision after updating
-        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $input['summary'] !== null) {
-            $this->savePageRevision($page, $input['summary']);
+        $summary = $input['summary'] ?? null;
+        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $summary !== null) {
+            $this->savePageRevision($page, $summary);
         }
 
         $this->searchService->indexEntity($page);
@@ -298,6 +304,10 @@ class PageRepo extends EntityRepo
         // Save page tags if present
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
+        }
+
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $draftPage->template = ($input['template'] === 'true');
         }
 
         $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
@@ -522,5 +532,30 @@ class PageRepo extends EntityRepo
         }
 
         return $this->publishPageDraft($copyPage, $pageData);
+    }
+
+    /**
+     * Get pages that have been marked as templates.
+     * @param int $count
+     * @param int $page
+     * @param string $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPageTemplates(int $count = 10, int $page = 1,  string $search = '')
+    {
+        $query = $this->entityQuery('page')
+            ->where('template', '=', true)
+            ->orderBy('name', 'asc')
+            ->skip( ($page - 1) * $count)
+            ->take($count);
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $paginator = $query->paginate($count, ['*'], 'page', $page);
+        $paginator->withPath('/templates');
+
+        return $paginator;
     }
 }
