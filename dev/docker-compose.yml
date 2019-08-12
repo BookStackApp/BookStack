@@ -19,23 +19,23 @@ services:
       - db:/var/lib/mysql
   app:
     build:
-      context: .
-      dockerfile: docker/dev/Dockerfile
+      context: ..
+      dockerfile: ./dev/docker/Dockerfile
     environment:
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: bookstack-test
-      DB_USER: bookstack-test
+      DB_USERNAME: bookstack-test
       DB_PASSWORD: bookstack-test
     ports:
-      - ${DEV_PORT}:80
+      - ${DEV_PORT:-8080}:80
     volumes:
-      - ./:/app
-    entrypoint: /app/docker/dev/entrypoint.app.sh
+      - ../:/app
+    entrypoint: /app/dev/docker/entrypoint.app.sh
   node:
     image: node:alpine
     working_dir: /app
     volumes:
-      - ./:/app
-    entrypoint: /app/docker/dev/entrypoint.node.sh
+      - ../:/app
+    entrypoint: /app/dev/docker/entrypoint.node.sh
