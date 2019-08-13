@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="email">{{ trans('auth.email') }}</label>
-    @include('form.text', ['name' => 'email', 'tabindex' => 1])
+    @include('form.text', ['name' => 'email', 'tabindex' => 1, 'focus' => 1])
 </div>
 
 <div class="form-group">
