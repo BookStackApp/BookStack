@@ -85,6 +85,7 @@ return [
     'role_manage_roles' => 'Manage roles & role permissions',
     'role_manage_entity_permissions' => 'Manage all book, chapter & page permissions',
     'role_manage_own_entity_permissions' => 'Manage permissions on own book, chapter & pages',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Manage app settings',
     'role_asset' => 'Asset Permissions',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
