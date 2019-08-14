@@ -38,6 +38,7 @@
                 <div>@include('settings.roles.checkbox', ['permission' => 'user-roles-manage', 'label' => trans('settings.role_manage_roles')])</div>
                 <div>@include('settings.roles.checkbox', ['permission' => 'restrictions-manage-all', 'label' => trans('settings.role_manage_entity_permissions')])</div>
                 <div>@include('settings.roles.checkbox', ['permission' => 'restrictions-manage-own', 'label' => trans('settings.role_manage_own_entity_permissions')])</div>
+                <div>@include('settings.roles.checkbox', ['permission' => 'templates-manage', 'label' => trans('settings.role_manage_page_templates')])</div>
                 <div>@include('settings.roles.checkbox', ['permission' => 'settings-manage', 'label' => trans('settings.role_manage_settings')])</div>
             </div>
         </div>
