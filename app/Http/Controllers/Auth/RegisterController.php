@@ -7,10 +7,13 @@ use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Exceptions\UserTokenExpiredException;
+use BookStack\Exceptions\UserTokenNotFoundException;
 use BookStack\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -189,17 +192,38 @@ class RegisterController extends Controller
      * Confirms an email via a token and logs the user into the system.
      * @param $token
      * @return RedirectResponse|Redirector
-     * @throws UserRegistrationException
+     * @throws ConfirmationEmailException
+     * @throws Exception
      */
     public function confirmEmail($token)
     {
-        $confirmation = $this->emailConfirmationService->getEmailConfirmationFromToken($token);
-        $user = $confirmation->user;
+        try {
+            $userId = $this->emailConfirmationService->checkTokenAndGetUserId($token);
+        } catch (Exception $exception) {
+
+            if ($exception instanceof UserTokenNotFoundException) {
+                session()->flash('error', trans('errors.email_confirmation_invalid'));
+                return redirect('/register');
+            }
+
+            if ($exception instanceof UserTokenExpiredException) {
+                $user = $this->userRepo->getById($exception->userId);
+                $this->emailConfirmationService->sendConfirmation($user);
+                session()->flash('error', trans('errors.email_confirmation_expired'));
+                return redirect('/register/confirm');
+            }
+
+            throw $exception;
+        }
+
+        $user = $this->userRepo->getById($userId);
         $user->email_confirmed = true;
         $user->save();
+
         auth()->login($user);
         session()->flash('success', trans('auth.email_confirm_success'));
-        $this->emailConfirmationService->deleteConfirmationsByUser($user);
+        $this->emailConfirmationService->deleteByUser($user);
+
         return redirect($this->redirectPath);
     }
 

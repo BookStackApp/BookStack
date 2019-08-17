@@ -64,4 +64,10 @@ return [
     'email_not_confirmed_click_link' => 'Please click the link in the email that was sent shortly after you registered.',
     'email_not_confirmed_resend' => 'If you cannot find the email you can re-send the confirmation email by submitting the form below.',
     'email_not_confirmed_resend_button' => 'Resend Confirmation Email',
+
+    // User Invite
+    'user_invite_email_subject' => 'You have been invited to join :appName!',
+    'user_invite_email_greeting' => 'A user account has been created for you on :appName.',
+    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
+    'user_invite_email_action' => 'Set Account Password',
 ];
