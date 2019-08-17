@@ -3,6 +3,7 @@
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Uploads\Image;
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -10,6 +11,20 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ * @package BookStack\Auth
+ * @property string $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property bool $email_confirmed
+ * @property int $image_id
+ * @property string $external_auth_id
+ * @property string $system_name
+ */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword, Notifiable;
