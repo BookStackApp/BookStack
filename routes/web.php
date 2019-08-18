@@ -217,6 +217,10 @@ Route::post('/register/confirm/resend', 'Auth\ConfirmEmailController@resend');
 Route::get('/register/confirm/{token}', 'Auth\ConfirmEmailController@confirm');
 Route::post('/register', 'Auth\RegisterController@postRegister');
 
+// User invitation routes
+Route::get('/register/invite/{token}', 'Auth\UserInviteController@showSetPassword');
+Route::post('/register/invite/{token}', 'Auth\UserInviteController@setPassword');
+
 // Password reset link request routes...
 Route::get('/password/email', 'Auth\ForgotPasswordController@showLinkRequestForm');
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
