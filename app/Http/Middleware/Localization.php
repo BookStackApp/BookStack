@@ -57,7 +57,7 @@ class Localization
             $locale = setting()->getUser(user(), 'language', $defaultLang);
         }
 
-        config()->set('app.lang', $this->getLocaleIso($locale));
+        config()->set('app.lang', str_replace('_', '-', $this->getLocaleIso($locale)));
 
         // Set text direction
         if (in_array($locale, $this->rtlLocales)) {
