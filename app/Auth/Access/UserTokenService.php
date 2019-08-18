@@ -61,7 +61,7 @@ class UserTokenService
         }
 
         if ($this->entryExpired($entry)) {
-            throw new UserTokenExpiredException("Token of id {$token->id} has expired.", $entry->user_id);
+            throw new UserTokenExpiredException("Token of id {$entry->id} has expired.", $entry->user_id);
         }
 
         return $entry->user_id;
