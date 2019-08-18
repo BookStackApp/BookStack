@@ -28,6 +28,7 @@ import bookSort from "./book-sort";
 import settingAppColorPicker from "./setting-app-color-picker";
 import entityPermissionsEditor from "./entity-permissions-editor";
 import templateManager from "./template-manager";
+import newUserPassword from "./new-user-password";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -60,6 +61,7 @@ const componentMapping = {
     'setting-app-color-picker': settingAppColorPicker,
     'entity-permissions-editor': entityPermissionsEditor,
     'template-manager': templateManager,
+    'new-user-password': newUserPassword,
 };
 
 window.components = {};

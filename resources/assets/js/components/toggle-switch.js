@@ -11,6 +11,11 @@ class ToggleSwitch {
 
     stateChange() {
         this.input.value = (this.checkbox.checked ? 'true' : 'false');
+
+        // Dispatch change event from hidden input so they can be listened to
+        // like a normal checkbox.
+        const changeEvent = new Event('change');
+        this.input.dispatchEvent(changeEvent);
     }
 
 }

@@ -27,7 +27,7 @@ return [
     'social_account_register_instructions' => 'If you do not yet have an account, You can register an account using the :socialAccount option.',
     'social_driver_not_found' => 'Social driver not found',
     'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
-    'invite_token_expired' => 'This invitation link has expired. You can try to reset your account password or request a new invite from an administrator.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
