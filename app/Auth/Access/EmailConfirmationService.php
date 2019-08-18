@@ -27,4 +27,14 @@ class EmailConfirmationService extends UserTokenService
         $user->notify(new ConfirmEmail($token));
     }
 
+    /**
+     * Check if confirmation is required in this instance.
+     * @return bool
+     */
+    public function confirmationRequired() : bool
+    {
+        return setting('registration-confirmation')
+            || setting('registration-restrict');
+    }
+
 }
