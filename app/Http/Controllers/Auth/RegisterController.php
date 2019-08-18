@@ -7,13 +7,10 @@ use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
-use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Exceptions\UserTokenExpiredException;
-use BookStack\Exceptions\UserTokenNotFoundException;
 use BookStack\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -21,7 +18,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Validator;
 
@@ -56,7 +52,7 @@ class RegisterController extends Controller
      * Create a new controller instance.
      *
      * @param SocialAuthService $socialAuthService
-     * @param \BookStack\Auth\EmailConfirmationService $emailConfirmationService
+     * @param EmailConfirmationService $emailConfirmationService
      * @param UserRepo $userRepo
      */
     public function __construct(SocialAuthService $socialAuthService, EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
@@ -162,7 +158,7 @@ class RegisterController extends Controller
             $newUser->socialAccounts()->save($socialAccount);
         }
 
-        if ((setting('registration-confirmation') || $registrationRestrict) && !$emailVerified) {
+        if ($this->emailConfirmationService->confirmationRequired() && !$emailVerified) {
             $newUser->save();
 
             try {
@@ -177,87 +173,6 @@ class RegisterController extends Controller
         auth()->login($newUser);
         session()->flash('success', trans('auth.register_success'));
         return redirect($this->redirectPath());
-    }
-
-    /**
-     * Show the page to tell the user to check their email
-     * and confirm their address.
-     */
-    public function getRegisterConfirmation()
-    {
-        return view('auth.register-confirm');
-    }
-
-    /**
-     * Confirms an email via a token and logs the user into the system.
-     * @param $token
-     * @return RedirectResponse|Redirector
-     * @throws ConfirmationEmailException
-     * @throws Exception
-     */
-    public function confirmEmail($token)
-    {
-        try {
-            $userId = $this->emailConfirmationService->checkTokenAndGetUserId($token);
-        } catch (Exception $exception) {
-
-            if ($exception instanceof UserTokenNotFoundException) {
-                session()->flash('error', trans('errors.email_confirmation_invalid'));
-                return redirect('/register');
-            }
-
-            if ($exception instanceof UserTokenExpiredException) {
-                $user = $this->userRepo->getById($exception->userId);
-                $this->emailConfirmationService->sendConfirmation($user);
-                session()->flash('error', trans('errors.email_confirmation_expired'));
-                return redirect('/register/confirm');
-            }
-
-            throw $exception;
-        }
-
-        $user = $this->userRepo->getById($userId);
-        $user->email_confirmed = true;
-        $user->save();
-
-        auth()->login($user);
-        session()->flash('success', trans('auth.email_confirm_success'));
-        $this->emailConfirmationService->deleteByUser($user);
-
-        return redirect($this->redirectPath);
-    }
-
-    /**
-     * Shows a notice that a user's email address has not been confirmed,
-     * Also has the option to re-send the confirmation email.
-     * @return View
-     */
-    public function showAwaitingConfirmation()
-    {
-        return view('auth.user-unconfirmed');
-    }
-
-    /**
-     * Resend the confirmation email
-     * @param Request $request
-     * @return View
-     */
-    public function resendConfirmation(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|email|exists:users,email'
-        ]);
-        $user = $this->userRepo->getByEmail($request->get('email'));
-
-        try {
-            $this->emailConfirmationService->sendConfirmation($user);
-        } catch (Exception $e) {
-            session()->flash('error', trans('auth.email_confirm_send_error'));
-            return redirect('/register/confirm');
-        }
-
-        session()->flash('success', trans('auth.email_confirm_resent'));
-        return redirect('/register/confirm');
     }
 
     /**
