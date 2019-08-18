@@ -26,12 +26,8 @@
 }
 
 .text-muted {
-  color: lighten($text-dark, 26%) !important;
-  fill: lighten($text-dark, 26%) !important;
-  &.small, .small {
-    color: lighten($text-dark, 32%) !important;
-    fill: lighten($text-dark, 32%) !important;
-  }
+  color: #575757 !important;
+  fill: #575757 !important;
 }
 
 /*

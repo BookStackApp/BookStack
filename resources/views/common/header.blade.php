@@ -16,8 +16,10 @@
         <div class="header-search hide-under-l">
             @if (hasAppAccess())
             <form action="{{ url('/search') }}" method="GET" class="search-box">
-                <button id="header-search-box-button" type="submit">@icon('search') </button>
-                <input id="header-search-box-input" type="text" name="term" tabindex="2" placeholder="{{ trans('common.search') }}" value="{{ isset($searchTerm) ? $searchTerm : '' }}">
+                <button id="header-search-box-button" type="submit" aria-label="{{ trans('common.search') }}">@icon('search') </button>
+                <input id="header-search-box-input" type="text" name="term" tabindex="2"
+                       aria-label="{{ trans('common.search') }}" placeholder="{{ trans('common.search') }}"
+                       value="{{ isset($searchTerm) ? $searchTerm : '' }}">
             </form>
             @endif
         </div>
