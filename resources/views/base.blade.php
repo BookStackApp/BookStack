@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="@yield('body-class')">
+<html lang="{{ config('app.lang') }}" dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}" class="@yield('body-class')">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
