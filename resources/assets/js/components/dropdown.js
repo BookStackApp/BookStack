@@ -112,7 +112,6 @@ class DropDown {
 
         onSelect(this.toggle, event => {
             event.stopPropagation();
-            console.log('cat', event);
             this.show(event);
             if (event instanceof KeyboardEvent) {
                 this.focusNext();
