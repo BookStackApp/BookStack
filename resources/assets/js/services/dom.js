@@ -23,6 +23,22 @@ export function onEvents(listenerElement, events, callback) {
 }
 
 /**
+ * Helper to run an action when an element is selected.
+ * A "select" is made to be accessible, So can be a click, space-press or enter-press.
+ * @param listenerElement
+ * @param callback
+ */
+export function onSelect(listenerElement, callback) {
+    listenerElement.addEventListener('click', callback);
+    listenerElement.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            callback(event);
+        }
+    });
+}
+
+/**
  * Set a listener on an element for an event emitted by a child
  * matching the given childSelector param.
  * Used in a similar fashion to jQuery's $('listener').on('eventName', 'childSelector', callback)

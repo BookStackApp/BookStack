@@ -307,7 +307,11 @@ body.flexbox {
     &:hover {
       opacity: 1;
     }
+    &:focus-within {
+      opacity: 1;
+    }
   }
+
 }
 
 @include smaller-than($m) {

@@ -14,11 +14,13 @@
 
                 @if($bookChild->isA('chapter') && count($bookChild->pages) > 0)
                     <div class="entity-list-item no-hover">
-                        <span class="icon text-chapter">
-
-                        </span>
+                        <span role="presentation" class="icon text-chapter"></span>
                         <div class="content">
-                            @include('chapters.child-menu', ['chapter' => $bookChild, 'current' => $current])
+                            @include('chapters.child-menu', [
+                                'chapter' => $bookChild,
+                                'current' => $current,
+                                'isOpen'  => $bookChild->matchesOrContains($current)
+                            ])
                         </div>
                     </div>
 

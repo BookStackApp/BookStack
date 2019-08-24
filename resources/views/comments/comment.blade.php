@@ -1,8 +1,8 @@
 <div class="comment-box mb-m" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id}}" id="comment{{$comment->local_id}}">
     <div class="header p-s">
-        <div class="grid half no-gap v-center">
-            <div class="meta">
-                <a href="#comment{{$comment->local_id}}" class="text-muted">#{{$comment->local_id}}</a>
+        <div class="grid half left-focus no-gap v-center">
+            <div class="meta text-muted text-small">
+                <a href="#comment{{$comment->local_id}}">#{{$comment->local_id}}</a>
                 &nbsp;&nbsp;
                 @if ($comment->createdBy)
                     <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar" alt="{{ $comment->createdBy->name }}">
@@ -21,17 +21,17 @@
             </div>
             <div class="actions text-right">
                 @if(userCan('comment-update', $comment))
-                    <button type="button" class="text-button" action="edit" title="{{ trans('common.edit') }}">@icon('edit')</button>
+                    <button type="button" class="text-button" action="edit" aria-label="{{ trans('common.edit') }}" title="{{ trans('common.edit') }}">@icon('edit')</button>
                 @endif
                 @if(userCan('comment-create-all'))
-                    <button type="button" class="text-button" action="reply" title="{{ trans('common.reply') }}">@icon('reply')</button>
+                    <button type="button" class="text-button" action="reply" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
                 @endif
                 @if(userCan('comment-delete', $comment))
                     <div dropdown class="dropdown-container">
-                        <button type="button" dropdown-toggle class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
-                        <ul class="dropdown-menu">
+                        <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
+                        <ul class="dropdown-menu" role="menu">
                             <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
-                            <li><a action="delete" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
+                            <li><a action="delete" href="#" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
                         </ul>
                     </div>
                 @endif

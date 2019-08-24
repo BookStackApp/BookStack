@@ -47,9 +47,7 @@ header {
   }
   .user-name {
     vertical-align: top;
-    padding-top: $-m;
     position: relative;
-    top: -3px;
     display: inline-block;
     cursor: pointer;
     > * {
@@ -73,6 +71,9 @@ header {
   }
 }
 
+.header *, .primary-background * {
+  outline-color: #FFF;
+}
 
 
 .header-search {
@@ -88,6 +89,10 @@ header .search-box {
     color: #EEE;
     z-index: 2;
     padding-left: 40px;
+    &:focus {
+      outline: none;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
   }
   button {
     fill: #EEE;
@@ -101,12 +106,6 @@ header .search-box {
     color: #DDD;
   }
   ::-moz-placeholder { /* Firefox 19+ */
-    color: #DDD;
-  }
-  :-ms-input-placeholder { /* IE 10+ */
-    color: #DDD;
-  }
-  :-moz-placeholder { /* Firefox 18- */
     color: #DDD;
   }
   @include between($l, $xl) {
@@ -243,7 +242,7 @@ header .search-box {
     line-height: 0.8;
     margin: -2px 0 0;
   }
-  &:hover {
+  &:hover, &:focus-within {
     opacity: 1;
   }
 }

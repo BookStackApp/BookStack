@@ -7,35 +7,14 @@ class BreadcrumbListing {
         this.searchInput = elem.querySelector('input');
         this.loadingElem = elem.querySelector('.loading-container');
         this.entityListElem = elem.querySelector('.breadcrumb-listing-entity-list');
-        this.toggleElem = elem.querySelector('[dropdown-toggle]');
 
         // this.loadingElem.style.display = 'none';
         const entityDescriptor = elem.getAttribute('breadcrumb-listing').split(':');
         this.entityType = entityDescriptor[0];
         this.entityId = Number(entityDescriptor[1]);
 
-        this.toggleElem.addEventListener('click', this.onShow.bind(this));
+        this.elem.addEventListener('show', this.onShow.bind(this));
         this.searchInput.addEventListener('input', this.onSearch.bind(this));
-        this.elem.addEventListener('keydown', this.keyDown.bind(this));
-    }
-
-    keyDown(event) {
-        if (event.key === 'ArrowDown') {
-            this.listFocusChange(1);
-            event.preventDefault();
-        } else if  (event.key === 'ArrowUp') {
-            this.listFocusChange(-1);
-            event.preventDefault();
-        }
-    }
-
-    listFocusChange(indexChange = 1) {
-        const links = Array.from(this.entityListElem.querySelectorAll('a:not(.hidden)'));
-        const currentFocused = this.entityListElem.querySelector('a:focus');
-        const currentFocusedIndex = links.indexOf(currentFocused);
-        const defaultFocus = (indexChange > 0) ? links[0] : this.searchInput;
-        const nextElem = links[currentFocusedIndex + indexChange] || defaultFocus;
-        nextElem.focus();
     }
 
     onShow() {
