@@ -414,6 +414,11 @@ ul.pagination {
     background-color: transparent;
     border-color: rgba(0, 0, 0, 0.1);
   }
+  &:focus {
+    background-color: #eee;
+    outline: 1px dotted #666;
+    outline-offset: -2px;
+  }
 }
 
 .entity-list-item-path-sep {
@@ -551,9 +556,13 @@ ul.pagination {
     color: #555;
     fill: #555;
     white-space: nowrap;
-    &:hover {
+    &:hover, &:focus {
       text-decoration: none;
       background-color: #EEE;
+    }
+    &:focus {
+      outline: 1px solid rgba(0, 0, 0, 0.2);
+      outline-offset: -2px;
     }
     svg {
       margin-right: $-s;

@@ -1,4 +1,6 @@
 button {
+  background-color: transparent;
+  border: 0;
   font-size: 100%;
 }
 
@@ -47,7 +49,12 @@ $button-border-radius: 2px;
   &:hover, &:focus {
     text-decoration: none;
   }
+  &:focus {
+    outline: 1px dotted currentColor;
+    outline-offset: -$-xs;
+  }
   &:active {
+    outline: 0;
     background-color: darken($primary, 8%);
   }
 }
@@ -83,7 +90,7 @@ $button-border-radius: 2px;
   user-select: none;
   font-size: 0.75rem;
   line-height: 1.4em;
-  &:focus, &:active {
+    &:active {
     outline: 0;
   }
   &:hover {

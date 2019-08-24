@@ -176,6 +176,7 @@ return [
     'pages_delete_confirm' => 'Are you sure you want to delete this page?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'Save Draft',
     'pages_edit_draft' => 'Edit Page Draft',
     'pages_editing_draft' => 'Editing Draft',

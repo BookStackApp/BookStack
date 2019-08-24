@@ -26,9 +26,9 @@
 
             <div class="text-center px-m py-xs">
                 <div v-show="draftsEnabled" dropdown dropdown-move-menu class="dropdown-container draft-display text">
-                    <a dropdown-toggle  class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
+                    <a dropdown-toggle aria-haspopup="true" aria-expanded="false" title="{{ trans('entities.pages_edit_draft_options') }}" class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
                     @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" role="menu">
                         <li>
                             <a @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</a>
                         </li>

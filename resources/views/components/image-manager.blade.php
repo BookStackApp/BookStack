@@ -9,7 +9,7 @@
     ])
 
     <div overlay v-cloak @click="hide">
-        <div class="popup-body" @click.stop="">
+        <div class="popup-body" tabindex="-1" @click.stop>
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
