@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="tri-layout-mobile-tabs text-primary" >
+    <div class="tri-layout-mobile-tabs text-primary print-hidden">
         <div class="grid half no-break no-gap">
             <div class="tri-layout-mobile-tab px-m py-s" tri-layout-mobile-tab="info">
                 {{ trans('common.tab_info') }}

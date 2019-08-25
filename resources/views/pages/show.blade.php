@@ -2,7 +2,7 @@
 
 @section('body')
 
-    <div class="mb-m">
+    <div class="mb-m print-hidden">
         @include('partials.breadcrumbs', ['crumbs' => [
             $page->book,
             $page->hasChapter() ? $page->chapter : null,
@@ -18,7 +18,7 @@
     </div>
 
     @if ($commentsEnabled)
-        <div class="container small p-none comments-container mb-l">
+        <div class="container small p-none comments-container mb-l print-hidden">
             @include('comments.comments', ['page' => $page])
             <div class="clearfix"></div>
         </div>
