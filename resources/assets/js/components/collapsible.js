@@ -18,11 +18,13 @@ class Collapsible {
 
     open() {
         this.elem.classList.add('open');
+        this.trigger.setAttribute('aria-expanded', 'true');
         slideDown(this.content, 300);
     }
 
     close() {
         this.elem.classList.remove('open');
+        this.trigger.setAttribute('aria-expanded', 'false');
         slideUp(this.content, 300);
     }
 

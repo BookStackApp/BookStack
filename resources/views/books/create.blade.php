@@ -25,12 +25,12 @@
             @endif
         </div>
 
-        <div class="content-wrap card">
+        <main class="content-wrap card">
             <h1 class="list-heading">{{ trans('entities.books_create') }}</h1>
             <form action="{{ isset($bookshelf) ? $bookshelf->getUrl('/create-book') : url('/books') }}" method="POST" enctype="multipart/form-data">
                 @include('books.form')
             </form>
-        </div>
+        </main>
     </div>
 
 @stop

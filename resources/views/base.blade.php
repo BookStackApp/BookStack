@@ -30,9 +30,9 @@
     @include('partials.notifications')
     @include('common.header')
 
-    <section id="content" class="block">
+    <div id="content" class="block">
         @yield('content')
-    </section>
+    </div>
 
     <div back-to-top class="primary-background print-hidden">
         <div class="inner">

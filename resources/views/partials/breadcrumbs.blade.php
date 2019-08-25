@@ -1,4 +1,4 @@
-<div class="breadcrumbs text-center">
+<nav class="breadcrumbs text-center" aria-label="{{ trans('common.breadcrumb') }}">
     <?php $breadcrumbCount = 0; ?>
 
     {{-- Show top level books item --}}
@@ -51,4 +51,4 @@
         @endif
         <?php $breadcrumbCount++; ?>
     @endforeach
-</div>
+</nav>

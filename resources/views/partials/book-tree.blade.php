@@ -1,4 +1,4 @@
-<div id="book-tree" class="book-tree mb-xl" v-pre>
+<nav id="book-tree" class="book-tree mb-xl" v-pre aria-label="{{ trans('entities.books_navigation') }}">
     <h5>{{ trans('entities.books_navigation') }}</h5>
 
     <ul class="sidebar-page-list mt-xs menu entity-list">
@@ -29,4 +29,4 @@
             </li>
         @endforeach
     </ul>
-</div>
+</nav>

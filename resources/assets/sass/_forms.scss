@@ -19,6 +19,10 @@
   &.disabled, &[disabled] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==);
   }
+  &:focus {
+    border-color: var(--color-primary);
+    outline: 1px solid var(--color-primary);
+  }
 }
 
 .fake-input {
@@ -266,6 +270,9 @@ input[type=color] {
     margin-left: -$-m;
     margin-right: -$-m;
     padding: $-s $-m;
+    display: block;
+    width: calc(100% + 32px);
+    text-align: left;
   }
   .collapse-title, .collapse-title label {
     cursor: pointer;
@@ -376,4 +383,19 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
 .image-picker img {
   background-color: #BBB;
   max-width: 100%;
+}
+
+.custom-file-input {
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+}
+.custom-file-input:focus + label {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
 }

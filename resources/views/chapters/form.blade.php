@@ -12,9 +12,9 @@
 </div>
 
 <div class="form-group" collapsible id="logo-control">
-    <div class="collapse-title text-primary" collapsible-trigger>
-        <label for="user-avatar">{{ trans('entities.chapter_tags') }}</label>
-    </div>
+    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
+        <label for="tags">{{ trans('entities.chapter_tags') }}</label>
+    </button>
     <div class="collapse-content" collapsible-content>
         @include('components.tag-manager', ['entity' => isset($chapter)?$chapter:null, 'entityType' => 'chapter'])
     </div>

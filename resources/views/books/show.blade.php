@@ -14,7 +14,7 @@
         ]])
     </div>
 
-    <div class="content-wrap card">
+    <main class="content-wrap card">
         <h1 class="break-text" v-pre>{{$book->name}}</h1>
         <div class="book-content" v-show="!searching">
             <p class="text-muted" v-pre>{!! nl2br(e($book->description)) !!}</p>
@@ -53,7 +53,7 @@
         </div>
 
         @include('partials.entity-dashboard-search-results')
-    </div>
+    </main>
 
 @stop
 
