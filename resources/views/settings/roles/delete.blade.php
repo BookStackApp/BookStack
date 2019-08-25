@@ -32,7 +32,7 @@
                     <div>
                         <div class="form-group text-right">
                             <a href="{{ url("/settings/roles/{$role->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
-                            <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                            <button type="submit" class="button">{{ trans('common.confirm') }}</button>
                         </div>
                     </div>
                 </div>

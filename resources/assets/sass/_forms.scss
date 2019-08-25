@@ -98,7 +98,7 @@
     max-width: 100%;
   }
   [drawio-diagram]:hover {
-    outline: 2px solid $primary;
+    outline: 2px solid var(--color-primary);
   }
 }
 
@@ -339,16 +339,16 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   button {
     background-color: transparent;
     border: none;
-    color: $primary;
+    fill: #666;
     padding: 0;
     cursor: pointer;
     position: absolute;
     left: 8px;
-    top: 9.5px;
+    top: 9px;
   }
   input {
     display: block;
-    padding-left: $-l;
+    padding-left: $-l + 4px;
     width: 300px;
     max-width: 100%;
   }

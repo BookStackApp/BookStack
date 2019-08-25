@@ -182,7 +182,7 @@
                         </table>
 
 
-                        <button type="submit" class="button primary">{{ trans('entities.search_update') }}</button>
+                        <button type="submit" class="button">{{ trans('entities.search_update') }}</button>
                     </form>
 
                 </div>

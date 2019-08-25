@@ -20,7 +20,7 @@
 
                 <div class="form-group text-right">
                     <a href="{{  url($currentUser->can('users-manage') ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button class="button primary" type="submit">{{ trans('common.save') }}</button>
+                    <button class="button" type="submit">{{ trans('common.save') }}</button>
                 </div>
 
             </form>

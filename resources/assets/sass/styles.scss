@@ -99,7 +99,7 @@ $loadingSize: 10px;
 // Back to top link
 $btt-size: 40px;
 [back-to-top] {
-  background-color: $primary;
+  background-color: var(--color-primary);
   position: fixed;
   bottom: $-m;
   right: $-l;
@@ -187,7 +187,7 @@ $btt-size: 40px;
     margin-bottom: 0;
   }
   .entity-list-item.selected {
-    background-color: rgba(0, 0, 0, 0.15) !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
   }
   .loading {
     height: 400px;

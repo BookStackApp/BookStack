@@ -150,9 +150,6 @@
     padding: 8px $-m;
   }
 }
-.popup-footer {
-  margin-top: 1px;
-}
 body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   height: 444px;
   min-height: 444px;
@@ -578,6 +575,20 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     color: #666;
     &.selected {
       border-bottom-width: 3px;
+    }
+  }
+}
+
+.nav-tabs {
+  text-align: center;
+  a, .tab-item {
+    padding: $-m;
+    display: inline-block;
+    color: #666;
+    fill: #666;
+    cursor: pointer;
+    &.selected {
+      border-bottom: 2px solid var(--color-primary);
     }
   }
 }

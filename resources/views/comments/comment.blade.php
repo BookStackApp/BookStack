@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group text-right">
                     <button type="button" class="button outline" action="closeUpdateForm">{{ trans('common.cancel') }}</button>
-                    <button type="submit" class="button primary">{{ trans('entities.comment_save') }}</button>
+                    <button type="submit" class="button">{{ trans('entities.comment_save') }}</button>
                 </div>
                 <div class="form-group loading" style="display: none;">
                     @include('partials.loading-icon', ['text' => trans('entities.comment_saving')])

@@ -58,7 +58,7 @@
                     @if($authMethod !== 'system')
                         <a href="{{ url("/settings/users/{$user->id}/delete") }}" class="button outline">{{ trans('settings.users_delete') }}</a>
                     @endif
-                    <button class="button primary" type="submit">{{ trans('common.save') }}</button>
+                    <button class="button" type="submit">{{ trans('common.save') }}</button>
                 </div>
             </form>
         </div>
