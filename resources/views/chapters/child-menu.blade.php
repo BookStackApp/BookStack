@@ -1,5 +1,5 @@
 <div class="chapter-child-menu">
-    <button chapter-toggle type="button" aria-expanded="{{ $isOpen ? 'true' : 'false' }}" aria-label="{{ trans('common.profile_menu') }}"
+    <button chapter-toggle type="button" aria-expanded="{{ $isOpen ? 'true' : 'false' }}"
             class="text-muted @if($isOpen) open @endif">
         @icon('caret-right') @icon('page') <span>{{ trans_choice('entities.x_pages', $bookChild->pages->count()) }}</span>
     </button>

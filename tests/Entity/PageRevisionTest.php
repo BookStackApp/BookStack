@@ -87,7 +87,7 @@ class PageRevisionTest extends TestCase
         // Delete the first revision
         $revision = $page->revisions->get(1);
         $resp = $this->asEditor()->delete($revision->getUrl('/delete/'));
-        $resp->assertStatus(200);
+        $resp->assertRedirect($page->getUrl('/revisions'));
 
         $page = Page::find($page->id);
         $afterRevisionCount = $page->revisions->count();

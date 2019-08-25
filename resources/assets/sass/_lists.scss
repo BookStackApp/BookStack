@@ -59,6 +59,8 @@
   .chapter-expansion-toggle {
     border-radius: 0 4px 4px 0;
     padding: $-xs $-m;
+    width: 100%;
+    text-align: left;
   }
   .chapter-expansion-toggle:hover {
     background-color: rgba(0, 0, 0, 0.06);
@@ -554,14 +556,15 @@ ul.pagination {
     display: block;
     padding: $-xs $-m;
     color: #555;
-    fill: #555;
+    fill: currentColor;
     white-space: nowrap;
     &:hover, &:focus {
       text-decoration: none;
-      background-color: #EEE;
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
     }
     &:focus {
-      outline: 1px solid rgba(0, 0, 0, 0.2);
+      outline: 1px solid var(--color-primary);
       outline-offset: -2px;
     }
     svg {
