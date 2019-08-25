@@ -52,9 +52,7 @@ class Translator {
         const rangeRegex = /^\[([0-9]+),([0-9*]+)]/;
         let result = null;
 
-        for (const i = 0, len = splitText.length; i < len; i++) {
-            const t = splitText[i];
-
+        for (let t of splitText) {
             // Parse exact matches
             const exactMatches = t.match(exactCountRegex);
             if (exactMatches !== null && Number(exactMatches[1]) === count) {
@@ -77,7 +75,10 @@ class Translator {
             result = (count === 1) ? splitText[0] : splitText[1];
         }
 
-        if (result === null) result = splitText[0];
+        if (result === null) {
+            result = splitText[0];
+        }
+
         return this.performReplacements(result, replacements);
     }
 
