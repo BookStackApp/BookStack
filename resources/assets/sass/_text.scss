@@ -106,6 +106,10 @@ a {
     position: relative;
     display: inline-block;
   }
+  &:focus img:only-child {
+    outline: 2px dashed var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .blended-links a {
