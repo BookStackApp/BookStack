@@ -13,7 +13,7 @@ A platform for storing and organising information and documentation. General inf
     * [Admin Login](https://demo.bookstackapp.com/login?email=admin@example.com&password=password)
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 
-## Project Definition
+## 📚 Project Definition
 
 BookStack is an opinionated wiki system that provides a pleasant and simple out of the box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
 
@@ -21,7 +21,7 @@ BookStack is not designed as an extensible platform to be used for purposes that
 
 In regards to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
 
-## Road Map
+## 🛣️ Road Map
 
 Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
 
@@ -34,7 +34,7 @@ Below is a high-level road map view for BookStack to provide a sense of directio
 - **Installation & Deployment Process Revamp**
     - *Creation of a streamlined & secure process for users to deploy & update BookStack with reduced development requirements (No git or composer requirement).*
 
-## Release Versioning & Process
+## 🚀 Release Versioning & Process
 
 BookStack releases are each assigned a version number, such as "v0.25.2", in the format `v<phase>.<feature>.<patch>`. A change only in the `patch` number indicates a fairly minor release that mainly contains fixes and therefore is very unlikely to cause breakages upon update. A change in the `feature` number indicates a release which will generally bring new features in addition to fixes and enhancements. These releases have a small chance of introducing breaking changes upon update so it's worth checking for any notes in the [update guide](https://www.bookstackapp.com/docs/admin/updates/). A change in the `phase` indicates a much large change in BookStack that will likely incur breakages requiring manual intervention.
 
@@ -42,7 +42,7 @@ Each BookStack release will have a [milestone](https://github.com/BookStackApp/B
 
 For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](http://eepurl.com/cmmq5j).
 
-## Development & Testing
+## 🛠️ Development & Testing
 
 All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
@@ -75,7 +75,11 @@ php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
 
 Once done you can run `php vendor/bin/phpunit` in the application root directory to run all tests.
 
-## Translations
+### 📜 Code Standards
+
+PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
+
+## 🌎 Translations
 
 All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
 
@@ -94,29 +98,15 @@ php resources/lang/check.php pt_BR
 
 Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
 
-## Contributing & Maintenance
+## 🎁 Contributing, Issues & Pull Requests
 
-Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
+Feel free to create issues to request new features or to report bugs & problems. Just please follow the template given when creating the issue.
+
+Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge. Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
 The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
 
-### Code Standards
-
-PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
-
-### Pull Requests
-
-Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge.
-
-Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
-
-If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
-
-## Website, Docs & Blog
-
-The website which contains the project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
-
-## Security
+## 🔒 Security
 
 Security information for administering a BookStack instance can be found on the [documentation site here](https://www.bookstackapp.com/docs/admin/security/).
 
@@ -124,12 +114,19 @@ If you'd like to be notified of new potential security concerns you can [sign-up
 
 If you would like to report a security concern in a more confidential manner than via a GitHub issue, You can directly email the lead maintainer [ssddanbrown](https://github.com/ssddanbrown). You will need to login to be able to see the email address on the [GitHub profile page](https://github.com/ssddanbrown). Alternatively you can send a DM via twitter to [@ssddanbrown](https://twitter.com/ssddanbrown).
 
+## ♿ Accessibility
 
-## License
+We want BookStack to remain accessible to as many people as possible. We aim for at least WCAG 2.1 Level A standards where possible although we do not strictly test this upon each release. If you come across any accessibility issues please feel free to open an issue.
 
-The BookStack source is provided under the MIT License.
+## 🖥️ Website, Docs & Blog
 
-## Attribution
+The website which contains the project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
+
+## ⚖️ License
+
+The BookStack source is provided under the MIT License. The libraries used by, and included with, BookStack are provided under their own licenses.
+
+## 👪 Attribution
 
 The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
 
