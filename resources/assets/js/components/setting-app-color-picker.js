@@ -10,7 +10,7 @@ class SettingAppColorPicker {
         this.colorInput.addEventListener('change', this.updateColor.bind(this));
         this.colorInput.addEventListener('input', this.updateColor.bind(this));
         this.resetButton.addEventListener('click', event => {
-            this.colorInput.value = '#1d75b6';
+            this.colorInput.value = '#206ea7';
             this.updateColor();
         });
     }
