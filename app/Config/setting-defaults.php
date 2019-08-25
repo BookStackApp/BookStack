@@ -14,8 +14,8 @@ return [
     'app-logo'             => '',
     'app-name-header'      => true,
     'app-editor'           => 'wysiwyg',
-    'app-color'            => '#0288D1',
-    'app-color-light'      => 'rgba(21, 101, 192, 0.15)',
+    'app-color'            => '#1d75b6',
+    'app-color-light'      => 'rgba(29,117,182,0.15)',
     'app-custom-head'      => false,
     'registration-enabled' => false,
 

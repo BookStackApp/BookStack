@@ -20,7 +20,7 @@
 
                         <input type="hidden" name="_method" value="DELETE">
                         <a href="{{ url("/settings/users/{$user->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
-                        <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                        <button type="submit" class="button">{{ trans('common.confirm') }}</button>
                     </form>
                 </div>
             </div>

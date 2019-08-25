@@ -41,20 +41,20 @@ $fs-m: 14px;
 $fs-s: 12px;
 
 // Colours
-$primary: #0288D1;
-$primary-dark: #0288D1;
-$secondary: #cf4d03;
+:root {
+  --color-primary: '#1d75b6';
+  --color-primary-light: 'rgba(29,117,182,0.15)';
+}
 $positive: #0f7d15;
 $negative: #ab0f0e;
-$info: $primary;
-$warning: $secondary;
-$primary-faded: rgba(21, 101, 192, 0.15);
+$info: #0288D1;
+$warning: #cf4d03;
 
 // Item Colors
 $color-bookshelf: #af5a5a;
 $color-book: #009688;
 $color-chapter: #d7804a;
-$color-page: $primary;
+$color-page: #0288D1;
 $color-page-draft: #9A60DA;
 
 // Text colours

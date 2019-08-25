@@ -37,6 +37,6 @@
 
     <div class="text-right">
         <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-        <button type="submit" class="button primary">{{ trans('entities.permissions_save') }}</button>
+        <button type="submit" class="button">{{ trans('entities.permissions_save') }}</button>
     </div>
 </form>

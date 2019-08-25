@@ -31,7 +31,7 @@
                         <a href="{{ url('/login') }}">{{ trans('auth.already_have_account') }}</a>
                     </div>
                     <div class="from-group text-right">
-                        <button class="button primary">{{ trans('auth.create_account') }}</button>
+                        <button class="button">{{ trans('auth.create_account') }}</button>
                     </div>
                 </div>
 

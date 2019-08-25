@@ -24,7 +24,7 @@
                     @endif
                 </div>
                 <div class="form-group text-right mt-m">
-                    <button type="submit" class="button primary">{{ trans('auth.email_not_confirmed_resend_button') }}</button>
+                    <button type="submit" class="button">{{ trans('auth.email_not_confirmed_resend_button') }}</button>
                 </div>
             </form>
 

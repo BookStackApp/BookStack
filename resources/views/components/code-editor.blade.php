@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="button" class="button primary" @click="save()">{{ trans('components.code_save') }}</button>
+                    <button type="button" class="button" @click="save()">{{ trans('components.code_save') }}</button>
                 </div>
 
             </div>

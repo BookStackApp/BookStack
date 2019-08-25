@@ -224,7 +224,7 @@
         @if (isset($role) && $role->id)
             <a href="{{ url("/settings/roles/delete/{$role->id}") }}" class="button outline">{{ trans('settings.role_delete') }}</a>
         @endif
-        <button type="submit" class="button primary">{{ trans('settings.role_save') }}</button>
+        <button type="submit" class="button">{{ trans('settings.role_save') }}</button>
     </div>
 
 </div>

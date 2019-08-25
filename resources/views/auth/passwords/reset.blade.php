@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="from-group text-right mt-m">
-                    <button class="button primary">{{ trans('auth.reset_password') }}</button>
+                    <button class="button">{{ trans('auth.reset_password') }}</button>
                 </div>
             </form>
 

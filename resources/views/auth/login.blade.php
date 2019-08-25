@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button class="button primary" tabindex="1">{{ title_case(trans('auth.log_in')) }}</button>
+                        <button class="button" tabindex="1">{{ title_case(trans('auth.log_in')) }}</button>
                     </div>
                 </div>
 

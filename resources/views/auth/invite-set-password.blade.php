@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="text-right">
-                    <button class="button primary">{{ trans('auth.user_invite_page_confirm_button') }}</button>
+                    <button class="button">{{ trans('auth.user_invite_page_confirm_button') }}</button>
                 </div>
 
             </form>

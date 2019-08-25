@@ -66,5 +66,5 @@
 
 <div class="form-group text-right">
     <a href="{{ isset($shelf) ? $shelf->getUrl() : url('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
-    <button type="submit" class="button primary">{{ trans('entities.shelves_save') }}</button>
+    <button type="submit" class="button">{{ trans('entities.shelves_save') }}</button>
 </div>

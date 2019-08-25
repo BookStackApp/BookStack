@@ -7,7 +7,7 @@
             </div>
             @include('components.entity-selector', ['name' => 'entity-selector'])
             <div class="popup-footer">
-                <button type="button" disabled="true" class="button entity-link-selector-confirm primary corner-button">{{ trans('common.select') }}</button>
+                <button type="button" disabled="true" class="button entity-link-selector-confirm corner-button">{{ trans('common.select') }}</button>
             </div>
         </div>
     </div>

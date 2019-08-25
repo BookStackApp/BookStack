@@ -72,7 +72,7 @@
                                     <button type="button" class="button icon outline" @click="deleteImage">@icon('delete')</button>
 
                                 </div>
-                                <button class="button primary anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
+                                <button class="button anim fadeIn float right" v-show="selectedImage" @click="callbackAndHide(selectedImage)">
                                     {{ trans('components.image_select_image') }}
                                 </button>
                                 <div class="clearfix"></div>

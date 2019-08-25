@@ -1,3 +1,13 @@
+/**
+ * Background colors
+ */
+
+.primary-background {
+  background-color: var(--color-primary) !important;
+}
+.primary-background-light {
+  background-color: var(--color-primary-light);
+}
 
 /*
  * Status text colors
@@ -21,8 +31,8 @@
  * Style text colors
  */
 .text-primary, .text-primary:hover, .text-primary-hover:hover  {
-  color: $primary !important;
-  fill: $primary !important;
+  color: var(--color-primary) !important;
+  fill: var(--color-primary) !important;
 }
 
 .text-muted {

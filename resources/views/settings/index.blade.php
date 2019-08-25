@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <button type="submit" class="button primary">{{ trans('settings.settings_save') }}</button>
+                    <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
                 </div>
             </form>
         </div>
@@ -135,7 +135,7 @@
                             <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
                         </div>
                         <div setting-app-color-picker class="text-m-right">
-                            <input type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
+                            <input type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#1d75b6">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                             <br>
                             <button type="button" class="text-button text-muted mt-s mx-s" setting-app-color-picker-reset>{{ trans('common.reset') }}</button>
@@ -173,7 +173,7 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <button type="submit" class="button primary">{{ trans('settings.settings_save') }}</button>
+                    <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
                 </div>
             </form>
         </div>
@@ -236,7 +236,7 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <button type="submit" class="button primary">{{ trans('settings.settings_save') }}</button>
+                    <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
                 </div>
             </form>
         </div>

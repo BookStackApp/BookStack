@@ -39,7 +39,7 @@
 
                 <div class="form-group text-right">
                     <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button primary">{{ trans('entities.pages_copy') }}</button>
+                    <button type="submit" class="button">{{ trans('entities.pages_copy') }}</button>
                 </div>
             </form>
 
