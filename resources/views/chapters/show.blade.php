@@ -8,7 +8,7 @@
 
 @section('body')
 
-    <div class="mb-m">
+    <div class="mb-m print-hidden">
         @include('partials.breadcrumbs', ['crumbs' => [
             $chapter->book,
             $chapter,
