@@ -1,7 +1,7 @@
 import draggable from 'vuedraggable';
 import autosuggest from './components/autosuggest';
 
-let data = {
+const data = {
     entityId: false,
     entityType: null,
     tags: [],
@@ -10,7 +10,7 @@ let data = {
 const components = {draggable, autosuggest};
 const directives = {};
 
-let methods = {
+const methods = {
 
     addEmptyTag() {
         this.tags.push({name: '', value: '', key: Math.random().toString(36).substring(7)});

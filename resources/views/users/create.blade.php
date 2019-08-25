@@ -8,7 +8,7 @@
             @include('settings.navbar', ['selected' => 'users'])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('settings.users_add_new') }}</h1>
 
             <form action="{{ url("/settings/users/create") }}" method="post">
@@ -25,7 +25,7 @@
 
             </form>
 
-        </div>
+        </main>
     </div>
 
 @stop

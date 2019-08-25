@@ -11,9 +11,9 @@
 </div>
 
 <div class="form-group" collapsible id="logo-control">
-    <div class="collapse-title text-primary" collapsible-trigger>
-        <label for="user-avatar">{{ trans('common.cover_image') }}</label>
-    </div>
+    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
+        <label>{{ trans('common.cover_image') }}</label>
+    </button>
     <div class="collapse-content" collapsible-content>
         <p class="small">{{ trans('common.cover_image_description') }}</p>
 
@@ -27,9 +27,9 @@
 </div>
 
 <div class="form-group" collapsible id="tags-control">
-    <div class="collapse-title text-primary" collapsible-trigger>
+    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
         <label for="tag-manager">{{ trans('entities.book_tags') }}</label>
-    </div>
+    </button>
     <div class="collapse-content" collapsible-content>
         @include('components.tag-manager', ['entity' => isset($book)?$book:null, 'entityType' => 'chapter'])
     </div>

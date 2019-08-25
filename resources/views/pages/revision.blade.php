@@ -25,10 +25,10 @@
         ]])
     </div>
 
-    <div class="card content-wrap">
+    <main class="card content-wrap">
         <div class="page-content page-revision">
             @include('pages.page-display')
         </div>
-    </div>
+    </main>
 
 @stop

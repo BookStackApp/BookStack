@@ -1,4 +1,4 @@
-<div page-comments page-id="{{ $page->id }}" class="comments-list">
+<section page-comments page-id="{{ $page->id }}" class="comments-list" aria-label="{{ trans('entities.comments') }}">
 
     @exposeTranslations([
         'entities.comment_updated_success',
@@ -34,4 +34,4 @@
         @endif
     @endif
 
-</div>
+</section>

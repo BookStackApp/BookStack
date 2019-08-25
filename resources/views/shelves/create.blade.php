@@ -17,12 +17,12 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.shelves_create') }}</h1>
             <form action="{{ url("/shelves") }}" method="POST" enctype="multipart/form-data">
                 @include('shelves.form', ['shelf' => null, 'books' => $books])
             </form>
-        </div>
+        </main>
 
     </div>
 

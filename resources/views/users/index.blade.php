@@ -7,7 +7,7 @@
             @include('settings.navbar', ['selected' => 'users'])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
 
             <div class="grid right-focus v-center">
                 <h1 class="list-heading">{{ trans('settings.users') }}</h1>
@@ -62,7 +62,7 @@
             <div>
                 {{ $users->links() }}
             </div>
-        </div>
+        </main>
 
     </div>
 

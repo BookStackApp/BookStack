@@ -15,7 +15,7 @@
 
         <div class="header-search hide-under-l">
             @if (hasAppAccess())
-            <form action="{{ url('/search') }}" method="GET" class="search-box">
+            <form action="{{ url('/search') }}" method="GET" class="search-box" role="search">
                 <button id="header-search-box-button" type="submit" aria-label="{{ trans('common.search') }}" tabindex="-1">@icon('search') </button>
                 <input id="header-search-box-input" type="text" name="term"
                        aria-label="{{ trans('common.search') }}" placeholder="{{ trans('common.search') }}"
@@ -25,7 +25,7 @@
         </div>
 
         <div class="text-right">
-            <div class="header-links">
+            <nav class="header-links" >
                 <div class="links text-center">
                     @if (hasAppAccess())
                         <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
@@ -69,7 +69,7 @@
                         </ul>
                     </div>
                 @endif
-            </div>
+            </nav>
         </div>
 
     </div>

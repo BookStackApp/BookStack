@@ -10,12 +10,12 @@
         ]])
     </div>
 
-    <div class="content-wrap card">
+    <main class="content-wrap card">
         <div class="page-content" page-display="{{ $page->id }}">
             @include('pages.pointer', ['page' => $page])
             @include('pages.page-display')
         </div>
-    </div>
+    </main>
 
     @if ($commentsEnabled)
         <div class="container small p-none comments-container mb-l print-hidden">
@@ -50,7 +50,7 @@
     @endif
 
     @if (isset($pageNav) && count($pageNav))
-        <div id="page-navigation" class="mb-xl">
+        <nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
             <h5>{{ trans('entities.pages_navigation') }}</h5>
             <div class="body">
                 <div class="sidebar-page-nav menu">
@@ -62,7 +62,7 @@
                     @endforeach
                 </div>
             </div>
-        </div>
+        </nav>
     @endif
 
     @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])

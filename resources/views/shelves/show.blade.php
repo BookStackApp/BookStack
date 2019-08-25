@@ -8,7 +8,7 @@
         ]])
     </div>
 
-    <div class="card content-wrap">
+    <main class="card content-wrap">
         <h1 class="break-text">{{$shelf->name}}</h1>
         <div class="book-content">
             <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
@@ -39,7 +39,7 @@
                 </div>
             @endif
         </div>
-    </div>
+    </main>
 
 @stop
 

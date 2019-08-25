@@ -35,12 +35,12 @@
             </div>
 
             <div>
-                <div class="card content-wrap">
+                <main class="card content-wrap">
                     <h2 class="list-heading mb-m">{{ trans('entities.books_sort_show_other') }}</h2>
 
                     @include('components.entity-selector', ['name' => 'books_list', 'selectorSize' => 'compact', 'entityTypes' => 'book', 'entityPermission' => 'update', 'showAdd' => true])
 
-                </div>
+                </main>
             </div>
         </div>
 

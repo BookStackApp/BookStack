@@ -8,8 +8,8 @@
         </div>
         <div class="text-center">
 
+            <input type="file" class="custom-file-input" accept="image/*" name="{{ $name }}" id="{{ $name }}">
             <label for="{{ $name }}" class="button outline">{{ trans('components.image_select_image') }}</label>
-            <input type="file" class="hidden" accept="image/*" name="{{ $name }}" id="{{ $name }}">
             <input type="hidden" data-reset-input name="{{ $name }}_reset" value="true" disabled="disabled">
             @if(isset($removeName))
                 <input type="hidden" data-remove-input name="{{ $removeName }}" value="{{ $removeValue }}" disabled="disabled">

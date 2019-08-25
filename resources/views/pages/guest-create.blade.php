@@ -15,7 +15,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.pages_new') }}</h1>
             <form action="{{  $parent->getUrl('/create-guest-page') }}" method="POST">
                 {!! csrf_field() !!}
@@ -31,7 +31,7 @@
                 </div>
 
             </form>
-        </div>
+        </main>
     </div>
 
 @stop

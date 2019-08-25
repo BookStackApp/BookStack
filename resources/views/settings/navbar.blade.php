@@ -1,5 +1,5 @@
 
-<div class="active-link-list">
+<nav class="active-link-list">
     @if($currentUser->can('settings-manage'))
         <a href="{{ url('/settings') }}" @if($selected == 'settings') class="active" @endif>@icon('settings'){{ trans('settings.settings') }}</a>
         <a href="{{ url('/settings/maintenance') }}" @if($selected == 'maintenance') class="active" @endif>@icon('spanner'){{ trans('settings.maint') }}</a>
@@ -10,4 +10,4 @@
     @if($currentUser->can('user-roles-manage'))
         <a href="{{ url('/settings/roles') }}" @if($selected == 'roles') class="active" @endif>@icon('lock-open'){{ trans('settings.roles') }}</a>
     @endif
-</div>
+</nav>

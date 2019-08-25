@@ -2,11 +2,11 @@
 
 @section('body')
     <div class="mt-m">
-        <div class="content-wrap card">
+        <main class="content-wrap card">
             <div class="page-content" page-display="{{ $customHomepage->id }}">
                 @include('pages.page-display', ['page' => $customHomepage])
             </div>
-        </div>
+        </main>
     </div>
 @stop
 

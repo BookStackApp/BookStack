@@ -59,6 +59,7 @@ return [
     'grid_view' => 'Grid View',
     'list_view' => 'List View',
     'default' => 'Default',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
     'profile_menu' => 'Profile Menu',

@@ -15,7 +15,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.chapters_move') }}</h1>
 
             <form action="{{ $chapter->getUrl('/move') }}" method="POST">
@@ -31,7 +31,7 @@
                 </div>
             </form>
 
-        </div>
+        </main>
 
 
 

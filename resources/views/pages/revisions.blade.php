@@ -15,7 +15,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.pages_revisions') }}</h1>
             @if(count($page->revisions) > 0)
 
@@ -86,7 +86,7 @@
             @else
                 <p>{{ trans('entities.pages_revisions_none') }}</p>
             @endif
-        </div>
+        </main>
 
     </div>
 
