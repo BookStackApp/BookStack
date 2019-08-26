@@ -1,0 +1,41 @@
+# This is a Docker Compose configuration
+# intended for development purposes
+
+version: '3'
+
+volumes:
+  db: {}
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: bookstack-test
+      MYSQL_USER: bookstack-test
+      MYSQL_PASSWORD: bookstack-test
+      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db:/var/lib/mysql
+  app:
+    build:
+      context: ..
+      dockerfile: ./dev/docker/Dockerfile
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: bookstack-test
+      DB_USERNAME: bookstack-test
+      DB_PASSWORD: bookstack-test
+    ports:
+      - ${DEV_PORT:-8080}:80
+    volumes:
+      - ../:/app
+    entrypoint: /app/dev/docker/entrypoint.app.sh
+  node:
+    image: node:alpine
+    working_dir: /app
+    volumes:
+      - ../:/app
+    entrypoint: /app/dev/docker/entrypoint.node.sh
