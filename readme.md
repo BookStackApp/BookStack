@@ -79,7 +79,7 @@ Once done you can run `php vendor/bin/phpunit` in the application root directory
 
 PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
 
-### Getting started with Development using Docker
+### 🐋 Development using Docker
 
 This repository ships with a Docker Compose configuration intended for development purposes. It'll build a PHP image with all needed extensions installed and start up a MySQL server and a Node image watching the UI assets.
 
@@ -87,17 +87,21 @@ To get started, make sure you meet the following requirements:
 
 - Docker and Docker Compose are installed
 - Your user is part of the `docker` group
-- Composer is installed
 
 If all the conditions are met, you can proceed with the following steps:
 
-1. Install Composer dependencies with **`docker-compose run app composer install`** (first time can take a while because the image has to be built)
-2. **Copy `.env.example` to `.env`** and change `APP_KEY` to a random 32 char string
-3. Make sure **port 8080 is unused** *or else* change `DEV_PORT` to a free port on your host
-4. **Run `chgrp -R docker storage`**. The development container will chown the `storage` directory to the `www-data` user inside the container so BookStack can write to it. You need to change the group to your host's `docker` group here to not lose access to the `storage` directory
-5. **Run `docker-compose up`** and wait until all database migrations have been done
-6. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified)
+1. Install PHP/Composer dependencies with **`docker-compose run app composer install`** (first time can take a while because the image has to be built).
+2. **Copy `.env.example` to `.env`** and change `APP_KEY` to a random 32 char string.
+3. Make sure **port 8080 is unused** *or else* change `DEV_PORT` to a free port on your host.
+4. **Run `chgrp -R docker storage`**. The development container will chown the `storage` directory to the `www-data` user inside the container so BookStack can write to it. You need to change the group to your host's `docker` group here to not lose access to the `storage` directory.
+5. **Run `docker-compose up`** and wait until all database migrations have been done.
+6. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
 
+If needed, You'll be able to run any artisan commands via docker-compose like so:
+
+ ```shell script
+docker-compose run app php artisan list 
+```
 
 ## 🌎 Translations
 
