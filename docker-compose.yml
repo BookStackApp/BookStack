@@ -1,5 +1,5 @@
 # This is a Docker Compose configuration
-# intended for development purposes
+# intended for development purposes only
 
 version: '3'
 
@@ -19,7 +19,7 @@ services:
       - db:/var/lib/mysql
   app:
     build:
-      context: ..
+      context: .
       dockerfile: ./dev/docker/Dockerfile
     environment:
       DB_CONNECTION: mysql
@@ -31,11 +31,11 @@ services:
     ports:
       - ${DEV_PORT:-8080}:80
     volumes:
-      - ../:/app
+      - ./:/app
     entrypoint: /app/dev/docker/entrypoint.app.sh
   node:
     image: node:alpine
     working_dir: /app
     volumes:
-      - ../:/app
+      - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh
