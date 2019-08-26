@@ -16,12 +16,21 @@ class TemplateManager {
         // Template list item content click
         DOM.onChildEvent(this.elem, '.template-item-content', 'click', this.handleTemplateItemClick.bind(this));
 
+        // Template list item drag start
+        DOM.onChildEvent(this.elem, '.template-item', 'dragstart', this.handleTemplateItemDragStart.bind(this));
+
         this.setupSearchBox();
     }
 
     handleTemplateItemClick(event, templateItem) {
         const templateId = templateItem.closest('[template-id]').getAttribute('template-id');
         this.insertTemplate(templateId, 'replace');
+    }
+
+    handleTemplateItemDragStart(event, templateItem) {
+        const templateId = templateItem.closest('[template-id]').getAttribute('template-id');
+        event.dataTransfer.setData('bookstack/template', templateId);
+        event.dataTransfer.setData('text/plain', templateId);
     }
 
     handleTemplateActionClick(event, actionButton) {

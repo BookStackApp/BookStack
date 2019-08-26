@@ -608,6 +608,18 @@ class WysiwygEditor {
                     let dom = editor.dom,
                         rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
 
+                    // Template insertion
+                    const templateId = event.dataTransfer.getData('bookstack/template');
+                    if (templateId) {
+                        event.preventDefault();
+                        window.$http.get(`/templates/${templateId}`).then(resp => {
+                            editor.selection.setRng(rng);
+                            editor.undoManager.transact(function () {
+                                editor.execCommand('mceInsertContent', false, resp.data.html);
+                            });
+                        });
+                    }
+
                     // Don't allow anything to be dropped in a captioned image.
                     if (dom.getParent(rng.startContainer, '.mceTemp')) {
                         event.preventDefault();
