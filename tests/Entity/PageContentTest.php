@@ -118,7 +118,7 @@ class PageContentTest extends TestCase
             '<iframe SRC=" javascript: alert(document.cookie)"></iframe>',
             '<iframe src="data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
             '<iframe src=" data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
-
+            '<iframe srcdoc="<script>window.alert(document.cookie)</script>"></iframe>'
         ];
 
         $this->asEditor();
