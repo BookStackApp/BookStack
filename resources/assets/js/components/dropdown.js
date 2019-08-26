@@ -118,8 +118,8 @@ class DropDown {
             }
         });
 
-        // Arrow navigation
-        this.container.addEventListener('keydown', event => {
+        // Keyboard navigation
+        const keyboardNavigation = event => {
             if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
                 this.focusNext();
                 event.preventDefault();
@@ -128,9 +128,14 @@ class DropDown {
                 event.preventDefault();
             } else if (event.key === 'Escape') {
                 this.hide();
+                this.toggle.focus();
                 event.stopPropagation();
             }
-        });
+        };
+        this.container.addEventListener('keydown', keyboardNavigation);
+        if (this.moveMenu) {
+            this.menu.addEventListener('keydown', keyboardNavigation);
+        }
 
         // Hide menu on enter press or escape
         this.menu.addEventListener('keydown ', event => {
