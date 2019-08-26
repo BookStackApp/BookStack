@@ -28,8 +28,7 @@
         <div class="editor-toolbar">
             <div class="editor-toolbar-label">{{ trans('entities.pages_md_preview') }}</div>
         </div>
-        <div class="markdown-display page-content">
-        </div>
+        <iframe class="markdown-display" sandbox="allow-same-origin"></iframe>
     </div>
     <input type="hidden" name="html"/>
 
