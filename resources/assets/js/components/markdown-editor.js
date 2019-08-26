@@ -222,16 +222,30 @@ class MarkdownEditor {
             }
         });
 
-        // Handle images on drag-drop
+        // Handle image & content drag n drop
         cm.on('drop', (cm, event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            let cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
-            cm.setCursor(cursorPos);
-            if (!event.dataTransfer || !event.dataTransfer.files) return;
-            for (let i = 0; i < event.dataTransfer.files.length; i++) {
-                uploadImage(event.dataTransfer.files[i]);
+
+            const templateId = event.dataTransfer.getData('bookstack/template');
+            if (templateId) {
+                const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
+                cm.setCursor(cursorPos);
+                event.preventDefault();
+                window.$http.get(`/templates/${templateId}`).then(resp => {
+                    const content = resp.data.markdown || resp.data.html;
+                    cm.replaceSelection(content);
+                });
             }
+
+            if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+                const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
+                cm.setCursor(cursorPos);
+                event.stopPropagation();
+                event.preventDefault();
+                for (let i = 0; i < event.dataTransfer.files.length; i++) {
+                    uploadImage(event.dataTransfer.files[i]);
+                }
+            }
+
         });
 
         // Helper to replace editor content
