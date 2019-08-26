@@ -1,4 +1,4 @@
-<div dropdown class="dropdown-container" >
+<div dropdown class="dropdown-container" id="export-menu">
     <div dropdown-toggle class="icon-list-item"
          aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('entities.export') }}" tabindex="0">
         <span>@icon('export')</span>

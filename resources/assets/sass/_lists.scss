@@ -232,9 +232,20 @@
 }
 .sort-box {
   margin-bottom: $-m;
-  border: 2px solid rgba($color-book, 0.6);
   padding: $-m $-xl;
-  border-radius: 4px;
+  position: relative;
+  &::before {
+    content: '';
+    border-radius: 4px;
+    opacity: 0.5;
+    border: 2px solid var(--color-book);
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
 }
 .sort-box-options {
   display: flex;
@@ -266,12 +277,9 @@
     border: 1px solid #DDD;
     margin-top: -1px;
     min-height: 38px;
-    &.text-chapter {
-      border-left: 2px solid $color-chapter;
-    }
-    &.text-page {
-      border-left: 2px solid $color-page;
-    }
+  }
+  li.text-page, li.text-chapter {
+    border-left: 2px solid currentColor;
   }
   li:first-child {
     margin-top: $-xs;
@@ -361,8 +369,8 @@ ul.pagination {
     margin-top: 0;
   }
   .page.draft .text-page {
-    color: $color-page-draft;
-    fill: $color-page-draft;
+    color: var(--color-page-draft);
+    fill: var(--color-page-draft);
   }
   > .dropdown-container {
     display: block;

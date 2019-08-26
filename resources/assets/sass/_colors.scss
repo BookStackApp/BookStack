@@ -44,24 +44,24 @@
  * Entity text colors
  */
 .text-bookshelf, .text-bookshelf:hover {
-  color: $color-bookshelf;
-  fill: $color-bookshelf;
+  color: var(--color-bookshelf);
+  fill: var(--color-bookshelf);
 }
 .text-book, .text-book:hover {
-  color: $color-book;
-  fill: $color-book;
+  color: var(--color-book);
+  fill: var(--color-book);
 }
 .text-page, .text-page:hover {
-  color: $color-page;
-  fill: $color-page;
+  color: var(--color-page);
+  fill: var(--color-page);
 }
 .text-page.draft, .text-page.draft:hover {
-  color: $color-page-draft;
-  fill: $color-page-draft;
+  color: var(--color-page-draft);
+  fill: var(--color-page-draft);
 }
 .text-chapter, .text-chapter:hover {
-  color: $color-chapter;
-  fill: $color-chapter;
+  color: var(--color-chapter);
+  fill: var(--color-chapter);
 }
 
 /*
@@ -71,11 +71,11 @@
   background-color: #FFFFFF;
 }
 .bg-book {
-  background-color: $color-book;
+  background-color: var(--color-book);
 }
 .bg-chapter {
-  background-color: $color-chapter;
+  background-color: var(--color-chapter);
 }
 .bg-shelf {
-  background-color: $color-bookshelf;
+  background-color: var(--color-bookshelf);
 }
