@@ -26,17 +26,17 @@
 
             <div class="text-center px-m py-xs">
                 <div v-show="draftsEnabled" dropdown dropdown-move-menu class="dropdown-container draft-display text">
-                    <a dropdown-toggle aria-haspopup="true" aria-expanded="false" title="{{ trans('entities.pages_edit_draft_options') }}" class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</a>
+                    <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" title="{{ trans('entities.pages_edit_draft_options') }}" class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</button>
                     @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</a>
+                            <button type="button" @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</button>
                         </li>
                         <li v-if="isNewDraft">
                             <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
                         </li>
                         <li v-if="isUpdateDraft">
-                            <a type="button" @click="discardDraft" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</a>
+                            <button type="button" @click="discardDraft" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</button>
                         </li>
                     </ul>
                 </div>
@@ -44,7 +44,7 @@
 
             <div class="action-buttons px-m py-xs" v-cloak>
                 <div dropdown dropdown-move-menu class="dropdown-container">
-                    <a dropdown-toggle class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></a>
+                    <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></button>
                     <ul class="wide dropdown-menu">
                         <li class="px-l py-m">
                             <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>

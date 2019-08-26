@@ -2,8 +2,8 @@ import DropZone from "dropzone";
 import { fadeOut } from "../../services/animations";
 
 const template = `
-    <div class="dropzone-container">
-        <div class="dz-message">{{placeholder}}</div>
+    <div class="dropzone-container text-center">
+        <button type="button" class="dz-message">{{placeholder}}</button>
     </div>
 `;
 

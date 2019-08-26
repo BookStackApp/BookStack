@@ -1,12 +1,12 @@
 <div editor-toolbox class="floating-toolbox">
 
     <div class="tabs primary-background-light">
-        <span toolbox-toggle>@icon('caret-left-circle')</span>
-        <span toolbox-tab-button="tags" title="{{ trans('entities.page_tags') }}" class="active">@icon('tag')</span>
+        <button type="button" toolbox-toggle aria-expanded="false">@icon('caret-left-circle')</button>
+        <button type="button" toolbox-tab-button="tags" title="{{ trans('entities.page_tags') }}" class="active">@icon('tag')</button>
         @if(userCan('attachment-create-all'))
-            <span toolbox-tab-button="files" title="{{ trans('entities.attachments') }}">@icon('attach')</span>
+            <button type="button" toolbox-tab-button="files" title="{{ trans('entities.attachments') }}">@icon('attach')</button>
         @endif
-        <span toolbox-tab-button="templates" title="{{ trans('entities.templates') }}">@icon('template')</span>
+        <button type="button" toolbox-tab-button="templates" title="{{ trans('entities.templates') }}">@icon('template')</button>
     </div>
 
     <div toolbox-tab-content="tags">

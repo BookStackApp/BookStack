@@ -258,7 +258,7 @@ body.mce-fullscreen .page-editor .edit-area {
     padding: 0;
     margin: 0;
   }
-  .tabs > span {
+  .tabs > button {
     display: block;
     cursor: pointer;
     padding: $-s $-m;
@@ -266,7 +266,7 @@ body.mce-fullscreen .page-editor .edit-area {
     line-height: 1.6;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
-  &.open .tabs > span.active {
+  &.open .tabs > button.active {
     fill: #444;
     background-color: rgba(0, 0, 0, 0.1);
   }

@@ -23,6 +23,8 @@ class EditorToolbox {
 
     toggle() {
         this.elem.classList.toggle('open');
+        const expanded = this.elem.classList.contains('open') ? 'true' : 'false';
+        this.toggleButton.setAttribute('aria-expanded', expanded);
     }
 
     setActiveTab(tabName, openToolbox = false) {

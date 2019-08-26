@@ -18,9 +18,12 @@
 
             <div class="tab-container">
                 <div class="nav-tabs">
-                    <div @click="tab = 'list'" :class="{selected: tab === 'list'}" class="tab-item">{{ trans('entities.attachments_items') }}</div>
-                    <div @click="tab = 'file'" :class="{selected: tab === 'file'}" class="tab-item">{{ trans('entities.attachments_upload') }}</div>
-                    <div @click="tab = 'link'" :class="{selected: tab === 'link'}" class="tab-item">{{ trans('entities.attachments_link') }}</div>
+                    <button type="button" @click="tab = 'list'" :class="{selected: tab === 'list'}"
+                            class="tab-item">{{ trans('entities.attachments_items') }}</button>
+                    <button type="button" @click="tab = 'file'" :class="{selected: tab === 'file'}"
+                            class="tab-item">{{ trans('entities.attachments_upload') }}</button>
+                    <button type="button" @click="tab = 'link'" :class="{selected: tab === 'link'}"
+                            class="tab-item">{{ trans('entities.attachments_link') }}</button>
                 </div>
                 <div v-show="tab === 'list'">
                     <draggable style="width: 100%;" :options="{handle: '.handle'}" @change="fileSortUpdate" :list="files" element="div">
@@ -31,11 +34,11 @@
                                 <div v-if="file.deleting">
                                     <span class="text-neg small">{{ trans('entities.attachments_delete_confirm') }}</span>
                                     <br>
-                                    <span class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</span>
+                                    <button type="button" class="text-primary small" @click="file.deleting = false;">{{ trans('common.cancel') }}</button>
                                 </div>
                             </div>
-                            <div @click="startEdit(file)" class="drag-card-action text-center text-primary">@icon('edit')</div>
-                            <div @click="deleteFile(file)" class="drag-card-action text-center text-neg">@icon('close')</div>
+                            <button type="button" @click="startEdit(file)" class="drag-card-action text-center text-primary">@icon('edit')</button>
+                            <button type="button" @click="deleteFile(file)" class="drag-card-action text-center text-neg">@icon('close')</button>
                         </div>
                     </draggable>
                     <p class="small text-muted" v-if="files.length === 0">
@@ -75,8 +78,8 @@
 
             <div class="tab-container">
                 <div class="nav-tabs">
-                    <div @click="editTab = 'file'" :class="{selected: editTab === 'file'}" class="tab-item">{{ trans('entities.attachments_upload') }}</div>
-                    <div @click="editTab = 'link'" :class="{selected: editTab === 'link'}" class="tab-item">{{ trans('entities.attachments_set_link') }}</div>
+                    <button type="button" @click="editTab = 'file'" :class="{selected: editTab === 'file'}" class="tab-item">{{ trans('entities.attachments_upload') }}</button>
+                    <button type="button" @click="editTab = 'link'" :class="{selected: editTab === 'link'}" class="tab-item">{{ trans('entities.attachments_set_link') }}</button>
                 </div>
                 <div v-if="editTab === 'file'">
                     <dropzone :upload-url="getUploadUrl(fileToEdit)" :uploaded-to="pageId" placeholder="{{ trans('entities.attachments_edit_drop_upload') }}" @success="uploadSuccessUpdate"></dropzone>
