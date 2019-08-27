@@ -53,6 +53,13 @@ class EntityRepo
     protected $searchService;
 
     /**
+     * PAGE_INCLUDE_MATCHER
+     *
+     * Regex to match page inclusion tags e.g. {{@1}}
+     */
+    const PAGE_INCLUDE_MATCHER = "/{{@\s?([0-9].*?)}}/";
+
+    /**
      * EntityRepo constructor.
      * @param EntityProvider $entityProvider
      * @param ViewService $viewService
@@ -674,7 +681,9 @@ class EntityRepo
         if ($blankIncludes) {
             $content = $this->blankPageIncludes($content);
         } else {
-            $content = $this->parsePageIncludes($content);
+            while (preg_match(self::PAGE_INCLUDE_MATCHER, $content)) {
+                $content = $this->parsePageIncludes($content);
+            }
         }
 
         return $content;
@@ -687,7 +696,7 @@ class EntityRepo
      */
     protected function blankPageIncludes(string $html) : string
     {
-        return preg_replace("/{{@\s?([0-9].*?)}}/", '', $html);
+        return preg_replace(self::PAGE_INCLUDE_MATCHER, '', $html);
     }
 
     /**
@@ -698,7 +707,7 @@ class EntityRepo
     protected function parsePageIncludes(string $html) : string
     {
         $matches = [];
-        preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
+        preg_match_all(self::PAGE_INCLUDE_MATCHER, $html, $matches);
 
         $topLevelTags = ['table', 'ul', 'ol'];
         foreach ($matches[1] as $index => $includeId) {
