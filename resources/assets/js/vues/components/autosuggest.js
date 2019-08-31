@@ -6,6 +6,7 @@ const template = `
             @input="inputUpdate($event.target.value)" @focus="inputUpdate($event.target.value)"
             @blur="inputBlur"
             @keydown="inputKeydown"
+            :aria-label="placeholder"
         />
         <ul class="suggestion-box" v-if="showSuggestions">
             <li v-for="(suggestion, i) in suggestions"
@@ -66,23 +67,23 @@ const methods = {
     },
 
     inputKeydown(event) {
-        if (event.keyCode === 13) event.preventDefault();
+        if (event.key === 'Enter') event.preventDefault();
         if (!this.showSuggestions) return;
 
         // Down arrow
-        if (event.keyCode === 40) {
+        if (event.key === 'ArrowDown') {
             this.active = (this.active === this.suggestions.length - 1) ? 0 : this.active+1;
         }
         // Up Arrow
-        else if (event.keyCode === 38) {
+        else if (event.key === 'ArrowUp') {
             this.active = (this.active === 0) ? this.suggestions.length - 1 : this.active-1;
         }
-        // Enter or tab keys
-        else if ((event.keyCode === 13 || event.keyCode === 9) && !event.shiftKey) {
+        // Enter key
+        else if ((event.key === 'Enter') && !event.shiftKey) {
             this.selectSuggestion(this.suggestions[this.active]);
         }
         // Escape key
-        else if (event.keyCode === 27) {
+        else if (event.key === 'Escape') {
             this.showSuggestions = false;
         }
     },
@@ -113,11 +114,13 @@ const methods = {
      */
     getSuggestions(input, params) {
         params.search = input;
-        let cacheKey = `${this.url}:${JSON.stringify(params)}`;
+        const cacheKey = `${this.url}:${JSON.stringify(params)}`;
 
-        if (typeof ajaxCache[cacheKey] !== "undefined") return Promise.resolve(ajaxCache[cacheKey]);
+        if (typeof ajaxCache[cacheKey] !== "undefined") {
+            return Promise.resolve(ajaxCache[cacheKey]);
+        }
 
-        return this.$http.get(this.url, {params}).then(resp => {
+        return this.$http.get(this.url, params).then(resp => {
             ajaxCache[cacheKey] = resp.data;
             return resp.data;
         });

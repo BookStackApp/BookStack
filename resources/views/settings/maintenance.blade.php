@@ -21,7 +21,7 @@
                 <p class="small text-muted">{{ trans('settings.maint_image_cleanup_desc') }}</p>
             </div>
             <div>
-                <form method="POST" action="{{ baseUrl('/settings/maintenance/cleanup-images') }}">
+                <form method="POST" action="{{ url('/settings/maintenance/cleanup-images') }}">
                     {!! csrf_field()  !!}
                     <input type="hidden" name="_method" value="DELETE">
                     <div>

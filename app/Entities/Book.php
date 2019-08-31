@@ -25,9 +25,9 @@ class Book extends Entity
     public function getUrl($path = false)
     {
         if ($path !== false) {
-            return baseUrl('/books/' . urlencode($this->slug) . '/' . trim($path, '/'));
+            return url('/books/' . urlencode($this->slug) . '/' . trim($path, '/'));
         }
-        return baseUrl('/books/' . urlencode($this->slug));
+        return url('/books/' . urlencode($this->slug));
     }
 
     /**
@@ -44,7 +44,7 @@ class Book extends Entity
         }
 
         try {
-            $cover = $this->cover ? baseUrl($this->cover->getThumb($width, $height, false)) : $default;
+            $cover = $this->cover ? url($this->cover->getThumb($width, $height, false)) : $default;
         } catch (\Exception $err) {
             $cover = $default;
         }

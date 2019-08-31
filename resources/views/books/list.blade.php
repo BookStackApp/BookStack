@@ -1,5 +1,5 @@
 
-<div class="content-wrap mt-m card">
+<main class="content-wrap mt-m card">
     <div class="grid half v-center no-row-gap">
         <h1 class="list-heading">{{ trans('entities.books') }}</h1>
         <div class="text-m-right my-m">
@@ -28,7 +28,7 @@
     @else
         <p class="text-muted">{{ trans('entities.books_empty') }}</p>
         @if(userCan('books-create-all'))
-            <a href="{{ baseUrl("/create-book") }}" class="text-pos">@icon('edit'){{ trans('entities.create_now') }}</a>
+            <a href="{{ url("/create-book") }}" class="text-pos">@icon('edit'){{ trans('entities.create_now') }}</a>
         @endif
     @endif
-</div>
+</main>

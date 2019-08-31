@@ -1,5 +1,10 @@
 * {
   box-sizing: border-box;
+  outline-color: #444444;
+}
+
+*:focus {
+  outline-style: dotted;
 }
 
 html {

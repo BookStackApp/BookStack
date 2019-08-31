@@ -11,7 +11,7 @@
 
 @section('body')
 
-    <div class="mb-m">
+    <div class="mb-m print-hidden">
         @include('partials.breadcrumbs', ['crumbs' => [
             $page->$book,
             $page->chapter,
@@ -25,10 +25,10 @@
         ]])
     </div>
 
-    <div class="card content-wrap">
+    <main class="card content-wrap">
         <div class="page-content page-revision">
             @include('pages.page-display')
         </div>
-    </div>
+    </main>
 
 @stop

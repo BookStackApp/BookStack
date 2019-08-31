@@ -69,8 +69,8 @@ let methods = {
         autoSave = window.setInterval(() => {
             // Return if manually saved recently to prevent bombarding the server
             if (Date.now() - lastSave < (1000 * autoSaveFrequency)/2) return;
-            let newTitle = document.getElementById('name').value.trim();
-            let newHtml = this.editorHTML;
+            const newTitle = document.getElementById('name').value.trim();
+            const newHtml = this.editorHTML;
 
             if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
                 currentContent.html = newHtml;
@@ -84,18 +84,18 @@ let methods = {
     saveDraft() {
         if (!this.draftsEnabled) return;
 
-        let data = {
+        const data = {
             name: document.getElementById('name').value.trim(),
             html: this.editorHTML
         };
 
         if (this.editorType === 'markdown') data.markdown = this.editorMarkdown;
 
-        let url = window.baseUrl(`/ajax/page/${this.pageId}/save-draft`);
+        const url = window.baseUrl(`/ajax/page/${this.pageId}/save-draft`);
         window.$http.put(url, data).then(response => {
             draftErroring = false;
             if (!this.isNewDraft) this.isUpdateDraft = true;
-            this.draftNotifyChange(`${response.data.message } ${Dates.utcTimeStampToLocalTime(response.data.timestamp)}`);
+            this.draftNotifyChange(`${response.data.message} ${Dates.utcTimeStampToLocalTime(response.data.timestamp)}`);
             lastSave = Date.now();
         }, errorRes => {
             if (draftErroring) return;

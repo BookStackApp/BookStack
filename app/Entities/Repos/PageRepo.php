@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
+use Illuminate\Support\Collection;
 
 class PageRepo extends EntityRepo
 {
@@ -69,6 +70,10 @@ class PageRepo extends EntityRepo
             $this->tagRepo->saveTagsToEntity($page, $input['tags']);
         }
 
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $page->template = ($input['template'] === 'true');
+        }
+
         // Update with new details
         $userId = user()->id;
         $page->fill($input);
@@ -85,8 +90,9 @@ class PageRepo extends EntityRepo
         $this->userUpdatePageDraftsQuery($page, $userId)->delete();
 
         // Save a revision after updating
-        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $input['summary'] !== null) {
-            $this->savePageRevision($page, $input['summary']);
+        $summary = $input['summary'] ?? null;
+        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $summary !== null) {
+            $this->savePageRevision($page, $summary);
         }
 
         $this->searchService->indexEntity($page);
@@ -300,6 +306,10 @@ class PageRepo extends EntityRepo
             $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
         }
 
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $draftPage->template = ($input['template'] === 'true');
+        }
+
         $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = $this->pageToPlainText($draftPage);
@@ -424,9 +434,7 @@ class PageRepo extends EntityRepo
 
         $tree = collect($headers)->map(function($header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
-            if (mb_strlen($text) > 30) {
-                $text = mb_substr($text, 0, 27) . '...';
-            }
+            $text = mb_substr($text, 0, 100);
 
             return [
                 'nodeName' => strtolower($header->nodeName),
@@ -438,10 +446,10 @@ class PageRepo extends EntityRepo
             return mb_strlen($header['text']) > 0;
         });
 
-        // Normalise headers if only smaller headers have been used
-        $minLevel = $tree->pluck('level')->min();
-        $tree = $tree->map(function ($header) use ($minLevel) {
-            $header['level'] -= ($minLevel - 2);
+        // Shift headers if only smaller headers have been used
+        $levelChange = ($tree->pluck('level')->min() - 1);
+        $tree = $tree->map(function ($header) use ($levelChange) {
+            $header['level'] -= ($levelChange);
             return $header;
         });
 
@@ -524,5 +532,30 @@ class PageRepo extends EntityRepo
         }
 
         return $this->publishPageDraft($copyPage, $pageData);
+    }
+
+    /**
+     * Get pages that have been marked as templates.
+     * @param int $count
+     * @param int $page
+     * @param string $search
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPageTemplates(int $count = 10, int $page = 1,  string $search = '')
+    {
+        $query = $this->entityQuery('page')
+            ->where('template', '=', true)
+            ->orderBy('name', 'asc')
+            ->skip( ($page - 1) * $count)
+            ->take($count);
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $paginator = $query->paginate($count, ['*'], 'page', $page);
+        $paginator->withPath('/templates');
+
+        return $paginator;
     }
 }

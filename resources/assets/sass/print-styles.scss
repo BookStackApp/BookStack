@@ -4,39 +4,32 @@ header {
   display: none;
 }
 
-body {
+html, body {
   font-size: 12px;
+  background-color: #FFF;
 }
 
 .page-content {
   margin: 0 auto;
 }
 
-.flex-fill {
-  display: block;
-}
-
-.flex.sidebar + .flex.content {
-  border-left: none;
-}
-
 .print-hidden {
-  display: none;
+  display: none !important;
 }
 
-.print-full-width {
-  width: 100%;
-  float: none;
+.tri-layout-container {
+  grid-template-columns: 1fr;
+  grid-template-areas: "b";
+  margin-left: 0;
+  margin-right: 0;
   display: block;
 }
 
-h2 {
-  font-size: 2em;
-  line-height: 1;
-  margin-top: 0.6em;
-  margin-bottom: 0.3em;
+.card {
+  box-shadow: none;
 }
 
-.comments-container {
-  display: none;
+.content-wrap.card {
+  padding-left: 0;
+  padding-right: 0;
 }

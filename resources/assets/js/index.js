@@ -1,6 +1,3 @@
-// Global Polyfills
-import "./services/dom-polyfills"
-
 // Url retrieval function
 window.baseUrl = function(path) {
     let basePath = document.querySelector('meta[name="base-url"]').getAttribute('content');
@@ -11,27 +8,24 @@ window.baseUrl = function(path) {
 
 // Set events and http services on window
 import Events from "./services/events"
-import Http from "./services/http"
-let httpInstance = Http();
+import httpInstance from "./services/http"
+const eventManager = new Events();
 window.$http = httpInstance;
-window.$events = new Events();
+window.$events = eventManager;
 
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
 import Translations from "./services/translations"
-let translator = new Translations(window.translations);
+const translator = new Translations();
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
 
-// Load in global UI helpers and libraries including jQuery
-import "./services/global-ui"
-
-// Set services on Vue
+// Make services available to Vue instances
 import Vue from "vue"
 Vue.prototype.$http = httpInstance;
-Vue.prototype.$events = window.$events;
+Vue.prototype.$events = eventManager;
 
-// Load vues and components
+// Load Vues and components
 import vues from "./vues/vues"
 import components from "./components"
 vues();

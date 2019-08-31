@@ -31,11 +31,9 @@ class Localization
         'nl' => 'nl_NL',
         'pl' => 'pl_PL',
         'pt_BR' => 'pt_BR',
-        'pt_BR' => 'pt_BR',
         'ru' => 'ru',
         'sk' => 'sk_SK',
         'sv' => 'sv_SE',
-        'uk' => 'uk_UA',
         'uk' => 'uk_UA',
         'zh_CN' => 'zh_CN',
         'zh_TW' => 'zh_TW',
@@ -58,6 +56,8 @@ class Localization
         } else {
             $locale = setting()->getUser(user(), 'language', $defaultLang);
         }
+
+        config()->set('app.lang', str_replace('_', '-', $this->getLocaleIso($locale)));
 
         // Set text direction
         if (in_array($locale, $this->rtlLocales)) {
@@ -89,13 +89,23 @@ class Localization
     }
 
     /**
+     * Get the ISO version of a BookStack language name
+     * @param  string $locale
+     * @return string
+     */
+    public function getLocaleIso(string $locale)
+    {
+        return $this->localeMap[$locale] ?? $locale;
+    }
+
+    /**
      * Set the system date locale for localized date formatting.
      * Will try both the standard locale name and the UTF8 variant.
      * @param string $locale
      */
     protected function setSystemDateLocale(string $locale)
     {
-        $systemLocale = $this->localeMap[$locale] ?? $locale;
+        $systemLocale = $this->getLocaleIso($locale);
         $set = setlocale(LC_TIME, $systemLocale);
         if ($set === false) {
             setlocale(LC_TIME, $systemLocale . '.utf8');

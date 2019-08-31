@@ -53,8 +53,8 @@ class LoginController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->ldapService = $ldapService;
         $this->userRepo = $userRepo;
-        $this->redirectPath = baseUrl('/');
-        $this->redirectAfterLogout = baseUrl('/login');
+        $this->redirectPath = url('/');
+        $this->redirectAfterLogout = url('/login');
         parent::__construct();
     }
 
@@ -106,9 +106,7 @@ class LoginController extends Controller
             $this->ldapService->syncGroups($user, $request->get($this->username()));
         }
 
-        $path = session()->pull('url.intended', '/');
-        $path = baseUrl($path, true);
-        return redirect($path);
+        return redirect()->intended('/');
     }
 
     /**

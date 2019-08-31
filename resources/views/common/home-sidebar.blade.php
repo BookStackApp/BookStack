@@ -15,7 +15,7 @@
 </div>
 
 <div class="mb-xl">
-    <h5><a class="no-color" href="{{ baseUrl("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h5>
+    <h5><a class="no-color" href="{{ url("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h5>
     <div id="recently-updated-pages">
         @include('partials.entity-list', [
         'entities' => $recentlyUpdatedPages,

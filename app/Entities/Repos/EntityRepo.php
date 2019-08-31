@@ -766,7 +766,7 @@ class EntityRepo
         }
 
         // Remove data or JavaScript iFrames
-        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')]');
+        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
         foreach ($badIframes as $badIframe) {
             $badIframe->parentNode->removeChild($badIframe);
         }

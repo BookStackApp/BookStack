@@ -16,10 +16,10 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.pages_permissions') }}</h1>
             @include('form.entity-permissions', ['model' => $page])
-        </div>
+        </main>
     </div>
 
 @stop

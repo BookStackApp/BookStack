@@ -1,33 +1,18 @@
 <?php namespace BookStack\Auth\Access;
 
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ConfirmationEmailException;
-use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Notifications\ConfirmEmail;
-use Carbon\Carbon;
-use Illuminate\Database\Connection as Database;
 
-class EmailConfirmationService
+class EmailConfirmationService extends UserTokenService
 {
-    protected $db;
-    protected $users;
-
-    /**
-     * EmailConfirmationService constructor.
-     * @param Database $db
-     * @param \BookStack\Auth\UserRepo $users
-     */
-    public function __construct(Database $db, UserRepo $users)
-    {
-        $this->db = $db;
-        $this->users = $users;
-    }
+    protected $tokenTable = 'email_confirmations';
+    protected $expiryTime = 24;
 
     /**
      * Create new confirmation for a user,
      * Also removes any existing old ones.
-     * @param \BookStack\Auth\User $user
+     * @param User $user
      * @throws ConfirmationEmailException
      */
     public function sendConfirmation(User $user)
@@ -36,76 +21,20 @@ class EmailConfirmationService
             throw new ConfirmationEmailException(trans('errors.email_already_confirmed'), '/login');
         }
 
-        $this->deleteConfirmationsByUser($user);
-        $token = $this->createEmailConfirmation($user);
+        $this->deleteByUser($user);
+        $token = $this->createTokenForUser($user);
 
         $user->notify(new ConfirmEmail($token));
     }
 
     /**
-     * Creates a new email confirmation in the database and returns the token.
-     * @param User $user
-     * @return string
+     * Check if confirmation is required in this instance.
+     * @return bool
      */
-    public function createEmailConfirmation(User $user)
+    public function confirmationRequired() : bool
     {
-        $token = $this->getToken();
-        $this->db->table('email_confirmations')->insert([
-            'user_id' => $user->id,
-            'token' => $token,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-        return $token;
+        return setting('registration-confirmation')
+            || setting('registration-restrict');
     }
 
-    /**
-     * Gets an email confirmation by looking up the token,
-     * Ensures the token has not expired.
-     * @param string $token
-     * @return array|null|\stdClass
-     * @throws UserRegistrationException
-     */
-    public function getEmailConfirmationFromToken($token)
-    {
-        $emailConfirmation = $this->db->table('email_confirmations')->where('token', '=', $token)->first();
-
-        // If not found show error
-        if ($emailConfirmation === null) {
-            throw new UserRegistrationException(trans('errors.email_confirmation_invalid'), '/register');
-        }
-
-        // If more than a day old
-        if (Carbon::now()->subDay()->gt(new Carbon($emailConfirmation->created_at))) {
-            $user = $this->users->getById($emailConfirmation->user_id);
-            $this->sendConfirmation($user);
-            throw new UserRegistrationException(trans('errors.email_confirmation_expired'), '/register/confirm');
-        }
-
-        $emailConfirmation->user = $this->users->getById($emailConfirmation->user_id);
-        return $emailConfirmation;
-    }
-
-    /**
-     * Delete all email confirmations that belong to a user.
-     * @param \BookStack\Auth\User $user
-     * @return mixed
-     */
-    public function deleteConfirmationsByUser(User $user)
-    {
-        return $this->db->table('email_confirmations')->where('user_id', '=', $user->id)->delete();
-    }
-
-    /**
-     * Creates a unique token within the email confirmation database.
-     * @return string
-     */
-    protected function getToken()
-    {
-        $token = str_random(24);
-        while ($this->db->table('email_confirmations')->where('token', '=', $token)->exists()) {
-            $token = str_random(25);
-        }
-        return $token;
-    }
 }

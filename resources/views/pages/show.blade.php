@@ -2,7 +2,7 @@
 
 @section('body')
 
-    <div class="mb-m">
+    <div class="mb-m print-hidden">
         @include('partials.breadcrumbs', ['crumbs' => [
             $page->book,
             $page->hasChapter() ? $page->chapter : null,
@@ -10,29 +10,15 @@
         ]])
     </div>
 
-    <div class="content-wrap card">
-        <div class="page-content flex" page-display="{{ $page->id }}">
-
-            <div class="pointer-container" id="pointer">
-                <div class="pointer anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
-                    <span class="icon text-primary">@icon('link') @icon('include', ['style' => 'display:none;'])</span>
-                    <span class="input-group">
-                    <input readonly="readonly" type="text" id="pointer-url" placeholder="url">
-                    <button class="button icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
-                </span>
-                    @if(userCan('page-update', $page))
-                        <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
-                           class="button icon heading-edit-icon" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
-                    @endif
-                </div>
-            </div>
-
+    <main class="content-wrap card">
+        <div class="page-content" page-display="{{ $page->id }}">
+            @include('pages.pointer', ['page' => $page])
             @include('pages.page-display')
         </div>
-    </div>
+    </main>
 
     @if ($commentsEnabled)
-        <div class="container small p-none comments-container mb-l">
+        <div class="container small p-none comments-container mb-l print-hidden">
             @include('comments.comments', ['page' => $page])
             <div class="clearfix"></div>
         </div>
@@ -64,19 +50,19 @@
     @endif
 
     @if (isset($pageNav) && count($pageNav))
-        <div id="page-navigation" class="mb-xl">
+        <nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
             <h5>{{ trans('entities.pages_navigation') }}</h5>
             <div class="body">
                 <div class="sidebar-page-nav menu">
                     @foreach($pageNav as $navItem)
                         <li class="page-nav-item h{{ $navItem['level'] }}">
-                            <a href="{{ $navItem['link'] }}">{{ $navItem['text'] }}</a>
+                            <a href="{{ $navItem['link'] }}" class="limit-text block">{{ $navItem['text'] }}</a>
                             <div class="primary-background sidebar-page-nav-bullet"></div>
                         </li>
                     @endforeach
                 </div>
             </div>
-        </div>
+        </nav>
     @endif
 
     @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
@@ -115,6 +101,12 @@
                     @else
                         @icon('lock'){{ trans('entities.pages_permissions_active') }}
                     @endif
+                </div>
+            @endif
+
+            @if($page->template)
+                <div>
+                    @icon('template'){{ trans('entities.pages_is_template') }}
                 </div>
             @endif
         </div>
@@ -166,17 +158,7 @@
             <hr class="primary-background"/>
 
             {{--Export--}}
-            <div dropdown class="dropdown-container block">
-                <div dropdown-toggle class="icon-list-item">
-                    <span>@icon('export')</span>
-                    <span>{{ trans('entities.export') }}</span>
-                </div>
-                <ul class="dropdown-menu wide">
-                    <li><a href="{{ $page->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $page->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $page->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </div>
+            @include('partials.entity-export-menu', ['entity' => $page])
         </div>
 
     </div>

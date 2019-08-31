@@ -110,11 +110,14 @@ class PageController extends Controller
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->signedIn;
+        $templates = $this->pageRepo->getPageTemplates(10);
+
         return view('pages.edit', [
             'page' => $draft,
             'book' => $draft->book,
             'isDraft' => true,
-            'draftsEnabled' => $draftsEnabled
+            'draftsEnabled' => $draftsEnabled,
+            'templates' => $templates,
         ]);
     }
 
@@ -239,11 +242,14 @@ class PageController extends Controller
         }
 
         $draftsEnabled = $this->signedIn;
+        $templates = $this->pageRepo->getPageTemplates(10);
+
         return view('pages.edit', [
             'page' => $page,
             'book' => $page->book,
             'current' => $page,
-            'draftsEnabled' => $draftsEnabled
+            'draftsEnabled' => $draftsEnabled,
+            'templates' => $templates,
         ]);
     }
 
@@ -489,7 +495,7 @@ class PageController extends Controller
 
         $revision->delete();
         session()->flash('success', trans('entities.revision_delete_success'));
-        return view('pages.revisions', ['page' => $page, 'book' => $page->book, 'current' => $page]);
+        return redirect($page->getUrl('/revisions'));
     }
 
     /**
@@ -541,7 +547,7 @@ class PageController extends Controller
     public function showRecentlyUpdated()
     {
         // TODO - Still exist?
-        $pages = $this->pageRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(baseUrl('/pages/recently-updated'));
+        $pages = $this->pageRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(url('/pages/recently-updated'));
         return view('pages.detailed-listing', [
             'title' => trans('entities.recently_updated_pages'),
             'pages' => $pages

@@ -20,7 +20,8 @@
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==);
   }
   &:focus {
-    outline: 0;
+    border-color: var(--color-primary);
+    outline: 1px solid var(--color-primary);
   }
 }
 
@@ -92,16 +93,18 @@
 }
 
 .markdown-display {
-  padding: 0 $-m 0;
   margin-left: -1px;
-  overflow-y: scroll;
-  &.page-content {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 100%;
+}
+
+.markdown-editor-display {
+  background-color: #FFFFFF;
+  body {
+    background-color: #FFFFFF;
+    padding-left: 16px;
+    padding-right: 16px;
   }
   [drawio-diagram]:hover {
-    outline: 2px solid $primary;
+    outline: 2px solid var(--color-primary);
   }
 }
 
@@ -158,12 +161,17 @@ table.form-table {
   }
 }
 
-input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="search"], input[type="url"], input[type="password"], select, textarea {
+input[type="text"], input[type="number"], input[type="email"], input[type="date"], input[type="search"], input[type="url"],
+input[type="color"], input[type="password"], select, textarea {
   @extend .input-base;
 }
 
 input[type=date] {
   width: 190px;
+}
+
+input[type=color] {
+  height: 60px;
 }
 
 .toggle-switch {
@@ -264,6 +272,9 @@ input[type=date] {
     margin-left: -$-m;
     margin-right: -$-m;
     padding: $-s $-m;
+    display: block;
+    width: calc(100% + 32px);
+    text-align: left;
   }
   .collapse-title, .collapse-title label {
     cursor: pointer;
@@ -337,16 +348,16 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   button {
     background-color: transparent;
     border: none;
-    color: $primary;
+    fill: #666;
     padding: 0;
     cursor: pointer;
     position: absolute;
     left: 8px;
-    top: 9.5px;
+    top: 9px;
   }
   input {
     display: block;
-    padding-left: $-l;
+    padding-left: $-l + 4px;
     width: 300px;
     max-width: 100%;
   }
@@ -374,4 +385,19 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
 .image-picker img {
   background-color: #BBB;
   max-width: 100%;
+}
+
+.custom-file-input {
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+}
+.custom-file-input:focus + label {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
 }
