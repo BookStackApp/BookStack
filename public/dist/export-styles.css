@@ -2567,8 +2567,7 @@ body.mce-fullscreen .page-editor .edit-area {
     margin: 0 0 0 -4px;
     box-shadow: none; }
   .pointer a.button {
-    margin: 0;
-    color: #FFF; }
+    margin: 0; }
   .pointer .svg-icon {
     width: 1.2em;
     height: 1.2em; }
@@ -2759,9 +2758,11 @@ body.mce-fullscreen .page-editor .edit-area {
     text-decoration: none;
     opacity: 1; }
 
+html, body {
+  background-color: #FFF; }
+
 body {
   font-family: 'DejaVu Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Roboto", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background-color: #FFF;
   margin: 0;
   padding: 0; }
 
