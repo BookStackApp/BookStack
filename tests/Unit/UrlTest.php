@@ -22,4 +22,12 @@ class UrlTest extends TestCase
         putenv('APP_URL=');
     }
 
+    public function test_url_helper_sets_correct_scheme_even_when_request_scheme_is_different()
+    {
+        putenv('APP_URL=https://example.com/');
+        $this->refreshApplication();
+        $this->get('http://example.com/login')->assertSee('https://example.com/dist/styles.css');
+        putenv('APP_URL=');
+    }
+
 }
