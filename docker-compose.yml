@@ -28,6 +28,9 @@ services:
       DB_DATABASE: bookstack-test
       DB_USERNAME: bookstack-test
       DB_PASSWORD: bookstack-test
+      MAIL_DRIVER: smtp
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
     ports:
       - ${DEV_PORT:-8080}:80
     volumes:
@@ -39,3 +42,7 @@ services:
     volumes:
       - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - ${DEV_MAIL_PORT:-8025}:8025
