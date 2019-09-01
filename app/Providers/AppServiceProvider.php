@@ -25,7 +25,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Set root URL
-        URL::forceRootUrl(config('app.url'));
+        $appUrl = config('app.url');
+        if ($appUrl) {
+            $isHttps = (strpos($appUrl, 'https://') === 0);
+            URL::forceRootUrl($appUrl);
+            URL::forceScheme($isHttps ? 'https' : 'http');
+        }
 
         // Custom validation methods
         Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
