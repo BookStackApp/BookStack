@@ -18,21 +18,18 @@ class MarkdownEditor {
         this.markdown.use(mdTasksLists, {label: true});
 
         this.display = this.elem.querySelector('.markdown-display');
-        this.displayDoc = this.display.contentDocument;
+
         this.displayStylesLoaded = false;
         this.input = this.elem.querySelector('textarea');
         this.htmlInput = this.elem.querySelector('input[name=html]');
         this.cm = code.markdownEditor(this.input);
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
-        this.init();
 
-        // Scroll to text if needed.
-        const queryParams = (new URL(window.location)).searchParams;
-        const scrollText = queryParams.get('content-text');
-        if (scrollText) {
-            this.scrollToText(scrollText);
-        }
+        this.display.addEventListener('load', () => {
+            this.displayDoc = this.display.contentDocument;
+            this.init();
+        });
     }
 
     init() {
@@ -94,6 +91,13 @@ class MarkdownEditor {
 
         this.codeMirrorSetup();
         this.listenForBookStackEditorEvents();
+
+        // Scroll to text if needed.
+        const queryParams = (new URL(window.location)).searchParams;
+        const scrollText = queryParams.get('content-text');
+        if (scrollText) {
+            this.scrollToText(scrollText);
+        }
     }
 
     // Update the input content and render the display.
