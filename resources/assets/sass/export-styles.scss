@@ -11,9 +11,13 @@
 @import "lists";
 @import "pages";
 
+
+html, body {
+  background-color: #FFF;
+}
+
 body {
   font-family: 'DejaVu Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Roboto", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background-color: #FFF;
   margin: 0;
   padding: 0;
 }
