@@ -15,7 +15,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.pages_new') }}</h1>
             <form action="{{  $parent->getUrl('/create-guest-page') }}" method="POST">
                 {!! csrf_field() !!}
@@ -27,11 +27,11 @@
 
                 <div class="form-group text-right">
                     <a href="{{ $parent->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button primary">{{ trans('common.continue') }}</button>
+                    <button type="submit" class="button">{{ trans('common.continue') }}</button>
                 </div>
 
             </form>
-        </div>
+        </main>
     </div>
 
 @stop

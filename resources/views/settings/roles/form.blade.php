@@ -38,6 +38,7 @@
                 <div>@include('settings.roles.checkbox', ['permission' => 'user-roles-manage', 'label' => trans('settings.role_manage_roles')])</div>
                 <div>@include('settings.roles.checkbox', ['permission' => 'restrictions-manage-all', 'label' => trans('settings.role_manage_entity_permissions')])</div>
                 <div>@include('settings.roles.checkbox', ['permission' => 'restrictions-manage-own', 'label' => trans('settings.role_manage_own_entity_permissions')])</div>
+                <div>@include('settings.roles.checkbox', ['permission' => 'templates-manage', 'label' => trans('settings.role_manage_page_templates')])</div>
                 <div>@include('settings.roles.checkbox', ['permission' => 'settings-manage', 'label' => trans('settings.role_manage_settings')])</div>
             </div>
         </div>
@@ -219,11 +220,11 @@
     </div>
 
     <div class="form-group text-right">
-        <a href="{{ baseUrl("/settings/roles") }}" class="button outline">{{ trans('common.cancel') }}</a>
+        <a href="{{ url("/settings/roles") }}" class="button outline">{{ trans('common.cancel') }}</a>
         @if (isset($role) && $role->id)
-            <a href="{{ baseUrl("/settings/roles/delete/{$role->id}") }}" class="button outline">{{ trans('settings.role_delete') }}</a>
+            <a href="{{ url("/settings/roles/delete/{$role->id}") }}" class="button outline">{{ trans('settings.role_delete') }}</a>
         @endif
-        <button type="submit" class="button primary">{{ trans('settings.role_save') }}</button>
+        <button type="submit" class="button">{{ trans('settings.role_save') }}</button>
     </div>
 
 </div>
@@ -239,7 +240,7 @@
                     </div>
                     <div>
                         @if(userCan('users-manage') || $currentUser->id == $user->id)
-                            <a href="{{ baseUrl("/settings/users/{$user->id}") }}">
+                            <a href="{{ url("/settings/users/{$user->id}") }}">
                                 @endif
                                 {{ $user->name }}
                                 @if(userCan('users-manage') || $currentUser->id == $user->id)

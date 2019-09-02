@@ -182,7 +182,7 @@
                         </table>
 
 
-                        <button type="submit" class="button primary">{{ trans('entities.search_update') }}</button>
+                        <button type="submit" class="button">{{ trans('entities.search_update') }}</button>
                     </form>
 
                 </div>
@@ -190,7 +190,7 @@
             <div>
                 <div v-pre class="card content-wrap">
                     <h1 class="list-heading">{{ trans('entities.search_results') }}</h1>
-                    <form action="{{ baseUrl('/search') }}" method="GET"  class="search-box flexible hide-over-l">
+                    <form action="{{ url('/search') }}" method="GET"  class="search-box flexible hide-over-l">
                         <input value="{{$searchTerm}}" type="text" name="term" placeholder="{{ trans('common.search') }}">
                         <button type="submit">@icon('search')</button>
                         <button v-if="searching" v-cloak class="search-box-cancel text-neg" v-on:click="clearSearch" type="button">@icon('close')</button>

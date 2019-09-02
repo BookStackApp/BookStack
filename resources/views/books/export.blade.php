@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ config('app.lang') }}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $book->name }}</title>
@@ -58,7 +58,7 @@
         <h1 id="{{$bookChild->getType()}}-{{$bookChild->id}}">{{ $bookChild->name }}</h1>
 
         @if($bookChild->isA('chapter'))
-            <p>{{ $bookChild->description }}</p>
+            <p>{{ $bookChild->text }}</p>
 
             @if(count($bookChild->pages) > 0)
                 @foreach($bookChild->pages as $page)

@@ -29,6 +29,7 @@ return [
     'app_editor_desc' => 'Select which editor will be used by all users to edit pages.',
     'app_custom_html' => 'Custom HTML Head Content',
     'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Application Logo',
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
@@ -84,6 +85,7 @@ return [
     'role_manage_roles' => 'Manage roles & role permissions',
     'role_manage_entity_permissions' => 'Manage all book, chapter & page permissions',
     'role_manage_own_entity_permissions' => 'Manage permissions on own book, chapter & pages',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Manage app settings',
     'role_asset' => 'Asset Permissions',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
@@ -107,7 +109,9 @@ return [
     'users_role' => 'User Roles',
     'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
     'users_password' => 'User Password',
-    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 5 characters long.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 6 characters long.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'External Authentication ID',
     'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your LDAP system.',
     'users_password_warning' => 'Only fill the below if you would like to change your password.',
@@ -125,7 +129,7 @@ return [
     'users_preferred_language' => 'Preferred Language',
     'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
     'users_social_accounts' => 'Social Accounts',
-    'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
+    'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not revoke previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Connect Account',
     'users_social_disconnect' => 'Disconnect Account',
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
@@ -155,7 +159,8 @@ return [
         'ru' => 'Русский',
         'uk' => 'Українська',
         'zh_CN' => '简体中文',
-        'zh_TW' => '繁體中文'
+	'zh_TW' => '繁體中文',
+	'hu' => 'Magyar'
     ]
     //!////////////////////////////////
 ];

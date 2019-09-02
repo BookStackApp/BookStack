@@ -4,7 +4,7 @@
 ?>
 <div class="list-sort-container" list-sort-control>
     <div class="list-sort-label">{{ trans('common.sort') }}</div>
-    <form action="{{ baseUrl("/settings/users/{$currentUser->id}/change-sort/{$type}") }}" method="post">
+    <form action="{{ url("/settings/users/{$currentUser->id}/change-sort/{$type}") }}" method="post">
 
         {!! csrf_field() !!}
         {!! method_field('PATCH') !!}
@@ -13,16 +13,17 @@
 
         <div class="list-sort">
             <div class="list-sort-type dropdown-container" dropdown>
-                <div dropdown-toggle>{{ $options[$selectedSort] }}</div>
+                <div dropdown-toggle aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" tabindex="0">{{ $options[$selectedSort] }}</div>
                 <ul class="dropdown-menu">
                     @foreach($options as $key => $label)
                         <li @if($key === $selectedSort) class="active" @endif><a href="#" data-sort-value="{{$key}}">{{ $label }}</a></li>
                     @endforeach
                 </ul>
             </div>
-            <div class="list-sort-dir" data-sort-dir>
+            <button href="#" class="list-sort-dir" type="button" data-sort-dir
+                    aria-label="{{ trans('common.sort_direction_toggle') }} - {{ $order === 'asc' ? trans('common.sort_ascending') : trans('common.sort_descending') }}" tabindex="0">
                 @icon($order === 'desc' ? 'sort-up' : 'sort-down')
-            </div>
+            </button>
         </div>
     </form>
 </div>

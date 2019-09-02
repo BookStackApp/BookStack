@@ -7,14 +7,14 @@
         <div class="grid right-focus reverse-collapse">
 
             <div>
-                <div id="recent-user-activity" class="mb-xl">
+                <section id="recent-user-activity" class="mb-xl">
                     <h5>{{ trans('entities.recent_activity') }}</h5>
                     @include('partials.activity-list', ['activity' => $activity])
-                </div>
+                </section>
             </div>
 
             <div>
-                <div class="card content-wrap auto-height">
+                <section class="card content-wrap auto-height">
                     <div class="grid half v-center">
                         <div>
                             <div class="mr-m float left">
@@ -54,13 +54,13 @@
 
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="card content-wrap auto-height book-contents">
+                <section class="card content-wrap auto-height book-contents">
                     <h2 id="recent-pages" class="list-heading">
                         {{ trans('entities.recently_created_pages') }}
                         @if (count($recentlyCreated['pages']) > 0)
-                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:page}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                            <a href="{{ url('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:page}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
                         @endif
                     </h2>
                     @if (count($recentlyCreated['pages']) > 0)
@@ -68,13 +68,13 @@
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_pages', ['userName' => $user->name]) }}</p>
                     @endif
-                </div>
+                </section>
 
-                <div class="card content-wrap auto-height book-contents">
+                <section class="card content-wrap auto-height book-contents">
                     <h2 id="recent-chapters" class="list-heading">
                         {{ trans('entities.recently_created_chapters') }}
                         @if (count($recentlyCreated['chapters']) > 0)
-                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:chapter}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                            <a href="{{ url('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:chapter}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
                         @endif
                     </h2>
                     @if (count($recentlyCreated['chapters']) > 0)
@@ -82,13 +82,13 @@
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_chapters', ['userName' => $user->name]) }}</p>
                     @endif
-                </div>
+                </section>
 
-                <div class="card content-wrap auto-height book-contents">
+                <section class="card content-wrap auto-height book-contents">
                     <h2 id="recent-books" class="list-heading">
                         {{ trans('entities.recently_created_books') }}
                         @if (count($recentlyCreated['books']) > 0)
-                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:book}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                            <a href="{{ url('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:book}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
                         @endif
                     </h2>
                     @if (count($recentlyCreated['books']) > 0)
@@ -96,13 +96,13 @@
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_books', ['userName' => $user->name]) }}</p>
                     @endif
-                </div>
+                </section>
 
-                <div class="card content-wrap auto-height book-contents">
+                <section class="card content-wrap auto-height book-contents">
                     <h2 id="recent-shelves" class="list-heading">
                         {{ trans('entities.recently_created_shelves') }}
                         @if (count($recentlyCreated['shelves']) > 0)
-                            <a href="{{ baseUrl('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:bookshelf}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                            <a href="{{ url('/search?term=' . urlencode('{created_by:'.$user->id.'} {type:bookshelf}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
                         @endif
                     </h2>
                     @if (count($recentlyCreated['shelves']) > 0)
@@ -110,13 +110,11 @@
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_shelves', ['userName' => $user->name]) }}</p>
                     @endif
-                </div>
+                </section>
             </div>
 
         </div>
 
 
     </div>
-
-
 @stop

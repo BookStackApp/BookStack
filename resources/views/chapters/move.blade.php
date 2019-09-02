@@ -15,7 +15,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.chapters_move') }}</h1>
 
             <form action="{{ $chapter->getUrl('/move') }}" method="POST">
@@ -27,11 +27,11 @@
 
                 <div class="form-group text-right">
                     <a href="{{ $chapter->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button primary">{{ trans('entities.chapters_move') }}</button>
+                    <button type="submit" class="button">{{ trans('entities.chapters_move') }}</button>
                 </div>
             </form>
 
-        </div>
+        </main>
 
 
 

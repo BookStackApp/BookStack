@@ -7,14 +7,14 @@
             @include('settings.navbar', ['selected' => 'users'])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
 
             <div class="grid right-focus v-center">
                 <h1 class="list-heading">{{ trans('settings.users') }}</h1>
 
                 <div class="text-right">
                     <div class="block inline mr-s">
-                        <form method="get" action="{{ baseUrl("/settings/users") }}">
+                        <form method="get" action="{{ url("/settings/users") }}">
                             @foreach(collect($listDetails)->except('search') as $name => $val)
                                 <input type="hidden" name="{{ $name }}" value="{{ $val }}">
                             @endforeach
@@ -22,7 +22,7 @@
                         </form>
                     </div>
                     @if(userCan('users-manage'))
-                        <a href="{{ baseUrl("/settings/users/create") }}" style="margin-top: 0;" class="outline button">{{ trans('settings.users_add_new') }}</a>
+                        <a href="{{ url("/settings/users/create") }}" style="margin-top: 0;" class="outline button">{{ trans('settings.users_add_new') }}</a>
                     @endif
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         <td class="text-center" style="line-height: 0;"><img class="avatar med" src="{{ $user->getAvatar(40)}}" alt="{{ $user->name }}"></td>
                         <td>
                             @if(userCan('users-manage') || $currentUser->id == $user->id)
-                                <a href="{{ baseUrl("/settings/users/{$user->id}") }}">
+                                <a href="{{ url("/settings/users/{$user->id}") }}">
                                     @endif
                                     {{ $user->name }} <br> <span class="text-muted">{{ $user->email }}</span>
                                     @if(userCan('users-manage') || $currentUser->id == $user->id)
@@ -52,7 +52,7 @@
                         </td>
                         <td>
                             @foreach($user->roles as $index => $role)
-                                <small><a href="{{ baseUrl("/settings/roles/{$role->id}") }}">{{$role->display_name}}</a>@if($index !== count($user->roles) -1),@endif</small>
+                                <small><a href="{{ url("/settings/roles/{$role->id}") }}">{{$role->display_name}}</a>@if($index !== count($user->roles) -1),@endif</small>
                             @endforeach
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
             <div>
                 {{ $users->links() }}
             </div>
-        </div>
+        </main>
 
     </div>
 

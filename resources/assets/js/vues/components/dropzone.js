@@ -1,14 +1,14 @@
 import DropZone from "dropzone";
+import { fadeOut } from "../../services/animations";
 
 const template = `
-    <div class="dropzone-container">
-        <div class="dz-message">{{placeholder}}</div>
+    <div class="dropzone-container text-center">
+        <button type="button" class="dz-message">{{placeholder}}</button>
     </div>
 `;
 
 const props = ['placeholder', 'uploadUrl', 'uploadedTo'];
 
-// TODO - Remove jQuery usage
 function mounted() {
    const container = this.$el;
    const _this = this;
@@ -37,7 +37,7 @@ function mounted() {
 
             dz.on('success', function (file, data) {
                 _this.$emit('success', {file, data});
-                $(file.previewElement).fadeOut(400, function () {
+                fadeOut(file.previewElement, 800, () => {
                     dz.removeFile(file);
                 });
             });
@@ -46,7 +46,8 @@ function mounted() {
                 _this.$emit('error', {file, errorMessage, xhr});
 
                 function setMessage(message) {
-                    $(file.previewElement).find('[data-dz-errormessage]').text(message);
+                    const messsageEl = file.previewElement.querySelector('[data-dz-errormessage]');
+                    messsageEl.textContent = message;
                 }
 
                 if (xhr && xhr.status === 413) {

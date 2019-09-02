@@ -75,17 +75,17 @@ $loadingSize: 10px;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(.62, .28, .23, .99);
     margin-right: 4px;
-    background-color: $color-page;
+    background-color: var(--color-page);
     animation-delay: 0.3s;
   }
   > div:first-child {
       left: -($loadingSize+$-xs);
-      background-color: $color-book;
+      background-color: var(--color-book);
       animation-delay: 0s;
   }
   > div:last-of-type {
     left: $loadingSize+$-xs;
-    background-color: $color-chapter;
+    background-color: var(--color-chapter);
     animation-delay: 0.6s;
   }
   > span {
@@ -99,7 +99,7 @@ $loadingSize: 10px;
 // Back to top link
 $btt-size: 40px;
 [back-to-top] {
-  background-color: $primary;
+  background-color: var(--color-primary);
   position: fixed;
   bottom: $-m;
   right: $-l;
@@ -187,7 +187,7 @@ $btt-size: 40px;
     margin-bottom: 0;
   }
   .entity-list-item.selected {
-    background-color: rgba(0, 0, 0, 0.15) !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
   }
   .loading {
     height: 400px;
@@ -216,10 +216,21 @@ $btt-size: 40px;
   .scroll-box-item {
     padding: $-xs $-m;
     border-bottom: 1px solid #DDD;
+    border-top: 1px solid #DDD;
+    margin-top: -1px;
     &:last-child {
       border-bottom: 0;
     }
   }
+}
+
+.scroll-box[data-instruction]:before {
+  content: attr(data-instruction);
+  padding: $-xs $-m;
+  border-bottom: 1px solid #DDD;
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
 }
 
 .fullscreen {
@@ -249,7 +260,7 @@ $btt-size: 40px;
   .list-sort-label {
     font-weight: bold;
     display: inline-block;
-    color: #888;
+    color: #555;
   }
   .list-sort-type {
     text-align: left;

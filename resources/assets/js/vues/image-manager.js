@@ -57,14 +57,14 @@ const methods = {
     },
 
     async fetchData() {
-        let query = {
+        const params = {
             page,
             search: this.searching ? this.searchTerm : null,
             uploaded_to: this.uploadedTo || null,
             filter_type: this.filter,
         };
 
-        const {data} = await this.$http.get(baseUrl, {params: query});
+        const {data} = await this.$http.get(baseUrl, params);
         this.images = this.images.concat(data.images);
         this.hasMore = data.has_more;
         page++;

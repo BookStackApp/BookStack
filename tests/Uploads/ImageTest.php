@@ -176,7 +176,7 @@ class ImageTest extends TestCase
 
     public function test_secure_images_uploads_to_correct_place()
     {
-        config()->set('filesystems.default', 'local_secure');
+        config()->set('filesystems.images', 'local_secure');
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::first();
@@ -194,7 +194,7 @@ class ImageTest extends TestCase
 
     public function test_secure_images_included_in_exports()
     {
-        config()->set('filesystems.default', 'local_secure');
+        config()->set('filesystems.images', 'local_secure');
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::first();
@@ -217,7 +217,7 @@ class ImageTest extends TestCase
 
     public function test_system_images_remain_public()
     {
-        config()->set('filesystems.default', 'local_secure');
+        config()->set('filesystems.images', 'local_secure');
         $this->asAdmin();
         $galleryFile = $this->getTestImage('my-system-test-upload.png');
         $expectedPath = public_path('uploads/images/system/' . Date('Y-m') . '/my-system-test-upload.png');

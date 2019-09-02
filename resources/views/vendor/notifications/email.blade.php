@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html lang="{{ config('app.lang') }}">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -83,7 +83,7 @@ $style = [
                                 <!-- Logo -->
                                 <tr>
                                     <td style="{{ $style['email-masthead'] }}">
-                                        <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ baseUrl('/') }}" target="_blank">
+                                        <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}" target="_blank">
                                             {{ setting('app-name') }}
                                         </a>
                                     </td>
@@ -186,7 +186,7 @@ $style = [
                                                 <td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
                                                     <p style="{{ $style['paragraph-sub'] }}">
                                                         &copy; {{ date('Y') }}
-                                                        <a style="{{ $style['anchor'] }}" href="{{ baseUrl('/') }}" target="_blank">{{ setting('app-name') }}</a>.
+                                                        <a style="{{ $style['anchor'] }}" href="{{ url('/') }}" target="_blank">{{ setting('app-name') }}</a>.
                                                         {{ trans('common.email_rights') }}
                                                     </p>
                                                 </td>

@@ -15,13 +15,7 @@
         <label for="books">{{ trans('entities.shelves_books') }}</label>
         <input type="hidden" id="books-input" name="books"
                value="{{ isset($shelf) ? $shelf->books->implode('id', ',') : '' }}">
-        <div class="scroll-box">
-            <div class="scroll-box-item text-small text-muted instruction">
-                {{ trans('entities.shelves_drag_books') }}
-            </div>
-            <div class="scroll-box-item scroll-box-placeholder" style="display: none;">
-                <a href="#" class="text-muted">@icon('book') ...</a>
-            </div>
+        <div class="scroll-box" shelf-sort-assigned-books data-instruction="{{ trans('entities.shelves_drag_books') }}">
             @if (isset($shelfBooks) && count($shelfBooks) > 0)
                 @foreach ($shelfBooks as $book)
                     <div data-id="{{ $book->id }}" class="scroll-box-item">
@@ -46,15 +40,15 @@
 
 
 <div class="form-group" collapsible id="logo-control">
-    <div class="collapse-title text-primary" collapsible-trigger>
-        <label for="user-avatar">{{ trans('common.cover_image') }}</label>
-    </div>
+    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
+        <label>{{ trans('common.cover_image') }}</label>
+    </button>
     <div class="collapse-content" collapsible-content>
         <p class="small">{{ trans('common.cover_image_description') }}</p>
 
         @include('components.image-picker', [
-            'defaultImage' => baseUrl('/book_default_cover.png'),
-            'currentImage' => (isset($shelf) && $shelf->cover) ? $shelf->getBookCover() : baseUrl('/book_default_cover.png') ,
+            'defaultImage' => url('/book_default_cover.png'),
+            'currentImage' => (isset($shelf) && $shelf->cover) ? $shelf->getBookCover() : url('/book_default_cover.png') ,
             'name' => 'image',
             'imageClass' => 'cover'
         ])
@@ -62,15 +56,15 @@
 </div>
 
 <div class="form-group" collapsible id="tags-control">
-    <div class="collapse-title text-primary" collapsible-trigger>
+    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
         <label for="tag-manager">{{ trans('entities.shelf_tags') }}</label>
-    </div>
+    </button>
     <div class="collapse-content" collapsible-content>
         @include('components.tag-manager', ['entity' => $shelf ?? null, 'entityType' => 'bookshelf'])
     </div>
 </div>
 
 <div class="form-group text-right">
-    <a href="{{ isset($shelf) ? $shelf->getUrl() : baseUrl('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
-    <button type="submit" class="button primary">{{ trans('entities.shelves_save') }}</button>
+    <a href="{{ isset($shelf) ? $shelf->getUrl() : url('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
+    <button type="submit" class="button">{{ trans('entities.shelves_save') }}</button>
 </div>

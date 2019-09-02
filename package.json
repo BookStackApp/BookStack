@@ -10,34 +10,25 @@
     "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
-    "autoprefixer": "^9.4.7",
-    "babel-loader": "^8.0.4",
-    "css-loader": "^2.1.0",
-    "livereload": "^0.7.0",
-    "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.10.0",
+    "css-loader": "^2.1.1",
+    "livereload": "^0.8.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
-    "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "uglifyjs-webpack-plugin": "^2.1.1",
-    "webpack": "^4.26.1",
-    "webpack-cli": "^3.1.2"
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "clipboard": "^2.0.4",
-    "codemirror": "^5.42.0",
+    "codemirror": "^5.47.0",
     "dropzone": "^5.5.1",
-    "jquery": "^3.3.1",
-    "jquery-sortable": "^0.9.13",
     "markdown-it": "^8.4.2",
     "markdown-it-task-lists": "^2.1.1",
-    "vue": "^2.5.17",
-    "vuedraggable": "^2.16.0"
+    "sortablejs": "^1.9.0",
+    "vue": "^2.6.10",
+    "vuedraggable": "^2.21.0"
   },
   "browser": {
     "vue": "vue/dist/vue.common.js"

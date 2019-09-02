@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="tri-layout-mobile-tabs text-primary" >
+    <div class="tri-layout-mobile-tabs text-primary print-hidden">
         <div class="grid half no-break no-gap">
             <div class="tri-layout-mobile-tab px-m py-s" tri-layout-mobile-tab="info">
                 {{ trans('common.tab_info') }}
@@ -18,9 +18,9 @@
     <div class="tri-layout-container" tri-layout @yield('container-attrs') >
 
         <div class="tri-layout-left print-hidden pt-m" id="sidebar">
-            <div class="tri-layout-left-contents">
+            <aside class="tri-layout-left-contents">
                 @yield('left')
-            </div>
+            </aside>
         </div>
 
         <div class="@yield('body-wrap-classes') tri-layout-middle">
@@ -30,9 +30,9 @@
         </div>
 
         <div class="tri-layout-right print-hidden pt-m">
-            <div class="tri-layout-right-contents">
+            <aside class="tri-layout-right-contents">
                 @yield('right')
-            </div>
+            </aside>
         </div>
     </div>
 

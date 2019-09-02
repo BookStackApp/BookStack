@@ -23,7 +23,7 @@
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="DELETE">
                 <a href="{{$book->getUrl()}}" class="button outline">{{ trans('common.cancel') }}</a>
-                <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                <button type="submit" class="button">{{ trans('common.confirm') }}</button>
             </form>
         </div>
 

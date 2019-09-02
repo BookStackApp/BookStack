@@ -6,7 +6,7 @@
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ trans('auth.reset_password') }}</h1>
 
-            <form action="{{ baseUrl("/password/reset") }}" method="POST" class="stretch-inputs">
+            <form action="{{ url("/password/reset") }}" method="POST" class="stretch-inputs">
                 {!! csrf_field() !!}
                 <input type="hidden" name="token" value="{{ $token }}">
 
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="from-group text-right mt-m">
-                    <button class="button primary">{{ trans('auth.reset_password') }}</button>
+                    <button class="button">{{ trans('auth.reset_password') }}</button>
                 </div>
             </form>
 

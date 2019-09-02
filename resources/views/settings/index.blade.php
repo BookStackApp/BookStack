@@ -15,7 +15,7 @@
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.app_features_security') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST">
+            <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -27,7 +27,7 @@
                             <p class="small">{!! trans('settings.app_public_access_desc') !!}</p>
                             @if(userCan('users-manage'))
                                 <p class="small mb-none">
-                                    <a href="{{ baseUrl($guestUser->getEditUrl()) }}">{!! trans('settings.app_public_access_desc_guest') !!}</a>
+                                    <a href="{{ url($guestUser->getEditUrl()) }}">{!! trans('settings.app_public_access_desc_guest') !!}</a>
                                 </p>
                             @endif
                         </div>
@@ -72,14 +72,14 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <button type="submit" class="button primary">{{ trans('settings.settings_save') }}</button>
+                    <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
                 </div>
             </form>
         </div>
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.app_customization') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url("/settings") }}" method="POST" enctype="multipart/form-data">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -121,7 +121,7 @@
                             @include('components.image-picker', [
                                      'removeName' => 'setting-app-logo',
                                      'removeValue' => 'none',
-                                     'defaultImage' => baseUrl('/logo.png'),
+                                     'defaultImage' => url('/logo.png'),
                                      'currentImage' => setting('app-logo'),
                                      'name' => 'app_logo',
                                      'imageClass' => 'logo-image',
@@ -134,9 +134,11 @@
                             <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
                             <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
                         </div>
-                        <div>
-                            <input type="text" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#0288D1">
+                        <div setting-app-color-picker class="text-m-right">
+                            <input type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
+                            <br>
+                            <button type="button" class="text-button text-muted mt-s mx-s" setting-app-color-picker-reset>{{ trans('common.reset') }}</button>
                         </div>
                     </div>
 
@@ -164,20 +166,21 @@
                         <label for="setting-app-custom-head" class="setting-list-label">{{ trans('settings.app_custom_html') }}</label>
                         <p class="small">{{ trans('settings.app_custom_html_desc') }}</p>
                         <textarea name="setting-app-custom-head" id="setting-app-custom-head" class="simple-code-input mt-m">{{ setting('app-custom-head', '') }}</textarea>
+                        <p class="small text-right">{{ trans('settings.app_custom_html_disabled_notice') }}</p>
                     </div>
 
 
                 </div>
 
                 <div class="form-group text-right">
-                    <button type="submit" class="button primary">{{ trans('settings.settings_save') }}</button>
+                    <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
                 </div>
             </form>
         </div>
 
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.reg_settings') }}</h2>
-            <form action="{{ baseUrl("/settings") }}" method="POST">
+            <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
@@ -233,7 +236,7 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <button type="submit" class="button primary">{{ trans('settings.settings_save') }}</button>
+                    <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
                 </div>
             </form>
         </div>
@@ -242,33 +245,4 @@
 
     @include('components.image-manager', ['imageType' => 'system'])
     @include('components.entity-selector-popup', ['entityTypes' => 'page'])
-@stop
-
-@section('scripts')
-    <script src="{{ baseUrl("/libs/jq-color-picker/tiny-color-picker.min.js?version=1.0.0") }}"></script>
-    <script type="text/javascript">
-        $('#setting-app-color').colorPicker({
-            opacity: false,
-            renderCallback: function($elm, toggled) {
-                const hexVal = '#' + this.color.colors.HEX;
-                const rgb = this.color.colors.RND.rgb;
-                const rgbLightVal = 'rgba('+ [rgb.r, rgb.g, rgb.b, '0.15'].join(',') +')';
-
-                // Set textbox color to hex color code.
-                const isEmpty = $.trim($elm.val()).length === 0;
-                if (!isEmpty) $elm.val(hexVal);
-                $('#setting-app-color-light').val(isEmpty ? '' : rgbLightVal);
-
-                const customStyles = document.getElementById('custom-styles');
-                const oldColor = customStyles.getAttribute('data-color');
-                const oldColorLight = customStyles.getAttribute('data-color-light');
-
-                customStyles.innerHTML = customStyles.innerHTML.split(oldColor).join(hexVal);
-                customStyles.innerHTML = customStyles.innerHTML.split(oldColorLight).join(rgbLightVal);
-
-                customStyles.setAttribute('data-color', hexVal);
-                customStyles.setAttribute('data-color-light', rgbLightVal);
-            }
-        });
-    </script>
 @stop

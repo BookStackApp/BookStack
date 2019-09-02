@@ -41,21 +41,21 @@ $fs-m: 14px;
 $fs-s: 12px;
 
 // Colours
-$primary: #0288D1;
-$primary-dark: #0288D1;
-$secondary: #cf4d03;
+:root {
+  --color-primary: #206ea7;
+  --color-primary-light: rgba(32,110,167,0.15);
+
+  --color-page: #206ea7;
+  --color-page-draft: #7e50b1;
+  --color-chapter: #af4d0d;
+  --color-book: #077b70;
+  --color-bookshelf: #a94747;
+}
+
 $positive: #0f7d15;
 $negative: #ab0f0e;
-$info: $primary;
-$warning: $secondary;
-$primary-faded: rgba(21, 101, 192, 0.15);
-
-// Item Colors
-$color-bookshelf: #af5a5a;
-$color-book: #009688;
-$color-chapter: #d7804a;
-$color-page: $primary;
-$color-page-draft: #9A60DA;
+$info: #0288D1;
+$warning: #cf4d03;
 
 // Text colours
 $text-dark: #444;

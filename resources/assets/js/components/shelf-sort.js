@@ -1,25 +1,26 @@
-import "jquery-sortable";
+import Sortable from "sortablejs";
 
 class ShelfSort {
 
     constructor(elem) {
         this.elem = elem;
-        this.sortGroup = this.initSortable();
         this.input = document.getElementById('books-input');
+        this.shelfBooksList = elem.querySelector('[shelf-sort-assigned-books]');
+
+        this.initSortable();
         this.setupListeners();
     }
 
     initSortable() {
-        const placeHolderContent = this.getPlaceholderHTML();
-        // TODO - Load sortable at this point
-        return $('.scroll-box').sortable({
-            group: 'shelf-books',
-            exclude: '.instruction,.scroll-box-placeholder',
-            containerSelector: 'div.scroll-box',
-            itemSelector: '.scroll-box-item',
-            placeholder: placeHolderContent,
-            onDrop: this.onDrop.bind(this)
-        });
+        const scrollBoxes = this.elem.querySelectorAll('.scroll-box');
+        for (let scrollBox of scrollBoxes) {
+            new Sortable(scrollBox, {
+                group: 'shelf-books',
+                ghostClass: 'primary-background-light',
+                animation: 150,
+                onSort: this.onChange.bind(this),
+            });
+        }
     }
 
     setupListeners() {
@@ -45,26 +46,10 @@ class ShelfSort {
         this.onChange();
     }
 
-    onDrop($item, container, _super) {
-        this.onChange();
-        _super($item, container);
-    }
-
     onChange() {
-        const data = this.sortGroup.sortable('serialize').get();
-        this.input.value = data[0].map(item => item.id).join(',');
-        const instruction = this.elem.querySelector('.scroll-box-item.instruction');
-        instruction.parentNode.insertBefore(instruction, instruction.parentNode.children[0]);
+        const shelfBookElems = Array.from(this.shelfBooksList.querySelectorAll('[data-id]'));
+        this.input.value = shelfBookElems.map(elem => elem.getAttribute('data-id')).join(',');
     }
-
-    getPlaceholderHTML() {
-        const placeHolder = document.querySelector('.scroll-box-placeholder');
-        placeHolder.style.display = 'block';
-        const placeHolderContent = placeHolder.outerHTML;
-        placeHolder.style.display = 'none';
-        return placeHolderContent;
-    }
-
 
 }
 

@@ -23,6 +23,12 @@ import listSortControl from "./list-sort-control";
 import triLayout from "./tri-layout";
 import breadcrumbListing from "./breadcrumb-listing";
 import permissionsTable from "./permissions-table";
+import customCheckbox from "./custom-checkbox";
+import bookSort from "./book-sort";
+import settingAppColorPicker from "./setting-app-color-picker";
+import entityPermissionsEditor from "./entity-permissions-editor";
+import templateManager from "./template-manager";
+import newUserPassword from "./new-user-password";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -50,6 +56,12 @@ const componentMapping = {
     'tri-layout': triLayout,
     'breadcrumb-listing': breadcrumbListing,
     'permissions-table': permissionsTable,
+    'custom-checkbox': customCheckbox,
+    'book-sort': bookSort,
+    'setting-app-color-picker': settingAppColorPicker,
+    'entity-permissions-editor': entityPermissionsEditor,
+    'template-manager': templateManager,
+    'new-user-password': newUserPassword,
 };
 
 window.components = {};

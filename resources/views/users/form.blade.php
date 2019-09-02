@@ -19,7 +19,7 @@
         <div>
             @if($authMethod !== 'ldap' || userCan('users-manage'))
                 <label for="email">{{ trans('auth.email') }}</label>
-                @include('form.text', ['name' => 'email'])
+                @include('form.text', ['name' => 'email', 'disabled' => !userCan('users-manage')])
             @endif
         </div>
     </div>
@@ -48,23 +48,40 @@
 @endif
 
 @if($authMethod === 'standard')
-    <div>
+    <div new-user-password>
         <label class="setting-list-label">{{ trans('settings.users_password') }}</label>
-        <p class="small">{{ trans('settings.users_password_desc') }}</p>
-        @if(isset($model))
+
+        @if(!isset($model))
             <p class="small">
-                {{ trans('settings.users_password_warning') }}
+                {{ trans('settings.users_send_invite_text') }}
             </p>
+
+            @include('components.toggle-switch', [
+                'name' => 'send_invite',
+                'value' => old('send_invite', 'true') === 'true',
+                'label' => trans('settings.users_send_invite_option')
+            ])
+
         @endif
-        <div class="grid half mt-m gap-xl">
-            <div>
-                <label for="password">{{ trans('auth.password') }}</label>
-                @include('form.password', ['name' => 'password'])
-            </div>
-            <div>
-                <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
-                @include('form.password', ['name' => 'password-confirm'])
+
+        <div id="password-input-container" @if(!isset($model)) style="display: none;" @endif>
+            <p class="small">{{ trans('settings.users_password_desc') }}</p>
+            @if(isset($model))
+                <p class="small">
+                    {{ trans('settings.users_password_warning') }}
+                </p>
+            @endif
+            <div class="grid half mt-m gap-xl">
+                <div>
+                    <label for="password">{{ trans('auth.password') }}</label>
+                    @include('form.password', ['name' => 'password'])
+                </div>
+                <div>
+                    <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
+                    @include('form.password', ['name' => 'password-confirm'])
+                </div>
             </div>
         </div>
+
     </div>
 @endif

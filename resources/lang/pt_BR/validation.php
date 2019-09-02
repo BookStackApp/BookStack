@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines
     'accepted'             => 'O :attribute deve ser aceito.',
     'active_url'           => 'O :attribute não é uma URL válida.',
     'after'                => 'O :attribute deve ser uma data posterior à data :date.',
@@ -38,6 +33,7 @@ return [
     'filled'               => 'O campo :attribute é requerido.',
     'exists'               => 'O atributo :attribute selecionado não é válido.',
     'image'                => 'O campo :attribute deve ser uma imagem.',
+    'image_extension'      => 'O campo :attribute deve ter uma extensão de imagem válida & suportada.',
     'in'                   => 'The selected :attribute is invalid.',
     'integer'              => 'O campo :attribute deve ser um número inteiro.',
     'ip'                   => 'O campo :attribute deve ser um IP válido.',
@@ -54,6 +50,7 @@ return [
         'string'  => 'O valor para o campo :attribute não deve ter menos que :min caracteres.',
         'array'   => 'O valor para o campo :attribute não deve ter menos que :min itens.',
     ],
+    'no_double_extension'  => 'O campo :attribute deve ter apenas uma extensão de arquivo.',
     'not_in'               => 'O campo selecionado :attribute é inválido.',
     'numeric'              => 'O campo :attribute deve ser um número.',
     'regex'                => 'O formato do campo :attribute é inválido.',
@@ -74,35 +71,15 @@ return [
     'timezone'             => 'O campo :attribute deve conter uma timezone válida.',
     'unique'               => 'Já existe um campo/dado de nome :attribute.',
     'url'                  => 'O formato da URL :attribute é inválido.',
+    'uploaded'             => 'O arquivo não pôde ser carregado. O servidor pode não aceitar arquivos deste tamanho.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Confirmação de senha requerida',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];

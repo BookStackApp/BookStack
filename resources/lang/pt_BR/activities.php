@@ -1,12 +1,10 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
-
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
-
+    
     // Pages
     'page_create'                 => 'página criada',
     'page_create_notification'    => 'Página criada com sucesso',

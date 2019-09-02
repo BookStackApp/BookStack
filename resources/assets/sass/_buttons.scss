@@ -1,28 +1,8 @@
 button {
+  background-color: transparent;
+  border: 0;
   font-size: 100%;
 }
-
-@mixin generate-button-colors($textColor, $backgroundColor) {
-  background-color: $backgroundColor;
-  color: $textColor;
-  fill: $textColor;
-  border: 1px solid $backgroundColor;
-  &:hover {
-    background-color: lighten($backgroundColor, 8%);
-    color: $textColor;
-  }
-  &:active {
-    background-color: darken($backgroundColor, 8%);
-  }
-  &:focus {
-    background-color: lighten($backgroundColor, 4%);
-    box-shadow: $bs-light;
-    color: $textColor;
-  }
-}
-
-// Button Specific Variables
-$button-border-radius: 2px;
 
 .button  {
   text-decoration: none;
@@ -34,34 +14,54 @@ $button-border-radius: 2px;
   display: inline-block;
   font-weight: 400;
   outline: 0;
-  border-radius: $button-border-radius;
+  border-radius: 2px;
   cursor: pointer;
-  transition: background-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
+  transition: background-color ease-in-out 120ms,
+    filter ease-in-out 120ms,
+    box-shadow ease-in-out 120ms;
   box-shadow: none;
-  background-color: $primary;
+  background-color: var(--color-primary);
   color: #FFF;
   fill: #FFF;
   text-transform: uppercase;
-  border: 1px solid $primary;
+  border: 1px solid var(--color-primary);
   vertical-align: top;
-  &:hover, &:focus {
+  &:hover, &:focus, &:active {
+    background-color: var(--color-primary);
     text-decoration: none;
+    color: #FFFFFF;
+  }
+  &:hover {
+    box-shadow: $bs-light;
+    filter: brightness(110%);
+  }
+  &:focus {
+    outline: 1px dotted currentColor;
+    outline-offset: -$-xs;
+    box-shadow: none;
+    filter: brightness(90%);
   }
   &:active {
-    background-color: darken($primary, 8%);
+    outline: 0;
   }
 }
-.button.primary {
-  @include generate-button-colors(#FFFFFF, $primary);
-}
+
 .button.outline {
   background-color: transparent;
-  color: #888;
-  fill: #888;
-  border: 1px solid #DDD;
+  color: #666;
+  fill: currentColor;
+  border: 1px solid #CCC;
   &:hover, &:focus, &:active {
+    border: 1px solid #CCC;
     box-shadow: none;
-    background-color: #EEE;
+    background-color: #F2F2F2;
+    filter: none;
+  }
+  &:active {
+    border-color: #BBB;
+    background-color: #DDD;
+    color: #666;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -83,11 +83,17 @@ $button-border-radius: 2px;
   user-select: none;
   font-size: 0.75rem;
   line-height: 1.4em;
-  &:focus, &:active {
+  color: var(--color-primary);
+  fill: var(--color-primary);
+  &:active {
     outline: 0;
   }
   &:hover {
     text-decoration: none;
+  }
+  &:hover, &:focus {
+    color: var(--color-primary);
+    fill: var(--color-primary);
   }
 }
 
@@ -118,6 +124,7 @@ $button-border-radius: 2px;
 .button[disabled] {
   background-color: #BBB;
   cursor: default;
+  border-color: #CCC;
   &:hover {
     background-color: #BBB;
     cursor: default;
