@@ -7,14 +7,13 @@ class BreadcrumbListing {
         this.searchInput = elem.querySelector('input');
         this.loadingElem = elem.querySelector('.loading-container');
         this.entityListElem = elem.querySelector('.breadcrumb-listing-entity-list');
-        this.toggleElem = elem.querySelector('[dropdown-toggle]');
 
         // this.loadingElem.style.display = 'none';
         const entityDescriptor = elem.getAttribute('breadcrumb-listing').split(':');
         this.entityType = entityDescriptor[0];
         this.entityId = Number(entityDescriptor[1]);
 
-        this.toggleElem.addEventListener('click', this.onShow.bind(this));
+        this.elem.addEventListener('show', this.onShow.bind(this));
         this.searchInput.addEventListener('input', this.onSearch.bind(this));
     }
 
@@ -28,6 +27,7 @@ class BreadcrumbListing {
         for (let listItem of listItems) {
             const match = !input || listItem.textContent.toLowerCase().includes(input);
             listItem.style.display = match ? 'flex' : 'none';
+            listItem.classList.toggle('hidden', !match);
         }
     }
 
@@ -39,7 +39,7 @@ class BreadcrumbListing {
             'entity_type': this.entityType,
         };
 
-        window.$http.get('/search/entity/siblings', {params}).then(resp => {
+        window.$http.get('/search/entity/siblings', params).then(resp => {
             this.entityListElem.innerHTML = resp.data;
         }).catch(err => {
             console.error(err);

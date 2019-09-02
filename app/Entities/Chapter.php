@@ -42,10 +42,13 @@ class Chapter extends Entity
     public function getUrl($path = false)
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
+        $fullPath = '/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug);
+
         if ($path !== false) {
-            return baseUrl('/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug) . '/' . trim($path, '/'));
+            $fullPath .= '/' . trim($path, '/');
         }
-        return baseUrl('/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug));
+
+        return url($fullPath);
     }
 
     /**
@@ -56,7 +59,7 @@ class Chapter extends Entity
     public function getExcerpt(int $length = 100)
     {
         $description = $this->text ?? $this->description;
-        return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
+        return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
     }
 
     /**

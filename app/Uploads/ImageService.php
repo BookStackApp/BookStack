@@ -45,9 +45,9 @@ class ImageService extends UploadService
      */
     protected function getStorage($type = '')
     {
-        $storageType = config('filesystems.default');
+        $storageType = config('filesystems.images');
 
-        // Override default location if set to local public to ensure not visible.
+        // Ensure system images (App logo) are uploaded to a public space
         if ($type === 'system' && $storageType === 'local_secure') {
             $storageType = 'local';
         }
@@ -417,7 +417,7 @@ class ImageService extends UploadService
         $isLocal = strpos(trim($uri), 'http') !== 0;
 
         // Attempt to find local files even if url not absolute
-        $base = baseUrl('/');
+        $base = url('/');
         if (!$isLocal && strpos($uri, $base) === 0) {
             $isLocal = true;
             $uri = str_replace($base, '', $uri);
@@ -442,7 +442,12 @@ class ImageService extends UploadService
             return null;
         }
 
-        return 'data:image/' . pathinfo($uri, PATHINFO_EXTENSION) . ';base64,' . base64_encode($imageData);
+        $extension = pathinfo($uri, PATHINFO_EXTENSION);
+        if ($extension === 'svg') {
+            $extension = 'svg+xml';
+        }
+
+        return 'data:image/' . $extension . ';base64,' . base64_encode($imageData);
     }
 
     /**
@@ -458,7 +463,7 @@ class ImageService extends UploadService
             // Get the standard public s3 url if s3 is set as storage type
             // Uses the nice, short URL if bucket name has no periods in otherwise the longer
             // region-based url will be used to prevent http issues.
-            if ($storageUrl == false && config('filesystems.default') === 's3') {
+            if ($storageUrl == false && config('filesystems.images') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
                 if (strpos($storageDetails['bucket'], '.') === false) {
                     $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
@@ -469,7 +474,7 @@ class ImageService extends UploadService
             $this->storageUrl = $storageUrl;
         }
 
-        $basePath = ($this->storageUrl == false) ? baseUrl('/') : $this->storageUrl;
+        $basePath = ($this->storageUrl == false) ? url('/') : $this->storageUrl;
         return rtrim($basePath, '/') . $filePath;
     }
 }

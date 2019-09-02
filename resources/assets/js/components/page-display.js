@@ -1,5 +1,7 @@
 import Clipboard from "clipboard/dist/clipboard.min";
 import Code from "../services/code";
+import * as DOM from "../services/dom";
+import {scrollAndHighlightElement} from "../services/util";
 
 class PageDisplay {
 
@@ -9,7 +11,6 @@ class PageDisplay {
 
         Code.highlight();
         this.setupPointer();
-        this.setupStickySidebar();
         this.setupNavHighlighting();
 
         // Check the hash on load
@@ -19,166 +20,135 @@ class PageDisplay {
         }
 
         // Sidebar page nav click event
-        $('.sidebar-page-nav').on('click', 'a', event => {
-            this.goToText(event.target.getAttribute('href').substr(1));
-        });
+        const sidebarPageNav = document.querySelector('.sidebar-page-nav');
+        if (sidebarPageNav) {
+            DOM.onChildEvent(sidebarPageNav, 'a', 'click', (event, child) => {
+                event.preventDefault();
+                window.components['tri-layout'][0].showContent();
+                const contentId = child.getAttribute('href').substr(1);
+                this.goToText(contentId);
+                window.history.pushState(null, null, '#' + contentId);
+            });
+        }
     }
 
     goToText(text) {
-        let idElem = document.getElementById(text);
-        $('.page-content [data-highlighted]').attr('data-highlighted', '').css('background-color', '');
+        const idElem = document.getElementById(text);
+
+        DOM.forEach('.page-content [data-highlighted]', elem => {
+            elem.removeAttribute('data-highlighted');
+            elem.style.backgroundColor = null;
+        });
+
         if (idElem !== null) {
-            window.scrollAndHighlight(idElem);
+            scrollAndHighlightElement(idElem);
         } else {
-            $('.page-content').find(':contains("' + text + '")').smoothScrollTo();
+            const textElem = DOM.findText('.page-content > div > *', text);
+            if (textElem) {
+                scrollAndHighlightElement(textElem);
+            }
         }
     }
 
     setupPointer() {
-        if (document.getElementById('pointer') === null) return;
+        let pointer = document.getElementById('pointer');
+        if (!pointer) {
+            return;
+        }
+
         // Set up pointer
-        let $pointer = $('#pointer').detach();
+        pointer = pointer.parentNode.removeChild(pointer);
+        const pointerInner = pointer.querySelector('div.pointer');
+
+        // Instance variables
         let pointerShowing = false;
-        let $pointerInner = $pointer.children('div.pointer').first();
         let isSelection = false;
         let pointerModeLink = true;
         let pointerSectionId = '';
 
         // Select all contents on input click
-        $pointer.on('click', 'input', event => {
-            $(this).select();
+        DOM.onChildEvent(pointer, 'input', 'click', (event, input) => {
+            input.select();
             event.stopPropagation();
         });
 
-        $pointer.on('click focus', event => {
+        // Prevent closing pointer when clicked or focused
+        DOM.onEvents(pointer, ['click', 'focus'], event => {
             event.stopPropagation();
         });
 
         // Pointer mode toggle
-        $pointer.on('click', 'span.icon', event => {
+        DOM.onChildEvent(pointer, 'span.icon', 'click', (event, icon) => {
             event.stopPropagation();
-            let $icon = $(event.currentTarget);
             pointerModeLink = !pointerModeLink;
-            $icon.find('[data-icon="include"]').toggle(!pointerModeLink);
-            $icon.find('[data-icon="link"]').toggle(pointerModeLink);
+            icon.querySelector('[data-icon="include"]').style.display = (!pointerModeLink) ? 'inline' : 'none';
+            icon.querySelector('[data-icon="link"]').style.display = (pointerModeLink) ? 'inline' : 'none';
             updatePointerContent();
         });
 
         // Set up clipboard
-        let clipboard = new Clipboard($pointer[0].querySelector('button'));
+        new Clipboard(pointer.querySelector('button'));
 
         // Hide pointer when clicking away
-        $(document.body).find('*').on('click focus', event => {
+        DOM.onEvents(document.body, ['click', 'focus'], event => {
             if (!pointerShowing || isSelection) return;
-            $pointer.detach();
+            pointer = pointer.parentElement.removeChild(pointer);
             pointerShowing = false;
         });
 
-        let updatePointerContent = ($elem) => {
+        let updatePointerContent = (element) => {
             let inputText = pointerModeLink ? window.baseUrl(`/link/${this.pageId}#${pointerSectionId}`) : `{{@${this.pageId}#${pointerSectionId}}}`;
-            if (pointerModeLink && inputText.indexOf('http') !== 0) inputText = window.location.protocol + "//" + window.location.host + inputText;
+            if (pointerModeLink && !inputText.startsWith('http')) {
+                inputText = window.location.protocol + "//" + window.location.host + inputText;
+            }
 
-            $pointer.find('input').val(inputText);
+            pointer.querySelector('input').value = inputText;
 
-            // update anchor if present
-            const $editAnchor = $pointer.find('#pointer-edit');
-            if ($editAnchor.length !== 0 && $elem) {
-                const editHref = $editAnchor.data('editHref');
-                const element = $elem[0];
+            // Update anchor if present
+            const editAnchor = pointer.querySelector('#pointer-edit');
+            if (editAnchor && element) {
+                const editHref = editAnchor.dataset.editHref;
                 const elementId = element.id;
 
                 // get the first 50 characters.
-                let queryContent = element.textContent && element.textContent.substring(0, 50);
-                $editAnchor[0].href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
+                const queryContent = element.textContent && element.textContent.substring(0, 50);
+                editAnchor.href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
             }
         };
 
         // Show pointer when selecting a single block of tagged content
-        $('.page-content [id^="bkmrk"]').on('mouseup keyup', function (e) {
-            e.stopPropagation();
-            let selection = window.getSelection();
-            if (selection.toString().length === 0) return;
+        DOM.forEach('.page-content [id^="bkmrk"]', bookMarkElem => {
+            DOM.onEvents(bookMarkElem, ['mouseup', 'keyup'], event => {
+                event.stopPropagation();
+                let selection = window.getSelection();
+                if (selection.toString().length === 0) return;
 
-            // Show pointer and set link
-            let $elem = $(this);
-            pointerSectionId = $elem.attr('id');
-            updatePointerContent($elem);
+                // Show pointer and set link
+                pointerSectionId = bookMarkElem.id;
+                updatePointerContent(bookMarkElem);
 
-            $elem.before($pointer);
-            $pointer.show();
-            pointerShowing = true;
+                bookMarkElem.parentNode.insertBefore(pointer, bookMarkElem);
+                pointer.style.display = 'block';
+                pointerShowing = true;
+                isSelection = true;
 
-            // Set pointer to sit near mouse-up position
-            let pointerLeftOffset = (e.pageX - $elem.offset().left - ($pointerInner.width() / 2));
-            if (pointerLeftOffset < 0) pointerLeftOffset = 0;
-            let pointerLeftOffsetPercent = (pointerLeftOffset / $elem.width()) * 100;
-            $pointerInner.css('left', pointerLeftOffsetPercent + '%');
+                // Set pointer to sit near mouse-up position
+                requestAnimationFrame(() => {
+                    const bookMarkBounds = bookMarkElem.getBoundingClientRect();
+                    let pointerLeftOffset = (event.pageX - bookMarkBounds.left - 164);
+                    if (pointerLeftOffset < 0) {
+                        pointerLeftOffset = 0
+                    }
+                    const pointerLeftOffsetPercent = (pointerLeftOffset / bookMarkBounds.width) * 100;
 
-            isSelection = true;
-            setTimeout(() => {
-                isSelection = false;
-            }, 100);
-        });
-    }
+                    pointerInner.style.left = pointerLeftOffsetPercent + '%';
 
-    setupStickySidebar() {
-        // Make the sidebar stick in view on scroll
-        const $window = $(window);
-        const $sidebar = $("#sidebar .scroll-body");
-        const $sidebarContainer = $sidebar.parent();
-        const sidebarHeight = $sidebar.height() + 32;
+                    setTimeout(() => {
+                        isSelection = false;
+                    }, 100);
+                });
 
-        // Check the page is scrollable and the content is taller than the tree
-        const pageScrollable = ($(document).height() > ($window.height() + 40)) && (sidebarHeight < $('.page-content').height());
-
-        // Get current tree's width and header height
-        const headerHeight = $("#header").height() + $(".toolbar").height();
-        let isFixed = $window.scrollTop() > headerHeight;
-
-        // Fix the tree as a sidebar
-        function stickTree() {
-            $sidebar.width($sidebarContainer.width() + 15);
-            $sidebar.addClass("fixed");
-            isFixed = true;
-        }
-
-        // Un-fix the tree back into position
-        function unstickTree() {
-            $sidebar.css('width', 'auto');
-            $sidebar.removeClass("fixed");
-            isFixed = false;
-        }
-
-        // Checks if the tree stickiness state should change
-        function checkTreeStickiness(skipCheck) {
-            let shouldBeFixed = $window.scrollTop() > headerHeight;
-            if (shouldBeFixed && (!isFixed || skipCheck)) {
-                stickTree();
-            } else if (!shouldBeFixed && (isFixed || skipCheck)) {
-                unstickTree();
-            }
-        }
-        // The event ran when the window scrolls
-        function windowScrollEvent() {
-            checkTreeStickiness(false);
-        }
-
-        // If the page is scrollable and the window is wide enough listen to scroll events
-        // and evaluate tree stickiness.
-        if (pageScrollable && $window.width() > 1000) {
-            $window.on('scroll', windowScrollEvent);
-            checkTreeStickiness(true);
-        }
-
-        // Handle window resizing and switch between desktop/mobile views
-        $window.on('resize', event => {
-            if (pageScrollable && $window.width() > 1000) {
-                $window.on('scroll', windowScrollEvent);
-                checkTreeStickiness(true);
-            } else {
-                $window.off('scroll', windowScrollEvent);
-                unstickTree();
-            }
+            });
         });
     }
 
@@ -221,10 +191,9 @@ class PageDisplay {
         }
 
         function toggleAnchorHighlighting(elementId, shouldHighlight) {
-            const anchorsToHighlight = pageNav.querySelectorAll('a[href="#' + elementId + '"]');
-            for (let anchor of anchorsToHighlight) {
+            DOM.forEach('a[href="#' + elementId + '"]', anchor => {
                 anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
-            }
+            });
         }
     }
 }

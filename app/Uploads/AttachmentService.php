@@ -13,7 +13,7 @@ class AttachmentService extends UploadService
      */
     protected function getStorage()
     {
-        $storageType = config('filesystems.default');
+        $storageType = config('filesystems.attachments');
 
         // Override default location if set to local public to ensure not visible.
         if ($storageType === 'local') {

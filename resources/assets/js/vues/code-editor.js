@@ -3,10 +3,10 @@ import codeLib from "../services/code";
 const methods = {
     show() {
         if (!this.editor) this.editor = codeLib.popupEditor(this.$refs.editor, this.language);
-        this.$refs.overlay.style.display = 'flex';
+        this.$refs.overlay.components.overlay.show();
     },
     hide() {
-        this.$refs.overlay.style.display = 'none';
+        this.$refs.overlay.components.overlay.hide();
     },
     updateEditorMode(language) {
         codeLib.setMode(this.editor, language);

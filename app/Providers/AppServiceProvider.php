@@ -9,10 +9,10 @@ use BookStack\Entities\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Schema;
+use URL;
 use Validator;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Set root URL
+        $appUrl = config('app.url');
+        if ($appUrl) {
+            $isHttps = (strpos($appUrl, 'https://') === 0);
+            URL::forceRootUrl($appUrl);
+            URL::forceScheme($isHttps ? 'https' : 'http');
+        }
+
         // Custom validation methods
         Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
             $validImageExtensions = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff', 'webp'];
@@ -38,6 +46,14 @@ class AppServiceProvider extends ServiceProvider
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
             return "<?php echo icon($expression); ?>";
+        });
+
+        Blade::directive('exposeTranslations', function($expression) {
+            return "<?php \$__env->startPush('translations'); ?>" .
+                "<?php foreach({$expression} as \$key): ?>" .
+                '<meta name="translation" key="<?php echo e($key); ?>" value="<?php echo e(trans($key)); ?>">' . "\n" .
+                "<?php endforeach; ?>" .
+                '<?php $__env->stopPush(); ?>';
         });
 
         // Allow longer string lengths after upgrade to utf8mb4

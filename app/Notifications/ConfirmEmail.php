@@ -26,6 +26,6 @@ class ConfirmEmail extends MailNotification
                 ->subject(trans('auth.email_confirm_subject', $appName))
                 ->greeting(trans('auth.email_confirm_greeting', $appName))
                 ->line(trans('auth.email_confirm_text'))
-                ->action(trans('auth.email_confirm_action'), baseUrl('/register/confirm/' . $this->token));
+                ->action(trans('auth.email_confirm_action'), url('/register/confirm/' . $this->token));
     }
 }

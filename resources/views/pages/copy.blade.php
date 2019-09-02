@@ -29,9 +29,9 @@
                 </div>
 
                 <div class="form-group" collapsible>
-                    <div class="collapse-title text-primary" collapsible-trigger>
+                    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
                         <label for="entity_selection">{{ trans('entities.pages_copy_desination') }}</label>
-                    </div>
+                    </button>
                     <div class="collapse-content" collapsible-content>
                         @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter', 'entityPermission' => 'page-create'])
                     </div>
@@ -39,7 +39,7 @@
 
                 <div class="form-group text-right">
                     <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button primary">{{ trans('entities.pages_copy') }}</button>
+                    <button type="submit" class="button">{{ trans('entities.pages_copy') }}</button>
                 </div>
             </form>
 

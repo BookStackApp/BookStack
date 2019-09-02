@@ -760,13 +760,19 @@ class EntityRepo
         $xPath = new DOMXPath($doc);
 
         // Remove standard script tags
-        $scriptElems = $xPath->query('//body//*//script');
+        $scriptElems = $xPath->query('//script');
         foreach ($scriptElems as $scriptElem) {
             $scriptElem->parentNode->removeChild($scriptElem);
         }
 
+        // Remove data or JavaScript iFrames
+        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
+        foreach ($badIframes as $badIframe) {
+            $badIframe->parentNode->removeChild($badIframe);
+        }
+
         // Remove 'on*' attributes
-        $onAttributes = $xPath->query('//body//*/@*[starts-with(name(), \'on\')]');
+        $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
         foreach ($onAttributes as $attr) {
             /** @var \DOMAttr $attr*/
             $attrName = $attr->nodeName;
@@ -852,10 +858,13 @@ class EntityRepo
      */
     public function destroyPage(Page $page)
     {
-        // Check if set as custom homepage
+        // Check if set as custom homepage & remove setting if not used or throw error if active
         $customHome = setting('app-homepage', '0:');
         if (intval($page->id) === intval(explode(':', $customHome)[0])) {
-            throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
+            if (setting('app-homepage-type') === 'page') {
+                throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
+            }
+            setting()->remove('app-homepage');
         }
 
         $this->destroyEntityCommonRelations($page);

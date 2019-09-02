@@ -1,6 +1,7 @@
 import MarkdownIt from "markdown-it";
 import mdTasksLists from 'markdown-it-task-lists';
 import code from '../services/code';
+import {debounce} from "../services/util";
 
 import DrawIO from "../services/drawio";
 
@@ -17,19 +18,18 @@ class MarkdownEditor {
         this.markdown.use(mdTasksLists, {label: true});
 
         this.display = this.elem.querySelector('.markdown-display');
+
+        this.displayStylesLoaded = false;
         this.input = this.elem.querySelector('textarea');
         this.htmlInput = this.elem.querySelector('input[name=html]');
         this.cm = code.markdownEditor(this.input);
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
-        this.init();
 
-        // Scroll to text if needed.
-        const queryParams = (new URL(window.location)).searchParams;
-        const scrollText = queryParams.get('content-text');
-        if (scrollText) {
-            this.scrollToText(scrollText);
-        }
+        this.display.addEventListener('load', () => {
+            this.displayDoc = this.display.contentDocument;
+            this.init();
+        });
     }
 
     init() {
@@ -37,7 +37,7 @@ class MarkdownEditor {
         let lastClick = 0;
 
         // Prevent markdown display link click redirect
-        this.display.addEventListener('click', event => {
+        this.displayDoc.addEventListener('click', event => {
             let isDblClick = Date.now() - lastClick < 300;
 
             let link = event.target.closest('a');
@@ -90,28 +90,53 @@ class MarkdownEditor {
         });
 
         this.codeMirrorSetup();
+        this.listenForBookStackEditorEvents();
+
+        // Scroll to text if needed.
+        const queryParams = (new URL(window.location)).searchParams;
+        const scrollText = queryParams.get('content-text');
+        if (scrollText) {
+            this.scrollToText(scrollText);
+        }
     }
 
     // Update the input content and render the display.
     updateAndRender() {
-        let content = this.cm.getValue();
+        const content = this.cm.getValue();
         this.input.value = content;
-        let html = this.markdown.render(content);
+        const html = this.markdown.render(content);
         window.$events.emit('editor-html-change', html);
         window.$events.emit('editor-markdown-change', content);
-        this.display.innerHTML = html;
+
+        // Set body content
+        this.displayDoc.body.className = 'page-content';
+        this.displayDoc.body.innerHTML = html;
         this.htmlInput.value = html;
+
+        // Copy styles from page head and set custom styles for editor
+        this.loadStylesIntoDisplay();
+    }
+
+    loadStylesIntoDisplay() {
+        if (this.displayStylesLoaded) return;
+        this.displayDoc.documentElement.className = 'markdown-editor-display';
+
+        this.displayDoc.head.innerHTML = '';
+        const styles = document.head.querySelectorAll('style,link[rel=stylesheet]');
+        for (let style of styles) {
+            const copy = style.cloneNode(true);
+            this.displayDoc.head.appendChild(copy);
+        }
+
+        this.displayStylesLoaded = true;
     }
 
     onMarkdownScroll(lineCount) {
-        let elems = this.display.children;
+        const elems = this.displayDoc.body.children;
         if (elems.length <= lineCount) return;
 
-        let topElem = (lineCount === -1) ? elems[elems.length-1] : elems[lineCount];
-        // TODO - Replace jQuery
-        $(this.display).animate({
-            scrollTop: topElem.offsetTop
-        }, {queue: false, duration: 200, easing: 'linear'});
+        const topElem = (lineCount === -1) ? elems[elems.length-1] : elems[lineCount];
+        topElem.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth'});
     }
 
     codeMirrorSetup() {
@@ -160,8 +185,7 @@ class MarkdownEditor {
             this.updateAndRender();
         });
 
-        // Handle scroll to sync display view
-        cm.on('scroll', instance => {
+        const onScrollDebounced = debounce((instance) => {
             // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
             let scroll = instance.getScrollInfo();
             let atEnd = scroll.top + scroll.clientHeight === scroll.height;
@@ -176,6 +200,11 @@ class MarkdownEditor {
             let doc = parser.parseFromString(this.markdown.render(range), 'text/html');
             let totalLines = doc.documentElement.querySelectorAll('body > *');
             this.onMarkdownScroll(totalLines.length);
+        }, 100);
+
+        // Handle scroll to sync display view
+        cm.on('scroll', instance => {
+            onScrollDebounced(instance);
         });
 
         // Handle image paste
@@ -197,16 +226,30 @@ class MarkdownEditor {
             }
         });
 
-        // Handle images on drag-drop
+        // Handle image & content drag n drop
         cm.on('drop', (cm, event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            let cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
-            cm.setCursor(cursorPos);
-            if (!event.dataTransfer || !event.dataTransfer.files) return;
-            for (let i = 0; i < event.dataTransfer.files.length; i++) {
-                uploadImage(event.dataTransfer.files[i]);
+
+            const templateId = event.dataTransfer.getData('bookstack/template');
+            if (templateId) {
+                const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
+                cm.setCursor(cursorPos);
+                event.preventDefault();
+                window.$http.get(`/templates/${templateId}`).then(resp => {
+                    const content = resp.data.markdown || resp.data.html;
+                    cm.replaceSelection(content);
+                });
             }
+
+            if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+                const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
+                cm.setCursor(cursorPos);
+                event.stopPropagation();
+                event.preventDefault();
+                for (let i = 0; i < event.dataTransfer.files.length; i++) {
+                    uploadImage(event.dataTransfer.files[i]);
+                }
+            }
+
         });
 
         // Helper to replace editor content
@@ -459,6 +502,37 @@ class MarkdownEditor {
         })
     }
 
+    listenForBookStackEditorEvents() {
+
+        function getContentToInsert({html, markdown}) {
+            return markdown || html;
+        }
+
+        // Replace editor content
+        window.$events.listen('editor::replace', (eventContent) => {
+            const markdown = getContentToInsert(eventContent);
+            this.cm.setValue(markdown);
+        });
+
+        // Append editor content
+        window.$events.listen('editor::append', (eventContent) => {
+            const cursorPos = this.cm.getCursor('from');
+            const markdown = getContentToInsert(eventContent);
+            const content = this.cm.getValue() + '\n' + markdown;
+            this.cm.setValue(content);
+            this.cm.setCursor(cursorPos.line, cursorPos.ch);
+        });
+
+        // Prepend editor content
+        window.$events.listen('editor::prepend', (eventContent) => {
+            const cursorPos = this.cm.getCursor('from');
+            const markdown = getContentToInsert(eventContent);
+            const content = markdown + '\n' + this.cm.getValue();
+            this.cm.setValue(content);
+            const prependLineCount = markdown.split('\n').length;
+            this.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
+        });
+    }
 }
 
 export default MarkdownEditor ;

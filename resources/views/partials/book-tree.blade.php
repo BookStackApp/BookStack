@@ -1,4 +1,4 @@
-<div id="book-tree" class="book-tree mb-xl" v-pre>
+<nav id="book-tree" class="book-tree mb-xl" v-pre aria-label="{{ trans('entities.books_navigation') }}">
     <h5>{{ trans('entities.books_navigation') }}</h5>
 
     <ul class="sidebar-page-list mt-xs menu entity-list">
@@ -14,11 +14,13 @@
 
                 @if($bookChild->isA('chapter') && count($bookChild->pages) > 0)
                     <div class="entity-list-item no-hover">
-                        <span class="icon text-chapter">
-
-                        </span>
+                        <span role="presentation" class="icon text-chapter"></span>
                         <div class="content">
-                            @include('chapters.child-menu', ['chapter' => $bookChild, 'current' => $current])
+                            @include('chapters.child-menu', [
+                                'chapter' => $bookChild,
+                                'current' => $current,
+                                'isOpen'  => $bookChild->matchesOrContains($current)
+                            ])
                         </div>
                     </div>
 
@@ -27,4 +29,4 @@
             </li>
         @endforeach
     </ul>
-</div>
+</nav>

@@ -14,13 +14,13 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.shelves_edit') }}</h1>
             <form action="{{ $shelf->getUrl() }}" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="PUT">
                 @include('shelves.form', ['model' => $shelf])
             </form>
-        </div>
+        </main>
     </div>
 
 @stop

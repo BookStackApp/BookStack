@@ -15,12 +15,12 @@
             <div class="grid half">
                 <p class="text-neg"><strong>{{ trans('settings.users_delete_confirm') }}</strong></p>
                 <div>
-                    <form action="{{ baseUrl("/settings/users/{$user->id}") }}" method="POST" class="text-right">
+                    <form action="{{ url("/settings/users/{$user->id}") }}" method="POST" class="text-right">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_method" value="DELETE">
-                        <a href="{{ baseUrl("/settings/users/{$user->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
-                        <button type="submit" class="button primary">{{ trans('common.confirm') }}</button>
+                        <a href="{{ url("/settings/users/{$user->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                        <button type="submit" class="button">{{ trans('common.confirm') }}</button>
                     </form>
                 </div>
             </div>

@@ -18,7 +18,7 @@ class PaginationServiceProvider extends IlluminatePaginationServiceProvider
         });
 
         Paginator::currentPathResolver(function () {
-            return baseUrl($this->app['request']->path());
+            return url($this->app['request']->path());
         });
 
         Paginator::currentPageResolver(function ($pageName = 'page') {

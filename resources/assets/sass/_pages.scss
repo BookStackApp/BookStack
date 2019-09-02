@@ -20,6 +20,10 @@
   }
 }
 
+body.mce-fullscreen .page-editor .edit-area {
+  z-index: 12;
+}
+
 @include smaller-than($s) {
   .page-edit-toolbar {
     overflow-x: scroll;
@@ -141,10 +145,12 @@
 }
 .pointer {
   border: 1px solid #CCC;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-items: center;
   padding: $-s $-s;
   border-radius: 4px;
-  box-shadow: 0 0 8px 1px rgba(212, 209, 209, 0.35);
+  box-shadow: 0 0 12px 1px rgba(212, 209, 209, 0.3);
   position: absolute;
   top: -60px;
   background-color:#FFF;
@@ -171,13 +177,6 @@
     border-right: 1px solid #CCC;
     z-index: 56;
   }
-  input {
-    background-color: #FFF;
-    border: 1px solid #DDD;
-    color: #666;
-    width: 172px;
-    z-index: 40;
-  }
   input, button, a {
     position: relative;
     border-radius: 0;
@@ -186,14 +185,20 @@
     vertical-align: top;
     padding: 5px 16px;
   }
-  > i {
-    color: #888;
-    font-size: 18px;
-    padding-top: 4px;
+  input {
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    color: #666;
+    width: 172px;
+    z-index: 40;
+    padding: 5px 10px;
   }
   span.icon {
+    fill: #444;
     cursor: pointer;
     user-select: none;
+    display: inline-block;
+    line-height: 1;
   }
   .input-group .button {
     line-height: 1;
@@ -201,11 +206,7 @@
     box-shadow: none;
   }
   a.button {
-    margin: 0 0 0 0;
-
-    &:hover {
-      fill: #fff;
-    }
+    margin: 0;
   }
   .svg-icon {
     width: 1.2em;
@@ -256,15 +257,15 @@
     padding: 0;
     margin: 0;
   }
-  .tabs > span {
+  .tabs > button {
     display: block;
     cursor: pointer;
     padding: $-s $-m;
-    font-size: 13.5px;
+    font-size: 16px;
     line-height: 1.6;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
-  &.open .tabs > span.active {
+  &.open .tabs > button.active {
     fill: #444;
     background-color: rgba(0, 0, 0, 0.1);
   }

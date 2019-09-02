@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Are you sure you want to delete this page?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
-    'pages_edit_toggle_header' => 'Toggle header',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'Save Draft',
     'pages_edit_draft' => 'Edit Page Draft',
     'pages_editing_draft' => 'Editing Draft',
@@ -234,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
     'pages_specific' => 'Specific Page',
+    'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
     'page_tags' => 'Page Tags',
@@ -242,9 +243,11 @@ return [
     'shelf_tags' => 'Shelf Tags',
     'tag' => 'Tag',
     'tags' =>  'Tags',
+    'tag_name' =>  'Tag Name',
     'tag_value' => 'Tag Value (Optional)',
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Add another tag',
+    'tags_remove' => 'Remove this tag',
     'attachments' => 'Attachments',
     'attachments_explain' => 'Upload some files or attach some links to display on your page. These are visible in the page sidebar.',
     'attachments_explain_instant_save' => 'Changes here are saved instantly.',
@@ -270,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'File successfully uploaded',
     'attachments_file_updated' => 'File successfully updated',
     'attachments_link_attached' => 'Link successfully attached to page',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
     // Profile View
     'profile_user_for_x' => 'User for :time',

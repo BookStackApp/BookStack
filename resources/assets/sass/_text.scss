@@ -90,14 +90,14 @@ h2.list-heading {
  * Link styling
  */
 a {
-  color: $primary;
+  color: var(--color-primary);
+  fill: var(--color-primary);
   cursor: pointer;
   text-decoration: none;
-  transition: color ease-in-out 80ms;
+  transition: filter ease-in-out 80ms;
   line-height: 1.6;
   &:hover {
     text-decoration: underline;
-    color: darken($primary, 20%);
   }
   &.icon {
     display: inline-block;
@@ -105,6 +105,10 @@ a {
   svg {
     position: relative;
     display: inline-block;
+  }
+  &:focus img:only-child {
+    outline: 2px dashed var(--color-primary);
+    outline-offset: 2px;
   }
 }
 
@@ -195,7 +199,7 @@ pre {
 blockquote {
   display: block;
   position: relative;
-  border-left: 4px solid $primary;
+  border-left: 4px solid var(--color-primary);
   background-color: #F8F8F8;
   padding: $-s $-m $-s $-xl;
   &:before {
@@ -239,7 +243,6 @@ pre code {
 }
 
 span.highlight {
-  //background-color: rgba($primary, 0.2);
   font-weight: bold;
   padding: 2px 4px;
 }
@@ -291,13 +294,25 @@ li.checkbox-item, li.task-list-item {
 .text-center {
   text-align: center;
 }
-
 .text-left {
   text-align: left;
 }
-
 .text-right {
   text-align: right;
+}
+
+@each $sizeLetter, $size in $screen-sizes {
+  @include larger-than($size) {
+    .text-#{$sizeLetter}-center {
+      text-align: center;
+    }
+    .text-#{$sizeLetter}-left {
+      text-align: left;
+    }
+    .text-#{$sizeLetter}-right {
+      text-align: right;
+    }
+  }
 }
 
 .text-bigger {
@@ -315,6 +330,12 @@ li.checkbox-item, li.task-list-item {
 .break-text {
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+.limit-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /**

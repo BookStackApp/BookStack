@@ -15,7 +15,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <main class="card content-wrap">
             <h1 class="list-heading">{{ trans('entities.pages_revisions') }}</h1>
             @if(count($page->revisions) > 0)
 
@@ -50,10 +50,9 @@
                                 @else
                                     <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
-                                    <a href="{{ $revision->getUrl('restore') }}"></a>
                                     <div dropdown class="dropdown-container">
-                                        <a dropdown-toggle>{{ trans('entities.pages_revisions_restore') }}</a>
-                                        <ul class="dropdown-menu">
+                                        <a dropdown-toggle href="#" aria-haspopup="true" aria-expanded="false">{{ trans('entities.pages_revisions_restore') }}</a>
+                                        <ul class="dropdown-menu" role="menu">
                                             <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_restore_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/restore') }}" method="POST">
@@ -66,8 +65,8 @@
                                     </div>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
                                     <div dropdown class="dropdown-container">
-                                        <a dropdown-toggle>{{ trans('common.delete') }}</a>
-                                        <ul class="dropdown-menu">
+                                        <a dropdown-toggle href="#" aria-haspopup="true" aria-expanded="false">{{ trans('common.delete') }}</a>
+                                        <ul class="dropdown-menu" role="menu">
                                             <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
@@ -87,7 +86,7 @@
             @else
                 <p>{{ trans('entities.pages_revisions_none') }}</p>
             @endif
-        </div>
+        </main>
 
     </div>
 

@@ -1,6 +1,5 @@
 <?php
 
-Route::get('/translations', 'HomeController@getTranslations');
 Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...
@@ -159,6 +158,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/search/chapter/{bookId}', 'SearchController@searchChapter');
     Route::get('/search/entity/siblings', 'SearchController@searchSiblings');
 
+    Route::get('/templates', 'PageTemplateController@list');
+    Route::get('/templates/{templateId}', 'PageTemplateController@get');
+
     // Other Pages
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
@@ -209,11 +211,15 @@ Route::get('/login', 'Auth\LoginController@getLogin');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/register', 'Auth\RegisterController@getRegister');
-Route::get('/register/confirm', 'Auth\RegisterController@getRegisterConfirmation');
-Route::get('/register/confirm/awaiting', 'Auth\RegisterController@showAwaitingConfirmation');
-Route::post('/register/confirm/resend', 'Auth\RegisterController@resendConfirmation');
-Route::get('/register/confirm/{token}', 'Auth\RegisterController@confirmEmail');
+Route::get('/register/confirm', 'Auth\ConfirmEmailController@show');
+Route::get('/register/confirm/awaiting', 'Auth\ConfirmEmailController@showAwaiting');
+Route::post('/register/confirm/resend', 'Auth\ConfirmEmailController@resend');
+Route::get('/register/confirm/{token}', 'Auth\ConfirmEmailController@confirm');
 Route::post('/register', 'Auth\RegisterController@postRegister');
+
+// User invitation routes
+Route::get('/register/invite/{token}', 'Auth\UserInviteController@showSetPassword');
+Route::post('/register/invite/{token}', 'Auth\UserInviteController@setPassword');
 
 // Password reset link request routes...
 Route::get('/password/email', 'Auth\ForgotPasswordController@showLinkRequestForm');

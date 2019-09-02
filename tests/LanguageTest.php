@@ -41,21 +41,6 @@ class LanguageTest extends TestCase
         $loginPageFrenchReq->assertDontSee('Se Connecter');
     }
 
-    public function test_js_endpoint_for_each_language()
-    {
-
-        $visibleKeys = ['common', 'components', 'entities', 'errors'];
-
-        $this->asEditor();
-        foreach ($this->langs as $lang) {
-            setting()->putUser($this->getEditor(), 'language', $lang);
-            $transResp = $this->get('/translations');
-            foreach ($visibleKeys as $key) {
-                $transResp->assertSee($key);
-            }
-        }
-    }
-
     public function test_all_lang_files_loadable()
     {
         $files = array_diff(scandir(resource_path('lang/en')), ['..', '.']);
@@ -96,15 +81,6 @@ class LanguageTest extends TestCase
         $deInformalEmailActionHelp = trans()->get('common.email_action_help', [], 'de_informal', false);
         $this->assertNotEquals($deEmailActionHelp, $deInformalEmailActionHelp);
         $this->assertNotEquals($enEmailActionHelp, $deInformalEmailActionHelp);
-    }
-
-    public function test_de_informal_falls_base_to_de_in_js_endpoint()
-    {
-        $this->asEditor();
-        setting()->putUser($this->getEditor(), 'language', 'de_informal');
-
-        $transResp = $this->get('/translations');
-        $transResp->assertSee('"cancel":"Abbrechen"');
     }
 
 }

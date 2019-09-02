@@ -13,7 +13,7 @@
                 {{ trans('auth.email_not_confirmed_resend') }}
             </p>
 
-            <form action="{{ baseUrl("/register/confirm/resend") }}" method="POST" class="stretch-inputs">
+            <form action="{{ url("/register/confirm/resend") }}" method="POST" class="stretch-inputs">
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="email">{{ trans('auth.email') }}</label>
@@ -24,7 +24,7 @@
                     @endif
                 </div>
                 <div class="form-group text-right mt-m">
-                    <button type="submit" class="button primary">{{ trans('auth.email_not_confirmed_resend_button') }}</button>
+                    <button type="submit" class="button">{{ trans('auth.email_not_confirmed_resend_button') }}</button>
                 </div>
             </form>
 

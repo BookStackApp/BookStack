@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'Você não tem permissões para acessar a página requerida.',
@@ -66,6 +64,7 @@ return [
     'role_cannot_be_edited' => 'Esse perfil não pode ser editado',
     'role_system_cannot_be_deleted' => 'Esse perfil é um perfil de sistema e não pode ser excluído',
     'role_registration_default_cannot_delete' => 'Esse perfil não poderá se excluído enquando estiver registrado como o perfil padrão',
+    'role_cannot_remove_only_admin' => 'Este usuário é o único usuário atribuído ao perfil de administrador. Atribua o perfil de administrador a outro usuário antes de tentar removê-lo aqui.',
 
     // comments
     'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
@@ -81,4 +80,5 @@ return [
     'error_occurred' => 'Um erro ocorreu',
     'app_down' => ':appName está fora do ar no momento',
     'back_soon' => 'Voltaremos em seguida.',
+    
 ];

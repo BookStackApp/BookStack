@@ -39,9 +39,9 @@ class Bookshelf extends Entity
     public function getUrl($path = false)
     {
         if ($path !== false) {
-            return baseUrl('/shelves/' . urlencode($this->slug) . '/' . trim($path, '/'));
+            return url('/shelves/' . urlencode($this->slug) . '/' . trim($path, '/'));
         }
-        return baseUrl('/shelves/' . urlencode($this->slug));
+        return url('/shelves/' . urlencode($this->slug));
     }
 
     /**
@@ -59,7 +59,7 @@ class Bookshelf extends Entity
         }
 
         try {
-            $cover = $this->cover ? baseUrl($this->cover->getThumb($width, $height, false)) : $default;
+            $cover = $this->cover ? url($this->cover->getThumb($width, $height, false)) : $default;
         } catch (\Exception $err) {
             $cover = $default;
         }
@@ -83,7 +83,7 @@ class Bookshelf extends Entity
     public function getExcerpt(int $length = 100)
     {
         $description = $this->description;
-        return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
+        return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
     }
 
     /**

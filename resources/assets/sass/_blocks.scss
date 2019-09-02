@@ -83,6 +83,10 @@
   line-height: 1;
 }
 
+.card.border-card {
+  border: 1px solid #DDD;
+}
+
 .card.drag-card {
   border: 1px solid #DDD;
   border-radius: 4px;
@@ -164,11 +168,6 @@
   }
 }
 
-.bookshelf-grid-item .grid-card-content h2 a  {
-  color: $color-bookshelf;
-  fill: $color-bookshelf;
-}
-
 .book-grid-item .grid-card-footer {
   p.small {
     font-size: .8em;
@@ -181,7 +180,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: $-xl;
-  overflow: auto;
+  overflow: initial;
   min-height: 60vh;
   &.auto-height {
     min-height: 0;
@@ -202,7 +201,7 @@
 }
 @include smaller-than($s) {
   .content-wrap.card {
-    padding: $-m $-s;
+    padding: $-m $-m;
   }
 }
 

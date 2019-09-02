@@ -8,14 +8,14 @@
 
 @section('body')
 
-    <div class="mb-m">
+    <div class="mb-m print-hidden">
         @include('partials.breadcrumbs', ['crumbs' => [
             $chapter->book,
             $chapter,
         ]])
     </div>
 
-    <div class="content-wrap card">
+    <main class="content-wrap card">
         <h1 class="break-text" v-pre>{{ $chapter->name }}</h1>
         <div class="chapter-content" v-show="!searching">
             <p v-pre class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
@@ -50,7 +50,7 @@
         </div>
 
         @include('partials.entity-dashboard-search-results')
-    </div>
+    </main>
 
 @stop
 
@@ -123,17 +123,7 @@
 
             <hr class="primary-background"/>
 
-            <div dropdown class="dropdown-container">
-                <div dropdown-toggle class="icon-list-item">
-                    <span>@icon('export')</span>
-                    <span>{{ trans('entities.export') }}</span>
-                </div>
-                <ul class="wide dropdown-menu">
-                    <li><a href="{{ $chapter->getUrl('/export/html') }}" target="_blank">{{ trans('entities.export_html') }} <span class="text-muted float right">.html</span></a></li>
-                    <li><a href="{{ $chapter->getUrl('/export/pdf') }}" target="_blank">{{ trans('entities.export_pdf') }} <span class="text-muted float right">.pdf</span></a></li>
-                    <li><a href="{{ $chapter->getUrl('/export/plaintext') }}" target="_blank">{{ trans('entities.export_text') }} <span class="text-muted float right">.txt</span></a></li>
-                </ul>
-            </div>
+            @include('partials.entity-export-menu', ['entity' => $chapter])
         </div>
     </div>
 @stop

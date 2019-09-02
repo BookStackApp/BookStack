@@ -40,6 +40,10 @@ return [
     'add' => 'Add',
 
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'Name',
     'sort_created_at' => 'Created Date',
     'sort_updated_at' => 'Updated Date',
@@ -55,8 +59,10 @@ return [
     'grid_view' => 'Grid View',
     'list_view' => 'List View',
     'default' => 'Default',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'View Profile',
     'edit_profile' => 'Edit Profile',
 
