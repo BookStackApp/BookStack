@@ -67,7 +67,7 @@ async function dataRequest(method, url, data = null) {
         body: data,
     };
 
-    if (typeof data === 'object') {
+    if (typeof data === 'object' && !(data instanceof FormData)) {
         options.headers = {'Content-Type': 'application/json'};
         options.body = JSON.stringify(data);
     }
