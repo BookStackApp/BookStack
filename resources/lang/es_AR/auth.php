@@ -68,4 +68,14 @@ return [
     'email_not_confirmed_click_link' => 'Por favor verifique el correo electrónico con el enlace de confirmación que fue enviado luego de registrarse.',
     'email_not_confirmed_resend' => 'Si no puede encontrar el correo electrónico, puede solicitar el renvío del correo electrónico de confirmación rellenando el formulario a continuación.',
     'email_not_confirmed_resend_button' => 'Reenviar correo electrónico de confirmación',
+
+    // User Invite
+    'user_invite_email_subject' => 'Lo invitaron a unirse a :appName!',
+    'user_invite_email_greeting' => 'Se creó una cuenta para usted en :appName.',
+    'user_invite_email_text' => 'Presione el botón de abajo para establecer una contraseña y tener acceso access:',
+    'user_invite_email_action' => 'Establecer la contraseña de la cuenta',
+    'user_invite_page_welcome' => 'Bienvenido a :appName!',
+    'user_invite_page_text' => 'Para finalizar la cuenta y tener acceso debe establcer una contraseña que utilizará para ingresar a :appName en visitas futuras.',
+    'user_invite_page_confirm_button' => 'Confirmar Contraseña',
+    'user_invite_success' => 'Contraseña establecida, ahora tiene acceso a :appName!'
 ];
