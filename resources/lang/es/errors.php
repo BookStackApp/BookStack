@@ -27,6 +27,7 @@ return [
     'social_account_register_instructions' => 'Si no dispone de una cuenta, puede registrar una cuenta usando la opción de :socialAccount .',
     'social_driver_not_found' => 'Driver social no encontrado',
     'social_driver_not_configured' => 'Su configuración :socialAccount no es correcta.',
+    'invite_token_expired' => 'Este enlace de invitación ha expirado. Puede resetear la contraseña de su cuenta como alternativa.',
 
     // System
     'path_not_writable' => 'El fichero no pudo ser subido a la ruta :filePath . Asegúrese de que es escribible por el servidor.',
