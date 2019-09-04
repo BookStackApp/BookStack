@@ -42,10 +42,14 @@ return [
     'add' => 'Agregar',
 
     // Sort Options - Opciones de filtro
+    'sort_options' => 'Opciones de Orden',
+    'sort_direction_toggle' => 'Cambiar Dirección de Orden',
+    'sort_ascending' => 'Orden Ascendente',
+    'sort_descending' => 'Orden Descendente',
     'sort_name' => 'Nombre',
     'sort_created_at' => 'Fecha de creación',
     'sort_updated_at' => 'Fecha de actualización',
-    
+
     //Misc
     'deleted_user' => 'Usuario borrado',
     'no_activity' => 'Ninguna actividad para mostrar',
@@ -57,8 +61,10 @@ return [
     "grid_view" => "Vista de grilla",
     "list_view" => "Vista de lista",
     'default' => 'Por defecto',
+    'breadcrumb' => 'Miga de Pan',
 
     // Header - Cabecera
+    'profile_menu' => 'Menu del Perfil',
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
 

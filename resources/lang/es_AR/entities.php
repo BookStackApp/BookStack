@@ -179,7 +179,7 @@ return [
     'pages_delete_confirm' => '¿Está seguro de borrar esta página?',
     'pages_delete_draft_confirm' => 'Está seguro de que desea borrar este borrador de página?',
     'pages_editing_named' => 'Editando página :pageName',
-    'pages_edit_toggle_header' => 'Alternar cabecera',
+    'pages_edit_draft_options' => 'Opciones de borrador',
     'pages_edit_save_draft' => 'Guardar borrador',
     'pages_edit_draft' => 'Editar borrador de página',
     'pages_editing_draft' => 'Editando borrador',
@@ -237,7 +237,7 @@ return [
     ],
     'pages_draft_discarded' => 'Borrador descartado, el editor ha sido actualizado con el contenido de la página actual',
     'pages_specific' => 'Página Específica',
-
+    'pages_is_template' => 'Plantilla de Página',
 
     // Editor sidebar - Barra lateral del editor
     'page_tags' => 'Etiquetas de página',
@@ -246,9 +246,11 @@ return [
     'shelf_tags' => 'Shelf Tags',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
+    'tag_name' =>  'Nombre de etiqueta',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
     'tags_explain' => "Agregar algunas etiquetas para mejorar la categorización de su contenido. \n Se puede asignar un valor a una etiqueta para una organizacón con mayor detalle.",
     'tags_add' => 'Agregar otra etiqueta',
+    'tags_remove' => 'Eliminar esta etiqueta',
     'attachments' => 'Adjuntos',
     'attachments_explain' => 'Subir archivos o agregar enlaces para mostrar en la página. Estos son visibles en la barra lateral de la página.',
     'attachments_explain_instant_save' => 'Los cambios se guardan de manera instantánea.',
@@ -274,6 +276,12 @@ return [
     'attachments_file_uploaded' => 'Archivo subido exitosamente',
     'attachments_file_updated' => 'Archivo actualizado exitosamente',
     'attachments_link_attached' => 'Enlace agregado exitosamente a la página',
+    'templates' => 'Plantillas',
+    'templates_set_as_template' => 'La Página es una plantilla',
+    'templates_explain_set_as_template' => 'Puede establecer esta página como plantilla para que el contenido pueda utilizarse para al crear otras páginas. Otris usuarios podrán utilizar esta plantilla si tienen permisos para ver de esta página.',
+    'templates_replace_content' => 'Reemplazar el contenido de la página',
+    'templates_append_content' => 'Incorporar al fina del contenido de la página',
+    'templates_prepend_content' => 'Incorporar al principio del contenido de la página',
 
     // Profile View - Vista de Perfil
     'profile_user_for_x' => 'Usuario para :time',
