@@ -303,11 +303,11 @@ return [
     'comment_deleted_success' => 'Комментарий удален',
     'comment_created_success' => 'Комментарий добавлен',
     'comment_updated_success' => 'Комментарий обновлен',
-    'comment_delete_confirm' => 'Вы уверены, что хотите удалить этот комментарий?',
+    'comment_delete_confirm' => 'Удалить этот комментарий?',
     'comment_in_reply_to' => 'В ответ на :commentId',
 
     //Revision
-    'revision_delete_confirm' => 'Вы действительно хотите удалить эту ревизию?',
+    'revision_delete_confirm' => 'Удалить эту ревизию?',
     'revision_restore_confirm' => 'Восстановить эту ревизию? Текущее содержимое будет заменено.',
     'revision_delete_success' => 'Ревизия удалена',
     'revision_cannot_delete_latest' => 'Нельзя удалить последнюю версию.'
