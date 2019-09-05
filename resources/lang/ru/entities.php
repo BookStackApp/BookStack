@@ -51,7 +51,7 @@ return [
     'search_content_type' => 'Тип содержимого',
     'search_exact_matches' => 'Точные соответствия',
     'search_tags' => 'Поиск по тегам',
-    'search_options' => 'Параметры'
+    'search_options' => 'Параметры',
     'search_viewed_by_me' => 'Просмотрено мной',
     'search_not_viewed_by_me' => 'Не просматривалось мной',
     'search_permissions_set' => 'Набор разрешений',
