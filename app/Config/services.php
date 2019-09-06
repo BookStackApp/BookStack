@@ -25,6 +25,7 @@ return [
     'mailgun'  => [
         'domain' => '',
         'secret' => '',
+        'endpoint' => '',
     ],
 
     'ses'      => [
@@ -37,6 +38,10 @@ return [
         'model'  => \BookStack\Auth\User::class,
         'key'    => '',
         'secret' => '',
+        'webhook' => [
+            'secret' => '',
+            'tolerance' => 300,
+        ],
     ],
 
     'github'   => [

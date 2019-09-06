@@ -12,7 +12,7 @@ return [
 
     // Default driver to use for the queue
     // Options: null, sync, redis
-    'default' => env('QUEUE_DRIVER', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'sync'),
 
     // Queue connection configuration
     'connections' => [

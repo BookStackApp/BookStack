@@ -25,7 +25,7 @@
         <env name="APP_AUTO_LANG_PUBLIC" value="true"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="DB_CONNECTION" value="mysql_testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="MAIL_DRIVER" value="log"/>

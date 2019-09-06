@@ -57,6 +57,9 @@ return [
     //  Application Fallback Locale
     'fallback_locale' => 'en',
 
+    // Faker Locale
+    'faker_locale' => 'en_GB',
+
     // Enable right-to-left text control.
     'rtl' => false,
 
