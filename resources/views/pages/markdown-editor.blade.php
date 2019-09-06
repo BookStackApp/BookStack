@@ -19,7 +19,7 @@
 
         <div markdown-input class="flex flex-fill">
                         <textarea  id="markdown-editor-input"  name="markdown" rows="5"
-                                   @if($errors->has('markdown')) class="text-neg" @endif>@if(isset($model) || old('markdown')){{htmlspecialchars( old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown))}}@endif</textarea>
+                                   @if($errors->has('markdown')) class="text-neg" @endif>@if(isset($model) || old('markdown')){{ old('markdown') ? old('markdown') : ($model->markdown === '' ? $model->html : $model->markdown) }}@endif</textarea>
         </div>
 
     </div>
