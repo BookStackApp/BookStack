@@ -142,7 +142,7 @@ function icon($name, $attrs = [])
         $attrString .=  $attrName . '="' . $attr . '" ';
     }
 
-    $iconPath = resource_path('assets/icons/' . $name . '.svg');
+    $iconPath = resource_path('icons/' . $name . '.svg');
     $themeIconPath = theme_path('icons/' . $name . '.svg');
     if ($themeIconPath && file_exists($themeIconPath)) {
         $iconPath = $themeIconPath;

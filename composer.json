@@ -13,24 +13,25 @@
         "ext-mbstring": "*",
         "ext-gd": "*",
         "ext-curl": "*",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": "5.7.*",
         "fideloper/proxy": "^4.0",
-        "intervention/image": "^2.4",
-        "laravel/socialite": "3.0.x-dev",
+        "intervention/image": "^2.5",
+        "laravel/socialite": "^4.2",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "barryvdh/laravel-dompdf": "^0.8.1",
+        "barryvdh/laravel-dompdf": "^0.8.5",
+        "barryvdh/laravel-snappy": "^0.4.5",
         "predis/predis": "^1.1",
         "gathercontent/htmldiff": "^0.2.1",
-        "barryvdh/laravel-snappy": "^0.4.0",
         "socialiteproviders/slack": "^3.0",
         "socialiteproviders/microsoft-azure": "^3.0",
         "socialiteproviders/okta": "^1.0",
         "socialiteproviders/gitlab": "^3.0",
         "socialiteproviders/twitch": "^3.0",
         "socialiteproviders/discord": "^2.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.9"
     },
     "require-dev": {
+        "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
@@ -43,7 +44,8 @@
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database/seeds",
+            "database/factories"
         ],
         "psr-4": {
             "BookStack\\": "app/"
@@ -56,37 +58,43 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+            "@php artisan key:generate --ansi"
         ],
         "pre-update-cmd": [
-            "php -r \"!file_exists('bootstrap/cache/services.php') || @unlink('bootstrap/cache/services.php');\"",
-            "php -r \"!file_exists('bootstrap/cache/compiled.php') || @unlink('bootstrap/cache/compiled.php');\""
+            "@php -r \"!file_exists('bootstrap/cache/services.php') || @unlink('bootstrap/cache/services.php');\"",
+            "@php -r \"!file_exists('bootstrap/cache/compiled.php') || @unlink('bootstrap/cache/compiled.php');\""
         ],
         "pre-install-cmd": [
-            "php -r \"!file_exists('bootstrap/cache/services.php') || @unlink('bootstrap/cache/services.php');\"",
-            "php -r \"!file_exists('bootstrap/cache/compiled.php') || @unlink('bootstrap/cache/compiled.php');\""
+            "@php -r \"!file_exists('bootstrap/cache/services.php') || @unlink('bootstrap/cache/services.php');\"",
+            "@php -r \"!file_exists('bootstrap/cache/compiled.php') || @unlink('bootstrap/cache/compiled.php');\""
         ],
         "post-install-cmd": [
-            "php artisan cache:clear",
-            "php artisan view:clear"
+            "@php artisan cache:clear",
+            "@php artisan view:clear"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover"
+            "@php artisan package:discover --ansi"
         ],
         "refresh-test-database": [
-            "php artisan migrate:refresh --database=mysql_testing",
-            "php artisan db:seed --class=DummyContentSeeder --database=mysql_testing"
+            "@php artisan migrate:refresh --database=mysql_testing",
+            "@php artisan db:seed --class=DummyContentSeeder --database=mysql_testing"
         ]
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
+        "sort-packages": true,
         "platform": {
             "php": "7.1.3"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
         }
     },
     "minimum-stability": "dev",

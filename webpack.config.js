@@ -7,10 +7,10 @@ const config = {
     target: 'web',
     mode: dev? 'development' : 'production',
     entry: {
-        app: './resources/assets/js/index.js',
-        styles: './resources/assets/sass/styles.scss',
-        "export-styles": './resources/assets/sass/export-styles.scss',
-        "print-styles": './resources/assets/sass/print-styles.scss',
+        app: './resources/js/index.js',
+        styles: './resources/sass/styles.scss',
+        "export-styles": './resources/sass/export-styles.scss',
+        "print-styles": './resources/sass/print-styles.scss',
     },
     output: {
         filename: '[name].js',

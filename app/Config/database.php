@@ -14,7 +14,7 @@ if (env('REDIS_SERVERS', false)) {
 
     $redisDefaults = ['host' => '127.0.0.1', 'port' => '6379', 'database' => '0', 'password' => null];
     $redisServers = explode(',', trim(env('REDIS_SERVERS', '127.0.0.1:6379:0'), ','));
-    $redisConfig = [];
+    $redisConfig = ['client' => 'predis'];
     $cluster = count($redisServers) > 1;
 
     if ($cluster) {
@@ -76,6 +76,7 @@ return [
             'charset'   => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
+            'prefix_indexes' => true,
             'strict'    => false,
             'engine' => null,
         ],
@@ -86,9 +87,10 @@ return [
             'database'  => 'bookstack-test',
             'username'  => env('MYSQL_USER', 'bookstack-test'),
             'password'  => env('MYSQL_PASSWORD', 'bookstack-test'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
+            'prefix_indexes' => true,
             'strict'    => false,
         ],
 

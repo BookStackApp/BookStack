@@ -35,12 +35,17 @@ return [
     // Session database table, if database driver is in use
     'table' => 'sessions',
 
+    // Session Cache Store
+    // When using the "apc" or "memcached" session drivers, you may specify a
+    // cache store that should be used for these sessions. This value must
+    // correspond with one of the application's configured cache stores.
+    'store' => null,
+
     // Session Sweeping Lottery
     // Some session drivers must manually sweep their storage location to get
     // rid of old sessions from storage. Here are the chances that it will
     // happen on a given request. By default, the odds are 2 out of 100.
     'lottery' => [2, 100],
-
 
     // Session Cookie Name
     // Here you may change the name of the cookie used to identify a session
