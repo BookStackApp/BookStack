@@ -72,10 +72,6 @@ return [
     // Encryption cipher
     'cipher' => 'AES-256-CBC',
 
-    // Logging configuration
-    // Options: single, daily, syslog, errorlog
-    'log' => env('APP_LOGGING', 'single'),
-
     // Application Services Provides
     'providers' => [
 

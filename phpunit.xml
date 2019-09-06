@@ -7,8 +7,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./tests/</directory>
@@ -28,6 +27,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_CONNECTION" value="mysql_testing"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="MAIL_DRIVER" value="log"/>
         <env name="AUTH_METHOD" value="standard"/>
         <env name="DISABLE_EXTERNAL_SERVICES" value="true"/>
