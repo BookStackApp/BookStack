@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => '¿Está seguro de borrar esta página?',
     'pages_delete_draft_confirm' => '¿Está seguro de que desea borrar este borrador de página?',
     'pages_editing_named' => 'Editando página :pageName',
-    'pages_edit_toggle_header' => 'Toggle Título',
+    'pages_edit_draft_options' => 'Opciones de Borrador',
     'pages_edit_save_draft' => 'Guardar borrador',
     'pages_edit_draft' => 'Editar borrador de página',
     'pages_editing_draft' => 'Editando borrador',
@@ -234,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Borrador descartado, el editor ha sido actualizado con el contenido de la página actual',
     'pages_specific' => 'Página específica',
+    'pages_is_template' => 'Página es plantilla',
 
     // Editor Sidebar
     'page_tags' => 'Etiquetas de Página',
@@ -242,9 +243,11 @@ return [
     'shelf_tags' => 'Etiquetas de Estante',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
+    'tag_name' =>  'Nombre de la Etiqueta',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
     'tags_explain' => "Agrege algunas etiquetas para mejorar la categorización de su contenido. \n Puede asignar un valor a una etiqueta para una organización a mayor detalle.",
     'tags_add' => 'Agregar otra etiqueta',
+    'tags_remove' => 'Eliminar esta etiqueta',
     'attachments' => 'Adjuntos',
     'attachments_explain' => 'Subir ficheros o agregar enlaces para mostrar en la página. Estos son visibles en la barra lateral de la página.',
     'attachments_explain_instant_save' => 'Los cambios son guardados de manera instantánea .',
@@ -269,7 +272,13 @@ return [
     'attachments_deleted' => 'Adjunto borrado',
     'attachments_file_uploaded' => 'Fichero subido éxitosamente',
     'attachments_file_updated' => 'Fichero actualizado éxitosamente',
-    'attachments_link_attached' => 'Enlace agregado éxitosamente a la ágina',
+    'attachments_link_attached' => 'Enlace agregado éxitosamente a la página',
+    'templates' => 'Plantillas',
+    'templates_set_as_template' => 'La página es una plantilla',
+    'templates_explain_set_as_template' => 'Puede ajustar esta página como una plantilla, así su contenido puede emplearse al crear una nueva página. Otros usuarios podrán utilizar esta plantilla si tienen permisos de lectura sobre esta página.',
+    'templates_replace_content' => 'Reemplazar el contenido de la página',
+    'templates_append_content' => 'Añadir después del contenido de la página',
+    'templates_prepend_content' => 'Añadir antes del contenido de la página',
 
     // Profile View
     'profile_user_for_x' => 'Usuario para :time',
