@@ -2078,6 +2078,7 @@ header .search-box {
   padding: 16px 32px;
   position: relative; }
   .sort-box::before {
+    pointer-events: none;
     content: '';
     border-radius: 4px;
     opacity: 0.5;
