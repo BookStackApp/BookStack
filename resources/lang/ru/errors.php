@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'У вас нет доступа к запрашиваемой странице.',
@@ -29,6 +27,7 @@ return [
     'social_account_register_instructions' => 'Если у вас еще нет учетной записи, вы можете зарегистрироваться, используя параметр :socialAccount.',
     'social_driver_not_found' => 'Драйвер для Соцсети не найден',
     'social_driver_not_configured' => 'Настройки вашего :socialAccount заданы неправильно.',
+    'invite_token_expired' => 'Срок действия приглашения истек. Вместо этого вы можете попытаться сбросить пароль своей учетной записи.',
 
     // System
     'path_not_writable' => 'Невозможно загрузить файл по пути :filePath . Убедитесь что сервер доступен для записи.',
@@ -50,6 +49,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Объект не найден',
+    'bookshelf_not_found' => 'Полка не найдена',
     'book_not_found' => 'Книга не найдена',
     'page_not_found' => 'Страница не найдена',
     'chapter_not_found' => 'Глава не найдена',
@@ -65,6 +65,7 @@ return [
     'role_cannot_be_edited' => 'Невозможно отредактировать данную роль',
     'role_system_cannot_be_deleted' => 'Эта роль является системной и не может быть удалена',
     'role_registration_default_cannot_delete' => 'Эта роль не может быть удалена, так как она устанолена в качестве роли по умолчанию',
+    'role_cannot_remove_only_admin' => 'Этот пользователь единственный с правами администратора. Назначьте роль администратора другому пользователю, прежде чем удалить этого.',
 
     // Comments
     'comment_list' => 'При получении комментариев произошла ошибка.',
@@ -80,4 +81,5 @@ return [
     'error_occurred' => 'Произошла ошибка',
     'app_down' => ':appName в данный момент не достпуно',
     'back_soon' => 'Скоро восстановится.',
+    
 ];
