@@ -1,31 +1,32 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ * 
+ * Elementos comunes encontrados en varias áreas de BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
+    // Buttons - Botones
     'cancel' => 'Cancelar',
     'confirm' => 'Confirmar',
     'back' => 'Atrás',
     'save' => 'Guardar',
     'continue' => 'Continuar',
     'select' => 'Seleccionar',
+    'toggle_all' => 'Alternar todo',
     'more' => 'Más',
     
-    /**
-     * Form Labels
-     */
+    // Form Labels - Etiquetas de Formularios
     'name' => 'Nombre',
     'description' => 'Descripción',
     'role' => 'Rol',
     'cover_image' => 'Imagen de cubierta',
     'cover_image_description' => 'Esta imagen debe ser de 440x250px aproximadamente.',
 
-    /**
-     * Actions
-     */
+    // Actions - Acciones
     'actions' => 'Acciones',
     'view' => 'Ver',
+    'view_all' => 'Ver todo',
     'create' => 'Crear',
     'update' => 'Actualizar',
     'edit' => 'Editar',
@@ -40,9 +41,16 @@ return [
     'remove' => 'Remover',
     'add' => 'Agregar',
 
-    /**
-     * Misc
-     */
+    // Sort Options - Opciones de filtro
+    'sort_options' => 'Opciones de Orden',
+    'sort_direction_toggle' => 'Cambiar Dirección de Orden',
+    'sort_ascending' => 'Orden Ascendente',
+    'sort_descending' => 'Orden Descendente',
+    'sort_name' => 'Nombre',
+    'sort_created_at' => 'Fecha de creación',
+    'sort_updated_at' => 'Fecha de actualización',
+
+    //Misc
     'deleted_user' => 'Usuario borrado',
     'no_activity' => 'Ninguna actividad para mostrar',
     'no_items' => 'No hay items disponibles',
@@ -53,16 +61,18 @@ return [
     "grid_view" => "Vista de grilla",
     "list_view" => "Vista de lista",
     'default' => 'Por defecto',
+    'breadcrumb' => 'Miga de Pan',
 
-    /**
-     * Header
-     */
+    // Header - Cabecera
+    'profile_menu' => 'Menu del Perfil',
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
 
-    /**
-     * Email Content
-     */
+    // Layout tabs - Pestañas de visualización
+    'tab_info' => 'Información',
+    'tab_content' => 'Contenido',
+
+    // Email Content - Contenido de correo Electrónico
     'email_action_help' => 'Si está teniendo problemas haga click en el botón ":actionText", copie y pegue la siguiente URL en su navegador web:',
     'email_rights' => 'Todos los derechos reservados',
 ];

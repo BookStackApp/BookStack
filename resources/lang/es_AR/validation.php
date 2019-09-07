@@ -1,18 +1,19 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ * 
+ * Líneas de validación
+ * Las líneas de lenguaje siguientes contienen los mensajes de error por
+ * defecto usados por el validador de la clase. Algunas de esta reglas tienen
+ * varias versiones, como las reglas de tamaño. Siéntase libre de ajustar cada
+ * uno de los mensajes.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines - Líneas de validación estándar de laravel
     'accepted'             => 'El :attribute debe ser aceptado.',
     'active_url'           => 'El :attribute no es una URl válida.',
     'after'                => 'El :attribute debe ser una fecha posterior :date.',
@@ -39,6 +40,7 @@ return [
     'exists'               => 'El :attribute seleccionado es inválido.',
     'image'                => 'El :attribute debe ser una imagen.',
     'in'                   => 'El selected :attribute es inválio.',
+    'image_extension'      => 'El :attribute debe tener una extensión de imagen válida y soportada.',
     'integer'              => 'El :attribute debe ser un entero.',
     'ip'                   => 'El :attribute debe ser una dirección IP álida.',
     'max'                  => [
@@ -54,6 +56,7 @@ return [
         'string'  => ':attribute debe ser al menos :min caracteres.',
         'array'   => ':attribute debe tener como mínimo :min items.',
     ],
+    'no_double_extension'  => 'El :attribute debe tener una única extensión de archivo.',
     'not_in'               => ':attribute seleccionado es inválio.',
     'numeric'              => ':attribute debe ser numérico.',
     'regex'                => ':attribute con formato inválido',
@@ -73,37 +76,17 @@ return [
     'string'               => 'El atributo :attribute debe ser una cadena.',
     'timezone'             => 'El atributo :attribute debe ser una zona válida.',
     'unique'               => 'El atributo :attribute ya ha sido tomado.',
-    'url'                  => 'El atributo :attribute tiene un formato inválid.',
-    'is_image'             => 'El atributo :attribute debe ser una imagen válida.',
+    'url'                  => 'El atributo :attribute tiene un formato inválido.',
+    'uploaded'             => 'El archivo no se pudo subir. Puede ser que el servidor no acepte archivos de este tamaño.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines - Líneas de validación personalizadas
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Confirmación de Password requerida',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes - Atributos de validación personalizados
     'attributes' => [],
 
 ];
