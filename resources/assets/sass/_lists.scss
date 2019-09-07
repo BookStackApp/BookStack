@@ -235,6 +235,7 @@
   padding: $-m $-xl;
   position: relative;
   &::before {
+    pointer-events: none;
     content: '';
     border-radius: 4px;
     opacity: 0.5;
