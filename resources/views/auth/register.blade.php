@@ -26,6 +26,14 @@
                     @include('form.password', ['name' => 'password', 'placeholder' => trans('auth.password_hint')])
                 </div>
 
+                <div class="form-group">
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                    <div class="g-recaptcha" data-sitekey="%%site_key%%"></div>
+                    @if($errors->has('g-recaptcha-response'))
+                        <div class="text-neg text-small">{{ $errors->first('g-recaptcha-response') }}</div>
+                    @endif
+                </div>
+
                 <div class="grid half collapse-xs gap-xl v-center mt-m">
                     <div class="text-small">
                         <a href="{{ url('/login') }}">{{ trans('auth.already_have_account') }}</a>

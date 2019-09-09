@@ -13,6 +13,7 @@ use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -114,6 +115,20 @@ class RegisterController extends Controller
     {
         $this->checkRegistrationAllowed();
         $this->validator($request->all())->validate();
+
+        $captcha = $request->get('g-recaptcha-response');
+        $resp = (new Client())->post('https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+                'response' => $captcha,
+                'secret' => '%%secret_key%%',
+            ]
+        ]);
+        $respBody = json_decode($resp->getBody());
+        if (!$respBody->success) {
+            return redirect()->back()->withInput()->withErrors([
+                'g-recaptcha-response' => 'Did not pass captcha',
+            ]);
+        }
 
         $userData = $request->all();
         return $this->registerUser($userData);
