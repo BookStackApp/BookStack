@@ -1,11 +1,21 @@
 name: phpunit
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container: ssddanbrown/docker-ubuntu-php7:php7.2
+    services:
+      database:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: bookstack-test
+          MYSQL_USER: bookstack-test
+          MYSQL_PASSWORD: bookstack-test
+          MYSQL_RANDOM_ROOT_PASSWORD: yes
+        ports:
+          - 3306:3306
     steps:
     - uses: actions/checkout@v1
     - name: Install composer dependancies & Test
