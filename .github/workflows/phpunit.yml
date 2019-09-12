@@ -7,14 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Initialize the Database
+    - name: Install composer dependancies & Test
       run: |
         mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test;`'
         mysql -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED BY 'bookstack-test';"
         mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
         mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
-    - name: Install composer dependancies & Test
-      run: |
         composer install --prefer-dist --no-interaction
         php7.3 artisan migrate --force -n --database=mysql_testing
         php7.3 artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
