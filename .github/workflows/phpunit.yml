@@ -1,0 +1,15 @@
+name: phpunit
+
+on: [push]
+
+jobs:
+  build:
+  
+    container:
+      image: ssddanbrown/docker-ubuntu-php7:php7.2
+    
+    steps:
+    - name: Install composer dependancies & Test
+      run: |
+        composer install
+        ./vendor/bin/phpunit
