@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-  
+    runs-on: ubuntu-latest
     container:
       image: ssddanbrown/docker-ubuntu-php7:php7.2
     
