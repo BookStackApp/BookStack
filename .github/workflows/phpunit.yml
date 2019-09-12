@@ -5,10 +5,9 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ssddanbrown/docker-ubuntu-php7:php7.2
-    
+    container: ssddanbrown/docker-ubuntu-php7:php7.2
     steps:
+    - uses: actions/checkout@v1
     - name: Install composer dependancies & Test
       run: |
         composer install
