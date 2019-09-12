@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [7.2, php7.3]
+        php: [7.2, 7.3]
     steps:
     - uses: actions/checkout@v1
     - name: Setup Database
@@ -20,7 +20,7 @@ jobs:
       run: composer install --prefer-dist --no-interaction
     - name: Migrate and seed the database
       run: |
-        ${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
-        ${{ matrix.php }} artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
+        php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
+        php${{ matrix.php }} artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
     - name: phpunit
-      run: ${{ matrix.php }} ./vendor/bin/phpunit
+      run: php${{ matrix.php }} ./vendor/bin/phpunit
