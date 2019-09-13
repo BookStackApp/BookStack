@@ -8,7 +8,7 @@ class PageDraftTest extends BrowserKitTest
     protected $page;
     protected $pageRepo;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->page = \BookStack\Entities\Page::first();

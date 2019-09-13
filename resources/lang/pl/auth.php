@@ -27,7 +27,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Hasło',
     'password_confirm' => 'Potwierdzenie hasła',
-    'password_hint' => 'Musi mieć więcej niż 5 znaków',
+    'password_hint' => 'Musi mieć więcej niż 7 znaków',
     'forgot_password' => 'Zapomniałem hasła',
     'remember_me' => 'Zapamiętaj mnie',
     'ldap_email_hint' => 'Wprowadź adres e-mail dla tego konta.',

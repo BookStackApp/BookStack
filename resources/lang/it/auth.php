@@ -27,7 +27,7 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'password_confirm' => 'Conferma Password',
-    'password_hint' => 'Deve essere più di 5 caratteri',
+    'password_hint' => 'Deve essere più di 7 caratteri',
     'forgot_password' => 'Password dimenticata?',
     'remember_me' => 'Ricordami',
     'ldap_email_hint' => 'Inserisci un email per usare quest\'account.',

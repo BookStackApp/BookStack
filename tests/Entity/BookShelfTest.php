@@ -4,6 +4,7 @@ use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
+use Illuminate\Support\Str;
 
 class BookShelfTest extends TestCase
 {
@@ -55,8 +56,8 @@ class BookShelfTest extends TestCase
     {
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name' => 'My test book' . str_random(4),
-            'description' => 'Test book description ' . str_random(10)
+            'name' => 'My test book' . Str::random(4),
+            'description' => 'Test book description ' . Str::random(10)
         ];
         $resp = $this->asEditor()->post('/shelves', array_merge($shelfInfo, [
             'books' => $booksToInclude->implode('id', ','),
@@ -120,8 +121,8 @@ class BookShelfTest extends TestCase
 
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name' => 'My test book' . str_random(4),
-            'description' => 'Test book description ' . str_random(10)
+            'name' => 'My test book' . Str::random(4),
+            'description' => 'Test book description ' . Str::random(10)
         ];
 
         $resp = $this->asEditor()->put($shelf->getUrl(), array_merge($shelfInfo, [

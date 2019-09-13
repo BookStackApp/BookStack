@@ -22,28 +22,6 @@ return [
     // Callback URL for social authentication methods
     'callback_url' => env('APP_URL', false),
 
-    'mailgun'  => [
-        'domain' => '',
-        'secret' => '',
-        'endpoint' => '',
-    ],
-
-    'ses'      => [
-        'key'    => '',
-        'secret' => '',
-        'region' => 'us-east-1',
-    ],
-
-    'stripe'   => [
-        'model'  => \BookStack\Auth\User::class,
-        'key'    => '',
-        'secret' => '',
-        'webhook' => [
-            'secret' => '',
-            'tolerance' => 300,
-        ],
-    ],
-
     'github'   => [
         'client_id'     => env('GITHUB_APP_ID', false),
         'client_secret' => env('GITHUB_APP_SECRET', false),

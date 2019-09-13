@@ -4,6 +4,7 @@
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Uploads\HttpFetcher;
+use Illuminate\Support\Str;
 
 class ExportTest extends TestCase
 {
@@ -79,7 +80,7 @@ class ExportTest extends TestCase
 
     public function test_book_html_export_shows_chapter_descriptions()
     {
-        $chapterDesc = 'My custom test chapter description ' . str_random(12);
+        $chapterDesc = 'My custom test chapter description ' . Str::random(12);
         $chapter = Chapter::query()->first();
         $chapter->description = $chapterDesc;
         $chapter->save();

@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Пароль',
     'password_confirm' => 'Підтвердження пароля',
-    'password_hint' => 'Має бути більше 5 символів',
+    'password_hint' => 'Має бути більше 7 символів',
     'forgot_password' => 'Забули пароль?',
     'remember_me' => 'Запам’ятати мене',
     'ldap_email_hint' => 'Введіть email для цього облікового запису.',

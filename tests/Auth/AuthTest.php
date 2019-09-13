@@ -81,7 +81,7 @@ class AuthTest extends BrowserKitTest
             ->press('Create Account')
             ->see('The name must be at least 2 characters.')
             ->see('The email must be a valid email address.')
-            ->see('The password must be at least 6 characters.')
+            ->see('The password must be at least 8 characters.')
             ->seePageIs('/register');
     }
 
