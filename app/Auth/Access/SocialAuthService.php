@@ -5,6 +5,7 @@ use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\UserRegistrationException;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -104,6 +105,7 @@ class SocialAuthService
         $socialAccount = $this->socialAccount->where('driver_id', '=', $socialId)->first();
         $isLoggedIn = auth()->check();
         $currentUser = user();
+        $titleCaseDriver = Str::title($socialDriver);
 
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
@@ -117,26 +119,26 @@ class SocialAuthService
         if ($isLoggedIn && $socialAccount === null) {
             $this->fillSocialAccount($socialDriver, $socialUser);
             $currentUser->socialAccounts()->save($this->socialAccount);
-            session()->flash('success', trans('settings.users_social_connected', ['socialAccount' => title_case($socialDriver)]));
+            session()->flash('success', trans('settings.users_social_connected', ['socialAccount' => $titleCaseDriver]));
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in and the social account exists and is already linked to the current user.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id === $currentUser->id) {
-            session()->flash('error', trans('errors.social_account_existing', ['socialAccount' => title_case($socialDriver)]));
+            session()->flash('error', trans('errors.social_account_existing', ['socialAccount' => $titleCaseDriver]));
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in, A social account exists but the users do not match.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
-            session()->flash('error', trans('errors.social_account_already_used_existing', ['socialAccount' => title_case($socialDriver)]));
+            session()->flash('error', trans('errors.social_account_already_used_existing', ['socialAccount' => $titleCaseDriver]));
             return redirect($currentUser->getEditUrl());
         }
 
         // Otherwise let the user know this social account is not used by anyone.
-        $message = trans('errors.social_account_not_used', ['socialAccount' => title_case($socialDriver)]);
+        $message = trans('errors.social_account_not_used', ['socialAccount' => $titleCaseDriver]);
         if (setting('registration-enabled')) {
-            $message .= trans('errors.social_account_register_instructions', ['socialAccount' => title_case($socialDriver)]);
+            $message .= trans('errors.social_account_register_instructions', ['socialAccount' => $titleCaseDriver]);
         }
         
         throw new SocialSignInAccountNotUsed($message, '/login');
@@ -157,7 +159,7 @@ class SocialAuthService
             abort(404, trans('errors.social_driver_not_found'));
         }
         if (!$this->checkDriverConfigured($driver)) {
-            throw new SocialDriverNotConfigured(trans('errors.social_driver_not_configured', ['socialAccount' => title_case($socialDriver)]));
+            throw new SocialDriverNotConfigured(trans('errors.social_driver_not_configured', ['socialAccount' => Str::title($socialDriver)]));
         }
 
         return $driver;
@@ -244,7 +246,7 @@ class SocialAuthService
     public function detachSocialAccount($socialDriver)
     {
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
-        session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => title_case($socialDriver)]));
+        session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => Str::title($socialDriver)]));
         return redirect(user()->getEditUrl());
     }
 

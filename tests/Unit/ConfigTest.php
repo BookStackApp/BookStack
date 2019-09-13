@@ -50,11 +50,14 @@ class ConfigTest extends TestCase
     protected function checkEnvConfigResult(string $envName, $envVal, string $configKey, string $expectedResult)
     {
         $originalVal = getenv($envName);
+        
         $envString = $envName . (is_null($envVal) ? '' : '=') . ($envVal ?? '');
         putenv($envString);
         $this->refreshApplication();
         $this->assertEquals($expectedResult, config($configKey));
-        putenv($envString = $envName . (empty($originalVal) ? '' : '=') . ($originalVal ?? ''));
+
+        $envString = $envName . (empty($originalVal) ? '' : '=') . ($originalVal ?? '');
+        putenv($envString);
     }
 
 }

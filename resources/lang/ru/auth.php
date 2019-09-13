@@ -27,7 +27,7 @@ return [
     'email' => 'Email',
     'password' => 'Пароль',
     'password_confirm' => 'Подтверждение пароля',
-    'password_hint' => 'Должен быть больше 5 символов',
+    'password_hint' => 'Должен быть больше 7 символов',
     'forgot_password' => 'Забыли пароль?',
     'remember_me' => 'Запомнить меня',
     'ldap_email_hint' => 'Введите email адрес для данной учетной записи.',

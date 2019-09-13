@@ -27,7 +27,7 @@ return [
     'email' => 'Email',
     'password' => 'Wachtwoord',
     'password_confirm' => 'Wachtwoord Bevestigen',
-    'password_hint' => 'Minimaal 6 tekens',
+    'password_hint' => 'Minimaal 8 tekens',
     'forgot_password' => 'Wachtwoord vergeten?',
     'remember_me' => 'Mij onthouden',
     'ldap_email_hint' => 'Geef een email op waarmee je dit account wilt gebruiken.',

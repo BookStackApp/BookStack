@@ -4,7 +4,7 @@ class UserProfileTest extends BrowserKitTest
 {
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->user = \BookStack\Auth\User::all()->last();

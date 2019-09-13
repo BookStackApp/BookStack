@@ -15,7 +15,7 @@ class LdapTest extends BrowserKitTest
     protected $mockUser;
     protected $resourceId = 'resource-test';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         if (!defined('LDAP_OPT_REFERRALS')) define('LDAP_OPT_REFERRALS', 1);
