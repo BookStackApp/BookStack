@@ -1,0 +1,26 @@
+name: phpunit
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [7.2, 7.3]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Database
+      run: |
+        mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
+        mysql -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED BY 'bookstack-test';"
+        mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
+        mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
+    - name: Install composer dependencies & Test
+      run: composer install --prefer-dist --no-interaction
+    - name: Migrate and seed the database
+      run: |
+        php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
+        php${{ matrix.php }} artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
+    - name: phpunit
+      run: php${{ matrix.php }} ./vendor/bin/phpunit
