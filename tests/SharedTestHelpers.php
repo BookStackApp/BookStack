@@ -1,8 +1,6 @@
 <?php namespace Tests;
 
 use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\EntityRepo;
@@ -12,6 +10,7 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
+use Illuminate\Support\Env;
 
 trait SharedTestHelpers
 {
@@ -77,6 +76,7 @@ trait SharedTestHelpers
     /**
      * Regenerate the permission for an entity.
      * @param Entity $entity
+     * @throws \Throwable
      */
     protected function regenEntityPermissions(Entity $entity)
     {
@@ -116,6 +116,7 @@ trait SharedTestHelpers
      * Create and return a new test page
      * @param array $input
      * @return Page
+     * @throws \Throwable
      */
     public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
         $book = Book::first();
@@ -202,6 +203,60 @@ trait SharedTestHelpers
         $mockHttp->shouldReceive('fetch')
             ->times($times)
             ->andReturn($returnData);
+    }
+
+    /**
+     * Run a set test with the given env variable.
+     * Remembers the original and resets the value after test.
+     * @param string $name
+     * @param $value
+     * @param callable $callback
+     */
+    protected function runWithEnv(string $name, $value, callable $callback)
+    {
+        Env::disablePutenv();
+        $originalVal = $_ENV[$name] ?? null;
+
+        if (is_null($value)) {
+            unset($_ENV[$name]);
+            unset($_SERVER[$name]);
+        } else {
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+
+        $this->refreshApplication();
+        $callback();
+
+        if (is_null($originalVal)) {
+            unset($_SERVER[$name]);
+            unset($_ENV[$name]);
+        } else {
+            $_SERVER[$name] = $originalVal;
+            $_ENV[$name] = $originalVal;
+        }
+    }
+
+    /**
+     * Check the keys and properties in the given map to include
+     * exist, albeit not exclusively, within the map to check.
+     * @param array $mapToInclude
+     * @param array $mapToCheck
+     * @param string $message
+     */
+    protected function assertArrayMapIncludes(array $mapToInclude, array $mapToCheck, string $message = '') : void
+    {
+        $passed = true;
+
+        foreach ($mapToInclude as $key => $value) {
+            if (!isset($mapToCheck[$key]) || $mapToCheck[$key] !== $mapToInclude[$key]) {
+                $passed = false;
+            }
+        }
+
+        $toIncludeStr = print_r($mapToInclude, true);
+        $toCheckStr = print_r($mapToCheck, true);
+        self::assertThat($passed, self::isTrue(), "Failed asserting that given map:\n\n{$toCheckStr}\n\nincludes:\n\n{$toIncludeStr}");
     }
 
 }

@@ -22,19 +22,19 @@ class PageRepoTest extends TestCase
         $navMap = $this->pageRepo->getPageNav($content);
 
         $this->assertCount(3, $navMap);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h1',
             'link' => '#testa',
             'text' => 'Hello',
             'level' => 1,
         ], $navMap[0]);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h2',
             'link' => '#testb',
             'text' => 'There',
             'level' => 2,
         ], $navMap[1]);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h3',
             'link' => '#testc',
             'text' => 'Donkey',
@@ -48,7 +48,7 @@ class PageRepoTest extends TestCase
         $navMap = $this->pageRepo->getPageNav($content);
 
         $this->assertCount(1, $navMap);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h1',
             'link' => '#testa',
             'text' => 'Hello'
@@ -61,15 +61,15 @@ class PageRepoTest extends TestCase
         $navMap = $this->pageRepo->getPageNav($content);
 
         $this->assertCount(3, $navMap);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h4',
             'level' => 1,
         ], $navMap[0]);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h5',
             'level' => 2,
         ], $navMap[1]);
-        $this->assertArraySubset([
+        $this->assertArrayMapIncludes([
             'nodeName' => 'h6',
             'level' => 3,
         ], $navMap[2]);
