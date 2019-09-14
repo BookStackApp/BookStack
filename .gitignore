@@ -22,3 +22,4 @@ nbproject
 .project
 .settings/
 webpack-stats.json
+.phpunit.result.cache

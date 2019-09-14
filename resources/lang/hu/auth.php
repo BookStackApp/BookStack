@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Jelszó',
     'password_confirm' => 'Jelszó megerősítése',
-    'password_hint' => 'Öt karakternél hosszabbnak kell lennie',
+    'password_hint' => 'Négy karakternél hosszabbnak kell lennie',
     'forgot_password' => 'Elfelejtett jelszó?',
     'remember_me' => 'Emlékezzen rám',
     'ldap_email_hint' => 'A fiókhoz használt email cím megadása.',

@@ -8,7 +8,7 @@ class LanguageTest extends TestCase
     /**
      * LanguageTest constructor.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.', 'check.php', 'format.php']);

@@ -6,6 +6,7 @@ use BookStack\Auth\User;
 use BookStack\Notifications\UserInvite;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Str;
 use Notification;
 
 class UserInviteTest extends TestCase
@@ -68,11 +69,13 @@ class UserInviteTest extends TestCase
         $inviteService->sendInvitation($user);
         $token = DB::table('user_invites')->where('user_id', '=', $user->id)->first()->token;
 
+        $this->get('/register/invite/' . $token);
         $shortPassword = $this->followingRedirects()->post('/register/invite/' . $token, [
-            'password' => 'mypas',
+            'password' => 'mypassw',
         ]);
-        $shortPassword->assertSee('The password must be at least 6 characters.');
+        $shortPassword->assertSee('The password must be at least 8 characters.');
 
+        $this->get('/register/invite/' . $token);
         $noPassword = $this->followingRedirects()->post('/register/invite/' . $token, [
             'password' => '',
         ]);
@@ -85,10 +88,10 @@ class UserInviteTest extends TestCase
 
     public function test_non_existent_invite_token_redirects_to_home()
     {
-        $setPasswordPageResp = $this->get('/register/invite/' . str_random(12));
+        $setPasswordPageResp = $this->get('/register/invite/' . Str::random(12));
         $setPasswordPageResp->assertRedirect('/');
 
-        $setPasswordResp = $this->post('/register/invite/' . str_random(12), ['password' => 'Password Test']);
+        $setPasswordResp = $this->post('/register/invite/' . Str::random(12), ['password' => 'Password Test']);
         $setPasswordResp->assertRedirect('/');
     }
 

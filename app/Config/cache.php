@@ -62,6 +62,6 @@ return [
 
     // Cache key prefix
     // Used to prevent collisions in shared cache systems.
-    'prefix' => env('CACHE_PREFIX', 'bookstack'),
+    'prefix' => env('CACHE_PREFIX', 'bookstack_cache'),
 
 ];

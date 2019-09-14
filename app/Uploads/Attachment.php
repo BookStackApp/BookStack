@@ -13,7 +13,7 @@ class Attachment extends Ownable
      */
     public function getFileName()
     {
-        if (str_contains($this->name, '.')) {
+        if (strpos($this->name, '.') !== false) {
             return $this->name;
         }
         return $this->name . '.' . $this->extension;

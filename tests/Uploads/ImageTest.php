@@ -4,6 +4,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Entities\Page;
 use BookStack\Uploads\ImageService;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ImageTest extends TestCase
@@ -43,7 +44,7 @@ class ImageTest extends TestCase
         $imgDetails = $this->uploadGalleryImage();
         $image = Image::query()->first();
 
-        $newName = str_random();
+        $newName = Str::random();
         $update = $this->put('/images/' . $image->id, ['name' => $newName]);
         $update->assertSuccessful();
         $update->assertJson([
@@ -89,7 +90,7 @@ class ImageTest extends TestCase
         $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
         $searchHitRequest->assertSuccessful()->assertJson($resultJson);
 
-        $namePartial = str_random(16);
+        $namePartial = Str::random(16);
         $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
         $searchHitRequest->assertSuccessful()->assertExactJson($emptyJson);
     }
@@ -208,7 +209,7 @@ class ImageTest extends TestCase
 
         $encodedImageContent = base64_encode(file_get_contents($expectedPath));
         $export = $this->get($page->getUrl('/export/html'));
-        $this->assertTrue(str_contains($export->getContent(), $encodedImageContent), 'Uploaded image in export content');
+        $this->assertTrue(strpos($export->getContent(), $encodedImageContent) !== false, 'Uploaded image in export content');
 
         if (file_exists($expectedPath)) {
             unlink($expectedPath);

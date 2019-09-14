@@ -25,7 +25,7 @@ return [
     'email' => 'E-Mail',
     'password' => 'Passwort',
     'password_confirm' => 'Passwort best&auml;tigen',
-    'password_hint' => 'Mindestlänge: 5 Zeichen',
+    'password_hint' => 'Mindestlänge: 7 Zeichen',
     'forgot_password' => 'Passwort vergessen?',
     'remember_me' => 'Angemeldet bleiben',
     'ldap_email_hint' => 'Bitte geben Sie eine E-Mail-Adresse ein, um diese mit dem Account zu nutzen.',

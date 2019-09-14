@@ -7,8 +7,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="false">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./tests/</directory>
@@ -20,32 +19,34 @@
         </whitelist>
     </filter>
     <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="APP_DEBUG" value="false"/>
-        <env name="APP_LANG" value="en"/>
-        <env name="APP_AUTO_LANG_PUBLIC" value="true"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
-        <env name="DB_CONNECTION" value="mysql_testing"/>
-        <env name="MAIL_DRIVER" value="log"/>
-        <env name="AUTH_METHOD" value="standard"/>
-        <env name="DISABLE_EXTERNAL_SERVICES" value="true"/>
-        <env name="AVATAR_URL" value=""/>
-        <env name="LDAP_VERSION" value="3"/>
-        <env name="STORAGE_TYPE" value="local"/>
-        <env name="STORAGE_ATTACHMENT_TYPE" value="local"/>
-        <env name="STORAGE_IMAGE_TYPE" value="local"/>
-        <env name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
-        <env name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
-        <env name="GITHUB_AUTO_REGISTER" value=""/>
-        <env name="GITHUB_AUTO_CONFIRM_EMAIL" value=""/>
-        <env name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
-        <env name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
-        <env name="GOOGLE_AUTO_REGISTER" value=""/>
-        <env name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
-        <env name="GOOGLE_SELECT_ACCOUNT" value=""/>
-        <env name="APP_URL" value="http://bookstack.dev"/>
-        <env name="DEBUGBAR_ENABLED" value="false"/>
+        <server name="APP_ENV" value="testing"/>
+        <server name="APP_DEBUG" value="false"/>
+        <server name="APP_LANG" value="en"/>
+        <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
+        <server name="CACHE_DRIVER" value="array"/>
+        <server name="SESSION_DRIVER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="DB_CONNECTION" value="mysql_testing"/>
+        <server name="BCRYPT_ROUNDS" value="4"/>
+        <server name="MAIL_DRIVER" value="array"/>
+        <server name="LOG_CHANNEL" value="null"/>
+        <server name="AUTH_METHOD" value="standard"/>
+        <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
+        <server name="AVATAR_URL" value=""/>
+        <server name="LDAP_VERSION" value="3"/>
+        <server name="STORAGE_TYPE" value="local"/>
+        <server name="STORAGE_ATTACHMENT_TYPE" value="local"/>
+        <server name="STORAGE_IMAGE_TYPE" value="local"/>
+        <server name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
+        <server name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <server name="GITHUB_AUTO_REGISTER" value=""/>
+        <server name="GITHUB_AUTO_CONFIRM_EMAIL" value=""/>
+        <server name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
+        <server name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+        <server name="GOOGLE_AUTO_REGISTER" value=""/>
+        <server name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
+        <server name="GOOGLE_SELECT_ACCOUNT" value=""/>
+        <server name="APP_URL" value="http://bookstack.dev"/>
+        <server name="DEBUGBAR_ENABLED" value="false"/>
     </php>
 </phpunit>

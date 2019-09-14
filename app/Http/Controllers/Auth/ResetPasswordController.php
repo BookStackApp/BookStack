@@ -4,6 +4,7 @@ namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -36,10 +37,11 @@ class ResetPasswordController extends Controller
     /**
      * Get the response for a successful password reset.
      *
-     * @param  string  $response
+     * @param Request $request
+     * @param string $response
      * @return \Illuminate\Http\Response
      */
-    protected function sendResetResponse($response)
+    protected function sendResetResponse(Request $request, $response)
     {
         $message = trans('auth.reset_password_success');
         session()->flash('success', $message);
