@@ -50,7 +50,7 @@ class PageContentTest extends TestCase
         $resp->assertStatus(302);
 
         $page = Page::find($page->id);
-        $this->assertContains($includeTag, $page->html);
+        $this->assertStringContainsString($includeTag, $page->html);
         $this->assertEquals('', $page->text);
     }
 
