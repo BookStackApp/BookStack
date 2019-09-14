@@ -7,7 +7,7 @@
         <div class="my-l">&nbsp;</div>
 
         <div class="card content-wrap auto-height">
-            <h1 class="list-heading">{{ title_case(trans('auth.log_in')) }}</h1>
+            <h1 class="list-heading">{{ Str::title(trans('auth.log_in')) }}</h1>
 
             <form action="{{ url('/login') }}" method="POST" id="login-form" class="mt-l">
                 {!! csrf_field() !!}
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button class="button" tabindex="1">{{ title_case(trans('auth.log_in')) }}</button>
+                        <button class="button" tabindex="1">{{ Str::title(trans('auth.log_in')) }}</button>
                     </div>
                 </div>
 

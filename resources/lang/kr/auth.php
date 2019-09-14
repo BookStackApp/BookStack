@@ -27,7 +27,7 @@ return [
     'email' => '이메일',
     'password' => '비밀번호',
     'password_confirm' => '비밀번호 (확인)',
-    'password_hint' => '5자 이상이어야 합니다.',
+    'password_hint' => '7자 이상이어야 합니다.',
     'forgot_password' => '비밀번호를 잊으셨습니까?',
     'remember_me' => '자동로그인',
     'ldap_email_hint' => '이 계정에서 사용하는 이메일을 입력해 주세요.',

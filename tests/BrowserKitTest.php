@@ -21,7 +21,7 @@ abstract class BrowserKitTest extends TestCase
      */
     protected $baseUrl = 'http://localhost';
 
-    public function tearDown()
+    public function tearDown() : void
     {
         \DB::disconnect();
         parent::tearDown();

@@ -14,7 +14,7 @@ if (env('REDIS_SERVERS', false)) {
 
     $redisDefaults = ['host' => '127.0.0.1', 'port' => '6379', 'database' => '0', 'password' => null];
     $redisServers = explode(',', trim(env('REDIS_SERVERS', '127.0.0.1:6379:0'), ','));
-    $redisConfig = [];
+    $redisConfig = ['client' => 'predis'];
     $cluster = count($redisServers) > 1;
 
     if ($cluster) {
@@ -59,14 +59,9 @@ return [
     // Many of those shown here are unsupported by BookStack.
     'connections' => [
 
-        'sqlite' => [
-            'driver'   => 'sqlite',
-            'database' => storage_path('database.sqlite'),
-            'prefix'   => '',
-        ],
-
         'mysql' => [
             'driver'    => 'mysql',
+            'url' => env('DATABASE_URL'),
             'host'      => $mysql_host,
             'database'  => env('DB_DATABASE', 'forge'),
             'username'  => env('DB_USERNAME', 'forge'),
@@ -76,41 +71,26 @@ return [
             'charset'   => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
+            'prefix_indexes' => true,
             'strict'    => false,
             'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
         ],
 
         'mysql_testing' => [
             'driver'    => 'mysql',
+            'url' => env('TEST_DATABASE_URL'),
             'host'      => '127.0.0.1',
             'database'  => 'bookstack-test',
             'username'  => env('MYSQL_USER', 'bookstack-test'),
             'password'  => env('MYSQL_PASSWORD', 'bookstack-test'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
             'prefix'    => '',
+            'prefix_indexes' => true,
             'strict'    => false,
-        ],
-
-        'pgsql' => [
-            'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',
-        ],
-
-        'sqlsrv' => [
-            'driver'   => 'sqlsrv',
-            'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset'  => 'utf8',
-            'prefix'   => '',
         ],
 
     ],

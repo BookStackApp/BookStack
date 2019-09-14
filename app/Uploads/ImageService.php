@@ -7,6 +7,7 @@ use DB;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
+use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use phpDocumentor\Reflection\Types\Integer;
@@ -140,12 +141,12 @@ class ImageService extends UploadService
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m') . '/';
 
         while ($storage->exists($imagePath . $imageName)) {
-            $imageName = str_random(3) . $imageName;
+            $imageName = Str::random(3) . $imageName;
         }
 
         $fullPath = $imagePath . $imageName;
         if ($secureUploads) {
-            $fullPath = $imagePath . str_random(16) . '-' . $imageName;
+            $fullPath = $imagePath . Str::random(16) . '-' . $imageName;
         }
 
         try {
@@ -220,7 +221,7 @@ class ImageService extends UploadService
 
         $storage->put($thumbFilePath, $thumbData);
         $storage->setVisibility($thumbFilePath, 'public');
-        $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 72);
+        $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
     }

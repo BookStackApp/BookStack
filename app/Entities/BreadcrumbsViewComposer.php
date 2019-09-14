@@ -23,8 +23,9 @@ class BreadcrumbsViewComposer
     public function compose(View $view)
     {
         $crumbs = $view->getData()['crumbs'];
-        if (array_first($crumbs) instanceof Book) {
-            $shelf = $this->entityContextManager->getContextualShelfForBook(array_first($crumbs));
+        $firstCrumb = $crumbs[0] ?? null;
+        if ($firstCrumb instanceof Book) {
+            $shelf = $this->entityContextManager->getContextualShelfForBook($firstCrumb);
             if ($shelf) {
                 array_unshift($crumbs, $shelf);
                 $view->with('crumbs', $crumbs);

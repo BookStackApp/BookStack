@@ -18,6 +18,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Validator;
 
@@ -77,7 +79,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|min:2|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ]);
     }
 
@@ -129,7 +131,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
     }
 
@@ -261,7 +263,7 @@ class RegisterController extends Controller
         $userData = [
             'name' => $socialUser->getName(),
             'email' => $socialUser->getEmail(),
-            'password' => str_random(30)
+            'password' => Str::random(30)
         ];
         return $this->registerUser($userData, $socialAccount, $emailVerified);
     }

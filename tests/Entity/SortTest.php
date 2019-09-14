@@ -10,7 +10,7 @@ class SortTest extends TestCase
 {
     protected $book;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->book = Book::first();

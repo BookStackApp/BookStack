@@ -3,7 +3,7 @@
 class CommentSettingTest extends BrowserKitTest {
   protected $page;
 
-  public function setUp() {
+  public function setUp(): void {
       parent::setUp();
       $this->page = \BookStack\Entities\Page::first();
   }

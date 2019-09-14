@@ -153,7 +153,7 @@ class SocialAuthTest extends TestCase
         config()->set('services.google.select_account', 'true');
 
         $resp = $this->get('/login/service/google');
-        $this->assertContains('prompt=select_account', $resp->headers->get('Location'));
+        $this->assertStringContainsString('prompt=select_account', $resp->headers->get('Location'));
     }
 
 }
