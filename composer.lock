@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "322b6b585d85e066f97711fe8f1f7ccd",
+    "content-hash": "822da5f0292bf0d88faa51281434145c",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2761,21 +2761,21 @@
         },
         {
             "name": "socialiteproviders/twitch",
-            "version": "v3.0.0",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocialiteProviders/Twitch.git",
-                "reference": "a7ad148c0b42d0c607d8a034b6e47faf5fc85e93"
+                "reference": "8c19b26ff24c40cc019413042a5492c5ed21a658"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/Twitch/zipball/a7ad148c0b42d0c607d8a034b6e47faf5fc85e93",
-                "reference": "a7ad148c0b42d0c607d8a034b6e47faf5fc85e93",
+                "url": "https://api.github.com/repos/SocialiteProviders/Twitch/zipball/8c19b26ff24c40cc019413042a5492c5ed21a658",
+                "reference": "8c19b26ff24c40cc019413042a5492c5ed21a658",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
-                "socialiteproviders/manager": "~3.0"
+                "socialiteproviders/manager": "~2.0 || ~3.0"
             },
             "type": "library",
             "autoload": {
@@ -2794,7 +2794,7 @@
                 }
             ],
             "description": "Twitch OAuth2 Provider for Laravel Socialite",
-            "time": "2017-01-25T09:48:29+00:00"
+            "time": "2018-06-20T10:59:51+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
