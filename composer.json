@@ -31,15 +31,16 @@
         "socialiteproviders/twitch": "^5.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2.8",
+        "barryvdh/laravel-ide-helper": "^2.6.4",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
-        "phpunit/phpunit": "^8.0",
-        "nunomaduro/collision": "^3.0",
         "laravel/browser-kit-testing": "^5.1",
-        "barryvdh/laravel-ide-helper": "^2.6.4",
-        "barryvdh/laravel-debugbar": "^3.2.8",
-        "squizlabs/php_codesniffer": "^3.4"
+        "mockery/mockery": "^1.0",
+        "nunomaduro/collision": "^3.0",
+        "phpunit/phpunit": "^8.0",
+        "squizlabs/php_codesniffer": "^3.4",
+        "wnx/laravel-stats": "^2.0"
     },
     "autoload": {
         "classmap": [
