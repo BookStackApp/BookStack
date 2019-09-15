@@ -47,9 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}/delete', 'BookController@showDelete');
         Route::get('/{bookSlug}/sort', 'BookController@sort');
         Route::put('/{bookSlug}/sort', 'BookController@saveSort');
-        Route::get('/{bookSlug}/export/html', 'BookController@exportHtml');
-        Route::get('/{bookSlug}/export/pdf', 'BookController@exportPdf');
-        Route::get('/{bookSlug}/export/plaintext', 'BookController@exportPlainText');
+        Route::get('/{bookSlug}/export/html', 'BookExportController@html');
+        Route::get('/{bookSlug}/export/pdf', 'BookExportController@pdf');
+        Route::get('/{bookSlug}/export/plaintext', 'BookExportController@plainText');
 
         // Pages
         Route::get('/{bookSlug}/create-page', 'PageController@create');
@@ -57,9 +57,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
         Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageController@exportPdf');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageController@exportHtml');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageController@exportPlainText');
+        Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageExportController@pdf');
+        Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageExportController@html');
+        Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageExportController@plainText');
         Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
         Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
@@ -91,9 +91,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@move');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@showPermissions');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/pdf', 'ChapterController@exportPdf');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/html', 'ChapterController@exportHtml');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/plaintext', 'ChapterController@exportPlainText');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/pdf', 'ChapterExportController@pdf');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/html', 'ChapterExportController@html');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/plaintext', 'ChapterExportController@plainText');
         Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@permissions');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
