@@ -432,7 +432,7 @@ class PageRepo extends EntityRepo
             return [];
         }
 
-        $tree = collect($headers)->map(function($header) {
+        $tree = collect($headers)->map(function ($header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 
@@ -442,7 +442,7 @@ class PageRepo extends EntityRepo
                 'link' => '#' . $header->getAttribute('id'),
                 'text' => $text,
             ];
-        })->filter(function($header) {
+        })->filter(function ($header) {
             return mb_strlen($header['text']) > 0;
         });
 
@@ -541,12 +541,12 @@ class PageRepo extends EntityRepo
      * @param string $search
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getPageTemplates(int $count = 10, int $page = 1,  string $search = '')
+    public function getPageTemplates(int $count = 10, int $page = 1, string $search = '')
     {
         $query = $this->entityQuery('page')
             ->where('template', '=', true)
             ->orderBy('name', 'asc')
-            ->skip( ($page - 1) * $count)
+            ->skip(($page - 1) * $count)
             ->take($count);
 
         if ($search) {

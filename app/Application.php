@@ -20,5 +20,4 @@ class Application extends \Illuminate\Foundation\Application
             . 'Config'
             . ($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
-
 }

@@ -69,7 +69,7 @@ return [
          * should be an absolute path.
          * This is only checked on command line call by dompdf.php, but not by
          * direct class use like:
-         * $dompdf = new DOMPDF();	$dompdf->load_html($htmldata); $dompdf->render(); $pdfdata = $dompdf->output();
+         * $dompdf = new DOMPDF();  $dompdf->load_html($htmldata); $dompdf->render(); $pdfdata = $dompdf->output();
          */
         "DOMPDF_CHROOT" => realpath(base_path()),
 

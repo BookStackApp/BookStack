@@ -102,5 +102,4 @@ class UserInviteController extends Controller
 
         throw $exception;
     }
-
 }

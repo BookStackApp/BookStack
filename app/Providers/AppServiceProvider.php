@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo icon($expression); ?>";
         });
 
-        Blade::directive('exposeTranslations', function($expression) {
+        Blade::directive('exposeTranslations', function ($expression) {
             return "<?php \$__env->startPush('translations'); ?>" .
                 "<?php foreach({$expression} as \$key): ?>" .
                 '<meta name="translation" key="<?php echo e($key); ?>" value="<?php echo e(trans($key)); ?>">' . "\n" .

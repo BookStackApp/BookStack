@@ -64,7 +64,6 @@ class ConfirmEmailController extends Controller
         try {
             $userId = $this->emailConfirmationService->checkTokenAndGetUserId($token);
         } catch (Exception $exception) {
-
             if ($exception instanceof UserTokenNotFoundException) {
                 session()->flash('error', trans('errors.email_confirmation_invalid'));
                 return redirect('/register');
@@ -114,5 +113,4 @@ class ConfirmEmailController extends Controller
         session()->flash('success', trans('auth.email_confirm_resent'));
         return redirect('/register/confirm');
     }
-
 }

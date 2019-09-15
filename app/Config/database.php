@@ -11,7 +11,6 @@
 // REDIS
 // Split out configuration into an array
 if (env('REDIS_SERVERS', false)) {
-
     $redisDefaults = ['host' => '127.0.0.1', 'port' => '6379', 'database' => '0', 'password' => null];
     $redisServers = explode(',', trim(env('REDIS_SERVERS', '127.0.0.1:6379:0'), ','));
     $redisConfig = ['client' => 'predis'];

@@ -81,8 +81,8 @@ return [
     'okta' => [
         'client_id' => env('OKTA_APP_ID'),
         'client_secret' => env('OKTA_APP_SECRET'),
-        'redirect' => env('APP_URL') . '/login/service/okta/callback', 
-        'base_url' => env('OKTA_BASE_URL'), 
+        'redirect' => env('APP_URL') . '/login/service/okta/callback',
+        'base_url' => env('OKTA_BASE_URL'),
         'name'          => 'Okta',
         'auto_register' => env('OKTA_AUTO_REGISTER', false),
         'auto_confirm' => env('OKTA_AUTO_CONFIRM_EMAIL', false),
@@ -126,10 +126,10 @@ return [
         'email_attribute' => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
         'display_name_attribute' => env('LDAP_DISPLAY_NAME_ATTRIBUTE', 'cn'),
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),
-		'user_to_groups' => env('LDAP_USER_TO_GROUPS',false),
-		'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
-		'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS',false),
-		'tls_insecure' => env('LDAP_TLS_INSECURE', false),
-	]
+        'user_to_groups' => env('LDAP_USER_TO_GROUPS', false),
+        'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
+        'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS', false),
+        'tls_insecure' => env('LDAP_TLS_INSECURE', false),
+    ]
 
 ];

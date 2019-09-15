@@ -19,5 +19,4 @@ class UserInviteService extends UserTokenService
         $token = $this->createTokenForUser($user);
         $user->notify(new UserInvite($token));
     }
-
 }
