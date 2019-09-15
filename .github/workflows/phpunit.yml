@@ -17,7 +17,7 @@ jobs:
         mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
         mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
     - name: Install composer dependencies & Test
-      run: composer install --prefer-dist --no-interaction
+      run: composer install --prefer-dist --no-interaction --ansi
     - name: Migrate and seed the database
       run: |
         php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
