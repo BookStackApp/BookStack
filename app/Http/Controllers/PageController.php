@@ -574,13 +574,14 @@ class PageController extends Controller
 
     /**
      * Does the action of moving the location of a page
+     * @param Request $request
      * @param string $bookSlug
      * @param string $pageSlug
-     * @param Request $request
      * @return mixed
      * @throws NotFoundException
+     * @throws \Throwable
      */
-    public function move($bookSlug, $pageSlug, Request $request)
+    public function move(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-update', $page);
@@ -632,13 +633,14 @@ class PageController extends Controller
 
     /**
      * Create a copy of a page within the requested target destination.
+     * @param Request $request
      * @param string $bookSlug
      * @param string $pageSlug
-     * @param Request $request
      * @return mixed
      * @throws NotFoundException
+     * @throws \Throwable
      */
-    public function copy($bookSlug, $pageSlug, Request $request)
+    public function copy(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-view', $page);
@@ -696,7 +698,7 @@ class PageController extends Controller
      * @throws NotFoundException
      * @throws \Throwable
      */
-    public function permissions($bookSlug, $pageSlug, Request $request)
+    public function permissions(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);

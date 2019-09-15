@@ -242,13 +242,13 @@ class BookshelfController extends Controller
 
     /**
      * Set the permissions for this bookshelf.
-     * @param string $slug
      * @param Request $request
+     * @param string $slug
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \BookStack\Exceptions\NotFoundException
      * @throws \Throwable
      */
-    public function permissions(string $slug, Request $request)
+    public function permissions(Request $request, string $slug)
     {
         $shelf = $this->entityRepo->getBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);

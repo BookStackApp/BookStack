@@ -75,12 +75,13 @@ class PermissionController extends Controller
 
     /**
      * Updates a user role.
-     * @param $id
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws PermissionsException
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function updateRole($id, Request $request)
+    public function updateRole(Request $request, $id)
     {
         $this->checkPermission('user-roles-manage');
         $this->validate($request, [
@@ -112,11 +113,11 @@ class PermissionController extends Controller
     /**
      * Delete a role from the system,
      * Migrate from a previous role if set.
-     * @param $id
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function deleteRole($id, Request $request)
+    public function deleteRole(Request $request, $id)
     {
         $this->checkPermission('user-roles-manage');
 

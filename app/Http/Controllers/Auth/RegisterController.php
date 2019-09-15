@@ -193,14 +193,14 @@ class RegisterController extends Controller
 
     /**
      * The callback for social login services.
-     * @param $socialDriver
      * @param Request $request
+     * @param string $socialDriver
      * @return RedirectResponse|Redirector
      * @throws SocialSignInException
      * @throws UserRegistrationException
      * @throws SocialDriverNotConfigured
      */
-    public function socialCallback($socialDriver, Request $request)
+    public function socialCallback(Request $request, string $socialDriver)
     {
         if (!session()->has('social-callback')) {
             throw new SocialSignInException(trans('errors.social_no_action_defined'), '/login');

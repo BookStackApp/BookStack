@@ -54,12 +54,12 @@ class UserInviteController extends Controller
 
     /**
      * Sets the password for an invited user and then grants them access.
-     * @param string $token
      * @param Request $request
+     * @param string $token
      * @return RedirectResponse|Redirector
      * @throws Exception
      */
-    public function setPassword(string $token, Request $request)
+    public function setPassword(Request $request, string $token)
     {
         $this->validate($request, [
             'password' => 'required|min:8'
