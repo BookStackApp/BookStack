@@ -100,7 +100,7 @@ class Bookshelf extends Entity
      * @param Book $book
      * @return bool
      */
-    public function contains(Book $book)
+    public function contains(Book $book): bool 
     {
         return $this->books()->where('id', '=', $book->id)->count() > 0;
     }
