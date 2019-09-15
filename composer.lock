@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "822da5f0292bf0d88faa51281434145c",
+    "content-hash": "c156e1738dbab2a57f9a926d9a9a5a6a",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -5851,6 +5851,55 @@
             "time": "2019-08-22T18:11:29+00:00"
         },
         {
+            "name": "phploc/phploc",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phploc.git",
+                "reference": "5b714ccb7cb8ca29ccf9caf6eb1aed0131d3a884"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phploc/zipball/5b714ccb7cb8ca29ccf9caf6eb1aed0131d3a884",
+                "reference": "5b714ccb7cb8ca29ccf9caf6eb1aed0131d3a884",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "sebastian/finder-facade": "^1.1",
+                "sebastian/version": "^2.0",
+                "symfony/console": "^4.0"
+            },
+            "bin": [
+                "phploc"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "A tool for quickly measuring the size of a PHP project.",
+            "homepage": "https://github.com/sebastianbergmann/phploc",
+            "time": "2019-03-16T10:41:19+00:00"
+        },
+        {
             "name": "phpspec/prophecy",
             "version": "1.8.1",
             "source": {
@@ -6601,6 +6650,45 @@
             "time": "2019-09-14T09:02:43+00:00"
         },
         {
+            "name": "sebastian/finder-facade",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/finder-facade.git",
+                "reference": "4a3174709c2dc565fe5fb26fcf827f6a1fc7b09f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/finder-facade/zipball/4a3174709c2dc565fe5fb26fcf827f6a1fc7b09f",
+                "reference": "4a3174709c2dc565fe5fb26fcf827f6a1fc7b09f",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/finder": "~2.3|~3.0|~4.0",
+                "theseer/fdomdocument": "~1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "FinderFacade is a convenience wrapper for Symfony's Finder component.",
+            "homepage": "https://github.com/sebastianbergmann/finder-facade",
+            "time": "2017-11-18T17:31:49+00:00"
+        },
+        {
             "name": "sebastian/global-state",
             "version": "3.0.0",
             "source": {
@@ -7186,6 +7274,46 @@
             "time": "2019-08-20T14:07:54+00:00"
         },
         {
+            "name": "theseer/fdomdocument",
+            "version": "1.6.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/theseer/fDOMDocument.git",
+                "reference": "6e8203e40a32a9c770bcb62fe37e68b948da6dca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/theseer/fDOMDocument/zipball/6e8203e40a32a9c770bcb62fe37e68b948da6dca",
+                "reference": "6e8203e40a32a9c770bcb62fe37e68b948da6dca",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "lib-libxml": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Arne Blankerts",
+                    "role": "lead",
+                    "email": "arne@blankerts.de"
+                }
+            ],
+            "description": "The classes contained within this repository extend the standard DOM to use exceptions at all occasions of errors instead of PHP warnings or notices. They also add various custom methods and shortcuts for convenience and to simplify the usage of DOM.",
+            "homepage": "https://github.com/theseer/fDOMDocument",
+            "time": "2017-06-30T11:53:12+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "1.1.3",
             "source": {
@@ -7274,6 +7402,69 @@
                 "validate"
             ],
             "time": "2019-08-24T08:43:50+00:00"
+        },
+        {
+            "name": "wnx/laravel-stats",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stefanzweifel/laravel-stats.git",
+                "reference": "1b3c60bfbf81233973cbc2a63be4e6f83b2d6205"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stefanzweifel/laravel-stats/zipball/1b3c60bfbf81233973cbc2a63be4e6f83b2d6205",
+                "reference": "1b3c60bfbf81233973cbc2a63be4e6f83b2d6205",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.8.0|^6.0",
+                "illuminate/support": "~5.8.0|^6.0",
+                "php": ">=7.2.0",
+                "phploc/phploc": "~4.0|~5.0",
+                "symfony/finder": "~3.3|~4.0"
+            },
+            "require-dev": {
+                "laravel/browser-kit-testing": "~2.0|~3.0|~4.0|~5.0",
+                "laravel/dusk": "~3.0|~4.0|~5.0",
+                "mockery/mockery": "^1.1",
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "6.*|7.*|8.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wnx\\LaravelStats\\StatsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wnx\\LaravelStats\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan Zweifel",
+                    "email": "hello@stefanzweifel.io",
+                    "homepage": "https://stefanzweifel.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Get insights about your Laravel Project",
+            "homepage": "https://github.com/stefanzweifel/laravel-stats",
+            "keywords": [
+                "laravel",
+                "statistics",
+                "stats",
+                "wnx"
+            ],
+            "time": "2019-09-01T14:18:49+00:00"
         }
     ],
     "aliases": [],

@@ -174,3 +174,4 @@ These are the great open-source projects used to help build BookStack:
     * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
 * [Draw.io](https://github.com/jgraph/drawio)
+* [Laravel Stats](https://github.com/stefanzweifel/laravel-stats)
