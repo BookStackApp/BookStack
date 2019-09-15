@@ -36,5 +36,4 @@ class EmailConfirmationService extends UserTokenService
         return setting('registration-confirmation')
             || setting('registration-restrict');
     }
-
 }

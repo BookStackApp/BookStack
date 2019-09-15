@@ -22,5 +22,4 @@ class Request extends LaravelRequest
 
         return $base;
     }
-
 }

@@ -1,6 +1,7 @@
 <?php namespace BookStack\Exceptions;
 
-class UserTokenExpiredException extends \Exception {
+class UserTokenExpiredException extends \Exception
+{
 
     public $userId;
 
@@ -14,6 +15,4 @@ class UserTokenExpiredException extends \Exception {
         $this->userId = $userId;
         parent::__construct($message);
     }
-
-
 }

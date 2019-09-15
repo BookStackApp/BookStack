@@ -12,7 +12,7 @@ use BookStack\Settings\SettingService;
  * @return string
  * @throws Exception
  */
-function versioned_asset($file = '') : string
+function versioned_asset(string $file = ''): string
 {
     static $version = null;
 
@@ -35,7 +35,7 @@ function versioned_asset($file = '') : string
  * Defaults to public 'Guest' user if not logged in.
  * @return User
  */
-function user() : User
+function user(): User
 {
     return auth()->user() ?: User::getDefault();
 }
@@ -44,7 +44,7 @@ function user() : User
  * Check if current user is a signed in user.
  * @return bool
  */
-function signedInUser() : bool
+function signedInUser(): bool
 {
     return auth()->user() && !auth()->user()->isDefault();
 }
@@ -53,7 +53,7 @@ function signedInUser() : bool
  * Check if the current user has general access.
  * @return bool
  */
-function hasAppAccess() : bool
+function hasAppAccess(): bool
 {
     return !auth()->guest() || setting('app-public');
 }
@@ -66,7 +66,7 @@ function hasAppAccess() : bool
  * @param Ownable $ownable
  * @return bool
  */
-function userCan(string $permission, Ownable $ownable = null) : bool
+function userCan(string $permission, Ownable $ownable = null): bool
 {
     if ($ownable === null) {
         return user() && user()->can($permission);
@@ -84,7 +84,7 @@ function userCan(string $permission, Ownable $ownable = null) : bool
  * @param string|null $entityClass
  * @return bool
  */
-function userCanOnAny(string $permission, string $entityClass = null) : bool
+function userCanOnAny(string $permission, string $entityClass = null): bool
 {
     $permissionService = app(PermissionService::class);
     return $permissionService->checkUserHasPermissionOnAnything($permission, $entityClass);
@@ -96,7 +96,7 @@ function userCanOnAny(string $permission, string $entityClass = null) : bool
  * @param bool $default
  * @return bool|string|SettingService
  */
-function setting($key = null, $default = false)
+function setting(string $key = null, bool $default = false)
 {
     $settingService = resolve(SettingService::class);
     if (is_null($key)) {
@@ -110,7 +110,7 @@ function setting($key = null, $default = false)
  * @param string $path
  * @return string
  */
-function theme_path($path = '') : string
+function theme_path(string $path = ''): string
 {
     $theme = config('view.theme');
     if (!$theme) {
@@ -130,7 +130,7 @@ function theme_path($path = '') : string
  * @param array $attrs
  * @return mixed
  */
-function icon($name, $attrs = [])
+function icon(string $name, array $attrs = []): string
 {
     $attrs = array_merge([
         'class'     => 'svg-icon',
@@ -158,12 +158,12 @@ function icon($name, $attrs = [])
  * Generate a url with multiple parameters for sorting purposes.
  * Works out the logic to set the correct sorting direction
  * Discards empty parameters and allows overriding.
- * @param $path
+ * @param string $path
  * @param array $data
  * @param array $overrideData
  * @return string
  */
-function sortUrl($path, $data, $overrideData = [])
+function sortUrl(string $path, array $data, array $overrideData = []): string
 {
     $queryStringSections = [];
     $queryData = array_merge($data, $overrideData);

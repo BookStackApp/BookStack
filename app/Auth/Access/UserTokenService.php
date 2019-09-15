@@ -131,5 +131,4 @@ class UserTokenService
         return Carbon::now()->subHours($this->expiryTime)
             ->gt(new Carbon($tokenEntry->created_at));
     }
-
 }

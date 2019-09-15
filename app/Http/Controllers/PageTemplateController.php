@@ -59,5 +59,4 @@ class PageTemplateController extends Controller
             'markdown' => $page->markdown,
         ]);
     }
-
 }
