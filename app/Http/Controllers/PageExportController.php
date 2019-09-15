@@ -43,7 +43,7 @@ class PageExportController extends Controller
      */
     public function pdf(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
         $page->html = $this->pageRepo->renderPage($page);
         $pdfContent = $this->exportService->pageToPdf($page);
         return $this->downloadResponse($pdfContent, $pageSlug . '.pdf');
@@ -59,7 +59,7 @@ class PageExportController extends Controller
      */
     public function html(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
         $page->html = $this->pageRepo->renderPage($page);
         $containedHtml = $this->exportService->pageToContainedHtml($page);
         return $this->downloadResponse($containedHtml, $pageSlug . '.html');
@@ -74,7 +74,7 @@ class PageExportController extends Controller
      */
     public function plainText(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getPageBySlug($pageSlug, $bookSlug);
+        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
         $pageText = $this->exportService->pageToPlainText($page);
         return $this->downloadResponse($pageText, $pageSlug . '.txt');
     }

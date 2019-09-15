@@ -3,16 +3,16 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\ExportService;
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\NotFoundException;
 use Throwable;
 
 class BookExportController extends Controller
 {
     /**
-     * @var EntityRepo
+     * @var BookRepo
      */
-    protected $entityRepo;
+    protected $bookRepo;
 
     /**
      * @var ExportService
@@ -21,12 +21,12 @@ class BookExportController extends Controller
 
     /**
      * BookExportController constructor.
-     * @param EntityRepo $entityRepo
+     * @param BookRepo $bookRepo
      * @param ExportService $exportService
      */
-    public function __construct(EntityRepo $entityRepo, ExportService $exportService)
+    public function __construct(BookRepo $bookRepo, ExportService $exportService)
     {
-        $this->entityRepo = $entityRepo;
+        $this->bookRepo = $bookRepo;
         $this->exportService = $exportService;
         parent::__construct();
     }
@@ -40,7 +40,7 @@ class BookExportController extends Controller
      */
     public function pdf(string $bookSlug)
     {
-        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $pdfContent = $this->exportService->bookToPdf($book);
         return $this->downloadResponse($pdfContent, $bookSlug . '.pdf');
     }
@@ -54,7 +54,7 @@ class BookExportController extends Controller
      */
     public function html(string $bookSlug)
     {
-        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $htmlContent = $this->exportService->bookToContainedHtml($book);
         return $this->downloadResponse($htmlContent, $bookSlug . '.html');
     }
@@ -67,7 +67,7 @@ class BookExportController extends Controller
      */
     public function plainText(string $bookSlug)
     {
-        $book = $this->entityRepo->getBySlug('book', $bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $textContent = $this->exportService->bookToPlainText($book);
         return $this->downloadResponse($textContent, $bookSlug . '.txt');
     }

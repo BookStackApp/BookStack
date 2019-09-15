@@ -92,11 +92,11 @@ function userCanOnAny(string $permission, string $entityClass = null): bool
 
 /**
  * Helper to access system settings.
- * @param $key
- * @param bool $default
+ * @param string $key
+ * @param $default
  * @return bool|string|SettingService
  */
-function setting(string $key = null, bool $default = false)
+function setting(string $key = null, $default = false)
 {
     $settingService = resolve(SettingService::class);
     if (is_null($key)) {

@@ -20,6 +20,7 @@ use DOMNode;
 use DOMXPath;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Throwable;
@@ -79,7 +80,7 @@ class EntityRepo
      * @param string $type
      * @param bool $allowDrafts
      * @param string $permission
-     * @return \Illuminate\Database\Query\Builder
+     * @return QueryBuilder
      */
     protected function entityQuery($type, $allowDrafts = false, $permission = 'view')
     {
@@ -142,25 +143,29 @@ class EntityRepo
      * Get an entity by its url slug.
      * @param string $type
      * @param string $slug
-     * @param string|bool $bookSlug
+     * @param string|null $bookSlug
      * @return Entity
      * @throws NotFoundException
      */
-    public function getBySlug($type, $slug, $bookSlug = false)
+    public function getEntityBySlug(string $type, string $slug, string $bookSlug = null): Entity
     {
-        $q = $this->entityQuery($type)->where('slug', '=', $slug);
+        $type = strtolower($type);
+        $query = $this->entityQuery($type)->where('slug', '=', $slug);
 
-        if (strtolower($type) === 'chapter' || strtolower($type) === 'page') {
-            $q = $q->where('book_id', '=', function ($query) use ($bookSlug) {
+        if ($type === 'chapter' || $type === 'page') {
+            $query = $query->where('book_id', '=', function (QueryBuilder $query) use ($bookSlug) {
                 $query->select('id')
                     ->from($this->entityProvider->book->getTable())
                     ->where('slug', '=', $bookSlug)->limit(1);
             });
         }
-        $entity = $q->first();
+
+        $entity = $query->first();
+
         if ($entity === null) {
-            throw new NotFoundException(trans('errors.' . strtolower($type) . '_not_found'));
+            throw new NotFoundException(trans('errors.' . $type . '_not_found'));
         }
+
         return $entity;
     }
 
@@ -507,23 +512,27 @@ class EntityRepo
     }
 
 
-
     /**
      * Create a new entity from request input.
      * Used for books and chapters.
      * @param string $type
      * @param array $input
-     * @param bool|Book $book
+     * @param Book|null $book
      * @return Entity
+     * @throws Throwable
      */
-    public function createFromInput($type, $input = [], $book = false)
+    public function createFromInput(string $type, array $input = [], Book $book = null)
     {
-        $isChapter = strtolower($type) === 'chapter';
         $entityModel = $this->entityProvider->get($type)->newInstance($input);
-        $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $isChapter ? $book->id : false);
+        $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $book ? $book->id : false);
         $entityModel->created_by = user()->id;
         $entityModel->updated_by = user()->id;
-        $isChapter ? $book->chapters()->save($entityModel) : $entityModel->save();
+
+        if ($book) {
+            $entityModel->book_id = $book->id;
+        }
+
+        $entityModel->save();
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
@@ -541,12 +550,14 @@ class EntityRepo
      * @param Entity $entityModel
      * @param array $input
      * @return Entity
+     * @throws Throwable
      */
-    public function updateFromInput($type, Entity $entityModel, $input = [])
+    public function updateFromInput(string $type, Entity $entityModel, array $input = [])
     {
         if ($entityModel->name !== $input['name']) {
             $entityModel->slug = $this->findSuitableSlug($type, $input['name'], $entityModel->id);
         }
+
         $entityModel->fill($input);
         $entityModel->updated_by = user()->id;
         $entityModel->save();
@@ -580,21 +591,6 @@ class EntityRepo
         }
 
         $shelf->books()->sync($syncData);
-    }
-
-    /**
-     * Append a Book to a BookShelf.
-     * @param Bookshelf $shelf
-     * @param Book $book
-     */
-    public function appendBookToShelf(Bookshelf $shelf, Book $book)
-    {
-        if ($shelf->contains($book)) {
-            return;
-        }
-
-        $maxOrder = $shelf->books()->max('order');
-        $shelf->books()->attach($book->id, ['order' => $maxOrder + 1]);
     }
 
     /**
@@ -813,24 +809,6 @@ class EntityRepo
     {
         $this->destroyEntityCommonRelations($shelf);
         $shelf->delete();
-    }
-
-    /**
-     * Destroy the provided book and all its child entities.
-     * @param Book $book
-     * @throws NotifyException
-     * @throws Throwable
-     */
-    public function destroyBook(Book $book)
-    {
-        foreach ($book->pages as $page) {
-            $this->destroyPage($page);
-        }
-        foreach ($book->chapters as $chapter) {
-            $this->destroyChapter($chapter);
-        }
-        $this->destroyEntityCommonRelations($book);
-        $book->delete();
     }
 
     /**

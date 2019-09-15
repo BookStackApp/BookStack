@@ -116,7 +116,7 @@ class BookshelfController extends Controller
     public function show(string $slug)
     {
         /** @var Bookshelf $shelf */
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('book-view', $shelf);
 
         $books = $this->entityRepo->getBookshelfChildren($shelf);
@@ -140,7 +140,7 @@ class BookshelfController extends Controller
      */
     public function edit(string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBooks = $this->entityRepo->getBookshelfChildren($shelf);
@@ -169,7 +169,7 @@ class BookshelfController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug); /** @var $bookshelf Bookshelf */
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug); /** @var $bookshelf Bookshelf */
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -194,7 +194,7 @@ class BookshelfController extends Controller
      */
     public function showDelete(string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->setPageTitle(trans('entities.shelves_delete_named', ['name' => $shelf->getShortName()]));
@@ -210,7 +210,7 @@ class BookshelfController extends Controller
      */
     public function destroy(string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
         Activity::addMessage('bookshelf_delete', 0, $shelf->name);
 
@@ -230,7 +230,7 @@ class BookshelfController extends Controller
      */
     public function showPermissions(string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $roles = $this->userRepo->getRestrictableRoles();
@@ -250,7 +250,7 @@ class BookshelfController extends Controller
      */
     public function permissions(Request $request, string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $this->entityRepo->updateEntityPermissionsFromRequest($request, $shelf);
@@ -266,7 +266,7 @@ class BookshelfController extends Controller
      */
     public function copyPermissions(string $slug)
     {
-        $shelf = $this->entityRepo->getBySlug('bookshelf', $slug);
+        $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $updateCount = $this->entityRepo->copyBookshelfPermissions($shelf);

@@ -90,7 +90,7 @@ trait SharedTestHelpers
      * @return \BookStack\Entities\Bookshelf
      */
     public function newShelf($input = ['name' => 'test shelf', 'description' => 'My new test shelf']) {
-        return app(EntityRepo::class)->createFromInput('bookshelf', $input, false);
+        return app(EntityRepo::class)->createFromInput('bookshelf', $input);
     }
 
     /**
@@ -99,7 +99,7 @@ trait SharedTestHelpers
      * @return Book
      */
     public function newBook($input = ['name' => 'test book', 'description' => 'My new test book']) {
-        return app(EntityRepo::class)->createFromInput('book', $input, false);
+        return app(EntityRepo::class)->createFromInput('book', $input);
     }
 
     /**

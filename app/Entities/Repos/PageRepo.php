@@ -21,9 +21,9 @@ class PageRepo extends EntityRepo
      * @return Page
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function getPageBySlug(string $pageSlug, string $bookSlug)
+    public function getBySlug(string $pageSlug, string $bookSlug)
     {
-        return $this->getBySlug('page', $pageSlug, $bookSlug);
+        return $this->getEntityBySlug('page', $pageSlug, $bookSlug);
     }
 
     /**
