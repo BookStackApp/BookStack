@@ -59,11 +59,12 @@ class AttachmentController extends Controller
 
     /**
      * Update an uploaded attachment.
-     * @param int $attachmentId
      * @param Request $request
+     * @param int $attachmentId
      * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function uploadUpdate($attachmentId, Request $request)
+    public function uploadUpdate(Request $request, $attachmentId)
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
@@ -94,11 +95,12 @@ class AttachmentController extends Controller
 
     /**
      * Update the details of an existing file.
-     * @param $attachmentId
      * @param Request $request
+     * @param $attachmentId
      * @return Attachment|mixed
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update($attachmentId, Request $request)
+    public function update(Request $request, $attachmentId)
     {
         $this->validate($request, [
             'uploaded_to' => 'required|integer|exists:pages,id',
@@ -161,11 +163,12 @@ class AttachmentController extends Controller
 
     /**
      * Update the attachment sorting.
-     * @param $pageId
      * @param Request $request
+     * @param $pageId
      * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function sortForPage($pageId, Request $request)
+    public function sortForPage(Request $request, $pageId)
     {
         $this->validate($request, [
             'files' => 'required|array',

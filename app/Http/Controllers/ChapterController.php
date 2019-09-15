@@ -44,11 +44,13 @@ class ChapterController extends Controller
 
     /**
      * Store a newly created chapter in storage.
-     * @param          $bookSlug
-     * @param  Request $request
+     * @param Request $request
+     * @param string $bookSlug
      * @return Response
+     * @throws \BookStack\Exceptions\NotFoundException
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store($bookSlug, Request $request)
+    public function store(Request $request, string $bookSlug)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255'
@@ -103,13 +105,13 @@ class ChapterController extends Controller
 
     /**
      * Update the specified chapter in storage.
-     * @param  Request $request
-     * @param          $bookSlug
-     * @param          $chapterSlug
+     * @param Request $request
+     * @param string $bookSlug
+     * @param string $chapterSlug
      * @return Response
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function update(Request $request, $bookSlug, $chapterSlug)
+    public function update(Request $request, string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
@@ -170,13 +172,13 @@ class ChapterController extends Controller
 
     /**
      * Perform the move action for a chapter.
-     * @param $bookSlug
-     * @param $chapterSlug
      * @param Request $request
+     * @param string $bookSlug
+     * @param string $chapterSlug
      * @return mixed
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function move($bookSlug, $chapterSlug, Request $request)
+    public function move(Request $request, string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
@@ -229,14 +231,14 @@ class ChapterController extends Controller
 
     /**
      * Set the restrictions for this chapter.
-     * @param $bookSlug
-     * @param $chapterSlug
      * @param Request $request
+     * @param string $bookSlug
+     * @param string $chapterSlug
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \BookStack\Exceptions\NotFoundException
      * @throws \Throwable
      */
-    public function permissions($bookSlug, $chapterSlug, Request $request)
+    public function permissions(Request $request, string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->entityRepo->getBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);

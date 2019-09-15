@@ -137,12 +137,12 @@ class BookController extends Controller
 
     /**
      * Display the specified book.
-     * @param $slug
      * @param Request $request
+     * @param string $slug
      * @return Response
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function show($slug, Request $request)
+    public function show(Request $request, string $slug)
     {
         $book = $this->entityRepo->getBySlug('book', $slug);
         $this->checkOwnablePermission('book-view', $book);
@@ -247,11 +247,12 @@ class BookController extends Controller
 
     /**
      * Saves an array of sort mapping to pages and chapters.
-     * @param  string $bookSlug
      * @param Request $request
+     * @param string $bookSlug
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function saveSort($bookSlug, Request $request)
+    public function saveSort(Request $request, string $bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('book-update', $book);
@@ -353,13 +354,13 @@ class BookController extends Controller
 
     /**
      * Set the restrictions for this book.
-     * @param $bookSlug
      * @param Request $request
+     * @param string $bookSlug
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \BookStack\Exceptions\NotFoundException
      * @throws \Throwable
      */
-    public function permissions($bookSlug, Request $request)
+    public function permissions(Request $request, string $bookSlug)
     {
         $book = $this->entityRepo->getBySlug('book', $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);

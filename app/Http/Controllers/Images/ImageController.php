@@ -47,13 +47,13 @@ class ImageController extends Controller
 
     /**
      * Update image details
-     * @param integer $id
      * @param Request $request
+     * @param integer $id
      * @return \Illuminate\Http\JsonResponse
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required|min:2|string'

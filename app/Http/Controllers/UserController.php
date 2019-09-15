@@ -274,22 +274,22 @@ class UserController extends Controller
 
     /**
      * Update the user's preferred book-list display setting.
-     * @param $id
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switchBookView($id, Request $request)
+    public function switchBookView(Request $request, $id)
     {
         return $this->switchViewType($id, $request, 'books');
     }
 
     /**
      * Update the user's preferred shelf-list display setting.
-     * @param $id
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switchShelfView($id, Request $request)
+    public function switchShelfView(Request $request, $id)
     {
         return $this->switchViewType($id, $request, 'bookshelves');
     }
@@ -319,12 +319,12 @@ class UserController extends Controller
 
     /**
      * Change the stored sort type for a particular view.
+     * @param Request $request
      * @param string $id
      * @param string $type
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeSort(string $id, string $type, Request $request)
+    public function changeSort(Request $request, string $id, string $type)
     {
         $validSortTypes = ['books', 'bookshelves'];
         if (!in_array($type, $validSortTypes)) {
@@ -335,12 +335,12 @@ class UserController extends Controller
 
     /**
      * Update the stored section expansion preference for the given user.
+     * @param Request $request
      * @param string $id
      * @param string $key
-     * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function updateExpansionPreference(string $id, string $key, Request $request)
+    public function updateExpansionPreference(Request $request, string $id, string $key)
     {
         $this->checkPermissionOrCurrentUser('users-manage', $id);
         $keyWhitelist = ['home-details'];
