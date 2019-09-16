@@ -24,6 +24,7 @@
                             <a @click="updateLanguage('Lua')">Lua</a>
                             <a @click="updateLanguage('PHP')">PHP</a>
                             <a @click="updateLanguage('Powershell')">Powershell</a>
+                            <a @click="updateLanguage('Properties')">Properties</a>
                             <a @click="updateLanguage('MarkDown')">MarkDown</a>
                             <a @click="updateLanguage('Nginx')">Nginx</a>
                             <a @click="updateLanguage('Python')">Python</a>
