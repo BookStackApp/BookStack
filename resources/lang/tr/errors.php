@@ -33,53 +33,53 @@ return [
     'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
     'cannot_get_image_from_url' => 'Cannot get image from :url',
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
-    'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'image_upload_error' => 'An error occurred uploading the image',
-    'image_upload_type_error' => 'The image type being uploaded is invalid',
-    'file_upload_timeout' => 'The file upload has timed out.',
+    'server_upload_limit' => 'Sunucu bu boyutta yüklemelere izin vermiyor. Lütfen daha küçük bir dosya boyutu deneyin.',
+    'uploaded'  => 'Sunucu bu boyutta yüklemelere izin vermiyor. Lütfen daha küçük bir dosya boyutu deneyin.',
+    'image_upload_error' => 'Resim yüklenirken bir hata oluştu',
+    'image_upload_type_error' => 'Yüklenmekte olan resim türü geçersiz',
+    'file_upload_timeout' => 'Dosya yükleme işlemi zaman aşımına uğradı.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
-    'attachment_not_found' => 'Attachment not found',
+    'attachment_page_mismatch' => 'Ek güncelleme sırasında sayfa uyuşmazlığı',
+    'attachment_not_found' => 'Ek bulunamadı',
 
     // Pages
-    'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
-    'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
+    'page_draft_autosave_fail' => 'Taslak kaydedilemedi. Bu sayfayı kaydetmeden önce internet bağlantınızın olduğundan emin olun.',
+    'page_custom_home_deletion' => 'Ana sayfa olarak ayarlanmış bir sayfayı silinemez',
 
     // Entities
-    'entity_not_found' => 'Entity not found',
-    'bookshelf_not_found' => 'Bookshelf not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
-    'selected_book_not_found' => 'The selected book was not found',
-    'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'entity_not_found' => 'Öğe bulunamadı',
+    'bookshelf_not_found' => 'Kitaplık bulunamadı',
+    'book_not_found' => 'Kitap bulunamadı',
+    'page_not_found' => 'Sayfa bulunamadı',
+    'chapter_not_found' => 'Bölüm bulunamadı',
+    'selected_book_not_found' => 'Seçilen kitap bulunamadı',
+    'selected_book_chapter_not_found' => 'Seçilen kitap ya da bölüm bulunamadı',
+    'guests_cannot_save_drafts' => 'Misafirler taslak kaydedemezler',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Sadece yöneticiler silebilir',
+    'users_cannot_delete_guest' => 'Misafir kullanıcıyı silmeye yetkiniz yok',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_be_edited' => 'Bu rol düzenlemedi',
+    'role_system_cannot_be_deleted' => 'Bu bir sistem rolüdür ve silinemez',
+    'role_registration_default_cannot_delete' => 'Bu rol, varsayılan kayıt rolü olarak kaldıkça silinemez',
+    'role_cannot_remove_only_admin' => 'Bu kullanıcı yönetici rolüne atanan tek kullanıcıdır. Burada kaldırmayı denemeden önce yönetici rolünü başka bir kullanıcıya atayın.',
 
     // Comments
-    'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
-    'comment_add' => 'An error occurred while adding / updating the comment.',
-    'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'comment_list' => 'Yorumlar yüklenirken bir hata oluştu.',
+    'cannot_add_comment_to_draft' => 'Bir taslağa yorum ekleyemezsiniz.',
+    'comment_add' => 'Yorum eklerken/güncellerken bşr hata oluştu.',
+    'comment_delete' => 'Yorumu silerken bir hata oluştu.',
+    'empty_comment' => 'Boş yorum eklenemez.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    '404_page_not_found' => 'Sayfa Bulunamadı',
+    'sorry_page_not_found' => 'Üzgünüm, aradığınız sayfa bulunamadı.',
+    'return_home' => 'Ana sayfaya dön',
+    'error_occurred' => 'Bir Hata Oluştu',
+    'app_down' => ':appName şimdi çöktü',
+    'back_soon' => 'Yakında geri dönecektir.',
 
 ];
