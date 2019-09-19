@@ -18,6 +18,7 @@ abstract class Controller extends BaseController
      * @var User static
      */
     protected $currentUser;
+
     /**
      * @var bool
      */
@@ -28,28 +29,15 @@ abstract class Controller extends BaseController
      */
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-
-            // Get a user instance for the current user
-            $user = user();
-
-            // Share variables with controllers
-            $this->currentUser = $user;
-            $this->signedIn = auth()->check();
-
-            // Share variables with views
-            view()->share('signedIn', $this->signedIn);
-            view()->share('currentUser', $user);
-
-            return $next($request);
-        });
+        $this->currentUser = user();
+        $this->signedIn = auth()->check();
     }
 
     /**
      * Stops the application and shows a permission error if
      * the application is in demo mode.
      */
-    protected function preventAccessForDemoUsers()
+    protected function preventAccessInDemoMode()
     {
         if (config('app.env') === 'demo') {
             $this->showPermissionError();
@@ -75,7 +63,7 @@ abstract class Controller extends BaseController
             $response = response()->json(['error' => trans('errors.permissionJson')], 403);
         } else {
             $response = redirect('/');
-            session()->flash('error', trans('errors.permission'));
+            $this->showErrorNotification( trans('errors.permission'));
         }
 
         throw new HttpResponseException($response);
@@ -177,5 +165,32 @@ abstract class Controller extends BaseController
             'Content-Type'        => 'application/octet-stream',
             'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
         ]);
+    }
+
+    /**
+     * Show a positive, successful notification to the user on next view load.
+     * @param string $message
+     */
+    protected function showSuccessNotification(string $message)
+    {
+        session()->flash('success', $message);
+    }
+
+    /**
+     * Show a warning notification to the user on next view load.
+     * @param string $message
+     */
+    protected function showWarningNotification(string $message)
+    {
+        session()->flash('warning', $message);
+    }
+
+    /**
+     * Show an error notification to the user on next view load.
+     * @param string $message
+     */
+    protected function showErrorNotification(string $message)
+    {
+        session()->flash('error', $message);
     }
 }

@@ -144,7 +144,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->preventAccessForDemoUsers();
+        $this->preventAccessInDemoMode();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $this->validate($request, [
@@ -202,7 +202,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        session()->flash('success', trans('settings.users_edit_success'));
+        $this->showSuccessNotification( trans('settings.users_edit_success'));
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
         return redirect($redirectUrl);
@@ -230,23 +230,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->preventAccessForDemoUsers();
+        $this->preventAccessInDemoMode();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
 
         if ($this->userRepo->isOnlyAdmin($user)) {
-            session()->flash('error', trans('errors.users_cannot_delete_only_admin'));
+            $this->showErrorNotification( trans('errors.users_cannot_delete_only_admin'));
             return redirect($user->getEditUrl());
         }
 
         if ($user->system_name === 'public') {
-            session()->flash('error', trans('errors.users_cannot_delete_guest'));
+            $this->showErrorNotification( trans('errors.users_cannot_delete_guest'));
             return redirect($user->getEditUrl());
         }
 
         $this->userRepo->destroy($user);
-        session()->flash('success', trans('settings.users_delete_success'));
+        $this->showSuccessNotification( trans('settings.users_delete_success'));
 
         return redirect('/settings/users');
     }

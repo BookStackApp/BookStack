@@ -77,7 +77,7 @@ class UserInviteController extends Controller
         $user->save();
 
         auth()->login($user);
-        session()->flash('success', trans('auth.user_invite_success', ['appName' => setting('app-name')]));
+        $this->showSuccessNotification( trans('auth.user_invite_success', ['appName' => setting('app-name')]));
         $this->inviteService->deleteByUser($user);
 
         return redirect('/');
@@ -96,7 +96,7 @@ class UserInviteController extends Controller
         }
 
         if ($exception instanceof UserTokenExpiredException) {
-            session()->flash('error', trans('errors.invite_token_expired'));
+            $this->showErrorNotification( trans('errors.invite_token_expired'));
             return redirect('/password/email');
         }
 

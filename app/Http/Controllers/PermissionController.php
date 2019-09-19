@@ -53,7 +53,7 @@ class PermissionController extends Controller
         ]);
 
         $this->permissionsRepo->saveNewRole($request->all());
-        session()->flash('success', trans('settings.role_create_success'));
+        $this->showSuccessNotification( trans('settings.role_create_success'));
         return redirect('/settings/roles');
     }
 
@@ -90,7 +90,7 @@ class PermissionController extends Controller
         ]);
 
         $this->permissionsRepo->updateRole($id, $request->all());
-        session()->flash('success', trans('settings.role_update_success'));
+        $this->showSuccessNotification( trans('settings.role_update_success'));
         return redirect('/settings/roles');
     }
 
@@ -124,11 +124,11 @@ class PermissionController extends Controller
         try {
             $this->permissionsRepo->deleteRole($id, $request->get('migrate_role_id'));
         } catch (PermissionsException $e) {
-            session()->flash('error', $e->getMessage());
+            $this->showErrorNotification( $e->getMessage());
             return redirect()->back();
         }
 
-        session()->flash('success', trans('settings.role_delete_success'));
+        $this->showSuccessNotification( trans('settings.role_delete_success'));
         return redirect('/settings/roles');
     }
 }

@@ -65,14 +65,14 @@ class ConfirmEmailController extends Controller
             $userId = $this->emailConfirmationService->checkTokenAndGetUserId($token);
         } catch (Exception $exception) {
             if ($exception instanceof UserTokenNotFoundException) {
-                session()->flash('error', trans('errors.email_confirmation_invalid'));
+                $this->showErrorNotification( trans('errors.email_confirmation_invalid'));
                 return redirect('/register');
             }
 
             if ($exception instanceof UserTokenExpiredException) {
                 $user = $this->userRepo->getById($exception->userId);
                 $this->emailConfirmationService->sendConfirmation($user);
-                session()->flash('error', trans('errors.email_confirmation_expired'));
+                $this->showErrorNotification( trans('errors.email_confirmation_expired'));
                 return redirect('/register/confirm');
             }
 
@@ -84,7 +84,7 @@ class ConfirmEmailController extends Controller
         $user->save();
 
         auth()->login($user);
-        session()->flash('success', trans('auth.email_confirm_success'));
+        $this->showSuccessNotification( trans('auth.email_confirm_success'));
         $this->emailConfirmationService->deleteByUser($user);
 
         return redirect('/');
@@ -106,11 +106,11 @@ class ConfirmEmailController extends Controller
         try {
             $this->emailConfirmationService->sendConfirmation($user);
         } catch (Exception $e) {
-            session()->flash('error', trans('auth.email_confirm_send_error'));
+            $this->showErrorNotification( trans('auth.email_confirm_send_error'));
             return redirect('/register/confirm');
         }
 
-        session()->flash('success', trans('auth.email_confirm_resent'));
+        $this->showSuccessNotification( trans('auth.email_confirm_resent'));
         return redirect('/register/confirm');
     }
 }

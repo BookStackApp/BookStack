@@ -197,13 +197,13 @@ class ChapterController extends Controller
         }
 
         if ($parent === false || $parent === null) {
-            session()->flash('error', trans('errors.selected_book_not_found'));
+            $this->showErrorNotification( trans('errors.selected_book_not_found'));
             return redirect()->back();
         }
 
         $this->entityRepo->changeBook('chapter', $parent->id, $chapter, true);
         Activity::add($chapter, 'chapter_move', $chapter->book->id);
-        session()->flash('success', trans('entities.chapter_move_success', ['bookName' => $parent->name]));
+        $this->showSuccessNotification( trans('entities.chapter_move_success', ['bookName' => $parent->name]));
 
         return redirect($chapter->getUrl());
     }
@@ -240,7 +240,7 @@ class ChapterController extends Controller
         $chapter = $this->entityRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
         $this->entityRepo->updateEntityPermissionsFromRequest($request, $chapter);
-        session()->flash('success', trans('entities.chapters_permissions_success'));
+        $this->showSuccessNotification( trans('entities.chapters_permissions_success'));
         return redirect($chapter->getUrl());
     }
 }

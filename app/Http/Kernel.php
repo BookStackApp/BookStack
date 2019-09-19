@@ -32,7 +32,8 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \BookStack\Http\Middleware\Localization::class
+            \BookStack\Http\Middleware\Localization::class,
+            \BookStack\Http\Middleware\GlobalViewData::class,
         ],
         'api' => [
             'throttle:60,1',

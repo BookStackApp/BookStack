@@ -380,7 +380,7 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
         $this->bookRepo->updateEntityPermissionsFromRequest($request, $book);
-        session()->flash('success', trans('entities.books_permissions_updated'));
+        $this->showSuccessNotification(trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());
     }
 
