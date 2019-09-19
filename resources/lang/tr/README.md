@@ -8,15 +8,6 @@
 
 <a name="tr"/>
 
-## Önemli Uyarı
-
-Aşağıdaki Dosyalar henüz tam olarak çevrilmemiştir.
-
-* entities.php
-* ~~errors.php~~
-* ~~settings.php~~
-* ~~validation.php~~
-
 ## Ön Tanımlı Olarak Türkçe Seçme
 Bunun için `.env` dosyasını açıp **APP_LANG** değerini  **tr** olarak set edin. Örnek: `APP_LANG=tr`.
 Daha sonra php veya dockeri yeniden başlatın.
@@ -27,15 +18,6 @@ Daha sonra php veya dockeri yeniden başlatın.
 # English
 
 <a name="en"/>
-
-## Warning
-
-The following files are not yet fully translated.
-
-* entities.php
-* ~~errors.php~~
-* ~~settings.php~~
-* ~~validation.php~~
 
 
 
