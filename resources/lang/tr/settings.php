@@ -59,7 +59,7 @@ return [
     'maint_image_cleanup' => 'Resimleri Ayıkla',
     'maint_image_cleanup_desc' => "Hangi görüntülerin ve çizimlerin kullanımda olduğunu ve hangi görüntülerin gereksiz olduğunu kontrol etmek için sayfa ve revizyon içeriğini tarar. Bunu çalıştırmadan önce tam bir veritabanı ve görüntü yedeği oluşturduğunuzdan emin olun.",
     'maint_image_cleanup_ignore_revisions' => 'Revizyondaki resimleri görmezden gel',
-    'maint_image_cleanup_run' => 'Temizliği Başlat'
+    'maint_image_cleanup_run' => 'Temizliği Başlat',
     'maint_image_cleanup_warning' => 'Potansiyel olarak kullanılmayan :count resim bulundu. Bu görüntüleri silmek istediğinize emin misiniz?',
     'maint_image_cleanup_success' => 'Potansiyel olarak kullanılmayan :count resim bulundu ve silindi!',
     'maint_image_cleanup_nothing_found' => 'Kullanılmayan resim bulunamadı. Hiçbir şey silinmedi!',
