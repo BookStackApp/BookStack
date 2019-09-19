@@ -56,7 +56,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-create', $parent);
 
         // Redirect to draft edit screen if signed in
-        if ($this->signedIn) {
+        if ($this->isSignedIn()) {
             $draft = $this->pageRepo->getDraftPage($book, $chapter);
             return redirect($draft->getUrl());
         }
@@ -111,7 +111,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-create', $draft->parent);
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
-        $draftsEnabled = $this->signedIn;
+        $draftsEnabled = $this->isSignedIn();
         $templates = $this->pageRepo->getPageTemplates(10);
 
         return view('pages.edit', [
@@ -230,7 +230,7 @@ class PageController extends Controller
         }
 
         // Check for a current draft version for this user
-        $userPageDraft = $this->pageRepo->getUserPageDraft($page, $this->currentUser->id);
+        $userPageDraft = $this->pageRepo->getUserPageDraft($page, user()->id);
         if ($userPageDraft !== null) {
             $page->name = $userPageDraft->name;
             $page->html = $userPageDraft->html;
@@ -243,7 +243,7 @@ class PageController extends Controller
             $this->showWarningNotification( implode("\n", $warnings));
         }
 
-        $draftsEnabled = $this->signedIn;
+        $draftsEnabled = $this->isSignedIn();
         $templates = $this->pageRepo->getPageTemplates(10);
 
         return view('pages.edit', [
@@ -285,7 +285,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getById('page', $pageId, true);
         $this->checkOwnablePermission('page-update', $page);
 
-        if (!$this->signedIn) {
+        if (!$this->isSignedIn()) {
             return response()->json([
                 'status' => 'error',
                 'message' => trans('errors.guests_cannot_save_drafts'),

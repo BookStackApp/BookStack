@@ -2,7 +2,7 @@
 
 use BookStack\Uploads\Attachment;
 
-class Page extends Entity
+class Page extends BookChild
 {
     protected $fillable = ['name', 'html', 'priority', 'markdown'];
 
@@ -28,15 +28,6 @@ class Page extends Entity
         $array = array_intersect_key($this->toArray(), array_flip($this->simpleAttributes));
         $array['url'] = $this->getUrl();
         return $array;
-    }
-
-    /**
-     * Get the book this page sits in.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function book()
-    {
-        return $this->belongsTo(Book::class);
     }
 
     /**

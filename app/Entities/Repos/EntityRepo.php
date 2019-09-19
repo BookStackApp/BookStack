@@ -6,6 +6,7 @@ use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\Book;
+use BookStack\Entities\BookChild;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
@@ -16,7 +17,6 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\AttachmentService;
 use DOMDocument;
-use DOMNode;
 use DOMXPath;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -465,25 +465,6 @@ class EntityRepo
         return $slug;
     }
 
-    /**
-     * Check if a slug already exists in the database.
-     * @param string $type
-     * @param string $slug
-     * @param bool|integer $currentId
-     * @param bool|integer $bookId
-     * @return bool
-     */
-    protected function slugExists($type, $slug, $currentId = false, $bookId = false)
-    {
-        $query = $this->entityProvider->get($type)->where('slug', '=', $slug);
-        if (strtolower($type) === 'page' || strtolower($type) === 'chapter') {
-            $query = $query->where('book_id', '=', $bookId);
-        }
-        if ($currentId) {
-            $query = $query->where('id', '!=', $currentId);
-        }
-        return $query->count() > 0;
-    }
 
     /**
      * Updates entity restrictions from a request
@@ -501,14 +482,14 @@ class EntityRepo
                 foreach ($restrictions as $action => $value) {
                     $entity->permissions()->create([
                         'role_id' => $roleId,
-                        'action'  => strtolower($action)
+                        'action'  => strtolower($action),
                     ]);
                 }
             }
         }
 
         $entity->save();
-        $this->permissionService->buildJointPermissionsForEntity($entity);
+        $entity->rebuildPermissions();
     }
 
 
@@ -519,12 +500,10 @@ class EntityRepo
      * @param array $input
      * @param Book|null $book
      * @return Entity
-     * @throws Throwable
      */
     public function createFromInput(string $type, array $input = [], Book $book = null)
     {
         $entityModel = $this->entityProvider->get($type)->newInstance($input);
-        $entityModel->slug = $this->findSuitableSlug($type, $entityModel->name, false, $book ? $book->id : false);
         $entityModel->created_by = user()->id;
         $entityModel->updated_by = user()->id;
 
@@ -532,41 +511,39 @@ class EntityRepo
             $entityModel->book_id = $book->id;
         }
 
+        $entityModel->refreshSlug();
         $entityModel->save();
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
         }
 
-        $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $entityModel->rebuildPermissions();
         $this->searchService->indexEntity($entityModel);
         return $entityModel;
     }
 
     /**
      * Update entity details from request input.
-     * Used for books and chapters
-     * @param string $type
-     * @param Entity $entityModel
-     * @param array $input
-     * @return Entity
-     * @throws Throwable
+     * Used for books and chapters.
+     * TODO: Remove type param
      */
-    public function updateFromInput(string $type, Entity $entityModel, array $input = [])
+    public function updateFromInput(string $type, Entity $entityModel, array $input = []): Entity
     {
-        if ($entityModel->name !== $input['name']) {
-            $entityModel->slug = $this->findSuitableSlug($type, $input['name'], $entityModel->id);
-        }
-
         $entityModel->fill($input);
         $entityModel->updated_by = user()->id;
+
+        if ($entityModel->isDirty('name')) {
+            $entityModel->refreshSlug();
+        }
+
         $entityModel->save();
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
         }
 
-        $this->permissionService->buildJointPermissionsForEntity($entityModel);
+        $entityModel->rebuildPermissions();
         $this->searchService->indexEntity($entityModel);
         return $entityModel;
     }
@@ -595,62 +572,24 @@ class EntityRepo
 
     /**
      * Change the book that an entity belongs to.
-     * @param string $type
-     * @param integer $newBookId
-     * @param Entity $entity
-     * @param bool $rebuildPermissions
-     * @return Entity
      */
-    public function changeBook($type, $newBookId, Entity $entity, $rebuildPermissions = false)
+    public function changeBook(BookChild $bookChild, int $newBookId): Entity
     {
-        $entity->book_id = $newBookId;
+        $bookChild->book_id = $newBookId;
+        $bookChild->refreshSlug();
+        $bookChild->save();
+
         // Update related activity
-        foreach ($entity->activity as $activity) {
-            $activity->book_id = $newBookId;
-            $activity->save();
-        }
-        $entity->slug = $this->findSuitableSlug($type, $entity->name, $entity->id, $newBookId);
-        $entity->save();
+        $bookChild->activity()->update(['book_id' => $newBookId]);
 
         // Update all child pages if a chapter
-        if (strtolower($type) === 'chapter') {
-            foreach ($entity->pages as $page) {
-                $this->changeBook('page', $newBookId, $page, false);
+        if ($bookChild->isA('chapter')) {
+            foreach ($bookChild->pages as $page) {
+                $this->changeBook($page, $newBookId);
             }
         }
 
-        // Update permissions if applicable
-        if ($rebuildPermissions) {
-            $entity->load('book');
-            $this->permissionService->buildJointPermissionsForEntity($entity->book);
-        }
-
-        return $entity;
-    }
-
-    /**
-     * Alias method to update the book jointPermissions in the PermissionService.
-     * @param Book $book
-     */
-    public function buildJointPermissionsForBook(Book $book)
-    {
-        $this->permissionService->buildJointPermissionsForEntity($book);
-    }
-
-    /**
-     * Format a name as a url slug.
-     * @param $name
-     * @return string
-     */
-    protected function nameToSlug($name)
-    {
-        $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', mb_strtolower($name));
-        $slug = preg_replace('/\s{2,}/', ' ', $slug);
-        $slug = str_replace(' ', '-', $slug);
-        if ($slug === "") {
-            $slug = substr(md5(rand(1, 500)), 0, 5);
-        }
-        return $slug;
+        return $bookChild;
     }
 
     /**
@@ -885,6 +824,7 @@ class EntityRepo
         $shelfBooks = $bookshelf->books()->get();
         $updatedBookCount = 0;
 
+        /** @var Book $book */
         foreach ($shelfBooks as $book) {
             if (!userCan('restrictions-manage', $book)) {
                 continue;
@@ -893,7 +833,7 @@ class EntityRepo
             $book->restricted = $bookshelf->restricted;
             $book->permissions()->createMany($shelfPermissions);
             $book->save();
-            $this->permissionService->buildJointPermissionsForEntity($book);
+            $book->rebuildPermissions();
             $updatedBookCount++;
         }
 

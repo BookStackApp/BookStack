@@ -54,12 +54,12 @@ class BookController extends Controller
      */
     public function index()
     {
-        $view = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books'));
-        $sort = setting()->getUser($this->currentUser, 'books_sort', 'name');
-        $order = setting()->getUser($this->currentUser, 'books_sort_order', 'asc');
+        $view = setting()->getForCurrentUser('books_view_type', config('app.views.books'));
+        $sort = setting()->getForCurrentUser('books_sort', 'name');
+        $order = setting()->getForCurrentUser('books_sort_order', 'asc');
 
         $books = $this->bookRepo->getAllPaginated('book', 18, $sort, $order);
-        $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed('book', 4, 0) : false;
+        $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed('book', 4, 0) : false;
         $popular = $this->bookRepo->getPopular('book', 4, 0);
         $new = $this->bookRepo->getRecentlyCreated('book', 4, 0);
 
@@ -107,7 +107,6 @@ class BookController extends Controller
      * @throws NotFoundException
      * @throws ImageUploadException
      * @throws ValidationException
-     * @throws Throwable
      */
     public function store(Request $request, string $shelfSlug = null)
     {
@@ -246,7 +245,7 @@ class BookController extends Controller
      * @return Factory|View
      * @throws NotFoundException
      */
-    public function getSortItem(string $bookSlug)
+    public function sortItem(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $bookChildren = $this->bookRepo->getBookChildren($book);
@@ -286,10 +285,12 @@ class BookController extends Controller
         // Get the books involved in the sort
         $bookIdsInvolved = $bookIdsInvolved->unique()->toArray();
         $booksInvolved = $this->bookRepo->getManyById('book', $bookIdsInvolved, false, true);
+
         // Throw permission error if invalid ids or inaccessible books given.
         if (count($bookIdsInvolved) !== count($booksInvolved)) {
             $this->showPermissionError();
         }
+
         // Check permissions of involved books
         $booksInvolved->each(function (Book $book) {
              $this->checkOwnablePermission('book-update', $book);
@@ -304,7 +305,7 @@ class BookController extends Controller
             $chapterChanged = ($mapItem->type === 'page') && intval($model->chapter_id) !== $mapItem->parentChapter;
 
             if ($bookChanged) {
-                $this->bookRepo->changeBook($mapItem->type, $mapItem->book, $model);
+                $this->bookRepo->changeBook($model, $mapItem->book);
             }
             if ($chapterChanged) {
                 $model->chapter_id = intval($mapItem->parentChapter);
@@ -318,7 +319,7 @@ class BookController extends Controller
 
         // Rebuild permissions and add activity for involved books.
         $booksInvolved->each(function (Book $book) {
-            $this->bookRepo->buildJointPermissionsForBook($book);
+            $book->rebuildPermissions();
             Activity::add($book, 'book_sort', $book->id);
         });
 

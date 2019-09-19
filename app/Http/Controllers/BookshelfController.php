@@ -40,9 +40,9 @@ class BookshelfController extends Controller
      */
     public function index()
     {
-        $view = setting()->getUser($this->currentUser, 'bookshelves_view_type', config('app.views.bookshelves', 'grid'));
-        $sort = setting()->getUser($this->currentUser, 'bookshelves_sort', 'name');
-        $order = setting()->getUser($this->currentUser, 'bookshelves_sort_order', 'asc');
+        $view = setting()->getForCurrentUser('bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+        $sort = setting()->getForCurrentUser('bookshelves_sort', 'name');
+        $order = setting()->getForCurrentUser('bookshelves_sort_order', 'asc');
         $sortOptions = [
             'name' => trans('common.sort_name'),
             'created_at' => trans('common.sort_created_at'),
@@ -54,7 +54,7 @@ class BookshelfController extends Controller
             $shelf->books = $this->entityRepo->getBookshelfChildren($shelf);
         }
 
-        $recents = $this->signedIn ? $this->entityRepo->getRecentlyViewed('bookshelf', 4, 0) : false;
+        $recents = $this->isSignedIn() ? $this->entityRepo->getRecentlyViewed('bookshelf', 4, 0) : false;
         $popular = $this->entityRepo->getPopular('bookshelf', 4, 0);
         $new = $this->entityRepo->getRecentlyCreated('bookshelf', 4, 0);
 

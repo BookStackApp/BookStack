@@ -1,6 +1,8 @@
 <?php namespace BookStack\Entities;
 
-class Chapter extends Entity
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Chapter extends BookChild
 {
     public $searchFactor = 1.3;
 
@@ -13,15 +15,6 @@ class Chapter extends Entity
     public function getMorphClass()
     {
         return 'BookStack\\Chapter';
-    }
-
-    /**
-     * Get the book this chapter is within.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function book()
-    {
-        return $this->belongsTo(Book::class);
     }
 
     /**

@@ -177,7 +177,7 @@ class UserController extends Controller
         }
 
         // External auth id updates
-        if ($this->currentUser->can('users-manage') && $request->filled('external_auth_id')) {
+        if (user()->can('users-manage') && $request->filled('external_auth_id')) {
             $user->external_auth_id = $request->get('external_auth_id');
         }
 

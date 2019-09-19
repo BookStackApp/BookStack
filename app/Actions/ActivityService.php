@@ -73,6 +73,7 @@ class ActivityService
      */
     public function removeEntity(Entity $entity)
     {
+        // TODO - Rewrite to db query.
         $activities = $entity->activity;
         foreach ($activities as $activity) {
             $activity->extra = $entity->name;

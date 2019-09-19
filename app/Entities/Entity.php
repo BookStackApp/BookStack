@@ -6,6 +6,7 @@ use BookStack\Actions\Tag;
 use BookStack\Actions\View;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Facades\Permissions;
 use BookStack\Ownable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -91,7 +92,8 @@ class Entity extends Ownable
      */
     public function activity()
     {
-        return $this->morphMany(Activity::class, 'entity')->orderBy('created_at', 'desc');
+        return $this->morphMany(Activity::class, 'entity')
+            ->orderBy('created_at', 'desc');
     }
 
     /**
@@ -100,11 +102,6 @@ class Entity extends Ownable
     public function views()
     {
         return $this->morphMany(View::class, 'viewable');
-    }
-
-    public function viewCountQuery()
-    {
-        return $this->views()->selectRaw('viewable_id, sum(views) as view_count')->groupBy('viewable_id');
     }
 
     /**
@@ -186,6 +183,14 @@ class Entity extends Ownable
     }
 
     /**
+     * Get the type of this entity.
+     */
+    public function type(): string
+    {
+        return static::getType();
+    }
+
+    /**
      * Get an instance of an entity of the given type.
      * @param $type
      * @return Entity
@@ -254,5 +259,24 @@ class Entity extends Ownable
     public function getUrl($path = '/')
     {
         return $path;
+    }
+
+    /**
+     * Rebuild the permissions for this entity.
+     */
+    public function rebuildPermissions()
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        Permissions::buildJointPermissionsForEntity($this);
+    }
+
+    /**
+     * Generate and set a new URL slug for this model.
+     */
+    public function refreshSlug(): string
+    {
+        $generator = new SlugGenerator($this);
+        $this->slug = $generator->generate();
+        return $this->slug;
     }
 }

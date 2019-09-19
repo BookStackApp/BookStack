@@ -201,7 +201,9 @@ class ChapterController extends Controller
             return redirect()->back();
         }
 
-        $this->entityRepo->changeBook('chapter', $parent->id, $chapter, true);
+        $this->entityRepo->changeBook($chapter, $parent->id);
+        $chapter->rebuildPermissions();
+
         Activity::add($chapter, 'chapter_move', $chapter->book->id);
         $this->showSuccessNotification( trans('entities.chapter_move_success', ['bookName' => $parent->name]));
 

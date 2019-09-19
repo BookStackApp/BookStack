@@ -215,7 +215,6 @@ class PermissionService
      * @param Collection $books
      * @param array $roles
      * @param bool $deleteOld
-     * @throws \Throwable
      */
     protected function buildJointPermissionsForBooks($books, $roles, $deleteOld = false)
     {
