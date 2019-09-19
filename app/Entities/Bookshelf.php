@@ -104,4 +104,18 @@ class Bookshelf extends Entity
     {
         return $this->books()->where('id', '=', $book->id)->count() > 0;
     }
+
+    /**
+     * Add a book to the end of this shelf.
+     * @param Book $book
+     */
+    public function appendBook(Book $book)
+    {
+       if (!$this->contains($book)) {
+           return;
+       }
+
+       $maxOrder = $this->books()->max('order');
+       $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
+    }
 }

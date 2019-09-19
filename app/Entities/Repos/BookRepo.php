@@ -3,9 +3,7 @@
 
 namespace BookStack\Entities\Repos;
 
-
 use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 
@@ -23,21 +21,6 @@ class BookRepo extends EntityRepo
         /** @var Book $book */
         $book = $this->getEntityBySlug('book', $slug);
         return $book;
-    }
-
-    /**
-     * Append a Book to a BookShelf.
-     * @param Bookshelf $shelf
-     * @param Book $book
-     */
-    public function appendBookToShelf(Bookshelf $shelf, Book $book)
-    {
-        if ($shelf->contains($book)) {
-            return;
-        }
-
-        $maxOrder = $shelf->books()->max('order');
-        $shelf->books()->attach($book->id, ['order' => $maxOrder + 1]);
     }
 
     /**

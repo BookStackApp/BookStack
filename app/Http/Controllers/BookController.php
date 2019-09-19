@@ -3,10 +3,9 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
 use BookStack\Entities\EntityContextManager;
 use BookStack\Entities\Repos\BookRepo;
-use BookStack\Entities\Repos\EntityRepo;
-use BookStack\Entities\ExportService;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
@@ -121,16 +120,18 @@ class BookController extends Controller
 
         $bookshelf = null;
         if ($shelfSlug !== null) {
+            /** @var Bookshelf $bookshelf */
             $bookshelf = $this->bookRepo->getEntityBySlug('bookshelf', $shelfSlug);
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
         }
 
+        /** @var Book $book */
         $book = $this->bookRepo->createFromInput('book', $request->all());
         $this->bookUpdateActions($book, $request);
         Activity::add($book, 'book_create', $book->id);
 
         if ($bookshelf) {
-            $this->bookRepo->appendBookToShelf($bookshelf, $book);
+            $bookshelf->appendBook($book);
             Activity::add($bookshelf, 'bookshelf_update');
         }
 
