@@ -166,14 +166,14 @@ class RegisterController extends Controller
             try {
                 $this->emailConfirmationService->sendConfirmation($newUser);
             } catch (Exception $e) {
-                session()->flash('error', trans('auth.email_confirm_send_error'));
+                $this->showErrorNotification(trans('auth.email_confirm_send_error'));
             }
 
             return redirect('/register/confirm');
         }
 
         auth()->login($newUser);
-        session()->flash('success', trans('auth.register_success'));
+        $this->showSuccessNotification(trans('auth.register_success'));
         return redirect($this->redirectPath());
     }
 

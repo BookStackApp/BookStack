@@ -254,7 +254,7 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $this->entityRepo->updateEntityPermissionsFromRequest($request, $shelf);
-        session()->flash('success', trans('entities.shelves_permissions_updated'));
+        $this->showSuccessNotification( trans('entities.shelves_permissions_updated'));
         return redirect($shelf->getUrl());
     }
 
@@ -270,7 +270,7 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $updateCount = $this->entityRepo->copyBookshelfPermissions($shelf);
-        session()->flash('success', trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
+        $this->showSuccessNotification( trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
         return redirect($shelf->getUrl());
     }
 

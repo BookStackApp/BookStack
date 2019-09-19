@@ -240,7 +240,7 @@ class PageController extends Controller
         }
 
         if (count($warnings) > 0) {
-            session()->flash('warning', implode("\n", $warnings));
+            $this->showWarningNotification( implode("\n", $warnings));
         }
 
         $draftsEnabled = $this->signedIn;
@@ -359,7 +359,7 @@ class PageController extends Controller
         $this->pageRepo->destroyPage($page);
 
         Activity::addMessage('page_delete', $book->id, $page->name);
-        session()->flash('success', trans('entities.pages_delete_success'));
+        $this->showSuccessNotification( trans('entities.pages_delete_success'));
         return redirect($book->getUrl());
     }
 
@@ -375,7 +375,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getById('page', $pageId, true);
         $book = $page->book;
         $this->checkOwnablePermission('page-update', $page);
-        session()->flash('success', trans('entities.pages_delete_draft_success'));
+        $this->showSuccessNotification( trans('entities.pages_delete_draft_success'));
         $this->pageRepo->destroyPage($page);
         return redirect($book->getUrl());
     }
@@ -491,12 +491,12 @@ class PageController extends Controller
 
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($currentRevision->id) === intval($revId)) {
-            session()->flash('error', trans('entities.revision_cannot_delete_latest'));
+            $this->showErrorNotification( trans('entities.revision_cannot_delete_latest'));
             return response()->view('pages.revisions', ['page' => $page, 'book' => $page->book, 'current' => $page], 400);
         }
 
         $revision->delete();
-        session()->flash('success', trans('entities.revision_delete_success'));
+        $this->showSuccessNotification( trans('entities.revision_delete_success'));
         return redirect($page->getUrl('/revisions'));
     }
 
@@ -568,7 +568,7 @@ class PageController extends Controller
 
         $this->pageRepo->changePageParent($page, $parent);
         Activity::add($page, 'page_move', $page->book->id);
-        session()->flash('success', trans('entities.pages_move_success', ['parentName' => $parent->name]));
+        $this->showSuccessNotification( trans('entities.pages_move_success', ['parentName' => $parent->name]));
 
         return redirect($page->getUrl());
     }
@@ -616,7 +616,7 @@ class PageController extends Controller
             try {
                 $parent = $this->pageRepo->getById($entityType, $entityId);
             } catch (Exception $e) {
-                session()->flash(trans('entities.selected_book_chapter_not_found'));
+                $this->showErrorNotification(trans('entities.selected_book_chapter_not_found'));
                 return redirect()->back();
             }
         }
@@ -626,7 +626,7 @@ class PageController extends Controller
         $pageCopy = $this->pageRepo->copyPage($page, $parent, $request->get('name', ''));
 
         Activity::add($pageCopy, 'page_create', $pageCopy->book->id);
-        session()->flash('success', trans('entities.pages_copy_success'));
+        $this->showSuccessNotification( trans('entities.pages_copy_success'));
 
         return redirect($pageCopy->getUrl());
     }
@@ -663,7 +663,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
         $this->pageRepo->updateEntityPermissionsFromRequest($request, $page);
-        session()->flash('success', trans('entities.pages_permissions_success'));
+        $this->showSuccessNotification( trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());
     }
 }
