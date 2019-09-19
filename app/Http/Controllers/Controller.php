@@ -2,9 +2,6 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Auth\User;
-use BookStack\Entities\Entity;
-use BookStack\Facades\Activity;
 use BookStack\Ownable;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -17,22 +14,19 @@ abstract class Controller extends BaseController
     use DispatchesJobs, ValidatesRequests;
 
     /**
-     * @var User static
-     */
-    protected $currentUser;
-
-    /**
-     * @var bool
-     */
-    protected $signedIn;
-
-    /**
      * Controller constructor.
      */
     public function __construct()
     {
-        $this->currentUser = user();
-        $this->signedIn = auth()->check();
+        //
+    }
+
+    /**
+     * Check if the current user is signed in.
+     */
+    protected function isSignedIn(): bool
+    {
+        return auth()->check();
     }
 
     /**
@@ -123,7 +117,7 @@ abstract class Controller extends BaseController
     protected function checkPermissionOrCurrentUser(string $permissionName, int $userId)
     {
         return $this->checkPermissionOr($permissionName, function () use ($userId) {
-            return $userId === $this->currentUser->id;
+            return $userId === user()->id;
         });
     }
 

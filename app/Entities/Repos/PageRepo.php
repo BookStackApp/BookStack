@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
-use Illuminate\Support\Collection;
 
 class PageRepo extends EntityRepo
 {
@@ -60,11 +59,6 @@ class PageRepo extends EntityRepo
         $oldHtml = $page->html;
         $oldName = $page->name;
 
-        // Prevent slug being updated if no name change
-        if ($page->name !== $input['name']) {
-            $page->slug = $this->findSuitableSlug('page', $input['name'], $page->id, $book_id);
-        }
-
         // Save page tags if present
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($page, $input['tags']);
@@ -79,11 +73,17 @@ class PageRepo extends EntityRepo
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = $this->pageToPlainText($page);
+        $page->updated_by = $userId;
+        $page->revision_count++;
+
         if (setting('app-editor') !== 'markdown') {
             $page->markdown = '';
         }
-        $page->updated_by = $userId;
-        $page->revision_count++;
+
+        if ($page->isDirty('name')) {
+            $page->refreshSlug();
+        }
+
         $page->save();
 
         // Remove all update drafts for this user & page.
@@ -242,8 +242,7 @@ class PageRepo extends EntityRepo
         }
 
         $book->pages()->save($page);
-        $page = $this->entityProvider->page->find($page->id);
-        $this->permissionService->buildJointPermissionsForEntity($page);
+        $page->refresh()->rebuildPermissions();
         return $page;
     }
 
@@ -310,12 +309,11 @@ class PageRepo extends EntityRepo
             $draftPage->template = ($input['template'] === 'true');
         }
 
-        $draftPage->slug = $this->findSuitableSlug('page', $draftPage->name, false, $draftPage->book->id);
         $draftPage->html = $this->formatHtml($input['html']);
         $draftPage->text = $this->pageToPlainText($draftPage);
         $draftPage->draft = false;
         $draftPage->revision_count = 1;
-
+        $draftPage->refreshSlug();
         $draftPage->save();
         $this->savePageRevision($draftPage, trans('entities.pages_initial_revision'));
         $this->searchService->indexEntity($draftPage);
@@ -468,12 +466,14 @@ class PageRepo extends EntityRepo
     {
         $page->revision_count++;
         $this->savePageRevision($page);
+
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
-        $page->slug = $this->findSuitableSlug('page', $page->name, $page->id, $book->id);
         $page->text = $this->pageToPlainText($page);
         $page->updated_by = user()->id;
+        $page->refreshSlug();
         $page->save();
+
         $this->searchService->indexEntity($page);
         return $page;
     }
@@ -482,18 +482,19 @@ class PageRepo extends EntityRepo
      * Change the page's parent to the given entity.
      * @param Page $page
      * @param Entity $parent
-     * @throws \Throwable
      */
     public function changePageParent(Page $page, Entity $parent)
     {
         $book = $parent->isA('book') ? $parent : $parent->book;
         $page->chapter_id = $parent->isA('chapter') ? $parent->id : 0;
         $page->save();
+
         if ($page->book->id !== $book->id) {
-            $page = $this->changeBook('page', $book->id, $page);
+            $page = $this->changeBook($page, $book->id);
         }
+
         $page->load('book');
-        $this->permissionService->buildJointPermissionsForEntity($book);
+        $book->rebuildPermissions();
     }
 
     /**

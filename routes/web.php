@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}/edit', 'BookController@edit');
         Route::put('/{slug}', 'BookController@update');
         Route::delete('/{id}', 'BookController@destroy');
-        Route::get('/{slug}/sort-item', 'BookController@getSortItem');
+        Route::get('/{slug}/sort-item', 'BookController@sortItem');
         Route::get('/{slug}', 'BookController@show');
         Route::get('/{bookSlug}/permissions', 'BookController@showPermissions');
         Route::put('/{bookSlug}/permissions', 'BookController@permissions');

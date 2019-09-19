@@ -182,6 +182,7 @@ return [
         'Setting'  => BookStack\Facades\Setting::class,
         'Views'    => BookStack\Facades\Views::class,
         'Images'   => BookStack\Facades\Images::class,
+        'Permissions' => BookStack\Facades\Permissions::class,
 
     ],
 

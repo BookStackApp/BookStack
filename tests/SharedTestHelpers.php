@@ -80,7 +80,7 @@ trait SharedTestHelpers
      */
     protected function regenEntityPermissions(Entity $entity)
     {
-        app(PermissionService::class)->buildJointPermissionsForEntity($entity);
+        $entity->rebuildPermissions();
         $entity->load('jointPermissions');
     }
 

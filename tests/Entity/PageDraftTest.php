@@ -18,25 +18,26 @@ class PageDraftTest extends BrowserKitTest
     public function test_draft_content_shows_if_available()
     {
         $addedContent = '<p>test message content</p>';
-        $this->asAdmin()->visit($this->page->getUrl() . '/edit')
+        $this->asAdmin()->visit($this->page->getUrl('/edit'))
             ->dontSeeInField('html', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
-        $this->asAdmin()->visit($this->page->getUrl() . '/edit')
+        $this->asAdmin()->visit($this->page->getUrl('/edit'))
             ->seeInField('html', $newContent);
     }
 
     public function test_draft_not_visible_by_others()
     {
         $addedContent = '<p>test message content</p>';
-        $this->asAdmin()->visit($this->page->getUrl() . '/edit')
+        $this->asAdmin()->visit($this->page->getUrl('/edit'))
             ->dontSeeInField('html', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
         $newUser = $this->getEditor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
-        $this->actingAs($newUser)->visit($this->page->getUrl() . '/edit')
+
+        $this->actingAs($newUser)->visit($this->page->getUrl('/edit'))
             ->dontSeeInField('html', $newContent);
     }
 
@@ -44,7 +45,7 @@ class PageDraftTest extends BrowserKitTest
     {
         $this->asAdmin();
         $this->pageRepo->updatePageDraft($this->page, ['html' => 'test content']);
-        $this->asAdmin()->visit($this->page->getUrl() . '/edit')
+        $this->asAdmin()->visit($this->page->getUrl('/edit'))
             ->see('You are currently editing a draft');
     }
 
@@ -52,7 +53,7 @@ class PageDraftTest extends BrowserKitTest
     {
         $nonEditedPage = \BookStack\Entities\Page::take(10)->get()->last();
         $addedContent = '<p>test message content</p>';
-        $this->asAdmin()->visit($this->page->getUrl() . '/edit')
+        $this->asAdmin()->visit($this->page->getUrl('/edit'))
             ->dontSeeInField('html', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
@@ -60,7 +61,7 @@ class PageDraftTest extends BrowserKitTest
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
         $this->actingAs($newUser)
-            ->visit($this->page->getUrl() . '/edit')
+            ->visit($this->page->getUrl('/edit'))
             ->see('Admin has started editing this page');
             $this->flushSession();
         $this->visit($nonEditedPage->getUrl() . '/edit')

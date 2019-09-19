@@ -111,7 +111,7 @@ class Bookshelf extends Entity
      */
     public function appendBook(Book $book)
     {
-       if (!$this->contains($book)) {
+       if ($this->contains($book)) {
            return;
        }
 
