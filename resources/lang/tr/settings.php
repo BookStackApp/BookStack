@@ -17,7 +17,7 @@ return [
     'app_name' => 'Uygulama Adı',
     'app_name_desc' => 'Bu ad, başlıkta ve sistem tarafından gönderilen e-postalarda gösterilir.',
     'app_name_header' => 'Adı başlıkta göster',
-    'app_public_access' => 'Herkese Açık Erişin',
+    'app_public_access' => 'Herkese Açık Erişim',
     'app_public_access_desc' => 'Bu seçeneğin etkinleştirilmesi, oturum açmamış ziyaretçilerin BookStack örneğinizdeki içeriğe erişmesine izin verir.',
     'app_public_access_desc_guest' => 'Genel ziyaretçilere erişim, "Misafir (Guest)" kullanıcısı tarafından kontrol edilebilir.',
     'app_public_access_toggle' => 'Herkese açık erişime izin ver',
