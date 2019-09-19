@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * The base class for book-like items such as pages, chapters & books.
  * This is not a database model in itself but extended.
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property string $slug
  * @property Carbon $created_at

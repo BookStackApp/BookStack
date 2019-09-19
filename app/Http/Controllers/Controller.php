@@ -3,6 +3,8 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\User;
+use BookStack\Entities\Entity;
+use BookStack\Facades\Activity;
 use BookStack\Ownable;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;

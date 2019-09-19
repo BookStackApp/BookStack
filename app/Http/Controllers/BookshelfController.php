@@ -212,7 +212,7 @@ class BookshelfController extends Controller
     {
         $shelf = $this->entityRepo->getEntityBySlug('bookshelf', $slug); /** @var $shelf Bookshelf */
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
-        Activity::addMessage('bookshelf_delete', 0, $shelf->name);
+        Activity::addMessage('bookshelf_delete', $shelf->name);
 
         if ($shelf->cover) {
             $this->imageRepo->destroyImage($shelf->cover);
