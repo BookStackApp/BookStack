@@ -3,13 +3,18 @@
 namespace BookStack\Actions;
 
 use BookStack\Auth\User;
+use BookStack\Entities\Entity;
 use BookStack\Model;
 
 /**
- * @property string  key
- * @property \User   user
- * @property \Entity entity
- * @property string  extra
+ * @property string $key
+ * @property User $user
+ * @property Entity $entity
+ * @property string $extra
+ * @property string $entity_type
+ * @property int $entity_id
+ * @property int $user_id
+ * @property int $book_id
  */
 class Activity extends Model
 {

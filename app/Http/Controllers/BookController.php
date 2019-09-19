@@ -58,11 +58,6 @@ class BookController extends Controller
         $view = setting()->getUser($this->currentUser, 'books_view_type', config('app.views.books'));
         $sort = setting()->getUser($this->currentUser, 'books_sort', 'name');
         $order = setting()->getUser($this->currentUser, 'books_sort_order', 'asc');
-        $sortOptions = [
-            'name' => trans('common.sort_name'),
-            'created_at' => trans('common.sort_created_at'),
-            'updated_at' => trans('common.sort_updated_at'),
-        ];
 
         $books = $this->bookRepo->getAllPaginated('book', 18, $sort, $order);
         $recents = $this->signedIn ? $this->bookRepo->getRecentlyViewed('book', 4, 0) : false;
@@ -80,7 +75,6 @@ class BookController extends Controller
             'view' => $view,
             'sort' => $sort,
             'order' => $order,
-            'sortOptions' => $sortOptions,
         ]);
     }
 
@@ -114,6 +108,7 @@ class BookController extends Controller
      * @throws NotFoundException
      * @throws ImageUploadException
      * @throws ValidationException
+     * @throws Throwable
      */
     public function store(Request $request, string $shelfSlug = null)
     {
@@ -192,6 +187,7 @@ class BookController extends Controller
      * @throws ImageUploadException
      * @throws NotFoundException
      * @throws ValidationException
+     * @throws Throwable
      */
     public function update(Request $request, string $slug)
     {
@@ -340,7 +336,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
-        Activity::addMessage('book_delete', 0, $book->name);
+        Activity::addMessage('book_delete', $book->name);
 
         if ($book->cover) {
             $this->imageRepo->destroyImage($book->cover);

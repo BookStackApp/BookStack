@@ -358,7 +358,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-delete', $page);
         $this->pageRepo->destroyPage($page);
 
-        Activity::addMessage('page_delete', $book->id, $page->name);
+        Activity::addMessage('page_delete', $page->name, $book->id);
         $this->showSuccessNotification( trans('entities.pages_delete_success'));
         return redirect($book->getUrl());
     }

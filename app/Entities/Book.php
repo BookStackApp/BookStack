@@ -2,6 +2,13 @@
 
 use BookStack\Uploads\Image;
 
+/**
+ * Class Book
+ * @property string $description
+ * @property int $image_id
+ * @property Image|null $cover
+ * @package BookStack\Entities
+ */
 class Book extends Entity
 {
     public $searchFactor = 2;

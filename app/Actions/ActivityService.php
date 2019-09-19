@@ -2,7 +2,6 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Entity;
-use Session;
 
 class ActivityService
 {
@@ -12,7 +11,7 @@ class ActivityService
 
     /**
      * ActivityService constructor.
-     * @param \BookStack\Actions\Activity $activity
+     * @param Activity $activity
      * @param PermissionService $permissionService
      */
     public function __construct(Activity $activity, PermissionService $permissionService)
@@ -24,42 +23,46 @@ class ActivityService
 
     /**
      * Add activity data to database.
-     * @param Entity $entity
-     * @param        $activityKey
+     * @param \BookStack\Entities\Entity $entity
+     * @param string $activityKey
      * @param int $bookId
-     * @param bool $extra
      */
-    public function add(Entity $entity, $activityKey, $bookId = 0, $extra = false)
+    public function add(Entity $entity, string $activityKey, int $bookId = null)
     {
-        $activity = $this->activity->newInstance();
-        $activity->user_id = $this->user->id;
-        $activity->book_id = $bookId;
-        $activity->key = strtolower($activityKey);
-        if ($extra !== false) {
-            $activity->extra = $extra;
-        }
+        $activity = $this->newActivityForUser($activityKey, $bookId);
         $entity->activity()->save($activity);
         $this->setNotification($activityKey);
     }
 
     /**
-     * Adds a activity history with a message & without binding to a entity.
-     * @param            $activityKey
+     * Adds a activity history with a message, without binding to a entity.
+     * @param string $activityKey
+     * @param string $message
      * @param int $bookId
-     * @param bool|false $extra
      */
-    public function addMessage($activityKey, $bookId = 0, $extra = false)
+    public function addMessage(string $activityKey, string $message, int $bookId = null)
     {
-        $this->activity->user_id = $this->user->id;
-        $this->activity->book_id = $bookId;
-        $this->activity->key = strtolower($activityKey);
-        if ($extra !== false) {
-            $this->activity->extra = $extra;
-        }
-        $this->activity->save();
+        $this->newActivityForUser($activityKey, $bookId)->forceFill([
+            'extra' => $message
+        ])->save();
+
         $this->setNotification($activityKey);
     }
 
+    /**
+     * Get a new activity instance for the current user.
+     * @param string $key
+     * @param int|null $bookId
+     * @return Activity
+     */
+    protected function newActivityForUser(string $key, int $bookId = null)
+    {
+        return $this->activity->newInstance()->forceFill([
+            'key' => strtolower($key),
+            'user_id' => $this->user->id,
+            'book_id' => $bookId ?? 0,
+        ]);
+    }
 
     /**
      * Removes the entity attachment from each of its activities
@@ -90,7 +93,11 @@ class ActivityService
     {
         $activityList = $this->permissionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')->with('user', 'entity')->skip($count * $page)->take($count)->get();
+            ->orderBy('created_at', 'desc')
+            ->with('user', 'entity')
+            ->skip($count * $page)
+            ->take($count)
+            ->get();
 
         return $this->filterSimilar($activityList);
     }
@@ -171,7 +178,7 @@ class ActivityService
         $notificationTextKey = 'activities.' . $activityKey . '_notification';
         if (trans()->has($notificationTextKey)) {
             $message = trans($notificationTextKey);
-            Session::flash('success', $message);
+            session()->flash('success', $message);
         }
     }
 }

@@ -143,7 +143,7 @@ class ChapterController extends Controller
         $chapter = $this->entityRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
         $book = $chapter->book;
         $this->checkOwnablePermission('chapter-delete', $chapter);
-        Activity::addMessage('chapter_delete', $book->id, $chapter->name);
+        Activity::addMessage('chapter_delete', $chapter->name, $book->id);
         $this->entityRepo->destroyChapter($chapter);
         return redirect($book->getUrl());
     }
