@@ -478,14 +478,16 @@ class EntityRepo
         $entity->permissions()->delete();
 
         if ($request->filled('restrictions')) {
-            foreach ($request->get('restrictions') as $roleId => $restrictions) {
-                foreach ($restrictions as $action => $value) {
-                    $entity->permissions()->create([
+            $entityPermissionData = collect($request->get('restrictions'))->flatMap(function($restrictions, $roleId) {
+                return collect($restrictions)->keys()->map(function($action) use ($roleId) {
+                    return [
                         'role_id' => $roleId,
-                        'action'  => strtolower($action),
-                    ]);
-                }
-            }
+                        'action' => strtolower($action),
+                    ] ;
+                });
+            });
+
+            $entity->permissions()->createMany($entityPermissionData);
         }
 
         $entity->save();
@@ -525,10 +527,9 @@ class EntityRepo
 
     /**
      * Update entity details from request input.
-     * Used for books and chapters.
-     * TODO: Remove type param
+     * Used for shelves, books and chapters.
      */
-    public function updateFromInput(string $type, Entity $entityModel, array $input = []): Entity
+    public function updateFromInput(Entity $entityModel, array $input): Entity
     {
         $entityModel->fill($input);
         $entityModel->updated_by = user()->id;

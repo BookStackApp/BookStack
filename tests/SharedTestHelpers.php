@@ -215,13 +215,11 @@ trait SharedTestHelpers
     protected function runWithEnv(string $name, $value, callable $callback)
     {
         Env::disablePutenv();
-        $originalVal = $_ENV[$name] ?? null;
+        $originalVal = $_SERVER[$name] ?? null;
 
         if (is_null($value)) {
-            unset($_ENV[$name]);
             unset($_SERVER[$name]);
         } else {
-            $_ENV[$name] = $value;
             $_SERVER[$name] = $value;
         }
 
@@ -230,10 +228,8 @@ trait SharedTestHelpers
 
         if (is_null($originalVal)) {
             unset($_SERVER[$name]);
-            unset($_ENV[$name]);
         } else {
             $_SERVER[$name] = $originalVal;
-            $_ENV[$name] = $originalVal;
         }
     }
 

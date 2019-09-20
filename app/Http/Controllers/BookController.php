@@ -199,7 +199,7 @@ class BookController extends Controller
             'image' => $this->imageRepo->getImageValidationRules(),
         ]);
 
-         $book = $this->bookRepo->updateFromInput('book', $book, $request->all());
+         $book = $this->bookRepo->updateFromInput($book, $request->all());
          $this->bookUpdateActions($book, $request);
 
          Activity::add($book, 'book_update', $book->id);

@@ -177,7 +177,7 @@ class BookshelfController extends Controller
             'image' => $this->imageRepo->getImageValidationRules(),
         ]);
 
-         $shelf = $this->entityRepo->updateFromInput('bookshelf', $shelf, $request->all());
+         $shelf = $this->entityRepo->updateFromInput($shelf, $request->all());
          $this->shelfUpdateActions($shelf, $request);
 
          Activity::add($shelf, 'bookshelf_update');

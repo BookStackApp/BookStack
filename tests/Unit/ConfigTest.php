@@ -20,7 +20,6 @@ class ConfigTest extends TestCase
 
     public function test_filesystem_attachments_falls_back_to_storage_type_var()
     {
-        putenv('STORAGE_TYPE=local_secure');
         $this->runWithEnv('STORAGE_TYPE', 'local_secure', function() {
             $this->checkEnvConfigResult('STORAGE_ATTACHMENT_TYPE', 's3', 'filesystems.attachments', 's3');
             $this->checkEnvConfigResult('STORAGE_ATTACHMENT_TYPE', null, 'filesystems.attachments', 'local_secure');
