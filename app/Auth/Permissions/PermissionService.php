@@ -683,12 +683,11 @@ class PermissionService
         if (strtolower($entityType) === 'page') {
             // Prevent drafts being visible to others.
             $query = $query->where(function ($query) {
-                $query->where('draft', '=', false);
-                if ($this->currentUser()) {
-                    $query->orWhere(function ($query) {
-                        $query->where('draft', '=', true)->where('created_by', '=', $this->currentUser()->id);
+                $query->where('draft', '=', false)
+                    ->orWhere(function ($query) {
+                        $query->where('draft', '=', true)
+                            ->where('created_by', '=', $this->currentUser()->id);
                     });
-                }
             });
         }
 

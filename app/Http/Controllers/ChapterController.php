@@ -3,7 +3,6 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\EntityRepo;
-use BookStack\Entities\ExportService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Views;
@@ -113,7 +112,7 @@ class ChapterController extends Controller
         $chapter = $this->entityRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
 
-        $this->entityRepo->updateFromInput('chapter', $chapter, $request->all());
+        $this->entityRepo->updateFromInput($chapter, $request->all());
         Activity::add($chapter, 'chapter_update', $chapter->book->id);
         return redirect($chapter->getUrl());
     }
