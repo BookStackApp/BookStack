@@ -135,6 +135,7 @@ return [
     'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
+    'book_parent_shelves_empty' => 'Shelves that this book is on will appear here.',
 
     // Chapters
     'chapter' => 'Chapter',

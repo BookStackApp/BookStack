@@ -57,9 +57,7 @@
 
 @stop
 
-
 @section('right')
-
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="text-small text-muted blended-links">
@@ -75,7 +73,6 @@
             @endif
         </div>
     </div>
-
 
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
@@ -123,6 +120,16 @@
 
             @include('partials.entity-export-menu', ['entity' => $book])
         </div>
+    </div>
+
+    <div class="actions mb-xl">
+        <h5>{{ trans('entities.shelves_long') }}</h5>
+
+        @if(count($bookParentShelves) > 0)
+            @include('partials.entity-list', ['entities' => $bookParentShelves, 'style' => 'compact'])
+        @else
+            <div class="body text-muted">{{ trans('entities.book_parent_shelves_empty') }}</div>
+        @endif
     </div>
 
 @stop

@@ -413,6 +413,17 @@ class EntityRepo
         return collect($tree);
     }
 
+
+    /**
+     * Get the bookshelves that a book is contained in.
+     * @param Book $book
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getBookParentShelves(Book $book)
+    {
+        return $this->permissionService->enforceEntityRestrictions('shelf', $book->shelves())->get();
+    }
+
     /**
      * Get the child items for a chapter sorted by priority but
      * with draft items floated to the top.
