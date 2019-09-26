@@ -150,6 +150,7 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-view', $book);
 
         $bookChildren = $this->bookRepo->getBookChildren($book);
+        $bookParentShelves = $this->bookRepo->getBookParentShelves($book);
 
         Views::add($book);
         if ($request->has('shelf')) {
@@ -161,6 +162,7 @@ class BookController extends Controller
             'book' => $book,
             'current' => $book,
             'bookChildren' => $bookChildren,
+            'bookParentShelves' => $bookParentShelves,
             'activity' => Activity::entityActivity($book, 20, 1)
         ]);
     }
