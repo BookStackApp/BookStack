@@ -106,7 +106,7 @@ class ActivityService
     /**
      * Gets the latest activity for an entity, Filtering out similar
      * items to prevent a message activity list.
-     * @param Entity $entity
+     * @param \BookStack\Entities\Entity $entity
      * @param int $count
      * @param int $page
      * @return array

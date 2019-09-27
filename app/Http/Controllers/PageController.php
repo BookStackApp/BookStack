@@ -2,6 +2,7 @@
 
 use Activity;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\Actions\BookContents;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use Exception;
@@ -178,7 +179,7 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-view', $page);
 
         $page->html = $this->pageRepo->renderPage($page);
-        $sidebarTree = $this->pageRepo->getBookChildren($page->book);
+        $sidebarTree = (new BookContents($page->book))->getTree();
         $pageNav = $this->pageRepo->getPageNav($page->html);
 
         // check if the comment's are enabled

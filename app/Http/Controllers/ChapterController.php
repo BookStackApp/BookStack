@@ -2,6 +2,7 @@
 
 use Activity;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\Actions\BookContents;
 use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -72,7 +73,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->entityRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-view', $chapter);
-        $sidebarTree = $this->entityRepo->getBookChildren($chapter->book);
+        $sidebarTree = (new BookContents($chapter->book))->getTree();
         Views::add($chapter);
         $this->setPageTitle($chapter->getShortName());
         $pages = $this->entityRepo->getChapterChildren($chapter);

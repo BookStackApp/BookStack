@@ -5,6 +5,7 @@ use BookStack\Actions\TagRepo;
 use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
+use BookStack\Entities\Actions\BookContents;
 use BookStack\Entities\Book;
 use BookStack\Entities\BookChild;
 use BookStack\Entities\Bookshelf;
@@ -345,57 +346,6 @@ class EntityRepo
     }
 
     /**
-     * Get all child objects of a book.
-     * Returns a sorted collection of Pages and Chapters.
-     * Loads the book slug onto child elements to prevent access database access for getting the slug.
-     * @param Book $book
-     * @param bool $filterDrafts
-     * @param bool $renderPages
-     * @return mixed
-     */
-    public function getBookChildren(Book $book, $filterDrafts = false, $renderPages = false)
-    {
-        $q = $this->permissionService->bookChildrenQuery($book->id, $filterDrafts, $renderPages)->get();
-        $entities = [];
-        $parents = [];
-        $tree = [];
-
-        foreach ($q as $index => $rawEntity) {
-            if ($rawEntity->entity_type ===  $this->entityProvider->page->getMorphClass()) {
-                $entities[$index] = $this->entityProvider->page->newFromBuilder($rawEntity);
-                if ($renderPages) {
-                    $entities[$index]->html = $rawEntity->html;
-                    $entities[$index]->html = $this->renderPage($entities[$index]);
-                };
-            } else if ($rawEntity->entity_type === $this->entityProvider->chapter->getMorphClass()) {
-                $entities[$index] = $this->entityProvider->chapter->newFromBuilder($rawEntity);
-                $key = $entities[$index]->entity_type . ':' . $entities[$index]->id;
-                $parents[$key] = $entities[$index];
-                $parents[$key]->setAttribute('pages', collect());
-            }
-            if ($entities[$index]->chapter_id === 0 || $entities[$index]->chapter_id === '0') {
-                $tree[] = $entities[$index];
-            }
-            $entities[$index]->book = $book;
-        }
-
-        foreach ($entities as $entity) {
-            if ($entity->chapter_id === 0 || $entity->chapter_id === '0') {
-                continue;
-            }
-            $parentKey = $this->entityProvider->chapter->getMorphClass() . ':' . $entity->chapter_id;
-            if (!isset($parents[$parentKey])) {
-                $tree[] = $entity;
-                continue;
-            }
-            $chapter = $parents[$parentKey];
-            $chapter->pages->push($entity);
-        }
-
-        return collect($tree);
-    }
-
-    /**
      * Get the child items for a chapter sorted by priority but
      * with draft items floated to the top.
      * @param Chapter $chapter
@@ -407,7 +357,6 @@ class EntityRepo
             ->orderBy('draft', 'DESC')->orderBy('priority', 'ASC')->get();
     }
 
-
     /**
      * Get the next sequential priority for a new child element in the given book.
      * @param Book $book
@@ -415,8 +364,7 @@ class EntityRepo
      */
     public function getNewBookPriority(Book $book)
     {
-        $lastElem = $this->getBookChildren($book)->pop();
-        return $lastElem ? $lastElem->priority + 1 : 0;
+        return (new BookContents($book))->getLastPriority() + 1;
     }
 
     /**

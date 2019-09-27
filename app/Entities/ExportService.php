@@ -1,5 +1,6 @@
 <?php namespace BookStack\Entities;
 
+use BookStack\Entities\Actions\BookContents;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Uploads\ImageService;
 
@@ -63,7 +64,7 @@ class ExportService
      */
     public function bookToContainedHtml(Book $book)
     {
-        $bookTree = $this->entityRepo->getBookChildren($book, true, true);
+        $bookTree = (new BookContents($book))->getTree(true, true);
         $html = view('books/export', [
             'book' => $book,
             'bookChildren' => $bookTree
@@ -113,7 +114,7 @@ class ExportService
      */
     public function bookToPdf(Book $book)
     {
-        $bookTree = $this->entityRepo->getBookChildren($book, true, true);
+        $bookTree = (new BookContents($book))->getTree(true, true);
         $html = view('books/export', [
             'book' => $book,
             'bookChildren' => $bookTree
@@ -227,7 +228,7 @@ class ExportService
      */
     public function bookToPlainText(Book $book)
     {
-        $bookTree = $this->entityRepo->getBookChildren($book, true, true);
+        $bookTree = (new BookContents($book))->getTree(true, true);
         $text = $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {

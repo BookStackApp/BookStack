@@ -669,45 +669,6 @@ class PermissionService
     }
 
     /**
-     * Get the children of a book in an efficient single query, Filtered by the permission system.
-     * @param integer $book_id
-     * @param bool $filterDrafts
-     * @param bool $fetchPageContent
-     * @return QueryBuilder
-     */
-    public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false)
-    {
-        $entities = $this->entityProvider;
-        $pageSelect = $this->db->table('pages')->selectRaw($entities->page->entityRawQuery($fetchPageContent))
-            ->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
-                $query->where('draft', '=', 0);
-                if (!$filterDrafts) {
-                    $query->orWhere(function ($query) {
-                        $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
-                    });
-                }
-            });
-        $chapterSelect = $this->db->table('chapters')->selectRaw($entities->chapter->entityRawQuery())->where('book_id', '=', $book_id);
-        $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
-            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
-
-        // Add joint permission filter
-        $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
-            ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
-            ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
-            ->where(function ($query) {
-                $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
-                    $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
-                });
-            });
-        $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
-
-        $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
-        $this->clean();
-        return  $query;
-    }
-
-    /**
      * Add restrictions for a generic entity
      * @param string $entityType
      * @param Builder|\BookStack\Entities\Entity $query

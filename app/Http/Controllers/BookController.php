@@ -2,6 +2,7 @@
 
 use Activity;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\Actions\BookContents;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\EntityContextManager;
@@ -55,7 +56,7 @@ class BookController extends Controller
     /**
      * Display a listing of the book.
      */
-    public function index(): Response
+    public function index()
     {
         $view = setting()->getForCurrentUser('books_view_type', config('app.views.books'));
         $sort = setting()->getForCurrentUser('books_sort', 'name');
@@ -83,7 +84,7 @@ class BookController extends Controller
     /**
      * Show the form for creating a new book.
      */
-    public function create(string $shelfSlug = null): Response
+    public function create(string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
 
@@ -104,7 +105,7 @@ class BookController extends Controller
      * @throws ImageUploadException
      * @throws ValidationException
      */
-    public function store(Request $request, string $shelfSlug = null): Response
+    public function store(Request $request, string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
         $this->validate($request, [
@@ -133,10 +134,10 @@ class BookController extends Controller
     /**
      * Display the specified book.
      */
-    public function show(Request $request, string $slug): Response
+    public function show(Request $request, string $slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        $bookChildren = $this->oldBookRepo->getBookChildren($book);
+        $bookChildren = (new BookContents($book))->getTree();
 
         Views::add($book);
         if ($request->has('shelf')) {
@@ -156,15 +157,18 @@ class BookController extends Controller
      * Show the form for editing the specified book.
      * @param string $slug
      * @return Response
-     * @throws NotFoundException
      */
     public function edit(string $slug)
     {
-        $book = $this->oldBookRepo->getBySlug($slug);
+        $book = $this->bookRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named', ['bookName'=>$book->getShortName()]));
         return view('books.edit', ['book' => $book, 'current' => $book]);
     }
+
+    /**
+     * TODO - Continue from here
+     */
 
     /**
      * Update the specified book in storage.
@@ -172,7 +176,6 @@ class BookController extends Controller
      * @param string $slug
      * @return Response
      * @throws ImageUploadException
-     * @throws NotFoundException
      * @throws ValidationException
      * @throws Throwable
      */
@@ -212,14 +215,13 @@ class BookController extends Controller
      * Shows the view which allows pages to be re-ordered and sorted.
      * @param string $bookSlug
      * @return View
-     * @throws NotFoundException
      */
     public function sort(string $bookSlug)
     {
         $book = $this->oldBookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
-        $bookChildren = $this->oldBookRepo->getBookChildren($book, true);
+        $bookChildren = (new BookContents($book))->getTree();
 
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
         return view('books.sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
@@ -230,12 +232,11 @@ class BookController extends Controller
      * Used via AJAX when loading in extra books to a sort.
      * @param string $bookSlug
      * @return Factory|View
-     * @throws NotFoundException
      */
     public function sortItem(string $bookSlug)
     {
         $book = $this->oldBookRepo->getBySlug($bookSlug);
-        $bookChildren = $this->oldBookRepo->getBookChildren($book);
+        $bookChildren = (new BookContents($book))->getTree();
         return view('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 

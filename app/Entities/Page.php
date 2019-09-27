@@ -93,22 +93,12 @@ class Page extends BookChild
         $midText = $this->draft ? '/draft/' : '/page/';
         $idComponent = $this->draft ? $this->id : urlencode($this->slug);
 
+        $url = '/books/' . urlencode($bookSlug) . $midText . $idComponent;
         if ($path !== false) {
-            return url('/books/' . urlencode($bookSlug) . $midText . $idComponent . '/' . trim($path, '/'));
+            $url .= '/' . trim($path, '/');
         }
 
-        return url('/books/' . urlencode($bookSlug) . $midText . $idComponent);
-    }
-
-    /**
-     * Return a generalised, common raw query that can be 'unioned' across entities.
-     * @param bool $withContent
-     * @return string
-     */
-    public function entityRawQuery($withContent = false)
-    {
-        $htmlQuery = $withContent ? 'html' : "'' as html";
-        return "'BookStack\\\\Page' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text, {$htmlQuery}, book_id, priority, chapter_id, draft, created_by, updated_by, updated_at, created_at";
+        return url($url);
     }
 
     /**

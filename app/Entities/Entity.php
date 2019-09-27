@@ -271,15 +271,6 @@ class Entity extends Ownable
     }
 
     /**
-     * Return a generalised, common raw query that can be 'unioned' across entities.
-     * @return string
-     */
-    public function entityRawQuery()
-    {
-        return '';
-    }
-
-    /**
      * Get the url of this entity
      * @param $path
      * @return string
