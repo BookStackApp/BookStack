@@ -9,15 +9,6 @@ class Chapter extends BookChild
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
 
     /**
-     * Get the morph class for this model.
-     * @return string
-     */
-    public function getMorphClass()
-    {
-        return 'BookStack\\Chapter';
-    }
-
-    /**
      * Get the pages that this chapter contains.
      * @param string $dir
      * @return mixed

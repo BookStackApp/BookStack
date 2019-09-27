@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Entities\Page;
 use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Response;
 use Views;
@@ -29,7 +30,8 @@ class HomeController extends Controller
         $draftPages = $this->isSignedIn() ? $this->entityRepo->getUserDraftPages(6) : [];
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->isSignedIn() ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
-        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
+        $recentlyUpdatedPages = Page::visible()->where('draft', false)
+            ->orderBy('updated_at', 'desc')->take(12)->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
         $homepageOption = setting('app-homepage-type', 'default');

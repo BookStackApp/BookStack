@@ -16,15 +16,6 @@ class Book extends Entity
     protected $fillable = ['name', 'description', 'image_id'];
 
     /**
-     * Get the morph class for this model.
-     * @return string
-     */
-    public function getMorphClass()
-    {
-        return 'BookStack\\Book';
-    }
-
-    /**
      * Get the url for this book.
      * @param string|bool $path
      * @return string

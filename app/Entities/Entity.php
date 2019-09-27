@@ -9,7 +9,9 @@ use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Facades\Permissions;
 use BookStack\Ownable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * Class Entity
@@ -24,6 +26,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property int $created_by
  * @property int $updated_by
  * @property boolean $restricted
+ * @method static Entity|Builder visible()
+ * @method static Builder withLastView()
+ * @method static Builder withViewCount()
  *
  * @package BookStack\Entities
  */
@@ -41,14 +46,37 @@ class Entity extends Ownable
     public $searchFactor = 1.0;
 
     /**
-     * Get the morph class for this model.
-     * Set here since, due to folder changes, the namespace used
-     * in the database no longer matches the class namespace.
-     * @return string
+     * Get the entities that are visible to the current user.
      */
-    public function getMorphClass()
+    public function scopeVisible(Builder $query)
     {
-        return 'BookStack\\Entity';
+        return Permissions::restrictEntityQuery($query);
+    }
+
+    /**
+     * Query scope to get the last view from the current user.
+     */
+    public function scopeWithLastView(Builder $query)
+    {
+        $viewedAtQuery = View::query()->select('updated_at')
+            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
+            ->where('viewable_type', '=', $this->getMorphClass())
+            ->where('user_id', '=', user()->id)
+            ->take(1);
+
+        $query->addSelect(['last_viewed_at' => $viewedAtQuery]);
+    }
+
+    /**
+     * Query scope to get the total view count of the entities.
+     */
+    public function scopeWithViewCount(Builder $query)
+    {
+        $viewCountQuery = View::query()->selectRaw('SUM(views) as view_count')
+            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
+            ->where('viewable_type', '=', $this->getMorphClass())->take(1);
+
+        $query->addSelect(['view_count' => $viewCountQuery]);
     }
 
     /**
@@ -88,7 +116,7 @@ class Entity extends Ownable
 
     /**
      * Gets the activity objects for this entity.
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function activity()
     {
@@ -106,7 +134,7 @@ class Entity extends Ownable
 
     /**
      * Get the Tag models that have been user assigned to this entity.
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function tags()
     {
@@ -126,7 +154,7 @@ class Entity extends Ownable
 
     /**
      * Get the related search terms.
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function searchTerms()
     {
@@ -155,7 +183,7 @@ class Entity extends Ownable
 
     /**
      * Get the entity jointPermissions this is connected to.
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function jointPermissions()
     {
@@ -268,6 +296,15 @@ class Entity extends Ownable
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         Permissions::buildJointPermissionsForEntity($this);
+    }
+
+    /**
+     * Index the current entity for search
+     */
+    public function indexForSearch()
+    {
+        $searchService = app()->make(SearchService::class);
+        $searchService->indexEntity($this);
     }
 
     /**

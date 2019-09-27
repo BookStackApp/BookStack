@@ -11,15 +11,6 @@ class Bookshelf extends Entity
     protected $fillable = ['name', 'description', 'image_id'];
 
     /**
-     * Get the morph class for this model.
-     * @return string
-     */
-    public function getMorphClass()
-    {
-        return 'BookStack\\Bookshelf';
-    }
-
-    /**
      * Get the books in this shelf.
      * Should not be used directly since does not take into account permissions.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

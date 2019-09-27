@@ -633,6 +633,42 @@ class PermissionService
     }
 
     /**
+     * Limited the given entity query so that the query will only
+     * return items that the user has permission for the given ability.
+     */
+    public function restrictEntityQuery(Builder $query, string $ability = 'view'): Builder
+    {
+        return $query->where(function (Builder $parentQuery) use ($ability) {
+            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) use ($ability) {
+                $permissionQuery->whereIn('role_id', $this->getRoles())
+                    ->where('action', '=', $ability)
+                    ->where(function (Builder $query) {
+                        $query->where('has_permission', '=', true)
+                            ->orWhere(function (Builder $query) {
+                                $query->where('has_permission_own', '=', true)
+                                    ->where('created_by', '=', $this->currentUser()->id);
+                            });
+                    });
+            });
+        });
+    }
+
+    /**
+     * Extend the given page query to ensure draft items are not visible
+     * unless created by the given user.
+     */
+    public function enforceDraftVisiblityOnQuery(Builder $query): Builder
+    {
+        return $query->where(function(Builder $query) {
+            $query->where('draft', '=', false)
+                ->orWhere(function (Builder $query) {
+                    $query->where('draft', '=', true)
+                        ->where('created_by', '=', $this->currentUser()->id);
+                });
+        });
+    }
+
+    /**
      * Get the children of a book in an efficient single query, Filtered by the permission system.
      * @param integer $book_id
      * @param bool $filterDrafts

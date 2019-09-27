@@ -234,35 +234,17 @@ class EntityRepo
      */
     public function getRecentlyCreated($type, $count = 20, $page = 0, $additionalQuery = false)
     {
-        $query = $this->permissionService->enforceEntityRestrictions($type, $this->entityProvider->get($type))
-            ->orderBy('created_at', 'desc');
-        if (strtolower($type) === 'page') {
-            $query = $query->where('draft', '=', false);
-        }
-        if ($additionalQuery !== false && is_callable($additionalQuery)) {
-            $additionalQuery($query);
-        }
-        return $query->skip($page * $count)->take($count)->get();
-    }
+        $entityModel = $this->entityProvider->get($type);
+        $query = $entityModel::visible()->orderBy('created_at', 'desc');
 
-    /**
-     * Get the most recently updated entities of the given type.
-     * @param string $type
-     * @param int $count
-     * @param int $page
-     * @param bool|callable $additionalQuery
-     * @return Collection
-     */
-    public function getRecentlyUpdated($type, $count = 20, $page = 0, $additionalQuery = false)
-    {
-        $query = $this->permissionService->enforceEntityRestrictions($type, $this->entityProvider->get($type))
-            ->orderBy('updated_at', 'desc');
-        if (strtolower($type) === 'page') {
-            $query = $query->where('draft', '=', false);
+        if ($entityModel->isA('page')) {
+            $query->where('draft', '=', false);
         }
+
         if ($additionalQuery !== false && is_callable($additionalQuery)) {
             $additionalQuery($query);
         }
+
         return $query->skip($page * $count)->take($count)->get();
     }
 

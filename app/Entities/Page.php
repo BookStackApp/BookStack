@@ -1,7 +1,14 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Attachment;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Permissions;
 
+/**
+ * Class Page
+ */
 class Page extends BookChild
 {
     protected $fillable = ['name', 'html', 'priority', 'markdown'];
@@ -11,12 +18,12 @@ class Page extends BookChild
     public $textField = 'text';
 
     /**
-     * Get the morph class for this model.
-     * @return string
+     * Get the entities that are visible to the current user.
      */
-    public function getMorphClass()
+    public function scopeVisible(Builder $query)
     {
-        return 'BookStack\\Page';
+        $query = Permissions::enforceDraftVisiblityOnQuery($query);
+        return parent::scopeVisible($query);
     }
 
     /**
@@ -32,7 +39,7 @@ class Page extends BookChild
 
     /**
      * Get the parent item
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function parent()
     {
@@ -41,7 +48,7 @@ class Page extends BookChild
 
     /**
      * Get the chapter that this page is in, If applicable.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function chapter()
     {
@@ -68,7 +75,7 @@ class Page extends BookChild
 
     /**
      * Get the attachments assigned to this page.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function attachments()
     {
@@ -106,7 +113,7 @@ class Page extends BookChild
 
     /**
      * Get the current revision for the page if existing
-     * @return \BookStack\Entities\PageRevision|null
+     * @return PageRevision|null
      */
     public function getCurrentRevision()
     {

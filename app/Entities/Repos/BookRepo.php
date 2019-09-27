@@ -4,7 +4,6 @@
 namespace BookStack\Entities\Repos;
 
 use BookStack\Entities\Book;
-use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 
 class BookRepo extends EntityRepo
@@ -14,13 +13,10 @@ class BookRepo extends EntityRepo
      * Fetch a book by its slug.
      * @param string $slug
      * @return Book
-     * @throws NotFoundException
      */
     public function getBySlug(string $slug): Book
     {
-        /** @var Book $book */
-        $book = $this->getEntityBySlug('book', $slug);
-        return $book;
+        return Book::visible()->where('slug', $slug)->firstOrFail();
     }
 
     /**
