@@ -119,7 +119,7 @@ class BookController extends Controller
     public function show(Request $request, string $slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        $bookChildren = (new BookContents($book))->getTree();
+        $bookChildren = (new BookContents($book))->getTree(true);
 
         Views::add($book);
         if ($request->has('shelf')) {
@@ -163,7 +163,7 @@ class BookController extends Controller
         ]);
 
         $book = $this->bookRepo->update($book, $request->all());
-        $resetCover = $request->get('image_reset');
+        $resetCover = $request->has('image_reset');
         $this->bookRepo->updateCoverImage($book, $request->file('image', null), $resetCover);
 
         Activity::add($book, 'book_update', $book->id);
@@ -171,6 +171,16 @@ class BookController extends Controller
         return redirect($book->getUrl());
     }
 
+    /**
+     * Shows the page to confirm deletion.
+     */
+    public function showDelete(string $bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-delete', $book);
+        $this->setPageTitle(trans('entities.books_delete_named', ['bookName' => $book->getShortName()]));
+        return view('books.delete', ['book' => $book, 'current' => $book]);
+    }
 
     /**
      * Remove the specified book from the system.

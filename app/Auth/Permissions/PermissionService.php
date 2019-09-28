@@ -638,6 +638,7 @@ class PermissionService
      */
     public function restrictEntityQuery(Builder $query, string $ability = 'view'): Builder
     {
+        $this->clean();
         return $query->where(function (Builder $parentQuery) use ($ability) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) use ($ability) {
                 $permissionQuery->whereIn('role_id', $this->getRoles())

@@ -4,6 +4,7 @@ use BookStack\Actions\TagRepo;
 use BookStack\Entities\Book;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Uploads\ImageRepo;
 use Exception;
@@ -44,6 +45,7 @@ class BookRepo
     public function getRecentlyViewed(int $count = 20): Collection
     {
         return Book::visible()->withLastView()
+            ->having('last_viewed_at', '>', 0)
             ->orderBy('last_viewed_at', 'desc')
             ->take($count)->get();
     }
@@ -54,6 +56,7 @@ class BookRepo
     public function getPopular(int $count = 20): Collection
     {
         return Book::visible()->withViewCount()
+            ->having('view_count', '>', 0)
             ->orderBy('view_count', 'desc')
             ->take($count)->get();
     }
@@ -72,7 +75,13 @@ class BookRepo
      */
     public function getBySlug(string $slug): Book
     {
-        return Book::visible()->where('slug', '=', $slug)->firstOrFail();
+        $book = Book::visible()->where('slug', '=', $slug)->first();
+
+        if ($book === null) {
+            throw new NotFoundException(trans('errors.book_not_found'));
+        }
+
+        return $book;
     }
 
     /**

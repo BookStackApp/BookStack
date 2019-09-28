@@ -6,6 +6,7 @@ use BookStack\Entities\Book;
 use BookStack\Entities\Managers\EntityContext;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\Request;
@@ -71,7 +72,7 @@ class BookshelfController extends Controller
     public function create()
     {
         $this->checkPermission('bookshelf-create-all');
-        $books = Book::hasPermission('update')->all();
+        $books = Book::hasPermission('update')->get();
         $this->setPageTitle(trans('entities.shelves_create'));
         return view('shelves.create', ['books' => $books]);
     }
@@ -100,6 +101,7 @@ class BookshelfController extends Controller
 
     /**
      * Display the bookshelf of the given slug.
+     * @throws NotFoundException
      */
     public function show(string $slug)
     {
@@ -125,7 +127,7 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBookIds = $shelf->books()->get(['id'])->pluck('id');
-        $books = Book::hasPermission('update')->whereNotIn('id', $shelfBookIds);
+        $books = Book::hasPermission('update')->whereNotIn('id', $shelfBookIds)->get();
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $shelf->getShortName()]));
         return view('shelves.edit', [
@@ -138,6 +140,7 @@ class BookshelfController extends Controller
      * Update the specified bookshelf in storage.
      * @throws ValidationException
      * @throws ImageUploadException
+     * @throws NotFoundException
      */
     public function update(Request $request, string $slug)
     {
@@ -152,12 +155,12 @@ class BookshelfController extends Controller
 
         $bookIds = explode(',', $request->get('books', ''));
         $shelf = $this->bookshelfRepo->update($shelf, $request->all(), $bookIds);
-        $this->bookshelfRepo->updateCoverImage($shelf);
+        $resetCover = $request->has('image_reset');
+        $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null), $resetCover);
         Activity::add($shelf, 'bookshelf_update');
 
         return redirect($shelf->getUrl());
     }
-
 
     /**
      * Shows the page to confirm deletion

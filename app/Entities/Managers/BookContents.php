@@ -35,17 +35,17 @@ class BookContents
             ->where('draft', '=', false)
             ->where('chapter_id', '=', 0)->max('priority');
         $maxChapter = Chapter::visible()->where('book_id', '=', $this->book->id)
-            ->where('chapter_id', '=', 0)->max('priority');
-        return max($maxChapter, $maxPage, 0);
+            ->max('priority');
+        return max($maxChapter, $maxPage, 1);
     }
 
     /**
      * Get the contents as a sorted collection tree.
      * TODO - Support $renderPages option
      */
-    public function getTree(bool $filterDrafts = false, bool $renderPages = false): Collection
+    public function getTree(bool $showDrafts = false, bool $renderPages = false): Collection
     {
-        $pages = $this->getPages($filterDrafts);
+        $pages = $this->getPages($showDrafts);
         $chapters = Chapter::visible()->where('book_id', '=', $this->book->id)->get();
         $all = collect()->concat($pages)->concat($chapters);
         $chapterMap = $chapters->keyBy('id');
@@ -84,11 +84,11 @@ class BookContents
     /**
      * Get the visible pages within this book.
      */
-    protected function getPages(bool $filterDrafts = false): Collection
+    protected function getPages(bool $showDrafts = false): Collection
     {
         $query = Page::visible()->where('book_id', '=', $this->book->id);
 
-        if ($filterDrafts) {
+        if (!$showDrafts) {
             $query->where('draft', '=', false);
         }
 

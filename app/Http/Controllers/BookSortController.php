@@ -32,7 +32,7 @@ class BookSortController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
-        $bookChildren = (new BookContents($book))->getTree();
+        $bookChildren = (new BookContents($book))->getTree(false);
 
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
         return view('books.sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);

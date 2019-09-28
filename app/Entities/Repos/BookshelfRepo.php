@@ -1,16 +1,11 @@
-<?php
-
-
-namespace BookStack\Entities\Repos;
-
+<?php namespace BookStack\Entities\Repos;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Exceptions\NotifyException;
+use BookStack\Exceptions\NotFoundException;
 use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -28,13 +23,13 @@ class BookshelfRepo
         $this->baseRepo = $baseRepo;
     }
 
-
     /**
      * Get all bookshelves in a paginated format.
      */
     public function getAllPaginated(int $count = 20, string $sort = 'name', string $order = 'asc'): LengthAwarePaginator
     {
-        return Bookshelf::visible()->with('visibleBooks')->orderBy($sort, $order)->paginate($count);
+        return Bookshelf::visible()->with('visibleBooks')
+            ->orderBy($sort, $order)->paginate($count);
     }
 
     /**
@@ -43,6 +38,7 @@ class BookshelfRepo
     public function getRecentlyViewed(int $count = 20): Collection
     {
         return Bookshelf::visible()->withLastView()
+            ->having('last_viewed_at', '>', 0)
             ->orderBy('last_viewed_at', 'desc')
             ->take($count)->get();
     }
@@ -53,6 +49,7 @@ class BookshelfRepo
     public function getPopular(int $count = 20): Collection
     {
         return Bookshelf::visible()->withViewCount()
+            ->having('view_count', '>', 0)
             ->orderBy('view_count', 'desc')
             ->take($count)->get();
     }
@@ -71,7 +68,13 @@ class BookshelfRepo
      */
     public function getBySlug(string $slug): Bookshelf
     {
-        return Bookshelf::visible()->where('slug', '=', $slug)->firstOrFail();
+        $shelf = Bookshelf::visible()->where('slug', '=', $slug)->first();
+
+        if ($shelf === null) {
+            throw new NotFoundException(trans('errors.bookshelf_not_found'));
+        }
+
+        return $shelf;
     }
 
     /**

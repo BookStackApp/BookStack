@@ -64,7 +64,7 @@ class ExportService
      */
     public function bookToContainedHtml(Book $book)
     {
-        $bookTree = (new BookContents($book))->getTree(true, true);
+        $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('books/export', [
             'book' => $book,
             'bookChildren' => $bookTree
@@ -114,7 +114,7 @@ class ExportService
      */
     public function bookToPdf(Book $book)
     {
-        $bookTree = (new BookContents($book))->getTree(true, true);
+        $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('books/export', [
             'book' => $book,
             'bookChildren' => $bookTree
@@ -228,7 +228,7 @@ class ExportService
      */
     public function bookToPlainText(Book $book)
     {
-        $bookTree = (new BookContents($book))->getTree(true, true);
+        $bookTree = (new BookContents($book))->getTree(false, true);
         $text = $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {
