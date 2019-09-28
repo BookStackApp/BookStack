@@ -502,28 +502,6 @@ class EntityRepo
     }
 
     /**
-     * Change the book that an entity belongs to.
-     */
-    public function changeBook(BookChild $bookChild, int $newBookId): Entity
-    {
-        $bookChild->book_id = $newBookId;
-        $bookChild->refreshSlug();
-        $bookChild->save();
-
-        // Update related activity
-        $bookChild->activity()->update(['book_id' => $newBookId]);
-
-        // Update all child pages if a chapter
-        if ($bookChild->isA('chapter')) {
-            foreach ($bookChild->pages as $page) {
-                $this->changeBook($page, $newBookId);
-            }
-        }
-
-        return $bookChild;
-    }
-
-    /**
      * Render the page for viewing
      * @param Page $page
      * @param bool $blankIncludes

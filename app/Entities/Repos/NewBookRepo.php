@@ -71,9 +71,8 @@ class NewBookRepo
 
     /**
      * Create a new book in the system
-     * @throws ImageUploadException
      */
-    public function create(array $input, UploadedFile $coverImage = null): Book
+    public function create(array $input): Book
     {
         $book = new Book($input);
         $book->forceFill([
@@ -90,12 +89,52 @@ class NewBookRepo
         $book->rebuildPermissions();
         $book->indexForSearch();
 
+        return $book;
+    }
+
+    /**
+     * Update the given book.
+     */
+    public function update(Book $book, array $input): Book
+    {
+        $book->fill($input);
+        $book->updated_by = user()->id;
+
+
+        if ($book->isDirty('name')) {
+            $book->refreshSlug();
+        }
+
+        $book->save();
+
+        if (isset($input['tags'])) {
+            $this->tagRepo->saveTagsToEntity($book, $input['tags']);
+        }
+
+        $book->rebuildPermissions();
+        $book->indexForSearch();
+
+        return $book;
+    }
+
+    /**
+     * Update the given book's cover image, or clear it.
+     * @throws ImageUploadException
+     * @throws \Exception
+     */
+    public function updateCoverImage(Book $book, UploadedFile $coverImage = null, bool $removeImage = false)
+    {
         if ($coverImage) {
+            $this->imageRepo->destroyImage($book->cover);
             $image = $this->imageRepo->saveNew($coverImage, 'cover_book', $book->id, 512, 512, true);
             $book->cover()->associate($image);
         }
 
-        return $book;
+        if ($removeImage) {
+            $this->imageRepo->destroyImage($book->cover);
+            $book->image_id = 0;
+            $book->save();
+        }
     }
 
 }

@@ -3,6 +3,7 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Actions\BookContents;
+use BookStack\Entities\Chapter;
 use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -177,6 +178,7 @@ class ChapterController extends Controller
      */
     public function move(Request $request, string $bookSlug, string $chapterSlug)
     {
+        /** @var Chapter $chapter */
         $chapter = $this->entityRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
         $this->checkOwnablePermission('chapter-delete', $chapter);
@@ -201,7 +203,7 @@ class ChapterController extends Controller
             return redirect()->back();
         }
 
-        $this->entityRepo->changeBook($chapter, $parent->id);
+        $chapter->changeBook($parent->id);
         $chapter->rebuildPermissions();
 
         Activity::add($chapter, 'chapter_move', $chapter->book->id);

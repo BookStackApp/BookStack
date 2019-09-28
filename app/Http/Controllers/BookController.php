@@ -11,6 +11,7 @@ use BookStack\Entities\Repos\NewBookRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
+use BookStack\Exceptions\SortOperationException;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -120,7 +121,8 @@ class BookController extends Controller
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
         }
 
-        $book = $this->bookRepo->create($request->all(), $request->get('image', null));
+        $book = $this->bookRepo->create($request->all());
+        $this->bookRepo->updateCoverImage($book, $request->file('image', null));
         Activity::add($book, 'book_create', $book->id);
 
         if ($bookshelf) {
@@ -155,8 +157,6 @@ class BookController extends Controller
 
     /**
      * Show the form for editing the specified book.
-     * @param string $slug
-     * @return Response
      */
     public function edit(string $slug)
     {
@@ -167,21 +167,14 @@ class BookController extends Controller
     }
 
     /**
-     * TODO - Continue from here
-     */
-
-    /**
      * Update the specified book in storage.
-     * @param Request $request
-     * @param string $slug
-     * @return Response
      * @throws ImageUploadException
      * @throws ValidationException
      * @throws Throwable
      */
     public function update(Request $request, string $slug)
     {
-        $book = $this->oldBookRepo->getBySlug($slug);
+        $book = $this->bookRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -189,23 +182,21 @@ class BookController extends Controller
             'image' => $this->imageRepo->getImageValidationRules(),
         ]);
 
-         $book = $this->oldBookRepo->updateFromInput($book, $request->all());
-         $this->bookUpdateActions($book, $request);
+        $book = $this->bookRepo->update($book, $request->all());
+        $resetCover = $request->get('image_reset');
+        $this->bookRepo->updateCoverImage($book, $request->file('image', null), $resetCover);
 
-         Activity::add($book, 'book_update', $book->id);
+        Activity::add($book, 'book_update', $book->id);
 
-         return redirect($book->getUrl());
+        return redirect($book->getUrl());
     }
 
     /**
-     * Shows the page to confirm deletion
-     * @param string $bookSlug
-     * @return View
-     * @throws NotFoundException
+     * Shows the page to confirm deletion.
      */
     public function showDelete(string $bookSlug)
     {
-        $book = $this->oldBookRepo->getBySlug($bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle(trans('entities.books_delete_named', ['bookName' => $book->getShortName()]));
         return view('books.delete', ['book' => $book, 'current' => $book]);
@@ -213,12 +204,10 @@ class BookController extends Controller
 
     /**
      * Shows the view which allows pages to be re-ordered and sorted.
-     * @param string $bookSlug
-     * @return View
      */
     public function sort(string $bookSlug)
     {
-        $book = $this->oldBookRepo->getBySlug($bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         $bookChildren = (new BookContents($book))->getTree();
@@ -230,26 +219,20 @@ class BookController extends Controller
     /**
      * Shows the sort box for a single book.
      * Used via AJAX when loading in extra books to a sort.
-     * @param string $bookSlug
-     * @return Factory|View
      */
     public function sortItem(string $bookSlug)
     {
-        $book = $this->oldBookRepo->getBySlug($bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $bookChildren = (new BookContents($book))->getTree();
         return view('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**
-     * Saves an array of sort mapping to pages and chapters.
-     * @param Request $request
-     * @param string $bookSlug
-     * @return RedirectResponse|Redirector
-     * @throws NotFoundException
+     * Sorts a book using a given mapping array.
      */
     public function saveSort(Request $request, string $bookSlug)
     {
-        $book = $this->oldBookRepo->getBySlug($bookSlug);
+        $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent
@@ -257,57 +240,18 @@ class BookController extends Controller
             return redirect($book->getUrl());
         }
 
-        // Sort pages and chapters
         $sortMap = collect(json_decode($request->get('sort-tree')));
-        $bookIdsInvolved = collect([$book->id]);
+        $bookContents = new BookContents($book);
+        $booksInvolved = collect();
 
-        // Load models into map
-        $sortMap->each(function ($mapItem) use ($bookIdsInvolved) {
-            $mapItem->type = ($mapItem->type === 'page' ? 'page' : 'chapter');
-            $mapItem->model = $this->oldBookRepo->getById($mapItem->type, $mapItem->id);
-            // Store source and target books
-            $bookIdsInvolved->push(intval($mapItem->model->book_id));
-            $bookIdsInvolved->push(intval($mapItem->book));
-        });
-
-        // Get the books involved in the sort
-        $bookIdsInvolved = $bookIdsInvolved->unique()->toArray();
-        $booksInvolved = $this->oldBookRepo->getManyById('book', $bookIdsInvolved, false, true);
-
-        // Throw permission error if invalid ids or inaccessible books given.
-        if (count($bookIdsInvolved) !== count($booksInvolved)) {
+        try {
+            $booksInvolved = $bookContents->sortUsingMap($sortMap);
+        } catch (SortOperationException $exception) {
             $this->showPermissionError();
         }
 
-        // Check permissions of involved books
-        $booksInvolved->each(function (Book $book) {
-             $this->checkOwnablePermission('book-update', $book);
-        });
-
-        // Perform the sort
-        $sortMap->each(function ($mapItem) {
-            $model = $mapItem->model;
-
-            $priorityChanged = intval($model->priority) !== intval($mapItem->sort);
-            $bookChanged = intval($model->book_id) !== intval($mapItem->book);
-            $chapterChanged = ($mapItem->type === 'page') && intval($model->chapter_id) !== $mapItem->parentChapter;
-
-            if ($bookChanged) {
-                $this->oldBookRepo->changeBook($model, $mapItem->book);
-            }
-            if ($chapterChanged) {
-                $model->chapter_id = intval($mapItem->parentChapter);
-                $model->save();
-            }
-            if ($priorityChanged) {
-                $model->priority = intval($mapItem->sort);
-                $model->save();
-            }
-        });
-
         // Rebuild permissions and add activity for involved books.
         $booksInvolved->each(function (Book $book) {
-            $book->rebuildPermissions();
             Activity::add($book, 'book_sort', $book->id);
         });
 
@@ -370,28 +314,4 @@ class BookController extends Controller
         return redirect($book->getUrl());
     }
 
-    /**
-     * Common actions to run on book update.
-     * Handles updating the cover image.
-     * @param Book $book
-     * @param Request $request
-     * @throws ImageUploadException
-     */
-    protected function bookUpdateActions(Book $book, Request $request)
-    {
-        // Update the cover image if in request
-        if ($request->has('image')) {
-            $this->imageRepo->destroyImage($book->cover);
-            $newImage = $request->file('image');
-            $image = $this->imageRepo->saveNew($newImage, 'cover_book', $book->id, 512, 512, true);
-            $book->image_id = $image->id;
-            $book->save();
-        }
-
-        if ($request->has('image_reset')) {
-            $this->imageRepo->destroyImage($book->cover);
-            $book->image_id = 0;
-            $book->save();
-        }
-    }
 }

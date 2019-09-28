@@ -490,7 +490,7 @@ class PageRepo extends EntityRepo
         $page->save();
 
         if ($page->book->id !== $book->id) {
-            $page = $this->changeBook($page, $book->id);
+            $page->changeBook($book->id);
         }
 
         $page->load('book');

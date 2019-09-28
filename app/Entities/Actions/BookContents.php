@@ -1,9 +1,11 @@
 <?php namespace BookStack\Entities\Actions;
 
 use BookStack\Entities\Book;
+use BookStack\Entities\BookChild;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Page;
+use BookStack\Exceptions\SortOperationException;
 use Illuminate\Support\Collection;
 
 class BookContents
@@ -91,6 +93,113 @@ class BookContents
         }
 
         return $query->get();
+    }
+
+    /**
+     * Sort the books content using the given map.
+     * The map is a single-dimension collection of objects in the following format:
+     *   {
+     *     +"id": "294" (ID of item)
+     *     +"sort": 1 (Sort order index)
+     *     +"parentChapter": false (ID of parent chapter, as string, or false)
+     *     +"type": "page" (Entity type of item)
+     *     +"book": "1" (Id of book to place item in)
+     *   }
+     *
+     * Returns a list of books that were involved in the operation.
+     * @throws SortOperationException
+     */
+    public function sortUsingMap(Collection $sortMap): Collection
+    {
+        // Load models into map
+        $this->loadModelsIntoSortMap($sortMap);
+        $booksInvolved = $this->getBooksInvolvedInSort($sortMap);
+
+        // Perform the sort
+        $sortMap->each(function ($mapItem) {
+            $this->applySortUpdates($mapItem);
+        });
+
+        // Update permissions and activity.
+        $booksInvolved->each(function(Book $book) {
+            $book->rebuildPermissions();
+        });
+
+        return $booksInvolved;
+    }
+
+    /**
+     * Using the given sort map item, detect changes for the related model
+     * and update it if required.
+     */
+    protected function applySortUpdates(\stdClass $sortMapItem)
+    {
+        /** @var BookChild $model */
+        $model = $sortMapItem->model;
+
+        $priorityChanged = intval($model->priority) !== intval($sortMapItem->sort);
+        $bookChanged = intval($model->book_id) !== intval($sortMapItem->book);
+        $chapterChanged = ($sortMapItem->type === 'page') && intval($model->chapter_id) !== $sortMapItem->parentChapter;
+
+        if ($bookChanged) {
+            $model->changeBook($sortMapItem->book);
+        }
+
+        if ($chapterChanged) {
+            $model->chapter_id = intval($sortMapItem->parentChapter);
+            $model->save();
+        }
+
+        if ($priorityChanged) {
+            $model->priority = intval($sortMapItem->sort);
+            $model->save();
+        }
+    }
+
+    /**
+     * Load models from the database into the given sort map.
+     */
+    protected function loadModelsIntoSortMap(Collection $sortMap): void
+    {
+        $keyMap = $sortMap->keyBy(function(\stdClass $sortMapItem) {
+            return  $sortMapItem->type . ':' . $sortMapItem->id;
+        });
+        $pageIds = $sortMap->where('type', '=', 'page')->pluck('id');
+        $chapterIds = $sortMap->where('type', '=', 'chapter')->pluck('id');
+
+        $pages = Page::visible()->whereIn('id', $pageIds)->get();
+        $chapters = Chapter::visible()->whereIn('id', $chapterIds)->get();
+
+        foreach ($pages as $page) {
+            $sortItem = $keyMap->get('page:' . $page->id);
+            $sortItem->model = $page;
+        }
+
+        foreach ($chapters as $chapter) {
+            $sortItem = $keyMap->get('chapter:' . $chapter->id);
+            $sortItem->model = $chapter;
+        }
+    }
+
+    /**
+     * Get the books involved in a sort.
+     * The given sort map should have its models loaded first.
+     * @throws SortOperationException
+     */
+    protected function getBooksInvolvedInSort(Collection $sortMap): Collection
+    {
+        $bookIdsInvolved = collect([$this->book->id]);
+        $bookIdsInvolved = $bookIdsInvolved->concat($sortMap->pluck('book'));
+        $bookIdsInvolved = $bookIdsInvolved->concat($sortMap->pluck('model.book_id'));
+        $bookIdsInvolved = $bookIdsInvolved->unique()->toArray();
+
+        $books = Book::hasPermission('update')->whereIn('id', $bookIdsInvolved)->get();
+
+        if (count($books) !== count($bookIdsInvolved)) {
+            throw new SortOperationException("Could not find all books requested in sort operation");
+        }
+
+        return $books;
     }
 
 }

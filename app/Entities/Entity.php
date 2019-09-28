@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property int $updated_by
  * @property boolean $restricted
  * @method static Entity|Builder visible()
+ * @method static Entity|Builder hasPermission(string $permission)
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  *
@@ -50,7 +51,15 @@ class Entity extends Ownable
      */
     public function scopeVisible(Builder $query)
     {
-        return Permissions::restrictEntityQuery($query);
+        return $this->scopeHasPermission($query, 'view');
+    }
+
+    /**
+     * Scope the query to those entities that the current user has the given permission for.
+     */
+    public function scopeHasPermission(Builder $query, string $permission)
+    {
+        return Permissions::restrictEntityQuery($query, $permission);
     }
 
     /**
@@ -64,7 +73,7 @@ class Entity extends Ownable
             ->where('user_id', '=', user()->id)
             ->take(1);
 
-        $query->addSelect(['last_viewed_at' => $viewedAtQuery]);
+        return $query->addSelect(['last_viewed_at' => $viewedAtQuery]);
     }
 
     /**

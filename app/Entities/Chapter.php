@@ -1,7 +1,13 @@
 <?php namespace BookStack\Entities;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
+/**
+ * Class Chapter
+ * @property Collection<Page> $pages
+ * @package BookStack\Entities
+ */
 class Chapter extends BookChild
 {
     public $searchFactor = 1.3;
