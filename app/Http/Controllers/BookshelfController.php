@@ -3,7 +3,7 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Bookshelf;
-use BookStack\Entities\EntityContextManager;
+use BookStack\Entities\Managers\EntityContext;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
@@ -22,10 +22,10 @@ class BookshelfController extends Controller
      * BookController constructor.
      * @param EntityRepo $entityRepo
      * @param UserRepo $userRepo
-     * @param EntityContextManager $entityContextManager
+     * @param EntityContext $entityContextManager
      * @param ImageRepo $imageRepo
      */
-    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, EntityContextManager $entityContextManager, ImageRepo $imageRepo)
+    public function __construct(EntityRepo $entityRepo, UserRepo $userRepo, EntityContext $entityContextManager, ImageRepo $imageRepo)
     {
         $this->entityRepo = $entityRepo;
         $this->userRepo = $userRepo;

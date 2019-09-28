@@ -1,6 +1,6 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Actions\BookContents;
+use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Uploads\ImageService;
 

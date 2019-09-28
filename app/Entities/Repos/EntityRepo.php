@@ -5,7 +5,7 @@ use BookStack\Actions\TagRepo;
 use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
-use BookStack\Entities\Actions\BookContents;
+use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Book;
 use BookStack\Entities\BookChild;
 use BookStack\Entities\Bookshelf;

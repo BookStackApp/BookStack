@@ -189,4 +189,12 @@ abstract class Controller extends BaseController
     {
         session()->flash('error', $message);
     }
+
+    /**
+     * Get the validation rules for image files.
+     */
+    protected function getImageValidationRules(): string
+    {
+        return 'image_extension|no_double_extension|mimes:jpeg,png,gif,bmp,webp,tiff';
+    }
 }

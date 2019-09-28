@@ -1,7 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ViewService;
-use BookStack\Entities\EntityContextManager;
+use BookStack\Entities\Managers\EntityContext;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\SearchService;
 use BookStack\Exceptions\NotFoundException;
@@ -21,13 +21,13 @@ class SearchController extends Controller
      * @param EntityRepo $entityRepo
      * @param ViewService $viewService
      * @param SearchService $searchService
-     * @param EntityContextManager $entityContextManager
+     * @param EntityContext $entityContextManager
      */
     public function __construct(
         EntityRepo $entityRepo,
         ViewService $viewService,
         SearchService $searchService,
-        EntityContextManager $entityContextManager
+        EntityContext $entityContextManager
     ) {
         $this->entityRepo = $entityRepo;
         $this->viewService = $viewService;

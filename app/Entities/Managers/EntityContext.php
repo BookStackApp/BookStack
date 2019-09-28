@@ -1,9 +1,11 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Managers;
 
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Session\Store;
 
-class EntityContextManager
+class EntityContext
 {
     protected $session;
     protected $entityRepo;

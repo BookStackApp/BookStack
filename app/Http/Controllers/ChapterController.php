@@ -2,7 +2,7 @@
 
 use Activity;
 use BookStack\Auth\UserRepo;
-use BookStack\Entities\Actions\BookContents;
+use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Request;

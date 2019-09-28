@@ -1,4 +1,4 @@
-<?php namespace BookStack\Entities\Actions;
+<?php namespace BookStack\Entities\Managers;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\BookChild;

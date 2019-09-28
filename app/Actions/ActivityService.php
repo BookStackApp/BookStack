@@ -1,6 +1,7 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\Book;
 use BookStack\Entities\Entity;
 
 class ActivityService
@@ -68,7 +69,7 @@ class ActivityService
      * Removes the entity attachment from each of its activities
      * and instead uses the 'extra' field with the entities name.
      * Used when an entity is deleted.
-     * @param Entity $entity
+     * @param \BookStack\Entities\Entity $entity
      * @return mixed
      */
     public function removeEntity(Entity $entity)
