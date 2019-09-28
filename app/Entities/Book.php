@@ -1,6 +1,7 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Image;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Book
@@ -9,7 +10,7 @@ use BookStack\Uploads\Image;
  * @property Image|null $cover
  * @package BookStack\Entities
  */
-class Book extends Entity
+class Book extends Entity implements HasCoverImage
 {
     public $searchFactor = 2;
 
@@ -51,11 +52,18 @@ class Book extends Entity
 
     /**
      * Get the cover image of the book
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function cover()
+    public function cover(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    /**
+     * Get the type of the image model that is used when storing a cover image.
+     */
+    public function coverImageTypeKey(): string
+    {
+        return 'cover_book';
     }
 
     /**

@@ -15,15 +15,17 @@ use Illuminate\Support\Collection;
 class BookRepo
 {
 
+    protected $baseRepo;
     protected $tagRepo;
     protected $imageRepo;
 
     /**
-     * NewBookRepo constructor.
+     * BookRepo constructor.
      * @param $tagRepo
      */
-    public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo)
+    public function __construct(BaseRepo $baseRepo, TagRepo $tagRepo, ImageRepo $imageRepo)
     {
+        $this->baseRepo = $baseRepo;
         $this->tagRepo = $tagRepo;
         $this->imageRepo = $imageRepo;
     }
@@ -78,21 +80,8 @@ class BookRepo
      */
     public function create(array $input): Book
     {
-        $book = new Book($input);
-        $book->forceFill([
-            'created_by' => user()->id,
-            'updated_by' => user()->id,
-        ]);
-        $book->refreshSlug();
-        $book->save();
-
-        if (isset($input['tags'])) {
-            $this->tagRepo->saveTagsToEntity($book, $input['tags']);
-        }
-
-        $book->rebuildPermissions();
-        $book->indexForSearch();
-
+        $book = new Book();
+        $this->baseRepo->create($book, $input);
         return $book;
     }
 
@@ -101,23 +90,7 @@ class BookRepo
      */
     public function update(Book $book, array $input): Book
     {
-        $book->fill($input);
-        $book->updated_by = user()->id;
-
-
-        if ($book->isDirty('name')) {
-            $book->refreshSlug();
-        }
-
-        $book->save();
-
-        if (isset($input['tags'])) {
-            $this->tagRepo->saveTagsToEntity($book, $input['tags']);
-        }
-
-        $book->rebuildPermissions();
-        $book->indexForSearch();
-
+        $this->baseRepo->update($book, $input);
         return $book;
     }
 
@@ -128,17 +101,7 @@ class BookRepo
      */
     public function updateCoverImage(Book $book, UploadedFile $coverImage = null, bool $removeImage = false)
     {
-        if ($coverImage) {
-            $this->imageRepo->destroyImage($book->cover);
-            $image = $this->imageRepo->saveNew($coverImage, 'cover_book', $book->id, 512, 512, true);
-            $book->cover()->associate($image);
-        }
-
-        if ($removeImage) {
-            $this->imageRepo->destroyImage($book->cover);
-            $book->image_id = 0;
-            $book->save();
-        }
+        $this->baseRepo->updateCoverImage($book, $coverImage, $removeImage);
     }
 
     /**
@@ -146,24 +109,7 @@ class BookRepo
      */
     public function updatePermissions(Book $book, bool $restricted, Collection $permissions = null)
     {
-        $book->restricted = $restricted;
-        $book->permissions()->delete();
-
-        if (!is_null($permissions)) {
-            $entityPermissionData = $permissions->flatMap(function($restrictions, $roleId) {
-                return collect($restrictions)->keys()->map(function($action) use ($roleId) {
-                    return [
-                        'role_id' => $roleId,
-                        'action' => strtolower($action),
-                    ] ;
-                });
-            });
-
-            $book->permissions()->createMany($entityPermissionData);
-        }
-
-        $book->save();
-        $book->rebuildPermissions();
+        $this->baseRepo->updatePermissions($book, $restricted, $permissions);
     }
 
     /**

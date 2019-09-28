@@ -7,7 +7,6 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Book;
-use BookStack\Entities\BookChild;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
@@ -123,24 +122,6 @@ class EntityRepo
     }
 
     /**
-     * @param string $type
-     * @param []int $ids
-     * @param bool $allowDrafts
-     * @param bool $ignorePermissions
-     * @return Builder[]|\Illuminate\Database\Eloquent\Collection|Collection
-     */
-    public function getManyById($type, $ids, $allowDrafts = false, $ignorePermissions = false)
-    {
-        $query = $this->entityQuery($type, $allowDrafts);
-
-        if ($ignorePermissions) {
-            $query = $this->entityProvider->get($type)->newQuery();
-        }
-
-        return $query->whereIn('id', $ids)->get();
-    }
-
-    /**
      * Get an entity by its url slug.
      * @param string $type
      * @param string $slug
@@ -249,29 +230,6 @@ class EntityRepo
         return $query->skip($page * $count)->take($count)->get();
     }
 
-    /**
-     * Get the most recently viewed entities.
-     * @param string|bool $type
-     * @param int $count
-     * @param int $page
-     * @return mixed
-     */
-    public function getRecentlyViewed($type, $count = 10, $page = 0)
-    {
-        $filter = is_bool($type) ? false : $this->entityProvider->get($type);
-        return $this->viewService->getUserRecentlyViewed($count, $page, $filter);
-    }
-
-    /**
-     * Get the latest pages added to the system with pagination.
-     * @param string $type
-     * @param int $count
-     * @return mixed
-     */
-    public function getRecentlyCreatedPaginated($type, $count = 20)
-    {
-        return $this->entityQuery($type)->orderBy('created_at', 'desc')->paginate($count);
-    }
 
     /**
      * Get the latest pages added to the system with pagination.
@@ -378,23 +336,6 @@ class EntityRepo
         return $lastPage !== null ? $lastPage->priority + 1 : 0;
     }
 
-    /**
-     * Find a suitable slug for an entity.
-     * @param string $type
-     * @param string $name
-     * @param bool|integer $currentId
-     * @param bool|integer $bookId Only pass if type is not a book
-     * @return string
-     */
-    public function findSuitableSlug($type, $name, $currentId = false, $bookId = false)
-    {
-        $slug = $this->nameToSlug($name);
-        while ($this->slugExists($type, $slug, $currentId, $bookId)) {
-            $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
-        }
-        return $slug;
-    }
-
 
     /**
      * Updates entity restrictions from a request
@@ -477,28 +418,6 @@ class EntityRepo
         $entityModel->rebuildPermissions();
         $this->searchService->indexEntity($entityModel);
         return $entityModel;
-    }
-
-    /**
-     * Sync the books assigned to a shelf from a comma-separated list
-     * of book IDs.
-     * @param Bookshelf $shelf
-     * @param string $books
-     */
-    public function updateShelfBooks(Bookshelf $shelf, string $books)
-    {
-        $ids = explode(',', $books);
-
-        // Check books exist and match ordering
-        $bookIds = $this->entityQuery('book')->whereIn('id', $ids)->get(['id'])->pluck('id');
-        $syncData = [];
-        foreach ($ids as $index => $id) {
-            if ($bookIds->contains($id)) {
-                $syncData[$id] = ['order' => $index];
-            }
-        }
-
-        $shelf->books()->sync($syncData);
     }
 
     /**
@@ -649,17 +568,6 @@ class EntityRepo
     }
 
     /**
-     * Destroy a bookshelf instance
-     * @param Bookshelf $shelf
-     * @throws Throwable
-     */
-    public function destroyBookshelf(Bookshelf $shelf)
-    {
-        $this->destroyEntityCommonRelations($shelf);
-        $shelf->delete();
-    }
-
-    /**
      * Destroy a chapter and its relations.
      * @param Chapter $chapter
      * @throws Throwable
@@ -720,32 +628,4 @@ class EntityRepo
         $this->searchService->deleteEntityTerms($entity);
     }
 
-    /**
-     * Copy the permissions of a bookshelf to all child books.
-     * Returns the number of books that had permissions updated.
-     * @param Bookshelf $bookshelf
-     * @return int
-     * @throws Throwable
-     */
-    public function copyBookshelfPermissions(Bookshelf $bookshelf)
-    {
-        $shelfPermissions = $bookshelf->permissions()->get(['role_id', 'action'])->toArray();
-        $shelfBooks = $bookshelf->books()->get();
-        $updatedBookCount = 0;
-
-        /** @var Book $book */
-        foreach ($shelfBooks as $book) {
-            if (!userCan('restrictions-manage', $book)) {
-                continue;
-            }
-            $book->permissions()->delete();
-            $book->restricted = $bookshelf->restricted;
-            $book->permissions()->createMany($shelfPermissions);
-            $book->save();
-            $book->rebuildPermissions();
-            $updatedBookCount++;
-        }
-
-        return $updatedBookCount;
-    }
 }

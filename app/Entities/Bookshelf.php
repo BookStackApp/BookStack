@@ -1,8 +1,10 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Image;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Bookshelf extends Entity
+class Bookshelf extends Entity implements HasCoverImage
 {
     protected $table = 'bookshelves';
 
@@ -20,6 +22,14 @@ class Bookshelf extends Entity
         return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
             ->withPivot('order')
             ->orderBy('order', 'asc');
+    }
+
+    /**
+     * Related books that are visible to the current user.
+     */
+    public function visibleBooks(): BelongsToMany
+    {
+        return $this->books()->visible();
     }
 
     /**
@@ -59,11 +69,18 @@ class Bookshelf extends Entity
 
     /**
      * Get the cover image of the shelf
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function cover()
+    public function cover(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    /**
+     * Get the type of the image model that is used when storing a cover image.
+     */
+    public function coverImageTypeKey(): string
+    {
+        return 'cover_shelf';
     }
 
     /**

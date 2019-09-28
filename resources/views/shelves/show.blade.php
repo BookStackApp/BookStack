@@ -12,9 +12,9 @@
         <h1 class="break-text">{{$shelf->name}}</h1>
         <div class="book-content">
             <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
-            @if(count($books) > 0)
+            @if(count($shelf->visibleBooks) > 0)
                 <div class="entity-list">
-                    @foreach($books as $book)
+                    @foreach($shelf->visibleBooks as $book)
                         @include('books.list-item', ['book' => $book])
                     @endforeach
                 </div>

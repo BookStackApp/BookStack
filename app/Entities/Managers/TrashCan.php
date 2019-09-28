@@ -1,8 +1,10 @@
 <?php namespace BookStack\Entities\Managers;
 
 use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
+use BookStack\Entities\HasCoverImage;
 use BookStack\Entities\Page;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
@@ -15,17 +17,22 @@ class TrashCan
 {
 
     /**
+     * Remove a bookshelf from the system.
+     * @throws Exception
+     */
+    public function destroyShelf(Bookshelf $shelf)
+    {
+        $this->destroyCommonRelations($shelf);
+        $shelf->delete();
+    }
+
+    /**
      * Remove a book from the system.
      * @throws NotifyException
      * @throws BindingResolutionException
      */
     public function destroyBook(Book $book)
     {
-        if ($book->cover) {
-            $imageService = app()->make(ImageService::class);
-            $imageService->destroy($book->cover);
-        }
-
         foreach ($book->pages as $page) {
             $this->destroyPage($page);
         }
@@ -93,6 +100,11 @@ class TrashCan
         $entity->comments()->delete();
         $entity->jointPermissions()->delete();
         $entity->searchTerms()->delete();
+
+        if ($entity instanceof HasCoverImage && $entity->cover) {
+            $imageService = app()->make(ImageService::class);
+            $imageService->destroy($entity->cover);
+        }
     }
 
 }
