@@ -135,81 +135,9 @@ class PageRepo extends EntityRepo
         return $revision;
     }
 
-    /**
-     * Formats a page's html to be tagged correctly within the system.
-     * @param string $htmlText
-     * @return string
-     */
-    protected function formatHtml(string $htmlText)
-    {
-        if ($htmlText == '') {
-            return $htmlText;
-        }
 
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
 
-        $container = $doc->documentElement;
-        $body = $container->childNodes->item(0);
-        $childNodes = $body->childNodes;
 
-        // Set ids on top-level nodes
-        $idMap = [];
-        foreach ($childNodes as $index => $childNode) {
-            $this->setUniqueId($childNode, $idMap);
-        }
-
-        // Ensure no duplicate ids within child items
-        $xPath = new DOMXPath($doc);
-        $idElems = $xPath->query('//body//*//*[@id]');
-        foreach ($idElems as $domElem) {
-            $this->setUniqueId($domElem, $idMap);
-        }
-
-        // Generate inner html as a string
-        $html = '';
-        foreach ($childNodes as $childNode) {
-            $html .= $doc->saveHTML($childNode);
-        }
-
-        return $html;
-    }
-
-    /**
-     * Set a unique id on the given DOMElement.
-     * A map for existing ID's should be passed in to check for current existence.
-     * @param DOMElement $element
-     * @param array $idMap
-     */
-    protected function setUniqueId($element, array &$idMap)
-    {
-        if (get_class($element) !== 'DOMElement') {
-            return;
-        }
-
-        // Overwrite id if not a BookStack custom id
-        $existingId = $element->getAttribute('id');
-        if (strpos($existingId, 'bkmrk') === 0 && !isset($idMap[$existingId])) {
-            $idMap[$existingId] = true;
-            return;
-        }
-
-        // Create an unique id for the element
-        // Uses the content as a basis to ensure output is the same every time
-        // the same content is passed through.
-        $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
-        $newId = urlencode($contentId);
-        $loopIndex = 0;
-
-        while (isset($idMap[$newId])) {
-            $newId = urlencode($contentId . '-' . $loopIndex);
-            $loopIndex++;
-        }
-
-        $element->setAttribute('id', $newId);
-        $idMap[$newId] = true;
-    }
 
     /**
      * Get the plain text version of a page's content.
@@ -232,18 +160,7 @@ class PageRepo extends EntityRepo
     public function getDraftPage(Book $book, Chapter $chapter = null)
     {
         $page = $this->entityProvider->page->newInstance();
-        $page->name = trans('entities.pages_initial_name');
-        $page->created_by = user()->id;
-        $page->updated_by = user()->id;
-        $page->draft = true;
 
-        if ($chapter) {
-            $page->chapter_id = $chapter->id;
-        }
-
-        $book->pages()->save($page);
-        $page->refresh()->rebuildPermissions();
-        return $page;
     }
 
     /**
@@ -298,12 +215,12 @@ class PageRepo extends EntityRepo
      */
     public function publishPageDraft(Page $draftPage, array $input)
     {
-        $draftPage->fill($input);
+//        $draftPage->fill($input);
 
         // Save page tags if present
-        if (isset($input['tags'])) {
-            $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
-        }
+//        if (isset($input['tags'])) {
+//            $this->tagRepo->saveTagsToEntity($draftPage, $input['tags']);
+//        }
 
         if (isset($input['template']) && userCan('templates-manage')) {
             $draftPage->template = ($input['template'] === 'true');

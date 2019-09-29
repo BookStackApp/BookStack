@@ -32,13 +32,7 @@ class ChapterRepo
      */
     public function getBySlug(string $bookSlug, string $chapterSlug): Chapter
     {
-        $chapter = Chapter::visible()
-            ->with('book')
-            ->whereHas('book', function(Builder $query) use ($bookSlug) {
-                $query->where('slug', '=', $bookSlug);
-            })
-            ->where('slug', '=', $chapterSlug)
-            ->first();
+        $chapter = Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->first();
 
         if ($chapter === null) {
             throw new NotFoundException(trans('errors.chapter_not_found'));

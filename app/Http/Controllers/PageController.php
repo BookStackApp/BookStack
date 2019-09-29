@@ -3,6 +3,9 @@
 use Activity;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Managers\BookContents;
+use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Managers\PageEditActivity;
+use BookStack\Entities\Repos\NewPageRepo;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use Exception;
@@ -13,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
 use Views;
@@ -20,16 +24,16 @@ use Views;
 class PageController extends Controller
 {
 
+    protected $newPageRepo;
     protected $pageRepo;
     protected $userRepo;
 
     /**
      * PageController constructor.
-     * @param PageRepo $pageRepo
-     * @param UserRepo $userRepo
      */
-    public function __construct(PageRepo $pageRepo, UserRepo $userRepo)
+    public function __construct(NewPageRepo $newPageRepo, PageRepo $pageRepo, UserRepo $userRepo)
     {
+        $this->newPageRepo = $newPageRepo;
         $this->pageRepo = $pageRepo;
         $this->userRepo = $userRepo;
         parent::__construct();
@@ -37,28 +41,16 @@ class PageController extends Controller
 
     /**
      * Show the form for creating a new page.
-     * @param string $bookSlug
-     * @param string $chapterSlug
-     * @return Response
-     * @internal param bool $pageSlug
-     * @throws NotFoundException
+     * @throws Throwable
      */
-    public function create($bookSlug, $chapterSlug = null)
+    public function create(string $bookSlug, string $chapterSlug = null)
     {
-        if ($chapterSlug !== null) {
-            $chapter = $this->pageRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
-            $book = $chapter->book;
-        } else {
-            $chapter = null;
-            $book = $this->pageRepo->getEntityBySlug('book', $bookSlug);
-        }
-
-        $parent = $chapter ? $chapter : $book;
+        $parent = $this->newPageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('page-create', $parent);
 
         // Redirect to draft edit screen if signed in
         if ($this->isSignedIn()) {
-            $draft = $this->pageRepo->getDraftPage($book, $chapter);
+            $draft = $this->newPageRepo->getNewDraftPage($parent);
             return redirect($draft->getUrl());
         }
 
@@ -69,51 +61,38 @@ class PageController extends Controller
 
     /**
      * Create a new page as a guest user.
-     * @param Request $request
-     * @param string $bookSlug
-     * @param string|null $chapterSlug
-     * @return mixed
-     * @throws NotFoundException
+     * @throws ValidationException
      */
-    public function createAsGuest(Request $request, $bookSlug, $chapterSlug = null)
+    public function createAsGuest(Request $request, string $bookSlug, string $chapterSlug = null)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
 
-        if ($chapterSlug !== null) {
-            $chapter = $this->pageRepo->getEntityBySlug('chapter', $chapterSlug, $bookSlug);
-            $book = $chapter->book;
-        } else {
-            $chapter = null;
-            $book = $this->pageRepo->getEntityBySlug('book', $bookSlug);
-        }
-
-        $parent = $chapter ? $chapter : $book;
+        $parent = $this->newPageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('page-create', $parent);
 
-        $page = $this->pageRepo->getDraftPage($book, $chapter);
-        $this->pageRepo->publishPageDraft($page, [
+        $page = $this->newPageRepo->getNewDraftPage($parent);
+        $this->newPageRepo->publishDraft($page, [
             'name' => $request->get('name'),
             'html' => ''
         ]);
+
         return redirect($page->getUrl('/edit'));
     }
 
     /**
      * Show form to continue editing a draft page.
-     * @param string $bookSlug
-     * @param int $pageId
-     * @return Factory|View
+     * @throws NotFoundException
      */
-    public function editDraft($bookSlug, $pageId)
+    public function editDraft(string $bookSlug, int $pageId)
     {
-        $draft = $this->pageRepo->getById('page', $pageId, true);
+        $draft = $this->newPageRepo->getById($pageId);
         $this->checkOwnablePermission('page-create', $draft->parent);
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
-        $templates = $this->pageRepo->getPageTemplates(10);
+        $templates = $this->newPageRepo->getTemplates(10);
 
         return view('pages.edit', [
             'page' => $draft,
@@ -126,63 +105,50 @@ class PageController extends Controller
 
     /**
      * Store a new page by changing a draft into a page.
-     * @param  Request $request
-     * @param  string $bookSlug
-     * @param  int $pageId
-     * @return Response
+     * @throws NotFoundException
+     * @throws ValidationException
      */
-    public function store(Request $request, $bookSlug, $pageId)
+    public function store(Request $request, string $bookSlug, int $pageId)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
+        $draftPage = $this->newPageRepo->getById($pageId);
+        $this->checkOwnablePermission('page-create', $draftPage->parent);
 
-        $input = $request->all();
-        $draftPage = $this->pageRepo->getById('page', $pageId, true);
-        $book = $draftPage->book;
+        $page = $this->newPageRepo->publishDraft($draftPage, $request->all());
+        Activity::add($page, 'page_create', $draftPage->book->id);
 
-        $parent = $draftPage->parent;
-        $this->checkOwnablePermission('page-create', $parent);
-
-        if ($parent->isA('chapter')) {
-            $input['priority'] = $this->pageRepo->getNewChapterPriority($parent);
-        } else {
-            $input['priority'] = $this->pageRepo->getNewBookPriority($parent);
-        }
-
-        $page = $this->pageRepo->publishPageDraft($draftPage, $input);
-
-        Activity::add($page, 'page_create', $book->id);
         return redirect($page->getUrl());
     }
 
     /**
      * Display the specified page.
      * If the page is not found via the slug the revisions are searched for a match.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return Response
      * @throws NotFoundException
      */
-    public function show($bookSlug, $pageSlug)
+    public function show(string $bookSlug, string $pageSlug)
     {
         try {
-            $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+            $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         } catch (NotFoundException $e) {
-            $page = $this->pageRepo->getPageByOldSlug($pageSlug, $bookSlug);
+            $page = $this->newPageRepo->getByOldSlug($bookSlug, $pageSlug);
+
             if ($page === null) {
                 throw $e;
             }
+
             return redirect($page->getUrl());
         }
 
         $this->checkOwnablePermission('page-view', $page);
 
-        $page->html = $this->pageRepo->renderPage($page);
+        $pageContent = (new PageContent($page));
+        $page->html = $pageContent->render();
         $sidebarTree = (new BookContents($page->book))->getTree();
-        $pageNav = $this->pageRepo->getPageNav($page->html);
+        $pageNav = $pageContent->getNavigation($page->html);
 
-        // check if the comment's are enabled
+        // Check if page comments are enabled
         $commentsEnabled = !setting('app-disable-comments');
         if ($commentsEnabled) {
             $page->load(['comments.createdBy']);
@@ -191,7 +157,8 @@ class PageController extends Controller
         Views::add($page);
         $this->setPageTitle($page->getShortName());
         return view('pages.show', [
-            'page' => $page,'book' => $page->book,
+            'page' => $page,
+            'book' => $page->book,
             'current' => $page,
             'sidebarTree' => $sidebarTree,
             'commentsEnabled' => $commentsEnabled,
@@ -201,52 +168,47 @@ class PageController extends Controller
 
     /**
      * Get page from an ajax request.
-     * @param int $pageId
-     * @return JsonResponse
+     * @throws NotFoundException
      */
-    public function getPageAjax($pageId)
+    public function getPageAjax(int $pageId)
     {
-        $page = $this->pageRepo->getById('page', $pageId);
+        $page = $this->newPageRepo->getById($pageId);
         return response()->json($page);
     }
 
     /**
      * Show the form for editing the specified page.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return Response
      * @throws NotFoundException
      */
-    public function edit($bookSlug, $pageSlug)
+    public function edit(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
-        $this->setPageTitle(trans('entities.pages_editing_named', ['pageName'=>$page->getShortName()]));
+
         $page->isDraft = false;
+        $editActivity = new PageEditActivity($page);
 
         // Check for active editing
         $warnings = [];
-        if ($this->pageRepo->isPageEditingActive($page, 60)) {
-            $warnings[] = $this->pageRepo->getPageEditingActiveMessage($page, 60);
+        if ($editActivity->hasActiveEditing()) {
+            $warnings[] = $editActivity->activeEditingMessage();
         }
 
         // Check for a current draft version for this user
-        $userPageDraft = $this->pageRepo->getUserPageDraft($page, user()->id);
-        if ($userPageDraft !== null) {
-            $page->name = $userPageDraft->name;
-            $page->html = $userPageDraft->html;
-            $page->markdown = $userPageDraft->markdown;
+        $userDraft = $this->newPageRepo->getUserDraft($page);
+        if ($userDraft !== null) {
+            $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
             $page->isDraft = true;
-            $warnings [] = $this->pageRepo->getUserPageDraftMessage($userPageDraft);
+            $warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
         }
 
         if (count($warnings) > 0) {
             $this->showWarningNotification( implode("\n", $warnings));
         }
 
-        $draftsEnabled = $this->isSignedIn();
         $templates = $this->pageRepo->getPageTemplates(10);
-
+        $draftsEnabled = $this->isSignedIn();
+        $this->setPageTitle(trans('entities.pages_editing_named', ['pageName' => $page->getShortName()]));
         return view('pages.edit', [
             'page' => $page,
             'book' => $page->book,
@@ -255,6 +217,10 @@ class PageController extends Controller
             'templates' => $templates,
         ]);
     }
+
+    /**
+     * TODO - Continue from here
+     */
 
     /**
      * Update the specified page in storage.

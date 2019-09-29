@@ -1,15 +1,30 @@
 <?php namespace BookStack\Entities;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Class BookChild
  * @property int $book_id
  * @property int $priority
  * @property Book $book
+ * @method Builder whereSlugs(string $bookSlug, string $childSlug)
  */
 class BookChild extends Entity
 {
+
+    /**
+     * Scope a query to find items where the the child has the given childSlug
+     * where its parent has the bookSlug.
+     */
+    public function scopeWhereSlugs(Builder $query, string $bookSlug, string $childSlug)
+    {
+        return $query->with('book')
+            ->whereHas('book', function(\Illuminate\Database\Eloquent\Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            })
+            ->where('slug', '=', $childSlug);
+    }
 
     /**
      * Get the book this page sits in.

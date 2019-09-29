@@ -9,6 +9,11 @@ use Permissions;
 
 /**
  * Class Page
+ * @property int $chapter_id
+ * @property string $html
+ * @property string $markdown
+ * @property string $text
+ * @property Entity $parent
  * @property Collection $attachments
  */
 class Page extends BookChild
