@@ -567,22 +567,6 @@ class EntityRepo
         return count($pages) > 0 ? $pages : false;
     }
 
-    /**
-     * Destroy a chapter and its relations.
-     * @param Chapter $chapter
-     * @throws Throwable
-     */
-    public function destroyChapter(Chapter $chapter)
-    {
-        if (count($chapter->pages) > 0) {
-            foreach ($chapter->pages as $page) {
-                $page->chapter_id = 0;
-                $page->save();
-            }
-        }
-        $this->destroyEntityCommonRelations($chapter);
-        $chapter->delete();
-    }
 
     /**
      * Destroy a given page along with its dependencies.

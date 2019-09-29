@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Class BookChild
  * @property int $book_id
  * @property int $priority
+ * @property Book $book
  */
 class BookChild extends Entity
 {
@@ -27,6 +28,7 @@ class BookChild extends Entity
         $this->book_id = $newBookId;
         $this->refreshSlug();
         $this->save();
+        $this->refresh();
 
         // Update related activity
         $this->activity()->update(['book_id' => $newBookId]);

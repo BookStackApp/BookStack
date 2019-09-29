@@ -33,7 +33,7 @@ class BaseRepo
      */
     public function create(Entity $entity, array $input)
     {
-        $entity = $entity->fill($input);
+        $entity->fill($input);
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
