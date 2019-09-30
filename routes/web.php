@@ -9,9 +9,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')
         ->where('path', '.*$');
 
-    Route::group(['prefix' => 'pages'], function() {
-        Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
-    });
+    Route::get('/pages/recently-updated', 'PageController@showRecentlyUpdated');
 
     // Shelves
     Route::get('/create-shelf', 'BookshelfController@create');

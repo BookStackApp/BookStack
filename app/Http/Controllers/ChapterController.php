@@ -173,7 +173,7 @@ class ChapterController extends Controller
         }
 
         try {
-            $newBook = $this->chapterRepo->moveChapter($chapter, $entitySelection);
+            $newBook = $this->chapterRepo->move($chapter, $entitySelection);
         } catch (MoveOperationException $exception) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
             return redirect()->back();

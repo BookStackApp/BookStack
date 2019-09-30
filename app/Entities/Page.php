@@ -13,6 +13,9 @@ use Permissions;
  * @property string $html
  * @property string $markdown
  * @property string $text
+ * @property bool $template
+ * @property bool $draft
+ * @property int $revision_count
  * @property Entity $parent
  * @property Collection $attachments
  */

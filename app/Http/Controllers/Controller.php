@@ -129,7 +129,7 @@ abstract class Controller extends BaseController
      */
     protected function jsonError($messageText = "", $statusCode = 500)
     {
-        return response()->json(['message' => $messageText], $statusCode);
+        return response()->json(['message' => $messageText, 'status' => 'error'], $statusCode);
     }
 
     /**

@@ -86,7 +86,7 @@ class ChapterRepo
      * 'book:<id>' (book:5)
      * @throws MoveOperationException
      */
-    public function moveChapter(Chapter $chapter, string $parentIdentifier): Book
+    public function move(Chapter $chapter, string $parentIdentifier): Book
     {
         $stringExploded = explode(':', $parentIdentifier);
         $entityType = $stringExploded[0];

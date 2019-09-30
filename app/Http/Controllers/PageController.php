@@ -5,9 +5,13 @@ use BookStack\Auth\UserRepo;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Managers\PageEditActivity;
+use BookStack\Entities\Page;
 use BookStack\Entities\Repos\NewPageRepo;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
+use BookStack\Exceptions\PermissionsException;
 use Exception;
 use GatherContent\Htmldiff\Htmldiff;
 use Illuminate\Contracts\View\Factory;
@@ -219,47 +223,38 @@ class PageController extends Controller
     }
 
     /**
-     * TODO - Continue from here
-     */
-
-    /**
      * Update the specified page in storage.
-     * @param  Request $request
-     * @param  string $bookSlug
-     * @param  string $pageSlug
-     * @return Response
+     * @throws ValidationException
+     * @throws NotFoundException
      */
-    public function update(Request $request, $bookSlug, $pageSlug)
+    public function update(Request $request, string $bookSlug, string $pageSlug)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
-        $this->pageRepo->updatePage($page, $page->book->id, $request->all());
+
+        $this->newPageRepo->update($page, $request->all());
         Activity::add($page, 'page_update', $page->book->id);
+
         return redirect($page->getUrl());
     }
 
     /**
      * Save a draft update as a revision.
-     * @param Request $request
-     * @param int $pageId
-     * @return JsonResponse
+     * @throws NotFoundException
      */
-    public function saveDraft(Request $request, $pageId)
+    public function saveDraft(Request $request, int $pageId)
     {
-        $page = $this->pageRepo->getById('page', $pageId, true);
+        $page = $this->newPageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         if (!$this->isSignedIn()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => trans('errors.guests_cannot_save_drafts'),
-            ], 500);
+            return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
         }
 
-        $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
+        $draft = $this->newPageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
 
         $updateTime = $draft->updated_at->timestamp;
         return response()->json([
@@ -270,115 +265,113 @@ class PageController extends Controller
     }
 
     /**
-     * Redirect from a special link url which
-     * uses the page id rather than the name.
-     * @param int $pageId
-     * @return RedirectResponse|Redirector
+     * Redirect from a special link url which uses the page id rather than the name.
+     * @throws NotFoundException
      */
-    public function redirectFromLink($pageId)
+    public function redirectFromLink(int $pageId)
     {
-        $page = $this->pageRepo->getById('page', $pageId);
+        $page = $this->newPageRepo->getById($pageId);
         return redirect($page->getUrl());
     }
 
     /**
      * Show the deletion page for the specified page.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return View
+     * @throws NotFoundException
      */
-    public function showDelete($bookSlug, $pageSlug)
+    public function showDelete(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName'=>$page->getShortName()]));
-        return view('pages.delete', ['book' => $page->book, 'page' => $page, 'current' => $page]);
+        return view('pages.delete', [
+            'book' => $page->book,
+            'page' => $page,
+            'current' => $page
+        ]);
     }
-
 
     /**
      * Show the deletion page for the specified page.
-     * @param string $bookSlug
-     * @param int $pageId
-     * @return View
      * @throws NotFoundException
      */
-    public function showDeleteDraft($bookSlug, $pageId)
+    public function showDeleteDraft(string $bookSlug, int $pageId)
     {
-        $page = $this->pageRepo->getById('page', $pageId, true);
+        $page = $this->newPageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName'=>$page->getShortName()]));
-        return view('pages.delete', ['book' => $page->book, 'page' => $page, 'current' => $page]);
+        return view('pages.delete', [
+            'book' => $page->book,
+            'page' => $page,
+            'current' => $page
+        ]);
     }
 
     /**
      * Remove the specified page from storage.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return Response
-     * @internal param int $id
+     * @throws NotFoundException
+     * @throws Throwable
+     * @throws NotifyException
      */
-    public function destroy($bookSlug, $pageSlug)
+    public function destroy(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
-        $book = $page->book;
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
-        $this->pageRepo->destroyPage($page);
 
+        $book = $page->book;
+        $this->newPageRepo->destroy($page);
         Activity::addMessage('page_delete', $page->name, $book->id);
+
         $this->showSuccessNotification( trans('entities.pages_delete_success'));
         return redirect($book->getUrl());
     }
 
     /**
      * Remove the specified draft page from storage.
-     * @param string $bookSlug
-     * @param int $pageId
-     * @return Response
      * @throws NotFoundException
+     * @throws NotifyException
+     * @throws Throwable
      */
-    public function destroyDraft($bookSlug, $pageId)
+    public function destroyDraft(string $bookSlug, int $pageId)
     {
-        $page = $this->pageRepo->getById('page', $pageId, true);
+        $page = $this->newPageRepo->getById($pageId);
         $book = $page->book;
         $this->checkOwnablePermission('page-update', $page);
+
+        $this->newPageRepo->destroy($page);
+
         $this->showSuccessNotification( trans('entities.pages_delete_draft_success'));
-        $this->pageRepo->destroyPage($page);
         return redirect($book->getUrl());
     }
 
     /**
      * Shows the last revisions for this page.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return View
      * @throws NotFoundException
      */
-    public function showRevisions($bookSlug, $pageSlug)
+    public function showRevisions(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName'=>$page->getShortName()]));
-        return view('pages.revisions', ['page' => $page, 'current' => $page]);
+        return view('pages.revisions', [
+            'page' => $page,
+            'current' => $page
+        ]);
     }
 
     /**
-     * Shows a preview of a single revision
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @param int $revisionId
-     * @return View
+     * Shows a preview of a single revision.
+     * @throws NotFoundException
      */
-    public function showRevision($bookSlug, $pageSlug, $revisionId)
+    public function showRevision(string $bookSlug, string $pageSlug, int $revisionId)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
-            abort(404);
+            throw new NotFoundException();
         }
 
         $page->fill($revision->toArray());
-        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
 
+        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
         return view('pages.revision', [
             'page' => $page,
             'book' => $page->book,
@@ -388,22 +381,19 @@ class PageController extends Controller
     }
 
     /**
-     * Shows the changes of a single revision
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @param int $revisionId
-     * @return View
+     * Shows the changes of a single revision.
+     * @throws NotFoundException
      */
-    public function showRevisionChanges($bookSlug, $pageSlug, $revisionId)
+    public function showRevisionChanges(string $bookSlug, string $pageSlug, int $revisionId)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
-            abort(404);
+            throw new NotFoundException();
         }
 
         $prev = $revision->getPrevious();
-        $prevContent = ($prev === null) ? '' : $prev->html;
+        $prevContent = $prev->html ?? '';
         $diff = (new Htmldiff)->diff($prevContent, $revision->html);
 
         $page->fill($revision->toArray());
@@ -419,33 +409,26 @@ class PageController extends Controller
 
     /**
      * Restores a page using the content of the specified revision.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @param int $revisionId
-     * @return RedirectResponse|Redirector
+     * @throws NotFoundException
      */
-    public function restoreRevision($bookSlug, $pageSlug, $revisionId)
+    public function restoreRevision(string $bookSlug, string $pageSlug, int $revisionId)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
-        $page = $this->pageRepo->restorePageRevision($page, $page->book, $revisionId);
+
+        $page = $this->newPageRepo->restoreRevision($page, $revisionId);
+
         Activity::add($page, 'page_restore', $page->book->id);
         return redirect($page->getUrl());
     }
 
-
     /**
      * Deletes a revision using the id of the specified revision.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @param int $revId
-     * @return RedirectResponse|Redirector
-     *@throws BadRequestException
      * @throws NotFoundException
      */
-    public function destroyRevision($bookSlug, $pageSlug, $revId)
+    public function destroyRevision(string $bookSlug, string $pageSlug, int $revId)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
 
         $revision = $page->revisions()->where('id', '=', $revId)->first();
@@ -458,8 +441,8 @@ class PageController extends Controller
 
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($currentRevision->id) === intval($revId)) {
-            $this->showErrorNotification( trans('entities.revision_cannot_delete_latest'));
-            return response()->view('pages.revisions', ['page' => $page, 'book' => $page->book, 'current' => $page], 400);
+            $this->showErrorNotification(trans('entities.revision_cannot_delete_latest'));
+            return $this->showRevisions($bookSlug, $pageSlug);
         }
 
         $revision->delete();
@@ -468,13 +451,14 @@ class PageController extends Controller
     }
 
     /**
-     * Show a listing of recently created pages
-     * @return Factory|View
+     * Show a listing of recently created pages.
      */
     public function showRecentlyUpdated()
     {
-        // TODO - Still exist?
-        $pages = $this->pageRepo->getRecentlyUpdatedPaginated('page', 20)->setPath(url('/pages/recently-updated'));
+        $pages = Page::visible()->orderBy('updated_at', 'desc')
+            ->paginate(20)
+            ->setPath(url('/pages/recently-updated'));
+
         return view('pages.detailed-listing', [
             'title' => trans('entities.recently_updated_pages'),
             'pages' => $pages
@@ -483,14 +467,11 @@ class PageController extends Controller
 
     /**
      * Show the view to choose a new parent to move a page into.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return mixed
      * @throws NotFoundException
      */
-    public function showMove($bookSlug, $pageSlug)
+    public function showMove(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
         $this->checkOwnablePermission('page-delete', $page);
         return view('pages.move', [
@@ -500,17 +481,13 @@ class PageController extends Controller
     }
 
     /**
-     * Does the action of moving the location of a page
-     * @param Request $request
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return mixed
+     * Does the action of moving the location of a page.
      * @throws NotFoundException
      * @throws Throwable
      */
     public function move(Request $request, string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
         $this->checkOwnablePermission('page-delete', $page);
 
@@ -519,37 +496,29 @@ class PageController extends Controller
             return redirect($page->getUrl());
         }
 
-        $stringExploded = explode(':', $entitySelection);
-        $entityType = $stringExploded[0];
-        $entityId = intval($stringExploded[1]);
-
-
         try {
-            $parent = $this->pageRepo->getById($entityType, $entityId);
-        } catch (Exception $e) {
-            session()->flash(trans('entities.selected_book_chapter_not_found'));
+            $parent = $this->newPageRepo->move($page, $entitySelection);
+        } catch (Exception $exception) {
+            if ($exception instanceof  PermissionsException) {
+                $this->showPermissionError();
+            }
+
+            $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
             return redirect()->back();
         }
 
-        $this->checkOwnablePermission('page-create', $parent);
-
-        $this->pageRepo->changePageParent($page, $parent);
         Activity::add($page, 'page_move', $page->book->id);
         $this->showSuccessNotification( trans('entities.pages_move_success', ['parentName' => $parent->name]));
-
         return redirect($page->getUrl());
     }
 
     /**
      * Show the view to copy a page.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return mixed
      * @throws NotFoundException
      */
-    public function showCopy($bookSlug, $pageSlug)
+    public function showCopy(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-view', $page);
         session()->flashInput(['name' => $page->name]);
         return view('pages.copy', [
@@ -557,6 +526,10 @@ class PageController extends Controller
             'page' => $page
         ]);
     }
+
+    /**
+     * TODO - Continue from here
+     */
 
     /**
      * Create a copy of a page within the requested target destination.
