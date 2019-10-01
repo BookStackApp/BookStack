@@ -20,7 +20,7 @@ return [
     'ldap_extension_not_installed' => 'L\'extension LDAP PHP n\'est pas installée',
     'ldap_cannot_connect' => 'Impossible de se connecter au serveur LDAP, la connexion initiale a échoué',
     'social_no_action_defined' => 'Pas d\'action définie',
-    'social_login_bad_response' => "Erreur pendant la tentative de connexion à :socialAccount : \n:error",
+    'social_login_bad_response' => "Erreur pendant la tentative de connexion à :socialAccount : \n:error",
     'social_account_in_use' => 'Ce compte :socialAccount est déjà utilisé. Essayez de vous connecter via :socialAccount.',
     'social_account_email_in_use' => 'L\'email :email est déjà utilisé. Si vous avez déjà un compte :socialAccount, vous pouvez le joindre à votre profil existant.',
     'social_account_existing' => 'Ce compte :socialAccount est déjà rattaché à votre profil.',
@@ -29,6 +29,7 @@ return [
     'social_account_register_instructions' => 'Si vous n\'avez pas encore de compte, vous pouvez le lier avec l\'option :socialAccount.',
     'social_driver_not_found' => 'Pilote de compte social absent',
     'social_driver_not_configured' => 'Vos préférences pour le compte :socialAccount sont incorrectes.',
+    'invite_token_expired' => 'Le lien de cette invitation a expiré. Vous pouvez essayer de réinitiliser votre mot de passe.',
 
     // System
     'path_not_writable' => 'Impossible d\'écrire dans :filePath. Assurez-vous d\'avoir les droits d\'écriture sur le serveur',
@@ -66,6 +67,7 @@ return [
     'role_cannot_be_edited' => 'Ce rôle ne peut pas être modifié',
     'role_system_cannot_be_deleted' => 'Ceci est un rôle du système et ne peut pas être supprimé',
     'role_registration_default_cannot_delete' => 'Ce rôle ne peut pas être supprimé tant qu\'il est le rôle par défaut',
+    'role_cannot_remove_only_admin' => 'Ceci est le seul compte administrateur. Assignez un nouvel administrateur avant de le supprimer ici.',
 
     // Error pages
     '404_page_not_found' => 'Page non trouvée',
