@@ -5,7 +5,7 @@ use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\UserRepo;
-use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Repos\NewPageRepo;
 use Carbon\Carbon;
 
 class EntityTest extends BrowserKitTest
@@ -192,7 +192,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
         app(UserRepo::class)->destroy($creator);
-        app(PageRepo::class)->savePageRevision($entities['page']);
+        app(NewPageRepo::class)->update($entities['page'], ['html' => '<p>hello!</p>>']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -205,7 +205,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
         app(UserRepo::class)->destroy($updater);
-        app(PageRepo::class)->savePageRevision($entities['page']);
+        app(NewPageRepo::class)->update($entities['page'], ['html' => '<p>Hello there!</p>']);
 
         $this->checkEntitiesViewable($entities);
     }

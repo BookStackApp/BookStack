@@ -7,7 +7,6 @@ use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Managers\PageEditActivity;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\NewPageRepo;
-use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
@@ -22,16 +21,14 @@ class PageController extends Controller
 {
 
     protected $newPageRepo;
-    protected $pageRepo;
     protected $userRepo;
 
     /**
      * PageController constructor.
      */
-    public function __construct(NewPageRepo $newPageRepo, PageRepo $pageRepo, UserRepo $userRepo)
+    public function __construct(NewPageRepo $newPageRepo, UserRepo $userRepo)
     {
         $this->newPageRepo = $newPageRepo;
-        $this->pageRepo = $pageRepo;
         $this->userRepo = $userRepo;
         parent::__construct();
     }
@@ -85,7 +82,7 @@ class PageController extends Controller
     public function editDraft(string $bookSlug, int $pageId)
     {
         $draft = $this->newPageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-create', $draft->parent);
+        $this->checkOwnablePermission('page-create', $draft->parent());
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
@@ -111,7 +108,7 @@ class PageController extends Controller
             'name' => 'required|string|max:255'
         ]);
         $draftPage = $this->newPageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-create', $draftPage->parent);
+        $this->checkOwnablePermission('page-create', $draftPage->parent());
 
         $page = $this->newPageRepo->publishDraft($draftPage, $request->all());
         Activity::add($page, 'page_create', $draftPage->book->id);
@@ -203,7 +200,7 @@ class PageController extends Controller
             $this->showWarningNotification( implode("\n", $warnings));
         }
 
-        $templates = $this->pageRepo->getPageTemplates(10);
+        $templates = $this->newPageRepo->getTemplates(10);
         $draftsEnabled = $this->isSignedIn();
         $this->setPageTitle(trans('entities.pages_editing_named', ['pageName' => $page->getShortName()]));
         return view('pages.edit', [
@@ -328,11 +325,16 @@ class PageController extends Controller
     {
         $page = $this->newPageRepo->getById($pageId);
         $book = $page->book;
+        $chapter = $page->chapter;
         $this->checkOwnablePermission('page-update', $page);
 
         $this->newPageRepo->destroy($page);
 
         $this->showSuccessNotification( trans('entities.pages_delete_draft_success'));
+
+        if ($chapter && userCan('view', $chapter)) {
+            return redirect($chapter->getUrl());
+        }
         return redirect($book->getUrl());
     }
 
@@ -435,7 +437,7 @@ class PageController extends Controller
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($currentRevision->id) === intval($revId)) {
             $this->showErrorNotification(trans('entities.revision_cannot_delete_latest'));
-            return $this->showRevisions($bookSlug, $pageSlug);
+            return redirect($page->getUrl('/revisions'));
         }
 
         $revision->delete();
@@ -464,7 +466,7 @@ class PageController extends Controller
      */
     public function showMove(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
         $this->checkOwnablePermission('page-delete', $page);
         return view('pages.move', [
@@ -528,7 +530,7 @@ class PageController extends Controller
      */
     public function copy(Request $request, string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-view', $page);
 
         $entitySelection = $request->get('entity_selection', null) ?? null;

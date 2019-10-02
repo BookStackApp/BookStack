@@ -1,11 +1,9 @@
 <?php namespace BookStack\Entities\Repos;
 
-use Activity;
 use BookStack\Actions\TagRepo;
 use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
-use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
@@ -14,16 +12,12 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Page;
 use BookStack\Entities\SearchService;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
-use BookStack\Uploads\AttachmentService;
 use DOMDocument;
 use DOMXPath;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Throwable;
 
 class EntityRepo
 {
@@ -122,37 +116,6 @@ class EntityRepo
     }
 
     /**
-     * Get an entity by its url slug.
-     * @param string $type
-     * @param string $slug
-     * @param string|null $bookSlug
-     * @return Entity
-     * @throws NotFoundException
-     */
-    public function getEntityBySlug(string $type, string $slug, string $bookSlug = null): Entity
-    {
-        $type = strtolower($type);
-        $query = $this->entityQuery($type)->where('slug', '=', $slug);
-
-        if ($type === 'chapter' || $type === 'page') {
-            $query = $query->where('book_id', '=', function (QueryBuilder $query) use ($bookSlug) {
-                $query->select('id')
-                    ->from($this->entityProvider->book->getTable())
-                    ->where('slug', '=', $bookSlug)->limit(1);
-            });
-        }
-
-        $entity = $query->first();
-
-        if ($entity === null) {
-            throw new NotFoundException(trans('errors.' . $type . '_not_found'));
-        }
-
-        return $entity;
-    }
-
-
-    /**
      * Get all entities of a type with the given permission, limited by count unless count is false.
      * @param string $type
      * @param integer|bool $count
@@ -230,18 +193,6 @@ class EntityRepo
         return $query->skip($page * $count)->take($count)->get();
     }
 
-
-    /**
-     * Get the latest pages added to the system with pagination.
-     * @param string $type
-     * @param int $count
-     * @return mixed
-     */
-    public function getRecentlyUpdatedPaginated($type, $count = 20)
-    {
-        return $this->entityQuery($type)->orderBy('updated_at', 'desc')->paginate($count);
-    }
-
     /**
      * Get the most popular entities base on all views.
      * @param string $type
@@ -316,57 +267,6 @@ class EntityRepo
     }
 
     /**
-     * Get the next sequential priority for a new child element in the given book.
-     * @param Book $book
-     * @return int
-     */
-    public function getNewBookPriority(Book $book)
-    {
-        return (new BookContents($book))->getLastPriority() + 1;
-    }
-
-    /**
-     * Get a new priority for a new page to be added to the given chapter.
-     * @param Chapter $chapter
-     * @return int
-     */
-    public function getNewChapterPriority(Chapter $chapter)
-    {
-        $lastPage = $chapter->pages('DESC')->first();
-        return $lastPage !== null ? $lastPage->priority + 1 : 0;
-    }
-
-
-    /**
-     * Updates entity restrictions from a request
-     * @param Request $request
-     * @param Entity $entity
-     * @throws Throwable
-     */
-    public function updateEntityPermissionsFromRequest(Request $request, Entity $entity)
-    {
-        $entity->restricted = $request->get('restricted', '') === 'true';
-        $entity->permissions()->delete();
-
-        if ($request->filled('restrictions')) {
-            $entityPermissionData = collect($request->get('restrictions'))->flatMap(function($restrictions, $roleId) {
-                return collect($restrictions)->keys()->map(function($action) use ($roleId) {
-                    return [
-                        'role_id' => $roleId,
-                        'action' => strtolower($action),
-                    ] ;
-                });
-            });
-
-            $entity->permissions()->createMany($entityPermissionData);
-        }
-
-        $entity->save();
-        $entity->rebuildPermissions();
-    }
-
-
-    /**
      * Create a new entity from request input.
      * Used for books and chapters.
      * @param string $type
@@ -385,30 +285,6 @@ class EntityRepo
         }
 
         $entityModel->refreshSlug();
-        $entityModel->save();
-
-        if (isset($input['tags'])) {
-            $this->tagRepo->saveTagsToEntity($entityModel, $input['tags']);
-        }
-
-        $entityModel->rebuildPermissions();
-        $this->searchService->indexEntity($entityModel);
-        return $entityModel;
-    }
-
-    /**
-     * Update entity details from request input.
-     * Used for shelves, books and chapters.
-     */
-    public function updateFromInput(Entity $entityModel, array $input): Entity
-    {
-        $entityModel->fill($input);
-        $entityModel->updated_by = user()->id;
-
-        if ($entityModel->isDirty('name')) {
-            $entityModel->refreshSlug();
-        }
-
         $entityModel->save();
 
         if (isset($input['tags'])) {
@@ -565,51 +441,6 @@ class EntityRepo
             $page->text = '';
         }
         return count($pages) > 0 ? $pages : false;
-    }
-
-
-    /**
-     * Destroy a given page along with its dependencies.
-     * @param Page $page
-     * @throws NotifyException
-     * @throws Throwable
-     */
-    public function destroyPage(Page $page)
-    {
-        // Check if set as custom homepage & remove setting if not used or throw error if active
-        $customHome = setting('app-homepage', '0:');
-        if (intval($page->id) === intval(explode(':', $customHome)[0])) {
-            if (setting('app-homepage-type') === 'page') {
-                throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
-            }
-            setting()->remove('app-homepage');
-        }
-
-        $this->destroyEntityCommonRelations($page);
-
-        // Delete Attached Files
-        $attachmentService = app(AttachmentService::class);
-        foreach ($page->attachments as $attachment) {
-            $attachmentService->deleteFile($attachment);
-        }
-
-        $page->delete();
-    }
-
-    /**
-     * Destroy or handle the common relations connected to an entity.
-     * @param Entity $entity
-     * @throws Throwable
-     */
-    protected function destroyEntityCommonRelations(Entity $entity)
-    {
-        Activity::removeEntity($entity);
-        $entity->views()->delete();
-        $entity->permissions()->delete();
-        $entity->tags()->delete();
-        $entity->comments()->delete();
-        $this->permissionService->deleteJointPermissionsForEntity($entity);
-        $this->searchService->deleteEntityTerms($entity);
     }
 
 }

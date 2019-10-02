@@ -16,7 +16,6 @@ use Permissions;
  * @property bool $template
  * @property bool $draft
  * @property int $revision_count
- * @property Entity $parent
  * @property Chapter $chapter
  * @property Collection $attachments
  */
@@ -50,11 +49,10 @@ class Page extends BookChild
 
     /**
      * Get the parent item
-     * @return BelongsTo
      */
-    public function parent()
+    public function parent(): Entity
     {
-        return $this->chapter_id ? $this->chapter() : $this->book();
+        return $this->chapter_id ? $this->chapter : $this->book;
     }
 
     /**
@@ -81,7 +79,7 @@ class Page extends BookChild
      */
     public function revisions()
     {
-        return $this->hasMany(PageRevision::class)->where('type', '=', 'version')->orderBy('created_at', 'desc');
+        return $this->hasMany(PageRevision::class)->where('type', '=', 'version')->orderBy('created_at', 'desc')->orderBy('id', 'desc');
     }
 
     /**

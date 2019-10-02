@@ -1,7 +1,7 @@
 <?php namespace BookStack\Entities;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Query\Builder;
 
 /**
  * Class BookChild
@@ -20,7 +20,7 @@ class BookChild extends Entity
     public function scopeWhereSlugs(Builder $query, string $bookSlug, string $childSlug)
     {
         return $query->with('book')
-            ->whereHas('book', function(\Illuminate\Database\Eloquent\Builder $query) use ($bookSlug) {
+            ->whereHas('book', function(Builder $query) use ($bookSlug) {
                 $query->where('slug', '=', $bookSlug);
             })
             ->where('slug', '=', $childSlug);

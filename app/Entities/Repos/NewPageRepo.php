@@ -35,7 +35,7 @@ class NewPageRepo
      */
     public function getById(int $id): Page
     {
-        $page = Page::visible()->with(['book', 'parent'])->find($id);
+        $page = Page::visible()->with(['book'])->find($id);
 
         if (!$page) {
             throw new NotFoundException(trans('errors.page_not_found'));
@@ -83,7 +83,7 @@ class NewPageRepo
      */
     public function getTemplates(int $count = 10, int $page = 1, string $search = ''): LengthAwarePaginator
     {
-        $query = $this->entityQuery('page')
+        $query = Page::visible()
             ->where('template', '=', true)
             ->orderBy('name', 'asc')
             ->skip(($page - 1) * $count)
@@ -306,7 +306,7 @@ class NewPageRepo
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
-        $page->changeBook($parent);
+        $page->changeBook($parent instanceof Book ? $parent->id : $parent->book->id);
         $page->rebuildPermissions();
         return $parent;
     }
@@ -319,12 +319,12 @@ class NewPageRepo
      */
     public function copy(Page $page, string $parentIdentifier = null, string $newName = null): Page
     {
-        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->parent;
+        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->parent();
         if ($parent === null) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
-        if (!userCan('page-create', $page)) {
+        if (!userCan('page-create', $parent)) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
@@ -438,12 +438,12 @@ class NewPageRepo
      */
     protected function getNewPriority(Page $page): int
     {
-        if ($page->parent instanceof Chapter) {
-            $lastPage = $page->parent->pages('desc')->first();
+        if ($page->parent() instanceof Chapter) {
+            $lastPage = $page->parent()->pages('desc')->first();
             return $lastPage ? $lastPage->priority + 1 : 0;
         }
 
-        return (new BookContents($page->parent))->getLastPriority() + 1;
+        return (new BookContents($page->book))->getLastPriority() + 1;
     }
 
     /**

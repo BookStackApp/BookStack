@@ -7,7 +7,7 @@ use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Repos\NewPageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
 use Illuminate\Support\Env;
@@ -120,9 +120,9 @@ trait SharedTestHelpers
      */
     public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
         $book = Book::first();
-        $pageRepo = app(PageRepo::class);
-        $draftPage = $pageRepo->getDraftPage($book);
-        return $pageRepo->publishPageDraft($draftPage, $input);
+        $pageRepo = app(NewPageRepo::class);
+        $draftPage = $pageRepo->getNewDraftPage($book);
+        return $pageRepo->publishDraft($draftPage, $input);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php namespace Entity;
 
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Repos\NewPageRepo;
 use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
@@ -10,9 +10,9 @@ class PageRevisionTest extends TestCase
     {
         $this->asEditor();
 
-        $pageRepo = app(PageRepo::class);
+        $pageRepo = app(NewPageRepo::class);
         $page = Page::first();
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $pageRevision = $page->revisions->last();
 
         $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
@@ -28,10 +28,10 @@ class PageRevisionTest extends TestCase
     {
         $this->asEditor();
 
-        $pageRepo = app(PageRepo::class);
+        $pageRepo = app(NewPageRepo::class);
         $page = Page::first();
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRepo->update($page, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
+        $pageRepo->update($page, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $page =  Page::find($page->id);
 
 
@@ -98,7 +98,7 @@ class PageRevisionTest extends TestCase
         $beforeRevisionCount = $page->revisions->count();
         $currentRevision = $page->getCurrentRevision();
         $resp = $this->asEditor()->delete($currentRevision->getUrl('/delete/'));
-        $resp->assertStatus(400);
+        $resp->assertRedirect($page->getUrl('/revisions'));
 
         $page = Page::find($page->id);
         $afterRevisionCount = $page->revisions->count();

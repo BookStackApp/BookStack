@@ -107,7 +107,7 @@ class PageContent
      */
     protected function toPlainText(): string
     {
-        $html = $this->render();
+        $html = $this->render(true);
         return strip_tags($html);
     }
 
@@ -198,7 +198,7 @@ class PageContent
                 continue;
             }
 
-            $matchedPage = $this->getById('page', $pageId);
+            $matchedPage = Page::visible()->find($pageId);
             if ($matchedPage === null) {
                 $html = str_replace($matches[0][$index], '', $html);
                 continue;
