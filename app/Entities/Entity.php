@@ -10,6 +10,7 @@ use BookStack\Facades\Permissions;
 use BookStack\Ownable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property int $created_by
  * @property int $updated_by
  * @property boolean $restricted
+ * @property Collection $tags
  * @method static Entity|Builder visible()
  * @method static Entity|Builder hasPermission(string $permission)
  * @method static Builder withLastView()

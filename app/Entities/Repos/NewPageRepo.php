@@ -14,6 +14,7 @@ use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class NewPageRepo
 {
@@ -138,6 +139,7 @@ class NewPageRepo
             $page->book_id = $parent->id;
         }
 
+        $page->save();
         $page->refresh()->rebuildPermissions();
         return $page;
     }
@@ -295,17 +297,7 @@ class NewPageRepo
      */
     public function move(Page $page, string $parentIdentifier): Book
     {
-        $stringExploded = explode(':', $parentIdentifier);
-        $entityType = $stringExploded[0];
-        $entityId = intval($stringExploded[1]);
-
-        if ($entityType !== 'book' && $entityType !== 'chapter') {
-            throw new MoveOperationException('Pages can only be moved into books or chapters');
-        }
-
-        $parentClass = $entityType === 'book' ? Book::class : Chapter::class;
-
-        $parent = $parentClass::visible()->where('id', '=', $entityId)->first();
+        $parent = $this->findParentByIdentifier($parentIdentifier);
         if ($parent === null) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
@@ -317,6 +309,70 @@ class NewPageRepo
         $page->changeBook($parent);
         $page->rebuildPermissions();
         return $parent;
+    }
+
+    /**
+     * Copy an existing page in the system.
+     * Optionally providing a new parent via string identifier and a new name.
+     * @throws MoveOperationException
+     * @throws PermissionsException
+     */
+    public function copy(Page $page, string $parentIdentifier = null, string $newName = null): Page
+    {
+        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->parent;
+        if ($parent === null) {
+            throw new MoveOperationException('Book or chapter to move page into not found');
+        }
+
+        if (!userCan('page-create', $page)) {
+            throw new PermissionsException('User does not have permission to create a page within the new parent');
+        }
+
+        $copyPage = $this->getNewDraftPage($parent);
+        $pageData = $page->getAttributes();
+
+        // Update name
+        if (!empty($newName)) {
+            $pageData['name'] = $newName;
+        }
+
+        // Copy tags from previous page if set
+        if ($page->tags) {
+            $pageData['tags'] = [];
+            foreach ($page->tags as $tag) {
+                $pageData['tags'][] = ['name' => $tag->name, 'value' => $tag->value];
+            }
+        }
+
+        return $this->publishDraft($copyPage, $pageData);
+    }
+
+    /**
+     * Find a page parent entity via a identifier string in the format:
+     * {type}:{id}
+     * Example: (book:5)
+     * @throws MoveOperationException
+     */
+    protected function findParentByIdentifier(string $identifier): ?Entity
+    {
+        $stringExploded = explode(':', $identifier);
+        $entityType = $stringExploded[0];
+        $entityId = intval($stringExploded[1]);
+
+        if ($entityType !== 'book' && $entityType !== 'chapter') {
+            throw new MoveOperationException('Pages can only be in books or chapters');
+        }
+
+        $parentClass = $entityType === 'book' ? Book::class : Chapter::class;
+        return $parentClass::visible()->where('id', '=', $entityId)->first();
+    }
+
+    /**
+     * Update the permissions of a page.
+     */
+    public function updatePermissions(Page $page, bool $restricted, Collection $permissions = null)
+    {
+        $this->baseRepo->updatePermissions($page, $restricted, $permissions);
     }
 
     /**
@@ -387,7 +443,7 @@ class NewPageRepo
             return $lastPage ? $lastPage->priority + 1 : 0;
         }
 
-        return (new BookContents($book))->getLastPriority() + 1;
+        return (new BookContents($page->parent))->getLastPriority() + 1;
     }
 
     /**

@@ -8,20 +8,13 @@ use BookStack\Entities\Managers\PageEditActivity;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\NewPageRepo;
 use BookStack\Entities\Repos\PageRepo;
-use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use Exception;
 use GatherContent\Htmldiff\Htmldiff;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
 use Throwable;
 use Views;
 
@@ -527,16 +520,9 @@ class PageController extends Controller
         ]);
     }
 
-    /**
-     * TODO - Continue from here
-     */
 
     /**
      * Create a copy of a page within the requested target destination.
-     * @param Request $request
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return mixed
      * @throws NotFoundException
      * @throws Throwable
      */
@@ -545,42 +531,33 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
         $this->checkOwnablePermission('page-view', $page);
 
-        $entitySelection = $request->get('entity_selection', null);
-        if ($entitySelection === null || $entitySelection === '') {
-            $parent = $page->chapter ? $page->chapter : $page->book;
-        } else {
-            $stringExploded = explode(':', $entitySelection);
-            $entityType = $stringExploded[0];
-            $entityId = intval($stringExploded[1]);
+        $entitySelection = $request->get('entity_selection', null) ?? null;
+        $newName = $request->get('name', null);
 
-            try {
-                $parent = $this->pageRepo->getById($entityType, $entityId);
-            } catch (Exception $e) {
-                $this->showErrorNotification(trans('entities.selected_book_chapter_not_found'));
-                return redirect()->back();
+        try {
+            $pageCopy = $this->newPageRepo->copy($page, $entitySelection, $newName);
+        } catch (Exception $exception) {
+            if ($exception instanceof  PermissionsException) {
+                $this->showPermissionError();
             }
+
+            $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
+            return redirect()->back();
         }
 
-        $this->checkOwnablePermission('page-create', $parent);
-
-        $pageCopy = $this->pageRepo->copyPage($page, $parent, $request->get('name', ''));
-
         Activity::add($pageCopy, 'page_create', $pageCopy->book->id);
-        $this->showSuccessNotification( trans('entities.pages_copy_success'));
 
+        $this->showSuccessNotification( trans('entities.pages_copy_success'));
         return redirect($pageCopy->getUrl());
     }
 
     /**
      * Show the Permissions view.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @return Factory|View
      * @throws NotFoundException
      */
-    public function showPermissions($bookSlug, $pageSlug)
+    public function showPermissions(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
         $roles = $this->userRepo->getRestrictableRoles();
         return view('pages.permissions', [
@@ -591,18 +568,18 @@ class PageController extends Controller
 
     /**
      * Set the permissions for this page.
-     * @param string $bookSlug
-     * @param string $pageSlug
-     * @param Request $request
-     * @return RedirectResponse|Redirector
      * @throws NotFoundException
      * @throws Throwable
      */
     public function permissions(Request $request, string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($pageSlug, $bookSlug);
+        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
-        $this->pageRepo->updateEntityPermissionsFromRequest($request, $page);
+
+        $restricted = $request->get('restricted') === 'true';
+        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
+        $this->newPageRepo->updatePermissions($page, $restricted, $permissions);
+
         $this->showSuccessNotification( trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());
     }

@@ -17,6 +17,7 @@ use Permissions;
  * @property bool $draft
  * @property int $revision_count
  * @property Entity $parent
+ * @property Chapter $chapter
  * @property Collection $attachments
  */
 class Page extends BookChild
