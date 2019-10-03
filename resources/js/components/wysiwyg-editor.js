@@ -451,7 +451,7 @@ class WysiwygEditor {
             end_container_on_empty_block: true,
             statusbar: false,
             menubar: false,
-            paste_data_images: false,
+            paste_data_images: true,
             extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram]',
             automatic_uploads: false,
             valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
