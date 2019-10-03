@@ -6,7 +6,7 @@ use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Managers\PageEditActivity;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
@@ -20,15 +20,15 @@ use Views;
 class PageController extends Controller
 {
 
-    protected $newPageRepo;
+    protected $pageRepo;
     protected $userRepo;
 
     /**
      * PageController constructor.
      */
-    public function __construct(NewPageRepo $newPageRepo, UserRepo $userRepo)
+    public function __construct(PageRepo $pageRepo, UserRepo $userRepo)
     {
-        $this->newPageRepo = $newPageRepo;
+        $this->pageRepo = $pageRepo;
         $this->userRepo = $userRepo;
         parent::__construct();
     }
@@ -39,12 +39,12 @@ class PageController extends Controller
      */
     public function create(string $bookSlug, string $chapterSlug = null)
     {
-        $parent = $this->newPageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
+        $parent = $this->pageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('page-create', $parent);
 
         // Redirect to draft edit screen if signed in
         if ($this->isSignedIn()) {
-            $draft = $this->newPageRepo->getNewDraftPage($parent);
+            $draft = $this->pageRepo->getNewDraftPage($parent);
             return redirect($draft->getUrl());
         }
 
@@ -63,11 +63,11 @@ class PageController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        $parent = $this->newPageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
+        $parent = $this->pageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('page-create', $parent);
 
-        $page = $this->newPageRepo->getNewDraftPage($parent);
-        $this->newPageRepo->publishDraft($page, [
+        $page = $this->pageRepo->getNewDraftPage($parent);
+        $this->pageRepo->publishDraft($page, [
             'name' => $request->get('name'),
             'html' => ''
         ]);
@@ -81,12 +81,12 @@ class PageController extends Controller
      */
     public function editDraft(string $bookSlug, int $pageId)
     {
-        $draft = $this->newPageRepo->getById($pageId);
+        $draft = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-create', $draft->parent());
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
-        $templates = $this->newPageRepo->getTemplates(10);
+        $templates = $this->pageRepo->getTemplates(10);
 
         return view('pages.edit', [
             'page' => $draft,
@@ -107,10 +107,10 @@ class PageController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
-        $draftPage = $this->newPageRepo->getById($pageId);
+        $draftPage = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-create', $draftPage->parent());
 
-        $page = $this->newPageRepo->publishDraft($draftPage, $request->all());
+        $page = $this->pageRepo->publishDraft($draftPage, $request->all());
         Activity::add($page, 'page_create', $draftPage->book->id);
 
         return redirect($page->getUrl());
@@ -124,9 +124,9 @@ class PageController extends Controller
     public function show(string $bookSlug, string $pageSlug)
     {
         try {
-            $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+            $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         } catch (NotFoundException $e) {
-            $page = $this->newPageRepo->getByOldSlug($bookSlug, $pageSlug);
+            $page = $this->pageRepo->getByOldSlug($bookSlug, $pageSlug);
 
             if ($page === null) {
                 throw $e;
@@ -166,7 +166,7 @@ class PageController extends Controller
      */
     public function getPageAjax(int $pageId)
     {
-        $page = $this->newPageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId);
         return response()->json($page);
     }
 
@@ -176,7 +176,7 @@ class PageController extends Controller
      */
     public function edit(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
 
         $page->isDraft = false;
@@ -189,7 +189,7 @@ class PageController extends Controller
         }
 
         // Check for a current draft version for this user
-        $userDraft = $this->newPageRepo->getUserDraft($page);
+        $userDraft = $this->pageRepo->getUserDraft($page);
         if ($userDraft !== null) {
             $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
             $page->isDraft = true;
@@ -200,7 +200,7 @@ class PageController extends Controller
             $this->showWarningNotification( implode("\n", $warnings));
         }
 
-        $templates = $this->newPageRepo->getTemplates(10);
+        $templates = $this->pageRepo->getTemplates(10);
         $draftsEnabled = $this->isSignedIn();
         $this->setPageTitle(trans('entities.pages_editing_named', ['pageName' => $page->getShortName()]));
         return view('pages.edit', [
@@ -222,10 +222,10 @@ class PageController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
 
-        $this->newPageRepo->update($page, $request->all());
+        $this->pageRepo->update($page, $request->all());
         Activity::add($page, 'page_update', $page->book->id);
 
         return redirect($page->getUrl());
@@ -237,14 +237,14 @@ class PageController extends Controller
      */
     public function saveDraft(Request $request, int $pageId)
     {
-        $page = $this->newPageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         if (!$this->isSignedIn()) {
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
         }
 
-        $draft = $this->newPageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
+        $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
 
         $updateTime = $draft->updated_at->timestamp;
         return response()->json([
@@ -260,7 +260,7 @@ class PageController extends Controller
      */
     public function redirectFromLink(int $pageId)
     {
-        $page = $this->newPageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId);
         return redirect($page->getUrl());
     }
 
@@ -270,7 +270,7 @@ class PageController extends Controller
      */
     public function showDelete(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName'=>$page->getShortName()]));
         return view('pages.delete', [
@@ -286,7 +286,7 @@ class PageController extends Controller
      */
     public function showDeleteDraft(string $bookSlug, int $pageId)
     {
-        $page = $this->newPageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName'=>$page->getShortName()]));
         return view('pages.delete', [
@@ -304,11 +304,11 @@ class PageController extends Controller
      */
     public function destroy(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
 
         $book = $page->book;
-        $this->newPageRepo->destroy($page);
+        $this->pageRepo->destroy($page);
         Activity::addMessage('page_delete', $page->name, $book->id);
 
         $this->showSuccessNotification( trans('entities.pages_delete_success'));
@@ -323,12 +323,12 @@ class PageController extends Controller
      */
     public function destroyDraft(string $bookSlug, int $pageId)
     {
-        $page = $this->newPageRepo->getById($pageId);
+        $page = $this->pageRepo->getById($pageId);
         $book = $page->book;
         $chapter = $page->chapter;
         $this->checkOwnablePermission('page-update', $page);
 
-        $this->newPageRepo->destroy($page);
+        $this->pageRepo->destroy($page);
 
         $this->showSuccessNotification( trans('entities.pages_delete_draft_success'));
 
@@ -344,7 +344,7 @@ class PageController extends Controller
      */
     public function showRevisions(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName'=>$page->getShortName()]));
         return view('pages.revisions', [
             'page' => $page,
@@ -358,7 +358,7 @@ class PageController extends Controller
      */
     public function showRevision(string $bookSlug, string $pageSlug, int $revisionId)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();
@@ -381,7 +381,7 @@ class PageController extends Controller
      */
     public function showRevisionChanges(string $bookSlug, string $pageSlug, int $revisionId)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();
@@ -408,10 +408,10 @@ class PageController extends Controller
      */
     public function restoreRevision(string $bookSlug, string $pageSlug, int $revisionId)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
 
-        $page = $this->newPageRepo->restoreRevision($page, $revisionId);
+        $page = $this->pageRepo->restoreRevision($page, $revisionId);
 
         Activity::add($page, 'page_restore', $page->book->id);
         return redirect($page->getUrl());
@@ -423,7 +423,7 @@ class PageController extends Controller
      */
     public function destroyRevision(string $bookSlug, string $pageSlug, int $revId)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
 
         $revision = $page->revisions()->where('id', '=', $revId)->first();
@@ -466,7 +466,7 @@ class PageController extends Controller
      */
     public function showMove(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
         $this->checkOwnablePermission('page-delete', $page);
         return view('pages.move', [
@@ -482,7 +482,7 @@ class PageController extends Controller
      */
     public function move(Request $request, string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
         $this->checkOwnablePermission('page-delete', $page);
 
@@ -492,7 +492,7 @@ class PageController extends Controller
         }
 
         try {
-            $parent = $this->newPageRepo->move($page, $entitySelection);
+            $parent = $this->pageRepo->move($page, $entitySelection);
         } catch (Exception $exception) {
             if ($exception instanceof  PermissionsException) {
                 $this->showPermissionError();
@@ -513,7 +513,7 @@ class PageController extends Controller
      */
     public function showCopy(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-view', $page);
         session()->flashInput(['name' => $page->name]);
         return view('pages.copy', [
@@ -530,14 +530,14 @@ class PageController extends Controller
      */
     public function copy(Request $request, string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-view', $page);
 
         $entitySelection = $request->get('entity_selection', null) ?? null;
         $newName = $request->get('name', null);
 
         try {
-            $pageCopy = $this->newPageRepo->copy($page, $entitySelection, $newName);
+            $pageCopy = $this->pageRepo->copy($page, $entitySelection, $newName);
         } catch (Exception $exception) {
             if ($exception instanceof  PermissionsException) {
                 $this->showPermissionError();
@@ -559,7 +559,7 @@ class PageController extends Controller
      */
     public function showPermissions(string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
         $roles = $this->userRepo->getRestrictableRoles();
         return view('pages.permissions', [
@@ -575,12 +575,12 @@ class PageController extends Controller
      */
     public function permissions(Request $request, string $bookSlug, string $pageSlug)
     {
-        $page = $this->newPageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
 
         $restricted = $request->get('restricted') === 'true';
         $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->newPageRepo->updatePermissions($page, $restricted, $permissions);
+        $this->pageRepo->updatePermissions($page, $restricted, $permissions);
 
         $this->showSuccessNotification( trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());

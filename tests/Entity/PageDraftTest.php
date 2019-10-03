@@ -1,13 +1,13 @@
 <?php namespace Tests;
 
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 
 class PageDraftTest extends BrowserKitTest
 {
     protected $page;
 
     /**
-     * @var NewPageRepo
+     * @var PageRepo
      */
     protected $pageRepo;
 
@@ -15,7 +15,7 @@ class PageDraftTest extends BrowserKitTest
     {
         parent::setUp();
         $this->page = \BookStack\Entities\Page::first();
-        $this->pageRepo = app(NewPageRepo::class);
+        $this->pageRepo = app(PageRepo::class);
     }
 
     public function test_draft_content_shows_if_available()

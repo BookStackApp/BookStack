@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Http\Response;
@@ -70,7 +71,7 @@ class HomeController extends Controller
         if ($homepageOption === 'bookshelves') {
             $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18, $commonData['sort'], $commonData['order']);
             foreach ($shelves as $shelf) {
-                $shelf->books = $this->entityRepo->getBookshelfChildren($shelf);
+                $shelf->books = $shelf->visibleBooks;
             }
             $data = array_merge($commonData, ['shelves' => $shelves]);
             return view('common.home-shelves', $data);
@@ -85,8 +86,9 @@ class HomeController extends Controller
         if ($homepageOption === 'page') {
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
-            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
-            $this->entityRepo->renderPage($customHomepage, true);
+            $customHomepage = Page::query()->where('draft', '=', false)->findOrFail($id);
+            $pageContent = new PageContent($customHomepage);
+            $customHomepage->html = $pageContent->render(true);
             return view('common.home-custom', array_merge($commonData, ['customHomepage' => $customHomepage]));
         }
 

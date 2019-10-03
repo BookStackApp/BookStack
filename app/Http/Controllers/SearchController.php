@@ -1,10 +1,12 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ViewService;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Entity;
 use BookStack\Entities\Managers\EntityContext;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\SearchService;
-use BookStack\Exceptions\NotFoundException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -18,10 +20,6 @@ class SearchController extends Controller
 
     /**
      * SearchController constructor.
-     * @param EntityRepo $entityRepo
-     * @param ViewService $viewService
-     * @param SearchService $searchService
-     * @param EntityContext $entityContextManager
      */
     public function __construct(
         EntityRepo $entityRepo,
@@ -38,9 +36,6 @@ class SearchController extends Controller
 
     /**
      * Searches all entities.
-     * @param Request $request
-     * @return View
-     * @internal param string $searchTerm
      */
     public function search(Request $request)
     {
@@ -64,12 +59,8 @@ class SearchController extends Controller
 
     /**
      * Searches all entities within a book.
-     * @param Request $request
-     * @param integer $bookId
-     * @return View
-     * @internal param string $searchTerm
      */
-    public function searchBook(Request $request, $bookId)
+    public function searchBook(Request $request, int $bookId)
     {
         $term = $request->get('term', '');
         $results = $this->searchService->searchBook($bookId, $term);
@@ -78,12 +69,8 @@ class SearchController extends Controller
 
     /**
      * Searches all entities within a chapter.
-     * @param Request $request
-     * @param integer $chapterId
-     * @return View
-     * @internal param string $searchTerm
      */
-    public function searchChapter(Request $request, $chapterId)
+    public function searchChapter(Request $request, int $chapterId)
     {
         $term = $request->get('term', '');
         $results = $this->searchService->searchChapter($chapterId, $term);
@@ -93,8 +80,6 @@ class SearchController extends Controller
     /**
      * Search for a list of entities and return a partial HTML response of matching entities.
      * Returns the most popular entities if no search is provided.
-     * @param Request $request
-     * @return mixed
      */
     public function searchEntitiesAjax(Request $request)
     {
@@ -115,15 +100,13 @@ class SearchController extends Controller
 
     /**
      * Search siblings items in the system.
-     * @param Request $request
-     * @return Factory|View|mixed
      */
     public function searchSiblings(Request $request)
     {
         $type = $request->get('entity_type', null);
         $id = $request->get('entity_id', null);
 
-        $entity = $this->entityRepo->getById($type, $id);
+        $entity = Entity::getEntityInstance($type)->newQuery()->visible()->find($id);
         if (!$entity) {
             return $this->jsonError(trans('errors.entity_not_found'), 404);
         }
@@ -132,12 +115,12 @@ class SearchController extends Controller
 
         // Page in chapter
         if ($entity->isA('page') && $entity->chapter) {
-            $entities = $this->entityRepo->getChapterChildren($entity->chapter);
+            $entities = $entity->chapter->visiblePages();
         }
 
         // Page in book or chapter
         if (($entity->isA('page') && !$entity->chapter) || $entity->isA('chapter')) {
-            $entities = $this->entityRepo->getBookDirectChildren($entity->book);
+            $entities = $entity->book->getDirectChildren();
         }
 
         // Book
@@ -145,15 +128,15 @@ class SearchController extends Controller
         if ($entity->isA('book')) {
             $contextShelf = $this->entityContextManager->getContextualShelfForBook($entity);
             if ($contextShelf) {
-                $entities = $this->entityRepo->getBookshelfChildren($contextShelf);
+                $entities = $contextShelf->visibleBooks()->get();
             } else {
-                $entities = $this->entityRepo->getAll('book');
+                $entities = Book::visible()->get();
             }
         }
 
         // Shelve
         if ($entity->isA('bookshelf')) {
-            $entities = $this->entityRepo->getAll('bookshelf');
+            $entities = Bookshelf::visible()->get();
         }
 
         return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);

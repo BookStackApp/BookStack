@@ -3,7 +3,7 @@
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Page;
 use BookStack\Auth\User;
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 
 class CommandsTest extends TestCase
 {
@@ -53,7 +53,7 @@ class CommandsTest extends TestCase
     public function test_clear_revisions_command()
     {
         $this->asEditor();
-        $pageRepo = app(NewPageRepo::class);
+        $pageRepo = app(PageRepo::class);
         $page = Page::first();
         $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $pageRepo->updatePageDraft($page, ['name' => 'updated page', 'html' => '<p>new content in draft</p>', 'summary' => 'page revision testing']);

@@ -1,6 +1,6 @@
 <?php namespace Tests\Uploads;
 
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Entities\Page;
 use BookStack\Uploads\ImageService;
@@ -366,7 +366,7 @@ class ImageTest extends TestCase
         $upload->assertStatus(200);
         $image = Image::where('type', '=', 'gallery')->first();
 
-        $pageRepo = app(NewPageRepo::class);
+        $pageRepo = app(PageRepo::class);
         $pageRepo->update($page, [
             'name' => $page->name,
             'html' => $page->html . "<img src=\"{$image->url}\">",

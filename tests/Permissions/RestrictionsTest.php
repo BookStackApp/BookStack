@@ -665,10 +665,8 @@ class RestrictionsTest extends BrowserKitTest
         $this->setEntityRestrictions($firstBook, ['view', 'update']);
         $this->setEntityRestrictions($secondBook, ['view']);
 
-        $firstBookChapter = $this->app[EntityRepo::class]->createFromInput('chapter',
-                ['name' => 'first book chapter'], $firstBook);
-        $secondBookChapter = $this->app[EntityRepo::class]->createFromInput('chapter',
-                ['name' => 'second book chapter'], $secondBook);
+        $firstBookChapter = $this->newChapter(['name' => 'first book chapter'], $firstBook);
+        $secondBookChapter = $this->newChapter(['name' => 'second book chapter'], $secondBook);
 
         // Create request data
         $reqData = [

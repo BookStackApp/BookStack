@@ -3,7 +3,7 @@
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 
 class SortTest extends TestCase
 {
@@ -18,7 +18,7 @@ class SortTest extends TestCase
     public function test_drafts_do_not_show_up()
     {
         $this->asAdmin();
-        $pageRepo = app(NewPageRepo::class);
+        $pageRepo = app(PageRepo::class);
         $draft = $pageRepo->getNewDraftPage($this->book);
 
         $resp = $this->get($this->book->getUrl());

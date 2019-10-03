@@ -25,22 +25,19 @@ class EntityContext
 
     /**
      * Get the current bookshelf context for the given book.
-     * @param Book $book
-     * @return Bookshelf|null
      */
-    public function getContextualShelfForBook(Book $book)
+    public function getContextualShelfForBook(Book $book): ?Bookshelf
     {
         $contextBookshelfId = $this->session->get($this->KEY_SHELF_CONTEXT_ID, null);
-        if (is_int($contextBookshelfId)) {
 
-            /** @var Bookshelf $shelf */
-            $shelf = $this->entityRepo->getById('bookshelf', $contextBookshelfId);
-
-            if ($shelf && $shelf->contains($book)) {
-                return $shelf;
-            }
+        if (!is_int($contextBookshelfId)) {
+            return null;
         }
-        return null;
+
+        $shelf = Bookshelf::visible()->find($contextBookshelfId);
+        $shelfContainsBook = $shelf && $shelf->contains($book);
+
+        return $shelfContainsBook ? $shelf : null;
     }
 
     /**

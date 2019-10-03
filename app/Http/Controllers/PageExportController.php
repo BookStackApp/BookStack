@@ -4,7 +4,7 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\ExportService;
 use BookStack\Entities\Managers\PageContent;
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use Throwable;
 
@@ -16,10 +16,10 @@ class PageExportController extends Controller
 
     /**
      * PageExportController constructor.
-     * @param NewPageRepo $pageRepo
+     * @param PageRepo $pageRepo
      * @param ExportService $exportService
      */
-    public function __construct(NewPageRepo $pageRepo, ExportService $exportService)
+    public function __construct(PageRepo $pageRepo, ExportService $exportService)
     {
         $this->pageRepo = $pageRepo;
         $this->exportService = $exportService;

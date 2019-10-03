@@ -1,7 +1,11 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Image;
+use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * Class Book
@@ -44,7 +48,7 @@ class Book extends Entity implements HasCoverImage
 
         try {
             $cover = $this->cover ? url($this->cover->getThumb($width, $height, false)) : $default;
-        } catch (\Exception $err) {
+        } catch (Exception $err) {
             $cover = $default;
         }
         return $cover;
@@ -68,7 +72,7 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get all pages within this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function pages()
     {
@@ -77,7 +81,7 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get the direct child pages of this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function directPages()
     {
@@ -86,7 +90,7 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get all chapters within this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function chapters()
     {
@@ -95,11 +99,22 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get the shelves this book is contained within.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function shelves()
     {
         return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
+    }
+
+    /**
+     * Get the direct child items within this book.
+     * @return Collection
+     */
+    public function getDirectChildren(): Collection
+    {
+        $pages = $this->directPages()->visible()->get();
+        $chapters = $this->chapters()->visible()->get();
+        return $pages->contact($chapters)->sortBy('priority')->sortByDesc('draft');
     }
 
     /**

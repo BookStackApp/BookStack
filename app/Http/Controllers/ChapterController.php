@@ -68,10 +68,7 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-view', $chapter);
 
         $sidebarTree = (new BookContents($chapter->book))->getTree();
-        $pages = $chapter->pages()->visible()
-            ->orderBy('draft', 'desc')
-            ->orderBy('priority', 'asc')
-            ->get();
+        $pages = $chapter->getVisiblePages();
         Views::add($chapter);
 
         $this->setPageTitle($chapter->getShortName());

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Entities;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 
 /**
@@ -59,5 +58,16 @@ class Chapter extends BookChild
     public function hasChildren()
     {
         return count($this->pages) > 0;
+    }
+
+    /**
+     * Get the visible pages in this chapter.
+     */
+    public function getVisiblePages(): Collection
+    {
+        return $this->pages()->visible()
+        ->orderBy('draft', 'desc')
+        ->orderBy('priority', 'asc')
+        ->get();
     }
 }

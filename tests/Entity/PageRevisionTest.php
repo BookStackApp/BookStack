@@ -1,7 +1,7 @@
 <?php namespace Entity;
 
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
@@ -10,7 +10,7 @@ class PageRevisionTest extends TestCase
     {
         $this->asEditor();
 
-        $pageRepo = app(NewPageRepo::class);
+        $pageRepo = app(PageRepo::class);
         $page = Page::first();
         $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $pageRevision = $page->revisions->last();
@@ -28,7 +28,7 @@ class PageRevisionTest extends TestCase
     {
         $this->asEditor();
 
-        $pageRepo = app(NewPageRepo::class);
+        $pageRepo = app(PageRepo::class);
         $page = Page::first();
         $pageRepo->update($page, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
         $pageRepo->update($page, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);

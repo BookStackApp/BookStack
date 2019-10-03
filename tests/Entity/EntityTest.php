@@ -5,7 +5,7 @@ use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\UserRepo;
-use BookStack\Entities\Repos\NewPageRepo;
+use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
 
 class EntityTest extends BrowserKitTest
@@ -192,7 +192,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
         app(UserRepo::class)->destroy($creator);
-        app(NewPageRepo::class)->update($entities['page'], ['html' => '<p>hello!</p>>']);
+        app(PageRepo::class)->update($entities['page'], ['html' => '<p>hello!</p>>']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -205,7 +205,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
         app(UserRepo::class)->destroy($updater);
-        app(NewPageRepo::class)->update($entities['page'], ['html' => '<p>Hello there!</p>']);
+        app(PageRepo::class)->update($entities['page'], ['html' => '<p>Hello there!</p>']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -273,8 +273,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_slug_multi_byte_lower_casing()
     {
-        $entityRepo = app(EntityRepo::class);
-        $book = $entityRepo->createFromInput('book', [
+        $book = $this->newBook([
             'name' => 'КНИГА'
         ]);
 
@@ -284,8 +283,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_slug_format()
     {
-        $entityRepo = app(EntityRepo::class);
-        $book = $entityRepo->createFromInput('book', [
+        $book = $this->newBook([
             'name' => 'PartA / PartB / PartC'
         ]);
 
