@@ -3,7 +3,6 @@
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;

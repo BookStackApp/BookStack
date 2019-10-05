@@ -222,14 +222,6 @@ class Entity extends Ownable
     }
 
     /**
-     * Get the type of this entity.
-     */
-    public function type(): string
-    {
-        return static::getType();
-    }
-
-    /**
      * Get an instance of an entity of the given type.
      * @param $type
      * @return Entity

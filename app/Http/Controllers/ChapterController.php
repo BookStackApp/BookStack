@@ -1,7 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Auth\UserRepo;
 use BookStack\Entities\Book;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Repos\ChapterRepo;
@@ -16,15 +15,13 @@ class ChapterController extends Controller
 {
 
     protected $chapterRepo;
-    protected $userRepo;
 
     /**
      * ChapterController constructor.
      */
-    public function __construct(ChapterRepo $chapterRepo, UserRepo $userRepo)
+    public function __construct(ChapterRepo $chapterRepo)
     {
         $this->chapterRepo = $chapterRepo;
-        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
@@ -190,10 +187,9 @@ class ChapterController extends Controller
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
-        $roles = $this->userRepo->getRestrictableRoles();
+
         return view('chapters.permissions', [
             'chapter' => $chapter,
-            'roles' => $roles
         ]);
     }
 

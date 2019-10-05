@@ -2,25 +2,20 @@
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Repos\EntityRepo;
 use Illuminate\Session\Store;
 
 class EntityContext
 {
     protected $session;
-    protected $entityRepo;
 
     protected $KEY_SHELF_CONTEXT_ID = 'context_bookshelf_id';
 
     /**
      * EntityContextManager constructor.
-     * @param Store $session
-     * @param EntityRepo $entityRepo
      */
-    public function __construct(Store $session, EntityRepo $entityRepo)
+    public function __construct(Store $session)
     {
         $this->session = $session;
-        $this->entityRepo = $entityRepo;
     }
 
     /**

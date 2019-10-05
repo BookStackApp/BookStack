@@ -1,7 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Auth\UserRepo;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Managers\PageEditActivity;
@@ -11,7 +10,6 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use Exception;
-use GatherContent\Htmldiff\Htmldiff;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -21,15 +19,13 @@ class PageController extends Controller
 {
 
     protected $pageRepo;
-    protected $userRepo;
 
     /**
      * PageController constructor.
      */
-    public function __construct(PageRepo $pageRepo, UserRepo $userRepo)
+    public function __construct(PageRepo $pageRepo)
     {
         $this->pageRepo = $pageRepo;
-        $this->userRepo = $userRepo;
         parent::__construct();
     }
 
@@ -339,113 +335,6 @@ class PageController extends Controller
     }
 
     /**
-     * Shows the last revisions for this page.
-     * @throws NotFoundException
-     */
-    public function showRevisions(string $bookSlug, string $pageSlug)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName'=>$page->getShortName()]));
-        return view('pages.revisions', [
-            'page' => $page,
-            'current' => $page
-        ]);
-    }
-
-    /**
-     * Shows a preview of a single revision.
-     * @throws NotFoundException
-     */
-    public function showRevision(string $bookSlug, string $pageSlug, int $revisionId)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $revision = $page->revisions()->where('id', '=', $revisionId)->first();
-        if ($revision === null) {
-            throw new NotFoundException();
-        }
-
-        $page->fill($revision->toArray());
-
-        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
-        return view('pages.revision', [
-            'page' => $page,
-            'book' => $page->book,
-            'diff' => null,
-            'revision' => $revision
-        ]);
-    }
-
-    /**
-     * Shows the changes of a single revision.
-     * @throws NotFoundException
-     */
-    public function showRevisionChanges(string $bookSlug, string $pageSlug, int $revisionId)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $revision = $page->revisions()->where('id', '=', $revisionId)->first();
-        if ($revision === null) {
-            throw new NotFoundException();
-        }
-
-        $prev = $revision->getPrevious();
-        $prevContent = $prev->html ?? '';
-        $diff = (new Htmldiff)->diff($prevContent, $revision->html);
-
-        $page->fill($revision->toArray());
-        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
-
-        return view('pages.revision', [
-            'page' => $page,
-            'book' => $page->book,
-            'diff' => $diff,
-            'revision' => $revision
-        ]);
-    }
-
-    /**
-     * Restores a page using the content of the specified revision.
-     * @throws NotFoundException
-     */
-    public function restoreRevision(string $bookSlug, string $pageSlug, int $revisionId)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page);
-
-        $page = $this->pageRepo->restoreRevision($page, $revisionId);
-
-        Activity::add($page, 'page_restore', $page->book->id);
-        return redirect($page->getUrl());
-    }
-
-    /**
-     * Deletes a revision using the id of the specified revision.
-     * @throws NotFoundException
-     */
-    public function destroyRevision(string $bookSlug, string $pageSlug, int $revId)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-delete', $page);
-
-        $revision = $page->revisions()->where('id', '=', $revId)->first();
-        if ($revision === null) {
-            throw new NotFoundException("Revision #{$revId} not found");
-        }
-
-        // Get the current revision for the page
-        $currentRevision = $page->getCurrentRevision();
-
-        // Check if its the latest revision, cannot delete latest revision.
-        if (intval($currentRevision->id) === intval($revId)) {
-            $this->showErrorNotification(trans('entities.revision_cannot_delete_latest'));
-            return redirect($page->getUrl('/revisions'));
-        }
-
-        $revision->delete();
-        $this->showSuccessNotification( trans('entities.revision_delete_success'));
-        return redirect($page->getUrl('/revisions'));
-    }
-
-    /**
      * Show a listing of recently created pages.
      */
     public function showRecentlyUpdated()
@@ -561,10 +450,8 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
-        $roles = $this->userRepo->getRestrictableRoles();
         return view('pages.permissions', [
             'page'  => $page,
-            'roles' => $roles
         ]);
     }
 

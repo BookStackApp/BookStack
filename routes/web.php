@@ -72,11 +72,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{bookSlug}/draft/{pageId}', 'PageController@destroyDraft');
 
         // Revisions
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageController@showRevisionChanges');
-        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
-        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageController@destroyRevision');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageRevisionController@index');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageRevisionController@show');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageRevisionController@changes');
+        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageRevisionController@restore');
+        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageRevisionController@destroy');
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');

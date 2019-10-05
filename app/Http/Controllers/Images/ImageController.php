@@ -1,7 +1,6 @@
 <?php namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\PageRepo;

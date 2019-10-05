@@ -5,15 +5,11 @@ use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Managers\EntityContext;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\SearchService;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class SearchController extends Controller
 {
-    protected $entityRepo;
     protected $viewService;
     protected $searchService;
     protected $entityContextManager;
@@ -22,12 +18,10 @@ class SearchController extends Controller
      * SearchController constructor.
      */
     public function __construct(
-        EntityRepo $entityRepo,
         ViewService $viewService,
         SearchService $searchService,
         EntityContext $entityContextManager
     ) {
-        $this->entityRepo = $entityRepo;
         $this->viewService = $viewService;
         $this->searchService = $searchService;
         $this->entityContextManager = $entityContextManager;

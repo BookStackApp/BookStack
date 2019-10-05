@@ -1,7 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Auth\UserRepo;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Managers\EntityContext;
@@ -17,19 +16,14 @@ class BookController extends Controller
 {
 
     protected $bookRepo;
-    protected $userRepo;
     protected $entityContextManager;
 
     /**
      * BookController constructor.
      */
-    public function __construct(
-        UserRepo $userRepo,
-        EntityContext $entityContextManager,
-        BookRepo $bookRepo
-    ) {
+    public function __construct(EntityContext $entityContextManager, BookRepo $bookRepo)
+    {
         $this->bookRepo = $bookRepo;
-        $this->userRepo = $userRepo;
         $this->entityContextManager = $entityContextManager;
         parent::__construct();
     }
@@ -206,10 +200,8 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
 
-        $roles = $this->userRepo->getRestrictableRoles();
         return view('books.permissions', [
             'book' => $book,
-            'roles' => $roles
         ]);
     }
 

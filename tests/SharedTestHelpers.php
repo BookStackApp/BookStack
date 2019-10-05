@@ -9,7 +9,6 @@ use BookStack\Entities\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
