@@ -59,7 +59,7 @@ abstract class Controller extends BaseController
             $response = response()->json(['error' => trans('errors.permissionJson')], 403);
         } else {
             $response = redirect('/');
-            $this->showErrorNotification( trans('errors.permission'));
+            $this->showErrorNotification(trans('errors.permission'));
         }
 
         throw new HttpResponseException($response);
@@ -129,7 +129,7 @@ abstract class Controller extends BaseController
      */
     protected function jsonError($messageText = "", $statusCode = 500)
     {
-        return response()->json(['message' => $messageText], $statusCode);
+        return response()->json(['message' => $messageText, 'status' => 'error'], $statusCode);
     }
 
     /**
@@ -188,5 +188,13 @@ abstract class Controller extends BaseController
     protected function showErrorNotification(string $message)
     {
         session()->flash('error', $message);
+    }
+
+    /**
+     * Get the validation rules for image files.
+     */
+    protected function getImageValidationRules(): string
+    {
+        return 'image_extension|no_double_extension|mimes:jpeg,png,gif,bmp,webp,tiff';
     }
 }

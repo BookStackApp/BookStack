@@ -1,23 +1,16 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Page;
+use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Repos\BookshelfRepo;
 use Illuminate\Http\Response;
 use Views;
 
 class HomeController extends Controller
 {
-    protected $entityRepo;
-
-    /**
-     * HomeController constructor.
-     * @param EntityRepo $entityRepo
-     */
-    public function __construct(EntityRepo $entityRepo)
-    {
-        $this->entityRepo = $entityRepo;
-        parent::__construct();
-    }
 
     /**
      * Display the homepage.
@@ -26,10 +19,20 @@ class HomeController extends Controller
     public function index()
     {
         $activity = Activity::latest(10);
-        $draftPages = $this->isSignedIn() ? $this->entityRepo->getUserDraftPages(6) : [];
+        $draftPages = [];
+
+        if ($this->isSignedIn()) {
+            $draftPages = Page::visible()->where('draft', '=', true)
+                ->where('created_by', '=', user()->id)
+                ->orderBy('updated_at', 'desc')->take(6)->get();
+        }
+
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->isSignedIn() ? Views::getUserRecentlyViewed(12*$recentFactor, 0) : $this->entityRepo->getRecentlyCreated('book', 12*$recentFactor);
-        $recentlyUpdatedPages = $this->entityRepo->getRecentlyUpdated('page', 12);
+        $recents = $this->isSignedIn() ?
+              Views::getUserRecentlyViewed(12*$recentFactor, 0)
+            : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
+        $recentlyUpdatedPages = Page::visible()->where('draft', false)
+            ->orderBy('updated_at', 'desc')->take(12)->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
         $homepageOption = setting('app-homepage-type', 'default');
@@ -66,16 +69,18 @@ class HomeController extends Controller
         }
 
         if ($homepageOption === 'bookshelves') {
-            $shelves = $this->entityRepo->getAllPaginated('bookshelf', 18, $commonData['sort'], $commonData['order']);
+            $shelfRepo = app(BookshelfRepo::class);
+            $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['sort'], $commonData['order']);
             foreach ($shelves as $shelf) {
-                $shelf->books = $this->entityRepo->getBookshelfChildren($shelf);
+                $shelf->books = $shelf->visibleBooks;
             }
             $data = array_merge($commonData, ['shelves' => $shelves]);
             return view('common.home-shelves', $data);
         }
 
         if ($homepageOption === 'books') {
-            $books = $this->entityRepo->getAllPaginated('book', 18, $commonData['sort'], $commonData['order']);
+            $bookRepo = app(BookRepo::class);
+            $books = $bookRepo->getAllPaginated(18, $commonData['sort'], $commonData['order']);
             $data = array_merge($commonData, ['books' => $books]);
             return view('common.home-book', $data);
         }
@@ -83,8 +88,9 @@ class HomeController extends Controller
         if ($homepageOption === 'page') {
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
-            $customHomepage = $this->entityRepo->getById('page', $id, false, true);
-            $this->entityRepo->renderPage($customHomepage, true);
+            $customHomepage = Page::query()->where('draft', '=', false)->findOrFail($id);
+            $pageContent = new PageContent($customHomepage);
+            $customHomepage->html = $pageContent->render(true);
             return view('common.home-custom', array_merge($commonData, ['customHomepage' => $customHomepage]));
         }
 

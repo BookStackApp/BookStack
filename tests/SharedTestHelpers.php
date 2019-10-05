@@ -1,9 +1,14 @@
 <?php namespace Tests;
 
+use BookStack\Auth\User;
 use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Repos\BookshelfRepo;
+use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
@@ -11,6 +16,8 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
 use Illuminate\Support\Env;
+use Mockery;
+use Throwable;
 
 trait SharedTestHelpers
 {
@@ -68,7 +75,7 @@ trait SharedTestHelpers
      */
     protected function getViewer($attributes = [])
     {
-        $user = \BookStack\Auth\Role::getRole('viewer')->users()->first();
+        $user = Role::getRole('viewer')->users()->first();
         if (!empty($attributes)) $user->forceFill($attributes)->save();
         return $user;
     }
@@ -76,7 +83,7 @@ trait SharedTestHelpers
     /**
      * Regenerate the permission for an entity.
      * @param Entity $entity
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function regenEntityPermissions(Entity $entity)
     {
@@ -87,10 +94,10 @@ trait SharedTestHelpers
     /**
      * Create and return a new bookshelf.
      * @param array $input
-     * @return \BookStack\Entities\Bookshelf
+     * @return Bookshelf
      */
     public function newShelf($input = ['name' => 'test shelf', 'description' => 'My new test shelf']) {
-        return app(EntityRepo::class)->createFromInput('bookshelf', $input);
+        return app(BookshelfRepo::class)->create($input, []);
     }
 
     /**
@@ -99,30 +106,30 @@ trait SharedTestHelpers
      * @return Book
      */
     public function newBook($input = ['name' => 'test book', 'description' => 'My new test book']) {
-        return app(EntityRepo::class)->createFromInput('book', $input);
+        return app(BookRepo::class)->create($input);
     }
 
     /**
      * Create and return a new test chapter
      * @param array $input
      * @param Book $book
-     * @return \BookStack\Entities\Chapter
+     * @return Chapter
      */
     public function newChapter($input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book) {
-        return app(EntityRepo::class)->createFromInput('chapter', $input, $book);
+        return app(ChapterRepo::class)->create($input, $book);
     }
 
     /**
      * Create and return a new test page
      * @param array $input
      * @return Page
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function newPage($input = ['name' => 'test page', 'html' => 'My new test page']) {
         $book = Book::first();
         $pageRepo = app(PageRepo::class);
-        $draftPage = $pageRepo->getDraftPage($book);
-        return $pageRepo->publishPageDraft($draftPage, $input);
+        $draftPage = $pageRepo->getNewDraftPage($book);
+        return $pageRepo->publishDraft($draftPage, $input);
     }
 
     /**
@@ -167,10 +174,10 @@ trait SharedTestHelpers
 
     /**
      * Give the given user some permissions.
-     * @param \BookStack\Auth\User $user
+     * @param User $user
      * @param array $permissions
      */
-    protected function giveUserPermissions(\BookStack\Auth\User $user, $permissions = [])
+    protected function giveUserPermissions(User $user, $permissions = [])
     {
         $newRole = $this->createNewRole($permissions);
         $user->attachRole($newRole);
@@ -198,7 +205,7 @@ trait SharedTestHelpers
      */
     protected function mockHttpFetch($returnData, int $times = 1)
     {
-        $mockHttp = \Mockery::mock(HttpFetcher::class);
+        $mockHttp = Mockery::mock(HttpFetcher::class);
         $this->app[HttpFetcher::class] = $mockHttp;
         $mockHttp->shouldReceive('fetch')
             ->times($times)

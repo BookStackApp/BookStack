@@ -1,6 +1,5 @@
 <?php namespace Tests;
 
-use BookStack\Auth\Role;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
@@ -20,7 +19,7 @@ class SortTest extends TestCase
     {
         $this->asAdmin();
         $pageRepo = app(PageRepo::class);
-        $draft = $pageRepo->getDraftPage($this->book);
+        $draft = $pageRepo->getNewDraftPage($this->book);
 
         $resp = $this->get($this->book->getUrl());
         $resp->assertSee($draft->name);
@@ -214,7 +213,6 @@ class SortTest extends TestCase
             'entity_selection' => 'book:' . $newBook->id,
             'name' => 'My copied test page'
         ]);
-
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
 
         $movePageResp->assertRedirect($pageCopy->getUrl());

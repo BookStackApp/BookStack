@@ -1,8 +1,7 @@
 <?php namespace Tests;
 
+use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\EntityRepo;
-use BookStack\Entities\Repos\PageRepo;
 
 class PageContentTest extends TestCase
 {
@@ -241,5 +240,67 @@ class PageContentTest extends TestCase
 
         $updatedPage = Page::where('id', '=', $page->id)->first();
         $this->assertEquals(substr_count($updatedPage->html, "bkmrk-test\""), 1);
+    }
+
+    public function test_get_page_nav_sets_correct_properties()
+    {
+        $content = '<h1 id="testa">Hello</h1><h2 id="testb">There</h2><h3 id="testc">Donkey</h3>';
+        $pageContent = new PageContent(new Page(['html' => $content]));
+        $navMap = $pageContent->getNavigation($content);
+
+        $this->assertCount(3, $navMap);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h1',
+            'link' => '#testa',
+            'text' => 'Hello',
+            'level' => 1,
+        ], $navMap[0]);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h2',
+            'link' => '#testb',
+            'text' => 'There',
+            'level' => 2,
+        ], $navMap[1]);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h3',
+            'link' => '#testc',
+            'text' => 'Donkey',
+            'level' => 3,
+        ], $navMap[2]);
+    }
+
+    public function test_get_page_nav_does_not_show_empty_titles()
+    {
+        $content = '<h1 id="testa">Hello</h1><h2 id="testb">&nbsp;</h2><h3 id="testc"></h3>';
+        $pageContent = new PageContent(new Page(['html' => $content]));
+        $navMap = $pageContent->getNavigation($content);
+
+        $this->assertCount(1, $navMap);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h1',
+            'link' => '#testa',
+            'text' => 'Hello'
+        ], $navMap[0]);
+    }
+
+    public function test_get_page_nav_shifts_headers_if_only_smaller_ones_are_used()
+    {
+        $content = '<h4 id="testa">Hello</h4><h5 id="testb">There</h5><h6 id="testc">Donkey</h6>';
+        $pageContent = new PageContent(new Page(['html' => $content]));
+        $navMap = $pageContent->getNavigation($content);
+
+        $this->assertCount(3, $navMap);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h4',
+            'level' => 1,
+        ], $navMap[0]);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h5',
+            'level' => 2,
+        ], $navMap[1]);
+        $this->assertArrayMapIncludes([
+            'nodeName' => 'h6',
+            'level' => 3,
+        ], $navMap[2]);
     }
 }

@@ -1,6 +1,11 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Image;
+use Exception;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * Class Book
@@ -9,20 +14,11 @@ use BookStack\Uploads\Image;
  * @property Image|null $cover
  * @package BookStack\Entities
  */
-class Book extends Entity
+class Book extends Entity implements HasCoverImage
 {
     public $searchFactor = 2;
 
     protected $fillable = ['name', 'description', 'image_id'];
-
-    /**
-     * Get the morph class for this model.
-     * @return string
-     */
-    public function getMorphClass()
-    {
-        return 'BookStack\\Book';
-    }
 
     /**
      * Get the url for this book.
@@ -52,7 +48,7 @@ class Book extends Entity
 
         try {
             $cover = $this->cover ? url($this->cover->getThumb($width, $height, false)) : $default;
-        } catch (\Exception $err) {
+        } catch (Exception $err) {
             $cover = $default;
         }
         return $cover;
@@ -60,16 +56,23 @@ class Book extends Entity
 
     /**
      * Get the cover image of the book
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function cover()
+    public function cover(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id');
     }
 
     /**
+     * Get the type of the image model that is used when storing a cover image.
+     */
+    public function coverImageTypeKey(): string
+    {
+        return 'cover_book';
+    }
+
+    /**
      * Get all pages within this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function pages()
     {
@@ -78,7 +81,7 @@ class Book extends Entity
 
     /**
      * Get the direct child pages of this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function directPages()
     {
@@ -87,7 +90,7 @@ class Book extends Entity
 
     /**
      * Get all chapters within this book.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function chapters()
     {
@@ -96,11 +99,22 @@ class Book extends Entity
 
     /**
      * Get the shelves this book is contained within.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function shelves()
     {
         return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
+    }
+
+    /**
+     * Get the direct child items within this book.
+     * @return Collection
+     */
+    public function getDirectChildren(): Collection
+    {
+        $pages = $this->directPages()->visible()->get();
+        $chapters = $this->chapters()->visible()->get();
+        return $pages->contact($chapters)->sortBy('priority')->sortByDesc('draft');
     }
 
     /**
@@ -112,14 +126,5 @@ class Book extends Entity
     {
         $description = $this->description;
         return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
-    }
-
-    /**
-     * Return a generalised, common raw query that can be 'unioned' across entities.
-     * @return string
-     */
-    public function entityRawQuery()
-    {
-        return "'BookStack\\\\Book' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text,'' as html, '0' as book_id, '0' as priority, '0' as chapter_id, '0' as draft, created_by, updated_by, updated_at, created_at";
     }
 }

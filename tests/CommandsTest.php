@@ -2,7 +2,6 @@
 
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\User;
 use BookStack\Entities\Repos\PageRepo;
 
@@ -56,7 +55,7 @@ class CommandsTest extends TestCase
         $this->asEditor();
         $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->updatePage($page, $page->book_id, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $pageRepo->updatePageDraft($page, ['name' => 'updated page', 'html' => '<p>new content in draft</p>', 'summary' => 'page revision testing']);
 
         $this->assertDatabaseHas('page_revisions', [

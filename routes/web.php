@@ -9,9 +9,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')
         ->where('path', '.*$');
 
-    Route::group(['prefix' => 'pages'], function() {
-        Route::get('/recently-updated', 'PageController@showRecentlyUpdated');
-    });
+    Route::get('/pages/recently-updated', 'PageController@showRecentlyUpdated');
 
     // Shelves
     Route::get('/create-shelf', 'BookshelfController@create');
@@ -40,13 +38,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{slug}/edit', 'BookController@edit');
         Route::put('/{slug}', 'BookController@update');
         Route::delete('/{id}', 'BookController@destroy');
-        Route::get('/{slug}/sort-item', 'BookController@sortItem');
+        Route::get('/{slug}/sort-item', 'BookSortController@showItem');
         Route::get('/{slug}', 'BookController@show');
         Route::get('/{bookSlug}/permissions', 'BookController@showPermissions');
         Route::put('/{bookSlug}/permissions', 'BookController@permissions');
         Route::get('/{slug}/delete', 'BookController@showDelete');
-        Route::get('/{bookSlug}/sort', 'BookController@sort');
-        Route::put('/{bookSlug}/sort', 'BookController@saveSort');
+        Route::get('/{bookSlug}/sort', 'BookSortController@show');
+        Route::put('/{bookSlug}/sort', 'BookSortController@update');
         Route::get('/{bookSlug}/export/html', 'BookExportController@html');
         Route::get('/{bookSlug}/export/pdf', 'BookExportController@pdf');
         Route::get('/{bookSlug}/export/plaintext', 'BookExportController@plainText');
@@ -74,11 +72,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{bookSlug}/draft/{pageId}', 'PageController@destroyDraft');
 
         // Revisions
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageController@showRevisions');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageController@showRevision');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageController@showRevisionChanges');
-        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageController@restoreRevision');
-        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageController@destroyRevision');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageRevisionController@index');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageRevisionController@show');
+        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageRevisionController@changes');
+        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageRevisionController@restore');
+        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageRevisionController@destroy');
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');

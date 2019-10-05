@@ -1,11 +1,14 @@
 <?php namespace Tests;
 
-
 use BookStack\Entities\Repos\PageRepo;
 
 class PageDraftTest extends BrowserKitTest
 {
     protected $page;
+
+    /**
+     * @var PageRepo
+     */
     protected $pageRepo;
 
     public function setUp(): void
@@ -85,11 +88,11 @@ class PageDraftTest extends BrowserKitTest
         $newUser = $this->getEditor();
 
         $this->actingAs($newUser)->visit('/')
-            ->visit($book->getUrl() . '/create-page')
-            ->visit($chapter->getUrl() . '/create-page')
+            ->visit($book->getUrl('/create-page'))
+            ->visit($chapter->getUrl('/create-page'))
             ->visit($book->getUrl())
             ->seeInElement('.book-contents', 'New Page');
-        
+
         $this->asAdmin()
             ->visit($book->getUrl())
             ->dontSeeInElement('.book-contents', 'New Page')
