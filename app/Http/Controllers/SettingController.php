@@ -76,7 +76,7 @@ class SettingController extends Controller
             setting()->remove('app-logo');
         }
 
-        $this->showSuccessNotification( trans('settings.settings_save_success'));
+        $this->showSuccessNotification(trans('settings.settings_save_success'));
         return redirect('/settings');
     }
 
@@ -111,14 +111,14 @@ class SettingController extends Controller
         $imagesToDelete = $imageService->deleteUnusedImages($checkRevisions, $dryRun);
         $deleteCount = count($imagesToDelete);
         if ($deleteCount === 0) {
-            $this->showWarningNotification( trans('settings.maint_image_cleanup_nothing_found'));
+            $this->showWarningNotification(trans('settings.maint_image_cleanup_nothing_found'));
             return redirect('/settings/maintenance')->withInput();
         }
 
         if ($dryRun) {
             session()->flash('cleanup-images-warning', trans('settings.maint_image_cleanup_warning', ['count' => $deleteCount]));
         } else {
-            $this->showSuccessNotification( trans('settings.maint_image_cleanup_success', ['count' => $deleteCount]));
+            $this->showSuccessNotification(trans('settings.maint_image_cleanup_success', ['count' => $deleteCount]));
         }
 
         return redirect('/settings/maintenance#image-cleanup')->withInput();

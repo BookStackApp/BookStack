@@ -59,7 +59,7 @@ abstract class Controller extends BaseController
             $response = response()->json(['error' => trans('errors.permissionJson')], 403);
         } else {
             $response = redirect('/');
-            $this->showErrorNotification( trans('errors.permission'));
+            $this->showErrorNotification(trans('errors.permission'));
         }
 
         throw new HttpResponseException($response);

@@ -122,7 +122,7 @@ class PageRevisionController extends Controller
         }
 
         $revision->delete();
-        $this->showSuccessNotification( trans('entities.revision_delete_success'));
+        $this->showSuccessNotification(trans('entities.revision_delete_success'));
         return redirect($page->getUrl('/revisions'));
     }
 }

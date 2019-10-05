@@ -51,7 +51,7 @@ class BookContents
         $chapterMap = $chapters->keyBy('id');
         $lonePages = collect();
 
-        $pages->groupBy('chapter_id')->each(function($pages, $chapter_id) use ($chapterMap, &$lonePages) {
+        $pages->groupBy('chapter_id')->each(function ($pages, $chapter_id) use ($chapterMap, &$lonePages) {
             $chapter = $chapterMap->get($chapter_id);
             if ($chapter) {
                 $chapter->setAttribute('pages', collect($pages)->sortBy($this->bookChildSortFunc()));
@@ -60,7 +60,7 @@ class BookContents
             }
         });
 
-        $all->each(function(Entity $entity) {
+        $all->each(function (Entity $entity) {
             $entity->setRelation('book', $this->book);
         });
 
@@ -73,7 +73,7 @@ class BookContents
      */
     protected function bookChildSortFunc(): callable
     {
-        return function(Entity $entity) {
+        return function (Entity $entity) {
             if (isset($entity['draft']) && $entity['draft']) {
                 return -100;
             }
@@ -121,7 +121,7 @@ class BookContents
         });
 
         // Update permissions and activity.
-        $booksInvolved->each(function(Book $book) {
+        $booksInvolved->each(function (Book $book) {
             $book->rebuildPermissions();
         });
 
@@ -161,7 +161,7 @@ class BookContents
      */
     protected function loadModelsIntoSortMap(Collection $sortMap): void
     {
-        $keyMap = $sortMap->keyBy(function(\stdClass $sortMapItem) {
+        $keyMap = $sortMap->keyBy(function (\stdClass $sortMapItem) {
             return  $sortMapItem->type . ':' . $sortMapItem->id;
         });
         $pageIds = $sortMap->where('type', '=', 'page')->pluck('id');
@@ -201,5 +201,4 @@ class BookContents
 
         return $books;
     }
-
 }

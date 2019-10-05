@@ -211,7 +211,7 @@ class BookshelfController extends Controller
         $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
         $this->bookshelfRepo->updatePermissions($shelf, $restricted, $permissions);
 
-        $this->showSuccessNotification( trans('entities.shelves_permissions_updated'));
+        $this->showSuccessNotification(trans('entities.shelves_permissions_updated'));
         return redirect($shelf->getUrl());
     }
 
@@ -224,8 +224,7 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $updateCount = $this->bookshelfRepo->copyDownPermissions($shelf);
-        $this->showSuccessNotification( trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
+        $this->showSuccessNotification(trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
         return redirect($shelf->getUrl());
     }
-
 }

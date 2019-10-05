@@ -71,5 +71,4 @@ class PageEditActivity
 
         return $query;
     }
-
 }

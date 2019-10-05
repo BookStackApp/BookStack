@@ -106,5 +106,4 @@ class TrashCan
             $imageService->destroy($entity->cover);
         }
     }
-
 }

@@ -20,7 +20,7 @@ class BookChild extends Entity
     public function scopeWhereSlugs(Builder $query, string $bookSlug, string $childSlug)
     {
         return $query->with('book')
-            ->whereHas('book', function(Builder $query) use ($bookSlug) {
+            ->whereHas('book', function (Builder $query) use ($bookSlug) {
                 $query->where('slug', '=', $bookSlug);
             })
             ->where('slug', '=', $childSlug);
@@ -57,5 +57,4 @@ class BookChild extends Entity
 
         return $this;
     }
-
 }

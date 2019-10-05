@@ -66,7 +66,7 @@ class PageRepo
     public function getByOldSlug(string $bookSlug, string $pageSlug): ?Page
     {
         $revision = PageRevision::query()
-            ->whereHas('page', function(Builder $query) {
+            ->whereHas('page', function (Builder $query) {
                 $query->visible();
             })
             ->where('slug', '=', $pageSlug)
@@ -456,5 +456,4 @@ class PageRepo
             ->where('page_id', '=', $page->id)
             ->orderBy('created_at', 'desc');
     }
-
 }

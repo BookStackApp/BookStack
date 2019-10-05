@@ -3,7 +3,6 @@
 
 namespace BookStack\Entities;
 
-
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 interface HasCoverImage
@@ -18,5 +17,4 @@ interface HasCoverImage
      * Get the type of the image model that is used when storing a cover image.
      */
     public function coverImageTypeKey(): string;
-
 }

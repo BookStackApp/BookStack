@@ -660,7 +660,7 @@ class PermissionService
      */
     public function enforceDraftVisiblityOnQuery(Builder $query): Builder
     {
-        return $query->where(function(Builder $query) {
+        return $query->where(function (Builder $query) {
             $query->where('draft', '=', false)
                 ->orWhere(function (Builder $query) {
                     $query->where('draft', '=', true)

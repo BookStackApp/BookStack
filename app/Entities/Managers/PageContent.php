@@ -1,9 +1,9 @@
 <?php namespace BookStack\Entities\Managers;
 
-
 use BookStack\Entities\Page;
 use DOMDocument;
 use DOMElement;
+use DOMNodeList;
 use DOMXPath;
 
 class PageContent
@@ -146,11 +146,16 @@ class PageContent
         $xPath = new DOMXPath($doc);
         $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
 
-        if (is_null($headers)) {
-            return [];
-        }
+        return $headers ? $this->headerNodesToLevelList($headers) : [];
+    }
 
-        $tree = collect($headers)->map(function ($header) {
+    /**
+     * Convert a DOMNodeList into an array of readable header attributes
+     * with levels normalised to the lower header level.
+     */
+    protected function headerNodesToLevelList(DOMNodeList $nodeList): array
+    {
+        $tree = collect($nodeList)->map(function ($header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 
@@ -166,7 +171,7 @@ class PageContent
 
         // Shift headers if only smaller headers have been used
         $levelChange = ($tree->pluck('level')->min() - 1);
-        $tree = $tree->map(function ($header) use ($levelChange) {
+        $tree = $tree->each(function ($header) use ($levelChange) {
             $header['level'] -= ($levelChange);
             return $header;
         });
@@ -190,47 +195,68 @@ class PageContent
         $matches = [];
         preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
 
-        $topLevelTags = ['table', 'ul', 'ol'];
         foreach ($matches[1] as $index => $includeId) {
+            $fullMatch = $matches[0][$index];
             $splitInclude = explode('#', $includeId, 2);
+
+            // Get page id from reference
             $pageId = intval($splitInclude[0]);
             if (is_nan($pageId)) {
                 continue;
             }
 
+            // Find page and skip this if page not found
             $matchedPage = Page::visible()->find($pageId);
             if ($matchedPage === null) {
-                $html = str_replace($matches[0][$index], '', $html);
+                $html = str_replace($fullMatch, '', $html);
                 continue;
             }
 
+            // If we only have page id, just insert all page html and continue.
             if (count($splitInclude) === 1) {
-                $html = str_replace($matches[0][$index], $matchedPage->html, $html);
+                $html = str_replace($fullMatch, $matchedPage->html, $html);
                 continue;
             }
 
-            $doc = new DOMDocument();
-            libxml_use_internal_errors(true);
-            $doc->loadHTML(mb_convert_encoding('<body>'.$matchedPage->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
-            $matchingElem = $doc->getElementById($splitInclude[1]);
-            if ($matchingElem === null) {
-                $html = str_replace($matches[0][$index], '', $html);
-                continue;
-            }
-            $innerContent = '';
-            $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
-            if ($isTopLevel) {
-                $innerContent .= $doc->saveHTML($matchingElem);
-            } else {
-                foreach ($matchingElem->childNodes as $childNode) {
-                    $innerContent .= $doc->saveHTML($childNode);
-                }
-            }
-            libxml_clear_errors();
-            $html = str_replace($matches[0][$index], trim($innerContent), $html);
+            // Create and load HTML into a document
+            $innerContent = $this->fetchSectionOfPage($matchedPage, $splitInclude[1]);
+            $html = str_replace($fullMatch, trim($innerContent), $html);
         }
 
         return $html;
+    }
+
+
+    /**
+     * Fetch the content from a specific section of the given page.
+     */
+    protected function fetchSectionOfPage(Page $page, string $sectionId): string
+    {
+        $topLevelTags = ['table', 'ul', 'ol'];
+        $doc = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $doc->loadHTML(mb_convert_encoding('<body>'.$page->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
+
+        // Search included content for the id given and blank out if not exists.
+        $matchingElem = $doc->getElementById($sectionId);
+        if ($matchingElem === null) {
+            return '';
+        }
+
+        // Otherwise replace the content with the found content
+        // Checks if the top-level wrapper should be included by matching on tag types
+        $innerContent = '';
+        $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
+        if ($isTopLevel) {
+            $innerContent .= $doc->saveHTML($matchingElem);
+        } else {
+            foreach ($matchingElem->childNodes as $childNode) {
+                $innerContent .= $doc->saveHTML($childNode);
+            }
+        }
+        libxml_clear_errors();
+
+        return $innerContent;
     }
 
     /**

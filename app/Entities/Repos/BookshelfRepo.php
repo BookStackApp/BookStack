@@ -105,13 +105,13 @@ class BookshelfRepo
      */
     protected function updateBooks(Bookshelf $shelf, array $bookIds)
     {
-        $numericIDs = collect($bookIds)->map(function($id) {
+        $numericIDs = collect($bookIds)->map(function ($id) {
             return intval($id);
         });
 
         $syncData = Book::visible()
             ->whereIn('id', $bookIds)
-            ->get(['id'])->pluck('id')->mapWithKeys(function($bookId) use ($numericIDs) {
+            ->get(['id'])->pluck('id')->mapWithKeys(function ($bookId) use ($numericIDs) {
                 return [$bookId => ['order' => $numericIDs->search($bookId)]];
             });
 
@@ -170,5 +170,4 @@ class BookshelfRepo
         $trashCan = new TrashCan();
         $trashCan->destroyShelf($shelf);
     }
-
 }

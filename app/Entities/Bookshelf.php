@@ -99,7 +99,7 @@ class Bookshelf extends Entity implements HasCoverImage
      * @param Book $book
      * @return bool
      */
-    public function contains(Book $book): bool 
+    public function contains(Book $book): bool
     {
         return $this->books()->where('id', '=', $book->id)->count() > 0;
     }
@@ -110,11 +110,11 @@ class Bookshelf extends Entity implements HasCoverImage
      */
     public function appendBook(Book $book)
     {
-       if ($this->contains($book)) {
-           return;
-       }
+        if ($this->contains($book)) {
+            return;
+        }
 
-       $maxOrder = $this->books()->max('order');
-       $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
+        $maxOrder = $this->books()->max('order');
+        $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
     }
 }

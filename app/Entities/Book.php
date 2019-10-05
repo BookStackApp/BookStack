@@ -127,5 +127,4 @@ class Book extends Entity implements HasCoverImage
         $description = $this->description;
         return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
     }
-
 }

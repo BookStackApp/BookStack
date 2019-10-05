@@ -193,7 +193,7 @@ class PageController extends Controller
         }
 
         if (count($warnings) > 0) {
-            $this->showWarningNotification( implode("\n", $warnings));
+            $this->showWarningNotification(implode("\n", $warnings));
         }
 
         $templates = $this->pageRepo->getTemplates(10);
@@ -307,7 +307,7 @@ class PageController extends Controller
         $this->pageRepo->destroy($page);
         Activity::addMessage('page_delete', $page->name, $book->id);
 
-        $this->showSuccessNotification( trans('entities.pages_delete_success'));
+        $this->showSuccessNotification(trans('entities.pages_delete_success'));
         return redirect($book->getUrl());
     }
 
@@ -326,7 +326,7 @@ class PageController extends Controller
 
         $this->pageRepo->destroy($page);
 
-        $this->showSuccessNotification( trans('entities.pages_delete_draft_success'));
+        $this->showSuccessNotification(trans('entities.pages_delete_draft_success'));
 
         if ($chapter && userCan('view', $chapter)) {
             return redirect($chapter->getUrl());
@@ -392,7 +392,7 @@ class PageController extends Controller
         }
 
         Activity::add($page, 'page_move', $page->book->id);
-        $this->showSuccessNotification( trans('entities.pages_move_success', ['parentName' => $parent->name]));
+        $this->showSuccessNotification(trans('entities.pages_move_success', ['parentName' => $parent->name]));
         return redirect($page->getUrl());
     }
 
@@ -438,7 +438,7 @@ class PageController extends Controller
 
         Activity::add($pageCopy, 'page_create', $pageCopy->book->id);
 
-        $this->showSuccessNotification( trans('entities.pages_copy_success'));
+        $this->showSuccessNotification(trans('entities.pages_copy_success'));
         return redirect($pageCopy->getUrl());
     }
 
@@ -469,7 +469,7 @@ class PageController extends Controller
         $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
         $this->pageRepo->updatePermissions($page, $restricted, $permissions);
 
-        $this->showSuccessNotification( trans('entities.pages_permissions_success'));
+        $this->showSuccessNotification(trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());
     }
 }

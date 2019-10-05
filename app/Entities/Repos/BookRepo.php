@@ -131,5 +131,4 @@ class BookRepo
         $trashCan = new TrashCan();
         $trashCan->destroyBook($book);
     }
-
 }

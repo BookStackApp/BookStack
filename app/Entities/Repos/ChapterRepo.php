@@ -105,5 +105,4 @@ class ChapterRepo
         $chapter->rebuildPermissions();
         return $parent;
     }
-
 }

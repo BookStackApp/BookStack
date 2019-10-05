@@ -175,7 +175,7 @@ class ChapterController extends Controller
 
         Activity::add($chapter, 'chapter_move', $newBook->id);
 
-        $this->showSuccessNotification( trans('entities.chapter_move_success', ['bookName' => $newBook->name]));
+        $this->showSuccessNotification(trans('entities.chapter_move_success', ['bookName' => $newBook->name]));
         return redirect($chapter->getUrl());
     }
 
@@ -206,7 +206,7 @@ class ChapterController extends Controller
         $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
         $this->chapterRepo->updatePermissions($chapter, $restricted, $permissions);
 
-        $this->showSuccessNotification( trans('entities.chapters_permissions_success'));
+        $this->showSuccessNotification(trans('entities.chapters_permissions_success'));
         return redirect($chapter->getUrl());
     }
 }

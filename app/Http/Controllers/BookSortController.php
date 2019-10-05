@@ -79,5 +79,4 @@ class BookSortController extends Controller
 
         return redirect($book->getUrl());
     }
-
 }

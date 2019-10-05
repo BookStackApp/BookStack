@@ -100,8 +100,8 @@ class BaseRepo
         $entity->permissions()->delete();
 
         if (!is_null($permissions)) {
-            $entityPermissionData = $permissions->flatMap(function($restrictions, $roleId) {
-                return collect($restrictions)->keys()->map(function($action) use ($roleId) {
+            $entityPermissionData = $permissions->flatMap(function ($restrictions, $roleId) {
+                return collect($restrictions)->keys()->map(function ($action) use ($roleId) {
                     return [
                         'role_id' => $roleId,
                         'action' => strtolower($action),
@@ -115,5 +115,4 @@ class BaseRepo
         $entity->save();
         $entity->rebuildPermissions();
     }
-
 }

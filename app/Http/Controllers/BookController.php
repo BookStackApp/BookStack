@@ -221,5 +221,4 @@ class BookController extends Controller
         $this->showSuccessNotification(trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());
     }
-
 }

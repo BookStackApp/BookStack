@@ -59,6 +59,4 @@ class SlugGenerator
 
         return $query->count() > 0;
     }
-
-
 }
