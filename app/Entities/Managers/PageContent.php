@@ -171,7 +171,7 @@ class PageContent
 
         // Shift headers if only smaller headers have been used
         $levelChange = ($tree->pluck('level')->min() - 1);
-        $tree = $tree->each(function ($header) use ($levelChange) {
+        $tree = $tree->map(function ($header) use ($levelChange) {
             $header['level'] -= ($levelChange);
             return $header;
         });
