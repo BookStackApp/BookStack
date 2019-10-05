@@ -4,7 +4,7 @@ ENV APACHE_DOCUMENT_ROOT /app/public
 WORKDIR /app
 
 RUN apt-get update -y \
-    && apt-get install -y libtidy-dev libpng-dev libldap2-dev libxml++2.6-dev wait-for-it \
+    && apt-get install -y git libtidy-dev libpng-dev libldap2-dev libxml++2.6-dev wait-for-it \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
     && docker-php-ext-install pdo pdo_mysql tidy dom xml mbstring gd ldap \
     && a2enmod rewrite \
