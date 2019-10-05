@@ -14,10 +14,10 @@
     <div class="form-group">
         <label for="books">{{ trans('entities.shelves_books') }}</label>
         <input type="hidden" id="books-input" name="books"
-               value="{{ isset($shelf) ? $shelf->books->implode('id', ',') : '' }}">
+               value="{{ isset($shelf) ? $shelf->visibleBooks->implode('id', ',') : '' }}">
         <div class="scroll-box" shelf-sort-assigned-books data-instruction="{{ trans('entities.shelves_drag_books') }}">
-            @if (isset($shelfBooks) && count($shelfBooks) > 0)
-                @foreach ($shelfBooks as $book)
+            @if (count($shelf->visibleBooks ?? []) > 0)
+                @foreach ($shelf->visibleBooks as $book)
                     <div data-id="{{ $book->id }}" class="scroll-box-item">
                         <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
                     </div>

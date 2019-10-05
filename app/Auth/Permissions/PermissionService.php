@@ -633,42 +633,40 @@ class PermissionService
     }
 
     /**
-     * Get the children of a book in an efficient single query, Filtered by the permission system.
-     * @param integer $book_id
-     * @param bool $filterDrafts
-     * @param bool $fetchPageContent
-     * @return QueryBuilder
+     * Limited the given entity query so that the query will only
+     * return items that the user has permission for the given ability.
      */
-    public function bookChildrenQuery($book_id, $filterDrafts = false, $fetchPageContent = false)
+    public function restrictEntityQuery(Builder $query, string $ability = 'view'): Builder
     {
-        $entities = $this->entityProvider;
-        $pageSelect = $this->db->table('pages')->selectRaw($entities->page->entityRawQuery($fetchPageContent))
-            ->where('book_id', '=', $book_id)->where(function ($query) use ($filterDrafts) {
-                $query->where('draft', '=', 0);
-                if (!$filterDrafts) {
-                    $query->orWhere(function ($query) {
-                        $query->where('draft', '=', 1)->where('created_by', '=', $this->currentUser()->id);
-                    });
-                }
-            });
-        $chapterSelect = $this->db->table('chapters')->selectRaw($entities->chapter->entityRawQuery())->where('book_id', '=', $book_id);
-        $query = $this->db->query()->select('*')->from($this->db->raw("({$pageSelect->toSql()} UNION {$chapterSelect->toSql()}) AS U"))
-            ->mergeBindings($pageSelect)->mergeBindings($chapterSelect);
-
-        // Add joint permission filter
-        $whereQuery = $this->db->table('joint_permissions as jp')->selectRaw('COUNT(*)')
-            ->whereRaw('jp.entity_id=U.id')->whereRaw('jp.entity_type=U.entity_type')
-            ->where('jp.action', '=', 'view')->whereIn('jp.role_id', $this->getRoles())
-            ->where(function ($query) {
-                $query->where('jp.has_permission', '=', 1)->orWhere(function ($query) {
-                    $query->where('jp.has_permission_own', '=', 1)->where('jp.created_by', '=', $this->currentUser()->id);
-                });
-            });
-        $query->whereRaw("({$whereQuery->toSql()}) > 0")->mergeBindings($whereQuery);
-
-        $query->orderBy('draft', 'desc')->orderBy('priority', 'asc');
         $this->clean();
-        return  $query;
+        return $query->where(function (Builder $parentQuery) use ($ability) {
+            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) use ($ability) {
+                $permissionQuery->whereIn('role_id', $this->getRoles())
+                    ->where('action', '=', $ability)
+                    ->where(function (Builder $query) {
+                        $query->where('has_permission', '=', true)
+                            ->orWhere(function (Builder $query) {
+                                $query->where('has_permission_own', '=', true)
+                                    ->where('created_by', '=', $this->currentUser()->id);
+                            });
+                    });
+            });
+        });
+    }
+
+    /**
+     * Extend the given page query to ensure draft items are not visible
+     * unless created by the given user.
+     */
+    public function enforceDraftVisiblityOnQuery(Builder $query): Builder
+    {
+        return $query->where(function (Builder $query) {
+            $query->where('draft', '=', false)
+                ->orWhere(function (Builder $query) {
+                    $query->where('draft', '=', true)
+                        ->where('created_by', '=', $this->currentUser()->id);
+                });
+        });
     }
 
     /**

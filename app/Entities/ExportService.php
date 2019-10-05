@@ -1,35 +1,34 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Managers\BookContents;
+use BookStack\Entities\Managers\PageContent;
 use BookStack\Uploads\ImageService;
+use DomPDF;
+use Exception;
+use SnappyPDF;
+use Throwable;
 
 class ExportService
 {
 
-    protected $entityRepo;
     protected $imageService;
 
     /**
      * ExportService constructor.
-     * @param EntityRepo $entityRepo
-     * @param ImageService $imageService
      */
-    public function __construct(EntityRepo $entityRepo, ImageService $imageService)
+    public function __construct(ImageService $imageService)
     {
-        $this->entityRepo = $entityRepo;
         $this->imageService = $imageService;
     }
 
     /**
      * Convert a page to a self-contained HTML file.
      * Includes required CSS & image content. Images are base64 encoded into the HTML.
-     * @param \BookStack\Entities\Page $page
-     * @return mixed|string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function pageToContainedHtml(Page $page)
     {
-        $this->entityRepo->renderPage($page);
+        $page->html = (new PageContent($page))->render();
         $pageHtml = view('pages/export', [
             'page' => $page
         ])->render();
@@ -38,15 +37,13 @@ class ExportService
 
     /**
      * Convert a chapter to a self-contained HTML file.
-     * @param \BookStack\Entities\Chapter $chapter
-     * @return mixed|string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function chapterToContainedHtml(Chapter $chapter)
     {
-        $pages = $this->entityRepo->getChapterChildren($chapter);
+        $pages = $chapter->getVisiblePages();
         $pages->each(function ($page) {
-            $page->html = $this->entityRepo->renderPage($page);
+            $page->html = (new PageContent($page))->render();
         });
         $html = view('chapters/export', [
             'chapter' => $chapter,
@@ -57,13 +54,11 @@ class ExportService
 
     /**
      * Convert a book to a self-contained HTML file.
-     * @param Book $book
-     * @return mixed|string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function bookToContainedHtml(Book $book)
     {
-        $bookTree = $this->entityRepo->getBookChildren($book, true, true);
+        $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('books/export', [
             'book' => $book,
             'bookChildren' => $bookTree
@@ -73,13 +68,11 @@ class ExportService
 
     /**
      * Convert a page to a PDF file.
-     * @param Page $page
-     * @return mixed|string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function pageToPdf(Page $page)
     {
-        $this->entityRepo->renderPage($page);
+        $page->html = (new PageContent($page))->render();
         $html = view('pages/pdf', [
             'page' => $page
         ])->render();
@@ -88,32 +81,30 @@ class ExportService
 
     /**
      * Convert a chapter to a PDF file.
-     * @param \BookStack\Entities\Chapter $chapter
-     * @return mixed|string
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function chapterToPdf(Chapter $chapter)
     {
-        $pages = $this->entityRepo->getChapterChildren($chapter);
+        $pages = $chapter->getVisiblePages();
         $pages->each(function ($page) {
-            $page->html = $this->entityRepo->renderPage($page);
+            $page->html = (new PageContent($page))->render();
         });
+
         $html = view('chapters/export', [
             'chapter' => $chapter,
             'pages' => $pages
         ])->render();
+
         return $this->htmlToPdf($html);
     }
 
     /**
-     * Convert a book to a PDF file
-     * @param \BookStack\Entities\Book $book
-     * @return string
-     * @throws \Throwable
+     * Convert a book to a PDF file.
+     * @throws Throwable
      */
     public function bookToPdf(Book $book)
     {
-        $bookTree = $this->entityRepo->getBookChildren($book, true, true);
+        $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('books/export', [
             'book' => $book,
             'bookChildren' => $bookTree
@@ -122,31 +113,27 @@ class ExportService
     }
 
     /**
-     * Convert normal webpage HTML to a PDF.
-     * @param $html
-     * @return string
-     * @throws \Exception
+     * Convert normal web-page HTML to a PDF.
+     * @throws Exception
      */
-    protected function htmlToPdf($html)
+    protected function htmlToPdf(string $html): string
     {
         $containedHtml = $this->containHtml($html);
         $useWKHTML = config('snappy.pdf.binary') !== false;
         if ($useWKHTML) {
-            $pdf = \SnappyPDF::loadHTML($containedHtml);
+            $pdf = SnappyPDF::loadHTML($containedHtml);
             $pdf->setOption('print-media-type', true);
         } else {
-            $pdf = \DomPDF::loadHTML($containedHtml);
+            $pdf = DomPDF::loadHTML($containedHtml);
         }
         return $pdf->output();
     }
 
     /**
      * Bundle of the contents of a html file to be self-contained.
-     * @param $htmlContent
-     * @return mixed|string
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function containHtml($htmlContent)
+    protected function containHtml(string $htmlContent): string
     {
         $imageTagsOutput = [];
         preg_match_all("/\<img.*src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
@@ -188,12 +175,10 @@ class ExportService
     /**
      * Converts the page contents into simple plain text.
      * This method filters any bad looking content to provide a nice final output.
-     * @param Page $page
-     * @return mixed
      */
-    public function pageToPlainText(Page $page)
+    public function pageToPlainText(Page $page): string
     {
-        $html = $this->entityRepo->renderPage($page);
+        $html = (new PageContent($page))->render();
         $text = strip_tags($html);
         // Replace multiple spaces with single spaces
         $text = preg_replace('/\ {2,}/', ' ', $text);
@@ -207,10 +192,8 @@ class ExportService
 
     /**
      * Convert a chapter into a plain text string.
-     * @param \BookStack\Entities\Chapter $chapter
-     * @return string
      */
-    public function chapterToPlainText(Chapter $chapter)
+    public function chapterToPlainText(Chapter $chapter): string
     {
         $text = $chapter->name . "\n\n";
         $text .= $chapter->description . "\n\n";
@@ -222,12 +205,10 @@ class ExportService
 
     /**
      * Convert a book into a plain text string.
-     * @param Book $book
-     * @return string
      */
-    public function bookToPlainText(Book $book)
+    public function bookToPlainText(Book $book): string
     {
-        $bookTree = $this->entityRepo->getBookChildren($book, true, true);
+        $bookTree = (new BookContents($book))->getTree(false, true);
         $text = $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {

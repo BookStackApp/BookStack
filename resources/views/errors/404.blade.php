@@ -22,7 +22,7 @@
                 <div class="card mb-xl">
                     <h3 class="card-title">{{ trans('entities.pages_popular') }}</h3>
                     <div class="px-m">
-                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, 'page'), 'style' => 'compact'])
+                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, ['page']), 'style' => 'compact'])
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="card mb-xl">
                     <h3 class="card-title">{{ trans('entities.books_popular') }}</h3>
                     <div class="px-m">
-                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, 'book'), 'style' => 'compact'])
+                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, ['book']), 'style' => 'compact'])
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <div class="card mb-xl">
                     <h3 class="card-title">{{ trans('entities.chapters_popular') }}</h3>
                     <div class="px-m">
-                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, 'chapter'), 'style' => 'compact'])
+                        @include('partials.entity-list', ['entities' => Views::getPopular(10, 0, ['chapter']), 'style' => 'compact'])
                     </div>
                 </div>
             </div>

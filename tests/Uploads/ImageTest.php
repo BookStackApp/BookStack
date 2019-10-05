@@ -367,7 +367,7 @@ class ImageTest extends TestCase
         $image = Image::where('type', '=', 'gallery')->first();
 
         $pageRepo = app(PageRepo::class);
-        $pageRepo->updatePage($page, $page->book_id, [
+        $pageRepo->update($page, [
             'name' => $page->name,
             'html' => $page->html . "<img src=\"{$image->url}\">",
             'summary' => ''
@@ -379,7 +379,7 @@ class ImageTest extends TestCase
         $this->assertCount(0, $toDelete);
 
         // Save a revision of our page without the image;
-        $pageRepo->updatePage($page, $page->book_id, [
+        $pageRepo->update($page, [
             'name' => $page->name,
             'html' => "<p>Hello</p>",
             'summary' => ''

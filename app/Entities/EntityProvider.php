@@ -39,11 +39,6 @@ class EntityProvider
 
     /**
      * EntityProvider constructor.
-     * @param Bookshelf $bookshelf
-     * @param Book $book
-     * @param Chapter $chapter
-     * @param Page $page
-     * @param PageRevision $pageRevision
      */
     public function __construct(
         Bookshelf $bookshelf,
@@ -62,9 +57,8 @@ class EntityProvider
     /**
      * Fetch all core entity types as an associated array
      * with their basic names as the keys.
-     * @return Entity[]
      */
-    public function all()
+    public function all(): array
     {
         return [
             'bookshelf' => $this->bookshelf,
@@ -76,10 +70,8 @@ class EntityProvider
 
     /**
      * Get an entity instance by it's basic name.
-     * @param string $type
-     * @return Entity
      */
-    public function get(string $type)
+    public function get(string $type): Entity
     {
         $type = strtolower($type);
         return $this->all()[$type];
@@ -87,15 +79,9 @@ class EntityProvider
 
     /**
      * Get the morph classes, as an array, for a single or multiple types.
-     * @param string|array $types
-     * @return array<string>
      */
-    public function getMorphClasses($types)
+    public function getMorphClasses(array $types): array
     {
-        if (is_string($types)) {
-            $types = [$types];
-        }
-
         $morphClasses = [];
         foreach ($types as $type) {
             $model = $this->get($type);

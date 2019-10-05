@@ -202,7 +202,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        $this->showSuccessNotification( trans('settings.users_edit_success'));
+        $this->showSuccessNotification(trans('settings.users_edit_success'));
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
         return redirect($redirectUrl);
@@ -236,17 +236,17 @@ class UserController extends Controller
         $user = $this->userRepo->getById($id);
 
         if ($this->userRepo->isOnlyAdmin($user)) {
-            $this->showErrorNotification( trans('errors.users_cannot_delete_only_admin'));
+            $this->showErrorNotification(trans('errors.users_cannot_delete_only_admin'));
             return redirect($user->getEditUrl());
         }
 
         if ($user->system_name === 'public') {
-            $this->showErrorNotification( trans('errors.users_cannot_delete_guest'));
+            $this->showErrorNotification(trans('errors.users_cannot_delete_guest'));
             return redirect($user->getEditUrl());
         }
 
         $this->userRepo->destroy($user);
-        $this->showSuccessNotification( trans('settings.users_delete_success'));
+        $this->showSuccessNotification(trans('settings.users_delete_success'));
 
         return redirect('/settings/users');
     }
@@ -261,7 +261,7 @@ class UserController extends Controller
         $user = $this->userRepo->getById($id);
 
         $userActivity = $this->userRepo->getActivity($user);
-        $recentlyCreated = $this->userRepo->getRecentlyCreated($user, 5, 0);
+        $recentlyCreated = $this->userRepo->getRecentlyCreated($user, 5);
         $assetCounts = $this->userRepo->getAssetCounts($user);
 
         return view('users.profile', [

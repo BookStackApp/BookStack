@@ -19,7 +19,7 @@
                 <a href="#" permissions-table-toggle-all class="text-small ml-m text-primary">{{ trans('common.toggle_all') }}</a>
             </th>
         </tr>
-        @foreach($roles as $role)
+        @foreach(\BookStack\Auth\Role::restrictable() as $role)
             <tr>
                 <td width="33%" class="pt-m">
                     {{ $role->display_name }}

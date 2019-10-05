@@ -24,5 +24,4 @@ class GlobalViewData
 
         return $next($request);
     }
-
 }

@@ -1,44 +1,38 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Managers;
 
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
 use Illuminate\Session\Store;
 
-class EntityContextManager
+class EntityContext
 {
     protected $session;
-    protected $entityRepo;
 
     protected $KEY_SHELF_CONTEXT_ID = 'context_bookshelf_id';
 
     /**
      * EntityContextManager constructor.
-     * @param Store $session
-     * @param EntityRepo $entityRepo
      */
-    public function __construct(Store $session, EntityRepo $entityRepo)
+    public function __construct(Store $session)
     {
         $this->session = $session;
-        $this->entityRepo = $entityRepo;
     }
 
     /**
      * Get the current bookshelf context for the given book.
-     * @param Book $book
-     * @return Bookshelf|null
      */
-    public function getContextualShelfForBook(Book $book)
+    public function getContextualShelfForBook(Book $book): ?Bookshelf
     {
         $contextBookshelfId = $this->session->get($this->KEY_SHELF_CONTEXT_ID, null);
-        if (is_int($contextBookshelfId)) {
 
-            /** @var Bookshelf $shelf */
-            $shelf = $this->entityRepo->getById('bookshelf', $contextBookshelfId);
-
-            if ($shelf && $shelf->contains($book)) {
-                return $shelf;
-            }
+        if (!is_int($contextBookshelfId)) {
+            return null;
         }
-        return null;
+
+        $shelf = Bookshelf::visible()->find($contextBookshelfId);
+        $shelfContainsBook = $shelf && $shelf->contains($book);
+
+        return $shelfContainsBook ? $shelf : null;
     }
 
     /**

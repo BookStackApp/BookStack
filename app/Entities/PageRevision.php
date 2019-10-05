@@ -2,7 +2,21 @@
 
 use BookStack\Auth\User;
 use BookStack\Model;
+use Carbon\Carbon;
 
+/**
+ * Class PageRevision
+ * @property int $page_id
+ * @property string $slug
+ * @property string $book_slug
+ * @property int $created_by
+ * @property Carbon $created_at
+ * @property string $type
+ * @property string $summary
+ * @property string $markdown
+ * @property string $html
+ * @property int $revision_number
+ */
 class PageRevision extends Model
 {
     protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
@@ -41,13 +55,18 @@ class PageRevision extends Model
 
     /**
      * Get the previous revision for the same page if existing
-     * @return \BookStack\PageRevision|null
+     * @return \BookStack\Entities\PageRevision|null
      */
     public function getPrevious()
     {
-        if ($id = static::where('page_id', '=', $this->page_id)->where('id', '<', $this->id)->max('id')) {
-            return static::find($id);
+        $id = static::newQuery()->where('page_id', '=', $this->page_id)
+            ->where('id', '<', $this->id)
+            ->max('id');
+
+        if ($id) {
+            return static::query()->find($id);
         }
+
         return null;
     }
 

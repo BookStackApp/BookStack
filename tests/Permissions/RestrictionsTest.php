@@ -5,14 +5,13 @@ use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Auth\User;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Entities\Page;
 
 class RestrictionsTest extends BrowserKitTest
 {
 
     /**
-     * @var \BookStack\Auth\User
+     * @var User
      */
     protected $user;
 
@@ -327,7 +326,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_view_restriction()
     {
-        $page = \BookStack\Entities\Page::first();
+        $page = Page::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -367,7 +366,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_delete_restriction()
     {
-        $page = \BookStack\Entities\Page::first();
+        $page = Page::first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
@@ -438,7 +437,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_page_restriction_form()
     {
-        $page = \BookStack\Entities\Page::first();
+        $page = Page::first();
         $this->asAdmin()->visit($page->getUrl() . '/permissions')
             ->see('Page Permissions')
             ->check('restricted')
@@ -665,10 +664,8 @@ class RestrictionsTest extends BrowserKitTest
         $this->setEntityRestrictions($firstBook, ['view', 'update']);
         $this->setEntityRestrictions($secondBook, ['view']);
 
-        $firstBookChapter = $this->app[EntityRepo::class]->createFromInput('chapter',
-                ['name' => 'first book chapter'], $firstBook);
-        $secondBookChapter = $this->app[EntityRepo::class]->createFromInput('chapter',
-                ['name' => 'second book chapter'], $secondBook);
+        $firstBookChapter = $this->newChapter(['name' => 'first book chapter'], $firstBook);
+        $secondBookChapter = $this->newChapter(['name' => 'second book chapter'], $secondBook);
 
         // Create request data
         $reqData = [

@@ -1,6 +1,7 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\Book;
 use BookStack\Entities\Entity;
 use BookStack\Entities\EntityProvider;
 use DB;
@@ -44,7 +45,7 @@ class ViewService
         }
 
         // Otherwise create new view count
-        $entity->views()->save($this->view->create([
+        $entity->views()->save($this->view->newInstance([
             'user_id' => $user->id,
             'views' => 1
         ]));
@@ -60,7 +61,7 @@ class ViewService
      * @param string $action - used for permission checking
      * @return Collection
      */
-    public function getPopular(int $count = 10, int $page = 0, $filterModels = null, string $action = 'view')
+    public function getPopular(int $count = 10, int $page = 0, array $filterModels = null, string $action = 'view')
     {
         $skipCount = $count * $page;
         $query = $this->permissionService
