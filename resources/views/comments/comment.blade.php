@@ -31,7 +31,7 @@
                         <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
                         <ul class="dropdown-menu" role="menu">
                             <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
-                            <li><a action="delete" href="#" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</a></li>
+                            <li><button action="delete" type="button" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</button></li>
                         </ul>
                     </div>
                 @endif
