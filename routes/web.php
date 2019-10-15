@@ -172,6 +172,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Maintenance
         Route::get('/maintenance', 'SettingController@showMaintenance');
         Route::delete('/maintenance/cleanup-images', 'SettingController@cleanupImages');
+        Route::post('/maintenance/send-test-email', 'SettingController@sendTestEmail');
 
         // Users
         Route::get('/users', 'UserController@index');
