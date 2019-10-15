@@ -63,6 +63,13 @@ return [
     'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
     'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
     'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
+    'maint_send_test_email' => 'Send a Test E-Mail',
+    'maint_send_test_email_desc' => 'This sends a test e-mail to your e-mail address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test e-mail',
+    'maint_send_test_email_success' => 'E-Mail sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test E-Mail',
+    'maint_send_test_email_mail_greeting' => 'E-Mail delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this e-mail notification, your e-mail settings seem to be configured properly.',
 
     // Role Settings
     'roles' => 'Roles',
