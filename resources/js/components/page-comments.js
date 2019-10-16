@@ -26,10 +26,12 @@ class PageComments {
 
     handleAction(event) {
         let actionElem = event.target.closest('[action]');
+
         if (event.target.matches('a[href^="#"]')) {
             const id = event.target.href.split('#')[1];
             scrollAndHighlightElement(document.querySelector('#' + id));
         }
+
         if (actionElem === null) return;
         event.preventDefault();
 

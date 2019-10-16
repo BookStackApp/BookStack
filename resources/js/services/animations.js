@@ -1,10 +1,18 @@
 /**
+ * Used in the function below to store references of clean-up functions.
+ * Used to ensure only one transitionend function exists at any time.
+ * @type {WeakMap<object, any>}
+ */
+const animateStylesCleanupMap = new WeakMap();
+
+/**
  * Fade out the given element.
  * @param {Element} element
  * @param {Number} animTime
  * @param {Function|null} onComplete
  */
 export function fadeOut(element, animTime = 400, onComplete = null) {
+    cleanupExistingElementAnimation(element);
     animateStyles(element, {
         opacity: ['1', '0']
     }, animTime, () => {
@@ -19,6 +27,7 @@ export function fadeOut(element, animTime = 400, onComplete = null) {
  * @param {Number} animTime
  */
 export function slideUp(element, animTime = 400) {
+    cleanupExistingElementAnimation(element);
     const currentHeight = element.getBoundingClientRect().height;
     const computedStyles = getComputedStyle(element);
     const currentPaddingTop = computedStyles.getPropertyValue('padding-top');
@@ -41,6 +50,7 @@ export function slideUp(element, animTime = 400) {
  * @param {Number} animTime - Animation time in ms
  */
 export function slideDown(element, animTime = 400) {
+    cleanupExistingElementAnimation(element);
     element.style.display = 'block';
     const targetHeight = element.getBoundingClientRect().height;
     const computedStyles = getComputedStyle(element);
@@ -55,13 +65,6 @@ export function slideDown(element, animTime = 400) {
 
     animateStyles(element, animStyles, animTime);
 }
-
-/**
- * Used in the function below to store references of clean-up functions.
- * Used to ensure only one transitionend function exists at any time.
- * @type {WeakMap<object, any>}
- */
-const animateStylesCleanupMap = new WeakMap();
 
 /**
  * Animate the css styles of an element using FLIP animation techniques.
@@ -84,23 +87,28 @@ function animateStyles(element, styles, animTime = 400, onComplete = null) {
         }
         element.style.transition = null;
         element.removeEventListener('transitionend', cleanup);
+        animateStylesCleanupMap.delete(element);
         if (onComplete) onComplete();
     };
 
     setTimeout(() => {
-        requestAnimationFrame(() => {
-            element.style.transition = `all ease-in-out ${animTime}ms`;
-            for (let style of styleNames) {
-                element.style[style] = styles[style][1];
-            }
+        element.style.transition = `all ease-in-out ${animTime}ms`;
+        for (let style of styleNames) {
+            element.style[style] = styles[style][1];
+        }
 
-            if (animateStylesCleanupMap.has(element)) {
-                const oldCleanup = animateStylesCleanupMap.get(element);
-                element.removeEventListener('transitionend', oldCleanup);
-            }
+        element.addEventListener('transitionend', cleanup);
+        animateStylesCleanupMap.set(element, cleanup);
+    }, 15);
+}
 
-            element.addEventListener('transitionend', cleanup);
-            animateStylesCleanupMap.set(element, cleanup);
-        });
-    }, 10);
+/**
+ * Run the active cleanup action for the given element.
+ * @param {Element} element
+ */
+function cleanupExistingElementAnimation(element) {
+    if (animateStylesCleanupMap.has(element)) {
+        const oldCleanup = animateStylesCleanupMap.get(element);
+        oldCleanup();
+    }
 }
