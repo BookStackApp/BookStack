@@ -253,7 +253,8 @@ $btt-size: 40px;
   .list-sort {
     display: inline-grid;
     margin-left: $-s;
-    grid-template-columns: 120px 40px;
+    grid-template-columns: minmax(120px, max-content) 40px;
+    font-size: 0.9rem;
     border: 2px solid #DDD;
     border-radius: 4px;
   }
