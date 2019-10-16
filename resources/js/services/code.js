@@ -240,24 +240,27 @@ function setContent(cmInstance, codeContent) {
 }
 
 /**
- * Get a CodeMirror instace to use for the markdown editor.
+ * Get a CodeMirror instance to use for the markdown editor.
  * @param {HTMLElement} elem
  * @returns {*}
  */
 function markdownEditor(elem) {
-    let content = elem.textContent;
-
-    return CodeMirror(function (elt) {
-        elem.parentNode.insertBefore(elt, elem);
-        elem.style.display = 'none';
-    }, {
+    const content = elem.textContent;
+    const config = {
         value: content,
         mode: "markdown",
         lineNumbers: true,
         theme: getTheme(),
         lineWrapping: true,
         scrollPastEnd: true,
-    });
+    };
+
+    window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {config});
+
+    return CodeMirror(function (elt) {
+        elem.parentNode.insertBefore(elt, elem);
+        elem.style.display = 'none';
+    }, config);
 }
 
 /**

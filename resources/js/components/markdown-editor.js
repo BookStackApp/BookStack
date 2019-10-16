@@ -30,6 +30,12 @@ class MarkdownEditor {
             this.displayDoc = this.display.contentDocument;
             this.init();
         });
+
+        window.$events.emitPublic(elem, 'editor-markdown::setup', {
+            markdownIt: this.markdown,
+            displayEl: this.display,
+            codeMirrorInstance: this.cm,
+        });
     }
 
     init() {
