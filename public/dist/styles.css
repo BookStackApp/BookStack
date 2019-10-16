@@ -4408,7 +4408,8 @@ body.dragging, body.dragging * {
   .list-sort-container .list-sort {
     display: inline-grid;
     margin-left: 12px;
-    grid-template-columns: 120px 40px;
+    grid-template-columns: minmax(120px, max-content) 40px;
+    font-size: 0.9rem;
     border: 2px solid #DDD;
     border-radius: 4px; }
   .list-sort-container .list-sort-label {
