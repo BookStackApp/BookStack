@@ -105,7 +105,7 @@ class Bookshelf extends Entity implements HasCoverImage
     }
 
     /**
-     * Add a book to the end of this shelf.
+     * Add a book to the end of this shelf. If shelve inheritance is enabled, copy permissions to book.
      * @param Book $book
      */
     public function appendBook(Book $book)
@@ -116,5 +116,14 @@ class Bookshelf extends Entity implements HasCoverImage
 
         $maxOrder = $this->books()->max('order');
         $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
+
+        if (setting()->get('app-inherit-from-shelve')){
+            $shelfPermissions = $this->permissions()->get(['role_id', 'action'])->toArray();
+            $book->permissions()->delete();
+            $book->restricted = $this->restricted;
+            $book->permissions()->createMany($shelfPermissions);
+            $book->save();
+            $book->rebuildPermissions();
+        }
     }
 }
