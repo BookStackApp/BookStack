@@ -68,6 +68,20 @@
                         </div>
                     </div>
 
+                    <div class="grid half gap-xl">
+                        <div>
+                            <label class="setting-list-label">{{ trans('settings.app_inherit_from_shelve') }}</label>
+                            <p class="small">{!! trans('settings.app_inherit_from_shelve_desc') !!}</p>
+                        </div>
+                        <div>
+                            @include('components.toggle-switch', [
+                                'name' => 'setting-app-inherit-from-shelve',
+                                'value' => setting('app-inherit-from-shelve'),
+                                'label' => trans('settings.app_inherit_from_shelve_toggle'),
+                            ])
+                        </div>
+                    </div>
+
 
                 </div>
 
