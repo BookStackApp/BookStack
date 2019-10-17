@@ -16,6 +16,7 @@ import 'codemirror/mode/mllike/mllike';
 import 'codemirror/mode/nginx/nginx';
 import 'codemirror/mode/php/php';
 import 'codemirror/mode/powershell/powershell';
+import 'codemirror/mode/properties/properties';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/ruby/ruby';
 import 'codemirror/mode/rust/rust';
@@ -42,6 +43,7 @@ const modeMap = {
     haskell: 'haskell',
     hs: 'haskell',
     html: 'htmlmixed',
+    ini: 'ini',
     javascript: 'javascript',
     json: {name: 'javascript', json: true},
     js: 'javascript',
@@ -54,6 +56,7 @@ const modeMap = {
     ml: 'mllike',
     nginx: 'nginx',
     powershell: 'powershell',
+    properties: 'properties',
     ocaml: 'mllike',
     php: 'php',
     py: 'python',
