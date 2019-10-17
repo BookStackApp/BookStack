@@ -33,13 +33,26 @@ return [
     'app_logo' => 'Application Logo',
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
-    'app_primary_color_desc' => 'This should be a hex value. <br>Leave empty to reset to the default color.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Application Homepage',
     'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
     'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Disable Comments',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
+
+    // Color settings
+    'bookshelf_color' => 'Shelf Color',
+    'bookshelf_color_desc' => 'Sets the color indicator for shelves.',
+    'book_color' => 'Book Color',
+    'book_color_desc' => 'Sets the color indicator for books.',
+    'chapter_color' => 'Chapter Color',
+    'chapter_color_desc' => 'Sets the color indicator for chapters.',
+    'page_color' => 'Page Color',
+    'page_color_desc' => 'Sets the color indicator for pages.',
+    'page_draft_color' => 'Page Draft Color',
+    'page_draft_color_desc' => 'Sets the color indicator for page drafts.',
+
 
     // Registration Settings
     'reg_settings' => 'Registration',
