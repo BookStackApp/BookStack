@@ -224,7 +224,7 @@ code {
   @extend .code-base;
   display: inline;
   padding: 1px 3px;
-  white-space:pre;
+  white-space:pre-wrap;
   line-height: 1.2em;
   margin-bottom: 1.2em;
 }
@@ -369,4 +369,3 @@ span.sep {
   margin-right: $-xs;
   pointer-events: none;
 }
-
