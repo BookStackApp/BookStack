@@ -37,6 +37,7 @@ class Localization
         'uk' => 'uk_UA',
         'zh_CN' => 'zh_CN',
         'zh_TW' => 'zh_TW',
+        'tr' => 'tr_TR',
     ];
 
     /**

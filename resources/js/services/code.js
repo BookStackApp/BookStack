@@ -102,6 +102,7 @@ function highlightElem(elem) {
         value: content,
         mode:  mode,
         lineNumbers: true,
+        lineWrapping: false,
         theme: getTheme(),
         readOnly: true
     });
@@ -188,6 +189,7 @@ function wysiwygView(elem) {
         value: content,
         mode:  getMode(lang),
         lineNumbers: true,
+        lineWrapping: false,
         theme: getTheme(),
         readOnly: true
     });
@@ -213,8 +215,8 @@ function popupEditor(elem, modeSuggestion) {
         value: content,
         mode:  getMode(modeSuggestion),
         lineNumbers: true,
-        theme: getTheme(),
-        lineWrapping: true
+        lineWrapping: false,
+        theme: getTheme()
     });
 }
 
@@ -240,24 +242,27 @@ function setContent(cmInstance, codeContent) {
 }
 
 /**
- * Get a CodeMirror instace to use for the markdown editor.
+ * Get a CodeMirror instance to use for the markdown editor.
  * @param {HTMLElement} elem
  * @returns {*}
  */
 function markdownEditor(elem) {
-    let content = elem.textContent;
+    const content = elem.textContent;
+    const config = {
+        value: content,
+        mode: "markdown",
+        lineNumbers: true,
+        lineWrapping: true,
+        theme: getTheme(),
+        scrollPastEnd: true,
+    };
+
+    window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {config});
 
     return CodeMirror(function (elt) {
         elem.parentNode.insertBefore(elt, elem);
         elem.style.display = 'none';
-    }, {
-        value: content,
-        mode: "markdown",
-        lineNumbers: true,
-        theme: getTheme(),
-        lineWrapping: true,
-        scrollPastEnd: true,
-    });
+    }, config);
 }
 
 /**

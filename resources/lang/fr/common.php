@@ -20,7 +20,7 @@ return [
     'description' => 'Description',
     'role' => 'Rôle',
     'cover_image' => 'Image de couverture',
-    'cover_image_description' => 'Cette image doit être environ 440x250px.',
+    'cover_image_description' => 'Cette image doit faire environ 440x250 px.',
     
     /**
      * Actions
@@ -45,6 +45,10 @@ return [
     /**
      * Sort Options
      */
+    'sort_options' => 'Options de tri',
+    'sort_direction_toggle' => 'Inverser la direction du tri',
+    'sort_ascending' => 'Tri ascendant',
+    'sort_descending' => 'Tri descendant',
     'sort_name' => 'Nom',
     'sort_created_at' => 'Date de création',
     'sort_updated_at' => 'Date de mise à jour',
@@ -62,16 +66,22 @@ return [
     'grid_view' => 'Vue en grille',
     'list_view' => 'Vue en liste',
     'default' => 'Défaut',
+    'breadcrumb' => 'Fil d\'Ariane',
 
     /**
      * Header
      */
+    'profile_menu' => 'Menu du profil',
     'view_profile' => 'Voir le profil',
     'edit_profile' => 'Modifier le profil',
+
+    // Layout tabs
+    'tab_info' => 'Info',
+    'tab_content' => 'Contenu',
 
     /**
      * Email Content
      */
-    'email_action_help' => 'Si vous rencontrez des problèmes pour cliquer sur le bouton ":actionText", copiez et collez l\'adresse ci-dessous dans votre navigateur :',
+    'email_action_help' => 'Si vous rencontrez des problèmes pour cliquer sur le bouton ":actionText", copiez et collez l\'adresse ci-dessous dans votre navigateur :',
     'email_rights' => 'Tous droits réservés',
 ];

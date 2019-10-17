@@ -412,6 +412,7 @@ class WysiwygEditor {
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
+        window.$events.emitPublic(elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
         window.tinymce.init(this.tinyMceConfig);
     }
 
@@ -654,6 +655,8 @@ class WysiwygEditor {
                 // Paste image-uploads
                 editor.on('paste', event => editorPaste(event, editor, context));
 
+                // Custom handler hook
+                window.$events.emitPublic(context.elem, 'editor-tinymce::setup', {editor});
             }
         };
     }
