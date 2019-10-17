@@ -1,4 +1,7 @@
 <?php
+if (env('FORCE_SSL')=="true"){
+    URL::forceScheme('https');
+}
 
 Route::get('/robots.txt', 'HomeController@getRobots');
 
