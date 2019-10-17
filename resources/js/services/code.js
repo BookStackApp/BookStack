@@ -102,7 +102,7 @@ function highlightElem(elem) {
         value: content,
         mode:  mode,
         lineNumbers: true,
-        lineWrapping: true,
+        lineWrapping: false,
         theme: getTheme(),
         readOnly: true
     });
@@ -189,7 +189,7 @@ function wysiwygView(elem) {
         value: content,
         mode:  getMode(lang),
         lineNumbers: true,
-        lineWrapping: true,
+        lineWrapping: false,
         theme: getTheme(),
         readOnly: true
     });
@@ -215,7 +215,7 @@ function popupEditor(elem, modeSuggestion) {
         value: content,
         mode:  getMode(modeSuggestion),
         lineNumbers: true,
-        lineWrapping: true,
+        lineWrapping: false,
         theme: getTheme()
     });
 }
