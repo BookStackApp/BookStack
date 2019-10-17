@@ -92,7 +92,7 @@ return [
     'shelves_delete' => 'Supprimer l\'étagère',
     'shelves_delete_named' => 'Supprimer l\'étagère :name',
     'shelves_delete_explain' => "Ceci va supprimer l\'étagère nommée \':bookName\'. Les livres contenus dans cette étagère ne seront pas supprimés.",
-    'shelves_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer cette étagère ?',
+    'shelves_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer cette étagère ?',
     'shelves_permissions' => 'Permissions de l\'étagère',
     'shelves_permissions_updated' => 'Permissions de l\'étagère mises à jour',
     'shelves_permissions_active' => 'Permissions de l\'étagère activées',
@@ -118,7 +118,7 @@ return [
     'books_delete' => 'Supprimer un livre',
     'books_delete_named' => 'Supprimer le livre :bookName',
     'books_delete_explain' => 'Ceci va supprimer le livre nommé \':bookName\', tous les chapitres et pages seront supprimés.',
-    'books_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer ce livre ?',
+    'books_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer ce livre ?',
     'books_edit' => 'Modifier le livre',
     'books_edit_named' => 'Modifier le livre :bookName',
     'books_form_book_name' => 'Nom du livre',
@@ -155,7 +155,7 @@ return [
     'chapters_delete' => 'Supprimer le chapitre',
     'chapters_delete_named' => 'Supprimer le chapitre :chapterName',
     'chapters_delete_explain' => 'Ceci va supprimer le chapitre \':chapterName\', toutes les pages seront déplacées dans le livre parent.',
-    'chapters_delete_confirm' => 'Etes-vous sûr(e) de vouloir supprimer ce chapitre ?',
+    'chapters_delete_confirm' => 'Etes-vous sûr(e) de vouloir supprimer ce chapitre ?',
     'chapters_edit' => 'Modifier le chapitre',
     'chapters_edit_named' => 'Modifier le chapitre :chapterName',
     'chapters_save' => 'Enregistrer le chapitre',
@@ -184,8 +184,8 @@ return [
     'pages_delete_draft' => 'Supprimer le brouillon',
     'pages_delete_success' => 'Page supprimée',
     'pages_delete_draft_success' => 'Brouillon supprimé',
-    'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
-    'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
+    'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
+    'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
     'pages_editing_named' => 'Modification de la page :pageName',
     'pages_edit_toggle_header' => 'Afficher/cacher l\'en-tête',
     'pages_edit_save_draft' => 'Enregistrer le brouillon',
@@ -239,10 +239,11 @@ return [
         'start_b' => ':userName a commencé à éditer cette page',
         'time_a' => 'depuis la dernière sauvegarde',
         'time_b' => 'dans les :minCount dernières minutes',
-        'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
+        'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
     ],
     'pages_draft_discarded' => 'Brouillon écarté, la page est dans sa version actuelle.',
     'pages_specific' => 'Page Spécifique',
+    'pages_is_template' => 'Modèle de page',
 
     /**
      * Editor sidebar
@@ -281,6 +282,12 @@ return [
     'attachments_file_uploaded' => 'Fichier ajouté avec succès',
     'attachments_file_updated' => 'Fichier mis à jour avec succès',
     'attachments_link_attached' => 'Lien attaché à la page avec succès',
+    'templates' => 'Modèles',
+    'templates_set_as_template' => 'La page est un modèle',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Remplacer le contenu de la page',
+    'templates_append_content' => 'Ajouter après le contenu de la page',
+    'templates_prepend_content' => 'Ajouter devant le contenu de la page',
 
     /**
      * Profile View
@@ -299,23 +306,24 @@ return [
     'comments' => 'Commentaires',
     'comment_add' => 'Ajouter un commentaire',
     'comment_placeholder' => 'Entrez vos commentaires ici',
-    'comment_count' => '{0} Pas de commentaires|{1} 1 Commentaire|[2,*] :count Commentaires',
+    'comment_count' => '{0} Pas de commentaires|{1} Un commentaire|[2,*] :count commentaires',
     'comment_save' => 'Enregistrer le commentaire',
-    'comment_saving' => 'Enregistrement du commentaire...',
-    'comment_deleting' => 'Suppression du commentaire...',
+    'comment_saving' => 'Enregistrement du commentaire…',
+    'comment_deleting' => 'Suppression du commentaire…',
     'comment_new' => 'Nouveau commentaire',
     'comment_created' => 'commenté :createDiff',
     'comment_updated' => 'Mis à jour :updateDiff par :username',
     'comment_deleted_success' => 'Commentaire supprimé',
     'comment_created_success' => 'Commentaire ajouté',
     'comment_updated_success' => 'Commentaire mis à jour',
-    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
+    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
     'comment_in_reply_to' => 'En réponse à :commentId',
 
      /**
      * Revision
      */
-    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision?',
+    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision ?',
+    'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu courant de la page va être remplacé.',
     'revision_delete_success' => 'Révision supprimée',
     'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.'
 ];
