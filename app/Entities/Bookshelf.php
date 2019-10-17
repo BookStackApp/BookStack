@@ -105,7 +105,7 @@ class Bookshelf extends Entity implements HasCoverImage
     }
 
     /**
-     * Add a book to the end of this shelf. If shelve inheritance is enabled, copy permissions to book.
+     * Add a book to the end of this shelf. If shelf inheritance is enabled, copy permissions to book.
      * @param Book $book
      */
     public function appendBook(Book $book)
