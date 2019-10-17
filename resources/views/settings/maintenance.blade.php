@@ -7,8 +7,8 @@
         <div class="py-m">
             @include('settings.navbar', ['selected' => 'maintenance'])
         </div>
-        <div class="text-right py-m">
-            <a href="https://github.com/BookStackApp/BookStack/releases">
+        <div class="text-right p-m">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
             BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
             </a>
         </div>
