@@ -29,6 +29,8 @@ import 'codemirror/mode/yaml/yaml';
 // Addons
 import 'codemirror/addon/scroll/scrollpastend';
 
+// Mapping of potential languages or formats from user input
+// to their proper codemirror modes.
 const modeMap = {
     css: 'css',
     c: 'text/x-csrc',
@@ -43,7 +45,7 @@ const modeMap = {
     haskell: 'haskell',
     hs: 'haskell',
     html: 'htmlmixed',
-    ini: 'ini',
+    ini: 'properties',
     javascript: 'javascript',
     json: {name: 'javascript', json: true},
     js: 'javascript',
