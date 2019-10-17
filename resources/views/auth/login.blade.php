@@ -22,13 +22,12 @@
                             'name' => 'remember',
                             'checked' => false,
                             'value' => 'on',
-                            'tabindex' => 1,
                             'label' => trans('auth.remember_me'),
                         ])
                     </div>
 
                     <div class="text-right">
-                        <button class="button" tabindex="1">{{ Str::title(trans('auth.log_in')) }}</button>
+                        <button class="button">{{ Str::title(trans('auth.log_in')) }}</button>
                     </div>
                 </div>
 
