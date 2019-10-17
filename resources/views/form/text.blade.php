@@ -1,4 +1,5 @@
 <input type="text" id="{{ $name }}" name="{{ $name }}"
+       @if(isset($focus)) autofocus @endif
        @if($errors->has($name)) class="text-neg" @endif
        @if(isset($placeholder)) placeholder="{{$placeholder}}" @endif
        @if(isset($disabled) && $disabled) disabled="disabled" @endif
