@@ -1,11 +1,9 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
-
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
 
     // Pages
     'page_create'                 => 'ha creato la pagina',
@@ -36,6 +34,14 @@ return [
     'book_delete_notification'    => 'Libro Eliminato Correttamente',
     'book_sort'                   => 'ha ordinato il libro',
     'book_sort_notification'      => 'Libro Riordinato Correttamente',
+
+    // Bookshelves
+    'bookshelf_create'            => '',
+    'bookshelf_create_notification'    => '',
+    'bookshelf_update'                 => '',
+    'bookshelf_update_notification'    => '',
+    'bookshelf_delete'                 => '',
+    'bookshelf_delete_notification'    => '',
 
     // Other
     'commented_on'                => 'ha commentato in',
