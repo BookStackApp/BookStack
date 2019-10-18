@@ -18,7 +18,7 @@ return [
 
     'name' => 'Jméno',
     'username' => 'Jméno účtu',
-    'email' => 'Email',
+    'email' => '',
     'password' => 'Heslo',
     'password_confirm' => 'Potvrdit heslo',
     'password_hint' => 'Musí mít víc než 7 znaků',
@@ -26,6 +26,8 @@ return [
     'remember_me' => 'Neodhlašovat',
     'ldap_email_hint' => 'Zadejte email, který chcete přiřadit k tomuto účtu.',
     'create_account' => 'Vytvořit účet',
+    'already_have_account' => '',
+    'dont_have_account' => '',
     'social_login' => 'Přihlášení přes sociální sítě',
     'social_registration' => 'Registrace přes sociální sítě',
     'social_registration_text' => 'Registrovat a přihlásit se přes jinou službu',
@@ -62,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Klikněte na odkaz v emailu který jsme vám zaslali ihned po registraci.',
     'email_not_confirmed_resend' => 'Pokud nemůžete nalézt email v příchozí poště, můžete si jej nechat poslat znovu pomocí formuláře níže.',
     'email_not_confirmed_resend_button' => 'Znovu poslat email pro potvrzení emailové adresy',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
