@@ -1,30 +1,24 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Deze inloggegevens zijn niet bij ons bekend.',
     'throttle' => 'Te veel loginpogingen! Probeer het opnieuw na :seconds seconden.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Registreren',
-    'log_in' => 'Log in',
+    'log_in' => '',
     'log_in_with' => 'Login met :socialDriver',
     'sign_up_with' => 'Registreer met :socialDriver',
     'logout' => 'Uitloggen',
 
     'name' => 'Naam',
     'username' => 'Gebruikersnaam',
-    'email' => 'Email',
+    'email' => '',
     'password' => 'Wachtwoord',
     'password_confirm' => 'Wachtwoord Bevestigen',
     'password_hint' => 'Minimaal 8 tekens',
@@ -32,7 +26,9 @@ return [
     'remember_me' => 'Mij onthouden',
     'ldap_email_hint' => 'Geef een email op waarmee je dit account wilt gebruiken.',
     'create_account' => 'Account Aanmaken',
-    'social_login' => 'Social Login',
+    'already_have_account' => '',
+    'dont_have_account' => '',
+    'social_login' => '',
     'social_registration' => 'Social Registratie',
     'social_registration_text' => 'Registreer en log in met een andere dienst.',
 
@@ -43,23 +39,18 @@ return [
     'register_success' => 'Bedankt voor het inloggen. Je bent ook geregistreerd.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Wachtwoord Herstellen',
     'reset_password_send_instructions' => 'Geef je e-mail en we sturen je een link om je wachtwoord te herstellen',
     'reset_password_send_button' => 'Link Sturen',
     'reset_password_sent_success' => 'Een link om je wachtwoord te herstellen is verstuurd naar :email.',
     'reset_password_success' => 'Je wachtwoord is succesvol hersteld.',
-
     'email_reset_subject' => 'Herstel je wachtwoord van :appName',
     'email_reset_text' => 'Je ontvangt deze e-mail zodat je je wachtwoord kunt herstellen.',
     'email_reset_not_requested' => 'Als je jouw wachtwoord niet wilt wijzigen, doe dan niets.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Bevestig je e-mailadres op :appName',
     'email_confirm_greeting' => 'Bedankt voor je aanmelding op :appName!',
     'email_confirm_text' => 'Bevestig je registratie door op onderstaande knop te drukken:',
@@ -73,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Klik op de link in de e-mail die vlak na je registratie is verstuurd.',
     'email_not_confirmed_resend' => 'Als je deze e-mail niet kunt vinden kun je deze met onderstaande formulier opnieuw verzenden.',
     'email_not_confirmed_resend_button' => 'Bevestigingsmail Opnieuw Verzenden',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
