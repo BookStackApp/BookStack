@@ -1,19 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
+    // Common Messages
     'settings' => 'Inställningar',
     'settings_save' => 'Spara inställningar',
     'settings_save_success' => 'Inställningarna har sparats',
 
-    /**
-     * App settings
-     */
+    // App Settings
     'app_customization' => 'Sidanpassning',
     'app_features_security' => 'Funktioner och säkerhet',
     'app_name' => 'Applikationsnamn',
@@ -31,6 +29,7 @@ return [
     'app_editor_desc' => 'Välj vilket redigeringsverktyg som ska användas av alla användare för att redigera sidor.',
     'app_custom_html' => 'Egen HTML i <head>',
     'app_custom_html_desc' => 'Eventuellt innehåll i det här fältet placeras längst ner i <head>-sektionen på varje sida. Detta är användbart för att skriva över stilmaller eller lägga in spårningskoder.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Applikationslogotyp',
     'app_logo_desc' => 'Bilden bör vara minst 43px hög. <br>Större bilder skalas ner.',
     'app_primary_color' => 'Primärfärg',
@@ -42,9 +41,7 @@ return [
     'app_disable_comments_toggle' => 'Inaktivera kommentarer',
     'app_disable_comments_desc' => 'Inaktivera kommentarer på alla sidor i applikationen. Befintliga kommentarer visas inte.',
 
-    /**
-     * Registration settings
-     */
+    // Registration Settings
     'reg_settings' => 'Registreringsinställningar',
     'reg_enable' => 'Tillåt registrering',
     'reg_enable_toggle' => 'Tillåt registrering',
@@ -57,9 +54,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Ange en kommaseparerad lista över e-postdomäner till vilka du vill begränsa registrering. Användare kommer att skickas ett mail för att bekräfta deras e-post innan de får logga in. <br> Notera att användare kommer att kunna ändra sin e-postadress efter lyckad registrering.',
     'reg_confirm_restrict_domain_placeholder' => 'Ingen begränsning satt',
 
-    /**
-     * Maintenance settings
-     */
+    // Maintenance settings
     'maint' => 'Underhåll',
     'maint_image_cleanup' => 'Rensa bilder',
     'maint_image_cleanup_desc' => "Söker igenom innehåll i sidor & revisioner för att se vilka bilder och teckningar som är i bruk och vilka som är överflödiga. Se till att ta en komplett backup av databas och bilder innan du kör detta.",
@@ -69,9 +64,7 @@ return [
     'maint_image_cleanup_success' => 'Hittade och raderade :count bilder som potentiellt inte används!',
     'maint_image_cleanup_nothing_found' => 'Hittade inga oanvända bilder, så inget har raderats!',
 
-    /**
-     * Role settings
-     */
+    // Role Settings
     'roles' => 'Roller',
     'role_user_roles' => 'Användarroller',
     'role_create' => 'Skapa ny roll',
@@ -79,7 +72,7 @@ return [
     'role_delete' => 'Ta bort roll',
     'role_delete_confirm' => 'Rollen med namn \':roleName\' kommer att tas bort.',
     'role_delete_users_assigned' => 'Det finns :userCount användare som tillhör den här rollen. Om du vill migrera användarna från den här rollen, välj en ny roll nedan.',
-    'role_delete_no_migration' => 'Migrera inte användare',
+    'role_delete_no_migration' => "Migrera inte användare",
     'role_delete_sure' => 'Är du säker på att du vill ta bort den här rollen?',
     'role_delete_success' => 'Rollen har tagits bort',
     'role_edit' => 'Redigera roll',
@@ -92,6 +85,7 @@ return [
     'role_manage_roles' => 'Hantera roller & rättigheter',
     'role_manage_entity_permissions' => 'Hantera rättigheter för alla böcker, kapitel och sidor',
     'role_manage_own_entity_permissions' => 'Hantera rättigheter för egna böcker, kapitel och sidor',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Hantera appinställningar',
     'role_asset' => 'Tillgång till innehåll',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',
@@ -104,9 +98,7 @@ return [
     'role_users' => 'Användare med denna roll',
     'role_users_none' => 'Inga användare tillhör den här rollen',
 
-    /**
-     * Users
-     */
+    // Users
     'users' => 'Användare',
     'user_profile' => 'Användarprofil',
     'users_add_new' => 'Lägg till användare',
@@ -118,6 +110,8 @@ return [
     'users_role_desc' => 'Välj vilka roller den här användaren ska tilldelas. Om en användare har tilldelats flera roller kommer behörigheterna från dessa roller att staplas och de kommer att få alla rättigheter i de tilldelade rollerna.',
     'users_password' => 'Användarlösenord',
     'users_password_desc' => 'Ange ett lösenord som ska användas för att logga in på sidan. Lösenordet måste vara minst 5 tecken långt.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Externt ID för autentisering',
     'users_external_auth_id_desc' => 'Detta är det ID som används för att matcha användaren när den kommunicerar med ditt LDAP-system.',
     'users_password_warning' => 'Fyll i nedanstående fält endast om du vill byta lösenord:',
@@ -139,5 +133,35 @@ return [
     'users_social_connect' => 'Anslut konto',
     'users_social_disconnect' => 'Koppla från konto',
     'users_social_connected' => ':socialAccount har kopplats till ditt konto.',
-    'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.'
+    'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];
