@@ -1,9 +1,10 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
 
-    /**
-     * Image Manager
-     */
+    // Image Manager
     'image_select' => '选择图片',
     'image_all' => '全部',
     'image_all_title' => '查看所有图片',
@@ -24,9 +25,7 @@ return [
     'image_delete_success' => '图片删除成功',
     'image_upload_remove' => '去掉',
 
-    /**
-     * Code editor
-     */
+    // Code Editor
     'code_editor' => '编辑代码',
     'code_language' => '编程语言',
     'code_content' => '代码内容',
