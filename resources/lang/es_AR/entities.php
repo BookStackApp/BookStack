@@ -2,13 +2,10 @@
 /**
  * Text used for 'Entities' (Document Structure Elements) such as
  * Books, Shelves, Chapters & Pages
- * 
- * Texto utilizado para 'Entities' (Elementos de Estructura de
- * los Documentos) como Libros, Estantes, Capítulos y Páginas
  */
 return [
 
-    // Shared - Compartido
+    // Shared
     'recently_created' => 'Creado recientemente',
     'recently_created_pages' => 'Páginas creadas recientemente',
     'recently_updated_pages' => 'Páginas actualizadas recientemente',
@@ -37,13 +34,13 @@ return [
     'export_pdf' => 'Archivo PDF',
     'export_text' => 'Archivo de texto plano',
 
-    // Permissions and restrictions - Permisos y Restricciones
+    // Permissions and restrictions
     'permissions' => 'Permisos',
     'permissions_intro' => 'una vez habilitado, Estos permisos tendrán prioridad por encima de cualquier permiso establecido.',
     'permissions_enable' => 'Habilitar permisos custom',
     'permissions_save' => 'Guardar permisos',
 
-    // Search - Búsqueda
+    // Search
     'search_results' => 'Buscar resultados',
     'search_total_results_found' => ':count resultados encontrados|:count total de resultados encontrados',
     'search_clear' => 'Limpiar resultados',
@@ -68,7 +65,7 @@ return [
     'search_set_date' => 'Esablecer fecha',
     'search_update' => 'Actualizar búsqueda',
 
-    // Shelves - Estantes
+    // Shelves
     'shelf' => 'Estante',
     'shelves' => 'Estantes',
     'x_shelves' => ':count Estante|:count Estantes',
@@ -100,7 +97,7 @@ return [
     'shelves_copy_permissions_explain' => 'Esta acción aplicará los permisos de este estante a todos los libros contenidos en él. Antes de activarlos, asegúrese que los cambios a los permisos de este estante estén guardados.',
     'shelves_copy_permission_success' => 'Se copiaron los permisos del estante a :count libros',
 
-    // Books - Libros
+    // Books
     'book' => 'Libro',
     'books' => 'Libros',
     'x_books' => ':count Libro|:count Libros',
@@ -139,7 +136,7 @@ return [
     'books_sort_show_other' => 'Mostrar otros libros',
     'books_sort_save' => 'Guardar nuevo orden',
 
-    // Chapters - Capítulos
+    // Chapters
     'chapter' => 'Capítulo',
     'chapters' => 'Capítulos',
     'x_chapters' => ':count Capítulo|:count Capítulos',
@@ -162,7 +159,7 @@ return [
     'chapters_permissions_success' => 'Permisos de capítulo actualizados',
     'chapters_search_this' => 'Buscar en este capítulo',
 
-    // Pages - Páginas
+    // Pages
     'page' => 'Página',
     'pages' => 'Páginas',
     'x_pages' => ':count Página|:count Páginas',
@@ -239,11 +236,11 @@ return [
     'pages_specific' => 'Página Específica',
     'pages_is_template' => 'Plantilla de Página',
 
-    // Editor sidebar - Barra lateral del editor
+    // Editor Sidebar
     'page_tags' => 'Etiquetas de página',
     'chapter_tags' => 'Etiquetas de capítulo',
     'book_tags' => 'Etiquetas de libro',
-    'shelf_tags' => 'Shelf Tags',
+    'shelf_tags' => 'Etiquetas de Estante',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
     'tag_name' =>  'Nombre de etiqueta',
@@ -283,7 +280,7 @@ return [
     'templates_append_content' => 'Incorporar al fina del contenido de la página',
     'templates_prepend_content' => 'Incorporar al principio del contenido de la página',
 
-    // Profile View - Vista de Perfil
+    // Profile View
     'profile_user_for_x' => 'Usuario para :time',
     'profile_created_content' => 'Contenido creado',
     'profile_not_created_pages' => ':userName no ha creado páginas',
@@ -291,8 +288,7 @@ return [
     'profile_not_created_books' => ':userName no ha creado libros',
     'profile_not_created_shelves' => ':userName no ha creado estantes',
 
-
-    // Comments - Comentarios
+    // Comments
     'comment' => 'Comentario',
     'comments' => 'Comentarios',
     'comment_add' => 'Agregar comentario',
@@ -310,7 +306,7 @@ return [
     'comment_delete_confirm' => '¿Está seguro que quiere borrar este comentario?',
     'comment_in_reply_to' => 'En respuesta a :commentId',
 
-     // Revision - Revisión
+    // Revision
     'revision_delete_confirm' => '¿Está seguro de que quiere eliminar esta revisión?',
     'revision_restore_confirm' => '¿Está seguro de que quiere restaurar esta revisión? Se reemplazará el contenido de la página actual.',
     'revision_delete_success' => 'Revisión eliminada',
