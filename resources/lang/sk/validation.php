@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines
     'accepted'             => ':attribute musí byť akceptovaný.',
     'active_url'           => ':attribute nie je platná URL.',
     'after'                => ':attribute musí byť dátum po :date.',
@@ -35,12 +30,41 @@ return [
     'digits'               => ':attribute musí mať :digits číslic.',
     'digits_between'       => ':attribute musí mať medzi :min a :max číslicami.',
     'email'                => ':attribute musí byť platná emailová adresa.',
+    'ends_with' => '',
     'filled'               => 'Políčko :attribute je povinné.',
+    'gt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'gte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'exists'               => 'Vybraný :attribute nie je platný.',
     'image'                => ':attribute musí byť obrázok.',
+    'image_extension'      => '',
     'in'                   => 'Vybraný :attribute je neplatný.',
     'integer'              => ':attribute musí byť celé číslo.',
     'ip'                   => ':attribute musí byť platná IP adresa.',
+    'ipv4'                 => '',
+    'ipv6'                 => '',
+    'json'                 => '',
+    'lt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'lte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'max'                  => [
         'numeric' => ':attribute nesmie byť väčší ako :max.',
         'file'    => ':attribute nesmie byť väčší ako :max kilobajtov.',
@@ -54,7 +78,9 @@ return [
         'string'  => ':attribute musí mať aspoň :min znakov.',
         'array'   => ':attribute musí mať aspoň :min položiek.',
     ],
+    'no_double_extension'  => '',
     'not_in'               => 'Vybraný :attribute je neplatný.',
+    'not_regex'            => '',
     'numeric'              => ':attribute musí byť číslo.',
     'regex'                => ':attribute formát je neplatný.',
     'required'             => 'Políčko :attribute je povinné.',
@@ -74,35 +100,15 @@ return [
     'timezone'             => ':attribute musí byť plantá časová zóna.',
     'unique'               => ':attribute je už použité.',
     'url'                  => ':attribute formát je neplatný.',
+    'uploaded'             => '',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Vyžaduje sa potvrdenie hesla',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];
