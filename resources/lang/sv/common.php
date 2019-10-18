@@ -1,83 +1,76 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
-    'cancel' => 'Avbryt',
-    'confirm' => 'Bekräfta',
-    'back' => 'Bakåt',
-    'save' => 'Spara',
-    'continue' => 'Fortsätt',
-    'select' => 'Välj',
-    'toggle_all' => 'Ändra alla',
-    'more' => 'Mer',
+    // Buttons
+    'cancel' => '',
+    'confirm' => '',
+    'back' => '',
+    'save' => '',
+    'continue' => '',
+    'select' => '',
+    'toggle_all' => '',
+    'more' => '',
 
-    /**
-     * Form Labels
-     */
-    'name' => 'Namn',
-    'description' => 'Beskrivning',
-    'role' => 'Roll',
-    'cover_image' => 'Omslagsbild',
-    'cover_image_description' => 'Bilden bör vara cirka 440x250px stor.',
+    // Form Labels
+    'name' => '',
+    'description' => '',
+    'role' => '',
+    'cover_image' => '',
+    'cover_image_description' => '',
+    
+    // Actions
+    'actions' => '',
+    'view' => '',
+    'view_all' => '',
+    'create' => '',
+    'update' => '',
+    'edit' => '',
+    'sort' => '',
+    'move' => '',
+    'copy' => '',
+    'reply' => '',
+    'delete' => '',
+    'search' => '',
+    'search_clear' => '',
+    'reset' => '',
+    'remove' => '',
+    'add' => '',
 
-    /**
-     * Actions
-     */
-    'actions' => 'Åtgärder',
-    'view' => 'Visa',
-    'view_all' => 'Visa alla',
-    'create' => 'Skapa',
-    'update' => 'Uppdatera',
-    'edit' => 'Redigera',
-    'sort' => 'Sortera',
-    'move' => 'Flytta',
-    'copy' => 'Kopiera',
-    'reply' => 'Svara',
-    'delete' => 'Ta bort',
-    'search' => 'Sök',
-    'search_clear' => 'Rensa sökning',
-    'reset' => 'Återställ',
-    'remove' => 'Radera',
-    'add' => 'Lägg till',
+    // Sort Options
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
+    'sort_name' => '',
+    'sort_created_at' => '',
+    'sort_updated_at' => '',
 
-    /**
-     * Sort Options
-     */
-    'sort_name' => 'Namn',
-    'sort_created_at' => 'Skapad',
-    'sort_updated_at' => 'Uppdaterad',
+    // Misc
+    'deleted_user' => '',
+    'no_activity' => '',
+    'no_items' => '',
+    'back_to_top' => '',
+    'toggle_details' => '',
+    'toggle_thumbnails' => '',
+    'details' => '',
+    'grid_view' => '',
+    'list_view' => '',
+    'default' => '',
+    'breadcrumb' => '',
 
-    /**
-     * Misc
-     */
-    'deleted_user' => 'Borttagen användare',
-    'no_activity' => 'Ingen aktivitet att visa',
-    'no_items' => 'Inga tillgängliga föremål',
-    'back_to_top' => 'Tillbaka till toppen',
-    'toggle_details' => 'Växla detaljer',
-    'toggle_thumbnails' => 'Växla miniatyrer',
-    'details' => 'Information',
-    'grid_view' => 'Rutnätsvy',
-    'list_view' => 'Listvy',
-    'default' => 'Förvald',
+    // Header
+    'profile_menu' => '',
+    'view_profile' => '',
+    'edit_profile' => '',
 
-    /**
-     * Header
-     */
-    'view_profile' => 'Visa profil',
-    'edit_profile' => 'Redigera profil',
+    // Layout tabs
+    'tab_info' => '',
+    'tab_content' => '',
 
-    /**
-     * Layout tabs
-     */
-    'tab_info' => 'Information',
-    'tab_content' => 'Innehåll',
-
-    /**
-     * Email Content
-     */
-    'email_action_help' => 'Om du har problem, klicka på knappen ":actionText", och kopiera och klistra in den här adressen i din webbläsare:',
-    'email_rights' => 'Alla rättigheter är reserverade',
+    // Email Content
+    'email_action_help' => '',
+    'email_rights' => '',
 ];
