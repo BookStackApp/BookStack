@@ -1,14 +1,17 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => '最近作成',
     'recently_created_pages' => '最近作成されたページ',
     'recently_updated_pages' => '最近更新されたページ',
     'recently_created_chapters' => '最近作成されたチャプター',
     'recently_created_books' => '最近作成されたブック',
+    'recently_created_shelves' => '',
     'recently_update' => '最近更新',
     'recently_viewed' => '閲覧履歴',
     'recent_activity' => 'アクティビティ',
@@ -19,7 +22,6 @@ return [
     'meta_created_name' => '作成: :timeLength (:user)',
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
-    'x_pages' => ':count ページ',
     'entity_select' => 'エンティティ選択',
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
@@ -32,17 +34,13 @@ return [
     'export_pdf' => 'PDF',
     'export_text' => 'テキストファイル',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => '権限',
     'permissions_intro' => 'この設定は各ユーザの役割よりも優先して適用されます。',
     'permissions_enable' => 'カスタム権限設定を有効にする',
     'permissions_save' => '権限を保存',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => '検索結果',
     'search_total_results_found' => ':count件見つかりました',
     'search_clear' => '検索をクリア',
@@ -53,11 +51,13 @@ return [
     'search_content_type' => '種類',
     'search_exact_matches' => '完全一致',
     'search_tags' => 'タグ検索',
+    'search_options' => '',
     'search_viewed_by_me' => '自分が閲覧したことがある',
     'search_not_viewed_by_me' => '自分が閲覧したことがない',
     'search_permissions_set' => '権限が設定されている',
     'search_created_by_me' => '自分が作成した',
     'search_updated_by_me' => '自分が更新した',
+    'search_date_options' => '',
     'search_updated_before' => '以前に更新',
     'search_updated_after' => '以降に更新',
     'search_created_before' => '以前に作成',
@@ -65,17 +65,49 @@ return [
     'search_set_date' => '日付を設定',
     'search_update' => 'フィルタを更新',
 
-    /**
-     * Books
-     */
-    'book' => 'Book',
+    // Shelves
+    'shelf' => '',
+    'shelves' => '',
+    'x_shelves' => '',
+    'shelves_long' => '',
+    'shelves_empty' => '',
+    'shelves_create' => '',
+    'shelves_popular' => '',
+    'shelves_new' => '',
+    'shelves_new_action' => '',
+    'shelves_popular_empty' => '',
+    'shelves_new_empty' => '',
+    'shelves_save' => '',
+    'shelves_books' => '',
+    'shelves_add_books' => '',
+    'shelves_drag_books' => '',
+    'shelves_empty_contents' => '',
+    'shelves_edit_and_assign' => '',
+    'shelves_edit_named' => '',
+    'shelves_edit' => '',
+    'shelves_delete' => '',
+    'shelves_delete_named' => '',
+    'shelves_delete_explain' => "",
+    'shelves_delete_confirmation' => '',
+    'shelves_permissions' => '',
+    'shelves_permissions_updated' => '',
+    'shelves_permissions_active' => '',
+    'shelves_copy_permissions_to_books' => '',
+    'shelves_copy_permissions' => '',
+    'shelves_copy_permissions_explain' => '',
+    'shelves_copy_permission_success' => '',
+
+    // Books
+    'book' => '',
     'books' => 'ブック',
+    'x_books' => ':count ブック',
     'books_empty' => 'まだブックは作成されていません',
     'books_popular' => '人気のブック',
-    'x_books' => ':count ブック',
     'books_recent' => '最近のブック',
     'books_new' => '新しいブック',
+    'books_new_action' => '',
     'books_popular_empty' => 'ここに人気のブックが表示されます。',
+    'books_new_empty' => '',
     'books_create' => '新しいブックを作成',
     'books_delete' => 'ブックを削除',
     'books_delete_named' => 'ブック「:bookName」を削除',
@@ -89,7 +121,6 @@ return [
     'books_permissions_updated' => 'ブックの権限を更新しました',
     'books_empty_contents' => 'まだページまたはチャプターが作成されていません。',
     'books_empty_create_page' => '新しいページを作成',
-    'books_empty_or' => 'または',
     'books_empty_sort_current_book' => 'ブックの並び順を変更',
     'books_empty_add_chapter' => 'チャプターを追加',
     'books_permissions_active' => 'ブックの権限は有効です',
@@ -97,16 +128,19 @@ return [
     'books_navigation' => '目次',
     'books_sort' => '並び順を変更',
     'books_sort_named' => 'ブック「:bookName」を並び替え',
+    'books_sort_name' => '',
+    'books_sort_created' => '',
+    'books_sort_updated' => '',
+    'books_sort_chapters_first' => '',
+    'books_sort_chapters_last' => '',
     'books_sort_show_other' => '他のブックを表示',
     'books_sort_save' => '並び順を保存',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'チャプター',
     'chapters' => 'チャプター',
-    'chapters_popular' => '人気のチャプター',
     'x_chapters' => ':count チャプター',
+    'chapters_popular' => '人気のチャプター',
     'chapters_new' => 'チャプターを作成',
     'chapters_create' => 'チャプターを作成',
     'chapters_delete' => 'チャプターを削除',
@@ -125,11 +159,10 @@ return [
     'chapters_permissions_success' => 'チャプターの権限を更新しました',
     'chapters_search_this' => 'このチャプターを検索',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'ページ',
     'pages' => 'ページ',
+    'x_pages' => ':count ページ',
     'pages_popular' => '人気のページ',
     'pages_new' => 'ページを作成',
     'pages_attachments' => '添付',
@@ -143,7 +176,7 @@ return [
     'pages_delete_confirm' => 'このページを削除してもよろしいですか？',
     'pages_delete_draft_confirm' => 'このページの下書きを削除してもよろしいですか？',
     'pages_editing_named' => 'ページ :pageName を編集',
-    'pages_edit_toggle_header' => 'ヘッダーの表示切替',
+    'pages_edit_draft_options' => '',
     'pages_edit_save_draft' => '下書きを保存',
     'pages_edit_draft' => 'ページの下書きを編集',
     'pages_editing_draft' => '下書きを編集中',
@@ -161,17 +194,24 @@ return [
     'pages_md_preview' => 'プレビュー',
     'pages_md_insert_image' => '画像を挿入',
     'pages_md_insert_link' => 'エンティティへのリンクを挿入',
+    'pages_md_insert_drawing' => '',
     'pages_not_in_chapter' => 'チャプターが設定されていません',
     'pages_move' => 'ページを移動',
     'pages_move_success' => 'ページを ":parentName" へ移動しました',
+    'pages_copy' => '',
+    'pages_copy_desination' => '',
+    'pages_copy_success' => '',
     'pages_permissions' => 'ページの権限設定',
     'pages_permissions_success' => 'ページの権限を更新しました',
+    'pages_revision' => '',
     'pages_revisions' => '編集履歴',
     'pages_revisions_named' => ':pageName のリビジョン',
     'pages_revision_named' => ':pageName のリビジョン',
     'pages_revisions_created_by' => '作成者',
     'pages_revisions_date' => '日付',
     'pages_revisions_number' => 'リビジョン',
+    'pages_revisions_numbered' => '',
+    'pages_revisions_numbered_changes' => '',
     'pages_revisions_changelog' => '説明',
     'pages_revisions_changes' => '変更点',
     'pages_revisions_current' => '現在のバージョン',
@@ -193,16 +233,21 @@ return [
         'message' => ':start :time. 他のユーザによる更新を上書きしないよう注意してください。',
     ],
     'pages_draft_discarded' => '下書きが破棄されました。エディタは現在の内容へ復元されています。',
+    'pages_specific' => '',
+    'pages_is_template' => '',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'タグ',
+    'chapter_tags' => '',
+    'book_tags' => '',
+    'shelf_tags' => '',
     'tag' => 'タグ',
     'tags' =>  '',
+    'tag_name' =>  '',
     'tag_value' => '内容 (オプション)',
     'tags_explain' => "タグを設定すると、コンテンツの管理が容易になります。\nより高度な管理をしたい場合、タグに内容を設定できます。",
     'tags_add' => 'タグを追加',
+    'tags_remove' => '',
     'attachments' => '添付ファイル',
     'attachments_explain' => 'ファイルをアップロードまたはリンクを添付することができます。これらはサイドバーで確認できます。',
     'attachments_explain_instant_save' => 'この変更は即座に保存されます。',
@@ -228,19 +273,22 @@ return [
     'attachments_file_uploaded' => 'ファイルがアップロードされました',
     'attachments_file_updated' => 'ファイルが更新されました',
     'attachments_link_attached' => 'リンクがページへ添付されました',
+    'templates' => '',
+    'templates_set_as_template' => '',
+    'templates_explain_set_as_template' => '',
+    'templates_replace_content' => '',
+    'templates_append_content' => '',
+    'templates_prepend_content' => '',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => ':time前に作成',
     'profile_created_content' => '作成したコンテンツ',
     'profile_not_created_pages' => ':userNameはページを作成していません',
     'profile_not_created_chapters' => ':userNameはチャプターを作成していません',
     'profile_not_created_books' => ':userNameはブックを作成していません',
+    'profile_not_created_shelves' => '',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'コメント',
     'comments' => 'コメント',
     'comment_add' => 'コメント追加',
@@ -258,10 +306,9 @@ return [
     'comment_delete_confirm' => '本当にこのコメントを削除しますか?',
     'comment_in_reply_to' => ':commentIdへ返信',
 
-     /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => 'このリビジョンを削除しますか？',
+    'revision_restore_confirm' => '',
     'revision_delete_success' => 'リビジョンを削除しました',
     'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。'
 ];
