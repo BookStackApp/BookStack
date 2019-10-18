@@ -1,9 +1,10 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
 
-    /**
-     * Image Manager
-     */
+    // Image Manager
     'image_select' => 'Vybrať obrázok',
     'image_all' => 'Všetko',
     'image_all_title' => 'Zobraziť všetky obrázky',
@@ -21,5 +22,12 @@ return [
     'image_preview' => 'Náhľad obrázka',
     'image_upload_success' => 'Obrázok úspešne nahraný',
     'image_update_success' => 'Detaily obrázka úspešne aktualizované',
-    'image_delete_success' => 'Obrázok úspešne zmazaný'
+    'image_delete_success' => 'Obrázok úspešne zmazaný',
+    'image_upload_remove' => '',
+
+    // Code Editor
+    'code_editor' => '',
+    'code_language' => '',
+    'code_content' => '',
+    'code_save' => '',
 ];
