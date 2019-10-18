@@ -1,56 +1,70 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => '設定',
     'settings_save' => '設定を保存',
     'settings_save_success' => '設定を保存しました',
 
-    /**
-     * App settings
-     */
-
-    'app_settings' => 'アプリケーション設定',
+    // App Settings
+    'app_customization' => 'Customization',
+    'app_features_security' => 'Features & Security',
     'app_name' => 'アプリケーション名',
     'app_name_desc' => 'この名前はヘッダーやEメール内で表示されます。',
     'app_name_header' => 'ヘッダーにアプリケーション名を表示する',
+    'app_public_access' => 'Public Access',
+    'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
+    'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
+    'app_public_access_toggle' => 'Allow public access',
     'app_public_viewing' => 'アプリケーションを公開する',
     'app_secure_images' => '画像アップロード時のセキュリティを強化',
+    'app_secure_images_toggle' => 'Enable higher security image uploads',
     'app_secure_images_desc' => 'パフォーマンスの観点から、全ての画像が公開になっています。このオプションを有効にすると、画像URLの先頭にランダムで推測困難な文字列が追加され、アクセスを困難にします。',
     'app_editor' => 'ページエディタ',
     'app_editor_desc' => 'ここで選択されたエディタを全ユーザが使用します。',
     'app_custom_html' => 'カスタムheadタグ',
     'app_custom_html_desc' => 'スタイルシートやアナリティクスコード追加したい場合、ここを編集します。これは<head>の最下部に挿入されます。',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'ロゴ',
     'app_logo_desc' => '高さ43pxで表示されます。これを上回る場合、自動で縮小されます。',
     'app_primary_color' => 'プライマリカラー',
     'app_primary_color_desc' => '16進数カラーコードで入力します。空にした場合、デフォルトの色にリセットされます。',
+    'app_homepage' => 'Application Homepage',
+    'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'コメントを無効にする',
+    'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'アプリケーション内のすべてのページのコメントを無効にします。既存のコメントは表示されません。',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => '登録設定',
-    'reg_allow' => '新規登録を許可',
+    'reg_enable' => 'Enable Registration',
+    'reg_enable_toggle' => 'Enable registration',
+    'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
     'reg_default_role' => '新規登録時のデフォルト役割',
-    'reg_confirm_email' => 'Eメール認証を必須にする',
+    'reg_email_confirmation' => 'Email Confirmation',
+    'reg_email_confirmation_toggle' => 'Require email confirmation',
     'reg_confirm_email_desc' => 'ドメイン制限を有効にしている場合はEメール認証が必須となり、この項目は無視されます。',
     'reg_confirm_restrict_domain' => 'ドメイン制限',
     'reg_confirm_restrict_domain_desc' => '特定のドメインのみ登録できるようにする場合、以下にカンマ区切りで入力します。設定された場合、Eメール認証が必須になります。<br>登録後、ユーザは自由にEメールアドレスを変更できます。',
     'reg_confirm_restrict_domain_placeholder' => '制限しない',
 
-    /**
-     * Role settings
-     */
+    // Maintenance settings
+    'maint' => 'Maintenance',
+    'maint_image_cleanup' => 'Cleanup Images',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
+    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
+    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
+    // Role Settings
     'roles' => '役割',
     'role_user_roles' => '役割',
     'role_create' => '役割を作成',
@@ -65,14 +79,17 @@ return [
     'role_details' => '概要',
     'role_name' => '役割名',
     'role_desc' => '役割の説明',
+    'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'システム権限',
     'role_manage_users' => 'ユーザ管理',
     'role_manage_roles' => '役割と権限の管理',
     'role_manage_entity_permissions' => '全てのブック, チャプター, ページに対する権限の管理',
     'role_manage_own_entity_permissions' => '自身のブック, チャプター, ページに対する権限の管理',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'アプリケーション設定の管理',
     'role_asset' => 'アセット権限',
     'role_asset_desc' => '各アセットに対するデフォルトの権限を設定します。ここで設定した権限が優先されます。',
+    'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => '全て',
     'role_own' => '自身',
     'role_controlled_by_asset' => 'このアセットに対し、右記の操作を許可:',
@@ -81,16 +98,22 @@ return [
     'role_users' => 'この役割を持つユーザ',
     'role_users_none' => 'この役割が付与されたユーザは居ません',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'ユーザ',
     'user_profile' => 'ユーザプロフィール',
     'users_add_new' => 'ユーザを追加',
     'users_search' => 'ユーザ検索',
+    'users_details' => 'User Details',
+    'users_details_desc' => 'Set a display name and an email address for this user. The email address will be used for logging into the application.',
+    'users_details_desc_no_email' => 'Set a display name for this user so others can recognise them.',
     'users_role' => 'ユーザ役割',
+    'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
+    'users_password' => 'User Password',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 6 characters long.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => '外部認証ID',
+    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your LDAP system.',
     'users_password_warning' => 'パスワードを変更したい場合のみ入力してください',
     'users_system_public' => 'このユーザはアプリケーションにアクセスする全てのゲストを表します。ログインはできませんが、自動的に割り当てられます。',
     'users_delete' => 'ユーザを削除',
@@ -104,11 +127,41 @@ return [
     'users_avatar' => 'アバター',
     'users_avatar_desc' => '256pxの正方形である必要があります。',
     'users_preferred_language' => '使用言語',
+    'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
     'users_social_accounts' => 'ソーシャルアカウント',
     'users_social_accounts_info' => 'アカウントを接続すると、ログインが簡単になります。ここでアカウントの接続を解除すると、そのアカウントを経由したログインを禁止できます。接続解除後、各ソーシャルアカウントの設定にてこのアプリケーションへのアクセス許可を解除してください。',
     'users_social_connect' => 'アカウントを接続',
     'users_social_disconnect' => 'アカウントを接続解除',
     'users_social_connected' => '「:socialAccount」がプロフィールに接続されました。',
-    'users_social_disconnected' => '「:socialAccount」がプロフィールから接続解除されました。'
+    'users_social_disconnected' => '「:socialAccount」がプロフィールから接続解除されました。',
 
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];
