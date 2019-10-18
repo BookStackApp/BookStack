@@ -273,11 +273,11 @@ return [
     'attachments_file_uploaded' => 'Файл успішно завантажений',
     'attachments_file_updated' => 'Файл успішно оновлено',
     'attachments_link_attached' => 'Посилання успішно додано до сторінки',
-    'templates' => 'Templates',
-    'templates_set_as_template' => 'Page is a template',
+    'templates' => 'Шаблони',
+    'templates_set_as_template' => 'Сторінка це шаблон',
     'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
-    'templates_replace_content' => 'Replace page content',
-    'templates_append_content' => 'Append to page content',
+    'templates_replace_content' => 'Замінити вміст сторінки',
+    'templates_append_content' => 'Додати до вмісту сторінки',
     'templates_prepend_content' => 'Prepend to page content',
 
     // Profile View
