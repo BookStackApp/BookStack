@@ -41,7 +41,7 @@ return [
     'app_disable_comments_toggle' => 'Desativar comentários',
     'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo. Os comentários existentes não são exibidos.',
 
-    // Registration settings
+    // Registration Settings
     'reg_settings' => 'Registro',
     'reg_enable' => 'Habilitar Registro',
     'reg_enable_toggle' => 'Habilitar registro',
@@ -64,7 +64,7 @@ return [
     'maint_image_cleanup_success' => ':count imagens potencialmente não utilizadas foram encontradas e excluídas!',
     'maint_image_cleanup_nothing_found' => 'Nenhuma imagem não utilizada foi encontrada, nada foi excluído!',
 
-    // Role settings
+    // Role Settings
     'roles' => 'Perfis',
     'role_user_roles' => 'Perfis de Usuário',
     'role_create' => 'Criar novo Perfil',
@@ -85,6 +85,7 @@ return [
     'role_manage_roles' => 'Gerenciar Perfis & Permissões de Perfis',
     'role_manage_entity_permissions' => 'Gerenciar todos os livros, capítulos e permissões de páginas',
     'role_manage_own_entity_permissions' => 'Gerenciar permissões de seu próprio livro, capítulo e paginas',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Gerenciar configurações de app',
     'role_asset' => 'Permissões de Ativos',
     'role_asset_desc' => 'Essas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por essas permissões.',
@@ -109,6 +110,8 @@ return [
     'users_role_desc' => 'Selecione os perfis para os quais este usuário será atribuído. Se um usuário for atribuído a multiplos perfis, as permissões destes perfis serão empilhadas e eles receberão todas as habilidades dos perfis atribuídos.',
     'users_password' => 'Senha do Usuário',
     'users_password_desc' => 'Defina uma senha usada para fazer login na aplicação. Esta deve ter pelo menos 5 caracteres.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'ID de Autenticação Externa',
     'users_external_auth_id_desc' => 'Este é o ID usado para corresponder a este usuário ao se comunicar com seu sistema LDAP.',
     'users_password_warning' => 'Preencha os dados abaixo caso queira modificar a sua senha:',
@@ -132,34 +135,33 @@ return [
     'users_social_connected' => 'Conta :socialAccount foi conectada com sucesso ao seu perfil.',
     'users_social_disconnected' => 'Conta :socialAccount foi desconectada com sucesso de seu perfil.',
 
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
