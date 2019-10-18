@@ -111,7 +111,7 @@ return [
     'users_password' => 'Пароль користувача',
     'users_password_desc' => 'Встановіть пароль для входу. Він повинен містити принаймні 5 символів.',
     'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
-    'users_send_invite_option' => 'Send user invite email',
+    'users_send_invite_option' => 'Надіслати лист із запрошенням користувачу',
     'users_external_auth_id' => 'Зовнішній ID автентифікації',
     'users_external_auth_id_desc' => 'Цей ID використовується для пошуку збігу цього користувача під час зв\'язку з LDAP.',
     'users_password_warning' => 'Тільки якщо ви хочете змінити свій пароль, заповніть поля нижче:',
