@@ -1,9 +1,10 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
 
-    /**
-     * Image Manager
-     */
+    // Image Manager
     'image_select' => 'تحديد صورة',
     'image_all' => 'الكل',
     'image_all_title' => 'عرض جميع الصور',
@@ -24,9 +25,7 @@ return [
     'image_delete_success' => 'تم حذف الصورة بنجاح',
     'image_upload_remove' => 'إزالة',
 
-    /**
-     * Code editor
-     */
+    // Code Editor
     'code_editor' => 'تعديل الشفرة',
     'code_language' => 'لغة الشفرة',
     'code_content' => 'محتويات الشفرة',
