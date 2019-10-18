@@ -65,7 +65,7 @@ return [
     'maint_image_cleanup_nothing_found' => '¡No se han encontrado imágenes sin utilizar, no se han borrado imágenes!',
 
     // Role Settings
-    'roles' => 'Roles',
+    'roles' => '',
     'role_user_roles' => 'Roles de usuario',
     'role_create' => 'Crear nuevo rol',
     'role_create_success' => 'Rol creado satisfactoriamente',
@@ -102,10 +102,10 @@ return [
     'users' => 'Usuarios',
     'user_profile' => 'Perfil de Usuario',
     'users_add_new' => 'Agregar Nuevo Usuario',
+    'users_search' => 'Buscar usuarios',
     'users_details' => 'Detalles de Usuario',
     'users_details_desc' => 'Ajusta un nombre público y email para este usuario. El email será empleado para acceder a la aplicación.',
     'users_details_desc_no_email' => 'Ajusta un nombre público para este usuario para que pueda ser reconocido por otros.',
-    'users_search' => 'Buscar usuarios',
     'users_role' => 'Roles de usuario',
     'users_role_desc' => 'Selecciona los roles a los que será asignado este usuario. Si se asignan varios roles los permisos se acumularán y recibirá todas las habilidades de los roles asignados.',
     'users_password' => 'Contraseña de Usuario',
@@ -135,4 +135,33 @@ return [
     'users_social_connected' => 'La cuenta :socialAccount ha sido añadida éxitosamente a su perfil.',
     'users_social_disconnected' => 'La cuenta :socialAccount ha sido desconectada éxitosamente de su perfil.',
 
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => '',
+        'ar' => '',
+        'de' => '',
+        'de_informal' => '',
+        'es' => '',
+        'es_AR' => '',
+        'fr' => '',
+        'nl' => '',
+        'pt_BR' => '',
+        'sk' => '',
+        'cs' => '',
+        'sv' => '',
+        'kr' => '',
+        'ja' => '',
+        'pl' => '',
+        'it' => '',
+        'ru' => '',
+        'uk' => '',
+        'zh_CN' => '',
+        'zh_TW' => '',
+        'hu' => '',
+        'tr' => '',
+    ]
+    //!////////////////////////////////
 ];
