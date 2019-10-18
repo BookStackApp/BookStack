@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => '您沒有權限進入所請求的頁面。',
@@ -29,13 +27,14 @@ return [
     'social_account_register_instructions' => '如果您還沒有帳號，您可以使用 :socialAccount 選項註冊帳號。',
     'social_driver_not_found' => '未找到社交驅動程式',
     'social_driver_not_configured' => '您的:socialAccount社交設定不正確。',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => '無法上傳到檔案路徑“:filePath”，請確保它可寫入伺服器。',
     'cannot_get_image_from_url' => '無法從 :url 中獲取圖片',
     'cannot_create_thumbs' => '伺服器無法建立縮圖，請檢查您是否安裝了GD PHP外掛。',
     'server_upload_limit' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
-    'uploaded' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
+    'uploaded'  => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型錯誤',
     'file_upload_timeout' => '文件上傳已超時。',
@@ -66,6 +65,7 @@ return [
     'role_cannot_be_edited' => '無法編輯這個角色',
     'role_system_cannot_be_deleted' => '無法刪除系統角色',
     'role_registration_default_cannot_delete' => '無法刪除設定為預設註冊的角色',
+    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
     'comment_list' => '讀取評論時發生錯誤。',
@@ -81,4 +81,5 @@ return [
     'error_occurred' => '發生錯誤',
     'app_down' => ':appName現在正在關閉',
     'back_soon' => '請耐心等待網站的恢複。',
+
 ];
