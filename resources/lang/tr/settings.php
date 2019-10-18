@@ -85,6 +85,7 @@ return [
     'role_manage_roles' => 'Rolleri ve rol izinlerini yönet',
     'role_manage_entity_permissions' => 'Bütün kitap, bölüm ve sayfa izinlerini yönet',
     'role_manage_own_entity_permissions' => 'Sahip olunan kitap, bölüm ve sayfaların izinlerini yönet',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Uygulama ayarlarını yönet',
     'role_asset' => 'Asset Yetkileri',
     'role_asset_desc' => 'Bu izinleri assetlere sistem içinden varsayılan erişimi kontrol eder. Kitaplar, bölümler ve sayfaların izinleri bu izinleri override eder.',
@@ -109,6 +110,8 @@ return [
     'users_role_desc' => 'Bu kullanıcının hangi rollere atanabileceğini belirleyin. Eğer bir kullanıcıya birden fazla rol atanırsa, kullanıcı bütün rollerin özelliklerini kullanabilir.',
     'users_password' => 'Kullanıcı Parolası',
     'users_password_desc' => 'Kullanıcının giriş yaparken kullanacağı bir parola belirleyin. Parola en az 5 karakter olmalıdır.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Harici Authentication ID\'si',
     'users_external_auth_id_desc' => 'Bu ID kullanıcı LDAP sunucu ile bağlantı kurarken kullanılır.',
     'users_password_warning' => 'Sadece parolanızı değiştirmek istiyorsanız aşağıyı doldurunuz.',
@@ -131,4 +134,34 @@ return [
     'users_social_disconnect' => 'Hesabın Bağlantısını Kes',
     'users_social_connected' => ':socialAccount hesabı profilinize başarıyla bağlandı.',
     'users_social_disconnected' => ':socialAccount hesabınızın profilinizle ilişiği başarıyla kesildi.',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];
