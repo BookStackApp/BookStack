@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines
     'accepted'             => ':attributeに同意する必要があります。',
     'active_url'           => ':attributeは正しいURLではありません。',
     'after'                => ':attributeは:date以降である必要があります。',
@@ -35,12 +30,41 @@ return [
     'digits'               => ':attributeは:digitsデジットである必要があります',
     'digits_between'       => ':attributeは:min〜:maxである必要があります。',
     'email'                => ':attributeは正しいEメールアドレスである必要があります。',
+    'ends_with' => '',
     'filled'               => ':attributeは必須です。',
+    'gt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'gte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'exists'               => '選択された:attributeは不正です。',
     'image'                => ':attributeは画像である必要があります。',
+    'image_extension'      => '',
     'in'                   => '選択された:attributeは不正です。',
     'integer'              => ':attributeは数値である必要があります。',
     'ip'                   => ':attributeは正しいIPアドレスである必要があります。',
+    'ipv4'                 => '',
+    'ipv6'                 => '',
+    'json'                 => '',
+    'lt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'lte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'max'                  => [
         'numeric' => ':attributeは:maxを越えることができません。',
         'file'    => ':attributeは:maxキロバイトを越えることができません。',
@@ -54,7 +78,9 @@ return [
         'string'  => ':attributeは:min文字以上である必要があります。',
         'array'   => ':attributeは:min個以上である必要があります。',
     ],
+    'no_double_extension'  => '',
     'not_in'               => '選択された:attributeは不正です。',
+    'not_regex'            => '',
     'numeric'              => ':attributeは数値である必要があります。',
     'regex'                => ':attributeのフォーマットは不正です。',
     'required'             => ':attributeは必須です。',
@@ -74,35 +100,15 @@ return [
     'timezone'             => ':attributeは正しいタイムゾーンである必要があります。',
     'unique'               => ':attributeは既に使用されています。',
     'url'                  => ':attributeのフォーマットは不正です。',
+    'uploaded'             => '',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'パスワードの確認は必須です。',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];
