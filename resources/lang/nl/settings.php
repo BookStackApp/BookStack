@@ -1,56 +1,70 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Instellingen',
     'settings_save' => 'Instellingen Opslaan',
     'settings_save_success' => 'Instellingen Opgeslagen',
 
-    /**
-     * App settings
-     */
-
-    'app_settings' => 'App Instellingen',
+    // App Settings
+    'app_customization' => 'Customization',
+    'app_features_security' => 'Features & Security',
     'app_name' => 'Applicatienaam',
     'app_name_desc' => 'De applicatienaam wordt in e-mails in in de header weergegeven.',
     'app_name_header' => 'Applicatienaam in de header weergeven?',
+    'app_public_access' => 'Public Access',
+    'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
+    'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
+    'app_public_access_toggle' => 'Allow public access',
     'app_public_viewing' => 'Publieke bewerkingen toestaan?',
     'app_secure_images' => 'Beter beveiligide afbeeldingen gebruiken?',
+    'app_secure_images_toggle' => 'Enable higher security image uploads',
     'app_secure_images_desc' => 'Omwille van de performance zijn alle afbeeldingen publiek toegankelijk. Zorg ervoor dat je de \'directory index\' niet hebt ingeschakeld.',
     'app_editor' => 'Pagina Bewerken',
     'app_editor_desc' => 'Selecteer welke tekstverwerker je wilt gebruiken.',
     'app_custom_html' => 'Speciale HTML toevoegen',
     'app_custom_html_desc' => 'Alles wat je hier toevoegd wordt in de <head> sectie van elke pagina meengenomen. Dit kun je bijvoorbeeld voor analytics gebruiken.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Applicatielogo',
     'app_logo_desc' => 'De afbeelding moet 43px hoog zijn. <br>Grotere afbeeldingen worden geschaald.',
     'app_primary_color' => 'Applicatie hoofdkleur',
     'app_primary_color_desc' => 'Geef een hexadecimale waarde. <br>Als je niks invult wordt de standaardkleur gebruikt.',
+    'app_homepage' => 'Application Homepage',
+    'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Reacties uitschakelen',
+    'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Schakel opmerkingen uit op alle pagina\'s in de applicatie. Bestaande opmerkingen worden niet getoond.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Registratieinstellingen',
-    'reg_allow' => 'Registratie toestaan?',
+    'reg_enable' => 'Enable Registration',
+    'reg_enable_toggle' => 'Enable registration',
+    'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
     'reg_default_role' => 'Standaard rol na registratie',
-    'reg_confirm_email' => 'E-mailbevesting vereist?',
+    'reg_email_confirmation' => 'Email Confirmation',
+    'reg_email_confirmation_toggle' => 'Require email confirmation',
     'reg_confirm_email_desc' => 'Als domeinrestricties aan staan dan is altijd e-maibevestiging nodig. Onderstaande instelling wordt dan genegeerd.',
     'reg_confirm_restrict_domain' => 'Beperk registratie tot een maildomein',
     'reg_confirm_restrict_domain_desc' => 'Geen een komma-gescheiden lijst van domeinnamen die gebruikt mogen worden bij registratie. <br> Let op: na registratie kunnen gebruikers hun e-mailadres nog steeds wijzigen.',
     'reg_confirm_restrict_domain_placeholder' => 'Geen beperkingen ingesteld',
 
-    /**
-     * Role settings
-     */
+    // Maintenance settings
+    'maint' => 'Maintenance',
+    'maint_image_cleanup' => 'Cleanup Images',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
+    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
+    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
+    // Role Settings
     'roles' => 'Rollen',
     'role_user_roles' => 'Gebruikrollen',
     'role_create' => 'Nieuwe Rol Maken',
@@ -65,14 +79,17 @@ return [
     'role_details' => 'Rol Details',
     'role_name' => 'Rolnaam',
     'role_desc' => 'Korte beschrijving van de rol',
+    'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'Systeem Permissies',
     'role_manage_users' => 'Gebruikers beheren',
     'role_manage_roles' => 'Rollen en rechten beheren',
     'role_manage_entity_permissions' => 'Beheer alle boeken-, hoofdstukken- en paginaresitrcties',
     'role_manage_own_entity_permissions' => 'Beheer restricties van je eigen boeken, hoofdstukken en pagina\'s',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Beheer app instellingen',
     'role_asset' => 'Asset Permissies',
     'role_asset_desc' => 'Deze permissies bepalen de standaardtoegangsrechten. Permissies op boeken, hoofdstukken en pagina\'s overschrijven deze instelling.',
+    'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',
@@ -81,19 +98,24 @@ return [
     'role_users' => 'Gebruikers in deze rol',
     'role_users_none' => 'Geen enkele gebruiker heeft deze rol',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Gebruikers',
     'user_profile' => 'Gebruikersprofiel',
     'users_add_new' => 'Gebruiker toevoegen',
     'users_search' => 'Gebruiker zoeken',
+    'users_details' => 'User Details',
+    'users_details_desc' => 'Set a display name and an email address for this user. The email address will be used for logging into the application.',
+    'users_details_desc_no_email' => 'Set a display name for this user so others can recognise them.',
     'users_role' => 'Gebruikersrollen',
+    'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
+    'users_password' => 'User Password',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 6 characters long.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'External Authentication ID',
+    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your LDAP system.',
     'users_password_warning' => 'Vul onderstaande formulier alleen in als je het wachtwoord wilt aanpassen:',
     'users_system_public' => 'De eigenschappen van deze gebruiker worden voor elke gastbezoeker gebruikt. Er kan niet mee ingelogd worden en wordt automatisch toegewezen.',
-    'users_books_view_type' => 'Voorkeursuitleg voor het weergeven van boeken',
     'users_delete' => 'Verwijder gebruiker',
     'users_delete_named' => 'Verwijder gebruiker :userName',
     'users_delete_warning' => 'Dit zal de gebruiker \':userName\' volledig uit het systeem verwijderen.',
@@ -105,10 +127,41 @@ return [
     'users_avatar' => 'Avatar',
     'users_avatar_desc' => 'De afbeelding moet vierkant zijn en ongeveer 256px breed.',
     'users_preferred_language' => 'Voorkeurstaal',
+    'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
     'users_social_accounts' => 'Social Accounts',
     'users_social_accounts_info' => 'Hier kun je accounts verbinden om makkelijker in te loggen. Via je profiel kun je ook weer rechten intrekken die bij deze social accountsh horen.',
     'users_social_connect' => 'Account Verbinden',
     'users_social_disconnect' => 'Account Ontkoppelen',
     'users_social_connected' => ':socialAccount account is succesvol aan je profiel gekoppeld.',
     'users_social_disconnected' => ':socialAccount account is succesvol ontkoppeld van je profiel.',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];
