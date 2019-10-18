@@ -40,6 +40,10 @@ return [
     'add' => 'Adicionar',
 
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'Nome',
     'sort_created_at' => 'Data de Criação',
     'sort_updated_at' => 'Data de Atualização',
@@ -55,8 +59,10 @@ return [
     'grid_view' => 'Visualização em Grade',
     'list_view' => 'Visualização em Lista',
     'default' => 'Padrão',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
 
