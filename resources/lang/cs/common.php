@@ -11,6 +11,7 @@ return [
     'save' => 'Uložit',
     'continue' => 'Pokračovat',
     'select' => 'Zvolit',
+    'toggle_all' => 'Toggle All',
     'more' => 'Více',
 
     // Form Labels
@@ -23,6 +24,7 @@ return [
     // Actions
     'actions' => 'Akce',
     'view' => 'Pohled',
+    'view_all' => 'View All',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
@@ -37,6 +39,15 @@ return [
     'remove' => 'Odstranit',
     'add' => 'Přidat',
 
+    // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
+    'sort_name' => 'Name',
+    'sort_created_at' => 'Created Date',
+    'sort_updated_at' => 'Updated Date',
+
     // Misc
     'deleted_user' => 'Smazaný uživatel',
     'no_activity' => 'Žádná aktivita k zobrazení',
@@ -48,10 +59,16 @@ return [
     'grid_view' => 'Zobrazit dlaždice',
     'list_view' => 'Zobrazit seznam',
     'default' => 'Výchozí',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'Ukázat profil',
     'edit_profile' => 'Upravit profil',
+
+    // Layout tabs
+    'tab_info' => 'Info',
+    'tab_content' => 'Content',
 
     // Email Content
     'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko ":actionText", zkopírujte odkaz níže přímo do webového prohlížeče:',

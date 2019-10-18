@@ -25,7 +25,7 @@ return [
     'image_delete_success' => 'Imagem excluída com sucesso',
     'image_upload_remove' => 'Remover',
 
-    // Code editor
+    // Code Editor
     'code_editor' => 'Editar Código',
     'code_language' => 'Linguagem do Código',
     'code_content' => 'Código',

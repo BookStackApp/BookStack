@@ -1,31 +1,30 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
+    // Buttons
     'cancel' => 'إلغاء',
     'confirm' => 'تأكيد',
     'back' => 'رجوع',
     'save' => 'حفظ',
     'continue' => 'استمرار',
     'select' => 'تحديد',
+    'toggle_all' => 'Toggle All',
     'more' => 'المزيد',
 
-    /**
-     * Form Labels
-     */
+    // Form Labels
     'name' => 'الاسم',
     'description' => 'الوصف',
     'role' => 'الدور',
     'cover_image' => 'صورة الغلاف',
     'cover_image_description' => 'الصورة يجب أن تكون مقاربة لحجم 440×250 بكسل.',
     
-    /**
-     * Actions
-     */
+    // Actions
     'actions' => 'إجراءات',
     'view' => 'عرض',
+    'view_all' => 'View All',
     'create' => 'إنشاء',
     'update' => 'تحديث',
     'edit' => 'تعديل',
@@ -40,9 +39,16 @@ return [
     'remove' => 'إزالة',
     'add' => 'إضافة',
 
-    /**
-     * Misc
-     */
+    // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
+    'sort_name' => 'Name',
+    'sort_created_at' => 'Created Date',
+    'sort_updated_at' => 'Updated Date',
+
+    // Misc
     'deleted_user' => 'حذف مستخدم',
     'no_activity' => 'لا يوجد نشاط لعرضه',
     'no_items' => 'لا توجد عناصر متوفرة',
@@ -52,16 +58,19 @@ return [
     'details' => 'التفاصيل',
     'grid_view' => 'عرض شبكي',
     'list_view' => 'عرض منسدل',
+    'default' => 'Default',
+    'breadcrumb' => 'Breadcrumb',
 
-    /**
-     * Header
-     */
+    // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'عرض الملف الشخصي',
     'edit_profile' => 'تعديل الملف الشخصي',
 
-    /**
-     * Email Content
-     */
+    // Layout tabs
+    'tab_info' => 'Info',
+    'tab_content' => 'Content',
+
+    // Email Content
     'email_action_help' => 'إذا واجهتكم مشكلة بضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
     'email_rights' => 'جميع الحقوق محفوظة',
 ];

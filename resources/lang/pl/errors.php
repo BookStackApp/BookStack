@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'Nie masz uprawnień do wyświetlenia tej strony.',
@@ -29,6 +27,7 @@ return [
     'social_account_register_instructions' => 'Jeśli nie masz jeszcze konta, możesz zarejestrować je używając opcji :socialAccount.',
     'social_driver_not_found' => 'Funkcja społecznościowa nie została odnaleziona',
     'social_driver_not_configured' => 'Ustawienia konta :socialAccount nie są poprawne.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'Zapis do ścieżki :filePath jest niemożliwy. Upewnij się że aplikacja ma prawa do zapisu plików na serwerze.',
@@ -66,14 +65,15 @@ return [
     'role_cannot_be_edited' => 'Ta rola nie może być edytowana',
     'role_system_cannot_be_deleted' => 'Ta rola jest rolą systemową i nie może zostać usunięta',
     'role_registration_default_cannot_delete' => 'Ta rola nie może zostać usunięta, dopóki jest ustawiona jako domyślna rola użytkownika',
-    
+    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+
     // Comments
     'comment_list' => 'Wystąpił błąd podczas pobierania komentarzy.',
     'cannot_add_comment_to_draft' => 'Nie możesz dodawać komentarzy do wersji roboczej.',
     'comment_add' => 'Wystąpił błąd podczas dodwania / aktualizaowania komentarza.',
     'comment_delete' => 'Wystąpił błąd podczas usuwania komentarza.',
     'empty_comment' => 'Nie można dodać pustego komentarza.',
-    
+
     // Error pages
     '404_page_not_found' => 'Strona nie została znaleziona',
     'sorry_page_not_found' => 'Przepraszamy, ale strona której szukasz nie została znaleziona.',
@@ -81,4 +81,5 @@ return [
     'error_occurred' => 'Wystąpił błąd',
     'app_down' => ':appName jest aktualnie wyłączona',
     'back_soon' => 'Niedługo zostanie uruchomiona ponownie.',
+
 ];

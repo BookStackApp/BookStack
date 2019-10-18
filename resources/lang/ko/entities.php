@@ -1,14 +1,17 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => '최근작성',
     'recently_created_pages' => '최근 작성된 페이지',
     'recently_updated_pages' => '최근 업데이트된 페이지',
     'recently_created_chapters' => '최근 만들어진 챕터',
     'recently_created_books' => '최근 만들어진 책',
+    'recently_created_shelves' => 'Recently Created Shelves',
     'recently_update' => '최근 작성',
     'recently_viewed' => '검색 기록',
     'recent_activity' => '최근 활동',
@@ -31,17 +34,13 @@ return [
     'export_pdf' => 'PDF 파일',
     'export_text' => '일반 텍스트 파일',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => '권한',
     'permissions_intro' => '이 설정은 각 사용자의 역할보다 우선하여 적용됩니다.',
     'permissions_enable' => '커스텀 권한 활성화',
     'permissions_save' => '권한 저장',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => '검색 결과',
     'search_total_results_found' => ':count 개의 결과를 찾았습니다.|총 :count 개의 결과를 찾았습니다.',
     'search_clear' => '검색기록 초기화',
@@ -66,16 +65,16 @@ return [
     'search_set_date' => '날짜 설정',
     'search_update' => '검색 업데이트',
 
-    /**
-     * Shelves
-     */
+    // Shelves
     'shelf' => '책꽃이',
     'shelves' => '책꽃이',
+    'x_shelves' => ':count Shelf|:count Shelves',
     'shelves_long' => '책꽃이',
     'shelves_empty' => '책꽃이가 만들어지지 않았습니다.',
     'shelves_create' => '새책꽃이 만들기',
     'shelves_popular' => '인기있는 책꽃이',
     'shelves_new' => '새로운 책꽃이',
+    'shelves_new_action' => 'New Shelf',
     'shelves_popular_empty' => '인기있는 책꽃이가 여기에 나타납니다.',
     'shelves_new_empty' => '가장 최근에 만들어진 책꽃이가 여기에 나타납니다.',
     'shelves_save' => '책꽃이 저장',
@@ -98,9 +97,7 @@ return [
     'shelves_copy_permissions_explain' => '이 책꽂이의 현재 권한 설정이 안에 포함 된 모든 책에 적용됩니다. 활성화하기 전에이 책꽂이의 사용 권한이 변경되었는지 확인하십시오.',
     'shelves_copy_permission_success' => '책꽃이의 권한이 :count 개의 책에 복사되었습니다.',
 
-    /**
-     * Books
-     */
+    // Books
     'book' => '책',
     'books' => '책들',
     'x_books' => ':count 책|:count 책들',
@@ -108,6 +105,7 @@ return [
     'books_popular' => '인기있는 책',
     'books_recent' => '최근 책',
     'books_new' => '새로운 책',
+    'books_new_action' => 'New Book',
     'books_popular_empty' => '가장 인기있는 책이 여기에 보입니다.',
     'books_new_empty' => '가장 최근에 만든 책이 여기에 표시됩니다.',
     'books_create' => '새로운 책 만들기',
@@ -123,7 +121,6 @@ return [
     'books_permissions_updated' => '책 권한이 업데이트 되었습니다.',
     'books_empty_contents' => '이 책에 대한 페이지 또는 장이 작성되지 않았습니다.',
     'books_empty_create_page' => '새로운 페이지 만들기',
-    'books_empty_or' => '또는',
     'books_empty_sort_current_book' => '현제 책 정렬하기',
     'books_empty_add_chapter' => '챕터 추가하기',
     'books_permissions_active' => '책 권한 활성화',
@@ -131,12 +128,15 @@ return [
     'books_navigation' => '책 네비게이션',
     'books_sort' => '책 구성 정렬하기',
     'books_sort_named' => ':bookName 책 정렬하기',
+    'books_sort_name' => 'Sort by Name',
+    'books_sort_created' => 'Sort by Created Date',
+    'books_sort_updated' => 'Sort by Updated Date',
+    'books_sort_chapters_first' => 'Chapters First',
+    'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => '다른책 보기',
     'books_sort_save' => '새로운 순서 저장',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => '챕터',
     'chapters' => '챕터',
     'x_chapters' => ':count 개 챕터|:count 챔터들',
@@ -159,9 +159,7 @@ return [
     'chapters_permissions_success' => '챕터 권한 수정됨',
     'chapters_search_this' => '이 챕터 찾기',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => '페이지',
     'pages' => '페이지들',
     'x_pages' => ':count 개의 페이지|:count 개의 페이지들',
@@ -178,7 +176,7 @@ return [
     'pages_delete_confirm' => '정말로 이 페이지를 지우시겠습니까?',
     'pages_delete_draft_confirm' => '정말로 초안페이지를 지우시겠습니까?',
     'pages_editing_named' => ':pageName 페이지 수정',
-    'pages_edit_toggle_header' => '헤더 숨김/보이기',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => '초안 저장',
     'pages_edit_draft' => '페이지 초안 수정',
     'pages_editing_draft' => '초안 수정중',
@@ -212,6 +210,8 @@ return [
     'pages_revisions_created_by' => 'Created By',
     'pages_revisions_date' => '변경일',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Revision #:id',
+    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
     'pages_revisions_changelog' => '변경내역',
     'pages_revisions_changes' => '변경사항 보기',
     'pages_revisions_current' => '현재 버전',
@@ -234,19 +234,20 @@ return [
     ],
     'pages_draft_discarded' => '초안이 삭제되었습니다. 편집기가 현재 페이지 작성자로 업데이트되었습니다.',
     'pages_specific' => '특정 페이지',
+    'pages_is_template' => 'Page Template',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => '페이지 테그',
     'chapter_tags' => '챕터 테그',
     'book_tags' => '책 테그',
     'shelf_tags' => '책꽃이 테그',
     'tag' => '테그',
     'tags' =>  '테그들',
+    'tag_name' =>  'Tag Name',
     'tag_value' => '테그 값 (선택사항)',
     'tags_explain' => "컨텐츠를 더 잘 분류하기 위해 테그를 추가하세요! \n 보다 상세한 구성을 위해 태그값을 할당 할 수 있습니다.",
     'tags_add' => '다른 테그 추가',
+    'tags_remove' => 'Remove this tag',
     'attachments' => '첨부',
     'attachments_explain' => '일부 파일을 업로드하거나 페이지에 표시 할 링크를 첨부하십시오. 페이지 사이드 바에 표시됩니다.',
     'attachments_explain_instant_save' => '변경 사항은 즉시 저장됩니다.',
@@ -272,19 +273,22 @@ return [
     'attachments_file_uploaded' => '파일이 성공적으로 업로드 되었습니다.',
     'attachments_file_updated' => '파일이 성공적으로 업데이트 되었습니다.',
     'attachments_link_attached' => '링크가 성공적으로 페이지에 첨부되었습니다.',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => ':time 전에 작성',
     'profile_created_content' => '생성한 컨텐츠',
     'profile_not_created_pages' => ':userName가 작성한 페이지가 없습니다.',
     'profile_not_created_chapters' => ':userName가 작성한 챕터가 없습니다.',
     'profile_not_created_books' => ':userName가 작성한 책이 없습니다.',
+    'profile_not_created_shelves' => ':userName has not created any shelves',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => '코멘트',
     'comments' => '코멘트들',
     'comment_add' => '코멘트 추가',
@@ -302,10 +306,9 @@ return [
     'comment_delete_confirm' => '정말로 코멘트를 지우시겠습니까?',
     'comment_in_reply_to' => ':commentId 응답',
 
-    /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => '해당 개정판을 지우시겠습니까??',
+    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => '개정판 삭제성공',
     'revision_cannot_delete_latest' => '최신버전은 지울수 없습니다.'
 ];

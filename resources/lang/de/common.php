@@ -1,9 +1,10 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
+    // Buttons
     'cancel' => 'Abbrechen',
     'confirm' => 'Bestätigen',
     'back' => 'Zurück',
@@ -13,18 +14,14 @@ return [
     'toggle_all' => 'Alle umschalten',
     'more' => 'Mehr',
 
-    /**
-     * Form Labels
-     */
+    // Form Labels
     'name' => 'Name',
     'description' => 'Beschreibung',
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
     'cover_image_description' => 'Das Bild sollte eine Auflösung von 440x250px haben.',
-
-    /**
-     * Actions
-     */
+    
+    // Actions
     'actions' => 'Aktionen',
     'view' => 'Anzeigen',
     'view_all' => 'Alle anzeigen',
@@ -43,13 +40,15 @@ return [
     'add' => 'Hinzufügen',
 
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'Name',
     'sort_created_at' => 'Erstellungsdatum',
     'sort_updated_at' => 'Aktualisierungsdatum',
 
-    /**
-     * Misc
-     */
+    // Misc
     'deleted_user' => 'Gelöschte Benutzer',
     'no_activity' => 'Keine Aktivitäten zum Anzeigen',
     'no_items' => 'Keine Einträge gefunden.',
@@ -60,10 +59,10 @@ return [
     'grid_view' => 'Gitteransicht',
     'list_view' => 'Listenansicht',
     'default' => 'Voreinstellung',
+    'breadcrumb' => 'Breadcrumb',
 
-    /**
-     * Header
-     */
+    // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'Profil ansehen',
     'edit_profile' => 'Profil bearbeiten',
 
@@ -71,9 +70,7 @@ return [
     'tab_info' => 'Info',
     'tab_content' => 'Inhalt',
 
-    /**
-     * Email Content
-     */
+    // Email Content
     'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":action_text" Probleme geben, öffnen Sie folgende URL in Ihrem Browser:',
     'email_rights' => 'Alle Rechte vorbehalten',
 ];

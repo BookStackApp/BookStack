@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Uppgifterna stämmer inte överrens med våra register.',
     'throttle' => 'För många inloggningsförsök. Prova igen om :seconds sekunder.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Skapa konto',
     'log_in' => 'Logga in',
     'log_in_with' => 'Logga in med :socialDriver',
@@ -45,23 +39,18 @@ return [
     'register_success' => 'Tack för din registrering! Du är nu registerad och inloggad.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Återställ lösenord',
     'reset_password_send_instructions' => 'Ange din e-postadress nedan så skickar vi ett mail med en länk för att återställa ditt lösenord.',
     'reset_password_send_button' => 'Skicka återställningslänk',
     'reset_password_sent_success' => 'En länk för att återställa lösenordet har skickats till :email.',
     'reset_password_success' => 'Ditt lösenord har återställts.',
-
     'email_reset_subject' => 'Återställ ditt lösenord till :appName',
     'email_reset_text' => 'Du får detta mail eftersom vi fått en begäran om att återställa lösenordet till ditt konto.',
     'email_reset_not_requested' => 'Om du inte begärt att få ditt lösenord återställt behöver du inte göra någonting',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Bekräfta din e-post på :appName',
     'email_confirm_greeting' => 'Tack för att du gått med i :appName!',
     'email_confirm_text' => 'Vänligen bekräfta din e-postadress genom att klicka på knappen nedan:',
@@ -75,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Vänligen klicka på länken i det mail du fick strax efter att du registerade dig.',
     'email_not_confirmed_resend' => 'Om du inte hittar mailet kan du begära en ny bekräftelse genom att fylla i formuläret nedan.',
     'email_not_confirmed_resend_button' => 'Skicka bekräftelse på nytt',
+
+    // User Invite
+    'user_invite_email_subject' => 'You have been invited to join :appName!',
+    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
+    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
+    'user_invite_email_action' => 'Set Account Password',
+    'user_invite_page_welcome' => 'Welcome to :appName!',
+    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
+    'user_invite_page_confirm_button' => 'Confirm Password',
+    'user_invite_success' => 'Password set, you now have access to :appName!'
 ];

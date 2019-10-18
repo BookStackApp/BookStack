@@ -4,7 +4,7 @@
  */
 return [
 
-    //Buttons
+    // Buttons
     'cancel' => 'Отмена',
     'confirm' => 'Применить',
     'back' => 'Назад',
@@ -14,14 +14,14 @@ return [
     'toggle_all' => 'Переключить все',
     'more' => 'Еще',
 
-    //Form Labels
+    // Form Labels
     'name' => 'Имя',
     'description' => 'Описание',
     'role' => 'Роль',
     'cover_image' => 'Обложка',
     'cover_image_description' => 'Изображение должно быть размером около 440x250px.',
-
-    //Actions
+    
+    // Actions
     'actions' => 'Действия',
     'view' => 'Просмотр',
     'view_all' => 'Показать все',
@@ -38,7 +38,7 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
-    
+
     // Sort Options
     'sort_options' => 'Параметры сортировки',
     'sort_direction_toggle' => 'Переключить направления сортировки',
@@ -48,7 +48,7 @@ return [
     'sort_created_at' => 'По дате создания',
     'sort_updated_at' => 'По дате обновления',
 
-    //Misc
+    // Misc
     'deleted_user' => 'Удаленный пользователь',
     'no_activity' => 'Нет действий для просмотра',
     'no_items' => 'Нет доступных элементов',
@@ -61,16 +61,16 @@ return [
     'default' => 'По умолчанию',
     'breadcrumb' => 'Навигация',
 
-    //Header
+    // Header
     'profile_menu' => 'Меню профиля',
     'view_profile' => 'Просмотреть профиль',
     'edit_profile' => 'Редактировать профиль',
-    
+
     // Layout tabs
     'tab_info' => 'Информация',
     'tab_content' => 'Содержание',
 
-    //Email Content
+    // Email Content
     'email_action_help' => 'Если у вас возникли проблемы с нажатием кнопки \':actionText\', то скопируйте и вставьте указанный URL-адрес в свой веб-браузер:',
     'email_rights' => 'Все права зарезервированы',
 ];

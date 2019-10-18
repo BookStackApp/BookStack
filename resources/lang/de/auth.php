@@ -1,25 +1,21 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Die eingegebenen Anmeldedaten sind ungültig.',
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
-    /**
-     * Login & Register
-     */
+
+    // Login & Register
     'sign_up' => 'Registrieren',
     'log_in' => 'Anmelden',
     'log_in_with' => 'Anmelden mit :socialDriver',
     'sign_up_with' => 'Registrieren mit :socialDriver',
     'logout' => 'Abmelden',
+
     'name' => 'Name',
     'username' => 'Benutzername',
     'email' => 'E-Mail',
@@ -35,14 +31,15 @@ return [
     'social_login' => 'Mit Sozialem Netzwerk anmelden',
     'social_registration' => 'Mit Sozialem Netzwerk registrieren',
     'social_registration_text' => 'Mit einer dieser Dienste registrieren oder anmelden',
+
     'register_thanks' => 'Vielen Dank für Ihre Registrierung!',
     'register_confirm' => 'Bitte prüfen Sie Ihren Posteingang und bestätigen Sie die Registrierung.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
     'registration_email_domain_invalid' => 'Sie können sich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für Ihre Registrierung! Die Daten sind gespeichert und Sie sind angemeldet.',
-    /**
-     * Password Reset
-     */
+
+
+    // Password Reset
     'reset_password' => 'Passwort vergessen',
     'reset_password_send_instructions' => 'Bitte geben Sie Ihre E-Mail-Adresse ein. Danach erhalten Sie eine E-Mail mit einem Link zum Zurücksetzen Ihres Passwortes.',
     'reset_password_send_button' => 'Passwort zurücksetzen',
@@ -51,9 +48,9 @@ return [
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
     'email_reset_text' => 'Sie erhalten diese E-Mail, weil jemand versucht hat, Ihr Passwort zurückzusetzen.',
     'email_reset_not_requested' => 'Wenn Sie das nicht waren, brauchen Sie nichts weiter zu tun.',
-    /**
-     * Email Confirmation
-     */
+
+
+    // Email Confirmation
     'email_confirm_subject' => 'Bestätigen Sie Ihre E-Mail-Adresse für :appName',
     'email_confirm_greeting' => 'Danke, dass Sie sich für :appName registriert haben!',
     'email_confirm_text' => 'Bitte bestätigen Sie Ihre E-Mail-Adresse, indem Sie auf die Schaltfläche klicken:',
@@ -61,9 +58,20 @@ return [
     'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur bestätigung Ihrer E-Mail-Adresse nicht versandt werden. Bitte kontaktieren Sie den Systemadministrator!',
     'email_confirm_success' => 'Ihre E-Mail-Adresse wurde best&auml;tigt!',
     'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfen Sie Ihren Posteingang.',
+
     'email_not_confirmed' => 'E-Mail-Adresse ist nicht bestätigt',
     'email_not_confirmed_text' => 'Ihre E-Mail-Adresse ist bisher nicht bestätigt.',
     'email_not_confirmed_click_link' => 'Bitte klicken Sie auf den Link in der E-Mail, die Sie nach der Registrierung erhalten haben.',
     'email_not_confirmed_resend' => 'Wenn Sie die E-Mail nicht erhalten haben, können Sie die Nachricht erneut anfordern. Füllen Sie hierzu bitte das folgende Formular aus:',
     'email_not_confirmed_resend_button' => 'Bestätigungs-E-Mail erneut senden',
+
+    // User Invite
+    'user_invite_email_subject' => 'You have been invited to join :appName!',
+    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
+    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
+    'user_invite_email_action' => 'Set Account Password',
+    'user_invite_page_welcome' => 'Welcome to :appName!',
+    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
+    'user_invite_page_confirm_button' => 'Confirm Password',
+    'user_invite_success' => 'Password set, you now have access to :appName!'
 ];

@@ -29,6 +29,7 @@ return [
     'app_editor_desc' => 'Annak kiválasztása, hogy a felhasználók melyik szerkesztőt használhatják az oldalak szerkesztéséhez.',
     'app_custom_html' => 'Egyéni HTML fejléc tartalom',
     'app_custom_html_desc' => 'Az itt hozzáadott bármilyen tartalom be lesz illesztve minden oldal <head> szekciójának aljára. Ez hasznos a stílusok felülírásához van analitikai kódok hozzáadásához.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Alkalmazás logó',
     'app_logo_desc' => 'A képnek 43px magasnak kell lennie.<br>A nagy képek át lesznek méretezve.',
     'app_primary_color' => 'Alkalmazás elsődleges színe',
@@ -84,6 +85,7 @@ return [
     'role_manage_roles' => 'Szerepkörök és szerepkör engedélyek kezelése',
     'role_manage_entity_permissions' => 'Minden könyv, fejezet és oldalengedély kezelése',
     'role_manage_own_entity_permissions' => 'Saját könyv, fejezet és oldalak engedélyeinek kezelése',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Alkalmazás beállításainak kezelése',
     'role_asset' => 'Eszköz jogosultságok',
     'role_asset_desc' => 'Ezek a jogosultság vezérlik a alapértelmezés szerinti hozzáférést a rendszerben található eszközökhöz. A könyvek, fejezetek és oldalak jogosultságai felülírják ezeket a jogosultságokat.',
@@ -108,6 +110,8 @@ return [
     'users_role_desc' => 'A felhasználó melyik szerepkörhöz lesz rendelve. Ha a felhasználó több szerepkörhöz van rendelve, akkor ezeknek a szerepköröknek a jogosultságai összeadódnak, és a a felhasználó a hozzárendelt szerepkörök minden képességét megkapja.',
     'users_password' => 'Felhasználó jelszava',
     'users_password_desc' => 'Az alkalmazásba bejelentkezéshez használható jelszó beállítása. Legalább 5 karakter hosszúnak kell lennie.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Külső hitelesítés azonosítója',
     'users_external_auth_id_desc' => 'Ez az azonosító lesz használva a felhasználó ellenőrzéséhez mikor az LDAP rendszerrel kommunikál.',
     'users_password_warning' => 'A lenti mezőket csak a jelszó módosításához kell kitölteni.',
@@ -148,14 +152,16 @@ return [
         'sk' => 'Slovensky',
         'cs' => 'Česky',
         'sv' => 'Svenska',
-        'kr' => '한국어',
+        'ko' => '한국어',
         'ja' => '日本語',
         'pl' => 'Polski',
         'it' => 'Italian',
         'ru' => 'Русский',
         'uk' => 'Українська',
         'zh_CN' => '简体中文',
-        'zh_TW' => '繁體中文'
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
     ]
     //!////////////////////////////////
 ];

@@ -1,7 +1,9 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    
     // Buttons
     'cancel' => 'Annuleren',
     'confirm' => 'Bevestigen',
@@ -11,7 +13,7 @@ return [
     'select' => 'Kies',
     'toggle_all' => 'Toggle Alles',
     'more' => 'Meer',
-    
+
     // Form Labels
     'name' => 'Naam',
     'description' => 'Beschrijving',
@@ -38,10 +40,14 @@ return [
     'add' => 'Toevoegen',
 
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'Naam',
     'sort_created_at' => 'Aanmaakdatum',
     'sort_updated_at' => 'Gewijzigd op',
-    
+
     // Misc
     'deleted_user' => 'Verwijderde gebruiker',
     'no_activity' => 'Geen activiteiten',
@@ -53,20 +59,18 @@ return [
     'grid_view' => 'Grid weergave',
     'list_view' => 'Lijst weergave',
     'default' => 'Standaard',
+    'breadcrumb' => 'Breadcrumb',
 
-    /**
-     * Header
-     */
+    // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'Profiel Weergeven',
     'edit_profile' => 'Profiel Bewerken',
 
     // Layout tabs
     'tab_info' => 'Info',
     'tab_content' => 'Inhoud',
-    
-    /**
-     * Email Content
-     */
+
+    // Email Content
     'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieer en plak de onderstaande URL in je web browser:',
     'email_rights' => 'Alle rechten voorbehouden',
 ];

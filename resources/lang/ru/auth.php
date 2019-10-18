@@ -5,7 +5,7 @@
  * messages that we need to display to the user.
  */
 return [
-    
+
     'failed' => 'Учетная запись не найдена.',
     'throttle' => 'Слишком много попыток входа. Пожалуйста, попробуйте позже через :seconds секунд.',
 
@@ -39,7 +39,7 @@ return [
     'register_success' => 'Спасибо за регистрацию! Регистрация и вход в систему выполнены.',
 
 
-    //Password Reset
+    // Password Reset
     'reset_password' => 'Сброс пароля',
     'reset_password_send_instructions' => 'Введите свой email ниже, и вам будет отправлено письмо со ссылкой для сброса пароля.',
     'reset_password_send_button' => 'Отправить ссылку для сброса',
@@ -50,7 +50,7 @@ return [
     'email_reset_not_requested' => 'Если вы не запрашивали сброса пароля, то никаких дополнительных действий не требуется.',
 
 
-    //Email Confirmation
+    // Email Confirmation
     'email_confirm_subject' => 'Подтвердите ваш почтовый адрес на :appName',
     'email_confirm_greeting' => 'Благодарим за участие :appName!',
     'email_confirm_text' => 'Пожалуйста, подтвердите ваш email адрес кликнув на кнопку ниже:',
@@ -64,7 +64,7 @@ return [
     'email_not_confirmed_click_link' => 'Пожалуйста, нажмите на ссылку в письме, которое было отправлено при регистрации.',
     'email_not_confirmed_resend' => 'Если вы не можете найти электронное письмо, вы можете снова отправить письмо с подтверждением по форме ниже.',
     'email_not_confirmed_resend_button' => 'Переотправить письмо с подтверждением',
-    
+
     // User Invite
     'user_invite_email_subject' => 'Вас приглашают присоединиться к :appName!',
     'user_invite_email_greeting' => 'Для вас создан аккаунт в :appName.',

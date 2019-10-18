@@ -57,7 +57,7 @@ return [
     // Maintenance settings
     'maint' => 'Обслуживание',
     'maint_image_cleanup' => 'Очистка изображений',
-    'maint_image_cleanup_desc' => 'Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.',
+    'maint_image_cleanup_desc' => "Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.",
     'maint_image_cleanup_ignore_revisions' => 'Пропускать изображения в версиях',
     'maint_image_cleanup_run' => 'Выполнить очистку',
     'maint_image_cleanup_warning' => 'Найдено :count возможно бесполезных изображений. Вы уверены, что хотите удалить эти изображения?',
@@ -72,7 +72,7 @@ return [
     'role_delete' => 'Удалить роль',
     'role_delete_confirm' => 'Это удалит роль с именем \':roleName\'.',
     'role_delete_users_assigned' => 'Эта роль назначена :userCount пользователям. Если вы хотите перенести их из этой роли, выберите новую роль ниже.',
-    'role_delete_no_migration' => 'Не мигрировать пользователей',
+    'role_delete_no_migration' => "Не мигрировать пользователей",
     'role_delete_sure' => 'Вы уверены что хотите удалить данную роль?',
     'role_delete_success' => 'Роль успешно удалена',
     'role_edit' => 'Редактировать роль',
@@ -135,5 +135,33 @@ return [
     'users_social_connected' => ':socialAccount аккаунт упешно подключен к вашему профилю.',
     'users_social_disconnected' => ':socialAccount аккаунт успешно отключен от вашего профиля.',
 
-
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];

@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => '使用者名稱或密碼錯誤。',
     'throttle' => '您的登入次數過多，請在:seconds秒後重試。',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => '註冊',
     'log_in' => '登入',
     'log_in_with' => '以:socialDriver登入',
@@ -32,6 +26,8 @@ return [
     'remember_me' => '記住我',
     'ldap_email_hint' => '請輸入用於此帳號的電子郵件。',
     'create_account' => '建立帳號',
+    'already_have_account' => 'Already have an account?',
+    'dont_have_account' => 'Don\'t have an account?',
     'social_login' => 'SNS登入',
     'social_registration' => 'SNS註冊',
     'social_registration_text' => '其他服務註冊/登入.',
@@ -43,23 +39,18 @@ return [
     'register_success' => '感謝您註冊:appName，您現在已經登入。',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => '重置密碼',
     'reset_password_send_instructions' => '在下方輸入您的Email位址，您將收到一封帶有密碼重置連結的郵件。',
     'reset_password_send_button' => '發送重置連結',
     'reset_password_sent_success' => '密碼重置連結已發送到:email。',
     'reset_password_success' => '您的密碼已成功重置。',
-
     'email_reset_subject' => '重置您的:appName密碼',
     'email_reset_text' => '您收到此電子郵件是因為我們收到了您的帳號的密碼重置請求。',
     'email_reset_not_requested' => '如果您沒有要求重置密碼，則不需要採取進一步的操作。',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => '確認您在:appName的Email位址',
     'email_confirm_greeting' => '感謝您加入:appName！',
     'email_confirm_text' => '請點選下面的按鈕確認您的Email位址：',
@@ -73,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => '請檢查註冊時收到的電子郵件，然後點選確認連結。',
     'email_not_confirmed_resend' => '如果找不到電子郵件，請透過下面的表單重新發送確認Email。',
     'email_not_confirmed_resend_button' => '重新發送確認Email',
+
+    // User Invite
+    'user_invite_email_subject' => 'You have been invited to join :appName!',
+    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
+    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
+    'user_invite_email_action' => 'Set Account Password',
+    'user_invite_page_welcome' => 'Welcome to :appName!',
+    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
+    'user_invite_page_confirm_button' => 'Confirm Password',
+    'user_invite_success' => 'Password set, you now have access to :appName!'
 ];

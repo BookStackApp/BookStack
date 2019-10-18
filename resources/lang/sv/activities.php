@@ -1,11 +1,9 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
-
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
 
     // Pages
     'page_create'                 => 'skapade sidan',
@@ -37,13 +35,13 @@ return [
     'book_sort'                   => 'sorterade boken',
     'book_sort_notification'      => 'Boken har sorterats om',
 
-    // Shelves
-    'bookshelf_create'                => 'skapade hyllan',
-    'bookshelf_create_notification'   => 'Hyllan har skapats',
-    'bookshelf_update'                => 'uppdaterade hyllan',
-    'bookshelf_update_notification'   => 'Hyllan har uppdaterats',
-    'bookshelf_delete'                => 'tog bort hyllan',
-    'bookshelf_delete_notification'   => 'Hyllan har tagits bort',
+    // Bookshelves
+    'bookshelf_create'            => 'skapade hyllan',
+    'bookshelf_create_notification'    => 'Hyllan har skapats',
+    'bookshelf_update'                 => 'uppdaterade hyllan',
+    'bookshelf_update_notification'    => 'Hyllan har uppdaterats',
+    'bookshelf_delete'                 => 'tog bort hyllan',
+    'bookshelf_delete_notification'    => 'Hyllan har tagits bort',
 
     // Other
     'commented_on'                => 'kommenterade',

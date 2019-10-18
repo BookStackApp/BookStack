@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines
     'accepted'             => ':attribute 需要被同意。',
     'active_url'           => ':attribute 並不是一個有效的網址',
     'after'                => ':attribute 必須是在 :date 後的日期。',
@@ -35,12 +30,41 @@ return [
     'digits'               => ':attribute 必須為:digits位數。',
     'digits_between'       => ':attribute 必須為:min到:max位數。',
     'email'                => ':attribute 必須是有效的電子郵件位址。',
+    'ends_with' => 'The :attribute must end with one of the following: :values',
     'filled'               => ':attribute 字段是必需的。',
+    'gt'                   => [
+        'numeric' => 'The :attribute must be greater than :value.',
+        'file'    => 'The :attribute must be greater than :value kilobytes.',
+        'string'  => 'The :attribute must be greater than :value characters.',
+        'array'   => 'The :attribute must have more than :value items.',
+    ],
+    'gte'                  => [
+        'numeric' => 'The :attribute must be greater than or equal :value.',
+        'file'    => 'The :attribute must be greater than or equal :value kilobytes.',
+        'string'  => 'The :attribute must be greater than or equal :value characters.',
+        'array'   => 'The :attribute must have :value items or more.',
+    ],
     'exists'               => '選中的 :attribute 無效。',
     'image'                => ':attribute 必須是一個圖片。',
+    'image_extension'      => 'The :attribute must have a valid & supported image extension.',
     'in'                   => '選中的 :attribute 無效。',
     'integer'              => ':attribute 必須是一個整數。',
     'ip'                   => ':attribute 必須是一個有效的IP位址。',
+    'ipv4'                 => 'The :attribute must be a valid IPv4 address.',
+    'ipv6'                 => 'The :attribute must be a valid IPv6 address.',
+    'json'                 => 'The :attribute must be a valid JSON string.',
+    'lt'                   => [
+        'numeric' => 'The :attribute must be less than :value.',
+        'file'    => 'The :attribute must be less than :value kilobytes.',
+        'string'  => 'The :attribute must be less than :value characters.',
+        'array'   => 'The :attribute must have less than :value items.',
+    ],
+    'lte'                  => [
+        'numeric' => 'The :attribute must be less than or equal :value.',
+        'file'    => 'The :attribute must be less than or equal :value kilobytes.',
+        'string'  => 'The :attribute must be less than or equal :value characters.',
+        'array'   => 'The :attribute must not have more than :value items.',
+    ],
     'max'                  => [
         'numeric' => ':attribute 不能超過:max。',
         'file'    => ':attribute 不能超過:max KB。',
@@ -54,7 +78,9 @@ return [
         'string'  => ':attribute 至少為:min個字元。',
         'array'   => ':attribute 至少有:min項。',
     ],
+    'no_double_extension'  => 'The :attribute must only have a single file extension.',
     'not_in'               => '選中的 :attribute 無效。',
+    'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => ':attribute 必須是一個數。',
     'regex'                => ':attribute 格式無效。',
     'required'             => ':attribute 字段是必需的。',
@@ -74,35 +100,15 @@ return [
     'timezone'             => ':attribute 必須是有效的區域。',
     'unique'               => ':attribute 已經被使用。',
     'url'                  => ':attribute 格式無效。',
+    'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => '需要確認密碼',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];

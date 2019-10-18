@@ -18,7 +18,7 @@ return [
     'ldap_extension_not_installed' => 'LDAP расширения для PHP не установлено',
     'ldap_cannot_connect' => 'Не удается подключиться к серверу ldap, не удалось выполнить начальное соединение',
     'social_no_action_defined' => 'Действие не определено',
-    'social_login_bad_response' => 'При попытке входа с :socialAccount произошла ошибка: \n:error',
+    'social_login_bad_response' => "При попытке входа с :socialAccount произошла ошибка: \\n:error",
     'social_account_in_use' => 'Этот :socialAccount аккаунт уже исопльзуется, попробуйте войти с параметрами :socialAccount.',
     'social_account_email_in_use' => 'Электронный ящик :email уже используется. Если у вас уже есть учетная запись, вы можете подключить свою учетную запись :socialAccount из настроек своего профиля.',
     'social_account_existing' => 'Этот :socialAccount уже привязан к вашему профилю.',
@@ -81,5 +81,5 @@ return [
     'error_occurred' => 'Произошла ошибка',
     'app_down' => ':appName в данный момент не достпуно',
     'back_soon' => 'Скоро восстановится.',
-    
+
 ];

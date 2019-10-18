@@ -27,13 +27,14 @@ return [
     'social_account_register_instructions' => 'Pokud ještě nemáte náš účet, můžete se zaregistrovat pomocí vašeho účtu na :socialAccount.',
     'social_driver_not_found' => 'Doplněk pro tohoto správce identity nebyl nalezen.',
     'social_driver_not_configured' => 'Nastavení vašeho účtu na :socialAccount není správné. :socialAccount musí mít vaše svolení pro naší aplikaci vás přihlásit.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'Nelze zapisovat na cestu k souboru :filePath. Zajistěte aby se dalo nahrávat na server.',
     'cannot_get_image_from_url' => 'Nelze získat obrázek z adresy :url',
     'cannot_create_thumbs' => 'Server nedokáže udělat náhledy. Zkontrolujte, že rozšíření GD pro PHP je nainstalováno.',
     'server_upload_limit' => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
-    'uploaded'  => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.', //TODO to je nějaký podezřelý
+    'uploaded'  => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
     'image_upload_error' => 'Nastala chyba během nahrávání souboru',
     'image_upload_type_error' => 'Typ nahrávaného obrázku je neplatný.',
     'file_upload_timeout' => 'Nahrávání souboru trvalo příliš dlouho a tak bylo ukončeno.',
@@ -71,7 +72,7 @@ return [
     'cannot_add_comment_to_draft' => 'Nemůžete přidávat komentáře ke konceptu.',
     'comment_add' => 'Při přidávání / aktualizaci komentáře nastala chyba.',
     'comment_delete' => 'Při mazání komentáře nastala chyba.',
-    'empty_comment' => 'Nemůžete přidat prázdný komentář.', //This has a deep thinking value
+    'empty_comment' => 'Nemůžete přidat prázdný komentář.',
 
     // Error pages
     '404_page_not_found' => 'Stránka nenalezena',

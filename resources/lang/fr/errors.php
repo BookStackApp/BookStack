@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'Vous n\'avez pas les droits pour accéder à cette page.',
@@ -69,6 +67,13 @@ return [
     'role_registration_default_cannot_delete' => 'Ce rôle ne peut pas être supprimé tant qu\'il est le rôle par défaut',
     'role_cannot_remove_only_admin' => 'Ceci est le seul compte administrateur. Assignez un nouvel administrateur avant de le supprimer ici.',
 
+    // Comments
+    'comment_list' => 'Une erreur s\'est produite lors de la récupération des commentaires.',
+    'cannot_add_comment_to_draft' => 'Vous ne pouvez pas ajouter de commentaires à un projet.',
+    'comment_add' => 'Une erreur s\'est produite lors de l\'ajout du commentaire.',
+    'comment_delete' => 'Une erreur s\'est produite lors de la suppression du commentaire.',
+    'empty_comment' => 'Impossible d\'ajouter un commentaire vide.',
+
     // Error pages
     '404_page_not_found' => 'Page non trouvée',
     'sorry_page_not_found' => 'Désolé, cette page n\'a pas pu être trouvée.',
@@ -77,10 +82,4 @@ return [
     'app_down' => ':appName n\'est pas en service pour le moment',
     'back_soon' => 'Nous serons bientôt de retour.',
 
-    // comments
-    'comment_list' => 'Une erreur s\'est produite lors de la récupération des commentaires.',
-    'cannot_add_comment_to_draft' => 'Vous ne pouvez pas ajouter de commentaires à un projet.',
-    'comment_add' => 'Une erreur s\'est produite lors de l\'ajout du commentaire.',
-    'comment_delete' => 'Une erreur s\'est produite lors de la suppression du commentaire.',
-    'empty_comment' => 'Impossible d\'ajouter un commentaire vide.',
 ];

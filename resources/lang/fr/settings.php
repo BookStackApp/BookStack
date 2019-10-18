@@ -1,21 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Préférences',
     'settings_save' => 'Enregistrer les préférences',
     'settings_save_success' => 'Préférences enregistrées',
 
-    /**
-     * App settings
-     */
-
+    // App Settings
     'app_customization' => 'Personnalisation',
     'app_features_security' => 'Fonctionnalités et sécurité',
     'app_name' => 'Nom de l\'application',
@@ -33,6 +29,7 @@ return [
     'app_editor_desc' => 'Sélectionnez l\'éditeur qui sera utilisé pour modifier les pages.',
     'app_custom_html' => 'HTML personnalisé dans l\'en-tête',
     'app_custom_html_desc' => 'Le contenu inséré ici sera ajouté en bas de la balise <head> de toutes les pages. Vous pouvez l\'utiliser pour ajouter du CSS personnalisé ou un tracker analytique.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Logo de l\'Application',
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',
@@ -43,11 +40,8 @@ return [
     'app_disable_comments' => 'Désactiver les commentaires',
     'app_disable_comments_toggle' => 'Désactiver les commentaires',
     'app_disable_comments_desc' => 'Désactive les commentaires sur toutes les pages de l\'application. Les commentaires existants ne sont pas affichés.',
-    
-    /**
-     * Registration settings
-     */
 
+    // Registration Settings
     'reg_settings' => 'Préférence pour l\'inscription',
     'reg_enable' => 'Activer l\'inscription',
     'reg_enable_toggle' => 'Activer l\'inscription',
@@ -60,10 +54,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Entrez une liste de domaines acceptés lors de l\'inscription, séparés par une virgule. Les utilisateurs recevront un e-mail de confirmation à cette adresse. <br> Les utilisateurs pourront changer leur adresse après inscription s\'ils le souhaitent.',
     'reg_confirm_restrict_domain_placeholder' => 'Aucune restriction en place',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Nettoyer les images',
     'maint_image_cleanup_desc' => "Scan le contenu des pages et des révisions pour vérifier les images et les dessins en cours d'utilisation et lesquels sont redondant. Veuillez à faire une sauvegarde de la base de données et des images avant de lancer ceci.",
@@ -72,11 +63,8 @@ return [
     'maint_image_cleanup_warning' => ':count images potentiellement inutilisées trouvées. Etes-vous sûr de vouloir supprimer ces images ?',
     'maint_image_cleanup_success' => ':count images potentiellement inutilisées trouvées et supprimées !',
     'maint_image_cleanup_nothing_found' => 'Aucune image inutilisée trouvée, rien à supprimer !',
-    
-    /**
-     * Role settings
-     */
 
+    // Role Settings
     'roles' => 'Rôles',
     'role_user_roles' => 'Rôles des utilisateurs',
     'role_create' => 'Créer un nouveau rôle',
@@ -97,6 +85,7 @@ return [
     'role_manage_roles' => 'Gérer les rôles et permissions',
     'role_manage_entity_permissions' => 'Gérer les permissions sur les livres, chapitres et pages',
     'role_manage_own_entity_permissions' => 'Gérer les permissions de ses propres livres, chapitres et pages',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Gérer les préférences de l\'application',
     'role_asset' => 'Permissions des ressources',
     'role_asset_desc' => 'Ces permissions contrôlent l\'accès par défaut des ressources dans le système. Les permissions dans les livres, les chapitres et les pages ignoreront ces permissions',
@@ -109,10 +98,7 @@ return [
     'role_users' => 'Utilisateurs ayant ce rôle',
     'role_users_none' => 'Aucun utilisateur avec ce rôle actuellement',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Utilisateurs',
     'user_profile' => 'Profil d\'utilisateur',
     'users_add_new' => 'Ajouter un nouvel utilisateur',
@@ -124,6 +110,8 @@ return [
     'users_role_desc' => 'Sélectionnez les rôles auxquels cet utilisateur sera affecté. Si un utilisateur est affecté à plusieurs rôles, les permissions de ces rôles s\'empileront et ils recevront toutes les capacités des rôles affectés.',
     'users_password' => 'Mot de passe de l\'utilisateur',
     'users_password_desc' => 'Définissez un mot de passe utilisé pour vous connecter à l\'application. Il doit comporter au moins 5 caractères.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Identifiant d\'authentification externe',
     'users_external_auth_id_desc' => 'Il s\'agit de l\'identifiant utilisé pour appairer cet utilisateur lors de la communication avec votre système LDAP.',
     'users_password_warning' => 'Remplissez ce formulaire uniquement si vous souhaitez changer de mot de passe:',
@@ -147,4 +135,33 @@ return [
     'users_social_connected' => 'Votre compte :socialAccount a été ajouté avec succès.',
     'users_social_disconnected' => 'Votre compte :socialAccount a été déconnecté avec succès',
 
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];

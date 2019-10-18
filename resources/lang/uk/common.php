@@ -1,6 +1,6 @@
 <?php
 /**
- * Common elements found throughout many areas of BookStack. / Загальні елементи, використовуються в багатьох областях BookStack.
+ * Common elements found throughout many areas of BookStack.
  */
 return [
 
@@ -38,8 +38,12 @@ return [
     'reset' => 'Скинути',
     'remove' => 'Видалити',
     'add' => 'Додати',
-    
+
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'Ім\'я',
     'sort_created_at' => 'Дата створення',
     'sort_updated_at' => 'Дата оновлення',
@@ -55,11 +59,13 @@ return [
     'grid_view' => 'Вигляд Сіткою',
     'list_view' => 'Вигляд Списком',
     'default' => 'За замовчуванням',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'Переглянути профіль',
     'edit_profile' => 'Редагувати профіль',
-    
+
     // Layout tabs
     'tab_info' => 'Інфо',
     'tab_content' => 'Вміст',

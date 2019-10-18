@@ -4,16 +4,10 @@
  * The following language lines contain the default error messages used by
  * the validator class. Some of these rules have multiple versions such
  * as the size rules. Feel free to tweak each of these messages here.
- * 
- * Líneas de validación
- * Las líneas de lenguaje siguientes contienen los mensajes de error por
- * defecto usados por el validador de la clase. Algunas de esta reglas tienen
- * varias versiones, como las reglas de tamaño. Siéntase libre de ajustar cada
- * uno de los mensajes.
  */
 return [
 
-    // Standard laravel validation lines - Líneas de validación estándar de laravel
+    // Standard laravel validation lines
     'accepted'             => 'El :attribute debe ser aceptado.',
     'active_url'           => 'El :attribute no es una URl válida.',
     'after'                => 'El :attribute debe ser una fecha posterior :date.',
@@ -36,7 +30,7 @@ return [
     'digits'               => ':attribute debe ser de :digits dígitos.',
     'digits_between'       => ':attribute debe ser un valor entre :min y :max dígios.',
     'email'                => ':attribute debe ser una dirección álida.',
-    'ends_with'            => 'El :attribute debe terminar con uno de los siguientes: :values',
+    'ends_with' => 'El :attribute debe terminar con uno de los siguientes: :values',
     'filled'               => 'El campo :attribute es requerido.',
     'gt'                   => [
         'numeric' => 'El :attribute debe ser mayor que :value.',
@@ -52,8 +46,8 @@ return [
     ],
     'exists'               => 'El :attribute seleccionado es inválido.',
     'image'                => 'El :attribute debe ser una imagen.',
-    'in'                   => 'El selected :attribute es inválio.',
     'image_extension'      => 'El :attribute debe tener una extensión de imagen válida y soportada.',
+    'in'                   => 'El selected :attribute es inválio.',
     'integer'              => 'El :attribute debe ser un entero.',
     'ip'                   => 'El :attribute debe ser una dirección IP álida.',
     'ipv4'                 => 'El :attribute debe ser una dirección IPv4 válida.',
@@ -108,14 +102,13 @@ return [
     'url'                  => 'El atributo :attribute tiene un formato inválido.',
     'uploaded'             => 'El archivo no se pudo subir. Puede ser que el servidor no acepte archivos de este tamaño.',
 
-    // Custom validation lines - Líneas de validación personalizadas
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Confirmación de Password requerida',
         ],
     ],
 
-    // Custom validation attributes - Atributos de validación personalizados
+    // Custom validation attributes
     'attributes' => [],
-
 ];

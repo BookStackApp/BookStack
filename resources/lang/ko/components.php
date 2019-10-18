@@ -1,9 +1,10 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
 
-    /**
-     * Image Manager
-     */
+    // Image Manager
     'image_select' => '이미지 선택',
     'image_all' => '전체',
     'image_all_title' => '모든 이미지 보기',
@@ -24,9 +25,7 @@ return [
     'image_delete_success' => '이미지가 삭제되었습니다.',
     'image_upload_remove' => '제거',
 
-    /**
-     * Code editor
-     */
+    // Code Editor
     'code_editor' => '코드 수정',
     'code_language' => '코드 언어',
     'code_content' => '코드 내용',

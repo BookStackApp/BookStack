@@ -26,6 +26,8 @@ return [
     'remember_me' => 'Neodhlašovat',
     'ldap_email_hint' => 'Zadejte email, který chcete přiřadit k tomuto účtu.',
     'create_account' => 'Vytvořit účet',
+    'already_have_account' => 'Already have an account?',
+    'dont_have_account' => 'Don\'t have an account?',
     'social_login' => 'Přihlášení přes sociální sítě',
     'social_registration' => 'Registrace přes sociální sítě',
     'social_registration_text' => 'Registrovat a přihlásit se přes jinou službu',
@@ -62,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Klikněte na odkaz v emailu který jsme vám zaslali ihned po registraci.',
     'email_not_confirmed_resend' => 'Pokud nemůžete nalézt email v příchozí poště, můžete si jej nechat poslat znovu pomocí formuláře níže.',
     'email_not_confirmed_resend_button' => 'Znovu poslat email pro potvrzení emailové adresy',
+
+    // User Invite
+    'user_invite_email_subject' => 'You have been invited to join :appName!',
+    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
+    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
+    'user_invite_email_action' => 'Set Account Password',
+    'user_invite_page_welcome' => 'Welcome to :appName!',
+    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
+    'user_invite_page_confirm_button' => 'Confirm Password',
+    'user_invite_success' => 'Password set, you now have access to :appName!'
 ];

@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Biztosan törölhető ez az oldal?',
     'pages_delete_draft_confirm' => 'Biztosan törölhető ez a vázlatoldal?',
     'pages_editing_named' => ':pageName oldal szerkesztése',
-    'pages_edit_toggle_header' => 'Fejléc átkapcsolása',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'Vázlat mentése',
     'pages_edit_draft' => 'Oldal vázlat szerkesztése',
     'pages_editing_draft' => 'Vázlat szerkesztése',
@@ -234,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Vázlat elvetve, a szerkesztő frissítve lesz az oldal aktuális tartalmával',
     'pages_specific' => 'Egy bizonyos oldal',
+    'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
     'page_tags' => 'Oldal címkék',
@@ -242,9 +243,11 @@ return [
     'shelf_tags' => 'Polc címkék',
     'tag' => 'Címke',
     'tags' =>  'Címkék',
+    'tag_name' =>  'Tag Name',
     'tag_value' => 'Címke érték (nem kötelező)',
     'tags_explain' => "Címkék hozzáadása a tartalom jobb kategorizálásához.\nA mélyebb szervezettség megvalósításához hozzá lehet rendelni egy értéket a címkéhez.",
     'tags_add' => 'Másik címke hozzáadása',
+    'tags_remove' => 'Remove this tag',
     'attachments' => 'Csatolmányok',
     'attachments_explain' => 'Az oldalon megjelenő fájlok feltöltése vagy hivatkozások csatolása. Az oldal oldalsávjában fognak megjelenni.',
     'attachments_explain_instant_save' => 'Az itt történt módosítások azonnal el lesznek mentve.',
@@ -270,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'Fájl sikeresen feltöltve',
     'attachments_file_updated' => 'Fájl sikeresen frissítve',
     'attachments_link_attached' => 'Hivatkozás sikeresen hozzácsatolva az oldalhoz',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
     // Profile View
     'profile_user_for_x' => 'Felhasználó ez óta: :time',

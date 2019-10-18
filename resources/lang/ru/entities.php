@@ -5,7 +5,7 @@
  */
 return [
 
-    //Shared
+    // Shared
     'recently_created' => 'Недавно созданные',
     'recently_created_pages' => 'Недавно созданные страницы',
     'recently_updated_pages' => 'Недавно обновленные страницы',
@@ -34,13 +34,13 @@ return [
     'export_pdf' => 'PDF файл',
     'export_text' => 'Текстовый файл',
 
-    //Permissions and restrictions
+    // Permissions and restrictions
     'permissions' => 'Разрешения',
     'permissions_intro' => 'После включения эти разрешения будут иметь приоритет над любыми установленными полномочиями.',
     'permissions_enable' => 'Включение пользовательских разрешений',
     'permissions_save' => 'Сохранить разрешения',
 
-    //Search
+    // Search
     'search_results' => 'Результаты поиска',
     'search_total_results_found' => ':count результатов найдено|:count всего результатов найдено',
     'search_clear' => 'Очистить поиск',
@@ -65,7 +65,7 @@ return [
     'search_set_date' => 'Установить дату',
     'search_update' => 'Обновить поиск',
 
-     //Shelves
+    // Shelves
     'shelf' => 'Полка',
     'shelves' => 'Полки',
     'x_shelves' => ':count полок|:count полок',
@@ -96,8 +96,8 @@ return [
     'shelves_copy_permissions' => 'Копировать доступы',
     'shelves_copy_permissions_explain' => 'Это применит текущие настройки доступов этой книжной полки ко всем книгам, содержащимся внутри. Перед активацией убедитесь, что все изменения в доступах этой книжной полки сохранены.',
     'shelves_copy_permission_success' => 'Доступы книжной полки скопированы для :count books',
-    
-    //Books
+
+    // Books
     'book' => 'Книга',
     'books' => 'Книги',
     'x_books' => ':count книга|:count книг',
@@ -136,7 +136,7 @@ return [
     'books_sort_show_other' => 'Показать другие книги',
     'books_sort_save' => 'Сохранить новый порядок',
 
-     //Chapters
+    // Chapters
     'chapter' => 'Глава',
     'chapters' => 'Главы',
     'x_chapters' => ':count глава|:count главы',
@@ -159,7 +159,7 @@ return [
     'chapters_permissions_success' => 'Разрешения главы обновлены',
     'chapters_search_this' => 'Искать в этой главе',
 
-    //Pages
+    // Pages
     'page' => 'Страница',
     'pages' => 'Страницы',
     'x_pages' => ':count страница|:count страниц',
@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Вы действительно хотите удалить эту страницу?',
     'pages_delete_draft_confirm' => 'Вы действительно хотите удалить этот черновик?',
     'pages_editing_named' => 'Редактирование страницы :pageName',
-    'pages_edit_toggle_header' => 'Переключение заголовка',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'Сохранить черновик',
     'pages_edit_draft' => 'Редактировать черновик',
     'pages_editing_draft' => 'Редактирование черновика',
@@ -236,7 +236,7 @@ return [
     'pages_specific' => 'Конкретная страница',
     'pages_is_template' => 'Шаблон страницы',
 
-    //Editor sidebar
+    // Editor Sidebar
     'page_tags' => 'Теги страницы',
     'chapter_tags' => 'Теги главы',
     'book_tags' => 'Теги книги',
@@ -245,7 +245,7 @@ return [
     'tags' =>  'Теги',
     'tag_name' =>  'Имя тега',
     'tag_value' => 'Значение тега (опционально)',
-    'tags_explain' => 'Добавьте теги, чтобы лучше классифицировать ваш контент. \n Вы можете присвоить значение тегу для более глубокой организации.',
+    'tags_explain' => "Добавьте теги, чтобы лучше классифицировать ваш контент. \\n Вы можете присвоить значение тегу для более глубокой организации.",
     'tags_add' => 'Добавить тег',
     'tags_remove' => 'Удалить этот тэг',
     'attachments' => 'Вложение',
@@ -280,7 +280,7 @@ return [
     'templates_append_content' => 'Добавить к содержанию страницы',
     'templates_prepend_content' => 'Добавить в начало содержимого страницы',
 
-    //Profile View
+    // Profile View
     'profile_user_for_x' => 'пользователь уже :time',
     'profile_created_content' => 'Созданный контент',
     'profile_not_created_pages' => ':userName не создавал страниц',
@@ -288,7 +288,7 @@ return [
     'profile_not_created_books' => ':userName не создавал ни одной книги',
     'profile_not_created_shelves' => ':userName не создал ни одной полки',
 
-    //Comments
+    // Comments
     'comment' => 'Комментарий',
     'comments' => 'Комментарии',
     'comment_add' => 'Комментировать',
@@ -306,7 +306,7 @@ return [
     'comment_delete_confirm' => 'Удалить этот комментарий?',
     'comment_in_reply_to' => 'В ответ на :commentId',
 
-    //Revision
+    // Revision
     'revision_delete_confirm' => 'Удалить эту ревизию?',
     'revision_restore_confirm' => 'Восстановить эту ревизию? Текущее содержимое будет заменено.',
     'revision_delete_success' => 'Ревизия удалена',

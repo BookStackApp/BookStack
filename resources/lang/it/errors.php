@@ -1,14 +1,12 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'Non hai il permesso di accedere alla pagina richiesta.',
-    'permissionJson' => "Non hai il permesso di eseguire l'azione richiesta.",
+    'permissionJson' => 'Non hai il permesso di eseguire l\'azione richiesta.',
 
     // Auth
     'error_user_exists_different_creds' => 'Un utente con la mail :email esiste già ma con credenziali differenti.',
@@ -29,18 +27,20 @@ return [
     'social_account_register_instructions' => 'Se non hai ancora un account, puoi registrarti usando l\'opzione :socialAccount.',
     'social_driver_not_found' => 'Driver social non trovato',
     'social_driver_not_configured' => 'Le impostazioni di :socialAccount non sono configurate correttamente.',
+    'invite_token_expired' => 'Il link di invito è scaduto. Puoi provare a resettare la password del tuo account.',
 
     // System
     'path_not_writable' => 'La path :filePath non può essere scritta. Controlla che abbia i permessi corretti.',
     'cannot_get_image_from_url' => 'Impossibile scaricare immagine da :url',
     'cannot_create_thumbs' => 'Il server non può creare thumbnail. Controlla che l\'estensione GD sia installata.',
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
+    'uploaded'  => 'Il server non consente upload di questa grandezza. Prova un file più piccolo.',
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
     'image_upload_type_error' => 'Il tipo di immagine in upload non è valido',
     'file_upload_timeout' => 'Il caricamento del file è scaduto.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
+    'attachment_page_mismatch' => 'La pagina non è corrisposta durante l\'aggiornamento dell\'allegato',
     'attachment_not_found' => 'Allegato non trovato',
 
     // Pages
@@ -49,6 +49,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entità non trovata',
+    'bookshelf_not_found' => 'Libreria non trovata',
     'book_not_found' => 'Libro non trovato',
     'page_not_found' => 'Pagina non trovata',
     'chapter_not_found' => 'Capitolo non trovato',
@@ -64,6 +65,7 @@ return [
     'role_cannot_be_edited' => 'Questo ruolo non può essere modificato',
     'role_system_cannot_be_deleted' => 'Questo ruolo è di sistema e non può essere eliminato',
     'role_registration_default_cannot_delete' => 'Questo ruolo non può essere eliminato finchè è impostato come default alla registrazione',
+    'role_cannot_remove_only_admin' => 'Questo utente è l\'unico con assegnato il ruolo di amministratore. Assegna il ruolo di amministratore ad un altro utente prima di rimuoverlo qui.',
 
     // Comments
     'comment_list' => 'C\'è stato un errore scaricando i commenti.',
@@ -79,4 +81,5 @@ return [
     'error_occurred' => 'C\'è Stato un errore',
     'app_down' => ':appName è offline',
     'back_soon' => 'Ritornerà presto.',
+
 ];

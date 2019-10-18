@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines
     'accepted'             => ':attribute doit être accepté.',
     'active_url'           => ':attribute n\'est pas une URL valide.',
     'after'                => ':attribute doit être supérieur à :date.',
@@ -35,7 +30,7 @@ return [
     'digits'               => ':attribute doit être de longueur :digits.',
     'digits_between'       => ':attribute doit avoir une longueur entre :min et :max.',
     'email'                => ':attribute doit être une adresse e-mail valide.',
-    'ends_with'            => ':attribute doit se terminer par une des valeurs suivantes : :values',
+    'ends_with' => ':attribute doit se terminer par une des valeurs suivantes : :values',
     'filled'               => ':attribute est un champ requis.',
     'gt'                   => [
         'numeric' => ':attribute doit être plus grand que :value.',
@@ -107,34 +102,13 @@ return [
     'url'                  => ':attribute a un format invalide.',
     'uploaded'             => 'Le fichier n\'a pas pu être envoyé. Le serveur peut ne pas accepter des fichiers de cette taille.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'La confirmation du mot de passe est requise',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];

@@ -1,8 +1,8 @@
 <?php
 /**
- * Settings text strings / Текст налаштувань
- * Contains all text strings used in the general settings sections of BookStack / Містить всі текстові рядки, що використовуються в розділах загальної настройки BookStack
- * including users and roles. / включаючи користувачів та ролі.
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
  */
 return [
 
@@ -29,6 +29,7 @@ return [
     'app_editor_desc' => 'Виберіть, який редактор буде використовуватися всіма користувачами для редагування сторінок.',
     'app_custom_html' => 'Користувацький вміст HTML-заголовку',
     'app_custom_html_desc' => 'Будь-який доданий тут вміст буде вставлено в нижню частину розділу <head> кожної сторінки. Це зручно для перевизначення стилів, або додавання коду аналітики.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Логотип програми',
     'app_logo_desc' => 'Це зображення має бути висотою 43px. <br>Великі зображення будуть зменшені.',
     'app_primary_color' => 'Основний колір програми',
@@ -84,6 +85,7 @@ return [
     'role_manage_roles' => 'Керування правами ролей та ролями',
     'role_manage_entity_permissions' => 'Керування всіма правами на книги, розділи та сторінки',
     'role_manage_own_entity_permissions' => 'Керування дозволами на власну книгу, розділ та сторінки',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Керування налаштуваннями програми',
     'role_asset' => 'Дозволи',
     'role_asset_desc' => 'Ці дозволи контролюють стандартні доступи всередині системи. Права на книги, розділи та сторінки перевизначать ці дозволи.',
@@ -108,6 +110,8 @@ return [
     'users_role_desc' => 'Виберіть, до яких ролей буде призначено цього користувача. Якщо користувачеві призначено декілька ролей, дозволи з цих ролей будуть складатись і вони отримуватимуть усі можливості призначених ролей.',
     'users_password' => 'Пароль користувача',
     'users_password_desc' => 'Встановіть пароль для входу. Він повинен містити принаймні 5 символів.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Зовнішній ID автентифікації',
     'users_external_auth_id_desc' => 'Цей ID використовується для пошуку збігу цього користувача під час зв\'язку з LDAP.',
     'users_password_warning' => 'Тільки якщо ви хочете змінити свій пароль, заповніть поля нижче:',
@@ -131,4 +135,33 @@ return [
     'users_social_connected' => 'Обліковий запис :socialAccount успішно додано до вашого профілю.',
     'users_social_disconnected' => 'Обліковий запис :socialAccount був успішно відключений від вашого профілю.',
 
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];

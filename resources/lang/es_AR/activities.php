@@ -2,9 +2,6 @@
 /**
  * Activity text strings.
  * Is used for all the text within activity logs & notifications.
- * 
- * Cadenas de texto de Actividades
- * Se usa para todos los textos dentro de los registros de actividad y notificaciones.
  */
 return [
 

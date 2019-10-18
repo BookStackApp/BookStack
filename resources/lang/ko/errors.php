@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => '요청한 페이지에 권한이 없습니다.',
@@ -29,6 +27,7 @@ return [
     'social_account_register_instructions' => '아직 계정이없는 경우 :socialAccount 옵션을 사용하여 계정을 등록 할 수 있습니다.',
     'social_driver_not_found' => '소셜 드라이버를 찾을 수 없음',
     'social_driver_not_configured' => '귀하의 :socialAccount 소셜 설정이 올바르게 구성되지 않았습니다.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => '파일 경로 :filePath에 업로드 할 수 없습니다. 서버에 쓰기 기능이 활성화 되어있는지 확인하세요.',
@@ -66,6 +65,7 @@ return [
     'role_cannot_be_edited' => '역할을 수정할 수 없습니다.',
     'role_system_cannot_be_deleted' => '이 역할은 시스템 역할입니다. 삭제할 수 없습니다.',
     'role_registration_default_cannot_delete' => '이 역할은 기본 등록 역할로 설정되어있는 동안 삭제할 수 없습니다.',
+    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
     'comment_list' => '댓글을 가져 오는 중에 오류가 발생했습니다.',
@@ -81,4 +81,5 @@ return [
     'error_occurred' => '오류가 발생하였습니다.',
     'app_down' => ':appName가 다운되었습니다.',
     'back_soon' => '곧 복구될 예정입니다.',
+
 ];

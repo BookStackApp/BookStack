@@ -1,14 +1,17 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => '最近创建',
     'recently_created_pages' => '最近创建的页面',
     'recently_updated_pages' => '最新页面',
     'recently_created_chapters' => '最近创建的章节',
     'recently_created_books' => '最近创建的图书',
+    'recently_created_shelves' => 'Recently Created Shelves',
     'recently_update' => '最近更新',
     'recently_viewed' => '最近查看',
     'recent_activity' => '近期活动',
@@ -31,17 +34,13 @@ return [
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => '权限',
     'permissions_intro' => '本设置优先于每个用户角色本身所具有的权限。',
     'permissions_enable' => '启用自定义权限',
     'permissions_save' => '保存权限',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => '搜索结果',
     'search_total_results_found' => '共找到了:count个结果',
     'search_clear' => '清除搜索',
@@ -66,16 +65,16 @@ return [
     'search_set_date' => '设置日期',
     'search_update' => '只显示更新操作',
 
-    /**
-     * Shelves
-     */
+    // Shelves
     'shelf' => '书架',
     'shelves' => '书架',
+    'x_shelves' => ':count Shelf|:count Shelves',
     'shelves_long' => '书架',
     'shelves_empty' => '当前未创建书架',
     'shelves_create' => '创建新书架',
     'shelves_popular' => '热门书架',
     'shelves_new' => '新书架',
+    'shelves_new_action' => 'New Shelf',
     'shelves_popular_empty' => '最热门的书架',
     'shelves_new_empty' => '最新创建的书架',
     'shelves_save' => '保存书架',
@@ -98,9 +97,7 @@ return [
     'shelves_copy_permissions_explain' => '这会将此书架的当前权限设置应用于其中包含的所有图书。 在激活之前，请确保已保存对此书架权限的任何更改。',
     'shelves_copy_permission_success' => '书架权限复制到图书 :count ',
 
-    /**
-     * Books
-     */
+    // Books
     'book' => '图书',
     'books' => '图书',
     'x_books' => ':count本书',
@@ -108,6 +105,7 @@ return [
     'books_popular' => '热门图书',
     'books_recent' => '最近的书',
     'books_new' => '新书',
+    'books_new_action' => 'New Book',
     'books_popular_empty' => '最受欢迎的图书将出现在这里。',
     'books_new_empty' => '最近创建的图书将出现在这里。',
     'books_create' => '创建图书',
@@ -123,7 +121,6 @@ return [
     'books_permissions_updated' => '图书权限已更新',
     'books_empty_contents' => '本书目前没有页面或章节。',
     'books_empty_create_page' => '创建页面',
-    'books_empty_or' => '或',
     'books_empty_sort_current_book' => '排序当前图书',
     'books_empty_add_chapter' => '添加章节',
     'books_permissions_active' => '有效的图书权限',
@@ -131,12 +128,15 @@ return [
     'books_navigation' => '图书导航',
     'books_sort' => '排序图书内容',
     'books_sort_named' => '排序图书「:bookName」',
+    'books_sort_name' => 'Sort by Name',
+    'books_sort_created' => 'Sort by Created Date',
+    'books_sort_updated' => 'Sort by Updated Date',
+    'books_sort_chapters_first' => 'Chapters First',
+    'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => '显示其他图书',
     'books_sort_save' => '保存新顺序',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => '章节',
     'chapters' => '章节',
     'x_chapters' => ':count个章节',
@@ -159,9 +159,7 @@ return [
     'chapters_permissions_success' => '章节权限已更新',
     'chapters_search_this' => '从本章节搜索',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => '页面',
     'pages' => '页面',
     'x_pages' => ':count个页面',
@@ -178,7 +176,7 @@ return [
     'pages_delete_confirm' => '您确定要删除此页面吗？',
     'pages_delete_draft_confirm' => '您确定要删除此草稿页面吗？',
     'pages_editing_named' => '正在编辑页面“:pageName”',
-    'pages_edit_toggle_header' => '显示/隐藏导航栏',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => '保存草稿',
     'pages_edit_draft' => '编辑页面草稿',
     'pages_editing_draft' => '正在编辑草稿',
@@ -196,11 +194,11 @@ return [
     'pages_md_preview' => '预览',
     'pages_md_insert_image' => '插入图片',
     'pages_md_insert_link' => '插入实体链接',
-	'pages_md_insert_drawing' => '插入图表',
+    'pages_md_insert_drawing' => '插入图表',
     'pages_not_in_chapter' => '本页面不在某章节中',
     'pages_move' => '移动页面',
     'pages_move_success' => '页面已移动到「:parentName」',
-	'pages_copy' => '复制页面',
+    'pages_copy' => '复制页面',
     'pages_copy_desination' => '复制目的地',
     'pages_copy_success' => '页面复制完成',
     'pages_permissions' => '页面权限',
@@ -212,6 +210,8 @@ return [
     'pages_revisions_created_by' => '创建者',
     'pages_revisions_date' => '修订日期',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Revision #:id',
+    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
     'pages_revisions_changelog' => '更新说明',
     'pages_revisions_changes' => '说明',
     'pages_revisions_current' => '当前版本',
@@ -233,20 +233,21 @@ return [
         'message' => ':time，:start。注意不要覆盖对方的更新！',
     ],
     'pages_draft_discarded' => '草稿已丢弃，编辑器已更新到当前页面内容。',
-	'pages_specific' => '具体页面',
+    'pages_specific' => '具体页面',
+    'pages_is_template' => 'Page Template',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => '页面标签',
-	'chapter_tags' => '章节标签',
-	'book_tags' => '图书标签',
+    'chapter_tags' => '章节标签',
+    'book_tags' => '图书标签',
     'shelf_tags' => '书架标签',
     'tag' => '标签',
     'tags' =>  '标签',
+    'tag_name' =>  'Tag Name',
     'tag_value' => '标签值 (Optional)',
     'tags_explain' => "添加一些标签以更好地对您的内容进行分类。\n您可以为标签分配一个值，以进行更深入的组织。",
     'tags_add' => '添加另一个标签',
+    'tags_remove' => 'Remove this tag',
     'attachments' => '附件',
     'attachments_explain' => '上传一些文件或附加一些链接显示在您的网页上。这些在页面的侧边栏中可见。',
     'attachments_explain_instant_save' => '这里的更改将立即保存。Changes here are saved instantly.',
@@ -256,7 +257,7 @@ return [
     'attachments_set_link' => '设置链接',
     'attachments_delete_confirm' => '确认您想要删除此附件后，请点击删除。',
     'attachments_dropzone' => '删除文件或点击此处添加文件',
-    'attachments_no_files' => '尚未上传文件', // No files have been uploaded
+    'attachments_no_files' => '尚未上传文件',
     'attachments_explain_link' => '如果您不想上传文件，则可以附加链接，这可以是指向其他页面的链接，也可以是指向云端文件的链接。',
     'attachments_link_name' => '链接名',
     'attachment_link' => '附件链接',
@@ -272,22 +273,25 @@ return [
     'attachments_file_uploaded' => '附件上传成功',
     'attachments_file_updated' => '附件更新成功',
     'attachments_link_attached' => '链接成功附加到页面',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => '来这里:time了',
     'profile_created_content' => '已创建内容',
     'profile_not_created_pages' => ':userName尚未创建任何页面',
     'profile_not_created_chapters' => ':userName尚未创建任何章节',
     'profile_not_created_books' => ':userName尚未创建任何图书',
+    'profile_not_created_shelves' => ':userName has not created any shelves',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => '评论',
     'comments' => '评论',
-	'comment_add' => '添加评论',
+    'comment_add' => '添加评论',
     'comment_placeholder' => '在这里评论',
     'comment_count' => '{0} 无评论|[1,*] :count条评论',
     'comment_save' => '保存评论',
@@ -302,10 +306,9 @@ return [
     'comment_delete_confirm' => '你确定要删除这条评论？',
     'comment_in_reply_to' => '回复 :commentId',
 
-    /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => '您确定要删除此修订版吗？',
+    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => '修订删除',
     'revision_cannot_delete_latest' => '无法删除最新版本。'
 ];
