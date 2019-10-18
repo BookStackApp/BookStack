@@ -135,9 +135,8 @@ return [
     'users_social_connected' => ':socialAccount 账户已经成功绑定到您的资料。',
     'users_social_disconnected' => ':socialAccount 账户已经成功解除绑定。',
 
-    //! Since these labels are already localized this array does not need to be
-    //! translated in the language-specific files.
-    //! DELETE BELOW IF COPIED FROM EN
+    //! If editing translations files directly please ignore this in all
+    //! languages apart from en. Content will be auto-copied from en.
     //!////////////////////////////////
     'language_select' => [
         'en' => 'English',

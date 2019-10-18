@@ -66,21 +66,4 @@ class LanguageTest extends TestCase
         $this->assertTrue(config('app.rtl'), "App RTL config should have been set to true by middleware");
     }
 
-    public function test_de_informal_falls_base_to_de()
-    {
-        // Base de back value
-        $deBack = trans()->get('common.cancel', [], 'de', false);
-        $this->assertEquals('Abbrechen', $deBack);
-        // Ensure de_informal has no value set
-        $this->assertEquals('common.cancel', trans()->get('common.cancel', [], 'de_informal', false));
-        // Ensure standard trans falls back to de
-        $this->assertEquals($deBack, trans('common.cancel', [], 'de_informal'));
-        // Ensure de_informal gets its own values where set
-        $deEmailActionHelp = trans()->get('common.email_action_help', [], 'de', false);
-        $enEmailActionHelp = trans()->get('common.email_action_help', [], 'en', false);
-        $deInformalEmailActionHelp = trans()->get('common.email_action_help', [], 'de_informal', false);
-        $this->assertNotEquals($deEmailActionHelp, $deInformalEmailActionHelp);
-        $this->assertNotEquals($enEmailActionHelp, $deInformalEmailActionHelp);
-    }
-
 }

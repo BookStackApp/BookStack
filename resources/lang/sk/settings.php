@@ -135,9 +135,8 @@ return [
     'users_social_connected' => ':socialAccount účet bol úspešne pripojený k Vášmu profilu.',
     'users_social_disconnected' => ':socialAccount účet bol úspešne odpojený od Vášho profilu.',
 
-    //! Since these labels are already localized this array does not need to be
-    //! translated in the language-specific files.
-    //! DELETE BELOW IF COPIED FROM EN
+    //! If editing translations files directly please ignore this in all
+    //! languages apart from en. Content will be auto-copied from en.
     //!////////////////////////////////
     'language_select' => [
         'en' => 'English',
