@@ -27,13 +27,14 @@ return [
     'social_account_register_instructions' => 'Se você não tem uma conta, você poderá fazer o registro usando a opção :socialAccount',
     'social_driver_not_found' => 'Social driver não encontrado',
     'social_driver_not_configured' => 'Seus parâmetros socials de :socialAccount não estão configurados corretamente.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'O caminho de destino (:filePath) de upload de arquivo não possui permissão de escrita. Certifique-se que ele possui direitos de escrita no servidor.',
     'cannot_get_image_from_url' => 'Não foi possivel capturar a imagem a partir de :url',
     'cannot_create_thumbs' => 'O servidor não pôde criar as miniaturas de imagem. Por favor, verifique se a extensão GD PHP está instalada.',
     'server_upload_limit' => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
-    'uploaded' => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
+    'uploaded'  => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
     'image_upload_error' => 'Um erro aconteceu enquanto o servidor tentava efetuar o upload da imagem',
     'image_upload_type_error' => 'O tipo de imagem que está sendo feito upload é inválido',
     'file_upload_timeout' => 'O upload do arquivo expirou.',
@@ -66,7 +67,7 @@ return [
     'role_registration_default_cannot_delete' => 'Esse perfil não poderá se excluído enquando estiver registrado como o perfil padrão',
     'role_cannot_remove_only_admin' => 'Este usuário é o único usuário atribuído ao perfil de administrador. Atribua o perfil de administrador a outro usuário antes de tentar removê-lo aqui.',
 
-    // comments
+    // Comments
     'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
     'cannot_add_comment_to_draft' => 'Você não pode adicionar comentários a um rascunho.',
     'comment_add' => 'Ocorreu um erro ao adicionar o comentário.',
@@ -80,5 +81,5 @@ return [
     'error_occurred' => 'Um erro ocorreu',
     'app_down' => ':appName está fora do ar no momento',
     'back_soon' => 'Voltaremos em seguida.',
-    
+
 ];
