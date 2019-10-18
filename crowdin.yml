@@ -9,7 +9,7 @@
 # Choose file structure in crowdin
 # e.g. true or false
 #
-"preserve_hierarchy": true
+"preserve_hierarchy": false
 
 #
 # Files configuration
@@ -20,7 +20,7 @@ files: [
   # Source files filter
   # e.g. "/resources/en/*.json"
   #
-  "source" : "/en/*.php",
+  "source" : "/resources/lang/en/*.php",
 
   #
   # where translations live
