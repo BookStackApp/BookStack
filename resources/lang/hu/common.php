@@ -40,6 +40,10 @@ return [
     'add' => 'Hozzáadás',
 
     // Sort Options
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
     'sort_name' => 'Név',
     'sort_created_at' => 'Létrehozás dátuma',
     'sort_updated_at' => 'Frissítés dátuma',
@@ -55,8 +59,10 @@ return [
     'grid_view' => 'Rács nézet',
     'list_view' => 'Lista nézet',
     'default' => 'Alapértelmezés szerinti',
+    'breadcrumb' => '',
 
     // Header
+    'profile_menu' => '',
     'view_profile' => 'Profil megtekintése',
     'edit_profile' => 'Profil szerkesztése',
 
