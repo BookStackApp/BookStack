@@ -27,6 +27,7 @@ return [
     'social_account_register_instructions' => ':socialAccount beállítása használatával is lehet fiókot regisztrálni, ha még nem volt fiók létrehozva.',
     'social_driver_not_found' => 'Közösségi meghajtó nem található',
     'social_driver_not_configured' => ':socialAccount közösségi beállítások nem megfelelőek.',
+    'invite_token_expired' => '',
 
     // System
     'path_not_writable' => ':filePath elérési út nem tölthető fel. Ellenőrizni kell, hogy az útvonal a kiszolgáló számára írható.',
