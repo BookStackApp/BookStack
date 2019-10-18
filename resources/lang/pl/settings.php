@@ -1,32 +1,35 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Ustawienia',
     'settings_save' => 'Zapisz ustawienia',
     'settings_save_success' => 'Ustawienia zapisane',
 
-    /**
-     * App settings
-     */
-
-    'app_settings' => 'Ustawienia aplikacji',
+    // App Settings
+    'app_customization' => '',
+    'app_features_security' => '',
     'app_name' => 'Nazwa aplikacji',
     'app_name_desc' => 'Ta nazwa jest wyświetlana w nagłówku i e-mailach.',
     'app_name_header' => 'Pokazać nazwę aplikacji w nagłówku?',
+    'app_public_access' => '',
+    'app_public_access_desc' => '',
+    'app_public_access_desc_guest' => '',
+    'app_public_access_toggle' => '',
     'app_public_viewing' => 'Zezwolić na publiczne przeglądanie?',
     'app_secure_images' => 'Włączyć przesyłanie obrazów o wyższym poziomie bezpieczeństwa?',
+    'app_secure_images_toggle' => '',
     'app_secure_images_desc' => 'Ze względów wydajnościowych wszystkie obrazki są publiczne. Ta opcja dodaje dodatkowy, trudny do odgadnięcia losowy ciąg na początku nazwy obrazka. Upewnij się że indeksowanie katalogów jest zablokowane, aby uniemożliwić łatwy dostęp do obrazków.',
     'app_editor' => 'Edytor strony',
     'app_editor_desc' => 'Wybierz edytor używany przez użytkowników do edycji zawartości.',
     'app_custom_html' => 'Własna zawartość w tagu <head>',
     'app_custom_html_desc' => 'Zawartość dodana tutaj zostanie dołączona na dole sekcji <head> każdej strony. Przydatne przy nadpisywaniu styli lub dodawaniu analityki.',
+    'app_custom_html_disabled_notice' => '',
     'app_logo' => 'Logo aplikacji',
     'app_logo_desc' => 'Ten obrazek powinien mieć nie więcej niż 43px wysokosci. <br>Większe obrazki zostaną zmniejszone.',
     'app_primary_color' => 'Podstawowy kolor aplikacji',
@@ -35,25 +38,23 @@ return [
     'app_homepage_desc' => 'Wybierz widok, który będzie wyświetlany na stronie głównej zamiast w widoku domyślnego. Uprawnienia dostępowe są ignorowane dla wybranych stron.',
     'app_homepage_select' => 'Wybierz stronę',
     'app_disable_comments' => 'Wyłącz komentarze',
+    'app_disable_comments_toggle' => '',
     'app_disable_comments_desc' => 'Wyłącz komentarze na wszystkich stronach w aplikacji. Istniejące komentarze nie będą pokazywane.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Ustawienia rejestracji',
-    'reg_allow' => 'Zezwolić na rejestrację?',
+    'reg_enable' => '',
+    'reg_enable_toggle' => '',
+    'reg_enable_desc' => '',
     'reg_default_role' => 'Domyślna rola użytkownika po rejestracji',
-    'reg_confirm_email' => 'Wymagać potwierdzenia adresu e-mail?',
+    'reg_email_confirmation' => '',
+    'reg_email_confirmation_toggle' => '',
     'reg_confirm_email_desc' => 'Jeśli restrykcje domenowe zostały ustawione, potwierdzenie adresu stanie się konieczne, a poniższa wartośc zostanie zignorowana.',
     'reg_confirm_restrict_domain' => 'Restrykcje domenowe dot. adresu e-mail',
     'reg_confirm_restrict_domain_desc' => 'Wprowadź listę domen adresów e-mail, rozdzieloną przecinkami, którym chciałbyś zezwolić na rejestrację. Wymusi to konieczność potwierdzenia adresu e-mail przez użytkownika przed uzyskaniem dostępu do aplikacji. <br> Pamiętaj, że użytkownicy będą mogli zmienić adres e-mail po rejestracji.',
     'reg_confirm_restrict_domain_placeholder' => 'Brak restrykcji',
 
-    /**
-     * Maintenance settings
-     */
-
+    // Maintenance settings
     'maint' => 'Konserwacja',
     'maint_image_cleanup' => 'Czyszczenie obrazków',
     'maint_image_cleanup_desc' => "Skanuje zawartość strony i poprzednie wersje, aby sprawdzić, które obrazy i rysunki są aktualnie używane, a które obrazy są zbędne. Przed uruchomieniem tej opcji należy utworzyć pełną kopię zapasową bazy danych i obrazków.",
@@ -63,10 +64,7 @@ return [
     'maint_image_cleanup_success' => ':count potencjalnie nieużywane obrazki zostały znalezione i usunięte!',
     'maint_image_cleanup_nothing_found' => 'Nie znaleziono żadnych nieużywanych obrazków. Nic nie zostało usunięte!',
 
-    /**
-     * Role settings
-     */
-
+    // Role Settings
     'roles' => 'Role',
     'role_user_roles' => 'Role użytkowników',
     'role_create' => 'Utwórz nową rolę',
@@ -87,6 +85,7 @@ return [
     'role_manage_roles' => 'Zarządzanie rolami i uprawnieniami ról',
     'role_manage_entity_permissions' => 'Zarządzanie uprawnieniami podręczników, rozdziałów i stron',
     'role_manage_own_entity_permissions' => 'Zarządzanie uprawnieniami własnych podręczników, rozdziałów i stron',
+    'role_manage_page_templates' => '',
     'role_manage_settings' => 'Zarządzanie ustawieniami aplikacji',
     'role_asset' => 'Zarządzanie zasobami',
     'role_asset_desc' => 'Te ustawienia kontrolują zarządzanie zasobami systemu. Uprawnienia podręczników, rozdziałów i stron nadpisują te ustawienia.',
@@ -99,16 +98,22 @@ return [
     'role_users' => 'Użytkownicy w tej roli',
     'role_users_none' => 'Brak użytkowników zapisanych do tej roli',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Użytkownicy',
     'user_profile' => 'Profil użytkownika',
     'users_add_new' => 'Dodaj użytkownika',
     'users_search' => 'Wyszukaj użytkownika',
+    'users_details' => '',
+    'users_details_desc' => '',
+    'users_details_desc_no_email' => '',
     'users_role' => 'Role użytkownika',
+    'users_role_desc' => '',
+    'users_password' => '',
+    'users_password_desc' => '',
+    'users_send_invite_text' => '',
+    'users_send_invite_option' => '',
     'users_external_auth_id' => 'Zewnętrzne identyfikatory autentykacji',
+    'users_external_auth_id_desc' => '',
     'users_password_warning' => 'Wypełnij poniżej tylko jeśli chcesz zmienić swoje hasło:',
     'users_system_public' => 'Ten użytkownik reprezentuje każdego gościa odwiedzającego tę aplikację. Nie można się na niego zalogować, lecz jest przyznawany automatycznie.',
     'users_delete' => 'Usuń użytkownika',
@@ -122,10 +127,41 @@ return [
     'users_avatar' => 'Avatar użytkownika',
     'users_avatar_desc' => 'Ten obrazek powinien posiadać wymiary 256x256px.',
     'users_preferred_language' => 'Preferowany język',
+    'users_preferred_language_desc' => '',
     'users_social_accounts' => 'Konta społecznościowe',
     'users_social_accounts_info' => 'Tutaj możesz połączyć kilka kont społecznościowych w celu łatwiejszego i szybszego logowania. Odłączenie konta tutaj nie autoryzowało dostępu. Odwołaj dostęp z ustawień profilu na podłączonym koncie społecznościowym.',
     'users_social_connect' => 'Podłącz konto',
     'users_social_disconnect' => 'Odłącz konto',
     'users_social_connected' => ':socialAccount zostało dodane do Twojego profilu.',
     'users_social_disconnected' => ':socialAccount zostało odłączone od Twojego profilu.',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => '',
+        'ar' => '',
+        'de' => '',
+        'de_informal' => '',
+        'es' => '',
+        'es_AR' => '',
+        'fr' => '',
+        'nl' => '',
+        'pt_BR' => '',
+        'sk' => '',
+        'cs' => '',
+        'sv' => '',
+        'kr' => '',
+        'ja' => '',
+        'pl' => '',
+        'it' => '',
+        'ru' => '',
+        'uk' => '',
+        'zh_CN' => '',
+        'zh_TW' => '',
+        'hu' => '',
+        'tr' => '',
+    ]
+    //!////////////////////////////////
 ];
