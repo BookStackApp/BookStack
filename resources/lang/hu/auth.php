@@ -18,7 +18,7 @@ return [
 
     'name' => 'Név',
     'username' => 'Felhasználónév',
-    'email' => 'Email',
+    'email' => '',
     'password' => 'Jelszó',
     'password_confirm' => 'Jelszó megerősítése',
     'password_hint' => 'Négy karakternél hosszabbnak kell lennie',
@@ -64,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Rá kell kattintani a regisztráció után nem sokkal elküldött emailben található hivatkozásra.',
     'email_not_confirmed_resend' => 'Ha nem érkezik meg a megerősítő email, a lenti űrlap beküldésével újra lehet küldeni.',
     'email_not_confirmed_resend_button' => 'Megerősítő email újraküldése',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
