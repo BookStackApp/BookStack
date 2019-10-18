@@ -32,6 +32,7 @@
                             <a @click="updateLanguage('SQL')">SQL</a>
                             <a @click="updateLanguage('XML')">XML</a>
                             <a @click="updateLanguage('YAML')">YAML</a>
+                            <a @click="updateLanguage('PASCAL')">Pascal</a>
                         </small>
                     </div>
                     <input @keypress.enter="save()" id="code-editor-language" type="text" @input="updateEditorMode(language)" v-model="language">
