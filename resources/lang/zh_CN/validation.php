@@ -1,108 +1,114 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
-    'accepted'             => ':attribute 需要被同意。',
-    'active_url'           => ':attribute 并不是一个有效的网址',
-    'after'                => ':attribute 必须是在 :date 后的日期。',
-    'alpha'                => ':attribute 只能包含字母。',
-    'alpha_dash'           => ':attribute 只能包含字母、数字和短横线。',
-    'alpha_num'            => ':attribute 只能包含字母和数字。',
-    'array'                => ':attribute 必须是一个数组。',
-    'before'               => ':attribute 必须是在 :date 前的日期。',
+    // Standard laravel validation lines
+    'accepted'             => '',
+    'active_url'           => '',
+    'after'                => '',
+    'alpha'                => '',
+    'alpha_dash'           => '',
+    'alpha_num'            => '',
+    'array'                => '',
+    'before'               => '',
     'between'              => [
-        'numeric' => ':attribute 必须在:min到:max之间。',
-        'file'    => ':attribute 必须为:min到:max KB。',
-        'string'  => ':attribute 必须在:min到:max个字符之间。',
-        'array'   => ':attribute 必须在:min到:max项之间.',
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
     ],
-    'boolean'              => ':attribute 字段必须为真或假。',
-    'confirmed'            => ':attribute 确认不符。',
-    'date'                 => ':attribute 不是一个有效的日期。',
-    'date_format'          => ':attribute 不匹配格式 :format。',
-    'different'            => ':attribute 和 :other 必须不同。',
-    'digits'               => ':attribute 必须为:digits位数。',
-    'digits_between'       => ':attribute 必须为:min到:max位数。',
-    'email'                => ':attribute 必须是有效的电子邮件地址。',
-    'filled'               => ':attribute 字段是必需的。',
-    'exists'               => '选中的 :attribute 无效。',
-    'image'                => ':attribute 必须是一个图片。',
-    'in'                   => '选中的 :attribute 无效。',
-    'integer'              => ':attribute 必须是一个整数。',
-    'ip'                   => ':attribute 必须是一个有效的IP地址。',
+    'boolean'              => '',
+    'confirmed'            => '',
+    'date'                 => '',
+    'date_format'          => '',
+    'different'            => '',
+    'digits'               => '',
+    'digits_between'       => '',
+    'email'                => '',
+    'ends_with' => '',
+    'filled'               => '',
+    'gt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'gte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'exists'               => '',
+    'image'                => '',
+    'image_extension'      => '',
+    'in'                   => '',
+    'integer'              => '',
+    'ip'                   => '',
+    'ipv4'                 => '',
+    'ipv6'                 => '',
+    'json'                 => '',
+    'lt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'lte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'max'                  => [
-        'numeric' => ':attribute 不能超过:max。',
-        'file'    => ':attribute 不能超过:max KB。',
-        'string'  => ':attribute 不能超过:max个字符。',
-        'array'   => ':attribute 不能有超过:max项。',
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
     ],
-    'mimes'                => ':attribute 必须是 :values 类型的文件。',
+    'mimes'                => '',
     'min'                  => [
-        'numeric' => ':attribute 至少为:min。',
-        'file'    => ':attribute 至少为:min KB。',
-        'string'  => ':attribute 至少为:min个字符。',
-        'array'   => ':attribute 至少有:min项。',
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
     ],
-    'not_in'               => '选中的 :attribute 无效。',
-    'numeric'              => ':attribute 必须是一个数。',
-    'regex'                => ':attribute 格式无效。',
-    'required'             => ':attribute 字段是必需的。',
-    'required_if'          => '当:other为:value时，:attribute 字段是必需的。',
-    'required_with'        => '当:values存在时，:attribute 字段是必需的。',
-    'required_with_all'    => '当:values存在时，:attribute 字段是必需的。',
-    'required_without'     => '当:values不存在时，:attribute 字段是必需的。',
-    'required_without_all' => '当:values均不存在时，:attribute 字段是必需的。',
-    'same'                 => ':attribute 与 :other 必须匹配。',
+    'no_double_extension'  => '',
+    'not_in'               => '',
+    'not_regex'            => '',
+    'numeric'              => '',
+    'regex'                => '',
+    'required'             => '',
+    'required_if'          => '',
+    'required_with'        => '',
+    'required_with_all'    => '',
+    'required_without'     => '',
+    'required_without_all' => '',
+    'same'                 => '',
     'size'                 => [
-        'numeric' => ':attribute 必须为:size。',
-        'file'    => ':attribute 必须为:size KB。',
-        'string'  => ':attribute 必须为:size个字符。',
-        'array'   => ':attribute 必须包含:size项。',
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
     ],
-    'string'               => ':attribute 必须是字符串。',
-    'timezone'             => ':attribute 必须是有效的区域。',
-    'unique'               => ':attribute 已经被使用。',
-    'url'                  => ':attribute 格式无效。',
+    'string'               => '',
+    'timezone'             => '',
+    'unique'               => '',
+    'url'                  => '',
+    'uploaded'             => '',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => '需要确认密码',
+            'required_with' => '',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];
