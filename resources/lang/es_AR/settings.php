@@ -3,19 +3,15 @@
  * Settings text strings
  * Contains all text strings used in the general settings sections of BookStack
  * including users and roles.
- * 
- * Cadenas de texto de la configuración
- * Contiene todas las cadenas de texto usadas en la sección de configuración general
- * de BookStack, incluyendo usuarios y roles.
  */
 return [
 
-    // Common Messages - Mensajes Comunes
+    // Common Messages
     'settings' => 'Ajustes',
     'settings_save' => 'Guardar ajustes',
     'settings_save_success' => 'Ajustes guardados',
 
-    // App Settings - Configuraciones de la aplicación
+    // App Settings
     'app_customization' => 'Personalización',
     'app_features_security' => 'Características y Seguridad',
     'app_name' => 'Nombre de aplicación',
@@ -45,7 +41,7 @@ return [
     'app_disable_comments_toggle' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
-    // Registration settings - Configuraciones de registro
+    // Registration Settings
     'reg_settings' => 'Ajustes de registro',
     'reg_enable' => 'Habilitar Registro',
     'reg_enable_toggle' => 'Habilitar registro',
@@ -58,7 +54,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los correos electrónicos del dominio a los que les gustaría restringir el registro por dominio. A los usuarios les será enviado un correo elctrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Note que a los usuarios se les permitirá cambiar sus direcciones de correo electrónico luego de un registro éxioso.',
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
 
-    // Maintenance settings - Configuraciones de mantenimiento
+    // Maintenance settings
     'maint' => 'Mantenimiento',
     'maint_image_cleanup' => 'Limpiar imágenes',
     'maint_image_cleanup_desc' => "Analizar contenido de páginas y revisiones para detectar cuáles imágenes y dibujos están en uso y cuáles son redundantes. Asegúrese de crear un respaldo completo de imágenes y base de datos antes de ejecutar esta tarea.",
@@ -68,7 +64,7 @@ return [
     'maint_image_cleanup_success' => 'Se encontraron y se eliminaron :count imágenes pontencialmente sin uso!',
     'maint_image_cleanup_nothing_found' => 'No se encotraron imágenes sin usar, Nada eliminado!',
 
-    // Role settings - Configuraciones de roles
+    // Role Settings
     'roles' => 'Roles',
     'role_user_roles' => 'Roles de usuario',
     'role_create' => 'Crear nuevo rol',
@@ -103,7 +99,7 @@ return [
     'role_users' => 'Usuarios en este rol',
     'role_users_none' => 'No hay usuarios asignados a este rol',
 
-    // Users - Usuarios
+    // Users
     'users' => 'Usuarios',
     'user_profile' => 'Perfil de usuario',
     'users_add_new' => 'Agregar nuevo usuario',
@@ -112,13 +108,13 @@ return [
     'users_details_desc' => 'Asigne un nombre de visualización y una dirección de correo electrónico para este usuario. La dirección de correo electrónico se usará pra ingresar a la aplicación.',
     'users_details_desc_no_email' => 'Asigne un nombre de visualización a este usuario para que los demás puedan reconocerlo.',
     'users_role' => 'Roles de usuario',
-    'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
-    'users_password' => 'User Password',
+    'users_role_desc' => 'Selecciona los roles a los que será asignado este usuario. Si se asignan varios roles los permisos se acumularán y recibirá todas las habilidades de los roles asignados.',
+    'users_password' => 'Contraseña de Usuario',
     'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 5 characters long.',
     'users_send_invite_text' => 'Puede optar por enviar a este usuario un correo electrónico de invitación que les permita establecer su propia contraseña; de lo contrario, puede establecerla contraseña usted mismo.',
     'users_send_invite_option' => 'Enviar correo electrónico de invitación al usuario.',
     'users_external_auth_id' => 'ID externo de autenticación',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your LDAP system.',
+    'users_external_auth_id_desc' => 'Esta es la ID usada para asociar este usuario con LDAP.',
     'users_password_warning' => 'Solo rellene a continuación si desea cambiar su password:',
     'users_system_public' => 'Este usuario representa cualquier usuario invitado que visita la aplicación. No puede utilizarse para hacer login sino que es asignado automáticamente.',
     'users_delete' => 'Borrar usuario',
@@ -132,7 +128,7 @@ return [
     'users_avatar' => 'Avatar del usuario',
     'users_avatar_desc' => 'Esta imagen debe ser de aproximadamente 256px por lado.',
     'users_preferred_language' => 'Lenguaje preferido',
-    'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
+    'users_preferred_language_desc' => 'Esta opción cambiará el idioma de la interfaz de usuario en la aplicación. No afectará al contenido creado por los usuarios.',
     'users_social_accounts' => 'Cuentas sociales',
     'users_social_accounts_info' => 'Aquí puede conectar sus otras cuentas para un acceso rápido y más fácil. Desconectando una cuenta aquí no revoca accesos ya autorizados. Revoque el acceso desde los ajustes de perfil en la cuenta social conectada.',
     'users_social_connect' => 'Conectar cuenta',
@@ -140,4 +136,33 @@ return [
     'users_social_connected' => 'La cuenta :socialAccount ha sido exitosamente añadida a su perfil.',
     'users_social_disconnected' => 'La cuenta :socialAccount ha sido desconectada exitosamente de su perfil.',
 
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];
