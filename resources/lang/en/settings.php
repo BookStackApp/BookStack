@@ -152,7 +152,7 @@ return [
         'sk' => 'Slovensky',
         'cs' => 'Česky',
         'sv' => 'Svenska',
-        'kr' => '한국어',
+        'ko' => '한국어',
         'ja' => '日本語',
         'pl' => 'Polski',
         'it' => 'Italian',
