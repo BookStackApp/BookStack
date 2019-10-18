@@ -64,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Por favor, clique no link no e-mail que foi enviado após o registro.',
     'email_not_confirmed_resend' => 'Caso não encontre o e-mail você poderá reenviar a confirmação usando o formulário abaixo.',
     'email_not_confirmed_resend_button' => 'Reenviar o e-mail de confirmação',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
