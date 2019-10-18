@@ -40,6 +40,10 @@ return [
     'add' => 'Adicionar',
 
     // Sort Options
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
     'sort_name' => 'Nome',
     'sort_created_at' => 'Data de Criação',
     'sort_updated_at' => 'Data de Atualização',
@@ -55,13 +59,15 @@ return [
     'grid_view' => 'Visualização em Grade',
     'list_view' => 'Visualização em Lista',
     'default' => 'Padrão',
+    'breadcrumb' => '',
 
     // Header
+    'profile_menu' => '',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => '',
     'tab_content' => 'Conteúdo',
 
     // Email Content
