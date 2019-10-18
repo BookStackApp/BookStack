@@ -30,13 +30,41 @@ return [
     'digits'               => ':attribute должен состоять из :digits цифр.',
     'digits_between'       => ':attribute должен иметь от :min до :max цифр.',
     'email'                => ':attribute должен быть корректным email адресом.',
+    'ends_with' => '',
     'filled'               => ':attribute поле необходимо.',
+    'gt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'gte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'exists'               => 'выделенный :attribute некорректен.',
     'image'                => ':attribute должен быть изображением.',
     'image_extension'      => ':attribute должен быть исправным  и содержать расширение картинки',
     'in'                   => 'выделенный :attribute некорректен.',
     'integer'              => ':attribute должно быть целое число.',
     'ip'                   => ':attribute должен быть корректным IP адресом.',
+    'ipv4'                 => '',
+    'ipv6'                 => '',
+    'json'                 => '',
+    'lt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'lte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'max'                  => [
         'numeric' => ':attribute не может быть больше чем :max.',
         'file'    => ':attribute не может быть больше чем :max килобайт.',
@@ -52,6 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute должен иметь только одно расширение файла.',
     'not_in'               => 'Выбранный :attribute некорректен.',
+    'not_regex'            => '',
     'numeric'              => ':attribute должен быть числом.',
     'regex'                => ':attribute неправильный формат.',
     'required'             => ':attribute обязательное поле.',
@@ -73,14 +102,13 @@ return [
     'url'                  => ':attribute имеет неправильный формат.',
     'uploaded'             => 'Не удалось загрузить файл. Сервер не может принимать файлы такого размера.',
 
-    //Custom validation lines
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Требуется подтверждение пароля',
         ],
     ],
 
-    //Custom validation attributes
+    // Custom validation attributes
     'attributes' => [],
-
 ];
