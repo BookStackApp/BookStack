@@ -3,79 +3,75 @@
  * Authentication Language Lines
  * The following language lines are used during authentication for various
  * messages that we need to display to the user.
- * 
- * Líneas de lenguaje para autenticación
- * Las siguientes líneas de lenguaje se utilizan para mostrar mensajes al usuario durante la autenticación.
  */
 return [
 
-    'failed' => 'Las credenciales no concuerdan con nuestros registros.',
-    'throttle' => 'Demasiados intentos fallidos de conexión. Por favor intente nuevamente en :seconds segundos.',
+    'failed' => '',
+    'throttle' => '',
 
-    // Login & Register - Ingreso y Registro
-    'sign_up' => 'Registrarse',
-    'log_in' => 'Acceder',
-    'log_in_with' => 'Acceder con :socialDriver',
-    'sign_up_with' => 'Registrarse con :socialDriver',
-    'logout' => 'Salir',
+    // Login & Register
+    'sign_up' => '',
+    'log_in' => '',
+    'log_in_with' => '',
+    'sign_up_with' => '',
+    'logout' => '',
 
-    'name' => 'Nombre',
-    'username' => 'Nombre de usuario',
-    'email' => 'Correo electrónico',
-    'password' => 'Contraseña',
-    'password_confirm' => 'Confirmar contraseña',
-    'password_hint' => 'Debe contener al menos 7 caracteres',
-    'forgot_password' => '¿Olvidó la contraseña?',
-    'remember_me' => 'Recordarme',
-    'ldap_email_hint' => 'Por favor introduzca un correo electrónico para utilizar con esta cuenta.',
-    'create_account' => 'Crear una cuenta',
-    'already_have_account' => '¿Ya tiene una cuenta?',
-    'dont_have_account' => '¿No tiene una cuenta?',
-    'social_login' => 'Acceso con cuenta Social',
-    'social_registration' => 'Registro con cuenta Social',
-    'social_registration_text' => 'Registrar y entrar utilizando otro servicio.',
+    'name' => '',
+    'username' => '',
+    'email' => '',
+    'password' => '',
+    'password_confirm' => '',
+    'password_hint' => '',
+    'forgot_password' => '',
+    'remember_me' => '',
+    'ldap_email_hint' => '',
+    'create_account' => '',
+    'already_have_account' => '',
+    'dont_have_account' => '',
+    'social_login' => '',
+    'social_registration' => '',
+    'social_registration_text' => '',
 
-    'register_thanks' => '¡Gracias por registrarse!',
-    'register_confirm' => 'Por favor verifique su correo electrónico y presione en el botón de confirmación enviado para acceder a :appName.',
-    'registrations_disabled' => 'Los registros están deshabilitados actualmente',
-    'registration_email_domain_invalid' => 'Este dominio de correo electrónico no tiene acceso a esta aplicación',
-    'register_success' => '¡Gracias por registrarse! Ahora se encuentra registrado y ha accedido a la aplicación.',
-
-
-    // Password Reset - Restablecer Contraseña
-    'reset_password' => 'Restablecer la contraseña',
-    'reset_password_send_instructions' => 'Introduzca su correo electrónico a continuación y se le enviará un correo electrónico con un enlace para la restauración',
-    'reset_password_send_button' => 'Enviar enlace de restauración',
-    'reset_password_sent_success' => 'Se envió un enlace para restablecer la contraseña a :email.',
-    'reset_password_success' => 'Su contraseña se restableció con éxito.',
-
-    'email_reset_subject' => 'Restauración de la contraseña de para la aplicación :appName',
-    'email_reset_text' => 'Ud. esta recibiendo este correo electrónico debido a que recibimos una solicitud de restauración de la contraseña de su cuenta.',
-    'email_reset_not_requested' => 'Si ud. no solicitó un cambio de contraseña, no se requiere ninguna acción.',
+    'register_thanks' => '',
+    'register_confirm' => '',
+    'registrations_disabled' => '',
+    'registration_email_domain_invalid' => '',
+    'register_success' => '',
 
 
-    // Email Confirmation - Confirmación de correo electrónico
-    'email_confirm_subject' => 'Confirme su correo electrónico en :appName',
-    'email_confirm_greeting' => '¡Gracias por unirse a :appName!',
-    'email_confirm_text' => 'Por favor confirme su dirección de correo electrónico presionando en el siguiente botón:',
-    'email_confirm_action' => 'Confirmar correo electrónico',
-    'email_confirm_send_error' => 'Se pidió confirmación de correo electrónico pero el sistema no pudo enviar el correo electrónico. Contacte al administrador para asegurarse que el correo electrónico está configurado correctamente.',
-    'email_confirm_success' => '¡Su correo electrónico hasido confirmado!',
-    'email_confirm_resent' => 'Correo electrónico de confirmación reenviado, Por favor verifique su bandeja de entrada.',
+    // Password Reset
+    'reset_password' => '',
+    'reset_password_send_instructions' => '',
+    'reset_password_send_button' => '',
+    'reset_password_sent_success' => '',
+    'reset_password_success' => '',
+    'email_reset_subject' => '',
+    'email_reset_text' => '',
+    'email_reset_not_requested' => '',
 
-    'email_not_confirmed' => 'Dirección de correo electrónico no confirmada',
-    'email_not_confirmed_text' => 'Su cuenta de correo electrónico todavía no ha sido confirmada.',
-    'email_not_confirmed_click_link' => 'Por favor verifique el correo electrónico con el enlace de confirmación que fue enviado luego de registrarse.',
-    'email_not_confirmed_resend' => 'Si no puede encontrar el correo electrónico, puede solicitar el renvío del correo electrónico de confirmación rellenando el formulario a continuación.',
-    'email_not_confirmed_resend_button' => 'Reenviar correo electrónico de confirmación',
+
+    // Email Confirmation
+    'email_confirm_subject' => '',
+    'email_confirm_greeting' => '',
+    'email_confirm_text' => '',
+    'email_confirm_action' => '',
+    'email_confirm_send_error' => '',
+    'email_confirm_success' => '',
+    'email_confirm_resent' => '',
+
+    'email_not_confirmed' => '',
+    'email_not_confirmed_text' => '',
+    'email_not_confirmed_click_link' => '',
+    'email_not_confirmed_resend' => '',
+    'email_not_confirmed_resend_button' => '',
 
     // User Invite
-    'user_invite_email_subject' => 'Lo invitaron a unirse a :appName!',
-    'user_invite_email_greeting' => 'Se creó una cuenta para usted en :appName.',
-    'user_invite_email_text' => 'Presione el botón de abajo para establecer una contraseña y tener acceso access:',
-    'user_invite_email_action' => 'Establecer la contraseña de la cuenta',
-    'user_invite_page_welcome' => 'Bienvenido a :appName!',
-    'user_invite_page_text' => 'Para finalizar la cuenta y tener acceso debe establcer una contraseña que utilizará para ingresar a :appName en visitas futuras.',
-    'user_invite_page_confirm_button' => 'Confirmar Contraseña',
-    'user_invite_success' => 'Contraseña establecida, ahora tiene acceso a :appName!'
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
