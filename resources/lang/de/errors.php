@@ -1,11 +1,13 @@
 <?php
+/**
+ * Text shown in error messaging.
+ */
 return [
-    /**
-     * Error text strings.
-     */
-    // Pages
+
+    // Permissions
     'permission' => 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen.',
     'permissionJson' => 'Sie haben keine Berechtigung, die angeforderte Aktion auszuführen.',
+
     // Auth
     'error_user_exists_different_creds' => 'Ein Benutzer mit der E-Mail-Adresse :email ist bereits mit anderen Anmeldedaten registriert.',
     'email_already_confirmed' => 'Die E-Mail-Adresse ist bereits bestätigt. Bitte melden Sie sich an.',
@@ -25,6 +27,8 @@ return [
     'social_account_register_instructions' => 'Wenn Sie bisher keinen Social-Media Konto besitzen, können Sie ein solches Konto mit der :socialAccount Option anlegen.',
     'social_driver_not_found' => 'Treiber für Social-Media-Konten nicht gefunden',
     'social_driver_not_configured' => 'Ihr :socialAccount-Konto ist nicht korrekt konfiguriert.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+
     // System
     'path_not_writable' => 'Die Datei kann nicht in den angegebenen Pfad :filePath hochgeladen werden. Stellen Sie sicher, dass dieser Ordner auf dem Server beschreibbar ist.',
     'cannot_get_image_from_url' => 'Bild konnte nicht von der URL :url geladen werden.',
@@ -38,21 +42,25 @@ return [
     // Attachments
     'attachment_page_mismatch' => 'Die Seite stimmte nach dem Hochladen des Anhangs nicht überein.',
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',
+
     // Pages
     'page_draft_autosave_fail' => 'Fehler beim Speichern des Entwurfs. Stellen Sie sicher, dass Sie mit dem Internet verbunden sind, bevor Sie den Entwurf dieser Seite speichern.',
     'page_custom_home_deletion' => 'Eine als Startseite gesetzte Seite kann nicht gelöscht werden.',
+
     // Entities
     'entity_not_found' => 'Eintrag nicht gefunden',
-    'book_not_found' => 'Buch nicht gefunden',
     'bookshelf_not_found' => 'Regal nicht gefunden',
+    'book_not_found' => 'Buch nicht gefunden',
     'page_not_found' => 'Seite nicht gefunden',
     'chapter_not_found' => 'Kapitel nicht gefunden',
     'selected_book_not_found' => 'Das gewählte Buch wurde nicht gefunden.',
     'selected_book_chapter_not_found' => 'Das gewählte Buch oder Kapitel wurde nicht gefunden.',
     'guests_cannot_save_drafts' => 'Gäste können keine Entwürfe speichern',
+
     // Users
     'users_cannot_delete_only_admin' => 'Sie können den einzigen Administrator nicht löschen.',
     'users_cannot_delete_guest' => 'Sie können den Gast-Benutzer nicht löschen',
+
     // Roles
     'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden.',
     'role_system_cannot_be_deleted' => 'Dies ist eine Systemrolle und kann nicht gelöscht werden',
@@ -65,11 +73,13 @@ return [
     'comment_add' => 'Beim Hinzufügen des Kommentars ist ein Fehler aufgetreten.',
     'comment_delete' => 'Beim Löschen des Kommentars ist ein Fehler aufgetreten.',
     'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen',
+
     // Error pages
     '404_page_not_found' => 'Seite nicht gefunden',
     'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Sie angefordert haben, wurde nicht gefunden.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
     'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',
-    'back_soon' => 'Wir werden so schnell wie möglich wieder online sein.'
+    'back_soon' => 'Wir werden so schnell wie möglich wieder online sein.',
+
 ];
