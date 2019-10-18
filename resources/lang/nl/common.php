@@ -1,7 +1,9 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    
     // Buttons
     'cancel' => 'Annuleren',
     'confirm' => 'Bevestigen',
@@ -11,7 +13,7 @@ return [
     'select' => 'Kies',
     'toggle_all' => 'Toggle Alles',
     'more' => 'Meer',
-    
+
     // Form Labels
     'name' => 'Naam',
     'description' => 'Beschrijving',
@@ -24,7 +26,7 @@ return [
     'view' => 'Bekijk',
     'view_all' => 'Bekijk Alle',
     'create' => 'Aanmaken',
-    'update' => 'Update',
+    'update' => '',
     'edit' => 'Bewerk',
     'sort' => 'Sorteer',
     'move' => 'Verplaats',
@@ -33,15 +35,19 @@ return [
     'delete' => 'Verwijder',
     'search' => 'Zoek',
     'search_clear' => 'Zoekopdracht wissen',
-    'reset' => 'Reset',
+    'reset' => '',
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
 
     // Sort Options
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
     'sort_name' => 'Naam',
     'sort_created_at' => 'Aanmaakdatum',
     'sort_updated_at' => 'Gewijzigd op',
-    
+
     // Misc
     'deleted_user' => 'Verwijderde gebruiker',
     'no_activity' => 'Geen activiteiten',
@@ -49,24 +55,22 @@ return [
     'back_to_top' => 'Terug naar boven',
     'toggle_details' => 'Details Weergeven',
     'toggle_thumbnails' => 'Thumbnails Weergeven',
-    'details' => 'Details',
+    'details' => '',
     'grid_view' => 'Grid weergave',
     'list_view' => 'Lijst weergave',
     'default' => 'Standaard',
+    'breadcrumb' => '',
 
-    /**
-     * Header
-     */
+    // Header
+    'profile_menu' => '',
     'view_profile' => 'Profiel Weergeven',
     'edit_profile' => 'Profiel Bewerken',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => '',
     'tab_content' => 'Inhoud',
-    
-    /**
-     * Email Content
-     */
+
+    // Email Content
     'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieer en plak de onderstaande URL in je web browser:',
     'email_rights' => 'Alle rechten voorbehouden',
 ];
