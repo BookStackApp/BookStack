@@ -11,18 +11,20 @@ return [
     'save' => 'Uložit',
     'continue' => 'Pokračovat',
     'select' => 'Zvolit',
+    'toggle_all' => '',
     'more' => 'Více',
 
     // Form Labels
     'name' => 'Jméno',
     'description' => 'Popis',
-    'role' => 'Role',
+    'role' => '',
     'cover_image' => 'Obrázek na přebal',
     'cover_image_description' => 'Obrázek by měl být asi 440 × 250px.',
     
     // Actions
     'actions' => 'Akce',
     'view' => 'Pohled',
+    'view_all' => '',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
@@ -33,9 +35,18 @@ return [
     'delete' => 'Smazat',
     'search' => 'Hledat',
     'search_clear' => 'Vyčistit hledání',
-    'reset' => 'Reset',
+    'reset' => '',
     'remove' => 'Odstranit',
     'add' => 'Přidat',
+
+    // Sort Options
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
+    'sort_name' => '',
+    'sort_created_at' => '',
+    'sort_updated_at' => '',
 
     // Misc
     'deleted_user' => 'Smazaný uživatel',
@@ -48,10 +59,16 @@ return [
     'grid_view' => 'Zobrazit dlaždice',
     'list_view' => 'Zobrazit seznam',
     'default' => 'Výchozí',
+    'breadcrumb' => '',
 
     // Header
+    'profile_menu' => '',
     'view_profile' => 'Ukázat profil',
     'edit_profile' => 'Upravit profil',
+
+    // Layout tabs
+    'tab_info' => '',
+    'tab_content' => '',
 
     // Email Content
     'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko ":actionText", zkopírujte odkaz níže přímo do webového prohlížeče:',
