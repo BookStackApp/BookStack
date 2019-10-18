@@ -1,8 +1,8 @@
 <?php
 /**
  * Authentication Language Lines
- * The following language lines are used during authentication for various / Під час автентифікації використовуються наступні лінії мов для різних повідомлень
- * messages that we need to display to the user. / які нам потрібно показати користувачеві.
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
  */
 return [
 
@@ -18,7 +18,7 @@ return [
 
     'name' => 'Ім\'я',
     'username' => 'Логін',
-    'email' => 'Email',
+    'email' => '',
     'password' => 'Пароль',
     'password_confirm' => 'Підтвердження пароля',
     'password_hint' => 'Має бути більше 7 символів',
@@ -64,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Будь-ласка, натисніть на посилання в електронному листі, яке було надіслано після реєстрації.',
     'email_not_confirmed_resend' => 'Якщо ви не можете знайти електронний лист, ви можете повторно надіслати підтвердження електронною поштою, на формі нижче.',
     'email_not_confirmed_resend_button' => 'Повторне підтвердження електронної пошти',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
