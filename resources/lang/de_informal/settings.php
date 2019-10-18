@@ -1,38 +1,167 @@
 <?php
-
-// Extends 'de'
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
 
-    /**
-     * App settings
-     */
-    'app_editor_desc' => 'Wähle den Editor aus, der von allen Benutzern genutzt werden soll, um Seiten zu editieren.',
-    'app_primary_color_desc' => "Dies sollte ein HEX Wert sein.\nWenn Du nichts eingibst, wird die Anwendung auf die Standardfarbe zurückgesetzt.",
-    'app_homepage_desc' => 'Wähle eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
-    'app_homepage_books' => 'Oder wähle die Buch-Übersicht als Startseite. Das wird die Seiten-Auswahl überschreiben.',
+    // Common Messages
+    'settings' => '',
+    'settings_save' => '',
+    'settings_save_success' => '',
 
-    /**
-     * Maintenance settings
-     */
-    'maint_image_cleanup_desc' => 'Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstelle vor dem Start ein Backup Deiner Datenbank und Bilder.',
-    'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchtest Du diese Bilder löschen?',
+    // App Settings
+    'app_customization' => '',
+    'app_features_security' => '',
+    'app_name' => '',
+    'app_name_desc' => '',
+    'app_name_header' => '',
+    'app_public_access' => '',
+    'app_public_access_desc' => '',
+    'app_public_access_desc_guest' => '',
+    'app_public_access_toggle' => '',
+    'app_public_viewing' => '',
+    'app_secure_images' => '',
+    'app_secure_images_toggle' => '',
+    'app_secure_images_desc' => '',
+    'app_editor' => '',
+    'app_editor_desc' => '',
+    'app_custom_html' => '',
+    'app_custom_html_desc' => '',
+    'app_custom_html_disabled_notice' => '',
+    'app_logo' => '',
+    'app_logo_desc' => '',
+    'app_primary_color' => '',
+    'app_primary_color_desc' => '',
+    'app_homepage' => '',
+    'app_homepage_desc' => '',
+    'app_homepage_select' => '',
+    'app_disable_comments' => '',
+    'app_disable_comments_toggle' => '',
+    'app_disable_comments_desc' => '',
 
-    /**
-     * Role settings
-     */
-    'role_delete_confirm' => 'Du möchtest die Rolle ":roleName" löschen.',
-    'role_delete_users_assigned' => 'Diese Rolle ist :userCount Benutzern zugeordnet. Du kannst unten eine neue Rolle auswählen, die Du diesen Benutzern zuordnen möchtest.',
-    'role_delete_sure' => 'Bist Du sicher, dass Du diese Rolle löschen möchtest?',
+    // Registration Settings
+    'reg_settings' => '',
+    'reg_enable' => '',
+    'reg_enable_toggle' => '',
+    'reg_enable_desc' => '',
+    'reg_default_role' => '',
+    'reg_email_confirmation' => '',
+    'reg_email_confirmation_toggle' => '',
+    'reg_confirm_email_desc' => '',
+    'reg_confirm_restrict_domain' => '',
+    'reg_confirm_restrict_domain_desc' => '',
+    'reg_confirm_restrict_domain_placeholder' => '',
 
-    /**
-     * Users
-     */
-    'users_password_warning' => 'Fülle die folgenden Felder nur aus, wenn Du Dein Passwort ändern möchtest:',
-    'users_delete_confirm' => 'Bist Du sicher, dass Du diesen Benutzer löschen möchtest?',
-    'users_social_accounts_info' => 'Hier kannst Du andere Social-Media-Konten für eine schnellere und einfachere Anmeldung verknüpfen. Wenn Du ein Social-Media Konto löschst, bleibt der Zugriff erhalten. Entferne in diesem Falle die Berechtigung in Deinen Profil-Einstellungen des verknüpften Social-Media-Kontos.',
+    // Maintenance settings
+    'maint' => '',
+    'maint_image_cleanup' => '',
+    'maint_image_cleanup_desc' => "",
+    'maint_image_cleanup_ignore_revisions' => '',
+    'maint_image_cleanup_run' => '',
+    'maint_image_cleanup_warning' => '',
+    'maint_image_cleanup_success' => '',
+    'maint_image_cleanup_nothing_found' => '',
+
+    // Role Settings
+    'roles' => '',
+    'role_user_roles' => '',
+    'role_create' => '',
+    'role_create_success' => '',
+    'role_delete' => '',
+    'role_delete_confirm' => '',
+    'role_delete_users_assigned' => '',
+    'role_delete_no_migration' => "",
+    'role_delete_sure' => '',
+    'role_delete_success' => '',
+    'role_edit' => '',
+    'role_details' => '',
+    'role_name' => '',
+    'role_desc' => '',
+    'role_external_auth_id' => '',
+    'role_system' => '',
+    'role_manage_users' => '',
+    'role_manage_roles' => '',
+    'role_manage_entity_permissions' => '',
+    'role_manage_own_entity_permissions' => '',
+    'role_manage_page_templates' => '',
+    'role_manage_settings' => '',
+    'role_asset' => '',
+    'role_asset_desc' => '',
+    'role_asset_admins' => '',
+    'role_all' => '',
+    'role_own' => '',
+    'role_controlled_by_asset' => '',
+    'role_save' => '',
+    'role_update_success' => '',
+    'role_users' => '',
+    'role_users_none' => '',
+
+    // Users
+    'users' => '',
+    'user_profile' => '',
+    'users_add_new' => '',
+    'users_search' => '',
+    'users_details' => '',
+    'users_details_desc' => '',
+    'users_details_desc_no_email' => '',
+    'users_role' => '',
+    'users_role_desc' => '',
+    'users_password' => '',
+    'users_password_desc' => '',
+    'users_send_invite_text' => '',
+    'users_send_invite_option' => '',
+    'users_external_auth_id' => '',
+    'users_external_auth_id_desc' => '',
+    'users_password_warning' => '',
+    'users_system_public' => '',
+    'users_delete' => '',
+    'users_delete_named' => '',
+    'users_delete_warning' => '',
+    'users_delete_confirm' => '',
+    'users_delete_success' => '',
+    'users_edit' => '',
+    'users_edit_profile' => '',
+    'users_edit_success' => '',
+    'users_avatar' => '',
+    'users_avatar_desc' => '',
+    'users_preferred_language' => '',
+    'users_preferred_language_desc' => '',
+    'users_social_accounts' => '',
+    'users_social_accounts_info' => '',
+    'users_social_connect' => '',
+    'users_social_disconnect' => '',
+    'users_social_connected' => '',
+    'users_social_disconnected' => '',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => '',
+        'ar' => '',
+        'de' => '',
+        'de_informal' => '',
+        'es' => '',
+        'es_AR' => '',
+        'fr' => '',
+        'nl' => '',
+        'pt_BR' => '',
+        'sk' => '',
+        'cs' => '',
+        'sv' => '',
+        'kr' => '',
+        'ja' => '',
+        'pl' => '',
+        'it' => '',
+        'ru' => '',
+        'uk' => '',
+        'zh_CN' => '',
+        'zh_TW' => '',
+        'hu' => '',
+        'tr' => '',
+    ]
+    //!////////////////////////////////
 ];
