@@ -1,14 +1,17 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'أنشئت مؤخراً',
     'recently_created_pages' => 'صفحات أنشئت مؤخراً',
     'recently_updated_pages' => 'صفحات حُدثت مؤخراً',
     'recently_created_chapters' => 'فصول أنشئت مؤخراً',
     'recently_created_books' => 'كتب أنشئت مؤخراً',
+    'recently_created_shelves' => '',
     'recently_update' => 'حُدثت مؤخراً',
     'recently_viewed' => 'عُرضت مؤخراً',
     'recent_activity' => 'نشاطات حديثة',
@@ -19,7 +22,7 @@ return [
     'meta_created_name' => 'أنشئ :timeLength بواسطة :user',
     'meta_updated' => 'مُحدث :timeLength',
     'meta_updated_name' => 'مُحدث :timeLength بواسطة :user',
-    'entity_select' => 'Entity Select', // جار البحث عن الترجمة الأنسب
+    'entity_select' => '',
     'images' => 'صور',
     'my_recent_drafts' => 'مسوداتي الحديثة',
     'my_recently_viewed' => 'ما عرضته مؤخراً',
@@ -31,17 +34,13 @@ return [
     'export_pdf' => 'ملف PDF',
     'export_text' => 'ملف نص عادي',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => 'الأذونات',
     'permissions_intro' => 'في حال التفعيل, ستتم تبدية هذه الأذونات على أذونات الأدوار.',
     'permissions_enable' => 'تفعيل الأذونات المخصصة',
     'permissions_save' => 'حفظ الأذونات',
 
-    /**
-     * Search //
-     */
+    // Search
     'search_results' => 'نتائج البحث',
     'search_total_results_found' => 'عدد النتائج :count|مجموع النتائج :count',
     'search_clear' => 'مسح البحث',
@@ -52,11 +51,13 @@ return [
     'search_content_type' => 'نوع المحتوى',
     'search_exact_matches' => 'نتائج مطابقة تماماً',
     'search_tags' => 'بحث الوسوم',
+    'search_options' => '',
     'search_viewed_by_me' => 'تم استعراضها من قبلي',
     'search_not_viewed_by_me' => 'لم يتم استعراضها من قبلي',
     'search_permissions_set' => 'حزمة الأذونات',
     'search_created_by_me' => 'أنشئت بواسطتي',
     'search_updated_by_me' => 'حُدثت بواسطتي',
+    'search_date_options' => '',
     'search_updated_before' => 'حدثت قبل',
     'search_updated_after' => 'حدثت بعد',
     'search_created_before' => 'أنشئت قبل',
@@ -64,9 +65,39 @@ return [
     'search_set_date' => 'تحديد التاريخ',
     'search_update' => 'تحديث البحث',
 
-    /**
-     * Books
-     */
+    // Shelves
+    'shelf' => '',
+    'shelves' => '',
+    'x_shelves' => '',
+    'shelves_long' => '',
+    'shelves_empty' => '',
+    'shelves_create' => '',
+    'shelves_popular' => '',
+    'shelves_new' => '',
+    'shelves_new_action' => '',
+    'shelves_popular_empty' => '',
+    'shelves_new_empty' => '',
+    'shelves_save' => '',
+    'shelves_books' => '',
+    'shelves_add_books' => '',
+    'shelves_drag_books' => '',
+    'shelves_empty_contents' => '',
+    'shelves_edit_and_assign' => '',
+    'shelves_edit_named' => '',
+    'shelves_edit' => '',
+    'shelves_delete' => '',
+    'shelves_delete_named' => '',
+    'shelves_delete_explain' => "",
+    'shelves_delete_confirmation' => '',
+    'shelves_permissions' => '',
+    'shelves_permissions_updated' => '',
+    'shelves_permissions_active' => '',
+    'shelves_copy_permissions_to_books' => '',
+    'shelves_copy_permissions' => '',
+    'shelves_copy_permissions_explain' => '',
+    'shelves_copy_permission_success' => '',
+
+    // Books
     'book' => 'كتاب',
     'books' => 'كتب',
     'x_books' => ':count كتاب|:count كتب',
@@ -74,6 +105,7 @@ return [
     'books_popular' => 'كتب رائجة',
     'books_recent' => 'كتب حديثة',
     'books_new' => 'كتب جديدة',
+    'books_new_action' => '',
     'books_popular_empty' => 'الكتب الأكثر رواجاً ستظهر هنا.',
     'books_new_empty' => 'الكتب المنشأة مؤخراً ستظهر هنا.',
     'books_create' => 'إنشاء كتاب جديد',
@@ -89,7 +121,6 @@ return [
     'books_permissions_updated' => 'تم تحديث أذونات الكتاب',
     'books_empty_contents' => 'لم يتم إنشاء أي صفحات أو فصول لهذا الكتاب.',
     'books_empty_create_page' => 'إنشاء صفحة جديدة',
-    'books_empty_or' => 'أو',
     'books_empty_sort_current_book' => 'فرز الكتاب الحالي',
     'books_empty_add_chapter' => 'إضافة فصل',
     'books_permissions_active' => 'أذونات الكتاب مفعلة',
@@ -97,12 +128,15 @@ return [
     'books_navigation' => 'تصفح الكتاب',
     'books_sort' => 'فرز محتويات الكتاب',
     'books_sort_named' => 'فرز كتاب :bookName',
+    'books_sort_name' => '',
+    'books_sort_created' => '',
+    'books_sort_updated' => '',
+    'books_sort_chapters_first' => '',
+    'books_sort_chapters_last' => '',
     'books_sort_show_other' => 'عرض كتب أخرى',
     'books_sort_save' => 'حفظ الترتيب الجديد',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'فصل',
     'chapters' => 'فصول',
     'x_chapters' => ':count فصل|:count فصول',
@@ -125,9 +159,7 @@ return [
     'chapters_permissions_success' => 'تم تحديث أذونات الفصل',
     'chapters_search_this' => 'البحث في هذا الفصل',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'صفحة',
     'pages' => 'صفحات',
     'x_pages' => ':count صفحة|:count صفحات',
@@ -144,7 +176,7 @@ return [
     'pages_delete_confirm' => 'تأكيد حذف الصفحة؟',
     'pages_delete_draft_confirm' => 'تأكيد حذف المسودة؟',
     'pages_editing_named' => ':pageName قيد التعديل',
-    'pages_edit_toggle_header' => 'إظهار / إخفاء الترويسة',
+    'pages_edit_draft_options' => '',
     'pages_edit_save_draft' => 'حفظ المسودة',
     'pages_edit_draft' => 'تعديل مسودة الصفحة',
     'pages_editing_draft' => 'المسودة قيد التعديل',
@@ -161,7 +193,7 @@ return [
     'pages_md_editor' => 'المحرر',
     'pages_md_preview' => 'معاينة',
     'pages_md_insert_image' => 'إدخال صورة',
-    'pages_md_insert_link' => 'Insert Entity Link', // جار البحث عن الترجمة الأنسب
+    'pages_md_insert_link' => '',
     'pages_md_insert_drawing' => 'إدخال رسمة',
     'pages_not_in_chapter' => 'صفحة ليست في فصل',
     'pages_move' => 'نقل الصفحة',
@@ -177,7 +209,9 @@ return [
     'pages_revision_named' => 'مراجعة صفحة :pageName',
     'pages_revisions_created_by' => 'أنشئ بواسطة',
     'pages_revisions_date' => 'تاريخ المراجعة',
-    'pages_revisions_number' => '#',
+    'pages_revisions_number' => '',
+    'pages_revisions_numbered' => '',
+    'pages_revisions_numbered_changes' => '',
     'pages_revisions_changelog' => 'سجل التعديل',
     'pages_revisions_changes' => 'التعديلات',
     'pages_revisions_current' => 'النسخة الحالية',
@@ -196,21 +230,24 @@ return [
         'start_b' => ':userName بدأ بتعديل هذه الصفحة',
         'time_a' => 'منذ أن تم تحديث هذه الصفحة',
         'time_b' => 'في آخر :minCount دقيقة/دقائق',
-        'message' => ':start :time. Take care not to overwrite each other\'s updates!', // جار البحث عن الترجمة الأنسب
+        'message' => '',
     ],
     'pages_draft_discarded' => 'تم التخلص من المسودة. تم تحديث المحرر بمحتوى الصفحة الحالي',
+    'pages_specific' => '',
+    'pages_is_template' => '',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'وسوم الصفحة',
     'chapter_tags' => 'وسوم الفصل',
     'book_tags' => 'وسوم الكتاب',
+    'shelf_tags' => '',
     'tag' => 'وسم',
     'tags' =>  'وسوم',
+    'tag_name' =>  '',
     'tag_value' => 'قيمة الوسم (اختياري)',
     'tags_explain' => "إضافة الوسوم تساعد بترتيب وتقسيم المحتوى. \n من الممكن وضع قيمة لكل وسم لترتيب أفضل وأدق.",
     'tags_add' => 'إضافة وسم آخر',
+    'tags_remove' => '',
     'attachments' => 'المرفقات',
     'attachments_explain' => 'ارفع بعض الملفات أو أرفق بعض الروابط لعرضها بصفحتك. ستكون الملفات والروابط معروضة في الشريط الجانبي للصفحة.',
     'attachments_explain_instant_save' => 'سيتم حفظ التغييرات هنا بلحظتها',
@@ -224,9 +261,9 @@ return [
     'attachments_explain_link' => 'بالإمكان إرفاق رابط في حال عدم تفضيل رفع ملف. قد يكون الرابط لصفحة أخرى أو لملف في أحد خدمات التخزين السحابي.',
     'attachments_link_name' => 'اسم الرابط',
     'attachment_link' => 'رابط المرفق',
-    'attachments_link_url' => 'Link to file', // جار البحث عن الترجمة الأنسب - هل المقصود الربط بالملف أو رابط يشير إلى ملف
+    'attachments_link_url' => '',
     'attachments_link_url_hint' => 'رابط الموقع أو الملف',
-    'attach' => 'Attach',
+    'attach' => '',
     'attachments_edit_file' => 'تعديل الملف',
     'attachments_edit_file_name' => 'اسم الملف',
     'attachments_edit_drop_upload' => 'أسقط الملفات أو اضغط هنا للرفع والاستبدال',
@@ -236,19 +273,22 @@ return [
     'attachments_file_uploaded' => 'تم رفع الملف بنجاح',
     'attachments_file_updated' => 'تم تحديث الملف بنجاح',
     'attachments_link_attached' => 'تم إرفاق الرابط بالصفحة بنجاح',
+    'templates' => '',
+    'templates_set_as_template' => '',
+    'templates_explain_set_as_template' => '',
+    'templates_replace_content' => '',
+    'templates_append_content' => '',
+    'templates_prepend_content' => '',
 
-    /**
-     * Profile View
-     */
-    'profile_user_for_x' => 'User for :time', // جار البحث عن الترجمة الأنسب
+    // Profile View
+    'profile_user_for_x' => '',
     'profile_created_content' => 'المحتوى المنشأ',
     'profile_not_created_pages' => 'لم يتم إنشاء أي صفحات بواسطة :userName',
     'profile_not_created_chapters' => 'لم يتم إنشاء أي فصول بواسطة :userName',
     'profile_not_created_books' => 'لم يتم إنشاء أي كتب بواسطة :userName',
+    'profile_not_created_shelves' => '',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'تعليق',
     'comments' => 'تعليقات',
     'comment_add' => 'إضافة تعليق',
@@ -265,4 +305,10 @@ return [
     'comment_updated_success' => 'تم تحديث التعليق',
     'comment_delete_confirm' => 'تأكيد حذف التعليق؟',
     'comment_in_reply_to' => 'رداً على :commentId',
+
+    // Revision
+    'revision_delete_confirm' => '',
+    'revision_restore_confirm' => '',
+    'revision_delete_success' => '',
+    'revision_cannot_delete_latest' => ''
 ];
