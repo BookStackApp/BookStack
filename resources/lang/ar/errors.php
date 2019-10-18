@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'لم يؤذن لك بالدخول للصفحة المطلوبة.',
@@ -27,8 +25,9 @@ return [
     'social_account_already_used_existing' => 'حساب :socialAccount مستخدَم من قبل مستخدم آخر.',
     'social_account_not_used' => 'حساب :socialAccount غير مرتبط بأي مستخدم. الرجاء ربطه من خلال إعدادات ملفكم. ',
     'social_account_register_instructions' => 'إذا لم يكن لديكم حساب فيمكنكم التجسيل باستخدام خيار :socialAccount.',
-    'social_driver_not_found' => 'Social driver not found', // جار البحث عن الترجمة الأنسب
-    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.', // جار البحث عن الترجمة الأنسب
+    'social_driver_not_found' => 'Social driver not found',
+    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'لا يمكن الرفع إلى مسار :filePath. الرجاء التأكد من قابلية الكتابة إلى الخادم.',
@@ -41,7 +40,7 @@ return [
     'file_upload_timeout' => 'انتهت عملية تحميل الملف.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update', // جار البحث عن الترجمة الأنسب
+    'attachment_page_mismatch' => 'Page mismatch during attachment update',
     'attachment_not_found' => 'لم يتم العثور على المرفق',
 
     // Pages
@@ -49,7 +48,8 @@ return [
     'page_custom_home_deletion' => 'لا يمكن حذف الصفحة إذا كانت محددة كصفحة رئيسية',
 
     // Entities
-    'entity_not_found' => 'Entity not found', // جار البحث عن الترجمة الأنسب
+    'entity_not_found' => 'Entity not found',
+    'bookshelf_not_found' => 'Bookshelf not found',
     'book_not_found' => 'لم يتم العثور على الكتاب',
     'page_not_found' => 'لم يتم العثور على الصفحة',
     'chapter_not_found' => 'لم يتم العثور على الفصل',
@@ -65,6 +65,7 @@ return [
     'role_cannot_be_edited' => 'لا يمكن تعديل هذا الدور',
     'role_system_cannot_be_deleted' => 'هذا الدور خاص بالنظام ولا يمكن حذفه',
     'role_registration_default_cannot_delete' => 'لا يمكن حذف الدور إذا كان مسجل كالدور الأساسي بعد تسجيل الحساب',
+    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
     'comment_list' => 'حصل خطأ خلال جلب التعليقات.',
@@ -80,4 +81,5 @@ return [
     'error_occurred' => 'حدث خطأ',
     'app_down' => ':appName لا يعمل حالياً',
     'back_soon' => 'سيعود للعمل قريباً.',
+
 ];

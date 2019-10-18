@@ -1,56 +1,70 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
-
+    // Common Messages
     'settings' => 'Nastavenia',
     'settings_save' => 'Uložiť nastavenia',
     'settings_save_success' => 'Nastavenia uložené',
 
-    /**
-     * App settings
-     */
-
-    'app_settings' => 'Nastavenia aplikácie',
+    // App Settings
+    'app_customization' => 'Customization',
+    'app_features_security' => 'Features & Security',
     'app_name' => 'Názov aplikácia',
     'app_name_desc' => 'Tento názov sa zobrazuje v hlavičke a v emailoch.',
     'app_name_header' => 'Zobraziť názov aplikácie v hlavičke?',
+    'app_public_access' => 'Public Access',
+    'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
+    'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
+    'app_public_access_toggle' => 'Allow public access',
     'app_public_viewing' => 'Povoliť verejné zobrazenie?',
     'app_secure_images' => 'Povoliť nahrávanie súborov so zvýšeným zabezpečením?',
+    'app_secure_images_toggle' => 'Enable higher security image uploads',
     'app_secure_images_desc' => 'Kvôli výkonu sú všetky obrázky verejné. Táto možnosť pridá pred URL obrázka náhodný, ťažko uhádnuteľný reťazec. Aby ste zabránili jednoduchému prístupu, uistite sa, že indexy priečinkov nie sú povolené.',
     'app_editor' => 'Editor stránky',
     'app_editor_desc' => 'Vyberte editor, ktorý bude používaný všetkými používateľmi na editáciu stránok.',
     'app_custom_html' => 'Vlastný HTML obsah hlavičky',
     'app_custom_html_desc' => 'Všetok text pridaný sem bude vložený naspodok <head> sekcie na každej stránke. Môže sa to zísť pri zmene štýlu alebo pre pridanie analytického kódu.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Logo aplikácie',
     'app_logo_desc' => 'Tento obrázok by mal mať 43px na výšku. <br>Veľké obrázky budú preškálované na menší rozmer.',
     'app_primary_color' => 'Primárna farba pre aplikáciu',
     'app_primary_color_desc' => 'Toto by mala byť hodnota v hex tvare. <br>Nechajte prázdne ak chcete použiť prednastavenú farbu.',
+    'app_homepage' => 'Application Homepage',
+    'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
+    'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Zakázať komentáre',
+    'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Zakázať komentáre na všetkých stránkach aplikácie. Existujúce komentáre sa nezobrazujú.',
 
-    /**
-     * Registration settings
-     */
-
+    // Registration Settings
     'reg_settings' => 'Nastavenia registrácie',
-    'reg_allow' => 'Povoliť registráciu?',
+    'reg_enable' => 'Enable Registration',
+    'reg_enable_toggle' => 'Enable registration',
+    'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
     'reg_default_role' => 'Prednastavená používateľská rola po registrácii',
-    'reg_confirm_email' => 'Vyžadovať overenie emailu?',
+    'reg_email_confirmation' => 'Email Confirmation',
+    'reg_email_confirmation_toggle' => 'Require email confirmation',
     'reg_confirm_email_desc' => 'Ak je použité obmedzenie domény, potom bude vyžadované overenie emailu a hodnota nižšie bude ignorovaná.',
     'reg_confirm_restrict_domain' => 'Obmedziť registráciu na doménu',
     'reg_confirm_restrict_domain_desc' => 'Zadajte zoznam domén, pre ktoré chcete povoliť registráciu oddelených čiarkou. Používatelia dostanú email kvôli overeniu adresy predtým ako im bude dovolené používať aplikáciu. <br> Používatelia si budú môcť po úspešnej registrácii zmeniť svoju emailovú adresu.',
     'reg_confirm_restrict_domain_placeholder' => 'Nie sú nastavené žiadne obmedzenia',
 
-    /**
-     * Role settings
-     */
+    // Maintenance settings
+    'maint' => 'Maintenance',
+    'maint_image_cleanup' => 'Cleanup Images',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
+    'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
+    'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
 
+    // Role Settings
     'roles' => 'Roly',
     'role_user_roles' => 'Používateľské roly',
     'role_create' => 'Vytvoriť novú rolu',
@@ -65,14 +79,17 @@ return [
     'role_details' => 'Detaily roly',
     'role_name' => 'Názov roly',
     'role_desc' => 'Krátky popis roly',
+    'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'Systémové oprávnenia',
     'role_manage_users' => 'Spravovať používateľov',
     'role_manage_roles' => 'Spravovať role a oprávnenia rolí',
     'role_manage_entity_permissions' => 'Spravovať všetky oprávnenia kníh, kapitol a stránok',
     'role_manage_own_entity_permissions' => 'Spravovať oprávnenia vlastných kníh, kapitol a stránok',
+    'role_manage_page_templates' => 'Manage page templates',
     'role_manage_settings' => 'Spravovať nastavenia aplikácie',
     'role_asset' => 'Oprávnenia majetku',
     'role_asset_desc' => 'Tieto oprávnenia regulujú prednastavený prístup k zdroju v systéme. Oprávnenia pre knihy, kapitoly a stránky majú vyššiu prioritu.',
+    'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'Všetko',
     'role_own' => 'Vlastné',
     'role_controlled_by_asset' => 'Regulované zdrojom, do ktorého sú nahrané',
@@ -81,19 +98,24 @@ return [
     'role_users' => 'Používatelia s touto rolou',
     'role_users_none' => 'Žiadni používatelia nemajú priradenú túto rolu',
 
-    /**
-     * Users
-     */
-
+    // Users
     'users' => 'Používatelia',
     'user_profile' => 'Profil používateľa',
     'users_add_new' => 'Pridať nového používateľa',
     'users_search' => 'Hľadať medzi používateľmi',
+    'users_details' => 'User Details',
+    'users_details_desc' => 'Set a display name and an email address for this user. The email address will be used for logging into the application.',
+    'users_details_desc_no_email' => 'Set a display name for this user so others can recognise them.',
     'users_role' => 'Používateľské roly',
+    'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
+    'users_password' => 'User Password',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 6 characters long.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Externé autentifikačné ID',
+    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your LDAP system.',
     'users_password_warning' => 'Pole nižšie vyplňte iba ak chcete zmeniť heslo:',
     'users_system_public' => 'Tento účet reprezentuje každého hosťovského používateľa, ktorý navštívi Vašu inštanciu. Nedá sa pomocou neho prihlásiť a je priradený automaticky.',
-    'users_books_view_type' => 'Preferované rozloženie pre prezeranie kníh',
     'users_delete' => 'Zmazať používateľa',
     'users_delete_named' => 'Zmazať používateľa :userName',
     'users_delete_warning' => ' Toto úplne odstráni používateľa menom \':userName\' zo systému.',
@@ -105,10 +127,41 @@ return [
     'users_avatar' => 'Avatar používateľa',
     'users_avatar_desc' => 'Tento obrázok by mal byť štvorec s rozmerom približne 256px.',
     'users_preferred_language' => 'Preferovaný jazyk',
+    'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
     'users_social_accounts' => 'Sociálne účty',
     'users_social_accounts_info' => 'Tu si môžete pripojiť iné účty pre rýchlejšie a jednoduchšie prihlásenie. Disconnecting an account here does not previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Pripojiť účet',
     'users_social_disconnect' => 'Odpojiť účet',
     'users_social_connected' => ':socialAccount účet bol úspešne pripojený k Vášmu profilu.',
     'users_social_disconnected' => ':socialAccount účet bol úspešne odpojený od Vášho profilu.',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];

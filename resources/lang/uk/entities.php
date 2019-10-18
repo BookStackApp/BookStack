@@ -1,7 +1,7 @@
 <?php
 /**
- * Text used for 'Entities' (Document Structure Elements) such as / Текст використовується для "об'єктів" (елементів структури документів), таких як
- * Books, Shelves, Chapters & Pages / Книги, Полиці, Розділи та Сторінки
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
  */
 return [
 
@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Ви впевнені, що хочете видалити цю сторінку?',
     'pages_delete_draft_confirm' => 'Ви впевнені, що хочете видалити цю чернетку?',
     'pages_editing_named' => 'Редагування сторінки :pageName',
-    'pages_edit_toggle_header' => 'Переключити заголовок',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'Зберегти чернетку',
     'pages_edit_draft' => 'Редагувати чернетку сторінки',
     'pages_editing_draft' => 'Редагування чернетки',
@@ -234,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Чернетка відхилена, редактор оновлено з поточним вмістом сторінки',
     'pages_specific' => 'Конкретна сторінка',
+    'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
     'page_tags' => 'Теги сторінки',
@@ -242,9 +243,11 @@ return [
     'shelf_tags' => 'Теги полиць',
     'tag' => 'Тег',
     'tags' =>  'Теги',
+    'tag_name' =>  'Tag Name',
     'tag_value' => 'Значення тегу (необов\'язково)',
     'tags_explain' => "Додайте кілька тегів, щоб краще класифікувати ваш вміст. \n Ви можете присвоїти значення тегу для більш глибокої організації.",
     'tags_add' => 'Додати ще один тег',
+    'tags_remove' => 'Remove this tag',
     'attachments' => 'Вкладення',
     'attachments_explain' => 'Завантажте файли, або додайте посилання, які відображатимуться на вашій сторінці. Їх буде видно на бічній панелі сторінки.',
     'attachments_explain_instant_save' => 'Зміни тут зберігаються миттєво.',
@@ -270,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'Файл успішно завантажений',
     'attachments_file_updated' => 'Файл успішно оновлено',
     'attachments_link_attached' => 'Посилання успішно додано до сторінки',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
     // Profile View
     'profile_user_for_x' => 'Користувач вже :time',

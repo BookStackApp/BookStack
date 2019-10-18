@@ -1,24 +1,27 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'Nedávno vytvorené',
     'recently_created_pages' => 'Nedávno vytvorené stránky',
     'recently_updated_pages' => 'Nedávno aktualizované stránky',
     'recently_created_chapters' => 'Nedávno vytvorené kapitoly',
     'recently_created_books' => 'Nedávno vytvorené knihy',
+    'recently_created_shelves' => 'Recently Created Shelves',
     'recently_update' => 'Nedávno aktualizované',
     'recently_viewed' => 'Nedávno zobrazené',
     'recent_activity' => 'Nedávna aktivita',
     'create_now' => 'Vytvoriť teraz',
     'revisions' => 'Revízie',
+    'meta_revision' => 'Revision #:revisionCount',
     'meta_created' => 'Vytvorené :timeLength',
     'meta_created_name' => 'Vytvorené :timeLength používateľom :user',
     'meta_updated' => 'Aktualizované :timeLength',
     'meta_updated_name' => 'Aktualizované :timeLength používateľom :user',
-    'x_pages' => ':count stránok',
     'entity_select' => 'Entita vybraná',
     'images' => 'Obrázky',
     'my_recent_drafts' => 'Moje nedávne koncepty',
@@ -31,40 +34,80 @@ return [
     'export_pdf' => 'PDF súbor',
     'export_text' => 'Súbor s čistým textom',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => 'Oprávnenia',
     'permissions_intro' => 'Ak budú tieto oprávnenia povolené, budú mať prioritu pred oprávneniami roly.',
     'permissions_enable' => 'Povoliť vlastné oprávnenia',
     'permissions_save' => 'Uložiť oprávnenia',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => 'Výsledky hľadania',
-    'search_results_page' => 'Výsledky hľadania stránky',
-    'search_results_chapter' => 'Výsledky hľadania kapitoly',
-    'search_results_book' => 'Výsledky hľadania knihy',
+    'search_total_results_found' => ':count result found|:count total results found',
     'search_clear' => 'Vyčistiť hľadanie',
-    'search_view_pages' => 'Zobraziť všetky vyhovujúce stránky',
-    'search_view_chapters' => 'Zobraziť všetky vyhovujúce kapitoly',
-    'search_view_books' => 'Zobraziť všetky vyhovujúce knihy',
     'search_no_pages' => 'Žiadne stránky nevyhovujú tomuto hľadaniu',
     'search_for_term' => 'Hľadať :term',
-    'search_page_for_term' => 'Hľadať :term medzi stránkami',
-    'search_chapter_for_term' => 'Hľadať :term medzi kapitolami',
-    'search_book_for_term' => 'Hľadať :term medzi knihami',
+    'search_more' => 'More Results',
+    'search_filters' => 'Search Filters',
+    'search_content_type' => 'Content Type',
+    'search_exact_matches' => 'Exact Matches',
+    'search_tags' => 'Tag Searches',
+    'search_options' => 'Options',
+    'search_viewed_by_me' => 'Viewed by me',
+    'search_not_viewed_by_me' => 'Not viewed by me',
+    'search_permissions_set' => 'Permissions set',
+    'search_created_by_me' => 'Created by me',
+    'search_updated_by_me' => 'Updated by me',
+    'search_date_options' => 'Date Options',
+    'search_updated_before' => 'Updated before',
+    'search_updated_after' => 'Updated after',
+    'search_created_before' => 'Created before',
+    'search_created_after' => 'Created after',
+    'search_set_date' => 'Set Date',
+    'search_update' => 'Update Search',
 
-    /**
-     * Books
-     */
+    // Shelves
+    'shelf' => 'Shelf',
+    'shelves' => 'Shelves',
+    'x_shelves' => ':count Shelf|:count Shelves',
+    'shelves_long' => 'Bookshelves',
+    'shelves_empty' => 'No shelves have been created',
+    'shelves_create' => 'Create New Shelf',
+    'shelves_popular' => 'Popular Shelves',
+    'shelves_new' => 'New Shelves',
+    'shelves_new_action' => 'New Shelf',
+    'shelves_popular_empty' => 'The most popular shelves will appear here.',
+    'shelves_new_empty' => 'The most recently created shelves will appear here.',
+    'shelves_save' => 'Save Shelf',
+    'shelves_books' => 'Books on this shelf',
+    'shelves_add_books' => 'Add books to this shelf',
+    'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_empty_contents' => 'This shelf has no books assigned to it',
+    'shelves_edit_and_assign' => 'Edit shelf to assign books',
+    'shelves_edit_named' => 'Edit Bookshelf :name',
+    'shelves_edit' => 'Edit Bookshelf',
+    'shelves_delete' => 'Delete Bookshelf',
+    'shelves_delete_named' => 'Delete Bookshelf :name',
+    'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
+    'shelves_delete_confirmation' => 'Are you sure you want to delete this bookshelf?',
+    'shelves_permissions' => 'Bookshelf Permissions',
+    'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
+    'shelves_permissions_active' => 'Bookshelf Permissions Active',
+    'shelves_copy_permissions_to_books' => 'Copy Permissions to Books',
+    'shelves_copy_permissions' => 'Copy Permissions',
+    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
+    'shelves_copy_permission_success' => 'Bookshelf permissions copied to :count books',
+
+    // Books
     'book' => 'Kniha',
     'books' => 'Knihy',
+    'x_books' => ':count Book|:count Books',
     'books_empty' => 'Žiadne knihy neboli vytvorené',
     'books_popular' => 'Populárne knihy',
     'books_recent' => 'Nedávne knihy',
+    'books_new' => 'New Books',
+    'books_new_action' => 'New Book',
     'books_popular_empty' => 'Najpopulárnejšie knihy sa objavia tu.',
+    'books_new_empty' => 'The most recently created books will appear here.',
     'books_create' => 'Vytvoriť novú knihu',
     'books_delete' => 'Zmazať knihu',
     'books_delete_named' => 'Zmazať knihu :bookName',
@@ -78,7 +121,6 @@ return [
     'books_permissions_updated' => 'Oprávnenia knihy aktualizované',
     'books_empty_contents' => 'Pre túto knihu neboli vytvorené žiadne stránky alebo kapitoly.',
     'books_empty_create_page' => 'Vytvoriť novú stránku',
-    'books_empty_or' => 'alebo',
     'books_empty_sort_current_book' => 'Zoradiť aktuálnu knihu',
     'books_empty_add_chapter' => 'Pridať kapitolu',
     'books_permissions_active' => 'Oprávnenia knihy aktívne',
@@ -86,14 +128,18 @@ return [
     'books_navigation' => 'Navigácia knihy',
     'books_sort' => 'Zoradiť obsah knihy',
     'books_sort_named' => 'Zoradiť knihu :bookName',
+    'books_sort_name' => 'Sort by Name',
+    'books_sort_created' => 'Sort by Created Date',
+    'books_sort_updated' => 'Sort by Updated Date',
+    'books_sort_chapters_first' => 'Chapters First',
+    'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => 'Zobraziť ostatné knihy',
     'books_sort_save' => 'Uložiť nové zoradenie',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'Kapitola',
     'chapters' => 'Kapitoly',
+    'x_chapters' => ':count Chapter|:count Chapters',
     'chapters_popular' => 'Populárne kapitoly',
     'chapters_new' => 'Nová kapitola',
     'chapters_create' => 'Vytvoriť novú kapitolu',
@@ -112,12 +158,12 @@ return [
     'chapters_empty' => 'V tejto kapitole nie sú teraz žiadne stránky.',
     'chapters_permissions_active' => 'Oprávnenia kapitoly aktívne',
     'chapters_permissions_success' => 'Oprávnenia kapitoly aktualizované',
+    'chapters_search_this' => 'Search this chapter',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'Stránka',
     'pages' => 'Stránky',
+    'x_pages' => ':count stránok',
     'pages_popular' => 'Populárne stránky',
     'pages_new' => 'Nová stránka',
     'pages_attachments' => 'Prílohy',
@@ -131,7 +177,7 @@ return [
     'pages_delete_confirm' => 'Ste si istý, že chcete zmazať túto stránku?',
     'pages_delete_draft_confirm' => 'Ste si istý, že chcete zmazať tento koncept stránky?',
     'pages_editing_named' => 'Upraviť stránku :pageName',
-    'pages_edit_toggle_header' => 'Prepnúť hlavičku',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'Uložiť koncept',
     'pages_edit_draft' => 'Upraviť koncept stránky',
     'pages_editing_draft' => 'Upravuje sa koncept',
@@ -149,16 +195,24 @@ return [
     'pages_md_preview' => 'Náhľad',
     'pages_md_insert_image' => 'Vložiť obrázok',
     'pages_md_insert_link' => 'Vložiť odkaz na entitu',
+    'pages_md_insert_drawing' => 'Insert Drawing',
     'pages_not_in_chapter' => 'Stránka nie je v kapitole',
     'pages_move' => 'Presunúť stránku',
     'pages_move_success' => 'Stránka presunutá do ":parentName"',
+    'pages_copy' => 'Copy Page',
+    'pages_copy_desination' => 'Copy Destination',
+    'pages_copy_success' => 'Page successfully copied',
     'pages_permissions' => 'Oprávnenia stránky',
     'pages_permissions_success' => 'Oprávnenia stránky aktualizované',
+    'pages_revision' => 'Revision',
     'pages_revisions' => 'Revízie stránky',
     'pages_revisions_named' => 'Revízie stránky :pageName',
     'pages_revision_named' => 'Revízia stránky :pageName',
     'pages_revisions_created_by' => 'Vytvoril',
     'pages_revisions_date' => 'Dátum revízie',
+    'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Revision #:id',
+    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
     'pages_revisions_changelog' => 'Záznam zmien',
     'pages_revisions_changes' => 'Zmeny',
     'pages_revisions_current' => 'Aktuálna verzia',
@@ -180,16 +234,21 @@ return [
         'message' => ':start :time. Dávajte pozor aby ste si navzájom neprepísali zmeny!',
     ],
     'pages_draft_discarded' => 'Koncept ostránený, aktuálny obsah stránky bol nahraný do editora',
+    'pages_specific' => 'Specific Page',
+    'pages_is_template' => 'Page Template',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'Štítky stránok',
+    'chapter_tags' => 'Chapter Tags',
+    'book_tags' => 'Book Tags',
+    'shelf_tags' => 'Shelf Tags',
     'tag' => 'Štítok',
     'tags' =>  'Štítky',
+    'tag_name' =>  'Tag Name',
     'tag_value' => 'Hodnota štítku (Voliteľné)',
     'tags_explain' => "Pridajte pár štítkov pre uľahčenie kategorizácie Vášho obsahu. \n Štítku môžete priradiť hodnotu pre ešte lepšiu organizáciu.",
     'tags_add' => 'Pridať ďalší štítok',
+    'tags_remove' => 'Remove this tag',
     'attachments' => 'Prílohy',
     'attachments_explain' => 'Nahrajte nejaké súbory alebo priložte zopár odkazov pre zobrazenie na Vašej stránke. Budú viditeľné v bočnom paneli.',
     'attachments_explain_instant_save' => 'Zmeny budú okamžite uložené.',
@@ -215,28 +274,42 @@ return [
     'attachments_file_uploaded' => 'Súbor úspešne nahraný',
     'attachments_file_updated' => 'Súbor úspešne aktualizovaný',
     'attachments_link_attached' => 'Odkaz úspešne pripojený k stránke',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => 'Používateľ už :time',
     'profile_created_content' => 'Vytvorený obsah',
     'profile_not_created_pages' => ':userName nevytvoril žiadne stránky',
     'profile_not_created_chapters' => ':userName nevytvoril žiadne kapitoly',
     'profile_not_created_books' => ':userName nevytvoril žiadne knihy',
+    'profile_not_created_shelves' => ':userName has not created any shelves',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'Komentár',
     'comments' => 'Komentáre',
+    'comment_add' => 'Add Comment',
     'comment_placeholder' => 'Tu zadajte svoje pripomienky',
+    'comment_count' => '{0} No Comments|{1} 1 Comment|[2,*] :count Comments',
     'comment_save' => 'Uložiť komentár',
+    'comment_saving' => 'Saving comment...',
+    'comment_deleting' => 'Deleting comment...',
+    'comment_new' => 'New Comment',
+    'comment_created' => 'commented :createDiff',
+    'comment_updated' => 'Updated :updateDiff by :username',
+    'comment_deleted_success' => 'Comment deleted',
+    'comment_created_success' => 'Comment added',
+    'comment_updated_success' => 'Comment updated',
+    'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
+    'comment_in_reply_to' => 'In reply to :commentId',
 
-    /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => 'Naozaj chcete túto revíziu odstrániť?',
+    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'Revízia bola vymazaná',
     'revision_cannot_delete_latest' => 'Nie je možné vymazať poslednú revíziu.'
 ];

@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'البيانات المعطاة لا توافق سجلاتنا.',
     'throttle' => 'تجاوزت الحد الأقصى من المحاولات. الرجاء المحاولة مرة أخرى بعد :seconds seconds.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'إنشاء حساب',
     'log_in' => 'تسجيل الدخول',
     'log_in_with' => 'تسجيل الدخول باستخدام :socialDriver',
@@ -32,6 +26,8 @@ return [
     'remember_me' => 'تذكرني',
     'ldap_email_hint' => 'الرجاء إدخال عنوان بريد إلكتروني لاستخدامه مع الحساب.',
     'create_account' => 'إنشاء حساب',
+    'already_have_account' => 'Already have an account?',
+    'dont_have_account' => 'Don\'t have an account?',
     'social_login' => 'تسجيل الدخول باستخدام حسابات التواصل الاجتماعي',
     'social_registration' => 'إنشاء حساب باستخدام حسابات التواصل الاجتماعي',
     'social_registration_text' => 'إنشاء حساب والدخول باستخدام خدمة أخرى.',
@@ -43,23 +39,18 @@ return [
     'register_success' => 'شكراً لإنشاء حسابكم! تم تسجيلكم ودخولكم للحساب الخاص بكم.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'استعادة كلمة المرور',
     'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة المرور.',
     'reset_password_send_button' => 'أرسل رابط الاستعادة',
     'reset_password_sent_success' => 'تم إرسال رابط استعادة كلمة المرور إلى :email.',
     'reset_password_success' => 'تمت استعادة كلمة المرور بنجاح.',
-
     'email_reset_subject' => 'استعد كلمة المرور الخاصة بتطبيق :appName',
     'email_reset_text' => 'تم إرسال هذه الرسالة بسبب تلقينا لطلب استعادة كلمة المرور الخاصة بحسابكم.',
     'email_reset_not_requested' => 'إذا لم يتم طلب استعادة كلمة المرور من قبلكم, فلا حاجة لاتخاذ أية خطوات.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'تأكيد بريدكم الإلكتروني لتطبيق :appName',
     'email_confirm_greeting' => 'شكرا لانضمامكم إلى :appName!',
     'email_confirm_text' => 'الرجاء تأكيد بريدكم الإلكتروني بالضغط على الزر أدناه:',
@@ -73,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'الرجاء الضغط على الرابط المرسل إلى بريدكم الإلكتروني بعد تسجيلكم.',
     'email_not_confirmed_resend' => 'إذا لم يتم إيجاد الرسالة, بإمكانكم إعادة إرسال رسالة التأكيد عن طريق تعبئة النموذج أدناه.',
     'email_not_confirmed_resend_button' => 'إعادة إرسال رسالة التأكيد',
+
+    // User Invite
+    'user_invite_email_subject' => 'You have been invited to join :appName!',
+    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
+    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
+    'user_invite_email_action' => 'Set Account Password',
+    'user_invite_page_welcome' => 'Welcome to :appName!',
+    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
+    'user_invite_page_confirm_button' => 'Confirm Password',
+    'user_invite_success' => 'Password set, you now have access to :appName!'
 ];

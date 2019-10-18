@@ -1,11 +1,9 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
-
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
 
     // Pages
     'page_create'                 => 'erstellt Seite',
@@ -38,7 +36,7 @@ return [
     'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert.',
 
     // Bookshelves
-    'bookshelf_create'                 => 'erstellt Bücherregal',
+    'bookshelf_create'            => 'erstellt Bücherregal',
     'bookshelf_create_notification'    => 'Das Bücherregal wurde erfolgreich erstellt',
     'bookshelf_update'                 => 'aktualisiert Bücherregal',
     'bookshelf_update_notification'    => 'Das Bücherregal wurde erfolgreich aktualisiert',

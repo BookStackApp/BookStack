@@ -1,6 +1,6 @@
 <?php
 /**
- * Text shown in error messaging. / Текст відображається в повідомленнях про помилку.
+ * Text shown in error messaging.
  */
 return [
 
@@ -27,6 +27,7 @@ return [
     'social_account_register_instructions' => 'Якщо у вас ще немає облікового запису, ви можете зареєструвати обліковий запис за допомогою параметра :socialAccount.',
     'social_driver_not_found' => 'Драйвер для СоціальноїМережі не знайдено',
     'social_driver_not_configured' => 'Ваші соціальні настройки :socialAccount не правильно налаштовані.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'Не вдається завантажити шлях до файлу :filePath. Переконайтеся, що він доступний для запису на сервер.',

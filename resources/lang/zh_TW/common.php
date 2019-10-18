@@ -1,31 +1,30 @@
 <?php
+/**
+ * Common elements found throughout many areas of BookStack.
+ */
 return [
 
-    /**
-     * Buttons
-     */
+    // Buttons
     'cancel' => '取消',
     'confirm' => '確認',
     'back' => '返回',
     'save' => '儲存',
     'continue' => '繼續',
     'select' => '選擇',
+    'toggle_all' => 'Toggle All',
     'more' => '更多',
 
-    /**
-     * Form Labels
-     */
+    // Form Labels
     'name' => '名稱',
     'description' => '摘要',
     'role' => '角色',
     'cover_image' => '封面圖片',
     'cover_image_description' => '所使用圖片大小必須是440x250px。',
-
-    /**
-     * Actions
-     */
+    
+    // Actions
     'actions' => '動作',
     'view' => '檢視',
+    'view_all' => 'View All',
     'create' => '建立',
     'update' => '更新',
     'edit' => '編輯',
@@ -40,9 +39,16 @@ return [
     'remove' => '刪除',
     'add' => '新增',
 
-    /**
-     * Misc
-     */
+    // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
+    'sort_name' => 'Name',
+    'sort_created_at' => 'Created Date',
+    'sort_updated_at' => 'Updated Date',
+
+    // Misc
     'deleted_user' => '刪除使用者',
     'no_activity' => '無活動',
     'no_items' => '無項目',
@@ -53,16 +59,18 @@ return [
     'grid_view' => '縮圖檢視',
     'list_view' => '清單撿視',
     'default' => '預設',
+    'breadcrumb' => 'Breadcrumb',
 
-    /**
-     * Header
-     */
+    // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => '檢視資料',
     'edit_profile' => '編輯資料',
 
-    /**
-     * Email Content
-     */
+    // Layout tabs
+    'tab_info' => 'Info',
+    'tab_content' => 'Content',
+
+    // Email Content
     'email_action_help' => '如果您無法點選“:actionText”按鈕，請將下面的網址複製到您的瀏覽器中打開：',
     'email_rights' => 'All rights reserved',
 ];

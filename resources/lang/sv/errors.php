@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'Du har inte tillgång till den här sidan.',
@@ -29,6 +27,7 @@ return [
     'social_account_register_instructions' => 'Om du inte har något konto ännu kan du registerar dig genom att välja :socialAccount.',
     'social_driver_not_found' => 'Drivrutinen för den här tjänsten hittades inte',
     'social_driver_not_configured' => 'Dina inställningar för :socialAccount är inte korrekta.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'Kunde inte ladda upp till sökvägen :filePath. Kontrollera att webbservern har skrivåtkomst.',
@@ -82,4 +81,5 @@ return [
     'error_occurred' => 'Ett fel inträffade',
     'app_down' => ':appName är nere just nu',
     'back_soon' => 'Vi är snart tillbaka.',
+
 ];

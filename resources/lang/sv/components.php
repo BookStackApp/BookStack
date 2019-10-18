@@ -1,9 +1,10 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
 
-    /**
-     * Image Manager
-     */
+    // Image Manager
     'image_select' => 'Val av bild',
     'image_all' => 'Alla',
     'image_all_title' => 'Visa alla bilder',
@@ -24,9 +25,7 @@ return [
     'image_delete_success' => 'Bilden har tagits bort',
     'image_upload_remove' => 'Radera',
 
-    /**
-     * Code editor
-     */
+    // Code Editor
     'code_editor' => 'Redigera kod',
     'code_language' => 'Språk',
     'code_content' => 'Kod',

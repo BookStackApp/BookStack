@@ -1,14 +1,17 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'Creati di recente',
     'recently_created_pages' => 'Pagine create di recente',
     'recently_updated_pages' => 'Pagine aggiornate di recente',
     'recently_created_chapters' => 'Capitoli creati di recente',
     'recently_created_books' => 'Libri creati di recente',
+    'recently_created_shelves' => 'Librerie Create Di Recente',
     'recently_update' => 'Aggiornati di recente',
     'recently_viewed' => 'Visti di recente',
     'recent_activity' => 'Attività Recente',
@@ -31,17 +34,13 @@ return [
     'export_pdf' => 'File PDF',
     'export_text' => 'File di testo',
 
-    /**
-     * Permissions and restrictions
-     */
+    // Permissions and restrictions
     'permissions' => 'Permessi',
     'permissions_intro' => 'Una volta abilitati, questi permessi avranno la priorità su tutti gli altri.',
     'permissions_enable' => 'Abilita Permessi Custom',
     'permissions_save' => 'Salva Permessi',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => 'Risultati Ricerca',
     'search_total_results_found' => ':count risultato trovato|:count risultati trovati',
     'search_clear' => 'Pulisci Ricerca',
@@ -52,11 +51,13 @@ return [
     'search_content_type' => 'Tipo di Contenuto',
     'search_exact_matches' => 'Corrispondenza Esatta',
     'search_tags' => 'Ricerche Tag',
+    'search_options' => 'Opzioni',
     'search_viewed_by_me' => 'Visti',
     'search_not_viewed_by_me' => 'Non visti',
     'search_permissions_set' => 'Permessi impostati',
     'search_created_by_me' => 'Creati da me',
     'search_updated_by_me' => 'Aggiornati da me',
+    'search_date_options' => 'Opzioni Data',
     'search_updated_before' => 'Aggiornati prima del',
     'search_updated_after' => 'Aggiornati dopo il',
     'search_created_before' => 'Creati prima del',
@@ -64,9 +65,39 @@ return [
     'search_set_date' => 'Imposta Data',
     'search_update' => 'Aggiorna Ricerca',
 
-    /**
-     * Books
-     */
+    // Shelves
+    'shelf' => 'Libreria',
+    'shelves' => 'Librerie',
+    'x_shelves' => ':count Libreria|:count Librerie',
+    'shelves_long' => 'Librerie',
+    'shelves_empty' => 'Nessuna libreria è stata creata',
+    'shelves_create' => 'Crea Nuova Libreria',
+    'shelves_popular' => 'Librerie Popolari',
+    'shelves_new' => 'Nuove Librerie',
+    'shelves_new_action' => 'Nuova Libreria',
+    'shelves_popular_empty' => 'Le librerie più popolari appariranno qui.',
+    'shelves_new_empty' => 'Le librerie create più di recente appariranno qui.',
+    'shelves_save' => 'Salva Libreria',
+    'shelves_books' => 'Libri in questa libreria',
+    'shelves_add_books' => 'Aggiungi libri a questa libreria',
+    'shelves_drag_books' => 'Trascina i libri qui per aggiungerli a questa libreria',
+    'shelves_empty_contents' => 'Questa libreria non ha libri assegnati',
+    'shelves_edit_and_assign' => 'Modifica la libreria per assegnare i libri',
+    'shelves_edit_named' => 'Modifica Libreria :name',
+    'shelves_edit' => 'Modifica Libreria',
+    'shelves_delete' => 'Elimina Libreria',
+    'shelves_delete_named' => 'Elimina Libreria :name',
+    'shelves_delete_explain' => "La libreria ':name' verrà eliminata. I libri contenuti non verranno eliminati.",
+    'shelves_delete_confirmation' => 'Sei sicuro di voler eliminare questa libreria?',
+    'shelves_permissions' => 'Permessi Libreria',
+    'shelves_permissions_updated' => 'Permessi Libreria Aggiornati',
+    'shelves_permissions_active' => 'Permessi Attivi Libreria',
+    'shelves_copy_permissions_to_books' => 'Copia Permessi ai Libri',
+    'shelves_copy_permissions' => 'Copia Permessi',
+    'shelves_copy_permissions_explain' => 'Verranno applicati tutti i permessi della libreria ai libri contenuti. Prima di attivarlo, assicurati che ogni permesso di questa libreria sia salvato.',
+    'shelves_copy_permission_success' => 'Permessi della libreria copiati in :count books',
+
+    // Books
     'book' => 'Libro',
     'books' => 'Libri',
     'x_books' => ':count Libro|:count Libri',
@@ -74,6 +105,7 @@ return [
     'books_popular' => 'Libri Popolari',
     'books_recent' => 'Libri Recenti',
     'books_new' => 'Nuovi Libri',
+    'books_new_action' => 'Nuovo Libro',
     'books_popular_empty' => 'I libri più popolari appariranno qui.',
     'books_new_empty' => 'I libri creati più di recente appariranno qui.',
     'books_create' => 'Crea Nuovo Libro',
@@ -89,7 +121,6 @@ return [
     'books_permissions_updated' => 'Permessi del libro aggiornati',
     'books_empty_contents' => 'Non ci sono pagine o capitoli per questo libro.',
     'books_empty_create_page' => 'Crea una nuova pagina',
-    'books_empty_or' => 'o',
     'books_empty_sort_current_book' => 'Ordina il libro corrente',
     'books_empty_add_chapter' => 'Aggiungi un capitolo',
     'books_permissions_active' => 'Permessi libro attivi',
@@ -97,12 +128,15 @@ return [
     'books_navigation' => 'Navigazione Libro',
     'books_sort' => 'Ordina il contenuto del libro',
     'books_sort_named' => 'Ordina il libro :bookName',
+    'books_sort_name' => 'Ordina per Nome',
+    'books_sort_created' => 'Ordina per Data di Creazione',
+    'books_sort_updated' => 'Ordina per Data di Aggiornamento',
+    'books_sort_chapters_first' => 'Capitoli Per Primi',
+    'books_sort_chapters_last' => 'Capitoli Per Ultimi',
     'books_sort_show_other' => 'Mostra Altri Libri',
     'books_sort_save' => 'Salva il nuovo ordine',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'Capitolo',
     'chapters' => 'Capitoli',
     'x_chapters' => ':count Capitolo|:count Capitoli',
@@ -125,9 +159,7 @@ return [
     'chapters_permissions_success' => 'Permessi Capitolo Aggiornati',
     'chapters_search_this' => 'Cerca in questo capitolo',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'Pagina',
     'pages' => 'Pagine',
     'x_pages' => ':count Pagina|:count Pagine',
@@ -144,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Sei sicuro di voler eliminare questa pagina?',
     'pages_delete_draft_confirm' => 'Sei sicuro di voler eliminare la bozza di questa pagina?',
     'pages_editing_named' => 'Modifica :pageName',
-    'pages_edit_toggle_header' => 'Mostra/Nascondi header',
+    'pages_edit_draft_options' => 'Opzioni Bozza',
     'pages_edit_save_draft' => 'Salva Bozza',
     'pages_edit_draft' => 'Modifica Bozza della pagina',
     'pages_editing_draft' => 'Modifica Bozza',
@@ -166,6 +198,9 @@ return [
     'pages_not_in_chapter' => 'La pagina non è in un capitolo',
     'pages_move' => 'Muovi Pagina',
     'pages_move_success' => 'Pagina mossa in ":parentName"',
+    'pages_copy' => 'Copia Pagina',
+    'pages_copy_desination' => 'Copia Destinazione',
+    'pages_copy_success' => 'Pagina copiata correttamente',
     'pages_permissions' => 'Permessi Pagina',
     'pages_permissions_success' => 'Permessi pagina aggiornati',
     'pages_revision' => 'Versione',
@@ -175,7 +210,9 @@ return [
     'pages_revisions_created_by' => 'Creata Da',
     'pages_revisions_date' => 'Data Versione',
     'pages_revisions_number' => '#',
-    'pages_revisions_changelog' => 'Changelog',
+    'pages_revisions_numbered' => 'Revisione #:id',
+    'pages_revisions_numbered_changes' => 'Modifiche Revisione #:id',
+    'pages_revisions_changelog' => 'Cambiamenti',
     'pages_revisions_changes' => 'Cambiamenti',
     'pages_revisions_current' => 'Versione Corrente',
     'pages_revisions_preview' => 'Anteprima',
@@ -195,17 +232,22 @@ return [
         'time_b' => 'negli ultimi :minCount minuti',
         'message' => ':start :time. Assicurati di non sovrascrivere le modifiche degli altri!',
     ],
-    'pages_draft_discarded' => "Bozza scartata, l'editor è stato aggiornato con il contenuto corrente della pagina",
+    'pages_draft_discarded' => 'Bozza scartata, l\'editor è stato aggiornato con il contenuto corrente della pagina',
+    'pages_specific' => 'Pagina Specifica',
+    'pages_is_template' => 'Template Pagina',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'Tag Pagina',
+    'chapter_tags' => 'Tag Capitolo',
+    'book_tags' => 'Tag Libro',
+    'shelf_tags' => 'Tag Libreria',
     'tag' => 'Tag',
-    'tags' =>  '',
+    'tags' =>  'Tag',
+    'tag_name' =>  'Nome Tag',
     'tag_value' => 'Valore (Opzionale)',
     'tags_explain' => "Aggiungi tag per categorizzare meglio il contenuto. \n Puoi assegnare un valore ai tag per una migliore organizzazione.",
     'tags_add' => 'Aggiungi un altro tag',
+    'tags_remove' => 'Rimuovi questo tag',
     'attachments' => 'Allegati',
     'attachments_explain' => 'Carica alcuni file o allega link per visualizzarli nella pagina. Questi sono visibili nella sidebar della pagina.',
     'attachments_explain_instant_save' => 'I cambiamenti qui sono salvati istantaneamente.',
@@ -213,7 +255,7 @@ return [
     'attachments_upload' => 'Carica File',
     'attachments_link' => 'Allega Link',
     'attachments_set_link' => 'Imposta Link',
-    'attachments_delete_confirm' => "Clicca elimina nuovamente per confermare l'eliminazione di questo allegato.",
+    'attachments_delete_confirm' => 'Clicca elimina nuovamente per confermare l\'eliminazione di questo allegato.',
     'attachments_dropzone' => 'Rilascia file o clicca qui per allegare un file',
     'attachments_no_files' => 'Nessun file è stato caricato',
     'attachments_explain_link' => 'Puoi allegare un link se preferisci non caricare un file. Questo può essere un link a un\'altra pagina o a un file in un cloud.',
@@ -231,19 +273,22 @@ return [
     'attachments_file_uploaded' => 'File caricato correttamente',
     'attachments_file_updated' => 'File aggiornato correttamente',
     'attachments_link_attached' => 'Link allegato correttamente alla pagina',
+    'templates' => 'Template',
+    'templates_set_as_template' => 'La pagina è un template',
+    'templates_explain_set_as_template' => 'Puoi impostare questa pagina come template in modo che il suo contenuto sia utilizzato quando si creano altre pagine. Gli altri utenti potranno utilizzare questo template se avranno i permessi di visualizzazione per questa pagina.',
+    'templates_replace_content' => 'Rimpiazza contenuto della pagina',
+    'templates_append_content' => 'Appendi al contenuto della pagina',
+    'templates_prepend_content' => 'Prependi al contenuto della pagina',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => 'Utente da :time',
     'profile_created_content' => 'Contenuti Creati',
     'profile_not_created_pages' => ':userName non ha creato pagine',
     'profile_not_created_chapters' => ':userName non ha creato capitoli',
     'profile_not_created_books' => ':userName non ha creato libri',
+    'profile_not_created_shelves' => ':userName non ha creato alcuna libreria',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'Commento',
     'comments' => 'Commenti',
     'comment_add' => 'Aggiungi Commento',
@@ -261,10 +306,9 @@ return [
     'comment_delete_confirm' => 'Sei sicuro di voler elminare questo commento?',
     'comment_in_reply_to' => 'In risposta a :commentId',
 
-     /**
-     * Revision
-     */
+    // Revision
     'revision_delete_confirm' => 'Sei sicuro di voler eliminare questa revisione?',
+    'revision_restore_confirm' => 'Sei sicuro di voler ripristinare questa revisione? Il contenuto della pagina verrà rimpiazzato.',
     'revision_delete_success' => 'Revisione cancellata',
     'revision_cannot_delete_latest' => 'Impossibile eliminare l\'ultima revisione.'
 ];

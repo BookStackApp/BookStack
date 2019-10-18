@@ -1,10 +1,8 @@
 <?php
-
+/**
+ * Text shown in error messaging.
+ */
 return [
-
-    /**
-     * Error text strings.
-     */
 
     // Permissions
     'permission' => 'Je hebt onvoldoende rechten om deze pagina te zien.',
@@ -20,6 +18,7 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
     'ldap_cannot_connect' => 'Kon niet met de LDAP server verbinden',
     'social_no_action_defined' => 'Geen actie gedefineerd',
+    'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => 'Dit :socialAccount account is al in gebruik, Probeer in te loggen met de :socialAccount optie.',
     'social_account_email_in_use' => 'Het e-mailadres :email is al in gebruik. Als je al een account hebt kun je een :socialAccount account verbinden met je profielinstellingen.',
     'social_account_existing' => 'Dit :socialAccount is al gekoppeld aan een profiel.',
@@ -28,23 +27,29 @@ return [
     'social_account_register_instructions' => 'Als je nog geen account hebt kun je je registreren met de :socialAccount optie.',
     'social_driver_not_found' => 'Social driver niet gevonden',
     'social_driver_not_configured' => 'Je :socialAccount instellingen zijn correct geconfigureerd.',
+    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
     'path_not_writable' => 'Bestand :filePath kon niet geupload worden. Zorg dat je schrijfrechten op de server hebt.',
     'cannot_get_image_from_url' => 'Kon geen afbeelding genereren van :url',
     'cannot_create_thumbs' => 'De server kon geen thumbnails maken. Controleer of je de GD PHP extensie geïnstalleerd hebt.',
     'server_upload_limit' => 'Het afbeeldingsformaat is te groot. Probeer een kleinere bestandsgrootte.',
+    'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'image_upload_error' => 'Er ging iets fout bij het uploaden van de afbeelding',
+    'image_upload_type_error' => 'The image type being uploaded is invalid',
     'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
 
     // Attachments
     'attachment_page_mismatch' => 'Bij het bijwerken van de bijlage bleek de pagina onjuist',
+    'attachment_not_found' => 'Attachment not found',
 
     // Pages
     'page_draft_autosave_fail' => 'Kon het concept niet opslaan. Zorg ervoor dat je een werkende internetverbinding hebt.',
+    'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
 
     // Entities
     'entity_not_found' => 'Entiteit niet gevonden',
+    'bookshelf_not_found' => 'Bookshelf not found',
     'book_not_found' => 'Boek niet gevonden',
     'page_not_found' => 'Pagina niet gevonden',
     'chapter_not_found' => 'Hoofdstuk niet gevonden',
@@ -60,6 +65,7 @@ return [
     'role_cannot_be_edited' => 'Deze rol kan niet bewerkt worden',
     'role_system_cannot_be_deleted' => 'Dit is een systeemrol en kan niet verwijderd worden',
     'role_registration_default_cannot_delete' => 'Deze rol kan niet verwijerd worden zolang dit de standaardrol na registratie is.',
+    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
     'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de reacties.',
@@ -67,6 +73,7 @@ return [
     'comment_add' => 'Er is een fout opgetreden tijdens het toevoegen van de reactie.',
     'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
     'empty_comment' => 'Kan geen lege reactie toevoegen.',
+
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
     'sorry_page_not_found' => 'Sorry, de pagina die je zocht is niet beschikbaar.',
@@ -74,4 +81,5 @@ return [
     'error_occurred' => 'Er Ging Iets Fout',
     'app_down' => ':appName is nu niet beschikbaar',
     'back_soon' => 'Komt snel weer online.',
+
 ];
