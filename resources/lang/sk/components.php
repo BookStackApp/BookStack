@@ -1,25 +1,33 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
 
-    /**
-     * Image Manager
-     */
-    'image_select' => 'Vybrať obrázok',
-    'image_all' => 'Všetko',
-    'image_all_title' => 'Zobraziť všetky obrázky',
-    'image_book_title' => 'Zobraziť obrázky nahrané do tejto knihy',
-    'image_page_title' => 'Zobraziť obrázky nahrané do tejto stránky',
-    'image_search_hint' => 'Hľadať obrázok podľa názvu',
-    'image_uploaded' => 'Nahrané :uploadedDate',
-    'image_load_more' => 'Načítať viac',
-    'image_image_name' => 'Názov obrázka',
-    'image_delete_used' => 'Tento obrázok je použitý na stránkach uvedených nižšie.',
-    'image_delete_confirm' => 'Kliknite znova na zmazať pre potvrdenie zmazania tohto obrázka.',
-    'image_select_image' => 'Vybrať obrázok',
-    'image_dropzone' => 'Presuňte obrázky sem alebo kliknite sem pre nahranie',
-    'images_deleted' => 'Obrázky zmazané',
-    'image_preview' => 'Náhľad obrázka',
-    'image_upload_success' => 'Obrázok úspešne nahraný',
-    'image_update_success' => 'Detaily obrázka úspešne aktualizované',
-    'image_delete_success' => 'Obrázok úspešne zmazaný'
+    // Image Manager
+    'image_select' => '',
+    'image_all' => '',
+    'image_all_title' => '',
+    'image_book_title' => '',
+    'image_page_title' => '',
+    'image_search_hint' => '',
+    'image_uploaded' => '',
+    'image_load_more' => '',
+    'image_image_name' => '',
+    'image_delete_used' => '',
+    'image_delete_confirm' => '',
+    'image_select_image' => '',
+    'image_dropzone' => '',
+    'images_deleted' => '',
+    'image_preview' => '',
+    'image_upload_success' => '',
+    'image_update_success' => '',
+    'image_delete_success' => '',
+    'image_upload_remove' => '',
+
+    // Code Editor
+    'code_editor' => '',
+    'code_language' => '',
+    'code_content' => '',
+    'code_save' => '',
 ];
