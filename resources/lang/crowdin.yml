@@ -1,0 +1,37 @@
+#
+# Your crowdin's credentials
+#
+"project_identifier" : "bookstack"
+"base_path" : "."
+#"base_url" : ""
+
+#
+# Choose file structure in crowdin
+# e.g. true or false
+#
+"preserve_hierarchy": true
+
+#
+# Files configuration
+#
+files: [
+ {
+  #
+  # Source files filter
+  # e.g. "/resources/en/*.json"
+  #
+  "source" : "/en/*.php",
+
+  #
+  # where translations live
+  # e.g. "/resources/%two_letters_code%/%original_file_name%"
+  #
+  "translation" : "/%two_letters_code%/%original_file_name%",
+
+  #
+  # File type
+  # e.g. "json"
+  #
+  "type" : "php",
+ }
+]
