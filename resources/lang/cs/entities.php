@@ -11,6 +11,7 @@ return [
     'recently_updated_pages' => 'Nedávno aktualizované stránky',
     'recently_created_chapters' => 'Nedávno vytvořené kapitoly',
     'recently_created_books' => 'Nedávno vytvořené knihy',
+    'recently_created_shelves' => '',
     'recently_update' => 'Nedávno aktualizované',
     'recently_viewed' => 'Nedávno prohlížené',
     'recent_activity' => 'Nedávné činnosti',
@@ -28,7 +29,7 @@ return [
     'no_pages_viewed' => 'Zatím jste nic neshlédli',
     'no_pages_recently_created' => 'Zatím nebyly vytvořeny žádné stránky',
     'no_pages_recently_updated' => 'Zatím nebyly aktualizovány žádné stránky',
-    'export' => 'Export',
+    'export' => '',
     'export_html' => 'Všeobjímající HTML',
     'export_pdf' => 'PDF dokument',
     'export_text' => 'Čistý text (txt)',
@@ -67,11 +68,13 @@ return [
     // Shelves
     'shelf' => 'Knihovna',
     'shelves' => 'Knihovny',
+    'x_shelves' => '',
     'shelves_long' => 'Knihovny',
     'shelves_empty' => 'Žádné knihovny nebyly vytvořeny',
     'shelves_create' => 'Vytvořit novou knihovnu',
     'shelves_popular' => 'Populární knihovny',
     'shelves_new' => 'Nové knihovny',
+    'shelves_new_action' => '',
     'shelves_popular_empty' => 'Nejpopulárnější knihovny se objeví zde.',
     'shelves_new_empty' => 'Nejnovější knihovny se objeví zde.',
     'shelves_save' => 'Uložit knihovnu',
@@ -102,6 +105,7 @@ return [
     'books_popular' => 'Populární knihy',
     'books_recent' => 'Nedávné knihy',
     'books_new' => 'Nové knihy',
+    'books_new_action' => '',
     'books_popular_empty' => 'Zde budou zobrazeny nejpopulárnější knihy.',
     'books_new_empty' => 'Zde budou zobrazeny nově vytvořené knihy.',
     'books_create' => 'Vytvořit novou knihu',
@@ -117,7 +121,6 @@ return [
     'books_permissions_updated' => 'Práva knihy upravena',
     'books_empty_contents' => 'V této knize nebyly vytvořeny žádné stránky ani kapitoly.',
     'books_empty_create_page' => 'Vytvořit novou stránku',
-    'books_empty_or' => 'nebo',
     'books_empty_sort_current_book' => 'Seřadit tuto knihu',
     'books_empty_add_chapter' => 'Přidat kapitolu',
     'books_permissions_active' => 'Účinná práva knihy',
@@ -125,6 +128,11 @@ return [
     'books_navigation' => 'Obsah knihy',
     'books_sort' => 'Seřadit obsah knihy',
     'books_sort_named' => 'Seřadit knihu :bookName',
+    'books_sort_name' => '',
+    'books_sort_created' => '',
+    'books_sort_updated' => '',
+    'books_sort_chapters_first' => '',
+    'books_sort_chapters_last' => '',
     'books_sort_show_other' => 'Ukázat ostatní knihy',
     'books_sort_save' => 'Uložit nové pořadí',
 
@@ -168,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Opravdu chcete tuto stránku smazat?',
     'pages_delete_draft_confirm' => 'Opravdu chcete tento koncept stránky smazat?',
     'pages_editing_named' => 'Úpravy stránky :pageName',
-    'pages_edit_toggle_header' => 'Ukázat hlavičku',
+    'pages_edit_draft_options' => '',
     'pages_edit_save_draft' => 'Uložit koncept',
     'pages_edit_draft' => 'Upravit koncept stránky',
     'pages_editing_draft' => 'Úpravy konceptu',
@@ -182,7 +190,7 @@ return [
     'pages_save' => 'Uložit stránku',
     'pages_title' => 'Nadpis stránky',
     'pages_name' => 'Název stránky',
-    'pages_md_editor' => 'Editor',
+    'pages_md_editor' => '',
     'pages_md_preview' => 'Náhled',
     'pages_md_insert_image' => 'Vložit obrázek',
     'pages_md_insert_link' => 'Vložit odkaz na prvek',
@@ -201,7 +209,9 @@ return [
     'pages_revision_named' => 'Revize stránky :pageName',
     'pages_revisions_created_by' => 'Vytvořeno uživatelem',
     'pages_revisions_date' => 'Datum revize',
-    'pages_revisions_number' => '#',
+    'pages_revisions_number' => '',
+    'pages_revisions_numbered' => '',
+    'pages_revisions_numbered_changes' => '',
     'pages_revisions_changelog' => 'Komentáře změn',
     'pages_revisions_changes' => 'Změny',
     'pages_revisions_current' => 'Aktuální verze',
@@ -224,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Koncept zahozen. Editor nyní obsahuje aktuální verzi stránky.',
     'pages_specific' => 'Konkrétní stránka',
+    'pages_is_template' => '',
 
     // Editor Sidebar
     'page_tags' => 'Štítky stránky',
@@ -232,9 +243,11 @@ return [
     'shelf_tags' => 'Štítky knihovny',
     'tag' => 'Štítek',
     'tags' =>  'Štítky',
+    'tag_name' =>  '',
     'tag_value' => 'Hodnota Štítku (volitelné)',
     'tags_explain' => "Přidejte si štítky pro lepší kategorizaci knih. \n Štítky mohou nést i hodnotu pro detailnější klasifikaci.",
     'tags_add' => 'Přidat další štítek',
+    'tags_remove' => '',
     'attachments' => 'Přílohy',
     'attachments_explain' => 'Nahrajte soubory nebo připojte odkazy, které se zobrazí na stránce. Budou k nalezení v postranní liště.',
     'attachments_explain_instant_save' => 'Změny zde provedené se okamžitě ukládají.',
@@ -260,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'Soubor byl úspěšně nahrán',
     'attachments_file_updated' => 'Soubor byl úspěšně aktualizován',
     'attachments_link_attached' => 'Odkaz úspěšně přiložen ke stránce',
+    'templates' => '',
+    'templates_set_as_template' => '',
+    'templates_explain_set_as_template' => '',
+    'templates_replace_content' => '',
+    'templates_append_content' => '',
+    'templates_prepend_content' => '',
 
     // Profile View
     'profile_user_for_x' => 'Uživatelem již :time',
@@ -267,6 +286,7 @@ return [
     'profile_not_created_pages' => ':userName nevytvořil/a žádný obsah',
     'profile_not_created_chapters' => ':userName nevytvořil/a žádné kapitoly',
     'profile_not_created_books' => ':userName nevytvořil/a žádné knihy',
+    'profile_not_created_shelves' => '',
 
     // Comments
     'comment' => 'Komentář',
@@ -288,7 +308,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Opravdu chcete smazat tuto revizi?',
+    'revision_restore_confirm' => '',
     'revision_delete_success' => 'Revize smazána',
     'revision_cannot_delete_latest' => 'Nelze smazat poslední revizi.'
-
 ];
