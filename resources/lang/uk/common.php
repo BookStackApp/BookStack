@@ -40,10 +40,10 @@ return [
     'add' => 'Додати',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
+    'sort_options' => 'Параметри сортування',
+    'sort_direction_toggle' => 'Перемикач напрямку сортування',
+    'sort_ascending' => 'За зростанням',
+    'sort_descending' => 'За спаданням',
     'sort_name' => 'Ім\'я',
     'sort_created_at' => 'Дата створення',
     'sort_updated_at' => 'Дата оновлення',
@@ -62,7 +62,7 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Меню профілю',
     'view_profile' => 'Переглянути профіль',
     'edit_profile' => 'Редагувати профіль',
 
