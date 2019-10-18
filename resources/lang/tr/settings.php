@@ -85,6 +85,7 @@ return [
     'role_manage_roles' => 'Rolleri ve rol izinlerini yönet',
     'role_manage_entity_permissions' => 'Bütün kitap, bölüm ve sayfa izinlerini yönet',
     'role_manage_own_entity_permissions' => 'Sahip olunan kitap, bölüm ve sayfaların izinlerini yönet',
+    'role_manage_page_templates' => '',
     'role_manage_settings' => 'Uygulama ayarlarını yönet',
     'role_asset' => 'Asset Yetkileri',
     'role_asset_desc' => 'Bu izinleri assetlere sistem içinden varsayılan erişimi kontrol eder. Kitaplar, bölümler ve sayfaların izinleri bu izinleri override eder.',
@@ -109,6 +110,8 @@ return [
     'users_role_desc' => 'Bu kullanıcının hangi rollere atanabileceğini belirleyin. Eğer bir kullanıcıya birden fazla rol atanırsa, kullanıcı bütün rollerin özelliklerini kullanabilir.',
     'users_password' => 'Kullanıcı Parolası',
     'users_password_desc' => 'Kullanıcının giriş yaparken kullanacağı bir parola belirleyin. Parola en az 5 karakter olmalıdır.',
+    'users_send_invite_text' => '',
+    'users_send_invite_option' => '',
     'users_external_auth_id' => 'Harici Authentication ID\'si',
     'users_external_auth_id_desc' => 'Bu ID kullanıcı LDAP sunucu ile bağlantı kurarken kullanılır.',
     'users_password_warning' => 'Sadece parolanızı değiştirmek istiyorsanız aşağıyı doldurunuz.',
@@ -131,4 +134,34 @@ return [
     'users_social_disconnect' => 'Hesabın Bağlantısını Kes',
     'users_social_connected' => ':socialAccount hesabı profilinize başarıyla bağlandı.',
     'users_social_disconnected' => ':socialAccount hesabınızın profilinizle ilişiği başarıyla kesildi.',
+
+    //! Since these labels are already localized this array does not need to be
+    //! translated in the language-specific files.
+    //! DELETE BELOW IF COPIED FROM EN
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => '',
+        'ar' => '',
+        'de' => '',
+        'de_informal' => '',
+        'es' => '',
+        'es_AR' => '',
+        'fr' => '',
+        'nl' => '',
+        'pt_BR' => '',
+        'sk' => '',
+        'cs' => '',
+        'sv' => '',
+        'kr' => '',
+        'ja' => '',
+        'pl' => '',
+        'it' => '',
+        'ru' => '',
+        'uk' => '',
+        'zh_CN' => '',
+        'zh_TW' => '',
+        'hu' => '',
+        'tr' => '',
+    ]
+    //!////////////////////////////////
 ];
