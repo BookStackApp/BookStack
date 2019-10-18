@@ -71,7 +71,7 @@ return [
     'user_invite_email_text' => 'Натисніть кнопку нижче, щоб встановити пароль облікового запису та отримати доступ:',
     'user_invite_email_action' => 'Встановити пароль облікового запису',
     'user_invite_page_welcome' => 'Ласкаво просимо до :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
+    'user_invite_page_text' => 'Для завершення процесу створення облікового запису та отримання доступу вам потрібно задати пароль, який буде використовуватися для входу в :appName в майбутньому.',
     'user_invite_page_confirm_button' => 'Підтвердити пароль',
     'user_invite_success' => 'Встановлено пароль, тепер у вас є доступ до :appName!'
 ];
