@@ -1,42 +1,48 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
 
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
-
     // Pages
-    'page_create'                 => 'создал страницу',
-    'page_create_notification'    => 'Страница успешно создана',
-    'page_update'                 => 'обновил страницу',
-    'page_update_notification'    => 'Страница успешно обновлена',
-    'page_delete'                 => 'удалил страницу',
-    'page_delete_notification'    => 'Страница успешно удалена',
-    'page_restore'                => 'восстановил страницу',
-    'page_restore_notification'   => 'Страница успешно восстановлена',
-    'page_move'                   => 'переместил страницу',
+    'page_create'                 => '',
+    'page_create_notification'    => '',
+    'page_update'                 => '',
+    'page_update_notification'    => '',
+    'page_delete'                 => '',
+    'page_delete_notification'    => '',
+    'page_restore'                => '',
+    'page_restore_notification'   => '',
+    'page_move'                   => '',
 
     // Chapters
-    'chapter_create'              => 'создал главу',
-    'chapter_create_notification' => 'глава успешно создана',
-    'chapter_update'              => 'обновил главу',
-    'chapter_update_notification' => 'Глава успешно обновлена',
-    'chapter_delete'              => 'удалил главу',
-    'chapter_delete_notification' => 'Глава успешно удалена',
-    'chapter_move'                => 'переместил главу',
+    'chapter_create'              => '',
+    'chapter_create_notification' => '',
+    'chapter_update'              => '',
+    'chapter_update_notification' => '',
+    'chapter_delete'              => '',
+    'chapter_delete_notification' => '',
+    'chapter_move'                => '',
 
     // Books
-    'book_create'                 => 'создал книгу',
-    'book_create_notification'    => 'Книга успешно создана',
-    'book_update'                 => 'обновил книгу',
-    'book_update_notification'    => 'Книга успешно обновлена',
-    'book_delete'                 => 'удалил книгу',
-    'book_delete_notification'    => 'Книга успешно удалена',
-    'book_sort'                   => 'отсортировал книгу',
-    'book_sort_notification'      => 'Книга успешно отсортирована',
+    'book_create'                 => '',
+    'book_create_notification'    => '',
+    'book_update'                 => '',
+    'book_update_notification'    => '',
+    'book_delete'                 => '',
+    'book_delete_notification'    => '',
+    'book_sort'                   => '',
+    'book_sort_notification'      => '',
+
+    // Bookshelves
+    'bookshelf_create'            => '',
+    'bookshelf_create_notification'    => '',
+    'bookshelf_update'                 => '',
+    'bookshelf_update_notification'    => '',
+    'bookshelf_delete'                 => '',
+    'bookshelf_delete_notification'    => '',
 
     // Other
-    'commented_on'                => 'прокомментировал',
+    'commented_on'                => '',
 ];
