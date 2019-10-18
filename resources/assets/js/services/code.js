@@ -24,6 +24,7 @@ import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/yaml/yaml';
+import 'codemirror/mode/pascal/pascal'
 
 // Addons
 import 'codemirror/addon/scroll/scrollpastend';
@@ -70,6 +71,7 @@ const modeMap = {
     xml: 'xml',
     yaml: 'yaml',
     yml: 'yaml',
+    pascal: 'text/x-pascal',
 };
 
 /**
