@@ -1,7 +1,7 @@
 <?php
 /**
- * Text used for 'Entities' (Document Structure Elements) such as / Текст використовується для "об'єктів" (елементів структури документів), таких як
- * Books, Shelves, Chapters & Pages / Книги, Полиці, Розділи та Сторінки
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
  */
 return [
 
@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Ви впевнені, що хочете видалити цю сторінку?',
     'pages_delete_draft_confirm' => 'Ви впевнені, що хочете видалити цю чернетку?',
     'pages_editing_named' => 'Редагування сторінки :pageName',
-    'pages_edit_toggle_header' => 'Переключити заголовок',
+    'pages_edit_draft_options' => '',
     'pages_edit_save_draft' => 'Зберегти чернетку',
     'pages_edit_draft' => 'Редагувати чернетку сторінки',
     'pages_editing_draft' => 'Редагування чернетки',
@@ -209,7 +209,7 @@ return [
     'pages_revision_named' => 'Версія сторінки для :pageName',
     'pages_revisions_created_by' => 'Створена',
     'pages_revisions_date' => 'Дата версії',
-    'pages_revisions_number' => '#',
+    'pages_revisions_number' => '',
     'pages_revisions_numbered' => 'Версія #:id',
     'pages_revisions_numbered_changes' => 'Зміни версії #:id',
     'pages_revisions_changelog' => 'Історія змін',
@@ -234,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Чернетка відхилена, редактор оновлено з поточним вмістом сторінки',
     'pages_specific' => 'Конкретна сторінка',
+    'pages_is_template' => '',
 
     // Editor Sidebar
     'page_tags' => 'Теги сторінки',
@@ -242,9 +243,11 @@ return [
     'shelf_tags' => 'Теги полиць',
     'tag' => 'Тег',
     'tags' =>  'Теги',
+    'tag_name' =>  '',
     'tag_value' => 'Значення тегу (необов\'язково)',
     'tags_explain' => "Додайте кілька тегів, щоб краще класифікувати ваш вміст. \n Ви можете присвоїти значення тегу для більш глибокої організації.",
     'tags_add' => 'Додати ще один тег',
+    'tags_remove' => '',
     'attachments' => 'Вкладення',
     'attachments_explain' => 'Завантажте файли, або додайте посилання, які відображатимуться на вашій сторінці. Їх буде видно на бічній панелі сторінки.',
     'attachments_explain_instant_save' => 'Зміни тут зберігаються миттєво.',
@@ -270,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'Файл успішно завантажений',
     'attachments_file_updated' => 'Файл успішно оновлено',
     'attachments_link_attached' => 'Посилання успішно додано до сторінки',
+    'templates' => '',
+    'templates_set_as_template' => '',
+    'templates_explain_set_as_template' => '',
+    'templates_replace_content' => '',
+    'templates_append_content' => '',
+    'templates_prepend_content' => '',
 
     // Profile View
     'profile_user_for_x' => 'Користувач вже :time',
