@@ -1,50 +1,48 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
 
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
-
     // Pages
-    'page_create'                 => 'a créé la page',
-    'page_create_notification'    => 'Page créée avec succès',
-    'page_update'                 => 'a modifié la page',
-    'page_update_notification'    => 'Page modifiée avec succès',
-    'page_delete'                 => 'a supprimé la page',
-    'page_delete_notification'    => 'Page supprimée avec succès',
-    'page_restore'                => 'a restauré la page',
-    'page_restore_notification'   => 'Page restaurée avec succès',
-    'page_move'                   => 'a déplacé la page',
+    'page_create'                 => '',
+    'page_create_notification'    => '',
+    'page_update'                 => '',
+    'page_update_notification'    => '',
+    'page_delete'                 => '',
+    'page_delete_notification'    => '',
+    'page_restore'                => '',
+    'page_restore_notification'   => '',
+    'page_move'                   => '',
 
     // Chapters
-    'chapter_create'              => 'a créé le chapitre',
-    'chapter_create_notification' => 'Chapitre créé avec succès',
-    'chapter_update'              => 'a modifié le chapitre',
-    'chapter_update_notification' => 'Chapitre modifié avec succès',
-    'chapter_delete'              => 'a supprimé le chapitre',
-    'chapter_delete_notification' => 'Chapitre supprimé avec succès',
-    'chapter_move'                => 'a déplacé le chapitre',
+    'chapter_create'              => '',
+    'chapter_create_notification' => '',
+    'chapter_update'              => '',
+    'chapter_update_notification' => '',
+    'chapter_delete'              => '',
+    'chapter_delete_notification' => '',
+    'chapter_move'                => '',
 
     // Books
-    'book_create'                 => 'a créé le livre',
-    'book_create_notification'    => 'Livre créé avec succès',
-    'book_update'                 => 'a modifié le livre',
-    'book_update_notification'    => 'Livre modifié avec succès',
-    'book_delete'                 => 'a supprimé le livre',
-    'book_delete_notification'    => 'Livre supprimé avec succès',
-    'book_sort'                   => 'a réordonné le livre',
-    'book_sort_notification'      => 'Livre réordonné avec succès',
+    'book_create'                 => '',
+    'book_create_notification'    => '',
+    'book_update'                 => '',
+    'book_update_notification'    => '',
+    'book_delete'                 => '',
+    'book_delete_notification'    => '',
+    'book_sort'                   => '',
+    'book_sort_notification'      => '',
 
     // Bookshelves
-    'bookshelf_create'                 => 'a créé l\'étagère',
-    'bookshelf_create_notification'    => 'Étagère créée avec succès',
-    'bookshelf_update'                 => 'a modifié l\'étagère',
-    'bookshelf_update_notification'    => 'Étagère modifiée avec succès',
-    'bookshelf_delete'                 => 'a supprimé l\'étagère',
-    'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
+    'bookshelf_create'            => '',
+    'bookshelf_create_notification'    => '',
+    'bookshelf_update'                 => '',
+    'bookshelf_update_notification'    => '',
+    'bookshelf_delete'                 => '',
+    'bookshelf_delete_notification'    => '',
 
     // Other
-    'commented_on'                => 'a commenté'
+    'commented_on'                => '',
 ];
