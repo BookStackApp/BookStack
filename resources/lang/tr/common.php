@@ -40,6 +40,10 @@ return [
     'add' => 'Ekle',
 
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'İsim',
     'sort_created_at' => 'Oluşturulma Tarihi',
     'sort_updated_at' => 'Güncellenme Tarihi',
@@ -55,8 +59,10 @@ return [
     'grid_view' => 'Grid görünümü',
     'list_view' => 'Liste görünümü',
     'default' => 'Varsayılan',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
 
