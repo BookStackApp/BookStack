@@ -1,78 +1,76 @@
 <?php
 /**
  * Common elements found throughout many areas of BookStack.
- * 
- * Elementos comunes encontrados en varias áreas de BookStack.
  */
 return [
 
-    // Buttons - Botones
-    'cancel' => 'Cancelar',
-    'confirm' => 'Confirmar',
-    'back' => 'Atrás',
-    'save' => 'Guardar',
-    'continue' => 'Continuar',
-    'select' => 'Seleccionar',
-    'toggle_all' => 'Alternar todo',
-    'more' => 'Más',
+    // Buttons
+    'cancel' => '',
+    'confirm' => '',
+    'back' => '',
+    'save' => '',
+    'continue' => '',
+    'select' => '',
+    'toggle_all' => '',
+    'more' => '',
+
+    // Form Labels
+    'name' => '',
+    'description' => '',
+    'role' => '',
+    'cover_image' => '',
+    'cover_image_description' => '',
     
-    // Form Labels - Etiquetas de Formularios
-    'name' => 'Nombre',
-    'description' => 'Descripción',
-    'role' => 'Rol',
-    'cover_image' => 'Imagen de cubierta',
-    'cover_image_description' => 'Esta imagen debe ser de 440x250px aproximadamente.',
+    // Actions
+    'actions' => '',
+    'view' => '',
+    'view_all' => '',
+    'create' => '',
+    'update' => '',
+    'edit' => '',
+    'sort' => '',
+    'move' => '',
+    'copy' => '',
+    'reply' => '',
+    'delete' => '',
+    'search' => '',
+    'search_clear' => '',
+    'reset' => '',
+    'remove' => '',
+    'add' => '',
 
-    // Actions - Acciones
-    'actions' => 'Acciones',
-    'view' => 'Ver',
-    'view_all' => 'Ver todo',
-    'create' => 'Crear',
-    'update' => 'Actualizar',
-    'edit' => 'Editar',
-    'sort' => 'Ordenar',
-    'move' => 'Mover',
-    'copy' => 'Copiar',
-    'reply' => 'Responder',
-    'delete' => 'Borrar',
-    'search' => 'Buscar',
-    'search_clear' => 'Limpiar búsqueda',
-    'reset' => 'Restablecer',
-    'remove' => 'Remover',
-    'add' => 'Agregar',
+    // Sort Options
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
+    'sort_name' => '',
+    'sort_created_at' => '',
+    'sort_updated_at' => '',
 
-    // Sort Options - Opciones de filtro
-    'sort_options' => 'Opciones de Orden',
-    'sort_direction_toggle' => 'Cambiar Dirección de Orden',
-    'sort_ascending' => 'Orden Ascendente',
-    'sort_descending' => 'Orden Descendente',
-    'sort_name' => 'Nombre',
-    'sort_created_at' => 'Fecha de creación',
-    'sort_updated_at' => 'Fecha de actualización',
+    // Misc
+    'deleted_user' => '',
+    'no_activity' => '',
+    'no_items' => '',
+    'back_to_top' => '',
+    'toggle_details' => '',
+    'toggle_thumbnails' => '',
+    'details' => '',
+    'grid_view' => '',
+    'list_view' => '',
+    'default' => '',
+    'breadcrumb' => '',
 
-    //Misc
-    'deleted_user' => 'Usuario borrado',
-    'no_activity' => 'Ninguna actividad para mostrar',
-    'no_items' => 'No hay items disponibles',
-    'back_to_top' => 'Volver arriba',
-    'toggle_details' => 'Alternar detalles',
-    "toggle_thumbnails" => "Alternar miniaturas",
-    'details' => 'Detalles',
-    "grid_view" => "Vista de grilla",
-    "list_view" => "Vista de lista",
-    'default' => 'Por defecto',
-    'breadcrumb' => 'Miga de Pan',
+    // Header
+    'profile_menu' => '',
+    'view_profile' => '',
+    'edit_profile' => '',
 
-    // Header - Cabecera
-    'profile_menu' => 'Menu del Perfil',
-    'view_profile' => 'Ver Perfil',
-    'edit_profile' => 'Editar Perfil',
+    // Layout tabs
+    'tab_info' => '',
+    'tab_content' => '',
 
-    // Layout tabs - Pestañas de visualización
-    'tab_info' => 'Información',
-    'tab_content' => 'Contenido',
-
-    // Email Content - Contenido de correo Electrónico
-    'email_action_help' => 'Si está teniendo problemas haga click en el botón ":actionText", copie y pegue la siguiente URL en su navegador web:',
-    'email_rights' => 'Todos los derechos reservados',
+    // Email Content
+    'email_action_help' => '',
+    'email_rights' => '',
 ];
