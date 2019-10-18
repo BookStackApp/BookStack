@@ -1,70 +1,76 @@
 <?php
 /**
- * Common elements found throughout many areas of BookStack. / Загальні елементи, використовуються в багатьох областях BookStack.
+ * Common elements found throughout many areas of BookStack.
  */
 return [
 
     // Buttons
-    'cancel' => 'Скасувати',
-    'confirm' => 'Застосувати',
-    'back' => 'Назад',
-    'save' => 'Зберегти',
-    'continue' => 'Продовжити',
-    'select' => 'Вибрати',
-    'toggle_all' => 'Увімкнути все',
-    'more' => 'Ще',
+    'cancel' => '',
+    'confirm' => '',
+    'back' => '',
+    'save' => '',
+    'continue' => '',
+    'select' => '',
+    'toggle_all' => '',
+    'more' => '',
 
     // Form Labels
-    'name' => 'Назва',
-    'description' => 'Опис',
-    'role' => 'Роль',
-    'cover_image' => 'Обкладинка',
-    'cover_image_description' => 'Це зображення має бути приблизно 440x250px.',
+    'name' => '',
+    'description' => '',
+    'role' => '',
+    'cover_image' => '',
+    'cover_image_description' => '',
     
     // Actions
-    'actions' => 'Дії',
-    'view' => 'Подивитись',
-    'view_all' => 'Подивитись все',
-    'create' => 'Створити',
-    'update' => 'Оновити',
-    'edit' => 'Редагувати',
-    'sort' => 'Сортувати',
-    'move' => 'Перемістити',
-    'copy' => 'Копіювати',
-    'reply' => 'Відповісти',
-    'delete' => 'Видалити',
-    'search' => 'Шукати',
-    'search_clear' => 'Очистити пошук',
-    'reset' => 'Скинути',
-    'remove' => 'Видалити',
-    'add' => 'Додати',
-    
+    'actions' => '',
+    'view' => '',
+    'view_all' => '',
+    'create' => '',
+    'update' => '',
+    'edit' => '',
+    'sort' => '',
+    'move' => '',
+    'copy' => '',
+    'reply' => '',
+    'delete' => '',
+    'search' => '',
+    'search_clear' => '',
+    'reset' => '',
+    'remove' => '',
+    'add' => '',
+
     // Sort Options
-    'sort_name' => 'Ім\'я',
-    'sort_created_at' => 'Дата створення',
-    'sort_updated_at' => 'Дата оновлення',
+    'sort_options' => '',
+    'sort_direction_toggle' => '',
+    'sort_ascending' => '',
+    'sort_descending' => '',
+    'sort_name' => '',
+    'sort_created_at' => '',
+    'sort_updated_at' => '',
 
     // Misc
-    'deleted_user' => 'Видалений користувач',
-    'no_activity' => 'Немає активності для показу',
-    'no_items' => 'Немає доступних елементів',
-    'back_to_top' => 'Повернутися до початку',
-    'toggle_details' => 'Подробиці',
-    'toggle_thumbnails' => 'Мініатюри',
-    'details' => 'Деталі',
-    'grid_view' => 'Вигляд Сіткою',
-    'list_view' => 'Вигляд Списком',
-    'default' => 'За замовчуванням',
+    'deleted_user' => '',
+    'no_activity' => '',
+    'no_items' => '',
+    'back_to_top' => '',
+    'toggle_details' => '',
+    'toggle_thumbnails' => '',
+    'details' => '',
+    'grid_view' => '',
+    'list_view' => '',
+    'default' => '',
+    'breadcrumb' => '',
 
     // Header
-    'view_profile' => 'Переглянути профіль',
-    'edit_profile' => 'Редагувати профіль',
-    
+    'profile_menu' => '',
+    'view_profile' => '',
+    'edit_profile' => '',
+
     // Layout tabs
-    'tab_info' => 'Інфо',
-    'tab_content' => 'Вміст',
+    'tab_info' => '',
+    'tab_content' => '',
 
     // Email Content
-    'email_action_help' => 'Якщо у вас виникають проблеми при натисканні кнопки ":actionText", скопіюйте та вставте URL у свій веб-браузер:',
-    'email_rights' => 'Всі права захищені',
+    'email_action_help' => '',
+    'email_rights' => '',
 ];
