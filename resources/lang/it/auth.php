@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Credenziali errate.',
     'throttle' => 'Troppi tentativi di login. Riprova in :seconds secondi.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Registrati',
     'log_in' => 'Login',
     'log_in_with' => 'Login con :socialDriver',
@@ -23,15 +17,17 @@ return [
     'logout' => 'Esci',
 
     'name' => 'Nome',
-    'username' => 'Username',
-    'email' => 'Email',
-    'password' => 'Password',
+    'username' => '',
+    'email' => '',
+    'password' => '',
     'password_confirm' => 'Conferma Password',
     'password_hint' => 'Deve essere più di 7 caratteri',
     'forgot_password' => 'Password dimenticata?',
     'remember_me' => 'Ricordami',
     'ldap_email_hint' => 'Inserisci un email per usare quest\'account.',
     'create_account' => 'Crea Account',
+    'already_have_account' => '',
+    'dont_have_account' => '',
     'social_login' => 'Login Social',
     'social_registration' => 'Registrazione Social',
     'social_registration_text' => 'Registrati usando un altro servizio.',
@@ -43,23 +39,18 @@ return [
     'register_success' => 'Grazie per la registrazione! Sei registrato e loggato.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Reimposta Password',
     'reset_password_send_instructions' => 'Inserisci il tuo indirizzo sotto e ti verrà inviata una mail contenente un link per resettare la tua password.',
     'reset_password_send_button' => 'Invia Link Reset',
     'reset_password_sent_success' => 'Un link di reset è stato mandato a :email.',
     'reset_password_success' => 'La tua password è stata resettata correttamente.',
-
     'email_reset_subject' => 'Reimposta la password di :appName',
     'email_reset_text' => 'Stai ricevendo questa mail perché abbiamo ricevuto una richiesta di reset della password per il tuo account.',
     'email_reset_not_requested' => 'Se non hai richiesto un reset della password, ignora questa mail.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Conferma email per :appName',
     'email_confirm_greeting' => 'Grazie per esserti registrato a :appName!',
     'email_confirm_text' => 'Conferma il tuo indirizzo email cliccando il pulsante sotto:',
@@ -73,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Clicca il link nella mail mandata subito dopo la tua registrazione.',
     'email_not_confirmed_resend' => 'Se non riesci a trovare la mail puoi rimandarla cliccando il pulsante sotto.',
     'email_not_confirmed_resend_button' => 'Reinvia Conferma',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
