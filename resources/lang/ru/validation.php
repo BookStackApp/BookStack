@@ -30,13 +30,41 @@ return [
     'digits'               => ':attribute должен состоять из :digits цифр.',
     'digits_between'       => ':attribute должен иметь от :min до :max цифр.',
     'email'                => ':attribute должен быть корректным email адресом.',
+    'ends_with' => 'The :attribute must end with one of the following: :values',
     'filled'               => ':attribute поле необходимо.',
+    'gt'                   => [
+        'numeric' => 'The :attribute must be greater than :value.',
+        'file'    => 'The :attribute must be greater than :value kilobytes.',
+        'string'  => 'The :attribute must be greater than :value characters.',
+        'array'   => 'The :attribute must have more than :value items.',
+    ],
+    'gte'                  => [
+        'numeric' => 'The :attribute must be greater than or equal :value.',
+        'file'    => 'The :attribute must be greater than or equal :value kilobytes.',
+        'string'  => 'The :attribute must be greater than or equal :value characters.',
+        'array'   => 'The :attribute must have :value items or more.',
+    ],
     'exists'               => 'выделенный :attribute некорректен.',
     'image'                => ':attribute должен быть изображением.',
     'image_extension'      => ':attribute должен быть исправным  и содержать расширение картинки',
     'in'                   => 'выделенный :attribute некорректен.',
     'integer'              => ':attribute должно быть целое число.',
     'ip'                   => ':attribute должен быть корректным IP адресом.',
+    'ipv4'                 => 'The :attribute must be a valid IPv4 address.',
+    'ipv6'                 => 'The :attribute must be a valid IPv6 address.',
+    'json'                 => 'The :attribute must be a valid JSON string.',
+    'lt'                   => [
+        'numeric' => 'The :attribute must be less than :value.',
+        'file'    => 'The :attribute must be less than :value kilobytes.',
+        'string'  => 'The :attribute must be less than :value characters.',
+        'array'   => 'The :attribute must have less than :value items.',
+    ],
+    'lte'                  => [
+        'numeric' => 'The :attribute must be less than or equal :value.',
+        'file'    => 'The :attribute must be less than or equal :value kilobytes.',
+        'string'  => 'The :attribute must be less than or equal :value characters.',
+        'array'   => 'The :attribute must not have more than :value items.',
+    ],
     'max'                  => [
         'numeric' => ':attribute не может быть больше чем :max.',
         'file'    => ':attribute не может быть больше чем :max килобайт.',
@@ -52,6 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute должен иметь только одно расширение файла.',
     'not_in'               => 'Выбранный :attribute некорректен.',
+    'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => ':attribute должен быть числом.',
     'regex'                => ':attribute неправильный формат.',
     'required'             => ':attribute обязательное поле.',
@@ -73,14 +102,13 @@ return [
     'url'                  => ':attribute имеет неправильный формат.',
     'uploaded'             => 'Не удалось загрузить файл. Сервер не может принимать файлы такого размера.',
 
-    //Custom validation lines
+    // Custom validation lines
     'custom' => [
         'password-confirm' => [
             'required_with' => 'Требуется подтверждение пароля',
         ],
     ],
 
-    //Custom validation attributes
+    // Custom validation attributes
     'attributes' => [],
-
 ];
