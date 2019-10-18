@@ -1,9 +1,9 @@
 <?php
 /**
- * Validation Lines / Стрічки перевірки
- * The following language lines contain the default error messages used by / Наступні мовні лінії містять повідомлення про помилку за замовчуванням, 
- * the validator class. Some of these rules have multiple versions such / що використовуються класом валідатора. Деякі з цих правил мають кілька версій,
- * as the size rules. Feel free to tweak each of these messages here. / таких як правила розмірів. Ви можете налаштувати кожен з цих повідомлень тут.
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
  */
 return [
 
@@ -30,13 +30,41 @@ return [
     'digits'               => ':attribute повинні бути :digits цифрами.',
     'digits_between'       => ':attribute має бути між :min та :max цифр.',
     'email'                => ':attribute повинна бути дійсною електронною адресою.',
+    'ends_with' => '',
     'filled'               => ':attribute поле обов\'язкове.',
+    'gt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'gte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'exists'               => 'Вибраний :attribute недійсний.',
     'image'                => ':attribute повинен бути зображенням.',
     'image_extension'      => ':attribute повинен мати дійсне та підтримуване розширення зображення.',
     'in'                   => 'Вибраний :attribute недійсний.',
     'integer'              => ':attribute повинен бути цілим числом.',
     'ip'                   => ':attribute повинна бути дійсною IP-адресою.',
+    'ipv4'                 => '',
+    'ipv6'                 => '',
+    'json'                 => '',
+    'lt'                   => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
+    'lte'                  => [
+        'numeric' => '',
+        'file'    => '',
+        'string'  => '',
+        'array'   => '',
+    ],
     'max'                  => [
         'numeric' => ':attribute не може бути більшим за :max.',
         'file'    => ':attribute не може бути більшим за :max кілобайт.',
@@ -52,6 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute повинен мати тільки одне розширення файлу.',
     'not_in'               => 'Вибраний :attribute недійсний.',
+    'not_regex'            => '',
     'numeric'              => ':attribute повинен бути числом.',
     'regex'                => ':attribute формат недійсний.',
     'required'             => ':attribute поле обов\'язкове.',
