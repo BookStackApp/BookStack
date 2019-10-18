@@ -1,50 +1,48 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
 
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
-
     // Pages
-    'page_create'                 => 'skapade sidan',
-    'page_create_notification'    => 'Sidan har skapats',
-    'page_update'                 => 'uppdaterade sidan',
-    'page_update_notification'    => 'Sidan har uppdaterats',
-    'page_delete'                 => 'tog bort sidan',
-    'page_delete_notification'    => 'Sidan har tagits bort',
-    'page_restore'                => 'återställde sidan',
-    'page_restore_notification'   => 'Sidan har återställts',
-    'page_move'                   => 'flyttade sidan',
+    'page_create'                 => '',
+    'page_create_notification'    => '',
+    'page_update'                 => '',
+    'page_update_notification'    => '',
+    'page_delete'                 => '',
+    'page_delete_notification'    => '',
+    'page_restore'                => '',
+    'page_restore_notification'   => '',
+    'page_move'                   => '',
 
     // Chapters
-    'chapter_create'              => 'skapade kapitlet',
-    'chapter_create_notification' => 'Kapitlet har skapats',
-    'chapter_update'              => 'uppdaterade kapitlet',
-    'chapter_update_notification' => 'Kapitlet har uppdaterats',
-    'chapter_delete'              => 'tog bort kapitlet',
-    'chapter_delete_notification' => 'Kapitlet har tagits bort',
-    'chapter_move'                => 'flyttade kapitlet',
+    'chapter_create'              => '',
+    'chapter_create_notification' => '',
+    'chapter_update'              => '',
+    'chapter_update_notification' => '',
+    'chapter_delete'              => '',
+    'chapter_delete_notification' => '',
+    'chapter_move'                => '',
 
     // Books
-    'book_create'                 => 'skapade boken',
-    'book_create_notification'    => 'Boken har skapats',
-    'book_update'                 => 'uppdaterade boken',
-    'book_update_notification'    => 'Boken har uppdaterats',
-    'book_delete'                 => 'tog bort boken',
-    'book_delete_notification'    => 'Boken har tagits bort',
-    'book_sort'                   => 'sorterade boken',
-    'book_sort_notification'      => 'Boken har sorterats om',
+    'book_create'                 => '',
+    'book_create_notification'    => '',
+    'book_update'                 => '',
+    'book_update_notification'    => '',
+    'book_delete'                 => '',
+    'book_delete_notification'    => '',
+    'book_sort'                   => '',
+    'book_sort_notification'      => '',
 
-    // Shelves
-    'bookshelf_create'                => 'skapade hyllan',
-    'bookshelf_create_notification'   => 'Hyllan har skapats',
-    'bookshelf_update'                => 'uppdaterade hyllan',
-    'bookshelf_update_notification'   => 'Hyllan har uppdaterats',
-    'bookshelf_delete'                => 'tog bort hyllan',
-    'bookshelf_delete_notification'   => 'Hyllan har tagits bort',
+    // Bookshelves
+    'bookshelf_create'            => '',
+    'bookshelf_create_notification'    => '',
+    'bookshelf_update'                 => '',
+    'bookshelf_update_notification'    => '',
+    'bookshelf_delete'                 => '',
+    'bookshelf_delete_notification'    => '',
 
     // Other
-    'commented_on'                => 'kommenterade',
+    'commented_on'                => '',
 ];
