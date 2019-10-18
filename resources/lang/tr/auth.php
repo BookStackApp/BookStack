@@ -18,7 +18,7 @@ return [
 
     'name' => 'İsim',
     'username' => 'Kullanıcı Adı',
-    'email' => 'Email',
+    'email' => '',
     'password' => 'Şifre',
     'password_confirm' => 'Şifreyi onayla',
     'password_hint' => 'En az 5 karakter olmalı',
@@ -64,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Lütfen kayıt olduktan kısa süre sonra size gönderilen maildeki bağlantıya tıklayın ve mail adresinizi onaylayın.',
     'email_not_confirmed_resend' => 'Eğer gelen maili bulamadıysanız aşağıdaki formu tekrar doldurarak onay mailini kendinize tekrar gönderebilirsiniz.',
     'email_not_confirmed_resend_button' => 'Doğrulama Mailini Yeniden Yolla',
+
+    // User Invite
+    'user_invite_email_subject' => '',
+    'user_invite_email_greeting' => '',
+    'user_invite_email_text' => '',
+    'user_invite_email_action' => '',
+    'user_invite_page_welcome' => '',
+    'user_invite_page_text' => '',
+    'user_invite_page_confirm_button' => '',
+    'user_invite_success' => ''
 ];
