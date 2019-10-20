@@ -21,7 +21,7 @@ return [
     'email' => '메일 주소',
     'password' => '비밀번호',
     'password_confirm' => '비밀번호 확인',
-    'password_hint' => '네 글자를 넘어야 합니다.',
+    'password_hint' => '일곱 글자를 넘어야 합니다.',
     'forgot_password' => '비밀번호를 잊었나요?',
     'remember_me' => '로그인 유지',
     'ldap_email_hint' => '이 계정에 대한 메일 주소를 입력하세요.',
