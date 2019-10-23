@@ -63,6 +63,13 @@ return [
     'maint_image_cleanup_warning' => '잠재적으로 사용되지 않는 이미지를 찾았습니다. 해당 이미지들을 삭제하시겠습니까?',
     'maint_image_cleanup_success' => ':잠재적으로 사용되지 않는 이미지들이 삭제되었습니다.',
     'maint_image_cleanup_nothing_found' => '사용되지 않는 이미지를 찾을 수 없습니다. 아무것도 삭제되지 않았습니다.',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => '역할',
