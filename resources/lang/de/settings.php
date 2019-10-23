@@ -66,6 +66,13 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchten Sie diese Bilder löschen?',
     'maint_image_cleanup_success' => ':count eventuell unbenutze Bilder wurden gefunden und gelöscht.',
     'maint_image_cleanup_nothing_found' => 'Keine unbenutzen Bilder gefunden. Nichts zu löschen!',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => 'Rollen',
