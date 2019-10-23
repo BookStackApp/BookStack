@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\User;
+use BookStack\Notifications\TestEmail;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
@@ -120,6 +121,22 @@ class SettingController extends Controller
         } else {
             $this->showSuccessNotification(trans('settings.maint_image_cleanup_success', ['count' => $deleteCount]));
         }
+
+        return redirect('/settings/maintenance#image-cleanup')->withInput();
+    }
+
+    /**
+     * Action to send a test e-mail to the current user.
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function sendTestEmail(Request $request)
+    {
+        $this->checkPermission('settings-manage');
+
+        user()->notify(new TestEmail());
+        $this->showSuccessNotification(trans('settings.maint_send_test_email_success', ['address' => user()->email]));
 
         return redirect('/settings/maintenance#image-cleanup')->withInput();
     }
