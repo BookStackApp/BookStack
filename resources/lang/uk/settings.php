@@ -63,6 +63,13 @@ return [
     'maint_image_cleanup_warning' => ':count потенційно невикористаних зображень було знайдено. Ви впевнені, що хочете видалити ці зображення?',
     'maint_image_cleanup_success' => ':count потенційно невикористані зображення знайдено і видалено!',
     'maint_image_cleanup_nothing_found' => 'Не знайдено невикористовуваних зображень, нічого не видалено!',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => 'Ролі',
