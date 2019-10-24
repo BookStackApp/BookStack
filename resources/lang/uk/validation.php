@@ -80,7 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute повинен мати тільки одне розширення файлу.',
     'not_in'               => 'Вибраний :attribute недійсний.',
-    'not_regex'            => 'The :attribute format is invalid.',
+    'not_regex'            => 'Недійсний формат атрибуту :attribute.',
     'numeric'              => ':attribute повинен бути числом.',
     'regex'                => ':attribute формат недійсний.',
     'required'             => ':attribute поле обов\'язкове.',
