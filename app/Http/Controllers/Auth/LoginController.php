@@ -106,9 +106,8 @@ class LoginController extends Controller
             $this->ldapService->syncGroups($user, $request->get($this->username()));
         }
 
-        if (env('APP_URL')) {
-            $app_url = parse_url(env('APP_URL'));
-            return redirect(preg_replace("/".addcslashes($app_url['path'], '/')."/", '', redirect()->intended('/')->getTargetUrl(), 1));
+        if (parse_url(env('APP_URL'), PHP_URL_PATH)) {
+            return redirect(preg_replace("/".addcslashes(parse_url(env('APP_URL'), PHP_URL_PATH), '/')."/", '', redirect()->intended('/')->getTargetUrl(), 1));
         } else {
             return redirect()->intended('/');
         }
