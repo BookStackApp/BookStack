@@ -110,7 +110,7 @@ class LoginController extends Controller
             $app_url = parse_url(env('APP_URL'));
             return redirect(preg_replace("/".addcslashes($app_url['path'], '/')."/", '', redirect()->intended('/')->getTargetUrl(), 1));
         } else {
-            redirect()->intended('/');
+            return redirect()->intended('/');
         }
     }
 
