@@ -96,7 +96,6 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
@@ -107,9 +106,9 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
 
-
         // BookStack replacement service providers (Extends Laravel)
         BookStack\Providers\PaginationServiceProvider::class,
+        BookStack\Providers\TranslationServiceProvider::class,
 
         // BookStack custom service providers
         BookStack\Providers\AuthServiceProvider::class,
