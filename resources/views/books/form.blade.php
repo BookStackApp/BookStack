@@ -31,20 +31,11 @@
         <label for="tag-manager">{{ trans('entities.book_tags') }}</label>
     </button>
     <div class="collapse-content" collapsible-content>
-        @include('components.tag-manager', ['entity' => isset($book)?$book:null, 'entityType' => 'chapter'])
+        @include('components.tag-manager', ['entity' => $book ?? null, 'entityType' => 'chapter'])
     </div>
 </div>
 
 <div class="form-group text-right">
-    <?php
-        if (isset($bookshelf)) {
-            $cancelUrl = $bookshelf->getUrl();
-        } else if (isset($book)) {
-            $cancelUrl = $book->getUrl();
-        } else {
-            $cancelUrl = '/books';
-        }
-    ?>
-    <a href="{{ $cancelUrl }}" class="button outline">{{ trans('common.cancel') }}</a>
+    <a href="{{ $returnLocation }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.books_save') }}</button>
 </div>
