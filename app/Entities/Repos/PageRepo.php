@@ -307,15 +307,13 @@ class PageRepo
         }
 
         if ($parent instanceof Chapter) {
-            $parentChapter = $parent;
-            $parent = $parent->book;
-            $page->chapter_id = $parentChapter->id;
-            $page->save();
+            $page->chapter_id = $parent->id;
         }
 
         $page->changeBook($parent instanceof Book ? $parent->id : $parent->book->id);
         $page->rebuildPermissions();
-        return $parent;
+
+        return ($parent instanceof Book ? $parent : $parent->book);
     }
 
     /**
