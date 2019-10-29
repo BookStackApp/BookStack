@@ -28,7 +28,7 @@ class SortTest extends TestCase
         $resp->assertDontSee($draft->name);
     }
 
-    public function test_page_move()
+    public function test_page_move_into_book()
     {
         $page = Page::first();
         $currentBook = $page->book;
@@ -48,6 +48,26 @@ class SortTest extends TestCase
         $newBookResp = $this->get($newBook->getUrl());
         $newBookResp->assertSee('moved page');
         $newBookResp->assertSee($page->name);
+    }
+
+    public function test_page_move_into_chapter()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+        $newChapter = $newBook->chapters()->first();
+
+        $movePageResp = $this->actingAs($this->getEditor())->put($page->getUrl('/move'), [
+            'entity_selection' => 'chapter:' . $newChapter->id
+        ]);
+        $page = Page::find($page->id);
+
+        $movePageResp->assertRedirect($page->getUrl());
+        $this->assertTrue($page->book->id == $newBook->id, 'Page parent is now the new chapter');
+
+        $newChapterResp = $this->get($newChapter->getUrl());
+        $newChapterResp->assertSee('moved page');
+        $newChapterResp->assertSee($page->name);
     }
 
     public function test_page_move_requires_create_permissions_on_parent()
