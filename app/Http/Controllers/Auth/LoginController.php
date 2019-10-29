@@ -98,6 +98,7 @@ class LoginController extends Controller
 
             $user->save();
             $this->userRepo->attachDefaultRole($user);
+            $this->userRepo->downloadAndAssignUserAvatar($user);
             auth()->login($user);
         }
 
