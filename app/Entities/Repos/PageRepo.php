@@ -306,9 +306,11 @@ class PageRepo
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
+        $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
         $page->changeBook($parent instanceof Book ? $parent->id : $parent->book->id);
         $page->rebuildPermissions();
-        return $parent;
+
+        return ($parent instanceof Book ? $parent : $parent->book);
     }
 
     /**
