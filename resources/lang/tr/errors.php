@@ -27,7 +27,7 @@ return [
     'social_account_register_instructions' => 'Hala bir hesabınız yoksa :socialAccount ile kayıt olabilirsiniz.',
     'social_driver_not_found' => 'Social driver bulunamadı',
     'social_driver_not_configured' => ':socialAccount ayarlarınız doğru bir şekilde ayarlanmadı.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Davetiye linkinin süresi doldu. Bunun yerine parolanızı sıfırlamayı deneyebilirsiniz.',
 
     // System
     'path_not_writable' => ':filePath dosya yolu yüklenemedi. Sunucuya yazılabilir olduğundan emin olun.',
