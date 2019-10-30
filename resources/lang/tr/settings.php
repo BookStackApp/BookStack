@@ -117,7 +117,7 @@ return [
     'users_role_desc' => 'Bu kullanıcının hangi rollere atanabileceğini belirleyin. Eğer bir kullanıcıya birden fazla rol atanırsa, kullanıcı bütün rollerin özelliklerini kullanabilir.',
     'users_password' => 'Kullanıcı Parolası',
     'users_password_desc' => 'Kullanıcının giriş yaparken kullanacağı bir parola belirleyin. Parola en az 5 karakter olmalıdır.',
-    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_text' => 'Bu kullanıcıya parolasını sıfırlayabilmesi için bir e-posta gönder veya şifresini sen belirle.',
     'users_send_invite_option' => 'Kullanıcıya davet e-postası gönder',
     'users_external_auth_id' => 'Harici Authentication ID\'si',
     'users_external_auth_id_desc' => 'Bu ID kullanıcı LDAP sunucu ile bağlantı kurarken kullanılır.',
