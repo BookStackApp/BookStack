@@ -40,6 +40,9 @@ return [
     'app_disable_comments' => 'Disable Comments',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
+    'app_show_pages_in_shelf_view' => 'Detailed shelf view',
+    'app_show_pages_in_shelf_view_desc' => 'Shows all pages and chapters of a book inside the shelf view.',
+    'app_show_pages_in_shelf_view_toggle' => 'Enable detailed view',
 
     // Registration Settings
     'reg_settings' => 'Registration',

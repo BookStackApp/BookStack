@@ -9,3 +9,24 @@
         </div>
     </div>
 </a>
+
+@if (setting()->get('app-show-pages-in-shelf-view'))
+    <div class="entity-shelf-books grid third gap-y-xs entity-list-item-children">
+        @foreach((new BookStack\Entities\Managers\BookContents($book))->getTree(true) as $bookChild)
+            <div>
+                @if ($bookChild->isA('chapter'))
+                    <a href="{{$bookChild->getUrl()}}" class="entity-chip text-book" style="color: var(--color-chapter)">
+                        @icon('chapter')
+                        @elseif ($bookChild->draft)
+                            <a href="{{$bookChild->getUrl()}}" class="entity-chip text-book" style="color: var(--color-page-draft)">
+                                @icon('edit')
+                                @else
+                                    <a href="{{$bookChild->getUrl()}}" class="entity-chip text-book" style="color: var(--color-page)">
+                                        @icon('page')
+                                        @endif
+                                        {{ $bookChild->name }}
+                                    </a>
+            </div>
+        @endforeach
+    </div>
+@endif
