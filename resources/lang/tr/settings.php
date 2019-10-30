@@ -64,12 +64,12 @@ return [
     'maint_image_cleanup_success' => ':count potanisyel kullanılmayan görsel bulundu ve silindi!',
     'maint_image_cleanup_nothing_found' => 'Kullanılmayan görsel bulunamadı ve birşey silinmedi!',
     'maint_send_test_email' => 'Test E-Postası Gönder',
-    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
-    'maint_send_test_email_run' => 'Send test email',
-    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_desc' => 'Bu profilinizde girdiğiniz e-posta adresine bir test e-postası gönderir.',
+    'maint_send_test_email_run' => 'Test E-Postasını gönder',
+    'maint_send_test_email_success' => 'E-Posta :address adresine gönderildi',
     'maint_send_test_email_mail_subject' => 'Test e-postası',
-    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
-    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
+    'maint_send_test_email_mail_greeting' => 'E-Posta gönderimi başarılı!',
+    'maint_send_test_email_mail_text' => 'Tebrikler! Eğer bu e-posta bildirimini alıyorsanız, e-posta ayarlarınız doğru bir şekilde ayarlanmış demektir.',
 
     // Role Settings
     'roles' => 'Roller',
