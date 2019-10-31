@@ -22,7 +22,7 @@ return [
     'social_account_in_use' => 'Questo account :socialAccount è già utilizzato, prova a loggarti usando l\'opzione :socialAccount.',
     'social_account_email_in_use' => 'La mail :email è già in uso. Se hai già un account puoi connettere il tuo account :socialAccount dalle impostazioni del tuo profilo.',
     'social_account_existing' => 'Questo account :socialAccount è già connesso al tuo profilo.',
-    'social_account_already_used_existing' => 'Questo accoutn :socialAccount è già utilizzato da un altro utente.',
+    'social_account_already_used_existing' => 'Questo account :socialAccount è già utilizzato da un altro utente.',
     'social_account_not_used' => 'Questo account :socialAccount non è collegato a nessun utente. Collegalo nelle impostazioni del profilo. ',
     'social_account_register_instructions' => 'Se non hai ancora un account, puoi registrarti usando l\'opzione :socialAccount.',
     'social_driver_not_found' => 'Driver social non trovato',
@@ -30,14 +30,14 @@ return [
     'invite_token_expired' => 'Il link di invito è scaduto. Puoi provare a resettare la password del tuo account.',
 
     // System
-    'path_not_writable' => 'La path :filePath non può essere scritta. Controlla che abbia i permessi corretti.',
+    'path_not_writable' => 'Il percorso :filePath non è scrivibile. Controlla che abbia i permessi corretti.',
     'cannot_get_image_from_url' => 'Impossibile scaricare immagine da :url',
     'cannot_create_thumbs' => 'Il server non può creare thumbnail. Controlla che l\'estensione GD sia installata.',
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
     'uploaded'  => 'Il server non consente upload di questa grandezza. Prova un file più piccolo.',
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
-    'image_upload_type_error' => 'Il tipo di immagine in upload non è valido',
-    'file_upload_timeout' => 'Il caricamento del file è scaduto.',
+    'image_upload_type_error' => 'Il tipo di immagine caricata non è valido',
+    'file_upload_timeout' => 'Il caricamento del file è andato in timeout.',
 
     // Attachments
     'attachment_page_mismatch' => 'La pagina non è corrisposta durante l\'aggiornamento dell\'allegato',
@@ -58,7 +58,7 @@ return [
     'guests_cannot_save_drafts' => 'Gli ospiti non possono salvare bozze',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Non puoi eliminare l\'unico adin',
+    'users_cannot_delete_only_admin' => 'Non puoi eliminare l\'unico admin',
     'users_cannot_delete_guest' => 'Non puoi eliminare l\'utente ospite',
 
     // Roles
