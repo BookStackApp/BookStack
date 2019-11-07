@@ -65,7 +65,7 @@ return [
     'maint_image_cleanup_nothing_found' => 'Не знайдено невикористовуваних зображень, нічого не видалено!',
     'maint_send_test_email' => 'Надіслати тестове повідомлення',
     'maint_send_test_email_desc' => 'Надіслати тестового листа на адресу електронної пошти, що вказана у вашому профілі.',
-    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_run' => 'Надіслати тестовий лист',
     'maint_send_test_email_success' => 'Лист відправлений на : адреса',
     'maint_send_test_email_mail_subject' => 'Перевірка електронної пошти',
     'maint_send_test_email_mail_greeting' => 'Доставляння електронної пошти працює!',
