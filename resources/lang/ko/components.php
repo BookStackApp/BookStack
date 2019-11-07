@@ -8,7 +8,7 @@ return [
     'image_select' => '이미지 선택',
     'image_all' => '모든 이미지',
     'image_all_title' => '모든 이미지',
-    'image_book_title' => '이 서적에서 쓰고 있는 이미지',
+    'image_book_title' => '이 책자에서 쓰고 있는 이미지',
     'image_page_title' => '이 문서에서 쓰고 있는 이미지',
     'image_search_hint' => '이미지 이름 검색',
     'image_uploaded' => '올림 :uploadedDate',

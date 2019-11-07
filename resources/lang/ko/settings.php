@@ -88,7 +88,7 @@ return [
     'role_manage_page_templates' => '템플릿 관리',
     'role_manage_settings' => '사이트 설정 관리',
     'role_asset' => '권한 항목',
-    'role_asset_desc' => '서적, 장절, 문서별 권한은 이 설정에 우선합니다.',
+    'role_asset_desc' => '책자, 챕터, 문서별 권한은 이 설정에 우선합니다.',
     'role_asset_admins' => 'Admin 권한은 어디든 접근할 수 있지만 이 설정은 사용자 인터페이스에서 해당 활동을 표시할지 결정합니다.',
     'role_all' => '모든 항목',
     'role_own' => '직접 만든 항목',
