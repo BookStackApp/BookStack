@@ -50,11 +50,11 @@ return [
     // Entities
     'entity_not_found' => '항목이 없습니다.',
     'bookshelf_not_found' => '서가가 없습니다.',
-    'book_not_found' => '서적이 없습니다.',
+    'book_not_found' => '책자이 없습니다.',
     'page_not_found' => '문서가 없습니다.',
-    'chapter_not_found' => '장절이 없습니다.',
-    'selected_book_not_found' => '고른 서적이 없습니다.',
-    'selected_book_chapter_not_found' => '고른 서적이나 장절이 없습니다.',
+    'chapter_not_found' => '챕터이 없습니다.',
+    'selected_book_not_found' => '고른 책자이 없습니다.',
+    'selected_book_chapter_not_found' => '고른 책자이나 챕터이 없습니다.',
     'guests_cannot_save_drafts' => 'Guest는 쓰다 만 문서를 보관할 수 없습니다.',
 
     // Users

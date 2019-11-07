@@ -17,23 +17,23 @@ return [
     'page_move'                   => '문서 옮기기',
 
     // Chapters
-    'chapter_create'              => '장절 만들기',
-    'chapter_create_notification' => '장절 만듦',
-    'chapter_update'              => '장절 바꾸기',
-    'chapter_update_notification' => '장절 바꿈',
-    'chapter_delete'              => '장절 지우기',
-    'chapter_delete_notification' => '장절 지움',
-    'chapter_move'                => '장절 옮기기',
+    'chapter_create'              => '챕터 만들기',
+    'chapter_create_notification' => '챕터 만듦',
+    'chapter_update'              => '챕터 바꾸기',
+    'chapter_update_notification' => '챕터 바꿈',
+    'chapter_delete'              => '챕터 지우기',
+    'chapter_delete_notification' => '챕터 지움',
+    'chapter_move'                => '챕터 옮기기',
 
     // Books
-    'book_create'                 => '서적 만들기',
-    'book_create_notification'    => '서적 만듦',
-    'book_update'                 => '서적 바꾸기',
-    'book_update_notification'    => '서적 바꿈',
-    'book_delete'                 => '서적 지우기',
-    'book_delete_notification'    => '서적 지움',
-    'book_sort'                   => '서적 정렬',
-    'book_sort_notification'      => '서적 정렬함',
+    'book_create'                 => '책자 만들기',
+    'book_create_notification'    => '책자 만듦',
+    'book_update'                 => '책자 바꾸기',
+    'book_update_notification'    => '책자 바꿈',
+    'book_delete'                 => '책자 지우기',
+    'book_delete_notification'    => '책자 지움',
+    'book_sort'                   => '책자 정렬',
+    'book_sort_notification'      => '책자 정렬함',
 
     // Bookshelves
     'bookshelf_create'            => '서가 만들기',
