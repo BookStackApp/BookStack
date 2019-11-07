@@ -59,7 +59,7 @@ return [
     'grid_view' => 'Вигляд Сіткою',
     'list_view' => 'Вигляд Списком',
     'default' => 'За замовчуванням',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Навігація',
 
     // Header
     'profile_menu' => 'Меню профілю',
