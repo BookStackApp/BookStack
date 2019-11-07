@@ -18,7 +18,7 @@ return [
 
     'name' => 'Имя',
     'username' => 'Логин',
-    'email' => 'Email',
+    'email' => 'Адрес электронной почты',
     'password' => 'Пароль',
     'password_confirm' => 'Подтверждение пароля',
     'password_hint' => 'Должен быть больше 7 символов',
