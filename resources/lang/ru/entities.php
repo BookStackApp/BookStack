@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Вы действительно хотите удалить эту страницу?',
     'pages_delete_draft_confirm' => 'Вы действительно хотите удалить этот черновик?',
     'pages_editing_named' => 'Редактирование страницы :pageName',
-    'pages_edit_draft_options' => 'Draft Options',
+    'pages_edit_draft_options' => 'Параметры черновика',
     'pages_edit_save_draft' => 'Сохранить черновик',
     'pages_edit_draft' => 'Редактировать черновик',
     'pages_editing_draft' => 'Редактирование черновика',
