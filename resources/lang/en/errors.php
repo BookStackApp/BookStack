@@ -17,6 +17,8 @@ return [
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
     'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
+    'saml_already_logged_in' => 'Already logged in',
+    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
     'social_no_action_defined' => 'No action defined',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',

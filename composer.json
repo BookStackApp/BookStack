@@ -28,7 +28,8 @@
         "socialiteproviders/microsoft-azure": "^3.0",
         "socialiteproviders/okta": "^1.0",
         "socialiteproviders/slack": "^3.0",
-        "socialiteproviders/twitch": "^5.0"
+        "socialiteproviders/twitch": "^5.0",
+        "aacotroneo/laravel-saml2": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2.8",
