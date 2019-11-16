@@ -137,12 +137,11 @@ return [
         'enabled' => env('SAML2_ENABLED', false),
         'auto_register' => env('SAML_AUTO_REGISTER', false),
         'email_attribute' => env('SAML_EMAIL_ATTRIBUTE', 'email'),
-        'display_name_attribute' => explode('|', env('SAML_DISPLAY_NAME_ATTRIBUTE', 'username')),
-        'user_name_attribute' => env('SAML_USER_NAME_ATTRIBUTE', null),
+        'display_name_attributes' => explode('|', env('SAML_DISPLAY_NAME_ATTRIBUTES', 'username')),
+        'external_id_attribute' => env('SAML_EXTERNAL_ID_ATTRIBUTE', null),
         'group_attribute' => env('SAML_GROUP_ATTRIBUTE', 'group'),
-        'remove_from_groups' => env('SAML_REMOVE_FROM_GROUPS',false),
+        'remove_from_groups' => env('SAML_REMOVE_FROM_GROUPS', false),
         'user_to_groups' => env('SAML_USER_TO_GROUPS', false),
-        'id_is_user_name' => env('SAML_ID_IS_USER_NAME', true),
     ]
 
 ];
