@@ -9,16 +9,11 @@ return [
     'permissionJson' => 'Du hast keine Berechtigung, die angeforderte Aktion auszuführen.',
 
     // Auth
+    'saml_already_logged_in' => 'Du bist bereits angemeldet',
     'error_user_exists_different_creds' => 'Ein Benutzer mit der E-Mail-Adresse :email ist bereits mit anderen Anmeldedaten registriert.',
     'email_already_confirmed' => 'Die E-Mail-Adresse ist bereits bestätigt. Bitte melde dich an.',
     'email_confirmation_invalid' => 'Der Bestätigungslink ist nicht gültig oder wurde bereits verwendet. Bitte registriere dich erneut.',
-    'email_confirmation_expired' => 'Der Bestätigungslink ist abgelaufen. Es wurde eine neue Bestätigungs-E-Mail gesendet.',
-    'ldap_fail_anonymous' => 'Anonymer LDAP-Zugriff ist fehlgeschlafgen',
-    'ldap_fail_authed' => 'LDAP-Zugriff mit DN und Passwort ist fehlgeschlagen',
-    'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert.',
-    'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf.',
-    'social_no_action_defined' => 'Es ist keine Aktion definiert',
-    'social_login_bad_response' => "Fehler bei der :socialAccount-Anmeldung: \n:error",
+
     'social_account_in_use' => 'Dieses :socialAccount-Konto wird bereits verwendet. Bitte melde dich mit dem :socialAccount-Konto an.',
     'social_account_email_in_use' => 'Die E-Mail-Adresse ":email" ist bereits registriert. Wenn Du bereits registriert bist, kannst Du Dein :socialAccount-Konto in Deinen Profil-Einstellungen verknüpfen.',
     'social_account_existing' => 'Dieses :socialAccount-Konto ist bereits mit Ihrem Profil verknüpft.',
