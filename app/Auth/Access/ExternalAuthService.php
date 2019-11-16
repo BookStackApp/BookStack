@@ -9,24 +9,31 @@ class ExternalAuthService
     /**
      * Check a role against an array of group names to see if it matches.
      * Checked against role 'external_auth_id' if set otherwise the name of the role.
-     * @param \BookStack\Auth\Role $role
-     * @param array $groupNames
-     * @return bool
      */
-    protected function roleMatchesGroupNames(Role $role, array $groupNames)
+    protected function roleMatchesGroupNames(Role $role, array $groupNames): bool
     {
         if ($role->external_auth_id) {
-            $externalAuthIds = explode(',', strtolower($role->external_auth_id));
-            foreach ($externalAuthIds as $externalAuthId) {
-                if (in_array(trim($externalAuthId), $groupNames)) {
-                    return true;
-                }
-            }
-            return false;
+            return $this->externalIdMatchesGroupNames($role->external_auth_id, $groupNames);
         }
 
         $roleName = str_replace(' ', '-', trim(strtolower($role->display_name)));
         return in_array($roleName, $groupNames);
+    }
+
+    /**
+     * Check if the given external auth ID string matches one of the given group names.
+     */
+    protected function externalIdMatchesGroupNames(string $externalId, array $groupNames): bool
+    {
+        $externalAuthIds = explode(',', strtolower($externalId));
+
+        foreach ($externalAuthIds as $externalAuthId) {
+            if (in_array(trim($externalAuthId), $groupNames)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

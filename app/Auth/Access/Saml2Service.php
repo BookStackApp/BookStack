@@ -147,10 +147,9 @@ class Saml2Service extends ExternalAuthService
     protected function registerUser(array $userDetails): User
     {
         // Create an array of the user data to create a new user instance
-
         $userData = [
             'name' => $userDetails['name'],
-            'email' => $userDetails['email'] ?? '',
+            'email' => $userDetails['email'],
             'password' => Str::random(32),
             'external_auth_id' => $userDetails['external_id'],
             'email_confirmed' => true,
