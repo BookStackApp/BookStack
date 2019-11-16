@@ -1,18 +1,15 @@
 <?php namespace BookStack\Auth\Access;
 
-use BookStack\Auth\Access;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\SamlException;
-use Illuminate\Contracts\Auth\Authenticatable;
-
+use Illuminate\Support\Str;
 
 /**
  * Class Saml2Service
  * Handles any app-specific SAML tasks.
- * @package BookStack\Services
  */
-class Saml2Service extends Access\ExternalAuthService
+class Saml2Service extends ExternalAuthService
 {
     protected $config;
     protected $userRepo;
@@ -21,7 +18,6 @@ class Saml2Service extends Access\ExternalAuthService
 
     /**
      * Saml2Service constructor.
-     * @param \BookStack\Auth\UserRepo $userRepo
      */
     public function __construct(UserRepo $userRepo, User $user)
     {
@@ -33,80 +29,79 @@ class Saml2Service extends Access\ExternalAuthService
 
     /**
      * Check if groups should be synced.
-     * @return bool
      */
-    public function shouldSyncGroups()
+    protected function shouldSyncGroups(): bool
     {
         return $this->enabled && $this->config['user_to_groups'] !== false;
     }
 
-    /** Calculate the display name
-     *  @param array $samlAttributes
-     *  @param string $defaultValue
-     *  @return string
+    /**
+     * Calculate the display name
      */
-    protected function getUserDisplayName(array $samlAttributes, string $defaultValue)
+    protected function getUserDisplayName(array $samlAttributes, string $defaultValue): string
     {
-        $displayNameAttr = $this->config['display_name_attribute'];
+        $displayNameAttr = $this->config['display_name_attributes'];
 
         $displayName = [];
         foreach ($displayNameAttr as $dnAttr) {
-          $dnComponent = $this->getSamlResponseAttribute($samlAttributes, $dnAttr, null);
-          if ($dnComponent !== null) {
-            $displayName[] = $dnComponent;
-          }
+            $dnComponent = $this->getSamlResponseAttribute($samlAttributes, $dnAttr, null);
+            if ($dnComponent !== null) {
+                $displayName[] = $dnComponent;
+            }
         }
 
         if (count($displayName) == 0) {
-          $displayName = $defaultValue;
+            $displayName = $defaultValue;
         } else {
-          $displayName = implode(' ', $displayName);
+            $displayName = implode(' ', $displayName);
         }
 
         return $displayName;
     }
 
-    protected function getUserName(array $samlAttributes, string $defaultValue)
+    /**
+     * Get the value to use as the external id saved in BookStack
+     * used to link the user to an existing BookStack DB user.
+     */
+    protected function getExternalId(array $samlAttributes, string $defaultValue)
     {
-        $userNameAttr = $this->config['user_name_attribute'];
-
+        $userNameAttr = $this->config['external_id_attribute'];
         if ($userNameAttr === null) {
-            $userName = $defaultValue;
-        } else {
-            $userName = $this->getSamlResponseAttribute($samlAttributes, $userNameAttr, $defaultValue);
+            return $defaultValue;
         }
 
-        return $userName;
+        return $this->getSamlResponseAttribute($samlAttributes, $userNameAttr, $defaultValue);
     }
 
     /**
      * Extract the details of a user from a SAML response.
-     * @param $samlID
-     * @param $samlAttributes
-     * @return array
+     * @throws SamlException
      */
-    public function getUserDetails($samlID, $samlAttributes)
+    public function getUserDetails(string $samlID, $samlAttributes): array
     {
         $emailAttr = $this->config['email_attribute'];
-        $userName = $this->getUserName($samlAttributes, $samlID);
+        $externalId = $this->getExternalId($samlAttributes, $samlID);
+        $email = $this->getSamlResponseAttribute($samlAttributes, $emailAttr, null);
+
+        if ($email === null) {
+            throw new SamlException(trans('errors.saml_no_email_address'));
+        }
 
         return [
-            'uid'   => $userName,
-            'name'  => $this->getUserDisplayName($samlAttributes, $userName),
-            'dn'    => $samlID,
-            'email' => $this->getSamlResponseAttribute($samlAttributes, $emailAttr, null),
+            'external_id' => $externalId,
+            'name' => $this->getUserDisplayName($samlAttributes, $externalId),
+            'email' => $email,
+            'saml_id' => $samlID,
         ];
     }
 
     /**
      * Get the groups a user is a part of from the SAML response.
-     * @param array $samlAttributes
-     * @return array
      */
-    public function getUserGroups($samlAttributes)
+    public function getUserGroups(array $samlAttributes): array
     {
         $groupsAttr = $this->config['group_attribute'];
-        $userGroups = $samlAttributes[$groupsAttr];
+        $userGroups = $samlAttributes[$groupsAttr] ?? null;
 
         if (!is_array($userGroups)) {
             $userGroups = [];
@@ -119,12 +114,9 @@ class Saml2Service extends Access\ExternalAuthService
      *  For an array of strings, return a default for an empty array,
      *  a string for an array with one element and the full array for
      *  more than one element.
-     *
-     *  @param array $data
-     *  @param $defaultValue
-     *  @return string
      */
-    protected function simplifyValue(array $data, $defaultValue) {
+    protected function simplifyValue(array $data, $defaultValue)
+    {
         switch (count($data)) {
             case 0:
                 $data = $defaultValue;
@@ -139,39 +131,32 @@ class Saml2Service extends Access\ExternalAuthService
     /**
      * Get a property from an SAML response.
      * Handles properties potentially being an array.
-     * @param array $userDetails
-     * @param string $propertyKey
-     * @param $defaultValue
-     * @return mixed
      */
     protected function getSamlResponseAttribute(array $samlAttributes, string $propertyKey, $defaultValue)
     {
         if (isset($samlAttributes[$propertyKey])) {
-            $data = $this->simplifyValue($samlAttributes[$propertyKey], $defaultValue);
-        } else {
-            $data = $defaultValue;
+            return $this->simplifyValue($samlAttributes[$propertyKey], $defaultValue);
         }
 
-        return $data;
+        return $defaultValue;
     }
 
     /**
-     *  Register a user that is authenticated but not
-     *  already registered.
-     *  @param array $userDetails
-     *  @return User
+     *  Register a user that is authenticated but not already registered.
      */
-    protected function registerUser($userDetails)
+    protected function registerUser(array $userDetails): User
     {
         // Create an array of the user data to create a new user instance
+
         $userData = [
             'name' => $userDetails['name'],
-            'email' => $userDetails['email'],
-            'password' => str_random(30),
-            'external_auth_id' => $userDetails['uid'],
+            'email' => $userDetails['email'] ?? '',
+            'password' => Str::random(32),
+            'external_auth_id' => $userDetails['external_id'],
             'email_confirmed' => true,
         ];
 
+        // TODO - Handle duplicate email address scenario
         $user = $this->user->forceCreate($userData);
         $this->userRepo->attachDefaultRole($user);
         $this->userRepo->downloadAndAssignUserAvatar($user);
@@ -180,14 +165,12 @@ class Saml2Service extends Access\ExternalAuthService
 
     /**
      * Get the user from the database for the specified details.
-     * @param array $userDetails
-     * @return User|null
      */
-    protected function getOrRegisterUser($userDetails)
+    protected function getOrRegisterUser(array $userDetails): ?User
     {
         $isRegisterEnabled = config('services.saml.auto_register') === true;
         $user = $this->user
-          ->where('external_auth_id', $userDetails['uid'])
+          ->where('external_auth_id', $userDetails['external_id'])
           ->first();
 
         if ($user === null && $isRegisterEnabled) {
@@ -198,30 +181,30 @@ class Saml2Service extends Access\ExternalAuthService
     }
 
     /**
-     *  Process the SAML response for a user. Login the user when
-     *  they exist, optionally registering them automatically.
-     *  @param string $samlID
-     *  @param array $samlAttributes
-     *  @throws SamlException
+     * Process the SAML response for a user. Login the user when
+     * they exist, optionally registering them automatically.
+     * @throws SamlException
      */
-    public function processLoginCallback($samlID, $samlAttributes)
+    public function processLoginCallback(string $samlID, array $samlAttributes): User
     {
         $userDetails = $this->getUserDetails($samlID, $samlAttributes);
         $isLoggedIn = auth()->check();
 
         if ($isLoggedIn) {
             throw new SamlException(trans('errors.saml_already_logged_in'), '/login');
-        } else {
-            $user = $this->getOrRegisterUser($userDetails);
-            if ($user === null) {
-                throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['uid']]), '/login');
-            } else {
-                $groups = $this->getUserGroups($samlAttributes);
-                $this->syncWithGroups($user, $groups);
-                auth()->login($user);
-            }
         }
 
+        $user = $this->getOrRegisterUser($userDetails);
+        if ($user === null) {
+            throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['external_id']]), '/login');
+        }
+
+        if ($this->shouldSyncGroups()) {
+            $groups = $this->getUserGroups($samlAttributes);
+            $this->syncWithGroups($user, $groups);
+        }
+
+        auth()->login($user);
         return $user;
     }
 }
