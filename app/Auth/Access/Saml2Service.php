@@ -7,6 +7,7 @@ use BookStack\Exceptions\SamlException;
 use Illuminate\Support\Str;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
+use OneLogin\Saml2\IdPMetadataParser;
 
 /**
  * Class Saml2Service
@@ -103,6 +104,7 @@ class Saml2Service extends ExternalAuthService
     /**
      * Load the underlying Onelogin SAML2 toolkit.
      * @throws \OneLogin\Saml2\Error
+     * @throws \Exception
      */
     protected function getToolkit(): Auth
     {
@@ -113,8 +115,13 @@ class Saml2Service extends ExternalAuthService
             $overrides = json_decode($overrides, true);
         }
 
+        $metaDataSettings = [];
+        if ($this->config['autoload_from_metadata']) {
+            $metaDataSettings = IdPMetadataParser::parseRemoteXML($settings['idp']['entityId']);
+        }
+
         $spSettings = $this->loadOneloginServiceProviderDetails();
-        $settings = array_replace_recursive($settings, $spSettings, $overrides);
+        $settings = array_replace_recursive($settings, $spSettings, $metaDataSettings, $overrides);
         return new Auth($settings);
     }
 
