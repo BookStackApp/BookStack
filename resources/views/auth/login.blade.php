@@ -49,7 +49,7 @@
                 <hr class="my-l">
                 <div>
                     <a id="saml-login" class="button outline block svg" href="{{ url("/saml2/login") }}">
-                      {{-- @icon('auth/github') --}}
+                       @icon('saml2')
                       {{ trans('auth.log_in_with', ['socialDriver' => config('saml2.name')]) }}
                     </a>
                 </div>
