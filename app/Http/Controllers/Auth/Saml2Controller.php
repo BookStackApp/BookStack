@@ -31,6 +31,20 @@ class Saml2Controller extends Controller
         return redirect($loginDetails['url']);
     }
 
+    /**
+     * Start the logout flow via SAML2.
+     */
+    public function logout()
+    {
+        $logoutDetails = $this->samlService->logout();
+
+        if ($logoutDetails['id']) {
+            session()->flash('saml2_logout_request_id', $logoutDetails['id']);
+        }
+
+        return redirect($logoutDetails['url']);
+    }
+
     /*
      * Get the metadata for this SAML2 service provider.
      */
@@ -48,7 +62,9 @@ class Saml2Controller extends Controller
      */
     public function sls()
     {
-        // TODO
+        $requestId = session()->pull('saml2_logout_request_id', null);
+        $redirect = $this->samlService->processSlsResponse($requestId) ?? '/';
+        return redirect($redirect);
     }
 
     /**
@@ -65,6 +81,7 @@ class Saml2Controller extends Controller
             return redirect('/login');
         }
 
+        session()->put('last_login_type', 'saml2');
         return redirect()->intended();
     }
 

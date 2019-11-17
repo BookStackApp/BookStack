@@ -146,4 +146,23 @@ class LoginController extends Controller
         session()->put('social-callback', 'login');
         return $this->socialAuthService->startLogIn($socialDriver);
     }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        if (config('saml2.enabled') && session()->get('last_login_type') === 'saml2') {
+            return redirect('/saml2/logout');
+        }
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
 }

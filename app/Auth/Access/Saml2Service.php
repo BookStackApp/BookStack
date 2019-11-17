@@ -4,10 +4,12 @@ use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\SamlException;
+use Exception;
 use Illuminate\Support\Str;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
 use OneLogin\Saml2\IdPMetadataParser;
+use OneLogin\Saml2\ValidationError;
 
 /**
  * Class Saml2Service
@@ -33,7 +35,7 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Initiate a login flow.
-     * @throws \OneLogin\Saml2\Error
+     * @throws Error
      */
     public function login(): array
     {
@@ -46,23 +48,48 @@ class Saml2Service extends ExternalAuthService
     }
 
     /**
+     * Initiate a logout flow.
+     * @throws Error
+     */
+    public function logout(): array
+    {
+        $toolKit = $this->getToolkit();
+        $returnRoute = url('/');
+
+        try {
+            $url = $toolKit->logout($returnRoute, [], null, null, true);
+            $id = $toolKit->getLastRequestID();
+        } catch (Error $error) {
+            if ($error->getCode() !== Error::SAML_SINGLE_LOGOUT_NOT_SUPPORTED) {
+                throw $error;
+            }
+
+            $this->actionLogout();
+            $url = '/';
+            $id = null;
+        }
+
+        return ['url' => $url, 'id' => $id];
+    }
+
+    /**
      * Process the ACS response from the idp and return the
      * matching, or new if registration active, user matched to the idp.
      * Returns null if not authenticated.
      * @throws Error
      * @throws SamlException
-     * @throws \OneLogin\Saml2\ValidationError
+     * @throws ValidationError
      * @throws JsonDebugException
      */
     public function processAcsResponse(?string $requestId): ?User
     {
-        $toolkit = $this->getToolkit();
-        $toolkit->processResponse($requestId);
-        $errors = $toolkit->getErrors();
-
         if (is_null($requestId)) {
             throw new SamlException(trans('errors.saml_invalid_response_id'));
         }
+
+        $toolkit = $this->getToolkit();
+        $toolkit->processResponse($requestId);
+        $errors = $toolkit->getErrors();
 
         if (!empty($errors)) {
             throw new Error(
@@ -78,6 +105,36 @@ class Saml2Service extends ExternalAuthService
         $id = $toolkit->getNameId();
 
         return $this->processLoginCallback($id, $attrs);
+    }
+
+    /**
+     * Process a response for the single logout service.
+     * @throws Error
+     */
+    public function processSlsResponse(?string $requestId): ?string
+    {
+        $toolkit = $this->getToolkit();
+        $redirect = $toolkit->processSLO(true, $requestId, false, null, true);
+
+        $errors = $toolkit->getErrors();
+
+        if (!empty($errors)) {
+            throw new Error(
+                'Invalid SLS Response: '.implode(', ', $errors)
+            );
+        }
+
+        $this->actionLogout();
+        return $redirect;
+    }
+
+    /**
+     * Do the required actions to log a user out.
+     */
+    protected function actionLogout()
+    {
+        auth()->logout();
+        session()->invalidate();
     }
 
     /**
@@ -103,8 +160,8 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Load the underlying Onelogin SAML2 toolkit.
-     * @throws \OneLogin\Saml2\Error
-     * @throws \Exception
+     * @throws Error
+     * @throws Exception
      */
     protected function getToolkit(): Auth
     {
