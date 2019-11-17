@@ -22,6 +22,7 @@
         "laravel/framework": "^6.0",
         "laravel/socialite": "^4.2",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "onelogin/php-saml": "^3.3",
         "predis/predis": "^1.1",
         "socialiteproviders/discord": "^2.0",
         "socialiteproviders/gitlab": "^3.0",
