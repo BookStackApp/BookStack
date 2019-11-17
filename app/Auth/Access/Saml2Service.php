@@ -83,10 +83,6 @@ class Saml2Service extends ExternalAuthService
      */
     public function processAcsResponse(?string $requestId): ?User
     {
-        if (is_null($requestId)) {
-            throw new SamlException(trans('errors.saml_invalid_response_id'));
-        }
-
         $toolkit = $this->getToolkit();
         $toolkit->processResponse($requestId);
         $errors = $toolkit->getErrors();
@@ -251,17 +247,14 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Extract the details of a user from a SAML response.
-     * @throws SamlException
      */
     public function getUserDetails(string $samlID, $samlAttributes): array
     {
         $emailAttr = $this->config['email_attribute'];
         $externalId = $this->getExternalId($samlAttributes, $samlID);
-        $email = $this->getSamlResponseAttribute($samlAttributes, $emailAttr, null);
 
-        if ($email === null) {
-            throw new SamlException(trans('errors.saml_no_email_address'));
-        }
+        $defaultEmail = filter_var($samlID, FILTER_VALIDATE_EMAIL) ? $samlID : null;
+        $email = $this->getSamlResponseAttribute($samlAttributes, $emailAttr, $defaultEmail);
 
         return [
             'external_id' => $externalId,
@@ -372,9 +365,14 @@ class Saml2Service extends ExternalAuthService
 
         if ($this->config['dump_user_details']) {
             throw new JsonDebugException([
+                'id_from_idp' => $samlID,
                 'attrs_from_idp' => $samlAttributes,
                 'attrs_after_parsing' => $userDetails,
             ]);
+        }
+
+        if ($userDetails['email'] === null) {
+            throw new SamlException(trans('errors.saml_no_email_address'));
         }
 
         if ($isLoggedIn) {
