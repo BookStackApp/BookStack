@@ -4,67 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42d7a337f6d603ab247b525ade5c3cee",
+    "content-hash": "140c7a04a20cef6d7ed8c1fc48257e66",
     "packages": [
-        {
-            "name": "aacotroneo/laravel-saml2",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/aacotroneo/laravel-saml2.git",
-                "reference": "5045701a07bcd7600a17c92971368669870f546a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aacotroneo/laravel-saml2/zipball/5045701a07bcd7600a17c92971368669870f546a",
-                "reference": "5045701a07bcd7600a17c92971368669870f546a",
-                "shasum": ""
-            },
-            "require": {
-                "ext-openssl": "*",
-                "illuminate/support": ">=5.0.0",
-                "onelogin/php-saml": "^3.0.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Aacotroneo\\Saml2\\Saml2ServiceProvider"
-                    ],
-                    "aliases": {
-                        "Saml2": "Aacotroneo\\Saml2\\Facades\\Saml2Auth"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Aacotroneo\\Saml2\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "aacotroneo",
-                    "email": "aacotroneo@gmail.com"
-                }
-            ],
-            "description": "A Laravel package for Saml2 integration as a SP (service provider) based on OneLogin toolkit, which is much lightweight than simplesamlphp",
-            "homepage": "https://github.com/aacotroneo/laravel-saml2",
-            "keywords": [
-                "SAML2",
-                "laravel",
-                "onelogin",
-                "saml"
-            ],
-            "time": "2018-11-08T14:03:58+00:00"
-        },
         {
             "name": "aws/aws-sdk-php",
             "version": "3.117.2",

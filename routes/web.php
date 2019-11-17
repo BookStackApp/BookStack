@@ -216,6 +216,15 @@ Route::post('/register/confirm/resend', 'Auth\ConfirmEmailController@resend');
 Route::get('/register/confirm/{token}', 'Auth\ConfirmEmailController@confirm');
 Route::post('/register', 'Auth\RegisterController@postRegister');
 
+// SAML routes
+// TODO - Prevent access without SAML2 enabled via middleware
+Route::get('/saml2/login', 'Auth\Saml2Controller@login');
+// TODO - Handle logout?
+//    Route::get('/saml2/logout', 'Auth\Saml2Controller@logout');
+Route::get('/saml2/metadata', 'Auth\Saml2Controller@metadata');
+Route::get('/saml2/sls', 'Auth\Saml2Controller@sls');
+Route::post('/saml2/acs', 'Auth\Saml2Controller@acs');
+
 // User invitation routes
 Route::get('/register/invite/{token}', 'Auth\UserInviteController@showSetPassword');
 Route::post('/register/invite/{token}', 'Auth\UserInviteController@setPassword');

@@ -119,7 +119,7 @@ class LoginController extends Controller
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         $authMethod = config('auth.method');
-        $samlEnabled = config('services.saml.enabled') == true;
+        $samlEnabled = config('saml2.enabled') === true;
 
         if ($request->has('email')) {
             session()->flashInput([

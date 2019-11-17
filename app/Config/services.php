@@ -132,16 +132,4 @@ return [
         'tls_insecure' => env('LDAP_TLS_INSECURE', false),
     ],
 
-    'saml' => [
-        'name' => env('SAML_NAME', 'SSO'),
-        'enabled' => env('SAML2_ENABLED', false),
-        'auto_register' => env('SAML_AUTO_REGISTER', false),
-        'email_attribute' => env('SAML_EMAIL_ATTRIBUTE', 'email'),
-        'display_name_attributes' => explode('|', env('SAML_DISPLAY_NAME_ATTRIBUTES', 'username')),
-        'external_id_attribute' => env('SAML_EXTERNAL_ID_ATTRIBUTE', null),
-        'group_attribute' => env('SAML_GROUP_ATTRIBUTE', 'group'),
-        'remove_from_groups' => env('SAML_REMOVE_FROM_GROUPS', false),
-        'user_to_groups' => env('SAML_USER_TO_GROUPS', false),
-    ]
-
 ];
