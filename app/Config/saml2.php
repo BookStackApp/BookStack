@@ -27,6 +27,9 @@ return [
     // When syncing groups, remove any groups that no longer match. Otherwise sync only adds new groups.
     'remove_from_groups' => env('SAML2_REMOVE_FROM_GROUPS', false),
 
+    // Autoload IDP details from the metadata endpoint
+    'autoload_from_metadata' => env('SAML2_AUTOLOAD_METADATA', false),
+
     // Overrides, in JSON format, to the configuration passed to underlying onelogin library.
     'onelogin_overrides' => env('SAML2_ONELOGIN_OVERRIDES', null),
 
