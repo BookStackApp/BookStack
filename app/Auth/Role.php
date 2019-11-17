@@ -4,6 +4,13 @@ use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Model;
 
+/**
+ * Class Role
+ * @property string $display_name
+ * @property string $description
+ * @property string $external_auth_id
+ * @package BookStack\Auth
+ */
 class Role extends Model
 {
 

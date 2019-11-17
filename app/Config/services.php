@@ -130,6 +130,6 @@ return [
         'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
         'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS', false),
         'tls_insecure' => env('LDAP_TLS_INSECURE', false),
-    ]
+    ],
 
 ];

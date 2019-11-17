@@ -48,5 +48,6 @@
         <server name="GOOGLE_SELECT_ACCOUNT" value=""/>
         <server name="APP_URL" value="http://bookstack.dev"/>
         <server name="DEBUGBAR_ENABLED" value="false"/>
+        <server name="SAML2_ENABLED" value="false"/>
     </php>
 </phpunit>

@@ -45,6 +45,16 @@
                 @endforeach
             @endif
 
+            @if($samlEnabled)
+                <hr class="my-l">
+                <div>
+                    <a id="saml-login" class="button outline block svg" href="{{ url("/saml2/login") }}">
+                       @icon('saml2')
+                      {{ trans('auth.log_in_with', ['socialDriver' => config('saml2.name')]) }}
+                    </a>
+                </div>
+            @endif
+
             @if(setting('registration-enabled', false))
                 <div class="text-center pb-s">
                     <hr class="my-l">
