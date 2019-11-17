@@ -2,8 +2,11 @@
 
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\SamlException;
 use Illuminate\Support\Str;
+use OneLogin\Saml2\Auth;
+use OneLogin\Saml2\Error;
 
 /**
  * Class Saml2Service
@@ -21,10 +24,119 @@ class Saml2Service extends ExternalAuthService
      */
     public function __construct(UserRepo $userRepo, User $user)
     {
-        $this->config = config('services.saml');
+        $this->config = config('saml2');
         $this->userRepo = $userRepo;
         $this->user = $user;
-        $this->enabled = config('saml2_settings.enabled') === true;
+        $this->enabled = config('saml2.enabled') === true;
+    }
+
+    /**
+     * Initiate a login flow.
+     * @throws \OneLogin\Saml2\Error
+     */
+    public function login(): array
+    {
+        $toolKit = $this->getToolkit();
+        $returnRoute = url('/saml2/acs');
+        return [
+            'url' => $toolKit->login($returnRoute, [], false, false, true),
+            'id' => $toolKit->getLastRequestID(),
+        ];
+    }
+
+    /**
+     * Process the ACS response from the idp and return the
+     * matching, or new if registration active, user matched to the idp.
+     * Returns null if not authenticated.
+     * @throws Error
+     * @throws SamlException
+     * @throws \OneLogin\Saml2\ValidationError
+     * @throws JsonDebugException
+     */
+    public function processAcsResponse(?string $requestId): ?User
+    {
+        $toolkit = $this->getToolkit();
+        $toolkit->processResponse($requestId);
+        $errors = $toolkit->getErrors();
+
+        if (is_null($requestId)) {
+            throw new SamlException(trans('errors.saml_invalid_response_id'));
+        }
+
+        if (!empty($errors)) {
+            throw new Error(
+                'Invalid ACS Response: '.implode(', ', $errors)
+            );
+        }
+
+        if (!$toolkit->isAuthenticated()) {
+            return null;
+        }
+
+        $attrs = $toolkit->getAttributes();
+        $id = $toolkit->getNameId();
+
+        return $this->processLoginCallback($id, $attrs);
+    }
+
+    /**
+     * Get the metadata for this service provider.
+     * @throws Error
+     */
+    public function metadata(): string
+    {
+        $toolKit = $this->getToolkit();
+        $settings = $toolKit->getSettings();
+        $metadata = $settings->getSPMetadata();
+        $errors = $settings->validateMetadata($metadata);
+
+        if (!empty($errors)) {
+            throw new Error(
+                'Invalid SP metadata: '.implode(', ', $errors),
+                Error::METADATA_SP_INVALID
+            );
+        }
+
+        return $metadata;
+    }
+
+    /**
+     * Load the underlying Onelogin SAML2 toolkit.
+     * @throws \OneLogin\Saml2\Error
+     */
+    protected function getToolkit(): Auth
+    {
+        $settings = $this->config['onelogin'];
+        $overrides = $this->config['onelogin_overrides'] ?? [];
+
+        if ($overrides && is_string($overrides)) {
+            $overrides = json_decode($overrides, true);
+        }
+
+        $spSettings = $this->loadOneloginServiceProviderDetails();
+        $settings = array_replace_recursive($settings, $spSettings, $overrides);
+        return new Auth($settings);
+    }
+
+    /**
+     * Load dynamic service provider options required by the onelogin toolkit.
+     */
+    protected function loadOneloginServiceProviderDetails(): array
+    {
+        $spDetails = [
+            'entityId' => url('/saml2/metadata'),
+            'assertionConsumerService' => [
+                'url' => url('/saml2/acs'),
+            ],
+            'singleLogoutService' => [
+                'url' => url('/saml2/sls')
+            ],
+        ];
+
+        return [
+            'baseurl' => url('/saml2'),
+            'sp' => $spDetails
+        ];
     }
 
     /**
@@ -155,7 +267,11 @@ class Saml2Service extends ExternalAuthService
             'email_confirmed' => true,
         ];
 
-        // TODO - Handle duplicate email address scenario
+        $existingUser = $this->user->newQuery()->where('email', '=', $userDetails['email'])->first();
+        if ($existingUser) {
+            throw new SamlException(trans('errors.saml_email_exists', ['email' => $userDetails['email']]));
+        }
+
         $user = $this->user->forceCreate($userData);
         $this->userRepo->attachDefaultRole($user);
         $this->userRepo->downloadAndAssignUserAvatar($user);
@@ -167,7 +283,7 @@ class Saml2Service extends ExternalAuthService
      */
     protected function getOrRegisterUser(array $userDetails): ?User
     {
-        $isRegisterEnabled = config('services.saml.auto_register') === true;
+        $isRegisterEnabled = $this->config['auto_register'] === true;
         $user = $this->user
           ->where('external_auth_id', $userDetails['external_id'])
           ->first();
@@ -183,11 +299,19 @@ class Saml2Service extends ExternalAuthService
      * Process the SAML response for a user. Login the user when
      * they exist, optionally registering them automatically.
      * @throws SamlException
+     * @throws JsonDebugException
      */
     public function processLoginCallback(string $samlID, array $samlAttributes): User
     {
         $userDetails = $this->getUserDetails($samlID, $samlAttributes);
         $isLoggedIn = auth()->check();
+
+        if ($this->config['dump_user_details']) {
+            throw new JsonDebugException([
+                'attrs_from_idp' => $samlAttributes,
+                'attrs_after_parsing' => $userDetails,
+            ]);
+        }
 
         if ($isLoggedIn) {
             throw new SamlException(trans('errors.saml_already_logged_in'), '/login');
