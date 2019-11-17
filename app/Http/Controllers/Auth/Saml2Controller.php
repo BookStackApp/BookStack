@@ -4,7 +4,6 @@ namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Auth\Access\Saml2Service;
 use BookStack\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class Saml2Controller extends Controller
 {
@@ -18,6 +17,15 @@ class Saml2Controller extends Controller
     {
         parent::__construct();
         $this->samlService = $samlService;
+
+        // SAML2 access middleware
+        $this->middleware(function ($request, $next) {
+            if (!config('saml2.enabled')) {
+                $this->showPermissionError();
+            }
+
+            return $next($request);
+        });
     }
 
     /**
