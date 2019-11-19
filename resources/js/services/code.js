@@ -27,6 +27,7 @@ import 'codemirror/mode/yaml/yaml';
 
 // Addons
 import 'codemirror/addon/scroll/scrollpastend';
+import 'codemirror/addon/display/autorefresh'
 
 const modeMap = {
     css: 'css',
@@ -104,7 +105,10 @@ function highlightElem(elem) {
         lineNumbers: true,
         lineWrapping: false,
         theme: getTheme(),
-        readOnly: true
+        readOnly: true,
+        autoRefresh: {
+          delay: 50
+        }
     });
 
     addCopyIcon(cm);
