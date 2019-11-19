@@ -11,7 +11,7 @@ return [
     'save' => '保存',
     'continue' => '继续',
     'select' => '选择',
-    'toggle_all' => 'Toggle All',
+    'toggle_all' => '全选',
     'more' => '更多',
 
     // Form Labels
@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => '操作',
     'view' => '浏览',
-    'view_all' => 'View All',
+    'view_all' => '查看全部',
     'create' => '创建',
     'update' => '更新',
     'edit' => '编辑',
@@ -40,13 +40,13 @@ return [
     'add' => '添加',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_options' => '排序选项',
+    'sort_direction_toggle' => '切换排序方式',
+    'sort_ascending' => '升序',
+    'sort_descending' => '降序',
+    'sort_name' => '名称',
+    'sort_created_at' => '创建日期',
+    'sort_updated_at' => '更新日期',
 
     // Misc
     'deleted_user' => '删除用户',
@@ -59,18 +59,18 @@ return [
     'grid_view' => '网格视图',
     'list_view' => '列表视图',
     'default' => '默认',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => '面包屑布局',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => '资料菜单',
     'view_profile' => '查看资料',
     'edit_profile' => '编辑资料',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => '信息',
+    'tab_content' => '内容',
 
     // Email Content
     'email_action_help' => '如果您无法点击“:actionText”按钮，请将下面的网址复制到您的浏览器中打开：',
-    'email_rights' => 'All rights reserved',
+    'email_rights' => '版权所有',
 ];
