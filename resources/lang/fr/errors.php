@@ -17,7 +17,7 @@ return [
     'ldap_fail_authed' => 'L\'accès LDAP n\'a pas abouti avec cet utilisateur et ce mot de passe',
     'ldap_extension_not_installed' => 'L\'extension LDAP PHP n\'est pas installée',
     'ldap_cannot_connect' => 'Impossible de se connecter au serveur LDAP, la connexion initiale a échoué',
-    'saml_already_logged_in' => 'Already logged in',
+    'saml_already_logged_in' => 'Déjà connecté',
     'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
