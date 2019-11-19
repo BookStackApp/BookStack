@@ -26,8 +26,8 @@ return [
     'remember_me' => '记住我',
     'ldap_email_hint' => '请输入用于此帐户的电子邮件。',
     'create_account' => '创建账户',
-    'already_have_account' => 'Already have an account?',
-    'dont_have_account' => 'Don\'t have an account?',
+    'already_have_account' => '已有账号？',
+    'dont_have_account' => '尚未注册账号？',
     'social_login' => 'SNS登录',
     'social_registration' => 'SNS注册',
     'social_registration_text' => '其他服务注册/登录.',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => '重新发送确认Email',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => '邀请您加入 :appName！',
+    'user_invite_email_greeting' => '已为您创建 :appName 账户',
+    'user_invite_email_text' => '点击下方按钮设置您的账户密码，以便获取访问权限。',
+    'user_invite_email_action' => '设置登陆密码',
+    'user_invite_page_welcome' => '欢迎访问 :appName!',
+    'user_invite_page_text' => '请输入密码以便完成账号注册，并获取 :appName 的访问权限。',
+    'user_invite_page_confirm_button' => '确认密码',
+    'user_invite_success' => '密码设置成功，您可以注册访问 :appName!'
 ];
