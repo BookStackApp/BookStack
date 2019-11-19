@@ -35,7 +35,7 @@ return [
     'export_text' => 'Document texte',
 
     // Permissions and restrictions
-    'permissions' => 'Permissions',
+    'permissions' => 'Autorisations',
     'permissions_intro' => 'Une fois activées ces permissions prendront la priorité sur tous les sets de permissions préexistants.',
     'permissions_enable' => 'Activer les permissions personnalisées',
     'permissions_save' => 'Enregistrer les permissions',
