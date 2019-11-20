@@ -18,7 +18,8 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "rtlcss-webpack-plugin": "^4.0.3"
   },
   "dependencies": {
     "clipboard": "^2.0.4",

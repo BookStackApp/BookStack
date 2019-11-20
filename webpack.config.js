@@ -2,6 +2,7 @@ const path = require('path');
 const dev = process.env.NODE_ENV !== 'production';
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const RtlCssPlugin = require('rtlcss-webpack-plugin');
 
 const config = {
     target: 'web',
@@ -42,6 +43,7 @@ const config = {
         new MiniCssExtractPlugin({
             filename: "[name].css",
         }),
+        new RtlCssPlugin('[name].rtl.css')
     ]
 };
 
