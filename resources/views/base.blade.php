@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.lang') }}" class="@yield('body-class')">
+<html lang="{{ config('app.lang') }}" class="@yield('body-class')" dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
@@ -10,8 +10,13 @@
     <meta charset="utf-8">
 
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
+    @if (config('app.rtl'))
+        <link rel="stylesheet" href="{{ versioned_asset('dist/styles.rtl.css') }}">
+        <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.rtl.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
+        <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
+    @endif
 
     @yield('head')
 
