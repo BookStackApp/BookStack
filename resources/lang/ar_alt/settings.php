@@ -148,7 +148,6 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'ar_alt' => 'العربية (بديلة)',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
