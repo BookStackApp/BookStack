@@ -63,6 +63,13 @@ return [
     'maint_image_cleanup_warning' => 'يوجد عدد :count من الصور المحتمل عدم استخدامها. تأكيد حذف الصور؟',
     'maint_image_cleanup_success' => 'تم إيجاد وحذف عدد :count من الصور المحتمل عدم استخدامها!',
     'maint_image_cleanup_nothing_found' => 'لم يتم حذف أي شيء لعدم وجود أي صور غير مسمتخدمة',
+    'maint_send_test_email' => 'ارسال بريد إختباري',
+    'maint_send_test_email_desc' => 'سيتم ارسال بريد الكتروني اختباري لبريدك المسجل.',
+    'maint_send_test_email_run' => 'ارسل البريد الإختباري',
+    'maint_send_test_email_success' => 'تم ارسال بريد للعنوان :address',
+    'maint_send_test_email_mail_subject' => 'بريد إختباري',
+    'maint_send_test_email_mail_greeting' => 'استلام البريد يعمل بشكل صحيح!',
+    'maint_send_test_email_mail_text' => 'تهانينا! بما انك استلمت هذا البريد الاكلتروني، اعدادت بريدك تعمل بشكل صحيح.',
 
     // Role Settings
     'roles' => 'الأدوار',
