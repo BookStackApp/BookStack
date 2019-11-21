@@ -67,8 +67,8 @@ return [
     'edit_profile' => 'تعديل الملف الشخصي',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => 'المعلومات',
+    'tab_content' => 'المحتوى',
 
     // Email Content
     'email_action_help' => 'إذا واجهتكم مشكلة بضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
