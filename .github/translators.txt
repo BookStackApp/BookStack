@@ -1,4 +1,48 @@
 Name :: Languages
+@robertlandes :: German
+@SergioMendolia :: French
+@NakaharaL :: Portuguese, Brazilian
+@ReeseSebastian :: German
+@arietimmerman :: Dutch
+@diegoseso :: Spanish
+@S64 :: Japanese
+@JachuPL :: Polish
+@Joorem :: French
+@timoschwarzer :: German
+@sanderdw :: Dutch
+@lbguilherme :: Portuguese, Brazilian
+@marcusforsberg :: Swedish
+@artur-trzesiok :: Polish
+@Alwaysin :: French
+@msaus :: Japanese
+@moucho :: Spanish
+@vriic :: German
+@DeehSlash :: Portuguese, Brazilian
+@alex2702 :: German
+@nicobubulle :: French
+@kmoj86 :: Arabic
+@houbaron :: Chinese Traditional; Chinese Simplified
+@mullinsmikey :: Russian
+@limkukhyun :: Korean
+@CliffyPrime :: German
+@kejjang :: Chinese Traditional
+@TheLastOperator :: French
+@qianmengnet :: Chinese Simplified
+@ezzra :: German Informal
+@vasiliev123 :: Polish
+@Mant1kor :: Ukrainian
+@Xiphoseer German; German Informal
+@maantje :: Dutch
+@cima :: Czech
+@agvol :: Russian
+@Hambern :: Swedish
+@NootoNooto :: Dutch
+@kostefun :: Russian
+@lucaguindani :: French
+@miles75 :: Hungarian
+@danielroehrig-mm :: German
+@oykenfurkan :: Turkish
+@qligier :: French
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
