@@ -67,7 +67,7 @@ return [
     'edit_profile' => 'Modifier le profil',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => 'Informations',
     'tab_content' => 'Contenu',
 
     // Email Content
