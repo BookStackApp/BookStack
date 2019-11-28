@@ -146,7 +146,7 @@ return [
     'chapters_delete' => 'Usuń rozdział',
     'chapters_delete_named' => 'Usuń rozdział :chapterName',
     'chapters_delete_explain' => 'To spowoduje usunięcie rozdziału \':chapterName\', Wszystkie strony zostaną usunięte
-        i dodane bezpośrednio do podręcznika nadrzędnego.',
+        i dodane bezpośrednio do książki.',
     'chapters_delete_confirm' => 'Czy na pewno chcesz usunąć ten rozdział?',
     'chapters_edit' => 'Edytuj rozdział',
     'chapters_edit_named' => 'Edytuj rozdział :chapterName',
@@ -240,7 +240,7 @@ return [
     // Editor Sidebar
     'page_tags' => 'Tagi strony',
     'chapter_tags' => 'Tagi rozdziału',
-    'book_tags' => 'Tagi podręcznika',
+    'book_tags' => 'Tagi książki',
     'shelf_tags' => 'Tagi półki',
     'tag' => 'Tag',
     'tags' =>  'Tagi',
@@ -286,7 +286,7 @@ return [
     'profile_created_content' => 'Utworzona zawartość',
     'profile_not_created_pages' => ':userName nie utworzył żadnych stron',
     'profile_not_created_chapters' => ':userName nie utworzył żadnych rozdziałów',
-    'profile_not_created_books' => ':userName nie utworzył żadnych podręczników',
+    'profile_not_created_books' => ':userName nie utworzył żadnych książek',
     'profile_not_created_shelves' => ':userName nie utworzył żadnych półek',
 
     // Comments

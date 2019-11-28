@@ -8,7 +8,7 @@ return [
     'image_select' => 'Wybór obrazka',
     'image_all' => 'Wszystkie',
     'image_all_title' => 'Zobacz wszystkie obrazki',
-    'image_book_title' => 'Zobacz obrazki zapisane w tym podręczniku',
+    'image_book_title' => 'Zobacz obrazki zapisane w tej książce',
     'image_page_title' => 'Zobacz obrazki zapisane na tej stronie',
     'image_search_hint' => 'Szukaj po nazwie obrazka',
     'image_uploaded' => 'Przesłano :uploadedDate',
