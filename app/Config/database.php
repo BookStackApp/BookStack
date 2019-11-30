@@ -82,6 +82,7 @@ return [
             'driver'    => 'mysql',
             'url' => env('TEST_DATABASE_URL'),
             'host'      => '127.0.0.1',
+            'port'      => $mysql_port,
             'database'  => 'bookstack-test',
             'username'  => env('MYSQL_USER', 'bookstack-test'),
             'password'  => env('MYSQL_PASSWORD', 'bookstack-test'),
