@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Logo aplikace',
     'app_logo_desc' => 'Obrázek by měl mít 43 pixelů na výšku. <br>Větší obrázky zmenšíme na tuto velikost.',
     'app_primary_color' => 'Hlavní barva aplikace',
-    'app_primary_color_desc' => 'Zápis by měl být hexa (#aabbcc). <br>Pro základní barvu nechte pole prázdné.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Úvodní stránka aplikace',
     'app_homepage_desc' => 'Zvolte pohled který se objeví jako úvodní stránka po přihlášení. Pokud zvolíte stránku, její specifická oprávnění budou ignorována (výjimka z výjimky 😜).',
     'app_homepage_select' => 'Zvolte stránku',
     'app_disable_comments' => 'Zakázání komentářů',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Zakáže komentáře napříč všemi stránkami. Existující komentáře se přestanou zobrazovat.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Nastavení registrace',
