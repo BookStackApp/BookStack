@@ -33,13 +33,22 @@ return [
     'app_logo' => 'App Logo',
     'app_logo_desc' => '這個圖片的高度應該為43px。<br>大圖片將會被縮小。',
     'app_primary_color' => 'App主要配色',
-    'app_primary_color_desc' => '請使用十六進位數值。<br>保留空白則重置回預設配色。',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'App首頁',
     'app_homepage_desc' => '選擇要做為首頁的頁面，這將會替換預設首頁，而且這個頁面的權限設定將被忽略。',
     'app_homepage_select' => '預設首頁選擇',
     'app_disable_comments' => '關閉評論',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => '在App的所有頁面上關閉評論，已經存在的評論也不會顯示。',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => '註冊設定',
