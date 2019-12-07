@@ -33,13 +33,22 @@ return [
     'app_logo' => '어플리케이션 로고',
     'app_logo_desc' => '해당 이미지는 반드시 높이가 43픽셀이어야 합니다. <br>대용량 이미지는 축소됩니다.',
     'app_primary_color' => '어플리케이션 기본 색상',
-    'app_primary_color_desc' => '해당 값은 16진수이어야 합니다. <br>입력하지 않으면 기본 색상으로 재설정됩니다.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => '어플리케이션 홈페이지',
     'app_homepage_desc' => '기본 화면 대신에 홈페이지에 표시할 화면을 선택하십시오. 선택된 페이지에서는 페이지 권한이 무시됩니다.',
     'app_homepage_select' => '페이지를 선택하십시오',
     'app_disable_comments' => '주석 비활성화',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => '어플리케이션의 모든 페이지에서 주석을 비활성화합니다. 기존의 주석은 표시되지 않습니다.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => '등록 설정',
