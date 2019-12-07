@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Alkalmazás logó',
     'app_logo_desc' => 'A képnek 43px magasnak kell lennie.<br>A nagy képek át lesznek méretezve.',
     'app_primary_color' => 'Alkalmazás elsődleges színe',
-    'app_primary_color_desc' => 'Hexadecimális értéknek kell lennie.<br>Az alapértelmezés szerinti szín visszaállításához üresen kell hagyni.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Alkalmazás kezdőlapja',
     'app_homepage_desc' => 'A kezdőlapon az alapértelmezés szerinti nézet helyett megjelenő nézet kiválasztása. A kiválasztott oldalakon figyelmen kívül lesznek hagyva az oldal engedélyek.',
     'app_homepage_select' => 'Egy oldal kiválasztása',
     'app_disable_comments' => 'Megjegyzések letiltása',
     'app_disable_comments_toggle' => 'Megjegyzések letiltása',
     'app_disable_comments_desc' => 'Megjegyzések letiltása az alkalmazás összes oldalán.<br>A már létező megjegyzések el lesznek rejtve.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Regisztráció',
