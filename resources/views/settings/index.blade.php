@@ -146,78 +146,22 @@
                         </div>
                     </div>
 
-                    <!-- Shelf Color -->
-                    <div class="grid half gap-xl">
+                    <!-- Entity Color -->
+                    <div class="pb-l">
                         <div>
-                            <label class="setting-list-label">{{ trans('settings.bookshelf_color') }}</label>
-                            <p class="small">{!! trans('settings.bookshelf_color_desc') !!}</p>
+                            <label class="setting-list-label">{{ trans('settings.content_colors') }}</label>
+                            <p class="small">{!! trans('settings.content_colors_desc') !!}</p>
                         </div>
-                        <div setting-color-picker class="text-m-right">
-                            <input type="color" data-default="#a94747" data-current="{{ setting('bookshelf-color') }}" value="{{ setting('bookshelf-color') }}" name="setting-bookshelf-color" id="setting-bookshelf-color" placeholder="#a94747">
-                            <br>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-default>{{ trans('common.default') }}</button>
-                            <span class="sep">|</span>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-reset>{{ trans('common.reset') }}</button>
-                        </div>
-                    </div>
-
-                    <!-- Book Color -->
-                    <div class="grid half gap-xl">
-                        <div>
-                            <label class="setting-list-label">{{ trans('settings.book_color') }}</label>
-                            <p class="small">{!! trans('settings.book_color_desc') !!}</p>
-                        </div>
-                        <div setting-color-picker class="text-m-right">
-                            <input type="color" data-default="#077b70" data-current="{{ setting('book-color') }}" value="{{ setting('book-color') }}" name="setting-book-color" id="setting-book-color" placeholder="#077b70">
-                            <br>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-default>{{ trans('common.default') }}</button>
-                            <span class="sep">|</span>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-reset>{{ trans('common.reset') }}</button>
-                        </div>
-                    </div>
-
-                    <!-- Chapter Color -->
-                    <div class="grid half gap-xl">
-                        <div>
-                            <label class="setting-list-label">{{ trans('settings.chapter_color') }}</label>
-                            <p class="small">{!! trans('settings.chapter_color_desc') !!}</p>
-                        </div>
-                        <div setting-color-picker class="text-m-right">
-                            <input type="color" data-default="#af4d0d" data-current="{{ setting('chapter-color') }}" value="{{ setting('chapter-color') }}" name="setting-chapter-color" id="setting-chapter-color" placeholder="#af4d0d">
-                            <br>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-default>{{ trans('common.default') }}</button>
-                            <span class="sep">|</span>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-reset>{{ trans('common.reset') }}</button>
-                        </div>
-                    </div>
-
-                    <!-- Page Color -->
-                    <div class="grid half gap-xl">
-                        <div>
-                            <label class="setting-list-label">{{ trans('settings.page_color') }}</label>
-                            <p class="small">{!! trans('settings.page_color_desc') !!}</p>
-                        </div>
-                        <div setting-color-picker class="text-m-right">
-                            <input type="color" data-default="#206ea7" data-current="{{ setting('page-color') }}" value="{{ setting('page-color') }}" name="setting-page-color" id="setting-page-color" placeholder="#206ea7">
-                            <br>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-default>{{ trans('common.default') }}</button>
-                            <span class="sep">|</span>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-reset>{{ trans('common.reset') }}</button>
-                        </div>
-                    </div>
-
-                    <!-- Page Draft Color -->
-                    <div class="grid half gap-xl">
-                        <div>
-                            <label class="setting-list-label">{{ trans('settings.page_draft_color') }}</label>
-                            <p class="small">{!! trans('settings.page_draft_color_desc') !!}</p>
-                        </div>
-                        <div setting-color-picker class="text-m-right">
-                            <input type="color" data-default="#7e50b1" data-current="{{ setting('page-draft-color') }}" value="{{ setting('page-draft-color') }}" name="setting-page-draft-color" id="setting-page-draft-color" placeholder="#7e50b1">
-                            <br>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-default>{{ trans('common.default') }}</button>
-                            <span class="sep">|</span>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-color-picker-reset>{{ trans('common.reset') }}</button>
+                        <div class="grid half pt-m">
+                            <div>
+                                @include('components.setting-entity-color-picker', ['type' => 'bookshelf'])
+                                @include('components.setting-entity-color-picker', ['type' => 'book'])
+                                @include('components.setting-entity-color-picker', ['type' => 'chapter'])
+                            </div>
+                            <div>
+                                @include('components.setting-entity-color-picker', ['type' => 'page'])
+                                @include('components.setting-entity-color-picker', ['type' => 'page-draft'])
+                            </div>
                         </div>
                     </div>
 
