@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Uygulama Logosu',
     'app_logo_desc' => 'Bu görsel 43px yüksekliğinde olmalı. <br>Büyük görseller ölçeklenecektir.',
     'app_primary_color' => 'Uygulamanın Birincil Rengi',
-    'app_primary_color_desc' => 'Bu bir hex değeri olmalıdır. <br>Varsayılan rengi seçmek için boş bırakın.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Uygulama Anasayfası',
     'app_homepage_desc' => 'Anasayfada görünmesi için bir view seçin. Sayfa izinleri seçili sayfalar için yok sayılacaktır.',
     'app_homepage_select' => 'Sayfa seçiniz',
     'app_disable_comments' => 'Yorumları Engelle',
     'app_disable_comments_toggle' => 'Yorumları engelle',
     'app_disable_comments_desc' => 'Yorumları uygulamadaki bütün sayfalar için engelle. <br> Mevcut yorumlar gösterilmeyecektir.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Kayıt',
