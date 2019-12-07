@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Лого приложения',
     'app_logo_desc' => 'Это изображение должно быть 43px в высоту. <br>Большое изображение будет уменьшено.',
     'app_primary_color' => 'Основной цвет приложения',
-    'app_primary_color_desc' => 'Значение должно быть указано в hex-формате. <br>Оставьте пустым чтобы использовать цвет по умолчанию.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Стартовая страница приложения',
     'app_homepage_desc' => 'Выберите страницу, которая будет отображаться на главной странице вместо стандартной. Права на страницы игнорируются для выбранных страниц.',
     'app_homepage_select' => 'Выберите страницу',
     'app_disable_comments' => 'Отключение комментов',
     'app_disable_comments_toggle' => 'Отключить комментарии',
     'app_disable_comments_desc' => 'Отключение комментов на всех страницах. Существующие комментарии отображаться не будут.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Настройки регистрации',
@@ -63,11 +72,11 @@ return [
     'maint_image_cleanup_warning' => 'Найдено :count возможно бесполезных изображений. Вы уверены, что хотите удалить эти изображения?',
     'maint_image_cleanup_success' => ':count возможно бесполезных изображений было найдено и удалено!',
     'maint_image_cleanup_nothing_found' => 'Не найдено ни одного бесполезного изображения!',
-    'maint_send_test_email' => 'Отправить проверочное письмо',
-    'maint_send_test_email_desc' => 'На адрес электронной почты, указанный в профиле, будет отправлено проверочное письмо.',
+    'maint_send_test_email' => 'Отправить тестовое письмо',
+    'maint_send_test_email_desc' => 'Отправить тестовое письмо на адрес электронной почты, указанный в профиле.',
     'maint_send_test_email_run' => 'Отправить проверочное письмо',
     'maint_send_test_email_success' => 'На адрес :address отравлено письмо',
-    'maint_send_test_email_mail_subject' => 'Проверочное письмо',
+    'maint_send_test_email_mail_subject' => 'Проверка электронной почты',
     'maint_send_test_email_mail_greeting' => 'Доставка электронной почты работает!',
     'maint_send_test_email_mail_text' => 'Поздравляем! Поскольку вы получили это письмо, электронная почта настроена правильно.',
 
