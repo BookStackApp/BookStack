@@ -10,4 +10,4 @@ _Specify here the language you want to add._
 
 ----
 
-_This issue template is to request a new language be added to our [Crowdin translation management project](https://crowdin.com/project/bookstack). Please don't use this template to simple request a new language that you are not prepared to provide translations for._   
+_This issue template is to request a new language be added to our [Crowdin translation management project](https://crowdin.com/project/bookstack). Please don't use this template to request a new language that you are not prepared to provide translations for._   
