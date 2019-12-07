@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Applicatielogo',
     'app_logo_desc' => 'De afbeelding moet 43px hoog zijn. <br>Grotere afbeeldingen worden geschaald.',
     'app_primary_color' => 'Applicatie hoofdkleur',
-    'app_primary_color_desc' => 'Geef een hexadecimale waarde. <br>Als je niks invult wordt de standaardkleur gebruikt.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Application Homepage',
     'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
     'app_homepage_select' => 'Select a page',
     'app_disable_comments' => 'Reacties uitschakelen',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Schakel opmerkingen uit op alle pagina\'s in de applicatie. Bestaande opmerkingen worden niet getoond.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Registratieinstellingen',
