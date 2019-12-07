@@ -107,22 +107,11 @@ The docker-compose setup runs an instance of [MailHog](https://github.com/mailho
 
 ## 🌎 Translations
 
-All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
+Translations for text within BookStack is managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time. Crowdin is the preferred way to provide translations, otherwise the raw translations files can be found within the `resources/lang` path.
 
-You will also need to add the language to the `locales` array in the `config/app.php` file.
+If you'd like a new language to be added to Crowdin, for you to be able to provide translations for, please [open a new issue here](https://github.com/BookStackApp/BookStack/issues/new?template=language_request.md).
 
-There is a script available which compares translation content to `en` files to see what items are missing or redundant. This can be ran like so from your BookStack install folder:
-
-```bash
-# Syntax
-php resources/lang/check.php <lang>
-
-# Examples
-php resources/lang/check.php fr
-php resources/lang/check.php pt_BR
-```
-
-Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
+Please note, translations in BookStack are provided to the "Crowdin Global Translation Memory" which helps BookStack and other projects with finding translations. If you are not happy with contributing to this then providing translations to BookStack, even manually via GitHub, is not advised.
 
 ## 🎁 Contributing, Issues & Pull Requests
 
@@ -155,6 +144,8 @@ The BookStack source is provided under the MIT License. The libraries used by, a
 ## 👪 Attribution
 
 The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
+
+The wonderful people that have provided translations, either through GitHub or via Crowdin [can be seen here](https://github.com/BookStackApp/BookStack/blob/master/.github/translators.txt).
 
 These are the great open-source projects used to help build BookStack:
 
