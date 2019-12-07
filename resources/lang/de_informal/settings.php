@@ -34,14 +34,22 @@ return [
     'app_logo_desc' => 'Dieses Bild sollte 43px hoch sein.
 Größere Bilder werden verkleinert.',
     'app_primary_color' => 'Primäre Anwendungsfarbe',
-    'app_primary_color_desc' => 'Dies sollte ein HEX Wert sein.
-Wenn Du nichts eingibst, wird die Anwendung auf die Standardfarbe zurückgesetzt.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Startseite der Anwendung',
     'app_homepage_desc' => 'Wähle eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
     'app_homepage_select' => 'Wählen Sie eine Seite aus',
     'app_disable_comments' => 'Kommentare deaktivieren',
     'app_disable_comments_toggle' => 'Kommentare deaktivieren',
     'app_disable_comments_desc' => 'Deaktiviert Kommentare über alle Seiten in der Anwendung. Vorhandene Kommentare werden nicht angezeigt.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Registrierungseinstellungen',
