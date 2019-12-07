@@ -29,8 +29,9 @@ import 'codemirror/mode/yaml/yaml';
 // Addons
 import 'codemirror/addon/scroll/scrollpastend';
 
-// Mapping of potential languages or formats from user input
-// to their proper codemirror modes.
+// Mapping of possible languages or formats from user input to their codemirror modes.
+// Value can be a mode string or a function that will receive the code content & return the mode string.
+// The function option is used in the event the exact mode could be dynamic depending on the code.
 const modeMap = {
     css: 'css',
     c: 'text/x-csrc',
@@ -60,7 +61,9 @@ const modeMap = {
     powershell: 'powershell',
     properties: 'properties',
     ocaml: 'mllike',
-    php: 'php',
+    php: (content) => {
+        return content.includes('<?php') ? 'php' : 'text/x-php';
+    },
     py: 'python',
     python: 'python',
     ruby: 'ruby',
@@ -92,16 +95,17 @@ function highlight() {
  * @param {HTMLElement} elem
  */
 function highlightElem(elem) {
-    let innerCodeElem = elem.querySelector('code[class^=language-]');
+    const innerCodeElem = elem.querySelector('code[class^=language-]');
+    elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
+    const content = elem.textContent.trim();
+
     let mode = '';
     if (innerCodeElem !== null) {
-        let langName = innerCodeElem.className.replace('language-', '');
-        mode = getMode(langName);
+        const langName = innerCodeElem.className.replace('language-', '');
+        mode = getMode(langName, content);
     }
-    elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
-    let content = elem.textContent.trim();
 
-    let cm = CodeMirror(function(elt) {
+    const cm = CodeMirror(function(elt) {
         elem.parentNode.replaceChild(elt, elem);
     }, {
         value: content,
@@ -142,12 +146,24 @@ function addCopyIcon(cmInstance) {
 
 /**
  * Search for a codemirror code based off a user suggestion
- * @param suggestion
+ * @param {String} suggestion
+ * @param {String} content
  * @returns {string}
  */
-function getMode(suggestion) {
+function getMode(suggestion, content) {
     suggestion = suggestion.trim().replace(/^\./g, '').toLowerCase();
-    return (typeof modeMap[suggestion] !== 'undefined') ? modeMap[suggestion] : '';
+
+    const modeMapType = typeof modeMap[suggestion];
+
+    if (modeMapType === 'undefined') {
+        return '';
+    }
+
+    if (modeMapType === 'function') {
+        return modeMap[suggestion](content);
+    }
+
+    return modeMap[suggestion];
 }
 
 /**
@@ -165,8 +181,8 @@ function getTheme() {
  * @returns {{wrap: Element, editor: *}}
  */
 function wysiwygView(elem) {
-    let doc = elem.ownerDocument;
-    let codeElem = elem.querySelector('code');
+    const doc = elem.ownerDocument;
+    const codeElem = elem.querySelector('code');
 
     let lang = (elem.className || '').replace('language-', '');
     if (lang === '' && codeElem) {
@@ -174,9 +190,9 @@ function wysiwygView(elem) {
     }
 
     elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
-    let content = elem.textContent;
-    let newWrap = doc.createElement('div');
-    let newTextArea = doc.createElement('textarea');
+    const content = elem.textContent;
+    const newWrap = doc.createElement('div');
+    const newTextArea = doc.createElement('textarea');
 
     newWrap.className = 'CodeMirrorContainer';
     newWrap.setAttribute('data-lang', lang);
@@ -192,7 +208,7 @@ function wysiwygView(elem) {
         newWrap.appendChild(elt);
     }, {
         value: content,
-        mode:  getMode(lang),
+        mode:  getMode(lang, content),
         lineNumbers: true,
         lineWrapping: false,
         theme: getTheme(),
@@ -211,14 +227,14 @@ function wysiwygView(elem) {
  * @returns {*}
  */
 function popupEditor(elem, modeSuggestion) {
-    let content = elem.textContent;
+    const content = elem.textContent;
 
     return CodeMirror(function(elt) {
         elem.parentNode.insertBefore(elt, elem);
         elem.style.display = 'none';
     }, {
         value: content,
-        mode:  getMode(modeSuggestion),
+        mode:  getMode(modeSuggestion, content),
         lineNumbers: true,
         lineWrapping: false,
         theme: getTheme()
@@ -230,8 +246,8 @@ function popupEditor(elem, modeSuggestion) {
  * @param cmInstance
  * @param modeSuggestion
  */
-function setMode(cmInstance, modeSuggestion) {
-      cmInstance.setOption('mode', getMode(modeSuggestion));
+function setMode(cmInstance, modeSuggestion, content) {
+      cmInstance.setOption('mode', getMode(modeSuggestion, content));
 }
 
 /**
