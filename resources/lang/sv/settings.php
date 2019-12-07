@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Applikationslogotyp',
     'app_logo_desc' => 'Bilden bör vara minst 43px hög. <br>Större bilder skalas ner.',
     'app_primary_color' => 'Primärfärg',
-    'app_primary_color_desc' => 'Detta ska vara en hexadimal färgkod. <br>Lämna tomt för att återställa standardfärgen.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Startsida',
     'app_homepage_desc' => 'Välj en sida att använda som startsida istället för standardvyn. Den valda sidans rättigheter kommer att ignoreras.',
     'app_homepage_select' => 'Välj en sida',
     'app_disable_comments' => 'Inaktivera kommentarer',
     'app_disable_comments_toggle' => 'Inaktivera kommentarer',
     'app_disable_comments_desc' => 'Inaktivera kommentarer på alla sidor i applikationen. Befintliga kommentarer visas inte.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Registreringsinställningar',
