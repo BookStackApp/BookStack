@@ -33,13 +33,22 @@ return [
     'app_logo' => 'App Logo',
     'app_logo_desc' => '这个图片的高度应该为43px。<br>大图片将会被缩小。',
     'app_primary_color' => 'App主色',
-    'app_primary_color_desc' => '这应该是一个十六进制值。<br>保留为空以重置为默认颜色。',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'App主页',
     'app_homepage_desc' => '选择要在主页上显示的页面来替换默认的视图，选定页面的访问权限将被忽略。',
     'app_homepage_select' => 'Select a page',
     'app_disable_comments' => '禁用评论',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => '在App的所有页面上禁用评论，现有评论也不会显示出来。',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => '注册设置',
