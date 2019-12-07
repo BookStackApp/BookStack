@@ -160,7 +160,7 @@ function codePlugin() {
             let cmInstance = editorElem.CodeMirror;
             if (cmInstance) {
                 Code.setContent(cmInstance, code);
-                Code.setMode(cmInstance, lang);
+                Code.setMode(cmInstance, lang, code);
             }
             let textArea = selectedNode.querySelector('textarea');
             if (textArea) textArea.textContent = code;

@@ -9,7 +9,7 @@ const methods = {
         this.$refs.overlay.components.overlay.hide();
     },
     updateEditorMode(language) {
-        codeLib.setMode(this.editor, language);
+        codeLib.setMode(this.editor, language, this.editor.getValue());
     },
     updateLanguage(lang) {
         this.language = lang;
