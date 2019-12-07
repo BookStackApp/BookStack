@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Logo da Aplicação',
     'app_logo_desc' => 'A imagem deve ter 43px de altura. <br>Imagens mais largas devem ser reduzidas.',
     'app_primary_color' => 'Cor primária da Aplicação',
-    'app_primary_color_desc' => 'Esse valor deverá ser Hexadecimal. <br>Deixe em branco para que o Bookstack assuma a cor padrão.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Página incial',
     'app_homepage_desc' => 'Selecione a página para ser usada como página inicial em vez da padrão. Permissões da página serão ignoradas.',
     'app_homepage_select' => 'Selecione uma página',
     'app_disable_comments' => 'Desativar Comentários',
     'app_disable_comments_toggle' => 'Desativar comentários',
     'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo. Os comentários existentes não são exibidos.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Registro',
