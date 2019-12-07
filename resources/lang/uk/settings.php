@@ -33,13 +33,22 @@ return [
     'app_logo' => 'Логотип програми',
     'app_logo_desc' => 'Це зображення має бути висотою 43px. <br>Великі зображення будуть зменшені.',
     'app_primary_color' => 'Основний колір програми',
-    'app_primary_color_desc' => 'Колір потрібно вказати у hex-форматі. <br>Залиште порожнім, щоб використати стандартний колір.',
+    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Домашня сторінка програми',
     'app_homepage_desc' => 'Виберіть сторінку, яка відображатиметься на домашній сторінці замість перегляду за умовчанням. Права на сторінку не враховуються для вибраних сторінок.',
     'app_homepage_select' => 'Вибрати сторінку',
     'app_disable_comments' => 'Вимкнути коментарі',
     'app_disable_comments_toggle' => 'Вимкнути коментарі',
     'app_disable_comments_desc' => 'Вимкнути коментарі на всіх сторінках програми. Існуючі коментарі не відображаються.',
+
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
     'reg_settings' => 'Реєстрація',
