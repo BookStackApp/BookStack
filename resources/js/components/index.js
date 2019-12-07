@@ -26,6 +26,7 @@ import permissionsTable from "./permissions-table";
 import customCheckbox from "./custom-checkbox";
 import bookSort from "./book-sort";
 import settingAppColorPicker from "./setting-app-color-picker";
+import settingColorPicker from "./setting-color-picker";
 import entityPermissionsEditor from "./entity-permissions-editor";
 import templateManager from "./template-manager";
 import newUserPassword from "./new-user-password";
@@ -59,6 +60,7 @@ const componentMapping = {
     'custom-checkbox': customCheckbox,
     'book-sort': bookSort,
     'setting-app-color-picker': settingAppColorPicker,
+    'setting-color-picker': settingColorPicker,
     'entity-permissions-editor': entityPermissionsEditor,
     'template-manager': templateManager,
     'new-user-password': newUserPassword,

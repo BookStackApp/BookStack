@@ -6,11 +6,16 @@ class SettingAppColorPicker {
         this.colorInput = elem.querySelector('input[type=color]');
         this.lightColorInput = elem.querySelector('input[name="setting-app-color-light"]');
         this.resetButton = elem.querySelector('[setting-app-color-picker-reset]');
+        this.defaultButton = elem.querySelector('[setting-app-color-picker-default]')
 
         this.colorInput.addEventListener('change', this.updateColor.bind(this));
         this.colorInput.addEventListener('input', this.updateColor.bind(this));
         this.resetButton.addEventListener('click', event => {
-            this.colorInput.value = '#206ea7';
+            this.colorInput.value = this.colorInput.dataset.current;
+            this.updateColor();
+        });
+        this.defaultButton.addEventListener('click', event => {
+            this.colorInput.value = this.colorInput.dataset.default;
             this.updateColor();
         });
     }
