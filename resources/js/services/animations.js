@@ -6,6 +6,22 @@
 const animateStylesCleanupMap = new WeakMap();
 
 /**
+ * Fade in the given element.
+ * @param {Element} element
+ * @param {Number} animTime
+ * @param {Function|null} onComplete
+ */
+export function fadeIn(element, animTime = 400, onComplete = null) {
+    cleanupExistingElementAnimation(element);
+    element.style.display = 'block';
+    animateStyles(element, {
+        opacity: ['0', '1']
+    }, animTime, () => {
+        if (onComplete) onComplete();
+    });
+}
+
+/**
  * Fade out the given element.
  * @param {Element} element
  * @param {Number} animTime

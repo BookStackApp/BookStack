@@ -258,8 +258,16 @@ function setMode(cmInstance, modeSuggestion, content) {
 function setContent(cmInstance, codeContent) {
     cmInstance.setValue(codeContent);
     setTimeout(() => {
-        cmInstance.refresh();
+        updateLayout(cmInstance);
     }, 10);
+}
+
+/**
+ * Update the layout (codemirror refresh) of a cm instance.
+ * @param cmInstance
+ */
+function updateLayout(cmInstance) {
+    cmInstance.refresh();
 }
 
 /**
@@ -301,6 +309,7 @@ export default {
     popupEditor: popupEditor,
     setMode: setMode,
     setContent: setContent,
+    updateLayout: updateLayout,
     markdownEditor: markdownEditor,
     getMetaKey: getMetaKey,
 };
