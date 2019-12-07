@@ -172,6 +172,11 @@ input[type=date] {
 
 input[type=color] {
   height: 60px;
+  &.small {
+    height: 42px;
+    width: 60px;
+    padding: 2px;
+  }
 }
 
 .toggle-switch {

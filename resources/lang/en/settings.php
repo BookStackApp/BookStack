@@ -42,17 +42,13 @@ return [
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
 
     // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Shelf Color',
-    'bookshelf_color_desc' => 'Sets the color indicator for shelves.',
     'book_color' => 'Book Color',
-    'book_color_desc' => 'Sets the color indicator for books.',
     'chapter_color' => 'Chapter Color',
-    'chapter_color_desc' => 'Sets the color indicator for chapters.',
     'page_color' => 'Page Color',
-    'page_color_desc' => 'Sets the color indicator for pages.',
     'page_draft_color' => 'Page Draft Color',
-    'page_draft_color_desc' => 'Sets the color indicator for page drafts.',
-
 
     // Registration Settings
     'reg_settings' => 'Registration',
