@@ -44,10 +44,10 @@ return [
     // Color settings
     'content_colors' => 'Content Colors',
     'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
+    'bookshelf_color' => 'Polc színe',
+    'book_color' => 'Könyv színe',
+    'chapter_color' => 'Fejezet színe',
+    'page_color' => 'Oldal színe',
     'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
@@ -72,11 +72,11 @@ return [
     'maint_image_cleanup_warning' => ':count potenciálisan nem használt képet találtam. Biztosan törölhetőek ezek a képek?',
     'maint_image_cleanup_success' => ':count potenciálisan nem használt kép megtalálva és törölve!',
     'maint_image_cleanup_nothing_found' => 'Nincsenek nem használt képek, semmi sem lett törölve!',
-    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email' => 'Teszt e-mail küldése',
     'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
     'maint_send_test_email_run' => 'Send test email',
     'maint_send_test_email_success' => 'Email sent to :address',
-    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_subject' => 'Teszt e-mail',
     'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
     'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
@@ -101,7 +101,7 @@ return [
     'role_manage_roles' => 'Szerepkörök és szerepkör engedélyek kezelése',
     'role_manage_entity_permissions' => 'Minden könyv, fejezet és oldalengedély kezelése',
     'role_manage_own_entity_permissions' => 'Saját könyv, fejezet és oldalak engedélyeinek kezelése',
-    'role_manage_page_templates' => 'Manage page templates',
+    'role_manage_page_templates' => 'Oldalsablonok kezelése',
     'role_manage_settings' => 'Alkalmazás beállításainak kezelése',
     'role_asset' => 'Eszköz jogosultságok',
     'role_asset_desc' => 'Ezek a jogosultság vezérlik a alapértelmezés szerinti hozzáférést a rendszerben található eszközökhöz. A könyvek, fejezetek és oldalak jogosultságai felülírják ezeket a jogosultságokat.',
