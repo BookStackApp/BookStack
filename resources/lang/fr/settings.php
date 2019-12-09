@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Désactive les commentaires sur toutes les pages de l\'application. Les commentaires existants ne sont pas affichés.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
+    'content_colors' => 'Couleur du contenu',
     'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'book_color' => 'Couleur du livre',
+    'chapter_color' => 'Couleur du chapitre',
+    'page_color' => 'Couleur de la page',
+    'page_draft_color' => 'Couleur du brouillon',
 
     // Registration Settings
     'reg_settings' => 'Préférence pour l\'inscription',
@@ -78,7 +78,7 @@ return [
     'maint_send_test_email_success' => 'Email envoyé à :address',
     'maint_send_test_email_mail_subject' => 'Email de test',
     'maint_send_test_email_mail_greeting' => 'La livraison d\'email semble fonctionner !',
-    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
+    'maint_send_test_email_mail_text' => 'Félicitations ! Lorsque vous avez reçu cette notification par courriel, vos paramètres d\'email semblent être configurés correctement.',
 
     // Role Settings
     'roles' => 'Rôles',
