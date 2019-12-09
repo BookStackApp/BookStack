@@ -275,7 +275,7 @@ return [
     'attachments_link_attached' => 'Lien attaché à la page avec succès',
     'templates' => 'Modèles',
     'templates_set_as_template' => 'La page est un modèle',
-    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_explain_set_as_template' => 'Vous pouvez définir cette page comme modèle pour que son contenu soit utilisé lors de la création d\'autres pages. Les autres utilisateurs pourront utiliser ce modèle s\'ils ont les permissions pour cette page.',
     'templates_replace_content' => 'Remplacer le contenu de la page',
     'templates_append_content' => 'Ajouter après le contenu de la page',
     'templates_prepend_content' => 'Ajouter devant le contenu de la page',
