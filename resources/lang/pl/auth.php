@@ -26,8 +26,8 @@ return [
     'remember_me' => 'Zapamiętaj mnie',
     'ldap_email_hint' => 'Wprowadź adres e-mail dla tego konta.',
     'create_account' => 'Utwórz konto',
-    'already_have_account' => 'Already have an account?',
-    'dont_have_account' => 'Don\'t have an account?',
+    'already_have_account' => 'Posiadasz już konto?',
+    'dont_have_account' => 'Nie masz konta?',
     'social_login' => 'Logowanie za pomocą konta społecznościowego',
     'social_registration' => 'Rejestracja za pomocą konta społecznościowego',
     'social_registration_text' => 'Zarejestruj się za pomocą innej usługi.',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Wyślij ponownie wiadomość z potwierdzeniem',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'Zaproszono Cię do dołączenia do :appName!',
+    'user_invite_email_greeting' => 'Twoje konto zostało utworzone w :appName.',
+    'user_invite_email_text' => 'Kliknij przycisk poniżej by ustawić hasło i uzyskać dostęp:',
+    'user_invite_email_action' => 'Ustaw hasło',
+    'user_invite_page_welcome' => 'Witaj w :appName!',
+    'user_invite_page_text' => 'Aby ukończyć konfigurację konta i uzyskać dostęp musisz ustawić hasło, które będzie używane podczas logowania w :appName w przyszłości.',
+    'user_invite_page_confirm_button' => 'Zatwierdź hasło',
+    'user_invite_success' => 'Hasło zostało ustawione, teraz masz dostęp do :appName!'
 ];
