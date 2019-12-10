@@ -11,7 +11,7 @@ return [
     'save' => 'Zapisz',
     'continue' => 'Kontynuuj',
     'select' => 'Wybierz',
-    'toggle_all' => 'Toggle All',
+    'toggle_all' => 'Przełącz wszystkie',
     'more' => 'Więcej',
 
     // Form Labels
@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => 'Akcje',
     'view' => 'Widok',
-    'view_all' => 'View All',
+    'view_all' => 'Zobacz wszystkie',
     'create' => 'Utwórz',
     'update' => 'Zaktualizuj',
     'edit' => 'Edytuj',
@@ -40,13 +40,13 @@ return [
     'add' => 'Dodaj',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_options' => 'Opcje sortowania',
+    'sort_direction_toggle' => 'Przełącznik kierunku sortowania',
+    'sort_ascending' => 'Sortuj rosnąco',
+    'sort_descending' => 'Sortuj malejąco',
+    'sort_name' => 'Nazwa',
+    'sort_created_at' => 'Data utworzenia',
+    'sort_updated_at' => 'Data zaktualizowania',
 
     // Misc
     'deleted_user' => 'Użytkownik usunięty',
