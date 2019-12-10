@@ -62,13 +62,13 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Menu profilu',
     'view_profile' => 'Zobacz profil',
     'edit_profile' => 'Edytuj profil',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => 'Informacje',
+    'tab_content' => 'Zawartość',
 
     // Email Content
     'email_action_help' => 'Jeśli masz problem z kliknięciem przycisku ":actionText", skopiuj i wklej poniższy adres URL w nowej karcie swojej przeglądarki:',
