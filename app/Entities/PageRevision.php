@@ -19,6 +19,13 @@ use Carbon\Carbon;
  */
 class PageRevision extends Model
 {
+    use GroupedLastScope;
+
+    /**
+     * @var string Set the default grouping by Last.
+     */
+    public static $groupedLastScopeFields = 'page_id';
+
     protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
 
     /**

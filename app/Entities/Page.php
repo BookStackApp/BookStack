@@ -118,4 +118,9 @@ class Page extends BookChild
     {
         return $this->revisions()->first();
     }
+
+    public function bookRevisions()
+    {
+        return $this->belongsToMany(BookRevision::class, 'book_revision_has_page_revision', 'page_revision_id', 'book_revision_id');
+    }
 }
