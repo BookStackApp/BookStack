@@ -68,7 +68,7 @@ return [
     // Shelves
     'shelf' => '书架',
     'shelves' => '书架',
-    'x_shelves' => ':count 书架|:count 书架',
+    'x_shelves' => ':count个书架|:count个书架',
     'shelves_long' => '书架',
     'shelves_empty' => '当前未创建书架',
     'shelves_create' => '创建新书架',
