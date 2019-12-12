@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Biztosan törölhető ez az oldal?',
     'pages_delete_draft_confirm' => 'Biztosan törölhető ez a vázlatoldal?',
     'pages_editing_named' => ':pageName oldal szerkesztése',
-    'pages_edit_draft_options' => 'Draft Options',
+    'pages_edit_draft_options' => 'Vázlatbeállítások',
     'pages_edit_save_draft' => 'Vázlat mentése',
     'pages_edit_draft' => 'Oldal vázlat szerkesztése',
     'pages_editing_draft' => 'Vázlat szerkesztése',
@@ -275,10 +275,10 @@ return [
     'attachments_link_attached' => 'Hivatkozás sikeresen hozzácsatolva az oldalhoz',
     'templates' => 'Sablonok',
     'templates_set_as_template' => 'Az oldal egy sablon',
-    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_explain_set_as_template' => 'Ez az oldal sablonnak lett beállítva, így a tartalma felhasználható más oldalak létrehozásakor. Más felhasználók is használhatják ezt a sablont ha megtekintési jogosultságuk van ehhez az oldalhoz.',
     'templates_replace_content' => 'Oldal tartalmának cseréje',
-    'templates_append_content' => 'Append to page content',
-    'templates_prepend_content' => 'Prepend to page content',
+    'templates_append_content' => 'Hozzáfűzés az oldal tartalmához',
+    'templates_prepend_content' => 'Hozzáadás az oldal tartalmának elejéhez',
 
     // Profile View
     'profile_user_for_x' => 'Felhasználó ez óta: :time',
