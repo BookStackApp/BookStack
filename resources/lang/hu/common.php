@@ -41,7 +41,7 @@ return [
 
     // Sort Options
     'sort_options' => 'Rendezési beállítások',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_direction_toggle' => 'Rendezési irány váltása',
     'sort_ascending' => 'Növekvő sorrend',
     'sort_descending' => 'Csökkenő sorrend',
     'sort_name' => 'Név',
