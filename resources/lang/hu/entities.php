@@ -162,7 +162,7 @@ return [
     // Pages
     'page' => 'Oldal',
     'pages' => 'Oldalak',
-    'x_pages' => ':count oldal|:count oldalak',
+    'x_pages' => ':count oldal|:count oldal',
     'pages_popular' => 'Népszerű oldalak',
     'pages_new' => 'Új oldal',
     'pages_attachments' => 'Csatolmányok',
