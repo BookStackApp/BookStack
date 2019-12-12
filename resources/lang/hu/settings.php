@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Megjegyzések letiltása az alkalmazás összes oldalán.<br>A már létező megjegyzések el lesznek rejtve.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
+    'content_colors' => 'Tartalomszínek',
     'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Polc színe',
     'book_color' => 'Könyv színe',
     'chapter_color' => 'Fejezet színe',
     'page_color' => 'Oldal színe',
-    'page_draft_color' => 'Page Draft Color',
+    'page_draft_color' => 'Oldalvázlat színe',
 
     // Registration Settings
     'reg_settings' => 'Regisztráció',
@@ -74,10 +74,10 @@ return [
     'maint_image_cleanup_nothing_found' => 'Nincsenek nem használt képek, semmi sem lett törölve!',
     'maint_send_test_email' => 'Teszt e-mail küldése',
     'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
-    'maint_send_test_email_run' => 'Send test email',
-    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_run' => 'Teszt e-mail küldése',
+    'maint_send_test_email_success' => 'Email elküldve :address címre',
     'maint_send_test_email_mail_subject' => 'Teszt e-mail',
-    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_greeting' => 'Az email kézbesítés működőképesnek tűnik!',
     'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
