@@ -126,7 +126,7 @@ return [
     'users_role_desc' => 'A felhasználó melyik szerepkörhöz lesz rendelve. Ha a felhasználó több szerepkörhöz van rendelve, akkor ezeknek a szerepköröknek a jogosultságai összeadódnak, és a a felhasználó a hozzárendelt szerepkörök minden képességét megkapja.',
     'users_password' => 'Felhasználó jelszava',
     'users_password_desc' => 'Az alkalmazásba bejelentkezéshez használható jelszó beállítása. Legalább 5 karakter hosszúnak kell lennie.',
-    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_text' => 'Lehetséges egy meghívó emailt küldeni ennek a felhasználónak ami lehetővé teszi, hogy beállíthassa a saját jelszavát. Máskülönben a jelszót az erre jogosult felhasználónak kell beállítania.',
     'users_send_invite_option' => 'Felhasználó meghívó levél küldése',
     'users_external_auth_id' => 'Külső hitelesítés azonosítója',
     'users_external_auth_id_desc' => 'Ez az azonosító lesz használva a felhasználó ellenőrzéséhez mikor az LDAP rendszerrel kommunikál.',
