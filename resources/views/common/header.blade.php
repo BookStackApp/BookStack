@@ -45,7 +45,7 @@
                         @if(setting('registration-enabled', false))
                             <a href="{{ url('/register') }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
                         @endif
-                        <a href="{{ url('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
+                        <a href="{{ action('Auth\LoginController@getLogin', ['intended' => url()->current()]) }}">@icon('login') {{ trans('auth.log_in') }}</a>
                     @endif
                 </div>
                 @if(signedInUser())
