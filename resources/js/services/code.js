@@ -97,7 +97,7 @@ function highlight() {
 function highlightElem(elem) {
     const innerCodeElem = elem.querySelector('code[class^=language-]');
     elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
-    const content = elem.textContent.trim();
+    const content = elem.textContent;
 
     let mode = '';
     if (innerCodeElem !== null) {
