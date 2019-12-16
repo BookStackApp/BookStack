@@ -24,6 +24,7 @@ class LdapTest extends BrowserKitTest
             'services.ldap.base_dn' => 'dc=ldap,dc=local',
             'services.ldap.email_attribute' => 'mail',
             'services.ldap.display_name_attribute' => 'cn',
+            'services.ldap.id_attribute' => 'uid',
             'services.ldap.user_to_groups' => false,
             'auth.providers.users.driver' => 'ldap',
         ]);
@@ -100,6 +101,32 @@ class LdapTest extends BrowserKitTest
             ->seePageIs('/')
             ->see($this->mockUser->name)
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $ldapDn]);
+    }
+
+    public function test_a_custom_uid_attribute_can_be_specified_and_is_used_properly()
+    {
+        config()->set(['services.ldap.id_attribute' => 'my_custom_id']);
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('setOption')->times(2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'cn' => [$this->mockUser->name],
+                'dn' => $ldapDn,
+                'my_custom_id' => ['cooluser456'],
+                'mail' => [$this->mockUser->email]
+            ]]);
+
+
+        $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true);
+        $this->mockEscapes(2);
+
+        $this->mockUserLogin()
+            ->seePageIs('/')
+            ->see($this->mockUser->name)
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => 'cooluser456']);
     }
 
     public function test_initial_incorrect_details()
@@ -365,7 +392,7 @@ class LdapTest extends BrowserKitTest
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
                 'dn' => ['dc=test' . config('services.ldap.base_dn')],
-                'displayName' => 'displayNameAttribute'
+                'displayname' => 'displayNameAttribute'
             ]]);
         $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
         $this->mockEscapes(4);
