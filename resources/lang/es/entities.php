@@ -181,7 +181,7 @@ return [
     'pages_edit_draft' => 'Editar borrador de página',
     'pages_editing_draft' => 'Editando borrador',
     'pages_editing_page' => 'Editando página',
-    'pages_edit_draft_save_at' => 'Borrador guardado el ',
+    'pages_edit_draft_save_at' => 'Borrador guardado ',
     'pages_edit_delete_draft' => 'Borrar borrador',
     'pages_edit_discard_draft' => 'Descartar borrador',
     'pages_edit_set_changelog' => 'Ajustar Log de cambios',
