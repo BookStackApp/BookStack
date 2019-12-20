@@ -44,5 +44,5 @@ return [
     'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
 
     // Other
-    'commented_on'                => 'commented on',
+    'commented_on'                => 'skrev en kommentar til',
 ];
