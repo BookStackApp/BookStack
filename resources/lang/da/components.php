@@ -20,14 +20,14 @@ return [
     'image_dropzone' => 'Drop images or click here to upload',
     'images_deleted' => 'Billede slettet',
     'image_preview' => 'Image Preview',
-    'image_upload_success' => 'Image uploaded successfully',
+    'image_upload_success' => 'Foto uploadet',
     'image_update_success' => 'Image details successfully updated',
-    'image_delete_success' => 'Image successfully deleted',
-    'image_upload_remove' => 'Remove',
+    'image_delete_success' => 'Billede slettet',
+    'image_upload_remove' => 'Fjern',
 
     // Code Editor
-    'code_editor' => 'Edit Code',
+    'code_editor' => 'Rediger kode',
     'code_language' => 'Code Language',
     'code_content' => 'Code Content',
-    'code_save' => 'Save Code',
+    'code_save' => 'Gem kode',
 ];
