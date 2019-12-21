@@ -1,5 +1,6 @@
 import Code from "../services/code";
 import DrawIO from "../services/drawio";
+import Clipboard from "../services/clipboard";
 
 /**
  * Handle pasting images from clipboard.
@@ -8,30 +9,33 @@ import DrawIO from "../services/drawio";
  * @param editor
  */
 function editorPaste(event, editor, wysiwygComponent) {
-    const clipboardItems = event.clipboardData.items;
-    if (!event.clipboardData || !clipboardItems) return;
+    const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
 
-    // Don't handle if clipboard includes text content
-    for (let clipboardItem of clipboardItems) {
-        if (clipboardItem.type.includes('text/')) {
-            return;
-        }
+    // Don't handle the event ourselves if no items exist of contains table-looking data
+    if (!clipboard.hasItems() || clipboard.containsTabularData()) {
+        return;
     }
 
-    for (let clipboardItem of clipboardItems) {
-        if (!clipboardItem.type.includes("image")) {
-            continue;
-        }
+    const images = clipboard.getImages();
+    for (const imageFile of images) {
 
         const id = "image-" + Math.random().toString(16).slice(2);
         const loadingImage = window.baseUrl('/loading.gif');
-        const file = clipboardItem.getAsFile();
+        event.preventDefault();
 
         setTimeout(() => {
             editor.insertContent(`<p><img src="${loadingImage}" id="${id}"></p>`);
 
-            uploadImageFile(file, wysiwygComponent).then(resp => {
-                editor.dom.setAttrib(id, 'src', resp.thumbs.display);
+            uploadImageFile(imageFile, wysiwygComponent).then(resp => {
+                const safeName = resp.name.replace(/"/g, '');
+                const newImageHtml = `<img src="${resp.thumbs.display}" alt="${safeName}" />`;
+
+                const newEl = editor.dom.create('a', {
+                    target: '_blank',
+                    href: resp.url,
+                }, newImageHtml);
+
+                editor.dom.replace(newEl, id);
             }).catch(err => {
                 editor.dom.remove(id);
                 window.$events.emit('error', trans('errors.image_upload_error'));
@@ -632,6 +636,10 @@ class WysiwygEditor {
                             editor.selection.setNode(wrap);
                             dom.remove(wrap);
                         });
+                    }
+
+                    if (!event.isDefaultPrevented()) {
+                        editorPaste(event, editor, context);
                     }
 
                     wrap = null;
