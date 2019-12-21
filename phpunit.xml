@@ -22,6 +22,7 @@
         <server name="APP_ENV" value="testing"/>
         <server name="APP_DEBUG" value="false"/>
         <server name="APP_LANG" value="en"/>
+        <server name="APP_THEME" value="none"/>
         <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="SESSION_DRIVER" value="array"/>
