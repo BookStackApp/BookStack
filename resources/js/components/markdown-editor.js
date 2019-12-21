@@ -1,6 +1,7 @@
 import MarkdownIt from "markdown-it";
 import mdTasksLists from 'markdown-it-task-lists';
 import code from '../services/code';
+import Clipboard from "../services/clipboard";
 import {debounce} from "../services/util";
 
 import DrawIO from "../services/drawio";
@@ -215,20 +216,16 @@ class MarkdownEditor {
 
         // Handle image paste
         cm.on('paste', (cm, event) => {
-            const clipboardItems = event.clipboardData.items;
-            if (!event.clipboardData || !clipboardItems) return;
+            const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
 
-            // Don't handle if clipboard includes text content
-            for (let clipboardItem of clipboardItems) {
-                if (clipboardItem.type.includes('text/')) {
-                    return;
-                }
+            // Don't handle the event ourselves if no items exist of contains table-looking data
+            if (!clipboard.hasItems() || clipboard.containsTabularData()) {
+                return;
             }
 
-            for (let clipboardItem of clipboardItems) {
-                if (clipboardItem.type.includes("image")) {
-                    uploadImage(clipboardItem.getAsFile());
-                }
+            const images = clipboard.getImages();
+            for (const image of images) {
+                uploadImage(image);
             }
         });
 
@@ -246,13 +243,15 @@ class MarkdownEditor {
                 });
             }
 
-            if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+            const clipboard = new Clipboard(event.dataTransfer);
+            if (clipboard.hasItems()) {
                 const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
                 cm.setCursor(cursorPos);
                 event.stopPropagation();
                 event.preventDefault();
-                for (let i = 0; i < event.dataTransfer.files.length; i++) {
-                    uploadImage(event.dataTransfer.files[i]);
+                const images = clipboard.getImages();
+                for (const image of images) {
+                    uploadImage(image);
                 }
             }
 
