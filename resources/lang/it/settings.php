@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Abilita registrazione',
     'reg_enable_desc' => 'Quando la registrazione è abilitata, l\'utente sarà in grado di registrarsi come utente dell\'applicazione. Al momento della registrazione viene loro assegnato un ruolo utente di default.',
     'reg_default_role' => 'Ruolo predefinito dopo la registrazione',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Conferma Email',
     'reg_email_confirmation_toggle' => 'Richiedi conferma email',
     'reg_confirm_email_desc' => 'Se la restrizione per dominio è usata la conferma della mail sarà richiesta e la scelta ignorata.',
