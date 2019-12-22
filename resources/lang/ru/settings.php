@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Разрешить регистрацию',
     'reg_enable_desc' => 'Если регистрация разрешена, пользователь сможет зарегистрироваться в системе самостоятельно. При регистрации назначается роль пользователя по умолчанию',
     'reg_default_role' => 'Роль пользователя по умолчанию после регистрации',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Подтверждение электронной почты',
     'reg_email_confirmation_toggle' => 'Требовать подтверждение по электронной почте',
     'reg_confirm_email_desc' => 'При использовании ограничения по домену - подтверждение обязательно, этот пункт игнорируется.',
