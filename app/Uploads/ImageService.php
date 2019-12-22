@@ -254,7 +254,16 @@ class ImageService extends UploadService
         } else {
             $thumb->fit($width, $height);
         }
-        return (string)$thumb->encode();
+
+        $thumbData = (string)$thumb->encode();
+
+        // Use original image data if we're keeping the ratio
+        // and the resizing does not save any space.
+        if ($keepRatio && strlen($thumbData) > strlen($imageData)) {
+            return $imageData;
+        }
+
+        return $thumbData;
     }
 
     /**
