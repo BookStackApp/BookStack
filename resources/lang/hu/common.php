@@ -38,6 +38,7 @@ return [
     'reset' => 'Visszaállítás',
     'remove' => 'Eltávolítás',
     'add' => 'Hozzáadás',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Rendezési beállítások',
