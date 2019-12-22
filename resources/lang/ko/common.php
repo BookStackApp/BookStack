@@ -38,6 +38,7 @@ return [
     'reset' => '초기화',
     'remove' => '제거',
     'add' => '추가',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Sort Options',
