@@ -62,6 +62,13 @@
     width: 50%;
     max-width: 50%;
   }
+  &.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 2;
+  }
 }
 
 @include smaller-than($m) {
@@ -71,6 +78,7 @@
   #markdown-editor .markdown-editor-wrap {
     width: 100%;
     max-width: 100%;
+    flex-grow: 1;
   }
   #markdown-editor .editor-toolbar {
     padding: 0;
@@ -83,12 +91,15 @@
     border-bottom: 1px solid #DDD;
     display: block;
   }
-  .markdown-editor-wrap:not(.active) .editor-toolbar + div, .markdown-editor-wrap:not(.active) .editor-toolbar .buttons {
+  .markdown-editor-wrap:not(.active) .editor-toolbar + div,
+  .markdown-editor-wrap:not(.active) .editor-toolbar .buttons,
+  .markdown-editor-wrap:not(.active) .markdown-display {
     display: none;
   }
   #markdown-editor .markdown-editor-wrap:not(.active) {
     flex-grow: 0;
     flex: none;
+    min-height: 0;
   }
 }
 
