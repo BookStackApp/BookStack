@@ -89,7 +89,7 @@ class RegisterController extends Controller
      */
     protected function checkRegistrationAllowed()
     {
-        if (!setting('registration-enabled')) {
+        if (!setting('registration-enabled') || config('auth.method') === 'ldap') {
             throw new UserRegistrationException(trans('auth.registrations_disabled'), '/login');
         }
     }

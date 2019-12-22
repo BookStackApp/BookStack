@@ -3,7 +3,7 @@
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 
-class Saml2 extends TestCase
+class Saml2Test extends TestCase
 {
 
     public function setUp(): void
