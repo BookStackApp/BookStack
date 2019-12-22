@@ -76,6 +76,7 @@ class MarkdownEditor {
                 return;
             }
             if (action === 'insertDrawing') this.actionStartDrawing();
+            if (action === 'fullscreen') this.actionFullScreen();
         });
 
         // Mobile section toggling
@@ -478,6 +479,13 @@ class MarkdownEditor {
                 console.log(err);
             });
         });
+    }
+
+    // Make the editor full screen
+    actionFullScreen() {
+        const alreadyFullscreen = this.elem.classList.contains('fullscreen');
+        this.elem.classList.toggle('fullscreen', !alreadyFullscreen);
+        document.body.classList.toggle('markdown-fullscreen', !alreadyFullscreen);
     }
 
     // Scroll to a specified text
