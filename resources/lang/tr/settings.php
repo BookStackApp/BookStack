@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Kaydolmaya izin ver',
     'reg_enable_desc' => 'Kayıt olmaya izin verdiğinizde kullanıcılar kendilerini uygulamaya kaydedebilecekler. Kayıt olduktan sonra kendilerine varsayılan kullanıcı rolü atanacaktır.',
     'reg_default_role' => 'Kayıt olduktan sonra varsayılan kullanıcı rolü',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Email Doğrulama',
     'reg_email_confirmation_toggle' => 'E-mail onayı gerektir',
     'reg_confirm_email_desc' => 'Eğer domain kısıtlaması kullanılıyorsa o zaman email doğrulaması gereklidir ve bu seçenek yok sayılacaktır.',
