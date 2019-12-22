@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Tillåt registrering',
     'reg_enable_desc' => 'När registrering tillåts kan användaren logga in som en användare. Vid registreringen ges de en förvald användarroll.',
     'reg_default_role' => 'Standardroll efter registrering',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'E-postbekräftelse',
     'reg_email_confirmation_toggle' => 'Kräv e-postbekräftelse',
     'reg_confirm_email_desc' => 'Om registrering begränas till vissa domäner kommer e-postbekräftelse alltid att krävas och den här inställningen kommer att ignoreras.',
