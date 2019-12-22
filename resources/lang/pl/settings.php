@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Włącz rejestrację',
     'reg_enable_desc' => 'Kiedy rejestracja jest włączona, użytkownicy będą mogli się rejestrować jako użytkownicy aplikacji. Przed rejestracją posiadają oni domyślną rolę użytkownika.',
     'reg_default_role' => 'Domyślna rola użytkownika po rejestracji',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Potwierdzenie email',
     'reg_email_confirmation_toggle' => 'Wymagaj potwierdzenia adresu email',
     'reg_confirm_email_desc' => 'Jeśli restrykcje domenowe zostały ustawione, potwierdzenie adresu stanie się konieczne, a poniższa wartośc zostanie zignorowana.',
