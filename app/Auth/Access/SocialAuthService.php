@@ -137,7 +137,7 @@ class SocialAuthService
 
         // Otherwise let the user know this social account is not used by anyone.
         $message = trans('errors.social_account_not_used', ['socialAccount' => $titleCaseDriver]);
-        if (setting('registration-enabled')) {
+        if (setting('registration-enabled') && config('auth.method') !== 'ldap') {
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => $titleCaseDriver]);
         }
         

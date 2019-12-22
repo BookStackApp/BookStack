@@ -55,7 +55,7 @@
                 </div>
             @endif
 
-            @if(setting('registration-enabled', false))
+            @if(setting('registration-enabled') && config('auth.method') !== 'ldap')
                 <div class="text-center pb-s">
                     <hr class="my-l">
                     <a href="{{ url('/register') }}">{{ trans('auth.dont_have_account') }}</a>

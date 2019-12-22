@@ -219,6 +219,10 @@
                                 'label' => trans('settings.reg_enable_toggle')
                             ])
 
+                            @if(config('auth.method') === 'ldap')
+                                <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_ldap_warning') }}</div>
+                            @endif
+
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
                             <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
                                 @foreach(\BookStack\Auth\Role::all() as $role)

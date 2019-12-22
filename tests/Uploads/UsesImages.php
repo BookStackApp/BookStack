@@ -15,7 +15,7 @@ trait UsesImages
         if (is_null($fileName)) {
             $fileName = 'test-image.png';
         }
-        
+
         return base_path('tests/test-data/' . $fileName);
     }
 

@@ -42,7 +42,7 @@
                     @endif
 
                     @if(!signedInUser())
-                        @if(setting('registration-enabled', false))
+                        @if(setting('registration-enabled') && config('auth.method') !== 'ldap')
                             <a href="{{ url('/register') }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
                         @endif
                         <a href="{{ url('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
