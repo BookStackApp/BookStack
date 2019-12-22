@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Habilitar registro',
     'reg_enable_desc' => 'Quando o registro é habilitado, o usuário poderá se registrar como usuário do aplicativo. No registro, eles recebem um único perfil padrão.',
     'reg_default_role' => 'Perfil padrão para usuários após o registro',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Confirmação de E-mail',
     'reg_email_confirmation_toggle' => 'Requer confirmação de e-mail',
     'reg_confirm_email_desc' => 'Se restrições de domínio são usadas a confirmação por e-mail será requerida e o valor abaixo será ignorado.',
