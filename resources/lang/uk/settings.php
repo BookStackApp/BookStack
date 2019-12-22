@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Дозволити реєстрацію',
     'reg_enable_desc' => 'При включенні реєстрації відвідувач зможе зареєструватися як користувач програми. Після реєстрації їм надається єдина роль користувача за замовчуванням.',
     'reg_default_role' => 'Роль користувача за умовчанням після реєстрації',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Підтвердження електронною поштою',
     'reg_email_confirmation_toggle' => 'Необхідне підтвердження електронною поштою',
     'reg_confirm_email_desc' => 'Якщо використовується обмеження домену, то підтвердження електронною поштою буде потрібно, а нижче значення буде проігноровано.',
