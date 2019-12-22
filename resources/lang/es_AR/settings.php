@@ -33,7 +33,7 @@ return [
     'app_logo' => 'Logo de la aplicación',
     'app_logo_desc' => 'Esta imagen debería ser de 43px en altura. <br>Las imágenes grandes seán escaladas.',
     'app_primary_color' => 'Color primario de la aplicación',
-    'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
+    'app_primary_color_desc' => 'Establece el color principal de la aplicación incluyendo el banner, botones y enlaces.',
     'app_homepage' => 'Página de inicio de la Aplicación',
     'app_homepage_desc' => 'Seleccione una página de inicio para mostrar en lugar de la vista por defecto. Se ignoran los permisos de página para las páginas seleccionadas.',
     'app_homepage_select' => 'Seleccione una página',
@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'content_colors' => 'Colores del contenido',
+    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de la organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
+    'bookshelf_color' => 'Color del estante',
+    'book_color' => 'Color del libro',
+    'chapter_color' => 'Color del capítulo',
+    'page_color' => 'Color de la página',
+    'page_draft_color' => 'Color del borrador de página',
 
     // Registration Settings
     'reg_settings' => 'Ajustes de registro',
@@ -56,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Habilitar registro',
     'reg_enable_desc' => 'Cuando se habilita el registro, el usuario podrá crear su usuario en la aplicación. Con el regsitro, se le otorga un rol de usuario único y por defecto.',
     'reg_default_role' => 'Rol de usuario por defecto despúes del registro',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Confirmación de correo electrónico',
     'reg_email_confirmation_toggle' => 'Requerir confirmación de correo electrónico',
     'reg_confirm_email_desc' => 'Si se utiliza la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y se ignorará el valor a continuación.',
