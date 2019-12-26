@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Habilitar registro',
     'reg_enable_desc' => 'Cuando se habilita el registro los usuarios podrán registrarse como usuarios de la aplicación. Al registrarse se les asigna un rol único por defecto.',
     'reg_default_role' => 'Rol de usuario por defecto después del registro',
-    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
+    'reg_enable_ldap_warning' => 'La opción anterior no se utiliza mientras la autenticación LDAP está activa. Las cuentas de usuario para los miembros no existentes se crearán automáticamente si la autenticación, contra el sistema LDAP en uso, es exitosa.',
     'reg_email_confirmation' => 'Confirmación por Email',
     'reg_email_confirmation_toggle' => 'Requerir confirmación por Email',
     'reg_confirm_email_desc' => 'Si se emplea la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y esta opción será ignorada.',
