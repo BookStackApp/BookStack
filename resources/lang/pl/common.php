@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => 'Akcje',
     'view' => 'Widok',
-    'view_all' => 'View All',
+    'view_all' => 'Zobacz wszystkie',
     'create' => 'Utwórz',
     'update' => 'Zaktualizuj',
     'edit' => 'Edytuj',
@@ -38,6 +38,7 @@ return [
     'reset' => 'Resetuj',
     'remove' => 'Usuń',
     'add' => 'Dodaj',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Opcje sortowania',
@@ -62,7 +63,7 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Menu profilu',
     'view_profile' => 'Zobacz profil',
     'edit_profile' => 'Edytuj profil',
 
