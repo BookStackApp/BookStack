@@ -95,7 +95,7 @@ return [
     'shelves_copy_permissions_to_books' => 'Copia Permessi ai Libri',
     'shelves_copy_permissions' => 'Copia Permessi',
     'shelves_copy_permissions_explain' => 'Verranno applicati tutti i permessi della libreria ai libri contenuti. Prima di attivarlo, assicurati che ogni permesso di questa libreria sia salvato.',
-    'shelves_copy_permission_success' => 'Permessi della libreria copiati in :count books',
+    'shelves_copy_permission_success' => 'Permessi della libreria copiati in :count libri',
 
     // Books
     'book' => 'Libro',
@@ -212,7 +212,7 @@ return [
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => 'Revisione #:id',
     'pages_revisions_numbered_changes' => 'Modifiche Revisione #:id',
-    'pages_revisions_changelog' => 'Cambiamenti',
+    'pages_revisions_changelog' => 'Changelog',
     'pages_revisions_changes' => 'Cambiamenti',
     'pages_revisions_current' => 'Versione Corrente',
     'pages_revisions_preview' => 'Anteprima',
@@ -258,7 +258,7 @@ return [
     'attachments_delete_confirm' => 'Clicca elimina nuovamente per confermare l\'eliminazione di questo allegato.',
     'attachments_dropzone' => 'Rilascia file o clicca qui per allegare un file',
     'attachments_no_files' => 'Nessun file è stato caricato',
-    'attachments_explain_link' => 'Puoi allegare un link se preferisci non caricare un file. Questo può essere un link a un\'altra pagina o a un file in un cloud.',
+    'attachments_explain_link' => 'Puoi allegare un link se preferisci non caricare un file. Questo può essere un link a un\'altra pagina o a un file nel cloud.',
     'attachments_link_name' => 'Nome Link',
     'attachment_link' => 'Link allegato',
     'attachments_link_url' => 'Link al file',
