@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Yorumları uygulamadaki bütün sayfalar için engelle. <br> Mevcut yorumlar gösterilmeyecektir.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
+    'content_colors' => 'İçerik Renkleri',
     'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'bookshelf_color' => 'Raf Rengi',
+    'book_color' => 'Kitap Rengi',
+    'chapter_color' => 'Kısım Rengi',
+    'page_color' => 'Sayfa Rengi',
+    'page_draft_color' => 'Sayfa Taslağı Rengi',
 
     // Registration Settings
     'reg_settings' => 'Kayıt',
