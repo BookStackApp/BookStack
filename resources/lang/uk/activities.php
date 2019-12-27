@@ -36,7 +36,7 @@ return [
     'book_sort_notification'      => 'Книгу успішно відновлено',
 
     // Bookshelves
-    'bookshelf_create'            => 'створено книжкову полицю',
+    'bookshelf_create'            => 'створив книжкову полицю',
     'bookshelf_create_notification'    => 'Книжкову полицю успішно створено',
     'bookshelf_update'                 => 'оновив книжкову полицю',
     'bookshelf_update_notification'    => 'Книжкову полицю успішно оновлено',
