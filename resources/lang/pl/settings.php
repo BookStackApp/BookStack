@@ -38,8 +38,17 @@ return [
     'app_homepage_desc' => 'Wybierz widok, który będzie wyświetlany na stronie głównej zamiast w widoku domyślnego. Uprawnienia dostępowe są ignorowane dla wybranych stron.',
     'app_homepage_select' => 'Wybierz stronę',
     'app_disable_comments' => 'Wyłącz komentarze',
-    'app_disable_comments_toggle' => 'Disable comments',
+    'app_disable_comments_toggle' => 'Wyłącz komentowanie',
     'app_disable_comments_desc' => 'Wyłącz komentarze na wszystkich stronach w aplikacji. Istniejące komentarze nie będą pokazywane.',
+
+    // Color settings
+    'content_colors' => 'Kolory zawartości',
+    'content_colors_desc' => 'Ustawia kolory dla wszystkich elementów w hierarchii organizacji stron. Wybór kolorów o podobnej jasności do domyślnych kolorów jest zalecany dla czytelności.',
+    'bookshelf_color' => 'Kolor półki',
+    'book_color' => 'Kolor książki',
+    'chapter_color' => 'Kolor rozdziału',
+    'page_color' => 'Kolor strony',
+    'page_draft_color' => 'Kolor szkicu strony',
 
     // Registration Settings
     'reg_settings' => 'Ustawienia rejestracji',
@@ -47,6 +56,7 @@ return [
     'reg_enable_toggle' => 'Włącz rejestrację',
     'reg_enable_desc' => 'Kiedy rejestracja jest włączona użytkownicy mogą się rejestrować. Po rejestracji otrzymują jedną domyślną rolę użytkownika.',
     'reg_default_role' => 'Domyślna rola użytkownika po rejestracji',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Potwierdzenie adresu email',
     'reg_email_confirmation_toggle' => 'Wymagaj potwierdzenia adresu email',
     'reg_confirm_email_desc' => 'Jeśli restrykcje domenowe zostały ustawione, potwierdzenie adresu stanie się konieczne, a poniższa wartośc zostanie zignorowana.',
