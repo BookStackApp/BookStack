@@ -11,7 +11,7 @@ return [
     'save' => 'Zapisz',
     'continue' => 'Kontynuuj',
     'select' => 'Wybierz',
-    'toggle_all' => 'Toggle All',
+    'toggle_all' => 'Przełącz wszystko',
     'more' => 'Więcej',
 
     // Form Labels
@@ -40,13 +40,13 @@ return [
     'add' => 'Dodaj',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_options' => 'Opcje sortowania',
+    'sort_direction_toggle' => 'Przełącz kierunek sortowania',
+    'sort_ascending' => 'Sortuj rosnąco',
+    'sort_descending' => 'Sortuj malejąco',
+    'sort_name' => 'Nazwa',
+    'sort_created_at' => 'Data utworzenia',
+    'sort_updated_at' => 'Data aktualizacji',
 
     // Misc
     'deleted_user' => 'Użytkownik usunięty',
@@ -67,8 +67,8 @@ return [
     'edit_profile' => 'Edytuj profil',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => 'Informacje',
+    'tab_content' => 'Treść',
 
     // Email Content
     'email_action_help' => 'Jeśli masz problem z kliknięciem przycisku ":actionText", skopiuj i wklej poniższy adres URL w nowej karcie swojej przeglądarki:',
