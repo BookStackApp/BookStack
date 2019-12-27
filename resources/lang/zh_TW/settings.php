@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => '在App的所有頁面上關閉評論，已經存在的評論也不會顯示。',
 
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
     // Registration Settings
     'reg_settings' => '註冊設定',
     'reg_enable' => 'Enable Registration',
     'reg_enable_toggle' => 'Enable registration',
     'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
     'reg_default_role' => '註冊後的預設使用者角色',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Email Confirmation',
     'reg_email_confirmation_toggle' => 'Require email confirmation',
     'reg_confirm_email_desc' => '如果使用網域名稱限制，則需要Email驗證，並且本設定將被忽略。',
@@ -63,6 +73,13 @@ return [
     'maint_image_cleanup_warning' => '發現了 :count 張可能未使用的圖像。您確定要刪除這些圖像嗎？',
     'maint_image_cleanup_success' => '找到並刪除了 :count 張可能未使用的圖像！',
     'maint_image_cleanup_nothing_found' => '找不到未使用的圖像，沒有刪除！',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => '角色',
