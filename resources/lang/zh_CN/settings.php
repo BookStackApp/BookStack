@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => '禁用评论',
     'app_disable_comments_desc' => '在站点的所有页面上禁用评论，现有评论也不会显示出来。',
 
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
     // Registration Settings
     'reg_settings' => '注册设置',
     'reg_enable' => '启用注册',
     'reg_enable_toggle' => '启用注册',
     'reg_enable_desc' => '启用注册后，用户将可以自己注册为站点用户。 注册后，他们将获得一个默认的单一用户角色。',
     'reg_default_role' => '注册后的默认用户角色',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => '邮箱确认n',
     'reg_email_confirmation_toggle' => '需要电子邮件确认',
     'reg_confirm_email_desc' => '如果使用域名限制，则需要Email验证，并且该值将被忽略。',
@@ -63,6 +73,13 @@ return [
     'maint_image_cleanup_warning' => '发现了 :count 张可能未使用的图像。您确定要删除这些图像吗？',
     'maint_image_cleanup_success' => '找到并删除了 :count 张可能未使用的图像！',
     'maint_image_cleanup_nothing_found' => '找不到未使用的图像，没有删除！',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => '角色',
