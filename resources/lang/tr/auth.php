@@ -18,7 +18,7 @@ return [
 
     'name' => 'İsim',
     'username' => 'Kullanıcı Adı',
-    'email' => 'Email',
+    'email' => 'E-Posta',
     'password' => 'Şifre',
     'password_confirm' => 'Şifreyi onayla',
     'password_hint' => 'En az 5 karakter olmalı',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Doğrulama Mailini Yeniden Yolla',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => ':appName\'e katılma daveti aldınız!',
+    'user_invite_email_greeting' => 'Sizin için :appName üzerinde bir hesap oluşturuldu.',
+    'user_invite_email_text' => 'Parola belirlemek ve erişebilmek için aşağıdaki butona tıklayın:',
+    'user_invite_email_action' => 'Hesap Şifresini Belirleyin',
+    'user_invite_page_welcome' => ':appName\'e hoş geldiniz!',
+    'user_invite_page_text' => 'Hesap açılışını tamamlamak ve erişim izni alabilmek için daha sonraki girişlerinizde kullanabilmek üzere bir şifre belirlemeniz gerekiyor.',
+    'user_invite_page_confirm_button' => 'Parolayı Onayla',
+    'user_invite_success' => 'Parolanız belirlendi, artık :appName\'e erişebilirsiniz!'
 ];

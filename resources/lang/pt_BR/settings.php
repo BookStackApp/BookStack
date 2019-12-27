@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Desativar comentários',
     'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo. Os comentários existentes não são exibidos.',
 
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
     // Registration Settings
     'reg_settings' => 'Registro',
     'reg_enable' => 'Habilitar Registro',
     'reg_enable_toggle' => 'Habilitar registro',
     'reg_enable_desc' => 'Quando o registro é habilitado, o usuário poderá se registrar como usuário do aplicativo. No registro, eles recebem um único perfil padrão.',
     'reg_default_role' => 'Perfil padrão para usuários após o registro',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Confirmação de E-mail',
     'reg_email_confirmation_toggle' => 'Requer confirmação de e-mail',
     'reg_confirm_email_desc' => 'Se restrições de domínio são usadas a confirmação por e-mail será requerida e o valor abaixo será ignorado.',
@@ -63,6 +73,13 @@ return [
     'maint_image_cleanup_warning' => ':count imagens potencialmente não utilizadas foram encontradas. Tem certeza de que deseja excluir estas imagens?',
     'maint_image_cleanup_success' => ':count imagens potencialmente não utilizadas foram encontradas e excluídas!',
     'maint_image_cleanup_nothing_found' => 'Nenhuma imagem não utilizada foi encontrada, nada foi excluído!',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => 'Perfis',

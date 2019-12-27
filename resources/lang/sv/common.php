@@ -38,6 +38,7 @@ return [
     'reset' => 'Återställ',
     'remove' => 'Radera',
     'add' => 'Lägg till',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Sort Options',

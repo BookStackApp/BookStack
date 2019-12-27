@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilita los comentarios en todas las páginas de la aplicación. <br> Los comentarios existentes no se muestran.',
 
+    // Color settings
+    'content_colors' => 'Colores del contenido',
+    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de la organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
+    'bookshelf_color' => 'Color del estante',
+    'book_color' => 'Color del libro',
+    'chapter_color' => 'Color del capítulo',
+    'page_color' => 'Color de la página',
+    'page_draft_color' => 'Color del borrador de página',
+
     // Registration Settings
     'reg_settings' => 'Registro',
     'reg_enable' => 'Habilitar Registro',
     'reg_enable_toggle' => 'Habilitar registro',
     'reg_enable_desc' => 'Cuando se habilita el registro los usuarios podrán registrarse como usuarios de la aplicación. Al registrarse se les asigna un rol único por defecto.',
     'reg_default_role' => 'Rol de usuario por defecto después del registro',
+    'reg_enable_ldap_warning' => 'La opción anterior no se utiliza mientras la autenticación LDAP está activa. Las cuentas de usuario para los miembros no existentes se crearán automáticamente si la autenticación, contra el sistema LDAP en uso, es exitosa.',
     'reg_email_confirmation' => 'Confirmación por Email',
     'reg_email_confirmation_toggle' => 'Requerir confirmación por Email',
     'reg_confirm_email_desc' => 'Si se emplea la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y esta opción será ignorada.',
@@ -63,6 +73,13 @@ return [
     'maint_image_cleanup_warning' => 'Se han encontrado :count imágenes posiblemente no utilizadas . ¿Estás seguro de querer borrar estas imágenes?',
     'maint_image_cleanup_success' => '¡Se han encontrado y borrado :count imágenes posiblemente no utilizadas!',
     'maint_image_cleanup_nothing_found' => '¡No se han encontrado imágenes sin utilizar, no se han borrado imágenes!',
+    'maint_send_test_email' => 'Enviar un correo electrónico de prueba',
+    'maint_send_test_email_desc' => 'Esto envía un correo electrónico de prueba a la dirección de correo electrónico especificada en tu perfil.',
+    'maint_send_test_email_run' => 'Enviar correo electrónico de prueba',
+    'maint_send_test_email_success' => 'Correo electrónico enviado a :address',
+    'maint_send_test_email_mail_subject' => 'Probar correo electrónico',
+    'maint_send_test_email_mail_greeting' => '¡El envío de correos electrónicos parece funcionar!',
+    'maint_send_test_email_mail_text' => '¡Enhorabuena! Al recibir esta notificación de correo electrónico, tu configuración de correo electrónico parece estar ajustada correctamente.',
 
     // Role Settings
     'roles' => 'Roles',
