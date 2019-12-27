@@ -25,6 +25,7 @@ import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/yaml/yaml';
+import 'codemirror/mode/pascal/pascal';
 
 // Addons
 import 'codemirror/addon/scroll/scrollpastend';
@@ -61,6 +62,8 @@ const modeMap = {
     powershell: 'powershell',
     properties: 'properties',
     ocaml: 'mllike',
+    pascal: 'text/x-pascal',
+    pas: 'text/x-pascal',
     php: (content) => {
         return content.includes('<?php') ? 'php' : 'text/x-php';
     },

@@ -94,9 +94,10 @@
 .popup-body {
   background-color: #FFF;
   max-height: 90%;
-  width: 1200px;
+  max-width: 1200px;
+  width: 90%;
   height: auto;
-  margin: 2% 5%;
+  margin: 2% auto;
   border-radius: 4px;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
