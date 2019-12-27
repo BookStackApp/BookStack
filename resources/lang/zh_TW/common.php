@@ -38,6 +38,7 @@ return [
     'reset' => '重置',
     'remove' => '刪除',
     'add' => '新增',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Sort Options',
