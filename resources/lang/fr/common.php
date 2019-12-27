@@ -38,6 +38,7 @@ return [
     'reset' => 'Réinitialiser',
     'remove' => 'Enlever',
     'add' => 'Ajouter',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Options de tri',
@@ -67,7 +68,7 @@ return [
     'edit_profile' => 'Modifier le profil',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => 'Informations',
     'tab_content' => 'Contenu',
 
     // Email Content
