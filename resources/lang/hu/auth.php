@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Megerősítő email újraküldése',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'Ez egy meghívó :appName weboldalhoz!',
+    'user_invite_email_greeting' => 'Létre lett hozva egy fiók az :appName weboldalon.',
+    'user_invite_email_text' => 'Jelszó beállításához és hozzáféréshez a lenti gombra kell kattintani:',
+    'user_invite_email_action' => 'Fiók jelszó beállítása',
+    'user_invite_page_welcome' => ':appName üdvözöl!',
+    'user_invite_page_text' => 'A fiók véglegesítéséhez és a hozzáféréshez be kell állítani egy jelszót ami :appName weboldalon lesz használva a bejelentkezéshez.',
+    'user_invite_page_confirm_button' => 'Jelszó megerősítése',
+    'user_invite_success' => 'Jelszó beállítva, :appName most már elérhető!'
 ];
