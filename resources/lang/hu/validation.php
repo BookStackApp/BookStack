@@ -30,12 +30,12 @@ return [
     'digits'               => ':attribute :digits számból kell álljon.',
     'digits_between'       => ':attribute hosszának :min és :max számjegy között kell lennie.',
     'email'                => ':attribute érvényes email cím kell legyen.',
-    'ends_with' => 'The :attribute must end with one of the following: :values',
+    'ends_with' => ':attribute attribútumnak a következők egyikével kell végződnie: :values',
     'filled'               => ':attribute mező kötelező.',
     'gt'                   => [
-        'numeric' => 'The :attribute must be greater than :value.',
-        'file'    => 'The :attribute must be greater than :value kilobytes.',
-        'string'  => 'The :attribute must be greater than :value characters.',
+        'numeric' => ':attribute nagyobb kell, hogy legyen, mint :value.',
+        'file'    => ':attribute nagyobb kell, hogy legyen, mint :value kilobájt.',
+        'string'  => ':attribute nagyobb kell legyen mint :value karakter.',
         'array'   => 'The :attribute must have more than :value items.',
     ],
     'gte'                  => [
