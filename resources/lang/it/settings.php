@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Disabilita commenti',
     'app_disable_comments_desc' => 'Disabilita i commenti su tutte le pagine nell\'applicazione. I commenti esistenti non sono mostrati. ',
 
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
     // Registration Settings
     'reg_settings' => 'Impostazioni Registrazione',
     'reg_enable' => 'Abilita Registrazione',
     'reg_enable_toggle' => 'Abilita registrazione',
     'reg_enable_desc' => 'Quando la registrazione è abilitata, l\utente sarà in grado di registrarsi all\'applicazione. Al momento della registrazione gli verrà associato un ruolo utente predefinito.',
     'reg_default_role' => 'Ruolo predefinito dopo la registrazione',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Conferma Email',
     'reg_email_confirmation_toggle' => 'Richiedi conferma email',
     'reg_confirm_email_desc' => 'Se la restrizione per dominio è usata la conferma della mail sarà richiesta e la scelta ignorata.',
