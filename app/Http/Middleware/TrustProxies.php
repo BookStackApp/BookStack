@@ -28,7 +28,7 @@ class TrustProxies extends Middleware
      * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $setProxies = config('app.proxies');
         if ($setProxies !== '**' && $setProxies !== '*' && $setProxies !== '') {
