@@ -27,7 +27,7 @@ return [
     'social_account_register_instructions' => '如果您还没有帐户，您可以使用 :socialAccount 选项注册账户。',
     'social_driver_not_found' => '未找到社交驱动程序',
     'social_driver_not_configured' => '您的:socialAccount社交设置不正确。',
-    'invite_token_expired' => '邀请链接已经过期，您可以尝试使用“忘记密码”功能来重新获取链接，以便激活账号。',
+    'invite_token_expired' => '此邀请链接已过期。 您可以尝试重置您的帐户密码。',
 
     // System
     'path_not_writable' => '无法上传到文件路径“:filePath”，请确保它可写入服务器。',
@@ -65,7 +65,7 @@ return [
     'role_cannot_be_edited' => '无法编辑该角色',
     'role_system_cannot_be_deleted' => '无法删除系统角色',
     'role_registration_default_cannot_delete' => '无法删除设置为默认注册的角色',
-    'role_cannot_remove_only_admin' => '当前系统中只有一个管理员账号，在删除此帐号前，请先设置一个新的账号为管理员。',
+    'role_cannot_remove_only_admin' => '该用户是分配给管理员角色的唯一用户。 在尝试在此处删除管理员角色之前，请将其分配给其他用户。',
 
     // Comments
     'comment_list' => '提取评论时出现错误。',
