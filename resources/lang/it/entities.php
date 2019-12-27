@@ -212,7 +212,7 @@ return [
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => 'Revisione #:id',
     'pages_revisions_numbered_changes' => 'Modifiche Revisione #:id',
-    'pages_revisions_changelog' => 'Changelog',
+    'pages_revisions_changelog' => 'Cambiamenti',
     'pages_revisions_changes' => 'Cambiamenti',
     'pages_revisions_current' => 'Versione Corrente',
     'pages_revisions_preview' => 'Anteprima',
