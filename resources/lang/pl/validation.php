@@ -80,7 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute może mieć tylko jedno rozszerzenie.',
     'not_in'               => 'Wartość :attribute jest nieprawidłowa.',
-    'not_regex'            => 'The :attribute format is invalid.',
+    'not_regex'            => 'Format :attribute jest nieprawidłowy.',
     'numeric'              => ':attribute musi być liczbą.',
     'regex'                => 'Format :attribute jest nieprawidłowy.',
     'required'             => 'Pole :attribute jest wymagane.',

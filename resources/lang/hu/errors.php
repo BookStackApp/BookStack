@@ -17,6 +17,12 @@ return [
     'ldap_fail_authed' => 'Az LDAP hozzáférés nem sikerült a megadott DN és jelszó beállításokkal',
     'ldap_extension_not_installed' => 'LDAP PHP kiterjesztés nincs telepítve',
     'ldap_cannot_connect' => 'Nem lehet kapcsolódni az LDAP kiszolgálóhoz, a kezdeti kapcsolatfelvétel nem sikerült',
+    'saml_already_logged_in' => 'Már bejelentkezett',
+    'saml_user_not_registered' => ':name felhasználó nincs regisztrálva és az automatikus regisztráció le van tiltva',
+    'saml_no_email_address' => 'Ehhez a felhasználóhoz nem található email cím a külső hitelesítő rendszer által átadott adatokban',
+    'saml_invalid_response_id' => 'A külső hitelesítő rendszerből érkező kérést nem ismerte fel az alkalmazás által indított folyamat. Bejelentkezés után az előző oldalra történő visszalépés okozhatja ezt a hibát.',
+    'saml_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres meghatalmazást',
+    'saml_email_exists' => 'A regisztráció sikertelen mivel már létezik felhasználó ":email" email címmel',
     'social_no_action_defined' => 'Nincs művelet meghatározva',
     'social_login_bad_response' => "Hiba történt :socialAccount bejelentkezés közben:\n:error",
     'social_account_in_use' => ':socialAccount fiók már használatban van. :socialAccount opción keresztül érdemes megpróbálni a bejelentkezést.',
@@ -27,7 +33,7 @@ return [
     'social_account_register_instructions' => ':socialAccount beállítása használatával is lehet fiókot regisztrálni, ha még nem volt fiók létrehozva.',
     'social_driver_not_found' => 'Közösségi meghajtó nem található',
     'social_driver_not_configured' => ':socialAccount közösségi beállítások nem megfelelőek.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Ez a meghívó hivatkozás lejárt. Helyette meg lehet próbálni új jelszót megadni a fiókhoz.',
 
     // System
     'path_not_writable' => ':filePath elérési út nem tölthető fel. Ellenőrizni kell, hogy az útvonal a kiszolgáló számára írható.',

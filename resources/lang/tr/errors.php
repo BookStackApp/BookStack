@@ -17,6 +17,12 @@ return [
     'ldap_fail_authed' => 'Verdiğiniz bilgiler ile LDAP girişi başarısız oldu.',
     'ldap_extension_not_installed' => 'LDAP PHP eklentisi yüklenmedi',
     'ldap_cannot_connect' => 'LDAP sunucusuna bağlanılamadı, ilk bağlantı başarısız oldu',
+    'saml_already_logged_in' => 'Already logged in',
+    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
+    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
+    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'saml_email_exists' => 'Registration unsuccessful since a user already exists with email address ":email"',
     'social_no_action_defined' => 'Bir aksiyon tanımlanmadı',
     'social_login_bad_response' => ":socialAccount girişi sırasında hata oluştu: \n:error",
     'social_account_in_use' => 'Bu :socialAccount zaten kullanımda, :socialAccount hesabıyla giriş yapmayı deneyin.',
@@ -27,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Hala bir hesabınız yoksa :socialAccount ile kayıt olabilirsiniz.',
     'social_driver_not_found' => 'Social driver bulunamadı',
     'social_driver_not_configured' => ':socialAccount ayarlarınız doğru bir şekilde ayarlanmadı.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Davetiye linkinin süresi doldu. Bunun yerine parolanızı sıfırlamayı deneyebilirsiniz.',
 
     // System
     'path_not_writable' => ':filePath dosya yolu yüklenemedi. Sunucuya yazılabilir olduğundan emin olun.',

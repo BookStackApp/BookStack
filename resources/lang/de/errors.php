@@ -19,6 +19,10 @@ return [
     'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf.',
     'saml_already_logged_in' => 'Sie sind bereits angemeldet',
     'saml_user_not_registered' => 'Kein Benutzer mit ID :name registriert und die automatische Registrierung ist deaktiviert',
+    'saml_no_email_address' => 'Es konnte keine E-Mail-Adresse für diesen Benutzer in den vom externen Authentifizierungssystem zur Verfügung gestellten Daten gefunden werden',
+    'saml_invalid_response_id' => 'Die Anfrage vom externen Authentifizierungssystem wird von einem von dieser Anwendung gestarteten Prozess nicht erkannt. Das Zurückgehen nach einem Login könnte dieses Problem verursachen.',
+    'saml_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System konnte keine erfolgreiche Autorisierung bereitstellen',
+    'saml_email_exists' => 'Registrierung fehlgeschlagen, da bereits ein Benutzer mit der E-Mail-Adresse ":email" existiert',
     'social_no_action_defined' => 'Es ist keine Aktion definiert',
     'social_login_bad_response' => "Fehler bei der :socialAccount-Anmeldung: \n:error",
     'social_account_in_use' => 'Dieses :socialAccount-Konto wird bereits verwendet. Bitte melden Sie sich mit dem :socialAccount-Konto an.',
@@ -29,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Wenn Sie bisher keinen Social-Media Konto besitzen, können Sie ein solches Konto mit der :socialAccount Option anlegen.',
     'social_driver_not_found' => 'Treiber für Social-Media-Konten nicht gefunden',
     'social_driver_not_configured' => 'Ihr :socialAccount-Konto ist nicht korrekt konfiguriert.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Dieser Einladungslink ist abgelaufen. Sie können stattdessen versuchen, Ihr Passwort zurückzusetzen.',
 
     // System
     'path_not_writable' => 'Die Datei kann nicht in den angegebenen Pfad :filePath hochgeladen werden. Stellen Sie sicher, dass dieser Ordner auf dem Server beschreibbar ist.',

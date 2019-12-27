@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => '댓글 사용 안 함',
     'app_disable_comments_desc' => '모든 페이지에서 댓글을 숨깁니다.',
 
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
     // Registration Settings
     'reg_settings' => '가입',
     'reg_enable' => '사이트 가입 허용',
     'reg_enable_toggle' => '사이트 가입 허용',
     'reg_enable_desc' => '가입한 사용자는 단일한 권한을 가집니다.',
     'reg_default_role' => '가입한 사용자의 기본 권한',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => '메일 주소 확인',
     'reg_email_confirmation_toggle' => '주소 확인 요구',
     'reg_confirm_email_desc' => '도메인 차단을 쓰고 있으면 메일 주소를 확인해야 하고, 이 설정은 무시합니다.',
@@ -57,12 +67,19 @@ return [
     // Maintenance settings
     'maint' => '데이터',
     'maint_image_cleanup' => '이미지 정리',
-    'maint_image_cleanup_desc' => '중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.',
+    'maint_image_cleanup_desc' => "중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.",
     'maint_image_cleanup_ignore_revisions' => '수정본에 있는 이미지 제외',
     'maint_image_cleanup_run' => '실행',
     'maint_image_cleanup_warning' => '이미지 :count개를 지울 건가요?',
     'maint_image_cleanup_success' => '이미지 :count개 삭제함',
     'maint_image_cleanup_nothing_found' => '삭제한 것 없음',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => '권한',
@@ -72,7 +89,7 @@ return [
     'role_delete' => '권한 지우기',
     'role_delete_confirm' => ':roleName(을)를 지웁니다.',
     'role_delete_users_assigned' => '이 권한을 가진 사용자 :userCount명에 할당할 권한을 고르세요.',
-    'role_delete_no_migration' => '할당하지 않음',
+    'role_delete_no_migration' => "할당하지 않음",
     'role_delete_sure' => '이 권한을 지울 건가요?',
     'role_delete_success' => '권한 지움',
     'role_edit' => '권한 수정',
@@ -135,9 +152,8 @@ return [
     'users_social_connected' => ':socialAccount(와)과 연결했습니다.',
     'users_social_disconnected' => ':socialAccount(와)과의 연결을 끊었습니다.',
 
-    //! Since these labels are already localized this array does not need to be
-    //! translated in the language-specific files.
-    //! DELETE BELOW IF COPIED FROM EN
+    //! If editing translations files directly please ignore this in all
+    //! languages apart from en. Content will be auto-copied from en.
     //!////////////////////////////////
     'language_select' => [
         'en' => 'English',

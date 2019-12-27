@@ -38,6 +38,7 @@ return [
     'reset' => 'Resetar',
     'remove' => 'Remover',
     'add' => 'Adicionar',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Sort Options',

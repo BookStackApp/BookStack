@@ -181,7 +181,7 @@ return [
     'pages_edit_draft' => 'Редагувати чернетку сторінки',
     'pages_editing_draft' => 'Редагування чернетки',
     'pages_editing_page' => 'Редагування сторінки',
-    'pages_edit_draft_save_at' => 'Чернетку зберегти в ',
+    'pages_edit_draft_save_at' => 'Чернетка збережена о ',
     'pages_edit_delete_draft' => 'Видалити чернетку',
     'pages_edit_discard_draft' => 'Відхилити чернетку',
     'pages_edit_set_changelog' => 'Встановити журнал змін',
@@ -275,10 +275,10 @@ return [
     'attachments_link_attached' => 'Посилання успішно додано до сторінки',
     'templates' => 'Шаблони',
     'templates_set_as_template' => 'Сторінка це шаблон',
-    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_explain_set_as_template' => 'Ви можете встановити цю сторінку як шаблон, щоб її вміст використовувався під час створення інших сторінок. Інші користувачі зможуть користуватися цим шаблоном, якщо вони мають права перегляду для цієї сторінки.',
     'templates_replace_content' => 'Замінити вміст сторінки',
     'templates_append_content' => 'Додати до вмісту сторінки',
-    'templates_prepend_content' => 'Prepend to page content',
+    'templates_prepend_content' => 'Додати на початок вмісту сторінки',
 
     // Profile View
     'profile_user_for_x' => 'Користувач вже :time',

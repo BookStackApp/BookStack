@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Zakáže komentáře napříč všemi stránkami. Existující komentáře se přestanou zobrazovat.',
 
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
     // Registration Settings
     'reg_settings' => 'Nastavení registrace',
     'reg_enable' => 'Enable Registration',
     'reg_enable_toggle' => 'Enable registration',
     'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
     'reg_default_role' => 'Role přiřazená po registraci',
+    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
     'reg_email_confirmation' => 'Email Confirmation',
     'reg_email_confirmation_toggle' => 'Require email confirmation',
     'reg_confirm_email_desc' => 'Pokud zapnete omezení emailové domény, tak bude ověřování emailové adresy vyžadováno vždy.',
@@ -63,6 +73,13 @@ return [
     'maint_image_cleanup_warning' => 'Nalezeno :count potenciálně nepoužitých obrázků. Jste si jistí, že je chcete smazat?',
     'maint_image_cleanup_success' => 'Potenciálně nepoužité obrázky byly smazány. Celkem :count.',
     'maint_image_cleanup_nothing_found' => 'Žádné potenciálně nepoužité obrázky nebyly nalezeny. Nic nebylo smazáno.',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
     // Role Settings
     'roles' => 'Role',
