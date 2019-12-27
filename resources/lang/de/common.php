@@ -38,12 +38,13 @@ return [
     'reset' => 'Zurücksetzen',
     'remove' => 'Entfernen',
     'add' => 'Hinzufügen',
+    'fullscreen' => 'Vollbild',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
+    'sort_options' => 'Sortieroptionen',
+    'sort_direction_toggle' => 'Sortierreihenfolge umkehren',
+    'sort_ascending' => 'Aufsteigend sortieren',
+    'sort_descending' => 'Absteigend sortieren',
     'sort_name' => 'Name',
     'sort_created_at' => 'Erstellungsdatum',
     'sort_updated_at' => 'Aktualisierungsdatum',
@@ -59,10 +60,10 @@ return [
     'grid_view' => 'Gitteransicht',
     'list_view' => 'Listenansicht',
     'default' => 'Voreinstellung',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Brotkrumen',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Profilmenü',
     'view_profile' => 'Profil ansehen',
     'edit_profile' => 'Profil bearbeiten',
 
