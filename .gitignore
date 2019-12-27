@@ -23,3 +23,4 @@ nbproject
 .settings/
 webpack-stats.json
 .phpunit.result.cache
+.DS_Store
