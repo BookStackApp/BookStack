@@ -38,6 +38,7 @@ return [
     'reset' => '리셋',
     'remove' => '제거',
     'add' => '추가',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => '정렬 기준',
