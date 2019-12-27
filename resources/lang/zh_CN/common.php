@@ -11,7 +11,7 @@ return [
     'save' => '保存',
     'continue' => '继续',
     'select' => '选择',
-    'toggle_all' => '全选',
+    'toggle_all' => '切换全部',
     'more' => '更多',
 
     // Form Labels
@@ -41,12 +41,12 @@ return [
 
     // Sort Options
     'sort_options' => '排序选项',
-    'sort_direction_toggle' => '切换排序方式',
+    'sort_direction_toggle' => '排序方向切换',
     'sort_ascending' => '升序',
     'sort_descending' => '降序',
     'sort_name' => '名称',
-    'sort_created_at' => '创建日期',
-    'sort_updated_at' => '更新日期',
+    'sort_created_at' => '创建时间',
+    'sort_updated_at' => '更新时间',
 
     // Misc
     'deleted_user' => '删除用户',
@@ -59,10 +59,10 @@ return [
     'grid_view' => '网格视图',
     'list_view' => '列表视图',
     'default' => '默认',
-    'breadcrumb' => '面包屑布局',
+    'breadcrumb' => '面包屑导航',
 
     // Header
-    'profile_menu' => '资料菜单',
+    'profile_menu' => '个人资料',
     'view_profile' => '查看资料',
     'edit_profile' => '编辑资料',
 
