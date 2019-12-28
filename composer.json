@@ -19,7 +19,7 @@
         "fideloper/proxy": "^4.0",
         "gathercontent/htmldiff": "^0.2.1",
         "intervention/image": "^2.5",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^6.9",
         "laravel/socialite": "^4.2",
         "league/flysystem-aws-s3-v3": "^1.0",
         "onelogin/php-saml": "^3.3",
