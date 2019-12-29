@@ -87,6 +87,25 @@
                 </div>
             </section>
         @endif
+
+        {{-- TODO - Review Control--}}
+        @if(($currentUser->id === $user->id && userCan('access-api')) || userCan('manage-users'))
+            <section class="card content-wrap auto-height">
+                <div class="grid half">
+                    <div><h2 class="list-heading">{{ trans('settings.users_api_tokens') }}</h2></div>
+                    <div class="text-right pt-xs">
+                        @if(userCan('access-api'))
+                            <a href="{{ $user->getEditUrl('/create-api-token') }}" class="button outline">{{ trans('settings.users_api_tokens_create') }}</a>
+                        @endif
+                    </div>
+                </div>
+                @if (count($user->apiTokens) > 0)
+
+                @else
+                    <p class="text-muted italic py-m">{{ trans('settings.users_api_tokens_none') }}</p>
+                @endif
+            </section>
+        @endif
     </div>
 
 @stop

@@ -103,6 +103,7 @@ return [
     'role_manage_entity_permissions' => 'Manage all book, chapter & page permissions',
     'role_manage_own_entity_permissions' => 'Manage permissions on own book, chapter & pages',
     'role_manage_page_templates' => 'Manage page templates',
+    'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Manage app settings',
     'role_asset' => 'Asset Permissions',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
@@ -151,6 +152,11 @@ return [
     'users_social_disconnect' => 'Disconnect Account',
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
+    'users_api_tokens' => 'API Tokens',
+    'users_api_tokens_none' => 'No API tokens have been created for this user',
+    'users_api_tokens_create' => 'Create Token',
+
+    // API Tokens
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

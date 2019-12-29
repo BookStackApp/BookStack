@@ -1,5 +1,6 @@
 <?php namespace BookStack\Auth;
 
+use BookStack\Api\ApiToken;
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Uploads\Image;
@@ -9,6 +10,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -218,19 +220,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get the url for editing this user.
-     * @return string
+     * Get the API tokens assigned to this user.
      */
-    public function getEditUrl()
+    public function apiTokens(): HasMany
     {
-        return url('/settings/users/' . $this->id);
+        return $this->hasMany(ApiToken::class);
+    }
+
+    /**
+     * Get the url for editing this user.
+     */
+    public function getEditUrl(string $path = ''): string
+    {
+        $uri = '/settings/users/' . $this->id . '/' . trim($path, '/');
+        return url(rtrim($uri, '/'));
     }
 
     /**
      * Get the url that links to this user's profile.
-     * @return mixed
      */
-    public function getProfileUrl()
+    public function getProfileUrl(): string
     {
         return url('/user/' . $this->id);
     }

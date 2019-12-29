@@ -187,6 +187,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/users/{id}', 'UserController@update');
         Route::delete('/users/{id}', 'UserController@destroy');
 
+        // User API Tokens
+        Route::get('/users/{userId}/create-api-token', 'UserApiTokenController@create');
+
         // Roles
         Route::get('/roles', 'PermissionController@listRoles');
         Route::get('/roles/new', 'PermissionController@createRole');
