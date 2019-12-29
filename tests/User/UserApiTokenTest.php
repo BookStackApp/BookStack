@@ -44,7 +44,7 @@ class UserApiTokenTest extends TestCase
         $resp = $this->asAdmin()->get($editor->getEditUrl('/create-api-token'));
         $resp->assertStatus(200);
         $resp->assertSee('Create API Token');
-        $resp->assertSee('client secret');
+        $resp->assertSee('Token Secret');
 
         $resp = $this->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
@@ -59,11 +59,11 @@ class UserApiTokenTest extends TestCase
         $this->assertSessionHas('api-token-secret:' . $token->id);
         $secret = session('api-token-secret:' . $token->id);
         $this->assertDatabaseMissing('api_tokens', [
-            'client_secret' => $secret,
+            'secret' => $secret,
         ]);
-        $this->assertTrue(\Hash::check($secret, $token->client_secret));
+        $this->assertTrue(\Hash::check($secret, $token->secret));
 
-        $this->assertTrue(strlen($token->client_id) === 32);
+        $this->assertTrue(strlen($token->token_id) === 32);
         $this->assertTrue(strlen($secret) === 32);
 
         $this->assertSessionHas('success');
@@ -92,15 +92,15 @@ class UserApiTokenTest extends TestCase
         $resp = $this->get($editor->getEditUrl());
         $resp->assertElementExists('#api_tokens');
         $resp->assertElementContains('#api_tokens', $token->name);
-        $resp->assertElementContains('#api_tokens', $token->client_id);
+        $resp->assertElementContains('#api_tokens', $token->token_id);
         $resp->assertElementContains('#api_tokens', $token->expires_at->format('Y-m-d'));
     }
 
-    public function test_client_secret_shown_once_after_creation()
+    public function test_secret_shown_once_after_creation()
     {
         $editor = $this->getEditor();
         $resp = $this->asAdmin()->followingRedirects()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
-        $resp->assertSeeText('Client Secret');
+        $resp->assertSeeText('Token Secret');
 
         $token = ApiToken::query()->latest()->first();
         $this->assertNull(session('api-token-secret:' . $token->id));

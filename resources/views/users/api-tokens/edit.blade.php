@@ -15,11 +15,11 @@
 
                     <div class="grid half gap-xl v-center">
                         <div>
-                            <label class="setting-list-label">{{ trans('settings.user_api_token_client_id') }}</label>
-                            <p class="small">{{ trans('settings.user_api_token_client_id_desc') }}</p>
+                            <label class="setting-list-label">{{ trans('settings.user_api_token_id') }}</label>
+                            <p class="small">{{ trans('settings.user_api_token_id_desc') }}</p>
                         </div>
                         <div>
-                            @include('form.text', ['name' => 'client_id', 'readonly' => true])
+                            @include('form.text', ['name' => 'token_id', 'readonly' => true])
                         </div>
                     </div>
 
@@ -27,8 +27,8 @@
                     @if( $secret )
                         <div class="grid half gap-xl v-center">
                             <div>
-                                <label class="setting-list-label">{{ trans('settings.user_api_token_client_secret') }}</label>
-                                <p class="small text-warn">{{ trans('settings.user_api_token_client_secret_desc') }}</p>
+                                <label class="setting-list-label">{{ trans('settings.user_api_token_secret') }}</label>
+                                <p class="small text-warn">{{ trans('settings.user_api_token_secret_desc') }}</p>
                             </div>
                             <div>
                                 <input type="text" readonly="readonly" value="{{ $secret }}">
