@@ -17,7 +17,7 @@ class UserApiTokenController extends Controller
     {
         // Ensure user is has access-api permission and is the current user or has permission to manage the current user.
         $this->checkPermission('access-api');
-        $this->checkPermissionOrCurrentUser('manage-users', $userId);
+        $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $user = User::query()->findOrFail($userId);
         return view('users.api-tokens.create', [
@@ -31,7 +31,7 @@ class UserApiTokenController extends Controller
     public function store(Request $request, int $userId)
     {
         $this->checkPermission('access-api');
-        $this->checkPermissionOrCurrentUser('manage-users', $userId);
+        $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $this->validate($request, [
             'name' => 'required|max:250',
@@ -55,8 +55,10 @@ class UserApiTokenController extends Controller
         }
 
         $token->save();
-        // TODO - Notification and activity?
+        $token->refresh();
+
         session()->flash('api-token-secret:' . $token->id, $secret);
+        $this->showSuccessNotification(trans('settings.user_api_token_create_success'));
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
@@ -89,7 +91,7 @@ class UserApiTokenController extends Controller
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
 
         $token->fill($request->all())->save();
-        // TODO - Notification and activity?
+        $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
@@ -113,7 +115,7 @@ class UserApiTokenController extends Controller
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
         $token->delete();
 
-        // TODO - Notification and activity?, Might have text in translations already (user_api_token_delete_success)
+        $this->showSuccessNotification(trans('settings.user_api_token_delete_success'));
         return redirect($user->getEditUrl('#api_tokens'));
     }
 
@@ -124,8 +126,9 @@ class UserApiTokenController extends Controller
      */
     protected function checkPermissionAndFetchUserToken(int $userId, int $tokenId): array
     {
-        $this->checkPermission('access-api');
-        $this->checkPermissionOrCurrentUser('manage-users', $userId);
+        $this->checkPermissionOr('users-manage', function () use ($userId) {
+            return $userId === user()->id && userCan('access-api');
+        });
 
         $user = User::query()->findOrFail($userId);
         $token = ApiToken::query()->where('user_id', '=', $user->id)->where('id', '=', $tokenId)->firstOrFail();

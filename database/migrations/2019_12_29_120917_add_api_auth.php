@@ -22,7 +22,7 @@ class AddApiAuth extends Migration
             $table->string('client_id')->unique();
             $table->string('client_secret');
             $table->integer('user_id')->unsigned()->index();
-            $table->timestamp('expires_at')->index();
+            $table->date('expires_at')->index();
             $table->nullableTimestamps();
         });
 

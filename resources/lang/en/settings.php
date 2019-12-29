@@ -164,6 +164,8 @@ return [
     'user_api_token_expiry' => 'Expiry Date',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "client id"" & "client secret" will be generated and displayed. The client secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
+    'user_api_token_create_success' => 'API token successfully created',
+    'user_api_token_update_success' => 'API token successfully updated',
     'user_api_token' => 'API Token',
     'user_api_token_client_id' => 'Client ID',
     'user_api_token_client_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
