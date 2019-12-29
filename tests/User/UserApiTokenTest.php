@@ -9,7 +9,7 @@ class UserApiTokenTest extends TestCase
 
     protected $testTokenData = [
         'name' => 'My test API token',
-        'expires_at' => '2099-04-01',
+        'expires_at' => '2050-04-01',
     ];
 
     public function test_tokens_section_not_visible_without_access_api_permission()
@@ -72,7 +72,7 @@ class UserApiTokenTest extends TestCase
     public function test_create_with_no_expiry_sets_expiry_hundred_years_away()
     {
         $editor = $this->getEditor();
-        $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), ['name' => 'No expiry token']);
+        $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), ['name' => 'No expiry token', 'expires_at' => '']);
         $token = ApiToken::query()->latest()->first();
 
         $over = Carbon::now()->addYears(101);
@@ -124,6 +124,26 @@ class UserApiTokenTest extends TestCase
 
         $this->assertDatabaseHas('api_tokens', array_merge($updateData, ['id' => $token->id]));
         $this->assertSessionHas('success');
+    }
+
+    public function test_token_update_with_blank_expiry_sets_to_hundred_years_away()
+    {
+        $editor = $this->getEditor();
+        $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
+        $token = ApiToken::query()->latest()->first();
+
+        $resp = $this->put($editor->getEditUrl('/api-tokens/' . $token->id), [
+            'name' => 'My updated token',
+            'expires_at' => '',
+        ]);
+        $token->refresh();
+
+        $over = Carbon::now()->addYears(101);
+        $under = Carbon::now()->addYears(99);
+        $this->assertTrue(
+            ($token->expires_at < $over && $token->expires_at > $under),
+            "Token expiry set at 100 years in future"
+        );
     }
 
     public function test_token_delete()
