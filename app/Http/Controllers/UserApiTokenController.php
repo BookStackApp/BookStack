@@ -40,7 +40,11 @@ class UserApiTokenController extends Controller
 
         $user = User::query()->findOrFail($userId);
         $secret = Str::random(32);
-        $expiry = $request->get('expires_at', (Carbon::now()->addYears(100))->format('Y-m-d'));
+
+        $expiry = $request->get('expires_at', null);
+        if (empty($expiry)) {
+            $expiry = Carbon::now()->addYears(100)->format('Y-m-d');
+        }
 
         $token = (new ApiToken())->forceFill([
             'name' => $request->get('name'),
@@ -83,14 +87,18 @@ class UserApiTokenController extends Controller
      */
     public function update(Request $request, int $userId, int $tokenId)
     {
-        $this->validate($request, [
+        $requestData = $this->validate($request, [
             'name' => 'required|max:250',
             'expires_at' => 'date_format:Y-m-d',
         ]);
 
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
 
-        $token->fill($request->all())->save();
+        if (empty($requestData['expires_at'])) {
+            $requestData['expires_at'] = Carbon::now()->addYears(100)->format('Y-m-d');
+        }
+
+        $token->fill($requestData)->save();
         $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
