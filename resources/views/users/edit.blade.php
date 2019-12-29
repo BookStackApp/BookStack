@@ -88,8 +88,7 @@
             </section>
         @endif
 
-        {{-- TODO - Review Control--}}
-        @if(($currentUser->id === $user->id && userCan('access-api')) || userCan('manage-users'))
+        @if(($currentUser->id === $user->id && userCan('access-api')) || userCan('users-manage'))
             <section class="card content-wrap auto-height" id="api_tokens">
                 <div class="grid half">
                     <div><h2 class="list-heading">{{ trans('settings.users_api_tokens') }}</h2></div>

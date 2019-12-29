@@ -6,6 +6,6 @@ class ApiToken extends Model
 {
     protected $fillable = ['name', 'expires_at'];
     protected $casts = [
-        'expires_at' => 'datetime:Y-m-d'
+        'expires_at' => 'date:Y-m-d'
     ];
 }
