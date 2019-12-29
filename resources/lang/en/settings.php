@@ -155,8 +155,26 @@ return [
     'users_api_tokens' => 'API Tokens',
     'users_api_tokens_none' => 'No API tokens have been created for this user',
     'users_api_tokens_create' => 'Create Token',
+    'users_api_tokens_expires' => 'Expires',
 
     // API Tokens
+    'user_api_token_create' => 'Create API Token',
+    'user_api_token_name' => 'Name',
+    'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
+    'user_api_token_expiry' => 'Expiry Date',
+    'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
+    'user_api_token_create_secret_message' => 'Immediately after creating this token a "client id"" & "client secret" will be generated and displayed. The client secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
+    'user_api_token' => 'API Token',
+    'user_api_token_client_id' => 'Client ID',
+    'user_api_token_client_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
+    'user_api_token_client_secret' => 'Client Secret',
+    'user_api_token_client_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
+    'user_api_token_created' => 'Token Created :timeAgo',
+    'user_api_token_updated' => 'Token Updated :timeAgo',
+    'user_api_token_delete' => 'Delete Token',
+    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
+    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
+    'user_api_token_delete_success' => 'API token successfully deleted',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
