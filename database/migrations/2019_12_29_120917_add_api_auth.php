@@ -19,8 +19,8 @@ class AddApiAuth extends Migration
         Schema::create('api_tokens', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('client_id')->unique();
-            $table->string('client_secret');
+            $table->string('token_id')->unique();
+            $table->string('secret');
             $table->integer('user_id')->unsigned()->index();
             $table->date('expires_at')->index();
             $table->nullableTimestamps();

@@ -44,14 +44,14 @@ class UserApiTokenController extends Controller
 
         $token = (new ApiToken())->forceFill([
             'name' => $request->get('name'),
-            'client_id' => Str::random(32),
-            'client_secret' => Hash::make($secret),
+            'token_id' => Str::random(32),
+            'secret' => Hash::make($secret),
             'user_id' => $user->id,
             'expires_at' => $expiry
         ]);
 
-        while (ApiToken::query()->where('client_id', '=', $token->client_id)->exists()) {
-            $token->client_id = Str::random(32);
+        while (ApiToken::query()->where('token_id', '=', $token->token_id)->exists()) {
+            $token->token_id = Str::random(32);
         }
 
         $token->save();

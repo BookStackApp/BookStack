@@ -109,7 +109,7 @@
                         <tr>
                             <td>
                                 {{ $token->name }} <br>
-                                <span class="small text-muted italic">{{ $token->client_id }}</span>
+                                <span class="small text-muted italic">{{ $token->token_id }}</span>
                             </td>
                             <td>{{ $token->expires_at->format('Y-m-d') ?? '' }}</td>
                             <td class="text-right">
