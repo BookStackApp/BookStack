@@ -194,6 +194,7 @@ class UserRepo
     public function destroy(User $user)
     {
         $user->socialAccounts()->delete();
+        $user->apiTokens()->delete();
         $user->delete();
         
         // Delete user profile images
