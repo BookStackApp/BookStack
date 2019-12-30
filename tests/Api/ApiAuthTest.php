@@ -3,6 +3,7 @@
 namespace Tests;
 
 use BookStack\Auth\Permissions\RolePermission;
+use Carbon\Carbon;
 
 class ApiAuthTest extends TestCase
 {
@@ -52,7 +53,7 @@ class ApiAuthTest extends TestCase
 
     public function test_api_access_permission_required_to_access_api()
     {
-        $resp = $this->get($this->endpoint, ['Authorization' => "Token {$this->apiTokenId}:{$this->apiTokenSecret}"]);
+        $resp = $this->get($this->endpoint, $this->apiAuthHeader());
         $resp->assertStatus(200);
         auth()->logout();
 
@@ -60,12 +61,27 @@ class ApiAuthTest extends TestCase
         $editorRole = $this->getEditor()->roles()->first();
         $editorRole->detachPermission($accessApiPermission);
 
-        $resp = $this->get($this->endpoint, ['Authorization' => "Token {$this->apiTokenId}:{$this->apiTokenSecret}"]);
+        $resp = $this->get($this->endpoint, $this->apiAuthHeader());
         $resp->assertJson($this->errorResponse("The owner of the used API token does not have permission to make API calls", 403));
     }
 
+    public function test_token_expiry_checked()
+    {
+        $editor = $this->getEditor();
+        $token = $editor->apiTokens()->first();
 
-    public function test_email_confirmation_checked_on_auth_requets()
+        $resp = $this->get($this->endpoint, $this->apiAuthHeader());
+        $resp->assertStatus(200);
+        auth()->logout();
+
+        $token->expires_at = Carbon::now()->subDay()->format('Y-m-d');
+        $token->save();
+
+        $resp = $this->get($this->endpoint, $this->apiAuthHeader());
+        $resp->assertJson($this->errorResponse("The authorization token used has expired", 403));
+    }
+
+    public function test_email_confirmation_checked_using_api_auth()
     {
         $editor = $this->getEditor();
         $editor->email_confirmed = false;
@@ -74,7 +90,7 @@ class ApiAuthTest extends TestCase
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
 
-        $resp = $this->get($this->endpoint, ['Authorization' => "Token {$this->apiTokenId}:{$this->apiTokenSecret}"]);
+        $resp = $this->get($this->endpoint, $this->apiAuthHeader());
         $resp->assertStatus(401);
         $resp->assertJson($this->errorResponse("The email address for the account in use needs to be confirmed", 401));
     }

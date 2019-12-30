@@ -95,5 +95,6 @@ return [
     'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];
