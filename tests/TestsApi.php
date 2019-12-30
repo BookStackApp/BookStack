@@ -13,4 +13,11 @@ trait TestsApi
         return ["error" => ["code" => $code, "message" => $messge]];
     }
 
+    protected function apiAuthHeader()
+    {
+        return [
+            "Authorization" => "Token {$this->apiTokenId}:{$this->apiTokenSecret}"
+        ];
+    }
+
 }

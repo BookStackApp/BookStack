@@ -6,6 +6,7 @@ use BookStack\Exceptions\ApiAuthException;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -123,6 +124,11 @@ class ApiTokenGuard implements Guard
 
         if (!Hash::check($secret, $token->secret)) {
             throw new ApiAuthException(trans('errors.api_incorrect_token_secret'));
+        }
+
+        $now = Carbon::now();
+        if ($token->expires_at <= $now) {
+            throw new ApiAuthException(trans('errors.api_user_token_expired'), 403);
         }
 
         if (!$token->user->can('access-api')) {
