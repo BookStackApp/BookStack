@@ -35,7 +35,7 @@ class ApiAuthenticate
         }
 
         if ($this->awaitingEmailConfirmation()) {
-            return $this->emailConfirmationErrorResponse($request);
+            return $this->emailConfirmationErrorResponse($request, true);
         }
 
         return $next($request);

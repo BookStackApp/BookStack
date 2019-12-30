@@ -26,9 +26,9 @@ trait ChecksForEmailConfirmation
      * Provide an error response for when the current user's email is not confirmed
      * in a system which requires it.
      */
-    protected function emailConfirmationErrorResponse(Request $request)
+    protected function emailConfirmationErrorResponse(Request $request, bool $forceJson = false)
     {
-        if ($request->wantsJson()) {
+        if ($request->wantsJson() || $forceJson) {
             return response()->json([
                 'error' => [
                     'code' => 401,

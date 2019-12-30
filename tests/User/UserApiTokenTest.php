@@ -14,7 +14,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_tokens_section_not_visible_without_access_api_permission()
     {
-        $user = $this->getEditor();
+        $user = $this->getViewer();
 
         $resp = $this->actingAs($user)->get($user->getEditUrl());
         $resp->assertDontSeeText('API Tokens');
@@ -30,9 +30,9 @@ class UserApiTokenTest extends TestCase
     {
         $viewer = $this->getViewer();
         $editor = $this->getEditor();
-        $this->giveUserPermissions($editor, ['users-manage']);
+        $this->giveUserPermissions($viewer, ['users-manage']);
 
-        $resp = $this->actingAs($editor)->get($viewer->getEditUrl());
+        $resp = $this->actingAs($viewer)->get($editor->getEditUrl());
         $resp->assertSeeText('API Tokens');
         $resp->assertDontSeeText('Create Token');
     }

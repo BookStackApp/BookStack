@@ -150,4 +150,11 @@ class ApiTokenGuard implements Guard
         return Hash::check($credentials['secret'], $token->secret);
     }
 
+    /**
+     * "Log out" the currently authenticated user.
+     */
+    public function logout()
+    {
+        $this->user = null;
+    }
 }
