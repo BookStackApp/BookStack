@@ -33,8 +33,7 @@ class ApiTokenGuard implements Guard
     {
         $this->request = $request;
     }
-
-
+    
     /**
      * @inheritDoc
      */
@@ -84,6 +83,24 @@ class ApiTokenGuard implements Guard
     protected function getAuthorisedUserFromRequest(): Authenticatable
     {
         $authToken = trim($this->request->headers->get('Authorization', ''));
+        $this->validateTokenHeaderValue($authToken);
+
+        [$id, $secret] = explode(':', str_replace('Token ', '', $authToken));
+        $token = ApiToken::query()
+            ->where('token_id', '=', $id)
+            ->with(['user'])->first();
+
+        $this->validateToken($token, $secret);
+
+        return $token->user;
+    }
+
+    /**
+     * Validate the format of the token header value string.
+     * @throws ApiAuthException
+     */
+    protected function validateTokenHeaderValue(string $authToken): void
+    {
         if (empty($authToken)) {
             throw new ApiAuthException(trans('errors.api_no_authorization_found'));
         }
@@ -91,12 +108,15 @@ class ApiTokenGuard implements Guard
         if (strpos($authToken, ':') === false || strpos($authToken, 'Token ') !== 0) {
             throw new ApiAuthException(trans('errors.api_bad_authorization_format'));
         }
+    }
 
-        [$id, $secret] = explode(':', str_replace('Token ', '', $authToken));
-        $token = ApiToken::query()
-            ->where('token_id', '=', $id)
-            ->with(['user'])->first();
-
+    /**
+     * Validate the given secret against the given token and ensure the token
+     * currently has access to the instance API.
+     * @throws ApiAuthException
+     */
+    protected function validateToken(?ApiToken $token, string $secret): void
+    {
         if ($token === null) {
             throw new ApiAuthException(trans('errors.api_user_token_not_found'));
         }
@@ -108,8 +128,6 @@ class ApiTokenGuard implements Guard
         if (!$token->user->can('access-api')) {
             throw new ApiAuthException(trans('errors.api_user_no_api_permission'), 403);
         }
-
-        return $token->user;
     }
 
     /**

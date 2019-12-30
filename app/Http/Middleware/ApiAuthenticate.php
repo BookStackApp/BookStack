@@ -3,11 +3,12 @@
 namespace BookStack\Http\Middleware;
 
 use BookStack\Exceptions\ApiAuthException;
-use BookStack\Http\Request;
 use Closure;
+use Illuminate\Http\Request;
 
 class ApiAuthenticate
 {
+    use ChecksForEmailConfirmation;
 
     /**
      * Handle an incoming request.
@@ -17,6 +18,9 @@ class ApiAuthenticate
         // Return if the user is already found to be signed in via session-based auth.
         // This is to make it easy to browser the API via browser after just logging into the system.
         if (signedInUser()) {
+            if ($this->awaitingEmailConfirmation()) {
+                return $this->emailConfirmationErrorResponse($request);
+            }
             return $next($request);
         }
 
@@ -28,6 +32,10 @@ class ApiAuthenticate
             auth()->authenticate();
         } catch (ApiAuthException $exception) {
             return $this->unauthorisedResponse($exception->getMessage(), $exception->getCode());
+        }
+
+        if ($this->awaitingEmailConfirmation()) {
+            return $this->emailConfirmationErrorResponse($request);
         }
 
         return $next($request);
