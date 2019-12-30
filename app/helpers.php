@@ -42,7 +42,6 @@ function user(): User
 
 /**
  * Check if current user is a signed in user.
- * @return bool
  */
 function signedInUser(): bool
 {
@@ -51,7 +50,6 @@ function signedInUser(): bool
 
 /**
  * Check if the current user has general access.
- * @return bool
  */
 function hasAppAccess(): bool
 {
@@ -62,9 +60,6 @@ function hasAppAccess(): bool
  * Check if the current user has a permission.
  * If an ownable element is passed in the jointPermissions are checked against
  * that particular item.
- * @param string $permission
- * @param Ownable $ownable
- * @return bool
  */
 function userCan(string $permission, Ownable $ownable = null): bool
 {
