@@ -1,6 +1,5 @@
 <?php namespace BookStack\Http;
 
-use BookStack\Http\Middleware\ApiAuthenticate;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -24,6 +23,7 @@ class Kernel extends HttpKernel
         \BookStack\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
+        \BookStack\Http\Middleware\StartSessionIfCookieExists::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \Illuminate\Routing\Middleware\ThrottleRequests::class,
         \BookStack\Http\Middleware\VerifyCsrfToken::class,
@@ -54,8 +54,7 @@ class Kernel extends HttpKernel
         ],
         'api' => [
             'throttle:60,1',
-            \BookStack\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            \BookStack\Http\Middleware\StartSessionIfCookieExists::class,
             \BookStack\Http\Middleware\ApiAuthenticate::class,
             \BookStack\Http\Middleware\ConfirmEmails::class,
         ],
