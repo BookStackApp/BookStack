@@ -41,17 +41,12 @@ class UserApiTokenController extends Controller
         $user = User::query()->findOrFail($userId);
         $secret = Str::random(32);
 
-        $expiry = $request->get('expires_at', null);
-        if (empty($expiry)) {
-            $expiry = Carbon::now()->addYears(100)->format('Y-m-d');
-        }
-
         $token = (new ApiToken())->forceFill([
             'name' => $request->get('name'),
             'token_id' => Str::random(32),
             'secret' => Hash::make($secret),
             'user_id' => $user->id,
-            'expires_at' => $expiry
+            'expires_at' => $request->get('expires_at') ?: ApiToken::defaultExpiry(),
         ]);
 
         while (ApiToken::query()->where('token_id', '=', $token->token_id)->exists()) {
@@ -59,7 +54,6 @@ class UserApiTokenController extends Controller
         }
 
         $token->save();
-        $token->refresh();
 
         session()->flash('api-token-secret:' . $token->id, $secret);
         $this->showSuccessNotification(trans('settings.user_api_token_create_success'));
@@ -87,18 +81,17 @@ class UserApiTokenController extends Controller
      */
     public function update(Request $request, int $userId, int $tokenId)
     {
-        $requestData = $this->validate($request, [
+        $this->validate($request, [
             'name' => 'required|max:250',
             'expires_at' => 'date_format:Y-m-d',
         ]);
 
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
+        $token->fill([
+            'name' => $request->get('name'),
+            'expires_at' => $request->get('expires_at') ?: ApiToken::defaultExpiry(),
+        ])->save();
 
-        if (empty($requestData['expires_at'])) {
-            $requestData['expires_at'] = Carbon::now()->addYears(100)->format('Y-m-d');
-        }
-
-        $token->fill($requestData)->save();
         $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
