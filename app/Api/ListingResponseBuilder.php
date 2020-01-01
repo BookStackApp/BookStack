@@ -2,19 +2,32 @@
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class ListingResponseBuilder
 {
 
     protected $query;
+    protected $request;
     protected $fields;
+
+    protected $filterOperators = [
+        'eq'   => '=',
+        'ne'   => '!=',
+        'gt'   => '>',
+        'lt'   => '<',
+        'gte'  => '>=',
+        'lte'  => '<=',
+        'like' => 'like'
+    ];
 
     /**
      * ListingResponseBuilder constructor.
      */
-    public function __construct(Builder $query, array $fields)
+    public function __construct(Builder $query, Request $request, array $fields)
     {
         $this->query = $query;
+        $this->request = $request;
         $this->fields = $fields;
     }
 
@@ -23,8 +36,8 @@ class ListingResponseBuilder
      */
     public function toResponse()
     {
-        $total = $this->query->count();
         $data = $this->fetchData();
+        $total = $this->query->count();
 
         return response()->json([
             'data' => $data,
@@ -39,9 +52,49 @@ class ListingResponseBuilder
     {
         $this->applyCountAndOffset($this->query);
         $this->applySorting($this->query);
-        // TODO - Apply filtering
+        $this->applyFiltering($this->query);
 
         return $this->query->get($this->fields);
+    }
+
+    /**
+     * Apply any filtering operations found in the request.
+     */
+    protected function applyFiltering(Builder $query)
+    {
+        $requestFilters = $this->request->get('filter', []);
+        if (!is_array($requestFilters)) {
+            return;
+        }
+
+        $queryFilters = collect($requestFilters)->map(function ($value, $key) {
+            return $this->requestFilterToQueryFilter($key, $value);
+        })->filter(function ($value) {
+            return !is_null($value);
+        })->values()->toArray();
+
+        $query->where($queryFilters);
+    }
+
+    /**
+     * Convert a request filter query key/value pair into a [field, op, value] where condition.
+     */
+    protected function requestFilterToQueryFilter($fieldKey, $value): ?array
+    {
+        $splitKey = explode(':', $fieldKey);
+        $field = $splitKey[0];
+        $filterOperator = $splitKey[1] ?? 'eq';
+
+        if (!in_array($field, $this->fields)) {
+            return null;
+        }
+
+        if (!in_array($filterOperator, array_keys($this->filterOperators))) {
+            $filterOperator = 'eq';
+        }
+
+        $queryOperator = $this->filterOperators[$filterOperator];
+        return [$field, $queryOperator, $value];
     }
 
     /**
@@ -53,7 +106,7 @@ class ListingResponseBuilder
         $defaultSortName = $this->fields[0];
         $direction = 'asc';
 
-        $sort = request()->get('sort', '');
+        $sort = $this->request->get('sort', '');
         if (strpos($sort, '-') === 0) {
             $direction = 'desc';
         }
@@ -72,9 +125,9 @@ class ListingResponseBuilder
      */
     protected function applyCountAndOffset(Builder $query)
     {
-        $offset = max(0, request()->get('offset', 0));
+        $offset = max(0, $this->request->get('offset', 0));
         $maxCount = config('api.max_item_count');
-        $count = request()->get('count', config('api.default_item_count'));
+        $count = $this->request->get('count', config('api.default_item_count'));
         $count = max(min($maxCount, $count), 1);
 
         $query->skip($offset)->take($count);

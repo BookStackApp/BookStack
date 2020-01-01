@@ -58,4 +58,30 @@ class ApiAuthTest extends TestCase
         }
     }
 
+    public function test_filter_parameter()
+    {
+        $this->actingAsApiEditor();
+        $book = Book::visible()->first();
+        $nameSubstr = substr($book->name, 0, 4);
+        $encodedNameSubstr = rawurlencode($nameSubstr);
+
+        $filterChecks = [
+            // Test different types of filter
+            "filter[id]={$book->id}" => 1,
+            "filter[id:ne]={$book->id}" => Book::visible()->where('id', '!=', $book->id)->count(),
+            "filter[id:gt]={$book->id}" => Book::visible()->where('id', '>', $book->id)->count(),
+            "filter[id:gte]={$book->id}" => Book::visible()->where('id', '>=', $book->id)->count(),
+            "filter[id:lt]={$book->id}" => Book::visible()->where('id', '<', $book->id)->count(),
+            "filter[name:like]={$encodedNameSubstr}%" => Book::visible()->where('name', 'like', $nameSubstr . '%')->count(),
+
+            // Test mulitple filters 'and' together
+            "filter[id]={$book->id}&filter[name]=random_non_existing_string" => 0,
+        ];
+
+        foreach ($filterChecks as $filterOption => $resultCount) {
+            $resp = $this->get($this->endpoint . '?count=1&' . $filterOption);
+            $resp->assertJson(['total' => $resultCount]);
+        }
+    }
+
 }

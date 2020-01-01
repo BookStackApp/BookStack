@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Middleware;
 
-use BookStack\Exceptions\ApiAuthException;
+use BookStack\Exceptions\UnauthorizedException;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -15,30 +15,36 @@ class ApiAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
+        // Validate the token and it's users API access
+        try {
+            $this->ensureAuthorizedBySessionOrToken();
+        } catch (UnauthorizedException $exception) {
+            return $this->unauthorisedResponse($exception->getMessage(), $exception->getCode());
+        }
+
+        return $next($request);
+    }
+
+    /**
+     * Ensure the current user can access authenticated API routes, either via existing session
+     * authentication or via API Token authentication.
+     * @throws UnauthorizedException
+     */
+    protected function ensureAuthorizedBySessionOrToken(): void
+    {
         // Return if the user is already found to be signed in via session-based auth.
         // This is to make it easy to browser the API via browser after just logging into the system.
         if (signedInUser()) {
-            if ($this->awaitingEmailConfirmation()) {
-                return $this->emailConfirmationErrorResponse($request);
-            }
-            return $next($request);
+            $this->ensureEmailConfirmedIfRequested();
+            return;
         }
 
         // Set our api guard to be the default for this request lifecycle.
         auth()->shouldUse('api');
 
         // Validate the token and it's users API access
-        try {
-            auth()->authenticate();
-        } catch (ApiAuthException $exception) {
-            return $this->unauthorisedResponse($exception->getMessage(), $exception->getCode());
-        }
-
-        if ($this->awaitingEmailConfirmation()) {
-            return $this->emailConfirmationErrorResponse($request, true);
-        }
-
-        return $next($request);
+        auth()->authenticate();
+        $this->ensureEmailConfirmedIfRequested();
     }
 
     /**
@@ -51,6 +57,6 @@ class ApiAuthenticate
                 'code' => $code,
                 'message' => $message,
             ]
-        ], 401);
+        ], $code);
     }
 }
