@@ -17,9 +17,9 @@ return [
     // Form Labels
     'name' => 'Nome',
     'description' => 'Descrição',
-    'role' => 'Regra',
+    'role' => 'Cargo',
     'cover_image' => 'Imagem de capa',
-    'cover_image_description' => 'Esta imagem deve ser aproximadamente 300x170px.',
+    'cover_image_description' => 'Esta imagem deve ser aproximadamente 440x250px.',
     
     // Actions
     'actions' => 'Ações',
@@ -38,13 +38,13 @@ return [
     'reset' => 'Resetar',
     'remove' => 'Remover',
     'add' => 'Adicionar',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Tela cheia',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
+    'sort_options' => 'Opções de Organização',
+    'sort_direction_toggle' => 'Alternar Direção de Ordenação',
+    'sort_ascending' => 'Ordenação Crescente',
+    'sort_descending' => 'Ordenação Decrescente',
     'sort_name' => 'Nome',
     'sort_created_at' => 'Data de Criação',
     'sort_updated_at' => 'Data de Atualização',
@@ -63,12 +63,12 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Menu de Perfil',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => 'Informações',
     'tab_content' => 'Conteúdo',
 
     // Email Content
