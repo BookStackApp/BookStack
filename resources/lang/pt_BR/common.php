@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => 'Ações',
     'view' => 'Visualizar',
-    'view_all' => 'Ver Tudo',
+    'view_all' => 'Visualizar Tudo',
     'create' => 'Criar',
     'update' => 'Atualizar',
     'edit' => 'Editar',
@@ -60,7 +60,7 @@ return [
     'grid_view' => 'Visualização em Grade',
     'list_view' => 'Visualização em Lista',
     'default' => 'Padrão',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Caminho',
 
     // Header
     'profile_menu' => 'Menu de Perfil',
