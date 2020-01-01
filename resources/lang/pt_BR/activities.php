@@ -32,8 +32,8 @@ return [
     'book_update_notification'    => 'Livro atualizado com sucesso',
     'book_delete'                 => 'livro excluído',
     'book_delete_notification'    => 'Livro excluído com sucesso',
-    'book_sort'                   => 'livro classificado',
-    'book_sort_notification'      => 'Livro reclassificado com sucesso',
+    'book_sort'                   => 'livro ordenado',
+    'book_sort_notification'      => 'Livro reordenado com sucesso',
 
     // Bookshelves
     'bookshelf_create'            => 'prateleira de livros criada',
