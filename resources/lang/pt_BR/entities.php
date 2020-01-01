@@ -25,7 +25,7 @@ return [
     'entity_select' => 'Seleção de Entidade',
     'images' => 'Imagens',
     'my_recent_drafts' => 'Meus rascunhos recentes',
-    'my_recently_viewed' => 'Vistos recentemente por mim',
+    'my_recently_viewed' => 'Vistos por mim recentemente',
     'no_pages_viewed' => 'Você não visualizou nenhuma página',
     'no_pages_recently_created' => 'Nenhuma página criada recentemente',
     'no_pages_recently_updated' => 'Nenhuma página atualizada recentemente',
