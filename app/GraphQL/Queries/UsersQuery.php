@@ -1,7 +1,7 @@
 <?php namespace BookStack\GraphQL\Queries;
 
 use Closure;
-use Rebing\GraphQL\Support\Facades\GraphQL;
+use GraphQL;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
@@ -15,7 +15,7 @@ class UsersQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('user'));
+        return Type::listOf(GraphQL::type('User'));
     }
 
     public function args(): array

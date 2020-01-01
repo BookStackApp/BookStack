@@ -23,7 +23,7 @@ class ActivityType extends GraphQLType
                 'type' => Type::string(),
             ],
             'user' => [
-                'type' => GraphQL::type('user'),
+                'type' => GraphQL::type('User'),
             ],
             'extra' => [
                 'type' => Type::string(),

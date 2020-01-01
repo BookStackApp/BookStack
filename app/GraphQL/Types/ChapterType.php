@@ -41,29 +41,29 @@ class ChapterType extends GraphQLType
                 'alias' => 'updated_at',
             ],
             'book' => [
-                'type' => GraphQL::type('book'),
+                'type' => GraphQL::type('Book'),
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'activity' => [
-                'type' => Type::listOf(GraphQL::type('activity')),
+                'type' => Type::listOf(GraphQL::type('Activity')),
                 'description' => 'Get activities of Entity.'
             ],
             'views' => [
-                'type' => Type::listOf(GraphQL::type('view')),
+                'type' => Type::listOf(GraphQL::type('View')),
             ],
             'tags' => [
-                'type' => Type::listOf(GraphQL::type('tag')),
+                'type' => Type::listOf(GraphQL::type('Tag')),
             ],
             'comments' => [
-                'type' => Type::listOf(GraphQL::type('comment')),
+                'type' => Type::listOf(GraphQL::type('Comment')),
             ],
             'searchTerms' => [
-                'type' => Type::listOf(GraphQL::type('searchTerm')),
+                'type' => Type::listOf(GraphQL::type('SearchTerm')),
             ]
         ];
     }
@@ -71,9 +71,9 @@ class ChapterType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('bookChild'),
-            GraphQL::type('entity'),
-            GraphQL::type('ownable'),
+            GraphQL::type('BookChild'),
+            GraphQL::type('Entity'),
+            GraphQL::type('Ownable'),
         ];
     }
 }

@@ -15,11 +15,11 @@ class OwnableInterface extends InterfaceType
     {
         return [
             'createdAt' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
                 'description' => 'The user that created Ownable.'
             ],
             'updatedAt' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
                 'description' => 'The user that last updated Ownable.'
             ],
         ];

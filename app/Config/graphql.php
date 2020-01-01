@@ -124,24 +124,27 @@ return [
     //
     'types' => [
         // Interfaces
-        'bookChild' => BookStack\GraphQL\Interfaces\BookChildInterface::class,
-        'entity' => BookStack\GraphQL\Interfaces\EntityInterface::class,
-        'ownable' => BookStack\GraphQL\Interfaces\OwnableInterface::class,
+        BookStack\GraphQL\Interfaces\BookChildInterface::class,
+        BookStack\GraphQL\Interfaces\EntityInterface::class,
+        BookStack\GraphQL\Interfaces\OwnableInterface::class,
 
         // Models
-        'attachment' => BookStack\GraphQL\Types\AttachmentType::class,
-        'activity' => BookStack\GraphQL\Types\ActivityType::class,
-        'book' => BookStack\GraphQL\Types\BookType::class,
-        'bookshelf' => BookStack\GraphQL\Types\BookshelfType::class,
-        'chapter' => BookStack\GraphQL\Types\ChapterType::class,
-        'comment' => BookStack\GraphQL\Types\CommentType::class,
-        'image' => BookStack\GraphQL\Types\ImageType::class,
-        'page' => BookStack\GraphQL\Types\PageType::class,
-        'pageRevision' => BookStack\GraphQL\Types\PageRevisionType::class,
-        'searchTerm' => BookStack\GraphQL\Types\SearchTermType::class,
-        'tag' => BookStack\GraphQL\Types\TagType::class,
-        'user' => BookStack\GraphQL\Types\UserType::class,
-        'view' => BookStack\GraphQL\Types\ViewType::class,
+        BookStack\GraphQL\Types\AttachmentType::class,
+        BookStack\GraphQL\Types\ActivityType::class,
+        BookStack\GraphQL\Types\BookType::class,
+        BookStack\GraphQL\Types\BookshelfType::class,
+        BookStack\GraphQL\Types\ChapterType::class,
+        BookStack\GraphQL\Types\CommentType::class,
+        BookStack\GraphQL\Types\ImageType::class,
+        BookStack\GraphQL\Types\PageType::class,
+        BookStack\GraphQL\Types\PageRevisionType::class,
+        BookStack\GraphQL\Types\SearchTermType::class,
+        BookStack\GraphQL\Types\TagType::class,
+        BookStack\GraphQL\Types\UserType::class,
+        BookStack\GraphQL\Types\ViewType::class,
+
+        // Unions
+        BookStack\GraphQL\Unions\DirectChildrenUnion::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

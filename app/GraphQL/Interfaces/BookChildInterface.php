@@ -15,7 +15,7 @@ class BookChildInterface extends InterfaceType
     {
         return [
             'book' => [
-                'type' => GraphQL::type('book'),
+                'type' => GraphQL::type('Book'),
             ],
         ];
     }

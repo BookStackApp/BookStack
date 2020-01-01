@@ -34,10 +34,10 @@ class CommentType extends GraphQLType
                 'alias' => 'updated_at',
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
         ];
     }
@@ -45,7 +45,7 @@ class CommentType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('ownable')
+            GraphQL::type('Ownable')
         ];
     }
 }

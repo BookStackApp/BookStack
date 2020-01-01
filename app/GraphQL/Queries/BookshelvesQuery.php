@@ -16,7 +16,7 @@ class BookshelvesQuery extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('bookshelf'));
+        return Type::listOf(GraphQL::type('Bookshelf'));
     }
 
     public function args(): array

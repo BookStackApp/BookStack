@@ -40,7 +40,7 @@ class ImageType extends GraphQLType
                 'alias' => 'updated_at',
             ],
             'page' => [
-                'type' => Type::getNullableType(GraphQL::type('page')),
+                'type' => Type::getNullableType(GraphQL::type('Page')),
                 'resolve' => function ($root, $args) {
                     return $root->getPage();
                 }
@@ -66,10 +66,10 @@ class ImageType extends GraphQLType
                 }
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
         ];
     }
@@ -77,7 +77,7 @@ class ImageType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('ownable'),
+            GraphQL::type('Ownable'),
         ];
     }
 }

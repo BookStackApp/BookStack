@@ -49,13 +49,13 @@ class AttachmentType extends GraphQLType
                 'alias' => 'updated_at',
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'page' => [
-                'type' => GraphQL::type('page'),
+                'type' => GraphQL::type('Page'),
             ],
         ];
     }
@@ -63,7 +63,7 @@ class AttachmentType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('ownable'),
+            GraphQL::type('Ownable'),
         ];
     }
 }

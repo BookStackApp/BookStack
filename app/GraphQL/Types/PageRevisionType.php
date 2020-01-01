@@ -26,7 +26,7 @@ class PageRevisionType extends GraphQLType
                 'alias' => 'book_slug',
             ],
             'createdBy' => [
-                'type' => GraphQL::type('user'),
+                'type' => GraphQL::type('User'),
             ],
             'createdAt' => [
                 'type' => Type::string(),
@@ -59,7 +59,7 @@ class PageRevisionType extends GraphQLType
                 'type' => Type::string(),
             ],
             'page' => [
-                'type' => GraphQL::type('page'),
+                'type' => GraphQL::type('Page'),
             ]
         ];
     }

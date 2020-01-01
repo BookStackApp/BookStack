@@ -43,50 +43,50 @@ class PageType extends GraphQLType
                 'alias' => 'updated_at',
             ],
             'chapter' => [
-                'type' => GraphQL::type('chapter'),
+                'type' => GraphQL::type('Chapter'),
             ],
             'revisions' => [
-                'type' => Type::listOf(GraphQL::type('pageRevision')),
+                'type' => Type::listOf(GraphQL::type('PageRevision')),
             ],
             'attachments' => [
-                'type' => Type::listOf(GraphQL::type('attachment')),
+                'type' => Type::listOf(GraphQL::type('Attachment')),
             ],
             'currentRevision' => [
-                'type' => GraphQL::type('pageRevision'),
+                'type' => GraphQL::type('PageRevision'),
                 'resolve' => function ($root, $args) {
                     return $root->getCurrentRevision();
                 }
             ],
             'parent' => [
-                'type' => GraphQL::type('entity'),
+                'type' => GraphQL::type('Entity'),
                 'resolve' => function ($root, $args) {
                     $root->parent();
                 }
             ],
             'book' => [
-                'type' => GraphQL::type('book'),
+                'type' => GraphQL::type('Book'),
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'activity' => [
-                'type' => Type::listOf(GraphQL::type('activity')),
+                'type' => Type::listOf(GraphQL::type('Activity')),
                 'description' => 'Get activities of Entity.'
             ],
             'views' => [
-                'type' => Type::listOf(GraphQL::type('view')),
+                'type' => Type::listOf(GraphQL::type('View')),
             ],
             'tags' => [
-                'type' => Type::listOf(GraphQL::type('tag')),
+                'type' => Type::listOf(GraphQL::type('Tag')),
             ],
             'comments' => [
-                'type' => Type::listOf(GraphQL::type('comment')),
+                'type' => Type::listOf(GraphQL::type('Comment')),
             ],
             'searchTerms' => [
-                'type' => Type::listOf(GraphQL::type('searchTerm')),
+                'type' => Type::listOf(GraphQL::type('SearchTerm')),
             ],
         ];
     }
@@ -94,9 +94,9 @@ class PageType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('bookChild'),
-            GraphQL::type('entity'),
-            GraphQL::type('ownable'),
+            GraphQL::type('BookChild'),
+            GraphQL::type('Entity'),
+            GraphQL::type('Ownable'),
         ];
     }
 }

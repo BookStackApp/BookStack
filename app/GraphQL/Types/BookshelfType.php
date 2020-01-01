@@ -40,29 +40,29 @@ class BookshelfType extends GraphQLType
                 'type' => Type::int(),
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'activity' => [
-                'type' => Type::listOf(GraphQL::type('activity')),
+                'type' => Type::listOf(GraphQL::type('Activity')),
                 'description' => 'Get activities of Entity.'
             ],
             'views' => [
-                'type' => Type::listOf(GraphQL::type('view')),
+                'type' => Type::listOf(GraphQL::type('View')),
             ],
             'tags' => [
-                'type' => Type::listOf(GraphQL::type('tag')),
+                'type' => Type::listOf(GraphQL::type('Tag')),
             ],
             'comments' => [
-                'type' => Type::listOf(GraphQL::type('comment')),
+                'type' => Type::listOf(GraphQL::type('Comment')),
             ],
             'searchTerms' => [
-                'type' => Type::listOf(GraphQL::type('searchTerm')),
+                'type' => Type::listOf(GraphQL::type('SearchTerm')),
             ],
             'books' => [
-                'type' => Type::listOf(GraphQL::type('book')),
+                'type' => Type::listOf(GraphQL::type('Book')),
             ]
         ];
     }
@@ -70,8 +70,8 @@ class BookshelfType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('entity'),
-            GraphQL::type('ownable'),
+            GraphQL::type('Entity'),
+            GraphQL::type('Ownable'),
         ];
     }
 }

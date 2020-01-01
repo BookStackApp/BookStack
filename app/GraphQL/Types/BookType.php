@@ -33,16 +33,16 @@ class BookType extends GraphQLType
                 'description' => 'The description of book',
             ],
             'pages' => [
-                'type' => Type::listOf(GraphQL::type('page')),
+                'type' => Type::listOf(GraphQL::type('Page')),
             ],
             'directPages' => [
-                'type' => Type::listOf(GraphQL::type('page')),
+                'type' => Type::listOf(GraphQL::type('Page')),
             ],
             'chapters' => [
-                'type' => Type::listOf(GraphQL::type('chapter')),
+                'type' => Type::listOf(GraphQL::type('Chapter')),
             ],
             'shelves' => [
-                'type' => Type::listOf(GraphQL::type('bookshelf')),
+                'type' => Type::listOf(GraphQL::type('Bookshelf')),
             ],
             'excerpt' => [
                 'type' => Type::string(),
@@ -59,7 +59,7 @@ class BookType extends GraphQLType
                 }
             ],
             'directChildren' => [
-                'type' => GraphQL::type('bookChild'),
+                'type' => GraphQL::type('DirectChildren'),
                 'resolve' => function ($root, $args) {
                     return $root->getDirectChildren()->all();
                 }
@@ -75,26 +75,26 @@ class BookType extends GraphQLType
                 'alias' => 'updated_at',
             ],
             'createdBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'updatedBy' => [
-                'type' => Type::getNullableType(GraphQL::type('user')),
+                'type' => Type::getNullableType(GraphQL::type('User')),
             ],
             'activity' => [
-                'type' => Type::listOf(GraphQL::type('activity')),
+                'type' => Type::listOf(GraphQL::type('Activity')),
                 'description' => 'Get activities of Entity.'
             ],
             'views' => [
-                'type' => Type::listOf(GraphQL::type('view')),
+                'type' => Type::listOf(GraphQL::type('View')),
             ],
             'tags' => [
-                'type' => Type::listOf(GraphQL::type('tag')),
+                'type' => Type::listOf(GraphQL::type('Tag')),
             ],
             'comments' => [
-                'type' => Type::listOf(GraphQL::type('comment')),
+                'type' => Type::listOf(GraphQL::type('Comment')),
             ],
             'searchTerms' => [
-                'type' => Type::listOf(GraphQL::type('searchTerm')),
+                'type' => Type::listOf(GraphQL::type('SearchTerm')),
             ],
         ];
     }
@@ -102,8 +102,8 @@ class BookType extends GraphQLType
     public function interfaces(): array
     {
         return [
-            GraphQL::type('entity'),
-            GraphQL::type('ownable'),
+            GraphQL::type('Entity'),
+            GraphQL::type('Ownable'),
         ];
     }
 }
