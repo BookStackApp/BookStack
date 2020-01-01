@@ -68,7 +68,7 @@ return [
     // User Invite
     'user_invite_email_subject' => 'Você recebeu um convite para ingressar :appName!',
     'user_invite_email_greeting' => 'Uma conta foi criada para você em :appName.',
-    'user_invite_email_text' => 'Clique no botão abaixo para definir uma senha de conta e ter acesso:',
+    'user_invite_email_text' => 'Clique no botão abaixo para definir uma senha de conta e obter acesso:',
     'user_invite_email_action' => 'Defina a Senha da Conta',
     'user_invite_page_welcome' => 'Bem vindo ao :appName!',
     'user_invite_page_text' => 'Para finalizar sua conta e obter acesso, você precisa definir uma senha que será usada para efetuar login em :appName em futuras visitas.',
