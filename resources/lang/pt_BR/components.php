@@ -19,9 +19,9 @@ return [
     'image_select_image' => 'Selecionar Imagem',
     'image_dropzone' => 'Arraste imagens ou clique aqui para fazer upload',
     'images_deleted' => 'Imagens excluídas',
-    'image_preview' => 'Virtualização de Imagem',
+    'image_preview' => 'Pré-Visualização de Imagem',
     'image_upload_success' => 'Upload de imagem efetuado com sucesso',
-    'image_update_success' => 'Upload de detalhes da imagem efetuado com sucesso',
+    'image_update_success' => 'Detalhes da imagem atualizados com sucesso',
     'image_delete_success' => 'Imagem excluída com sucesso',
     'image_upload_remove' => 'Remover',
 
