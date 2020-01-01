@@ -3,6 +3,7 @@
 namespace Tests;
 
 use BookStack\Auth\Permissions\RolePermission;
+use BookStack\Auth\User;
 use Carbon\Carbon;
 
 class ApiAuthTest extends TestCase
@@ -14,6 +15,8 @@ class ApiAuthTest extends TestCase
     public function test_requests_succeed_with_default_auth()
     {
         $viewer = $this->getViewer();
+        $this->giveUserPermissions($viewer, ['access-api']);
+
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(401);
 
@@ -62,6 +65,28 @@ class ApiAuthTest extends TestCase
         $editorRole->detachPermission($accessApiPermission);
 
         $resp = $this->get($this->endpoint, $this->apiAuthHeader());
+        $resp->assertStatus(403);
+        $resp->assertJson($this->errorResponse("The owner of the used API token does not have permission to make API calls", 403));
+    }
+
+    public function test_api_access_permission_required_to_access_api_with_session_auth()
+    {
+        $editor = $this->getEditor();
+        $this->actingAs($editor, 'web');
+
+        $resp = $this->get($this->endpoint);
+        $resp->assertStatus(200);
+        auth('web')->logout();
+
+        $accessApiPermission = RolePermission::getByName('access-api');
+        $editorRole = $this->getEditor()->roles()->first();
+        $editorRole->detachPermission($accessApiPermission);
+
+        $editor = User::query()->where('id', '=', $editor->id)->first();
+
+        $this->actingAs($editor, 'web');
+        $resp = $this->get($this->endpoint);
+        $resp->assertStatus(403);
         $resp->assertJson($this->errorResponse("The owner of the used API token does not have permission to make API calls", 403));
     }
 

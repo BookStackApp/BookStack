@@ -6,7 +6,7 @@ use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Entities\Book;
 use Carbon\Carbon;
 
-class ApiAuthTest extends TestCase
+class ApiListingTest extends TestCase
 {
     use TestsApi;
 

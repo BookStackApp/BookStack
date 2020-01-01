@@ -5,7 +5,7 @@ namespace Tests;
 use BookStack\Auth\Permissions\RolePermission;
 use Carbon\Carbon;
 
-class ApiAuthTest extends TestCase
+class ApiConfigTest extends TestCase
 {
     use TestsApi;
 
