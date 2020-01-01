@@ -26,7 +26,7 @@ return [
     'remember_me' => 'Lembrar de mim',
     'ldap_email_hint' => 'Por favor, digite um e-mail para essa conta.',
     'create_account' => 'Criar conta',
-    'already_have_account' => 'Você já possui uma conta?',
+    'already_have_account' => 'Já possui uma conta?',
     'dont_have_account' => 'Não possui uma conta?',
     'social_login' => 'Login social',
     'social_registration' => 'Registro social',
