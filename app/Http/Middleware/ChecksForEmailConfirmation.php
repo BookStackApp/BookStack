@@ -2,10 +2,22 @@
 
 namespace BookStack\Http\Middleware;
 
+use BookStack\Exceptions\UnauthorizedException;
 use Illuminate\Http\Request;
 
 trait ChecksForEmailConfirmation
 {
+    /**
+     * Check if the current user has a confirmed email if the instance deems it as required.
+     * Throws if confirmation is required by the user.
+     * @throws UnauthorizedException
+     */
+    protected function ensureEmailConfirmedIfRequested()
+    {
+        if ($this->awaitingEmailConfirmation()) {
+            throw new UnauthorizedException(trans('errors.email_confirmation_awaiting'));
+        }
+    }
 
     /**
      * Check if email confirmation is required and the current user is awaiting confirmation.
@@ -20,23 +32,5 @@ trait ChecksForEmailConfirmation
         }
 
         return false;
-    }
-
-    /**
-     * Provide an error response for when the current user's email is not confirmed
-     * in a system which requires it.
-     */
-    protected function emailConfirmationErrorResponse(Request $request, bool $forceJson = false)
-    {
-        if ($request->wantsJson() || $forceJson) {
-            return response()->json([
-                'error' => [
-                    'code' => 401,
-                    'message' => trans('errors.email_confirmation_awaiting')
-                ]
-            ], 401);
-        }
-
-        return redirect('/register/confirm/awaiting');
     }
 }

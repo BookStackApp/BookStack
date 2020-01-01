@@ -14,7 +14,7 @@ class ApiController extends Controller
      */
     protected function apiListingResponse(Builder $query, array $fields): JsonResponse
     {
-        $listing = new ListingResponseBuilder($query, $fields);
+        $listing = new ListingResponseBuilder($query, request(), $fields);
         return $listing->toResponse();
     }
 }
