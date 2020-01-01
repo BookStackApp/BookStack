@@ -28,7 +28,7 @@ return [
     // Books
     'book_create'                 => 'livro criado',
     'book_create_notification'    => 'Livro criado com sucesso',
-    'book_update'                 => 'livro atualizado',
+    'book_update'                 => 'atualizou livro',
     'book_update_notification'    => 'Livro atualizado com sucesso',
     'book_delete'                 => 'livro excluído',
     'book_delete_notification'    => 'Livro excluído com sucesso',
