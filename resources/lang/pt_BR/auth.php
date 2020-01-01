@@ -6,7 +6,7 @@
  */
 return [
 
-    'failed' => 'As credenciais fornecidas não puderam ser validadas em nossos registros..',
+    'failed' => 'Essas credenciais não correspondem aos nossos registros.',
     'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
 
     // Login & Register
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Reenviar o e-mail de confirmação',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'Você recebeu um convite para ingressar :appName!',
+    'user_invite_email_greeting' => 'Uma conta foi criada para você em :appName.',
+    'user_invite_email_text' => 'Clique no botão abaixo para definir uma senha de conta e ter acesso:',
+    'user_invite_email_action' => 'Defina a Senha da Conta',
+    'user_invite_page_welcome' => 'Bem vindo ao :appName!',
+    'user_invite_page_text' => 'Para finalizar sua conta e obter acesso, você precisa definir uma senha que será usada para efetuar login em :appName em futuras visitas.',
+    'user_invite_page_confirm_button' => 'Confirmar Senha',
+    'user_invite_success' => 'Senha definida, você agora tem acesso a :appName!'
 ];
