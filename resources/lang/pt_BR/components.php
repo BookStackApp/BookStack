@@ -6,7 +6,7 @@ return [
 
     // Image Manager
     'image_select' => 'Selecionar imagem',
-    'image_all' => 'Todos',
+    'image_all' => 'Todas',
     'image_all_title' => 'Visualizar todas as imagens',
     'image_book_title' => 'Visualizar imagens relacionadas a esse livro',
     'image_page_title' => 'visualizar imagens relacionadas a essa página',
