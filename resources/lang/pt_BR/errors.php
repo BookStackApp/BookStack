@@ -25,15 +25,15 @@ return [
     'saml_email_exists' => 'Registro malsucedido pois um usuário já existe com este endereço de e-mail ":email"',
     'social_no_action_defined' => 'Nenhuma ação definida',
     'social_login_bad_response' => "Erro recebido durante o login :socialAccount: \n:error",
-    'social_account_in_use' => 'Essa conta :socialAccount já está em uso. Por favor, tente logar usando a opção :socialAccount.',
+    'social_account_in_use' => 'Essa conta :socialAccount já está em uso. Por favor, tente entrar utilizando a opção :socialAccount.',
     'social_account_email_in_use' => 'O e-mail :email já está em uso. Se você já tem uma conta você poderá se conectar a conta :socialAccount a partir das configurações de seu perfil.',
     'social_account_existing' => 'Essa conta :socialAccount já está vinculada a esse perfil.',
-    'social_account_already_used_existing' => 'Essa conta :socialAccount já está sendo usada por outro usuário.',
-    'social_account_not_used' => 'Essa conta :socialAccount não está vinculada a nenhum usuário. Por favor vincule a conta com suas configurações de perfil. ',
-    'social_account_register_instructions' => 'Se você não tem uma conta, você poderá fazer o registro usando a opção :socialAccount',
+    'social_account_already_used_existing' => 'Essa conta :socialAccount já está sendo utilizada por outro usuário.',
+    'social_account_not_used' => 'Essa conta :socialAccount não está vinculada a nenhum usuário. Por favor vincule a conta nas suas configurações de perfil. ',
+    'social_account_register_instructions' => 'Se você não tem uma conta, você poderá se cadastrar usando a opção :socialAccount.',
     'social_driver_not_found' => 'Social driver não encontrado',
     'social_driver_not_configured' => 'Seus parâmetros socials de :socialAccount não estão configurados corretamente.',
-    'invite_token_expired' => 'Esse link de convite expirou. Alternativamente, você pode tentar redefinir sua senha da conta.',
+    'invite_token_expired' => 'Esse link de convite expirou. Alternativamente, você pode tentar redefinir a senha da sua conta.',
 
     // System
     'path_not_writable' => 'O caminho de destino (:filePath) de upload de arquivo não possui permissão de escrita. Certifique-se que ele possui direitos de escrita no servidor.',
@@ -51,7 +51,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Falha ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',
-    'page_custom_home_deletion' => 'Não pode deletar uma página que está definida como página inicial',
+    'page_custom_home_deletion' => 'Não é possível excluir uma página que está definida como página inicial',
 
     // Entities
     'entity_not_found' => 'Entidade não encontrada',
@@ -71,7 +71,7 @@ return [
     'role_cannot_be_edited' => 'Esse cargo não pode ser editado',
     'role_system_cannot_be_deleted' => 'Esse cargo é um cargo do sistema e não pode ser excluído',
     'role_registration_default_cannot_delete' => 'Esse cargo não poderá se excluído enquanto estiver registrado como o cargo padrão',
-    'role_cannot_remove_only_admin' => 'Este usuário é o único usuário atribuído ao cargo de administrador. Atribua o cargo de administrador a outro usuário antes de tentar removê-lo aqui.',
+    'role_cannot_remove_only_admin' => 'Este usuário é o único usuário vinculado ao cargo de administrador. Atribua o cargo de administrador a outro usuário antes de tentar removê-lo aqui.',
 
     // Comments
     'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
@@ -83,8 +83,8 @@ return [
     // Error pages
     '404_page_not_found' => 'Página Não Encontrada',
     'sorry_page_not_found' => 'Desculpe, a página que você está procurando não pôde ser encontrada.',
-    'return_home' => 'Retornar à página principal',
-    'error_occurred' => 'Um Erro Ocorreu',
+    'return_home' => 'Retornar à página inicial',
+    'error_occurred' => 'Ocorreu um Erro',
     'app_down' => ':appName está fora do ar no momento',
     'back_soon' => 'Voltaremos em breve.',
 
