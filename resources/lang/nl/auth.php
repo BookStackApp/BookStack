@@ -28,7 +28,7 @@ return [
     'create_account' => 'Account Aanmaken',
     'already_have_account' => 'Heb je al een account?',
     'dont_have_account' => 'Nog geen account?',
-    'social_login' => 'Social Login',
+    'social_login' => 'Aanmelden via een sociaal netwerk',
     'social_registration' => 'Social Registratie',
     'social_registration_text' => 'Registreer en log in met een andere dienst.',
 
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Bevestigingsmail Opnieuw Verzenden',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'Je bent uitgenodigd voor :appName!',
+    'user_invite_email_greeting' => 'Er is een account voor je aangemaakt op :appName.',
+    'user_invite_email_text' => 'Klik op de onderstaande knop om een account wachtwoord in te stellen en toegang te krijgen:',
+    'user_invite_email_action' => 'Account wachtwoord instellen',
+    'user_invite_page_welcome' => 'Welkom bij :appName!',
+    'user_invite_page_text' => 'Om je account af te ronden en toegang te krijgen moet je een wachtwoord instellen dat gebruikt wordt om in te loggen op :appName bij toekomstige bezoeken.',
+    'user_invite_page_confirm_button' => 'Bevestig wachtwoord',
+    'user_invite_success' => 'Wachtwoord ingesteld, je hebt nu toegang tot :appName!'
 ];
