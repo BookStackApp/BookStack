@@ -35,13 +35,13 @@ return [
     'delete' => 'Excluir',
     'search' => 'Pesquisar',
     'search_clear' => 'Limpar Pesquisa',
-    'reset' => 'Resetar',
+    'reset' => 'Redefinir',
     'remove' => 'Remover',
     'add' => 'Adicionar',
     'fullscreen' => 'Tela cheia',
 
     // Sort Options
-    'sort_options' => 'Opções de Organização',
+    'sort_options' => 'Opções de Ordenação',
     'sort_direction_toggle' => 'Alternar Direção de Ordenação',
     'sort_ascending' => 'Ordenação Crescente',
     'sort_descending' => 'Ordenação Decrescente',
