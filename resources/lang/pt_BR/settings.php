@@ -24,7 +24,7 @@ return [
     'app_public_viewing' => 'Permitir visualização pública?',
     'app_secure_images' => 'Permitir upload de imagens com maior segurança?',
     'app_secure_images_toggle' => 'Habilitar uploads de imagem de maior segurança',
-    'app_secure_images_desc' => 'Por questões de performance, todas as imagens são públicas. Essa opção adiciona uma string randômica na frente das urls de imagens. Certifique-se de que os diretórios não possam ser indexados para prevenir acesso indesejado.',
+    'app_secure_images_desc' => 'Por questões de performance, todas as imagens são públicas. Essa opção adiciona uma string randômica na frente das URLs de imagens. Certifique-se de que os diretórios não possam ser indexados para prevenir acesso indesejado.',
     'app_editor' => 'Editor de Página',
     'app_editor_desc' => 'Selecione qual editor será utilizado pelos usuários para editar páginas.',
     'app_custom_html' => 'Conteúdo customizado para tag HTML HEAD',
