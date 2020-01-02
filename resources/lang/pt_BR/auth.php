@@ -29,8 +29,8 @@ return [
     'already_have_account' => 'Já possui uma conta?',
     'dont_have_account' => 'Não possui uma conta?',
     'social_login' => 'Login Social',
-    'social_registration' => 'Registro social',
-    'social_registration_text' => 'Cadastre-se e entre usando outro serviço.',
+    'social_registration' => 'Cadastro Social',
+    'social_registration_text' => 'Cadastre-se e entre utilizando outro serviço.',
 
     'register_thanks' => 'Obrigado por se cadastrar!',
     'register_confirm' => 'Por favor, verifique seu e-mail e clique no botão de confirmação para acessar :appName.',
@@ -41,7 +41,7 @@ return [
 
     // Password Reset
     'reset_password' => 'Redefinir senha',
-    'reset_password_send_instructions' => 'Digite seu e-mail abaixo e o sistema enviará uma mensagem com o link de redefinição de senha.',
+    'reset_password_send_instructions' => 'Digite seu e-mail abaixo e uma mensagem com o link de redefinição de senha lhe será enviada.',
     'reset_password_send_button' => 'Enviar o link de redefinição de senha',
     'reset_password_sent_success' => 'Um link de redefinição de senha foi enviado para :email.',
     'reset_password_success' => 'Sua senha foi redefinida com sucesso.',
