@@ -10,10 +10,10 @@ return [
     'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
 
     // Login & Register
-    'sign_up' => 'Registrar-se',
+    'sign_up' => 'Cadastre-se',
     'log_in' => 'Entrar',
     'log_in_with' => 'Entrar com :socialDriver',
-    'sign_up_with' => 'Registrar com :socialDriver',
+    'sign_up_with' => 'Cadastre-se com :socialDriver',
     'logout' => 'Sair',
 
     'name' => 'Nome',
@@ -25,18 +25,18 @@ return [
     'forgot_password' => 'Esqueceu a senha?',
     'remember_me' => 'Lembrar de mim',
     'ldap_email_hint' => 'Por favor, digite um e-mail para essa conta.',
-    'create_account' => 'Criar conta',
+    'create_account' => 'Criar Conta',
     'already_have_account' => 'Já possui uma conta?',
     'dont_have_account' => 'Não possui uma conta?',
-    'social_login' => 'Login social',
+    'social_login' => 'Login Social',
     'social_registration' => 'Registro social',
-    'social_registration_text' => 'Registre-se e entre usando outro serviço.',
+    'social_registration_text' => 'Cadastre-se e entre usando outro serviço.',
 
-    'register_thanks' => 'Obrigado por se registrar!',
+    'register_thanks' => 'Obrigado por se cadastrar!',
     'register_confirm' => 'Por favor, verifique seu e-mail e clique no botão de confirmação para acessar :appName.',
-    'registrations_disabled' => 'Registros estão temporariamente desabilitados',
+    'registrations_disabled' => 'Cadastros estão temporariamente desabilitados',
     'registration_email_domain_invalid' => 'O domínio de e-mail usado não tem acesso permitido a essa aplicação',
-    'register_success' => 'Obrigado por se registrar! Você agora encontra-se registrado e logado.',
+    'register_success' => 'Obrigado por se cadastrar! Você agora encontra-se cadastrado(a) e logado(a).',
 
 
     // Password Reset
