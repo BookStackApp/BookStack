@@ -11,7 +11,7 @@ return [
     'save' => 'Salvar',
     'continue' => 'Continuar',
     'select' => 'Selecionar',
-    'toggle_all' => 'Alternar Tudo',
+    'toggle_all' => 'Alternar Todos',
     'more' => 'Mais',
 
     // Form Labels
