@@ -15,7 +15,7 @@ return [
     'app_customization' => 'Customização',
     'app_features_security' => 'Recursos & Segurança',
     'app_name' => 'Nome da Aplicação',
-    'app_name_desc' => 'Esse nome será mostrado no cabeçalho e em e-mails.',
+    'app_name_desc' => 'Este nome será mostrado no cabeçalho e em e-mails.',
     'app_name_header' => 'Mostrar o nome da Aplicação no cabeçalho?',
     'app_public_access' => 'Acesso Público',
     'app_public_access_desc' => 'Habilitar esta opção irá permitir que visitantes, que não estão logados, acessem o conteúdo em sua instância do BookStack.',
