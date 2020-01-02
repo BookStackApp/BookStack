@@ -5,22 +5,22 @@
 return [
 
     // Permissions
-    'permission' => 'Você não tem permissões para acessar a página requerida.',
+    'permission' => 'Você não tem permissão para acessar a página requerida.',
     'permissionJson' => 'Você não tem permissão para realizar a ação requerida.',
 
     // Auth
     'error_user_exists_different_creds' => 'Um usuário com o e-mail :email já existe mas com credenciais diferentes.',
     'email_already_confirmed' => 'E-mail já foi confirmado. Tente efetuar o login.',
-    'email_confirmation_invalid' => 'Esse token de confirmação não é válido ou já foi utilizado. Por favor, tente efetuar o registro novamente.',
+    'email_confirmation_invalid' => 'Esse token de confirmação não é válido ou já foi utilizado. Por favor, tente cadastrar-se novamente.',
     'email_confirmation_expired' => 'O token de confirmação já expirou. Um novo e-mail foi enviado.',
     'ldap_fail_anonymous' => 'O acesso LDAP falhou ao tentar usar o anonymous bind',
     'ldap_fail_authed' => 'O acesso LDAP falhou ao tentar os detalhes do dn e senha fornecidos',
-    'ldap_extension_not_installed' => 'As extensões LDAP PHP não estão instaladas',
+    'ldap_extension_not_installed' => 'A extensão LDAP PHP não está instalada',
     'ldap_cannot_connect' => 'Não foi possível conectar ao servidor LDAP. Conexão inicial falhou',
     'saml_already_logged_in' => 'Login já efetuado',
-    'saml_user_not_registered' => 'O usuário :name não está registrado e o registro automático está desativado',
+    'saml_user_not_registered' => 'O usuário :name não está cadastrado e o cadastro automático está desativado',
     'saml_no_email_address' => 'Não foi possível encontrar um endereço de e-mail para este usuário nos dados providos pelo sistema de autenticação externa',
-    'saml_invalid_response_id' => 'A requisição do sistema de autenticação externa não foi reconhecido por um processo iniciado por esta aplicação. Navegar para o caminho anterior depois do login pode causar um problema.',
+    'saml_invalid_response_id' => 'A requisição do sistema de autenticação externa não foi reconhecia por um processo iniciado por esta aplicação. Após o login, navegar para o caminho anterior pode causar um problema.',
     'saml_fail_authed' => 'Login utilizando :system falhou. Sistema não forneceu autorização bem sucedida',
     'saml_email_exists' => 'Registro malsucedido pois um usuário já existe com este endereço de e-mail ":email"',
     'social_no_action_defined' => 'Nenhuma ação definida',
