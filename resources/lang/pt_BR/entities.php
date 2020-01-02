@@ -273,12 +273,12 @@ return [
     'attachments_file_uploaded' => 'Upload de arquivo efetuado com sucesso',
     'attachments_file_updated' => 'Arquivo atualizado com sucesso',
     'attachments_link_attached' => 'Link anexado com sucesso à página',
-    'templates' => 'Templates',
-    'templates_set_as_template' => 'Page is a template',
-    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
-    'templates_replace_content' => 'Replace page content',
-    'templates_append_content' => 'Append to page content',
-    'templates_prepend_content' => 'Prepend to page content',
+    'templates' => 'Modelos',
+    'templates_set_as_template' => 'A Página é um Modelo',
+    'templates_explain_set_as_template' => 'Você pode definir esta página como um modelo para que seu conteúdo possa ser utilizado para criar outras páginas. Outros usuários poderão utilizar esta página como modelo se tiverem permissão para visualiza-la.',
+    'templates_replace_content' => 'Substituir conteúdo da página',
+    'templates_append_content' => 'Adicionar ao final do conteúdo da página',
+    'templates_prepend_content' => 'Adicionar ao início do conteúdo da página',
 
     // Profile View
     'profile_user_for_x' => 'Usuário por :time',
