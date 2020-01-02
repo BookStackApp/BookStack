@@ -105,7 +105,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Wachtwoord bevestiging vereist',
+            'required_with' => 'Wachtwoord bevestiging verplicht',
         ],
     ],
 
