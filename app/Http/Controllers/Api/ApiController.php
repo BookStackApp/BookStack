@@ -8,6 +8,8 @@ use Illuminate\Http\JsonResponse;
 class ApiController extends Controller
 {
 
+    protected $rules = [];
+
     /**
      * Provide a paginated listing JSON response in a standard format
      * taking into account any pagination parameters passed by the user.
@@ -16,5 +18,13 @@ class ApiController extends Controller
     {
         $listing = new ListingResponseBuilder($query, request(), $fields);
         return $listing->toResponse();
+    }
+
+    /**
+     * Get the validation rules for this controller.
+     */
+    public function getValdationRules(): array
+    {
+        return $this->rules;
     }
 }

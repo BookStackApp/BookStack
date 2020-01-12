@@ -1,47 +1,99 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
 use BookStack\Entities\Book;
+use BookStack\Entities\Repos\BookRepo;
+use BookStack\Facades\Activity;
+use Illuminate\Http\Request;
 
 class BooksApiController extends ApiController
 {
-    public $validation = [
+
+    protected $bookRepo;
+
+    protected $rules = [
         'create' => [
-            // TODO
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:1000',
         ],
         'update' => [
-            // TODO
+            'name' => 'string|min:1|max:255',
+            'description' => 'string|max:1000',
         ],
     ];
 
     /**
+     * BooksApiController constructor.
+     */
+    public function __construct(BookRepo $bookRepo)
+    {
+        $this->bookRepo = $bookRepo;
+    }
+
+    /**
      * Get a listing of books visible to the user.
+     * @api listing
      */
     public function index()
     {
         $books = Book::visible();
         return $this->apiListingResponse($books, [
-            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by',
-            'restricted', 'image_id',
+            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'image_id',
         ]);
     }
 
-    public function create()
+    /**
+     * Create a new book.
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function create(Request $request)
     {
-        // TODO -
+        $this->checkPermission('book-create-all');
+        $requestData = $this->validate($request, $this->rules['create']);
+
+        $book = $this->bookRepo->create($requestData);
+        Activity::add($book, 'book_create', $book->id);
+
+        return response()->json($book);
     }
 
-    public function read()
+    /**
+     * View the details of a single book.
+     */
+    public function read(string $id)
     {
-        // TODO -
+        $book = Book::visible()->with(['tags', 'cover', 'createdBy', 'updatedBy'])->findOrFail($id);
+        return response()->json($book);
     }
 
-    public function update()
+    /**
+     * Update the details of a single book.
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, string $id)
     {
-        // TODO -
+        $book = Book::visible()->findOrFail($id);
+        $this->checkOwnablePermission('book-update', $book);
+
+        $requestData = $this->validate($request, $this->rules['update']);
+        $book = $this->bookRepo->update($book, $requestData);
+        Activity::add($book, 'book_update', $book->id);
+
+        return response()->json($book);
     }
 
-    public function delete()
+    /**
+     * Delete a book from the system.
+     * @throws \BookStack\Exceptions\NotifyException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function delete(string $id)
     {
-        // TODO -
+        $book = Book::visible()->findOrFail($id);
+        $this->checkOwnablePermission('book-delete', $book);
+
+        $this->bookRepo->destroy($book);
+        Activity::addMessage('book_delete', $book->name);
+
+        return response('', 204);
     }
 }
