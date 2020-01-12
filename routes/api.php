@@ -6,6 +6,9 @@
  * Controllers are all within app/Http/Controllers/Api
  */
 
+Route::get('docs', 'ApiDocsController@display');
+Route::get('docs.json', 'ApiDocsController@json');
+
 Route::get('books', 'BooksApiController@index');
 Route::post('books', 'BooksApiController@create');
 Route::get('books/{id}', 'BooksApiController@read');

@@ -31,7 +31,6 @@ class BooksApiController extends ApiController
 
     /**
      * Get a listing of books visible to the user.
-     * @api listing
      */
     public function index()
     {
