@@ -42,7 +42,7 @@ return [
 
     // Search
     'search_results' => 'Результаты поиска',
-    'search_total_results_found' => ':count результатов найдено|:count всего результатов найдено',
+    'search_total_results_found' => '[0] Найдено :count результатов поиска|[1] Найден :count результат поиска|[2,4] Найдено :count результата поиска|[5,*] Найдено :count результатов поиска',
     'search_clear' => 'Очистить поиск',
     'search_no_pages' => 'Нет страниц, соответствующих этому поиску.',
     'search_for_term' => 'Искать :term',
@@ -68,7 +68,7 @@ return [
     // Shelves
     'shelf' => 'Полка',
     'shelves' => 'Полки',
-    'x_shelves' => ':count полок|:count полок',
+    'x_shelves' => '[0] :count полок|[1] :count полка|[2,4] :count полки|[5,*] :count полок',
     'shelves_long' => 'Полки',
     'shelves_empty' => 'Полки не созданы',
     'shelves_create' => 'Создать новую полку',
@@ -100,7 +100,7 @@ return [
     // Books
     'book' => 'Книга',
     'books' => 'Книги',
-    'x_books' => ':count книга|:count книг',
+    'x_books' => '[0] :count книг|[1] :count книга|[2,4] :count книги|[5,*] :count книг',
     'books_empty' => 'Нет созданных книг',
     'books_popular' => 'Популярные книги',
     'books_recent' => 'Недавние книги',
@@ -139,7 +139,7 @@ return [
     // Chapters
     'chapter' => 'Глава',
     'chapters' => 'Главы',
-    'x_chapters' => ':count глава|:count главы',
+    'x_chapters' => '[0] :count глав|[1] :count глава|[2,4] :count главы|[5,*] :count глав',
     'chapters_popular' => 'Популярные главы',
     'chapters_new' => 'Новая глава',
     'chapters_create' => 'Создать новую главу',
@@ -162,7 +162,7 @@ return [
     // Pages
     'page' => 'Страница',
     'pages' => 'Страницы',
-    'x_pages' => ':count страница|:count страниц',
+    'x_pages' => '[0] :count страниц|[1] :count страница|[2,4] :count страницы|[5,*] :count страниц',
     'pages_popular' => 'Популярные страницы',
     'pages_new' => 'Новая страница',
     'pages_attachments' => 'Вложения',
@@ -293,7 +293,7 @@ return [
     'comments' => 'Комментарии',
     'comment_add' => 'Комментировать',
     'comment_placeholder' => 'Оставить комментарий здесь',
-    'comment_count' => '{0} Нет комментариев|{1} 1 комментарий|[2,4] :count комментария|[5,*] :count комментариев',
+    'comment_count' => '[0] Нет комментариев|[1] 1 комментарий|[2,4] :count комментария|[5,*] :count комментариев',
     'comment_save' => 'Сохранить комментарий',
     'comment_saving' => 'Сохраниение комментария...',
     'comment_deleting' => 'Удаление комментария...',
