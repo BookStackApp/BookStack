@@ -15,7 +15,7 @@
   transition: transform ease-in-out 280ms;
   transform: translateX(580px);
   display: grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 42px 1fr 12px;
   color: #444;
   font-weight: 700;
   span, svg {
@@ -28,6 +28,13 @@
     height: 2.8rem;
     padding-right: $-s;
     fill: currentColor;
+  }
+  .dismiss {
+    margin-top: -8px;
+    svg {
+      height: 1.0rem;
+      color: #444;
+    }
   }
   span {
     vertical-align: middle;
