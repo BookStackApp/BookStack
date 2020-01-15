@@ -106,7 +106,7 @@ class ApiDocsGenerator
             return strpos($route->uri, 'api/') === 0;
         })->map(function ($route) {
             [$controller, $controllerMethod] = explode('@', $route->action['uses']);
-            $baseModelName = explode('/', $route->uri)[1];
+            $baseModelName = explode('.', explode('/', $route->uri)[1])[0];
             $shortName = $baseModelName . '-' . $controllerMethod;
             return [
                 'name' => $shortName,

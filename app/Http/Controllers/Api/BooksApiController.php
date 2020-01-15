@@ -2,8 +2,11 @@
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Repos\BookRepo;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class BooksApiController extends ApiController
 {
@@ -41,8 +44,8 @@ class BooksApiController extends ApiController
     }
 
     /**
-     * Create a new book.
-     * @throws \Illuminate\Validation\ValidationException
+     * Create a new book in the system.
+     * @throws ValidationException
      */
     public function create(Request $request)
     {
@@ -66,7 +69,7 @@ class BooksApiController extends ApiController
 
     /**
      * Update the details of a single book.
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function update(Request $request, string $id)
     {
@@ -81,9 +84,9 @@ class BooksApiController extends ApiController
     }
 
     /**
-     * Delete a book from the system.
-     * @throws \BookStack\Exceptions\NotifyException
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * Delete a single book from the system.
+     * @throws NotifyException
+     * @throws BindingResolutionException
      */
     public function delete(string $id)
     {
