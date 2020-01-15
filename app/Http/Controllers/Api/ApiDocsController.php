@@ -13,9 +13,9 @@ class ApiDocsController extends ApiController
     public function display()
     {
         $docs = $this->getDocs();
-        dd($docs);
-        // TODO - Build view for API docs
-        return view('');
+        return view('api-docs.index', [
+            'docs' => $docs,
+        ]);
     }
 
     /**
