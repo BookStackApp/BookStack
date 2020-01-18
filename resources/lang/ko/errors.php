@@ -13,6 +13,7 @@ return [
     'email_already_confirmed' => '확인이 끝난 메일 주소입니다. 로그인하세요.',
     'email_confirmation_invalid' => '이 링크는 더 이상 유효하지 않습니다. 다시 가입하세요.',
     'email_confirmation_expired' => '이 링크는 더 이상 유효하지 않습니다. 메일을 다시 보냈습니다.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => '익명 정보로 LDAP 서버에 접근할 수 없습니다.',
     'ldap_fail_authed' => '이 정보로 LDAP 서버에 접근할 수 없습니다.',
     'ldap_extension_not_installed' => 'PHP에 LDAP 확장 도구를 설치하세요.',
@@ -87,5 +88,13 @@ return [
     'error_occurred' => '문제가 생겼습니다.',
     'app_down' => ':appName에 문제가 있는 것 같습니다',
     'back_soon' => '곧 되돌아갑니다.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];
