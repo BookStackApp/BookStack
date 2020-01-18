@@ -35,7 +35,7 @@ class BooksApiController extends ApiController
     /**
      * Get a listing of books visible to the user.
      */
-    public function index()
+    public function list()
     {
         $books = Book::visible();
         return $this->apiListingResponse($books, [
