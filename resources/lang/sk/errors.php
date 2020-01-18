@@ -13,6 +13,7 @@ return [
     'email_already_confirmed' => 'Email bol už overený, skúste sa prihlásiť.',
     'email_confirmation_invalid' => 'Tento potvrdzujúci token nie je platný alebo už bol použitý, skúste sa prosím registrovať znova.',
     'email_confirmation_expired' => 'Potvrdzujúci token expiroval, bol odoslaný nový potvrdzujúci email.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
@@ -87,5 +88,13 @@ return [
     'error_occurred' => 'Nastala chyba',
     'app_down' => ':appName je momentálne nedostupná',
     'back_soon' => 'Čoskoro bude opäť dostupná.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];
