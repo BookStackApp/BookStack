@@ -43,12 +43,12 @@ return [
 
     // Color settings
     'content_colors' => '본문 색상',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'content_colors_desc' => '페이지에 있는 모든 요소에 대한 색상 지정하세요. 가독성을 위해 기본 색상과 유사한 밝기를 가진 색상으로 추천됩니다.',
+    'bookshelf_color' => '책선반 색상',
+    'book_color' => '책 색상',
+    'chapter_color' => '챕터 색상',
+    'page_color' => '페이지 색상',
+    'page_draft_color' => '드래프트 페이지 색상',
 
     // Registration Settings
     'reg_settings' => '가입',
@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => '사이트 가입 허용',
     'reg_enable_desc' => '가입한 사용자는 단일한 권한을 가집니다.',
     'reg_default_role' => '가입한 사용자의 기본 권한',
-    'reg_enable_ldap_warning' => 'The option above is not used while LDAP authentication is active. User accounts for non-existing members will be auto-created if authentication, against the LDAP system in use, is successful.',
+    'reg_enable_ldap_warning' => 'LDAP 인증이 활성화되었다면 위 옵션은 사용되지 않습니다. LDAP 시스템 인증 사용시 존재하지 않은 멤버 계정은 자동으로 생성됩니다.',
     'reg_email_confirmation' => '메일 주소 확인',
     'reg_email_confirmation_toggle' => '주소 확인 요구',
     'reg_confirm_email_desc' => '도메인 차단을 쓰고 있으면 메일 주소를 확인해야 하고, 이 설정은 무시합니다.',
@@ -73,13 +73,13 @@ return [
     'maint_image_cleanup_warning' => '이미지 :count개를 지울 건가요?',
     'maint_image_cleanup_success' => '이미지 :count개 삭제함',
     'maint_image_cleanup_nothing_found' => '삭제한 것 없음',
-    'maint_send_test_email' => 'Send a Test Email',
-    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
-    'maint_send_test_email_run' => 'Send test email',
-    'maint_send_test_email_success' => 'Email sent to :address',
-    'maint_send_test_email_mail_subject' => 'Test Email',
-    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
-    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
+    'maint_send_test_email' => '테스트 메일 보내기',
+    'maint_send_test_email_desc' => '프로필에 명시된 이메일주소로 테스트 메일이 전송됩니다.',
+    'maint_send_test_email_run' => '테스트 메일 보내기',
+    'maint_send_test_email_success' => '보낼 이메일 주소',
+    'maint_send_test_email_mail_subject' => '테스트 메일',
+    'maint_send_test_email_mail_greeting' => '이메일 전송이 성공하였습니다.',
+    'maint_send_test_email_mail_text' => '축하합니다! 이 메일을 받음으로 이메일 설정이 정상적으로 되었음을 확인하였습니다.',
 
     // Role Settings
     'roles' => '권한',
