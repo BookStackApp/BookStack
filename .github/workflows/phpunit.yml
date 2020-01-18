@@ -1,6 +1,15 @@
 name: phpunit
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - release
+  pull_request:
+    branches:
+      - '*'
+      - '*/*'
+      - '!l10n_master'
 
 jobs:
   build:
@@ -12,10 +21,13 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Cache composer packages
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
       uses: actions/cache@v1
       with:
-        path: ~/.cache/composer
-        key: ${{ runner.os }}-node-${{ matrix.php }}
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ matrix.php }}
 
     - name: Setup Database
       run: |
