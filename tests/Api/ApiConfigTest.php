@@ -44,4 +44,15 @@ class ApiConfigTest extends TestCase
         $resp->assertJsonCount(2, 'data');
     }
 
+    public function test_requests_per_min_alters_rate_limit()
+    {
+        $resp = $this->actingAsApiEditor()->get($this->endpoint);
+        $resp->assertHeader('x-ratelimit-limit', 180);
+
+        config()->set(['api.requests_per_minute' => 10]);
+
+        $resp = $this->actingAsApiEditor()->get($this->endpoint);
+        $resp->assertHeader('x-ratelimit-limit', 10);
+    }
+
 }

@@ -38,6 +38,26 @@ class BooksApiTest extends TestCase
         $this->assertActivityExists('book_create', $newItem);
     }
 
+    public function test_book_name_needed_to_create()
+    {
+        $this->actingAsApiEditor();
+        $details = [
+            'description' => 'A book created via the API',
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertStatus(422);
+        $resp->assertJson([
+            "error" => [
+                "message" => "The given data was invalid.",
+                "validation" => [
+                    "name" => ["The name field is required."]
+                ],
+                "code" => 422,
+            ],
+        ]);
+    }
+
     public function test_read_endpoint()
     {
         $this->actingAsApiEditor();
