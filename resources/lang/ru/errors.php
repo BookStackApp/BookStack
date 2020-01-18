@@ -13,6 +13,7 @@ return [
     'email_already_confirmed' => 'Электронная почта уже подтверждена, попробуйте войти в систему.',
     'email_confirmation_invalid' => 'Этот токен подтверждения недействителен или уже используется. Повторите попытку регистрации.',
     'email_confirmation_expired' => 'Истек срок действия токена. Отправлено новое письмо с подтверждением.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'Недопустимый доступ LDAP с использованием анонимной привязки',
     'ldap_fail_authed' => 'Не удалось получить доступ к LDAP, используя данные dn & password',
     'ldap_extension_not_installed' => 'LDAP расширения для PHP не установлено',
@@ -87,5 +88,13 @@ return [
     'error_occurred' => 'Произошла ошибка',
     'app_down' => ':appName в данный момент не достпуно',
     'back_soon' => 'Скоро восстановится.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

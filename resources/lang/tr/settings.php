@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Yorumları uygulamadaki bütün sayfalar için engelle. <br> Mevcut yorumlar gösterilmeyecektir.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
+    'content_colors' => 'İçerik Renkleri',
     'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'bookshelf_color' => 'Raf Rengi',
+    'book_color' => 'Kitap Rengi',
+    'chapter_color' => 'Kısım Rengi',
+    'page_color' => 'Sayfa Rengi',
+    'page_draft_color' => 'Sayfa Taslağı Rengi',
 
     // Registration Settings
     'reg_settings' => 'Kayıt',
@@ -103,6 +103,7 @@ return [
     'role_manage_entity_permissions' => 'Bütün kitap, bölüm ve sayfa izinlerini yönet',
     'role_manage_own_entity_permissions' => 'Sahip olunan kitap, bölüm ve sayfaların izinlerini yönet',
     'role_manage_page_templates' => 'Sayfa şablonlarını yönet',
+    'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Uygulama ayarlarını yönet',
     'role_asset' => 'Asset Yetkileri',
     'role_asset_desc' => 'Bu izinleri assetlere sistem içinden varsayılan erişimi kontrol eder. Kitaplar, bölümler ve sayfaların izinleri bu izinleri override eder.',
@@ -151,6 +152,32 @@ return [
     'users_social_disconnect' => 'Hesabın Bağlantısını Kes',
     'users_social_connected' => ':socialAccount hesabı profilinize başarıyla bağlandı.',
     'users_social_disconnected' => ':socialAccount hesabınızın profilinizle ilişiği başarıyla kesildi.',
+    'users_api_tokens' => 'API Tokens',
+    'users_api_tokens_none' => 'No API tokens have been created for this user',
+    'users_api_tokens_create' => 'Create Token',
+    'users_api_tokens_expires' => 'Expires',
+    'users_api_tokens_docs' => 'API Documentation',
+
+    // API Tokens
+    'user_api_token_create' => 'Create API Token',
+    'user_api_token_name' => 'Name',
+    'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
+    'user_api_token_expiry' => 'Expiry Date',
+    'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
+    'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
+    'user_api_token_create_success' => 'API token successfully created',
+    'user_api_token_update_success' => 'API token successfully updated',
+    'user_api_token' => 'API Token',
+    'user_api_token_id' => 'Token ID',
+    'user_api_token_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
+    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
+    'user_api_token_created' => 'Token Created :timeAgo',
+    'user_api_token_updated' => 'Token Updated :timeAgo',
+    'user_api_token_delete' => 'Delete Token',
+    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
+    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
+    'user_api_token_delete_success' => 'API token successfully deleted',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

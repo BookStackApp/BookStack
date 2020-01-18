@@ -13,6 +13,7 @@ return [
     'email_already_confirmed' => 'Email已被確認，請嘗試登錄。',
     'email_confirmation_invalid' => '此確認 Session 無效或已被使用，請重新註冊。',
     'email_confirmation_expired' => '確認 Session 已過期，已發送新的確認電子郵件。',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => '使用匿名綁定的LDAP進入失敗。',
     'ldap_fail_authed' => '帶有標識名稱和密碼的LDAP進入失敗。',
     'ldap_extension_not_installed' => '未安裝LDAP PHP外掛程式',
@@ -87,5 +88,13 @@ return [
     'error_occurred' => '發生錯誤',
     'app_down' => ':appName現在正在關閉',
     'back_soon' => '請耐心等待網站的恢複。',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

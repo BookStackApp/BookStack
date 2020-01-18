@@ -11,20 +11,20 @@ return [
     'save' => 'Salvar',
     'continue' => 'Continuar',
     'select' => 'Selecionar',
-    'toggle_all' => 'Alternar Tudo',
+    'toggle_all' => 'Alternar Todos',
     'more' => 'Mais',
 
     // Form Labels
     'name' => 'Nome',
     'description' => 'Descrição',
-    'role' => 'Regra',
+    'role' => 'Cargo',
     'cover_image' => 'Imagem de capa',
-    'cover_image_description' => 'Esta imagem deve ser aproximadamente 300x170px.',
+    'cover_image_description' => 'Esta imagem deve ser aproximadamente 440x250px.',
     
     // Actions
     'actions' => 'Ações',
     'view' => 'Visualizar',
-    'view_all' => 'Ver Tudo',
+    'view_all' => 'Visualizar Tudo',
     'create' => 'Criar',
     'update' => 'Atualizar',
     'edit' => 'Editar',
@@ -35,16 +35,16 @@ return [
     'delete' => 'Excluir',
     'search' => 'Pesquisar',
     'search_clear' => 'Limpar Pesquisa',
-    'reset' => 'Resetar',
+    'reset' => 'Redefinir',
     'remove' => 'Remover',
     'add' => 'Adicionar',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Tela cheia',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
+    'sort_options' => 'Opções de Ordenação',
+    'sort_direction_toggle' => 'Alternar Direção de Ordenação',
+    'sort_ascending' => 'Ordenação Crescente',
+    'sort_descending' => 'Ordenação Decrescente',
     'sort_name' => 'Nome',
     'sort_created_at' => 'Data de Criação',
     'sort_updated_at' => 'Data de Atualização',
@@ -60,15 +60,15 @@ return [
     'grid_view' => 'Visualização em Grade',
     'list_view' => 'Visualização em Lista',
     'default' => 'Padrão',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Caminho',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Menu de Perfil',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => 'Informações',
     'tab_content' => 'Conteúdo',
 
     // Email Content
