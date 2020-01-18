@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Az email cím már meg van erősítve, meg lehet próbálni a bejelentkezést.',
     'email_confirmation_invalid' => 'A megerősítő vezérjel nem érvényes vagy használva volt. Meg kell próbálni újraregisztrálni.',
     'email_confirmation_expired' => 'A megerősítő vezérjel lejárt. Egy új megerősítő email lett elküldve.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'A használatban lévő fiók email címét meg kell erősíteni',
     'ldap_fail_anonymous' => 'Nem sikerült az LDAP elérése névtelen csatlakozással',
     'ldap_fail_authed' => 'Az LDAP hozzáférés nem sikerült a megadott DN és jelszó beállításokkal',
     'ldap_extension_not_installed' => 'LDAP PHP kiterjesztés nincs telepítve',
