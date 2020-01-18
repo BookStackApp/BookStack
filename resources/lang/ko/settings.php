@@ -42,7 +42,7 @@ return [
     'app_disable_comments_desc' => '모든 페이지에서 댓글을 숨깁니다.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
+    'content_colors' => '본문 색상',
     'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Shelf Color',
     'book_color' => 'Book Color',
