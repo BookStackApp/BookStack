@@ -188,6 +188,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'da' => 'Dansk',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
