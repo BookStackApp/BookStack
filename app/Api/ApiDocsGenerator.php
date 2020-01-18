@@ -31,9 +31,12 @@ class ApiDocsGenerator
     protected function loadDetailsFromFiles(Collection $routes): Collection
     {
         return $routes->map(function (array $route) {
-            $exampleResponseFile = base_path('dev/api/responses/' . $route['name'] . '.json');
-            $exampleResponse = file_exists($exampleResponseFile) ? file_get_contents($exampleResponseFile) : null;
-            $route['example_response'] = $exampleResponse;
+            $exampleTypes = ['request', 'response'];
+            foreach ($exampleTypes as $exampleType) {
+                $exampleFile = base_path("dev/api/{$exampleType}s/{$route['name']}.json");
+                $exampleContent = file_exists($exampleFile) ? file_get_contents($exampleFile) : null;
+                $route["example_{$exampleType}"] = $exampleContent;
+            }
             return $route;
         });
     }
