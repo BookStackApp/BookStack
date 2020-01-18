@@ -26,7 +26,7 @@ return [
     'view' => 'Bekijk',
     'view_all' => 'Bekijk Alle',
     'create' => 'Aanmaken',
-    'update' => 'Update',
+    'update' => 'Bijwerken',
     'edit' => 'Bewerk',
     'sort' => 'Sorteer',
     'move' => 'Verplaats',
