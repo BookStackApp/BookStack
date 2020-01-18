@@ -38,7 +38,7 @@ return [
     'reset' => 'Sıfırla',
     'remove' => 'Kaldır',
     'add' => 'Ekle',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Tam Ekran',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',

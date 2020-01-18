@@ -38,7 +38,7 @@ return [
     'reset' => '리셋',
     'remove' => '제거',
     'add' => '추가',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => '전체화면',
 
     // Sort Options
     'sort_options' => '정렬 기준',
@@ -73,5 +73,5 @@ return [
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',
-    'email_rights' => 'All rights reserved',
+    'email_rights' => '모든 권리 소유',
 ];

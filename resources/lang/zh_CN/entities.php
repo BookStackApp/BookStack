@@ -247,7 +247,7 @@ return [
     'tag_value' => '标签值 (Optional)',
     'tags_explain' => "添加一些标签以更好地对您的内容进行分类。\n您可以为标签分配一个值，以进行更深入的组织。",
     'tags_add' => '添加另一个标签',
-    'tags_remove' => 'Remove this tag',
+    'tags_remove' => '删除此标签',
     'attachments' => '附件',
     'attachments_explain' => '上传一些文件或附加一些链接显示在您的网页上。这些在页面的侧边栏中可见。',
     'attachments_explain_instant_save' => '这里的更改将立即保存。',

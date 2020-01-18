@@ -38,13 +38,13 @@ return [
     'reset' => 'Reset',
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Volledig scherm',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
+    'sort_options' => 'Sorteeropties',
+    'sort_direction_toggle' => 'Sorteer richting',
+    'sort_ascending' => 'Sorteer oplopend',
+    'sort_descending' => 'Sorteer teruglopend',
     'sort_name' => 'Naam',
     'sort_created_at' => 'Aanmaakdatum',
     'sort_updated_at' => 'Gewijzigd op',
@@ -60,10 +60,10 @@ return [
     'grid_view' => 'Grid weergave',
     'list_view' => 'Lijst weergave',
     'default' => 'Standaard',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Kruimelpad',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Profiel menu',
     'view_profile' => 'Profiel Weergeven',
     'edit_profile' => 'Profiel Bewerken',
 
