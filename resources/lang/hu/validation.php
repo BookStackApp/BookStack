@@ -80,7 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute csak egy fájlkiterjesztéssel rendelkezhet.',
     'not_in'               => 'A kiválasztott :attribute érvénytelen.',
-    'not_regex'            => 'The :attribute format is invalid.',
+    'not_regex'            => ':attribute formátuma érvénytelen.',
     'numeric'              => ':attribute szám kell legyen.',
     'regex'                => ':attribute formátuma érvénytelen.',
     'required'             => ':attribute mező kötelező.',
