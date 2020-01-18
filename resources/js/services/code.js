@@ -87,9 +87,20 @@ const modeMap = {
  * Highlight pre elements on a page
  */
 function highlight() {
-    let codeBlocks = document.querySelectorAll('.page-content pre, .comment-box .content pre');
-    for (let i = 0; i < codeBlocks.length; i++) {
-        highlightElem(codeBlocks[i]);
+    const codeBlocks = document.querySelectorAll('.page-content pre, .comment-box .content pre');
+    for (const codeBlock of codeBlocks) {
+        highlightElem(codeBlock);
+    }
+}
+
+/**
+ * Highlight all code blocks within the given parent element
+ * @param {HTMLElement} parent
+ */
+function highlightWithin(parent) {
+    const codeBlocks = parent.querySelectorAll('pre');
+    for (const codeBlock of codeBlocks) {
+        highlightElem(codeBlock);
     }
 }
 
@@ -174,7 +185,7 @@ function getMode(suggestion, content) {
  * @returns {*|string}
  */
 function getTheme() {
-    return window.codeTheme || 'base16-light';
+    return window.codeTheme || 'mdn-like';
 }
 
 /**
@@ -308,6 +319,7 @@ function getMetaKey() {
 
 export default {
     highlight: highlight,
+    highlightWithin: highlightWithin,
     wysiwygView: wysiwygView,
     popupEditor: popupEditor,
     setMode: setMode,

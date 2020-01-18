@@ -1,6 +1,8 @@
 <?php
 
+use BookStack\Api\ApiToken;
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Bookshelf;
@@ -51,6 +53,18 @@ class DummyContentSeeder extends Seeder
 
         $shelves = factory(Bookshelf::class, 10)->create($byData);
         $largeBook->shelves()->attach($shelves->pluck('id'));
+
+        // Assign API permission to editor role and create an API key
+        $apiPermission = RolePermission::getByName('access-api');
+        $editorRole->attachPermission($apiPermission);
+        $token = (new ApiToken())->forceFill([
+            'user_id' => $editorUser->id,
+            'name' => 'Testing API key',
+            'expires_at' => ApiToken::defaultExpiry(),
+            'secret' => Hash::make('password'),
+            'token_id' => 'apitoken',
+        ]);
+        $token->save();
 
         app(PermissionService::class)->buildJointPermissions();
         app(SearchService::class)->indexAllEntities();

@@ -1,0 +1,10 @@
+{
+  "name": "My new book",
+  "description": "This is a book created via the API",
+  "created_by": 1,
+  "updated_by": 1,
+  "slug": "my-new-book",
+  "updated_at": "2020-01-12 14:05:11",
+  "created_at": "2020-01-12 14:05:11",
+  "id": 15
+}

@@ -3,38 +3,19 @@
 namespace BookStack\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 
 class Authenticate
 {
-    /**
-     * The Guard implementation.
-     * @var Guard
-     */
-    protected $auth;
-
-    /**
-     * Create a new filter instance.
-     * @param  Guard $auth
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
+    use ChecksForEmailConfirmation;
 
     /**
      * Handle an incoming request.
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if ($this->auth->check()) {
-            $requireConfirmation = (setting('registration-confirmation') || setting('registration-restrict'));
-            if ($requireConfirmation && !$this->auth->user()->email_confirmed) {
-                return redirect('/register/confirm/awaiting');
-            }
+        if ($this->awaitingEmailConfirmation()) {
+            return $this->emailConfirmationErrorResponse($request);
         }
 
         if (!hasAppAccess()) {
@@ -46,5 +27,23 @@ class Authenticate
         }
 
         return $next($request);
+    }
+
+    /**
+     * Provide an error response for when the current user's email is not confirmed
+     * in a system which requires it.
+     */
+    protected function emailConfirmationErrorResponse(Request $request)
+    {
+        if ($request->wantsJson()) {
+            return response()->json([
+                'error' => [
+                    'code' => 401,
+                    'message' => trans('errors.email_confirmation_awaiting')
+                ]
+            ], 401);
+        }
+
+        return redirect('/register/confirm/awaiting');
     }
 }
