@@ -31,6 +31,7 @@ import entityPermissionsEditor from "./entity-permissions-editor";
 import templateManager from "./template-manager";
 import newUserPassword from "./new-user-password";
 import detailsHighlighter from "./details-highlighter";
+import codeHighlighter from "./code-highlighter";
 
 const componentMapping = {
     'dropdown': dropdown,
@@ -66,6 +67,7 @@ const componentMapping = {
     'template-manager': templateManager,
     'new-user-password': newUserPassword,
     'details-highlighter': detailsHighlighter,
+    'code-highlighter': codeHighlighter,
 };
 
 window.components = {};

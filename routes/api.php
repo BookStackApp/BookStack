@@ -9,7 +9,7 @@
 Route::get('docs', 'ApiDocsController@display');
 Route::get('docs.json', 'ApiDocsController@json');
 
-Route::get('books', 'BooksApiController@index');
+Route::get('books', 'BooksApiController@list');
 Route::post('books', 'BooksApiController@create');
 Route::get('books/{id}', 'BooksApiController@read');
 Route::put('books/{id}', 'BooksApiController@update');

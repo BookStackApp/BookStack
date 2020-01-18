@@ -156,6 +156,7 @@ return [
     'users_api_tokens_none' => 'No API tokens have been created for this user',
     'users_api_tokens_create' => 'Create Token',
     'users_api_tokens_expires' => 'Expires',
+    'users_api_tokens_docs' => 'API Documentation',
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
