@@ -2,7 +2,7 @@
 
 use BookStack\Entities\Book;
 
-class ApiAuthTest extends TestCase
+class BooksApiTest extends TestCase
 {
     use TestsApi;
 
