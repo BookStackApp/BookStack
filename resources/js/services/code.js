@@ -185,7 +185,7 @@ function getMode(suggestion, content) {
  * @returns {*|string}
  */
 function getTheme() {
-    return window.codeTheme || 'base16-light';
+    return window.codeTheme || 'mdn-like';
 }
 
 /**
