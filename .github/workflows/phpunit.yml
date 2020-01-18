@@ -20,10 +20,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Cache composer packages
+    - name: Get Composer Cache Directory
       id: composer-cache
       run: |
         echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache composer packages
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
