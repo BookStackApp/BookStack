@@ -6,10 +6,7 @@ class Kernel extends HttpKernel
 {
     /**
      * The application's global HTTP middleware stack.
-     *
      * These middleware are run during every request to your application.
-     *
-     * @var array
      */
     protected $middleware = [
         \BookStack\Http\Middleware\CheckForMaintenanceMode::class,
@@ -31,13 +28,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \BookStack\Http\Middleware\Localization::class,
             \BookStack\Http\Middleware\GlobalViewData::class,
         ],
         'api' => [
-            'throttle:60,1',
-            'bindings',
+            \BookStack\Http\Middleware\ThrottleApiRequests::class,
+            \BookStack\Http\Middleware\EncryptCookies::class,
+            \BookStack\Http\Middleware\StartSessionIfCookieExists::class,
+            \BookStack\Http\Middleware\ApiAuthenticate::class,
         ],
     ];
 
@@ -48,7 +46,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth'       => \BookStack\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'can'        => \Illuminate\Auth\Middleware\Authorize::class,
         'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

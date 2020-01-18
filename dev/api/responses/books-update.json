@@ -1,0 +1,11 @@
+{
+  "id": 16,
+  "name": "My own book",
+  "slug": "my-own-book",
+  "description": "This is my own little book - updated",
+  "created_at": "2020-01-12 14:09:59",
+  "updated_at": "2020-01-12 14:16:10",
+  "created_by": 1,
+  "updated_by": 1,
+  "image_id": 452
+}

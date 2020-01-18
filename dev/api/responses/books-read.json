@@ -1,0 +1,47 @@
+{
+  "id": 16,
+  "name": "My own book",
+  "slug": "my-own-book",
+  "description": "This is my own little book",
+  "created_at": "2020-01-12 14:09:59",
+  "updated_at": "2020-01-12 14:11:51",
+  "created_by": {
+    "id": 1,
+    "name": "Admin",
+    "created_at": "2019-05-05 21:15:13",
+    "updated_at": "2019-12-16 12:18:37",
+    "image_id": 48
+  },
+  "updated_by": {
+    "id": 1,
+    "name": "Admin",
+    "created_at": "2019-05-05 21:15:13",
+    "updated_at": "2019-12-16 12:18:37",
+    "image_id": 48
+  },
+  "image_id": 452,
+  "tags": [
+    {
+      "id": 13,
+      "entity_id": 16,
+      "entity_type": "BookStack\\Book",
+      "name": "Category",
+      "value": "Guide",
+      "order": 0,
+      "created_at": "2020-01-12 14:11:51",
+      "updated_at": "2020-01-12 14:11:51"
+    }
+  ],
+  "cover": {
+    "id": 452,
+    "name": "sjovall_m117hUWMu40.jpg",
+    "url": "http:\/\/bookstack.local\/uploads\/images\/cover_book\/2020-01\/sjovall_m117hUWMu40.jpg",
+    "created_at": "2020-01-12 14:11:51",
+    "updated_at": "2020-01-12 14:11:51",
+    "created_by": 1,
+    "updated_by": 1,
+    "path": "\/uploads\/images\/cover_book\/2020-01\/sjovall_m117hUWMu40.jpg",
+    "type": "cover_book",
+    "uploaded_to": 16
+  }
+}
