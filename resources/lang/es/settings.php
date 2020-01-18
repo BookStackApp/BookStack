@@ -185,7 +185,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'da' => 'Dansk',
+        'da' => 'Danés',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
