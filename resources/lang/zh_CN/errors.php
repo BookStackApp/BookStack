@@ -22,7 +22,7 @@ return [
     'saml_no_email_address' => '无法找到有效Email地址，此用户数据由外部身份验证系统托管',
     'saml_invalid_response_id' => '来自外部身份验证系统的请求没有被本应用程序认证，在登录后返回上一页可能会导致此问题。',
     'saml_fail_authed' => '使用 :system 登录失败，登录系统未返回成功登录授权信息。',
-    'saml_email_exists' => 'Registration unsuccessful since a user already exists with email address ":email"',
+    'saml_email_exists' => '注册失败，因此已经有用户使用了 ":email" 此Email地址了',
     'social_no_action_defined' => '没有定义行为',
     'social_login_bad_response' => "在 :socialAccount 登录时遇到错误：\n:error",
     'social_account_in_use' => ':socialAccount 账户已被使用，请尝试通过 :socialAccount 选项登录。',
