@@ -13,6 +13,7 @@ return [
     'email_already_confirmed' => 'Email er allerede bekræftet. Prøv at logge ind.',
     'email_confirmation_invalid' => 'Denne bekræftelsestoken er ikke gyldig eller er allerede blevet brugt. Prøv at registrere dig igen.',
     'email_confirmation_expired' => 'Bekræftelsestoken er udløbet. En ny bekræftelsesmail er blevet sendt.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
     'ldap_fail_authed' => 'LDAP adgang fejlede med de givne DN & kodeord oplysninger',
     'ldap_extension_not_installed' => 'LDAP PHP udvidelse er ikke installeret',
@@ -87,5 +88,13 @@ return [
     'error_occurred' => 'An Error Occurred',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];
