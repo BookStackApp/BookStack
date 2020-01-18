@@ -120,4 +120,29 @@ class ApiAuthTest extends TestCase
         $resp->assertJson($this->errorResponse("The email address for the account in use needs to be confirmed", 401));
     }
 
+    public function test_rate_limit_headers_active_on_requests()
+    {
+        $resp = $this->actingAsApiEditor()->get($this->endpoint);
+        $resp->assertHeader('x-ratelimit-limit', 180);
+        $resp->assertHeader('x-ratelimit-remaining', 179);
+        $resp = $this->actingAsApiEditor()->get($this->endpoint);
+        $resp->assertHeader('x-ratelimit-remaining', 178);
+    }
+
+    public function test_rate_limit_hit_gives_json_error()
+    {
+        config()->set(['api.requests_per_minute' => 1]);
+        $resp = $this->actingAsApiEditor()->get($this->endpoint);
+        $resp->assertStatus(200);
+
+        $resp = $this->actingAsApiEditor()->get($this->endpoint);
+        $resp->assertStatus(429);
+        $resp->assertHeader('x-ratelimit-remaining', 0);
+        $resp->assertHeader('retry-after');
+        $resp->assertJson([
+            'error' => [
+                'code' => 429,
+            ]
+        ]);
+    }
 }

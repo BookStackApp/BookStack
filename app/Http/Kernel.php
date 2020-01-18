@@ -32,7 +32,7 @@ class Kernel extends HttpKernel
             \BookStack\Http\Middleware\GlobalViewData::class,
         ],
         'api' => [
-            'throttle:60,1',
+            \BookStack\Http\Middleware\ThrottleApiRequests::class,
             \BookStack\Http\Middleware\EncryptCookies::class,
             \BookStack\Http\Middleware\StartSessionIfCookieExists::class,
             \BookStack\Http\Middleware\ApiAuthenticate::class,

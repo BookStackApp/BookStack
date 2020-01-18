@@ -17,4 +17,7 @@ return [
     // The maximum number of items that can be returned in a listing API request.
     'max_item_count' => env('API_MAX_ITEM_COUNT', 500),
 
+    // The number of API requests that can be made per minute by a single user.
+    'requests_per_minute' => env('API_REQUESTS_PER_MIN', 180)
+
 ];
