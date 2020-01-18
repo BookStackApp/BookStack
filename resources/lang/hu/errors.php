@@ -22,7 +22,7 @@ return [
     'saml_user_not_registered' => ':name felhasználó nincs regisztrálva és az automatikus regisztráció le van tiltva',
     'saml_no_email_address' => 'Ehhez a felhasználóhoz nem található email cím a külső hitelesítő rendszer által átadott adatokban',
     'saml_invalid_response_id' => 'A külső hitelesítő rendszerből érkező kérést nem ismerte fel az alkalmazás által indított folyamat. Bejelentkezés után az előző oldalra történő visszalépés okozhatja ezt a hibát.',
-    'saml_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres meghatalmazást',
+    'saml_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres hitelesítést',
     'saml_email_exists' => 'A regisztráció sikertelen mivel már létezik felhasználó ":email" email címmel',
     'social_no_action_defined' => 'Nincs művelet meghatározva',
     'social_login_bad_response' => "Hiba történt :socialAccount bejelentkezés közben:\n:error",
@@ -90,11 +90,11 @@ return [
     'back_soon' => 'Hamarosan újra elérhető lesz.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_no_authorization_found' => 'A kérésben nem található hitelesítési vezérjel',
+    'api_bad_authorization_format' => 'A kérésben hitelesítési vezérjel található de a formátuma érvénytelennek tűnik',
+    'api_user_token_not_found' => 'A megadott hitelesítési vezérjelhez nem található egyező API vezérjel',
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_no_api_permission' => 'A használt API vezérjel tulajdonosának nincs jogosultsága API hívások végrehajtásához',
+    'api_user_token_expired' => 'A használt hitelesítési vezérjel lejárt',
 
 ];
