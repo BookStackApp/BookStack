@@ -2,9 +2,7 @@
 
 namespace Tests;
 
-use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Entities\Book;
-use Carbon\Carbon;
 
 class ApiListingTest extends TestCase
 {
