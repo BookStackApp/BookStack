@@ -176,8 +176,8 @@ return [
     'user_api_token_updated' => '令牌更新:timeAgo',
     'user_api_token_delete' => '删除令牌',
     'user_api_token_delete_warning' => '这将会从系统中完全删除名为“令牌命名”的API令牌',
-    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
-    'user_api_token_delete_success' => 'API token successfully deleted',
+    'user_api_token_delete_confirm' => '您确定要删除此API令牌吗？',
+    'user_api_token_delete_success' => '成功删除API令牌',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
@@ -185,7 +185,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'da' => 'Dansk',
+        'da' => '丹麦',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
