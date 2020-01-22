@@ -163,7 +163,7 @@ return [
     'user_api_token_name' => '姓名',
     'user_api_token_name_desc' => '请给您的可读令牌一个命名以在未来提醒您它的预期用途',
     'user_api_token_expiry' => '过期期限',
-    'user_api_token_expiry_desc' => '请设置一个此令牌的过期时间，过期后此令牌所给出的请求将失效，离开此空白处将自动将过期日期设置为未来100年。',
+    'user_api_token_expiry_desc' => '请设置一个此令牌的过期时间，过期后此令牌所给出的请求将失效，若将此处留为空白将自动设置过期时间为100年。',
     'user_api_token_create_secret_message' => '创建此令牌后会立即生成“令牌ID”和“令牌密钥”。该密钥只会显示一次，所以请确保在继续操作之前将密钥记录或复制到一个安全的地方。',
     'user_api_token_create_success' => '成功创建API令牌。',
     'user_api_token_update_success' => '成功更新API令牌。',
