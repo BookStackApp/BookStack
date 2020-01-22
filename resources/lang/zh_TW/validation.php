@@ -30,10 +30,10 @@ return [
     'digits'               => ':attribute 必須為:digits位數。',
     'digits_between'       => ':attribute 必須為:min到:max位數。',
     'email'                => ':attribute 必須是有效的電子郵件位址。',
-    'ends_with' => 'The :attribute must end with one of the following: :values',
+    'ends_with' => '：attribute必須以下列之一結尾：：values',
     'filled'               => ':attribute 字段是必需的。',
     'gt'                   => [
-        'numeric' => 'The :attribute must be greater than :value.',
+        'numeric' => '：attribute必須大於：value。',
         'file'    => 'The :attribute must be greater than :value kilobytes.',
         'string'  => 'The :attribute must be greater than :value characters.',
         'array'   => 'The :attribute must have more than :value items.',
