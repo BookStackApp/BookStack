@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Die E-Mail-Adresse ist bereits bestätigt. Bitte melden Sie sich an.',
     'email_confirmation_invalid' => 'Der Bestätigungslink ist nicht gültig oder wurde bereits verwendet. Bitte registrieren Sie sich erneut.',
     'email_confirmation_expired' => 'Der Bestätigungslink ist abgelaufen. Es wurde eine neue Bestätigungs-E-Mail gesendet.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'Die E-Mail-Adresse für das verwendete Konto muss bestätigt werden',
     'ldap_fail_anonymous' => 'Anonymer LDAP-Zugriff ist fehlgeschlafgen',
     'ldap_fail_authed' => 'LDAP-Zugriff mit DN und Passwort ist fehlgeschlagen',
     'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert.',
@@ -90,11 +90,11 @@ return [
     'back_soon' => 'Wir werden so schnell wie möglich wieder online sein.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_no_authorization_found' => 'Kein Autorisierungs-Token für die Anfrage gefunden',
+    'api_bad_authorization_format' => 'Ein Autorisierungs-Token wurde auf die Anfrage gefunden, aber das Format schien falsch zu sein',
+    'api_user_token_not_found' => 'Es wurde kein passender API-Token für den angegebenen Autorisierungs-Token gefunden',
+    'api_incorrect_token_secret' => 'Das für den angegebenen API-Token angegebene Kennwort ist falsch',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_token_expired' => 'Das verwendete Autorisierungs-Token ist abgelaufen',
 
 ];
