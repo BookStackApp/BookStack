@@ -94,7 +94,7 @@ return [
     'api_bad_authorization_format' => 'Ein Autorisierungs-Token wurde auf die Anfrage gefunden, aber das Format schien falsch zu sein',
     'api_user_token_not_found' => 'Es wurde kein passender API-Token für den angegebenen Autorisierungs-Token gefunden',
     'api_incorrect_token_secret' => 'Das für den angegebenen API-Token angegebene Kennwort ist falsch',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_no_api_permission' => 'Der Besitzer des verwendeten API-Token hat keine Berechtigung für API-Aufrufe',
     'api_user_token_expired' => 'Das verwendete Autorisierungs-Token ist abgelaufen',
 
 ];
