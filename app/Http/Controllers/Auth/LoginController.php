@@ -66,9 +66,6 @@ class LoginController extends Controller
     /**
      * Overrides the action when a user is authenticated.
      * If the user authenticated but does not exist in the user table we create them.
-     * @param Request $request
-     * @param Authenticatable $user
-     * @return \Illuminate\Http\RedirectResponse
      * @throws AuthException
      * @throws \BookStack\Exceptions\LdapException
      */
@@ -112,8 +109,6 @@ class LoginController extends Controller
 
     /**
      * Show the application login form.
-     * @param Request $request
-     * @return \Illuminate\Http\Response
      */
     public function getLogin(Request $request)
     {
@@ -136,22 +131,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Redirect to the relevant social site.
-     * @param $socialDriver
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \BookStack\Exceptions\SocialDriverNotConfigured
-     */
-    public function getSocialLogin($socialDriver)
-    {
-        session()->put('social-callback', 'login');
-        return $this->socialAuthService->startLogIn($socialDriver);
-    }
-
-    /**
      * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
     {
@@ -160,7 +140,6 @@ class LoginController extends Controller
         }
 
         $this->guard()->logout();
-
         $request->session()->invalidate();
 
         return $this->loggedOut($request) ?: redirect('/');

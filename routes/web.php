@@ -208,10 +208,10 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Social auth routes
-Route::get('/login/service/{socialDriver}', 'Auth\LoginController@getSocialLogin');
-Route::get('/login/service/{socialDriver}/callback', 'Auth\RegisterController@socialCallback');
-Route::get('/login/service/{socialDriver}/detach', 'Auth\RegisterController@detachSocialAccount');
-Route::get('/register/service/{socialDriver}', 'Auth\RegisterController@socialRegister');
+Route::get('/login/service/{socialDriver}', 'Auth\SocialController@getSocialLogin');
+Route::get('/login/service/{socialDriver}/callback', 'Auth\SocialController@socialCallback');
+Route::get('/login/service/{socialDriver}/detach', 'Auth\SocialController@detachSocialAccount');
+Route::get('/register/service/{socialDriver}', 'Auth\SocialController@socialRegister');
 
 // Login/Logout routes
 Route::get('/login', 'Auth\LoginController@getLogin');
