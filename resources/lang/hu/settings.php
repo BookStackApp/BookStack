@@ -43,7 +43,7 @@ return [
 
     // Color settings
     'content_colors' => 'Tartalomszínek',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'content_colors_desc' => 'Beállítja az elemek színét az oldalszervezési hierarchiában. Az olvashatóság szempontjából javasolt az alapértelmezés szerinti színhez hasonló fényerősséget választani.',
     'bookshelf_color' => 'Polc színe',
     'book_color' => 'Könyv színe',
     'chapter_color' => 'Fejezet színe',
@@ -175,7 +175,7 @@ return [
     'user_api_token_created' => 'Vezérjel létrehozva :timeAgo',
     'user_api_token_updated' => 'Vezérjel frissítve :timeAgo',
     'user_api_token_delete' => 'Vezérjel törlése',
-    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
+    'user_api_token_delete_warning' => '\':tokenName\' nevű API vezérjel teljesen törölve lesz a rendszerből.',
     'user_api_token_delete_confirm' => 'Biztosan törölhető ez az API vezérjel?',
     'user_api_token_delete_success' => 'API vezérjel sikeresen törölve',
 
