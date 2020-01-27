@@ -103,7 +103,7 @@ return [
     'role_manage_entity_permissions' => 'Gerenciar todos os livros, capítulos e permissões de páginas',
     'role_manage_own_entity_permissions' => 'Gerenciar permissões de seu próprio livro, capítulo e paginas',
     'role_manage_page_templates' => 'Gerenciar modelos de página',
-    'role_access_api' => 'Access system API',
+    'role_access_api' => 'Acessar API do sistema',
     'role_manage_settings' => 'Gerenciar configurações da aplicação',
     'role_asset' => 'Permissões de Ativos',
     'role_asset_desc' => 'Essas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por essas permissões.',
@@ -152,11 +152,11 @@ return [
     'users_social_disconnect' => 'Desconectar Conta',
     'users_social_connected' => 'Conta :socialAccount foi conectada com sucesso ao seu perfil.',
     'users_social_disconnected' => 'Conta :socialAccount foi desconectada com sucesso de seu perfil.',
-    'users_api_tokens' => 'API Tokens',
-    'users_api_tokens_none' => 'No API tokens have been created for this user',
-    'users_api_tokens_create' => 'Create Token',
-    'users_api_tokens_expires' => 'Expires',
-    'users_api_tokens_docs' => 'API Documentation',
+    'users_api_tokens' => 'Tokens de API',
+    'users_api_tokens_none' => 'Nenhum token de API foi criado para este usuário',
+    'users_api_tokens_create' => 'Criar Token',
+    'users_api_tokens_expires' => 'Expira',
+    'users_api_tokens_docs' => 'Documentação da API',
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
@@ -174,10 +174,10 @@ return [
     'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
     'user_api_token_created' => 'Token Created :timeAgo',
     'user_api_token_updated' => 'Token Updated :timeAgo',
-    'user_api_token_delete' => 'Delete Token',
-    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
-    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
-    'user_api_token_delete_success' => 'API token successfully deleted',
+    'user_api_token_delete' => 'Excluir Token',
+    'user_api_token_delete_warning' => 'Isto irá excluir completamente este token de API com o nome \':tokenName\' do sistema.',
+    'user_api_token_delete_confirm' => 'Você tem certeza que deseja excluir este token de API?',
+    'user_api_token_delete_success' => 'Token de API excluído com sucesso',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
