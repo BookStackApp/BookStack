@@ -70,6 +70,20 @@
                         </div>
                     </div>
 
+                    <div class="grid half gap-xl">
+                        <div>
+                            <label class="setting-list-label">{{ trans('settings.app_shared_drafts') }}</label>
+                            <p class="small">{!! trans('settings.app_shared_drafts_desc') !!}</p>
+                        </div>
+                        <div>
+                            @include('components.toggle-switch', [
+                                'name' => 'setting-app-shared-drafts',
+                                'value' => setting('app-shared-drafts'),
+                                'label' => trans('settings.app_shared_drafts_toggle'),
+                            ])
+                        </div>
+                    </div>
+
 
                 </div>
 

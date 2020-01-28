@@ -656,15 +656,19 @@ class PermissionService
 
     /**
      * Extend the given page query to ensure draft items are not visible
-     * unless created by the given user.
+     * unless created by the given user, or editable by the given user if
+     * app-shared-drafts setting is enabled.
      */
     public function enforceDraftVisiblityOnQuery(Builder $query): Builder
     {
         return $query->where(function (Builder $query) {
             $query->where('draft', '=', false)
                 ->orWhere(function (Builder $query) {
-                    $query->where('draft', '=', true)
-                        ->where('created_by', '=', $this->currentUser()->id);
+                    if (setting('app-shared-drafts')) {
+                        $this->restrictEntityQuery($query, 'update');
+                    } else {
+                        $query->where('created_by', '=', $this->currentUser()->id);
+                    }
                 });
         });
     }
@@ -680,13 +684,7 @@ class PermissionService
     {
         if (strtolower($entityType) === 'page') {
             // Prevent drafts being visible to others.
-            $query = $query->where(function ($query) {
-                $query->where('draft', '=', false)
-                    ->orWhere(function ($query) {
-                        $query->where('draft', '=', true)
-                            ->where('created_by', '=', $this->currentUser()->id);
-                    });
-            });
+            $query = $this->enforceDraftVisiblityOnQuery($query);
         }
 
         $this->currentAction = $action;

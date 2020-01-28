@@ -32,9 +32,11 @@
                         <li>
                             <button type="button" @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</button>
                         </li>
-                        <li v-if="isNewDraft">
-                            <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
-                        </li>
+                        @if(userCan('page-delete', $model))
+                            <li v-if="isNewDraft">
+                                <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
+                            </li>
+                        @endif
                         <li v-if="isUpdateDraft">
                             <button type="button" @click="discardDraft" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</button>
                         </li>

@@ -1,5 +1,6 @@
 <?php namespace BookStack\Entities\Managers;
 
+use BookStack\Auth\User;
 use BookStack\Entities\Page;
 use BookStack\Entities\PageRevision;
 use Carbon\Carbon;
@@ -41,12 +42,28 @@ class PageEditActivity
     }
 
     /**
-     * Get the message to show when the user will be editing one of their drafts.
+     * Get the message to show when the user will be editing one of the drafts.
      * @param PageRevision $draft
      * @return string
      */
-    public function getEditingActiveDraftMessage(PageRevision $draft): string
+    public function getEditingActiveDraftMessage(PageRevision $draft, bool $sharedDrafts): string
     {
+        if ($sharedDrafts) {
+            $time = $draft->updated_at->diffForHumans();
+            $user = user();
+            error_log('$draft->updated_by: ' . $draft->updated_by);
+            error_log('$user->id: ' . $user->id);
+            if ($draft->created_by === $user->id) {
+                return trans('entities.pages_editing_shared_draft_notification.message', ['timeDiff' => $time, 'userName' => trans('entities.pages_editing_shared_draft_notification.you')]);
+            }
+            $createdUser = User::find($draft->created_by);
+            $userName = '_user'.$draft->created_by.'_';
+            if ($createdUser) {
+                $userName = $createdUser->name;
+            }
+            return trans('entities.pages_editing_shared_draft_notification.message', ['timeDiff' => $time, 'userName' => $userName]) . "\n" .
+                trans('entities.pages_editing_shared_draft_notification.warn');
+        }
         $message = trans('entities.pages_editing_draft_notification', ['timeDiff' => $draft->updated_at->diffForHumans()]);
         if ($draft->page->updated_at->timestamp <= $draft->updated_at->timestamp) {
             return $message;

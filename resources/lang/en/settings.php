@@ -40,6 +40,9 @@ return [
     'app_disable_comments' => 'Disable Comments',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
+    'app_shared_drafts' => 'Shared Drafts',
+    'app_shared_drafts_toggle' => 'Enable shared drafts',
+    'app_shared_drafts_desc' => 'Enable shared drafts across all users with edit permission on the page. <br> Existing drafts on the same page are overwritten, the last edited take precedence over the others.',
 
     // Color settings
     'content_colors' => 'Content Colors',

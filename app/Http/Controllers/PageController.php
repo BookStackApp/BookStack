@@ -78,7 +78,7 @@ class PageController extends Controller
     public function editDraft(string $bookSlug, int $pageId)
     {
         $draft = $this->pageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-create', $draft->parent());
+        $this->checkOwnablePermission('page-update', $draft->parent());
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
@@ -175,21 +175,26 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
 
+        $sharedDrafts = setting('app-shared-drafts');
         $page->isDraft = false;
         $editActivity = new PageEditActivity($page);
 
         // Check for active editing
         $warnings = [];
-        if ($editActivity->hasActiveEditing()) {
+        if (!$sharedDrafts && $editActivity->hasActiveEditing()) {
             $warnings[] = $editActivity->activeEditingMessage();
         }
 
         // Check for a current draft version for this user
-        $userDraft = $this->pageRepo->getUserDraft($page);
-        if ($userDraft !== null) {
-            $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
+        if ($sharedDrafts) {
+            $draft = $this->pageRepo->getDraft($page);
+        } else {
+            $draft = $this->pageRepo->getUserDraft($page);
+        }
+        if ($draft !== null) {
+            $page->forceFill($draft->only(['name', 'html', 'markdown']));
             $page->isDraft = true;
-            $warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
+            $warnings[] = $editActivity->getEditingActiveDraftMessage($draft, $sharedDrafts);
         }
 
         if (count($warnings) > 0) {
@@ -283,7 +288,7 @@ class PageController extends Controller
     public function showDeleteDraft(string $bookSlug, int $pageId)
     {
         $page = $this->pageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName'=>$page->getShortName()]));
         return view('pages.delete', [
             'book' => $page->book,
@@ -323,7 +328,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId);
         $book = $page->book;
         $chapter = $page->chapter;
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission('page-delete', $page);
 
         $this->pageRepo->destroy($page);
 

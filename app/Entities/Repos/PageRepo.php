@@ -121,6 +121,15 @@ class PageRepo
     }
 
     /**
+     * Get the draft copy of the given page.
+     */
+    public function getDraft(Page $page): ?PageRevision
+    {
+        $revision = $this->getDraftQuery($page)->first();
+        return $revision;
+    }
+
+    /**
      * Get a new draft page belonging to the given parent entity.
      */
     public function getNewDraftPage(Entity $parent)
@@ -195,7 +204,11 @@ class PageRepo
         $page->save();
 
         // Remove all update drafts for this user & page.
-        $this->getUserDraftQuery($page)->delete();
+        if (setting('app-shared-drafts')) {
+            $this->getDraftQuery($page)->delete();
+        } else {
+            $this->getUserDraftQuery($page)->delete();
+        }
 
         // Save a revision after updating
         $summary = $input['summary'] ?? null;
@@ -250,6 +263,7 @@ class PageRepo
         // Otherwise save the data to a revision
         $draft = $this->getPageRevisionToUpdate($page);
         $draft->fill($input);
+        $draft->created_by = user()->id; // Update the user that last updated the draft, just in case of shared draft
         if (setting('app-editor') !== 'markdown') {
             $draft->markdown = '';
         }
@@ -400,7 +414,11 @@ class PageRepo
      */
     protected function getPageRevisionToUpdate(Page $page): PageRevision
     {
-        $drafts = $this->getUserDraftQuery($page)->get();
+        if (setting('app-shared-drafts')) {
+            $drafts = $this->getDraftQuery($page)->get();
+        } else {
+            $drafts = $this->getUserDraftQuery($page)->get();
+        }
         if ($drafts->count() > 0) {
             return $drafts->first();
         }
@@ -457,5 +475,16 @@ class PageRepo
             ->where('type', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get the query to find the draft copies of the given page.
+     */
+    protected function getDraftQuery(Page $page)
+    {
+        return PageRevision::query()
+            ->where('type', 'update_draft')
+            ->where('page_id', '=', $page->id)
+            ->orderBy('updated_at', 'desc');
     }
 }
