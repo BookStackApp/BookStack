@@ -36,10 +36,10 @@ return [
         'numeric' => ':attribute nagyobb kell, hogy legyen, mint :value.',
         'file'    => ':attribute nagyobb kell, hogy legyen, mint :value kilobájt.',
         'string'  => ':attribute nagyobb kell legyen mint :value karakter.',
-        'array'   => 'The :attribute must have more than :value items.',
+        'array'   => ':attribute több, mint :value elemet kell, hogy tartalmazzon.',
     ],
     'gte'                  => [
-        'numeric' => 'The :attribute must be greater than or equal :value.',
+        'numeric' => ':attribute attribútumnak :value értéknél nagyobbnak vagy vele egyenlőnek kell lennie.',
         'file'    => 'The :attribute must be greater than or equal :value kilobytes.',
         'string'  => 'The :attribute must be greater than or equal :value characters.',
         'array'   => 'The :attribute must have :value items or more.',
