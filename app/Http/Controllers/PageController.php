@@ -78,7 +78,9 @@ class PageController extends Controller
     public function editDraft(string $bookSlug, int $pageId)
     {
         $draft = $this->pageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-update', $draft->parent());
+        if (!(userCan('page-update', $draft) || userCan('page-editdraft', $draft))) {
+            $this->showPermissionError();
+        }
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
@@ -173,7 +175,9 @@ class PageController extends Controller
     public function edit(string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        if (!(userCan('page-update', $page) || userCan('page-editdraft', $page))) {
+            $this->showPermissionError();
+        }
 
         $sharedDrafts = setting('app-shared-drafts');
         $page->isDraft = false;
@@ -239,7 +243,9 @@ class PageController extends Controller
     public function saveDraft(Request $request, int $pageId)
     {
         $page = $this->pageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-update', $page);
+        if (!(userCan('page-update', $page) || userCan('page-editdraft', $page))) {
+            $this->showPermissionError();
+        }
 
         if (!$this->isSignedIn()) {
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);

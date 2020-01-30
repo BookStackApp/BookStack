@@ -155,6 +155,8 @@
                         @include('settings.roles.checkbox', ['permission' => 'page-update-own', 'label' => trans('settings.role_own')])
                         <br>
                         @include('settings.roles.checkbox', ['permission' => 'page-update-all', 'label' => trans('settings.role_all')])
+                        <br>
+                        @include('settings.roles.checkbox', ['permission' => 'page-editdraft-all', 'label' => trans('common.drafts')])
                     </td>
                     <td>
                         @include('settings.roles.checkbox', ['permission' => 'page-delete-own', 'label' => trans('settings.role_own')])

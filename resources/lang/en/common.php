@@ -28,6 +28,8 @@ return [
     'create' => 'Create',
     'update' => 'Update',
     'edit' => 'Edit',
+    'drafts' => 'Drafts',
+    'edit_draft' => 'Edit Draft',
     'sort' => 'Sort',
     'move' => 'Move',
     'copy' => 'Copy',

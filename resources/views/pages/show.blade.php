@@ -118,7 +118,7 @@
         <div class="icon-list text-primary">
 
             {{--User Actions--}}
-            @if(userCan('page-update', $page))
+            @if(userCan('page-update', $page) || userCan('page-editdraft', $page))
                 <a href="{{ $page->getUrl('/edit') }}" class="icon-list-item">
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>

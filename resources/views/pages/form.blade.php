@@ -45,18 +45,20 @@
             </div>
 
             <div class="action-buttons px-m py-xs" v-cloak>
-                <div dropdown dropdown-move-menu class="dropdown-container">
-                    <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></button>
-                    <ul class="wide dropdown-menu">
-                        <li class="px-l py-m">
-                            <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
-                            <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
-                        </li>
-                    </ul>
-                    <span>{{-- Prevents button jumping on menu show --}}</span>
-                </div>
+                @if(userCan('page-update', $model))
+                    <div dropdown dropdown-move-menu class="dropdown-container">
+                        <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></button>
+                        <ul class="wide dropdown-menu">
+                            <li class="px-l py-m">
+                                <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
+                                <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
+                            </li>
+                        </ul>
+                        <span>{{-- Prevents button jumping on menu show --}}</span>
+                    </div>
 
-                <button type="submit" id="save-button" class="float-left text-primary text-button text-pos-hover hide-under-m">@icon('save')<span>{{ trans('entities.pages_save') }}</span></button>
+                    <button type="submit" id="save-button" class="float-left text-primary text-button text-pos-hover hide-under-m">@icon('save')<span>{{ trans('entities.pages_save') }}</span></button>
+                @endif
             </div>
         </div>
     </div>

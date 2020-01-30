@@ -426,6 +426,9 @@ class PermissionService
         if ($entity->isA('book')) {
             $baseActions[] = 'chapter-create';
         }
+        if ($entity->isA('page')) {
+            $baseActions[] = 'editdraft';
+        }
         return $baseActions;
     }
 
@@ -665,7 +668,27 @@ class PermissionService
             $query->where('draft', '=', false)
                 ->orWhere(function (Builder $query) {
                     if (setting('app-shared-drafts')) {
-                        $this->restrictEntityQuery($query, 'update');
+                        $this->clean();
+                        $query->where(function (Builder $parentQuery) {
+                            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
+                                $permissionQuery->whereIn('role_id', $this->getRoles())
+                                ->where(function (Builder $query) {
+                                    $query->where(function (Builder $query) {
+                                        $query->where('action', '=', 'editdraft')
+                                        ->where('has_permission', '=', true);
+                                    })->orWhere(function (Builder $query) {
+                                        $query->where('action', '=', 'update')
+                                        ->where(function (Builder $query) {
+                                            $query->where('has_permission', '=', true)
+                                            ->orWhere(function (Builder $query) {
+                                                $query->where('has_permission_own', '=', true)
+                                                ->where('created_by', '=', $this->currentUser()->id);
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
                     } else {
                         $query->where('created_by', '=', $this->currentUser()->id);
                     }
