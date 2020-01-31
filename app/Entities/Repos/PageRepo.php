@@ -204,11 +204,7 @@ class PageRepo
         $page->save();
 
         // Remove all update drafts for this user & page.
-        if (setting('app-shared-drafts')) {
-            $this->getDraftQuery($page)->delete();
-        } else {
-            $this->getUserDraftQuery($page)->delete();
-        }
+        setting('app-shared-drafts') ? $this->getDraftQuery($page)->delete() : $this->getUserDraftQuery($page)->delete();
 
         // Save a revision after updating
         $summary = $input['summary'] ?? null;

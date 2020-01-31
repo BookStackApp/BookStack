@@ -78,9 +78,7 @@ class PageController extends Controller
     public function editDraft(string $bookSlug, int $pageId)
     {
         $draft = $this->pageRepo->getById($pageId);
-        if (!(userCan('page-update', $draft) || userCan('page-editdraft', $draft))) {
-            $this->showPermissionError();
-        }
+        $this->checkOwnableOrPermissions(['page-update', 'page-editdraft'], $draft);
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
@@ -137,7 +135,7 @@ class PageController extends Controller
 
         $pageContent = (new PageContent($page));
         $page->html = $pageContent->render();
-        $sidebarTree = (new BookContents($page->book))->getTree();
+        $sidebarTree = (new BookContents($page->book))->getTree(true);
         $pageNav = $pageContent->getNavigation($page->html);
 
         // Check if page comments are enabled
@@ -175,9 +173,7 @@ class PageController extends Controller
     public function edit(string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        if (!(userCan('page-update', $page) || userCan('page-editdraft', $page))) {
-            $this->showPermissionError();
-        }
+        $this->checkOwnableOrPermissions(['page-update', 'page-editdraft'], $page);
 
         $sharedDrafts = setting('app-shared-drafts');
         $page->isDraft = false;
@@ -190,11 +186,7 @@ class PageController extends Controller
         }
 
         // Check for a current draft version for this user
-        if ($sharedDrafts) {
-            $draft = $this->pageRepo->getDraft($page);
-        } else {
-            $draft = $this->pageRepo->getUserDraft($page);
-        }
+        $draft = $sharedDrafts ? $this->pageRepo->getDraft($page) : $this->pageRepo->getUserDraft($page);
         if ($draft !== null) {
             $page->forceFill($draft->only(['name', 'html', 'markdown']));
             $page->isDraft = true;
@@ -243,9 +235,7 @@ class PageController extends Controller
     public function saveDraft(Request $request, int $pageId)
     {
         $page = $this->pageRepo->getById($pageId);
-        if (!(userCan('page-update', $page) || userCan('page-editdraft', $page))) {
-            $this->showPermissionError();
-        }
+        $this->checkOwnableOrPermissions(['page-update', 'page-editdraft'], $page);
 
         if (!$this->isSignedIn()) {
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);

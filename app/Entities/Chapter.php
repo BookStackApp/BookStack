@@ -52,12 +52,12 @@ class Chapter extends BookChild
     }
 
     /**
-     * Check if this chapter has any child pages.
+     * Check if this chapter has visible child pages.
      * @return bool
      */
-    public function hasChildren()
+    public function hasVisibleChildren()
     {
-        return count($this->pages) > 0;
+        return $this->pages()->visible()->count() > 0;
     }
 
     /**

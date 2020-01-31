@@ -665,34 +665,28 @@ class PermissionService
     public function enforceDraftVisiblityOnQuery(Builder $query): Builder
     {
         return $query->where(function (Builder $query) {
-            $query->where('draft', '=', false)
-                ->orWhere(function (Builder $query) {
-                    if (setting('app-shared-drafts')) {
-                        $this->clean();
-                        $query->where(function (Builder $parentQuery) {
-                            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
-                                $permissionQuery->whereIn('role_id', $this->getRoles())
-                                ->where(function (Builder $query) {
-                                    $query->where(function (Builder $query) {
-                                        $query->where('action', '=', 'editdraft')
-                                        ->where('has_permission', '=', true);
-                                    })->orWhere(function (Builder $query) {
-                                        $query->where('action', '=', 'update')
-                                        ->where(function (Builder $query) {
-                                            $query->where('has_permission', '=', true)
-                                            ->orWhere(function (Builder $query) {
-                                                $query->where('has_permission_own', '=', true)
-                                                ->where('created_by', '=', $this->currentUser()->id);
-                                            });
+            $query->where('draft', '=', false)->orWhere(function (Builder $query) {
+                if (setting('app-shared-drafts')) {
+                    $this->clean();
+                    $query->where(function (Builder $parentQuery) {
+                        $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
+                            $permissionQuery->whereIn('role_id', $this->getRoles())->where(function (Builder $query) {
+                                $query->where(function (Builder $query) {
+                                    $query->where('action', '=', 'editdraft')->where('has_permission', '=', true);
+                                })->orWhere(function (Builder $query) {
+                                    $query->where('action', '=', 'update')->where(function (Builder $query) {
+                                        $query->where('has_permission', '=', true)->orWhere(function (Builder $query) {
+                                            $query->where('has_permission_own', '=', true)->where('created_by', '=', $this->currentUser()->id);
                                         });
                                     });
                                 });
                             });
                         });
-                    } else {
-                        $query->where('created_by', '=', $this->currentUser()->id);
-                    }
-                });
+                    });
+                } else {
+                    $query->where('created_by', '=', $this->currentUser()->id);
+                }
+            });
         });
     }
 

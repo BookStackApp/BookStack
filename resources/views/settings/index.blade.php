@@ -8,9 +8,7 @@
                 @include('settings.navbar', ['selected' => 'settings'])
             </div>
             <div class="text-right p-m">
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
-                    BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
-                </a>
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}</a>
             </div>
         </div>
 
@@ -21,7 +19,6 @@
                 <input type="hidden" name="section" value="features">
 
                 <div class="setting-list">
-
 
                     <div class="grid half gap-xl">
                         <div>
@@ -37,8 +34,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-public',
                                 'value' => setting('app-public'),
-                                'label' => trans('settings.app_public_access_toggle'),
-                            ])
+                                'label' => trans('settings.app_public_access_toggle')])
                         </div>
                     </div>
 
@@ -51,8 +47,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-secure-images',
                                 'value' => setting('app-secure-images'),
-                                'label' => trans('settings.app_secure_images_toggle'),
-                            ])
+                                'label' => trans('settings.app_secure_images_toggle')])
                         </div>
                     </div>
 
@@ -65,8 +60,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-disable-comments',
                                 'value' => setting('app-disable-comments'),
-                                'label' => trans('settings.app_disable_comments_toggle'),
-                            ])
+                                'label' => trans('settings.app_disable_comments_toggle')])
                         </div>
                     </div>
 
@@ -79,11 +73,9 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-shared-drafts',
                                 'value' => setting('app-shared-drafts'),
-                                'label' => trans('settings.app_shared_drafts_toggle'),
-                            ])
+                                'label' => trans('settings.app_shared_drafts_toggle')])
                         </div>
                     </div>
-
 
                 </div>
 
@@ -111,8 +103,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-name-header',
                                 'value' => setting('app-name-header'),
-                                'label' => trans('settings.app_name_header'),
-                            ])
+                                'label' => trans('settings.app_name_header')])
                         </div>
                     </div>
 
@@ -136,13 +127,12 @@
                         </div>
                         <div>
                             @include('components.image-picker', [
-                                     'removeName' => 'setting-app-logo',
-                                     'removeValue' => 'none',
-                                     'defaultImage' => url('/logo.png'),
-                                     'currentImage' => setting('app-logo'),
-                                     'name' => 'app_logo',
-                                     'imageClass' => 'logo-image',
-                                 ])
+                                'removeName' => 'setting-app-logo',
+                                'removeValue' => 'none',
+                                'defaultImage' => url('/logo.png'),
+                                'currentImage' => setting('app-logo'),
+                                'name' => 'app_logo',
+                                'imageClass' => 'logo-image'])
                         </div>
                     </div>
 
@@ -195,11 +185,13 @@
                             </select>
 
                             <div page-picker-container style="display: none;" class="mt-m">
-                                @include('components.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_select'), 'value' => setting('app-homepage')])
+                                @include('components.page-picker', [
+                                    'name' => 'setting-app-homepage',
+                                    'placeholder' => trans('settings.app_homepage_select'),
+                                    'value' => setting('app-homepage')])
                             </div>
                         </div>
                     </div>
-
 
                     <div>
                         <label for="setting-app-custom-head" class="setting-list-label">{{ trans('settings.app_custom_html') }}</label>
@@ -207,7 +199,6 @@
                         <textarea name="setting-app-custom-head" id="setting-app-custom-head" class="simple-code-input mt-m">{{ setting('app-custom-head', '') }}</textarea>
                         <p class="small text-right">{{ trans('settings.app_custom_html_disabled_notice') }}</p>
                     </div>
-
 
                 </div>
 
@@ -233,8 +224,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-registration-enabled',
                                 'value' => setting('registration-enabled'),
-                                'label' => trans('settings.reg_enable_toggle')
-                            ])
+                                'label' => trans('settings.reg_enable_toggle')])
 
                             @if(in_array(config('auth.method'), ['ldap', 'saml2']))
                                 <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_external_warning') }}</div>
@@ -243,9 +233,7 @@
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
                             <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
                                 @foreach(\BookStack\Auth\Role::all() as $role)
-                                    <option value="{{$role->id}}" data-role-name="{{ $role->name }}"
-                                            @if(setting('registration-role', \BookStack\Auth\Role::first()->id) == $role->id) selected @endif
-                                    >
+                                    <option value="{{$role->id}}" data-role-name="{{ $role->name }}" @if(setting('registration-role', \BookStack\Auth\Role::first()->id) == $role->id) selected @endif>
                                         {{ $role->display_name }}
                                     </option>
                                 @endforeach
@@ -272,8 +260,7 @@
                             @include('components.toggle-switch', [
                                 'name' => 'setting-registration-confirmation',
                                 'value' => setting('registration-confirmation'),
-                                'label' => trans('settings.reg_email_confirmation_toggle')
-                            ])
+                                'label' => trans('settings.reg_email_confirmation_toggle')])
                         </div>
                     </div>
 

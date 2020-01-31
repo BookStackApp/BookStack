@@ -93,6 +93,22 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Check the current user's permissions in or against an ownable item.
+     * @param Collection $permissions
+     * @param Ownable $ownable
+     * @return bool
+     */
+    protected function checkOwnableOrPermissions($permissions, Ownable $ownable)
+    {
+        foreach ($permissions as $permission) {
+            if (userCan($permission, $ownable)) {
+                return true;
+            }
+        }
+        return $this->showPermissionError();
+    }
+
+    /**
      * Check if a user has a permission or bypass if the callback is true.
      * @param $permissionName
      * @param $callback

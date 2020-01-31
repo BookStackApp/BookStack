@@ -57,10 +57,7 @@ class PageEditActivity
                 return trans('entities.pages_editing_shared_draft_notification.message', ['timeDiff' => $time, 'userName' => trans('entities.pages_editing_shared_draft_notification.you')]);
             }
             $createdUser = User::find($draft->created_by);
-            $userName = '_user'.$draft->created_by.'_';
-            if ($createdUser) {
-                $userName = $createdUser->name;
-            }
+            $userName = $createdUser ? $createdUser->name : '_user'.$draft->created_by.'_';
             return trans('entities.pages_editing_shared_draft_notification.message', ['timeDiff' => $time, 'userName' => $userName]) . "\n" .
                 trans('entities.pages_editing_shared_draft_notification.warn');
         }
