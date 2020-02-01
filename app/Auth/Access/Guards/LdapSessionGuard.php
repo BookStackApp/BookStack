@@ -75,29 +75,8 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             $user = $this->freshUserInstanceFromLdapUserDetails($userDetails);
         }
 
-        $providedEmail = ($credentials['email'] ?? false);
-
-        // Request email if missing from LDAP and model and missing from request
-        if (is_null($user->email) && !$providedEmail) {
-            throw new LoginAttemptEmailNeededException();
-        }
-
-        // Add email to model if non-existing and email provided in request
-        if (!$user->exists && $user->email === null && $providedEmail) {
-            $user->email = $providedEmail;
-        }
-
-        if (!$user->exists) {
-            // Check for existing users with same email
-            $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
-            if ($alreadyUser) {
-                throw new LoginAttemptException(trans('errors.error_user_exists_different_creds', ['email' => $user->email]));
-            }
-
-            $user->save();
-            $this->userRepo->attachDefaultRole($user);
-            $this->userRepo->downloadAndAssignUserAvatar($user);
-        }
+        $this->checkForUserEmail($user, $credentials['email'] ?? '');
+        $this->saveIfNew($user);
 
         // Sync LDAP groups if required
         if ($this->ldapService->shouldSyncGroups()) {
@@ -106,6 +85,46 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
 
         $this->login($user, $remember);
         return true;
+    }
+
+    /**
+     * Save the give user if they don't yet existing in the system.
+     * @throws LoginAttemptException
+     */
+    protected function saveIfNew(User $user)
+    {
+        if ($user->exists) {
+            return;
+        }
+
+        // Check for existing users with same email
+        $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
+        if ($alreadyUser) {
+            throw new LoginAttemptException(trans('errors.error_user_exists_different_creds', ['email' => $user->email]));
+        }
+
+        $user->save();
+        $this->userRepo->attachDefaultRole($user);
+        $this->userRepo->downloadAndAssignUserAvatar($user);
+    }
+
+    /**
+     * Ensure the given user has an email.
+     * Takes the provided email in the request if a value is provided
+     * and the user does not have an existing email.
+     * @throws LoginAttemptEmailNeededException
+     */
+    protected function checkForUserEmail(User $user, string $providedEmail)
+    {
+        // Request email if missing from user and missing from request
+        if (is_null($user->email) && !$providedEmail) {
+            throw new LoginAttemptEmailNeededException();
+        }
+
+        // Add email to model if non-existing and email provided in request
+        if (!$user->exists && is_null($user->email) && $providedEmail) {
+            $user->email = $providedEmail;
+        }
     }
 
     /**

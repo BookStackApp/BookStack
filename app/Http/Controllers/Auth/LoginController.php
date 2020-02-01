@@ -120,6 +120,43 @@ class LoginController extends Controller
     }
 
     /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function validateLogin(Request $request)
+    {
+        $rules = [];
+        $authMethod = config('auth.method');
+
+        if ($authMethod === 'standard') {
+            $rules = [
+                'email' => 'required|string|email',
+                'password' => 'required|string'
+            ];
+        }
+
+        if ($authMethod === 'ldap') {
+            $rules = [
+                'username' => 'required|string',
+                'password' => 'required|string',
+                'email' => 'email',
+            ];
+        }
+
+        if ($authMethod === 'saml2') {
+            $rules = [
+                'email' => 'email',
+            ];
+        }
+
+        $request->validate($rules);
+    }
+
+    /**
      * Send a response when a login attempt exception occurs.
      */
     protected function sendLoginAttemptExceptionResponse(LoginAttemptException $exception, Request $request)
