@@ -18,7 +18,7 @@ return [
     // This option controls the default authentication "guard" and password
     // reset options for your application.
     'defaults' => [
-        'guard' => 'web',
+        'guard' => env('AUTH_METHOD', 'standard') === 'standard' ? 'web' : env('AUTH_METHOD'),
         'passwords' => 'users',
     ],
 
@@ -26,13 +26,16 @@ return [
     // All authentication drivers have a user provider. This defines how the
     // users are actually retrieved out of your database or other storage
     // mechanisms used by this application to persist your user's data.
-    // Supported: "session", "token"
+    // Supported drivers: "session", "api-token", "ldap-session"
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        'ldap' => [
+            'driver' => 'ldap-session',
+            'provider' => 'external'
+        ],
         'api' => [
             'driver' => 'api-token',
         ],
@@ -42,17 +45,15 @@ return [
     // All authentication drivers have a user provider. This defines how the
     // users are actually retrieved out of your database or other storage
     // mechanisms used by this application to persist your user's data.
-    // Supported: database, eloquent, ldap
     'providers' => [
         'users' => [
             'driver' => env('AUTH_METHOD', 'standard') === 'standard' ? 'eloquent' : env('AUTH_METHOD'),
             'model' => \BookStack\Auth\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'external' => [
+            'driver' => 'external-users',
+            'model' => \BookStack\Auth\User::class,
+        ],
     ],
 
     // Resetting Passwords
