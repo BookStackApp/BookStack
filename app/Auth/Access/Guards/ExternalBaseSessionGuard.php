@@ -2,10 +2,7 @@
 
 namespace BookStack\Auth\Access\Guards;
 
-use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
-use BookStack\Exceptions\LoginAttemptEmailNeededException;
-use BookStack\Exceptions\LoginAttemptException;
+use BookStack\Auth\Access\RegistrationService;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\StatefulGuard;
@@ -56,23 +53,23 @@ class ExternalBaseSessionGuard implements StatefulGuard
     protected $loggedOut = false;
 
     /**
-     * Repository to perform user-specific actions.
+     * Service to handle common registration actions.
      *
-     * @var UserRepo
+     * @var RegistrationService
      */
-    protected $userRepo;
+    protected $registrationService;
 
     /**
      * Create a new authentication guard.
      *
      * @return void
      */
-    public function __construct(string $name, UserProvider $provider, Session $session, UserRepo $userRepo)
+    public function __construct(string $name, UserProvider $provider, Session $session, RegistrationService $registrationService)
     {
         $this->name = $name;
         $this->session = $session;
         $this->provider = $provider;
-        $this->userRepo = $userRepo;
+        $this->registrationService = $registrationService;
     }
 
     /**

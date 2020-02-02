@@ -73,7 +73,7 @@ class Saml2Test extends TestCase
             $this->assertDatabaseHas('users', [
                 'email' => 'user@example.com',
                 'external_auth_id' => 'user',
-                'email_confirmed' => true,
+                'email_confirmed' => false,
                 'name' => 'Barry Scott'
             ]);
 
@@ -209,7 +209,7 @@ class Saml2Test extends TestCase
             $acsPost = $this->post('/saml2/acs');
             $acsPost->assertRedirect('/');
             $errorMessage = session()->get('error');
-            $this->assertEquals('Registration unsuccessful since a user already exists with email address "user@example.com"', $errorMessage);
+            $this->assertEquals('A user with the email user@example.com already exists but with different credentials.', $errorMessage);
         });
     }
 
@@ -269,6 +269,24 @@ class Saml2Test extends TestCase
 
         $resp = $this->post('/register');
         $this->assertPermissionError($resp);
+    }
+
+    public function test_email_domain_restriction_active_on_new_saml_login()
+    {
+        $this->setSettings([
+            'registration-restrict' => 'testing.com'
+        ]);
+        config()->set([
+            'saml2.onelogin.strict' => false,
+        ]);
+
+        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
+            $acsPost = $this->post('/saml2/acs');
+            $acsPost->assertRedirect('/login');
+            $errorMessage = session()->get('error');
+            $this->assertStringContainsString('That email domain does not have access to this application', $errorMessage);
+            $this->assertDatabaseMissing('users', ['email' => 'user@example.com']);
+        });
     }
 
     protected function withGet(array $options, callable $callback)

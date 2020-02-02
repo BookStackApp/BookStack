@@ -219,8 +219,8 @@
                                 'label' => trans('settings.reg_enable_toggle')
                             ])
 
-                            @if(config('auth.method') === 'ldap')
-                                <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_ldap_warning') }}</div>
+                            @if(in_array(config('auth.method'), ['ldap', 'saml2']))
+                                <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_external_warning') }}</div>
                             @endif
 
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>

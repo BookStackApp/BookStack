@@ -81,7 +81,6 @@ class Saml2Controller extends Controller
             return redirect('/login');
         }
 
-        session()->put('last_login_type', 'saml2');
         return redirect()->intended();
     }
 

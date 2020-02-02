@@ -8,6 +8,7 @@ use BookStack\Auth\Access\ExternalBaseUserProvider;
 use BookStack\Auth\Access\Guards\LdapSessionGuard;
 use BookStack\Auth\Access\Guards\Saml2SessionGuard;
 use BookStack\Auth\Access\LdapService;
+use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\UserRepo;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
                 $provider,
                 $this->app['session.store'],
                 $app[LdapService::class],
-                $app[UserRepo::class]
+                $app[RegistrationService::class]
             );
         });
 
@@ -41,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
                 $name,
                 $provider,
                 $this->app['session.store'],
-                $app[UserRepo::class]
+                $app[RegistrationService::class]
             );
         });
     }
