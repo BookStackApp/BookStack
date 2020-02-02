@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'Es konnte keine E-Mail-Adresse für diesen Benutzer in den vom externen Authentifizierungssystem zur Verfügung gestellten Daten gefunden werden',
     'saml_invalid_response_id' => 'Die Anfrage vom externen Authentifizierungssystem wird von einem von dieser Anwendung gestarteten Prozess nicht erkannt. Das Zurückgehen nach einem Login könnte dieses Problem verursachen.',
     'saml_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System konnte keine erfolgreiche Autorisierung bereitstellen',
-    'saml_email_exists' => 'Registrierung fehlgeschlagen, da bereits ein Benutzer mit der E-Mail-Adresse ":email" existiert',
     'social_no_action_defined' => 'Es ist keine Aktion definiert',
     'social_login_bad_response' => "Fehler bei der :socialAccount-Anmeldung: \n:error",
     'social_account_in_use' => 'Dieses :socialAccount-Konto wird bereits verwendet. Bitte melden Sie sich mit dem :socialAccount-Konto an.',
