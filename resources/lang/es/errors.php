@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'No se pudo encontrar una dirección de correo electrónico, para este usuario, en los datos proporcionados por el sistema de autenticación externo',
     'saml_invalid_response_id' => 'La solicitud del sistema de autenticación externo no está reconocida por un proceso iniciado por esta aplicación. Navegar hacia atrás después de un inicio de sesión podría causar este problema.',
     'saml_fail_authed' => 'El inicio de sesión con :system falló, el sistema no proporcionó una autorización correcta',
-    'saml_email_exists' => 'Registro fallido porque un usuario ya existe con la dirección de correo electrónico ":email"',
     'social_no_action_defined' => 'Acción no definida',
     'social_login_bad_response' => "Se ha recibido un error durante el acceso con :socialAccount error: \n:error",
     'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente acceder a través de la opción :socialAccount .',
