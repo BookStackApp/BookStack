@@ -1,10 +1,8 @@
 <?php namespace BookStack\Auth\Access;
 
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\LdapException;
 use ErrorException;
-use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * Class LdapService
@@ -16,17 +14,15 @@ class LdapService extends ExternalAuthService
     protected $ldap;
     protected $ldapConnection;
     protected $config;
-    protected $userRepo;
     protected $enabled;
 
     /**
      * LdapService constructor.
      */
-    public function __construct(Ldap $ldap, UserRepo $userRepo)
+    public function __construct(Ldap $ldap)
     {
         $this->ldap = $ldap;
         $this->config = config('services.ldap');
-        $this->userRepo = $userRepo;
         $this->enabled = config('auth.method') === 'ldap';
     }
 

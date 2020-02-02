@@ -3,13 +3,17 @@
 namespace BookStack\Auth\Access\Guards;
 
 use BookStack\Auth\Access\LdapService;
+use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\LdapException;
 use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
+use BookStack\Exceptions\UserRegistrationException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class LdapSessionGuard extends ExternalBaseSessionGuard
 {
@@ -23,11 +27,11 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         UserProvider $provider,
         Session $session,
         LdapService $ldapService,
-        UserRepo $userRepo
+        RegistrationService $registrationService
     )
     {
         $this->ldapService = $ldapService;
-        parent::__construct($name, $provider, $session, $userRepo);
+        parent::__construct($name, $provider, $session, $registrationService);
     }
 
     /**
@@ -56,6 +60,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
      * @throws LoginAttemptEmailNeededException
      * @throws LoginAttemptException
      * @throws LdapException
+     * @throws UserRegistrationException
      */
     public function attempt(array $credentials = [], $remember = false)
     {
@@ -70,11 +75,8 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         }
 
         if (is_null($user)) {
-            $user = $this->freshUserInstanceFromLdapUserDetails($userDetails);
+            $user = $this->createNewFromLdapAndCreds($userDetails, $credentials);
         }
-
-        $this->checkForUserEmail($user, $credentials['email'] ?? '');
-        $this->saveIfNew($user);
 
         // Sync LDAP groups if required
         if ($this->ldapService->shouldSyncGroups()) {
@@ -86,58 +88,27 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     }
 
     /**
-     * Save the give user if they don't yet existing in the system.
-     * @throws LoginAttemptException
-     */
-    protected function saveIfNew(User $user)
-    {
-        if ($user->exists) {
-            return;
-        }
-
-        // Check for existing users with same email
-        $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
-        if ($alreadyUser) {
-            throw new LoginAttemptException(trans('errors.error_user_exists_different_creds', ['email' => $user->email]));
-        }
-
-        $user->save();
-        $this->userRepo->attachDefaultRole($user);
-        $this->userRepo->downloadAndAssignUserAvatar($user);
-    }
-
-    /**
-     * Ensure the given user has an email.
-     * Takes the provided email in the request if a value is provided
-     * and the user does not have an existing email.
+     * Create a new user from the given ldap credentials and login credentials
      * @throws LoginAttemptEmailNeededException
+     * @throws LoginAttemptException
+     * @throws UserRegistrationException
      */
-    protected function checkForUserEmail(User $user, string $providedEmail)
+    protected function createNewFromLdapAndCreds(array $ldapUserDetails, array $credentials): User
     {
-        // Request email if missing from user and missing from request
-        if (is_null($user->email) && !$providedEmail) {
+        $email = trim($ldapUserDetails['email'] ?: ($credentials['email'] ?? ''));
+
+        if (empty($email)) {
             throw new LoginAttemptEmailNeededException();
         }
 
-        // Add email to model if non-existing and email provided in request
-        if (!$user->exists && is_null($user->email) && $providedEmail) {
-            $user->email = $providedEmail;
-        }
-    }
+        $details = [
+            'name' => $ldapUserDetails['name'],
+            'email' => $ldapUserDetails['email'] ?: $credentials['email'],
+            'external_auth_id' => $ldapUserDetails['uid'],
+            'password' => Str::random(32),
+        ];
 
-    /**
-     * Create a fresh user instance from details provided by a LDAP lookup.
-     */
-    protected function freshUserInstanceFromLdapUserDetails(array $ldapUserDetails): User
-    {
-        $user = new User();
-
-        $user->name = $ldapUserDetails['name'];
-        $user->external_auth_id = $ldapUserDetails['uid'];
-        $user->email = $ldapUserDetails['email'];
-        $user->email_confirmed = false;
-
-        return $user;
+        return $this->registrationService->registerUser($details, null, false);
     }
 
 }

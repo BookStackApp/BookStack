@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
+use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;

@@ -1,9 +1,9 @@
 <?php namespace BookStack\Auth\Access;
 
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\SamlException;
+use BookStack\Exceptions\UserRegistrationException;
 use Exception;
 use Illuminate\Support\Str;
 use OneLogin\Saml2\Auth;
@@ -18,16 +18,16 @@ use OneLogin\Saml2\ValidationError;
 class Saml2Service extends ExternalAuthService
 {
     protected $config;
-    protected $userRepo;
+    protected $registrationService;
     protected $user;
 
     /**
      * Saml2Service constructor.
      */
-    public function __construct(UserRepo $userRepo, User $user)
+    public function __construct(RegistrationService $registrationService, User $user)
     {
         $this->config = config('saml2');
-        $this->userRepo = $userRepo;
+        $this->registrationService = $registrationService;
         $this->user = $user;
     }
 
@@ -78,6 +78,7 @@ class Saml2Service extends ExternalAuthService
      * @throws SamlException
      * @throws ValidationError
      * @throws JsonDebugException
+     * @throws UserRegistrationException
      */
     public function processAcsResponse(?string $requestId): ?User
     {
@@ -309,33 +310,9 @@ class Saml2Service extends ExternalAuthService
     }
 
     /**
-     *  Register a user that is authenticated but not already registered.
-     */
-    protected function registerUser(array $userDetails): User
-    {
-        // Create an array of the user data to create a new user instance
-        $userData = [
-            'name' => $userDetails['name'],
-            'email' => $userDetails['email'],
-            'password' => Str::random(32),
-            'external_auth_id' => $userDetails['external_id'],
-            'email_confirmed' => true,
-        ];
-
-        $existingUser = $this->user->newQuery()->where('email', '=', $userDetails['email'])->first();
-        if ($existingUser) {
-            throw new SamlException(trans('errors.saml_email_exists', ['email' => $userDetails['email']]));
-        }
-
-        $user = $this->user->newQuery()->forceCreate($userData);
-        $this->userRepo->attachDefaultRole($user);
-        $this->userRepo->downloadAndAssignUserAvatar($user);
-        return $user;
-    }
-
-    /**
      * Get the user from the database for the specified details.
      * @throws SamlException
+     * @throws UserRegistrationException
      */
     protected function getOrRegisterUser(array $userDetails): ?User
     {
@@ -344,7 +321,14 @@ class Saml2Service extends ExternalAuthService
           ->first();
 
         if (is_null($user)) {
-            $user = $this->registerUser($userDetails);
+            $userData = [
+                'name' => $userDetails['name'],
+                'email' => $userDetails['email'],
+                'password' => Str::random(32),
+                'external_auth_id' => $userDetails['external_id'],
+            ];
+
+            $user = $this->registrationService->registerUser($userData, null, false);
         }
 
         return $user;
@@ -355,6 +339,7 @@ class Saml2Service extends ExternalAuthService
      * they exist, optionally registering them automatically.
      * @throws SamlException
      * @throws JsonDebugException
+     * @throws UserRegistrationException
      */
     public function processLoginCallback(string $samlID, array $samlAttributes): User
     {

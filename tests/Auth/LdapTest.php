@@ -86,6 +86,38 @@ class LdapTest extends BrowserKitTest
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name]);
     }
 
+    public function test_email_domain_restriction_active_on_new_ldap_login()
+    {
+        $this->setSettings([
+            'registration-restrict' => 'testing.com'
+        ]);
+
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$this->mockUser->name],
+                'cn' => [$this->mockUser->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
+        $this->mockEscapes(2);
+
+        $this->mockUserLogin()
+            ->seePageIs('/login')
+            ->see('Please enter an email to use for this account.');
+
+        $email = 'tester@invaliddomain.com';
+
+        $this->type($email, '#email')
+            ->press('Log In')
+            ->seePageIs('/login')
+            ->see('That email domain does not have access to this application')
+            ->dontSeeInDatabase('users', ['email' => $email]);
+    }
+
     public function test_login_works_when_no_uid_provided_by_ldap_server()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);

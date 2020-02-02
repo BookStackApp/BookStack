@@ -74,7 +74,7 @@ class RegisterController extends Controller
      */
     public function getRegister()
     {
-        $this->registrationService->checkRegistrationAllowed();
+        $this->registrationService->ensureRegistrationAllowed();
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,
@@ -87,12 +87,13 @@ class RegisterController extends Controller
      */
     public function postRegister(Request $request)
     {
-        $this->registrationService->checkRegistrationAllowed();
+        $this->registrationService->ensureRegistrationAllowed();
         $this->validator($request->all())->validate();
         $userData = $request->all();
 
         try {
-            $this->registrationService->registerUser($userData);
+            $user = $this->registrationService->registerUser($userData);
+            auth()->login($user);
         } catch (UserRegistrationException $exception) {
             if ($exception->getMessage()) {
                 $this->showErrorNotification($exception->getMessage());

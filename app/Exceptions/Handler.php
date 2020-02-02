@@ -57,7 +57,10 @@ class Handler extends ExceptionHandler
         // Handle notify exceptions which will redirect to the
         // specified location then show a notification message.
         if ($this->isExceptionType($e, NotifyException::class)) {
-            session()->flash('error', $this->getOriginalMessage($e));
+            $message = $this->getOriginalMessage($e);
+            if (!empty($message)) {
+                session()->flash('error', $message);
+            }
             return redirect($e->redirectLocation);
         }
 

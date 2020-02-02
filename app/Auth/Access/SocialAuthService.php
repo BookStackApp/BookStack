@@ -64,7 +64,7 @@ class SocialAuthService
 
         if ($this->userRepo->getByEmail($socialUser->getEmail())) {
             $email = $socialUser->getEmail();
-            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver, 'email' => $email]), '/login');
+            throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $email]), '/login');
         }
 
         return $socialUser;
@@ -124,7 +124,7 @@ class SocialAuthService
 
         // Otherwise let the user know this social account is not used by anyone.
         $message = trans('errors.social_account_not_used', ['socialAccount' => $titleCaseDriver]);
-        if (setting('registration-enabled') && config('auth.method') !== 'ldap') {
+        if (setting('registration-enabled') && config('auth.method') !== 'ldap' && config('auth.method') !== 'saml2') {
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => $titleCaseDriver]);
         }
         
