@@ -20,14 +20,15 @@ class RegistrationService
         $this->emailConfirmationService = $emailConfirmationService;
     }
 
-
     /**
      * Check whether or not registrations are allowed in the app settings.
      * @throws UserRegistrationException
      */
     public function checkRegistrationAllowed()
     {
-        if (!setting('registration-enabled') || config('auth.method') === 'ldap') {
+        $authMethod = config('auth.method');
+        $authMethodsWithRegistration = ['standard'];
+        if (!setting('registration-enabled') || !in_array($authMethod, $authMethodsWithRegistration)) {
             throw new UserRegistrationException(trans('auth.registrations_disabled'), '/login');
         }
     }

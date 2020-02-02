@@ -34,7 +34,11 @@ return [
         ],
         'ldap' => [
             'driver' => 'ldap-session',
-            'provider' => 'external'
+            'provider' => 'external',
+        ],
+        'saml2' => [
+            'driver' => 'saml2-session',
+            'provider' => 'external',
         ],
         'api' => [
             'driver' => 'api-token',

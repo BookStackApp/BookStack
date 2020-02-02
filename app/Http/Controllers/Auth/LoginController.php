@@ -65,7 +65,6 @@ class LoginController extends Controller
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         $authMethod = config('auth.method');
-        $samlEnabled = config('saml2.enabled') === true;
 
         if ($request->has('email')) {
             session()->flashInput([
@@ -77,7 +76,6 @@ class LoginController extends Controller
         return view('auth.login', [
           'socialDrivers' => $socialDrivers,
           'authMethod' => $authMethod,
-          'samlEnabled' => $samlEnabled,
         ]);
     }
 
@@ -129,28 +127,16 @@ class LoginController extends Controller
      */
     protected function validateLogin(Request $request)
     {
-        $rules = [];
+        $rules = ['password' => 'required|string'];
         $authMethod = config('auth.method');
 
         if ($authMethod === 'standard') {
-            $rules = [
-                'email' => 'required|string|email',
-                'password' => 'required|string'
-            ];
+            $rules['email'] = 'required|email';
         }
 
         if ($authMethod === 'ldap') {
-            $rules = [
-                'username' => 'required|string',
-                'password' => 'required|string',
-                'email' => 'email',
-            ];
-        }
-
-        if ($authMethod === 'saml2') {
-            $rules = [
-                'email' => 'email',
-            ];
+            $rules['username'] = 'required|string';
+            $rules['email'] = 'email';
         }
 
         $request->validate($rules);
@@ -178,10 +164,6 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        if (config('saml2.enabled') && session()->get('last_login_type') === 'saml2') {
-            return redirect('/saml2/logout');
-        }
-
         $this->guard()->logout();
         $request->session()->invalidate();
 

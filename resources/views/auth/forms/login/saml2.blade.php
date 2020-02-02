@@ -1,30 +1,11 @@
-<form action="{{ url('/login') }}" method="POST" id="login-form" class="mt-l">
+<form action="{{ url('/saml2/login') }}" method="POST" id="login-form" class="mt-l">
     {!! csrf_field() !!}
 
-    <div class="stretch-inputs">
-        <div class="form-group">
-            <label for="username">{{ trans('auth.username') }}</label>
-            @include('form.text', ['name' => 'username', 'autofocus' => true])
-        </div>
-
-        @if(session('request-email', false) === true)
-            <div class="form-group">
-                <label for="email">{{ trans('auth.email') }}</label>
-                @include('form.text', ['name' => 'email'])
-                <span class="text-neg">{{ trans('auth.ldap_email_hint') }}</span>
-            </div>
-        @endif
-
-        <div class="form-group">
-            <label for="password">{{ trans('auth.password') }}</label>
-            @include('form.password', ['name' => 'password'])
-        </div>
-    </div>
-
-    <div class="grid half collapse-xs gap-xl v-center">
-        <div class="text-right">
-            <button class="button">{{ Str::title(trans('auth.log_in')) }}</button>
-        </div>
+    <div>
+        <button id="saml-login" class="button outline block svg">
+            @icon('saml2')
+            {{ trans('auth.log_in_with', ['socialDriver' => config('saml2.name')]) }}
+        </button>
     </div>
 
 </form>

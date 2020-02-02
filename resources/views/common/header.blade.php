@@ -42,7 +42,7 @@
                     @endif
 
                     @if(!signedInUser())
-                        @if(setting('registration-enabled') && config('auth.method') !== 'ldap')
+                        @if(setting('registration-enabled') && config('auth.method') === 'standard')
                             <a href="{{ url('/register') }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
                         @endif
                         <a href="{{ url('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
@@ -64,7 +64,11 @@
                                 <a href="{{ url("/settings/users/{$currentUser->id}") }}">@icon('edit'){{ trans('common.edit_profile') }}</a>
                             </li>
                             <li>
-                                <a href="{{ url('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
+                                @if(config('auth.method') === 'saml2')
+                                    <a href="{{ url('/saml2/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
+                                @else
+                                    <a href="{{ url('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
+                                @endif
                             </li>
                         </ul>
                     </div>
