@@ -19,10 +19,8 @@
             <label for="password">{{ trans('auth.password') }}</label>
             @include('form.password', ['name' => 'password'])
         </div>
-    </div>
 
-    <div class="grid half collapse-xs gap-xl v-center">
-        <div class="text-right">
+        <div class="form-group text-right pt-s">
             <button class="button">{{ Str::title(trans('auth.log_in')) }}</button>
         </div>
     </div>
