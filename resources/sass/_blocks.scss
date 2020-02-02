@@ -259,3 +259,8 @@
   &[data-method="PUT"] { background-color: #0288D1 }
   &[data-method="DELETE"] { background-color: #ab0f0e }
 }
+
+.sticky-sidebar {
+  position: sticky;
+  top: $-m;
+}
