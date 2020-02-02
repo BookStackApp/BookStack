@@ -51,7 +51,7 @@ return [
     // mechanisms used by this application to persist your user's data.
     'providers' => [
         'users' => [
-            'driver' => env('AUTH_METHOD', 'standard') === 'standard' ? 'eloquent' : env('AUTH_METHOD'),
+            'driver' => 'eloquent',
             'model' => \BookStack\Auth\User::class,
         ],
         'external' => [
