@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'Ehhez a felhasználóhoz nem található email cím a külső hitelesítő rendszer által átadott adatokban',
     'saml_invalid_response_id' => 'A külső hitelesítő rendszerből érkező kérést nem ismerte fel az alkalmazás által indított folyamat. Bejelentkezés után az előző oldalra történő visszalépés okozhatja ezt a hibát.',
     'saml_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres hitelesítést',
-    'saml_email_exists' => 'A regisztráció sikertelen mivel már létezik felhasználó ":email" email címmel',
     'social_no_action_defined' => 'Nincs művelet meghatározva',
     'social_login_bad_response' => "Hiba történt :socialAccount bejelentkezés közben:\n:error",
     'social_account_in_use' => ':socialAccount fiók már használatban van. :socialAccount opción keresztül érdemes megpróbálni a bejelentkezést.',
