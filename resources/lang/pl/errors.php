@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'Nie można odnaleźć adresu email dla tego użytkownika w danych dostarczonych przez zewnętrzny system uwierzytelniania',
     'saml_invalid_response_id' => 'Żądanie z zewnętrznego systemu uwierzytelniania nie zostało rozpoznane przez proces rozpoczęty przez tę aplikację. Cofnięcie po zalogowaniu mogło spowodować ten problem.',
     'saml_fail_authed' => 'Logowanie przy użyciu :system nie powiodło się, system nie mógł pomyślnie ukończyć uwierzytelniania',
-    'saml_email_exists' => 'Rejestracja nie powiodła się, ponieważ użytkownik z adresem email ":email" już istnieje',
     'social_no_action_defined' => 'Brak zdefiniowanej akcji',
     'social_login_bad_response' => "Podczas próby logowania :socialAccount wystąpił błąd: \n:error",
     'social_account_in_use' => 'To konto :socialAccount jest już w użyciu. Spróbuj zalogować się za pomocą opcji :socialAccount.',
