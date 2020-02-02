@@ -117,6 +117,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Attach the default system role to this user.
+     */
+    public function attachDefaultRole(): void
+    {
+        $roleId = setting('registration-role');
+        if ($roleId && $this->roles()->where('id', '=', $roleId)->count() === 0) {
+            $this->roles()->attach($roleId);
+        }
+    }
+
+    /**
      * Get all permissions belonging to a the current user.
      * @param bool $cache
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
@@ -153,16 +164,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function attachRole(Role $role)
     {
-        $this->attachRoleId($role->id);
-    }
-
-    /**
-     * Attach a role id to this user.
-     * @param $id
-     */
-    public function attachRoleId($id)
-    {
-        $this->roles()->attach($id);
+        $this->roles()->attach($role->id);
     }
 
     /**

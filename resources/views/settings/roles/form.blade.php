@@ -19,7 +19,7 @@
                     @include('form.text', ['name' => 'description'])
                 </div>
 
-                @if(config('auth.method') === 'ldap' || config('saml2.enabled') === true)
+                @if(config('auth.method') === 'ldap' || config('auth.method') === 'saml2')
                     <div class="form-group">
                         <label for="name">{{ trans('settings.role_external_auth_id') }}</label>
                         @include('form.text', ['name' => 'external_auth_id'])

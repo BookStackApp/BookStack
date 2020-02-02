@@ -20,7 +20,7 @@ class ApiAuthTest extends TestCase
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(401);
 
-        $this->actingAs($viewer, 'web');
+        $this->actingAs($viewer, 'standard');
 
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(200);
@@ -72,11 +72,11 @@ class ApiAuthTest extends TestCase
     public function test_api_access_permission_required_to_access_api_with_session_auth()
     {
         $editor = $this->getEditor();
-        $this->actingAs($editor, 'web');
+        $this->actingAs($editor, 'standard');
 
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(200);
-        auth('web')->logout();
+        auth('standard')->logout();
 
         $accessApiPermission = RolePermission::getByName('access-api');
         $editorRole = $this->getEditor()->roles()->first();
@@ -84,7 +84,7 @@ class ApiAuthTest extends TestCase
 
         $editor = User::query()->where('id', '=', $editor->id)->first();
 
-        $this->actingAs($editor, 'web');
+        $this->actingAs($editor, 'standard');
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(403);
         $resp->assertJson($this->errorResponse("The owner of the used API token does not have permission to make API calls", 403));

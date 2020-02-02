@@ -11,9 +11,9 @@ class Saml2Test extends TestCase
         parent::setUp();
         // Set default config for SAML2
         config()->set([
+            'auth.method' => 'saml2',
+            'auth.defaults.guard' => 'saml2',
             'saml2.name' => 'SingleSignOn-Testing',
-            'saml2.enabled' => true,
-            'saml2.auto_register' => true,
             'saml2.email_attribute' => 'email',
             'saml2.display_name_attributes' => ['first_name', 'last_name'],
             'saml2.external_id_attribute' => 'uid',
@@ -53,27 +53,12 @@ class Saml2Test extends TestCase
     {
         $req = $this->get('/login');
         $req->assertSeeText('SingleSignOn-Testing');
-        $req->assertElementExists('a[href$="/saml2/login"]');
-    }
-
-    public function test_login_option_shows_on_register_page_only_when_auto_register_enabled()
-    {
-        $this->setSettings(['app-public' => 'true', 'registration-enabled' => 'true']);
-
-        $req = $this->get('/register');
-        $req->assertSeeText('SingleSignOn-Testing');
-        $req->assertElementExists('a[href$="/saml2/login"]');
-
-        config()->set(['saml2.auto_register' => false]);
-
-        $req = $this->get('/register');
-        $req->assertDontSeeText('SingleSignOn-Testing');
-        $req->assertElementNotExists('a[href$="/saml2/login"]');
+        $req->assertElementExists('form[action$="/saml2/login"][method=POST] button');
     }
 
     public function test_login()
     {
-        $req = $this->get('/saml2/login');
+        $req = $this->post('/saml2/login');
         $redirect = $req->headers->get('location');
         $this->assertStringStartsWith('http://saml.local/saml2/idp/SSOService.php', $redirect, 'Login redirects to SSO location');
 
@@ -88,7 +73,7 @@ class Saml2Test extends TestCase
             $this->assertDatabaseHas('users', [
                 'email' => 'user@example.com',
                 'external_auth_id' => 'user',
-                'email_confirmed' => true,
+                'email_confirmed' => false,
                 'name' => 'Barry Scott'
             ]);
 
@@ -138,20 +123,15 @@ class Saml2Test extends TestCase
         });
     }
 
-    public function test_logout_redirects_to_saml_logout_when_active_saml_session()
+    public function test_logout_link_directs_to_saml_path()
     {
         config()->set([
             'saml2.onelogin.strict' => false,
         ]);
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $lastLoginType = session()->get('last_login_type');
-            $this->assertEquals('saml2', $lastLoginType);
-
-            $req = $this->get('/logout');
-            $req->assertRedirect('/saml2/logout');
-        });
+        $resp = $this->actingAs($this->getEditor())->get('/');
+        $resp->assertElementExists('a[href$="/saml2/logout"]');
+        $resp->assertElementContains('a[href$="/saml2/logout"]', 'Logout');
     }
 
     public function test_logout_sls_flow()
@@ -229,30 +209,84 @@ class Saml2Test extends TestCase
             $acsPost = $this->post('/saml2/acs');
             $acsPost->assertRedirect('/');
             $errorMessage = session()->get('error');
-            $this->assertEquals('Registration unsuccessful since a user already exists with email address "user@example.com"', $errorMessage);
+            $this->assertEquals('A user with the email user@example.com already exists but with different credentials.', $errorMessage);
         });
     }
 
     public function test_saml_routes_are_only_active_if_saml_enabled()
     {
-        config()->set(['saml2.enabled' => false]);
-        $getRoutes = ['/login', '/logout', '/metadata', '/sls'];
+        config()->set(['auth.method' => 'standard']);
+        $getRoutes = ['/logout', '/metadata', '/sls'];
         foreach ($getRoutes as $route) {
             $req = $this->get('/saml2' . $route);
-            $req->assertRedirect('/');
-            $error = session()->get('error');
-            $this->assertStringStartsWith('You do not have permission to access', $error);
-            session()->flush();
+            $this->assertPermissionError($req);
         }
 
-        $postRoutes = ['/acs'];
+        $postRoutes = ['/login', '/acs'];
         foreach ($postRoutes as $route) {
             $req = $this->post('/saml2' . $route);
-            $req->assertRedirect('/');
-            $error = session()->get('error');
-            $this->assertStringStartsWith('You do not have permission to access', $error);
-            session()->flush();
+            $this->assertPermissionError($req);
         }
+    }
+
+    public function test_forgot_password_routes_inaccessible()
+    {
+        $resp = $this->get('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->get('/password/reset/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/reset');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_standard_login_routes_inaccessible()
+    {
+        $resp = $this->post('/login');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->get('/logout');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_invite_routes_inaccessible()
+    {
+        $resp = $this->get('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_register_routes_inaccessible()
+    {
+        $resp = $this->get('/register');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_email_domain_restriction_active_on_new_saml_login()
+    {
+        $this->setSettings([
+            'registration-restrict' => 'testing.com'
+        ]);
+        config()->set([
+            'saml2.onelogin.strict' => false,
+        ]);
+
+        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
+            $acsPost = $this->post('/saml2/acs');
+            $acsPost->assertRedirect('/login');
+            $errorMessage = session()->get('error');
+            $this->assertStringContainsString('That email domain does not have access to this application', $errorMessage);
+            $this->assertDatabaseMissing('users', ['email' => 'user@example.com']);
+        });
     }
 
     protected function withGet(array $options, callable $callback)

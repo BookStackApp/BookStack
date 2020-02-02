@@ -49,7 +49,7 @@ class SocialController extends Controller
      */
     public function socialRegister(string $socialDriver)
     {
-        $this->registrationService->checkRegistrationAllowed();
+        $this->registrationService->ensureRegistrationAllowed();
         session()->put('social-callback', 'register');
         return $this->socialAuthService->startRegister($socialDriver);
     }
@@ -78,7 +78,7 @@ class SocialController extends Controller
 
         // Attempt login or fall-back to register if allowed.
         $socialUser = $this->socialAuthService->getSocialUser($socialDriver);
-        if ($action == 'login') {
+        if ($action === 'login') {
             try {
                 return $this->socialAuthService->handleLoginCallback($socialDriver, $socialUser);
             } catch (SocialSignInAccountNotUsed $exception) {
@@ -89,7 +89,7 @@ class SocialController extends Controller
             }
         }
 
-        if ($action == 'register') {
+        if ($action === 'register') {
             return $this->socialRegisterCallback($socialDriver, $socialUser);
         }
 
@@ -108,7 +108,6 @@ class SocialController extends Controller
 
     /**
      * Register a new user after a registration callback.
-     * @return RedirectResponse|Redirector
      * @throws UserRegistrationException
      */
     protected function socialRegisterCallback(string $socialDriver, SocialUser $socialUser)
@@ -121,17 +120,11 @@ class SocialController extends Controller
         $userData = [
             'name' => $socialUser->getName(),
             'email' => $socialUser->getEmail(),
-            'password' => Str::random(30)
+            'password' => Str::random(32)
         ];
 
-        try {
-            $this->registrationService->registerUser($userData, $socialAccount, $emailVerified);
-        } catch (UserRegistrationException $exception) {
-            if ($exception->getMessage()) {
-                $this->showErrorNotification($exception->getMessage());
-            }
-            return redirect($exception->redirectLocation);
-        }
+        $user = $this->registrationService->registerUser($userData, $socialAccount, $emailVerified);
+        auth()->login($user);
 
         $this->showSuccessNotification(trans('auth.register_success'));
         return redirect('/');

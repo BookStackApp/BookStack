@@ -1,10 +1,8 @@
 <?php namespace BookStack\Auth\Access;
 
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\LdapException;
 use ErrorException;
-use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * Class LdapService
@@ -16,17 +14,15 @@ class LdapService extends ExternalAuthService
     protected $ldap;
     protected $ldapConnection;
     protected $config;
-    protected $userRepo;
     protected $enabled;
 
     /**
      * LdapService constructor.
      */
-    public function __construct(Ldap $ldap, UserRepo $userRepo)
+    public function __construct(Ldap $ldap)
     {
         $this->ldap = $ldap;
         $this->config = config('services.ldap');
-        $this->userRepo = $userRepo;
         $this->enabled = config('auth.method') === 'ldap';
     }
 
@@ -106,20 +102,15 @@ class LdapService extends ExternalAuthService
      * Check if the given credentials are valid for the given user.
      * @throws LdapException
      */
-    public function validateUserCredentials(Authenticatable $user, string $username, string $password): bool
+    public function validateUserCredentials(array $ldapUserDetails, string $username, string $password): bool
     {
-        $ldapUser = $this->getUserDetails($username);
-        if ($ldapUser === null) {
-            return false;
-        }
-
-        if ($ldapUser['uid'] !== $user->external_auth_id) {
+        if ($ldapUserDetails === null) {
             return false;
         }
 
         $ldapConnection = $this->getConnection();
         try {
-            $ldapBind = $this->ldap->bind($ldapConnection, $ldapUser['dn'], $password);
+            $ldapBind = $this->ldap->bind($ldapConnection, $ldapUserDetails['dn'], $password);
         } catch (ErrorException $e) {
             $ldapBind = false;
         }
