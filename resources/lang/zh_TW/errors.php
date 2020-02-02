@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => '在外部認證系統提供的數據中找不到該用戶的電子郵件地址',
     'saml_invalid_response_id' => '該應用程序啟動的進程無法識別來自外部身份驗證系統的請求。 登錄後返回可能會導致此問題。',
     'saml_fail_authed' => '使用：system登錄失敗，系統未提供成功的授權',
-    'saml_email_exists' => '註冊失敗，該用戶已經存在，電子郵件地址為“：email”',
     'social_no_action_defined' => '沒有定義行為',
     'social_login_bad_response' => "在 :socialAccount 登錄時遇到錯誤：\n:error",
     'social_account_in_use' => ':socialAccount 帳號已被使用，請嘗試透過 :socialAccount 選項登錄。',
