@@ -11,14 +11,14 @@
 return [
 
     // Method of authentication to use
-    // Options: standard, ldap
+    // Options: standard, ldap, saml2
     'method' => env('AUTH_METHOD', 'standard'),
 
     // Authentication Defaults
     // This option controls the default authentication "guard" and password
     // reset options for your application.
     'defaults' => [
-        'guard' => env('AUTH_METHOD', 'standard') === 'standard' ? 'web' : env('AUTH_METHOD'),
+        'guard' => env('AUTH_METHOD', 'standard'),
         'passwords' => 'users',
     ],
 
@@ -28,7 +28,7 @@ return [
     // mechanisms used by this application to persist your user's data.
     // Supported drivers: "session", "api-token", "ldap-session"
     'guards' => [
-        'web' => [
+        'standard' => [
             'driver' => 'session',
             'provider' => 'users',
         ],

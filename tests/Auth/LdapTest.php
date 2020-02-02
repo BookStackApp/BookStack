@@ -478,4 +478,37 @@ class LdapTest extends BrowserKitTest
     {
         $this->checkLdapReceivesCorrectDetails('ldap.bookstack.com', 'ldap.bookstack.com', 389);
     }
+
+    public function test_forgot_password_routes_inaccessible()
+    {
+        $resp = $this->get('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->get('/password/reset/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/reset');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_invite_routes_inaccessible()
+    {
+        $resp = $this->get('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_register_routes_inaccessible()
+    {
+        $resp = $this->get('/register');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register');
+        $this->assertPermissionError($resp);
+    }
 }

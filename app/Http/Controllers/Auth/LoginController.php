@@ -38,7 +38,9 @@ class LoginController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService)
     {
-        $this->middleware('guest', ['only' => ['getLogin', 'postLogin']]);
+        $this->middleware('guest', ['only' => ['getLogin', 'login']]);
+        $this->middleware('guard:standard,ldap', ['only' => ['login', 'logout']]);
+
         $this->socialAuthService = $socialAuthService;
         $this->redirectPath = url('/');
         $this->redirectAfterLogout = url('/login');
@@ -159,14 +161,4 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
-    /**
-     * Log the user out of the application.
-     */
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
-        $request->session()->invalidate();
-
-        return $this->loggedOut($request) ?: redirect('/');
-    }
 }

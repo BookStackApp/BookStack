@@ -48,7 +48,8 @@ class Kernel extends HttpKernel
         'auth'       => \BookStack\Http\Middleware\Authenticate::class,
         'can'        => \Illuminate\Auth\Middleware\Authorize::class,
         'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'perm'       => \BookStack\Http\Middleware\PermissionMiddleware::class
+        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'perm'       => \BookStack\Http\Middleware\PermissionMiddleware::class,
+        'guard'      => \BookStack\Http\Middleware\CheckGuard::class,
     ];
 }
