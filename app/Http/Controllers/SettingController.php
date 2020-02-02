@@ -71,7 +71,8 @@ class SettingController extends Controller
         }
 
         $this->showSuccessNotification(trans('settings.settings_save_success'));
-        return redirect('/settings#' . $request->get('section', ''));
+        $redirectLocation = '/settings#' . $request->get('section', '');
+        return redirect(rtrim($redirectLocation, '#'));
     }
 
     /**
