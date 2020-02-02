@@ -17,19 +17,6 @@ abstract class TestCase extends BaseTestCase
     protected $baseUrl = 'http://localhost';
 
     /**
-     * Assert a permission error has occurred.
-     * @param TestResponse $response
-     * @return TestCase
-     */
-    protected function assertPermissionError(TestResponse $response)
-    {
-        $response->assertRedirect('/');
-        $this->assertSessionHas('error');
-        session()->remove('error');
-        return $this;
-    }
-
-    /**
      * Assert the session contains a specific entry.
      * @param string $key
      * @return $this

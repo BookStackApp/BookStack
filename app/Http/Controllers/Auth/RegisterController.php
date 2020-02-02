@@ -43,7 +43,8 @@ class RegisterController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService, RegistrationService $registrationService)
     {
-        $this->middleware('guest')->only(['getRegister', 'postRegister']);
+        $this->middleware('guest');
+        $this->middleware('guard:standard');
 
         $this->socialAuthService = $socialAuthService;
         $this->registrationService = $registrationService;
@@ -73,12 +74,10 @@ class RegisterController extends Controller
      */
     public function getRegister()
     {
-        $this->registrationService->checkRegistrationAllowed();
+        $this->registrationService->ensureRegistrationAllowed();
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $samlEnabled = (config('saml2.enabled') === true) && (config('saml2.auto_register') === true);
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,
-            'samlEnabled' => $samlEnabled,
         ]);
     }
 
@@ -88,12 +87,13 @@ class RegisterController extends Controller
      */
     public function postRegister(Request $request)
     {
-        $this->registrationService->checkRegistrationAllowed();
+        $this->registrationService->ensureRegistrationAllowed();
         $this->validator($request->all())->validate();
         $userData = $request->all();
 
         try {
-            $this->registrationService->registerUser($userData);
+            $user = $this->registrationService->registerUser($userData);
+            auth()->login($user);
         } catch (UserRegistrationException $exception) {
             if ($exception->getMessage()) {
                 $this->showErrorNotification($exception->getMessage());

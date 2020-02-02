@@ -17,15 +17,7 @@ class Saml2Controller extends Controller
     {
         parent::__construct();
         $this->samlService = $samlService;
-
-        // SAML2 access middleware
-        $this->middleware(function ($request, $next) {
-            if (!config('saml2.enabled')) {
-                $this->showPermissionError();
-            }
-
-            return $next($request);
-        });
+        $this->middleware('guard:saml2');
     }
 
     /**
@@ -89,7 +81,6 @@ class Saml2Controller extends Controller
             return redirect('/login');
         }
 
-        session()->put('last_login_type', 'saml2');
         return redirect()->intended();
     }
 

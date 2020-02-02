@@ -15,9 +15,10 @@
         </div>
 
         <div class="card content-wrap auto-height">
-            <h2 class="list-heading">{{ trans('settings.app_features_security') }}</h2>
+            <h2 id="features" class="list-heading">{{ trans('settings.app_features_security') }}</h2>
             <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
+                <input type="hidden" name="section" value="features">
 
                 <div class="setting-list">
 
@@ -79,9 +80,10 @@
         </div>
 
         <div class="card content-wrap auto-height">
-            <h2 class="list-heading">{{ trans('settings.app_customization') }}</h2>
+            <h2 id="customization" class="list-heading">{{ trans('settings.app_customization') }}</h2>
             <form action="{{ url("/settings") }}" method="POST" enctype="multipart/form-data">
                 {!! csrf_field() !!}
+                <input type="hidden" name="section" value="customization">
 
                 <div class="setting-list">
 
@@ -202,9 +204,10 @@
         </div>
 
         <div class="card content-wrap auto-height">
-            <h2 class="list-heading">{{ trans('settings.reg_settings') }}</h2>
+            <h2 id="registration" class="list-heading">{{ trans('settings.reg_settings') }}</h2>
             <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
+                <input type="hidden" name="section" value="registration">
 
                 <div class="setting-list">
                     <div class="grid half gap-xl">
@@ -219,8 +222,8 @@
                                 'label' => trans('settings.reg_enable_toggle')
                             ])
 
-                            @if(config('auth.method') === 'ldap')
-                                <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_ldap_warning') }}</div>
+                            @if(in_array(config('auth.method'), ['ldap', 'saml2']))
+                                <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_external_warning') }}</div>
                             @endif
 
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>

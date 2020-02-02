@@ -29,10 +29,9 @@ class UserRepo
     }
 
     /**
-     * @param string $email
-     * @return User|null
+     * Get a user by their email address.
      */
-    public function getByEmail($email)
+    public function getByEmail(string $email): ?User
     {
         return $this->user->where('email', '=', $email)->first();
     }
@@ -78,29 +77,14 @@ class UserRepo
 
      /**
      * Creates a new user and attaches a role to them.
-     * @param array $data
-     * @param boolean $verifyEmail
-     * @return User
      */
-    public function registerNew(array $data, $verifyEmail = false)
+    public function registerNew(array $data, bool $emailConfirmed = false): User
     {
-        $user = $this->create($data, $verifyEmail);
-        $this->attachDefaultRole($user);
+        $user = $this->create($data, $emailConfirmed);
+        $user->attachDefaultRole();
         $this->downloadAndAssignUserAvatar($user);
 
         return $user;
-    }
-
-    /**
-     * Give a user the default role. Used when creating a new user.
-     * @param User $user
-     */
-    public function attachDefaultRole(User $user)
-    {
-        $roleId = setting('registration-role');
-        if ($roleId !== false && $user->roles()->where('id', '=', $roleId)->count() === 0) {
-            $user->attachRoleId($roleId);
-        }
     }
 
     /**
@@ -172,17 +156,15 @@ class UserRepo
 
     /**
      * Create a new basic instance of user.
-     * @param array $data
-     * @param boolean $verifyEmail
-     * @return User
      */
-    public function create(array $data, $verifyEmail = false)
+    public function create(array $data, bool $emailConfirmed = false): User
     {
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            'email_confirmed' => $verifyEmail
+            'email_confirmed' => $emailConfirmed,
+            'external_auth_id' => $data['external_auth_id'] ?? '',
         ]);
     }
 

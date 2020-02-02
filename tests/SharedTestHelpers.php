@@ -262,4 +262,19 @@ trait SharedTestHelpers
         self::assertThat($passed, self::isTrue(), "Failed asserting that given map:\n\n{$toCheckStr}\n\nincludes:\n\n{$toIncludeStr}");
     }
 
+    /**
+     * Assert a permission error has occurred.
+     */
+    protected function assertPermissionError($response)
+    {
+        if ($response instanceof BrowserKitTest) {
+            $response = \Illuminate\Foundation\Testing\TestResponse::fromBaseResponse($response->response);
+        }
+
+        $response->assertRedirect('/');
+        $this->assertSessionHas('error');
+        $error = session()->pull('error');
+        $this->assertStringStartsWith('You do not have permission to access', $error);
+    }
+
 }
