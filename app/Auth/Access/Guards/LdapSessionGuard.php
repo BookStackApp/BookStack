@@ -15,7 +15,6 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
 {
 
     protected $ldapService;
-    protected $userRepo;
 
     /**
      * LdapSessionGuard constructor.
@@ -28,8 +27,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     )
     {
         $this->ldapService = $ldapService;
-        $this->userRepo = $userRepo;
-        parent::__construct($name, $provider, $session);
+        parent::__construct($name, $provider, $session, $userRepo);
     }
 
     /**

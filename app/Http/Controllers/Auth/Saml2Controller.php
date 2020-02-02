@@ -20,7 +20,8 @@ class Saml2Controller extends Controller
 
         // SAML2 access middleware
         $this->middleware(function ($request, $next) {
-            if (!config('saml2.enabled')) {
+
+            if (config('auth.method') !== 'saml2') {
                 $this->showPermissionError();
             }
 

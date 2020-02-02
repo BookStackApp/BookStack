@@ -20,7 +20,6 @@ class Saml2Service extends ExternalAuthService
     protected $config;
     protected $userRepo;
     protected $user;
-    protected $enabled;
 
     /**
      * Saml2Service constructor.
@@ -30,7 +29,6 @@ class Saml2Service extends ExternalAuthService
         $this->config = config('saml2');
         $this->userRepo = $userRepo;
         $this->user = $user;
-        $this->enabled = config('saml2.enabled') === true;
     }
 
     /**
@@ -204,7 +202,7 @@ class Saml2Service extends ExternalAuthService
      */
     protected function shouldSyncGroups(): bool
     {
-        return $this->enabled && $this->config['user_to_groups'] !== false;
+        return $this->config['user_to_groups'] !== false;
     }
 
     /**
@@ -248,7 +246,7 @@ class Saml2Service extends ExternalAuthService
     /**
      * Extract the details of a user from a SAML response.
      */
-    public function getUserDetails(string $samlID, $samlAttributes): array
+    protected function getUserDetails(string $samlID, $samlAttributes): array
     {
         $emailAttr = $this->config['email_attribute'];
         $externalId = $this->getExternalId($samlAttributes, $samlID);
@@ -329,7 +327,7 @@ class Saml2Service extends ExternalAuthService
             throw new SamlException(trans('errors.saml_email_exists', ['email' => $userDetails['email']]));
         }
 
-        $user = $this->user->forceCreate($userData);
+        $user = $this->user->newQuery()->forceCreate($userData);
         $this->userRepo->attachDefaultRole($user);
         $this->userRepo->downloadAndAssignUserAvatar($user);
         return $user;
@@ -337,15 +335,15 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Get the user from the database for the specified details.
+     * @throws SamlException
      */
     protected function getOrRegisterUser(array $userDetails): ?User
     {
-        $isRegisterEnabled = $this->config['auto_register'] === true;
-        $user = $this->user
-          ->where('external_auth_id', $userDetails['external_id'])
+        $user = $this->user->newQuery()
+          ->where('external_auth_id', '=', $userDetails['external_id'])
           ->first();
 
-        if ($user === null && $isRegisterEnabled) {
+        if (is_null($user)) {
             $user = $this->registerUser($userDetails);
         }
 

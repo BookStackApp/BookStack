@@ -75,10 +75,8 @@ class RegisterController extends Controller
     {
         $this->registrationService->checkRegistrationAllowed();
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $samlEnabled = (config('saml2.enabled') === true) && (config('saml2.auto_register') === true);
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,
-            'samlEnabled' => $samlEnabled,
         ]);
     }
 
