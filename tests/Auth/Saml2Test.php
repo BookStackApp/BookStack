@@ -219,20 +219,56 @@ class Saml2Test extends TestCase
         $getRoutes = ['/logout', '/metadata', '/sls'];
         foreach ($getRoutes as $route) {
             $req = $this->get('/saml2' . $route);
-            $req->assertRedirect('/');
-            $error = session()->get('error');
-            $this->assertStringStartsWith('You do not have permission to access', $error);
-            session()->flush();
+            $this->assertPermissionError($req);
         }
 
         $postRoutes = ['/login', '/acs'];
         foreach ($postRoutes as $route) {
             $req = $this->post('/saml2' . $route);
-            $req->assertRedirect('/');
-            $error = session()->get('error');
-            $this->assertStringStartsWith('You do not have permission to access', $error);
-            session()->flush();
+            $this->assertPermissionError($req);
         }
+    }
+
+    public function test_forgot_password_routes_inaccessible()
+    {
+        $resp = $this->get('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->get('/password/reset/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/reset');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_standard_login_routes_inaccessible()
+    {
+        $resp = $this->post('/login');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->get('/logout');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_invite_routes_inaccessible()
+    {
+        $resp = $this->get('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_register_routes_inaccessible()
+    {
+        $resp = $this->get('/register');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register');
+        $this->assertPermissionError($resp);
     }
 
     protected function withGet(array $options, callable $callback)

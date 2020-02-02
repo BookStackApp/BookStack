@@ -43,7 +43,8 @@ class RegisterController extends Controller
      */
     public function __construct(SocialAuthService $socialAuthService, RegistrationService $registrationService)
     {
-        $this->middleware('guest')->only(['getRegister', 'postRegister']);
+        $this->middleware('guest');
+        $this->middleware('guard:standard');
 
         $this->socialAuthService = $socialAuthService;
         $this->registrationService = $registrationService;

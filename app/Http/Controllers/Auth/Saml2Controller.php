@@ -17,16 +17,7 @@ class Saml2Controller extends Controller
     {
         parent::__construct();
         $this->samlService = $samlService;
-
-        // SAML2 access middleware
-        $this->middleware(function ($request, $next) {
-
-            if (config('auth.method') !== 'saml2') {
-                $this->showPermissionError();
-            }
-
-            return $next($request);
-        });
+        $this->middleware('guard:saml2');
     }
 
     /**
