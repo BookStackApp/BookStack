@@ -7,29 +7,31 @@
         <div class="grid right-focus reverse-collapse">
             <div>
 
-                <p class="text-uppercase text-muted mb-xm mt-l"><strong>Getting Started</strong></p>
+                <div class="sticky-sidebar">
+                    <p class="text-uppercase text-muted mb-xm mt-l"><strong>Getting Started</strong></p>
 
-                <div class="text-mono">
-                    <div class="mb-xs"><a href="#authentication">Authentication</a></div>
-                    <div class="mb-xs"><a href="#request-format">Request Format</a></div>
-                    <div class="mb-xs"><a href="#listing-endpoints">Listing Endpoints</a></div>
-                    <div class="mb-xs"><a href="#error-handling">Error Handling</a></div>
-                </div>
+                    <div class="text-mono">
+                        <div class="mb-xs"><a href="#authentication">Authentication</a></div>
+                        <div class="mb-xs"><a href="#request-format">Request Format</a></div>
+                        <div class="mb-xs"><a href="#listing-endpoints">Listing Endpoints</a></div>
+                        <div class="mb-xs"><a href="#error-handling">Error Handling</a></div>
+                    </div>
 
-                @foreach($docs as $model => $endpoints)
-                    <p class="text-uppercase text-muted mb-xm mt-l"><strong>{{ $model }}</strong></p>
+                    @foreach($docs as $model => $endpoints)
+                        <p class="text-uppercase text-muted mb-xm mt-l"><strong>{{ $model }}</strong></p>
 
-                    @foreach($endpoints as $endpoint)
-                        <div class="mb-xs">
-                            <a href="#{{ $endpoint['name'] }}" class="text-mono inline block mr-s">
-                                <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
-                            </a>
-                            <a href="#{{ $endpoint['name'] }}" class="text-mono">
-                                {{ $endpoint['controller_method'] }}
-                            </a>
-                        </div>
+                        @foreach($endpoints as $endpoint)
+                            <div class="mb-xs">
+                                <a href="#{{ $endpoint['name'] }}" class="text-mono inline block mr-s">
+                                    <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
+                                </a>
+                                <a href="#{{ $endpoint['name'] }}" class="text-mono">
+                                    {{ $endpoint['controller_method'] }}
+                                </a>
+                            </div>
+                        @endforeach
                     @endforeach
-                @endforeach
+                </div>
             </div>
 
             <div style="overflow: auto;">
