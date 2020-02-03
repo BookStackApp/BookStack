@@ -1,11 +1,10 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\User;
+use BookStack\Notifications\TestEmail;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Setting;
 
 class SettingController extends Controller
 {
@@ -13,7 +12,6 @@ class SettingController extends Controller
 
     /**
      * SettingController constructor.
-     * @param $imageRepo
      */
     public function __construct(ImageRepo $imageRepo)
     {
@@ -21,10 +19,8 @@ class SettingController extends Controller
         parent::__construct();
     }
 
-
     /**
      * Display a listing of the settings.
-     * @return Response
      */
     public function index()
     {
@@ -42,12 +38,10 @@ class SettingController extends Controller
 
     /**
      * Update the specified settings in storage.
-     * @param  Request $request
-     * @return Response
      */
     public function update(Request $request)
     {
-        $this->preventAccessForDemoUsers();
+        $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
             'app_logo' => $this->imageRepo->getImageValidationRules(),
@@ -76,13 +70,13 @@ class SettingController extends Controller
             setting()->remove('app-logo');
         }
 
-        session()->flash('success', trans('settings.settings_save_success'));
-        return redirect('/settings');
+        $this->showSuccessNotification(trans('settings.settings_save_success'));
+        $redirectLocation = '/settings#' . $request->get('section', '');
+        return redirect(rtrim($redirectLocation, '#'));
     }
 
     /**
      * Show the page for application maintenance.
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showMaintenance()
     {
@@ -97,9 +91,6 @@ class SettingController extends Controller
 
     /**
      * Action to clean-up images in the system.
-     * @param Request $request
-     * @param ImageService $imageService
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function cleanupImages(Request $request, ImageService $imageService)
     {
@@ -111,15 +102,28 @@ class SettingController extends Controller
         $imagesToDelete = $imageService->deleteUnusedImages($checkRevisions, $dryRun);
         $deleteCount = count($imagesToDelete);
         if ($deleteCount === 0) {
-            session()->flash('warning', trans('settings.maint_image_cleanup_nothing_found'));
+            $this->showWarningNotification(trans('settings.maint_image_cleanup_nothing_found'));
             return redirect('/settings/maintenance')->withInput();
         }
 
         if ($dryRun) {
             session()->flash('cleanup-images-warning', trans('settings.maint_image_cleanup_warning', ['count' => $deleteCount]));
         } else {
-            session()->flash('success', trans('settings.maint_image_cleanup_success', ['count' => $deleteCount]));
+            $this->showSuccessNotification(trans('settings.maint_image_cleanup_success', ['count' => $deleteCount]));
         }
+
+        return redirect('/settings/maintenance#image-cleanup')->withInput();
+    }
+
+    /**
+     * Action to send a test e-mail to the current user.
+     */
+    public function sendTestEmail()
+    {
+        $this->checkPermission('settings-manage');
+
+        user()->notify(new TestEmail());
+        $this->showSuccessNotification(trans('settings.maint_send_test_email_success', ['address' => user()->email]));
 
         return redirect('/settings/maintenance#image-cleanup')->withInput();
     }

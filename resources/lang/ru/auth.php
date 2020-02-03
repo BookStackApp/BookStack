@@ -5,7 +5,7 @@
  * messages that we need to display to the user.
  */
 return [
-    
+
     'failed' => 'Учетная запись не найдена.',
     'throttle' => 'Слишком много попыток входа. Пожалуйста, попробуйте позже через :seconds секунд.',
 
@@ -18,13 +18,13 @@ return [
 
     'name' => 'Имя',
     'username' => 'Логин',
-    'email' => 'Email',
+    'email' => 'Адрес электронной почты',
     'password' => 'Пароль',
     'password_confirm' => 'Подтверждение пароля',
-    'password_hint' => 'Должен быть больше 5 символов',
+    'password_hint' => 'Должен быть больше 7 символов',
     'forgot_password' => 'Забыли пароль?',
     'remember_me' => 'Запомнить меня',
-    'ldap_email_hint' => 'Введите email адрес для данной учетной записи.',
+    'ldap_email_hint' => 'Введите адрес электронной почты для этой учетной записи.',
     'create_account' => 'Создать аккаунт',
     'already_have_account' => 'Уже есть аккаунт?',
     'dont_have_account' => 'У вас нет аккаунта?',
@@ -39,7 +39,7 @@ return [
     'register_success' => 'Спасибо за регистрацию! Регистрация и вход в систему выполнены.',
 
 
-    //Password Reset
+    // Password Reset
     'reset_password' => 'Сброс пароля',
     'reset_password_send_instructions' => 'Введите свой email ниже, и вам будет отправлено письмо со ссылкой для сброса пароля.',
     'reset_password_send_button' => 'Отправить ссылку для сброса',
@@ -50,21 +50,21 @@ return [
     'email_reset_not_requested' => 'Если вы не запрашивали сброса пароля, то никаких дополнительных действий не требуется.',
 
 
-    //Email Confirmation
+    // Email Confirmation
     'email_confirm_subject' => 'Подтвердите ваш почтовый адрес на :appName',
     'email_confirm_greeting' => 'Благодарим за участие :appName!',
-    'email_confirm_text' => 'Пожалуйста, подтвердите ваш email адрес кликнув на кнопку ниже:',
-    'email_confirm_action' => 'Подтвердить email',
+    'email_confirm_text' => 'Пожалуйста, подтвердите свой адрес электронной почты нажав на кнопку ниже:',
+    'email_confirm_action' => 'Подтвердить адрес электронной почты',
     'email_confirm_send_error' => 'Требуется подтверждение электронной почты, но система не может отправить письмо. Свяжитесь с администратором, чтобы убедиться, что адрес электронной почты настроен правильно.',
-    'email_confirm_success' => 'Ваш email был подтвержден!',
+    'email_confirm_success' => 'Ваш адрес подтвержден!',
     'email_confirm_resent' => 'Письмо с подтверждение выслано снова. Пожалуйста, проверьте ваш почтовый ящик.',
 
-    'email_not_confirmed' => 'email не подтвержден',
+    'email_not_confirmed' => 'Адрес электронной почты не подтвержден',
     'email_not_confirmed_text' => 'Ваш email адрес все еще не подтвержден.',
     'email_not_confirmed_click_link' => 'Пожалуйста, нажмите на ссылку в письме, которое было отправлено при регистрации.',
     'email_not_confirmed_resend' => 'Если вы не можете найти электронное письмо, вы можете снова отправить письмо с подтверждением по форме ниже.',
     'email_not_confirmed_resend_button' => 'Переотправить письмо с подтверждением',
-    
+
     // User Invite
     'user_invite_email_subject' => 'Вас приглашают присоединиться к :appName!',
     'user_invite_email_greeting' => 'Для вас создан аккаунт в :appName.',

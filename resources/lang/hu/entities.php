@@ -162,7 +162,7 @@ return [
     // Pages
     'page' => 'Oldal',
     'pages' => 'Oldalak',
-    'x_pages' => ':count oldal|:count oldalak',
+    'x_pages' => ':count oldal|:count oldal',
     'pages_popular' => 'Népszerű oldalak',
     'pages_new' => 'Új oldal',
     'pages_attachments' => 'Csatolmányok',
@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Biztosan törölhető ez az oldal?',
     'pages_delete_draft_confirm' => 'Biztosan törölhető ez a vázlatoldal?',
     'pages_editing_named' => ':pageName oldal szerkesztése',
-    'pages_edit_toggle_header' => 'Fejléc átkapcsolása',
+    'pages_edit_draft_options' => 'Vázlatbeállítások',
     'pages_edit_save_draft' => 'Vázlat mentése',
     'pages_edit_draft' => 'Oldal vázlat szerkesztése',
     'pages_editing_draft' => 'Vázlat szerkesztése',
@@ -234,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Vázlat elvetve, a szerkesztő frissítve lesz az oldal aktuális tartalmával',
     'pages_specific' => 'Egy bizonyos oldal',
+    'pages_is_template' => 'Oldalsablon',
 
     // Editor Sidebar
     'page_tags' => 'Oldal címkék',
@@ -242,9 +243,11 @@ return [
     'shelf_tags' => 'Polc címkék',
     'tag' => 'Címke',
     'tags' =>  'Címkék',
+    'tag_name' =>  'Címkenév',
     'tag_value' => 'Címke érték (nem kötelező)',
     'tags_explain' => "Címkék hozzáadása a tartalom jobb kategorizálásához.\nA mélyebb szervezettség megvalósításához hozzá lehet rendelni egy értéket a címkéhez.",
     'tags_add' => 'Másik címke hozzáadása',
+    'tags_remove' => 'Címke eltávolítása',
     'attachments' => 'Csatolmányok',
     'attachments_explain' => 'Az oldalon megjelenő fájlok feltöltése vagy hivatkozások csatolása. Az oldal oldalsávjában fognak megjelenni.',
     'attachments_explain_instant_save' => 'Az itt történt módosítások azonnal el lesznek mentve.',
@@ -270,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'Fájl sikeresen feltöltve',
     'attachments_file_updated' => 'Fájl sikeresen frissítve',
     'attachments_link_attached' => 'Hivatkozás sikeresen hozzácsatolva az oldalhoz',
+    'templates' => 'Sablonok',
+    'templates_set_as_template' => 'Az oldal egy sablon',
+    'templates_explain_set_as_template' => 'Ez az oldal sablonnak lett beállítva, így a tartalma felhasználható más oldalak létrehozásakor. Más felhasználók is használhatják ezt a sablont ha megtekintési jogosultságuk van ehhez az oldalhoz.',
+    'templates_replace_content' => 'Oldal tartalmának cseréje',
+    'templates_append_content' => 'Hozzáfűzés az oldal tartalmához',
+    'templates_prepend_content' => 'Hozzáadás az oldal tartalmának elejéhez',
 
     // Profile View
     'profile_user_for_x' => 'Felhasználó ez óta: :time',

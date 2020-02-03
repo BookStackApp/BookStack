@@ -38,8 +38,13 @@ return [
     'reset' => 'Visszaállítás',
     'remove' => 'Eltávolítás',
     'add' => 'Hozzáadás',
+    'fullscreen' => 'Teljes képernyő',
 
     // Sort Options
+    'sort_options' => 'Rendezési beállítások',
+    'sort_direction_toggle' => 'Rendezési irány váltása',
+    'sort_ascending' => 'Növekvő sorrend',
+    'sort_descending' => 'Csökkenő sorrend',
     'sort_name' => 'Név',
     'sort_created_at' => 'Létrehozás dátuma',
     'sort_updated_at' => 'Frissítés dátuma',
@@ -55,8 +60,10 @@ return [
     'grid_view' => 'Rács nézet',
     'list_view' => 'Lista nézet',
     'default' => 'Alapértelmezés szerinti',
+    'breadcrumb' => 'Morzsa',
 
     // Header
+    'profile_menu' => 'Profil menü',
     'view_profile' => 'Profil megtekintése',
     'edit_profile' => 'Profil szerkesztése',
 

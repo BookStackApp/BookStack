@@ -1,8 +1,25 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Uploads\Attachment;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Permissions;
 
-class Page extends Entity
+/**
+ * Class Page
+ * @property int $chapter_id
+ * @property string $html
+ * @property string $markdown
+ * @property string $text
+ * @property bool $template
+ * @property bool $draft
+ * @property int $revision_count
+ * @property Chapter $chapter
+ * @property Collection $attachments
+ */
+class Page extends BookChild
 {
     protected $fillable = ['name', 'html', 'priority', 'markdown'];
 
@@ -11,12 +28,12 @@ class Page extends Entity
     public $textField = 'text';
 
     /**
-     * Get the morph class for this model.
-     * @return string
+     * Get the entities that are visible to the current user.
      */
-    public function getMorphClass()
+    public function scopeVisible(Builder $query)
     {
-        return 'BookStack\\Page';
+        $query = Permissions::enforceDraftVisiblityOnQuery($query);
+        return parent::scopeVisible($query);
     }
 
     /**
@@ -31,26 +48,16 @@ class Page extends Entity
     }
 
     /**
-     * Get the book this page sits in.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function book()
-    {
-        return $this->belongsTo(Book::class);
-    }
-
-    /**
      * Get the parent item
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parent()
+    public function parent(): Entity
     {
-        return $this->chapter_id ? $this->chapter() : $this->book();
+        return $this->chapter_id ? $this->chapter : $this->book;
     }
 
     /**
      * Get the chapter that this page is in, If applicable.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function chapter()
     {
@@ -72,12 +79,12 @@ class Page extends Entity
      */
     public function revisions()
     {
-        return $this->hasMany(PageRevision::class)->where('type', '=', 'version')->orderBy('created_at', 'desc');
+        return $this->hasMany(PageRevision::class)->where('type', '=', 'version')->orderBy('created_at', 'desc')->orderBy('id', 'desc');
     }
 
     /**
      * Get the attachments assigned to this page.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function attachments()
     {
@@ -95,27 +102,17 @@ class Page extends Entity
         $midText = $this->draft ? '/draft/' : '/page/';
         $idComponent = $this->draft ? $this->id : urlencode($this->slug);
 
+        $url = '/books/' . urlencode($bookSlug) . $midText . $idComponent;
         if ($path !== false) {
-            return url('/books/' . urlencode($bookSlug) . $midText . $idComponent . '/' . trim($path, '/'));
+            $url .= '/' . trim($path, '/');
         }
 
-        return url('/books/' . urlencode($bookSlug) . $midText . $idComponent);
-    }
-
-    /**
-     * Return a generalised, common raw query that can be 'unioned' across entities.
-     * @param bool $withContent
-     * @return string
-     */
-    public function entityRawQuery($withContent = false)
-    {
-        $htmlQuery = $withContent ? 'html' : "'' as html";
-        return "'BookStack\\\\Page' as entity_type, id, id as entity_id, slug, name, {$this->textField} as text, {$htmlQuery}, book_id, priority, chapter_id, draft, created_by, updated_by, updated_at, created_at";
+        return url($url);
     }
 
     /**
      * Get the current revision for the page if existing
-     * @return \BookStack\Entities\PageRevision|null
+     * @return PageRevision|null
      */
     public function getCurrentRevision()
     {

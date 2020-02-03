@@ -1,9 +1,9 @@
 <?php namespace Tests;
 
+use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
-use BookStack\Entities\Repos\EntityRepo;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
@@ -192,7 +192,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($creator);
         app(UserRepo::class)->destroy($creator);
-        app(PageRepo::class)->savePageRevision($entities['page']);
+        app(PageRepo::class)->update($entities['page'], ['html' => '<p>hello!</p>>']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -205,7 +205,7 @@ class EntityTest extends BrowserKitTest
         $entities = $this->createEntityChainBelongingToUser($creator, $updater);
         $this->actingAs($updater);
         app(UserRepo::class)->destroy($updater);
-        app(PageRepo::class)->savePageRevision($entities['page']);
+        app(PageRepo::class)->update($entities['page'], ['html' => '<p>Hello there!</p>']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -273,8 +273,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_slug_multi_byte_lower_casing()
     {
-        $entityRepo = app(EntityRepo::class);
-        $book = $entityRepo->createFromInput('book', [
+        $book = $this->newBook([
             'name' => 'КНИГА'
         ]);
 
@@ -284,12 +283,46 @@ class EntityTest extends BrowserKitTest
 
     public function test_slug_format()
     {
-        $entityRepo = app(EntityRepo::class);
-        $book = $entityRepo->createFromInput('book', [
+        $book = $this->newBook([
             'name' => 'PartA / PartB / PartC'
         ]);
 
         $this->assertEquals('parta-partb-partc', $book->slug);
+    }
+
+    public function test_shelf_cancel_creation_returns_to_correct_place()
+    {
+        $shelf = Bookshelf::first();
+
+        // Cancel button from shelf goes back to shelf
+        $this->asEditor()->visit($shelf->getUrl('/create-book'))
+            ->see('Cancel')
+            ->click('Cancel')
+            ->seePageIs($shelf->getUrl());
+
+        // Cancel button from books goes back to books
+        $this->asEditor()->visit('/create-book')
+            ->see('Cancel')
+            ->click('Cancel')
+            ->seePageIs('/books');
+
+        // Cancel button from book edit goes back to book
+        $book = Book::first();
+
+        $this->asEditor()->visit($book->getUrl('/edit'))
+            ->see('Cancel')
+            ->click('Cancel')
+            ->seePageIs($book->getUrl());
+    }
+
+    public function test_page_within_chapter_deletion_returns_to_chapter()
+    {
+        $chapter = Chapter::query()->first();
+        $page = $chapter->pages()->first();
+
+        $this->asEditor()->visit($page->getUrl('/delete'))
+            ->submitForm('Confirm')
+            ->seePageIs($chapter->getUrl());
     }
 
 }

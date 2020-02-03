@@ -3,6 +3,7 @@
 use BookStack\Auth\Permissions;
 use BookStack\Auth\Role;
 use BookStack\Exceptions\PermissionsException;
+use Illuminate\Support\Str;
 
 class PermissionsRepo
 {
@@ -66,7 +67,7 @@ class PermissionsRepo
         $role->name = str_replace(' ', '-', strtolower($roleData['display_name']));
         // Prevent duplicate names
         while ($this->role->where('name', '=', $role->name)->count() > 0) {
-            $role->name .= strtolower(str_random(2));
+            $role->name .= strtolower(Str::random(2));
         }
         $role->save();
 
@@ -136,7 +137,7 @@ class PermissionsRepo
         // Prevent deleting admin role or default registration role.
         if ($role->system_name && in_array($role->system_name, $this->systemRoles)) {
             throw new PermissionsException(trans('errors.role_system_cannot_be_deleted'));
-        } else if ($role->id == setting('registration-role')) {
+        } else if ($role->id === intval(setting('registration-role'))) {
             throw new PermissionsException(trans('errors.role_registration_default_cannot_delete'));
         }
 

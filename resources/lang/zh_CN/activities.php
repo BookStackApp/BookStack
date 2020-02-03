@@ -1,11 +1,9 @@
 <?php
-
+/**
+ * Activity text strings.
+ * Is used for all the text within activity logs & notifications.
+ */
 return [
-
-    /**
-     * Activity text strings.
-     * Is used for all the text within activity logs & notifications.
-     */
 
     // Pages
     'page_create'                 => '创建了页面',
@@ -36,7 +34,7 @@ return [
     'book_delete_notification'    => '图书已删除成功',
     'book_sort'                   => '排序了图书',
     'book_sort_notification'      => '图书已重新排序成功',
-    
+
     // Bookshelves
     'bookshelf_create'            => '创建了书架',
     'bookshelf_create_notification'    => '书架已成功创建',

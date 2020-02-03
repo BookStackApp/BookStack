@@ -1,19 +1,17 @@
 <?php
-
+/**
+ * Settings text strings
+ * Contains all text strings used in the general settings sections of BookStack
+ * including users and roles.
+ */
 return [
 
-    /**
-     * Settings text strings
-     * Contains all text strings used in the general settings sections of BookStack
-     * including users and roles.
-     */
+    // Common Messages
     'settings' => 'Inställningar',
     'settings_save' => 'Spara inställningar',
     'settings_save_success' => 'Inställningarna har sparats',
 
-    /**
-     * App settings
-     */
+    // App Settings
     'app_customization' => 'Sidanpassning',
     'app_features_security' => 'Funktioner och säkerhet',
     'app_name' => 'Applikationsnamn',
@@ -31,6 +29,7 @@ return [
     'app_editor_desc' => 'Välj vilket redigeringsverktyg som ska användas av alla användare för att redigera sidor.',
     'app_custom_html' => 'Egen HTML i <head>',
     'app_custom_html_desc' => 'Eventuellt innehåll i det här fältet placeras längst ner i <head>-sektionen på varje sida. Detta är användbart för att skriva över stilmaller eller lägga in spårningskoder.',
+    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Applikationslogotyp',
     'app_logo_desc' => 'Bilden bör vara minst 43px hög. <br>Större bilder skalas ner.',
     'app_primary_color' => 'Primärfärg',
@@ -42,14 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Inaktivera kommentarer',
     'app_disable_comments_desc' => 'Inaktivera kommentarer på alla sidor i applikationen. Befintliga kommentarer visas inte.',
 
-    /**
-     * Registration settings
-     */
+    // Color settings
+    'content_colors' => 'Content Colors',
+    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'bookshelf_color' => 'Shelf Color',
+    'book_color' => 'Book Color',
+    'chapter_color' => 'Chapter Color',
+    'page_color' => 'Page Color',
+    'page_draft_color' => 'Page Draft Color',
+
+    // Registration Settings
     'reg_settings' => 'Registreringsinställningar',
     'reg_enable' => 'Tillåt registrering',
     'reg_enable_toggle' => 'Tillåt registrering',
     'reg_enable_desc' => 'När registrering tillåts kan användaren logga in som en användare. Vid registreringen ges de en förvald användarroll.',
     'reg_default_role' => 'Standardroll efter registrering',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'E-postbekräftelse',
     'reg_email_confirmation_toggle' => 'Kräv e-postbekräftelse',
     'reg_confirm_email_desc' => 'Om registrering begränas till vissa domäner kommer e-postbekräftelse alltid att krävas och den här inställningen kommer att ignoreras.',
@@ -57,9 +64,7 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Ange en kommaseparerad lista över e-postdomäner till vilka du vill begränsa registrering. Användare kommer att skickas ett mail för att bekräfta deras e-post innan de får logga in. <br> Notera att användare kommer att kunna ändra sin e-postadress efter lyckad registrering.',
     'reg_confirm_restrict_domain_placeholder' => 'Ingen begränsning satt',
 
-    /**
-     * Maintenance settings
-     */
+    // Maintenance settings
     'maint' => 'Underhåll',
     'maint_image_cleanup' => 'Rensa bilder',
     'maint_image_cleanup_desc' => "Söker igenom innehåll i sidor & revisioner för att se vilka bilder och teckningar som är i bruk och vilka som är överflödiga. Se till att ta en komplett backup av databas och bilder innan du kör detta.",
@@ -68,10 +73,15 @@ return [
     'maint_image_cleanup_warning' => 'Hittade :count bilder som potentiellt inte används. Vill du verkligen ta bort dessa bilder?',
     'maint_image_cleanup_success' => 'Hittade och raderade :count bilder som potentiellt inte används!',
     'maint_image_cleanup_nothing_found' => 'Hittade inga oanvända bilder, så inget har raderats!',
+    'maint_send_test_email' => 'Send a Test Email',
+    'maint_send_test_email_desc' => 'This sends a test email to your email address specified in your profile.',
+    'maint_send_test_email_run' => 'Send test email',
+    'maint_send_test_email_success' => 'Email sent to :address',
+    'maint_send_test_email_mail_subject' => 'Test Email',
+    'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
+    'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
 
-    /**
-     * Role settings
-     */
+    // Role Settings
     'roles' => 'Roller',
     'role_user_roles' => 'Användarroller',
     'role_create' => 'Skapa ny roll',
@@ -79,7 +89,7 @@ return [
     'role_delete' => 'Ta bort roll',
     'role_delete_confirm' => 'Rollen med namn \':roleName\' kommer att tas bort.',
     'role_delete_users_assigned' => 'Det finns :userCount användare som tillhör den här rollen. Om du vill migrera användarna från den här rollen, välj en ny roll nedan.',
-    'role_delete_no_migration' => 'Migrera inte användare',
+    'role_delete_no_migration' => "Migrera inte användare",
     'role_delete_sure' => 'Är du säker på att du vill ta bort den här rollen?',
     'role_delete_success' => 'Rollen har tagits bort',
     'role_edit' => 'Redigera roll',
@@ -92,6 +102,8 @@ return [
     'role_manage_roles' => 'Hantera roller & rättigheter',
     'role_manage_entity_permissions' => 'Hantera rättigheter för alla böcker, kapitel och sidor',
     'role_manage_own_entity_permissions' => 'Hantera rättigheter för egna böcker, kapitel och sidor',
+    'role_manage_page_templates' => 'Manage page templates',
+    'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Hantera appinställningar',
     'role_asset' => 'Tillgång till innehåll',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',
@@ -104,9 +116,7 @@ return [
     'role_users' => 'Användare med denna roll',
     'role_users_none' => 'Inga användare tillhör den här rollen',
 
-    /**
-     * Users
-     */
+    // Users
     'users' => 'Användare',
     'user_profile' => 'Användarprofil',
     'users_add_new' => 'Lägg till användare',
@@ -118,8 +128,10 @@ return [
     'users_role_desc' => 'Välj vilka roller den här användaren ska tilldelas. Om en användare har tilldelats flera roller kommer behörigheterna från dessa roller att staplas och de kommer att få alla rättigheter i de tilldelade rollerna.',
     'users_password' => 'Användarlösenord',
     'users_password_desc' => 'Ange ett lösenord som ska användas för att logga in på sidan. Lösenordet måste vara minst 5 tecken långt.',
+    'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
+    'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'Externt ID för autentisering',
-    'users_external_auth_id_desc' => 'Detta är det ID som används för att matcha användaren när den kommunicerar med ditt LDAP-system.',
+    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
     'users_password_warning' => 'Fyll i nedanstående fält endast om du vill byta lösenord:',
     'users_system_public' => 'Den här användaren representerar eventuella gäster som använder systemet. Den kan inte användas för att logga in utan tilldeles automatiskt.',
     'users_delete' => 'Ta bort användare',
@@ -139,5 +151,61 @@ return [
     'users_social_connect' => 'Anslut konto',
     'users_social_disconnect' => 'Koppla från konto',
     'users_social_connected' => ':socialAccount har kopplats till ditt konto.',
-    'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.'
+    'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.',
+    'users_api_tokens' => 'API Tokens',
+    'users_api_tokens_none' => 'No API tokens have been created for this user',
+    'users_api_tokens_create' => 'Create Token',
+    'users_api_tokens_expires' => 'Expires',
+    'users_api_tokens_docs' => 'API Documentation',
+
+    // API Tokens
+    'user_api_token_create' => 'Create API Token',
+    'user_api_token_name' => 'Name',
+    'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
+    'user_api_token_expiry' => 'Expiry Date',
+    'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
+    'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
+    'user_api_token_create_success' => 'API token successfully created',
+    'user_api_token_update_success' => 'API token successfully updated',
+    'user_api_token' => 'API Token',
+    'user_api_token_id' => 'Token ID',
+    'user_api_token_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
+    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
+    'user_api_token_created' => 'Token Created :timeAgo',
+    'user_api_token_updated' => 'Token Updated :timeAgo',
+    'user_api_token_delete' => 'Delete Token',
+    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
+    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
+    'user_api_token_delete_success' => 'API token successfully deleted',
+
+    //! If editing translations files directly please ignore this in all
+    //! languages apart from en. Content will be auto-copied from en.
+    //!////////////////////////////////
+    'language_select' => [
+        'en' => 'English',
+        'ar' => 'العربية',
+        'da' => 'Dansk',
+        'de' => 'Deutsch (Sie)',
+        'de_informal' => 'Deutsch (Du)',
+        'es' => 'Español',
+        'es_AR' => 'Español Argentina',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'pt_BR' => 'Português do Brasil',
+        'sk' => 'Slovensky',
+        'cs' => 'Česky',
+        'sv' => 'Svenska',
+        'ko' => '한국어',
+        'ja' => '日本語',
+        'pl' => 'Polski',
+        'it' => 'Italian',
+        'ru' => 'Русский',
+        'uk' => 'Українська',
+        'zh_CN' => '简体中文',
+        'zh_TW' => '繁體中文',
+        'hu' => 'Magyar',
+        'tr' => 'Türkçe',
+    ]
+    //!////////////////////////////////
 ];

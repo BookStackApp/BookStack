@@ -1,8 +1,10 @@
 <?php
+/**
+ * Text used in custom JavaScript driven components.
+ */
 return [
-    /**
-     * Image Manager
-     */
+
+    // Image Manager
     'image_select' => 'Bild auswählen',
     'image_all' => 'Alle',
     'image_all_title' => 'Alle Bilder anzeigen',
@@ -22,9 +24,8 @@ return [
     'image_update_success' => 'Bilddetails erfolgreich aktualisiert',
     'image_delete_success' => 'Bild erfolgreich gelöscht',
     'image_upload_remove' => 'Entfernen',
-    /**
-     * Code editor
-     */
+
+    // Code Editor
     'code_editor' => 'Code editieren',
     'code_language' => 'Code Sprache',
     'code_content' => 'Code Inhalt',

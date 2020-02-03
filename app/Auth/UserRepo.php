@@ -1,39 +1,37 @@
 <?php namespace BookStack\Auth;
 
 use Activity;
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Book;
+use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Images;
+use Log;
 
 class UserRepo
 {
 
     protected $user;
     protected $role;
-    protected $entityRepo;
 
     /**
      * UserRepo constructor.
-     * @param User $user
-     * @param Role $role
-     * @param EntityRepo $entityRepo
      */
-    public function __construct(User $user, Role $role, EntityRepo $entityRepo)
+    public function __construct(User $user, Role $role)
     {
         $this->user = $user;
         $this->role = $role;
-        $this->entityRepo = $entityRepo;
     }
 
     /**
-     * @param string $email
-     * @return User|null
+     * Get a user by their email address.
      */
-    public function getByEmail($email)
+    public function getByEmail(string $email): ?User
     {
         return $this->user->where('email', '=', $email)->first();
     }
@@ -79,29 +77,14 @@ class UserRepo
 
      /**
      * Creates a new user and attaches a role to them.
-     * @param array $data
-     * @param boolean $verifyEmail
-     * @return \BookStack\Auth\User
      */
-    public function registerNew(array $data, $verifyEmail = false)
+    public function registerNew(array $data, bool $emailConfirmed = false): User
     {
-        $user = $this->create($data, $verifyEmail);
-        $this->attachDefaultRole($user);
+        $user = $this->create($data, $emailConfirmed);
+        $user->attachDefaultRole();
         $this->downloadAndAssignUserAvatar($user);
 
         return $user;
-    }
-
-    /**
-     * Give a user the default role. Used when creating a new user.
-     * @param User $user
-     */
-    public function attachDefaultRole(User $user)
-    {
-        $roleId = setting('registration-role');
-        if ($roleId !== false && $user->roles()->where('id', '=', $roleId)->count() === 0) {
-            $user->attachRoleId($roleId);
-        }
     }
 
     /**
@@ -121,7 +104,7 @@ class UserRepo
 
     /**
      * Checks if the give user is the only admin.
-     * @param \BookStack\Auth\User $user
+     * @param User $user
      * @return bool
      */
     public function isOnlyAdmin(User $user)
@@ -173,28 +156,27 @@ class UserRepo
 
     /**
      * Create a new basic instance of user.
-     * @param array $data
-     * @param boolean $verifyEmail
-     * @return \BookStack\Auth\User
      */
-    public function create(array $data, $verifyEmail = false)
+    public function create(array $data, bool $emailConfirmed = false): User
     {
         return $this->user->forceCreate([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
-            'email_confirmed' => $verifyEmail
+            'email_confirmed' => $emailConfirmed,
+            'external_auth_id' => $data['external_auth_id'] ?? '',
         ]);
     }
 
     /**
      * Remove the given user from storage, Delete all related content.
-     * @param \BookStack\Auth\User $user
+     * @param User $user
      * @throws Exception
      */
     public function destroy(User $user)
     {
         $user->socialAccounts()->delete();
+        $user->apiTokens()->delete();
         $user->delete();
         
         // Delete user profile images
@@ -206,7 +188,7 @@ class UserRepo
 
     /**
      * Get the latest activity for a user.
-     * @param \BookStack\Auth\User $user
+     * @param User $user
      * @param int $count
      * @param int $page
      * @return array
@@ -218,36 +200,35 @@ class UserRepo
 
     /**
      * Get the recently created content for this given user.
-     * @param \BookStack\Auth\User $user
-     * @param int $count
-     * @return mixed
      */
-    public function getRecentlyCreated(User $user, $count = 20)
+    public function getRecentlyCreated(User $user, int $count = 20): array
     {
-        $createdByUserQuery = function (Builder $query) use ($user) {
-            $query->where('created_by', '=', $user->id);
+        $query = function (Builder $query) use ($user, $count) {
+            return $query->orderBy('created_at', 'desc')
+                ->where('created_by', '=', $user->id)
+                ->take($count)
+                ->get();
         };
 
         return [
-            'pages'    => $this->entityRepo->getRecentlyCreated('page', $count, 0, $createdByUserQuery),
-            'chapters' => $this->entityRepo->getRecentlyCreated('chapter', $count, 0, $createdByUserQuery),
-            'books'    => $this->entityRepo->getRecentlyCreated('book', $count, 0, $createdByUserQuery),
-            'shelves'  => $this->entityRepo->getRecentlyCreated('bookshelf', $count, 0, $createdByUserQuery)
+            'pages'    => $query(Page::visible()->where('draft', '=', false)),
+            'chapters' => $query(Chapter::visible()),
+            'books'    => $query(Book::visible()),
+            'shelves'  => $query(Bookshelf::visible()),
         ];
     }
 
     /**
      * Get asset created counts for the give user.
-     * @param \BookStack\Auth\User $user
-     * @return array
      */
-    public function getAssetCounts(User $user)
+    public function getAssetCounts(User $user): array
     {
+        $createdBy = ['created_by' => $user->id];
         return [
-            'pages'    => $this->entityRepo->getUserTotalCreated('page', $user),
-            'chapters' => $this->entityRepo->getUserTotalCreated('chapter', $user),
-            'books'    => $this->entityRepo->getUserTotalCreated('book', $user),
-            'shelves'    => $this->entityRepo->getUserTotalCreated('bookshelf', $user),
+            'pages'    =>  Page::visible()->where($createdBy)->count(),
+            'chapters'    =>  Chapter::visible()->where($createdBy)->count(),
+            'books'    =>  Book::visible()->where($createdBy)->count(),
+            'shelves'    =>  Bookshelf::visible()->where($createdBy)->count(),
         ];
     }
 
@@ -258,16 +239,6 @@ class UserRepo
     public function getAllRoles()
     {
         return $this->role->newQuery()->orderBy('name', 'asc')->get();
-    }
-
-    /**
-     * Get all the roles which can be given restricted access to
-     * other entities in the system.
-     * @return mixed
-     */
-    public function getRestrictableRoles()
-    {
-        return $this->role->where('system_name', '!=', 'admin')->get();
     }
 
     /**
@@ -288,7 +259,7 @@ class UserRepo
             $user->save();
             return true;
         } catch (Exception $e) {
-            \Log::error('Failed to save user avatar image');
+            Log::error('Failed to save user avatar image');
             return false;
         }
     }

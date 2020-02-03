@@ -2,7 +2,6 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Auth\User;
 use BookStack\Ownable;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,41 +14,26 @@ abstract class Controller extends BaseController
     use DispatchesJobs, ValidatesRequests;
 
     /**
-     * @var User static
-     */
-    protected $currentUser;
-    /**
-     * @var bool
-     */
-    protected $signedIn;
-
-    /**
      * Controller constructor.
      */
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
+        //
+    }
 
-            // Get a user instance for the current user
-            $user = user();
-
-            // Share variables with controllers
-            $this->currentUser = $user;
-            $this->signedIn = auth()->check();
-
-            // Share variables with views
-            view()->share('signedIn', $this->signedIn);
-            view()->share('currentUser', $user);
-
-            return $next($request);
-        });
+    /**
+     * Check if the current user is signed in.
+     */
+    protected function isSignedIn(): bool
+    {
+        return auth()->check();
     }
 
     /**
      * Stops the application and shows a permission error if
      * the application is in demo mode.
      */
-    protected function preventAccessForDemoUsers()
+    protected function preventAccessInDemoMode()
     {
         if (config('app.env') === 'demo') {
             $this->showPermissionError();
@@ -75,7 +59,7 @@ abstract class Controller extends BaseController
             $response = response()->json(['error' => trans('errors.permissionJson')], 403);
         } else {
             $response = redirect('/');
-            session()->flash('error', trans('errors.permission'));
+            $this->showErrorNotification(trans('errors.permission'));
         }
 
         throw new HttpResponseException($response);
@@ -133,7 +117,7 @@ abstract class Controller extends BaseController
     protected function checkPermissionOrCurrentUser(string $permissionName, int $userId)
     {
         return $this->checkPermissionOr($permissionName, function () use ($userId) {
-            return $userId === $this->currentUser->id;
+            return $userId === user()->id;
         });
     }
 
@@ -145,7 +129,7 @@ abstract class Controller extends BaseController
      */
     protected function jsonError($messageText = "", $statusCode = 500)
     {
-        return response()->json(['message' => $messageText], $statusCode);
+        return response()->json(['message' => $messageText, 'status' => 'error'], $statusCode);
     }
 
     /**
@@ -177,5 +161,40 @@ abstract class Controller extends BaseController
             'Content-Type'        => 'application/octet-stream',
             'Content-Disposition' => 'attachment; filename="' . $fileName . '"'
         ]);
+    }
+
+    /**
+     * Show a positive, successful notification to the user on next view load.
+     * @param string $message
+     */
+    protected function showSuccessNotification(string $message)
+    {
+        session()->flash('success', $message);
+    }
+
+    /**
+     * Show a warning notification to the user on next view load.
+     * @param string $message
+     */
+    protected function showWarningNotification(string $message)
+    {
+        session()->flash('warning', $message);
+    }
+
+    /**
+     * Show an error notification to the user on next view load.
+     * @param string $message
+     */
+    protected function showErrorNotification(string $message)
+    {
+        session()->flash('error', $message);
+    }
+
+    /**
+     * Get the validation rules for image files.
+     */
+    protected function getImageValidationRules(): string
+    {
+        return 'image_extension|no_double_extension|mimes:jpeg,png,gif,bmp,webp,tiff';
     }
 }

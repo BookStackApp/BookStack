@@ -4,6 +4,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Entities\Page;
 use BookStack\Uploads\ImageService;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ImageTest extends TestCase
@@ -35,6 +36,30 @@ class ImageTest extends TestCase
         ]);
     }
 
+    public function test_image_display_thumbnail_generation_does_not_increase_image_size()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $originalFile = $this->getTestImageFilePath('compressed.png');
+        $originalFileSize = filesize($originalFile);
+        $imgDetails = $this->uploadGalleryImage($page, 'compressed.png');
+        $relPath = $imgDetails['path'];
+
+        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: '. public_path($relPath));
+        $displayImage = $imgDetails['response']->thumbs->display;
+
+        $displayImageRelPath = implode('/', array_slice(explode('/', $displayImage), 3));
+        $displayImagePath = public_path($displayImageRelPath);
+        $displayFileSize = filesize($displayImagePath);
+
+        $this->deleteImage($relPath);
+        $this->deleteImage($displayImageRelPath);
+
+        $this->assertEquals($originalFileSize, $displayFileSize, 'Display thumbnail generation should not increase image size');
+    }
+
     public function test_image_edit()
     {
         $editor = $this->getEditor();
@@ -43,7 +68,7 @@ class ImageTest extends TestCase
         $imgDetails = $this->uploadGalleryImage();
         $image = Image::query()->first();
 
-        $newName = str_random();
+        $newName = Str::random();
         $update = $this->put('/images/' . $image->id, ['name' => $newName]);
         $update->assertSuccessful();
         $update->assertJson([
@@ -89,7 +114,7 @@ class ImageTest extends TestCase
         $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
         $searchHitRequest->assertSuccessful()->assertJson($resultJson);
 
-        $namePartial = str_random(16);
+        $namePartial = Str::random(16);
         $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
         $searchHitRequest->assertSuccessful()->assertExactJson($emptyJson);
     }
@@ -208,7 +233,7 @@ class ImageTest extends TestCase
 
         $encodedImageContent = base64_encode(file_get_contents($expectedPath));
         $export = $this->get($page->getUrl('/export/html'));
-        $this->assertTrue(str_contains($export->getContent(), $encodedImageContent), 'Uploaded image in export content');
+        $this->assertTrue(strpos($export->getContent(), $encodedImageContent) !== false, 'Uploaded image in export content');
 
         if (file_exists($expectedPath)) {
             unlink($expectedPath);
@@ -366,7 +391,7 @@ class ImageTest extends TestCase
         $image = Image::where('type', '=', 'gallery')->first();
 
         $pageRepo = app(PageRepo::class);
-        $pageRepo->updatePage($page, $page->book_id, [
+        $pageRepo->update($page, [
             'name' => $page->name,
             'html' => $page->html . "<img src=\"{$image->url}\">",
             'summary' => ''
@@ -378,7 +403,7 @@ class ImageTest extends TestCase
         $this->assertCount(0, $toDelete);
 
         // Save a revision of our page without the image;
-        $pageRepo->updatePage($page, $page->book_id, [
+        $pageRepo->update($page, [
             'name' => $page->name,
             'html' => "<p>Hello</p>",
             'summary' => ''

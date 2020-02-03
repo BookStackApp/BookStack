@@ -7,12 +7,12 @@
         <div class="py-m">
             @include('settings.navbar', ['selected' => 'maintenance'])
         </div>
-        <div class="text-right mb-l px-m">
-            <br>
+        <div class="text-right p-m">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
             BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
+            </a>
         </div>
     </div>
-
 
     <div id="image-cleanup" class="card content-wrap auto-height">
         <h2 class="list-heading">{{ trans('settings.maint_image_cleanup') }}</h2>
@@ -39,6 +39,21 @@
                         @endif
                     </div>
                     <button class="button outline">{{ trans('settings.maint_image_cleanup_run') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="send-test-email" class="card content-wrap auto-height">
+        <h2 class="list-heading">{{ trans('settings.maint_send_test_email') }}</h2>
+        <div class="grid half gap-xl">
+            <div>
+                <p class="small text-muted">{{ trans('settings.maint_send_test_email_desc') }}</p>
+            </div>
+            <div>
+                <form method="POST" action="{{ url('/settings/maintenance/send-test-email') }}">
+                    {!! csrf_field()  !!}
+                    <button class="button outline">{{ trans('settings.maint_send_test_email_run') }}</button>
                 </form>
             </div>
         </div>

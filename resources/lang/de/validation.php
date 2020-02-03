@@ -1,18 +1,13 @@
 <?php
-
+/**
+ * Validation Lines
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
+ */
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | following language lines contain default error messages used by
-    | validator class. Some of these rules have multiple versions such
-    | as size rules. Feel free to tweak each of these messages here.
-    |
-    */
-
+    // Standard laravel validation lines
     'accepted'             => ':attribute muss akzeptiert werden.',
     'active_url'           => ':attribute ist keine valide URL.',
     'after'                => ':attribute muss ein Datum nach :date sein.',
@@ -35,13 +30,41 @@ return [
     'digits'               => ':attribute muss :digits Stellen haben.',
     'digits_between'       => ':attribute muss zwischen :min und :max Stellen haben.',
     'email'                => ':attribute muss eine valide E-Mail-Adresse sein.',
+    'ends_with' => ':attribute muss mit einem der folgenden Werte: :values enden',
     'filled'               => ':attribute ist erforderlich.',
+    'gt'                   => [
+        'numeric' => ':attribute muss größer als :value sein.',
+        'file'    => ':attribute muss mindestens :value Kilobytes groß sein.',
+        'string'  => ':attribute muss mehr als :value Zeichen haben.',
+        'array'   => ':attribute muss mindestens :value Elemente haben.',
+    ],
+    'gte'                  => [
+        'numeric' => ':attribute muss größer-gleich :value sein.',
+        'file'    => ':attribute muss mindestens :value Kilobytes groß sein.',
+        'string'  => ':attribute muss mindestens :value Zeichen enthalten.',
+        'array'   => ':attribute muss :value Elemente oder mehr haben.',
+    ],
     'exists'               => ':attribute ist ungültig.',
     'image'                => ':attribute muss ein Bild sein.',
     'image_extension'      => ':attribute muss eine gültige und unterstützte Bild-Dateiendung haben.',
     'in'                   => ':attribute ist ungültig.',
     'integer'              => ':attribute muss eine Zahl sein.',
     'ip'                   => ':attribute muss eine valide IP-Adresse sein.',
+    'ipv4'                 => ':attribute muss eine gültige IPv4 Adresse sein.',
+    'ipv6'                 => ':attribute muss eine gültige IPv6-Adresse sein.',
+    'json'                 => 'Das Attribut muss eine gültige JSON-Zeichenfolge sein.',
+    'lt'                   => [
+        'numeric' => ':attribute muss kleiner sein :value sein.',
+        'file'    => ':attribute muss kleiner als :value Kilobytes sein.',
+        'string'  => ':attribute muss weniger als :value Zeichen haben.',
+        'array'   => ':attribute muss weniger als :value Elemente haben.',
+    ],
+    'lte'                  => [
+        'numeric' => ':attribute muss kleiner oder gleich :value sein.',
+        'file'    => ':attribute muss kleiner oder gleich :value Kilobytes sein.',
+        'string'  => ':attribute darf höchstens :value Zeichen besitzen.',
+        'array'   => ':attribute darf höchstens :value Elemente haben.',
+    ],
     'max'                  => [
         'numeric' => ':attribute darf nicht größer als :max sein.',
         'file'    => ':attribute darf nicht größer als :max Kilobyte sein.',
@@ -57,6 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute darf nur eine gültige Dateiendung',
     'not_in'               => ':attribute ist ungültig.',
+    'not_regex'            => ':attribute ist kein valides Format.',
     'numeric'              => ':attribute muss eine Zahl sein.',
     'regex'                => ':attribute ist in einem ungültigen Format.',
     'required'             => ':attribute ist erforderlich.',
@@ -78,37 +102,13 @@ return [
     'url'                  => ':attribute ist kein valides Format.',
     'uploaded'             => 'Die Datei konnte nicht hochgeladen werden. Der Server akzeptiert möglicherweise keine Dateien dieser Größe.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
+    // Custom validation lines
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
         'password-confirm' => [
             'required_with' => 'Passwortbestätigung erforderlich',
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
-    |
-    */
-
+    // Custom validation attributes
     'attributes' => [],
-
 ];

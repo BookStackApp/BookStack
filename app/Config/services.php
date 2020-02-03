@@ -22,23 +22,6 @@ return [
     // Callback URL for social authentication methods
     'callback_url' => env('APP_URL', false),
 
-    'mailgun'  => [
-        'domain' => '',
-        'secret' => '',
-    ],
-
-    'ses'      => [
-        'key'    => '',
-        'secret' => '',
-        'region' => 'us-east-1',
-    ],
-
-    'stripe'   => [
-        'model'  => \BookStack\Auth\User::class,
-        'key'    => '',
-        'secret' => '',
-    ],
-
     'github'   => [
         'client_id'     => env('GITHUB_APP_ID', false),
         'client_secret' => env('GITHUB_APP_SECRET', false),
@@ -98,8 +81,8 @@ return [
     'okta' => [
         'client_id' => env('OKTA_APP_ID'),
         'client_secret' => env('OKTA_APP_SECRET'),
-        'redirect' => env('APP_URL') . '/login/service/okta/callback', 
-        'base_url' => env('OKTA_BASE_URL'), 
+        'redirect' => env('APP_URL') . '/login/service/okta/callback',
+        'base_url' => env('OKTA_BASE_URL'),
         'name'          => 'Okta',
         'auto_register' => env('OKTA_AUTO_REGISTER', false),
         'auto_confirm' => env('OKTA_AUTO_CONFIRM_EMAIL', false),
@@ -140,13 +123,14 @@ return [
         'base_dn' => env('LDAP_BASE_DN', false),
         'user_filter' => env('LDAP_USER_FILTER', '(&(uid=${user}))'),
         'version' => env('LDAP_VERSION', false),
+        'id_attribute' => env('LDAP_ID_ATTRIBUTE', 'uid'),
         'email_attribute' => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
         'display_name_attribute' => env('LDAP_DISPLAY_NAME_ATTRIBUTE', 'cn'),
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),
-		'user_to_groups' => env('LDAP_USER_TO_GROUPS',false),
-		'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
-		'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS',false),
-		'tls_insecure' => env('LDAP_TLS_INSECURE', false),
-	]
+        'user_to_groups' => env('LDAP_USER_TO_GROUPS', false),
+        'group_attribute' => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
+        'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS', false),
+        'tls_insecure' => env('LDAP_TLS_INSECURE', false),
+    ],
 
 ];

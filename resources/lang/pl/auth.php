@@ -1,21 +1,15 @@
 <?php
+/**
+ * Authentication Language Lines
+ * The following language lines are used during authentication for various
+ * messages that we need to display to the user.
+ */
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+
     'failed' => 'Wprowadzone poświadczenia są nieprawidłowe.',
     'throttle' => 'Zbyt wiele prób logowania. Spróbuj ponownie za :seconds s.',
 
-    /**
-     * Login & Register
-     */
+    // Login & Register
     'sign_up' => 'Zarejestruj się',
     'log_in' => 'Zaloguj się',
     'log_in_with' => 'Zaloguj się za pomocą :socialDriver',
@@ -27,11 +21,13 @@ return [
     'email' => 'E-mail',
     'password' => 'Hasło',
     'password_confirm' => 'Potwierdzenie hasła',
-    'password_hint' => 'Musi mieć więcej niż 5 znaków',
+    'password_hint' => 'Musi mieć więcej niż 7 znaków',
     'forgot_password' => 'Zapomniałem hasła',
     'remember_me' => 'Zapamiętaj mnie',
     'ldap_email_hint' => 'Wprowadź adres e-mail dla tego konta.',
     'create_account' => 'Utwórz konto',
+    'already_have_account' => 'Masz już konto?',
+    'dont_have_account' => 'Nie masz konta?',
     'social_login' => 'Logowanie za pomocą konta społecznościowego',
     'social_registration' => 'Rejestracja za pomocą konta społecznościowego',
     'social_registration_text' => 'Zarejestruj się za pomocą innej usługi.',
@@ -43,23 +39,18 @@ return [
     'register_success' => 'Dziękujemy za rejestrację! Zostałeś zalogowany automatycznie.',
 
 
-    /**
-     * Password Reset
-     */
+    // Password Reset
     'reset_password' => 'Resetowanie hasła',
     'reset_password_send_instructions' => 'Wprowadź adres e-mail powiązany z Twoim kontem, by otrzymać link do resetowania hasła.',
     'reset_password_send_button' => 'Wyślij link do resetowania hasła',
     'reset_password_sent_success' => 'Wysłano link do resetowania hasła na adres :email.',
     'reset_password_success' => 'Hasło zostało zresetowane pomyślnie.',
-
     'email_reset_subject' => 'Resetowanie hasła do :appName',
     'email_reset_text' => 'Otrzymujesz tę wiadomość ponieważ ktoś zażądał zresetowania hasła do Twojego konta.',
     'email_reset_not_requested' => 'Jeśli to nie Ty złożyłeś żądanie zresetowania hasła, zignoruj tę wiadomość.',
 
 
-    /**
-     * Email Confirmation
-     */
+    // Email Confirmation
     'email_confirm_subject' => 'Potwierdź swój adres e-mail w :appName',
     'email_confirm_greeting' => 'Dziękujemy za dołączenie do :appName!',
     'email_confirm_text' => 'Prosimy byś potwierdził swoje hasło klikając przycisk poniżej:',
@@ -73,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Aby potwierdzić swoje konto kliknij w link wysłany w wiadomości po rejestracji.',
     'email_not_confirmed_resend' => 'Jeśli wiadomość do Ciebie nie dotarła możesz wysłać ją ponownie wypełniając formularz poniżej.',
     'email_not_confirmed_resend_button' => 'Wyślij ponownie wiadomość z potwierdzeniem',
+
+    // User Invite
+    'user_invite_email_subject' => 'Zostałeś zaproszony do :appName!',
+    'user_invite_email_greeting' => 'Zostało dla Ciebie utworzone konto w :appName.',
+    'user_invite_email_text' => 'Kliknij przycisk poniżej, aby ustawić hasło do konta i uzyskać do niego dostęp:',
+    'user_invite_email_action' => 'Ustaw hasło do konta',
+    'user_invite_page_welcome' => 'Witaj w :appName!',
+    'user_invite_page_text' => 'Aby zakończyć tworzenie konta musisz ustawić hasło, które będzie używane do logowania do :appName w przyszłości.',
+    'user_invite_page_confirm_button' => 'Potwierdź hasło',
+    'user_invite_success' => 'Hasło zostało ustawione, teraz masz dostęp do :appName!'
 ];

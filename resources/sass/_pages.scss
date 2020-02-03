@@ -1,0 +1,452 @@
+.page-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  background-color: #FFF;
+
+  .edit-area {
+    flex: 1;
+    flex-direction: column;
+    z-index: 10;
+  }
+
+  .mce-tinymce {
+	box-shadow: none;
+  }
+
+  .mce-top-part::before {
+    box-shadow: none;
+  }
+}
+
+body.mce-fullscreen .page-editor .edit-area,
+body.markdown-fullscreen .page-editor .edit-area {
+  z-index: 12;
+}
+
+body.mce-fullscreen, body.markdown-fullscreen {
+  .page-editor, .flex-fill {
+    overflow: visible;
+  }
+}
+
+@include smaller-than($s) {
+  .page-edit-toolbar {
+    overflow-x: scroll;
+    overflow-y: visible;
+  }
+  .page-edit-toolbar .grid.third {
+    display: block;
+    white-space: nowrap;
+    > div {
+      display: inline-block;
+    }
+  }
+}
+
+.page-save-mobile-button {
+  position: fixed;
+  z-index: 30;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  right: $-m;
+  bottom: $-s;
+  box-shadow: $bs-hover;
+  background-color: currentColor;
+  text-align: center;
+  svg {
+    fill: #FFF;
+    margin-right: 0;
+  }
+}
+
+.draft-notification {
+  pointer-events: none;
+  transform: scale(0);
+  transition: transform ease-in-out 120ms;
+  transform-origin: 50% 50%;
+  &.visible {
+    transform: scale(1);
+  }
+}
+
+.page-style.editor {
+  padding: 0 !important;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 840px;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+  .align-left {
+    text-align: left;
+  }
+  img.align-left, table.align-left {
+    float: left !important;
+    margin: $-xs $-m $-m 0;
+  }
+  .align-right {
+    text-align: right !important;
+  }
+  img.align-right, table.align-right {
+    float: right !important;
+    margin: $-xs 0 $-xs $-s;
+  }
+  .align-center {
+    text-align: center;
+  }
+  img.align-center {
+    display: block;
+  }
+  img.align-center, table.align-center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  img {
+    max-width: 100%;
+    height:auto;
+  }
+  h1, h2, h3, h4, h5, h6, pre {
+    clear: left;
+  }
+  hr {
+    clear: both;
+    margin: $-m 0;
+  }
+  table {
+    hyphens: auto;
+    table-layout: fixed;
+    max-width: 100%;
+    height: auto !important;
+  }
+
+  // diffs
+  ins,
+  del {
+    text-decoration: none;
+  }
+  ins {
+    background: #dbffdb;
+  }
+  del {
+    background: #FFECEC;
+  }
+
+  &.page-revision {
+    pre code {
+      white-space: pre-wrap;
+    }
+  }
+}
+
+// Page content pointers
+.pointer-container {
+  position: relative;
+  display: none;
+  left: 0;
+  z-index: 10;
+}
+.pointer {
+  border: 1px solid #CCC;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: $-s $-s;
+  border-radius: 4px;
+  box-shadow: 0 0 12px 1px rgba(212, 209, 209, 0.3);
+  position: absolute;
+  top: -60px;
+  background-color:#FFF;
+  width: 275px;
+  z-index: 55;
+
+  &.is-page-editable {
+    width: 328px;
+  }
+
+  &:before {
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    content: '';
+    display: block;
+    background-color:#FFF;
+    transform: rotate(45deg);
+    transform-origin: 50% 50%;
+    border-bottom: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    z-index: 56;
+  }
+  input, button, a {
+    position: relative;
+    border-radius: 0;
+    height: 28px;
+    font-size: 12px;
+    vertical-align: top;
+    padding: 5px 16px;
+  }
+  input {
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    color: #666;
+    width: 172px;
+    z-index: 40;
+    padding: 5px 10px;
+  }
+  span.icon {
+    fill: #444;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    line-height: 1;
+  }
+  .input-group .button {
+    line-height: 1;
+    margin: 0 0 0 -4px;
+    box-shadow: none;
+  }
+  a.button {
+    margin: 0;
+  }
+  .svg-icon {
+    width: 1.2em;
+    height: 1.2em;
+  }
+}
+
+// Attribute form
+.floating-toolbox {
+  background-color: #FFF;
+  border: 1px solid #DDD;
+  right: $-xl*2;
+  width: 48px;
+  overflow: hidden;
+  align-items: stretch;
+  flex-direction: row;
+  display: flex;
+  transition: width ease-in-out 180ms;
+  margin-top: -1px;
+  min-height: 0;
+  &.open {
+    width: 480px;
+  }
+  [toolbox-toggle] svg {
+    transition: transform ease-in-out 180ms;
+  }
+  [toolbox-toggle] {
+    transition: background-color ease-in-out 180ms;
+  }
+  &.open [toolbox-toggle] {
+    background-color: rgba(255, 0, 0, 0.29);
+  }
+  &.open [toolbox-toggle] svg {
+    transform: rotate(180deg);
+  }
+  > div {
+    flex: 1;
+    position: relative;
+  }
+  .tabs {
+    display: block;
+    border-right: 1px solid #DDD;
+    width: 48px;
+    flex: 0 1 auto;
+  }
+  .tabs svg {
+    fill: rgba(0, 0, 0, 0.5);
+    padding: 0;
+    margin: 0;
+  }
+  .tabs > button {
+    display: block;
+    cursor: pointer;
+    padding: $-s $-m;
+    font-size: 16px;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  &.open .tabs > button.active {
+    fill: #444;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  div[toolbox-tab-content] {
+    padding-bottom: 45px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0px;
+    overflow-y: scroll;
+  }
+  h4 {
+    font-size: 24px;
+    margin: $-m 0 0 0;
+    padding: 0 $-l $-s $-l;
+  }
+  .tags input {
+    max-width: 100%;
+    width: 100%;
+    min-width: 50px;
+  }
+  .tags td, .tag-table > div > div > div {
+    padding-right: $-s;
+    padding-top: $-s;
+    position: relative;
+  }
+  .handle {
+    user-select: none;
+    cursor: move;
+    fill: #999;
+  }
+  form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+  table td, table th {
+    overflow: visible;
+  }
+}
+
+[toolbox-tab-content] {
+  display: none;
+}
+
+.tag-display {
+  position: relative;
+  table {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  tr:first-child td {
+    padding-top: 0;
+  }
+  .heading th {
+    padding: $-xs $-s;
+    color: rgba(100, 100, 100, 0.7);
+    border: 0;
+    font-weight: 400;
+  }
+  td {
+    border: 0;
+    border-bottom: 1px solid #EEE;
+    padding: $-xs $-s;
+    color: #444;
+  }
+  tr td:first-child {
+    padding-left:0;
+  }
+  .tag-value {
+    color: #888;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  .tag {
+    padding: $-s;
+  }
+}
+
+.suggestion-box {
+  position: absolute;
+  background-color: #FFF;
+  border: 1px solid #BBB;
+  box-shadow: $bs-light;
+  list-style: none;
+  z-index: 100;
+  padding: 0;
+  margin: 0;
+  border-radius: 3px;
+  li {
+    display: block;
+    padding: $-xs $-s;
+    border-bottom: 1px solid #DDD;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &.active {
+      background-color: #EEE;
+    }
+  }
+}
+
+.comments-container h5 {
+  color: #888;
+  font-weight: normal;
+  margin-top: 0.5em;
+}
+
+.comment-editor .CodeMirror, .comment-editor .CodeMirror-scroll {
+  min-height: 175px;
+}
+
+/* FIXME - Ugly hack to modify the media plugin for TinyMCE */
+.mce-floatpanel[aria-label="Insert/edit media"] {
+  .mce-open {
+    display: none;
+  }
+}
+
+.entity-list-item > span:first-child, .icon-list-item > span:first-child, .chapter-expansion > .icon {
+  font-size: 0.8rem;
+  width: 1.88em;
+  height: 1.88em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 1em;
+  position: relative;
+  overflow: hidden;
+  svg {
+    margin: 0;
+    bottom: 0;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    opacity: 0.2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.entity-chip {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9em;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  padding: $-xs $-s;
+  fill: currentColor;
+  opacity: 0.85;
+  transition: opacity ease-in-out 120ms;
+  &:after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    opacity: 0.15;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    text-decoration: none;
+    opacity: 1;
+  }
+}

@@ -30,6 +30,7 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guard:standard');
         parent::__construct();
     }
 
@@ -53,7 +54,7 @@ class ForgotPasswordController extends Controller
 
         if ($response === Password::RESET_LINK_SENT) {
             $message = trans('auth.reset_password_sent_success', ['email' => $request->get('email')]);
-            session()->flash('success', $message);
+            $this->showSuccessNotification($message);
             return back()->with('status', trans($response));
         }
 

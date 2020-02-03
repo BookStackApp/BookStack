@@ -1,0 +1,7 @@
+project_identifier: bookstack
+base_path: .
+preserve_hierarchy: false
+files:
+  - source: /resources/lang/en/*.php
+    translation: /resources/lang/%two_letters_code%/%original_file_name%
+    type: php

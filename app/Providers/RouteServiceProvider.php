@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-//        $this->mapApiRoutes();
+        $this->mapApiRoutes();
     }
     /**
      * Define the "web" routes for the application.
@@ -63,7 +63,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace,
+            'namespace' => $this->namespace . '\Api',
             'prefix' => 'api',
         ], function ($router) {
             require base_path('routes/api.php');

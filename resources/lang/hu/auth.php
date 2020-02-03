@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Jelszó',
     'password_confirm' => 'Jelszó megerősítése',
-    'password_hint' => 'Öt karakternél hosszabbnak kell lennie',
+    'password_hint' => 'Négy karakternél hosszabbnak kell lennie',
     'forgot_password' => 'Elfelejtett jelszó?',
     'remember_me' => 'Emlékezzen rám',
     'ldap_email_hint' => 'A fiókhoz használt email cím megadása.',
@@ -64,4 +64,14 @@ return [
     'email_not_confirmed_click_link' => 'Rá kell kattintani a regisztráció után nem sokkal elküldött emailben található hivatkozásra.',
     'email_not_confirmed_resend' => 'Ha nem érkezik meg a megerősítő email, a lenti űrlap beküldésével újra lehet küldeni.',
     'email_not_confirmed_resend_button' => 'Megerősítő email újraküldése',
+
+    // User Invite
+    'user_invite_email_subject' => 'Ez egy meghívó :appName weboldalhoz!',
+    'user_invite_email_greeting' => 'Létre lett hozva egy fiók az :appName weboldalon.',
+    'user_invite_email_text' => 'Jelszó beállításához és hozzáféréshez a lenti gombra kell kattintani:',
+    'user_invite_email_action' => 'Fiók jelszó beállítása',
+    'user_invite_page_welcome' => ':appName üdvözöl!',
+    'user_invite_page_text' => 'A fiók véglegesítéséhez és a hozzáféréshez be kell állítani egy jelszót ami :appName weboldalon lesz használva a bejelentkezéshez.',
+    'user_invite_page_confirm_button' => 'Jelszó megerősítése',
+    'user_invite_success' => 'Jelszó beállítva, :appName most már elérhető!'
 ];

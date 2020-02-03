@@ -21,7 +21,7 @@ return [
     'email' => 'Correo electrónico',
     'password' => 'Contraseña',
     'password_confirm' => 'Confirmar Contraseña',
-    'password_hint' => 'Debe contener más de 5 caracteres',
+    'password_hint' => 'Debe contener más de 7 caracteres',
     'forgot_password' => '¿Contraseña Olvidada?',
     'remember_me' => 'Recordarme',
     'ldap_email_hint' => 'Por favor introduzca un mail para utilizar con esta cuenta.',

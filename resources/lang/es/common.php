@@ -20,7 +20,7 @@ return [
     'role' => 'Rol',
     'cover_image' => 'Imagen de portada',
     'cover_image_description' => 'Esta imagen debe ser aproximadamente de 440x250px.',
-
+    
     // Actions
     'actions' => 'Acciones',
     'view' => 'Ver',
@@ -38,6 +38,7 @@ return [
     'reset' => 'Resetear',
     'remove' => 'Remover',
     'add' => 'Añadir',
+    'fullscreen' => 'Pantalla completa',
 
     // Sort Options
     'sort_options' => 'Opciones de ordenación',

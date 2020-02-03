@@ -14,8 +14,12 @@ if (env('CACHE_DRIVER') === 'memcached') {
     $memcachedServers = explode(',', trim(env('MEMCACHED_SERVERS', '127.0.0.1:11211:100'), ','));
     foreach ($memcachedServers as $index => $memcachedServer) {
         $memcachedServerDetails = explode(':', $memcachedServer);
-        if (count($memcachedServerDetails) < 2) $memcachedServerDetails[] = '11211';
-        if (count($memcachedServerDetails) < 3) $memcachedServerDetails[] = '100';
+        if (count($memcachedServerDetails) < 2) {
+            $memcachedServerDetails[] = '11211';
+        }
+        if (count($memcachedServerDetails) < 3) {
+            $memcachedServerDetails[] = '100';
+        }
         $memcachedServers[$index] = array_combine($memcachedServerKeys, $memcachedServerDetails);
     }
 }
@@ -62,6 +66,6 @@ return [
 
     // Cache key prefix
     // Used to prevent collisions in shared cache systems.
-    'prefix' => env('CACHE_PREFIX', 'bookstack'),
+    'prefix' => env('CACHE_PREFIX', 'bookstack_cache'),
 
 ];

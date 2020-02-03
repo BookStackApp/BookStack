@@ -1,31 +1,21 @@
 <?php namespace BookStack\Providers;
 
-use BookStack\Translation\Translator;
+use BookStack\Translation\FileLoader;
+use Illuminate\Translation\TranslationServiceProvider as BaseProvider;
 
-class TranslationServiceProvider extends \Illuminate\Translation\TranslationServiceProvider
+class TranslationServiceProvider extends BaseProvider
 {
+
     /**
-     * Register the service provider.
-     *
+     * Register the translation line loader.
+     * Overrides the default register action from Laravel so a custom loader can be used.
      * @return void
      */
-    public function register()
+    protected function registerLoader()
     {
-        $this->registerLoader();
-
-        $this->app->singleton('translator', function ($app) {
-            $loader = $app['translation.loader'];
-
-            // When registering the translator component, we'll need to set the default
-            // locale as well as the fallback locale. So, we'll grab the application
-            // configuration so we can easily get both of these values from there.
-            $locale = $app['config']['app.locale'];
-
-            $trans = new Translator($loader, $locale);
-
-            $trans->setFallback($app['config']['app.fallback_locale']);
-
-            return $trans;
+        $this->app->singleton('translation.loader', function ($app) {
+            return new FileLoader($app['files'], $app['path.lang']);
         });
     }
+
 }

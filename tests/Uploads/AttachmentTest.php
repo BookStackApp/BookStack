@@ -78,7 +78,7 @@ class AttachmentTest extends TestCase
         $upload->assertStatus(200);
 
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
-        $this->assertNotContains($fileName, $attachment->path);
+        $this->assertStringNotContainsString($fileName, $attachment->path);
         $this->assertStringEndsWith('.txt', $attachment->path);
     }
 
@@ -223,7 +223,7 @@ class AttachmentTest extends TestCase
     {
         $admin = $this->getAdmin();
         $viewer = $this->getViewer();
-        $page = Page::first();
+        $page = Page::first(); /** @var Page $page */
 
         $this->actingAs($admin);
         $fileName = 'permission_test.txt';
@@ -233,7 +233,7 @@ class AttachmentTest extends TestCase
         $page->restricted = true;
         $page->permissions()->delete();
         $page->save();
-        $this->app[PermissionService::class]->buildJointPermissionsForEntity($page);
+        $page->rebuildPermissions();
         $page->load('jointPermissions');
 
         $this->actingAs($viewer);

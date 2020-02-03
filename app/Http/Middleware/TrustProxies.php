@@ -16,17 +16,11 @@ class TrustProxies extends Middleware
     protected $proxies;
 
     /**
-     * The current proxy header mappings.
+     * The headers that should be used to detect proxies.
      *
-     * @var array
+     * @var int
      */
-    protected $headers = [
-        Request::HEADER_FORWARDED => 'FORWARDED',
-        Request::HEADER_X_FORWARDED_FOR => 'X_FORWARDED_FOR',
-        Request::HEADER_X_FORWARDED_HOST => 'X_FORWARDED_HOST',
-        Request::HEADER_X_FORWARDED_PORT => 'X_FORWARDED_PORT',
-        Request::HEADER_X_FORWARDED_PROTO => 'X_FORWARDED_PROTO',
-    ];
+    protected $headers = Request::HEADER_X_FORWARDED_ALL;
 
     /**
      * Handle the request, Set the correct user-configured proxy information.
@@ -34,7 +28,7 @@ class TrustProxies extends Middleware
      * @param Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $setProxies = config('app.proxies');
         if ($setProxies !== '**' && $setProxies !== '*' && $setProxies !== '') {

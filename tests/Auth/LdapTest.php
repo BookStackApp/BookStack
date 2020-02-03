@@ -1,4 +1,5 @@
 <?php namespace Tests;
+
 use BookStack\Auth\Role;
 use BookStack\Auth\Access\Ldap;
 use BookStack\Auth\User;
@@ -15,17 +16,22 @@ class LdapTest extends BrowserKitTest
     protected $mockUser;
     protected $resourceId = 'resource-test';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         if (!defined('LDAP_OPT_REFERRALS')) define('LDAP_OPT_REFERRALS', 1);
         app('config')->set([
             'auth.method' => 'ldap',
+            'auth.defaults.guard' => 'ldap',
             'services.ldap.base_dn' => 'dc=ldap,dc=local',
             'services.ldap.email_attribute' => 'mail',
             'services.ldap.display_name_attribute' => 'cn',
+            'services.ldap.id_attribute' => 'uid',
             'services.ldap.user_to_groups' => false,
-            'auth.providers.users.driver' => 'ldap',
+            'services.ldap.version' => '3',
+            'services.ldap.user_filter' => '(&(uid=${user}))',
+            'services.ldap.follow_referrals' => false,
+            'services.ldap.tls_insecure' => false,
         ]);
         $this->mockLdap = \Mockery::mock(Ldap::class);
         $this->app[Ldap::class] = $this->mockLdap;
@@ -59,16 +65,16 @@ class LdapTest extends BrowserKitTest
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
-        $this->mockLdap->shouldReceive('setOption')->times(4);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+        $this->mockLdap->shouldReceive('setOption')->times(2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
                 'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
-        $this->mockEscapes(4);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
+        $this->mockEscapes(2);
 
         $this->mockUserLogin()
             ->seePageIs('/login')->see('Please enter an email to use for this account.');
@@ -80,30 +86,12 @@ class LdapTest extends BrowserKitTest
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name]);
     }
 
-    public function test_login_works_when_no_uid_provided_by_ldap_server()
+    public function test_email_domain_restriction_active_on_new_ldap_login()
     {
-        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setVersion')->once();
-        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
-        $this->mockLdap->shouldReceive('setOption')->times(2);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
-            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
-            ->andReturn(['count' => 1, 0 => [
-                'cn' => [$this->mockUser->name],
-                'dn' => $ldapDn,
-                'mail' => [$this->mockUser->email]
-            ]]);
-        $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true);
-        $this->mockEscapes(2);
+        $this->setSettings([
+            'registration-restrict' => 'testing.com'
+        ]);
 
-        $this->mockUserLogin()
-            ->seePageIs('/')
-            ->see($this->mockUser->name)
-            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $ldapDn]);
-    }
-
-    public function test_initial_incorrect_details()
-    {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
         $this->mockLdap->shouldReceive('setOption')->times(2);
@@ -114,8 +102,84 @@ class LdapTest extends BrowserKitTest
                 'cn' => [$this->mockUser->name],
                 'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true, true, false);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
         $this->mockEscapes(2);
+
+        $this->mockUserLogin()
+            ->seePageIs('/login')
+            ->see('Please enter an email to use for this account.');
+
+        $email = 'tester@invaliddomain.com';
+
+        $this->type($email, '#email')
+            ->press('Log In')
+            ->seePageIs('/login')
+            ->see('That email domain does not have access to this application')
+            ->dontSeeInDatabase('users', ['email' => $email]);
+    }
+
+    public function test_login_works_when_no_uid_provided_by_ldap_server()
+    {
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('setOption')->times(1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'cn' => [$this->mockUser->name],
+                'dn' => $ldapDn,
+                'mail' => [$this->mockUser->email]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(2)->andReturn(true);
+        $this->mockEscapes(1);
+
+        $this->mockUserLogin()
+            ->seePageIs('/')
+            ->see($this->mockUser->name)
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $ldapDn]);
+    }
+
+    public function test_a_custom_uid_attribute_can_be_specified_and_is_used_properly()
+    {
+        config()->set(['services.ldap.id_attribute' => 'my_custom_id']);
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('setOption')->times(1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'cn' => [$this->mockUser->name],
+                'dn' => $ldapDn,
+                'my_custom_id' => ['cooluser456'],
+                'mail' => [$this->mockUser->email]
+            ]]);
+
+
+        $this->mockLdap->shouldReceive('bind')->times(2)->andReturn(true);
+        $this->mockEscapes(1);
+
+        $this->mockUserLogin()
+            ->seePageIs('/')
+            ->see($this->mockUser->name)
+            ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => 'cooluser456']);
+    }
+
+    public function test_initial_incorrect_details()
+    {
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$this->mockUser->name],
+                'cn' => [$this->mockUser->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')]
+            ]]);
+        $this->mockLdap->shouldReceive('bind')->times(2)->andReturn(true, false);
+        $this->mockEscapes(1);
 
         $this->mockUserLogin()
             ->seePageIs('/login')->see('These credentials do not match our records.')
@@ -174,10 +238,10 @@ class LdapTest extends BrowserKitTest
             'services.ldap.group_attribute' => 'memberOf',
             'services.ldap.remove_from_groups' => false,
         ]);
-        $this->mockLdap->shouldReceive('connect')->times(2)->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setVersion')->times(2);
-        $this->mockLdap->shouldReceive('setOption')->times(5);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(5)
+        $this->mockLdap->shouldReceive('connect')->times(1)->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->times(1);
+        $this->mockLdap->shouldReceive('setOption')->times(4);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
@@ -190,8 +254,8 @@ class LdapTest extends BrowserKitTest
                     1 => "cn=ldaptester-second,ou=groups,dc=example,dc=com",
                 ]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
-        $this->mockEscapes(5);
+        $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
+        $this->mockEscapes(4);
         $this->mockExplodes(6);
 
         $this->mockUserLogin()->seePageIs('/');
@@ -223,10 +287,10 @@ class LdapTest extends BrowserKitTest
             'services.ldap.group_attribute' => 'memberOf',
             'services.ldap.remove_from_groups' => true,
         ]);
-        $this->mockLdap->shouldReceive('connect')->times(2)->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setVersion')->times(2);
-        $this->mockLdap->shouldReceive('setOption')->times(4);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+        $this->mockLdap->shouldReceive('connect')->times(1)->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->times(1);
+        $this->mockLdap->shouldReceive('setOption')->times(3);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(3)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
@@ -238,8 +302,8 @@ class LdapTest extends BrowserKitTest
                     0 => "cn=ldaptester,ou=groups,dc=example,dc=com",
                 ]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
-        $this->mockEscapes(4);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
+        $this->mockEscapes(3);
         $this->mockExplodes(2);
 
         $this->mockUserLogin()->seePageIs('/');
@@ -272,10 +336,10 @@ class LdapTest extends BrowserKitTest
             'services.ldap.group_attribute' => 'memberOf',
             'services.ldap.remove_from_groups' => true,
         ]);
-        $this->mockLdap->shouldReceive('connect')->times(2)->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setVersion')->times(2);
-        $this->mockLdap->shouldReceive('setOption')->times(4);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+        $this->mockLdap->shouldReceive('connect')->times(1)->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->times(1);
+        $this->mockLdap->shouldReceive('setOption')->times(3);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(3)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
@@ -287,8 +351,8 @@ class LdapTest extends BrowserKitTest
                     0 => "cn=ex-auth-a,ou=groups,dc=example,dc=com",
                 ]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
-        $this->mockEscapes(4);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
+        $this->mockEscapes(3);
         $this->mockExplodes(2);
 
         $this->mockUserLogin()->seePageIs('/');
@@ -317,10 +381,10 @@ class LdapTest extends BrowserKitTest
             'services.ldap.group_attribute' => 'memberOf',
             'services.ldap.remove_from_groups' => true,
         ]);
-        $this->mockLdap->shouldReceive('connect')->times(2)->andReturn($this->resourceId);
-        $this->mockLdap->shouldReceive('setVersion')->times(2);
-        $this->mockLdap->shouldReceive('setOption')->times(5);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(5)
+        $this->mockLdap->shouldReceive('connect')->times(1)->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->times(1);
+        $this->mockLdap->shouldReceive('setOption')->times(4);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
@@ -333,8 +397,8 @@ class LdapTest extends BrowserKitTest
                     1 => "cn=ldaptester-second,ou=groups,dc=example,dc=com",
                 ]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
-        $this->mockEscapes(5);
+        $this->mockLdap->shouldReceive('bind')->times(5)->andReturn(true);
+        $this->mockEscapes(4);
         $this->mockExplodes(6);
 
         $this->mockUserLogin()->seePageIs('/');
@@ -358,17 +422,17 @@ class LdapTest extends BrowserKitTest
 
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
-        $this->mockLdap->shouldReceive('setOption')->times(4);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+        $this->mockLdap->shouldReceive('setOption')->times(2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
                 'dn' => ['dc=test' . config('services.ldap.base_dn')],
-                'displayName' => 'displayNameAttribute'
+                'displayname' => 'displayNameAttribute'
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
-        $this->mockEscapes(4);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
+        $this->mockEscapes(2);
 
         $this->mockUserLogin()
             ->seePageIs('/login')->see('Please enter an email to use for this account.');
@@ -388,16 +452,16 @@ class LdapTest extends BrowserKitTest
 
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
-        $this->mockLdap->shouldReceive('setOption')->times(4);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+        $this->mockLdap->shouldReceive('setOption')->times(2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn' => [$this->mockUser->name],
                 'dn' => ['dc=test' . config('services.ldap.base_dn')]
             ]]);
-        $this->mockLdap->shouldReceive('bind')->times(6)->andReturn(true);
-        $this->mockEscapes(4);
+        $this->mockLdap->shouldReceive('bind')->times(4)->andReturn(true);
+        $this->mockEscapes(2);
 
         $this->mockUserLogin()
             ->seePageIs('/login')->see('Please enter an email to use for this account.');
@@ -417,14 +481,14 @@ class LdapTest extends BrowserKitTest
 
         // Standard mocks
         $this->mockLdap->shouldReceive('setVersion')->once();
-        $this->mockLdap->shouldReceive('setOption')->times(2);
-        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(2)->andReturn(['count' => 1, 0 => [
+        $this->mockLdap->shouldReceive('setOption')->times(1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)->andReturn(['count' => 1, 0 => [
             'uid' => [$this->mockUser->name],
             'cn' => [$this->mockUser->name],
             'dn' => ['dc=test' . config('services.ldap.base_dn')]
         ]]);
-        $this->mockLdap->shouldReceive('bind')->times(3)->andReturn(true);
-        $this->mockEscapes(2);
+        $this->mockLdap->shouldReceive('bind')->times(2)->andReturn(true);
+        $this->mockEscapes(1);
 
         $this->mockLdap->shouldReceive('connect')->once()
             ->with($expectedHost, $expectedPort)->andReturn($this->resourceId);
@@ -445,5 +509,38 @@ class LdapTest extends BrowserKitTest
     public function test_default_ldap_port_used_if_not_in_server_string_and_not_uri()
     {
         $this->checkLdapReceivesCorrectDetails('ldap.bookstack.com', 'ldap.bookstack.com', 389);
+    }
+
+    public function test_forgot_password_routes_inaccessible()
+    {
+        $resp = $this->get('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/email');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->get('/password/reset/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/password/reset');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_invite_routes_inaccessible()
+    {
+        $resp = $this->get('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register/invite/abc123');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_user_register_routes_inaccessible()
+    {
+        $resp = $this->get('/register');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->post('/register');
+        $this->assertPermissionError($resp);
     }
 }

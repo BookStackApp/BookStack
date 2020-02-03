@@ -1,9 +1,11 @@
 <?php
+/**
+ * Text used for 'Entities' (Document Structure Elements) such as
+ * Books, Shelves, Chapters & Pages
+ */
 return [
 
-    /**
-     * Shared
-     */
+    // Shared
     'recently_created' => 'Créé récemment',
     'recently_created_pages' => 'Pages créées récemment',
     'recently_updated_pages' => 'Pages mises à jour récemment',
@@ -32,17 +34,13 @@ return [
     'export_pdf' => 'Fichier PDF',
     'export_text' => 'Document texte',
 
-    /**
-     * Permissions and restrictions
-     */
-    'permissions' => 'Permissions',
+    // Permissions and restrictions
+    'permissions' => 'Autorisations',
     'permissions_intro' => 'Une fois activées ces permissions prendront la priorité sur tous les sets de permissions préexistants.',
     'permissions_enable' => 'Activer les permissions personnalisées',
     'permissions_save' => 'Enregistrer les permissions',
 
-    /**
-     * Search
-     */
+    // Search
     'search_results' => 'Résultats de recherche',
     'search_total_results_found' => ':count résultats trouvés|:count résultats trouvés au total',
     'search_clear' => 'Réinitialiser la recherche',
@@ -67,9 +65,7 @@ return [
     'search_set_date' => 'Choisir la date',
     'search_update' => 'Actualiser la recherche',
 
-    /**
-     * Shelves
-     */
+    // Shelves
     'shelf' => 'Étagère',
     'shelves' => 'Étagères',
     'x_shelves' => ':count Étagère|:count Étagères',
@@ -91,8 +87,8 @@ return [
     'shelves_edit' => 'Modifier l\'étagère',
     'shelves_delete' => 'Supprimer l\'étagère',
     'shelves_delete_named' => 'Supprimer l\'étagère :name',
-    'shelves_delete_explain' => "Ceci va supprimer l\'étagère nommée \':bookName\'. Les livres contenus dans cette étagère ne seront pas supprimés.",
-    'shelves_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer cette étagère ?',
+    'shelves_delete_explain' => "Ceci va supprimer l\\'étagère nommée \\':bookName\\'. Les livres contenus dans cette étagère ne seront pas supprimés.",
+    'shelves_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer cette étagère ?',
     'shelves_permissions' => 'Permissions de l\'étagère',
     'shelves_permissions_updated' => 'Permissions de l\'étagère mises à jour',
     'shelves_permissions_active' => 'Permissions de l\'étagère activées',
@@ -101,9 +97,7 @@ return [
     'shelves_copy_permissions_explain' => 'Ceci va appliquer les permissions actuelles de cette étagère à tous les livres qu\'elle contient. Avant de  continuer, assurez-vous que toutes les permissions de cette étagère ont été sauvegardées.',
     'shelves_copy_permission_success' => 'Permissions de l\'étagère transférées à :count livres',
 
-    /**
-     * Books
-     */
+    // Books
     'book' => 'Livre',
     'books' => 'Livres',
     'x_books' => ':count livre|:count livres',
@@ -118,7 +112,7 @@ return [
     'books_delete' => 'Supprimer un livre',
     'books_delete_named' => 'Supprimer le livre :bookName',
     'books_delete_explain' => 'Ceci va supprimer le livre nommé \':bookName\', tous les chapitres et pages seront supprimés.',
-    'books_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer ce livre ?',
+    'books_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer ce livre ?',
     'books_edit' => 'Modifier le livre',
     'books_edit_named' => 'Modifier le livre :bookName',
     'books_form_book_name' => 'Nom du livre',
@@ -127,7 +121,6 @@ return [
     'books_permissions_updated' => 'Permissions du livre mises à jour',
     'books_empty_contents' => 'Aucune page ou chapitre n\'a été ajouté à ce livre.',
     'books_empty_create_page' => 'Créer une nouvelle page',
-    'books_empty_or' => 'ou',
     'books_empty_sort_current_book' => 'Trier les pages du livre',
     'books_empty_add_chapter' => 'Ajouter un chapitre',
     'books_permissions_active' => 'Permissions personnalisées activées',
@@ -143,9 +136,7 @@ return [
     'books_sort_show_other' => 'Afficher d\'autres livres',
     'books_sort_save' => 'Enregistrer l\'ordre',
 
-    /**
-     * Chapters
-     */
+    // Chapters
     'chapter' => 'Chapitre',
     'chapters' => 'Chapitres',
     'x_chapters' => ':count chapitre|:count chapitres',
@@ -155,7 +146,7 @@ return [
     'chapters_delete' => 'Supprimer le chapitre',
     'chapters_delete_named' => 'Supprimer le chapitre :chapterName',
     'chapters_delete_explain' => 'Ceci va supprimer le chapitre \':chapterName\', toutes les pages seront déplacées dans le livre parent.',
-    'chapters_delete_confirm' => 'Etes-vous sûr(e) de vouloir supprimer ce chapitre ?',
+    'chapters_delete_confirm' => 'Etes-vous sûr(e) de vouloir supprimer ce chapitre ?',
     'chapters_edit' => 'Modifier le chapitre',
     'chapters_edit_named' => 'Modifier le chapitre :chapterName',
     'chapters_save' => 'Enregistrer le chapitre',
@@ -168,12 +159,10 @@ return [
     'chapters_permissions_success' => 'Permissions du chapitre mises à jour',
     'chapters_search_this' => 'Rechercher dans ce chapitre',
 
-    /**
-     * Pages
-     */
+    // Pages
     'page' => 'Page',
     'pages' => 'Pages',
-    'x_pages' => ':count Page|:count Pages',
+    'x_pages' => ':count Page|:count pages',
     'pages_popular' => 'Pages populaires',
     'pages_new' => 'Nouvelle page',
     'pages_attachments' => 'Fichiers joints',
@@ -184,10 +173,10 @@ return [
     'pages_delete_draft' => 'Supprimer le brouillon',
     'pages_delete_success' => 'Page supprimée',
     'pages_delete_draft_success' => 'Brouillon supprimé',
-    'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
-    'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
+    'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
+    'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
     'pages_editing_named' => 'Modification de la page :pageName',
-    'pages_edit_toggle_header' => 'Afficher/cacher l\'en-tête',
+    'pages_edit_draft_options' => 'Options du brouillon',
     'pages_edit_save_draft' => 'Enregistrer le brouillon',
     'pages_edit_draft' => 'Modifier le brouillon',
     'pages_editing_draft' => 'Modification du brouillon',
@@ -221,6 +210,8 @@ return [
     'pages_revisions_created_by' => 'Créé par',
     'pages_revisions_date' => 'Date de révision',
     'pages_revisions_number' => '#',
+    'pages_revisions_numbered' => 'Révision #:id',
+    'pages_revisions_numbered_changes' => 'Modification #:id',
     'pages_revisions_changelog' => 'Journal des changements',
     'pages_revisions_changes' => 'Changements',
     'pages_revisions_current' => 'Version courante',
@@ -239,23 +230,24 @@ return [
         'start_b' => ':userName a commencé à éditer cette page',
         'time_a' => 'depuis la dernière sauvegarde',
         'time_b' => 'dans les :minCount dernières minutes',
-        'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
+        'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
     ],
     'pages_draft_discarded' => 'Brouillon écarté, la page est dans sa version actuelle.',
     'pages_specific' => 'Page Spécifique',
+    'pages_is_template' => 'Modèle de page',
 
-    /**
-     * Editor sidebar
-     */
+    // Editor Sidebar
     'page_tags' => 'Mots-clés de la page',
     'chapter_tags' => 'Mots-clés du chapitre',
     'book_tags' => 'Mots-clés du livre',
     'shelf_tags' => 'Mots-clés de l\'étagère',
     'tag' => 'Mot-clé',
     'tags' =>  'Mots-clés',
+    'tag_name' =>  'Nom du tag',
     'tag_value' => 'Valeur du mot-clé (Optionnel)',
     'tags_explain' => "Ajouter des mots-clés pour catégoriser votre contenu.",
     'tags_add' => 'Ajouter un autre mot-clé',
+    'tags_remove' => 'Supprimer le tag',
     'attachments' => 'Fichiers joints',
     'attachments_explain' => 'Ajouter des fichiers ou des liens pour les afficher sur votre page. Ils seront affichés dans la barre latérale',
     'attachments_explain_instant_save' => 'Ces changements sont enregistrés immédiatement.',
@@ -281,10 +273,14 @@ return [
     'attachments_file_uploaded' => 'Fichier ajouté avec succès',
     'attachments_file_updated' => 'Fichier mis à jour avec succès',
     'attachments_link_attached' => 'Lien attaché à la page avec succès',
+    'templates' => 'Modèles',
+    'templates_set_as_template' => 'La page est un modèle',
+    'templates_explain_set_as_template' => 'Vous pouvez définir cette page comme modèle pour que son contenu soit utilisé lors de la création d\'autres pages. Les autres utilisateurs pourront utiliser ce modèle s\'ils ont les permissions pour cette page.',
+    'templates_replace_content' => 'Remplacer le contenu de la page',
+    'templates_append_content' => 'Ajouter après le contenu de la page',
+    'templates_prepend_content' => 'Ajouter devant le contenu de la page',
 
-    /**
-     * Profile View
-     */
+    // Profile View
     'profile_user_for_x' => 'Utilisateur depuis :time',
     'profile_created_content' => 'Contenu créé',
     'profile_not_created_pages' => ':userName n\'a pas créé de page',
@@ -292,30 +288,27 @@ return [
     'profile_not_created_books' => ':userName n\'a pas créé de livre',
     'profile_not_created_shelves' => ':userName n\'a pas créé d\'étagère',
 
-    /**
-     * Comments
-     */
+    // Comments
     'comment' => 'Commentaire',
     'comments' => 'Commentaires',
     'comment_add' => 'Ajouter un commentaire',
     'comment_placeholder' => 'Entrez vos commentaires ici',
-    'comment_count' => '{0} Pas de commentaires|{1} 1 Commentaire|[2,*] :count Commentaires',
+    'comment_count' => '{0} Pas de commentaires|{1} Un commentaire|[2,*] :count commentaires',
     'comment_save' => 'Enregistrer le commentaire',
-    'comment_saving' => 'Enregistrement du commentaire...',
-    'comment_deleting' => 'Suppression du commentaire...',
+    'comment_saving' => 'Enregistrement du commentaire…',
+    'comment_deleting' => 'Suppression du commentaire…',
     'comment_new' => 'Nouveau commentaire',
     'comment_created' => 'commenté :createDiff',
     'comment_updated' => 'Mis à jour :updateDiff par :username',
     'comment_deleted_success' => 'Commentaire supprimé',
     'comment_created_success' => 'Commentaire ajouté',
     'comment_updated_success' => 'Commentaire mis à jour',
-    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
+    'comment_delete_confirm' => 'Etes-vous sûr de vouloir supprimer ce commentaire ?',
     'comment_in_reply_to' => 'En réponse à :commentId',
 
-     /**
-     * Revision
-     */
-    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision?',
+    // Revision
+    'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision ?',
+    'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu courant de la page va être remplacé.',
     'revision_delete_success' => 'Révision supprimée',
     'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.'
 ];

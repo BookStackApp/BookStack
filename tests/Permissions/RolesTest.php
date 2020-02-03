@@ -11,7 +11,7 @@ class RolesTest extends BrowserKitTest
 {
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->user = $this->getViewer();
@@ -637,14 +637,14 @@ class RolesTest extends BrowserKitTest
             $ownPage->getUrl() => 'Delete'
         ]);
 
-        $bookUrl = $ownPage->book->getUrl();
+        $parent = $ownPage->chapter ?? $ownPage->book;
         $this->visit($otherPage->getUrl())
             ->dontSeeInElement('.action-buttons', 'Delete')
             ->visit($otherPage->getUrl() . '/delete')
             ->seePageIs('/');
         $this->visit($ownPage->getUrl())->visit($ownPage->getUrl() . '/delete')
             ->press('Confirm')
-            ->seePageIs($bookUrl)
+            ->seePageIs($parent->getUrl())
             ->dontSeeInElement('.book-content', $ownPage->name);
     }
 
@@ -658,10 +658,10 @@ class RolesTest extends BrowserKitTest
             $otherPage->getUrl() => 'Delete'
         ]);
 
-        $bookUrl = $otherPage->book->getUrl();
+        $parent = $otherPage->chapter ?? $otherPage->book;
         $this->visit($otherPage->getUrl())->visit($otherPage->getUrl() . '/delete')
             ->press('Confirm')
-            ->seePageIs($bookUrl)
+            ->seePageIs($parent->getUrl())
             ->dontSeeInElement('.book-content', $otherPage->name);
     }
 

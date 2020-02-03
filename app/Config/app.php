@@ -52,10 +52,13 @@ return [
     'locale' => env('APP_LANG', 'en'),
 
     // Locales available
-    'locales' => ['en', 'ar', 'de', 'de_informal', 'es', 'es_AR', 'fr', 'hu', 'nl', 'pt_BR', 'sk', 'cs', 'sv', 'kr', 'ja', 'pl', 'it', 'ru', 'uk', 'zh_CN', 'zh_TW'],
+    'locales' => ['en', 'ar', 'da', 'de', 'de_informal', 'es', 'es_AR', 'fr', 'hu', 'nl', 'pt_BR', 'sk', 'cs', 'sv', 'ko', 'ja', 'pl', 'it', 'ru', 'uk', 'zh_CN', 'zh_TW', 'tr'],
 
     //  Application Fallback Locale
     'fallback_locale' => 'en',
+
+    // Faker Locale
+    'faker_locale' => 'en_GB',
 
     // Enable right-to-left text control.
     'rtl' => false,
@@ -71,10 +74,6 @@ return [
 
     // Encryption cipher
     'cipher' => 'AES-256-CBC',
-
-    // Logging configuration
-    // Options: single, daily, syslog, errorlog
-    'log' => env('APP_LOGGING', 'single'),
 
     // Application Services Provides
     'providers' => [
@@ -107,7 +106,6 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
 
-
         // BookStack replacement service providers (Extends Laravel)
         BookStack\Providers\PaginationServiceProvider::class,
         BookStack\Providers\TranslationServiceProvider::class,
@@ -137,6 +135,7 @@ return [
 
         // Laravel
         'App'       => Illuminate\Support\Facades\App::class,
+        'Arr'       => Illuminate\Support\Arr::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
         'Blade'     => Illuminate\Support\Facades\Blade::class,
@@ -166,6 +165,7 @@ return [
         'Schema'    => Illuminate\Support\Facades\Schema::class,
         'Session'   => Illuminate\Support\Facades\Session::class,
         'Storage'   => Illuminate\Support\Facades\Storage::class,
+        'Str'       => Illuminate\Support\Str::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
@@ -181,6 +181,7 @@ return [
         'Setting'  => BookStack\Facades\Setting::class,
         'Views'    => BookStack\Facades\Views::class,
         'Images'   => BookStack\Facades\Images::class,
+        'Permissions' => BookStack\Facades\Permissions::class,
 
     ],
 

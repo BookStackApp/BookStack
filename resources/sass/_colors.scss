@@ -1,0 +1,86 @@
+/**
+ * Background colors
+ */
+
+.primary-background {
+  background-color: var(--color-primary) !important;
+}
+.primary-background-light {
+  background-color: var(--color-primary-light);
+}
+
+/*
+ * Status text colors
+ */
+.text-pos, .text-pos:hover, .text-pos-hover:hover {
+  color: $positive !important;
+  fill: $positive !important;
+}
+
+.text-warn, .text-warn:hover, .text-warn-hover:hover {
+  color: $warning !important;
+  fill: $warning !important;
+}
+
+.text-neg, .text-neg:hover, .text-neg-hover:hover  {
+  color: $negative !important;
+  fill: $negative !important;
+}
+
+/*
+ * Style text colors
+ */
+.text-primary, .text-primary:hover, .text-primary-hover:hover  {
+  color: var(--color-primary) !important;
+  fill: var(--color-primary) !important;
+}
+
+.text-muted {
+  color: #575757 !important;
+  fill: #575757 !important;
+}
+
+.text-dark {
+  color: #222 !important;
+  fill: #222 !important;
+}
+
+/*
+ * Entity text colors
+ */
+.text-bookshelf, .text-bookshelf:hover {
+  color: var(--color-bookshelf);
+  fill: var(--color-bookshelf);
+}
+.text-book, .text-book:hover {
+  color: var(--color-book);
+  fill: var(--color-book);
+}
+.text-page, .text-page:hover {
+  color: var(--color-page);
+  fill: var(--color-page);
+}
+.text-page.draft, .text-page.draft:hover {
+  color: var(--color-page-draft);
+  fill: var(--color-page-draft);
+}
+.text-chapter, .text-chapter:hover {
+  color: var(--color-chapter);
+  fill: var(--color-chapter);
+}
+
+/*
+ * Standard & Entity background colors
+ */
+.bg-white {
+  background-color: #FFFFFF;
+}
+.bg-book {
+  background-color: var(--color-book);
+}
+.bg-chapter {
+  background-color: var(--color-chapter);
+}
+.bg-shelf {
+  background-color: var(--color-bookshelf);
+}

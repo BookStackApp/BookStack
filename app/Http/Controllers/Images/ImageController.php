@@ -1,6 +1,6 @@
 <?php namespace BookStack\Http\Controllers\Images;
 
-use BookStack\Entities\Repos\EntityRepo;
+use BookStack\Entities\Page;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Repos\PageRepo;
@@ -47,13 +47,13 @@ class ImageController extends Controller
 
     /**
      * Update image details
-     * @param integer $id
      * @param Request $request
+     * @param integer $id
      * @return \Illuminate\Http\JsonResponse
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required|min:2|string'
@@ -69,16 +69,21 @@ class ImageController extends Controller
 
     /**
      * Show the usage of an image on pages.
-     * @param \BookStack\Entities\Repos\EntityRepo $entityRepo
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function usage(EntityRepo $entityRepo, $id)
+    public function usage(int $id)
     {
         $image = $this->imageRepo->getById($id);
         $this->checkImagePermission($image);
-        $pageSearch = $entityRepo->searchForImage($image->url);
-        return response()->json($pageSearch);
+
+        $pages = Page::visible()->where('html', 'like', '%' . $image->url . '%')->get(['id', 'name', 'slug', 'book_id']);
+        foreach ($pages as $page) {
+            $page->url = $page->getUrl();
+            $page->html = '';
+            $page->text = '';
+        }
+        $result = count($pages) > 0 ? $pages : false;
+
+        return response()->json($result);
     }
 
     /**

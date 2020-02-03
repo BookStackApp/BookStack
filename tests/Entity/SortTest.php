@@ -1,6 +1,5 @@
 <?php namespace Tests;
 
-use BookStack\Auth\Role;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
@@ -10,7 +9,7 @@ class SortTest extends TestCase
 {
     protected $book;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->book = Book::first();
@@ -20,7 +19,7 @@ class SortTest extends TestCase
     {
         $this->asAdmin();
         $pageRepo = app(PageRepo::class);
-        $draft = $pageRepo->getDraftPage($this->book);
+        $draft = $pageRepo->getNewDraftPage($this->book);
 
         $resp = $this->get($this->book->getUrl());
         $resp->assertSee($draft->name);
@@ -29,7 +28,7 @@ class SortTest extends TestCase
         $resp->assertDontSee($draft->name);
     }
 
-    public function test_page_move()
+    public function test_page_move_into_book()
     {
         $page = Page::first();
         $currentBook = $page->book;
@@ -48,6 +47,44 @@ class SortTest extends TestCase
 
         $newBookResp = $this->get($newBook->getUrl());
         $newBookResp->assertSee('moved page');
+        $newBookResp->assertSee($page->name);
+    }
+
+    public function test_page_move_into_chapter()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+        $newChapter = $newBook->chapters()->first();
+
+        $movePageResp = $this->actingAs($this->getEditor())->put($page->getUrl('/move'), [
+            'entity_selection' => 'chapter:' . $newChapter->id
+        ]);
+        $page = Page::find($page->id);
+
+        $movePageResp->assertRedirect($page->getUrl());
+        $this->assertTrue($page->book->id == $newBook->id, 'Page parent is now the new chapter');
+
+        $newChapterResp = $this->get($newChapter->getUrl());
+        $newChapterResp->assertSee($page->name);
+    }
+
+    public function test_page_move_from_chapter_to_book()
+    {
+        $oldChapter = Chapter::first();
+        $page = $oldChapter->pages()->first();
+        $newBook = Book::where('id', '!=', $oldChapter->book_id)->first();
+
+        $movePageResp = $this->actingAs($this->getEditor())->put($page->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id
+        ]);
+        $page = Page::find($page->id);
+
+        $movePageResp->assertRedirect($page->getUrl());
+        $this->assertTrue($page->book->id == $newBook->id, 'Page parent is now the new book');
+        $this->assertTrue($page->chapter === null, 'Page has no parent chapter');
+
+        $newBookResp = $this->get($newBook->getUrl());
         $newBookResp->assertSee($page->name);
     }
 
@@ -214,7 +251,6 @@ class SortTest extends TestCase
             'entity_selection' => 'book:' . $newBook->id,
             'name' => 'My copied test page'
         ]);
-
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
 
         $movePageResp->assertRedirect($pageCopy->getUrl());

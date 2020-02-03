@@ -3,6 +3,7 @@
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Actions\Tag;
+use BookStack\Entities\Entity;
 use BookStack\Entities\Page;
 use BookStack\Auth\Permissions\PermissionService;
 
@@ -14,9 +15,9 @@ class TagTest extends BrowserKitTest
     /**
      * Get an instance of a page that has many tags.
      * @param \BookStack\Actions\Tag[]|bool $tags
-     * @return mixed
+     * @return Entity
      */
-    protected function getEntityWithTags($class, $tags = false)
+    protected function getEntityWithTags($class, $tags = false): Entity
     {
         $entity = $class::first();
 
@@ -122,7 +123,7 @@ class TagTest extends BrowserKitTest
         // Set restricted permission the page
         $page->restricted = true;
         $page->save();
-        $permissionService->buildJointPermissionsForEntity($page);
+        $page->rebuildPermissions();
 
         $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals([]);

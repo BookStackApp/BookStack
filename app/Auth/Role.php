@@ -4,6 +4,13 @@ use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Model;
 
+/**
+ * Class Role
+ * @property string $display_name
+ * @property string $description
+ * @property string $external_auth_id
+ * @package BookStack\Auth
+ */
 class Role extends Model
 {
 
@@ -65,7 +72,7 @@ class Role extends Model
      */
     public function detachPermission(RolePermission $permission)
     {
-        $this->permissions()->detach($permission->id);
+        $this->permissions()->detach([$permission->id]);
     }
 
     /**
@@ -75,7 +82,7 @@ class Role extends Model
      */
     public static function getRole($roleName)
     {
-        return static::where('name', '=', $roleName)->first();
+        return static::query()->where('name', '=', $roleName)->first();
     }
 
     /**
@@ -85,7 +92,7 @@ class Role extends Model
      */
     public static function getSystemRole($roleName)
     {
-        return static::where('system_name', '=', $roleName)->first();
+        return static::query()->where('system_name', '=', $roleName)->first();
     }
 
     /**
@@ -94,6 +101,15 @@ class Role extends Model
      */
     public static function visible()
     {
-        return static::where('hidden', '=', false)->orderBy('name')->get();
+        return static::query()->where('hidden', '=', false)->orderBy('name')->get();
+    }
+
+    /**
+     * Get the roles that can be restricted.
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function restrictable()
+    {
+        return static::query()->where('system_name', '!=', 'admin')->get();
     }
 }
