@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Activer l\'inscription',
     'reg_enable_desc' => 'Lorsque l\'inscription est activée, l\'utilisateur pourra s\'enregistrer en tant qu\'utilisateur de l\'application. Lors de l\'inscription, ils se voient attribuer un rôle par défaut.',
     'reg_default_role' => 'Rôle par défaut lors de l\'inscription',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Confirmation de l\'e-mail',
     'reg_email_confirmation_toggle' => 'Obliger la confirmation par e-mail ?',
     'reg_confirm_email_desc' => 'Si la restriction de domaine est activée, la confirmation sera automatiquement obligatoire et cette valeur sera ignorée.',
