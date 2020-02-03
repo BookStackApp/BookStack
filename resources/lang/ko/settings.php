@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => '사이트 가입 허용',
     'reg_enable_desc' => '가입한 사용자는 단일한 권한을 가집니다.',
     'reg_default_role' => '가입한 사용자의 기본 권한',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => '메일 주소 확인',
     'reg_email_confirmation_toggle' => '주소 확인 요구',
     'reg_confirm_email_desc' => '도메인 차단을 쓰고 있으면 메일 주소를 확인해야 하고, 이 설정은 무시합니다.',
