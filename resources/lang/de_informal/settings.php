@@ -58,7 +58,7 @@ Wenn Du nichts eingibst, wird die Anwendung auf die Standardfarbe zurückgesetzt
     'reg_enable_toggle' => 'Registrierung erlauben',
     'reg_enable_desc' => 'Wenn die Registrierung erlaubt ist, kann sich der Benutzer als Anwendungsbenutzer anmelden. Bei der Registrierung erhält er eine einzige, voreingestellte Benutzerrolle.',
     'reg_default_role' => 'Standard-Benutzerrolle nach Registrierung',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Bestätigung per E-Mail',
     'reg_email_confirmation_toggle' => 'Bestätigung per E-Mail erforderlich',
     'reg_confirm_email_desc' => 'Falls die Einschränkung für Domains genutzt wird, ist die Bestätigung per E-Mail zwingend erforderlich und der untenstehende Wert wird ignoriert.',
