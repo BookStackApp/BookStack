@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Habilitar cadastro',
     'reg_enable_desc' => 'Quando o cadastro é habilitado, visitantes poderão cadastrar-se como usuários do aplicativo. Realizado o cadastro, recebem um único cargo padrão.',
     'reg_default_role' => 'Cargo padrão para usuários após o cadastro',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Confirmação de E-mail',
     'reg_email_confirmation_toggle' => 'Requerer confirmação de e-mail',
     'reg_confirm_email_desc' => 'Em caso da restrição de domínios estar em uso, a confirmação de e-mail será requerida e essa opção será ignorada.',
