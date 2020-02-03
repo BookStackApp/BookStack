@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Włącz rejestrację',
     'reg_enable_desc' => 'Kiedy rejestracja jest włączona użytkownicy mogą się rejestrować. Po rejestracji otrzymują jedną domyślną rolę użytkownika.',
     'reg_default_role' => 'Domyślna rola użytkownika po rejestracji',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Potwierdzenie adresu email',
     'reg_email_confirmation_toggle' => 'Wymagaj potwierdzenia adresu email',
     'reg_confirm_email_desc' => 'Jeśli restrykcje domenowe zostały ustawione, potwierdzenie adresu stanie się konieczne, a poniższa wartośc zostanie zignorowana.',
