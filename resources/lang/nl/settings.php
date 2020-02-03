@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Registratie inschakelen',
     'reg_enable_desc' => 'Wanneer registratie is ingeschakeld, kan de gebruiker zich aanmelden als een gebruiker. Na registratie krijgen ze een enkele, standaard gebruikersrol.',
     'reg_default_role' => 'Standaard rol na registratie',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'E-mail bevestiging',
     'reg_email_confirmation_toggle' => 'E-mailbevestiging verplichten',
     'reg_confirm_email_desc' => 'Als domeinrestricties aan staan dan is altijd e-maibevestiging nodig. Onderstaande instelling wordt dan genegeerd.',
