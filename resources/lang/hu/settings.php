@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Regisztráció engedélyezése',
     'reg_enable_desc' => 'Ha a regisztráció engedélyezett, akkor a felhasználó képes lesz bejelentkezni mint az alkalmazás egy felhasználója. Regisztráció után egy egyszerű, alapértelmezés szerinti felhasználói szerepkör lesz hozzárendelve.',
     'reg_default_role' => 'Regisztráció utáni alapértelmezett felhasználói szerepkör',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Email megerősítés',
     'reg_email_confirmation_toggle' => 'Email megerősítés szükséges',
     'reg_confirm_email_desc' => 'Ha a tartomány korlátozás be van állítva, akkor email megerősítés szükséges és ez a beállítás figyelmen kívül lesz hagyva.',
