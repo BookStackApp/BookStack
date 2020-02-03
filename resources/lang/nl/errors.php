@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'Kan geen e-mailadres voor deze gebruiker vinden in de gegevens die door het externe verificatiesysteem worden verstrekt',
     'saml_invalid_response_id' => 'Het verzoek van het externe verificatiesysteem is niet herkend door een door deze applicatie gestart proces. Het terug navigeren na een login kan dit probleem veroorzaken.',
     'saml_fail_authed' => 'Inloggen met :system mislukt, het systeem gaf geen succesvolle autorisatie',
-    'saml_email_exists' => 'Registratie is mislukt omdat een gebruiker al bestaat met e-mailadres ":email"',
     'social_no_action_defined' => 'Geen actie gedefineerd',
     'social_login_bad_response' => "Fout ontvangen tijdens :socialAccount login: \n:error",
     'social_account_in_use' => 'Dit :socialAccount account is al in gebruik, Probeer in te loggen met de :socialAccount optie.',

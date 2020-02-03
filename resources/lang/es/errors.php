@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'El correo electrónico ya ha sido confirmado, intente acceder a la aplicación.',
     'email_confirmation_invalid' => 'Este token de confirmación no es válido o ya ha sido usado, intente registrar uno nuevamente.',
     'email_confirmation_expired' => 'El token de confirmación ha expirado, un nuevo email de confirmacón ha sido enviado.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'La dirección de correo electrónico de la cuenta en uso debe ser confirmada',
     'ldap_fail_anonymous' => 'El acceso con LDAP ha fallado usando binding anónimo',
     'ldap_fail_authed' => 'El acceso LDAP ha fallado usando el dn & contraseña enviados',
     'ldap_extension_not_installed' => 'La extensión LDAP PHP no se encuentra instalada',
@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'No se pudo encontrar una dirección de correo electrónico, para este usuario, en los datos proporcionados por el sistema de autenticación externo',
     'saml_invalid_response_id' => 'La solicitud del sistema de autenticación externo no está reconocida por un proceso iniciado por esta aplicación. Navegar hacia atrás después de un inicio de sesión podría causar este problema.',
     'saml_fail_authed' => 'El inicio de sesión con :system falló, el sistema no proporcionó una autorización correcta',
-    'saml_email_exists' => 'Registro fallido porque un usuario ya existe con la dirección de correo electrónico ":email"',
     'social_no_action_defined' => 'Acción no definida',
     'social_login_bad_response' => "Se ha recibido un error durante el acceso con :socialAccount error: \n:error",
     'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente acceder a través de la opción :socialAccount .',
@@ -90,11 +89,11 @@ return [
     'back_soon' => 'Volverá a estar operativa pronto.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'No se encontró ningún token de autorización en la solicitud',
+    'api_bad_authorization_format' => 'Se ha encontrado un token de autorización en la solicitud pero el formato era incorrecto',
+    'api_user_token_not_found' => 'No se ha encontrado un token API que corresponda con el token de autorización proporcionado',
+    'api_incorrect_token_secret' => 'El secreto proporcionado para el token API usado es incorrecto',
+    'api_user_no_api_permission' => 'El propietario del token API usado no tiene permiso para hacer llamadas API',
+    'api_user_token_expired' => 'El token de autorización usado ha caducado',
 
 ];
