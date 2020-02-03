@@ -7,7 +7,7 @@
 return [
 
     'failed' => '使用者名稱或密碼錯誤。',
-    'throttle' => '您的登入次數過多，請在:seconds秒後重試。',
+    'throttle' => '您的登入次數過多，請在:秒後重試。',
 
     // Login & Register
     'sign_up' => '註冊',
@@ -23,11 +23,11 @@ return [
     'password_confirm' => '確認密碼',
     'password_hint' => '必須超過7個字元',
     'forgot_password' => '忘記密碼?',
-    'remember_me' => '記住我',
+    'remember_me' => '記住該賬戶密碼',
     'ldap_email_hint' => '請輸入用於此帳號的電子郵件。',
     'create_account' => '建立帳號',
-    'already_have_account' => 'Already have an account?',
-    'dont_have_account' => 'Don\'t have an account?',
+    'already_have_account' => '已經擁有賬戶？',
+    'dont_have_account' => '沒有賬戶？',
     'social_login' => 'SNS登入',
     'social_registration' => 'SNS註冊',
     'social_registration_text' => '其他服務註冊/登入.',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => '重新發送確認Email',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => '您被邀請加入:bookstack！',
+    'user_invite_email_greeting' => '我們為您在bookstack上創建了一個新賬戶。',
+    'user_invite_email_text' => '請點擊下面的按鈕設置賬戶密碼并獲取訪問權限:',
+    'user_invite_email_action' => '請設置賬戶密碼',
+    'user_invite_page_welcome' => '歡迎使用:bookstack',
+    'user_invite_page_text' => '要完善您的賬戶并獲取訪問權限，您需要設置一個密碼，該密碼將在以後訪問時用於登陸:bookstack',
+    'user_invite_page_confirm_button' => '請確定密碼',
+    'user_invite_success' => '密碼已設置，您現在可以進入:bookstack了啦'
 ];

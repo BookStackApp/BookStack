@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'saml_email_exists' => 'Registration unsuccessful since a user already exists with email address ":email"',
     'social_no_action_defined' => 'لم يتم تعريف أي إجراء',
     'social_login_bad_response' => "حصل خطأ خلال تسجيل الدخول باستخدام :socialAccount \n:error",
     'social_account_in_use' => 'حساب :socialAccount قيد الاستخدام حالياً, الرجاء محاولة الدخول باستخدام خيار :socialAccount.',

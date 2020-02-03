@@ -13,17 +13,16 @@ return [
     'email_already_confirmed' => 'Email已被確認，請嘗試登錄。',
     'email_confirmation_invalid' => '此確認 Session 無效或已被使用，請重新註冊。',
     'email_confirmation_expired' => '確認 Session 已過期，已發送新的確認電子郵件。',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => '用於此賬戶的電子郵箱需要認證',
     'ldap_fail_anonymous' => '使用匿名綁定的LDAP進入失敗。',
     'ldap_fail_authed' => '帶有標識名稱和密碼的LDAP進入失敗。',
     'ldap_extension_not_installed' => '未安裝LDAP PHP外掛程式',
     'ldap_cannot_connect' => '無法連接到ldap伺服器，第一次連接失敗',
-    'saml_already_logged_in' => 'Already logged in',
-    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
-    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'saml_email_exists' => 'Registration unsuccessful since a user already exists with email address ":email"',
+    'saml_already_logged_in' => '已登陸',
+    'saml_user_not_registered' => '用戶:name未註冊，自動註冊不可用',
+    'saml_no_email_address' => '在外部認證系統提供的數據中找不到該用戶的電子郵件地址',
+    'saml_invalid_response_id' => '該應用程序啟動的進程無法識別來自外部身份驗證系統的請求。 登錄後返回可能會導致此問題。',
+    'saml_fail_authed' => '使用：system登錄失敗，系統未提供成功的授權',
     'social_no_action_defined' => '沒有定義行為',
     'social_login_bad_response' => "在 :socialAccount 登錄時遇到錯誤：\n:error",
     'social_account_in_use' => ':socialAccount 帳號已被使用，請嘗試透過 :socialAccount 選項登錄。',
@@ -34,7 +33,7 @@ return [
     'social_account_register_instructions' => '如果您還沒有帳號，您可以使用 :socialAccount 選項註冊帳號。',
     'social_driver_not_found' => '未找到社交驅動程式',
     'social_driver_not_configured' => '您的:socialAccount社交設定不正確。',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => '此邀請鏈接已過期，您可以嘗試重置您的賬戶密碼。',
 
     // System
     'path_not_writable' => '無法上傳到檔案路徑“:filePath”，請確保它可寫入伺服器。',
@@ -72,7 +71,7 @@ return [
     'role_cannot_be_edited' => '無法編輯這個角色',
     'role_system_cannot_be_deleted' => '無法刪除系統角色',
     'role_registration_default_cannot_delete' => '無法刪除設定為預設註冊的角色',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_remove_only_admin' => '該用戶是分配作為管理員職務的唯一用戶。 在嘗試在此處刪除管理員職務之前，請將其分配給其他用戶。',
 
     // Comments
     'comment_list' => '讀取評論時發生錯誤。',
@@ -90,11 +89,11 @@ return [
     'back_soon' => '請耐心等待網站的恢複。',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => '在請求上找不到授權令牌',
+    'api_bad_authorization_format' => '在請求中找到授權令牌，但格式似乎不正確',
+    'api_user_token_not_found' => '找不到提供的授權令牌的匹配API令牌',
+    'api_incorrect_token_secret' => '給定使用的API令牌提供的密鑰不正確',
+    'api_user_no_api_permission' => '使用的API令牌的擁有者者無權進行API調用',
+    'api_user_token_expired' => '授權令牌已過期',
 
 ];

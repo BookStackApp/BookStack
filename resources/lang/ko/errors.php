@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => '이 사용자에 대하여 외부 인증시스템에 의해 제공된 데이타 중 이메일 주소를 찾을 수 없습니다.',
     'saml_invalid_response_id' => '이 응용프로그램에 의해 시작된 프로세스에 의하면 외부 인증시스템으로 온 요청이 인식되지 않습니다. 인증 후에 뒤로가기 기능을 사용했을 경우 이런 현상이 발생할 수 있습니다.',
     'saml_fail_authed' => '시스템 로그인에 실패하였습니다. ( 해당 시스템이 인증성공값을 제공하지 않았습니다. )',
-    'saml_email_exists' => '해당 사용자가 이미 존재하는 이메일주소를 입력하였기에 사용자 등록에 실패하였습니다.',
     'social_no_action_defined' => '무슨 활동인지 알 수 없습니다.',
     'social_login_bad_response' => ":socialAccount에 로그인할 수 없습니다. : \\n:error",
     'social_account_in_use' => ':socialAccount(을)를 가진 사용자가 있습니다. :socialAccount로 로그인하세요.',

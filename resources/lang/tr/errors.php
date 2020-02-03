@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => 'Bu kullanıcı için, harici bir doğrulama siteminden elde edilen verilerde, bir e-posta adresi bulunamadı',
     'saml_invalid_response_id' => 'Harici doğrulama sistemi tarafından sağlanan bir veri talebi, bu uygulama tarafından başlatılan bir işlem tarafından tanınamadı. Giriş yaptıktan sonra geri dönmek bu soruna yol açabilir.',
     'saml_fail_authed' => ':system kullanarak giriş yapma başarısız, sistem başarılı bir doğrulama sağlamadı',
-    'saml_email_exists' => '":email" adresiyle halihazırda kayıtlı bir kullanıcı olduğu için kayıt başarısız',
     'social_no_action_defined' => 'Bir aksiyon tanımlanmadı',
     'social_login_bad_response' => ":socialAccount girişi sırasında hata oluştu: \n:error",
     'social_account_in_use' => 'Bu :socialAccount zaten kullanımda, :socialAccount hesabıyla giriş yapmayı deneyin.',

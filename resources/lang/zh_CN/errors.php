@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Email已被确认，请尝试登录。',
     'email_confirmation_invalid' => '此确认令牌无效或已被使用，请重新注册。',
     'email_confirmation_expired' => '确认令牌已过期，已发送新的确认电子邮件。',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => '需要认证账户的电子邮箱地址',
     'ldap_fail_anonymous' => '使用匿名绑定的LDAP访问失败。',
     'ldap_fail_authed' => '带有标识名称和密码的LDAP访问失败。',
     'ldap_extension_not_installed' => '未安装LDAP PHP扩展程序',
@@ -23,7 +23,6 @@ return [
     'saml_no_email_address' => '无法找到有效Email地址，此用户数据由外部身份验证系统托管',
     'saml_invalid_response_id' => '来自外部身份验证系统的请求没有被本应用程序认证，在登录后返回上一页可能会导致此问题。',
     'saml_fail_authed' => '使用 :system 登录失败，登录系统未返回成功登录授权信息。',
-    'saml_email_exists' => '注册失败，因此已经有用户使用了 ":email" 此Email地址了',
     'social_no_action_defined' => '没有定义行为',
     'social_login_bad_response' => "在 :socialAccount 登录时遇到错误：\n:error",
     'social_account_in_use' => ':socialAccount 账户已被使用，请尝试通过 :socialAccount 选项登录。',
@@ -90,11 +89,11 @@ return [
     'back_soon' => '请耐心等待网站的恢复。',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => '未在请求中找到授权令牌',
+    'api_bad_authorization_format' => '已在请求中找到授权令牌，但格式貌似不正确',
+    'api_user_token_not_found' => '未能找到所匹配的API提供的授权令牌',
+    'api_incorrect_token_secret' => '给已给出的API所提供的密钥不正确',
+    'api_user_no_api_permission' => '使用过的 API 令牌的所有者没有进行API 调用的权限',
+    'api_user_token_expired' => '所使用的身份令牌已过期',
 
 ];
