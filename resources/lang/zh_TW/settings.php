@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => '啟用註冊',
     'reg_enable_desc' => '啟用註冊後，用戶將可以自己註冊為應用程序用戶，註冊後，他們將獲得一個默認的單一用戶角色。',
     'reg_default_role' => '註冊後的預設使用者角色',
-    'reg_enable_external_warning' => 'The option above is ignore while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => '电子邮箱认证',
     'reg_email_confirmation_toggle' => '需要電子郵件確認',
     'reg_confirm_email_desc' => '如果使用網域名稱限制，則需要Email驗證，並且本設定將被忽略。',
