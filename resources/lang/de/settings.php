@@ -134,7 +134,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_send_invite_text' => 'Sie können diesem Benutzer eine Einladungs-E-Mail senden, die es ihm erlaubt, sein eigenes Passwort zu setzen, andernfalls können Sie sein Passwort selbst setzen.',
     'users_send_invite_option' => 'Benutzer-Einladungs-E-Mail senden',
     'users_external_auth_id' => 'Externe Authentifizierungs-ID',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
+    'users_external_auth_id_desc' => 'Dies ist die ID, mit der dieser Benutzer bei der Kommunikation mit Ihrem externen Authentifizierungssystem übereinstimmt.',
     'users_password_warning' => 'Füllen Sie die folgenden Felder nur aus, wenn Sie Ihr Passwort ändern möchten:',
     'users_system_public' => 'Dieser Benutzer repräsentiert alle unangemeldeten Benutzer, die diese Seite betrachten. Er kann nicht zum Anmelden benutzt werden, sondern wird automatisch zugeordnet.',
     'users_delete' => 'Benutzer löschen',
