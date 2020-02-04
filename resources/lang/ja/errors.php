@@ -75,7 +75,7 @@ return [
 
     // Comments
     'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
+    'cannot_add_comment_to_draft' => '下書きにコメントは追加できません。',
     'comment_add' => 'An error occurred while adding / updating the comment.',
     'comment_delete' => 'An error occurred while deleting the comment.',
     'empty_comment' => 'Cannot add an empty comment.',
