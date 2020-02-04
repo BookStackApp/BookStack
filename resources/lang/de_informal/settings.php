@@ -134,7 +134,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_send_invite_text' => 'Du kannst diesem Benutzer eine Einladungs-E-Mail senden, die es ihm erlaubt, sein eigenes Passwort zu setzen, andernfalls kannst du sein Passwort selbst setzen.',
     'users_send_invite_option' => 'Benutzer-Einladungs-E-Mail senden',
     'users_external_auth_id' => 'Externe Authentifizierungs-ID',
-    'users_external_auth_id_desc' => 'Dies ist die ID, mit der dieser Benutzer bei der Kommunikation mit Ihrem externen Authentifizierungssystem übereinstimmt.',
+    'users_external_auth_id_desc' => 'Dies ist die ID, die verwendet wird, um diesen Benutzer bei der Kommunikation mit deinem externen Authentifizierungssystem abzugleichen.',
     'users_password_warning' => 'Fülle die folgenden Felder nur aus, wenn Du Dein Passwort ändern möchtest:',
     'users_system_public' => 'Dieser Benutzer repräsentiert alle unangemeldeten Benutzer, die diese Seite betrachten. Er kann nicht zum Anmelden benutzt werden, sondern wird automatisch zugeordnet.',
     'users_delete' => 'Benutzer löschen',
@@ -174,12 +174,12 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Dies ist ein nicht editierbarer, vom System generierter Identifikator für diesen Token, welcher bei API-Anfragen angegeben werden muss.',
     'user_api_token_secret' => 'Token Kennwort',
-    'user_api_token_secret_desc' => 'Dies ist ein systemgeneriertes Kennwort für diesen Token, das bei API-Anfragen zur Verfügung gestellt werden muss. Es wird nur dieses eine Mal angezeigt, deshalb kopieren Sie diesen Wert an einen sicheren und geschützten Ort.',
+    'user_api_token_secret_desc' => 'Dies ist ein systemgeneriertes Kennwort für diesen Token, das bei API-Anfragen zur Verfügung gestellt werden muss. Es wird nur dieses eine Mal angezeigt, deshalb kopiere diesen an einen sicheren und geschützten Ort.',
     'user_api_token_created' => 'Token erstellt :timeAgo',
     'user_api_token_updated' => 'Token aktualisiert :timeAgo',
     'user_api_token_delete' => 'Lösche Token',
     'user_api_token_delete_warning' => 'Dies löscht den API-Token mit dem Namen \':tokenName\' vollständig aus dem System.',
-    'user_api_token_delete_confirm' => 'Sind Sie sicher, dass Sie diesen API-Token löschen möchten?',
+    'user_api_token_delete_confirm' => 'Bist du sicher, dass du diesen API-Token löschen möchtest?',
     'user_api_token_delete_success' => 'API-Token erfolgreich gelöscht',
 
     //! If editing translations files directly please ignore this in all
