@@ -170,7 +170,7 @@ return [
     'user_api_token' => 'API vezérjel',
     'user_api_token_id' => 'Vezérjel azonosító',
     'user_api_token_id_desc' => 'Ez egy nem szerkeszthető, a rendszer által létrehozott azonosító ehhez a vezérjelhez amire API kérésekben lehet szükség.',
-    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret' => 'Vezérjel titkos kódja',
     'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
     'user_api_token_created' => 'Vezérjel létrehozva :timeAgo',
     'user_api_token_updated' => 'Vezérjel frissítve :timeAgo',
