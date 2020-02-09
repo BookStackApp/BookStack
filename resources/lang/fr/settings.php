@@ -29,7 +29,7 @@ return [
     'app_editor_desc' => 'Sélectionnez l\'éditeur qui sera utilisé pour modifier les pages.',
     'app_custom_html' => 'HTML personnalisé dans l\'en-tête',
     'app_custom_html_desc' => 'Le contenu inséré ici sera ajouté en bas de la balise <head> de toutes les pages. Vous pouvez l\'utiliser pour ajouter du CSS personnalisé ou un tracker analytique.',
-    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
+    'app_custom_html_disabled_notice' => 'Le contenu de la tête HTML personnalisée est désactivé sur cette page de paramètres pour garantir que les modifications les plus récentes peuvent être annulées.',
     'app_logo' => 'Logo de l\'Application',
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',
@@ -161,7 +161,7 @@ return [
     // API Tokens
     'user_api_token_create' => 'Créer un nouveau jeton API',
     'user_api_token_name' => 'Nom',
-    'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
+    'user_api_token_name_desc' => 'Donnez à votre jeton un nom lisible pour l\'identifier plus tard.',
     'user_api_token_expiry' => 'Date d\'expiration',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
