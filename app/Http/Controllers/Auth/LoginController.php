@@ -101,6 +101,9 @@ class LoginController extends Controller
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
+            // Also log some error message
+            $this->logFailedAccess($request);
+
             return $this->sendLockoutResponse($request);
         }
 
@@ -116,6 +119,9 @@ class LoginController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
+
+        // Also log some error message
+        $this->logFailedAccess($request);
 
         return $this->sendFailedLoginResponse($request);
     }
@@ -160,6 +166,18 @@ class LoginController extends Controller
         }
 
         return redirect('/login');
+    }
+
+    /**
+     * Log failed accesses, matching the default fail2ban nginx/apache auth rules.
+     */
+    protected function logFailedAccess(Request $request)
+    {
+        if (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/nginx/i', $_SERVER['SERVER_SOFTWARE'])) {
+             error_log('user "' . $request->get($this->username()) . '" was not found in "BookStack"', 4);
+         } else {
+             error_log('user "' . $request->get($this->username()) . '" authentication failure for "BookStack"', 4);
+         }
     }
 
 }
