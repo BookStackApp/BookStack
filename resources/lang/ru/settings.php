@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Отключение комментов на всех страницах. Существующие комментарии отображаться не будут.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'content_colors' => 'Цвета контента',
+    'content_colors_desc' => 'Настройка цветов элементов иерархии страницы. Для комфортного чтения рекомендуем выбирать цвета близкие по яркости к цветам по умолчанию.',
+    'bookshelf_color' => 'Цвет полки',
+    'book_color' => 'Цвет книги',
+    'chapter_color' => 'Цвет главы',
+    'page_color' => 'Цвет страницы',
+    'page_draft_color' => 'Цвет страницы черновика',
 
     // Registration Settings
     'reg_settings' => 'Настройки регистрации',
@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Разрешить регистрацию',
     'reg_enable_desc' => 'Если регистрация разрешена, пользователь сможет зарегистрироваться в системе самостоятельно. При регистрации назначается роль пользователя по умолчанию',
     'reg_default_role' => 'Роль пользователя по умолчанию после регистрации',
-    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'Если используется LDAP или SAMP аутентификация, то параметр выше игнорируется. Аккаунты для несуществующих пользователей будут автоматически созданы если аутентификация на внешней системе будет успешна.',
     'reg_email_confirmation' => 'Подтверждение электронной почты',
     'reg_email_confirmation_toggle' => 'Требовать подтверждение по электронной почте',
     'reg_confirm_email_desc' => 'При использовании ограничения по домену - подтверждение обязательно, этот пункт игнорируется.',
@@ -159,8 +159,8 @@ return [
     'users_api_tokens_docs' => 'API Documentation',
 
     // API Tokens
-    'user_api_token_create' => 'Create API Token',
-    'user_api_token_name' => 'Name',
+    'user_api_token_create' => 'Создать API токен',
+    'user_api_token_name' => 'Имя',
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
     'user_api_token_expiry' => 'Expiry Date',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
