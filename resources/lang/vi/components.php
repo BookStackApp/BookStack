@@ -5,13 +5,13 @@
 return [
 
     // Image Manager
-    'image_select' => 'Image Select',
-    'image_all' => 'All',
-    'image_all_title' => 'View all images',
-    'image_book_title' => 'View images uploaded to this book',
-    'image_page_title' => 'View images uploaded to this page',
-    'image_search_hint' => 'Search by image name',
-    'image_uploaded' => 'Uploaded :uploadedDate',
+    'image_select' => 'Chọn Ảnh',
+    'image_all' => 'Tất cả',
+    'image_all_title' => 'Xem tất cả các ảnh',
+    'image_book_title' => 'Xem các ảnh đã được tải lên sách này',
+    'image_page_title' => 'Xem các ảnh đã được tải lên trang này',
+    'image_search_hint' => 'Tìm kiếm ảnh bằng tên',
+    'image_uploaded' => 'Đã tải lên :uploadedDate',
     'image_load_more' => 'Load More',
     'image_image_name' => 'Image Name',
     'image_delete_used' => 'This image is used in the pages below.',
