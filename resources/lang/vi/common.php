@@ -19,7 +19,7 @@ return [
     'description' => 'Mô tả',
     'role' => 'Quyền',
     'cover_image' => 'Ảnh bìa',
-    'cover_image_description' => 'This image should be approx 440x250px.',
+    'cover_image_description' => 'Ảnh nên có kích thước 440x250px.',
     
     // Actions
     'actions' => 'Hành động',
@@ -63,15 +63,15 @@ return [
     'breadcrumb' => 'Đường dẫn liên kết',
 
     // Header
-    'profile_menu' => 'Profile Menu',
-    'view_profile' => 'View Profile',
-    'edit_profile' => 'Edit Profile',
+    'profile_menu' => 'Menu Hồ sơ',
+    'view_profile' => 'Xem Hồ sơ',
+    'edit_profile' => 'Sửa Hồ sơ',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => 'Thông tin',
+    'tab_content' => 'Nội dung',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_action_help' => 'Nếu bạn đang có vấn đề trong việc bấm nút ":actionText", sao chép và dán địa chỉ URL dưới đây vào trình duyệt web:',
+    'email_rights' => 'Bản quyền đã được bảo hộ',
 ];
