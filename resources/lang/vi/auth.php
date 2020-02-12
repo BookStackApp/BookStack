@@ -36,12 +36,12 @@ return [
     'register_confirm' => 'Vui lòng kiểm tra email và bấm vào nút xác nhận để truy cập :appName.',
     'registrations_disabled' => 'Việc đăng kí đang bị tắt',
     'registration_email_domain_invalid' => 'Tên miền của email không có quyền truy cập tới ứng dụng này',
-    'register_success' => 'Thanks for signing up! You are now registered and signed in.',
+    'register_success' => 'Cảm ơn bạn đã đăng kí! Bạn đã được xác nhận và đăng nhập.',
 
 
     // Password Reset
-    'reset_password' => 'Reset Password',
-    'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
+    'reset_password' => 'Đặt lại mật khẩu',
+    'reset_password_send_instructions' => 'Nhập email vào ô dưới đây và bạn sẽ nhận được một email với liên kết để đặt lại mật khẩu.',
     'reset_password_send_button' => 'Send Reset Link',
     'reset_password_sent_success' => 'A password reset link has been sent to :email.',
     'reset_password_success' => 'Your password has been successfully reset.',
