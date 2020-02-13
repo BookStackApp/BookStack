@@ -23,7 +23,7 @@ return [
     'saml_no_email_address' => 'Không tìm thấy địa chỉ email cho người dùng này trong dữ liệu được cung cấp bới hệ thống xác thực ngoài',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'social_no_action_defined' => 'No action defined',
+    'social_no_action_defined' => 'Không có hành động được xác định',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',
     'social_account_email_in_use' => 'The email :email is already in use. If you already have an account you can connect your :socialAccount account from your profile settings.',
@@ -55,45 +55,45 @@ return [
 
     // Entities
     'entity_not_found' => 'Entity not found',
-    'bookshelf_not_found' => 'Bookshelf not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
+    'bookshelf_not_found' => 'Không tìm thấy giá sách',
+    'book_not_found' => 'Không tìm thấy sách',
+    'page_not_found' => 'Không tìm thấy trang',
+    'chapter_not_found' => 'Không tìm thấy chương',
     'selected_book_not_found' => 'The selected book was not found',
     'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'guests_cannot_save_drafts' => 'Khách không thể lưu bản nháp',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Bạn không thể xóa quản trị viên duy nhất',
+    'users_cannot_delete_guest' => 'Bạn không thể xóa người dùng khách',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_be_edited' => 'Không thể chỉnh sửa quyền này',
+    'role_system_cannot_be_deleted' => 'Quyền này là quyền hệ thống và không thể bị xóa',
+    'role_registration_default_cannot_delete' => 'Quyền này không thể bị xóa trong khi đang đặt là quyền mặc định khi đăng ký',
+    'role_cannot_remove_only_admin' => 'Người dùng này là người dùng duy nhất được chỉ định quyền quản trị viên. Gán quyền quản trị viên cho người dùng khác trước khi thử xóa người dùng này.',
 
     // Comments
-    'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
+    'comment_list' => 'Đã có lỗi xảy ra khi tải bình luận.',
+    'cannot_add_comment_to_draft' => 'Bạn không thể thêm bình luận vào bản nháp.',
     'comment_add' => 'An error occurred while adding / updating the comment.',
     'comment_delete' => 'An error occurred while deleting the comment.',
     'empty_comment' => 'Cannot add an empty comment.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    '404_page_not_found' => 'Không Tìm Thấy Trang',
+    'sorry_page_not_found' => 'Xin lỗi, Không tìm thấy trang bạn đang tìm kiếm.',
+    'return_home' => 'Quay lại trang chủ',
+    'error_occurred' => 'Đã xảy ra lỗi',
+    'app_down' => ':appName hiện đang ngoại tuyến',
+    'back_soon' => 'Nó sẽ sớm hoạt động trở lại.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Không tìm thấy token ủy quyền trong yêu cầu',
+    'api_bad_authorization_format' => 'Đã tìm thấy một token ủy quyền trong yêu cầu nhưng định dạng hiển thị không hợp lệ',
+    'api_user_token_not_found' => 'Không tìm thấy token API nào khớp với token ủy quyền được cung cấp',
+    'api_incorrect_token_secret' => 'Mã bí mật được cung cấp cho token API đang được sử dụng không hợp lệ',
+    'api_user_no_api_permission' => 'Chủ của token API đang sử dụng không có quyền gọi API',
+    'api_user_token_expired' => 'Token sử dụng cho việc ủy quyền đã hết hạn',
 
 ];
