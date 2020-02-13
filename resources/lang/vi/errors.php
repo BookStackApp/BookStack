@@ -5,11 +5,11 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Bạn không có quyền truy cập đến trang này.',
+    'permissionJson' => 'Bạn không có quyền để thực hiện hành động này.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
+    'error_user_exists_different_creds' => 'Đã có người sử dụng email :email nhưng với thông tin định danh khác.',
     'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
     'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
     'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
