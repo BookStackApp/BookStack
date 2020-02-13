@@ -20,7 +20,7 @@ return [
     'ldap_cannot_connect' => 'Không thể kết nối đến máy chủ LDAP, mở đầu kết nối thất bại',
     'saml_already_logged_in' => 'Đã đăng nhập',
     'saml_user_not_registered' => 'Người dùng :name chưa được đăng ký và tự động đăng ký đang bị tắt',
-    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
+    'saml_no_email_address' => 'Không tìm thấy địa chỉ email cho người dùng này trong dữ liệu được cung cấp bới hệ thống xác thực ngoài',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'No action defined',
