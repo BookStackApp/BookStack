@@ -8,9 +8,9 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'The :attribute must be accepted.',
-    'active_url'           => 'The :attribute is not a valid URL.',
-    'after'                => 'The :attribute must be a date after :date.',
+    'accepted'             => ':attribute phải được chấp nhận.',
+    'active_url'           => ':attribute không phải là một đường dẫn hợp lệ.',
+    'after'                => ':attribute phải là một ngày sau :date.',
     'alpha'                => 'The :attribute may only contain letters.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
