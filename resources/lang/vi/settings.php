@@ -29,7 +29,7 @@ return [
     'app_editor_desc' => 'Chọn trình soạn thảo nào sẽ được sử dụng bởi tất cả người dùng để chỉnh sửa trang.',
     'app_custom_html' => 'Tùy chọn nội dung Head HTML',
     'app_custom_html_desc' => 'Bất cứ nội dung nào được thêm vào đây sẽ được đưa vào phần cuối của khu vực <head> của mỗi trang. Tiện cho việc ghi đè style hoặc thêm mã phân tích dữ liệu.',
-    'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
+    'app_custom_html_disabled_notice' => 'Nội dung tùy biến HTML head bị tắt tại trang cài đặt này để đảm bảo mọi thay đổi làm hỏng hệ thống có để được khôi phục.',
     'app_logo' => 'Logo Ứng dụng',
     'app_logo_desc' => 'Ảnh này nên có kích thước chiều cao là 43px. <br>Ảnh lớn sẽ được điều chỉnh tỷ lệ xuống.',
     'app_primary_color' => 'Màu chủ đạo của Ứng dụng',
@@ -56,12 +56,12 @@ return [
     'reg_enable_toggle' => 'Bật đăng ký',
     'reg_enable_desc' => 'Khi đăng ký được bật người dùng sẽ có thể tự đăng ký để trở thành người dùng của ứng dụng. Khi đăng kí người dùng sẽ được cấp một quyền sử dụng mặc định.',
     'reg_default_role' => 'Quyền người dùng sử dụng mặc định sau khi đăng kí',
-    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'Tùy chọn trên bị bỏ qua khi xác thực từ bên ngoài LDAP hoặc SAML được bật. Tài khoản người dùng chưa phải là thành viên sẽ được tự động tạo nếu xác thực với hệ thống bên ngoài thành công.',
     'reg_email_confirmation' => 'Xác nhận Email',
     'reg_email_confirmation_toggle' => 'Yêu cầu xác nhận email',
     'reg_confirm_email_desc' => 'Nếu giới hạn tên miền được sử dụng, xác nhận email là bắt buộc và tùy chọn này sẽ bị bỏ qua.',
     'reg_confirm_restrict_domain' => 'Giới hạn tên miền',
-    'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
+    'reg_confirm_restrict_domain_desc' => 'Điền dấu phẩy ngăn cách danh sách các tên miền email dành cho việc bạn muốn giới hạn đăng nhập. Người dùng sẽ nhận được email xác nhận địa chỉ của họ trước khi được phép tương tác với ứng dụng. <br> Lưu ý rằng người dùng có thể thay đổi địa chỉ email của họ sau khi đăng ký thành công.',
     'reg_confirm_restrict_domain_placeholder' => 'Không có giới hạn nào được thiết lập',
 
     // Maintenance settings
