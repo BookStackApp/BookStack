@@ -90,7 +90,7 @@ class BookshelfController extends Controller
 
         $bookIds = explode(',', $request->get('books', ''));
         $shelf = $this->bookshelfRepo->create($request->all(), $bookIds);
-        $this->bookshelfRepo->updateCoverImage($shelf);
+        $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null));
 
         Activity::add($shelf, 'bookshelf_create');
         return redirect($shelf->getUrl());
