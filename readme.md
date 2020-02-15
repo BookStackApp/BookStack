@@ -2,10 +2,11 @@
 
 [![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest)
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
+[![Crowdin](https://badges.crowdin.net/bookstack/localized.svg)](https://crowdin.com/project/bookstack)
 [![Build Status](https://github.com/BookStackApp/BookStack/workflows/phpunit/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
 [![Discord](https://img.shields.io/static/v1?label=Chat&message=Discord&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
 
-A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
+A platform for storing and organising information and documentation. Details for BookStack can be found on the official website at https://www.bookstackapp.com/.
 
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
 * [Documentation](https://www.bookstackapp.com/docs)
@@ -25,7 +26,7 @@ In regards to development philosophy, BookStack has a relaxed, open & positive a
 
 Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
 
-- **Platform REST API** *(In Design)*
+- **Platform REST API** *(Base Implemented, In review and roll-out)*
     - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
 - **Editor Alignment & Review**
     - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
