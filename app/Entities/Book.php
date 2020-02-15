@@ -115,7 +115,7 @@ class Book extends Entity implements HasCoverImage
     {
         $pages = $this->directPages()->visible()->get();
         $chapters = $this->chapters()->visible()->get();
-        return $pages->contact($chapters)->sortBy('priority')->sortByDesc('draft');
+        return $pages->concat($chapters)->sortBy('priority')->sortByDesc('draft');
     }
 
     /**

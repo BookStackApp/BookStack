@@ -1,6 +1,7 @@
 <?php namespace Tests;
 
-
+use BookStack\Actions\Tag;
+use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
@@ -10,7 +11,7 @@ class EntitySearchTest extends TestCase
 
     public function test_page_search()
     {
-        $book = \BookStack\Entities\Book::all()->first();
+        $book = Book::all()->first();
         $page = $book->pages->first();
 
         $search = $this->asEditor()->get('/search?term=' . urlencode($page->name));
@@ -54,7 +55,7 @@ class EntitySearchTest extends TestCase
 
     public function test_book_search()
     {
-        $book = \BookStack\Entities\Book::first();
+        $book = Book::first();
         $page = $book->pages->last();
         $chapter = $book->chapters->last();
 
@@ -67,7 +68,7 @@ class EntitySearchTest extends TestCase
 
     public function test_chapter_search()
     {
-        $chapter = \BookStack\Entities\Chapter::has('pages')->first();
+        $chapter = Chapter::has('pages')->first();
         $page = $chapter->pages[0];
 
         $pageTestResp = $this->asEditor()->get('/search/chapter/' . $chapter->id . '?term=' . urlencode($page->name));
@@ -77,11 +78,11 @@ class EntitySearchTest extends TestCase
     public function test_tag_search()
     {
         $newTags = [
-            new \BookStack\Actions\Tag([
+            new Tag([
                 'name' => 'animal',
                 'value' => 'cat'
             ]),
-            new \BookStack\Actions\Tag([
+            new Tag([
                 'name' => 'color',
                 'value' => 'red'
             ])
@@ -203,5 +204,76 @@ class EntitySearchTest extends TestCase
         $chapterSearch = $this->get('/ajax/search/entities?term=' . urlencode($chapter->name));
         $chapterSearch->assertSee($chapter->name);
         $chapterSearch->assertSee($chapter->book->getShortName(42));
+    }
+
+    public function test_sibling_search_for_pages()
+    {
+        $chapter = Chapter::query()->with('pages')->first();
+        $this->assertGreaterThan(2, count($chapter->pages), 'Ensure we\'re testing with at least 1 sibling');
+        $page = $chapter->pages->first();
+
+        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
+        $search->assertSuccessful();
+        foreach ($chapter->pages as $page) {
+            $search->assertSee($page->name);
+        }
+
+        $search->assertDontSee($chapter->name);
+    }
+
+    public function test_sibling_search_for_pages_without_chapter()
+    {
+        $page = Page::query()->where('chapter_id', '=', 0)->firstOrFail();
+        $bookChildren = $page->book->getDirectChildren();
+        $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
+
+        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
+        $search->assertSuccessful();
+        foreach ($bookChildren as $child) {
+            $search->assertSee($child->name);
+        }
+
+        $search->assertDontSee($page->book->name);
+    }
+
+    public function test_sibling_search_for_chapters()
+    {
+        $chapter = Chapter::query()->firstOrFail();
+        $bookChildren = $chapter->book->getDirectChildren();
+        $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
+
+        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$chapter->id}&entity_type=chapter");
+        $search->assertSuccessful();
+        foreach ($bookChildren as $child) {
+            $search->assertSee($child->name);
+        }
+
+        $search->assertDontSee($chapter->book->name);
+    }
+
+    public function test_sibling_search_for_books()
+    {
+        $books = Book::query()->take(10)->get();
+        $book = $books->first();
+        $this->assertGreaterThan(2, count($books), 'Ensure we\'re testing with at least 1 sibling');
+
+        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$book->id}&entity_type=book");
+        $search->assertSuccessful();
+        foreach ($books as $expectedBook) {
+            $search->assertSee($expectedBook->name);
+        }
+    }
+
+    public function test_sibling_search_for_shelves()
+    {
+        $shelves = Bookshelf::query()->take(10)->get();
+        $shelf = $shelves->first();
+        $this->assertGreaterThan(2, count($shelves), 'Ensure we\'re testing with at least 1 sibling');
+
+        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$shelf->id}&entity_type=bookshelf");
+        $search->assertSuccessful();
+        foreach ($shelves as $expectedShelf) {
+            $search->assertSee($expectedShelf->name);
+        }
     }
 }
