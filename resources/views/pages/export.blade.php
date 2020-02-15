@@ -4,12 +4,31 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $page->name }}</title>
 
-    <style>
-        @if (!app()->environment('testing'))
-        {!! file_get_contents(public_path('/dist/export-styles.css')) !!}
-        @endif
-    </style>
-    @yield('head')
+    @include('partials.export-styles', ['format' => $format])
+
+    @if($format === 'pdf')
+        <style>
+            body {
+                font-size: 14px;
+                line-height: 1.2;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                line-height: 1.2;
+            }
+
+            table {
+                max-width: 800px !important;
+                font-size: 0.8em;
+                width: 100% !important;
+            }
+
+            table td {
+                width: auto !important;
+            }
+        </style>
+    @endif
+
     @include('partials.custom-head')
 </head>
 <body>
