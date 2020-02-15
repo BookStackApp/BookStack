@@ -96,4 +96,7 @@ return [
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
     'api_user_token_expired' => '認証トークンが期限切れです。',
 
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+
 ];
