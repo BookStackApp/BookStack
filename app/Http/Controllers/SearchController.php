@@ -109,7 +109,7 @@ class SearchController extends Controller
 
         // Page in chapter
         if ($entity->isA('page') && $entity->chapter) {
-            $entities = $entity->chapter->visiblePages();
+            $entities = $entity->chapter->getVisiblePages();
         }
 
         // Page in book or chapter
