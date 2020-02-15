@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'El token de autorización usado ha caducado',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Error al enviar un email de prueba:',
 
 ];
