@@ -45,6 +45,13 @@ class LdapService extends ExternalAuthService
         $ldapConnection = $this->getConnection();
         $this->bindSystemUser($ldapConnection);
 
+        // Clean attributes
+        foreach ($attributes as $index => $attribute) {
+            if (strpos($attribute, 'BIN;') === 0) {
+                $attributes[$index] = substr($attribute, strlen('BIN;'));
+            }
+        }
+
         // Find user
         $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
         $baseDn = $this->config['base_dn'];
