@@ -44,11 +44,14 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     public function validate(array $credentials = [])
     {
         $userDetails = $this->ldapService->getUserDetails($credentials['username']);
-        $this->lastAttempted = $this->provider->retrieveByCredentials([
-            'external_auth_id' => $userDetails['uid']
-        ]);
 
-        return $this->ldapService->validateUserCredentials($userDetails, $credentials['username'], $credentials['password']);
+        if (isset($userDetails['uid'])) {
+            $this->lastAttempted = $this->provider->retrieveByCredentials([
+                'external_auth_id' => $userDetails['uid']
+            ]);
+        }
+
+        return $this->ldapService->validateUserCredentials($userDetails, $credentials['password']);
     }
 
     /**
@@ -66,11 +69,15 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     {
         $username = $credentials['username'];
         $userDetails = $this->ldapService->getUserDetails($username);
-        $this->lastAttempted = $user = $this->provider->retrieveByCredentials([
-            'external_auth_id' => $userDetails['uid']
-        ]);
 
-        if (!$this->ldapService->validateUserCredentials($userDetails, $username, $credentials['password'])) {
+        $user = null;
+        if (isset($userDetails['uid'])) {
+            $this->lastAttempted = $user = $this->provider->retrieveByCredentials([
+                'external_auth_id' => $userDetails['uid']
+            ]);
+        }
+
+        if (!$this->ldapService->validateUserCredentials($userDetails, $credentials['password'])) {
             return false;
         }
 

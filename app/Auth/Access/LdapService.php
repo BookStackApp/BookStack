@@ -102,9 +102,9 @@ class LdapService extends ExternalAuthService
      * Check if the given credentials are valid for the given user.
      * @throws LdapException
      */
-    public function validateUserCredentials(array $ldapUserDetails, string $username, string $password): bool
+    public function validateUserCredentials(?array $ldapUserDetails, string $password): bool
     {
-        if ($ldapUserDetails === null) {
+        if (is_null($ldapUserDetails)) {
             return false;
         }
 
