@@ -100,7 +100,7 @@ class BookShelfTest extends TestCase
         $lastImage = Image::query()->orderByDesc('id')->firstOrFail();
         $shelf = Bookshelf::query()->where('name', '=', $shelfInfo['name'])->first();
         $this->assertDatabaseHas('bookshelves', [
-            'id' => $shelf,
+            'id' => $shelf->id,
             'image_id' => $lastImage->id,
         ]);
         $this->assertEquals($lastImage->id, $shelf->cover->id);

@@ -123,7 +123,7 @@ class BookshelfRepo
      * @throws ImageUploadException
      * @throws Exception
      */
-    public function updateCoverImage(Bookshelf $shelf, UploadedFile $coverImage = null, bool $removeImage = false)
+    public function updateCoverImage(Bookshelf $shelf, ?UploadedFile $coverImage, bool $removeImage = false)
     {
         $this->baseRepo->updateCoverImage($shelf, $coverImage, $removeImage);
     }

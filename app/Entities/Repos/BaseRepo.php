@@ -76,7 +76,7 @@ class BaseRepo
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage(HasCoverImage $entity, UploadedFile $coverImage = null, bool $removeImage = false)
+    public function updateCoverImage(HasCoverImage $entity, ?UploadedFile $coverImage, bool $removeImage = false)
     {
         if ($coverImage) {
             $this->imageRepo->destroyImage($entity->cover);
