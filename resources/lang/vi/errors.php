@@ -96,4 +96,7 @@ return [
     'api_user_no_api_permission' => 'Chủ của token API đang sử dụng không có quyền gọi API',
     'api_user_token_expired' => 'Token sử dụng cho việc ủy quyền đã hết hạn',
 
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+
 ];
