@@ -166,7 +166,7 @@ class LdapTest extends BrowserKitTest
             ->seeInDatabase('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => 'cooluser456']);
     }
 
-    public function test_initial_incorrect_details()
+    public function test_initial_incorrect_credentials()
     {
         $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->once();
@@ -185,6 +185,23 @@ class LdapTest extends BrowserKitTest
             ->seePageIs('/login')->see('These credentials do not match our records.')
             ->dontSeeInDatabase('users', ['external_auth_id' => $this->mockUser->name]);
     }
+
+    public function test_login_not_found_username()
+    {
+        $this->mockLdap->shouldReceive('connect')->once()->andReturn($this->resourceId);
+        $this->mockLdap->shouldReceive('setVersion')->once();
+        $this->mockLdap->shouldReceive('setOption')->times(1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 0]);
+        $this->mockLdap->shouldReceive('bind')->times(1)->andReturn(true, false);
+        $this->mockEscapes(1);
+
+        $this->mockUserLogin()
+            ->seePageIs('/login')->see('These credentials do not match our records.')
+            ->dontSeeInDatabase('users', ['external_auth_id' => $this->mockUser->name]);
+    }
+
 
     public function test_create_user_form()
     {
