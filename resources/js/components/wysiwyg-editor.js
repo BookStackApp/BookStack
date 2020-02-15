@@ -593,6 +593,7 @@ class WysiwygEditor {
                 registerEditorShortcuts(editor);
 
                 let wrap;
+                let draggedContentEditable;
 
                 function hasTextContent(node) {
                     return node && !!( node.textContent || node.innerText );
@@ -601,12 +602,19 @@ class WysiwygEditor {
                 editor.on('dragstart', function () {
                     let node = editor.selection.getNode();
 
-                    if (node.nodeName !== 'IMG') return;
-                    wrap = editor.dom.getParent(node, '.mceTemp');
+                    if (node.nodeName === 'IMG') {
+                        wrap = editor.dom.getParent(node, '.mceTemp');
 
-                    if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
-                        wrap = node.parentNode;
+                        if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
+                            wrap = node.parentNode;
+                        }
                     }
+
+                    // Track dragged contenteditable blocks
+                    if (node.hasAttribute('contenteditable') && node.getAttribute('contenteditable') === 'false') {
+                        draggedContentEditable = node;
+                    }
+
                 });
 
                 editor.on('drop', function (event) {
@@ -614,7 +622,7 @@ class WysiwygEditor {
                         rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
 
                     // Template insertion
-                    const templateId = event.dataTransfer.getData('bookstack/template');
+                    const templateId = event.dataTransfer && event.dataTransfer.getData('bookstack/template');
                     if (templateId) {
                         event.preventDefault();
                         window.$http.get(`/templates/${templateId}`).then(resp => {
@@ -638,6 +646,22 @@ class WysiwygEditor {
                         });
                     }
 
+                    // Handle contenteditable section drop
+                    if (!event.isDefaultPrevented() && draggedContentEditable) {
+                        event.preventDefault();
+                        editor.undoManager.transact(function () {
+                            const selectedNode = editor.selection.getNode();
+                            const range = editor.selection.getRng();
+                            const selectedNodeRoot = selectedNode.closest('body > *');
+                            if (range.startOffset > (range.startContainer.length / 2)) {
+                                editor.$(selectedNodeRoot).after(draggedContentEditable);
+                            } else {
+                                editor.$(selectedNodeRoot).before(draggedContentEditable);
+                            }
+                        });
+                    }
+
+                    // Handle image insert
                     if (!event.isDefaultPrevented()) {
                         editorPaste(event, editor, context);
                     }

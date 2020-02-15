@@ -118,6 +118,7 @@ return [
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
+        'dump_user_details' => env('LDAP_DUMP_USER_DETAILS', false),
         'dn' => env('LDAP_DN', false),
         'pass' => env('LDAP_PASS', false),
         'base_dn' => env('LDAP_BASE_DN', false),

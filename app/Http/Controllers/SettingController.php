@@ -122,8 +122,14 @@ class SettingController extends Controller
     {
         $this->checkPermission('settings-manage');
 
-        user()->notify(new TestEmail());
-        $this->showSuccessNotification(trans('settings.maint_send_test_email_success', ['address' => user()->email]));
+        try {
+            user()->notify(new TestEmail());
+            $this->showSuccessNotification(trans('settings.maint_send_test_email_success', ['address' => user()->email]));
+        } catch (\Exception $exception) {
+            $errorMessage = trans('errors.maintenance_test_email_failure') . "\n" . $exception->getMessage();
+            $this->showErrorNotification($errorMessage);
+        }
+
 
         return redirect('/settings/maintenance#image-cleanup')->withInput();
     }
