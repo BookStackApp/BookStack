@@ -157,7 +157,7 @@ return [
     'chapters_empty' => 'Không có trang nào hiện có trong chương này.',
     'chapters_permissions_active' => 'Chapter Permissions Active',
     'chapters_permissions_success' => 'Chapter Permissions Updated',
-    'chapters_search_this' => 'Search this chapter',
+    'chapters_search_this' => 'Tìm kiếm trong Chương này',
 
     // Pages
     'page' => 'Trang',
@@ -241,9 +241,9 @@ return [
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
     'shelf_tags' => 'Shelf Tags',
-    'tag' => 'Tag',
+    'tag' => 'Nhãn',
     'tags' =>  'Tags',
-    'tag_name' =>  'Tag Name',
+    'tag_name' =>  'Tên Nhãn',
     'tag_value' => 'Tag Value (Optional)',
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Add another tag',
