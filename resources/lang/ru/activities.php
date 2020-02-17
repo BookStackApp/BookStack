@@ -36,12 +36,12 @@ return [
     'book_sort_notification'      => 'Книга успешно отсортирована',
 
     // Bookshelves
-    'bookshelf_create'            => 'created Bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+    'bookshelf_create'            => 'создал книжную полку',
+    'bookshelf_create_notification'    => 'Книжная полка успешно создана',
+    'bookshelf_update'                 => 'обновил книжную полку',
+    'bookshelf_update_notification'    => 'Книжная полка успешно обновлена',
+    'bookshelf_delete'                 => 'удалил книжную полку',
+    'bookshelf_delete_notification'    => 'Книжная полка успешно удалена',
 
     // Other
     'commented_on'                => 'прокомментировал',

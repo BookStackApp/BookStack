@@ -13,10 +13,16 @@ return [
     'email_already_confirmed' => 'تم تأكيد البريد الإلكتروني من قبل, الرجاء محاولة تسجيل الدخول.',
     'email_confirmation_invalid' => 'رابط التأكيد غير صحيح أو قد تم استخدامه من قبل, الرجاء محاولة التسجيل من جديد.',
     'email_confirmation_expired' => 'صلاحية رابط التأكيد انتهت, تم إرسال رسالة تأكيد جديدة لعنوان البريد الإلكتروني.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'فشل الوصول إلى LDAP باستخدام الربط المجهول',
     'ldap_fail_authed' => 'فشل الوصول إلى LDAP باستخدام dn و password المعطاة',
     'ldap_extension_not_installed' => 'لم يتم تثبيت إضافة LDAP PHP',
     'ldap_cannot_connect' => 'لا يمكن الاتصال بخادم ldap, فشل الاتصال المبدئي',
+    'saml_already_logged_in' => 'Already logged in',
+    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
+    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
+    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'لم يتم تعريف أي إجراء',
     'social_login_bad_response' => "حصل خطأ خلال تسجيل الدخول باستخدام :socialAccount \n:error",
     'social_account_in_use' => 'حساب :socialAccount قيد الاستخدام حالياً, الرجاء محاولة الدخول باستخدام خيار :socialAccount.',
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'حدث خطأ',
     'app_down' => ':appName لا يعمل حالياً',
     'back_soon' => 'سيعود للعمل قريباً.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

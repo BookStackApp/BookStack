@@ -41,12 +41,22 @@ return [
     'app_disable_comments_toggle' => 'Deshabilitar comentarios',
     'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
+    // Color settings
+    'content_colors' => 'Colores del contenido',
+    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de la organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
+    'bookshelf_color' => 'Color del estante',
+    'book_color' => 'Color del libro',
+    'chapter_color' => 'Color del capítulo',
+    'page_color' => 'Color de la página',
+    'page_draft_color' => 'Color del borrador de página',
+
     // Registration Settings
     'reg_settings' => 'Ajustes de registro',
     'reg_enable' => 'Habilitar Registro',
     'reg_enable_toggle' => 'Habilitar registro',
     'reg_enable_desc' => 'Cuando se habilita el registro, el usuario podrá crear su usuario en la aplicación. Con el regsitro, se le otorga un rol de usuario único y por defecto.',
     'reg_default_role' => 'Rol de usuario por defecto despúes del registro',
+    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Confirmación de correo electrónico',
     'reg_email_confirmation_toggle' => 'Requerir confirmación de correo electrónico',
     'reg_confirm_email_desc' => 'Si se utiliza la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y se ignorará el valor a continuación.',
@@ -63,6 +73,13 @@ return [
     'maint_image_cleanup_warning' => 'Se encontraron :count imágenes pontencialmente sin uso. Está seguro de que quiere eliminarlas?',
     'maint_image_cleanup_success' => 'Se encontraron y se eliminaron :count imágenes pontencialmente sin uso!',
     'maint_image_cleanup_nothing_found' => 'No se encotraron imágenes sin usar, Nada eliminado!',
+    'maint_send_test_email' => 'Enviar un correo electrónico de prueba',
+    'maint_send_test_email_desc' => 'Esto envía un correo electrónico de prueba a la dirección de correo electrónico especificada en tu perfil.',
+    'maint_send_test_email_run' => 'Enviar correo electrónico de prueba',
+    'maint_send_test_email_success' => 'Correo electrónico enviado a :address',
+    'maint_send_test_email_mail_subject' => 'Probar correo electrónico',
+    'maint_send_test_email_mail_greeting' => '¡El envío de correos electrónicos parece funcionar!',
+    'maint_send_test_email_mail_text' => '¡Enhorabuena! Al recibir esta notificación de correo electrónico, tu configuración de correo electrónico parece estar ajustada correctamente.',
 
     // Role Settings
     'roles' => 'Roles',
@@ -87,6 +104,7 @@ return [
     'role_manage_own_entity_permissions' => 'Gestionar permisos en libro
     s propios, capítulos y páginas',
     'role_manage_page_templates' => 'Gestionar las plantillas de páginas',
+    'role_access_api' => 'API de sistema de acceso',
     'role_manage_settings' => 'Gestionar ajustes de activos',
     'role_asset' => 'Permisos de activos',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos a Libros, Capítulos y Páginas sobreescribiran estos permisos.',
@@ -114,7 +132,7 @@ return [
     'users_send_invite_text' => 'Puede optar por enviar a este usuario un correo electrónico de invitación que les permita establecer su propia contraseña; de lo contrario, puede establecerla contraseña usted mismo.',
     'users_send_invite_option' => 'Enviar correo electrónico de invitación al usuario.',
     'users_external_auth_id' => 'ID externo de autenticación',
-    'users_external_auth_id_desc' => 'Esta es la ID usada para asociar este usuario con LDAP.',
+    'users_external_auth_id_desc' => 'Esta es la ID usada para asociar este usuario con el sistema de autenticación externo.',
     'users_password_warning' => 'Solo rellene a continuación si desea cambiar su password:',
     'users_system_public' => 'Este usuario representa cualquier usuario invitado que visita la aplicación. No puede utilizarse para hacer login sino que es asignado automáticamente.',
     'users_delete' => 'Borrar usuario',
@@ -135,6 +153,32 @@ return [
     'users_social_disconnect' => 'Desconectar cuenta',
     'users_social_connected' => 'La cuenta :socialAccount ha sido exitosamente añadida a su perfil.',
     'users_social_disconnected' => 'La cuenta :socialAccount ha sido desconectada exitosamente de su perfil.',
+    'users_api_tokens' => 'Tokens API',
+    'users_api_tokens_none' => 'No se han creado tokens API para este usuario',
+    'users_api_tokens_create' => 'Crear token',
+    'users_api_tokens_expires' => 'Expira',
+    'users_api_tokens_docs' => 'Documentación API',
+
+    // API Tokens
+    'user_api_token_create' => 'Crear token API',
+    'user_api_token_name' => 'Nombre',
+    'user_api_token_name_desc' => 'Dale a tu token un nombre legible como un recordatorio futuro de su propósito.',
+    'user_api_token_expiry' => 'Fecha de expiración',
+    'user_api_token_expiry_desc' => 'Establece una fecha en la que este token expira. Después de esta fecha, las solicitudes realizadas usando este token ya no funcionarán. Dejar este campo en blanco fijará un vencimiento de 100 años en el futuro.',
+    'user_api_token_create_secret_message' => 'Inmediatamente después de crear este token se generarán y mostrarán sus correspondientes "Token ID" y "Token Secret". El "Token Secret" sólo se mostrará una vez, así que asegúrese de copiar el valor a un lugar seguro antes de proceder.',
+    'user_api_token_create_success' => 'Token API creado correctamente',
+    'user_api_token_update_success' => 'Token API actualizado correctamente',
+    'user_api_token' => 'Token API',
+    'user_api_token_id' => 'Token ID',
+    'user_api_token_id_desc' => 'Este es un identificador no editable generado por el sistema y único para este token que necesitará ser proporcionado en solicitudes de API.',
+    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret_desc' => 'Esta es una clave no editable generada por el sistema que necesitará ser proporcionada en solicitudes de API. Solo se monstraré esta vez así que guarde su valor en un lugar seguro.',
+    'user_api_token_created' => 'Token creado :timeAgo',
+    'user_api_token_updated' => 'Token actualizado :timeAgo',
+    'user_api_token_delete' => 'Borrar token',
+    'user_api_token_delete_warning' => 'Esto eliminará completamente este token API con el nombre \':tokenName\' del sistema.',
+    'user_api_token_delete_confirm' => '¿Está seguro de que desea borrar este API token?',
+    'user_api_token_delete_success' => 'Token API borrado correctamente',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
@@ -142,6 +186,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'da' => 'Danés',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',

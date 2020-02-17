@@ -1,9 +1,9 @@
 <?php namespace BookStack\Auth\Access;
 
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\SamlException;
+use BookStack\Exceptions\UserRegistrationException;
 use Exception;
 use Illuminate\Support\Str;
 use OneLogin\Saml2\Auth;
@@ -18,19 +18,17 @@ use OneLogin\Saml2\ValidationError;
 class Saml2Service extends ExternalAuthService
 {
     protected $config;
-    protected $userRepo;
+    protected $registrationService;
     protected $user;
-    protected $enabled;
 
     /**
      * Saml2Service constructor.
      */
-    public function __construct(UserRepo $userRepo, User $user)
+    public function __construct(RegistrationService $registrationService, User $user)
     {
         $this->config = config('saml2');
-        $this->userRepo = $userRepo;
+        $this->registrationService = $registrationService;
         $this->user = $user;
-        $this->enabled = config('saml2.enabled') === true;
     }
 
     /**
@@ -80,6 +78,7 @@ class Saml2Service extends ExternalAuthService
      * @throws SamlException
      * @throws ValidationError
      * @throws JsonDebugException
+     * @throws UserRegistrationException
      */
     public function processAcsResponse(?string $requestId): ?User
     {
@@ -204,7 +203,7 @@ class Saml2Service extends ExternalAuthService
      */
     protected function shouldSyncGroups(): bool
     {
-        return $this->enabled && $this->config['user_to_groups'] !== false;
+        return $this->config['user_to_groups'] !== false;
     }
 
     /**
@@ -248,7 +247,7 @@ class Saml2Service extends ExternalAuthService
     /**
      * Extract the details of a user from a SAML response.
      */
-    public function getUserDetails(string $samlID, $samlAttributes): array
+    protected function getUserDetails(string $samlID, $samlAttributes): array
     {
         $emailAttr = $this->config['email_attribute'];
         $externalId = $this->getExternalId($samlAttributes, $samlID);
@@ -311,42 +310,25 @@ class Saml2Service extends ExternalAuthService
     }
 
     /**
-     *  Register a user that is authenticated but not already registered.
-     */
-    protected function registerUser(array $userDetails): User
-    {
-        // Create an array of the user data to create a new user instance
-        $userData = [
-            'name' => $userDetails['name'],
-            'email' => $userDetails['email'],
-            'password' => Str::random(32),
-            'external_auth_id' => $userDetails['external_id'],
-            'email_confirmed' => true,
-        ];
-
-        $existingUser = $this->user->newQuery()->where('email', '=', $userDetails['email'])->first();
-        if ($existingUser) {
-            throw new SamlException(trans('errors.saml_email_exists', ['email' => $userDetails['email']]));
-        }
-
-        $user = $this->user->forceCreate($userData);
-        $this->userRepo->attachDefaultRole($user);
-        $this->userRepo->downloadAndAssignUserAvatar($user);
-        return $user;
-    }
-
-    /**
      * Get the user from the database for the specified details.
+     * @throws SamlException
+     * @throws UserRegistrationException
      */
     protected function getOrRegisterUser(array $userDetails): ?User
     {
-        $isRegisterEnabled = $this->config['auto_register'] === true;
-        $user = $this->user
-          ->where('external_auth_id', $userDetails['external_id'])
+        $user = $this->user->newQuery()
+          ->where('external_auth_id', '=', $userDetails['external_id'])
           ->first();
 
-        if ($user === null && $isRegisterEnabled) {
-            $user = $this->registerUser($userDetails);
+        if (is_null($user)) {
+            $userData = [
+                'name' => $userDetails['name'],
+                'email' => $userDetails['email'],
+                'password' => Str::random(32),
+                'external_auth_id' => $userDetails['external_id'],
+            ];
+
+            $user = $this->registrationService->registerUser($userData, null, false);
         }
 
         return $user;
@@ -357,6 +339,7 @@ class Saml2Service extends ExternalAuthService
      * they exist, optionally registering them automatically.
      * @throws SamlException
      * @throws JsonDebugException
+     * @throws UserRegistrationException
      */
     public function processLoginCallback(string $samlID, array $samlAttributes): User
     {

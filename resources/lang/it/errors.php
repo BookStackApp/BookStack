@@ -13,16 +13,22 @@ return [
     'email_already_confirmed' => 'La mail è già stata confermata, esegui il login.',
     'email_confirmation_invalid' => 'Questo token di conferma non è valido o già stato utilizzato, registrati nuovamente.',
     'email_confirmation_expired' => 'Il token di conferma è scaduto, è stata inviata una nuova mail di conferma.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'Accesso LDAP fallito usando bind anonimo',
     'ldap_fail_authed' => 'Accesso LDAP fallito usando il dn e la password inseriti',
     'ldap_extension_not_installed' => 'L\'estensione PHP LDAP non è installata',
     'ldap_cannot_connect' => 'Impossibile connettersi al server ldap, connessione iniziale fallita',
+    'saml_already_logged_in' => 'Già loggato',
+    'saml_user_not_registered' => 'L\'utente :name non è registrato e la registrazione automatica è disabilitata',
+    'saml_no_email_address' => 'Impossibile trovare un indirizzo email per questo utente nei dati forniti dal sistema di autenticazione esterno',
+    'saml_invalid_response_id' => 'La richiesta dal sistema di autenticazione esterno non è riconosciuta da un processo iniziato da questa applicazione. Tornare indietro dopo un login potrebbe causare questo problema.',
+    'saml_fail_authed' => 'Accesso con :system non riuscito, il sistema non ha fornito l\'autorizzazione corretta',
     'social_no_action_defined' => 'Nessuna azione definita',
     'social_login_bad_response' => "Ricevuto error durante il login con :socialAccount : \n:error",
     'social_account_in_use' => 'Questo account :socialAccount è già utilizzato, prova a loggarti usando l\'opzione :socialAccount.',
     'social_account_email_in_use' => 'La mail :email è già in uso. Se hai già un account puoi connettere il tuo account :socialAccount dalle impostazioni del tuo profilo.',
     'social_account_existing' => 'Questo account :socialAccount è già connesso al tuo profilo.',
-    'social_account_already_used_existing' => 'Questo accoutn :socialAccount è già utilizzato da un altro utente.',
+    'social_account_already_used_existing' => 'Questo account :socialAccount è già utilizzato da un altro utente.',
     'social_account_not_used' => 'Questo account :socialAccount non è collegato a nessun utente. Collegalo nelle impostazioni del profilo. ',
     'social_account_register_instructions' => 'Se non hai ancora un account, puoi registrarti usando l\'opzione :socialAccount.',
     'social_driver_not_found' => 'Driver social non trovato',
@@ -30,14 +36,14 @@ return [
     'invite_token_expired' => 'Il link di invito è scaduto. Puoi provare a resettare la password del tuo account.',
 
     // System
-    'path_not_writable' => 'La path :filePath non può essere scritta. Controlla che abbia i permessi corretti.',
+    'path_not_writable' => 'Il percorso :filePath non è scrivibile. Controlla che abbia i permessi corretti.',
     'cannot_get_image_from_url' => 'Impossibile scaricare immagine da :url',
     'cannot_create_thumbs' => 'Il server non può creare thumbnail. Controlla che l\'estensione GD sia installata.',
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
     'uploaded'  => 'Il server non consente upload di questa grandezza. Prova un file più piccolo.',
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
-    'image_upload_type_error' => 'Il tipo di immagine in upload non è valido',
-    'file_upload_timeout' => 'Il caricamento del file è scaduto.',
+    'image_upload_type_error' => 'Il tipo di immagine caricata non è valido',
+    'file_upload_timeout' => 'Il caricamento del file è andato in timeout.',
 
     // Attachments
     'attachment_page_mismatch' => 'La pagina non è corrisposta durante l\'aggiornamento dell\'allegato',
@@ -58,7 +64,7 @@ return [
     'guests_cannot_save_drafts' => 'Gli ospiti non possono salvare bozze',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Non puoi eliminare l\'unico adin',
+    'users_cannot_delete_only_admin' => 'Non puoi eliminare l\'unico admin',
     'users_cannot_delete_guest' => 'Non puoi eliminare l\'utente ospite',
 
     // Roles
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'C\'è Stato un errore',
     'app_down' => ':appName è offline',
     'back_soon' => 'Ritornerà presto.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

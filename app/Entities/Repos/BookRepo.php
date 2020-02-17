@@ -108,7 +108,7 @@ class BookRepo
      * @throws ImageUploadException
      * @throws Exception
      */
-    public function updateCoverImage(Book $book, UploadedFile $coverImage = null, bool $removeImage = false)
+    public function updateCoverImage(Book $book, ?UploadedFile $coverImage, bool $removeImage = false)
     {
         $this->baseRepo->updateCoverImage($book, $coverImage, $removeImage);
     }

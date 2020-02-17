@@ -8,6 +8,7 @@ class Image extends Ownable
 {
 
     protected $fillable = ['name'];
+    protected $hidden = [];
 
     /**
      * Get a thumbnail for this image.

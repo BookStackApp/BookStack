@@ -12,8 +12,8 @@ class Collapsible {
         this.content = elem.querySelector('[collapsible-content]');
 
         if (!this.trigger) return;
-
         this.trigger.addEventListener('click', this.toggle.bind(this));
+        this.openIfContainsError();
     }
 
     open() {
@@ -32,6 +32,13 @@ class Collapsible {
         if (this.elem.classList.contains('open')) {
             this.close();
         } else {
+            this.open();
+        }
+    }
+
+    openIfContainsError() {
+        const error = this.content.querySelector('.text-neg');
+        if (error) {
             this.open();
         }
     }
