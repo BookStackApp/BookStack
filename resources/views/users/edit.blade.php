@@ -87,6 +87,10 @@
                 </div>
             </section>
         @endif
+
+        @if(($currentUser->id === $user->id && userCan('access-api')) || userCan('users-manage'))
+            @include('users.api-tokens.list', ['user' => $user])
+        @endif
     </div>
 
 @stop

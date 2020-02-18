@@ -13,10 +13,16 @@ return [
     'email_already_confirmed' => 'Електронна пошта вже підтверджена, спробуйте увійти.',
     'email_confirmation_invalid' => 'Цей токен підтвердження недійсний або вже був використаний, будь ласка, спробуйте знову зареєструватися.',
     'email_confirmation_expired' => 'Термін дії токена підтвердження минув, новий електронний лист підтвердження був відправлений.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'LDAP-доступ невдалий, з використання анонімного зв\'язку',
     'ldap_fail_authed' => 'LDAP-доступ невдалий, використовуючи задані параметри dn та password',
     'ldap_extension_not_installed' => 'Розширення PHP LDAP не встановлено',
     'ldap_cannot_connect' => 'Неможливо підключитися до ldap-сервера, Помилка з\'єднання',
+    'saml_already_logged_in' => 'Вже увійшли',
+    'saml_user_not_registered' => 'Користувач «:name» не зареєстрований, а автоматична реєстрація вимкнена',
+    'saml_no_email_address' => 'Не вдалося знайти електронну адресу для цього користувача у даних, наданих зовнішньою системою аутентифікації',
+    'saml_invalid_response_id' => 'Запит із зовнішньої системи аутентифікації не розпізнається процесом, розпочатим цим додатком. Повернення назад після входу могла спричинити цю проблему.',
+    'saml_fail_authed' => 'Вхід із використанням «:system» не вдався, система не здійснила успішну авторизацію',
     'social_no_action_defined' => 'Жодних дій не визначено',
     'social_login_bad_response' => "Помилка, отримана під час входу з :socialAccount помилка : \n:error",
     'social_account_in_use' => 'Цей :socialAccount обліковий запис вже використовується, спробуйте ввійти з параметрами :socialAccount.',
@@ -27,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Якщо у вас ще немає облікового запису, ви можете зареєструвати обліковий запис за допомогою параметра :socialAccount.',
     'social_driver_not_found' => 'Драйвер для СоціальноїМережі не знайдено',
     'social_driver_not_configured' => 'Ваші соціальні настройки :socialAccount не правильно налаштовані.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Термін дії цього запрошення закінчився. Замість цього ви можете спробувати скинути пароль свого облікового запису.',
 
     // System
     'path_not_writable' => 'Не вдається завантажити шлях до файлу :filePath. Переконайтеся, що він доступний для запису на сервер.',
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'Виникла помилка',
     'app_down' => ':appName зараз недоступний',
     'back_soon' => 'Він повернеться найближчим часом.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

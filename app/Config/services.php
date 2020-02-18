@@ -118,11 +118,13 @@ return [
 
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
+        'dump_user_details' => env('LDAP_DUMP_USER_DETAILS', false),
         'dn' => env('LDAP_DN', false),
         'pass' => env('LDAP_PASS', false),
         'base_dn' => env('LDAP_BASE_DN', false),
         'user_filter' => env('LDAP_USER_FILTER', '(&(uid=${user}))'),
         'version' => env('LDAP_VERSION', false),
+        'id_attribute' => env('LDAP_ID_ATTRIBUTE', 'uid'),
         'email_attribute' => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
         'display_name_attribute' => env('LDAP_DISPLAY_NAME_ATTRIBUTE', 'cn'),
         'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),

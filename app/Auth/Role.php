@@ -72,7 +72,7 @@ class Role extends Model
      */
     public function detachPermission(RolePermission $permission)
     {
-        $this->permissions()->detach($permission->id);
+        $this->permissions()->detach([$permission->id]);
     }
 
     /**

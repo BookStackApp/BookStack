@@ -13,6 +13,7 @@ return [
     'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
     'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
     'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
@@ -22,7 +23,6 @@ return [
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'saml_email_exists' => 'Registration unsuccessful since a user already exists with email address ":email"',
     'social_no_action_defined' => 'No action defined',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',
@@ -87,5 +87,16 @@ return [
     'error_occurred' => 'An Error Occurred',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];

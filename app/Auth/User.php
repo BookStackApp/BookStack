@@ -1,5 +1,6 @@
 <?php namespace BookStack\Auth;
 
+use BookStack\Api\ApiToken;
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Uploads\Image;
@@ -9,6 +10,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -45,7 +47,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * The attributes excluded from the model's JSON form.
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'system_name', 'email_confirmed', 'external_auth_id', 'email'];
 
     /**
      * This holds the user's permissions when loaded.
@@ -115,6 +117,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Attach the default system role to this user.
+     */
+    public function attachDefaultRole(): void
+    {
+        $roleId = setting('registration-role');
+        if ($roleId && $this->roles()->where('id', '=', $roleId)->count() === 0) {
+            $this->roles()->attach($roleId);
+        }
+    }
+
+    /**
      * Get all permissions belonging to a the current user.
      * @param bool $cache
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
@@ -151,16 +164,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function attachRole(Role $role)
     {
-        $this->attachRoleId($role->id);
-    }
-
-    /**
-     * Attach a role id to this user.
-     * @param $id
-     */
-    public function attachRoleId($id)
-    {
-        $this->roles()->attach($id);
+        $this->roles()->attach($role->id);
     }
 
     /**
@@ -218,19 +222,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get the url for editing this user.
-     * @return string
+     * Get the API tokens assigned to this user.
      */
-    public function getEditUrl()
+    public function apiTokens(): HasMany
     {
-        return url('/settings/users/' . $this->id);
+        return $this->hasMany(ApiToken::class);
+    }
+
+    /**
+     * Get the url for editing this user.
+     */
+    public function getEditUrl(string $path = ''): string
+    {
+        $uri = '/settings/users/' . $this->id . '/' . trim($path, '/');
+        return url(rtrim($uri, '/'));
     }
 
     /**
      * Get the url that links to this user's profile.
-     * @return mixed
      */
-    public function getProfileUrl()
+    public function getProfileUrl(): string
     {
         return url('/user/' . $this->id);
     }

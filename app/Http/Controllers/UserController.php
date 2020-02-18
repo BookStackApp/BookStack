@@ -116,22 +116,24 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified user.
-     * @param  int              $id
-     * @param \BookStack\Auth\Access\SocialAuthService $socialAuthService
-     * @return Response
      */
-    public function edit($id, SocialAuthService $socialAuthService)
+    public function edit(int $id, SocialAuthService $socialAuthService)
     {
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->user->newQuery()->with(['apiTokens'])->findOrFail($id);
 
         $authMethod = ($user->system_name) ? 'system' : config('auth.method');
 
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
-        return view('users.edit', ['user' => $user, 'activeSocialDrivers' => $activeSocialDrivers, 'authMethod' => $authMethod, 'roles' => $roles]);
+        return view('users.edit', [
+            'user' => $user,
+            'activeSocialDrivers' => $activeSocialDrivers,
+            'authMethod' => $authMethod,
+            'roles' => $roles
+        ]);
     }
 
     /**

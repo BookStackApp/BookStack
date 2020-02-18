@@ -20,8 +20,15 @@
   }
 }
 
-body.mce-fullscreen .page-editor .edit-area {
+body.mce-fullscreen .page-editor .edit-area,
+body.markdown-fullscreen .page-editor .edit-area {
   z-index: 12;
+}
+
+body.mce-fullscreen, body.markdown-fullscreen {
+  .page-editor, .flex-fill {
+    overflow: visible;
+  }
 }
 
 @include smaller-than($s) {

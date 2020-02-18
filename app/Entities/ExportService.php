@@ -29,8 +29,9 @@ class ExportService
     public function pageToContainedHtml(Page $page)
     {
         $page->html = (new PageContent($page))->render();
-        $pageHtml = view('pages/export', [
-            'page' => $page
+        $pageHtml = view('pages.export', [
+            'page' => $page,
+            'format' => 'html',
         ])->render();
         return $this->containHtml($pageHtml);
     }
@@ -45,9 +46,10 @@ class ExportService
         $pages->each(function ($page) {
             $page->html = (new PageContent($page))->render();
         });
-        $html = view('chapters/export', [
+        $html = view('chapters.export', [
             'chapter' => $chapter,
-            'pages' => $pages
+            'pages' => $pages,
+            'format' => 'html',
         ])->render();
         return $this->containHtml($html);
     }
@@ -59,9 +61,10 @@ class ExportService
     public function bookToContainedHtml(Book $book)
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $html = view('books/export', [
+        $html = view('books.export', [
             'book' => $book,
-            'bookChildren' => $bookTree
+            'bookChildren' => $bookTree,
+            'format' => 'html',
         ])->render();
         return $this->containHtml($html);
     }
@@ -73,8 +76,9 @@ class ExportService
     public function pageToPdf(Page $page)
     {
         $page->html = (new PageContent($page))->render();
-        $html = view('pages/pdf', [
-            'page' => $page
+        $html = view('pages.export', [
+            'page' => $page,
+            'format' => 'pdf',
         ])->render();
         return $this->htmlToPdf($html);
     }
@@ -90,9 +94,10 @@ class ExportService
             $page->html = (new PageContent($page))->render();
         });
 
-        $html = view('chapters/export', [
+        $html = view('chapters.export', [
             'chapter' => $chapter,
-            'pages' => $pages
+            'pages' => $pages,
+            'format' => 'pdf',
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -105,9 +110,10 @@ class ExportService
     public function bookToPdf(Book $book)
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $html = view('books/export', [
+        $html = view('books.export', [
             'book' => $book,
-            'bookChildren' => $bookTree
+            'bookChildren' => $bookTree,
+            'format' => 'pdf',
         ])->render();
         return $this->htmlToPdf($html);
     }

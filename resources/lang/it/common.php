@@ -38,6 +38,7 @@ return [
     'reset' => 'Azzera',
     'remove' => 'Rimuovi',
     'add' => 'Aggiungi',
+    'fullscreen' => 'Schermo intero',
 
     // Sort Options
     'sort_options' => 'Opzioni Ordinamento',

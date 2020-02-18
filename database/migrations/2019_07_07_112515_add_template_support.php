@@ -46,9 +46,9 @@ class AddTemplateSupport extends Migration
 
         // Remove templates-manage permission
         $templatesManagePermission = DB::table('role_permissions')
-            ->where('name', '=', 'templates_manage')->first();
+            ->where('name', '=', 'templates-manage')->first();
 
         DB::table('permission_role')->where('permission_id', '=', $templatesManagePermission->id)->delete();
-        DB::table('role_permissions')->where('name', '=', 'templates_manage')->delete();
+        DB::table('role_permissions')->where('name', '=', 'templates-manage')->delete();
     }
 }

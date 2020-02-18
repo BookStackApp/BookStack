@@ -38,6 +38,7 @@ return [
     'reset' => 'リセット',
     'remove' => '削除',
     'add' => '追加',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Sort Options',

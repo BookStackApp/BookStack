@@ -13,10 +13,16 @@ return [
     'email_already_confirmed' => 'Emailová adresa již byla potvrzena. Zkuste se přihlásit.',
     'email_confirmation_invalid' => 'Tento potvrzovací odkaz již neplatí nebo už byl použit. Zkuste prosím registraci znovu.',
     'email_confirmation_expired' => 'Potvrzovací odkaz už neplatí, email s novým odkazem už byl poslán.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'Přístup k adresáři LDAP jako anonymní uživatel (anonymous bind) selhal',
     'ldap_fail_authed' => 'Přístup k adresáři LDAP pomocí zadaného jména (dn) a hesla selhal',
     'ldap_extension_not_installed' => 'Není nainstalováno rozšíření LDAP pro PHP',
     'ldap_cannot_connect' => 'Nelze se připojit k adresáři LDAP. Prvotní připojení selhalo.',
+    'saml_already_logged_in' => 'Already logged in',
+    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
+    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
+    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'Nebyla zvolena žádá akce',
     'social_login_bad_response' => "Nastala chyba během přihlašování přes :socialAccount \n:error",
     'social_account_in_use' => 'Tento účet na :socialAccount se již používá. Pokuste se s ním přihlásit volbou Přihlásit přes :socialAccount.',
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'Nastala chyba',
     'app_down' => ':appName je momentálně vypnutá',
     'back_soon' => 'Brzy naběhne.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];
