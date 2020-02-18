@@ -300,15 +300,15 @@ return [
     'comment_new' => 'New Comment',
     'comment_created' => 'commented :createDiff',
     'comment_updated' => 'Updated :updateDiff by :username',
-    'comment_deleted_success' => 'Comment deleted',
-    'comment_created_success' => 'Comment added',
-    'comment_updated_success' => 'Comment updated',
-    'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
-    'comment_in_reply_to' => 'In reply to :commentId',
+    'comment_deleted_success' => 'Bình luận đã bị xóa',
+    'comment_created_success' => 'Đã thêm bình luận',
+    'comment_updated_success' => 'Bình luận đã được cập nhật',
+    'comment_delete_confirm' => 'Bạn có chắc bạn muốn xóa bình luận này?',
+    'comment_in_reply_to' => 'Trả lời cho :commentId',
 
     // Revision
-    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
-    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
-    'revision_delete_success' => 'Revision deleted',
+    'revision_delete_confirm' => 'Bạn có chắc bạn muốn xóa phiên bản này?',
+    'revision_restore_confirm' => 'Bạn có chắc bạn muốn khôi phục phiên bản này? Nội dung trang hiện tại sẽ được thay thế.',
+    'revision_delete_success' => 'Phiên bản đã được xóa',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
 ];
