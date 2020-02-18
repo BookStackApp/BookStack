@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'Token sử dụng cho việc ủy quyền đã hết hạn',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Lỗi khi gửi email thử:',
 
 ];
