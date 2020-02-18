@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => '所使用的身份令牌已过期',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => '发送测试电子邮件时出现错误：',
 
 ];
