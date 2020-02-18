@@ -289,16 +289,16 @@ return [
     'profile_not_created_shelves' => ':userName has not created any shelves',
 
     // Comments
-    'comment' => 'Comment',
-    'comments' => 'Comments',
-    'comment_add' => 'Add Comment',
-    'comment_placeholder' => 'Leave a comment here',
-    'comment_count' => '{0} No Comments|{1} 1 Comment|[2,*] :count Comments',
-    'comment_save' => 'Save Comment',
-    'comment_saving' => 'Saving comment...',
-    'comment_deleting' => 'Deleting comment...',
-    'comment_new' => 'New Comment',
-    'comment_created' => 'commented :createDiff',
+    'comment' => 'Bình luận',
+    'comments' => 'Các bình luận',
+    'comment_add' => 'Thêm bình luận',
+    'comment_placeholder' => 'Đăng bình luận tại đây',
+    'comment_count' => '{0} Không có bình luận|{1} 1 Bình luận|[2,*] :count Bình luận',
+    'comment_save' => 'Lưu bình luận',
+    'comment_saving' => 'Đang lưu bình luận...',
+    'comment_deleting' => 'Đang xóa bình luận...',
+    'comment_new' => 'Bình luận mới',
+    'comment_created' => 'đã bình luận :createDiff',
     'comment_updated' => 'Updated :updateDiff by :username',
     'comment_deleted_success' => 'Bình luận đã bị xóa',
     'comment_created_success' => 'Đã thêm bình luận',
@@ -310,5 +310,5 @@ return [
     'revision_delete_confirm' => 'Bạn có chắc bạn muốn xóa phiên bản này?',
     'revision_restore_confirm' => 'Bạn có chắc bạn muốn khôi phục phiên bản này? Nội dung trang hiện tại sẽ được thay thế.',
     'revision_delete_success' => 'Phiên bản đã được xóa',
-    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
+    'revision_cannot_delete_latest' => 'Không thể xóa phiên bản mới nhất.'
 ];
