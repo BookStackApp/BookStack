@@ -15,9 +15,10 @@
         </div>
 
         <div class="card content-wrap auto-height">
-            <h2 class="list-heading">{{ trans('settings.app_features_security') }}</h2>
+            <h2 id="features" class="list-heading">{{ trans('settings.app_features_security') }}</h2>
             <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
+                <input type="hidden" name="section" value="features">
 
                 <div class="setting-list">
 
@@ -79,9 +80,10 @@
         </div>
 
         <div class="card content-wrap auto-height">
-            <h2 class="list-heading">{{ trans('settings.app_customization') }}</h2>
+            <h2 id="customization" class="list-heading">{{ trans('settings.app_customization') }}</h2>
             <form action="{{ url("/settings") }}" method="POST" enctype="multipart/form-data">
                 {!! csrf_field() !!}
+                <input type="hidden" name="section" value="customization">
 
                 <div class="setting-list">
 
@@ -130,16 +132,38 @@
                         </div>
                     </div>
 
+                    <!-- Primary Color -->
                     <div class="grid half gap-xl">
                         <div>
                             <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
                             <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
                         </div>
                         <div setting-app-color-picker class="text-m-right">
-                            <input type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
+                            <input type="color" data-default="#206ea7" data-current="{{ setting('app-color') }}" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                             <br>
+                            <button type="button" class="text-button text-muted mt-s mx-s" setting-app-color-picker-default>{{ trans('common.default') }}</button>
+                            <span class="sep">|</span>
                             <button type="button" class="text-button text-muted mt-s mx-s" setting-app-color-picker-reset>{{ trans('common.reset') }}</button>
+                        </div>
+                    </div>
+
+                    <!-- Entity Color -->
+                    <div class="pb-l">
+                        <div>
+                            <label class="setting-list-label">{{ trans('settings.content_colors') }}</label>
+                            <p class="small">{!! trans('settings.content_colors_desc') !!}</p>
+                        </div>
+                        <div class="grid half pt-m">
+                            <div>
+                                @include('components.setting-entity-color-picker', ['type' => 'bookshelf'])
+                                @include('components.setting-entity-color-picker', ['type' => 'book'])
+                                @include('components.setting-entity-color-picker', ['type' => 'chapter'])
+                            </div>
+                            <div>
+                                @include('components.setting-entity-color-picker', ['type' => 'page'])
+                                @include('components.setting-entity-color-picker', ['type' => 'page-draft'])
+                            </div>
                         </div>
                     </div>
 
@@ -180,9 +204,10 @@
         </div>
 
         <div class="card content-wrap auto-height">
-            <h2 class="list-heading">{{ trans('settings.reg_settings') }}</h2>
+            <h2 id="registration" class="list-heading">{{ trans('settings.reg_settings') }}</h2>
             <form action="{{ url("/settings") }}" method="POST">
                 {!! csrf_field() !!}
+                <input type="hidden" name="section" value="registration">
 
                 <div class="setting-list">
                     <div class="grid half gap-xl">
@@ -196,6 +221,10 @@
                                 'value' => setting('registration-enabled'),
                                 'label' => trans('settings.reg_enable_toggle')
                             ])
+
+                            @if(in_array(config('auth.method'), ['ldap', 'saml2']))
+                                <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_external_warning') }}</div>
+                            @endif
 
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
                             <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>

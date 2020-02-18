@@ -1,6 +1,15 @@
 name: phpunit
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - release
+  pull_request:
+    branches:
+      - '*'
+      - '*/*'
+      - '!l10n_master'
 
 jobs:
   build:
@@ -10,17 +19,32 @@ jobs:
         php: [7.2, 7.3]
     steps:
     - uses: actions/checkout@v1
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache composer packages
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ matrix.php }}
+
     - name: Setup Database
       run: |
         mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
         mysql -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED BY 'bookstack-test';"
         mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
         mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
+
     - name: Install composer dependencies & Test
       run: composer install --prefer-dist --no-interaction --ansi
+
     - name: Migrate and seed the database
       run: |
         php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
         php${{ matrix.php }} artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
+
     - name: phpunit
       run: php${{ matrix.php }} ./vendor/bin/phpunit

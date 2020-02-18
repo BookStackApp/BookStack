@@ -2,12 +2,11 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\SocialAuthService;
-use BookStack\Auth\UserRepo;
-use BookStack\Exceptions\AuthException;
+use BookStack\Exceptions\LoginAttemptEmailNeededException;
+use BookStack\Exceptions\LoginAttemptException;
+use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -27,32 +26,23 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * Redirection paths
      */
     protected $redirectTo = '/';
-
     protected $redirectPath = '/';
     protected $redirectAfterLogout = '/login';
 
     protected $socialAuthService;
-    protected $ldapService;
-    protected $userRepo;
 
     /**
      * Create a new controller instance.
-     *
-     * @param \BookStack\Auth\\BookStack\Auth\Access\SocialAuthService $socialAuthService
-     * @param LdapService $ldapService
-     * @param \BookStack\Auth\UserRepo $userRepo
      */
-    public function __construct(SocialAuthService $socialAuthService, LdapService $ldapService, UserRepo $userRepo)
+    public function __construct(SocialAuthService $socialAuthService)
     {
-        $this->middleware('guest', ['only' => ['getLogin', 'postLogin']]);
+        $this->middleware('guest', ['only' => ['getLogin', 'login']]);
+        $this->middleware('guard:standard,ldap', ['only' => ['login', 'logout']]);
+
         $this->socialAuthService = $socialAuthService;
-        $this->ldapService = $ldapService;
-        $this->userRepo = $userRepo;
         $this->redirectPath = url('/');
         $this->redirectAfterLogout = url('/login');
         parent::__construct();
@@ -64,62 +54,20 @@ class LoginController extends Controller
     }
 
     /**
-     * Overrides the action when a user is authenticated.
-     * If the user authenticated but does not exist in the user table we create them.
-     * @param Request $request
-     * @param Authenticatable $user
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws AuthException
-     * @throws \BookStack\Exceptions\LdapException
+     * Get the needed authorization credentials from the request.
      */
-    protected function authenticated(Request $request, Authenticatable $user)
+    protected function credentials(Request $request)
     {
-        // Explicitly log them out for now if they do no exist.
-        if (!$user->exists) {
-            auth()->logout($user);
-        }
-
-        if (!$user->exists && $user->email === null && !$request->filled('email')) {
-            $request->flash();
-            session()->flash('request-email', true);
-            return redirect('/login');
-        }
-
-        if (!$user->exists && $user->email === null && $request->filled('email')) {
-            $user->email = $request->get('email');
-        }
-
-        if (!$user->exists) {
-            // Check for users with same email already
-            $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
-            if ($alreadyUser) {
-                throw new AuthException(trans('errors.error_user_exists_different_creds', ['email' => $user->email]));
-            }
-
-            $user->save();
-            $this->userRepo->attachDefaultRole($user);
-            $this->userRepo->downloadAndAssignUserAvatar($user);
-            auth()->login($user);
-        }
-
-        // Sync LDAP groups if required
-        if ($this->ldapService->shouldSyncGroups()) {
-            $this->ldapService->syncGroups($user, $request->get($this->username()));
-        }
-
-        return redirect()->intended('/');
+        return $request->only('username', 'email', 'password');
     }
 
     /**
      * Show the application login form.
-     * @param Request $request
-     * @return \Illuminate\Http\Response
      */
     public function getLogin(Request $request)
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         $authMethod = config('auth.method');
-        $samlEnabled = config('saml2.enabled') === true;
 
         if ($request->has('email')) {
             session()->flashInput([
@@ -131,38 +79,87 @@ class LoginController extends Controller
         return view('auth.login', [
           'socialDrivers' => $socialDrivers,
           'authMethod' => $authMethod,
-          'samlEnabled' => $samlEnabled,
         ]);
     }
 
     /**
-     * Redirect to the relevant social site.
-     * @param $socialDriver
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \BookStack\Exceptions\SocialDriverNotConfigured
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function getSocialLogin($socialDriver)
+    public function login(Request $request)
     {
-        session()->put('social-callback', 'login');
-        return $this->socialAuthService->startLogIn($socialDriver);
+        $this->validateLogin($request);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        try {
+            if ($this->attemptLogin($request)) {
+                return $this->sendLoginResponse($request);
+            }
+        } catch (LoginAttemptException $exception) {
+            return $this->sendLoginAttemptExceptionResponse($exception, $request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**
-     * Log the user out of the application.
+     * Validate the user login request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function logout(Request $request)
+    protected function validateLogin(Request $request)
     {
-        if (config('saml2.enabled') && session()->get('last_login_type') === 'saml2') {
-            return redirect('/saml2/logout');
+        $rules = ['password' => 'required|string'];
+        $authMethod = config('auth.method');
+
+        if ($authMethod === 'standard') {
+            $rules['email'] = 'required|email';
         }
 
-        $this->guard()->logout();
+        if ($authMethod === 'ldap') {
+            $rules['username'] = 'required|string';
+            $rules['email'] = 'email';
+        }
 
-        $request->session()->invalidate();
-
-        return $this->loggedOut($request) ?: redirect('/');
+        $request->validate($rules);
     }
+
+    /**
+     * Send a response when a login attempt exception occurs.
+     */
+    protected function sendLoginAttemptExceptionResponse(LoginAttemptException $exception, Request $request)
+    {
+        if ($exception instanceof LoginAttemptEmailNeededException) {
+            $request->flash();
+            session()->flash('request-email', true);
+        }
+
+        if ($message = $exception->getMessage()) {
+            $this->showWarningNotification($message);
+        }
+
+        return redirect('/login');
+    }
+
 }

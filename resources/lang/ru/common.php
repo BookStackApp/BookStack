@@ -38,6 +38,7 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
@@ -72,5 +73,5 @@ return [
 
     // Email Content
     'email_action_help' => 'Если у вас возникли проблемы с нажатием кнопки \':actionText\', то скопируйте и вставьте указанный URL-адрес в свой веб-браузер:',
-    'email_rights' => 'Все права зарезервированы',
+    'email_rights' => 'Все права защищены',
 ];

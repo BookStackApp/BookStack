@@ -64,10 +64,8 @@ class ExternalAuthService
 
     /**
      * Sync the groups to the user roles for the current user
-     * @param \BookStack\Auth\User $user
-     * @param array $userGroups
      */
-    public function syncWithGroups(User $user, array $userGroups)
+    public function syncWithGroups(User $user, array $userGroups): void
     {
         // Get the ids for the roles from the names
         $groupsAsRoles = $this->matchGroupsToSystemsRoles($userGroups);
@@ -75,7 +73,7 @@ class ExternalAuthService
         // Sync groups
         if ($this->config['remove_from_groups']) {
             $user->roles()->sync($groupsAsRoles);
-            $this->userRepo->attachDefaultRole($user);
+            $user->attachDefaultRole();
         } else {
             $user->roles()->syncWithoutDetaching($groupsAsRoles);
         }

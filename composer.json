@@ -19,7 +19,7 @@
         "fideloper/proxy": "^4.0",
         "gathercontent/htmldiff": "^0.2.1",
         "intervention/image": "^2.5",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^6.12",
         "laravel/socialite": "^4.2",
         "league/flysystem-aws-s3-v3": "^1.0",
         "onelogin/php-saml": "^3.3",
@@ -29,16 +29,16 @@
         "socialiteproviders/microsoft-azure": "^3.0",
         "socialiteproviders/okta": "^1.0",
         "socialiteproviders/slack": "^3.0",
-        "socialiteproviders/twitch": "^5.0"
+        "socialiteproviders/twitch": "^5.0",
+        "facade/ignition": "^1.4",
+        "nunomaduro/collision": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2.8",
         "barryvdh/laravel-ide-helper": "^2.6.4",
-        "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "laravel/browser-kit-testing": "^5.1",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0",
         "squizlabs/php_codesniffer": "^3.4",
         "wnx/laravel-stats": "^2.0"

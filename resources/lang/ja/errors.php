@@ -13,10 +13,16 @@ return [
     'email_already_confirmed' => 'Eメールは既に確認済みです。ログインしてください。',
     'email_confirmation_invalid' => 'この確認トークンは無効か、または既に使用済みです。登録を再試行してください。',
     'email_confirmation_expired' => '確認トークンは有効期限切れです。確認メールを再送しました。',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => '匿名バインドを用いたLDAPアクセスに失敗しました',
     'ldap_fail_authed' => '識別名, パスワードを用いたLDAPアクセスに失敗しました',
     'ldap_extension_not_installed' => 'LDAP PHP extensionがインストールされていません',
     'ldap_cannot_connect' => 'LDAPサーバに接続できませんでした',
+    'saml_already_logged_in' => 'Already logged in',
+    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
+    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
+    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'アクションが定義されていません',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => ':socialAccountアカウントは既に使用されています。:socialAccountのオプションからログインを試行してください。',
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'エラーが発生しました',
     'app_down' => ':appNameは現在停止しています',
     'back_soon' => '回復までしばらくお待ちください。',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

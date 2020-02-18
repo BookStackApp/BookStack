@@ -1,35 +1,29 @@
 <?php namespace BookStack\Auth\Access;
 
-use BookStack\Auth\Access;
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\LdapException;
-use Illuminate\Contracts\Auth\Authenticatable;
+use ErrorException;
 
 /**
  * Class LdapService
  * Handles any app-specific LDAP tasks.
- * @package BookStack\Services
  */
-class LdapService extends Access\ExternalAuthService
+class LdapService extends ExternalAuthService
 {
 
     protected $ldap;
     protected $ldapConnection;
     protected $config;
-    protected $userRepo;
     protected $enabled;
 
     /**
      * LdapService constructor.
-     * @param Ldap $ldap
-     * @param \BookStack\Auth\UserRepo $userRepo
      */
-    public function __construct(Access\Ldap $ldap, UserRepo $userRepo)
+    public function __construct(Ldap $ldap)
     {
         $this->ldap = $ldap;
         $this->config = config('services.ldap');
-        $this->userRepo = $userRepo;
         $this->enabled = config('auth.method') === 'ldap';
     }
 
@@ -43,16 +37,20 @@ class LdapService extends Access\ExternalAuthService
     }
 
     /**
-     * Search for attributes for a specific user on the ldap
-     * @param string $userName
-     * @param array $attributes
-     * @return null|array
+     * Search for attributes for a specific user on the ldap.
      * @throws LdapException
      */
-    private function getUserWithAttributes($userName, $attributes)
+    private function getUserWithAttributes(string $userName, array $attributes): ?array
     {
         $ldapConnection = $this->getConnection();
         $this->bindSystemUser($ldapConnection);
+
+        // Clean attributes
+        foreach ($attributes as $index => $attribute) {
+            if (strpos($attribute, 'BIN;') === 0) {
+                $attributes[$index] = substr($attribute, strlen('BIN;'));
+            }
+        }
 
         // Find user
         $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
@@ -71,69 +69,78 @@ class LdapService extends Access\ExternalAuthService
     /**
      * Get the details of a user from LDAP using the given username.
      * User found via configurable user filter.
-     * @param $userName
-     * @return array|null
      * @throws LdapException
      */
-    public function getUserDetails($userName)
+    public function getUserDetails(string $userName): ?array
     {
+        $idAttr = $this->config['id_attribute'];
         $emailAttr = $this->config['email_attribute'];
         $displayNameAttr = $this->config['display_name_attribute'];
 
-        $user = $this->getUserWithAttributes($userName, ['cn', 'uid', 'dn', $emailAttr, $displayNameAttr]);
+        $user = $this->getUserWithAttributes($userName, ['cn', 'dn', $idAttr, $emailAttr, $displayNameAttr]);
 
         if ($user === null) {
             return null;
         }
 
         $userCn = $this->getUserResponseProperty($user, 'cn', null);
-        return [
-            'uid'   => $this->getUserResponseProperty($user, 'uid', $user['dn']),
+        $formatted = [
+            'uid'   => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
             'name'  => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
             'dn'    => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
         ];
+
+        if ($this->config['dump_user_details']) {
+            throw new JsonDebugException([
+                'details_from_ldap' => $user,
+                'details_bookstack_parsed' => $formatted,
+            ]);
+        }
+
+        return $formatted;
     }
 
     /**
      * Get a property from an LDAP user response fetch.
      * Handles properties potentially being part of an array.
-     * @param array $userDetails
-     * @param string $propertyKey
-     * @param $defaultValue
-     * @return mixed
+     * If the given key is prefixed with 'BIN;', that indicator will be stripped
+     * from the key and any fetched values will be converted from binary to hex.
      */
     protected function getUserResponseProperty(array $userDetails, string $propertyKey, $defaultValue)
     {
-        if (isset($userDetails[$propertyKey])) {
-            return (is_array($userDetails[$propertyKey]) ? $userDetails[$propertyKey][0] : $userDetails[$propertyKey]);
+        $isBinary = strpos($propertyKey, 'BIN;') === 0;
+        $propertyKey = strtolower($propertyKey);
+        $value = $defaultValue;
+
+        if ($isBinary) {
+            $propertyKey = substr($propertyKey, strlen('BIN;'));
         }
 
-        return $defaultValue;
+        if (isset($userDetails[$propertyKey])) {
+            $value = (is_array($userDetails[$propertyKey]) ? $userDetails[$propertyKey][0] : $userDetails[$propertyKey]);
+            if ($isBinary) {
+                $value = bin2hex($value);
+            }
+        }
+
+        return $value;
     }
 
     /**
-     * @param Authenticatable $user
-     * @param string $username
-     * @param string $password
-     * @return bool
+     * Check if the given credentials are valid for the given user.
      * @throws LdapException
      */
-    public function validateUserCredentials(Authenticatable $user, $username, $password)
+    public function validateUserCredentials(?array $ldapUserDetails, string $password): bool
     {
-        $ldapUser = $this->getUserDetails($username);
-        if ($ldapUser === null) {
-            return false;
-        }
-
-        if ($ldapUser['uid'] !== $user->external_auth_id) {
+        if (is_null($ldapUserDetails)) {
             return false;
         }
 
         $ldapConnection = $this->getConnection();
         try {
-            $ldapBind = $this->ldap->bind($ldapConnection, $ldapUser['dn'], $password);
-        } catch (\ErrorException $e) {
+            $ldapBind = $this->ldap->bind($ldapConnection, $ldapUserDetails['dn'], $password);
+        } catch (ErrorException $e) {
             $ldapBind = false;
         }
 
@@ -203,12 +210,10 @@ class LdapService extends Access\ExternalAuthService
     }
 
     /**
-     * Parse a LDAP server string and return the host and port for
-     * a connection. Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'
-     * @param $serverString
-     * @return array
+     * Parse a LDAP server string and return the host and port for a connection.
+     * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
      */
-    protected function parseServerString($serverString)
+    protected function parseServerString(string $serverString): array
     {
         $serverNameParts = explode(':', $serverString);
 
@@ -225,11 +230,8 @@ class LdapService extends Access\ExternalAuthService
 
     /**
      * Build a filter string by injecting common variables.
-     * @param string $filterString
-     * @param array $attrs
-     * @return string
      */
-    protected function buildFilter($filterString, array $attrs)
+    protected function buildFilter(string $filterString, array $attrs): string
     {
         $newAttrs = [];
         foreach ($attrs as $key => $attrText) {
@@ -240,12 +242,10 @@ class LdapService extends Access\ExternalAuthService
     }
 
     /**
-     * Get the groups a user is a part of on ldap
-     * @param string $userName
-     * @return array
+     * Get the groups a user is a part of on ldap.
      * @throws LdapException
      */
-    public function getUserGroups($userName)
+    public function getUserGroups(string $userName): array
     {
         $groupsAttr = $this->config['group_attribute'];
         $user = $this->getUserWithAttributes($userName, [$groupsAttr]);
@@ -260,40 +260,36 @@ class LdapService extends Access\ExternalAuthService
     }
 
     /**
-     * Get the parent groups of an array of groups
-     * @param array $groupsArray
-     * @param array $checked
-     * @return array
+     * Get the parent groups of an array of groups.
      * @throws LdapException
      */
-    private function getGroupsRecursive($groupsArray, $checked)
+    private function getGroupsRecursive(array $groupsArray, array $checked): array
     {
-        $groups_to_add = [];
+        $groupsToAdd = [];
         foreach ($groupsArray as $groupName) {
             if (in_array($groupName, $checked)) {
                 continue;
             }
 
-            $groupsToAdd = $this->getGroupGroups($groupName);
-            $groups_to_add = array_merge($groups_to_add, $groupsToAdd);
+            $parentGroups = $this->getGroupGroups($groupName);
+            $groupsToAdd = array_merge($groupsToAdd, $parentGroups);
             $checked[] = $groupName;
         }
-        $groupsArray = array_unique(array_merge($groupsArray, $groups_to_add), SORT_REGULAR);
 
-        if (!empty($groups_to_add)) {
-            return $this->getGroupsRecursive($groupsArray, $checked);
-        } else {
+        $groupsArray = array_unique(array_merge($groupsArray, $groupsToAdd), SORT_REGULAR);
+
+        if (empty($groupsToAdd)) {
             return $groupsArray;
         }
+
+        return $this->getGroupsRecursive($groupsArray, $checked);
     }
 
     /**
-     * Get the parent groups of a single group
-     * @param string $groupName
-     * @return array
+     * Get the parent groups of a single group.
      * @throws LdapException
      */
-    private function getGroupGroups($groupName)
+    private function getGroupGroups(string $groupName): array
     {
         $ldapConnection = $this->getConnection();
         $this->bindSystemUser($ldapConnection);
@@ -310,17 +306,14 @@ class LdapService extends Access\ExternalAuthService
             return [];
         }
 
-        $groupGroups = $this->groupFilter($groups[0]);
-        return $groupGroups;
+        return $this->groupFilter($groups[0]);
     }
 
     /**
-     * Filter out LDAP CN and DN language in a ldap search return
-     * Gets the base CN (common name) of the string
-     * @param array $userGroupSearchResponse
-     * @return array
+     * Filter out LDAP CN and DN language in a ldap search return.
+     * Gets the base CN (common name) of the string.
      */
-    protected function groupFilter(array $userGroupSearchResponse)
+    protected function groupFilter(array $userGroupSearchResponse): array
     {
         $groupsAttr = strtolower($this->config['group_attribute']);
         $ldapGroups = [];
@@ -341,9 +334,7 @@ class LdapService extends Access\ExternalAuthService
     }
 
     /**
-     * Sync the LDAP groups to the user roles for the current user
-     * @param \BookStack\Auth\User $user
-     * @param string $username
+     * Sync the LDAP groups to the user roles for the current user.
      * @throws LdapException
      */
     public function syncGroups(User $user, string $username)

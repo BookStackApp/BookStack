@@ -13,10 +13,16 @@ return [
     'email_already_confirmed' => 'E-mail został potwierdzony, spróbuj się zalogować.',
     'email_confirmation_invalid' => 'Ten token jest nieprawidłowy lub został już wykorzystany. Spróbuj zarejestrować się ponownie.',
     'email_confirmation_expired' => 'Ten token potwierdzający wygasł. Wysłaliśmy Ci kolejny.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'Dostęp LDAP przy użyciu anonimowego powiązania nie powiódł się',
     'ldap_fail_authed' => 'Dostęp LDAP przy użyciu tego DN i hasła nie powiódł się',
     'ldap_extension_not_installed' => 'Rozszerzenie LDAP PHP nie zostało zainstalowane',
     'ldap_cannot_connect' => 'Nie można połączyć z serwerem LDAP, połączenie nie zostało ustanowione',
+    'saml_already_logged_in' => 'Już zalogowany',
+    'saml_user_not_registered' => 'Użytkownik :name nie jest zarejestrowany i automatyczna rejestracja jest wyłączona',
+    'saml_no_email_address' => 'Nie można odnaleźć adresu email dla tego użytkownika w danych dostarczonych przez zewnętrzny system uwierzytelniania',
+    'saml_invalid_response_id' => 'Żądanie z zewnętrznego systemu uwierzytelniania nie zostało rozpoznane przez proces rozpoczęty przez tę aplikację. Cofnięcie po zalogowaniu mogło spowodować ten problem.',
+    'saml_fail_authed' => 'Logowanie przy użyciu :system nie powiodło się, system nie mógł pomyślnie ukończyć uwierzytelniania',
     'social_no_action_defined' => 'Brak zdefiniowanej akcji',
     'social_login_bad_response' => "Podczas próby logowania :socialAccount wystąpił błąd: \n:error",
     'social_account_in_use' => 'To konto :socialAccount jest już w użyciu. Spróbuj zalogować się za pomocą opcji :socialAccount.',
@@ -27,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Jeśli nie masz jeszcze konta, możesz zarejestrować je używając opcji :socialAccount.',
     'social_driver_not_found' => 'Funkcja społecznościowa nie została odnaleziona',
     'social_driver_not_configured' => 'Ustawienia konta :socialAccount nie są poprawne.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Zaproszenie wygasło. Możesz spróować zresetować swoje hasło.',
 
     // System
     'path_not_writable' => 'Zapis do ścieżki :filePath jest niemożliwy. Upewnij się że aplikacja ma prawa do zapisu plików na serwerze.',
@@ -50,11 +56,11 @@ return [
     // Entities
     'entity_not_found' => 'Nie znaleziono obiektu',
     'bookshelf_not_found' => 'Nie znaleziono półki',
-    'book_not_found' => 'Nie znaleziono podręcznika',
+    'book_not_found' => 'Nie znaleziono książki',
     'page_not_found' => 'Nie znaleziono strony',
     'chapter_not_found' => 'Nie znaleziono rozdziału',
-    'selected_book_not_found' => 'Wybrany podręcznik nie został znaleziony',
-    'selected_book_chapter_not_found' => 'Wybrany podręcznik lub rozdział nie został znaleziony',
+    'selected_book_not_found' => 'Wybrana książka nie została znaleziona',
+    'selected_book_chapter_not_found' => 'Wybrana książka lub rozdział nie został znaleziony',
     'guests_cannot_save_drafts' => 'Goście nie mogą zapisywać wersji roboczych',
 
     // Users
@@ -65,7 +71,7 @@ return [
     'role_cannot_be_edited' => 'Ta rola nie może być edytowana',
     'role_system_cannot_be_deleted' => 'Ta rola jest rolą systemową i nie może zostać usunięta',
     'role_registration_default_cannot_delete' => 'Ta rola nie może zostać usunięta, dopóki jest ustawiona jako domyślna rola użytkownika',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_remove_only_admin' => 'Ten użytkownik jest jedynym użytkownikiem przypisanym do roli administratora. Przypisz rolę administratora innemu użytkownikowi przed próbą usunięcia.',
 
     // Comments
     'comment_list' => 'Wystąpił błąd podczas pobierania komentarzy.',
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'Wystąpił błąd',
     'app_down' => ':appName jest aktualnie wyłączona',
     'back_soon' => 'Niedługo zostanie uruchomiona ponownie.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

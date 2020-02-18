@@ -1,12 +1,11 @@
 <?php
 
-namespace BookStack\Providers;
+namespace BookStack\Auth\Access;
 
-use BookStack\Auth\Access\LdapService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
-class LdapUserProvider implements UserProvider
+class ExternalBaseUserProvider implements UserProvider
 {
 
     /**
@@ -17,20 +16,12 @@ class LdapUserProvider implements UserProvider
     protected $model;
 
     /**
-     * @var \BookStack\Auth\LdapService
-     */
-    protected $ldapService;
-
-
-    /**
      * LdapUserProvider constructor.
      * @param             $model
-     * @param \BookStack\Auth\LdapService $ldapService
      */
-    public function __construct($model, LdapService $ldapService)
+    public function __construct(string $model)
     {
         $this->model = $model;
-        $this->ldapService = $ldapService;
     }
 
     /**
@@ -43,7 +34,6 @@ class LdapUserProvider implements UserProvider
         $class = '\\' . ltrim($this->model, '\\');
         return new $class;
     }
-
 
     /**
      * Retrieve a user by their unique identifier.
@@ -65,12 +55,7 @@ class LdapUserProvider implements UserProvider
      */
     public function retrieveByToken($identifier, $token)
     {
-        $model = $this->createModel();
-
-        return $model->newQuery()
-            ->where($model->getAuthIdentifierName(), $identifier)
-            ->where($model->getRememberTokenName(), $token)
-            ->first();
+        return null;
     }
 
 
@@ -83,10 +68,7 @@ class LdapUserProvider implements UserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        if ($user->exists) {
-            $user->setRememberToken($token);
-            $user->save();
-        }
+        //
     }
 
     /**
@@ -97,27 +79,11 @@ class LdapUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials)
     {
-        // Get user via LDAP
-        $userDetails = $this->ldapService->getUserDetails($credentials['username']);
-        if ($userDetails === null) {
-            return null;
-        }
-
         // Search current user base by looking up a uid
         $model = $this->createModel();
-        $currentUser = $model->newQuery()
-            ->where('external_auth_id', $userDetails['uid'])
+        return $model->newQuery()
+            ->where('external_auth_id', $credentials['external_auth_id'])
             ->first();
-
-        if ($currentUser !== null) {
-            return $currentUser;
-        }
-
-        $model->name = $userDetails['name'];
-        $model->external_auth_id = $userDetails['uid'];
-        $model->email = $userDetails['email'];
-        $model->email_confirmed = false;
-        return $model;
     }
 
     /**
@@ -129,6 +95,7 @@ class LdapUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        return $this->ldapService->validateUserCredentials($user, $credentials['username'], $credentials['password']);
+        // Should be done in the guard.
+        return false;
     }
 }

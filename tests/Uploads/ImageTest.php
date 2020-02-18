@@ -36,6 +36,30 @@ class ImageTest extends TestCase
         ]);
     }
 
+    public function test_image_display_thumbnail_generation_does_not_increase_image_size()
+    {
+        $page = Page::first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $originalFile = $this->getTestImageFilePath('compressed.png');
+        $originalFileSize = filesize($originalFile);
+        $imgDetails = $this->uploadGalleryImage($page, 'compressed.png');
+        $relPath = $imgDetails['path'];
+
+        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: '. public_path($relPath));
+        $displayImage = $imgDetails['response']->thumbs->display;
+
+        $displayImageRelPath = implode('/', array_slice(explode('/', $displayImage), 3));
+        $displayImagePath = public_path($displayImageRelPath);
+        $displayFileSize = filesize($displayImagePath);
+
+        $this->deleteImage($relPath);
+        $this->deleteImage($displayImageRelPath);
+
+        $this->assertEquals($originalFileSize, $displayFileSize, 'Display thumbnail generation should not increase image size');
+    }
+
     public function test_image_edit()
     {
         $editor = $this->getEditor();

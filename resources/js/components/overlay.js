@@ -1,3 +1,4 @@
+import {fadeIn, fadeOut} from "../services/animations";
 
 class Overlay {
 
@@ -19,29 +20,15 @@ class Overlay {
         }
     }
 
-    hide() { this.toggle(false); }
-    show() { this.toggle(true); }
+    hide(onComplete = null) { this.toggle(false, onComplete); }
+    show(onComplete = null) { this.toggle(true, onComplete); }
 
-    toggle(show = true) {
-        let start = Date.now();
-        let duration = 240;
-
-        function setOpacity() {
-            let elapsedTime = (Date.now() - start);
-            let targetOpacity = show ? (elapsedTime / duration) : 1-(elapsedTime / duration);
-            this.container.style.opacity = targetOpacity;
-            if (elapsedTime > duration) {
-                this.container.style.display = show ? 'flex' : 'none';
-                if (show) {
-                    this.focusOnBody();
-                }
-                this.container.style.opacity = '';
-            } else {
-                requestAnimationFrame(setOpacity.bind(this));
-            }
+    toggle(show = true, onComplete) {
+        if (show) {
+            fadeIn(this.container, 240, onComplete);
+        } else {
+            fadeOut(this.container, 240, onComplete);
         }
-
-        requestAnimationFrame(setOpacity.bind(this));
     }
 
     focusOnBody() {

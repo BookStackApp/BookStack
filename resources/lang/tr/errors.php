@@ -13,10 +13,16 @@ return [
     'email_already_confirmed' => 'E-mail halihazırda onaylanmış, giriş yapmayı dene.',
     'email_confirmation_invalid' => 'Bu doğrulama tokenı daha önce kullanılmış veya geçerli değil, lütfen tekrar kayıt olmayı deneyin.',
     'email_confirmation_expired' => 'Doğrulama token\'ının süresi geçmiş, yeni bir mail gönderildi.',
+    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'Anonim LDAP girişi başarısız oldu',
     'ldap_fail_authed' => 'Verdiğiniz bilgiler ile LDAP girişi başarısız oldu.',
     'ldap_extension_not_installed' => 'LDAP PHP eklentisi yüklenmedi',
     'ldap_cannot_connect' => 'LDAP sunucusuna bağlanılamadı, ilk bağlantı başarısız oldu',
+    'saml_already_logged_in' => 'Zaten giriş yapıldı',
+    'saml_user_not_registered' => ':name adlı kullanıcı kayıtlı değil ve otomatik kaydolma devre dışı',
+    'saml_no_email_address' => 'Bu kullanıcı için, harici bir doğrulama siteminden elde edilen verilerde, bir e-posta adresi bulunamadı',
+    'saml_invalid_response_id' => 'Harici doğrulama sistemi tarafından sağlanan bir veri talebi, bu uygulama tarafından başlatılan bir işlem tarafından tanınamadı. Giriş yaptıktan sonra geri dönmek bu soruna yol açabilir.',
+    'saml_fail_authed' => ':system kullanarak giriş yapma başarısız, sistem başarılı bir doğrulama sağlamadı',
     'social_no_action_defined' => 'Bir aksiyon tanımlanmadı',
     'social_login_bad_response' => ":socialAccount girişi sırasında hata oluştu: \n:error",
     'social_account_in_use' => 'Bu :socialAccount zaten kullanımda, :socialAccount hesabıyla giriş yapmayı deneyin.',
@@ -27,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Hala bir hesabınız yoksa :socialAccount ile kayıt olabilirsiniz.',
     'social_driver_not_found' => 'Social driver bulunamadı',
     'social_driver_not_configured' => ':socialAccount ayarlarınız doğru bir şekilde ayarlanmadı.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Davetiye linkinin süresi doldu. Bunun yerine parolanızı sıfırlamayı deneyebilirsiniz.',
 
     // System
     'path_not_writable' => ':filePath dosya yolu yüklenemedi. Sunucuya yazılabilir olduğundan emin olun.',
@@ -81,5 +87,13 @@ return [
     'error_occurred' => 'Bir Hata Oluştu',
     'app_down' => ':appName şu anda inaktif',
     'back_soon' => 'En kısa zamanda aktif hale gelecek.',
+
+    // API errors
+    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_token_expired' => 'The authorization token used has expired',
 
 ];

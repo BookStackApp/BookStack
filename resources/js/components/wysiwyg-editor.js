@@ -1,5 +1,6 @@
 import Code from "../services/code";
 import DrawIO from "../services/drawio";
+import Clipboard from "../services/clipboard";
 
 /**
  * Handle pasting images from clipboard.
@@ -8,30 +9,33 @@ import DrawIO from "../services/drawio";
  * @param editor
  */
 function editorPaste(event, editor, wysiwygComponent) {
-    const clipboardItems = event.clipboardData.items;
-    if (!event.clipboardData || !clipboardItems) return;
+    const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
 
-    // Don't handle if clipboard includes text content
-    for (let clipboardItem of clipboardItems) {
-        if (clipboardItem.type.includes('text/')) {
-            return;
-        }
+    // Don't handle the event ourselves if no items exist of contains table-looking data
+    if (!clipboard.hasItems() || clipboard.containsTabularData()) {
+        return;
     }
 
-    for (let clipboardItem of clipboardItems) {
-        if (!clipboardItem.type.includes("image")) {
-            continue;
-        }
+    const images = clipboard.getImages();
+    for (const imageFile of images) {
 
         const id = "image-" + Math.random().toString(16).slice(2);
         const loadingImage = window.baseUrl('/loading.gif');
-        const file = clipboardItem.getAsFile();
+        event.preventDefault();
 
         setTimeout(() => {
             editor.insertContent(`<p><img src="${loadingImage}" id="${id}"></p>`);
 
-            uploadImageFile(file, wysiwygComponent).then(resp => {
-                editor.dom.setAttrib(id, 'src', resp.thumbs.display);
+            uploadImageFile(imageFile, wysiwygComponent).then(resp => {
+                const safeName = resp.name.replace(/"/g, '');
+                const newImageHtml = `<img src="${resp.thumbs.display}" alt="${safeName}" />`;
+
+                const newEl = editor.dom.create('a', {
+                    target: '_blank',
+                    href: resp.url,
+                }, newImageHtml);
+
+                editor.dom.replace(newEl, id);
             }).catch(err => {
                 editor.dom.remove(id);
                 window.$events.emit('error', trans('errors.image_upload_error'));
@@ -160,7 +164,7 @@ function codePlugin() {
             let cmInstance = editorElem.CodeMirror;
             if (cmInstance) {
                 Code.setContent(cmInstance, code);
-                Code.setMode(cmInstance, lang);
+                Code.setMode(cmInstance, lang, code);
             }
             let textArea = selectedNode.querySelector('textarea');
             if (textArea) textArea.textContent = code;
@@ -589,6 +593,7 @@ class WysiwygEditor {
                 registerEditorShortcuts(editor);
 
                 let wrap;
+                let draggedContentEditable;
 
                 function hasTextContent(node) {
                     return node && !!( node.textContent || node.innerText );
@@ -597,12 +602,19 @@ class WysiwygEditor {
                 editor.on('dragstart', function () {
                     let node = editor.selection.getNode();
 
-                    if (node.nodeName !== 'IMG') return;
-                    wrap = editor.dom.getParent(node, '.mceTemp');
+                    if (node.nodeName === 'IMG') {
+                        wrap = editor.dom.getParent(node, '.mceTemp');
 
-                    if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
-                        wrap = node.parentNode;
+                        if (!wrap && node.parentNode.nodeName === 'A' && !hasTextContent(node.parentNode)) {
+                            wrap = node.parentNode;
+                        }
                     }
+
+                    // Track dragged contenteditable blocks
+                    if (node.hasAttribute('contenteditable') && node.getAttribute('contenteditable') === 'false') {
+                        draggedContentEditable = node;
+                    }
+
                 });
 
                 editor.on('drop', function (event) {
@@ -610,7 +622,7 @@ class WysiwygEditor {
                         rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
 
                     // Template insertion
-                    const templateId = event.dataTransfer.getData('bookstack/template');
+                    const templateId = event.dataTransfer && event.dataTransfer.getData('bookstack/template');
                     if (templateId) {
                         event.preventDefault();
                         window.$http.get(`/templates/${templateId}`).then(resp => {
@@ -632,6 +644,26 @@ class WysiwygEditor {
                             editor.selection.setNode(wrap);
                             dom.remove(wrap);
                         });
+                    }
+
+                    // Handle contenteditable section drop
+                    if (!event.isDefaultPrevented() && draggedContentEditable) {
+                        event.preventDefault();
+                        editor.undoManager.transact(function () {
+                            const selectedNode = editor.selection.getNode();
+                            const range = editor.selection.getRng();
+                            const selectedNodeRoot = selectedNode.closest('body > *');
+                            if (range.startOffset > (range.startContainer.length / 2)) {
+                                editor.$(selectedNodeRoot).after(draggedContentEditable);
+                            } else {
+                                editor.$(selectedNodeRoot).before(draggedContentEditable);
+                            }
+                        });
+                    }
+
+                    // Handle image insert
+                    if (!event.isDefaultPrevented()) {
+                        editorPaste(event, editor, context);
                     }
 
                     wrap = null;

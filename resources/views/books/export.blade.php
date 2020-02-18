@@ -4,10 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $book->name }}</title>
 
+    @include('partials.export-styles', ['format' => $format])
+
     <style>
-        @if (!app()->environment('testing'))
-        {!! file_get_contents(public_path('/dist/export-styles.css')) !!}
-        @endif
         .page-break {
             page-break-after: always;
         }

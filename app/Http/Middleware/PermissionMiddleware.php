@@ -19,7 +19,7 @@ class PermissionMiddleware
     {
 
         if (!$request->user() || !$request->user()->can($permission)) {
-            Session::flash('error', trans('errors.permission'));
+            session()->flash('error', trans('errors.permission'));
             return redirect()->back();
         }
 

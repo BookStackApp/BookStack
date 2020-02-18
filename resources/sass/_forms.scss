@@ -19,6 +19,9 @@
   &.disabled, &[disabled] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==);
   }
+  &[readonly] {
+    background-color: #f8f8f8;
+  }
   &:focus {
     border-color: var(--color-primary);
     outline: 1px solid var(--color-primary);
@@ -62,6 +65,13 @@
     width: 50%;
     max-width: 50%;
   }
+  &.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 2;
+  }
 }
 
 @include smaller-than($m) {
@@ -71,6 +81,7 @@
   #markdown-editor .markdown-editor-wrap {
     width: 100%;
     max-width: 100%;
+    flex-grow: 1;
   }
   #markdown-editor .editor-toolbar {
     padding: 0;
@@ -83,12 +94,15 @@
     border-bottom: 1px solid #DDD;
     display: block;
   }
-  .markdown-editor-wrap:not(.active) .editor-toolbar + div, .markdown-editor-wrap:not(.active) .editor-toolbar .buttons {
+  .markdown-editor-wrap:not(.active) .editor-toolbar + div,
+  .markdown-editor-wrap:not(.active) .editor-toolbar .buttons,
+  .markdown-editor-wrap:not(.active) .markdown-display {
     display: none;
   }
   #markdown-editor .markdown-editor-wrap:not(.active) {
     flex-grow: 0;
     flex: none;
+    min-height: 0;
   }
 }
 
@@ -172,6 +186,11 @@ input[type=date] {
 
 input[type=color] {
   height: 60px;
+  &.small {
+    height: 42px;
+    width: 60px;
+    padding: 2px;
+  }
 }
 
 .toggle-switch {

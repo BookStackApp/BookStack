@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
-  outline-color: #444444;
+  outline-color: var(--color-primary);
+  outline-width: 1px;
 }
 
 *:focus {

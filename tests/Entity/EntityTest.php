@@ -315,4 +315,14 @@ class EntityTest extends BrowserKitTest
             ->seePageIs($book->getUrl());
     }
 
+    public function test_page_within_chapter_deletion_returns_to_chapter()
+    {
+        $chapter = Chapter::query()->first();
+        $page = $chapter->pages()->first();
+
+        $this->asEditor()->visit($page->getUrl('/delete'))
+            ->submitForm('Confirm')
+            ->seePageIs($chapter->getUrl());
+    }
+
 }

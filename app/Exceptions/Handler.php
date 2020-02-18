@@ -7,6 +7,9 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -47,10 +50,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($this->isApiRequest($request)) {
+            return $this->renderApiException($e);
+        }
+
         // Handle notify exceptions which will redirect to the
         // specified location then show a notification message.
         if ($this->isExceptionType($e, NotifyException::class)) {
-            session()->flash('error', $this->getOriginalMessage($e));
+            $message = $this->getOriginalMessage($e);
+            if (!empty($message)) {
+                session()->flash('error', $message);
+            }
             return redirect($e->redirectLocation);
         }
 
@@ -68,6 +78,41 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $e);
+    }
+
+    /**
+     * Check if the given request is an API request.
+     */
+    protected function isApiRequest(Request $request): bool
+    {
+        return strpos($request->path(), 'api/') === 0;
+    }
+
+    /**
+     * Render an exception when the API is in use.
+     */
+    protected function renderApiException(Exception $e): JsonResponse
+    {
+        $code = $e->getCode() === 0 ? 500 : $e->getCode();
+        $headers = [];
+        if ($e instanceof HttpException) {
+            $code = $e->getStatusCode();
+            $headers = $e->getHeaders();
+        }
+
+        $responseData = [
+            'error' => [
+                'message' => $e->getMessage(),
+            ]
+        ];
+
+        if ($e instanceof ValidationException) {
+            $responseData['error']['validation'] = $e->errors();
+            $code = $e->status;
+        }
+
+        $responseData['error']['code'] = $code;
+        return new JsonResponse($responseData, $code, $headers);
     }
 
     /**
