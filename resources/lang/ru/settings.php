@@ -42,13 +42,13 @@ return [
     'app_disable_comments_desc' => 'Отключение комментов на всех страницах. Существующие комментарии отображаться не будут.',
 
     // Color settings
-    'content_colors' => 'Content Colors',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
-    'page_draft_color' => 'Page Draft Color',
+    'content_colors' => 'Цвета контента',
+    'content_colors_desc' => 'Задает цвета для всех элементов организационной иерархии страницы. Для удобства чтения рекомендуется выбирать цвета, яркость которых близка к цветам по умолчанию.',
+    'bookshelf_color' => 'Цвет полки',
+    'book_color' => 'Цвет книги',
+    'chapter_color' => 'Цвет главы',
+    'page_color' => 'Цвет страницы',
+    'page_draft_color' => 'Цвет черновика страницы',
 
     // Registration Settings
     'reg_settings' => 'Настройки регистрации',
