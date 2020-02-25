@@ -9,7 +9,7 @@ return [
     'permissionJson' => 'У вас нет разрешения для запрашиваемого действия.',
 
     // Auth
-    'error_user_exists_different_creds' => 'Пользователь с электронной почтой: :email уже существует, но с другими учетными данными.',
+    'error_user_exists_different_creds' => 'Пользователь с электронной почтой :email уже существует, но с другими учетными данными.',
     'email_already_confirmed' => 'Электронная почта уже подтверждена, попробуйте войти в систему.',
     'email_confirmation_invalid' => 'Этот токен подтверждения недействителен или уже используется. Повторите попытку регистрации.',
     'email_confirmation_expired' => 'Истек срок действия токена. Отправлено новое письмо с подтверждением.',
@@ -20,9 +20,9 @@ return [
     'ldap_cannot_connect' => 'Не удается подключиться к серверу ldap, не удалось выполнить начальное соединение',
     'saml_already_logged_in' => 'Already logged in',
     'saml_user_not_registered' => 'Пользователь :name не зарегистрирован. Автоматическая регистрация отключена',
-    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
-    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'saml_no_email_address' => 'Не удалось найти email для этого пользователя в данных, предоставленных внешней системой аутентификации',
+    'saml_invalid_response_id' => 'Запрос от внешней системы аутентификации не распознается процессом, запущенным этим приложением. Переход назад после входа в систему может вызвать эту проблему.',
+    'saml_fail_authed' => 'Вход с помощью :system не удался, система не предоставила успешную авторизацию',
     'social_no_action_defined' => 'Действие не определено',
     'social_login_bad_response' => "При попытке входа с :socialAccount произошла ошибка: \\n:error",
     'social_account_in_use' => 'Этот :socialAccount аккаунт уже исопльзуется, попробуйте войти с параметрами :socialAccount.',
@@ -89,14 +89,14 @@ return [
     'back_soon' => 'Скоро восстановится.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Отсутствует токен авторизации в запросе',
+    'api_bad_authorization_format' => 'Токен авторизации найден, но формат запроса неверен',
+    'api_user_token_not_found' => 'Отсутствует соответствующий API токен для предоставленного токена авторизации',
+    'api_incorrect_token_secret' => 'Секрет, предоставленный для данного использованного API токена неверен',
+    'api_user_no_api_permission' => 'Владелец используемого API токена не имеет прав на выполнение вызовов API',
+    'api_user_token_expired' => 'Срок действия используемого токена авторизации истек',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Ошибка при отправке тестового email:',
 
 ];
