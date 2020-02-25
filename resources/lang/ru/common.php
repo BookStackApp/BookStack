@@ -38,7 +38,7 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'На весь экран',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
