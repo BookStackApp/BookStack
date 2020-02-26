@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'A használt hitelesítési vezérjel lejárt',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Hiba történt egy teszt email küldésekor:',
 
 ];
