@@ -18,7 +18,7 @@ return [
     'ldap_fail_authed' => 'Не удалось получить доступ к LDAP, используя данные dn & password',
     'ldap_extension_not_installed' => 'LDAP расширения для PHP не установлено',
     'ldap_cannot_connect' => 'Не удается подключиться к серверу ldap, не удалось выполнить начальное соединение',
-    'saml_already_logged_in' => 'Already logged in',
+    'saml_already_logged_in' => 'Уже вошли в систему',
     'saml_user_not_registered' => 'Пользователь :name не зарегистрирован. Автоматическая регистрация отключена',
     'saml_no_email_address' => 'Не удалось найти email для этого пользователя в данных, предоставленных внешней системой аутентификации',
     'saml_invalid_response_id' => 'Запрос от внешней системы аутентификации не распознается процессом, запущенным этим приложением. Переход назад после входа в систему может вызвать эту проблему.',
@@ -61,7 +61,7 @@ return [
     'chapter_not_found' => 'Глава не найдена',
     'selected_book_not_found' => 'Выбранная книга не найдена',
     'selected_book_chapter_not_found' => 'Выбранная книга или глава не найдена',
-    'guests_cannot_save_drafts' => 'Гости не могут сохранить черновики',
+    'guests_cannot_save_drafts' => 'Гости не могут сохранять черновики',
 
     // Users
     'users_cannot_delete_only_admin' => 'Вы не можете удалить единственного администратора',
