@@ -16,7 +16,7 @@ return [
     'email_confirmation_awaiting' => 'Для используемой учетной записи необходимо подтвердить email',
     'ldap_fail_anonymous' => 'Недопустимый доступ LDAP с использованием анонимной привязки',
     'ldap_fail_authed' => 'Не удалось получить доступ к LDAP, используя данные dn & password',
-    'ldap_extension_not_installed' => 'LDAP расширения для PHP не установлено',
+    'ldap_extension_not_installed' => 'LDAP расширение для PHP не установлено',
     'ldap_cannot_connect' => 'Не удается подключиться к серверу ldap, не удалось выполнить начальное соединение',
     'saml_already_logged_in' => 'Уже вошли в систему',
     'saml_user_not_registered' => 'Пользователь :name не зарегистрирован. Автоматическая регистрация отключена',
@@ -43,7 +43,7 @@ return [
     'uploaded'  => 'Сервер не позволяет загружать файлы такого размера. Пожалуйста, попробуйте файл меньше.',
     'image_upload_error' => 'Произошла ошибка при загрузке изображения.',
     'image_upload_type_error' => 'Неправильный тип загружаемого изображения',
-    'file_upload_timeout' => 'Выгрузка файла закончилась.',
+    'file_upload_timeout' => 'Время загрузки файла истекло.',
 
     // Attachments
     'attachment_page_mismatch' => 'Несоответствие страницы во время обновления вложения',
