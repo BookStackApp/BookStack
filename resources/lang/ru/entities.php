@@ -16,7 +16,7 @@ return [
     'recently_viewed' => 'Недавно просмотренные',
     'recent_activity' => 'Недавние действия',
     'create_now' => 'Создать сейчас',
-    'revisions' => 'Версия',
+    'revisions' => 'Версии',
     'meta_revision' => 'Версия #:revisionCount',
     'meta_created' => 'Создано :timeLength',
     'meta_created_name' => ':user создал :timeLength',
