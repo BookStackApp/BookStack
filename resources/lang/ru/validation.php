@@ -19,7 +19,7 @@ return [
     'between'              => [
         'numeric' => ':attribute должен быть между :min и :max.',
         'file'    => ':attribute должен быть между :min и :max килобайт.',
-        'string'  => 'длина :attribute должена быть между :min и :max символами.',
+        'string'  => 'длина :attribute должна быть между :min и :max символами.',
         'array'   => ':attribute должен содержать не менее :min и не более:max элементов.',
     ],
     'boolean'              => ':attribute поле может быть только true или false.',
