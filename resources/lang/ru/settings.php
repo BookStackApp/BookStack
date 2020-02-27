@@ -85,7 +85,7 @@ return [
     'roles' => 'Роли',
     'role_user_roles' => 'Роли пользователя',
     'role_create' => 'Добавить роль',
-    'role_create_success' => 'Роль упешно добавлена',
+    'role_create_success' => 'Роль уcпешно добавлена',
     'role_delete' => 'Удалить роль',
     'role_delete_confirm' => 'Это удалит роль с именем \':roleName\'.',
     'role_delete_users_assigned' => 'Эта роль назначена :userCount пользователям. Если вы хотите перенести их из этой роли, выберите новую роль ниже.',
