@@ -34,15 +34,15 @@ return [
 
     'register_thanks' => 'Tak for registreringen!',
     'register_confirm' => 'Check venligst din e-mail og klik deri på bekræftelses knappen for at tilgå :appName.',
-    'registrations_disabled' => 'Registrations are currently disabled',
-    'registration_email_domain_invalid' => 'That email domain does not have access to this application',
-    'register_success' => 'Thanks for signing up! You are now registered and signed in.',
+    'registrations_disabled' => 'Registrering er i øjeblikket deaktiveret',
+    'registration_email_domain_invalid' => 'E-Mail domænet har ikke adgang til denne applikation',
+    'register_success' => 'Tak for din registrering. Du er nu registeret og logget ind.',
 
 
     // Password Reset
-    'reset_password' => 'Reset Password',
-    'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
-    'reset_password_send_button' => 'Send Reset Link',
+    'reset_password' => 'Nulstil adgangskode',
+    'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
+    'reset_password_send_button' => 'Send link til nulstilling',
     'reset_password_sent_success' => 'A password reset link has been sent to :email.',
     'reset_password_success' => 'Your password has been successfully reset.',
     'email_reset_subject' => 'Reset your :appName password',
@@ -72,6 +72,6 @@ return [
     'user_invite_email_action' => 'Set Account Password',
     'user_invite_page_welcome' => 'Welcome to :appName!',
     'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
+    'user_invite_page_confirm_button' => 'Bekræft adgangskode',
     'user_invite_success' => 'Password set, you now have access to :appName!'
 ];
