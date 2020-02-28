@@ -62,14 +62,14 @@ return [
     'email_not_confirmed' => 'Адрес электронной почты не подтвержден',
     'email_not_confirmed_text' => 'Ваш email адрес все еще не подтвержден.',
     'email_not_confirmed_click_link' => 'Пожалуйста, нажмите на ссылку в письме, которое было отправлено при регистрации.',
-    'email_not_confirmed_resend' => 'Если вы не можете найти электронное письмо, вы можете снова отправить письмо с подтверждением по форме ниже.',
+    'email_not_confirmed_resend' => 'Если вы не можете найти электронное письмо, вы можете снова отправить его с подтверждением по форме ниже.',
     'email_not_confirmed_resend_button' => 'Переотправить письмо с подтверждением',
 
     // User Invite
     'user_invite_email_subject' => 'Вас приглашают присоединиться к :appName!',
     'user_invite_email_greeting' => 'Для вас создан аккаунт в :appName.',
     'user_invite_email_text' => 'Нажмите кнопку ниже, чтобы задать пароль и получить доступ:',
-    'user_invite_email_action' => 'Установить пароль аккаунту.',
+    'user_invite_email_action' => 'Установить пароль для аккаунта',
     'user_invite_page_welcome' => 'Добро пожаловать в :appName!',
     'user_invite_page_text' => 'Завершите настройку аккаунта, установите пароль для дальнейшего входа в :appName.',
     'user_invite_page_confirm_button' => 'Подтвердите пароль',
