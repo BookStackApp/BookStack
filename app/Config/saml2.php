@@ -139,6 +139,11 @@ return [
             //      )
             // ),
         ],
+
+        'security' => [
+            'logoutRequestSigned' => env('SAML2_SLS_SIGNED_REQUEST',false),
+            'logoutResponseSigned' => env('SAML2_SLS_SIGNED_RESPONSE',false),
+        ],
     ],
 
 ];
