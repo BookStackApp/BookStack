@@ -25,6 +25,11 @@
                         @include('form.text', ['name' => 'external_auth_id'])
                     </div>
                 @endif
+
+                <div class="form-group">
+                    <label for="name">{{ trans('settings.role_email_domains') }}</label>
+                    @include('form.text', ['name' => 'email_domains'])
+                </div>
             </div>
         </div>
 

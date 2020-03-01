@@ -14,7 +14,7 @@ use BookStack\Model;
 class Role extends Model
 {
 
-    protected $fillable = ['display_name', 'description', 'external_auth_id'];
+    protected $fillable = ['display_name', 'description', 'external_auth_id', 'email_domains'];
 
     /**
      * The roles that belong to the role.

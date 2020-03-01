@@ -97,6 +97,8 @@ return [
     'role_name' => 'Role Name',
     'role_desc' => 'Short Description of Role',
     'role_external_auth_id' => 'External Authentication IDs',
+    'role_email_domains' => 'Email Domains',
+    'role_email_domains_desc' => 'This is a comma separated list of email domains which should automatically be added to this role.',
     'role_system' => 'System Permissions',
     'role_manage_users' => 'Manage users',
     'role_manage_roles' => 'Manage roles & role permissions',
