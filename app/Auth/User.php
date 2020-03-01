@@ -137,15 +137,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $email = $this->email;
         $emailDomain = substr($email, strpos($email, '@') + 1);
         foreach ($roles as $role) {
-            var_dump($role);
             $emailDomains = explode(',', $role->email_domains);
             $roleId = $role->id;
-            var_dump($roleId);
             if (in_array($emailDomain, $emailDomains)) {
                 $this->roles()->attach($roleId);
-                Log::info("Added user to role.", ['user' => $this->email, 'role' => $role->name]);
-            } else {
-                Log::warning("Failed to add user to role.");
             }
         }
     }
