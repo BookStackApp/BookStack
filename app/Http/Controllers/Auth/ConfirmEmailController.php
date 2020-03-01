@@ -81,6 +81,8 @@ class ConfirmEmailController extends Controller
 
         $user = $this->userRepo->getById($userId);
         $user->email_confirmed = true;
+        $roles = $this->userRepo->getAllRoles();
+        $user->attachRolesEmailDomain($roles);
         $user->save();
 
         auth()->login($user);

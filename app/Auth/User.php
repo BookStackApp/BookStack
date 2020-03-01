@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Log;
 
 /**
  * Class User
@@ -124,6 +125,28 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $roleId = setting('registration-role');
         if ($roleId && $this->roles()->where('id', '=', $roleId)->count() === 0) {
             $this->roles()->attach($roleId);
+        }
+    }
+
+    /**
+     * Attach roles by email.
+     * @param collection $roles
+     */
+    public function attachRolesEmailDomain($roles): void
+    {
+        $email = $this->email;
+        $emailDomain = substr($email, strpos($email, '@') + 1);
+        foreach ($roles as $role) {
+            var_dump($role);
+            $emailDomains = explode(',', $role->email_domains);
+            $roleId = $role->id;
+            var_dump($roleId);
+            if (in_array($emailDomain, $emailDomains)) {
+                $this->roles()->attach($roleId);
+                Log::info("Added user to role.", ['user' => $this->email, 'role' => $role->name]);
+            } else {
+                Log::warning("Failed to add user to role.");
+            }
         }
     }
 

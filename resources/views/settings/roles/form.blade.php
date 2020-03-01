@@ -22,12 +22,14 @@
                 @if(config('auth.method') === 'ldap' || config('auth.method') === 'saml2')
                     <div class="form-group">
                         <label for="name">{{ trans('settings.role_external_auth_id') }}</label>
+                        <p class="small">{{ trans('settings.role_external_auth_desc') }}</p>
                         @include('form.text', ['name' => 'external_auth_id'])
                     </div>
                 @endif
 
                 <div class="form-group">
                     <label for="name">{{ trans('settings.role_email_domains') }}</label>
+                    <p class="small">{{ trans('settings.role_email_domains_desc') }}</p>
                     @include('form.text', ['name' => 'email_domains'])
                 </div>
             </div>
