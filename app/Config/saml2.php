@@ -79,8 +79,8 @@ return [
             'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
             // Usually x509cert and privateKey of the SP are provided by files placed at
             // the certs folder. But we can also provide them with the following parameters
-            'x509cert' => '',
-            'privateKey' => '',
+            'x509cert' => env('SAML2_SP_x509',''),
+            'privateKey' => env('SAML2_SP_PRIVATEKEY',''),
         ],
         // Identity Provider Data that we want connect with our SP
         'idp' => [
