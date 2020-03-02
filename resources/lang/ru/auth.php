@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Сброс пароля',
     'reset_password_send_instructions' => 'Введите свой email ниже, и вам будет отправлено письмо со ссылкой для сброса пароля.',
     'reset_password_send_button' => 'Отправить ссылку для сброса',
-    'reset_password_sent_success' => 'Ссылка для сброса была отправлена на :email.',
+    'reset_password_sent_success' => 'Ссылка для сброса пароля была отправлена на :email.',
     'reset_password_success' => 'Ваш пароль был успешно сброшен.',
     'email_reset_subject' => 'Сбросить ваш :appName пароль',
     'email_reset_text' => 'Вы получили это письмо, потому что запросили сброс пароля для вашей учетной записи.',
