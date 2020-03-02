@@ -69,7 +69,7 @@ return [
     'maint_image_cleanup' => 'Ryd op i billeder',
     'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
     'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
-    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_run' => 'Kør Oprydning',
     'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
     'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
     'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
