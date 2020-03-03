@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'Срок действия используемого токена авторизации истек',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Ошибка при отправке тестового email:',
+    'maintenance_test_email_failure' => 'Ошибка при отправке тестового письма:',
 
 ];
