@@ -155,7 +155,7 @@ class UserController extends Controller
             'password'         => 'min:6|required_with:password_confirm',
             'password-confirm' => 'same:password|required_with:password',
             'setting'          => 'array',
-            'profile_image'    => $this->imageRepo->getImageValidationRules(),
+            'profile_image'    => $this->getImageValidationRules(),
         ]);
 
         $user = $this->userRepo->getById($id);

@@ -44,7 +44,7 @@ class SettingController extends Controller
         $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
-            'app_logo' => $this->imageRepo->getImageValidationRules(),
+            'app_logo' => $this->getImageValidationRules(),
         ]);
 
         // Cycles through posted settings and update them
