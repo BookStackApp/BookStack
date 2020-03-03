@@ -146,7 +146,7 @@ class BookshelfController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => $this->imageRepo->getImageValidationRules(),
+            'image' => $this->getImageValidationRules(),
         ]);
 
 
