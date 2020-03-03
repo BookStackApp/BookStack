@@ -191,7 +191,7 @@ class UserController extends Controller
         }
 
         // Save profile image if in request
-        if ($request->has('profile_image')) {
+        if ($request->hasFile('profile_image')) {
             $imageUpload = $request->file('profile_image');
             $this->imageRepo->destroyImage($user->avatar);
             $image = $this->imageRepo->saveNew($imageUpload, 'user', $user->id);
