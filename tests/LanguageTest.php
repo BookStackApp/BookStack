@@ -19,7 +19,7 @@ class LanguageTest extends TestCase
         $configLocales = config('app.locales');
         sort($configLocales);
         sort($this->langs);
-        $this->assertTrue(implode(':', $this->langs) === implode(':', $configLocales), 'app.locales configuration variable matches found lang files');
+        $this->assertEquals(implode(':', $configLocales), implode(':', $this->langs), 'app.locales configuration variable does not match those found in lang files');
     }
 
     public function test_correct_language_if_not_logged_in()
