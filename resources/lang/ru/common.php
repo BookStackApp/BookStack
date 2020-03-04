@@ -38,11 +38,11 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'На весь экран',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
-    'sort_direction_toggle' => 'Переключить направления сортировки',
+    'sort_direction_toggle' => 'Переключить направление сортировки',
     'sort_ascending' => 'По возрастанию',
     'sort_descending' => 'По убыванию',
     'sort_name' => 'По имени',

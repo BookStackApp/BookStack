@@ -18,7 +18,7 @@ return [
 
     // Chapters
     'chapter_create'              => 'создал главу',
-    'chapter_create_notification' => 'глава успешно создана',
+    'chapter_create_notification' => 'Глава успешно создана',
     'chapter_update'              => 'обновил главу',
     'chapter_update_notification' => 'Глава успешно обновлена',
     'chapter_delete'              => 'удалил главу',

@@ -18,7 +18,7 @@ return [
     'ldap_fail_authed' => '識別名, パスワードを用いたLDAPアクセスに失敗しました',
     'ldap_extension_not_installed' => 'LDAP PHP extensionがインストールされていません',
     'ldap_cannot_connect' => 'LDAPサーバに接続できませんでした',
-    'saml_already_logged_in' => 'Already logged in',
+    'saml_already_logged_in' => '既にログインしています',
     'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
@@ -36,7 +36,7 @@ return [
     'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
-    'path_not_writable' => 'ファイルパス :filePath へアップロードできませんでした。サーバ上での書き込みを許可してください。',
+    'path_not_writable' => 'ファイルパス :filePath へアップロードできませんでした。サーバ上での書き込みが許可されているか確認してください。',
     'cannot_get_image_from_url' => ':url から画像を取得できませんでした。',
     'cannot_create_thumbs' => 'このサーバはサムネイルを作成できません。GD PHP extensionがインストールされていることを確認してください。',
     'server_upload_limit' => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
@@ -47,7 +47,7 @@ return [
 
     // Attachments
     'attachment_page_mismatch' => '添付を更新するページが一致しません',
-    'attachment_not_found' => 'Attachment not found',
+    'attachment_not_found' => '添付ファイルが見つかりません。',
 
     // Pages
     'page_draft_autosave_fail' => '下書きの保存に失敗しました。インターネットへ接続してください。',
@@ -75,7 +75,7 @@ return [
 
     // Comments
     'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
+    'cannot_add_comment_to_draft' => '下書きにコメントは追加できません。',
     'comment_add' => 'An error occurred while adding / updating the comment.',
     'comment_delete' => 'An error occurred while deleting the comment.',
     'empty_comment' => 'Cannot add an empty comment.',
@@ -94,6 +94,9 @@ return [
     'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_token_expired' => '認証トークンが期限切れです。',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];

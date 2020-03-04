@@ -96,4 +96,7 @@ return [
     'api_user_no_api_permission' => '使用过的 API 令牌的所有者没有进行API 调用的权限',
     'api_user_token_expired' => '所使用的身份令牌已过期',
 
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => '发送测试电子邮件时出现错误：',
+
 ];

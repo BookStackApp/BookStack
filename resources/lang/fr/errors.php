@@ -92,8 +92,11 @@ return [
     'api_no_authorization_found' => 'Aucun jeton d\'autorisation trouvé pour la demande',
     'api_bad_authorization_format' => 'Un jeton d\'autorisation a été trouvé pour la requête, mais le format semble incorrect',
     'api_user_token_not_found' => 'Aucun jeton API correspondant n\'a été trouvé pour le jeton d\'autorisation fourni',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_incorrect_token_secret' => 'Le secret fourni pour le jeton d\'API utilisé est incorrect',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
     'api_user_token_expired' => 'Le jeton d\'autorisation utilisé a expiré',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];

@@ -19,10 +19,10 @@ return [
     'description' => 'Beskrivelse',
     'role' => 'Rolle',
     'cover_image' => 'Coverbillede',
-    'cover_image_description' => 'This image should be approx 440x250px.',
+    'cover_image_description' => 'Dette billede skal være omtrent 440x250px.',
     
     // Actions
-    'actions' => 'Actions',
+    'actions' => 'Handlinger',
     'view' => 'Vis',
     'view_all' => 'Vis alle',
     'create' => 'Opret',
@@ -42,36 +42,36 @@ return [
 
     // Sort Options
     'sort_options' => 'Sorteringsindstillinger',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_direction_toggle' => 'Sorteringsretning',
+    'sort_ascending' => 'Sorter stigende',
+    'sort_descending' => 'Sorter faldende',
+    'sort_name' => 'Navn',
+    'sort_created_at' => 'Oprettelsesdato',
+    'sort_updated_at' => 'Opdateringsdato',
 
     // Misc
-    'deleted_user' => 'Deleted User',
-    'no_activity' => 'No activity to show',
-    'no_items' => 'No items available',
-    'back_to_top' => 'Back to top',
-    'toggle_details' => 'Toggle Details',
-    'toggle_thumbnails' => 'Toggle Thumbnails',
-    'details' => 'Details',
-    'grid_view' => 'Grid View',
-    'list_view' => 'List View',
-    'default' => 'Default',
-    'breadcrumb' => 'Breadcrumb',
+    'deleted_user' => 'Slettet bruger',
+    'no_activity' => 'Ingen aktivitet at vise',
+    'no_items' => 'Intet indhold tilgængeligt',
+    'back_to_top' => 'Tilbage til toppen',
+    'toggle_details' => 'Vis/skjul detaljer',
+    'toggle_thumbnails' => 'Vis/skjul miniaturer',
+    'details' => 'Detaljer',
+    'grid_view' => 'Gittervisning',
+    'list_view' => 'Listevisning',
+    'default' => 'Standard',
+    'breadcrumb' => 'Brødkrumme',
 
     // Header
-    'profile_menu' => 'Profile Menu',
-    'view_profile' => 'View Profile',
-    'edit_profile' => 'Edit Profile',
+    'profile_menu' => 'Profilmenu',
+    'view_profile' => 'Vis profil',
+    'edit_profile' => 'Redigér Profil',
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_content' => 'Indhold',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_action_help' => 'Hvis du har problemer med at trykke på ":actionText" knappen, prøv at kopiere og indsætte linket herunder ind i din webbrowser:',
+    'email_rights' => 'Alle rettigheder forbeholdes',
 ];

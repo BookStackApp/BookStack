@@ -96,4 +96,7 @@ return [
     'api_user_no_api_permission' => 'A használt API vezérjel tulajdonosának nincs jogosultsága API hívások végrehajtásához',
     'api_user_token_expired' => 'A használt hitelesítési vezérjel lejárt',
 
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Hiba történt egy teszt email küldésekor:',
+
 ];
