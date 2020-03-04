@@ -73,7 +73,7 @@ return [
     ],
     'mimes'                => ':attribute должен быть файлом с типом: :values.',
     'min'                  => [
-        'numeric' => ':attribute должен быть хотя бы :min.',
+        'numeric' => 'Поле :attribute должно быть не менее :min.',
         'file'    => ':attribute должен быть минимум :min килобайт.',
         'string'  => ':attribute должен быть минимум :min символов.',
         'array'   => ':attribute должен содержать хотя бы :min элементов.',
@@ -82,7 +82,7 @@ return [
     'not_in'               => 'Выбранный :attribute некорректен.',
     'not_regex'            => 'Формат :attribute некорректен.',
     'numeric'              => ':attribute должен быть числом.',
-    'regex'                => ':attribute неправильный формат.',
+    'regex'                => 'Формат :attribute некорректен.',
     'required'             => ':attribute обязательное поле.',
     'required_if'          => ':attribute обязательное поле когда :other со значением :value.',
     'required_with'        => ':attribute обязательное поле когда :values установлено.',
