@@ -11,7 +11,7 @@ class Localization
      * Array of right-to-left locales
      * @var array
      */
-    protected $rtlLocales = ['ar'];
+    protected $rtlLocales = ['ar', 'he'];
 
     /**
      * Map of BookStack locale names to best-estimate system locale names.
@@ -26,6 +26,7 @@ class Localization
         'es' => 'es_ES',
         'es_AR' => 'es_AR',
         'fr' => 'fr_FR',
+        'he' => 'he_IL',
         'it' => 'it_IT',
         'ja' => 'ja',
         'ko' => 'ko_KR',
