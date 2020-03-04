@@ -34,14 +34,14 @@ return [
     'filled'               => ':attribute ist erforderlich.',
     'gt'                   => [
         'numeric' => ':attribute muss größer als :value sein.',
-        'file'    => ':attribute muss mindestens :value Kilobytes groß sein.',
+        'file'    => ':attribute muss mindestens größer als :value Kilobytes sein.',
         'string'  => ':attribute muss mehr als :value Zeichen haben.',
-        'array'   => ':attribute muss mindestens :value Elemente haben.',
+        'array'   => ':attribute muss mehr als :value Elemente haben.',
     ],
     'gte'                  => [
         'numeric' => ':attribute muss größer-gleich :value sein.',
-        'file'    => ':attribute muss mindestens :value Kilobytes groß sein.',
-        'string'  => ':attribute muss mindestens :value Zeichen enthalten.',
+        'file'    => ':attribute muss größer-gleich :value Kilobytes sein.',
+        'string'  => ':attribute muss mindestens :value Zeichen haben.',
         'array'   => ':attribute muss :value Elemente oder mehr haben.',
     ],
     'exists'               => ':attribute ist ungültig.',
@@ -52,9 +52,9 @@ return [
     'ip'                   => ':attribute muss eine valide IP-Adresse sein.',
     'ipv4'                 => ':attribute muss eine gültige IPv4 Adresse sein.',
     'ipv6'                 => ':attribute muss eine gültige IPv6-Adresse sein.',
-    'json'                 => 'Das Attribut muss eine gültige JSON-Zeichenfolge sein.',
+    'json'                 => ':attribute muss ein gültiger JSON-String sein.',
     'lt'                   => [
-        'numeric' => ':attribute muss kleiner sein :value sein.',
+        'numeric' => ':attribute muss kleiner als :value sein.',
         'file'    => ':attribute muss kleiner als :value Kilobytes sein.',
         'string'  => ':attribute muss weniger als :value Zeichen haben.',
         'array'   => ':attribute muss weniger als :value Elemente haben.',
@@ -62,7 +62,7 @@ return [
     'lte'                  => [
         'numeric' => ':attribute muss kleiner oder gleich :value sein.',
         'file'    => ':attribute muss kleiner oder gleich :value Kilobytes sein.',
-        'string'  => ':attribute darf höchstens :value Zeichen besitzen.',
+        'string'  => ':attribute muss :value oder weniger Zeichen haben.',
         'array'   => ':attribute darf höchstens :value Elemente haben.',
     ],
     'max'                  => [
@@ -80,7 +80,7 @@ return [
     ],
     'no_double_extension'  => ':attribute darf nur eine gültige Dateiendung',
     'not_in'               => ':attribute ist ungültig.',
-    'not_regex'            => ':attribute ist kein valides Format.',
+    'not_regex'            => ':attribute ist kein gültiges Format.',
     'numeric'              => ':attribute muss eine Zahl sein.',
     'regex'                => ':attribute ist in einem ungültigen Format.',
     'required'             => ':attribute ist erforderlich.',

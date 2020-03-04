@@ -96,4 +96,7 @@ return [
     'api_user_no_api_permission' => 'O proprietário do token de API utilizado não tem permissão para fazer requisições de API',
     'api_user_token_expired' => 'O token de autenticação expirou',
 
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+
 ];
