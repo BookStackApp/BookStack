@@ -100,7 +100,7 @@ return [
     // Books
     'book' => 'Книга',
     'books' => 'Книги',
-    'x_books' => ':count книга|:count книг',
+    'x_books' => ':count книга|:count книги|:count книг',
     'books_empty' => 'Нет созданных книг',
     'books_popular' => 'Популярные книги',
     'books_recent' => 'Недавние книги',
