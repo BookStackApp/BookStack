@@ -27,6 +27,7 @@
                             <a @click="updateLanguage('MarkDown')">MarkDown</a>
                             <a @click="updateLanguage('Nginx')">Nginx</a>
                             <a @click="updateLanguage('PASCAL')">Pascal</a>
+                            <a @click="updateLanguage('Perl')">Perl</a>
                             <a @click="updateLanguage('PHP')">PHP</a>
                             <a @click="updateLanguage('Powershell')">Powershell</a>
                             <a @click="updateLanguage('Python')">Python</a>
