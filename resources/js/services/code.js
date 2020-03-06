@@ -15,6 +15,7 @@ import 'codemirror/mode/lua/lua';
 import 'codemirror/mode/markdown/markdown';
 import 'codemirror/mode/mllike/mllike';
 import 'codemirror/mode/nginx/nginx';
+import 'codemirror/mode/perl/perl';
 import 'codemirror/mode/pascal/pascal';
 import 'codemirror/mode/php/php';
 import 'codemirror/mode/powershell/powershell';
@@ -62,6 +63,8 @@ const modeMap = {
     markdown: 'markdown',
     ml: 'mllike',
     nginx: 'nginx',
+    perl: 'perl',
+    pl: 'perl',
     powershell: 'powershell',
     properties: 'properties',
     ocaml: 'mllike',
