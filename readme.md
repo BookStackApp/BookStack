@@ -13,6 +13,8 @@ A platform for storing and organising information and documentation. Details for
 * [Demo Instance](https://demo.bookstackapp.com)
     * [Admin Login](https://demo.bookstackapp.com/login?email=admin@example.com&password=password)
 * [BookStack Blog](https://www.bookstackapp.com/blog)
+* [Issue List](https://github.com/BookStackApp/BookStack/issues)
+* [Discord Chat](https://discord.gg/ztkBqR2)
 
 ## 📚 Project Definition
 
