@@ -16,6 +16,7 @@
                             <a @click="updateLanguage('C')">C</a>
                             <a @click="updateLanguage('C++')">C++</a>
                             <a @click="updateLanguage('C#')">C#</a>
+                            <a @click="updateLanguage('Fortran')">Fortran</a>
                             <a @click="updateLanguage('Go')">Go</a>
                             <a @click="updateLanguage('HTML')">HTML</a>
                             <a @click="updateLanguage('INI')">INI</a>
