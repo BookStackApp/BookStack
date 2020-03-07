@@ -123,7 +123,7 @@ return [
     'books_empty_create_page' => 'Создать новую страницу',
     'books_empty_sort_current_book' => 'Сортировка текущей книги',
     'books_empty_add_chapter' => 'Добавить главу',
-    'books_permissions_active' => 'Действующие разрешения на книгу',
+    'books_permissions_active' => 'Действующие разрешения книги',
     'books_search_this' => 'Поиск в этой книге',
     'books_navigation' => 'Навигация по книге',
     'books_sort' => 'Сортировка содержимого книги',
