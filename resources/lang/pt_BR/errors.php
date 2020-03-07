@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'O token de autenticação expirou',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Erro encontrado ao enviar um e-mail de teste:',
 
 ];
