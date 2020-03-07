@@ -101,7 +101,7 @@ return [
     'role_manage_users' => 'Управление пользователями',
     'role_manage_roles' => 'Управление ролями и правами на роли',
     'role_manage_entity_permissions' => 'Управление правами на все книги, главы и страницы',
-    'role_manage_own_entity_permissions' => 'Управление разрешениями для собственных книг, разделов и страниц',
+    'role_manage_own_entity_permissions' => 'Управление разрешениями для собственных книг, глав и страниц',
     'role_manage_page_templates' => 'Управление шаблонами страниц',
     'role_access_api' => 'Доступ к системному API',
     'role_manage_settings' => 'Управление настройками приложения',
