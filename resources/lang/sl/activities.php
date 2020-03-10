@@ -32,17 +32,17 @@ return [
     'book_update_notification'    => 'Uspešno posodobljeno',
     'book_delete'                 => 'izbrisana knjiga',
     'book_delete_notification'    => 'Uspešno izbrisano',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book Successfully Re-sorted',
+    'book_sort'                   => 'razvrščena knjiga',
+    'book_sort_notification'      => 'Knjiga Uspešno Razvrščena',
 
     // Bookshelves
-    'bookshelf_create'            => 'created Bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+    'bookshelf_create'            => 'knjižna polica izdelana',
+    'bookshelf_create_notification'    => 'Knjižna Polica Izdelana',
+    'bookshelf_update'                 => 'knjižna polica posodobljena',
+    'bookshelf_update_notification'    => 'Knjižna Polica Uspešno Posodobljena',
+    'bookshelf_delete'                 => 'knjižna polica izbrisana',
+    'bookshelf_delete_notification'    => 'Knjižna Polica Uspešno Izbrisana',
 
     // Other
-    'commented_on'                => 'commented on',
+    'commented_on'                => 'komentar na',
 ];
