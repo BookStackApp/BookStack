@@ -123,6 +123,11 @@ class SocialController extends Controller
             'password' => Str::random(32)
         ];
 
+        // Take name from email address if empty
+        if (!$userData['name']) {
+            $userData['name'] = explode('@', $userData['email'])[0];
+        }
+
         $user = $this->registrationService->registerUser($userData, $socialAccount, $emailVerified);
         auth()->login($user);
 
