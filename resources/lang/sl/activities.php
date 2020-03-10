@@ -30,8 +30,8 @@ return [
     'book_create_notification'    => 'Knjiga Uspešno Usvarjena',
     'book_update'                 => 'knjiga posodobljena',
     'book_update_notification'    => 'Uspešno posodobljeno',
-    'book_delete'                 => 'deleted book',
-    'book_delete_notification'    => 'Book Successfully Deleted',
+    'book_delete'                 => 'izbrisana knjiga',
+    'book_delete_notification'    => 'Uspešno izbrisano',
     'book_sort'                   => 'sorted book',
     'book_sort_notification'      => 'Book Successfully Re-sorted',
 
