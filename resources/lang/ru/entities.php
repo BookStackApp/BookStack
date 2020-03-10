@@ -44,7 +44,7 @@ return [
     'search_results' => 'Результаты поиска',
     'search_total_results_found' => 'Найден :count результат|Найдено :count результата|Найдено :count результатов',
     'search_clear' => 'Очистить поиск',
-    'search_no_pages' => 'Нет страниц, соответствующих этому поиску.',
+    'search_no_pages' => 'Нет страниц, соответствующих этому поиску',
     'search_for_term' => 'Искать :term',
     'search_more' => 'Еще результаты',
     'search_filters' => 'Фильтры поиска',
