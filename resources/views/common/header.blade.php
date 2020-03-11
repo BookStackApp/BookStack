@@ -25,7 +25,7 @@
         </div>
 
         <div class="text-right">
-            <nav class="header-links" >
+            <nav class="header-links">
                 <div class="links text-center">
                     @if (hasAppAccess())
                         <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
@@ -43,9 +43,9 @@
 
                     @if(!signedInUser())
                         @if(setting('registration-enabled') && config('auth.method') === 'standard')
-                            <a href="{{ url('/register') }}">@icon('new-user') {{ trans('auth.sign_up') }}</a>
+                            <a href="{{ url('/register') }}">@icon('new-user'){{ trans('auth.sign_up') }}</a>
                         @endif
-                        <a href="{{ url('/login') }}">@icon('login') {{ trans('auth.log_in') }}</a>
+                        <a href="{{ url('/login') }}">@icon('login'){{ trans('auth.log_in') }}</a>
                     @endif
                 </div>
                 @if(signedInUser())
