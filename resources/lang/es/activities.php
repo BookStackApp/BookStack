@@ -37,11 +37,11 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'estante creado',
-    'bookshelf_create_notification'    => 'Estante creado exitosamente',
+    'bookshelf_create_notification'    => 'Estante creado correctamente',
     'bookshelf_update'                 => 'estante actualizado',
-    'bookshelf_update_notification'    => 'Estante actualizado exitosamente',
-    'bookshelf_delete'                 => 'estante borrado',
-    'bookshelf_delete_notification'    => 'Estante borrado exitosamente',
+    'bookshelf_update_notification'    => 'Estante actualizado correctamente',
+    'bookshelf_delete'                 => 'estante eliminado',
+    'bookshelf_delete_notification'    => 'Estante eliminado correctamente',
 
     // Other
     'commented_on'                => 'comentada el',
