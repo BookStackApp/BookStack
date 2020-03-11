@@ -22,11 +22,11 @@ return [
     'image_preview' => 'Predogled slike',
     'image_upload_success' => 'Slika uspešno naložena',
     'image_update_success' => 'Podatki slike uspešno posodobljeni',
-    'image_delete_success' => 'Image successfully deleted',
-    'image_upload_remove' => 'Remove',
+    'image_delete_success' => 'Uspešno izbrisano',
+    'image_upload_remove' => 'Odstrani',
 
     // Code Editor
-    'code_editor' => 'Edit Code',
+    'code_editor' => 'Uredi kodo',
     'code_language' => 'Code Language',
     'code_content' => 'Code Content',
     'code_save' => 'Save Code',
