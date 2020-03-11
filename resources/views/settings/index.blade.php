@@ -141,10 +141,12 @@
                         <div setting-app-color-picker class="text-m-right">
                             <input type="color" data-default="#206ea7" data-current="{{ setting('app-color') }}" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
-                            <br>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-app-color-picker-default>{{ trans('common.default') }}</button>
-                            <span class="sep">|</span>
-                            <button type="button" class="text-button text-muted mt-s mx-s" setting-app-color-picker-reset>{{ trans('common.reset') }}</button>
+                            <div class="pr-s">
+                                <button type="button" class="text-button text-muted mt-s" setting-app-color-picker-default>{{ trans('common.default') }}</button>
+                                <span class="sep">|</span>
+                                <button type="button" class="text-button text-muted mt-s" setting-app-color-picker-reset>{{ trans('common.reset') }}</button>
+                            </div>
+
                         </div>
                     </div>
 
