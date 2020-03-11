@@ -42,36 +42,36 @@ return [
 
     // Sort Options
     'sort_options' => 'Možnosti razvrščanja',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_direction_toggle' => 'Preklopi smer razvrščanja',
+    'sort_ascending' => 'Razvrsti naraščajoče',
+    'sort_descending' => 'Razvrsti padajoče',
+    'sort_name' => 'Ime',
+    'sort_created_at' => 'Datum nastanka',
+    'sort_updated_at' => 'Datum posodobitve',
 
     // Misc
-    'deleted_user' => 'Deleted User',
-    'no_activity' => 'No activity to show',
-    'no_items' => 'No items available',
-    'back_to_top' => 'Back to top',
-    'toggle_details' => 'Toggle Details',
-    'toggle_thumbnails' => 'Toggle Thumbnails',
-    'details' => 'Details',
-    'grid_view' => 'Grid View',
-    'list_view' => 'List View',
-    'default' => 'Default',
-    'breadcrumb' => 'Breadcrumb',
+    'deleted_user' => 'Izbrisan uporabnik',
+    'no_activity' => 'Ni aktivnosti za prikaz',
+    'no_items' => 'Ni na voljo nobenih elementov',
+    'back_to_top' => 'Nazaj na vrh',
+    'toggle_details' => 'Preklopi podrobnosti',
+    'toggle_thumbnails' => 'Preklopi sličice',
+    'details' => 'Podrobnosti',
+    'grid_view' => 'Mrežni pogled',
+    'list_view' => 'Seznam',
+    'default' => 'Privzeto',
+    'breadcrumb' => 'Pot',
 
     // Header
-    'profile_menu' => 'Profile Menu',
-    'view_profile' => 'View Profile',
-    'edit_profile' => 'Edit Profile',
+    'profile_menu' => 'Meni profila',
+    'view_profile' => 'Ogled profila',
+    'edit_profile' => 'Uredi profil',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => 'Informacije',
+    'tab_content' => 'Vsebina',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_action_help' => 'Če imate težave s klikom na ":actionText" gumb, kopirajte im prilepite spodnjo povezavo v vaš brskalnik:',
+    'email_rights' => 'Vse pravice pridržane',
 ];
