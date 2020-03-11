@@ -6,11 +6,11 @@
 return [
 
     // Shared
-    'recently_created' => 'Recently Created',
-    'recently_created_pages' => 'Recently Created Pages',
-    'recently_updated_pages' => 'Recently Updated Pages',
-    'recently_created_chapters' => 'Recently Created Chapters',
-    'recently_created_books' => 'Recently Created Books',
+    'recently_created' => 'Nazadnje objavljeno',
+    'recently_created_pages' => 'Nazadnje objavljene strani',
+    'recently_updated_pages' => 'Nedavno posodobljene strani',
+    'recently_created_chapters' => 'Nazadnje objavljena poglavja',
+    'recently_created_books' => 'Nazadnje objavljene knjige',
     'recently_created_shelves' => 'Recently Created Shelves',
     'recently_update' => 'Recently Updated',
     'recently_viewed' => 'Recently Viewed',
