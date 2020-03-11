@@ -27,7 +27,7 @@ return [
 
     // Code Editor
     'code_editor' => 'Uredi kodo',
-    'code_language' => 'Code Language',
-    'code_content' => 'Code Content',
-    'code_save' => 'Save Code',
+    'code_language' => 'Koda jezika',
+    'code_content' => 'Koda vsebine',
+    'code_save' => 'Shrani kodo',
 ];
