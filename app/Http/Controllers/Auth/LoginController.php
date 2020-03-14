@@ -76,8 +76,9 @@ class LoginController extends Controller
             ]);
         }
 
-        if ($request->has('intended')) {
-            redirect()->setIntendedUrl($request->get('intended'));
+        $previous = url()->previous('');
+        if (setting('app-public') && $previous && $previous !== url('/login')) {
+            redirect()->setIntendedUrl($previous);
         }
 
         return view('auth.login', [

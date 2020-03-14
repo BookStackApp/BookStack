@@ -1,16 +1,25 @@
 <?php namespace Tests;
 
+use Auth;
+use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\RolePermission;
+use BookStack\Auth\Role;
+use BookStack\Auth\User;
+use BookStack\Entities\Book;
+use BookStack\Entities\Chapter;
+use BookStack\Entities\Page;
+
 class PublicActionTest extends BrowserKitTest
 {
 
     public function test_app_not_public()
     {
         $this->setSettings(['app-public' => 'false']);
-        $book = \BookStack\Entities\Book::orderBy('name', 'asc')->first();
+        $book = Book::orderBy('name', 'asc')->first();
         $this->visit('/books')->seePageIs('/login');
         $this->visit($book->getUrl())->seePageIs('/login');
 
-        $page = \BookStack\Entities\Page::first();
+        $page = Page::first();
         $this->visit($page->getUrl())->seePageIs('/login');
     }
 
@@ -35,7 +44,7 @@ class PublicActionTest extends BrowserKitTest
     public function test_books_viewable()
     {
         $this->setSettings(['app-public' => 'true']);
-        $books = \BookStack\Entities\Book::orderBy('name', 'asc')->take(10)->get();
+        $books = Book::orderBy('name', 'asc')->take(10)->get();
         $bookToVisit = $books[1];
 
         // Check books index page is showing
@@ -52,7 +61,7 @@ class PublicActionTest extends BrowserKitTest
     public function test_chapters_viewable()
     {
         $this->setSettings(['app-public' => 'true']);
-        $chapterToVisit = \BookStack\Entities\Chapter::first();
+        $chapterToVisit = Chapter::first();
         $pageToVisit = $chapterToVisit->pages()->first();
 
         // Check chapters index page is showing
@@ -70,15 +79,15 @@ class PublicActionTest extends BrowserKitTest
     public function test_public_page_creation()
     {
         $this->setSettings(['app-public' => 'true']);
-        $publicRole = \BookStack\Auth\Role::getSystemRole('public');
+        $publicRole = Role::getSystemRole('public');
         // Grant all permissions to public
         $publicRole->permissions()->detach();
-        foreach (\BookStack\Auth\Permissions\RolePermission::all() as $perm) {
+        foreach (RolePermission::all() as $perm) {
             $publicRole->attachPermission($perm);
         }
-        $this->app[\BookStack\Auth\Permissions\PermissionService::class]->buildJointPermissionForRole($publicRole);
+        $this->app[PermissionService::class]->buildJointPermissionForRole($publicRole);
 
-        $chapter = \BookStack\Entities\Chapter::first();
+        $chapter = Chapter::first();
         $this->visit($chapter->book->getUrl());
         $this->visit($chapter->getUrl())
             ->click('New Page')
@@ -89,7 +98,7 @@ class PublicActionTest extends BrowserKitTest
             'name' => 'My guest page'
         ])->seePageIs($chapter->book->getUrl('/page/my-guest-page/edit'));
 
-        $user = \BookStack\Auth\User::getDefault();
+        $user = User::getDefault();
         $this->seeInDatabase('pages', [
             'name' => 'My guest page',
             'chapter_id' => $chapter->id,
@@ -100,9 +109,9 @@ class PublicActionTest extends BrowserKitTest
 
     public function test_content_not_listed_on_404_for_public_users()
     {
-        $page = \BookStack\Entities\Page::first();
+        $page = Page::first();
         $this->asAdmin()->visit($page->getUrl());
-        \Auth::logout();
+        Auth::logout();
         view()->share('pageTitle', '');
         $this->forceVisit('/cats/dogs/hippos');
         $this->dontSee($page->name);
@@ -139,4 +148,36 @@ class PublicActionTest extends BrowserKitTest
         $this->seeText("User-agent: *\nDisallow: /");
     }
 
+    public function test_public_view_then_login_redirects_to_previous_content()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $book = Book::query()->first();
+        $this->visit($book->getUrl())
+            ->see($book->name)
+            ->visit('/login')
+            ->type('admin@admin.com', '#email')
+            ->type('password', '#password')
+            ->press('Log In')
+            ->seePageUrlIs($book->getUrl());
+    }
+
+    public function test_access_hidden_content_then_login_redirects_to_intended_content()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $book = Book::query()->first();
+        $this->setEntityRestrictions($book);
+
+        try {
+            $this->visit($book->getUrl());
+        } catch (\Exception $exception) {}
+
+        $this->see('Book not found')
+            ->dontSee($book->name)
+            ->visit('/login')
+            ->type('admin@admin.com', '#email')
+            ->type('password', '#password')
+            ->press('Log In')
+            ->seePageUrlIs($book->getUrl())
+            ->see($book->name);
+    }
 }
