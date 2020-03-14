@@ -44,7 +44,7 @@ class SettingController extends Controller
         $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
-            'app_logo' => $this->imageRepo->getImageValidationRules(),
+            'app_logo' => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         // Cycles through posted settings and update them
@@ -57,7 +57,7 @@ class SettingController extends Controller
         }
 
         // Update logo image if set
-        if ($request->has('app_logo')) {
+        if ($request->hasFile('app_logo')) {
             $logoFile = $request->file('app_logo');
             $this->imageRepo->destroyByType('system');
             $image = $this->imageRepo->saveNew($logoFile, 'system', 0, null, 86);
