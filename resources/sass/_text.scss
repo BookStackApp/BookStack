@@ -295,6 +295,13 @@ li.checkbox-item, li.task-list-item {
   }
 }
 
+li > ol, li > ul {
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  padding-block-end: 0px;
+  padding-block-start: 0px;
+}
+
 /*
  * Generic text styling classes
  */
