@@ -51,7 +51,7 @@ All development on BookStack is currently done on the master branch. When it's t
 
 * [Node.js](https://nodejs.org/en/) v10.0+
 
-SASS is used to help the CSS development and the JavaScript is run through babel to allow for writing ES6 code. This is done using webpack. To run the build task you can use the following commands:
+This project uses SASS for CSS development and this is built, along with the JavaScript, using webpack. The below npm commands can be used to install the dependencies & run the build tasks:
 
 ``` bash
 # Install NPM Dependencies
@@ -80,7 +80,7 @@ Once done you can run `php vendor/bin/phpunit` in the application root directory
 
 ### 📜 Code Standards
 
-PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
+PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code. Please don't auto-fix code unless it's related to changes you've made otherwise you'll likely cause git conflicts.
 
 ### 🐋 Development using Docker
 
@@ -120,7 +120,9 @@ Please note, translations in BookStack are provided to the "Crowdin Global Trans
 
 Feel free to create issues to request new features or to report bugs & problems. Just please follow the template given when creating the issue.
 
-Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge. Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
+Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge. Just because a feature request exists, or is tagged, does not mean that feature would be accepted into the core project.
+
+Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
 The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
 
