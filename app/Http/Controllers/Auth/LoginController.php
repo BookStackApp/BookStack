@@ -76,6 +76,10 @@ class LoginController extends Controller
             ]);
         }
 
+        if ($request->has('intended')) {
+            redirect()->setIntendedUrl($request->get('intended'));
+        }
+
         return view('auth.login', [
           'socialDrivers' => $socialDrivers,
           'authMethod' => $authMethod,
