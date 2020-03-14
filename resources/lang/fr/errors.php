@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Page non trouvée',
     'sorry_page_not_found' => 'Désolé, cette page n\'a pas pu être trouvée.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Retour à l\'accueil',
     'error_occurred' => 'Une erreur est survenue',
     'app_down' => ':appName n\'est pas en service pour le moment',
@@ -93,10 +94,10 @@ return [
     'api_bad_authorization_format' => 'Un jeton d\'autorisation a été trouvé pour la requête, mais le format semble incorrect',
     'api_user_token_not_found' => 'Aucun jeton API correspondant n\'a été trouvé pour le jeton d\'autorisation fourni',
     'api_incorrect_token_secret' => 'Le secret fourni pour le jeton d\'API utilisé est incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_no_api_permission' => 'Le propriétaire du jeton API utilisé n\'a pas la permission de passer des appels API',
     'api_user_token_expired' => 'Le jeton d\'autorisation utilisé a expiré',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Erreur émise lors de l\'envoi d\'un e-mail de test :',
 
 ];

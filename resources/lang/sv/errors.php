@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Sidan hittades inte',
     'sorry_page_not_found' => 'Tyvärr gick det inte att hitta sidan du söker.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Återvänd till startsidan',
     'error_occurred' => 'Ett fel inträffade',
     'app_down' => ':appName är nere just nu',
