@@ -85,7 +85,7 @@ class BookshelfController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => $this->getImageValidationRules(),
+            'image' => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
@@ -146,7 +146,7 @@ class BookshelfController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => $this->imageRepo->getImageValidationRules(),
+            'image' => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
 

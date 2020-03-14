@@ -155,7 +155,7 @@ class UserController extends Controller
             'password'         => 'min:6|required_with:password_confirm',
             'password-confirm' => 'same:password|required_with:password',
             'setting'          => 'array',
-            'profile_image'    => $this->imageRepo->getImageValidationRules(),
+            'profile_image'    => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $user = $this->userRepo->getById($id);
@@ -191,7 +191,7 @@ class UserController extends Controller
         }
 
         // Save profile image if in request
-        if ($request->has('profile_image')) {
+        if ($request->hasFile('profile_image')) {
             $imageUpload = $request->file('profile_image');
             $this->imageRepo->destroyImage($user->avatar);
             $image = $this->imageRepo->saveNew($imageUpload, 'user', $user->id);
