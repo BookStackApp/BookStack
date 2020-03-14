@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
     'sorry_page_not_found' => 'Sorry, de pagina die je zocht is niet beschikbaar.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Terug naar home',
     'error_occurred' => 'Er Ging Iets Fout',
     'app_down' => ':appName is nu niet beschikbaar',

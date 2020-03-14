@@ -6,15 +6,15 @@
  */
 return [
 
-    'failed' => 'Las credenciales no concuerdan con nuestros registros.',
-    'throttle' => 'Demasiados intentos fallidos de conexión. Por favor intente nuevamente en :seconds segundos.',
+    'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+    'throttle' => 'Demasiados intentos de inicio de sesión. Por favor, inténtalo de nuevo en :seconds segundos.',
 
     // Login & Register
     'sign_up' => 'Registrarse',
     'log_in' => 'Acceder',
     'log_in_with' => 'Acceder con :socialDriver',
     'sign_up_with' => 'Registrarse con :socialDriver',
-    'logout' => 'Salir',
+    'logout' => 'Cerrar sesión',
 
     'name' => 'Nombre',
     'username' => 'Usuario',

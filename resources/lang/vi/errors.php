@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Không Tìm Thấy Trang',
     'sorry_page_not_found' => 'Xin lỗi, Không tìm thấy trang bạn đang tìm kiếm.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Quay lại trang chủ',
     'error_occurred' => 'Đã xảy ra lỗi',
     'app_down' => ':appName hiện đang ngoại tuyến',

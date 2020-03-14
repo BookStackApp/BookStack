@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'لم يتم العثور على الصفحة',
     'sorry_page_not_found' => 'عفواً, لا يمكن العثور على الصفحة التي تبحث عنها.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'العودة للصفحة الرئيسية',
     'error_occurred' => 'حدث خطأ',
     'app_down' => ':appName لا يعمل حالياً',

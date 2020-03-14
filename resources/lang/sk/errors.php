@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Stránka nenájdená',
     'sorry_page_not_found' => 'Prepáčte, stránka ktorú hľadáte nebola nájdená.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Vrátiť sa domov',
     'error_occurred' => 'Nastala chyba',
     'app_down' => ':appName je momentálne nedostupná',

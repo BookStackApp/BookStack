@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => '无法找到页面',
     'sorry_page_not_found' => '对不起，无法找到您想访问的页面。',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => '返回主页',
     'error_occurred' => '出现错误',
     'app_down' => ':appName现在正在关闭',

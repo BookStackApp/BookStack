@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Адрес электронной почты уже был подтвержден, попробуйте войти в систему.',
     'email_confirmation_invalid' => 'Этот токен подтверждения недействителен или уже используется. Повторите попытку регистрации.',
     'email_confirmation_expired' => 'Истек срок действия токена. Отправлено новое письмо с подтверждением.',
-    'email_confirmation_awaiting' => 'Для используемой учетной записи необходимо подтвердить email',
+    'email_confirmation_awaiting' => 'Для используемой учетной записи необходимо подтвердить адрес электронной почты',
     'ldap_fail_anonymous' => 'Недопустимый доступ LDAP с использованием анонимной привязки',
     'ldap_fail_authed' => 'Не удалось получить доступ к LDAP, используя данные dn & password',
     'ldap_extension_not_installed' => 'LDAP расширение для PHP не установлено',
@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Страница не найдена',
     'sorry_page_not_found' => 'Извините, страница, которую вы искали, не найдена.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'вернуться на главную страницу',
     'error_occurred' => 'Произошла ошибка',
     'app_down' => ':appName в данный момент не доступно',

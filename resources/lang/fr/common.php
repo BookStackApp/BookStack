@@ -38,7 +38,7 @@ return [
     'reset' => 'Réinitialiser',
     'remove' => 'Enlever',
     'add' => 'Ajouter',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Plein écran',
 
     // Sort Options
     'sort_options' => 'Options de tri',

@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Seite nicht gefunden',
     'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Du angefordert hast, wurde nicht gefunden.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
     'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',

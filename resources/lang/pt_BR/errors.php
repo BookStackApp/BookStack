@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Página Não Encontrada',
     'sorry_page_not_found' => 'Desculpe, a página que você está procurando não pôde ser encontrada.',
+    'sorry_page_not_found_permission_warning' => 'Se você esperava que esta página existisse, talvez você não tenha permissão para visualizá-la.',
     'return_home' => 'Retornar à página inicial',
     'error_occurred' => 'Ocorreu um Erro',
     'app_down' => ':appName está fora do ar no momento',
@@ -97,6 +98,6 @@ return [
     'api_user_token_expired' => 'O token de autenticação expirou',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Erro encontrado ao enviar um e-mail de teste:',
 
 ];

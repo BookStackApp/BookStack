@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Siden blev ikke fundet',
     'sorry_page_not_found' => 'Beklager, siden du leder efter blev ikke fundet.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Gå tilbage til hjem',
     'error_occurred' => 'Der opstod en fejl',
     'app_down' => ':appName er nede lige nu',

@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'ページが見つかりません',
     'sorry_page_not_found' => 'ページを見つけることができませんでした。',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'ホームに戻る',
     'error_occurred' => 'エラーが発生しました',
     'app_down' => ':appNameは現在停止しています',

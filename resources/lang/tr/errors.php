@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Sayfa Bulunamadı',
     'sorry_page_not_found' => 'Üzgünüz, aradığınız sayfa bulunamıyor.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Anasayfaya dön',
     'error_occurred' => 'Bir Hata Oluştu',
     'app_down' => ':appName şu anda inaktif',
