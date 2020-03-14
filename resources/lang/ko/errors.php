@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => '404 Not Found',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => '처음으로 돌아가기',
     'error_occurred' => '문제가 생겼습니다.',
     'app_down' => ':appName에 문제가 있는 것 같습니다',
