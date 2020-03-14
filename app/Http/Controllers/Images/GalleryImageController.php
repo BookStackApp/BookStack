@@ -48,7 +48,7 @@ class GalleryImageController extends Controller
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => $this->imageRepo->getImageValidationRules()
+            'file' => $this->getImageValidationRules()
         ]);
 
         try {
