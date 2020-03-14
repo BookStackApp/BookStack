@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Seite nicht gefunden',
     'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Sie angefordert haben, wurde nicht gefunden.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
     'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',
@@ -95,5 +96,8 @@ return [
     'api_incorrect_token_secret' => 'Das für den angegebenen API-Token angegebene Kennwort ist falsch',
     'api_user_no_api_permission' => 'Der Besitzer des verwendeten API-Token hat keine Berechtigung für API-Aufrufe',
     'api_user_token_expired' => 'Das verwendete Autorisierungs-Token ist abgelaufen',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];

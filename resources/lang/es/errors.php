@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Página no encontrada',
     'sorry_page_not_found' => 'Lo sentimos, la página a la que intenta acceder no pudo ser encontrada.',
+    'sorry_page_not_found_permission_warning' => 'Si esperaba que esta página existiera, puede que no tenga permiso para verla.',
     'return_home' => 'Volver a la página de inicio',
     'error_occurred' => 'Ha ocurrido un error',
     'app_down' => 'La aplicación :appName se encuentra caída en este momento',
@@ -95,5 +96,8 @@ return [
     'api_incorrect_token_secret' => 'El secreto proporcionado para el token API usado es incorrecto',
     'api_user_no_api_permission' => 'El propietario del token API usado no tiene permiso para hacer llamadas API',
     'api_user_token_expired' => 'El token de autorización usado ha caducado',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error al enviar un email de prueba:',
 
 ];

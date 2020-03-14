@@ -20,7 +20,7 @@ return [
     'username' => 'Benutzername',
     'email' => 'E-Mail',
     'password' => 'Passwort',
-    'password_confirm' => 'Passwort best&auml;tigen',
+    'password_confirm' => 'Passwort bestätigen',
     'password_hint' => 'Mindestlänge: 7 Zeichen',
     'forgot_password' => 'Passwort vergessen?',
     'remember_me' => 'Angemeldet bleiben',
@@ -32,11 +32,11 @@ return [
     'social_registration' => 'Mit Sozialem Netzwerk registrieren',
     'social_registration_text' => 'Mit einer dieser Dienste registrieren oder anmelden',
 
-    'register_thanks' => 'Vielen Dank für Ihre Registrierung!',
+    'register_thanks' => 'Vielen Dank für deine Registrierung!',
     'register_confirm' => 'Bitte prüfe Deinen Posteingang und bestätig die Registrierung.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
-    'register_success' => 'Vielen Dank für Deine Registrierung! Die Daten sind gespeichert und Du bist angemeldet.',
+    'register_success' => 'Vielen Dank für deine Registrierung! Du bist jetzt registriert und eingeloggt.',
 
 
     // Password Reset
@@ -47,7 +47,7 @@ return [
     'reset_password_success' => 'Dein Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
     'email_reset_text' => 'Du erhältsts diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',
-    'email_reset_not_requested' => 'Wenn Du das nicht warst, brauchst Du nichts weiter zu tun.',
+    'email_reset_not_requested' => 'Wenn du das zurücksetzen des Passworts nicht angefordert hast, ist keine weitere Aktion erforderlich.',
 
 
     // Email Confirmation
@@ -55,8 +55,8 @@ return [
     'email_confirm_greeting' => 'Danke, dass Du dich für :appName registrierst hast!',
     'email_confirm_text' => 'Bitte bestätige Deine E-Mail-Adresse, indem Du auf die Schaltfläche klickst:',
     'email_confirm_action' => 'E-Mail-Adresse bestätigen',
-    'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung Deine E-Mail-Adresse nicht versandt werden. Bitte kontaktiere den Systemadministrator!',
-    'email_confirm_success' => 'Deine E-Mail-Adresse wurde best&auml;tigt!',
+    'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung Deiner E-Mail-Adresse nicht versandt werden. Bitte kontaktiere den Systemadministrator!',
+    'email_confirm_success' => 'Deine E-Mail-Adresse wurde bestätigt!',
     'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfe Deinen Posteingang.',
 
     'email_not_confirmed' => 'E-Mail-Adresse ist nicht bestätigt',
@@ -67,11 +67,11 @@ return [
 
     // User Invite
     'user_invite_email_subject' => 'Du wurdest eingeladen :appName beizutreten!',
-    'user_invite_email_greeting' => 'Ein Konto wurde für Sie auf :appName erstellt.',
-    'user_invite_email_text' => 'Klicken Sie auf die Schaltfläche unten, um ein Passwort festzulegen und Zugriff zu erhalten:',
-    'user_invite_email_action' => 'Account-Passwort festlegen',
+    'user_invite_email_greeting' => 'Ein Konto wurde für dich auf :appName erstellt.',
+    'user_invite_email_text' => 'Klicke auf die Schaltfläche unten, um ein Passwort festzulegen und Zugriff zu erhalten:',
+    'user_invite_email_action' => 'Konto-Passwort festlegen',
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
     'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
-    'user_invite_page_confirm_button' => 'Passwort wiederholen',
-    'user_invite_success' => 'Passwort gesetzt, Sie haben nun Zugriff auf :appName!'
+    'user_invite_page_confirm_button' => 'Passwort bestätigen',
+    'user_invite_success' => 'Das Passwort wurde gesetzt, du hast nun Zugriff auf :appName!'
 ];

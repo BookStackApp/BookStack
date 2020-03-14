@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => '404 Not Found',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => '처음으로 돌아가기',
     'error_occurred' => '문제가 생겼습니다.',
     'app_down' => ':appName에 문제가 있는 것 같습니다',
@@ -95,5 +96,8 @@ return [
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
     'api_user_token_expired' => 'The authorization token used has expired',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];
