@@ -64,7 +64,7 @@ return [
 
     // Header
     'profile_menu' => 'Меню профиля',
-    'view_profile' => 'Посмотреть профиль',
+    'view_profile' => 'Просмотр профиля',
     'edit_profile' => 'Редактировать профиль',
 
     // Layout tabs
