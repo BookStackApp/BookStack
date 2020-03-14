@@ -31,6 +31,10 @@ jobs:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ matrix.php }}
 
+    - name: Start Database
+      run: |
+        sudo /etc/init.d/mysql start
+
     - name: Setup Database
       run: |
         mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
