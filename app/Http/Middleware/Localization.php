@@ -36,6 +36,7 @@ class Localization
         'pt_BR' => 'pt_BR',
         'ru' => 'ru',
         'sk' => 'sk_SK',
+        'sl' => 'sl_SI',
         'sv' => 'sv_SE',
         'uk' => 'uk_UA',
         'vi' => 'vi_VN',
