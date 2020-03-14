@@ -202,6 +202,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
+        'sl' => 'Slovenščina',
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
