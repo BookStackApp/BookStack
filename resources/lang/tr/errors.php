@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'E-mail halihazırda onaylanmış, giriş yapmayı dene.',
     'email_confirmation_invalid' => 'Bu doğrulama tokenı daha önce kullanılmış veya geçerli değil, lütfen tekrar kayıt olmayı deneyin.',
     'email_confirmation_expired' => 'Doğrulama token\'ının süresi geçmiş, yeni bir mail gönderildi.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'Kullanılan hesabın e-posta adresinin onaylanması gerekiyor',
     'ldap_fail_anonymous' => 'Anonim LDAP girişi başarısız oldu',
     'ldap_fail_authed' => 'Verdiğiniz bilgiler ile LDAP girişi başarısız oldu.',
     'ldap_extension_not_installed' => 'LDAP PHP eklentisi yüklenmedi',
@@ -83,21 +83,21 @@ return [
     // Error pages
     '404_page_not_found' => 'Sayfa Bulunamadı',
     'sorry_page_not_found' => 'Üzgünüz, aradığınız sayfa bulunamıyor.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Görüntüleyemediğiniz bu sayfanın var olduğunu düşünüyorsanız, görüntüleme izniniz olmayabilir.',
     'return_home' => 'Anasayfaya dön',
     'error_occurred' => 'Bir Hata Oluştu',
     'app_down' => ':appName şu anda inaktif',
     'back_soon' => 'En kısa zamanda aktif hale gelecek.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'İstekte yetkilendirme anahtarı bulunamadı',
+    'api_bad_authorization_format' => 'İstekte bir yetkilendirme anahtarı bulundu, ancak biçim yanlış görünüyor',
+    'api_user_token_not_found' => 'Sağlanan yetkilendirme anahtarı ile eşleşen bir API anahtarı bulunamadı',
+    'api_incorrect_token_secret' => 'Kullanılan API anahtarı için sağlanan gizli anahtar doğru değil',
+    'api_user_no_api_permission' => 'Kullanılan API anahtarının sahibi API çağrısı yapmak için izne sahip değil',
+    'api_user_token_expired' => 'Kullanılan yetkilendirme anahtarının süresi doldu',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Test e-postası gönderilirken hata oluştu:',
 
 ];
