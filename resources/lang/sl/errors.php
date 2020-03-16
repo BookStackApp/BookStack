@@ -81,13 +81,13 @@ return [
     'empty_comment' => 'Praznega komentarja ne morete objaviti.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    '404_page_not_found' => 'Strani ni mogoče najti',
+    'sorry_page_not_found' => 'Oprostite, strani ki jo iščete ni mogoče najti.',
+    'sorry_page_not_found_permission_warning' => 'Če pričakujete, da ta stran obstaja, mogoče nimate pravic, da jo vidite.',
+    'return_home' => 'Vrni se domov',
+    'error_occurred' => 'Prišlo je do napake',
+    'app_down' => ':appName trenutno ni dosegljiva',
+    'back_soon' => 'Kmalu bo ponovno dosegljiva.',
 
     // API errors
     'api_no_authorization_found' => 'No authorization token found on the request',
