@@ -64,8 +64,8 @@ return [
     'guests_cannot_save_drafts' => 'Gosti ne morejo shranjevati osnutkov',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Ne morete odstraniti edinega administratorja',
+    'users_cannot_delete_guest' => 'Ne morete odstraniti uporabnika gost',
 
     // Roles
     'role_cannot_be_edited' => 'This role cannot be edited',
