@@ -83,7 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Страница не найдена',
     'sorry_page_not_found' => 'Извините, страница, которую вы искали, не найдена.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Если вы ожидали что страница существует, возможно у вас нет прав для её просмотра.',
     'return_home' => 'вернуться на главную страницу',
     'error_occurred' => 'Произошла ошибка',
     'app_down' => ':appName в данный момент не доступно',
