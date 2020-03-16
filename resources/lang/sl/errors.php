@@ -68,17 +68,17 @@ return [
     'users_cannot_delete_guest' => 'Ne morete odstraniti uporabnika gost',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_be_edited' => 'Te vloge mi možno urejati',
+    'role_system_cannot_be_deleted' => 'Ta vloga je sistemska in je ni možno brisati',
+    'role_registration_default_cannot_delete' => 'Te vloge ni možno brisati dokler je nastavljena kot privzeta',
+    'role_cannot_remove_only_admin' => 'Ta uporabnik je edini administrator. Dodelite vlogo administratorja drugemu uporabniku preden ga poskusite brisati.',
 
     // Comments
-    'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
-    'comment_add' => 'An error occurred while adding / updating the comment.',
-    'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'comment_list' => 'Napaka se je pojavila pri pridobivanju komentarjev.',
+    'cannot_add_comment_to_draft' => 'Ni mogoče dodajanje komentarjev v osnutek.',
+    'comment_add' => 'Napaka se je pojavila pri dodajanju / posodobitev komentarjev.',
+    'comment_delete' => 'Napaka se je pojavila pri brisanju komentarja.',
+    'empty_comment' => 'Praznega komentarja ne morete objaviti.',
 
     // Error pages
     '404_page_not_found' => 'Page Not Found',
