@@ -7,18 +7,18 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => 'Nastavitve',
+    'settings_save' => 'Shrani nastavitve',
+    'settings_save_success' => 'Nastavitve, shranjene',
 
     // App Settings
-    'app_customization' => 'Customization',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
-    'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
-    'app_name_header' => 'Show name in header',
-    'app_public_access' => 'Public Access',
-    'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
+    'app_customization' => 'Prilagajanje',
+    'app_features_security' => 'Lastnosti & Varnost',
+    'app_name' => 'Ime aplikacije',
+    'app_name_desc' => 'To ime je prikazano v glavi in vsaki sistemski e-pošti.',
+    'app_name_header' => 'Prikaži ime v glavi',
+    'app_public_access' => 'Javni dostop',
+    'app_public_access_desc' => 'Če omogočite to možnost, bo obiskovalcem, ki niso prijavljeni, omogočen dostop do vsebine v BookStack.',
     'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
     'app_public_access_toggle' => 'Allow public access',
     'app_public_viewing' => 'Allow public viewing?',
