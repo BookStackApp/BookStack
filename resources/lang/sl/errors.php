@@ -90,14 +90,14 @@ return [
     'back_soon' => 'Kmalu bo ponovno dosegljiva.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Avtorizacija ni bila najdena',
+    'api_bad_authorization_format' => 'Avtorizacija je bila najdena, vendar je v napačni obliki',
+    'api_user_token_not_found' => 'Za dano avtorizacijo ni bil najden noben ustrezen API',
+    'api_incorrect_token_secret' => 'Skrivnost, ki je bila dana za uporabljeni žeton API, je napačna',
+    'api_user_no_api_permission' => 'Lastnik API nima pravic za klicanje API',
+    'api_user_token_expired' => 'Avtorizacijski žeton je pretečen',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Napaka se je pojavila pri pošiljanju testne e-pošte:',
 
 ];
