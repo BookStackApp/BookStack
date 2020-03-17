@@ -30,7 +30,7 @@ return [
     'app_custom_html' => 'Po meri HTML vsebina glave',
     'app_custom_html_desc' => 'Katerakoli vsebina dodana tukaj, bo vstavljena na dno <head> dela vsake strani. To je uporabno za uporabo prevladujočih slogov ali dodajanje analitike.',
     'app_custom_html_disabled_notice' => 'Po meri narejena HTML glava vsebine je onemogočena na tej strani z nastavitvami, da se zagotovi, da bodo morebitne zrušitve lahko povrnjene.',
-    'app_logo' => 'Application Logo',
+    'app_logo' => 'Logotip aplikacije',
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
     'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
