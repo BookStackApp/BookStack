@@ -43,7 +43,7 @@ return [
 
     // Color settings
     'content_colors' => 'Barve vsebine',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'content_colors_desc' => 'Nastavi barve za vse elemente v hierarhiji. Izbor barv s podobno barvno svetlostjo je priporočljivo za osnovne barve za branje.',
     'bookshelf_color' => 'Shelf Color',
     'book_color' => 'Book Color',
     'chapter_color' => 'Chapter Color',
