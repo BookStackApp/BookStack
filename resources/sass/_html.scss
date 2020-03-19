@@ -23,4 +23,7 @@ body {
   color: #444;
   -webkit-font-smoothing: antialiased;
   background-color: #F2F2F2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
