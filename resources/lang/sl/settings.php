@@ -44,7 +44,7 @@ return [
     // Color settings
     'content_colors' => 'Barve vsebine',
     'content_colors_desc' => 'Nastavi barve za vse elemente v hierarhiji. Izbor barv s podobno barvno svetlostjo je priporočljivo za osnovne barve za branje.',
-    'bookshelf_color' => 'Shelf Color',
+    'bookshelf_color' => 'Barva police',
     'book_color' => 'Book Color',
     'chapter_color' => 'Chapter Color',
     'page_color' => 'Page Color',
