@@ -97,15 +97,15 @@ return [
         'array'   => ':attribute mora vsebovati :velikost elementov.',
     ],
     'string'               => ':attribute mora biti niz.',
-    'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
-    'url'                  => 'The :attribute format is invalid.',
-    'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
+    'timezone'             => ':attribute mora biti veljavna cona.',
+    'unique'               => ':attribute je že zaseden.',
+    'url'                  => ':attribute oblika ni veljavna.',
+    'uploaded'             => 'Datoteke ni bilo mogoče naložiti. Strežnik morda ne sprejema datotek te velikosti.',
 
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Password confirmation required',
+            'required_with' => 'Potrditev gesla',
         ],
     ],
 
