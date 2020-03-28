@@ -22,10 +22,17 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest(url('/login'));
-            }
+                $uri = url()->getRequest()->getRequestUri();
+                $path = url()->getRequest()->path();
+                if (preg_match("|$path\?(.*)$|", "$uri", $match)) {
+                    session()->put('url.intended', $path.'?'.$match[1]);
+                } else {
+                    session()->put('url.intended', $path);
+                }
+                return redirect()->to(url('/login'));
+	    }
         }
-
+        
         return $next($request);
     }
 
