@@ -56,6 +56,10 @@ class TemplateManager {
 
     setupSearchBox() {
         const searchBox = this.elem.querySelector('.search-box');
+
+        // Search box may not exist if there are no existing templates in the system.
+        if (!searchBox) return;
+
         const input = searchBox.querySelector('input');
         const submitButton = searchBox.querySelector('button');
         const cancelButton = searchBox.querySelector('button.search-box-cancel');
@@ -70,7 +74,7 @@ class TemplateManager {
         }
         performSearch = performSearch.bind(this);
 
-        // Searchbox enter press
+        // Search box enter press
         searchBox.addEventListener('keypress', event => {
             if (event.key === 'Enter') {
                 event.preventDefault();
