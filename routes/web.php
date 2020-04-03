@@ -226,6 +226,9 @@ Route::post('/register/confirm/resend', 'Auth\ConfirmEmailController@resend');
 Route::get('/register/confirm/{token}', 'Auth\ConfirmEmailController@confirm');
 Route::post('/register', 'Auth\RegisterController@postRegister');
 
+Route::get('/cas/login', 'Auth\CasController@login');
+Route::get('/cas/logout', 'Auth\CasController@logout');
+
 // SAML routes
 Route::post('/saml2/login', 'Auth\Saml2Controller@login');
 Route::get('/saml2/logout', 'Auth\Saml2Controller@logout');

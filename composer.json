@@ -31,7 +31,8 @@
         "socialiteproviders/slack": "^3.0",
         "socialiteproviders/twitch": "^5.0",
         "facade/ignition": "^1.4",
-        "nunomaduro/collision": "^3.0"
+        "nunomaduro/collision": "^3.0",
+        "subfission/cas": ">=3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2.8",

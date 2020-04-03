@@ -66,6 +66,8 @@
                             <li>
                                 @if(config('auth.method') === 'saml2')
                                     <a href="{{ url('/saml2/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
+                                @elseif(config('auth.method') === 'cas')
+                                    <a href="{{ url('/cas/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
                                 @else
                                     <a href="{{ url('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
                                 @endif
