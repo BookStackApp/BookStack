@@ -139,6 +139,12 @@ return [
             //      )
             // ),
         ],
+        'security' => [
+            // Specifies Authentication context
+            // false means that IDP choose authentication method
+            // null force Form based authentication or is possible set via array supported methods. See to onelogin/php-sampl/advance_settings
+            'requestedAuthnContext' => env('SAML2_IDP_AUTHNCONTEXT',false), 
+        ],
     ],
 
 ];
