@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Tests\Permissions;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
@@ -6,6 +6,7 @@ use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Auth\User;
 use BookStack\Entities\Page;
+use Tests\BrowserKitTest;
 
 class RestrictionsTest extends BrowserKitTest
 {

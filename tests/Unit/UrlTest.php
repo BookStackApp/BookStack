@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php namespace Tests\Unit;
+
+use Tests\TestCase;
 
 class UrlTest extends TestCase
 {

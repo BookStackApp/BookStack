@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Auth;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Page;
 use BookStack\Notifications\ConfirmEmail;
 use BookStack\Settings\SettingService;
 use Illuminate\Support\Facades\Notification;
+use Tests\BrowserKitTest;
 
 class AuthTest extends BrowserKitTest
 {

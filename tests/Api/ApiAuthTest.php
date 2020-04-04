@@ -1,10 +1,9 @@
-<?php
-
-namespace Tests;
+<?php namespace Tests\Api;
 
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\User;
 use Carbon\Carbon;
+use Tests\TestCase;
 
 class ApiAuthTest extends TestCase
 {
