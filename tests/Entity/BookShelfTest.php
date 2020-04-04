@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Uploads\Image;
 use Illuminate\Support\Str;
+use Tests\TestCase;
 use Tests\Uploads\UsesImages;
 
 class BookShelfTest extends TestCase

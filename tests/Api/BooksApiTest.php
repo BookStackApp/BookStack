@@ -1,6 +1,7 @@
-<?php namespace Tests;
+<?php namespace Tests\Api;
 
 use BookStack\Entities\Book;
+use Tests\TestCase;
 
 class BooksApiTest extends TestCase
 {

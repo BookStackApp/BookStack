@@ -1,9 +1,10 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\PageRepo;
+use Tests\TestCase;
 
 class SortTest extends TestCase
 {
