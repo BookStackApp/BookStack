@@ -23,7 +23,7 @@ table.table {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
   th, td {
-    text-align: left;
+    text-align: start;
     border: none;
     padding: $-s $-s;
     vertical-align: middle;
@@ -36,7 +36,7 @@ table.table {
     background-color: #EEE;
   }
   .text-right {
-    text-align: right;
+    text-align: end;
   }
   .text-center {
     text-align: center;

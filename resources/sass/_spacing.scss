@@ -7,8 +7,8 @@
       #{$prop}: $size !important;
     }
     .#{$propLetter}x-#{$sizeLetter} {
-      #{$prop}-left: $size !important;
-      #{$prop}-right: $size !important;
+      #{$prop}-inline-start: $size !important;
+      #{$prop}-inline-end: $size !important;
     }
     .#{$propLetter}y-#{$sizeLetter} {
       #{$prop}-top: $size !important;
@@ -18,13 +18,13 @@
       #{$prop}-top: $size !important;
     }
     .#{$propLetter}r-#{$sizeLetter} {
-      #{$prop}-right: $size !important;
+      #{$prop}-inline-end: $size !important;
     }
     .#{$propLetter}b-#{$sizeLetter} {
       #{$prop}-bottom: $size !important;
     }
     .#{$propLetter}l-#{$sizeLetter} {
-      #{$prop}-left: $size !important;
+      #{$prop}-inline-start: $size !important;
     }
   }
 }

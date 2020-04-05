@@ -3,7 +3,7 @@
  * Callouts
  */
 .callout {
-  border-left: 3px solid #BBB;
+  border-inline-start: 3px solid #BBB;
   background-color: #EEE;
   padding: $-s $-s $-s $-xl;
   display: block;
@@ -109,7 +109,7 @@
       background-color: #EEE;
     }
     .svg-icon {
-      margin-right: 0px;
+      margin-inline-end: 0px;
     }
   }
   > div .outline input {
@@ -177,8 +177,8 @@
 
 .content-wrap.card {
   padding: $-m $-xxl;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
   margin-bottom: $-xl;
   overflow: initial;
   min-height: 60vh;
@@ -211,7 +211,7 @@
 .tag-item {
   display: inline-flex;
   margin-bottom: $-xs;
-  margin-right: $-xs;
+  margin-inline-end: $-xs;
   border-radius: 4px;
   border: 1px solid #CCC;
   overflow: hidden;
@@ -229,7 +229,7 @@
     fill: #888;
   }
   .tag-value {
-    border-left: 1px solid #DDD;
+    border-inline-start: 1px solid #DDD;
     background-color: rgba(255, 255, 255, 0.5);
   }
 }
