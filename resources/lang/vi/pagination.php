@@ -6,7 +6,7 @@
  */
 return [
 
-    'previous' => '&laquo; Trước',
-    'next'     => 'Tiếp &raquo;',
+    'previous' => '&laquo; Previous',
+    'next'     => 'Next &raquo;',
 
 ];
