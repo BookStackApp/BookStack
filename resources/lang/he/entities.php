@@ -176,6 +176,7 @@ return [
     'pages_delete_confirm' => 'האם ברצונך למחוק דף זה?',
     'pages_delete_draft_confirm' => 'האם ברצונך למחוק את טיוטת הדף הזה?',
     'pages_editing_named' => 'עריכת דף :pageName',
+    'pages_edit_draft_options' => 'Draft Options',
     'pages_edit_save_draft' => 'שמור טיוטה',
     'pages_edit_draft' => 'ערוך טיוטת דף',
     'pages_editing_draft' => 'עריכת טיוטה',
@@ -233,6 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'הסקיצה נמחקה, העורך עודכן עם תוכן הדף העכשוי',
     'pages_specific' => 'דף ספציפי',
+    'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
     'page_tags' => 'תגיות דף',
@@ -241,9 +243,11 @@ return [
     'shelf_tags' => 'תגיות מדף',
     'tag' => 'תגית',
     'tags' =>  'תגיות',
+    'tag_name' =>  'Tag Name',
     'tag_value' => 'ערך התגית (אופציונאלי)',
     'tags_explain' => "הכנס תגיות על מנת לסדר את התוכן שלך. \n  ניתן לציין ערך לתגית על מנת לבצע סידור יסודי יותר",
     'tags_add' => 'הוסף תגית נוספת',
+    'tags_remove' => 'Remove this tag',
     'attachments' => 'קבצים מצורפים',
     'attachments_explain' => 'צרף קבצים או קישורים על מנת להציגם בדף שלך. צירופים אלו יהיו זמינים בתפריט הצדדי של הדף',
     'attachments_explain_instant_save' => 'שינויים נשמרים באופן מיידי',
@@ -269,6 +273,12 @@ return [
     'attachments_file_uploaded' => 'הקובץ עלה בהצלחה',
     'attachments_file_updated' => 'הקובץ עודכן בהצלחה',
     'attachments_link_attached' => 'הקישור צורף לדף בהצלחה',
+    'templates' => 'Templates',
+    'templates_set_as_template' => 'Page is a template',
+    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
+    'templates_replace_content' => 'Replace page content',
+    'templates_append_content' => 'Append to page content',
+    'templates_prepend_content' => 'Prepend to page content',
 
     // Profile View
     'profile_user_for_x' => 'משתמש במערכת כ :time',
