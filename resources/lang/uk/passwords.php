@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Пароль повинен містити не менше восьми символів і збігатись з підтвердженням.',
-    'user' => "Ми не можемо знайти користувача з цією адресою електронної пошти.",
-    'token' => 'Цей токен для скидання пароля недійсний.',
-    'sent' => 'Ми надіслали Вам електронний лист із посиланням для скидання пароля!',
-    'reset' => 'Ваш пароль скинуто!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
