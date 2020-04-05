@@ -8,3 +8,27 @@
 @mixin between($min, $max) {
   @media screen and (min-width: $min) and (max-width: $max) { @content; }
 }
+
+// Padding shorthand using logical operators to better support RTL.
+@mixin padding($t, $r, $b, $l) {
+  padding-block-start: $t;
+  padding-block-end: $b;
+  padding-inline-start: $l;
+  padding-inline-end: $r;
+}
+
+// Margin shorthand using logical operators to better support RTL.
+@mixin margin($t, $r, $b, $l) {
+  margin-block-start: $t;
+  margin-block-end: $b;
+  margin-inline-start: $l;
+  margin-inline-end: $r;
+}
+
+// Create a RTL specific style block.
+// Mostly used as a patch until browser support improves for logical properties.
+@mixin rtl() {
+  html[dir=rtl] & {
+    @content;
+  }
+}
