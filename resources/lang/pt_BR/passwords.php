@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Senhas devem ter ao menos oito caracteres e ser iguais à confirmação.',
-    'user' => "Não pudemos encontrar um usuário com o e-mail fornecido.",
-    'token' => 'O token de redefinição de senha é inválido.',
-    'sent' => 'Enviamos o link de redefinição de senha para o seu e-mail!',
-    'reset' => 'Sua senha foi redefinida com sucesso!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
