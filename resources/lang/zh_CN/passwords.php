@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => '密码必须至少包含六个字符并与确认相符。',
-    'user' => "使用该Email地址的用户不存在。",
-    'token' => '此密码重置令牌无效。',
-    'sent' => '我们已经通过Email发送您的密码重置链接！',
-    'reset' => '您的密码已被重置！',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
