@@ -5,14 +5,14 @@
 return [
 
     // Permissions
-    'permission' => 'Nemáte oprávnenie pre prístup k požadovanej stránke.',
-    'permissionJson' => 'Nemáte oprávnenie pre vykonanie požadovaného úkonu.',
+    'permission' => 'You do not have permission to access the requested page.',
+    'permissionJson' => 'You do not have permission to perform the requested action.',
 
     // Auth
-    'error_user_exists_different_creds' => 'Používateľ s emailom :email už existuje, ale s inými údajmi.',
-    'email_already_confirmed' => 'Email bol už overený, skúste sa prihlásiť.',
-    'email_confirmation_invalid' => 'Tento potvrdzujúci token nie je platný alebo už bol použitý, skúste sa prosím registrovať znova.',
-    'email_confirmation_expired' => 'Potvrdzujúci token expiroval, bol odoslaný nový potvrdzujúci email.',
+    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
+    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
+    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
+    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
     'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
@@ -23,25 +23,25 @@ return [
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'social_no_action_defined' => 'Nebola definovaná žiadna akcia',
+    'social_no_action_defined' => 'No action defined',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
-    'social_account_in_use' => 'Tento :socialAccount účet sa už používa, skúste sa prihlásiť pomocou možnosti :socialAccount.',
-    'social_account_email_in_use' => 'Email :email sa už používa. Ak už máte účet, môžete pripojiť svoj :socialAccount účet v nastaveniach profilu.',
-    'social_account_existing' => 'Tento :socialAccount účet je už spojený s Vaším profilom.',
+    'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',
+    'social_account_email_in_use' => 'The email :email is already in use. If you already have an account you can connect your :socialAccount account from your profile settings.',
+    'social_account_existing' => 'This :socialAccount is already attached to your profile.',
     'social_account_already_used_existing' => 'Tento :socialAccount účet už používa iný používateľ.',
-    'social_account_not_used' => 'Tento :socialAccount účet nie je spojený so žiadnym používateľom. Pripojte ho prosím v nastaveniach Vášho profilu. ',
-    'social_account_register_instructions' => 'Ak zatiaľ nemáte účet, môžete sa registrovať pomocou možnosti :socialAccount.',
+    'social_account_not_used' => 'This :socialAccount account is not linked to any users. Please attach it in your profile settings. ',
+    'social_account_register_instructions' => 'If you do not yet have an account, You can register an account using the :socialAccount option.',
     'social_driver_not_found' => 'Ovládač socialnych sietí nebol nájdený',
-    'social_driver_not_configured' => 'Nastavenia Vášho :socialAccount účtu nie sú správne.',
+    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
     'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
 
     // System
-    'path_not_writable' => 'Do cesty :filePath sa nedá nahrávať. Uistite sa, že je zapisovateľná serverom.',
-    'cannot_get_image_from_url' => 'Nedá sa získať obrázok z :url',
+    'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
+    'cannot_get_image_from_url' => 'Cannot get image from :url',
     'cannot_create_thumbs' => 'Server nedokáže vytvoriť náhľady. Skontrolujte prosím, či máte nainštalované GD rozšírenie PHP.',
-    'server_upload_limit' => 'Server nedovoľuje nahrávanie súborov s takouto veľkosťou. Skúste prosím menší súbor.',
+    'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'image_upload_error' => 'Pri nahrávaní obrázka nastala chyba',
+    'image_upload_error' => 'An error occurred uploading the image',
     'image_upload_type_error' => 'The image type being uploaded is invalid',
     'file_upload_timeout' => 'Nahrávanie súboru vypršalo.',
 
@@ -50,44 +50,44 @@ return [
     'attachment_not_found' => 'Attachment not found',
 
     // Pages
-    'page_draft_autosave_fail' => 'Koncept nemohol byť uložený. Uistite sa, že máte pripojenie k internetu pre uložením tejto stránky',
+    'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
     'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
 
     // Entities
-    'entity_not_found' => 'Entita nenájdená',
+    'entity_not_found' => 'Entity not found',
     'bookshelf_not_found' => 'Bookshelf not found',
-    'book_not_found' => 'Kniha nenájdená',
-    'page_not_found' => 'Stránka nenájdená',
-    'chapter_not_found' => 'Kapitola nenájdená',
-    'selected_book_not_found' => 'Vybraná kniha nebola nájdená',
-    'selected_book_chapter_not_found' => 'Vybraná kniha alebo kapitola nebola nájdená',
-    'guests_cannot_save_drafts' => 'Hosť nemôže ukladať koncepty',
+    'book_not_found' => 'Book not found',
+    'page_not_found' => 'Page not found',
+    'chapter_not_found' => 'Chapter not found',
+    'selected_book_not_found' => 'The selected book was not found',
+    'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
+    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Nemôžete zmazať posledného správcu',
-    'users_cannot_delete_guest' => 'Nemôžete zmazať hosťa',
+    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
+    'users_cannot_delete_guest' => 'You cannot delete the guest user',
 
     // Roles
-    'role_cannot_be_edited' => 'Táto rola nemôže byť upravovaná',
-    'role_system_cannot_be_deleted' => 'Táto rola je systémová rola a nemôže byť zmazaná',
-    'role_registration_default_cannot_delete' => 'Táto rola nemôže byť zmazaná, pretože je nastavená ako prednastavená rola pri registrácii',
+    'role_cannot_be_edited' => 'This role cannot be edited',
+    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
+    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
     'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
-    'comment_list' => 'Pri načítaní komentárov sa vyskytla chyba',
-    'cannot_add_comment_to_draft' => 'Do konceptu nemôžete pridávať komentáre.',
-    'comment_add' => 'Počas pridávania komentára sa vyskytla chyba',
-    'comment_delete' => 'Pri odstraňovaní komentára došlo k chybe',
-    'empty_comment' => 'Nelze pridať prázdny komentár.',
+    'comment_list' => 'An error occurred while fetching the comments.',
+    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
+    'comment_add' => 'An error occurred while adding / updating the comment.',
+    'comment_delete' => 'An error occurred while deleting the comment.',
+    'empty_comment' => 'Cannot add an empty comment.',
 
     // Error pages
-    '404_page_not_found' => 'Stránka nenájdená',
-    'sorry_page_not_found' => 'Prepáčte, stránka ktorú hľadáte nebola nájdená.',
+    '404_page_not_found' => 'Page Not Found',
+    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
     'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'return_home' => 'Vrátiť sa domov',
-    'error_occurred' => 'Nastala chyba',
-    'app_down' => ':appName je momentálne nedostupná',
-    'back_soon' => 'Čoskoro bude opäť dostupná.',
+    'return_home' => 'Return to home',
+    'error_occurred' => 'An Error Occurred',
+    'app_down' => ':appName is down right now',
+    'back_soon' => 'It will be back up soon.',
 
     // API errors
     'api_no_authorization_found' => 'No authorization token found on the request',
