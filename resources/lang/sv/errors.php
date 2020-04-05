@@ -13,16 +13,16 @@ return [
     'email_already_confirmed' => 'E-posten har redan bekräftats, prova att logga in.',
     'email_confirmation_invalid' => 'Denna bekräftelsekod är inte giltig eller har redan använts. Vänligen prova att registera dig på nytt',
     'email_confirmation_expired' => 'Denna bekräftelsekod har gått ut. Vi har skickat dig en ny.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'E-postadressen för det konto som används måste bekräftas',
     'ldap_fail_anonymous' => 'LDAP-inloggning misslyckades med anonym bindning',
     'ldap_fail_authed' => 'LDAP-inloggning misslyckades med angivna dn- och lösenordsuppgifter',
     'ldap_extension_not_installed' => 'LDAP PHP-tillägg inte installerat',
     'ldap_cannot_connect' => 'Kan inte ansluta till ldap-servern. Anslutningen misslyckades',
-    'saml_already_logged_in' => 'Already logged in',
-    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
-    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'saml_already_logged_in' => 'Redan inloggad',
+    'saml_user_not_registered' => 'Användarnamnet är inte registrerat och automatisk registrering är inaktiverad',
+    'saml_no_email_address' => 'Kunde inte hitta en e-postadress för den här användaren i data som tillhandahålls av det externa autentiseringssystemet',
+    'saml_invalid_response_id' => 'En begäran från det externa autentiseringssystemet känns inte igen av en process som startats av denna applikation. Att navigera bakåt efter en inloggning kan orsaka detta problem.',
+    'saml_fail_authed' => 'Inloggning med :system misslyckades, systemet godkände inte auktoriseringen',
     'social_no_action_defined' => 'Ingen åtgärd definierad',
     'social_login_bad_response' => "Ett fel inträffade vid inloggning genom :socialAccount: \n:error",
     'social_account_in_use' => 'Detta konto från :socialAccount används redan. Testa att logga in med :socialAccount istället.',
@@ -33,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Om du inte har något konto ännu kan du registerar dig genom att välja :socialAccount.',
     'social_driver_not_found' => 'Drivrutinen för den här tjänsten hittades inte',
     'social_driver_not_configured' => 'Dina inställningar för :socialAccount är inte korrekta.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Denna inbjudningslänk har löpt ut. Du kan istället försöka återställa ditt kontos lösenord.',
 
     // System
     'path_not_writable' => 'Kunde inte ladda upp till sökvägen :filePath. Kontrollera att webbservern har skrivåtkomst.',
@@ -83,21 +83,21 @@ return [
     // Error pages
     '404_page_not_found' => 'Sidan hittades inte',
     'sorry_page_not_found' => 'Tyvärr gick det inte att hitta sidan du söker.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Om du förväntade dig att denna sida skulle existera, kanske du inte har behörighet att se den.',
     'return_home' => 'Återvänd till startsidan',
     'error_occurred' => 'Ett fel inträffade',
     'app_down' => ':appName är nere just nu',
     'back_soon' => 'Vi är snart tillbaka.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Ingen auktoriseringstoken hittades på denna begäran',
+    'api_bad_authorization_format' => 'En auktoriseringstoken hittades på denna begäran men formatet verkade felaktigt',
+    'api_user_token_not_found' => 'Ingen matchande API-token hittades för den angivna auktoriseringstoken',
+    'api_incorrect_token_secret' => 'Hemligheten för den angivna API-token är felaktig',
+    'api_user_no_api_permission' => 'Ägaren av den använda API-token har inte behörighet att göra API-anrop',
+    'api_user_token_expired' => 'Den använda auktoriseringstoken har löpt ut',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Ett fel uppstod när ett test mail skulle skickas:',
 
 ];

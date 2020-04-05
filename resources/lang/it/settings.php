@@ -160,9 +160,9 @@ return [
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
-    'user_api_token_name' => 'Name',
+    'user_api_token_name' => 'Nome',
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
-    'user_api_token_expiry' => 'Expiry Date',
+    'user_api_token_expiry' => 'Data di scadenza',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
     'user_api_token_create_success' => 'API token successfully created',
@@ -186,7 +186,7 @@ return [
         'en' => 'English',
         'ar' => 'العربية',
         'cs' => 'Česky',
-        'da' => 'Dansk',
+        'da' => 'Danese',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
@@ -201,6 +201,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
+        'sl' => 'Sloveno',
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',

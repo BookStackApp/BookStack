@@ -204,6 +204,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
+        'sl' => 'Slowenisch',
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
