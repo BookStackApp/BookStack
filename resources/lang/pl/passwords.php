@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Hasło musi zawierać co najmniej 6 znaków i być zgodne z powtórzeniem.',
-    'user' => "Nie znaleziono użytkownika o takim adresie e-mail.",
-    'token' => 'Ten token resetowania hasła jest nieprawidłowy.',
-    'sent' => 'Wysłaliśmy Ci link do resetowania hasła!',
-    'reset' => 'Twoje hasło zostało zresetowane!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
