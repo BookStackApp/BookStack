@@ -1,6 +1,6 @@
 <div id="code-editor">
     <div overlay ref="overlay" v-cloak @click="hide()">
-        <div class="popup-body" tabindex="-1" @click.stop>
+        <div class="popup-body" tabindex="-1" @click.stop @keydown.enter.ctrl="save">
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.code_editor') }}</div>
