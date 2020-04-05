@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'This password reset token is invalid.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'يجب أن تتكون كلمة المرور من ستة أحرف على الأقل وأن تطابق التأكيد.',
+    'user' => "لم يتم العثور على مستخدم بعنوان البريد الإلكتروني المعطى.",
+    'token' => 'رابط تجديد كلمة المرور غير صحيح.',
+    'sent' => 'تم إرسال رابط تجديد كلمة المرور إلى بريدكم الإلكتروني!',
+    'reset' => 'تم تجديد كلمة المرور الخاصة بكم!',
 
 ];
