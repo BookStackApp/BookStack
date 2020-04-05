@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => '密碼必須至少包含六個字元並與確認相符。',
-    'user' => "使用該Email位址的使用者不存在。",
-    'token' => '此密碼重置 Session 無效。',
-    'sent' => '我們已經透過Email發送您的密碼重置連結。',
-    'reset' => '您的密碼已被重置。',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
