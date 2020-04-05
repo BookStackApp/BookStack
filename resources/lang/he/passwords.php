@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'הסיסמא חייבת להיות בעלת 6 תווים ולהתאים לאימות',
-    'user' => "לא ניתן למצוא משתמש עם המייל שסופק",
-    'token' => 'איפוס הסיסמא אינו תקין',
-    'sent' => 'נשלח אליך אי-מייל עם קישור לאיפוס הסיסמא',
-    'reset' => 'איפוס הסיסמא הושלם בהצלחה!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
