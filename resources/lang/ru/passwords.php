@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Пароль должен содержать не менее восьми символов и совпадать с подтверждением.',
-    'user' => "Пользователя с данным адресом электронной почты не существует.",
-    'token' => 'Токен сброса пароля недействителен.',
-    'sent' => 'Ссылка для сброса пароля отправлена на вашу почту!',
-    'reset' => 'Ваш пароль был сброшен!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
