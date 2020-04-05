@@ -74,7 +74,7 @@ $loadingSize: 10px;
     animation-duration: 1.4s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(.62, .28, .23, .99);
-    margin-right: 4px;
+    margin-inline-end: 4px;
     background-color: var(--color-page);
     animation-delay: 0.3s;
   }
@@ -89,7 +89,7 @@ $loadingSize: 10px;
     animation-delay: 0.6s;
   }
   > span {
-    margin-left: $-s;
+    margin-inline-start: $-s;
     font-style: italic;
     color: #888;
     vertical-align: top;
@@ -110,7 +110,7 @@ $btt-size: 40px;
   svg {
     width: $btt-size / 1.5;
     height: $btt-size / 1.5;
-    margin-right: 4px;
+    margin-inline-end: 4px;
   }
   width: $btt-size;
   height: $btt-size;
@@ -138,7 +138,7 @@ $btt-size: 40px;
   input, button {
     border-radius: 0;
     border: 1px solid #DDD;
-    margin-left: -1px;
+    margin-inline-start: -1px;
   }
   input {
     flex: 5;
@@ -177,8 +177,8 @@ $btt-size: 40px;
     overflow-y: scroll;
     height: 400px;
     background-color: #EEEEEE;
-    margin-right: 0;
-    margin-left: 0;
+    margin-inline-end: 0;
+    margin-inline-start: 0;
   }
   .entity-list-item {
     background-color: #FFF;
@@ -252,7 +252,7 @@ $btt-size: 40px;
   }
   .list-sort {
     display: inline-grid;
-    margin-left: $-s;
+    margin-inline-start: $-s;
     grid-template-columns: minmax(120px, max-content) 40px;
     font-size: 0.9rem;
     border: 2px solid #DDD;
@@ -264,14 +264,14 @@ $btt-size: 40px;
     color: #555;
   }
   .list-sort-type {
-    text-align: left;
+    text-align: start;
   }
   .list-sort-type, .list-sort-dir {
     padding: $-xs $-s;
     cursor: pointer;
   }
   .list-sort-dir {
-    border-left: 2px solid #DDD;
+    border-inline-start: 2px solid #DDD;
     fill: #888;
     .svg-icon {
       transition: transform ease-in-out 120ms;
