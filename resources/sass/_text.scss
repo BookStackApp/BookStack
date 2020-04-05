@@ -313,10 +313,10 @@ li > ol, li > ul {
   text-align: center;
 }
 .text-left {
-  text-align: left;
+  text-align: start;
 }
 .text-right {
-  text-align: right;
+  text-align: end;
 }
 
 @each $sizeLetter, $size in $screen-sizes {
@@ -325,10 +325,10 @@ li > ol, li > ul {
       text-align: center;
     }
     .text-#{$sizeLetter}-left {
-      text-align: left;
+      text-align: start;
     }
     .text-#{$sizeLetter}-right {
-      text-align: right;
+      text-align: end;
     }
   }
 }
@@ -384,6 +384,6 @@ span.sep {
   display: inline-block;
   position: relative;
   bottom: -0.105em;
-  margin-right: $-xs;
+  margin-inline-end: $-xs;
   pointer-events: none;
 }
