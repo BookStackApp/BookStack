@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'パスワードは6文字以上である必要があります。',
-    'user' => "このEメールアドレスに一致するユーザが見つかりませんでした。",
-    'token' => 'このパスワードリセットトークンは無効です。',
-    'sent' => 'パスワードリセットリンクを送信しました。',
-    'reset' => 'パスワードはリセットされました。',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
