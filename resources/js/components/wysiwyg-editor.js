@@ -238,7 +238,7 @@ function codePlugin() {
     });
 }
 
-function drawIoPlugin() {
+function drawIoPlugin(drawioUrl) {
 
     let pageEditor = null;
     let currentNode = null;
@@ -266,7 +266,7 @@ function drawIoPlugin() {
     function showDrawingEditor(mceEditor, selectedNode = null) {
         pageEditor = mceEditor;
         currentNode = selectedNode;
-        DrawIO.show(drawingInit, updateContent);
+        DrawIO.show(drawioUrl, drawingInit, updateContent);
     }
 
     async function updateContent(pngData) {
@@ -423,10 +423,14 @@ class WysiwygEditor {
     loadPlugins() {
         codePlugin();
         customHrPlugin();
-        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') === 'true') {
-            drawIoPlugin();
+
+        const drawioUrlElem = document.querySelector('[drawio-url]');
+        if (drawioUrlElem) {
+            const url = drawioUrlElem.getAttribute('drawio-url');
+            drawIoPlugin(url);
             this.plugins += ' drawio';
         }
+
         if (this.textDirection === 'rtl') {
             this.plugins += ' directionality'
         }
