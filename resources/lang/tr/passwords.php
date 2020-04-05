@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Parolanız en az 6 karakterden oluşmalı ve doğrulama parolası ile eşleşmelidir. ',
-    'user' => "Bu e-mail adresi ile ilişkilendirilmiş bir kullanıcı bulamadık.",
-    'token' => 'Parola yenileme tokeni geçerli değil.',
-    'sent' => 'Parola sıfırlanma bağlantısını e-mail adresinize gönderdik!',
-    'reset' => 'Parolanız sıfırlandı!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
