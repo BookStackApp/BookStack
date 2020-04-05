@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => '여덟 글자를 넘어야 합니다.',
-    'user' => "메일 주소를 가진 사용자가 없습니다.",
-    'token' => '이 링크는 더 이상 유효하지 않습니다.',
-    'sent' => '메일을 보냈습니다.',
-    'reset' => '비밀번호를 바꿨습니다.',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'This password reset token is invalid.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
