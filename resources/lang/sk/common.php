@@ -5,38 +5,38 @@
 return [
 
     // Buttons
-    'cancel' => 'Zrušiť',
-    'confirm' => 'Potvrdiť',
-    'back' => 'Späť',
-    'save' => 'Uložiť',
-    'continue' => 'Pokračovať',
-    'select' => 'Vybrať',
+    'cancel' => 'Cancel',
+    'confirm' => 'Confirm',
+    'back' => 'Back',
+    'save' => 'Save',
+    'continue' => 'Continue',
+    'select' => 'Select',
     'toggle_all' => 'Toggle All',
     'more' => 'More',
 
     // Form Labels
-    'name' => 'Meno',
-    'description' => 'Popis',
-    'role' => 'Rola',
-    'cover_image' => 'Obal knihy',
-    'cover_image_description' => 'Tento obrázok by mal byť približne 300 x 170 pixelov.',
+    'name' => 'Name',
+    'description' => 'Description',
+    'role' => 'Role',
+    'cover_image' => 'Cover image',
+    'cover_image_description' => 'This image should be approx 440x250px.',
     
     // Actions
-    'actions' => 'Akcie',
-    'view' => 'Zobraziť',
+    'actions' => 'Actions',
+    'view' => 'View',
     'view_all' => 'View All',
-    'create' => 'Vytvoriť',
-    'update' => 'Aktualizovať',
-    'edit' => 'Editovať',
-    'sort' => 'Zoradiť',
-    'move' => 'Presunúť',
+    'create' => 'Create',
+    'update' => 'Update',
+    'edit' => 'Edit',
+    'sort' => 'Sort',
+    'move' => 'Move',
     'copy' => 'Copy',
     'reply' => 'Reply',
-    'delete' => 'Zmazať',
-    'search' => 'Hľadť',
-    'search_clear' => 'Vyčistiť hľadanie',
+    'delete' => 'Delete',
+    'search' => 'Search',
+    'search_clear' => 'Clear Search',
     'reset' => 'Reset',
-    'remove' => 'Odstrániť',
+    'remove' => 'Remove',
     'add' => 'Add',
     'fullscreen' => 'Fullscreen',
 
@@ -50,12 +50,12 @@ return [
     'sort_updated_at' => 'Updated Date',
 
     // Misc
-    'deleted_user' => 'Odstránený používateľ',
-    'no_activity' => 'Žiadna aktivita na zobrazenie',
-    'no_items' => 'Žiadne položky nie sú dostupné',
-    'back_to_top' => 'Späť nahor',
-    'toggle_details' => 'Prepnúť detaily',
-    'toggle_thumbnails' => 'Prepnúť náhľady',
+    'deleted_user' => 'Deleted User',
+    'no_activity' => 'No activity to show',
+    'no_items' => 'No items available',
+    'back_to_top' => 'Back to top',
+    'toggle_details' => 'Toggle Details',
+    'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => 'Details',
     'grid_view' => 'Grid View',
     'list_view' => 'List View',
@@ -64,14 +64,14 @@ return [
 
     // Header
     'profile_menu' => 'Profile Menu',
-    'view_profile' => 'Zobraziť profil',
-    'edit_profile' => 'Upraviť profil',
+    'view_profile' => 'View Profile',
+    'edit_profile' => 'Edit Profile',
 
     // Layout tabs
     'tab_info' => 'Info',
     'tab_content' => 'Content',
 
     // Email Content
-    'email_action_help' => 'Ak máte problém klinkúť na tlačidlo ":actionText", skopírujte a vložte URL uvedenú nižšie do Vášho prehliadača:',
-    'email_rights' => 'Všetky práva vyhradené',
+    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
+    'email_rights' => 'All rights reserved',
 ];
