@@ -101,6 +101,9 @@ return [
         Illuminate\Notifications\NotificationServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
 
+        // 又拍云存储
+        JellyBool\Flysystem\Upyun\UpyunServiceProvider::class,
+
         // Third party service providers
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,

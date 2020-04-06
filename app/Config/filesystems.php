@@ -69,6 +69,15 @@ return [
             'url_type'  => 'publicURL',
         ],
 
+        'upyun' => [
+            'driver'        => env('STORAGE_upyun_KEY'),
+            'bucket'        => env('STORAGE_upyun_BUCKET'),// 服务名字
+            'operator'      => env('STORAGE_upyun_OPERATIOR'), // 操作员的名字
+            'password'      => env('STORAGE_upyun_PASSWORD'),// 操作员的密码
+            'domain'        => env('STORAGE_upyun_DOMAIN'),// 服务分配的域名
+            'protocol'     => env('STORAGE_upyun_PROTOCOL'),// 服务使用的协议，如需使用 http，在此配置 http
+        ],
+
     ],
 
 ];
