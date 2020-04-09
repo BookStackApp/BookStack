@@ -122,16 +122,6 @@
         </div>
     </div>
 
-    <div class="actions mb-xl">
-        <h5>{{ trans('entities.shelves_long') }}</h5>
-
-        @if(count($bookParentShelves) > 0)
-            @include('partials.entity-list', ['entities' => $bookParentShelves, 'style' => 'compact'])
-        @else
-            <div class="body text-muted">{{ trans('entities.book_parent_shelves_empty') }}</div>
-        @endif
-    </div>
-
 @stop
 
 @section('left')
@@ -141,6 +131,13 @@
     @if($book->tags->count() > 0)
         <div class="mb-xl">
             @include('components.tag-list', ['entity' => $book])
+        </div>
+    @endif
+
+    @if(count($bookParentShelves) > 0)
+        <div class="actions mb-xl">
+            <h5>{{ trans('entities.shelves_long') }}</h5>
+            @include('partials.entity-list', ['entities' => $bookParentShelves, 'style' => 'compact'])
         </div>
     @endif
 
