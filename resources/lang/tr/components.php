@@ -5,9 +5,9 @@
 return [
 
     // Image Manager
-    'image_select' => 'Görsel Seç',
-    'image_all' => 'Tümü',
-    'image_all_title' => 'Tüm görselleri temizle',
+    'image_select' => 'Resim Seç',
+    'image_all' => 'Hepsi',
+    'image_all_title' => 'Tüm resimleri görüntüle',
     'image_book_title' => 'Bu kitaba ait görselleri görüntüle',
     'image_page_title' => 'Bu sayfaya ait görselleri görüntüle',
     'image_search_hint' => 'Görsel adı ile ara',
