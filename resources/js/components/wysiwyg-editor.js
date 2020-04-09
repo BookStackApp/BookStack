@@ -508,7 +508,15 @@ class WysiwygEditor {
                         const originalField = win.document.getElementById(field_name);
                         originalField.value = entity.link;
                         const mceForm = originalField.closest('.mce-form');
-                        mceForm.querySelectorAll('input')[2].value = entity.name;
+                        const inputs = mceForm.querySelectorAll('input');
+
+                        // Set text to display if not empty
+                        if (!inputs[1].value) {
+                            inputs[1].value = entity.name;
+                        }
+
+                        // Set title field
+                        inputs[2].value = entity.name;
                     });
                 }
 
