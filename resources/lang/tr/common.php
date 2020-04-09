@@ -52,7 +52,7 @@ return [
     // Misc
     'deleted_user' => 'Silinmiş Kullanıcı',
     'no_activity' => 'Gösterilecek eylem bulunamadı',
-    'no_items' => 'Kullanılabilir öge bulunamadı',
+    'no_items' => 'Herhangi bir öge bulunamadı',
     'back_to_top' => 'Başa dön',
     'toggle_details' => 'Detayları Göster/Gizle',
     'toggle_thumbnails' => 'Küçük Resimleri Göster/Gizle',
