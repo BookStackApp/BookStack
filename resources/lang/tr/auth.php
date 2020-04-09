@@ -51,27 +51,27 @@ return [
 
 
     // Email Confirmation
-    'email_confirm_subject' => ':appName için girdiğiniz mail adresiniz onaylayınız',
-    'email_confirm_greeting' => ':appName\'e katıldığınız için teşekkürler!',
-    'email_confirm_text' => 'Lütfen e-mail adresinizi aşağıda bulunan butona tıklayarak onaylayınız:',
-    'email_confirm_action' => 'E-Maili Onayla',
-    'email_confirm_send_error' => 'e-mail onayı gerekli fakat sistem mail göndermeyi başaramadı. Yöneticiniz ile görüşüp kurulumlarda bir sorun olmadığını doğrulayın.',
-    'email_confirm_success' => 'e-mail adresiniz onaylandı!',
-    'email_confirm_resent' => 'Doğrulama maili gönderildi, lütfen gelen kutunuzu kontrol ediniz...',
+    'email_confirm_subject' => ':appName için girdiğiniz e-posta adresini doğrulayın',
+    'email_confirm_greeting' => ':appName uygulamasına katıldığınız için teşekkürler!',
+    'email_confirm_text' => 'Lütfen aşağıdaki butona tıklayarak e-posta adresinizi doğrulayın:',
+    'email_confirm_action' => 'E-posta Adresini Doğrula',
+    'email_confirm_send_error' => 'E-posta adresinin doğrulanması gerekiyor fakat sistem, doğrulama bağlantısını göndermeyi başaramadı. E-posta adresinin doğru bir şekilde ayarlığından emin olmak için yöneticiyle iletişime geçin.',
+    'email_confirm_success' => 'E-posta adresiniz doğrulandı!',
+    'email_confirm_resent' => 'Doğrulama e-postası tekrar gönderildi, lütfen gelen kutunuzu kontrol ediniz.',
 
-    'email_not_confirmed' => 'E-mail Adresi Doğrulanmadı',
-    'email_not_confirmed_text' => 'Sağlamış olduğunuz e-mail adresi henüz doğrulanmadı.',
-    'email_not_confirmed_click_link' => 'Lütfen kayıt olduktan kısa süre sonra size gönderilen maildeki bağlantıya tıklayın ve mail adresinizi onaylayın.',
-    'email_not_confirmed_resend' => 'Eğer gelen maili bulamadıysanız aşağıdaki formu tekrar doldurarak onay mailini kendinize tekrar gönderebilirsiniz.',
-    'email_not_confirmed_resend_button' => 'Doğrulama Mailini Yeniden Yolla',
+    'email_not_confirmed' => 'E-posta Adresi Doğrulanmadı',
+    'email_not_confirmed_text' => 'E-posta adresiniz henüz doğrulanmadı.',
+    'email_not_confirmed_click_link' => 'Lütfen kayıt olduktan hemen sonra size gönderilen e-postadaki bağlantıya tıklayın.',
+    'email_not_confirmed_resend' => 'Eğer e-postayı bulamıyorsanız, aşağıdaki formu doldurarak doğrulama e-postasının tekrar gönderilmesini sağlayabilirsiniz.',
+    'email_not_confirmed_resend_button' => 'Doğrulama E-postasını Tekrar Gönder',
 
     // User Invite
-    'user_invite_email_subject' => ':appName\'e katılma daveti aldınız!',
+    'user_invite_email_subject' => ':appName uygulamasına davet edildiniz!',
     'user_invite_email_greeting' => 'Sizin için :appName üzerinde bir hesap oluşturuldu.',
-    'user_invite_email_text' => 'Parola belirlemek ve erişebilmek için aşağıdaki butona tıklayın:',
+    'user_invite_email_text' => 'Hesap şifrenizi belirlemek ve hesabınıza erişim sağlayabilmek için aşağıdaki butona tıklayın:',
     'user_invite_email_action' => 'Hesap Şifresini Belirleyin',
-    'user_invite_page_welcome' => ':appName\'e hoş geldiniz!',
-    'user_invite_page_text' => 'Hesap açılışını tamamlamak ve erişim izni alabilmek için daha sonraki girişlerinizde kullanabilmek üzere bir şifre belirlemeniz gerekiyor.',
-    'user_invite_page_confirm_button' => 'Parolayı Onayla',
-    'user_invite_success' => 'Parolanız belirlendi, artık :appName\'e erişebilirsiniz!'
+    'user_invite_page_welcome' => ':appName uygulamasına hoş geldiniz!',
+    'user_invite_page_text' => 'Hesap kurulumunuzu tamamlamak ve gelecekteki :appName ziyaretlerinizde hesabınıza erişim sağlayabilmeniz için bir şifre belirlemeniz gerekiyor.',
+    'user_invite_page_confirm_button' => 'Şifreyi Doğrula',
+    'user_invite_success' => 'Şifreniz ayarlandı, artık :appName uygulamasına giriş yapabilirsiniz!'
 ];
