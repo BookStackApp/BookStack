@@ -284,7 +284,7 @@ class BookShelfTest extends TestCase
         $newBook = Book::query()->orderBy('id', 'desc')->first();
 
         $resp = $this->asEditor()->get($newBook->getUrl());
-        $resp->assertSee($shelfInfo['name']);
+        $resp->assertElementContains('.tri-layout-left-contents', $shelfInfo['name']);
 
         // Remove shelf
         $this->delete($shelf->getUrl());
