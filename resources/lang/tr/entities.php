@@ -308,7 +308,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Bu revizyonu silmek istediğinize emin misiniz?',
-    'revision_restore_confirm' => 'Bu revizyonu yeniden yüklemek istediğinizden emin misiniz? Mevcut sayfa içeriği değiştirilecektir.',
+    'revision_restore_confirm' => 'Bu revizyonu yeniden yüklemek istediğinize emin misiniz? Sayfanın şu anki içeriği değiştirilecektir.',
     'revision_delete_success' => 'Revizyon silindi',
-    'revision_cannot_delete_latest' => 'Son revizyon silinemez.'
+    'revision_cannot_delete_latest' => 'Son revizyonu silemezsiniz.'
 ];
