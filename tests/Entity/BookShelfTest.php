@@ -264,4 +264,32 @@ class BookShelfTest extends TestCase
         $pageVisit->assertElementNotContains('.breadcrumbs', $shelf->getShortName());
     }
 
+    public function test_bookshelves_show_on_book()
+    {
+        // Create shelf
+        $shelfInfo = [
+            'name' => 'My test shelf' . Str::random(4),
+            'description' => 'Test shelf description ' . Str::random(10)
+        ];
+
+        $this->asEditor()->post('/shelves', $shelfInfo);
+        $shelf = Bookshelf::where('name', '=', $shelfInfo['name'])->first();
+
+        // Create book and add to shelf
+        $this->asEditor()->post($shelf->getUrl('/create-book'), [
+            'name' => 'Test book name',
+            'description' => 'Book in shelf description'
+        ]);
+
+        $newBook = Book::query()->orderBy('id', 'desc')->first();
+
+        $resp = $this->asEditor()->get($newBook->getUrl());
+        $resp->assertSee($shelfInfo['name']);
+
+        // Remove shelf
+        $this->delete($shelf->getUrl());
+
+        $resp = $this->asEditor()->get($newBook->getUrl());
+        $resp->assertDontSee($shelfInfo['name']);
+    }
 }
