@@ -6,27 +6,27 @@
 return [
 
     // Pages
-    'page_create'                 => 'saya oluşturuldu',
+    'page_create'                 => 'sayfa oluşturdu',
     'page_create_notification'    => 'Sayfa Başarıyla Oluşturuldu',
-    'page_update'                 => 'sayfa güncellendi',
+    'page_update'                 => 'sayfayı güncelledi',
     'page_update_notification'    => 'Sayfa Başarıyla Güncellendi',
-    'page_delete'                 => 'sayfa silindi',
+    'page_delete'                 => 'sayfayı sildi',
     'page_delete_notification'    => 'Sayfa Başarıyla Silindi',
-    'page_restore'                => 'sayfa kurtarıldı',
-    'page_restore_notification'   => 'Sayfa Başarıyla Kurtarıldı',
-    'page_move'                   => 'sayfa taşındı',
+    'page_restore'                => 'sayfayı eski haline getirdi',
+    'page_restore_notification'   => 'Sayfa Başarıyla Eski Haline Getirildi',
+    'page_move'                   => 'sayfayı taşıdı',
 
     // Chapters
-    'chapter_create'              => 'bölüm oluşturuldu',
+    'chapter_create'              => 'bölüm oluşturdu',
     'chapter_create_notification' => 'Bölüm Başarıyla Oluşturuldu',
-    'chapter_update'              => 'bölüm güncellendi',
+    'chapter_update'              => 'bölümü güncelledi',
     'chapter_update_notification' => 'Bölüm Başarıyla Güncellendi',
-    'chapter_delete'              => 'bölüm silindi',
+    'chapter_delete'              => 'bölüm sildi',
     'chapter_delete_notification' => 'Bölüm Başarıyla Silindi',
-    'chapter_move'                => 'bölüm taşındı',
+    'chapter_move'                => 'bölümü taşıdı',
 
     // Books
-    'book_create'                 => 'kitap oluşturuldu',
+    'book_create'                 => 'kitap oluşturdu',
     'book_create_notification'    => 'Kitap Başarıyla Oluşturuldu',
     'book_update'                 => 'kitap güncellendi',
     'book_update_notification'    => 'Kitap Başarıyla Güncellendi',
