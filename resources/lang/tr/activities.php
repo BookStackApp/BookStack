@@ -21,26 +21,26 @@ return [
     'chapter_create_notification' => 'Bölüm Başarıyla Oluşturuldu',
     'chapter_update'              => 'bölümü güncelledi',
     'chapter_update_notification' => 'Bölüm Başarıyla Güncellendi',
-    'chapter_delete'              => 'bölüm sildi',
+    'chapter_delete'              => 'bölümü sildi',
     'chapter_delete_notification' => 'Bölüm Başarıyla Silindi',
     'chapter_move'                => 'bölümü taşıdı',
 
     // Books
     'book_create'                 => 'kitap oluşturdu',
     'book_create_notification'    => 'Kitap Başarıyla Oluşturuldu',
-    'book_update'                 => 'kitap güncellendi',
+    'book_update'                 => 'kitabı güncelledi',
     'book_update_notification'    => 'Kitap Başarıyla Güncellendi',
-    'book_delete'                 => 'kitap silindi',
+    'book_delete'                 => 'kitabı sildi',
     'book_delete_notification'    => 'Kitap Başarıyla Silindi',
-    'book_sort'                   => 'kitap düzenlendi',
+    'book_sort'                   => 'kitabı sıraladı',
     'book_sort_notification'      => 'Kitap Başarıyla Yeniden Sıralandı',
 
     // Bookshelves
-    'bookshelf_create'            => 'kitaplık oluşturuldu',
+    'bookshelf_create'            => 'kitaplık oluşturdu',
     'bookshelf_create_notification'    => 'Kitaplık Başarıyla Oluşturuldu',
-    'bookshelf_update'                 => 'kitaplık güncellendi',
+    'bookshelf_update'                 => 'kitaplığı güncelledi',
     'bookshelf_update_notification'    => 'Kitaplık Başarıyla Güncellendi',
-    'bookshelf_delete'                 => 'kitaplık silindi',
+    'bookshelf_delete'                 => 'kitaplığı sildi',
     'bookshelf_delete_notification'    => 'Kitaplık Başarıyla Silindi',
 
     // Other
