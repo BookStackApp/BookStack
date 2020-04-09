@@ -6,48 +6,48 @@
  */
 return [
 
-    'failed' => 'Girilen bilgiler bizdeki kayıtlarla uyuşmuyor.',
+    'failed' => 'Girdiğiniz bilgiler kayıtlarımızla uyuşmuyor.',
     'throttle' => 'Çok fazla giriş yapmaya çalıştınız. Lütfen :seconds saniye içinde tekrar deneyin.',
 
     // Login & Register
-    'sign_up' => 'Kayıt Ol',
+    'sign_up' => 'Kaydol',
     'log_in' => 'Giriş Yap',
     'log_in_with' => ':socialDriver ile giriş yap',
-    'sign_up_with' => ':socialDriver ile kayıt ol',
+    'sign_up_with' => ':socialDriver ile kaydol',
     'logout' => 'Çıkış Yap',
 
     'name' => 'İsim',
     'username' => 'Kullanıcı Adı',
-    'email' => 'E-Posta',
+    'email' => 'E-posta',
     'password' => 'Şifre',
-    'password_confirm' => 'Şifreyi onayla',
-    'password_hint' => 'En az 5 karakter olmalı',
+    'password_confirm' => 'Şifreyi Onayla',
+    'password_hint' => 'En az 8 karakter olmalı',
     'forgot_password' => 'Şifrenizi mi unuttunuz?',
     'remember_me' => 'Beni Hatırla',
-    'ldap_email_hint' => 'Hesabı kullanmak istediğiniz e-mail adresinizi giriniz.',
+    'ldap_email_hint' => 'Bu hesap için kullanmak istediğiniz e-posta adresini giriniz.',
     'create_account' => 'Hesap Oluştur',
     'already_have_account' => 'Zaten bir hesabınız var mı?',
     'dont_have_account' => 'Hesabınız yok mu?',
     'social_login' => 'Diğer Servisler ile Giriş Yap',
-    'social_registration' => 'Diğer Servisler ile Kayıt Ol',
-    'social_registration_text' => 'Diğer servisler ile kayıt ol ve giriş yap.',
+    'social_registration' => 'Diğer Servisler ile Kaydol',
+    'social_registration_text' => 'Başka bir servis aracılığıyla kaydol ve giriş yap.',
 
-    'register_thanks' => 'Kayıt olduğunuz için teşekkürler!',
-    'register_confirm' => 'Lütfen e-posta adresinizi kontrol edin ve gelen doğrulama bağlantısına tıklayınız. :appName.',
-    'registrations_disabled' => 'Kayıt olma özelliği geçici olarak kısıtlanmıştır',
-    'registration_email_domain_invalid' => 'Bu e-mail sağlayıcısının bu uygulamaya erişim izni yoktur.',
-    'register_success' => 'Artık kayıtlı bir kullanıcı olarak giriş yaptınız.',
+    'register_thanks' => 'Kaydolduğunuz için teşekkürler!',
+    'register_confirm' => ':appName erişimi için lütfen e-posta adresinizi kontrol edin ve size gönderilen doğrulama bağlantısına tıklayın.',
+    'registrations_disabled' => 'Kayıtlar devre dışı bırakılmıştır',
+    'registration_email_domain_invalid' => 'Bu e-posta sağlayıcısının uygulamaya erişim izni bulunmuyor',
+    'register_success' => 'Kaydolduğunuz için teşekkürler! Artık kayıtlı bir kullanıcı olarak giriş yaptınız.',
 
 
     // Password Reset
-    'reset_password' => 'Parolayı Sıfırla',
-    'reset_password_send_instructions' => 'Aşağıya e-mail adresinizi girdiğinizde parola yenileme bağlantısı mail adresinize gönderilecektir.',
-    'reset_password_send_button' => '>Sıfırlama Bağlantısını Gönder',
-    'reset_password_sent_success' => 'Sıfırlama bağlantısı :email adresinize gönderildi.',
-    'reset_password_success' => 'Parolanız başarıyla sıfırlandı.',
-    'email_reset_subject' => ':appName şifrenizi sıfırlayın.',
-    'email_reset_text' => ' Parola sıfırlama isteğinde bulunduğunuz için bu maili görüntülüyorsunuz.',
-    'email_reset_not_requested' => 'Eğer bu parola sıfırlama isteğinde bulunmadıysanız herhangi bir işlem yapmanıza gerek yoktur.',
+    'reset_password' => 'Şifreyi Sıfırla',
+    'reset_password_send_instructions' => 'Aşağıya gireceğiniz e-posta adresine şifre sıfırlama bağlantısı gönderilecektir.',
+    'reset_password_send_button' => 'Sıfırlama Bağlantısını Gönder',
+    'reset_password_sent_success' => 'Şifre sıfırlama bağlantısı :email adresine gönderildi.',
+    'reset_password_success' => 'Şifreniz başarıyla sıfırlandı.',
+    'email_reset_subject' => ':appName şifrenizi sıfırlayın',
+    'email_reset_text' => 'Hesap şifrenizi sıfırlama isteğinde bulunduğunuz için bu e-postayı aldınız.',
+    'email_reset_not_requested' => 'Şifre sıfırlama isteğinde bulunmadıysanız herhangi bir işlem yapmanıza gerek yoktur.',
 
 
     // Email Confirmation
