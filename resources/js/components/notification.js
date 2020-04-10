@@ -28,7 +28,11 @@ class Notification {
             this.elem.classList.add('showing');
         }, 1);
 
-        if (this.autohide) setTimeout(this.hide.bind(this), 2000);
+        if (this.autohide) {
+            const words = textToShow.split(' ').length;
+            const timeToShow = Math.max(2000, 1000 + (250 * words));
+            setTimeout(this.hide.bind(this), timeToShow);
+        }
     }
 
     hide() {
