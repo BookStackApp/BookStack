@@ -9,7 +9,7 @@ return [
 
     // Standard laravel validation lines
     'accepted'             => ':attribute kabul edilmelidir.',
-    'active_url'           => ':attribute geçerli bir URL adresi değildir.',
+    'active_url'           => ':attribute, geçerli bir URL adresi değildir.',
     'after'                => ':attribute tarihi, :date tarihinden sonraki bir tarih olmalıdır.',
     'alpha'                => ':attribute sadece harflerden oluşabilir.',
     'alpha_dash'           => ':attribute sadece harf, rakam ve tirelerden oluşabilir.',
