@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Şifreyi Sıfırla',
     'reset_password_send_instructions' => 'Aşağıya gireceğiniz e-posta adresine şifre sıfırlama bağlantısı gönderilecektir.',
     'reset_password_send_button' => 'Sıfırlama Bağlantısını Gönder',
-    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
+    'reset_password_sent' => 'Şifre sıfırlama bağlantısı, :email adresinin sistemde bulunması durumunda e-posta olarak gönderilecektir.',
     'reset_password_success' => 'Şifreniz başarıyla sıfırlandı.',
     'email_reset_subject' => ':appName şifrenizi sıfırlayın',
     'email_reset_text' => 'Hesap şifrenizi sıfırlama isteğinde bulunduğunuz için bu e-postayı aldınız.',
