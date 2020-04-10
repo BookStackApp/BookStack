@@ -19,10 +19,10 @@ return [
     'image_select_image' => 'Görsel Seç',
     'image_dropzone' => 'Görselleri sürükleyin ya da seçin',
     'images_deleted' => 'Görseller Silindi',
-    'image_preview' => 'Görsel Önizlemesi',
+    'image_preview' => 'Görsel Ön İzlemesi',
     'image_upload_success' => 'Görsel başarıyla yüklendi',
-    'image_update_success' => 'Resim detayları başarıyla güncellendi',
-    'image_delete_success' => 'Resim başarıyla silindi',
+    'image_update_success' => 'Görsel detayları başarıyla güncellendi',
+    'image_delete_success' => 'Görsel başarıyla silindi',
     'image_upload_remove' => 'Kaldır',
 
     // Code Editor
