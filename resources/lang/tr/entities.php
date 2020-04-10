@@ -20,7 +20,7 @@ return [
     'meta_revision' => 'Revizyon #:revisionCount',
     'meta_created' => ':timeLength Oluşturuldu',
     'meta_created_name' => ':user tarafından :timeLength oluşturuldu',
-    'meta_updated' => ':timeLength Güncellendi',
+    'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'entity_select' => 'Öge Seçimi',
     'images' => 'Görseller',
