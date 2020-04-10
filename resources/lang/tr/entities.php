@@ -44,7 +44,7 @@ return [
     'search_results' => 'Arama Sonuçları',
     'search_total_results_found' => ':count sonuç bulundu |:count toplam sonuç bulundu',
     'search_clear' => 'Aramayı Temizle',
-    'search_no_pages' => 'Bu aramayla ilgili bir sonuç bulunamadı',
+    'search_no_pages' => 'Bu aramayla ilgili herhangi bir sayfa bulunamadı',
     'search_for_term' => ':term için Ara',
     'search_more' => 'Daha Fazla Sonuç',
     'search_filters' => 'Arama Filtreleri',
