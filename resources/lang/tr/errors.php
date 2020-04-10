@@ -69,31 +69,31 @@ return [
 
     // Roles
     'role_cannot_be_edited' => 'Bu rol düzenlenemez',
-    'role_system_cannot_be_deleted' => 'Bu bir yönetici rolüdür ve silinemez',
-    'role_registration_default_cannot_delete' => 'Bu rol varsayılan yönetici rolü olarak atandığı için silinemez ',
-    'role_cannot_remove_only_admin' => 'Bu kullanıcı yönetici rolü olan tek kullanıcı olduğu için silinemez. Bu kullanıcıyı silmek için önce başka bir kullanıcıya yönetici rolü atayın.',
+    'role_system_cannot_be_deleted' => 'Bu rol, bir sistem rolüdür ve silinemez',
+    'role_registration_default_cannot_delete' => 'Bu rol, kaydolan üyelere varsayılan olarak atandığı için silinemez',
+    'role_cannot_remove_only_admin' => 'Bu kullanıcı, yönetici rolü olan tek kullanıcı olduğu için silinemez. Bu kullanıcıyı silmek için önce başka bir kullanıcıya yönetici rolü atayın.',
 
     // Comments
     'comment_list' => 'Yorumlar yüklenirken bir hata oluştu.',
     'cannot_add_comment_to_draft' => 'Taslaklara yorum ekleyemezsiniz.',
     'comment_add' => 'Yorum eklerken/güncellerken bir hata olıuştu.',
     'comment_delete' => 'Yorum silinirken bir hata oluştu.',
-    'empty_comment' => 'Boş bir yorum eklenemez.',
+    'empty_comment' => 'Boş bir yorum ekleyemezsiniz.',
 
     // Error pages
     '404_page_not_found' => 'Sayfa Bulunamadı',
     'sorry_page_not_found' => 'Üzgünüz, aradığınız sayfa bulunamıyor.',
-    'sorry_page_not_found_permission_warning' => 'Görüntüleyemediğiniz bu sayfanın var olduğunu düşünüyorsanız, görüntüleme izniniz olmayabilir.',
-    'return_home' => 'Anasayfaya dön',
+    'sorry_page_not_found_permission_warning' => 'Bu sayfanın var olduğunu düşünüyorsanız, görüntüleme iznine sahip olmayabilirsiniz.',
+    'return_home' => 'Ana sayfaya dön',
     'error_occurred' => 'Bir Hata Oluştu',
-    'app_down' => ':appName şu anda inaktif',
-    'back_soon' => 'En kısa zamanda aktif hale gelecek.',
+    'app_down' => ':appName şu anda erişilemez durumda',
+    'back_soon' => 'En kısa zamanda tekrar erişilebilir duruma gelecektir.',
 
     // API errors
-    'api_no_authorization_found' => 'İstekte yetkilendirme anahtarı bulunamadı',
-    'api_bad_authorization_format' => 'İstekte bir yetkilendirme anahtarı bulundu, ancak biçim yanlış görünüyor',
+    'api_no_authorization_found' => 'Yapılan istekte, yetkilendirme anahtarı bulunamadı',
+    'api_bad_authorization_format' => 'Yapılan istekte bir yetkilendirme anahtarı bulundu fakat doğru görünmüyor',
     'api_user_token_not_found' => 'Sağlanan yetkilendirme anahtarı ile eşleşen bir API anahtarı bulunamadı',
-    'api_incorrect_token_secret' => 'Kullanılan API anahtarı için sağlanan gizli anahtar doğru değil',
+    'api_incorrect_token_secret' => 'Kullanılan API için sağlanan gizli anahtar doğru değil',
     'api_user_no_api_permission' => 'Kullanılan API anahtarının sahibi API çağrısı yapmak için izne sahip değil',
     'api_user_token_expired' => 'Kullanılan yetkilendirme anahtarının süresi doldu',
 
