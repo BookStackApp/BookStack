@@ -27,9 +27,9 @@ return [
     'app_secure_images_desc' => 'Bütün resimler, performans sebepleri nedeniyle herkes tarafından görüntülenebilir durumdadır. Bu seçeneği aktif ederseniz; resim bağlantılarının önüne rastgele, tahmini zor karakterler eklenmesini sağlarsınız. Kolay erişimin önlenmesi için dizin indekslerinin kapalı olduğundan emin olun.',
     'app_editor' => 'Sayfa Düzenleyicisi',
     'app_editor_desc' => 'Sayfa düzenlemesi yapılırken, bütün kullanıcılar tarafından hangi düzenleyicinin kullanılacağını seçin.',
-    'app_custom_html' => 'Özel HTML Head İçeriği',
-    'app_custom_html_desc' => 'Buraya yazacağınız içerik, <head> etiketinin en sonuna eklenecektir. Bu işlem, stil değişikliklerinin uygulanmasında ya da analytics kodlarının eklenmesinde yararlı olmaktadır.',
-    'app_custom_html_disabled_notice' => 'Yapılan hatalı değişikliklerin geriye alınabilmesi için bu sayfada özel HTML head içeriği kapalı.',
+    'app_custom_html' => 'Özel HTML "Head" İçeriği',
+    'app_custom_html_desc' => 'Buraya yazacağınız içerik, <head> etiketinin içine ve en sonuna eklenecektir. Bu işlem, stil değişikliklerinin uygulanmasında ya da analytics kodlarının eklenmesinde yararlı olmaktadır.',
+    'app_custom_html_disabled_notice' => 'Yapılabilecek hatalı değişikliklerin geriye alınabilmesi için bu sayfanın özelleştirilmiş HTML "head" içeriği devre dışı bırakıldı.',
     'app_logo' => 'Uygulama Logosu',
     'app_logo_desc' => 'Bu resim 43px yüksekliğinde olmalıdır. <br>Daha büyük resimler otomatik olarak küçültülecektir.',
     'app_primary_color' => 'Uygulamanın Birincil Rengi',
@@ -39,7 +39,7 @@ return [
     'app_homepage_select' => 'Bir sayfa seçin',
     'app_disable_comments' => 'Yorumları Devre Dışı Bırak',
     'app_disable_comments_toggle' => 'Yorumları devre dışı bırak',
-    'app_disable_comments_desc' => 'Bütün sayfalar için yorumları devre dışı bırak. <br> Mevcut yorumlar gösterilmeyecektir.',
+    'app_disable_comments_desc' => 'Bütün sayfalar için yorumları devre dışı bırakır. <br> Mevcut yorumlar gösterilmeyecektir.',
 
     // Color settings
     'content_colors' => 'İçerik Renkleri',
@@ -52,16 +52,16 @@ return [
 
     // Registration Settings
     'reg_settings' => 'Kayıt İşlemleri',
-    'reg_enable' => 'Kaydolmaya İzin Ver',
-    'reg_enable_toggle' => 'Kaydolmaya izin ver',
+    'reg_enable' => 'Kayıtları Aktifleştir',
+    'reg_enable_toggle' => 'Kayıtları aktifleştir',
     'reg_enable_desc' => 'Kullanıcılar kaydolduktan sonra sizin belirleyeceğiniz bir role otomatik olarak atanabilirler.',
     'reg_default_role' => 'Kayıttan sonraki varsayılan kullanıcı rolü',
     'reg_enable_external_warning' => 'Harici LDAP veya SAML kimlik doğrulaması etkinken yukarıdaki seçenek yok sayılır. Mevcut harici üyelere yönelik kimlik doğrulama başarılı olursa, mevcut olmayan üyelerin kullanıcı hesapları otomatik olarak oluşturulur.',
-    'reg_email_confirmation' => 'Email Doğrulama',
-    'reg_email_confirmation_toggle' => 'E-mail onayı gerektir',
-    'reg_confirm_email_desc' => 'Eğer domain kısıtlaması kullanılıyorsa o zaman email doğrulaması gereklidir ve bu seçenek yok sayılacaktır.',
-    'reg_confirm_restrict_domain' => 'Domain Kısıtlaması',
-    'reg_confirm_restrict_domain_desc' => 'Kısıtlamak istediğiniz email domainlerini vigül ile ayırarak yazınız. Kullanıcılara uygulamaya erişmeden önce adreslerini doğrulamak için bir mail gönderilecektir. <br> Kullanıcılar başarıyla kaydolduktan sonra email adreslerini değiştiremeyeceklerdir.',
+    'reg_email_confirmation' => 'E-posta Doğrulaması',
+    'reg_email_confirmation_toggle' => 'E-posta doğrulamasını zorunlu kıl',
+    'reg_confirm_email_desc' => 'Eğer alan adı kısıtlaması kullanılıyorsa, bu seçenek yok sayılarak e-posta doğrulaması zorunlu kılınacaktır.',
+    'reg_confirm_restrict_domain' => 'Alan Adı Kısıtlaması',
+    'reg_confirm_restrict_domain_desc' => 'Kısıtlamak istediğiniz e-posta alan adlarını vigül ile ayırarak yazınız. Kullanıcılara, uygulamaya erişmeden önce adreslerini doğrulamaları için bir e-posta gönderilecektir. <br> Başarılı bir kayıt işleminden sonra kullanıcıların e-posta adreslerini değiştirebileceklerini unutmayın.',
     'reg_confirm_restrict_domain_placeholder' => 'Hiçbir kısıtlama tanımlanmamış',
 
     // Maintenance settings
