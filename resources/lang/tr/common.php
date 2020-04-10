@@ -19,7 +19,7 @@ return [
     'description' => 'Açıklama',
     'role' => 'Rol',
     'cover_image' => 'Kapak resmi',
-    'cover_image_description' => 'Bu resim yaklaşık 440x250px boyutlarında olmalıdır.',
+    'cover_image_description' => 'Bu görsel yaklaşık 440x250px boyutlarında olmalıdır.',
     
     // Actions
     'actions' => 'İşlemler',
@@ -55,7 +55,7 @@ return [
     'no_items' => 'Herhangi bir öge bulunamadı',
     'back_to_top' => 'Başa dön',
     'toggle_details' => 'Detayları Göster/Gizle',
-    'toggle_thumbnails' => 'Küçük Resimleri Göster/Gizle',
+    'toggle_thumbnails' => 'Ön İzleme Görsellerini Göster/Gizle',
     'details' => 'Detaylar',
     'grid_view' => 'Izgara Görünümü',
     'list_view' => 'Liste Görünümü',
