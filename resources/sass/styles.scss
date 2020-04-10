@@ -161,6 +161,7 @@ $btt-size: 40px;
 
 .entity-selector {
   border: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #111);
   border-radius: 3px;
   overflow: hidden;
   font-size: 0.8em;
@@ -176,12 +177,12 @@ $btt-size: 40px;
   .entity-list {
     overflow-y: scroll;
     height: 400px;
-    background-color: #EEEEEE;
+    @include lightDark(background-color, #eee, #222);
     margin-inline-end: 0;
     margin-inline-start: 0;
   }
   .entity-list-item {
-    background-color: #FFF;
+    @include lightDark(background-color, #fff, #222);
   }
   .entity-list-item p {
     margin-bottom: 0;

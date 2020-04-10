@@ -24,6 +24,11 @@
     <!-- Translations for JS -->
     @stack('translations')
 
+    <script>
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
 </head>
 <body class="@yield('body-class')">
 
