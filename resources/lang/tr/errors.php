@@ -37,11 +37,11 @@ return [
 
     // System
     'path_not_writable' => ':filePath dosya yolu yüklenemedi. Sunucuya yazılabilir olduğundan emin olun.',
-    'cannot_get_image_from_url' => ':url adresindeki resim alınamadı',
-    'cannot_create_thumbs' => 'Sunucu küçük resimleri oluşturamadı. Lütfen GD PHP eklentisinin kurulu olduğundan emin olun.',
+    'cannot_get_image_from_url' => ':url adresindeki görsel alınamadı',
+    'cannot_create_thumbs' => 'Sunucu, görsel ön izlemelerini oluşturamadı. Lütfen GD PHP eklentisinin kurulu olduğundan emin olun.',
     'server_upload_limit' => 'Sunucu bu boyutta dosya yüklemenize izin vermiyor. Lütfen daha küçük bir dosya deneyin.',
     'uploaded'  => 'Sunucu bu boyutta dosya yüklemenize izin vermiyor. Lütfen daha küçük bir dosya deneyin.',
-    'image_upload_error' => 'Resim yüklenirken bir hata meydana geldi',
+    'image_upload_error' => 'Görsel yüklenirken bir hata meydana geldi',
     'image_upload_type_error' => 'Yüklemeye çalıştığınız dosya türü geçersizdir',
     'file_upload_timeout' => 'Dosya yüklemesi zaman aşımına uğradı',
 
@@ -54,7 +54,7 @@ return [
     'page_custom_home_deletion' => 'Bu sayfa, "ana sayfa" olarak ayarlandığı için silinemez',
 
     // Entities
-    'entity_not_found' => 'Eleman bulunamadı',
+    'entity_not_found' => 'Öge bulunamadı',
     'bookshelf_not_found' => 'Kitaplık bulunamadı',
     'book_not_found' => 'Kitap bulunamadı',
     'page_not_found' => 'Sayfa bulunamadı',
