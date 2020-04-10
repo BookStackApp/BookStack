@@ -12,7 +12,7 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
-            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelves'])
             @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
         </div>
     </div>
