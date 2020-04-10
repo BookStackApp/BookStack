@@ -30,7 +30,7 @@ return [
     'social_account_existing' => 'Bu :socialAccount zaten hesabınıza bağlanmış.',
     'social_account_already_used_existing' => 'Bu :socialAccount, başka bir kullanıcı tarafından kullanılıyor.',
     'social_account_not_used' => 'Bu :socialAccount hesabı hiç bir kullanıcıya bağlanmamış. Lütfen profil ayarlarınızdan mevcut hesabınıza bağlayınız. ',
-    'social_account_register_instructions' => 'Hala bir hesabınız yoksa :socialAccount aracılığıyla kaydolabilirsiniz.',
+    'social_account_register_instructions' => 'Hâlâ bir hesabınız yoksa, :socialAccount aracılığıyla kaydolabilirsiniz.',
     'social_driver_not_found' => 'Social driver bulunamadı',
     'social_driver_not_configured' => ':socialAccount ayarlarınız doğru bir şekilde ayarlanmadı.',
     'invite_token_expired' => 'Davetiye bağlantısının süresi doldu. Bunun yerine parolanızı sıfırlamayı deneyebilirsiniz.',
@@ -51,7 +51,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Taslak kaydetme başarısız oldu. Bu sayfayı kaydetmeden önce internet bağlantınız olduğundan emin olun',
-    'page_custom_home_deletion' => 'Bu sayfa, "ana sayfa" olarak ayarlandığı için silinemez',
+    'page_custom_home_deletion' => 'Bu sayfa, "Ana Sayfa" olarak ayarlandığı için silinemez',
 
     // Entities
     'entity_not_found' => 'Öge bulunamadı',
@@ -87,7 +87,7 @@ return [
     'return_home' => 'Ana sayfaya dön',
     'error_occurred' => 'Bir Hata Oluştu',
     'app_down' => ':appName şu anda erişilemez durumda',
-    'back_soon' => 'En kısa zamanda tekrar erişilebilir duruma gelecektir.',
+    'back_soon' => 'En kısa sürede tekrar erişilebilir duruma gelecektir.',
 
     // API errors
     'api_no_authorization_found' => 'Yapılan istekte, yetkilendirme anahtarı bulunamadı',
@@ -98,6 +98,6 @@ return [
     'api_user_token_expired' => 'Kullanılan yetkilendirme anahtarının süresi doldu',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Test e-postası gönderilirken hata oluştu:',
+    'maintenance_test_email_failure' => 'Test e-postası gönderilirken bir hata meydana geldi:',
 
 ];
