@@ -8,7 +8,7 @@ return [
 
     'password' => 'Şifreniz en az 6 karakterden oluşmalı ve her iki şifre de birbiri ile eşleşmelidir.',
     'user' => "Bu e-posta adresine sahip bir kullanıcı bulamadık.",
-    'token' => 'Şifre yenileme anahtarı geçersiz.',
+    'token' => 'The password reset token is invalid for this email address.',
     'sent' => 'Şifre sıfırlama bağlantısını e-posta adresinize gönderdik!',
     'reset' => 'Şifreniz sıfırlandı!',
 
