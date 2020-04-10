@@ -33,7 +33,7 @@ table.table {
     font-weight: bold;
   }
   tr:hover {
-    background-color: #EEE;
+    @include lightDark(background-color, #eee, #333);
   }
   .text-right {
     text-align: end;

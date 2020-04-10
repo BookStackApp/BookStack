@@ -58,7 +58,7 @@
  */
 
 .card {
-  background-color: #FFF;
+  @include lightDark(background-color, #FFF, #222);
   box-shadow: $bs-card;
   border-radius: 3px;
   border: 1px solid transparent;

@@ -36,13 +36,13 @@
 }
 
 .text-muted {
-  color: #575757 !important;
-  fill: #575757 !important;
+  @include lightDark(color, #575757, #888888, true);
+  fill: currentColor !important;
 }
 
 .text-dark {
-  color: #222 !important;
-  fill: #222 !important;
+  @include lightDark(color, #222, #ccc, true);
+  fill: currentColor !important;
 }
 
 /*

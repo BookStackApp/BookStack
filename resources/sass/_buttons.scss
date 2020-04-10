@@ -22,17 +22,17 @@ button {
   box-shadow: none;
   background-color: var(--color-primary);
   color: #FFF;
-  fill: #FFF;
   text-transform: uppercase;
   border: 1px solid var(--color-primary);
   vertical-align: top;
+  @include lightDark(filter, none, saturate(0.8) brightness(0.8));
   &:hover, &:focus, &:active {
     background-color: var(--color-primary);
     text-decoration: none;
     color: #FFFFFF;
   }
   &:hover {
-    box-shadow: $bs-light;
+    @include lightDark(box-shadow, $bs-light, $bs-dark);
     filter: brightness(110%);
   }
   &:focus {
@@ -48,13 +48,14 @@ button {
 
 .button.outline {
   background-color: transparent;
-  color: #666;
+  @include lightDark(color, #666, #aaa);
   fill: currentColor;
   border: 1px solid #CCC;
   &:hover, &:focus, &:active {
     border: 1px solid #CCC;
     box-shadow: none;
     background-color: #F2F2F2;
+    @include lightDark(background-color, #f2f2f2, #555);
     filter: none;
   }
   &:active {
