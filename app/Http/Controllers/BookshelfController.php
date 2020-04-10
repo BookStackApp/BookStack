@@ -103,11 +103,11 @@ class BookshelfController extends Controller
     public function show(string $slug)
     {
         $shelf = $this->bookshelfRepo->getBySlug($slug);
-        $view = setting()->getForCurrentUser('books_view_type', config('app.views.books'));
         $this->checkOwnablePermission('book-view', $shelf);
 
         Views::add($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
+        $view = setting()->getForCurrentUser('bookshelf_view_type', config('app.views.books'));
 
         $this->setPageTitle($shelf->getShortName());
         return view('shelves.show', [
