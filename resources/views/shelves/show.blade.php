@@ -13,11 +13,19 @@
         <div class="book-content">
             <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
             @if(count($shelf->visibleBooks) > 0)
-                <div class="entity-list">
-                    @foreach($shelf->visibleBooks as $book)
-                        @include('books.list-item', ['book' => $book])
-                    @endforeach
-                </div>
+                @if($view === 'list')
+                    <div class="entity-list">
+                        @foreach($shelf->visibleBooks as $book)
+                            @include('books.list-item', ['book' => $book])
+                        @endforeach
+                    </div>
+                @else
+                    <div class="grid third">
+                        @foreach($shelf->visibleBooks as $key => $book)
+                            @include('books.grid-item', ['book' => $book])
+                        @endforeach
+                    </div>
+                @endif
             @else
                 <div class="mt-xl">
                     <hr>
@@ -86,6 +94,8 @@
                     <span>{{ trans('entities.books_new_action') }}</span>
                 </a>
             @endif
+
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'book'])
 
             <hr class="primary-background">
 
