@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: stretch;
   overflow: hidden;
-  background-color: #FFF;
 
   .edit-area {
     flex: 1;
@@ -223,8 +222,9 @@ body.mce-fullscreen, body.markdown-fullscreen {
 
 // Attribute form
 .floating-toolbox {
-  background-color: #FFF;
   border: 1px solid #DDD;
+  @include lightDark(background-color, #fff, #222);
+  @include lightDark(border-color, #DDD, #000);
   right: $-xl*2;
   width: 48px;
   overflow: hidden;
@@ -256,15 +256,16 @@ body.mce-fullscreen, body.markdown-fullscreen {
   .tabs {
     display: block;
     border-inline-end: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     width: 48px;
     flex: 0 1 auto;
   }
   .tabs svg {
-    fill: rgba(0, 0, 0, 0.5);
     padding: 0;
     margin: 0;
   }
   .tabs > button {
+    @include lightDark(color, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
     padding: $-s $-m;
@@ -273,7 +274,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   &.open .tabs > button.active {
-    fill: #444;
+    @include lightDark(color, #444, #EEE);
     background-color: rgba(0, 0, 0, 0.1);
   }
   div[toolbox-tab-content] {
@@ -281,7 +282,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
     display: flex;
     flex: 1;
     flex-direction: column;
-    min-height: 0px;
+    min-height: 0;
     overflow-y: scroll;
   }
   h4 {

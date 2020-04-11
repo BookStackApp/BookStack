@@ -7,6 +7,12 @@
 }
 .primary-background-light {
   background-color: var(--color-primary-light);
+  @include whenDark {
+    background: #000;
+    .text-primary {
+      color: #AAA !important;
+    }
+  }
 }
 
 /*
@@ -83,4 +89,10 @@
 }
 .bg-shelf {
   background-color: var(--color-bookshelf);
+}
+
+.bg-shelf, .bg-book {
+  @include whenDark {
+    filter: brightness(67%) saturate(80%);
+  }
 }

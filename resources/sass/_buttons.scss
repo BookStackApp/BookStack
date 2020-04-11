@@ -85,7 +85,9 @@ button {
   font-size: 0.75rem;
   line-height: 1.4em;
   color: var(--color-primary);
-  fill: var(--color-primary);
+  @include whenDark {
+    color: #AAA;
+  }
   &:active {
     outline: 0;
   }

@@ -242,7 +242,7 @@ function codePlugin() {
     });
 }
 
-function drawIoPlugin(drawioUrl) {
+function drawIoPlugin(drawioUrl, isDarkMode) {
 
     let pageEditor = null;
     let currentNode = null;
@@ -321,14 +321,17 @@ function drawIoPlugin(drawioUrl) {
     window.tinymce.PluginManager.add('drawio', function(editor, url) {
 
         editor.addCommand('drawio', () => {
-            let selectedNode = editor.selection.getNode();
+            const selectedNode = editor.selection.getNode();
             showDrawingEditor(editor, isDrawing(selectedNode) ? selectedNode : null);
         });
 
         editor.addButton('drawio', {
             type: 'splitbutton',
             tooltip: 'Drawing',
-            image: `data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMDAwMDAiICB4bWxucz0iaHR0cDovL3d3 dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTIzIDdWMWgtNnYySDdWMUgxdjZoMnYx MEgxdjZoNnYtMmgxMHYyaDZ2LTZoLTJWN2gyek0zIDNoMnYySDNWM3ptMiAxOEgzdi0yaDJ2Mnpt MTItMkg3di0ySDVWN2gyVjVoMTB2MmgydjEwaC0ydjJ6bTQgMmgtMnYtMmgydjJ6TTE5IDVWM2gy djJoLTJ6bS01LjI3IDloLTMuNDlsLS43MyAySDcuODlsMy40LTloMS40bDMuNDEgOWgtMS42M2wt Ljc0LTJ6bS0zLjA0LTEuMjZoMi42MUwxMiA4LjkxbC0xLjMxIDMuODN6Ii8+CiAgICA8cGF0aCBk PSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==`,
+            image: `data:image/svg+xml;base64,${btoa(`<svg viewBox="0 0 24 24" fill="${isDarkMode ? '#BBB' : '#000000'}"  xmlns="http://www.w3.org/2000/svg">
+    <path d="M23 7V1h-6v2H7V1H1v6h2v10H1v6h6v-2h10v2h6v-6h-2V7h2zM3 3h2v2H3V3zm2 18H3v-2h2v2zm12-2H7v-2H5V7h2V5h10v2h2v10h-2v2zm4 2h-2v-2h2v2zM19 5V3h2v2h-2zm-5.27 9h-3.49l-.73 2H7.89l3.4-9h1.4l3.41 9h-1.63l-.74-2zm-3.04-1.26h2.61L12 8.91l-1.31 3.83z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>`)}`,
             cmd: 'drawio',
             menu: [
                 {
@@ -415,6 +418,7 @@ class WysiwygEditor {
         const pageEditor = document.getElementById('page-editor');
         this.pageId = pageEditor.getAttribute('page-id');
         this.textDirection = pageEditor.getAttribute('text-direction');
+        this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
         this.plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor media";
         this.loadPlugins();
@@ -431,7 +435,7 @@ class WysiwygEditor {
         const drawioUrlElem = document.querySelector('[drawio-url]');
         if (drawioUrlElem) {
             const url = drawioUrlElem.getAttribute('drawio-url');
-            drawIoPlugin(url);
+            drawIoPlugin(url, this.isDarkMode);
             this.plugins += ' drawio';
         }
 
@@ -455,6 +459,7 @@ class WysiwygEditor {
                 window.baseUrl('/dist/styles.css'),
             ],
             branding: false,
+            skin: this.isDarkMode ? 'dark' : 'lightgray',
             body_class: 'page-content',
             browser_spellcheck: true,
             relative_urls: false,
@@ -471,7 +476,7 @@ class WysiwygEditor {
             plugins: this.plugins,
             imagetools_toolbar: 'imageoptions',
             toolbar: this.getToolBar(),
-            content_style: "html, body {background: #FFF;} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
+            content_style: `html, body, html.dark-mode {background: ${this.isDarkMode ? '#222' : '#fff'};} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}`,
             style_formats: [
                 {title: "Header Large", format: "h2"},
                 {title: "Header Medium", format: "h3"},
@@ -578,7 +583,10 @@ class WysiwygEditor {
                 });
 
                 function editorChange() {
-                    let content = editor.getContent();
+                    const content = editor.getContent();
+                    if (context.isDarkMode) {
+                        editor.contentDocument.documentElement.classList.add('dark-mode');
+                    }
                     window.$events.emit('editor-html-change', content);
                 }
 
