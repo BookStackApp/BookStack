@@ -603,6 +603,9 @@ ul.pagination {
   li.border-bottom {
     border-bottom: 1px solid #DDD;
   }
+  li hr {
+    margin: $-xs 0;
+  }
 }
 
 // Books grid view

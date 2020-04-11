@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.lang') }}" dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}" class="@yield('body-class')">
+<html lang="{{ config('app.lang') }}"
+      dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+      class="{{ setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '' }}@yield('body-class')">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
@@ -23,12 +25,6 @@
 
     <!-- Translations for JS -->
     @stack('translations')
-
-    <script>
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark-mode');
-        }
-    </script>
 </head>
 <body class="@yield('body-class')">
 

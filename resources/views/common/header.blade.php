@@ -70,6 +70,18 @@
                                     <a href="{{ url('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
                                 @endif
                             </li>
+                            <li><hr></li>
+                            <li>
+                                <form action="{{ url('/settings/users/toggle-dark-mode') }}" method="post">
+                                    {{ csrf_field() }}
+                                    {{ method_field('patch') }}
+                                    @if(setting()->getForCurrentUser('dark-mode-enabled'))
+                                        <button>@icon('light-mode')Light Mode</button>
+                                    @else
+                                        <button>@icon('dark-mode')Dark Mode</button>
+                                    @endif
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 @endif
