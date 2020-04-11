@@ -313,6 +313,16 @@ class UserController extends Controller
     }
 
     /**
+     * Toggle dark mode for the current user.
+     */
+    public function toggleDarkMode()
+    {
+        $enabled = setting()->getForCurrentUser('dark-mode-enabled', false);
+        setting()->putUser(user(), 'dark-mode-enabled', $enabled ? 'false' : 'true');
+        return redirect()->back();
+    }
+
+    /**
      * Update the stored section expansion preference for the given user.
      */
     public function updateExpansionPreference(Request $request, string $id, string $key)
