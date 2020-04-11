@@ -18,11 +18,14 @@ header {
   display: block;
   z-index: 11;
   top: 0;
-  color: #fff;
-  fill: #fff;
+  color: rgb(250, 250, 250);
   border-bottom: 1px solid #DDD;
   box-shadow: $bs-card;
   padding: $-xxs 0;
+  @include lightDark(border-bottom-color, #DDD, #000);
+  @include whenDark {
+    filter: saturate(0.6) brightness(0.8);
+  }
   .links {
     display: inline-block;
     vertical-align: top;
@@ -31,7 +34,6 @@ header {
     display: inline-block;
     padding: $-m;
     color: #FFF;
-    fill: #FFF;
   }
   .dropdown-container {
     padding-inline-start: $-m;
@@ -94,9 +96,9 @@ header .search-box {
     }
   }
   button {
-    fill: #EEE;
     z-index: 1;
     left: 16px;
+    @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
     @include rtl {
       left: auto;
       right: 16px;
@@ -263,7 +265,7 @@ header .search-box {
       display: none;
     }
     > span:first-child {
-      margin-block-end: 0;
+      margin-inline-end: 0;
     }
   }
 }
@@ -279,7 +281,7 @@ header .search-box {
     }
   }
   .svg-icon {
-    margin-block-end: 0;
+    margin-inline-end: 0;
   }
 }
 

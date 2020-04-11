@@ -36,7 +36,7 @@ body.dragging, body.dragging * {
 // User Avatar Images
 .avatar {
   border-radius: 100%;
-  background-color: #EEE;
+  @include lightDark(background-color, #eee, #000);
   width: 30px;
   height: 30px;
   &.med {
@@ -53,6 +53,11 @@ body.dragging, body.dragging * {
   }
   &.square {
     border-radius: 3px;
+  }
+  &[src$="user_avatar.png"] {
+    @include whenDark {
+      filter: invert(1);
+    }
   }
 }
 
@@ -137,7 +142,7 @@ $btt-size: 40px;
   display: flex;
   input, button {
     border-radius: 0;
-    border: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     margin-inline-start: -1px;
   }
   input {
@@ -161,6 +166,7 @@ $btt-size: 40px;
 
 .entity-selector {
   border: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #111);
   border-radius: 3px;
   overflow: hidden;
   font-size: 0.8em;
@@ -176,12 +182,12 @@ $btt-size: 40px;
   .entity-list {
     overflow-y: scroll;
     height: 400px;
-    background-color: #EEEEEE;
+    @include lightDark(background-color, #eee, #222);
     margin-inline-end: 0;
     margin-inline-start: 0;
   }
   .entity-list-item {
-    background-color: #FFF;
+    @include lightDark(background-color, #fff, #222);
   }
   .entity-list-item p {
     margin-bottom: 0;
@@ -256,12 +262,13 @@ $btt-size: 40px;
     grid-template-columns: minmax(120px, max-content) 40px;
     font-size: 0.9rem;
     border: 2px solid #DDD;
+    @include lightDark(border-color, #ddd, #444);
     border-radius: 4px;
   }
   .list-sort-label {
     font-weight: bold;
     display: inline-block;
-    color: #555;
+    @include lightDark(color, #555, #888);
   }
   .list-sort-type {
     text-align: start;
@@ -272,7 +279,8 @@ $btt-size: 40px;
   }
   .list-sort-dir {
     border-inline-start: 2px solid #DDD;
-    fill: #888;
+    color: #888;
+    @include lightDark(border-color, #ddd, #444);
     .svg-icon {
       transition: transform ease-in-out 120ms;
     }

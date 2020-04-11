@@ -99,7 +99,7 @@
       left: auto;
       right: 0;
     }
-    background-color: rgba(0, 0, 0, 0.2);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
     width: 2px;
     top: 5px;
     bottom: 5px;
@@ -132,7 +132,7 @@
     font-weight: bold;
   }
   li:not(.current-heading) .sidebar-page-nav-bullet {
-    background-color: #BBB !important;
+    @include lightDark(background-color, #BBB, #666, true);
   }
   .sidebar-page-nav-bullet {
     width: 6px;
@@ -142,6 +142,7 @@
     top: 30%;
     border-radius: 50%;
     box-shadow: 0 0 0 6px #F2F2F2;
+    @include lightDark(box-shadow, 0 0 0 6px #F2F2F2, 0 0 0 6px #111);
     z-index: 1;
     @include rtl {
       left: auto;
@@ -357,7 +358,8 @@ ul.pagination {
     }
   }
   li.active span {
-    color: #FFF;
+    @include lightDark(color, #444, #eee);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -438,7 +440,7 @@ ul.pagination {
     border-color: rgba(0, 0, 0, 0.1);
   }
   &:focus {
-    background-color: #eee;
+    @include lightDark(background-color, #eee, #222);
     outline: 1px dotted #666;
     outline-offset: -2px;
   }
@@ -455,7 +457,7 @@ ul.pagination {
 }
 
 .card .entity-list-item:not(.no-hover):hover {
-  background-color: #F2F2F2;
+  @include lightDark(background-color, #F2F2F2, #2d2d2d)
 }
 .card .entity-list-item .entity-list-item:hover {
   background-color: #EEEEEE;
@@ -493,8 +495,7 @@ ul.pagination {
   }
 
   .svg-icon {
-    color: #FFF;
-    fill: #FFF;
+    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 1.66rem;
     margin-inline-end: 0;
     position: absolute;
@@ -554,14 +555,15 @@ ul.pagination {
   list-style: none;
   right: 0;
   margin: $-m 0;
-  background-color: #FFFFFF;
+  @include lightDark(background-color, #fff, #333);
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
   border-radius: 1px;
   border: 1px solid #EEE;
+  @include lightDark(border-color, #eee, #000);
   min-width: 180px;
   padding: $-xs 0;
-  color: #555;
-  fill: #555;
+  @include lightDark(color, #555, #eee);
+  fill: currentColor;
   text-align: start !important;
   &.wide {
     min-width: 220px;
@@ -576,7 +578,7 @@ ul.pagination {
   a, button {
     display: block;
     padding: $-xs $-m;
-    color: #555;
+    @include lightDark(color, #555, #eee);
     fill: currentColor;
     white-space: nowrap;
     &:hover, &:focus {
@@ -601,6 +603,9 @@ ul.pagination {
   li.border-bottom {
     border-bottom: 1px solid #DDD;
   }
+  li hr {
+    margin: $-xs 0;
+  }
 }
 
 // Books grid view
@@ -624,8 +629,7 @@ ul.pagination {
 .featured-image-container-wrap {
   position: relative;
   .svg-icon {
-    color: #FFF;
-    fill: #FFF;
+    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 2rem;
     margin-inline-end: 0;
     position: absolute;
@@ -653,11 +657,10 @@ ul.pagination {
     padding: $-s;
   }
   a:not(.active) {
-    color: #444;
-    fill: #444;
+    @include lightDark(color, #444, #666);
   }
   a:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
     border-radius: 3px;
     text-decoration: none;
   }
