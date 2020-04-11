@@ -122,7 +122,7 @@ class ActivityService
             ->where('user_id', '=', $user->id)
             ->skip($count * $page)
             ->take($count)
-            ->get()->toArray();
+            ->get();
 
         return $this->filterSimilar($activityList);
     }
