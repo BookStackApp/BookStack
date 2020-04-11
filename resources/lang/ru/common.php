@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Меню профиля',
     'view_profile' => 'Посмотреть профиль',
     'edit_profile' => 'Редактировать профиль',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Информация',
