@@ -98,6 +98,7 @@ header .search-box {
   button {
     z-index: 1;
     left: 16px;
+    @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
     @include rtl {
       left: auto;
       right: 16px;
@@ -264,7 +265,7 @@ header .search-box {
       display: none;
     }
     > span:first-child {
-      margin-block-end: 0;
+      margin-inline-end: 0;
     }
   }
 }
@@ -280,7 +281,7 @@ header .search-box {
     }
   }
   .svg-icon {
-    margin-block-end: 0;
+    margin-inline-end: 0;
   }
 }
 

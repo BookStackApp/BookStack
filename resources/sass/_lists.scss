@@ -358,7 +358,8 @@ ul.pagination {
     }
   }
   li.active span {
-    color: #FFF;
+    @include lightDark(color, #444, #eee);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
   }
 }
 
