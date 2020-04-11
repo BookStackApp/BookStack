@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Actions\Tag;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
+use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
 {

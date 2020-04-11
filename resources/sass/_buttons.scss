@@ -66,7 +66,7 @@ button {
 }
 
 .button + .button {
-  margin-left: $-s;
+  margin-inline-start: $-s;
 }
 
 .button.small {
@@ -99,26 +99,28 @@ button {
 
 .button.block {
   width: 100%;
-  text-align: left;
+  text-align: start;
   display: block;
 }
 
 .button.icon {
   .svg-icon {
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 }
 
 .button.svg {
+  display: flex;
+  align-items: center;
+  padding: $-s $-m;
+  padding-bottom: ($-s - 2px);
   svg {
     display: inline-block;
-    position: absolute;
-    left: $-m;
-    top: $-s - 2px;
     width: 24px;
     height: 24px;
+    bottom: auto;
+    margin-inline-end: $-m;
   }
-  padding: $-s $-m ($-s - 2px) ($-m*2 + 24px);
 }
 
 .button[disabled] {

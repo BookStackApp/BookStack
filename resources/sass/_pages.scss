@@ -59,7 +59,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
   text-align: center;
   svg {
     fill: #FFF;
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 }
 
@@ -174,14 +174,14 @@ body.mce-fullscreen, body.markdown-fullscreen {
     bottom: -9px;
     width: 16px;
     height: 16px;
-    margin-left: -8px;
+    margin-inline-start: -8px;
     content: '';
     display: block;
     background-color:#FFF;
     transform: rotate(45deg);
     transform-origin: 50% 50%;
-    border-bottom: 1px solid #CCC;
-    border-right: 1px solid #CCC;
+    border-inline-startom: 1px solid #CCC;
+    border-inline-end: 1px solid #CCC;
     z-index: 56;
   }
   input, button, a {
@@ -255,7 +255,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
   }
   .tabs {
     display: block;
-    border-right: 1px solid #DDD;
+    border-inline-end: 1px solid #DDD;
     width: 48px;
     flex: 0 1 auto;
   }
@@ -294,8 +294,8 @@ body.mce-fullscreen, body.markdown-fullscreen {
     width: 100%;
     min-width: 50px;
   }
-  .tags td, .tag-table > div > div > div {
-    padding-right: $-s;
+  .tags td, .inline-start-table > div > div > div {
+    padding-inline-end: $-s;
     padding-top: $-s;
     position: relative;
   }
@@ -317,42 +317,6 @@ body.mce-fullscreen, body.markdown-fullscreen {
 
 [toolbox-tab-content] {
   display: none;
-}
-
-.tag-display {
-  position: relative;
-  table {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  tr:first-child td {
-    padding-top: 0;
-  }
-  .heading th {
-    padding: $-xs $-s;
-    color: rgba(100, 100, 100, 0.7);
-    border: 0;
-    font-weight: 400;
-  }
-  td {
-    border: 0;
-    border-bottom: 1px solid #EEE;
-    padding: $-xs $-s;
-    color: #444;
-  }
-  tr td:first-child {
-    padding-left:0;
-  }
-  .tag-value {
-    color: #888;
-  }
-  tr:last-child td {
-    border-bottom: none;
-  }
-  .tag {
-    padding: $-s;
-  }
 }
 
 .suggestion-box {

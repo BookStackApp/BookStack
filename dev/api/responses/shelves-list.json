@@ -1,0 +1,38 @@
+{
+  "data": [
+    {
+      "id": 8,
+      "name": "Qui qui aspernatur autem molestiae libero necessitatibus molestias.",
+      "slug": "qui-qui-aspernatur-autem-molestiae-libero-necessitatibus-molestias",
+      "description": "Enim dolor ut quia error dolores est. Aut distinctio consequuntur non nisi nostrum. Labore cupiditate error labore aliquid provident impedit voluptatibus. Quaerat impedit excepturi eius qui eius voluptatem reiciendis.",
+      "created_at": "2019-05-05 22:10:16",
+      "updated_at": "2020-04-10 13:00:45",
+      "created_by": 4,
+      "updated_by": 1,
+      "image_id": 31
+    },
+    {
+      "id": 9,
+      "name": "Ipsum aut inventore fuga libero non facilis.",
+      "slug": "ipsum-aut-inventore-fuga-libero-non-facilis",
+      "description": "Labore culpa modi perspiciatis harum sit. Maxime non et nam est. Quae ut laboriosam repellendus sunt quisquam. Velit at est perspiciatis nesciunt adipisci nobis illo. Sed possimus odit optio officiis nisi voluptates officiis dolor.",
+      "created_at": "2019-05-05 22:10:16",
+      "updated_at": "2020-04-10 13:00:58",
+      "created_by": 4,
+      "updated_by": 1,
+      "image_id": 28
+    },
+    {
+      "id": 10,
+      "name": "Omnis reiciendis aut molestias sint accusantium.",
+      "slug": "omnis-reiciendis-aut-molestias-sint-accusantium",
+      "description": "Qui ea occaecati alias est dolores voluptatem doloribus. Ad reiciendis corporis vero nostrum omnis et. Non doloribus ut eaque ut quos dolores.",
+      "created_at": "2019-05-05 22:10:16",
+      "updated_at": "2020-04-10 13:00:53",
+      "created_by": 4,
+      "updated_by": 1,
+      "image_id": 30
+    }
+  ],
+  "total": 3
+}

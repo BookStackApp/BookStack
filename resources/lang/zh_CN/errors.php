@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => '无法找到页面',
     'sorry_page_not_found' => '对不起，无法找到您想访问的页面。',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => '返回主页',
     'error_occurred' => '出现错误',
     'app_down' => ':appName现在正在关闭',
@@ -95,5 +96,8 @@ return [
     'api_incorrect_token_secret' => '给已给出的API所提供的密钥不正确',
     'api_user_no_api_permission' => '使用过的 API 令牌的所有者没有进行API 调用的权限',
     'api_user_token_expired' => '所使用的身份令牌已过期',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => '发送测试电子邮件时出现错误：',
 
 ];

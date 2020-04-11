@@ -107,15 +107,15 @@
 }
 
 .markdown-display {
-  margin-left: -1px;
+  margin-inline-start: -1px;
 }
 
 .markdown-editor-display {
   background-color: #FFFFFF;
   body {
     background-color: #FFFFFF;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-inline-start: 16px;
+    pmargin-inline-end: 16px;
   }
   [drawio-diagram]:hover {
     outline: 2px solid var(--color-primary);
@@ -155,12 +155,12 @@ label.radio, label.checkbox {
   font-weight: 400;
   user-select: none;
   input[type="radio"], input[type="checkbox"] {
-    margin-right: $-xs;
+    margin-inline-end: $-xs;
   }
 }
 
 label.inline.checkbox {
-  margin-right: $-m;
+  margin-inline-end: $-m;
 }
 
 label + p.small {
@@ -288,12 +288,12 @@ input[type=color] {
   border: 1px solid #DDD;
   border-radius: 4px;
   .collapse-title {
-    margin-left: -$-m;
-    margin-right: -$-m;
+    margin-inline-start: -$-m;
+    margin-inline-end: -$-m;
     padding: $-s $-m;
     display: block;
     width: calc(100% + 32px);
-    text-align: left;
+    text-align: start;
   }
   .collapse-title, .collapse-title label {
     cursor: pointer;
@@ -306,7 +306,7 @@ input[type=color] {
   .collapse-title label:before {
     display: inline-block;
     content: '▸';
-    margin-right: $-m;
+    margin-inline-end: $-m;
     transition: all ease-in-out 400ms;
     transform: rotate(0);
   }
@@ -373,10 +373,14 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
     position: absolute;
     left: 8px;
     top: 9px;
+    @include rtl {
+      right: 8px;
+      left: auto;
+    }
   }
   input {
     display: block;
-    padding-left: $-l + 4px;
+    padding-inline-start: $-l + 4px;
     width: 300px;
     max-width: 100%;
   }

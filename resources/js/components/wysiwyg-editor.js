@@ -139,19 +139,21 @@ function codePlugin() {
     }
 
     function showPopup(editor) {
-        let selectedNode = editor.selection.getNode();
+        const selectedNode = editor.selection.getNode();
 
         if (!elemIsCodeBlock(selectedNode)) {
-            let providedCode = editor.selection.getNode().textContent;
+            const providedCode = editor.selection.getNode().textContent;
             window.vues['code-editor'].open(providedCode, '', (code, lang) => {
-                let wrap = document.createElement('div');
+                const wrap = document.createElement('div');
                 wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
                 wrap.querySelector('code').innerText = code;
 
                 editor.formatter.toggle('pre');
-                let node = editor.selection.getNode();
+                const node = editor.selection.getNode();
                 editor.dom.setHTML(node, wrap.querySelector('pre').innerHTML);
                 editor.fire('SetContent');
+
+                editor.focus()
             });
             return;
         }
@@ -160,15 +162,17 @@ function codePlugin() {
         let currentCode = selectedNode.querySelector('textarea').textContent;
 
         window.vues['code-editor'].open(currentCode, lang, (code, lang) => {
-            let editorElem = selectedNode.querySelector('.CodeMirror');
-            let cmInstance = editorElem.CodeMirror;
+            const editorElem = selectedNode.querySelector('.CodeMirror');
+            const cmInstance = editorElem.CodeMirror;
             if (cmInstance) {
                 Code.setContent(cmInstance, code);
                 Code.setMode(cmInstance, lang, code);
             }
-            let textArea = selectedNode.querySelector('textarea');
+            const textArea = selectedNode.querySelector('textarea');
             if (textArea) textArea.textContent = code;
             selectedNode.setAttribute('data-lang', lang);
+
+            editor.focus()
         });
     }
 
@@ -238,7 +242,7 @@ function codePlugin() {
     });
 }
 
-function drawIoPlugin() {
+function drawIoPlugin(drawioUrl) {
 
     let pageEditor = null;
     let currentNode = null;
@@ -266,7 +270,7 @@ function drawIoPlugin() {
     function showDrawingEditor(mceEditor, selectedNode = null) {
         pageEditor = mceEditor;
         currentNode = selectedNode;
-        DrawIO.show(drawingInit, updateContent);
+        DrawIO.show(drawioUrl, drawingInit, updateContent);
     }
 
     async function updateContent(pngData) {
@@ -423,10 +427,14 @@ class WysiwygEditor {
     loadPlugins() {
         codePlugin();
         customHrPlugin();
-        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') === 'true') {
-            drawIoPlugin();
+
+        const drawioUrlElem = document.querySelector('[drawio-url]');
+        if (drawioUrlElem) {
+            const url = drawioUrlElem.getAttribute('drawio-url');
+            drawIoPlugin(url);
             this.plugins += ' drawio';
         }
+
         if (this.textDirection === 'rtl') {
             this.plugins += ' directionality'
         }
@@ -500,7 +508,15 @@ class WysiwygEditor {
                         const originalField = win.document.getElementById(field_name);
                         originalField.value = entity.link;
                         const mceForm = originalField.closest('.mce-form');
-                        mceForm.querySelectorAll('input')[2].value = entity.name;
+                        const inputs = mceForm.querySelectorAll('input');
+
+                        // Set text to display if not empty
+                        if (!inputs[1].value) {
+                            inputs[1].value = entity.name;
+                        }
+
+                        // Set title field
+                        inputs[2].value = entity.name;
                     });
                 }
 

@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Book;
@@ -7,6 +7,8 @@ use BookStack\Entities\Page;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Tests\BrowserKitTest;
 
 class EntityTest extends BrowserKitTest
 {
@@ -323,6 +325,36 @@ class EntityTest extends BrowserKitTest
         $this->asEditor()->visit($page->getUrl('/delete'))
             ->submitForm('Confirm')
             ->seePageIs($chapter->getUrl());
+    }
+
+    public function test_page_delete_removes_entity_from_its_activity()
+    {
+        $page = Page::query()->first();
+
+        $this->asEditor()->put($page->getUrl(), [
+            'name' => 'My updated page',
+            'html' => '<p>updated content</p>',
+        ]);
+        $page->refresh();
+
+        $this->seeInDatabase('activities', [
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+
+        $resp = $this->delete($page->getUrl());
+        $resp->assertResponseStatus(302);
+
+        $this->dontSeeInDatabase('activities', [
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+
+        $this->seeInDatabase('activities', [
+            'extra' => 'My updated page',
+            'entity_id' => 0,
+            'entity_type' => '',
+        ]);
     }
 
 }

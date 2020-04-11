@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Auth;
 
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Role;
 use BookStack\Auth\Access\Ldap;
 use BookStack\Auth\User;
 use Mockery\MockInterface;
+use Tests\BrowserKitTest;
 
 class LdapTest extends BrowserKitTest
 {

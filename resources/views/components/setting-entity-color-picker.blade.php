@@ -5,7 +5,7 @@
     <div>
         <label for="setting-{{ $type }}-color" class="text-dark">{{ trans('settings.'. str_replace('-', '_', $type) .'_color') }}</label>
         <button type="button" class="text-button text-muted" setting-color-picker-default>{{ trans('common.default') }}</button>
-        <span class="sep mx-xs">|</span>
+        <span class="sep">|</span>
         <button type="button" class="text-button text-muted" setting-color-picker-reset>{{ trans('common.reset') }}</button>
     </div>
     <div>

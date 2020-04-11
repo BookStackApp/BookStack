@@ -275,7 +275,7 @@ return [
     'attachments_link_attached' => 'Link erfolgreich der Seite hinzugefügt',
     'templates' => 'Vorlagen',
     'templates_set_as_template' => 'Seite ist eine Vorlage',
-    'templates_explain_set_as_template' => 'Sie können diese Seite als Vorlage festlegen, damit deren Inhalt beim Erstellen anderer Seiten verwendet werden kann. Andere Benutzer können diese Vorlage verwenden, wenn sie die Zugriffsrechte für diese Seite haben.',
+    'templates_explain_set_as_template' => 'Du kannst diese Seite als Vorlage festlegen, damit deren Inhalt beim Erstellen anderer Seiten verwendet werden kann. Andere Benutzer können diese Vorlage verwenden, wenn diese die Zugriffsrechte für diese Seite haben.',
     'templates_replace_content' => 'Seiteninhalt ersetzen',
     'templates_append_content' => 'An Seiteninhalt anhängen',
     'templates_prepend_content' => 'Seiteninhalt voranstellen',

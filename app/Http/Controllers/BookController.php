@@ -86,7 +86,7 @@ class BookController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => $this->getImageValidationRules(),
+            'image' => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $bookshelf = null;
@@ -114,6 +114,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
+        $bookParentShelves = $book->shelves()->visible()->get();
 
         Views::add($book);
         if ($request->has('shelf')) {
@@ -125,6 +126,7 @@ class BookController extends Controller
             'book' => $book,
             'current' => $book,
             'bookChildren' => $bookChildren,
+            'bookParentShelves' => $bookParentShelves,
             'activity' => Activity::entityActivity($book, 20, 1)
         ]);
     }
@@ -153,7 +155,7 @@ class BookController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => $this->getImageValidationRules(),
+            'image' => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $book = $this->bookRepo->update($book, $request->all());

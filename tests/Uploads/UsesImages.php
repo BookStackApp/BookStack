@@ -1,6 +1,5 @@
 <?php namespace Tests\Uploads;
 
-
 use BookStack\Entities\Page;
 use Illuminate\Http\UploadedFile;
 

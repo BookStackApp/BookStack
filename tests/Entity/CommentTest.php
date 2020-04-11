@@ -1,7 +1,8 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Page;
 use BookStack\Actions\Comment;
+use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
