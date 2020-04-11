@@ -385,7 +385,7 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   button {
     background-color: transparent;
     border: none;
-    fill: #666;
+    @include lightDark(color, #666, #AAA);
     padding: 0;
     cursor: pointer;
     position: absolute;

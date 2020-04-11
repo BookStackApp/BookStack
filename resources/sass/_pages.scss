@@ -151,15 +151,16 @@ body.mce-fullscreen, body.markdown-fullscreen {
 }
 .pointer {
   border: 1px solid #CCC;
+  @include lightDark(border-color, #ccc, #000);
   display: flex;
   align-items: center;
   justify-items: center;
   padding: $-s $-s;
   border-radius: 4px;
-  box-shadow: 0 0 12px 1px rgba(212, 209, 209, 0.3);
+  box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: -60px;
-  background-color:#FFF;
+  @include lightDark(background-color, #fff, #333);
   width: 275px;
   z-index: 55;
 
@@ -176,12 +177,13 @@ body.mce-fullscreen, body.markdown-fullscreen {
     margin-inline-start: -8px;
     content: '';
     display: block;
-    background-color:#FFF;
     transform: rotate(45deg);
     transform-origin: 50% 50%;
-    border-inline-startom: 1px solid #CCC;
+    border-block-end: 1px solid #CCC;
     border-inline-end: 1px solid #CCC;
     z-index: 56;
+    @include lightDark(background-color, #fff, #333);
+    @include lightDark(border-color, #ccc, #000);
   }
   input, button, a {
     position: relative;
@@ -194,6 +196,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
   input {
     background-color: #FFF;
     border: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     color: #666;
     width: 172px;
     z-index: 40;
@@ -217,6 +220,9 @@ body.mce-fullscreen, body.markdown-fullscreen {
   .svg-icon {
     width: 1.2em;
     height: 1.2em;
+  }
+  .button {
+    @include lightDark(border-color, #ddd, #000);
   }
 }
 

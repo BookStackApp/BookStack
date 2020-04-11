@@ -54,6 +54,11 @@ body.dragging, body.dragging * {
   &.square {
     border-radius: 3px;
   }
+  &[src$="user_avatar.png"] {
+    @include whenDark {
+      filter: invert(1);
+    }
+  }
 }
 
 // Loading icon
