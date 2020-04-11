@@ -204,7 +204,7 @@ blockquote {
   display: block;
   position: relative;
   border-left: 4px solid var(--color-primary);
-  background-color: #F8F8F8;
+  @include lightDark(background-color, #f8f8f8, #333);
   padding: $-s $-m $-s $-xl;
   &:before {
     content: "\201C";

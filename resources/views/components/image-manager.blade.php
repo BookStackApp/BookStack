@@ -26,7 +26,7 @@
                     </div>
                     <div>
                         <form @submit.prevent="searchImages" class="contained-search-box">
-                            <input placeholder="{{ trans('components.image_search_hint') }}" v-model="searchTerm">
+                            <input placeholder="{{ trans('components.image_search_hint') }}" v-model="searchTerm" type="text">
                             <button :class="{active: searching}" title="{{ trans('common.search_clear') }}" type="button" @click="cancelSearch()" class="text-button cancel">@icon('close')</button>
                             <button title="{{ trans('common.search') }}" class="text-button">@icon('search')</button>
                         </form>

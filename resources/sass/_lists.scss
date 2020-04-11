@@ -494,8 +494,7 @@ ul.pagination {
   }
 
   .svg-icon {
-    color: #FFF;
-    fill: #FFF;
+    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 1.66rem;
     margin-inline-end: 0;
     position: absolute;
@@ -626,8 +625,7 @@ ul.pagination {
 .featured-image-container-wrap {
   position: relative;
   .svg-icon {
-    color: #FFF;
-    fill: #FFF;
+    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 2rem;
     margin-inline-end: 0;
     position: absolute;

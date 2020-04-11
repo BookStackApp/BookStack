@@ -63,6 +63,7 @@
     display: flex;
     flex-direction: column;
     border: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     width: 50%;
     max-width: 50%;
   }
@@ -112,14 +113,21 @@
 }
 
 .markdown-editor-display {
-  background-color: #FFFFFF;
+  background-color: #fff;
   body {
-    background-color: #FFFFFF;
+    background-color: #fff;
     padding-inline-start: 16px;
-    pmargin-inline-end: 16px;
+    margin-inline-end: 16px;
   }
   [drawio-diagram]:hover {
     outline: 2px solid var(--color-primary);
+  }
+}
+
+html.markdown-editor-display.dark-mode {
+  background-color: #222;
+  body {
+    background-color: #222;
   }
 }
 
@@ -130,11 +138,18 @@
   line-height: 1.6;
   border-bottom: 1px solid #DDD;
   background-color: #EEE;
+  @include lightDark(background-color, #eee, #111);
+  @include lightDark(border-color, #ddd, #000);
   flex: none;
   &:after {
     content: '';
     display: block;
     clear: both;
+  }
+  @include whenDark {
+    button {
+      color: #AAA;
+    }
   }
 }
 
@@ -334,6 +349,7 @@ input[type=color] {
 
 .title-input.page-title {
   font-size: 0.8em;
+  @include lightDark(background-color, #fff, #333);
   .input {
     border: 0;
     margin-bottom: -1px;
@@ -360,6 +376,7 @@ input[type=color] {
 
 div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   max-width: 100%;
+  border-radius: 0;
 }
 
 .search-box {
