@@ -10,10 +10,10 @@
 
 .mce-tinymce {
   .mce-panel {
-    background-color: #FFF;
+    @include lightDark(background-color, #fff, #333);
   }
   .mce-btn {
-    background-color: #FFF;
+    @include lightDark(background-color, #fff, #333);
   }
 }
 

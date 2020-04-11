@@ -15,12 +15,14 @@ html {
   &.flexbox {
     overflow-y: hidden;
   }
+  &.dark-mode {
+    background-color: #111;
+  }
 }
 
 body {
   font-size: $fs-m;
   line-height: 1.6;
-  color: #444;
+  @include lightDark(color, #444, #AAA);
   -webkit-font-smoothing: antialiased;
-  background-color: #F2F2F2;
 }

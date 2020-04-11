@@ -127,7 +127,13 @@ class MarkdownEditor {
 
     loadStylesIntoDisplay() {
         if (this.displayStylesLoaded) return;
-        this.displayDoc.documentElement.className = 'markdown-editor-display';
+        this.displayDoc.documentElement.classList.add('markdown-editor-display');
+        // Set display to be dark mode if parent is
+
+        if (document.documentElement.classList.contains('dark-mode')) {
+            this.displayDoc.documentElement.style.backgroundColor = '#222';
+            this.displayDoc.documentElement.classList.add('dark-mode');
+        }
 
         this.displayDoc.head.innerHTML = '';
         const styles = document.head.querySelectorAll('style,link[rel=stylesheet]');

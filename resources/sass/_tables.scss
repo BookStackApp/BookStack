@@ -2,7 +2,7 @@ table {
   min-width: 100px;
   max-width: 100%;
   thead {
-    background-color: #F8F8F8;
+    @include lightDark(background-color, #f8f8f8, #333);
     font-weight: 500;
   }
   td, th {
@@ -33,7 +33,7 @@ table.table {
     font-weight: bold;
   }
   tr:hover {
-    background-color: #EEE;
+    @include lightDark(background-color, #eee, #333);
   }
   .text-right {
     text-align: end;

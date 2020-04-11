@@ -3,6 +3,7 @@ const template = `
     <div>
         <input :value="value" :autosuggest-type="type" ref="input"
             :placeholder="placeholder" :name="name"
+            type="text"
             @input="inputUpdate($event.target.value)" @focus="inputUpdate($event.target.value)"
             @blur="inputBlur"
             @keydown="inputKeydown"
@@ -14,7 +15,6 @@ const template = `
                 :class="{active: (i === active)}">{{suggestion}}</li>
         </ul>
     </div>
-    
 `;
 
 function data() {
