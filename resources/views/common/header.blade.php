@@ -76,9 +76,9 @@
                                     {{ csrf_field() }}
                                     {{ method_field('patch') }}
                                     @if(setting()->getForCurrentUser('dark-mode-enabled'))
-                                        <button>@icon('light-mode')Light Mode</button>
+                                        <button>@icon('light-mode'){{ trans('common.light_mode') }}</button>
                                     @else
-                                        <button>@icon('dark-mode')Dark Mode</button>
+                                        <button>@icon('dark-mode'){{ trans('common.dark_mode') }}</button>
                                     @endif
                                 </form>
                             </li>
