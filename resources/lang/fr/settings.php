@@ -192,7 +192,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
-        'he' => 'עברית',
+        'he' => 'Hébreu',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',
