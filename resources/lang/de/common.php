@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Profilmenü',
     'view_profile' => 'Profil ansehen',
     'edit_profile' => 'Profil bearbeiten',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Info',
