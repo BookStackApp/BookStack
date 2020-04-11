@@ -38,11 +38,11 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'На весь экран',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
-    'sort_direction_toggle' => 'Переключить направления сортировки',
+    'sort_direction_toggle' => 'Переключить направление сортировки',
     'sort_ascending' => 'По возрастанию',
     'sort_descending' => 'По убыванию',
     'sort_name' => 'По имени',
@@ -64,7 +64,7 @@ return [
 
     // Header
     'profile_menu' => 'Меню профиля',
-    'view_profile' => 'Просмотреть профиль',
+    'view_profile' => 'Посмотреть профиль',
     'edit_profile' => 'Редактировать профиль',
 
     // Layout tabs
@@ -72,6 +72,6 @@ return [
     'tab_content' => 'Содержание',
 
     // Email Content
-    'email_action_help' => 'Если у вас возникли проблемы с нажатием кнопки \':actionText\', то скопируйте и вставьте указанный URL-адрес в свой веб-браузер:',
+    'email_action_help' => 'Если у вас возникли проблемы с нажатием кнопки \':actionText\', то скопируйте и вставьте указанный URL-адрес в свой браузер:',
     'email_rights' => 'Все права защищены',
 ];

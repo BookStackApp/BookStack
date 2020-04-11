@@ -76,6 +76,11 @@ class LoginController extends Controller
             ]);
         }
 
+        $previous = url()->previous('');
+        if (setting('app-public') && $previous && $previous !== url('/login')) {
+            redirect()->setIntendedUrl($previous);
+        }
+
         return view('auth.login', [
           'socialDrivers' => $socialDrivers,
           'authMethod' => $authMethod,

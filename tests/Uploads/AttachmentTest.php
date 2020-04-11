@@ -1,8 +1,9 @@
-<?php namespace Tests;
+<?php namespace Tests\Uploads;
 
 use BookStack\Uploads\Attachment;
 use BookStack\Entities\Page;
 use BookStack\Auth\Permissions\PermissionService;
+use Tests\TestCase;
 
 class AttachmentTest extends TestCase
 {

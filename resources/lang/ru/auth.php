@@ -7,7 +7,7 @@
 return [
 
     'failed' => 'Учетная запись не найдена.',
-    'throttle' => 'Слишком много попыток входа. Пожалуйста, попробуйте позже через :seconds секунд.',
+    'throttle' => 'Слишком много попыток входа. Пожалуйста, повторите попытку через :seconds секунд.',
 
     // Login & Register
     'sign_up' => 'Регистрация',
@@ -21,7 +21,7 @@ return [
     'email' => 'Адрес электронной почты',
     'password' => 'Пароль',
     'password_confirm' => 'Подтверждение пароля',
-    'password_hint' => 'Должен быть больше 7 символов',
+    'password_hint' => 'Минимум 8 символов',
     'forgot_password' => 'Забыли пароль?',
     'remember_me' => 'Запомнить меня',
     'ldap_email_hint' => 'Введите адрес электронной почты для этой учетной записи.',
@@ -41,11 +41,11 @@ return [
 
     // Password Reset
     'reset_password' => 'Сброс пароля',
-    'reset_password_send_instructions' => 'Введите свой email ниже, и вам будет отправлено письмо со ссылкой для сброса пароля.',
-    'reset_password_send_button' => 'Отправить ссылку для сброса',
-    'reset_password_sent_success' => 'Ссылка для сброса была отправлена на :email.',
+    'reset_password_send_instructions' => 'Введите свой адрес электронной почты ниже, и вам будет отправлено письмо со ссылкой для сброса пароля.',
+    'reset_password_send_button' => 'Сбросить пароль',
+    'reset_password_sent_success' => 'Ссылка для сброса пароля была отправлена на :email.',
     'reset_password_success' => 'Ваш пароль был успешно сброшен.',
-    'email_reset_subject' => 'Сбросить ваш :appName пароль',
+    'email_reset_subject' => 'Сброс пароля от :appName',
     'email_reset_text' => 'Вы получили это письмо, потому что запросили сброс пароля для вашей учетной записи.',
     'email_reset_not_requested' => 'Если вы не запрашивали сброса пароля, то никаких дополнительных действий не требуется.',
 
@@ -62,14 +62,14 @@ return [
     'email_not_confirmed' => 'Адрес электронной почты не подтвержден',
     'email_not_confirmed_text' => 'Ваш email адрес все еще не подтвержден.',
     'email_not_confirmed_click_link' => 'Пожалуйста, нажмите на ссылку в письме, которое было отправлено при регистрации.',
-    'email_not_confirmed_resend' => 'Если вы не можете найти электронное письмо, вы можете снова отправить письмо с подтверждением по форме ниже.',
+    'email_not_confirmed_resend' => 'Если вы не можете найти электронное письмо, вы можете снова отправить его с подтверждением по форме ниже.',
     'email_not_confirmed_resend_button' => 'Переотправить письмо с подтверждением',
 
     // User Invite
     'user_invite_email_subject' => 'Вас приглашают присоединиться к :appName!',
     'user_invite_email_greeting' => 'Для вас создан аккаунт в :appName.',
     'user_invite_email_text' => 'Нажмите кнопку ниже, чтобы задать пароль и получить доступ:',
-    'user_invite_email_action' => 'Установить пароль аккаунту.',
+    'user_invite_email_action' => 'Установить пароль для аккаунта',
     'user_invite_page_welcome' => 'Добро пожаловать в :appName!',
     'user_invite_page_text' => 'Завершите настройку аккаунта, установите пароль для дальнейшего входа в :appName.',
     'user_invite_page_confirm_button' => 'Подтвердите пароль',

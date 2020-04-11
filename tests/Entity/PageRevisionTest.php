@@ -1,4 +1,4 @@
-<?php namespace Entity;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\PageRepo;

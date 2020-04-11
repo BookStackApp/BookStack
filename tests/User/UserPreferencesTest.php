@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php namespace Test\User;
+
+use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
 {

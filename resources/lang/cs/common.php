@@ -11,20 +11,20 @@ return [
     'save' => 'Uložit',
     'continue' => 'Pokračovat',
     'select' => 'Zvolit',
-    'toggle_all' => 'Toggle All',
+    'toggle_all' => 'Přepnout vše',
     'more' => 'Více',
 
     // Form Labels
     'name' => 'Jméno',
     'description' => 'Popis',
-    'role' => 'Role',
+    'role' => 'Funkce',
     'cover_image' => 'Obrázek na přebal',
     'cover_image_description' => 'Obrázek by měl být asi 440 × 250px.',
     
     // Actions
     'actions' => 'Akce',
     'view' => 'Pohled',
-    'view_all' => 'View All',
+    'view_all' => 'Zobrazit vše',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
@@ -35,19 +35,19 @@ return [
     'delete' => 'Smazat',
     'search' => 'Hledat',
     'search_clear' => 'Vyčistit hledání',
-    'reset' => 'Reset',
+    'reset' => 'Resetovat',
     'remove' => 'Odstranit',
     'add' => 'Přidat',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Celá obrazovka',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_options' => 'Možnosti řazení',
+    'sort_direction_toggle' => 'Přepínač směru řazení',
+    'sort_ascending' => 'Řadit vzestupně',
+    'sort_descending' => 'Řadit sestupně',
+    'sort_name' => 'Jméno',
+    'sort_created_at' => 'Datum vytvoření',
+    'sort_updated_at' => 'Datum aktualizace',
 
     // Misc
     'deleted_user' => 'Smazaný uživatel',
@@ -60,16 +60,16 @@ return [
     'grid_view' => 'Zobrazit dlaždice',
     'list_view' => 'Zobrazit seznam',
     'default' => 'Výchozí',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Drobečková navigace',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'Nabídka profilu',
     'view_profile' => 'Ukázat profil',
     'edit_profile' => 'Upravit profil',
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_content' => 'Obsah',
 
     // Email Content
     'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko ":actionText", zkopírujte odkaz níže přímo do webového prohlížeče:',

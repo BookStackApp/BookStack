@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Tests\Permissions;
 
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Page;
@@ -6,6 +6,7 @@ use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
 use Laravel\BrowserKitTesting\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Tests\BrowserKitTest;
 
 class RolesTest extends BrowserKitTest
 {

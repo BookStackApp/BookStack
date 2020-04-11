@@ -411,17 +411,23 @@ class MarkdownEditor {
         });
     }
 
+    getDrawioUrl() {
+        const drawioUrlElem = document.querySelector('[drawio-url]');
+        return drawioUrlElem ? drawioUrlElem.getAttribute('drawio-url') : false;
+    }
+
     // Show draw.io if enabled and handle save.
     actionStartDrawing() {
-        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true') return;
-        let cursorPos = this.cm.getCursor('from');
+        const url = this.getDrawioUrl();
+        if (!url) return;
 
-        DrawIO.show(() => {
+        const cursorPos = this.cm.getCursor('from');
+
+        DrawIO.show(url,() => {
             return Promise.resolve('');
         }, (pngData) => {
-            // let id = "image-" + Math.random().toString(16).slice(2);
-            // let loadingImage = window.baseUrl('/loading.gif');
-            let data = {
+
+            const data = {
                 image: pngData,
                 uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
             };
@@ -445,15 +451,15 @@ class MarkdownEditor {
 
     // Show draw.io if enabled and handle save.
     actionEditDrawing(imgContainer) {
-        const drawingDisabled = document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true';
-        if (drawingDisabled) {
+        const drawioUrl = this.getDrawioUrl();
+        if (!drawioUrl) {
             return;
         }
 
         const cursorPos = this.cm.getCursor('from');
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
-        DrawIO.show(() => {
+        DrawIO.show(drawioUrl, () => {
             return DrawIO.load(drawingId);
         }, (pngData) => {
 

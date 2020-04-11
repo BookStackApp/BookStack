@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => '無法找到頁面',
     'sorry_page_not_found' => '對不起，無法找到您想進入的頁面。',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => '返回首頁',
     'error_occurred' => '發生錯誤',
     'app_down' => ':appName現在正在關閉',
@@ -95,5 +96,8 @@ return [
     'api_incorrect_token_secret' => '給定使用的API令牌提供的密鑰不正確',
     'api_user_no_api_permission' => '使用的API令牌的擁有者者無權進行API調用',
     'api_user_token_expired' => '授權令牌已過期',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];

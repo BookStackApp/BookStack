@@ -34,8 +34,8 @@ header {
     fill: #FFF;
   }
   .dropdown-container {
-    padding-left: $-m;
-    padding-right: 0;
+    padding-inline-start: $-m;
+    padding-inline-end: 0;
   }
   .avatar, .user-name {
     display: inline-block;
@@ -53,7 +53,7 @@ header {
       vertical-align: top;
     }
     > span {
-      padding-left: $-xs;
+      padding-inline-start: $-xs;
       display: inline-block;
       padding-top: $-xxs;
     }
@@ -62,7 +62,7 @@ header {
       font-size: 18px;
     }
     @include between($l, $xl) {
-      padding-left: $-xs;
+      padding-inline-start: $-xs;
       .name {
         display: none;
       }
@@ -87,7 +87,7 @@ header .search-box {
     border-radius: 40px;
     color: #EEE;
     z-index: 2;
-    padding-left: 40px;
+    padding-inline-start: 40px;
     &:focus {
       outline: none;
       border: 1px solid rgba(255, 255, 255, 0.6);
@@ -97,8 +97,12 @@ header .search-box {
     fill: #EEE;
     z-index: 1;
     left: 16px;
+    @include rtl {
+      left: auto;
+      right: 16px;
+    }
     svg {
-      margin-right: 0;
+      margin-block-end: 0;
     }
   }
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -124,12 +128,12 @@ header .search-box {
   font-size: 1.8em;
   color: #fff;
   font-weight: 400;
-  padding: 14px $-l 14px 0;
+  @include padding(14px, $-l, 14px, 0);
   vertical-align: top;
   line-height: 1;
 }
 .logo-image {
-  margin: $-xs $-s $-xs 0;
+  @include margin($-xs, $-s, $-xs, 0);
   vertical-align: top;
   height: 43px;
 }
@@ -151,7 +155,13 @@ header .search-box {
     margin: 0;
     bottom: -2px;
   }
+  @include rtl() {
+    left: $-m;
+    right: auto;
+  }
 }
+
+
 
 @include smaller-than($l) {
   header .header-links {
@@ -169,13 +179,13 @@ header .search-box {
     }
   }
   header .links a, header .dropdown-container ul li a {
-    text-align: left;
+    text-align: start;
     display: block;
     padding: $-s $-m;
     color: $text-dark;
     fill: $text-dark;
     svg {
-      margin-right: $-s;
+      margin-inline-end: $-s;
     }
     &:hover {
       background-color: #EEE;
@@ -186,7 +196,7 @@ header .search-box {
   }
   header .dropdown-container {
     display: block;
-    padding-left: 0;
+    padding-inline-start: 0;
   }
   header .links {
     display: block;
@@ -215,7 +225,7 @@ header .search-box {
   border-bottom: 3px solid #BBB;
   cursor: pointer;
   &:first-child {
-    border-right: 1px solid #DDD;
+    border-inline-end: 1px solid #DDD;
   }
   &.active {
     border-bottom-color: currentColor;
@@ -253,7 +263,7 @@ header .search-box {
       display: none;
     }
     > span:first-child {
-      margin-right: 0;
+      margin-block-end: 0;
     }
   }
 }
@@ -269,7 +279,7 @@ header .search-box {
     }
   }
   .svg-icon {
-    margin-right: 0;
+    margin-block-end: 0;
   }
 }
 
@@ -282,9 +292,17 @@ header .search-box {
   position: absolute;
   z-index: 80;
   right: -$-m;
+  @include rtl {
+    right: auto;
+    left: -$-m;
+  }
   .breadcrumb-listing-search .svg-icon {
     position: absolute;
     left: $-s;
+    @include rtl {
+      right: $-s;
+      left: auto;
+    }
     top: 11px;
     fill: #888;
     pointer-events: none;
@@ -292,10 +310,10 @@ header .search-box {
   .breadcrumb-listing-entity-list {
     max-height: 400px;
     overflow-y: scroll;
-    text-align: left;
+    text-align: start;
   }
   input {
-    padding-left: $-xl;
+    padding-inline-start: $-xl;
     border-radius: 0;
     border: 0;
     border-bottom: 1px solid #DDD;
@@ -337,25 +355,25 @@ header .search-box {
   display: inline-block;
   padding: $-xs $-s;
   &:last-child {
-    padding-right: 0;
+    padding-inline-end: 0;
   }
   &:first-child {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 
 
 .action-buttons .dropdown-container:last-child a {
-  padding-right: 0;
-  padding-left: $-s;
+  padding-inline-end: 0;
+  padding-inline-start: $-s;
 }
 .action-buttons {
-  text-align: right;
+  text-align: end;
   &.text-left {
-    text-align: left;
+    text-align: start;
     .text-button {
-      padding-right: $-m;
-      padding-left: 0;
+      padding-inline-end: $-m;
+      padding-inline-start: 0;
     }
   }
   &.text-center {
@@ -368,6 +386,6 @@ header .search-box {
     padding: $-xs $-xs;
   }
   .action-buttons .dropdown-container:last-child a {
-    padding-left: $-xs;
+    padding-inline-start: $-xs;
   }
 }

@@ -3,13 +3,17 @@
 @section('content')
 <div class="container mt-l">
 
-    <div class="card mb-xl px-l pb-xl pt-l">
+    <div class="card mb-xl px-l pb-l pt-l">
         <div class="grid half v-center">
             <div>
                 <h1 class="list-heading">{{ $message ?? trans('errors.404_page_not_found') }}</h1>
                 <h5>{{ trans('errors.sorry_page_not_found') }}</h5>
+                <p>{{ trans('errors.sorry_page_not_found_permission_warning') }}</p>
             </div>
             <div class="text-right">
+                @if(!signedInUser())
+                    <a href="{{ url('/login') }}" class="button outline">{{ trans('auth.log_in') }}</a>
+                @endif
                 <a href="{{ url('/') }}" class="button outline">{{ trans('errors.return_home') }}</a>
             </div>
         </div>

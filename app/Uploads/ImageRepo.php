@@ -138,7 +138,7 @@ class ImageRepo
      */
     public function saveDrawing(string $base64Uri, int $uploadedTo): Image
     {
-        $name = 'Drawing-' . user()->getShortName(40) . '-' . strval(time()) . '.png';
+        $name = 'Drawing-' . strval(user()->id) . '-' . strval(time()) . '.png';
         return $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
     }
 
@@ -218,13 +218,5 @@ class ImageRepo
         } catch (Exception $exception) {
             return null;
         }
-    }
-
-    /**
-     * Get the validation rules for image files.
-     */
-    public function getImageValidationRules(): string
-    {
-        return 'image_extension|no_double_extension|mimes:jpeg,png,gif,bmp,webp,tiff';
     }
 }

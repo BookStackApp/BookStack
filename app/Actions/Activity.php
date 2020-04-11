@@ -50,10 +50,8 @@ class Activity extends Model
 
     /**
      * Checks if another Activity matches the general information of another.
-     * @param $activityB
-     * @return bool
      */
-    public function isSimilarTo($activityB)
+    public function isSimilarTo(Activity $activityB): bool
     {
         return [$this->key, $this->entity_type, $this->entity_id] === [$activityB->key, $activityB->entity_type, $activityB->entity_id];
     }

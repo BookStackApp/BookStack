@@ -262,7 +262,6 @@ span.highlight {
  * Lists
  */
 ul, ol {
-  overflow: hidden;
   p {
     margin: 0;
   }
@@ -295,6 +294,13 @@ li.checkbox-item, li.task-list-item {
   }
 }
 
+li > ol, li > ul {
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  padding-block-end: 0px;
+  padding-block-start: 0px;
+}
+
 /*
  * Generic text styling classes
  */
@@ -306,10 +312,10 @@ li.checkbox-item, li.task-list-item {
   text-align: center;
 }
 .text-left {
-  text-align: left;
+  text-align: start;
 }
 .text-right {
-  text-align: right;
+  text-align: end;
 }
 
 @each $sizeLetter, $size in $screen-sizes {
@@ -318,10 +324,10 @@ li.checkbox-item, li.task-list-item {
       text-align: center;
     }
     .text-#{$sizeLetter}-left {
-      text-align: left;
+      text-align: start;
     }
     .text-#{$sizeLetter}-right {
-      text-align: right;
+      text-align: end;
     }
   }
 }
@@ -377,6 +383,6 @@ span.sep {
   display: inline-block;
   position: relative;
   bottom: -0.105em;
-  margin-right: $-xs;
+  margin-inline-end: $-xs;
   pointer-events: none;
 }

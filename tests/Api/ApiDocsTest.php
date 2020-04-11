@@ -1,6 +1,6 @@
-<?php
+<?php namespace Tests\Api;
 
-namespace Tests;
+use Tests\TestCase;
 
 class ApiDocsTest extends TestCase
 {

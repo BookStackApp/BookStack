@@ -69,5 +69,21 @@ dbguichu :: Chinese Simplified
 Randy Kim (hyunjun) :: Korean
 Francesco M. Taurino (ftaurino) :: Italian
 DanielFrederiksen :: Danish
-Finn Wessel (19finnwessel6) :: German
+Finn Wessel (19finnwessel6) :: German Informal; German
 Gustav Kånåhols (Kurbitz) :: Swedish
+Vuong Trung Hieu (fpooon) :: Vietnamese
+Emil Petersen (emoyly) :: Danish
+mrjaboozy :: Slovenian
+Statium :: Russian
+Mikkel Struntze (MStruntze) :: Danish
+kostefun :: Russian
+Tuyen.NG (tuyendev) :: Vietnamese
+Ghost_chu (dbguichu) :: Chinese Simplified
+Ziipen :: Danish
+Samuel Schwarz (Guiph7quan) :: Czech
+Aleph (toishoki) :: Turkish
+Julio Alberto García (Yllelder) :: Spanish
+Rafael (raribeir) :: Portuguese, Brazilian
+Hiroyuki Odake (dakesan) :: Japanese
+Alex Lee (qianmengnet) :: Chinese Simplified
+swinn37 :: French

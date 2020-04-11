@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Oldal nem található',
     'sorry_page_not_found' => 'Sajnáljuk, a keresett oldal nem található.',
+    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Vissza a kezdőlapra',
     'error_occurred' => 'Hiba örtént',
     'app_down' => ':appName jelenleg nem üzemel',
@@ -95,5 +96,8 @@ return [
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
     'api_user_no_api_permission' => 'A használt API vezérjel tulajdonosának nincs jogosultsága API hívások végrehajtásához',
     'api_user_token_expired' => 'A használt hitelesítési vezérjel lejárt',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Hiba történt egy teszt email küldésekor:',
 
 ];

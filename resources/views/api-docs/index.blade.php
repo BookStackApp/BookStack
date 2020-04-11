@@ -26,7 +26,7 @@
                                     <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
                                 </a>
                                 <a href="#{{ $endpoint['name'] }}" class="text-mono">
-                                    {{ $endpoint['controller_method'] }}
+                                    {{ $endpoint['controller_method_kebab'] }}
                                 </a>
                             </div>
                         @endforeach
@@ -186,7 +186,7 @@
                         <h1 class="list-heading text-capitals">{{ $model }}</h1>
 
                         @foreach($endpoints as $endpoint)
-                            <h6 class="text-uppercase text-muted float right">{{ $endpoint['controller_method'] }}</h6>
+                            <h6 class="text-uppercase text-muted float right">{{ $endpoint['controller_method_kebab'] }}</h6>
                             <h5 id="{{ $endpoint['name'] }}" class="text-mono mb-m">
                                 <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
                                 {{ url($endpoint['uri']) }}

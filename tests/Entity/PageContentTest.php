@@ -1,7 +1,8 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Page;
+use Tests\TestCase;
 
 class PageContentTest extends TestCase
 {

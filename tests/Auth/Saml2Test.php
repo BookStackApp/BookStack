@@ -1,7 +1,8 @@
-<?php namespace Tests;
+<?php namespace Tests\Auth;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use Tests\TestCase;
 
 class Saml2Test extends TestCase
 {

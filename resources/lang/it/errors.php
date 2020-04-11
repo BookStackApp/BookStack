@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'La mail è già stata confermata, esegui il login.',
     'email_confirmation_invalid' => 'Questo token di conferma non è valido o già stato utilizzato, registrati nuovamente.',
     'email_confirmation_expired' => 'Il token di conferma è scaduto, è stata inviata una nuova mail di conferma.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'L\'indirizzo email per l\'account in uso deve essere confermato',
     'ldap_fail_anonymous' => 'Accesso LDAP fallito usando bind anonimo',
     'ldap_fail_authed' => 'Accesso LDAP fallito usando il dn e la password inseriti',
     'ldap_extension_not_installed' => 'L\'estensione PHP LDAP non è installata',
@@ -83,6 +83,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Pagina Non Trovata',
     'sorry_page_not_found' => 'La pagina che stavi cercando non è stata trovata.',
+    'sorry_page_not_found_permission_warning' => 'Se pensi che questa pagina possa esistere, potresti non avere i permessi per visualizzarla.',
     'return_home' => 'Ritorna alla home',
     'error_occurred' => 'C\'è Stato un errore',
     'app_down' => ':appName è offline',
@@ -90,10 +91,13 @@ return [
 
     // API errors
     'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
+    'api_bad_authorization_format' => 'Un token di autorizzazione è stato trovato nella richiesta, ma il formato sembra non corretto',
     'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_user_no_api_permission' => 'Il proprietario del token API utilizzato non ha il permesso di effettuare chiamate API',
     'api_user_token_expired' => 'The authorization token used has expired',
+
+    // Settings & Maintenance
+    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
 
 ];

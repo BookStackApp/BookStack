@@ -1,6 +1,7 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Repos\PageRepo;
+use Tests\BrowserKitTest;
 
 class PageDraftTest extends BrowserKitTest
 {
