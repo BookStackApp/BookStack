@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Profil Menüsü',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Bilgi',
