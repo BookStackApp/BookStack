@@ -167,8 +167,8 @@ header .search-box {
 
 @include smaller-than($l) {
   header .header-links {
+    @include lightDark(background-color, #fff, #333);
     display: none;
-    background-color: #FFF;
     z-index: 10;
     right: $-m;
     border-radius: 4px;
@@ -180,19 +180,18 @@ header .search-box {
       display: block;
     }
   }
-  header .links a, header .dropdown-container ul li a {
+  header .links a, header .dropdown-container ul li a, header .dropdown-container ul li button {
     text-align: start;
     display: block;
     padding: $-s $-m;
     color: $text-dark;
-    fill: $text-dark;
+    @include lightDark(color, $text-dark, #eee);
     svg {
       margin-inline-end: $-s;
     }
     &:hover {
-      background-color: #EEE;
-      color: #444;
-      fill: #444;
+      @include lightDark(background-color, #eee, #333);
+      @include lightDark(color, #000, #fff);
       text-decoration: none;
     }
   }
