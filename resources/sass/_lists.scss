@@ -581,6 +581,8 @@ ul.pagination {
     @include lightDark(color, #555, #eee);
     fill: currentColor;
     white-space: nowrap;
+    line-height: 1.6;
+    cursor: pointer;
     &:hover, &:focus {
       text-decoration: none;
       background-color: var(--color-primary-light);

@@ -72,15 +72,7 @@
                             </li>
                             <li><hr></li>
                             <li>
-                                <form action="{{ url('/settings/users/toggle-dark-mode') }}" method="post">
-                                    {{ csrf_field() }}
-                                    {{ method_field('patch') }}
-                                    @if(setting()->getForCurrentUser('dark-mode-enabled'))
-                                        <button>@icon('light-mode'){{ trans('common.light_mode') }}</button>
-                                    @else
-                                        <button>@icon('dark-mode'){{ trans('common.dark_mode') }}</button>
-                                    @endif
-                                </form>
+                                @include('partials.dark-mode-toggle')
                             </li>
                         </ul>
                     </div>
