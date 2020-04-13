@@ -11,7 +11,7 @@ return [
     'save' => 'Kaydet',
     'continue' => 'Devam',
     'select' => 'Seç',
-    'toggle_all' => 'Hepsini Değiştir',
+    'toggle_all' => 'Hepsini Aç/Kapat',
     'more' => 'Daha Fazla',
 
     // Form Labels
@@ -19,12 +19,12 @@ return [
     'description' => 'Açıklama',
     'role' => 'Rol',
     'cover_image' => 'Kapak resmi',
-    'cover_image_description' => 'Bu resim yaklaşık 440x250px boyutlarında olmalıdır.',
+    'cover_image_description' => 'Bu görsel yaklaşık 440x250px boyutlarında olmalıdır.',
     
     // Actions
-    'actions' => 'Aksiyonlar',
+    'actions' => 'İşlemler',
     'view' => 'Görüntüle',
-    'view_all' => 'Hepsini Görüntüle',
+    'view_all' => 'Hepsini Göster',
     'create' => 'Oluştur',
     'update' => 'Güncelle',
     'edit' => 'Düzenle',
@@ -47,31 +47,33 @@ return [
     'sort_descending' => 'Azalan Sıralama',
     'sort_name' => 'İsim',
     'sort_created_at' => 'Oluşturulma Tarihi',
-    'sort_updated_at' => 'Güncellenme Tarihi',
+    'sort_updated_at' => 'Güncelleme Tarihi',
 
     // Misc
     'deleted_user' => 'Silinmiş Kullanıcı',
-    'no_activity' => 'Gösterilecek aktivite yok',
-    'no_items' => 'Kullanılabilir öge yok',
+    'no_activity' => 'Gösterilecek eylem bulunamadı',
+    'no_items' => 'Herhangi bir öge bulunamadı',
     'back_to_top' => 'Başa dön',
-    'toggle_details' => 'Detayları değiştir',
-    'toggle_thumbnails' => 'Küçük resimleri değiştir',
+    'toggle_details' => 'Detayları Göster/Gizle',
+    'toggle_thumbnails' => 'Ön İzleme Görsellerini Göster/Gizle',
     'details' => 'Detaylar',
-    'grid_view' => 'Grid görünümü',
-    'list_view' => 'Liste görünümü',
+    'grid_view' => 'Izgara Görünümü',
+    'list_view' => 'Liste Görünümü',
     'default' => 'Varsayılan',
-    'breadcrumb' => 'Sayfa İşaretleri Yolu',
+    'breadcrumb' => 'Gezinti Menüsü',
 
     // Header
-    'profile_menu' => 'Tercih menüsü',
+    'profile_menu' => 'Profil Menüsü',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Bilgi',
     'tab_content' => 'İçerik',
 
     // Email Content
-    'email_action_help' => 'Eğer ":actionText" butonuna tıklamakta zorluk çekiyorsanız, aşağıda bulunan linki kopyalayıp tarayıcınıza yapıştırabilirsiniz.',
-    'email_rights' => 'Bütün hakları saklıdır',
+    'email_action_help' => '":actionText" butonuna tıklamada sorun yaşıyorsanız, aşağıda bulunan bağlantıyı kopyalayıp tarayıcınıza yapıştırın:',
+    'email_rights' => 'Tüm hakları saklıdır',
 ];

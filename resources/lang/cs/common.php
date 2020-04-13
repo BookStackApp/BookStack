@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Nabídka profilu',
     'view_profile' => 'Ukázat profil',
     'edit_profile' => 'Upravit profil',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Info',

@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Jelszó visszaállítása',
     'reset_password_send_instructions' => 'Meg kell adni az email címet amire egy jelszó visszaállító hivatkozás lesz elküldve.',
     'reset_password_send_button' => 'Visszaállító hivatkozás elküldése',
-    'reset_password_sent_success' => 'Jelszó visszaállító hivatkozás elküldve :email címre.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'A jelszó sikeresen visszaállítva.',
     'email_reset_subject' => ':appName jelszó visszaállítása',
     'email_reset_text' => 'Ezt az emailt azért küldtük mert egy jelszó visszaállításra vonatkozó kérést kaptunk ebből a fiókból.',

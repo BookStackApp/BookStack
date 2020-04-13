@@ -43,7 +43,7 @@ return [
     'reset_password' => '重置密碼',
     'reset_password_send_instructions' => '在下方輸入您的Email位址，您將收到一封帶有密碼重置連結的郵件。',
     'reset_password_send_button' => '發送重置連結',
-    'reset_password_sent_success' => '密碼重置連結已發送到:email。',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => '您的密碼已成功重置。',
     'email_reset_subject' => '重置您的:appName密碼',
     'email_reset_text' => '您收到此電子郵件是因為我們收到了您的帳號的密碼重置請求。',

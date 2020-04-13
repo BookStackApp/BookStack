@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Passwort vergessen',
     'reset_password_send_instructions' => 'Bitte gib Deine E-Mail-Adresse ein. Danach erhältst Du eine E-Mail mit einem Link zum Zurücksetzen Deines Passwortes.',
     'reset_password_send_button' => 'Passwort zurücksetzen',
-    'reset_password_sent_success' => 'Eine E-Mail mit dem Link zum Zurücksetzen Deines Passwortes wurde an :email gesendet.',
+    'reset_password_sent' => 'Ein Link zum Zurücksetzen des Passworts wird an :email gesendet, wenn diese E-Mail-Adresse im System gefunden wird.',
     'reset_password_success' => 'Dein Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
     'email_reset_text' => 'Du erhältsts diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',

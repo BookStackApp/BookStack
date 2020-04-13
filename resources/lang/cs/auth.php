@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Resetovat heslo',
     'reset_password_send_instructions' => 'Zadejte vaší emailovou adresu a bude vám zaslán odkaz na resetování hesla.',
     'reset_password_send_button' => 'Poslat odkaz pro reset hesla',
-    'reset_password_sent_success' => 'Odkaz na resetování hesla vám byl zaslán na :email.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'Vaše heslo bylo úspěšně resetováno.',
     'email_reset_subject' => 'Reset hesla do :appName',
     'email_reset_text' => 'Tento email jste obdrželi, protože jsme dostali žádost o resetování vašeho hesla k účtu v :appName.',

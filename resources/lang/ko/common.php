@@ -66,6 +66,8 @@ return [
     'profile_menu' => '프로필',
     'view_profile' => '프로필 보기',
     'edit_profile' => '프로필 바꾸기',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => '정보',
