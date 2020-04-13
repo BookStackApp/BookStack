@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Restablecer la contraseña',
     'reset_password_send_instructions' => 'Introduzca su correo electrónico a continuación y se le enviará un correo electrónico con un enlace para la restauración',
     'reset_password_send_button' => 'Enviar enlace de restauración',
-    'reset_password_sent_success' => 'Se envió un enlace para restablecer la contraseña a :email.',
+    'reset_password_sent' => 'Un enlace para cambiar la contraseña será enviado a su dirección de correo electrónico si existe en nuestro sistema.',
     'reset_password_success' => 'Su contraseña se restableció con éxito.',
     'email_reset_subject' => 'Restauración de la contraseña de para la aplicación :appName',
     'email_reset_text' => 'Ud. esta recibiendo este correo electrónico debido a que recibimos una solicitud de restauración de la contraseña de su cuenta.',

@@ -43,7 +43,7 @@ return [
     'reset_password' => 'איפוס סיסמא',
     'reset_password_send_instructions' => 'יש להזין את כתובת המייל למטה ואנו נשלח אלייך הוראות לאיפוס הסיסמא',
     'reset_password_send_button' => 'שלח קישור לאיפוס סיסמא',
-    'reset_password_sent_success' => 'שלחנו הוראות לאיפוס הסיסמא אל :email',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'סיסמתך עודכנה בהצלחה',
     'email_reset_subject' => 'איפוס סיסמא ב :appName',
     'email_reset_text' => 'קישור זה נשלח עקב בקשה לאיפוס סיסמא בחשבון שלך',

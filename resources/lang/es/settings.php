@@ -61,7 +61,7 @@ return [
     'reg_email_confirmation_toggle' => 'Requerir confirmación por Email',
     'reg_confirm_email_desc' => 'Si se emplea la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y esta opción será ignorada.',
     'reg_confirm_restrict_domain' => 'Restricción de Dominio',
-    'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los dominio a los que les gustaría restringir el registro de usuarios. A los usuarios les será enviado un correo electrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Tenga en cuenta que los usuarios podrán cambiar sus direcciones de correo electrónico después de registrarse exitosamente.',
+    'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los dominios para cuentas de correo a los que se les permitirá el registro de usuarios. A los usuarios les será enviado un correo electrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Tenga en cuenta que los usuarios podrán cambiar sus direcciones de correo electrónico después de registrarse exitosamente.',
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
 
     // Maintenance settings
@@ -192,6 +192,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
+        'he' => 'עברית',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',

@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'הצג פרופיל',
     'edit_profile' => 'ערוך פרופיל',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'מידע',
