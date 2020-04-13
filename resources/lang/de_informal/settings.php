@@ -195,7 +195,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
-        'he' => 'עברית',
+        'he' => 'Hebräisch',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',
