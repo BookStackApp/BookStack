@@ -66,6 +66,8 @@ return [
     'profile_menu' => '個人資料菜單',
     'view_profile' => '檢視資料',
     'edit_profile' => '編輯資料',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => '訊息',
