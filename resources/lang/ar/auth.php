@@ -43,7 +43,7 @@ return [
     'reset_password' => 'استعادة كلمة المرور',
     'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة المرور.',
     'reset_password_send_button' => 'أرسل رابط الاستعادة',
-    'reset_password_sent_success' => 'تم إرسال رابط استعادة كلمة المرور إلى :email.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'تمت استعادة كلمة المرور بنجاح.',
     'email_reset_subject' => 'استعد كلمة المرور الخاصة بتطبيق :appName',
     'email_reset_text' => 'تم إرسال هذه الرسالة بسبب تلقينا لطلب استعادة كلمة المرور الخاصة بحسابكم.',

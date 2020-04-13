@@ -8,7 +8,7 @@ return [
 
     'password' => 'Gesla morajo biti najmanj osem znakov in se morajo ujemati s potrditvijo.',
     'user' => "Ne moremo najti uporabnika s tem e-poštnim naslovom.",
-    'token' => 'Žeton za ponastavitev gesla ni veljaven.',
+    'token' => 'The password reset token is invalid for this email address.',
     'sent' => 'Poslali smo vam povezavo za ponastavitev gesla!',
     'reset' => 'Vaše geslo je bilo ponastavljeno!',
 

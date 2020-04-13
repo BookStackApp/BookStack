@@ -43,7 +43,7 @@ return [
     'reset_password' => 'パスワードリセット',
     'reset_password_send_instructions' => '以下にEメールアドレスを入力すると、パスワードリセットリンクが記載されたメールが送信されます。',
     'reset_password_send_button' => 'リセットリンクを送信',
-    'reset_password_sent_success' => ':emailへリセットリンクを送信しました。',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'パスワードがリセットされました。',
     'email_reset_subject' => ':appNameのパスワードをリセット',
     'email_reset_text' => 'このメールは、パスワードリセットがリクエストされたため送信されています。',
