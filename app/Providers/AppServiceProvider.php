@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Custom validation methods
         Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
-            $validImageExtensions = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff', 'webp'];
+            $validImageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
             return in_array(strtolower($value->getClientOriginalExtension()), $validImageExtensions);
         });
 

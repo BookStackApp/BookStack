@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Tests\Auth;
 
 
 use BookStack\Auth\Access\UserInviteService;
@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Str;
 use Notification;
+use Tests\TestCase;
 
 class UserInviteTest extends TestCase
 {

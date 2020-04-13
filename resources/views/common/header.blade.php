@@ -70,6 +70,10 @@
                                     <a href="{{ url('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
                                 @endif
                             </li>
+                            <li><hr></li>
+                            <li>
+                                @include('partials.dark-mode-toggle')
+                            </li>
                         </ul>
                     </div>
                 @endif

@@ -1,6 +1,8 @@
 <div class="page-editor flex-fill flex" id="page-editor"
      drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
-     drawio-enabled="{{ config('services.drawio') ? 'true' : 'false' }}"
+     @if(config('services.drawio'))
+        drawio-url="{{ is_string(config('services.drawio')) ? config('services.drawio') : 'https://www.draw.io/?embed=1&proto=json&spin=1' }}"
+     @endif
      editor-type="{{ setting('app-editor') }}"
      page-id="{{ $model->id ?? 0 }}"
      text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"

@@ -1,4 +1,4 @@
-<?php namespace Test;
+<?php namespace Test\User;
 
 use BookStack\Api\ApiToken;
 use Carbon\Carbon;

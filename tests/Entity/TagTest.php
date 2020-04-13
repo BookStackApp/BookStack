@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
@@ -6,6 +6,7 @@ use BookStack\Actions\Tag;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Page;
 use BookStack\Auth\Permissions\PermissionService;
+use Tests\BrowserKitTest;
 
 class TagTest extends BrowserKitTest
 {

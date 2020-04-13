@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Reset Password',
     'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
     'reset_password_send_button' => 'Send Reset Link',
-    'reset_password_sent_success' => 'A password reset link has been sent to :email.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'Your password has been successfully reset.',
     'email_reset_subject' => 'Reset your :appName password',
     'email_reset_text' => 'You are receiving this email because we received a password reset request for your account.',

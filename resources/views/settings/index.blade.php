@@ -92,7 +92,7 @@
                             <label for="setting-app-name" class="setting-list-label">{{ trans('settings.app_name') }}</label>
                             <p class="small">{{ trans('settings.app_name_desc') }}</p>
                         </div>
-                        <div>
+                        <div class="pt-xs">
                             <input type="text" value="{{ setting('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
                             @include('components.toggle-switch', [
                                 'name' => 'setting-app-name-header',
@@ -107,7 +107,7 @@
                             <label class="setting-list-label">{{ trans('settings.app_editor') }}</label>
                             <p class="small">{{ trans('settings.app_editor_desc') }}</p>
                         </div>
-                        <div>
+                        <div class="pt-xs">
                             <select name="setting-app-editor" id="setting-app-editor">
                                 <option @if(setting('app-editor') === 'wysiwyg') selected @endif value="wysiwyg">WYSIWYG</option>
                                 <option @if(setting('app-editor') === 'markdown') selected @endif value="markdown">Markdown</option>
@@ -120,7 +120,7 @@
                             <label class="setting-list-label">{{ trans('settings.app_logo') }}</label>
                             <p class="small">{!! trans('settings.app_logo_desc') !!}</p>
                         </div>
-                        <div>
+                        <div class="pt-xs">
                             @include('components.image-picker', [
                                      'removeName' => 'setting-app-logo',
                                      'removeValue' => 'none',
@@ -138,7 +138,7 @@
                             <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
                             <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
                         </div>
-                        <div setting-app-color-picker class="text-m-right">
+                        <div setting-app-color-picker class="text-m-right pt-xs">
                             <input type="color" data-default="#206ea7" data-current="{{ setting('app-color') }}" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
                             <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                             <div class="pr-s">
@@ -174,7 +174,7 @@
                             <label for="setting-app-homepage" class="setting-list-label">{{ trans('settings.app_homepage') }}</label>
                             <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
                         </div>
-                        <div>
+                        <div class="pt-xs">
                             <select name="setting-app-homepage-type" id="setting-app-homepage-type">
                                 <option @if(setting('app-homepage-type') === 'default') selected @endif value="default">{{ trans('common.default') }}</option>
                                 <option @if(setting('app-homepage-type') === 'books') selected @endif value="books">{{ trans('entities.books') }}</option>
@@ -246,7 +246,7 @@
                             <label for="setting-registration-restrict" class="setting-list-label">{{ trans('settings.reg_confirm_restrict_domain') }}</label>
                             <p class="small">{!! trans('settings.reg_confirm_restrict_domain_desc') !!}</p>
                         </div>
-                        <div>
+                        <div class="pt-xs">
                             <input type="text" id="setting-registration-restrict" name="setting-registration-restrict" placeholder="{{ trans('settings.reg_confirm_restrict_domain_placeholder') }}" value="{{ setting('registration-restrict', '') }}">
                         </div>
                     </div>

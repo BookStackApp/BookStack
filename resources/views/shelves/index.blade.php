@@ -15,7 +15,7 @@
                     <span>{{ trans('entities.shelves_new_action') }}</span>
                 </a>
             @endif
-            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
+            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelves'])
         </div>
     </div>
 
