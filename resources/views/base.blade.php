@@ -45,5 +45,16 @@
     <script src="{{ versioned_asset('dist/app.js') }}"></script>
     @yield('scripts')
 
+    <script type="text/javascript">
+        //百度统计
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?84409055f1221299ffd6056602cd2268";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </body>
 </html>
