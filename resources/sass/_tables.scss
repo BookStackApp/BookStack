@@ -2,7 +2,7 @@ table {
   min-width: 100px;
   max-width: 100%;
   thead {
-    background-color: #F8F8F8;
+    @include lightDark(background-color, #f8f8f8, #333);
     font-weight: 500;
   }
   td, th {
@@ -23,7 +23,7 @@ table.table {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
   th, td {
-    text-align: left;
+    text-align: start;
     border: none;
     padding: $-s $-s;
     vertical-align: middle;
@@ -33,10 +33,10 @@ table.table {
     font-weight: bold;
   }
   tr:hover {
-    background-color: #EEE;
+    @include lightDark(background-color, #eee, #333);
   }
   .text-right {
-    text-align: right;
+    text-align: end;
   }
   .text-center {
     text-align: center;

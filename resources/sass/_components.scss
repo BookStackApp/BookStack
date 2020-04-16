@@ -6,8 +6,9 @@
   margin: $-xl;
   padding: $-m $-l;
   background-color: #FFF;
+  @include lightDark(background-color, #fff, #444);
   border-radius: 4px;
-  border-left: 6px solid currentColor;
+  border-inline-start: 6px solid currentColor;
   box-shadow: $bs-large;
   z-index: 999999;
   cursor: pointer;
@@ -26,19 +27,22 @@
   svg {
     width: 2.8rem;
     height: 2.8rem;
-    padding-right: $-s;
+    padding-inline-end: $-s;
     fill: currentColor;
   }
   .dismiss {
     margin-top: -8px;
     svg {
       height: 1.0rem;
-      color: #444;
+      @include lightDark(color, #444, #888);
     }
   }
   span {
     vertical-align: middle;
     line-height: 1.3;
+    @include whenDark {
+      color: #BBB;
+    }
   }
   &.pos {
     color: $positive;
@@ -63,7 +67,7 @@
   transition: all ease-in-out 180ms;
   user-select: none;
   svg[data-icon="caret-right"] {
-    margin-right: 0;
+    margin-inline-end: 0;
     font-size: 1rem;
     transition: all ease-in-out 180ms;
     transform: rotate(0deg);
@@ -73,12 +77,12 @@
     transform: rotate(90deg);
   }
   svg[data-icon="caret-right"] + * {
-    margin-left: $-xs;
+    margin-inline-start: $-xs;
   }
 }
 
 [overlay] {
-  background-color: rgba(0, 0, 0, 0.333);
+  @include lightDark(background-color, rgba(0, 0, 0, 0.333), rgba(0, 0, 0, 0.6));
   position: fixed;
   z-index: 95536;
   width: 100%;
@@ -99,7 +103,7 @@
 }
 
 .popup-body {
-  background-color: #FFF;
+  @include lightDark(background-color, #fff, #333);
   max-height: 90%;
   max-width: 1200px;
   width: 90%;
@@ -175,7 +179,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .dropzone-container {
   position: relative;
-  background-color: #EEE;
+  @include lightDark(background-color, #eee, #222);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23a9a9a9' fill-opacity='0.52' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
@@ -188,7 +192,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   cursor: pointer;
   width: (100%/6);
   height: auto;
-  border: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #000);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   transition: all cubic-bezier(.4, 0, 1, 1) 160ms;
   overflow: hidden;
@@ -230,7 +234,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 #image-manager .load-more {
   display: block;
   text-align: center;
-  background-color: #EEE;
+  @include lightDark(background-color, #EEE, #444);
   padding: $-s $-m;
   color: #AAA;
   clear: both;
@@ -243,7 +247,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   width: 300px;
   overflow-y: auto;
   overflow-x: hidden;
-  border-left: 1px solid #DDD;
+  border-inline-start: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #000);
   .inner {
     padding: $-m;
   }
@@ -265,6 +270,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
   .dropzone-container {
     border-bottom: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
   }
 }
 
@@ -477,7 +483,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: block;
   top: 50%;
   left: 50%;
-  margin-left: -27px;
+  margin-inline-start: -27px;
   margin-top: -35px;
 }
 
@@ -511,7 +517,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   top: 50%;
   margin-top: -8px;
   width: 80px;
-  margin-left: -40px;
+  margin-inline-start: -40px;
   background: rgba(255, 255, 255, 0.9);
   transform: scale(1);
   border-radius: 8px;
@@ -568,19 +574,20 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   left: 44px;
   width: 0;
   height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
+  border-inline-start: 6px solid transparent;
+  border-inline-end: 6px solid transparent;
   border-bottom: 6px solid $negative;
 }
 
 
 .tab-container .nav-tabs {
-  text-align: left;
+  text-align: start;
   border-bottom: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #444);
   margin-bottom: $-m;
   .tab-item {
     padding: $-s;
-    color: #666;
+    @include lightDark(color, #666, #999);
     &.selected {
       border-bottom-width: 3px;
     }
@@ -592,8 +599,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   a, .tab-item {
     padding: $-m;
     display: inline-block;
-    color: #666;
-    fill: #666;
+    @include lightDark(color, #666, #999);
     cursor: pointer;
     &.selected {
       border-bottom: 2px solid var(--color-primary);
@@ -613,7 +619,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   max-width: 480px;
   margin-bottom: $-s;
   a {
-    margin-right: $-xs;
+    margin-inline-end: $-xs;
     text-decoration: underline;
   }
 }
@@ -628,9 +634,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .comment-box {
-  border: 1px solid #DDD;
   border-radius: 4px;
-  background-color: #FFF;
+  border: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #000);
+  @include lightDark(background-color, #FFF, #222);
   .content {
     font-size: 0.666em;
     p, ul, ol {
@@ -659,7 +666,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     }
     a { color: #666; }
     span {
-      padding-left: $-xxs;
+      padding-inline-start: $-xxs;
     }
   }
   .text-muted {
@@ -692,7 +699,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-left: 1px solid #DDD;
+    border-inline-start: 1px solid #DDD;
   }
   .template-item-actions button {
     cursor: pointer;

@@ -75,4 +75,21 @@ class UserPreferencesTest extends TestCase
         $invalidKeyRequest = $this->patch('/settings/users/' . $editor->id.'/update-expansion-preference/my-home-details', ['expand' => 'true']);
         $invalidKeyRequest->assertStatus(500);
     }
+
+    public function test_toggle_dark_mode()
+    {
+        $home = $this->actingAs($this->getEditor())->get('/');
+        $home->assertElementNotExists('.dark-mode');
+        $home->assertSee('Dark Mode');
+
+        $this->assertEquals(false, setting()->getForCurrentUser('dark-mode-enabled', false));
+        $prefChange = $this->patch('/settings/users/toggle-dark-mode');
+        $prefChange->assertRedirect();
+        $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
+
+        $home = $this->actingAs($this->getEditor())->get('/');
+        $home->assertElementExists('.dark-mode');
+        $home->assertDontSee('Dark Mode');
+        $home->assertSee('Light Mode');
+    }
 }
