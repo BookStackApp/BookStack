@@ -36,8 +36,8 @@ class ListingResponseBuilder
      */
     public function toResponse()
     {
-        $data = $this->fetchData();
         $total = $this->query->count();
+        $data = $this->fetchData();
 
         return response()->json([
             'data' => $data,
