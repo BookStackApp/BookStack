@@ -459,7 +459,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
   height: auto;
   margin-bottom: $-l;
   border: 1px solid;
-  @include lightDark(border-color, #DDD, #111)
+  @include lightDark(border-color, #DDD, #111);
+}
+html.dark-mode .CodeMirror pre {
+  background-color: transparent;
 }
 
 .cm-s-mdn-like .CodeMirror-gutters { background: #f8f8f8; border-left: 0; color: #333; }
