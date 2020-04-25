@@ -36,6 +36,8 @@ class ListingResponseBuilder
      */
     public function toResponse()
     {
+        $this->applyFiltering($this->query);
+
         $total = $this->query->count();
         $data = $this->fetchData();
 
@@ -52,7 +54,6 @@ class ListingResponseBuilder
     {
         $this->applyCountAndOffset($this->query);
         $this->applySorting($this->query);
-        $this->applyFiltering($this->query);
 
         return $this->query->get($this->fields);
     }
