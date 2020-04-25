@@ -81,4 +81,20 @@ class ApiListingTest extends TestCase
         }
     }
 
+    public function test_total_on_results_shows_correctly()
+    {
+        $this->actingAsApiEditor();
+        $bookCount = Book::query()->count();
+        $resp = $this->get($this->endpoint . '?count=1');
+        $resp->assertJson(['total' => $bookCount ]);
+    }
+
+    public function test_total_on_results_shows_correctly_when_offset_provided()
+    {
+        $this->actingAsApiEditor();
+        $bookCount = Book::query()->count();
+        $resp = $this->get($this->endpoint . '?count=1&offset=1');
+        $resp->assertJson(['total' => $bookCount ]);
+    }
+
 }
