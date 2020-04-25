@@ -35,7 +35,7 @@ return [
     'delete' => 'Verwijder',
     'search' => 'Zoek',
     'search_clear' => 'Zoekopdracht wissen',
-    'reset' => 'Reset',
+    'reset' => 'Resetten',
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
     'fullscreen' => 'Volledig scherm',
@@ -66,8 +66,8 @@ return [
     'profile_menu' => 'Profiel menu',
     'view_profile' => 'Profiel Weergeven',
     'edit_profile' => 'Profiel Bewerken',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Donkere Modus',
+    'light_mode' => 'Lichte Modus',
 
     // Layout tabs
     'tab_info' => 'Info',
