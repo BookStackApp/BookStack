@@ -126,6 +126,26 @@ class LoginController extends Controller
     }
 
     /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // Authenticate on all session guards if a likely admin
+        if ($user->can('users-manage') && $user->can('user-roles-manage')) {
+            $guards = ['standard', 'ldap', 'saml2'];
+            foreach ($guards as $guard) {
+                auth($guard)->login($user);
+            }
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    /**
      * Validate the user login request.
      *
      * @param  \Illuminate\Http\Request  $request
