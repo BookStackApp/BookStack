@@ -98,21 +98,15 @@ function registerEditorShortcuts(editor) {
 
     // Loop through callout styles
     editor.shortcuts.add('meta+9', '', function() {
-        let selectedNode = editor.selection.getNode();
-        let formats = ['info', 'success', 'warning', 'danger'];
+        const selectedNode = editor.selection.getNode();
+        const callout = selectedNode ? selectedNode.closest('.callout') : null;
 
-        if (!selectedNode || selectedNode.className.indexOf('callout') === -1) {
-            editor.formatter.apply('calloutinfo');
-            return;
-        }
+        const formats = ['info', 'success', 'warning', 'danger'];
+        const currentFormatIndex = formats.findIndex(format => callout && callout.classList.contains(format));
+        const newFormatIndex = (currentFormatIndex + 1) % formats.length;
+        const newFormat = formats[newFormatIndex];
 
-        for (let i = 0; i < formats.length; i++) {
-            if (selectedNode.className.indexOf(formats[i]) === -1) continue;
-            let newFormat = (i === formats.length -1) ? formats[0] : formats[i+1];
-            editor.formatter.apply('callout' + newFormat);
-            return;
-        }
-        editor.formatter.apply('p');
+        editor.formatter.apply('callout' + newFormat);
     });
 
 }
