@@ -8,8 +8,6 @@ class NotifyException extends \Exception
 
     /**
      * NotifyException constructor.
-     * @param string $message
-     * @param string    $redirectLocation
      */
     public function __construct(string $message, string $redirectLocation = "/")
     {
