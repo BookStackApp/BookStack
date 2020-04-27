@@ -557,6 +557,11 @@ class MarkdownEditor {
             const prependLineCount = markdown.split('\n').length;
             this.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
         });
+
+        // Focus on editor
+        window.$events.listen('editor::focus', () => {
+            this.cm.focus();
+        });
     }
 }
 

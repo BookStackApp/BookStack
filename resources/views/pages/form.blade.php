@@ -63,8 +63,8 @@
 
     {{--Title input--}}
     <div class="title-input page-title clearfix" v-pre>
-        <div class="input">
-            @include('form.text', ['name' => 'name', 'placeholder' => trans('entities.pages_title')])
+        <div class="input" @if($model->name === trans('entities.pages_initial_name')) is-default-value @endif>
+            @include('form.text', ['name' => 'name', 'model' => $model, 'placeholder' => trans('entities.pages_title')])
         </div>
     </div>
 
