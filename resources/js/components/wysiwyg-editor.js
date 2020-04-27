@@ -402,6 +402,10 @@ function listenForBookStackEditorEvents(editor) {
         editor.setContent(content);
     });
 
+    // Focus on the editor
+    window.$events.listen('editor::focus', () => {
+        editor.focus();
+    });
 }
 
 class WysiwygEditor {
