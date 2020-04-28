@@ -66,8 +66,8 @@ return [
     'profile_menu' => 'Profil Menüsü',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Gece Modu',
+    'light_mode' => 'Aydınlık Modu',
 
     // Layout tabs
     'tab_info' => 'Bilgi',
