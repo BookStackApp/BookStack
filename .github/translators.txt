@@ -95,3 +95,6 @@ Biepa :: German Informal; German
 syecu :: Chinese Simplified
 Lap1t0r :: French
 Thinkverse (thinkverse) :: Swedish
+alef (toishoki) :: Turkish
+Robbert Feunekes (Muukuro) :: Dutch
+seohyeon.joo :: Korean
