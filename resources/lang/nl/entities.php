@@ -11,7 +11,7 @@ return [
     'recently_updated_pages' => 'Recent Bijgewerkte Pagina\'s',
     'recently_created_chapters' => 'Recent Aangemaakte Hoofdstukken',
     'recently_created_books' => 'Recent Aangemaakte Boeken',
-    'recently_created_shelves' => 'Recently Created Shelves',
+    'recently_created_shelves' => 'Recent Aangemaakte Boekenplanken',
     'recently_update' => 'Recent Bijgewerkt',
     'recently_viewed' => 'Recent Bekeken',
     'recent_activity' => 'Recente Activiteit',

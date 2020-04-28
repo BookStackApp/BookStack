@@ -381,13 +381,30 @@ class AuthTest extends BrowserKitTest
             ->seePageUrlIs($page->getUrl());
     }
 
+    public function test_login_authenticates_admins_on_all_guards()
+    {
+        $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $this->assertTrue(auth()->check());
+        $this->assertTrue(auth('ldap')->check());
+        $this->assertTrue(auth('saml2')->check());
+    }
+
+    public function test_login_authenticates_nonadmins_on_default_guard_only()
+    {
+        $editor = $this->getEditor();
+        $editor->password = bcrypt('password');
+        $editor->save();
+
+        $this->post('/login', ['email' => $editor->email, 'password' => 'password']);
+        $this->assertTrue(auth()->check());
+        $this->assertFalse(auth('ldap')->check());
+        $this->assertFalse(auth('saml2')->check());
+    }
+
     /**
      * Perform a login
-     * @param string $email
-     * @param string $password
-     * @return $this
      */
-    protected function login($email, $password)
+    protected function login(string $email, string $password): AuthTest
     {
         return $this->visit('/login')
             ->type($email, '#email')

@@ -66,8 +66,8 @@ return [
     'profile_menu' => 'Menu del Perfil',
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Modo Oscuro',
+    'light_mode' => 'Modo Claro',
 
     // Layout tabs
     'tab_info' => 'Información',
