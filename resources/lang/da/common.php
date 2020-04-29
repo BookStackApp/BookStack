@@ -66,8 +66,8 @@ return [
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Mørk tilstand',
+    'light_mode' => 'Lys tilstand',
 
     // Layout tabs
     'tab_info' => 'Info',
