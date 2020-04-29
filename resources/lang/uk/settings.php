@@ -43,10 +43,10 @@ return [
 
     // Color settings
     'content_colors' => 'Кольори вмісту',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'content_colors_desc' => 'Встановлює кольори для всіх елементів в ієрархії організації сторінок. Рекомендуємо вибирати кольори із яскравістю, схожою на кольори за замовчуванням, для кращої читабельності.',
     'bookshelf_color' => 'Колір полиці',
     'book_color' => 'Колір книги',
-    'chapter_color' => 'Chapter Color',
+    'chapter_color' => 'Колір глави',
     'page_color' => 'Колір сторінки',
     'page_draft_color' => 'Колір чернетки',
 
@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Дозволити реєстрацію',
     'reg_enable_desc' => 'При включенні реєстрації відвідувач зможе зареєструватися як користувач програми. Після реєстрації їм надається єдина роль користувача за замовчуванням.',
     'reg_default_role' => 'Роль користувача за умовчанням після реєстрації',
-    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'Цей параметр ігнорується, якщо активна зовнішня автентифікація LDAP або SAML. Облікові записи користувачів для неіснуючих учасників будуть створені автоматично, якщо аутентифікація у зовнішній системі буде успішною.',
     'reg_email_confirmation' => 'Підтвердження електронною поштою',
     'reg_email_confirmation_toggle' => 'Необхідне підтвердження електронною поштою',
     'reg_confirm_email_desc' => 'Якщо використовується обмеження домену, то підтвердження електронною поштою буде потрібно, а нижче значення буде проігноровано.',
