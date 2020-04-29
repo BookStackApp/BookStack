@@ -234,7 +234,7 @@ blockquote {
   font-size: 0.84em;
   border: 1px solid #DDD;
   border-radius: 3px;
-  @include lightDark(background-color, #f8f8f8f, #2b2b2b);
+  @include lightDark(background-color, #f8f8f8, #2b2b2b);
   @include lightDark(border-color, #DDD, #444);
 }
 
