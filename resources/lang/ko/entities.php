@@ -177,7 +177,7 @@ return [
     'pages_delete_draft_confirm' => '쓰다 만 문서를 지울 건가요?',
     'pages_editing_named' => ':pageName 수정',
     'pages_edit_draft_options' => '쓰다 만 문서 선택',
-    'pages_edit_save_draft' => '보관',
+    'pages_edit_save_draft' => '초안으로 저장',
     'pages_edit_draft' => '쓰다 만 문서 수정',
     'pages_editing_draft' => '쓰다 만 문서 수정',
     'pages_editing_page' => '문서 수정',
