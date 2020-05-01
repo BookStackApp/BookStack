@@ -70,7 +70,7 @@ class CommentRepo
     /**
      * Convert the given comment markdown text to HTML.
      */
-    protected function commentToHtml(string $commentText): string
+    public function commentToHtml(string $commentText): string
     {
         $converter = new CommonMarkConverter([
             'html_input' => 'strip',
