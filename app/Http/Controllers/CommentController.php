@@ -10,9 +10,6 @@ class CommentController extends Controller
 {
     protected $commentRepo;
 
-    /**
-     * CommentController constructor.
-     */
     public function __construct(CommentRepo $commentRepo)
     {
         $this->commentRepo = $commentRepo;
@@ -23,19 +20,17 @@ class CommentController extends Controller
      * Save a new comment for a Page
      * @throws ValidationException
      */
-    public function savePageComment(Request $request, int $pageId, int $commentId = null)
+    public function savePageComment(Request $request, int $pageId)
     {
         $this->validate($request, [
             'text' => 'required|string',
-            'html' => 'required|string',
+            'parent_id' => 'nullable|integer',
         ]);
 
         $page = Page::visible()->find($pageId);
         if ($page === null) {
             return response('Not found', 404);
         }
-
-        $this->checkOwnablePermission('page-view', $page);
 
         // Prevent adding comments to draft pages
         if ($page->draft) {
@@ -44,7 +39,7 @@ class CommentController extends Controller
 
         // Create a new comment.
         $this->checkPermission('comment-create-all');
-        $comment = $this->commentRepo->create($page, $request->only(['html', 'text', 'parent_id']));
+        $comment = $this->commentRepo->create($page, $request->get('text'), $request->get('parent_id'));
         Activity::add($page, 'commented_on', $page->book->id);
         return view('comments.comment', ['comment' => $comment]);
     }
@@ -57,14 +52,13 @@ class CommentController extends Controller
     {
         $this->validate($request, [
             'text' => 'required|string',
-            'html' => 'required|string',
         ]);
 
         $comment = $this->commentRepo->getById($commentId);
         $this->checkOwnablePermission('page-view', $comment->entity);
         $this->checkOwnablePermission('comment-update', $comment);
 
-        $comment = $this->commentRepo->update($comment, $request->only(['html', 'text']));
+        $comment = $this->commentRepo->update($comment, $request->get('text'));
         return view('comments.comment', ['comment' => $comment]);
     }
 
