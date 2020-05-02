@@ -64,10 +64,10 @@ return [
 
     // Header
     'profile_menu' => 'Nabídka profilu',
-    'view_profile' => 'Ukázat profil',
+    'view_profile' => 'Zobrazit profil',
     'edit_profile' => 'Upravit profil',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Tmavý motiv',
+    'light_mode' => 'Světlý motiv',
 
     // Layout tabs
     'tab_info' => 'Info',
