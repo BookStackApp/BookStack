@@ -16,12 +16,15 @@
         "barryvdh/laravel-dompdf": "^0.8.5",
         "barryvdh/laravel-snappy": "^0.4.5",
         "doctrine/dbal": "^2.9",
+        "facade/ignition": "^1.4",
         "fideloper/proxy": "^4.0",
         "gathercontent/htmldiff": "^0.2.1",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.12",
         "laravel/socialite": "^4.3.2",
+        "league/commonmark": "^1.4",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "nunomaduro/collision": "^3.0",
         "onelogin/php-saml": "^3.3",
         "predis/predis": "^1.1",
         "socialiteproviders/discord": "^2.0",
@@ -29,9 +32,7 @@
         "socialiteproviders/microsoft-azure": "^3.0",
         "socialiteproviders/okta": "^1.0",
         "socialiteproviders/slack": "^3.0",
-        "socialiteproviders/twitch": "^5.0",
-        "facade/ignition": "^1.4",
-        "nunomaduro/collision": "^3.0"
+        "socialiteproviders/twitch": "^5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2.8",

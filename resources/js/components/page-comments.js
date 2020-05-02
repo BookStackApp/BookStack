@@ -1,7 +1,4 @@
-import MarkdownIt from "markdown-it";
 import {scrollAndHighlightElement} from "../services/util";
-
-const md = new MarkdownIt({ html: false });
 
 class PageComments {
 
@@ -68,12 +65,11 @@ class PageComments {
         let text = form.querySelector('textarea').value;
         let reqData = {
             text: text,
-            html: md.render(text),
             parent_id: this.parentId || null,
         };
         this.showLoading(form);
         let commentId = this.editingComment.getAttribute('comment');
-        window.$http.put(window.baseUrl(`/ajax/comment/${commentId}`), reqData).then(resp => {
+        window.$http.put(`/ajax/comment/${commentId}`, reqData).then(resp => {
             let newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
             this.editingComment.innerHTML = newComment.children[0].innerHTML;
@@ -88,7 +84,7 @@ class PageComments {
     deleteComment(commentElem) {
         let id = commentElem.getAttribute('comment');
         this.showLoading(commentElem.querySelector('[comment-content]'));
-        window.$http.delete(window.baseUrl(`/ajax/comment/${id}`)).then(resp => {
+        window.$http.delete(`/ajax/comment/${id}`).then(resp => {
             commentElem.parentNode.removeChild(commentElem);
             window.$events.emit('success', window.trans('entities.comment_deleted_success'));
             this.updateCount();
@@ -102,11 +98,10 @@ class PageComments {
         let text = this.formInput.value;
         let reqData = {
             text: text,
-            html: md.render(text),
             parent_id: this.parentId || null,
         };
         this.showLoading(this.form);
-        window.$http.post(window.baseUrl(`/ajax/page/${this.pageId}/comment`), reqData).then(resp => {
+        window.$http.post(`/ajax/page/${this.pageId}/comment`, reqData).then(resp => {
             let newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
             let newElem = newComment.children[0];
@@ -171,17 +166,17 @@ class PageComments {
     }
 
     showLoading(formElem) {
-        let groups = formElem.querySelectorAll('.form-group');
-        for (let i = 0, len = groups.length; i < len; i++) {
-            groups[i].style.display = 'none';
+        const groups = formElem.querySelectorAll('.form-group');
+        for (let group of groups) {
+            group.style.display = 'none';
         }
         formElem.querySelector('.form-group.loading').style.display = 'block';
     }
 
     hideLoading(formElem) {
-        let groups = formElem.querySelectorAll('.form-group');
-        for (let i = 0, len = groups.length; i < len; i++) {
-            groups[i].style.display = 'block';
+        const groups = formElem.querySelectorAll('.form-group');
+        for (let group of groups) {
+            group.style.display = 'block';
         }
         formElem.querySelector('.form-group.loading').style.display = 'none';
     }

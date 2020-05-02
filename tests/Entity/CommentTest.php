@@ -42,7 +42,6 @@ class CommentTest extends TestCase
         $newText = 'updated text content';
         $resp = $this->putJson("/ajax/comment/$comment->id", [
             'text' => $newText,
-            'html' => '<p>'.$newText.'</p>',
         ]);
 
         $resp->assertStatus(200);
@@ -71,5 +70,47 @@ class CommentTest extends TestCase
         $this->assertDatabaseMissing('comments', [
             'id' => $comment->id
         ]);
+    }
+
+    public function test_comments_converts_markdown_input_to_html()
+    {
+        $page = Page::first();
+        $this->asAdmin()->postJson("/ajax/page/$page->id/comment", [
+            'text' => '# My Title',
+        ]);
+
+        $this->assertDatabaseHas('comments', [
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+            'text' => '# My Title',
+            'html' => "<h1>My Title</h1>\n",
+        ]);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee('<h1>My Title</h1>');
+    }
+
+    public function test_html_cannot_be_injected_via_comment_content()
+    {
+        $this->asAdmin();
+        $page = Page::first();
+
+        $script = '<script>const a = "script";</script>\n\n# sometextinthecomment';
+        $this->postJson("/ajax/page/$page->id/comment", [
+            'text' => $script,
+        ]);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee('sometextinthecomment');
+
+        $comment = $page->comments()->first();
+        $this->putJson("/ajax/comment/$comment->id", [
+            'text' => $script . 'updated',
+        ]);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee('sometextinthecommentupdated');
     }
 }

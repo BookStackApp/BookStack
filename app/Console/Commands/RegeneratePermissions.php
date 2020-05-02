@@ -30,8 +30,6 @@ class RegeneratePermissions extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @param \BookStack\Auth\\BookStack\Auth\Permissions\PermissionService $permissionService
      */
     public function __construct(PermissionService $permissionService)
     {
