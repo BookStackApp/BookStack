@@ -169,15 +169,20 @@ class LoginController extends Controller
     }
 
     /**
-     * Log failed accesses, matching the default fail2ban nginx/apache auth rules.
-     */
-    protected function logFailedAccess(Request $request)
+     * Log failed accesses, for further processing by tools like Fail2Ban
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+      */
+    protected function logFailedAccess($request)
     {
-        if (isset($_SERVER['SERVER_SOFTWARE']) && preg_match('/nginx/i', $_SERVER['SERVER_SOFTWARE'])) {
-             error_log('user "' . $request->get($this->username()) . '" was not found in "BookStack"', 4);
-         } else {
-             error_log('user "' . $request->get($this->username()) . '" authentication failure for "BookStack"', 4);
-         }
+        $log_msg = env('FAILED_ACCESS_MESSAGE', '');
+
+        if (!is_string($request->get($this->username())) || !is_string($log_msg) || strlen($log_msg)<1)
+            return;
+
+        $log_msg = str_replace("%u", $request->get($this->username()), $log_msg);
+        error_log($log_msg, 4);
     }
 
 }
