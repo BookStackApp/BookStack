@@ -11,7 +11,7 @@ return [
     'recently_updated_pages' => 'Nedávno aktualizované stránky',
     'recently_created_chapters' => 'Nedávno vytvořené kapitoly',
     'recently_created_books' => 'Nedávno vytvořené knihy',
-    'recently_created_shelves' => 'Recently Created Shelves',
+    'recently_created_shelves' => 'Nedávno vytvořené knihovny',
     'recently_update' => 'Nedávno aktualizované',
     'recently_viewed' => 'Nedávno prohlížené',
     'recent_activity' => 'Nedávné činnosti',
@@ -176,7 +176,7 @@ return [
     'pages_delete_confirm' => 'Opravdu chcete tuto stránku smazat?',
     'pages_delete_draft_confirm' => 'Opravdu chcete tento koncept stránky smazat?',
     'pages_editing_named' => 'Úpravy stránky :pageName',
-    'pages_edit_draft_options' => 'Draft Options',
+    'pages_edit_draft_options' => 'Možnosti konceptu',
     'pages_edit_save_draft' => 'Uložit koncept',
     'pages_edit_draft' => 'Upravit koncept stránky',
     'pages_editing_draft' => 'Úpravy konceptu',
@@ -211,12 +211,12 @@ return [
     'pages_revisions_date' => 'Datum revize',
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => 'Revision #:id',
-    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
+    'pages_revisions_numbered_changes' => 'Změny revize #:id',
     'pages_revisions_changelog' => 'Komentáře změn',
     'pages_revisions_changes' => 'Změny',
     'pages_revisions_current' => 'Aktuální verze',
     'pages_revisions_preview' => 'Náhled',
-    'pages_revisions_restore' => 'Renovovat',
+    'pages_revisions_restore' => 'Obnovit',
     'pages_revisions_none' => 'Tato stránka nemá žádné revize',
     'pages_copy_link' => 'Zkopírovat odkaz',
     'pages_edit_content_link' => 'Upravit obsah',
@@ -234,7 +234,7 @@ return [
     ],
     'pages_draft_discarded' => 'Koncept zahozen. Editor nyní obsahuje aktuální verzi stránky.',
     'pages_specific' => 'Konkrétní stránka',
-    'pages_is_template' => 'Page Template',
+    'pages_is_template' => 'Šablona stránky',
 
     // Editor Sidebar
     'page_tags' => 'Štítky stránky',
@@ -243,11 +243,11 @@ return [
     'shelf_tags' => 'Štítky knihovny',
     'tag' => 'Štítek',
     'tags' =>  'Štítky',
-    'tag_name' =>  'Tag Name',
+    'tag_name' =>  'Název štítku',
     'tag_value' => 'Hodnota Štítku (volitelné)',
     'tags_explain' => "Přidejte si štítky pro lepší kategorizaci knih. \n Štítky mohou nést i hodnotu pro detailnější klasifikaci.",
     'tags_add' => 'Přidat další štítek',
-    'tags_remove' => 'Remove this tag',
+    'tags_remove' => 'Odstranit tento štítek',
     'attachments' => 'Přílohy',
     'attachments_explain' => 'Nahrajte soubory nebo připojte odkazy, které se zobrazí na stránce. Budou k nalezení v postranní liště.',
     'attachments_explain_instant_save' => 'Změny zde provedené se okamžitě ukládají.',
@@ -273,10 +273,10 @@ return [
     'attachments_file_uploaded' => 'Soubor byl úspěšně nahrán',
     'attachments_file_updated' => 'Soubor byl úspěšně aktualizován',
     'attachments_link_attached' => 'Odkaz úspěšně přiložen ke stránce',
-    'templates' => 'Templates',
-    'templates_set_as_template' => 'Page is a template',
-    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
-    'templates_replace_content' => 'Replace page content',
+    'templates' => 'Šablony',
+    'templates_set_as_template' => 'Tato stránka je šablona',
+    'templates_explain_set_as_template' => 'Tuto stránku můžete nastavit jako šablonu, aby byl její obsah využit při vytváření dalších stránek. Ostatní uživatelé budou moci použít tuto šablonu, pokud mají oprávnění k zobrazení této stránky.',
+    'templates_replace_content' => 'Nahradit obsah stránky',
     'templates_append_content' => 'Append to page content',
     'templates_prepend_content' => 'Prepend to page content',
 
@@ -286,7 +286,7 @@ return [
     'profile_not_created_pages' => ':userName nevytvořil/a žádný obsah',
     'profile_not_created_chapters' => ':userName nevytvořil/a žádné kapitoly',
     'profile_not_created_books' => ':userName nevytvořil/a žádné knihy',
-    'profile_not_created_shelves' => ':userName has not created any shelves',
+    'profile_not_created_shelves' => ':userName nevytvořil/a žádné knihovny',
 
     // Comments
     'comment' => 'Komentář',
@@ -308,7 +308,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Opravdu chcete smazat tuto revizi?',
-    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
+    'revision_restore_confirm' => 'Jste si jisti, že chcete obnovit tuto revizi? Aktuální obsah stránky bude nahrazen.',
     'revision_delete_success' => 'Revize smazána',
     'revision_cannot_delete_latest' => 'Nelze smazat poslední revizi.'
 ];
