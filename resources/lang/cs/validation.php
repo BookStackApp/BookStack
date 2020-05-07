@@ -30,7 +30,7 @@ return [
     'digits'               => ':attribute musí být :digits pozic dlouhé.',
     'digits_between'       => ':attribute musí být dlouhé nejméně :min a nejvíce :max pozic.',
     'email'                => ':attribute není platný formát.',
-    'ends_with' => 'The :attribute must end with one of the following: :values',
+    'ends_with' => ':attribute musí končit jednou z následujících hodnot: :values',
     'filled'               => ':attribute musí být vyplněno.',
     'gt'                   => [
         'numeric' => ':attribute musí být větší než :value.',
@@ -46,7 +46,7 @@ return [
     ],
     'exists'               => 'Zvolená hodnota pro :attribute není platná.',
     'image'                => ':attribute musí být obrázek.',
-    'image_extension'      => 'The :attribute must have a valid & supported image extension.',
+    'image_extension'      => ':attribute musí mít platné a podporované rozšíření obrázku.',
     'in'                   => 'Zvolená hodnota pro :attribute je neplatná.',
     'integer'              => ':attribute musí být celé číslo.',
     'ip'                   => ':attribute musí být platnou IP adresou.',
@@ -78,7 +78,7 @@ return [
         'string'  => ':attribute musí být delší než :min znaků.',
         'array'   => ':attribute musí obsahovat více než :min prvků.',
     ],
-    'no_double_extension'  => 'The :attribute must only have a single file extension.',
+    'no_double_extension'  => ':attribute musí obsahovat pouze jednu příponu souboru.',
     'not_in'               => 'Zvolená hodnota pro :attribute je neplatná.',
     'not_regex'            => ':attribute musí být regulární výraz.',
     'numeric'              => ':attribute musí být číslo.',
@@ -105,7 +105,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Password confirmation required',
+            'required_with' => 'Je nutné potvrdit heslo',
         ],
     ],
 
