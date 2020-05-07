@@ -131,7 +131,7 @@ return [
     'users_send_invite_text' => '您可以向该用户发送邀请电子邮件，允许他们设置自己的密码，否则，您可以自己设置他们的密码。',
     'users_send_invite_option' => '发送邀请用户电子邮件',
     'users_external_auth_id' => '外部身份认证ID',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
+    'users_external_auth_id_desc' => '这是用于与您的外部身份验证系统通信时匹配此用户的ID。',
     'users_password_warning' => '如果您想更改密码，请填写以下内容：',
     'users_system_public' => '此用户代表访问您的App的任何访客。它不能用于登录，而是自动分配。',
     'users_delete' => '删除用户',
