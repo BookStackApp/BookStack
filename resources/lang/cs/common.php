@@ -17,13 +17,13 @@ return [
     // Form Labels
     'name' => 'Jméno',
     'description' => 'Popis',
-    'role' => 'Funkce',
+    'role' => 'Role',
     'cover_image' => 'Obrázek na přebal',
-    'cover_image_description' => 'Obrázek by měl být asi 440 × 250px.',
+    'cover_image_description' => 'Obrázek by měl být přibližně 440 × 250px.',
     
     // Actions
     'actions' => 'Akce',
-    'view' => 'Pohled',
+    'view' => 'Zobrazit',
     'view_all' => 'Zobrazit vše',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
@@ -52,7 +52,7 @@ return [
     // Misc
     'deleted_user' => 'Smazaný uživatel',
     'no_activity' => 'Žádná aktivita k zobrazení',
-    'no_items' => 'Žádné položky nejsou k mání',
+    'no_items' => 'Žádné položky k dispozici',
     'back_to_top' => 'Zpět na začátek',
     'toggle_details' => 'Ukázat detaily',
     'toggle_thumbnails' => 'Ukázat náhledy',
