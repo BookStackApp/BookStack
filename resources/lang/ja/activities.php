@@ -40,7 +40,7 @@ return [
     'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
     'bookshelf_update'                 => 'updated bookshelf',
     'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
+    'bookshelf_delete'                 => 'ブックが削除されました。',
     'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
 
     // Other
