@@ -66,8 +66,8 @@ return [
     'profile_menu' => '个人资料',
     'view_profile' => '查看资料',
     'edit_profile' => '编辑资料',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => '夜间模式',
+    'light_mode' => '日间模式',
 
     // Layout tabs
     'tab_info' => '信息',
