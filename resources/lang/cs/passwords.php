@@ -8,7 +8,7 @@ return [
 
     'password' => 'Heslo musí být alespoň 6 znaků dlouhé a shodovat se v obou polích.',
     'user' => "Nemůžeme najít uživatele se zadanou emailovou adresou.",
-    'token' => 'The password reset token is invalid for this email address.',
+    'token' => 'Token pro obnovení hesla je neplatný pro tuto e-mailovou adresu.',
     'sent' => 'Poslali jsme vám odkaz pro reset hesla!',
     'reset' => 'Vaše heslo bylo resetováno!',
 
