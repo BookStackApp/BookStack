@@ -126,7 +126,7 @@ return [
     'users_details_desc_no_email' => '사용자 이름을 바꿉니다.',
     'users_role' => '사용자 권한',
     'users_role_desc' => '고른 권한 모두를 적용합니다.',
-    'users_password' => '비밀번호',
+    'users_password' => '사용자 비밀번호',
     'users_password_desc' => '여섯 글자를 넘어야 합니다.',
     'users_send_invite_text' => '비밀번호 설정을 권유하는 메일을 보내거나 내가 정할 수 있습니다.',
     'users_send_invite_option' => '메일 보내기',
