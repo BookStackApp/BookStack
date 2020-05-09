@@ -50,7 +50,7 @@ return [
     'attachment_not_found' => '첨부 파일이 없습니다.',
 
     // Pages
-    'page_draft_autosave_fail' => '쓰다 만 문서를 유실했습니다. 인터넷 연결 상태를 확인하세요.',
+    'page_draft_autosave_fail' => '초안 문서를 유실했습니다. 인터넷 연결 상태를 확인하세요.',
     'page_custom_home_deletion' => '처음 페이지는 지울 수 없습니다.',
 
     // Entities
@@ -61,7 +61,7 @@ return [
     'chapter_not_found' => '챕터가 없습니다.',
     'selected_book_not_found' => '고른 책자가 없습니다.',
     'selected_book_chapter_not_found' => '고른 책자나 챕터가 없습니다.',
-    'guests_cannot_save_drafts' => 'Guest는 쓰다 만 문서를 보관할 수 없습니다.',
+    'guests_cannot_save_drafts' => 'Guest는 초안 문서를 보관할 수 없습니다.',
 
     // Users
     'users_cannot_delete_only_admin' => 'Admin을 삭제할 수 없습니다.',
@@ -75,7 +75,7 @@ return [
 
     // Comments
     'comment_list' => '댓글을 가져오다 문제가 생겼습니다.',
-    'cannot_add_comment_to_draft' => '쓰다 만 문서에 댓글을 달 수 없습니다.',
+    'cannot_add_comment_to_draft' => '초안 문서에 댓글을 달 수 없습니다.',
     'comment_add' => '댓글을 등록하다 문제가 생겼습니다.',
     'comment_delete' => '댓글을 지우다 문제가 생겼습니다.',
     'empty_comment' => '빈 댓글은 등록할 수 없습니다.',
