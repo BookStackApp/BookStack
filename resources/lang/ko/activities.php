@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => '문서 지움',
     'page_restore'                => '문서 복원',
     'page_restore_notification'   => '문서 복원함',
-    'page_move'                   => '문서 옮기기',
+    'page_move'                   => '문서 이동됨',
 
     // Chapters
     'chapter_create'              => '챕터 만들기',
@@ -23,7 +23,7 @@ return [
     'chapter_update_notification' => '챕터 바꿈',
     'chapter_delete'              => '챕터 지우기',
     'chapter_delete_notification' => '챕터 지움',
-    'chapter_move'                => '챕터 옮기기',
+    'chapter_move'                => '챕터 이동된',
 
     // Books
     'book_create'                 => '책자 만들기',
