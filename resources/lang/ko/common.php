@@ -29,7 +29,7 @@ return [
     'update' => '바꾸기',
     'edit' => '수정',
     'sort' => '정렬',
-    'move' => '옮기기',
+    'move' => '이동',
     'copy' => '복사',
     'reply' => '답글',
     'delete' => '지우기',
