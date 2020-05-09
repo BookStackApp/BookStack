@@ -98,6 +98,6 @@ return [
     'api_user_token_expired' => 'The authorization token used has expired',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => '테스트 이메일 발송할 때 발생한 오류:',
 
 ];
