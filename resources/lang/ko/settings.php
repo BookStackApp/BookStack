@@ -48,7 +48,7 @@ return [
     'book_color' => '책 색상',
     'chapter_color' => '챕터 색상',
     'page_color' => '페이지 색상',
-    'page_draft_color' => '드래프트 페이지 색상',
+    'page_draft_color' => '초안 페이지 색상',
 
     // Registration Settings
     'reg_settings' => '가입',
@@ -86,7 +86,7 @@ return [
     'role_user_roles' => '사용자 권한',
     'role_create' => '권한 만들기',
     'role_create_success' => '권한 만듦',
-    'role_delete' => '권한 지우기',
+    'role_delete' => '권한 제거',
     'role_delete_confirm' => ':roleName(을)를 지웁니다.',
     'role_delete_users_assigned' => '이 권한을 가진 사용자 :userCount명에 할당할 권한을 고르세요.',
     'role_delete_no_migration' => "할당하지 않음",
