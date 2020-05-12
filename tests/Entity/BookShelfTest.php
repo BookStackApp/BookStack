@@ -56,6 +56,25 @@ class BookShelfTest extends TestCase
         $resp->assertElementContains('a', 'New Shelf');
     }
 
+    public function test_book_not_visible_in_shelf_list_view_if_user_cant_view_shelf()
+    {
+        config()->set([
+            'app.views.bookshelves' => 'list',
+        ]);
+        $shelf = Bookshelf::query()->first();
+        $book = $shelf->books()->first();
+
+        $resp = $this->asEditor()->get('/shelves');
+        $resp->assertSee($book->name);
+        $resp->assertSee($book->getUrl());
+
+        $this->setEntityRestrictions($book, []);
+
+        $resp = $this->asEditor()->get('/shelves');
+        $resp->assertDontSee($book->name);
+        $resp->assertDontSee($book->getUrl());
+    }
+
     public function test_shelves_create()
     {
         $booksToInclude = Book::take(2)->get();
