@@ -28,8 +28,10 @@ class BookshelfRepo
      */
     public function getAllPaginated(int $count = 20, string $sort = 'name', string $order = 'asc'): LengthAwarePaginator
     {
-        return Bookshelf::visible()->with('visibleBooks')
-            ->orderBy($sort, $order)->paginate($count);
+        return Bookshelf::visible()
+            ->with('visibleBooks')
+            ->orderBy($sort, $order)
+            ->paginate($count);
     }
 
     /**

@@ -69,11 +69,7 @@ class HomeController extends Controller
         }
 
         if ($homepageOption === 'bookshelves') {
-            $shelfRepo = app(BookshelfRepo::class);
             $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['sort'], $commonData['order']);
-            foreach ($shelves as $shelf) {
-                $shelf->books = $shelf->visibleBooks;
-            }
             $data = array_merge($commonData, ['shelves' => $shelves]);
             return view('common.home-shelves', $data);
         }

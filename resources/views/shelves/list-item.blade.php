@@ -10,7 +10,7 @@
     </div>
 </a>
 <div class="entity-shelf-books grid third gap-y-xs entity-list-item-children">
-    @foreach($shelf->books as $book)
+    @foreach($shelf->visibleBooks as $book)
         <div>
             <a href="{{ $book->getUrl('?shelf=' . $shelf->id) }}" class="entity-chip text-book">
                 @icon('book')
