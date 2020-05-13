@@ -225,4 +225,49 @@ class ExportService
         }
         return $text;
     }
+
+    /**
+     * Convert a page to a Markdown file.
+     * @throws Throwable
+     */
+    public function pageToMarkdown(Page $page)
+    {
+        if (property_exists($page, 'markdown') || $page->markdown != '') {
+            return "#" . $page->name . "\n\n" . $page->markdown;
+        } else {
+            // TODO: Implement this feature.
+            return "# Unimplemented Feature\nidk how to turn html into markdown";
+        }
+    }
+
+    /**
+     * Convert a chapter to a Markdown file.
+     * @throws Throwable
+     */
+    public function chapterToMarkdown(Chapter $chapter)
+    {
+        $text = "#" . $chapter->name . "\n\n";
+        $text .= $chapter->description . "\n\n";
+        foreach ($chapter->pages as $page) {
+            $text .= $this->pageToMarkdown($page);
+        }
+        return $text;
+    }
+
+    /**
+     * Convert a book into a plain text string.
+     */
+    public function bookToMarkdown(Book $book): string
+    {
+        $bookTree = (new BookContents($book))->getTree(false, true);
+        $text = "#" . $book->name . "\n\n";
+        foreach ($bookTree as $bookChild) {
+            if ($bookChild->isA('chapter')) {
+                $text .= $this->chapterToMarkdown($bookChild);
+            } else {
+                $text .= $this->pageToMarkdown($bookChild);
+            }
+        }
+        return $text;
+    }
 }

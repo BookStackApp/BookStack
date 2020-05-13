@@ -63,4 +63,15 @@ class PageExportController extends Controller
         $pageText = $this->exportService->pageToPlainText($page);
         return $this->downloadResponse($pageText, $pageSlug . '.txt');
     }
+
+    /**
+     * Export a page to a simple markdown .md file.
+     * @throws NotFoundException
+     */
+    public function markdown(string $bookSlug, string $pageSlug)
+    {
+        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $pageText = $this->exportService->pageToMarkdown($page);
+        return $this->downloadResponse($pageText, $pageSlug . '.md');
+    }
 }
