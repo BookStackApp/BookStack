@@ -53,4 +53,15 @@ class BookExportController extends Controller
         $textContent = $this->exportService->bookToPlainText($book);
         return $this->downloadResponse($textContent, $bookSlug . '.txt');
     }
+
+    /**
+     * Export a book as a markdown file.
+     */
+    public function markdown(string $bookSlug)
+    {
+        // TODO: This should probably export to a zip file.
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $textContent = $this->exportService->bookToMarkdown($book);
+        return $this->downloadResponse($textContent, $bookSlug . '.md');
+    }
 }
