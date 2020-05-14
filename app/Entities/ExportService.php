@@ -6,6 +6,7 @@ use BookStack\Uploads\ImageService;
 use DomPDF;
 use Exception;
 use SnappyPDF;
+use League\HTMLToMarkdown\HtmlConverter;
 use Throwable;
 
 class ExportService
@@ -232,11 +233,11 @@ class ExportService
      */
     public function pageToMarkdown(Page $page)
     {
-        if (property_exists($page, 'markdown') || $page->markdown != '') {
-            return "#" . $page->name . "\n\n" . $page->markdown;
+        if (property_exists($page, 'markdown') && $page->markdown != '') {
+            return "# " . $page->name . "\n\n" . $page->markdown;
         } else {
-            // TODO: Implement this feature.
-            return "# Unimplemented Feature\nidk how to turn html into markdown";
+            $converter = new HtmlConverter();
+            return "# " . $page->name . "\n\n" . $converter->convert($page->html);
         }
     }
 
@@ -246,7 +247,7 @@ class ExportService
      */
     public function chapterToMarkdown(Chapter $chapter)
     {
-        $text = "#" . $chapter->name . "\n\n";
+        $text = "# " . $chapter->name . "\n\n";
         $text .= $chapter->description . "\n\n";
         foreach ($chapter->pages as $page) {
             $text .= $this->pageToMarkdown($page);
@@ -260,7 +261,7 @@ class ExportService
     public function bookToMarkdown(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $text = "#" . $book->name . "\n\n";
+        $text = "# " . $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {
                 $text .= $this->chapterToMarkdown($bookChild);
