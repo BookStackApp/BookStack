@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/export/html', 'BookExportController@html');
         Route::get('/{bookSlug}/export/pdf', 'BookExportController@pdf');
         Route::get('/{bookSlug}/export/markdown', 'BookExportController@markdown');
+        Route::get('/{bookSlug}/export/zip', 'BookExportController@zip');
         Route::get('/{bookSlug}/export/plaintext', 'BookExportController@plainText');
 
         // Pages
