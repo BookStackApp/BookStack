@@ -6,7 +6,6 @@ use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\ExportService;
 use BookStack\Entities\Repos\BookRepo;
 use Throwable;
-use ZipArchive;
 
 class BookExportController extends Controller
 {
@@ -72,20 +71,7 @@ class BookExportController extends Controller
     public function zip(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $z = new ZipArchive();
-        $z->open("book.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-        $bookTree = (new BookContents($book))->getTree(false, true);
-        foreach ($bookTree as $bookChild) {
-            if ($bookChild->isA('chapter')) {
-                $z->addEmptyDir($bookChild->name);
-                foreach ($bookChild->pages as $page) {
-                    $z->addFromString($bookChild->name . "/" . $page->name . ".md", $this->exportService->pageToMarkdown($page));
-                }
-            } else {
-                $z->addFromString($bookChild->name . ".md", $this->exportService->pageToMarkdown($bookChild));
-            }
-        }
-        return response()->download('book.zip');
-        // TODO: Is not unlinking it a security issue?
+        $filename = $this->exportService->bookToZip($book);
+        return response()->download($filename);
     }
 }
