@@ -24,6 +24,7 @@
         "laravel/socialite": "^4.3.2",
         "league/commonmark": "^1.4",
         "league/flysystem-aws-s3-v3": "^1.0",
+        "league/html-to-markdown": "^4.9",
         "nunomaduro/collision": "^3.0",
         "onelogin/php-saml": "^3.3",
         "predis/predis": "^1.1",
