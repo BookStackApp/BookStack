@@ -29,6 +29,9 @@ import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/yaml/yaml';
 
+// External repo modes
+import 'codemirror-mode-elixir'
+
 // Addons
 import 'codemirror/addon/scroll/scrollpastend';
 
@@ -47,6 +50,7 @@ const modeMap = {
     diff: 'diff',
     for: 'fortran',
     fortran: 'fortran',
+    elixir: 'elixir',
     go: 'go',
     haskell: 'haskell',
     hs: 'haskell',
