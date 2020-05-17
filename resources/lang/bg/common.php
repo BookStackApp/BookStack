@@ -74,6 +74,6 @@ return [
     'tab_content' => 'Съдържание',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_action_help' => 'Ако имате проблеми с бутона ":actionText" по-горе, копирайте и поставете URL адреса по-долу в уеб браузъра си:',
+    'email_rights' => 'Всички права запазени',
 ];
