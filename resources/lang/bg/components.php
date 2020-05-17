@@ -29,5 +29,5 @@ return [
     'code_editor' => 'Edit Code',
     'code_language' => 'Code Language',
     'code_content' => 'Code Content',
-    'code_save' => 'Save Code',
+    'code_save' => 'Запази кода',
 ];
