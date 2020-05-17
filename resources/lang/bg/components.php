@@ -5,11 +5,11 @@
 return [
 
     // Image Manager
-    'image_select' => 'Image Select',
-    'image_all' => 'All',
-    'image_all_title' => 'View all images',
-    'image_book_title' => 'View images uploaded to this book',
-    'image_page_title' => 'View images uploaded to this page',
+    'image_select' => 'Избор на изображение',
+    'image_all' => 'Всички',
+    'image_all_title' => 'Преглед на всички изображения',
+    'image_book_title' => 'Виж изображенията прикачени към тази книга',
+    'image_page_title' => 'Виж изображенията прикачени към страницата',
     'image_search_hint' => 'Search by image name',
     'image_uploaded' => 'Uploaded :uploadedDate',
     'image_load_more' => 'Load More',
