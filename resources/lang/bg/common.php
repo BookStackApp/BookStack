@@ -5,11 +5,11 @@
 return [
 
     // Buttons
-    'cancel' => 'Cancel',
-    'confirm' => 'Confirm',
-    'back' => 'Back',
-    'save' => 'Save',
-    'continue' => 'Continue',
+    'cancel' => 'Отказ',
+    'confirm' => 'Потвърди',
+    'back' => 'Назад',
+    'save' => 'Запази',
+    'continue' => 'Продължи',
     'select' => 'Select',
     'toggle_all' => 'Toggle All',
     'more' => 'More',
