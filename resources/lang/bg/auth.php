@@ -47,31 +47,31 @@ return [
     'reset_password_success' => 'Паролата Ви е променена успешно.',
     'email_reset_subject' => 'Възстановете паролата си за :appName',
     'email_reset_text' => 'Вие получихте този емейл, защото поискахте вашата парола да бъде занулена.',
-    'email_reset_not_requested' => 'If you did not request a password reset, no further action is required.',
+    'email_reset_not_requested' => 'Ако Вие не сте поискали зануляването на паролата, няма нужда от други действия.',
 
 
     // Email Confirmation
-    'email_confirm_subject' => 'Confirm your email on :appName',
-    'email_confirm_greeting' => 'Thanks for joining :appName!',
-    'email_confirm_text' => 'Please confirm your email address by clicking the button below:',
-    'email_confirm_action' => 'Confirm Email',
-    'email_confirm_send_error' => 'Email confirmation required but the system could not send the email. Contact the admin to ensure email is set up correctly.',
-    'email_confirm_success' => 'Your email has been confirmed!',
-    'email_confirm_resent' => 'Confirmation email resent, Please check your inbox.',
+    'email_confirm_subject' => 'Потвърди емейла си за :appName',
+    'email_confirm_greeting' => 'Благодарим Ви, че се присъединихте към :appName!',
+    'email_confirm_text' => 'Моля, потвърдете вашия имейл адрес, като следвате връзката по-долу:',
+    'email_confirm_action' => 'Потвърдете имейл',
+    'email_confirm_send_error' => 'Нужно ви е потвърждение чрез емейл, но системата не успя да го изпрати. Моля свържете се с администратора, за да проверите дали вашият емейл адрес е конфигуриран правилно.',
+    'email_confirm_success' => 'Адресът на електронната ви поща е потвърден!',
+    'email_confirm_resent' => 'Беше изпратен имейл с потвърждение, Моля, проверете кутията си.',
 
-    'email_not_confirmed' => 'Email Address Not Confirmed',
-    'email_not_confirmed_text' => 'Your email address has not yet been confirmed.',
-    'email_not_confirmed_click_link' => 'Please click the link in the email that was sent shortly after you registered.',
-    'email_not_confirmed_resend' => 'If you cannot find the email you can re-send the confirmation email by submitting the form below.',
-    'email_not_confirmed_resend_button' => 'Resend Confirmation Email',
+    'email_not_confirmed' => 'Имейл адресът не е потвърден',
+    'email_not_confirmed_text' => 'Вашият емейл адрес все още не е потвърден.',
+    'email_not_confirmed_click_link' => 'Моля да последвате линка, който ви беше изпратен непосредствено след регистрацията.',
+    'email_not_confirmed_resend' => 'Ако не откривате писмото, може да го изпратите отново като попълните формуляра по-долу.',
+    'email_not_confirmed_resend_button' => 'Изпрати отново емейла за потвърждение',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'Вие бяхте поканен да се присъедините към :appName!',
+    'user_invite_email_greeting' => 'Беше създаден акаунт за Вас във :appName.',
+    'user_invite_email_text' => 'Натисните бутона по-долу за да определите парола и да получите достъп:',
+    'user_invite_email_action' => 'Парола на акаунта',
+    'user_invite_page_welcome' => 'Добре дошли в :appName!',
+    'user_invite_page_text' => 'За да финализирате вашият акаунт и да получите достъп трябва да определите парола, която да бъде използвана за следващия влизания в :appName.',
+    'user_invite_page_confirm_button' => 'Потвърди паролата',
+    'user_invite_success' => 'Паролата е потвърдена и вече имате достъп до :appName!'
 ];
