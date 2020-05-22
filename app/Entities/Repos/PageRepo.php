@@ -180,12 +180,11 @@ class PageRepo
             $page->template = ($input['template'] === 'true');
         }
 
+        $pageContent = new PageContent($page);
+        $pageContent->setNewHTML($input['html']);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
-        $page->fill($input);
-        $pageContent = new PageContent($page);
-        $pageContent->setNewHTML($input['html']);
         $page->revision_count++;
 
         if (setting('app-editor') !== 'markdown') {
