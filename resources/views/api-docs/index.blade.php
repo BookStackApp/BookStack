@@ -189,7 +189,11 @@
                             <h6 class="text-uppercase text-muted float right">{{ $endpoint['controller_method_kebab'] }}</h6>
                             <h5 id="{{ $endpoint['name'] }}" class="text-mono mb-m">
                                 <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
-                                {{ url($endpoint['uri']) }}
+                                @if($endpoint['controller_method_kebab'] === 'list')
+                                    <a style="color: inherit;" target="_blank" href="{{ url($endpoint['uri']) }}">{{ url($endpoint['uri']) }}</a>
+                                @else
+                                    {{ url($endpoint['uri']) }}
+                                @endif
                             </h5>
                             <p class="mb-m">{{ $endpoint['description'] ?? '' }}</p>
                             @if($endpoint['body_params'] ?? false)
