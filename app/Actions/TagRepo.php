@@ -106,14 +106,13 @@ class TagRepo
 
     /**
      * Save an array of tags to an entity
-     * @param \BookStack\Entities\Entity $entity
-     * @param array $tags
      * @return array|\Illuminate\Database\Eloquent\Collection
      */
-    public function saveTagsToEntity(Entity $entity, $tags = [])
+    public function saveTagsToEntity(Entity $entity, array $tags = [])
     {
         $entity->tags()->delete();
         $newTags = [];
+
         foreach ($tags as $tag) {
             if (trim($tag['name']) === '') {
                 continue;

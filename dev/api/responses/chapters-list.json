@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "book_id": 1,
+      "name": "Content Creation",
+      "slug": "content-creation",
+      "description": "How to create documentation on whatever subject you need to write about.",
+      "priority": 3,
+      "created_at": "2019-05-05 21:49:56",
+      "updated_at": "2019-09-28 11:24:23",
+      "created_by": 1,
+      "updated_by": 1
+    },
+    {
+      "id": 2,
+      "book_id": 1,
+      "name": "Managing Content",
+      "slug": "managing-content",
+      "description": "How to keep things organised and orderly in the system for easier navigation and better user experience.",
+      "priority": 5,
+      "created_at": "2019-05-05 21:58:07",
+      "updated_at": "2019-10-17 15:05:34",
+      "created_by": 3,
+      "updated_by": 3
+    }
+  ],
+  "total": 40
+}

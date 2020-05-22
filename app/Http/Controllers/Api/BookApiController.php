@@ -8,7 +8,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class BooksApiController extends ApiController
+class BookApiController extends ApiController
 {
 
     protected $bookRepo;
@@ -17,10 +17,12 @@ class BooksApiController extends ApiController
         'create' => [
             'name' => 'required|string|max:255',
             'description' => 'string|max:1000',
+            'tags' => 'array',
         ],
         'update' => [
             'name' => 'string|min:1|max:255',
             'description' => 'string|max:1000',
+            'tags' => 'array',
         ],
     ];
 

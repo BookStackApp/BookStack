@@ -5,9 +5,8 @@ use BookStack\Entities\ExportService;
 use BookStack\Entities\Repos\BookRepo;
 use Throwable;
 
-class BooksExportApiController extends ApiController
+class BookExportApiController extends ApiController
 {
-
     protected $bookRepo;
     protected $exportService;
 

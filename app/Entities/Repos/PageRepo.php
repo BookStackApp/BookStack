@@ -211,7 +211,7 @@ class PageRepo
      */
     protected function savePageRevision(Page $page, string $summary = null)
     {
-        $revision = new PageRevision($page->toArray());
+        $revision = new PageRevision($page->getAttributes());
 
         if (setting('app-editor') !== 'markdown') {
             $revision->markdown = '';
