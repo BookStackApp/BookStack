@@ -9,15 +9,25 @@
 Route::get('docs', 'ApiDocsController@display');
 Route::get('docs.json', 'ApiDocsController@json');
 
-Route::get('books', 'BooksApiController@list');
-Route::post('books', 'BooksApiController@create');
-Route::get('books/{id}', 'BooksApiController@read');
-Route::put('books/{id}', 'BooksApiController@update');
-Route::delete('books/{id}', 'BooksApiController@delete');
+Route::get('books', 'BookApiController@list');
+Route::post('books', 'BookApiController@create');
+Route::get('books/{id}', 'BookApiController@read');
+Route::put('books/{id}', 'BookApiController@update');
+Route::delete('books/{id}', 'BookApiController@delete');
 
-Route::get('books/{id}/export/html', 'BooksExportApiController@exportHtml');
-Route::get('books/{id}/export/pdf', 'BooksExportApiController@exportPdf');
-Route::get('books/{id}/export/plaintext', 'BooksExportApiController@exportPlainText');
+Route::get('books/{id}/export/html', 'BookExportApiController@exportHtml');
+Route::get('books/{id}/export/pdf', 'BookExportApiController@exportPdf');
+Route::get('books/{id}/export/plaintext', 'BookExportApiController@exportPlainText');
+
+Route::get('chapters', 'ChapterApiController@list');
+Route::post('chapters', 'ChapterApiController@create');
+Route::get('chapters/{id}', 'ChapterApiController@read');
+Route::put('chapters/{id}', 'ChapterApiController@update');
+Route::delete('chapters/{id}', 'ChapterApiController@delete');
+
+Route::get('chapters/{id}/export/html', 'ChapterExportApiController@exportHtml');
+Route::get('chapters/{id}/export/pdf', 'ChapterExportApiController@exportPdf');
+Route::get('chapters/{id}/export/plaintext', 'ChapterExportApiController@exportPlainText');
 
 Route::get('shelves', 'BookshelfApiController@list');
 Route::post('shelves', 'BookshelfApiController@create');

@@ -27,6 +27,8 @@ class Page extends BookChild
 
     public $textField = 'text';
 
+    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot'];
+
     /**
      * Get the entities that are visible to the current user.
      */
