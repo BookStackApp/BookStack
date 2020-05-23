@@ -79,4 +79,9 @@ return [
         ],
     ],
 
+    // Failed Access Message
+    // Defines the message to log into webserver logs in case of failed access,
+    // for further processing by tools like Fail2Ban.
+    'failed_access_message' => env('FAILED_ACCESS_MESSAGE', ''),
+
 ];
