@@ -176,7 +176,7 @@ class LoginController extends Controller
       */
     protected function logFailedAccess($request)
     {
-        $log_msg = env('FAILED_ACCESS_MESSAGE', '');
+        $log_msg = config('logging.failed_access_message');
 
         if (!is_string($request->get($this->username())) || !is_string($log_msg) || strlen($log_msg)<1)
             return;
