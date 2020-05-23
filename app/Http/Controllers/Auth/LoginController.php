@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use Activity;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
@@ -102,7 +103,7 @@ class LoginController extends Controller
             $this->fireLockoutEvent($request);
 
             // Also log some error message
-            $this->logFailedAccess($request);
+            Activity::logFailedAccess($request->get($this->username()));
 
             return $this->sendLockoutResponse($request);
         }
@@ -121,7 +122,7 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         // Also log some error message
-        $this->logFailedAccess($request);
+        Activity::logFailedAccess($request->get($this->username()));
 
         return $this->sendFailedLoginResponse($request);
     }
@@ -166,23 +167,6 @@ class LoginController extends Controller
         }
 
         return redirect('/login');
-    }
-
-    /**
-     * Log failed accesses, for further processing by tools like Fail2Ban
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-      */
-    protected function logFailedAccess($request)
-    {
-        $log_msg = config('logging.failed_access_message');
-
-        if (!is_string($request->get($this->username())) || !is_string($log_msg) || strlen($log_msg)<1)
-            return;
-
-        $log_msg = str_replace("%u", $request->get($this->username()), $log_msg);
-        error_log($log_msg, 4);
     }
 
 }

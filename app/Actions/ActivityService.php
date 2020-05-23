@@ -183,4 +183,21 @@ class ActivityService
             session()->flash('success', $message);
         }
     }
+
+    /**
+     * Log failed accesses, for further processing by tools like Fail2Ban
+     *
+     * @param username
+     * @return void
+      */
+    public function logFailedAccess($username)
+    {
+        $log_msg = config('logging.failed_access_message');
+
+        if (!is_string($username) || !is_string($log_msg) || strlen($log_msg)<1)
+            return;
+
+        $log_msg = str_replace("%u", $username, $log_msg);
+        error_log($log_msg, 4);
+    }
 }
