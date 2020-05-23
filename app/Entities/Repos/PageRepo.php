@@ -278,7 +278,7 @@ class PageRepo
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
         $content = new PageContent($page);
-        $content->setNewHTML($page->html);
+        $content->setNewHTML($revision->html);
         $page->updated_by = user()->id;
         $page->refreshSlug();
         $page->save();
