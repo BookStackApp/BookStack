@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'Паролите трябва да имат поне 8 символа и да съвпадат с потвърждението.',
+    'user' => "Не можем да намерим потребител с този имейл адрес.",
+    'token' => 'Кодът за зануляване на паролата е невалиден за този емейл адрес.',
+    'sent' => 'Пратихме връзка за нулиране на паролата до имейла ви!',
+    'reset' => 'Вашата парола е нулирана!',
 
 ];
