@@ -75,29 +75,29 @@ return [
 
     // Comments
     'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
-    'comment_add' => 'An error occurred while adding / updating the comment.',
-    'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'cannot_add_comment_to_draft' => 'Не може да добавяте коментари към чернова.',
+    'comment_add' => 'Възникна грешка при актуализиране/добавяне на коментар.',
+    'comment_delete' => 'Възникна грешка при изтриването на коментара.',
+    'empty_comment' => 'Не може да добавите празен коментар.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    '404_page_not_found' => 'Страницата не е намерена',
+    'sorry_page_not_found' => 'Страницата, която търсите не може да бъде намерена.',
+    'sorry_page_not_found_permission_warning' => 'Ако смятате, че тази страница съществува, най-вероятно нямате право да я преглеждате.',
+    'return_home' => 'Назад към Начало',
+    'error_occurred' => 'Възникна грешка',
+    'app_down' => ':appName не е достъпно в момента',
+    'back_soon' => 'Ще се върне обратно онлайн скоро.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Но беше намерен код за достъп в заявката',
+    'api_bad_authorization_format' => 'В заявката имаше код за достъп, но формата изглежда е неправилен',
+    'api_user_token_not_found' => 'Няма открит API код, който да отговоря на предоставения такъв',
+    'api_incorrect_token_secret' => 'Секретния код, който беше предоставен за достъп до API-а е неправилен',
+    'api_user_no_api_permission' => 'Собственика на АPI кода няма право да прави API заявки',
+    'api_user_token_expired' => 'Кода за достъп, който беше използван, вече не е валиден',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Беше върната грешка, когато се изпрати тестовият емейл:',
 
 ];
