@@ -5,16 +5,16 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Нямате права за достъп до избраната страница.',
+    'permissionJson' => 'Нямате права да извършите тази операция.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
-    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
-    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
-    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
-    'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
+    'error_user_exists_different_creds' => 'Потребител с емайл :email вече съществува но с други данни.',
+    'email_already_confirmed' => 'Емейлът вече беше потвърден. Моля опитрайте да влезете.',
+    'email_confirmation_invalid' => 'Този код за достъп не е валиден или вече е бил използван, Моля опитрайте се да се регистрирате отново.',
+    'email_confirmation_expired' => 'Кодът за потвърждение изтече, нов емейл за потвърждение беше изпратен.',
+    'email_confirmation_awaiting' => 'Емайл адреса, който използвате трябва да се потвърди',
+    'ldap_fail_anonymous' => 'LDAP протокола прекъсна, използвайки анонимни настройки',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
     'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
