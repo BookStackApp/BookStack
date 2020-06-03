@@ -7,17 +7,17 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => 'Настройки',
+    'settings_save' => 'Запази настройките',
+    'settings_save_success' => 'Настройките са записани',
 
     // App Settings
-    'app_customization' => 'Customization',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
-    'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
-    'app_name_header' => 'Show name in header',
-    'app_public_access' => 'Public Access',
+    'app_customization' => 'Персонализиране',
+    'app_features_security' => 'Екстри и Сигурност',
+    'app_name' => 'Име на приложението',
+    'app_name_desc' => 'Това име е включено във всяка шапка и във всеки имейл изпратен от системата.',
+    'app_name_header' => 'Покажи името в шапката',
+    'app_public_access' => 'Публичен достъп',
     'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
     'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
     'app_public_access_toggle' => 'Allow public access',
