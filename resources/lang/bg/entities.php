@@ -307,8 +307,8 @@ return [
     'comment_in_reply_to' => 'В отговор на :commentId',
 
     // Revision
-    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
-    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
-    'revision_delete_success' => 'Revision deleted',
-    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
+    'revision_delete_confirm' => 'Наистина ли искате да изтриете тази версия?',
+    'revision_restore_confirm' => 'Сигурни ли сте, че искате да изтриете тази версия? Настоящата страница ще бъде заместена.',
+    'revision_delete_success' => 'Версията беше изтрита',
+    'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.'
 ];
