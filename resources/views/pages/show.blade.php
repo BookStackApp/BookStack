@@ -11,7 +11,7 @@
     </div>
 
     <main class="content-wrap card">
-        <div class="page-content" page-display="{{ $page->id }}">
+        <div class="page-content clearfix" page-display="{{ $page->id }}">
             @include('pages.pointer', ['page' => $page])
             @include('pages.page-display')
         </div>

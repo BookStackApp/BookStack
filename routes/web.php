@@ -178,10 +178,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
         Route::get('/users/{id}/delete', 'UserController@delete');
-        Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
+        Route::patch('/users/{id}/switch-books-view', 'UserController@switchBooksView');
+        Route::patch('/users/{id}/switch-shelves-view', 'UserController@switchShelvesView');
         Route::patch('/users/{id}/switch-shelf-view', 'UserController@switchShelfView');
         Route::patch('/users/{id}/change-sort/{type}', 'UserController@changeSort');
         Route::patch('/users/{id}/update-expansion-preference/{key}', 'UserController@updateExpansionPreference');
+        Route::patch('/users/toggle-dark-mode', 'UserController@toggleDarkMode');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');

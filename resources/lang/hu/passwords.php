@@ -8,7 +8,7 @@ return [
 
     'password' => 'A jelszónak legalább hat karakterből kell állnia és egyeznie kell a megerősítéssel.',
     'user' => "Nem található felhasználó ezzel az e-mail címmel.",
-    'token' => 'Ez a jelszó visszaállító vezérjel érvénytelen.',
+    'token' => 'The password reset token is invalid for this email address.',
     'sent' => 'E-mailben elküldtük a jelszó visszaállító hivatkozást!',
     'reset' => 'A jelszó visszaállítva!',
 

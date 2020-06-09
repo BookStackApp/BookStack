@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
+
+use Tests\BrowserKitTest;
 
 class MarkdownTest extends BrowserKitTest
 {

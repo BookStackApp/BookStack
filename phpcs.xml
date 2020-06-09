@@ -3,6 +3,7 @@
     <description>The coding standard for BookStack.</description>
     <file>app</file>
     <exclude-pattern>*/migrations/*</exclude-pattern>
+    <exclude-pattern>*/tests/*</exclude-pattern>
     <arg value="np"/>
     <rule ref="PSR2"/>
 </ruleset>

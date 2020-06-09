@@ -43,7 +43,7 @@ return [
     'reset_password' => '비밀번호 바꾸기',
     'reset_password_send_instructions' => '메일 주소를 입력하세요. 이 주소로 해당 과정을 위한 링크를 보낼 것입니다.',
     'reset_password_send_button' => '메일 보내기',
-    'reset_password_sent_success' => ':email로 메일을 보냈습니다.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => '비밀번호를 바꿨습니다.',
     'email_reset_subject' => ':appName 비밀번호 바꾸기',
     'email_reset_text' => '비밀번호를 바꿉니다.',

@@ -1,12 +1,13 @@
 
 .input-base {
-  background-color: #FFF;
   border-radius: 3px;
   border: 1px solid #D4D4D4;
+  @include lightDark(background-color, #fff, #333);
+  @include lightDark(border-color, #d4d4d4, #111);
+  @include lightDark(color, #666, #AAA);
   display: inline-block;
-  font-size: $fs-s;
+  font-size: $fs-m;
   padding: $-xs*1.5;
-  color: #666;
   width: 250px;
   max-width: 100%;
 
@@ -62,6 +63,7 @@
     display: flex;
     flex-direction: column;
     border: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     width: 50%;
     max-width: 50%;
   }
@@ -107,18 +109,25 @@
 }
 
 .markdown-display {
-  margin-left: -1px;
+  margin-inline-start: -1px;
 }
 
 .markdown-editor-display {
-  background-color: #FFFFFF;
+  background-color: #fff;
   body {
-    background-color: #FFFFFF;
-    padding-left: 16px;
-    padding-right: 16px;
+    background-color: #fff;
+    padding-inline-start: 16px;
+    margin-inline-end: 16px;
   }
   [drawio-diagram]:hover {
     outline: 2px solid var(--color-primary);
+  }
+}
+
+html.markdown-editor-display.dark-mode {
+  background-color: #222;
+  body {
+    background-color: #222;
   }
 }
 
@@ -129,21 +138,28 @@
   line-height: 1.6;
   border-bottom: 1px solid #DDD;
   background-color: #EEE;
+  @include lightDark(background-color, #eee, #111);
+  @include lightDark(border-color, #ddd, #000);
   flex: none;
   &:after {
     content: '';
     display: block;
     clear: both;
   }
+  @include whenDark {
+    button {
+      color: #AAA;
+    }
+  }
 }
 
 
 label {
+  @include lightDark(color, #666, #ddd);
   display: block;
   line-height: 1.4em;
   font-size: 0.94em;
   font-weight: 400;
-  color: #666;
   padding-bottom: 2px;
   margin-bottom: 0.2em;
   &.inline {
@@ -155,12 +171,12 @@ label.radio, label.checkbox {
   font-weight: 400;
   user-select: none;
   input[type="radio"], input[type="checkbox"] {
-    margin-right: $-xs;
+    margin-inline-end: $-xs;
   }
 }
 
 label.inline.checkbox {
-  margin-right: $-m;
+  margin-inline-end: $-m;
 }
 
 label + p.small {
@@ -288,12 +304,12 @@ input[type=color] {
   border: 1px solid #DDD;
   border-radius: 4px;
   .collapse-title {
-    margin-left: -$-m;
-    margin-right: -$-m;
+    margin-inline-start: -$-m;
+    margin-inline-end: -$-m;
     padding: $-s $-m;
     display: block;
     width: calc(100% + 32px);
-    text-align: left;
+    text-align: start;
   }
   .collapse-title, .collapse-title label {
     cursor: pointer;
@@ -306,7 +322,7 @@ input[type=color] {
   .collapse-title label:before {
     display: inline-block;
     content: '▸';
-    margin-right: $-m;
+    margin-inline-end: $-m;
     transition: all ease-in-out 400ms;
     transform: rotate(0);
   }
@@ -333,6 +349,7 @@ input[type=color] {
 
 .title-input.page-title {
   font-size: 0.8em;
+  @include lightDark(background-color, #fff, #333);
   .input {
     border: 0;
     margin-bottom: -1px;
@@ -359,6 +376,7 @@ input[type=color] {
 
 div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   max-width: 100%;
+  border-radius: 0;
 }
 
 .search-box {
@@ -367,16 +385,20 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   button {
     background-color: transparent;
     border: none;
-    fill: #666;
+    @include lightDark(color, #666, #AAA);
     padding: 0;
     cursor: pointer;
     position: absolute;
     left: 8px;
     top: 9px;
+    @include rtl {
+      right: 8px;
+      left: auto;
+    }
   }
   input {
     display: block;
-    padding-left: $-l + 4px;
+    padding-inline-start: $-l + 4px;
     width: 300px;
     max-width: 100%;
   }

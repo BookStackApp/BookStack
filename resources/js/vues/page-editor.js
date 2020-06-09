@@ -19,6 +19,8 @@ function mounted() {
     this.pageId= Number(elem.getAttribute('page-id'));
     this.isNewDraft = Number(elem.getAttribute('page-new-draft')) === 1;
     this.isUpdateDraft = Number(elem.getAttribute('page-update-draft')) === 1;
+    this.titleElem = elem.querySelector('input[name=name]');
+    this.hasDefaultTitle = this.titleElem.closest('[is-default-value]') !== null;
 
     if (this.pageId !== 0 && this.draftsEnabled) {
         window.setTimeout(() => {
@@ -43,6 +45,8 @@ function mounted() {
     window.$events.listen('editor-markdown-change', markdown => {
         this.editorMarkdown = markdown;
     });
+
+    this.setInitialFocus();
 }
 
 let data = {
@@ -58,18 +62,31 @@ let data = {
 
     editorHTML: '',
     editorMarkdown: '',
+
+    hasDefaultTitle: false,
+    titleElem: null,
 };
 
 let methods = {
 
+    setInitialFocus() {
+        if (this.hasDefaultTitle) {
+            this.titleElem.select();
+        } else {
+            window.setTimeout(() => {
+                this.$events.emit('editor::focus', '');
+            }, 500);
+        }
+    },
+
     startAutoSave() {
-        currentContent.title = document.getElementById('name').value.trim();
+        currentContent.title = this.titleElem.value.trim();
         currentContent.html = this.editorHTML;
 
         autoSave = window.setInterval(() => {
             // Return if manually saved recently to prevent bombarding the server
             if (Date.now() - lastSave < (1000 * autoSaveFrequency)/2) return;
-            const newTitle = document.getElementById('name').value.trim();
+            const newTitle = this.titleElem.value.trim();
             const newHtml = this.editorHTML;
 
             if (newTitle !== currentContent.title || newHtml !== currentContent.html) {
@@ -85,7 +102,7 @@ let methods = {
         if (!this.draftsEnabled) return;
 
         const data = {
-            name: document.getElementById('name').value.trim(),
+            name: this.titleElem.value.trim(),
             html: this.editorHTML
         };
 
@@ -126,7 +143,7 @@ let methods = {
             window.$events.emit('editor-html-update', response.data.html);
             window.$events.emit('editor-markdown-update', response.data.markdown || response.data.html);
 
-            document.getElementById('name').value = response.data.name;
+            this.titleElem.value = response.data.name;
             window.setTimeout(() => {
                 this.startAutoSave();
             }, 1000);

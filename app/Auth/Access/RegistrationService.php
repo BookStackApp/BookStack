@@ -106,13 +106,4 @@ class RegistrationService
         }
     }
 
-    /**
-     * Alias to the UserRepo method of the same name.
-     * Attaches the default system role, if configured, to the given user.
-     */
-    public function attachDefaultRole(User $user): void
-    {
-        $this->userRepo->attachDefaultRole($user);
-    }
-
 }

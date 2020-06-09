@@ -22,17 +22,17 @@ button {
   box-shadow: none;
   background-color: var(--color-primary);
   color: #FFF;
-  fill: #FFF;
   text-transform: uppercase;
   border: 1px solid var(--color-primary);
   vertical-align: top;
+  @include lightDark(filter, none, saturate(0.8) brightness(0.8));
   &:hover, &:focus, &:active {
     background-color: var(--color-primary);
     text-decoration: none;
     color: #FFFFFF;
   }
   &:hover {
-    box-shadow: $bs-light;
+    @include lightDark(box-shadow, $bs-light, $bs-dark);
     filter: brightness(110%);
   }
   &:focus {
@@ -48,13 +48,14 @@ button {
 
 .button.outline {
   background-color: transparent;
-  color: #666;
+  @include lightDark(color, #666, #aaa);
   fill: currentColor;
   border: 1px solid #CCC;
   &:hover, &:focus, &:active {
     border: 1px solid #CCC;
     box-shadow: none;
     background-color: #F2F2F2;
+    @include lightDark(background-color, #f2f2f2, #555);
     filter: none;
   }
   &:active {
@@ -66,7 +67,7 @@ button {
 }
 
 .button + .button {
-  margin-left: $-s;
+  margin-inline-start: $-s;
 }
 
 .button.small {
@@ -84,7 +85,9 @@ button {
   font-size: 0.75rem;
   line-height: 1.4em;
   color: var(--color-primary);
-  fill: var(--color-primary);
+  @include whenDark {
+    color: #AAA;
+  }
   &:active {
     outline: 0;
   }
@@ -99,26 +102,28 @@ button {
 
 .button.block {
   width: 100%;
-  text-align: left;
+  text-align: start;
   display: block;
 }
 
 .button.icon {
   .svg-icon {
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 }
 
 .button.svg {
+  display: flex;
+  align-items: center;
+  padding: $-s $-m;
+  padding-bottom: ($-s - 2px);
   svg {
     display: inline-block;
-    position: absolute;
-    left: $-m;
-    top: $-s - 2px;
     width: 24px;
     height: 24px;
+    bottom: auto;
+    margin-inline-end: $-m;
   }
-  padding: $-s $-m ($-s - 2px) ($-m*2 + 24px);
 }
 
 .button[disabled] {

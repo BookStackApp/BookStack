@@ -107,10 +107,12 @@ class BookshelfController extends Controller
 
         Views::add($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
+        $view = setting()->getForCurrentUser('bookshelf_view_type', config('app.views.books'));
 
         $this->setPageTitle($shelf->getShortName());
         return view('shelves.show', [
             'shelf' => $shelf,
+            'view' => $view,
             'activity' => Activity::entityActivity($shelf, 20, 1)
         ]);
     }

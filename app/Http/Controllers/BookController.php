@@ -114,6 +114,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
+        $bookParentShelves = $book->shelves()->visible()->get();
 
         Views::add($book);
         if ($request->has('shelf')) {
@@ -125,6 +126,7 @@ class BookController extends Controller
             'book' => $book,
             'current' => $book,
             'bookChildren' => $bookChildren,
+            'bookParentShelves' => $bookParentShelves,
             'activity' => Activity::entityActivity($book, 20, 1)
         ]);
     }

@@ -57,9 +57,7 @@
 
 @stop
 
-
 @section('right')
-
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="text-small text-muted blended-links">
@@ -75,7 +73,6 @@
             @endif
         </div>
     </div>
-
 
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
@@ -134,6 +131,13 @@
     @if($book->tags->count() > 0)
         <div class="mb-xl">
             @include('components.tag-list', ['entity' => $book])
+        </div>
+    @endif
+
+    @if(count($bookParentShelves) > 0)
+        <div class="actions mb-xl">
+            <h5>{{ trans('entities.shelves_long') }}</h5>
+            @include('partials.entity-list', ['entities' => $bookParentShelves, 'style' => 'compact'])
         </div>
     @endif
 

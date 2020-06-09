@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: stretch;
   overflow: hidden;
-  background-color: #FFF;
 
   .edit-area {
     flex: 1;
@@ -59,7 +58,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
   text-align: center;
   svg {
     fill: #FFF;
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 }
 
@@ -152,15 +151,16 @@ body.mce-fullscreen, body.markdown-fullscreen {
 }
 .pointer {
   border: 1px solid #CCC;
+  @include lightDark(border-color, #ccc, #000);
   display: flex;
   align-items: center;
   justify-items: center;
   padding: $-s $-s;
   border-radius: 4px;
-  box-shadow: 0 0 12px 1px rgba(212, 209, 209, 0.3);
+  box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: -60px;
-  background-color:#FFF;
+  @include lightDark(background-color, #fff, #333);
   width: 275px;
   z-index: 55;
 
@@ -174,15 +174,16 @@ body.mce-fullscreen, body.markdown-fullscreen {
     bottom: -9px;
     width: 16px;
     height: 16px;
-    margin-left: -8px;
+    margin-inline-start: -8px;
     content: '';
     display: block;
-    background-color:#FFF;
     transform: rotate(45deg);
     transform-origin: 50% 50%;
-    border-bottom: 1px solid #CCC;
-    border-right: 1px solid #CCC;
+    border-block-end: 1px solid #CCC;
+    border-inline-end: 1px solid #CCC;
     z-index: 56;
+    @include lightDark(background-color, #fff, #333);
+    @include lightDark(border-color, #ccc, #000);
   }
   input, button, a {
     position: relative;
@@ -195,6 +196,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
   input {
     background-color: #FFF;
     border: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     color: #666;
     width: 172px;
     z-index: 40;
@@ -219,12 +221,16 @@ body.mce-fullscreen, body.markdown-fullscreen {
     width: 1.2em;
     height: 1.2em;
   }
+  .button {
+    @include lightDark(border-color, #ddd, #000);
+  }
 }
 
 // Attribute form
 .floating-toolbox {
-  background-color: #FFF;
   border: 1px solid #DDD;
+  @include lightDark(background-color, #fff, #222);
+  @include lightDark(border-color, #DDD, #000);
   right: $-xl*2;
   width: 48px;
   overflow: hidden;
@@ -255,16 +261,17 @@ body.mce-fullscreen, body.markdown-fullscreen {
   }
   .tabs {
     display: block;
-    border-right: 1px solid #DDD;
+    border-inline-end: 1px solid #DDD;
+    @include lightDark(border-color, #ddd, #000);
     width: 48px;
     flex: 0 1 auto;
   }
   .tabs svg {
-    fill: rgba(0, 0, 0, 0.5);
     padding: 0;
     margin: 0;
   }
   .tabs > button {
+    @include lightDark(color, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
     padding: $-s $-m;
@@ -273,7 +280,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   &.open .tabs > button.active {
-    fill: #444;
+    @include lightDark(color, #444, #EEE);
     background-color: rgba(0, 0, 0, 0.1);
   }
   div[toolbox-tab-content] {
@@ -281,7 +288,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
     display: flex;
     flex: 1;
     flex-direction: column;
-    min-height: 0px;
+    min-height: 0;
     overflow-y: scroll;
   }
   h4 {
@@ -294,8 +301,8 @@ body.mce-fullscreen, body.markdown-fullscreen {
     width: 100%;
     min-width: 50px;
   }
-  .tags td, .tag-table > div > div > div {
-    padding-right: $-s;
+  .tags td, .inline-start-table > div > div > div {
+    padding-inline-end: $-s;
     padding-top: $-s;
     position: relative;
   }
@@ -317,42 +324,6 @@ body.mce-fullscreen, body.markdown-fullscreen {
 
 [toolbox-tab-content] {
   display: none;
-}
-
-.tag-display {
-  position: relative;
-  table {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  tr:first-child td {
-    padding-top: 0;
-  }
-  .heading th {
-    padding: $-xs $-s;
-    color: rgba(100, 100, 100, 0.7);
-    border: 0;
-    font-weight: 400;
-  }
-  td {
-    border: 0;
-    border-bottom: 1px solid #EEE;
-    padding: $-xs $-s;
-    color: #444;
-  }
-  tr td:first-child {
-    padding-left:0;
-  }
-  .tag-value {
-    color: #888;
-  }
-  tr:last-child td {
-    border-bottom: none;
-  }
-  .tag {
-    padding: $-s;
-  }
 }
 
 .suggestion-box {

@@ -1,8 +1,9 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Book;
+use BookStack\Auth\User;
 use BookStack\Entities\Entity;
+use Illuminate\Support\Collection;
 
 class ActivityService
 {
@@ -12,8 +13,6 @@ class ActivityService
 
     /**
      * ActivityService constructor.
-     * @param Activity $activity
-     * @param PermissionService $permissionService
      */
     public function __construct(Activity $activity, PermissionService $permissionService)
     {
@@ -24,11 +23,8 @@ class ActivityService
 
     /**
      * Add activity data to database.
-     * @param \BookStack\Entities\Entity $entity
-     * @param string $activityKey
-     * @param int $bookId
      */
-    public function add(Entity $entity, string $activityKey, int $bookId = null)
+    public function add(Entity $entity, string $activityKey, ?int $bookId = null)
     {
         $activity = $this->newActivityForUser($activityKey, $bookId);
         $entity->activity()->save($activity);
@@ -37,11 +33,8 @@ class ActivityService
 
     /**
      * Adds a activity history with a message, without binding to a entity.
-     * @param string $activityKey
-     * @param string $message
-     * @param int $bookId
      */
-    public function addMessage(string $activityKey, string $message, int $bookId = null)
+    public function addMessage(string $activityKey, string $message, ?int $bookId = null)
     {
         $this->newActivityForUser($activityKey, $bookId)->forceFill([
             'extra' => $message
@@ -52,11 +45,8 @@ class ActivityService
 
     /**
      * Get a new activity instance for the current user.
-     * @param string $key
-     * @param int|null $bookId
-     * @return Activity
      */
-    protected function newActivityForUser(string $key, int $bookId = null)
+    protected function newActivityForUser(string $key, ?int $bookId = null): Activity
     {
         return $this->activity->newInstance()->forceFill([
             'key' => strtolower($key),
@@ -69,34 +59,27 @@ class ActivityService
      * Removes the entity attachment from each of its activities
      * and instead uses the 'extra' field with the entities name.
      * Used when an entity is deleted.
-     * @param \BookStack\Entities\Entity $entity
-     * @return mixed
      */
-    public function removeEntity(Entity $entity)
+    public function removeEntity(Entity $entity): Collection
     {
-        // TODO - Rewrite to db query.
-        $activities = $entity->activity;
-        foreach ($activities as $activity) {
-            $activity->extra = $entity->name;
-            $activity->entity_id = 0;
-            $activity->entity_type = null;
-            $activity->save();
-        }
+        $activities = $entity->activity()->get();
+        $entity->activity()->update([
+            'extra' => $entity->name,
+            'entity_id' => 0,
+            'entity_type' => '',
+        ]);
         return $activities;
     }
 
     /**
      * Gets the latest activity.
-     * @param int $count
-     * @param int $page
-     * @return array
      */
-    public function latest($count = 20, $page = 0)
+    public function latest(int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
-            ->with('user', 'entity')
+            ->with(['user', 'entity'])
             ->skip($count * $page)
             ->take($count)
             ->get();
@@ -107,17 +90,13 @@ class ActivityService
     /**
      * Gets the latest activity for an entity, Filtering out similar
      * items to prevent a message activity list.
-     * @param \BookStack\Entities\Entity $entity
-     * @param int $count
-     * @param int $page
-     * @return array
      */
-    public function entityActivity($entity, $count = 20, $page = 1)
+    public function entityActivity(Entity $entity, int $count = 20, int $page = 1): array
     {
         if ($entity->isA('book')) {
-            $query = $this->activity->where('book_id', '=', $entity->id);
+            $query = $this->activity->newQuery()->where('book_id', '=', $entity->id);
         } else {
-            $query = $this->activity->where('entity_type', '=', $entity->getMorphClass())
+            $query = $this->activity->newQuery()->where('entity_type', '=', $entity->getMorphClass())
                 ->where('entity_id', '=', $entity->id);
         }
         
@@ -133,18 +112,18 @@ class ActivityService
     }
 
     /**
-     * Get latest activity for a user, Filtering out similar
-     * items.
-     * @param $user
-     * @param int $count
-     * @param int $page
-     * @return array
+     * Get latest activity for a user, Filtering out similar items.
      */
-    public function userActivity($user, $count = 20, $page = 0)
+    public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissionService
             ->filterRestrictedEntityRelations($this->activity, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')->where('user_id', '=', $user->id)->skip($count * $page)->take($count)->get();
+            ->orderBy('created_at', 'desc')
+            ->where('user_id', '=', $user->id)
+            ->skip($count * $page)
+            ->take($count)
+            ->get();
+
         return $this->filterSimilar($activityList);
     }
 
@@ -153,29 +132,26 @@ class ActivityService
      * @param Activity[] $activities
      * @return array
      */
-    protected function filterSimilar($activities)
+    protected function filterSimilar(iterable $activities): array
     {
         $newActivity = [];
-        $previousItem = false;
+        $previousItem = null;
+
         foreach ($activities as $activityItem) {
-            if ($previousItem === false) {
-                $previousItem = $activityItem;
-                $newActivity[] = $activityItem;
-                continue;
-            }
-            if (!$activityItem->isSimilarTo($previousItem)) {
+            if (!$previousItem || !$activityItem->isSimilarTo($previousItem)) {
                 $newActivity[] = $activityItem;
             }
+
             $previousItem = $activityItem;
         }
+
         return $newActivity;
     }
 
     /**
      * Flashes a notification message to the session if an appropriate message is available.
-     * @param $activityKey
      */
-    protected function setNotification($activityKey)
+    protected function setNotification(string $activityKey)
     {
         $notificationTextKey = 'activities.' . $activityKey . '_notification';
         if (trans()->has($notificationTextKey)) {

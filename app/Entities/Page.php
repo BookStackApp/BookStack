@@ -21,11 +21,13 @@ use Permissions;
  */
 class Page extends BookChild
 {
-    protected $fillable = ['name', 'html', 'priority', 'markdown'];
+    protected $fillable = ['name', 'priority', 'markdown'];
 
     protected $simpleAttributes = ['name', 'id', 'slug'];
 
     public $textField = 'text';
+
+    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot'];
 
     /**
      * Get the entities that are visible to the current user.

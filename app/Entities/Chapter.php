@@ -12,6 +12,7 @@ class Chapter extends BookChild
     public $searchFactor = 1.3;
 
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
+    protected $hidden = ['restricted', 'pivot'];
 
     /**
      * Get the pages that this chapter contains.

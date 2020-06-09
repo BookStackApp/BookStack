@@ -3,6 +3,7 @@
 use BookStack\Http\Controllers\Api\ApiController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -117,6 +118,7 @@ class ApiDocsGenerator
                 'method' => $route->methods[0],
                 'controller' => $controller,
                 'controller_method' => $controllerMethod,
+                'controller_method_kebab' => Str::kebab($controllerMethod),
                 'base_model' => $baseModelName,
             ];
         });

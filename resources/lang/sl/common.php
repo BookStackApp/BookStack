@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Meni profila',
     'view_profile' => 'Ogled profila',
     'edit_profile' => 'Uredi profil',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Informacije',

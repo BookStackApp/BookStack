@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Auth;
 
 use BookStack\Auth\User;
 use DB;
 use Laravel\Socialite\Contracts\Factory;
 use Laravel\Socialite\Contracts\Provider;
 use Mockery;
+use Tests\TestCase;
 
 class SocialAuthTest extends TestCase
 {

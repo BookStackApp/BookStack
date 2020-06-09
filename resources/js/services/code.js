@@ -191,7 +191,8 @@ function getMode(suggestion, content) {
  * @returns {*|string}
  */
 function getTheme() {
-    return window.codeTheme || 'default';
+    const darkMode = document.documentElement.classList.contains('dark-mode');
+    return window.codeTheme || (darkMode ? 'darcula' : 'default');
 }
 
 /**

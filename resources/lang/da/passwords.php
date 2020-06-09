@@ -8,7 +8,7 @@ return [
 
     'password' => 'Adgangskoder skal være mindst otte tegn og svare til bekræftelsen.',
     'user' => "Vi kan ikke finde en bruger med den e-mail adresse.",
-    'token' => 'Denne adgangskode nulstillingstoken er ugyldig.',
+    'token' => 'The password reset token is invalid for this email address.',
     'sent' => 'Vi har sendt dig en e-mail med et link til at nulstille adgangskoden!',
     'reset' => 'Dit kodeord er blevet nulstillet!',
 

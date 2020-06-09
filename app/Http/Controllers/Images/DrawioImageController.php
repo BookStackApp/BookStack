@@ -4,6 +4,7 @@ namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Uploads\ImageRepo;
+use Exception;
 use Illuminate\Http\Request;
 use BookStack\Http\Controllers\Controller;
 
@@ -11,10 +12,6 @@ class DrawioImageController extends Controller
 {
     protected $imageRepo;
 
-    /**
-     * DrawioImageController constructor.
-     * @param ImageRepo $imageRepo
-     */
     public function __construct(ImageRepo $imageRepo)
     {
         $this->imageRepo = $imageRepo;
@@ -24,8 +21,6 @@ class DrawioImageController extends Controller
     /**
      * Get a list of gallery images, in a list.
      * Can be paged and filtered by entity.
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function list(Request $request)
     {
@@ -40,9 +35,7 @@ class DrawioImageController extends Controller
 
     /**
      * Store a new gallery image in the system.
-     * @param Request $request
-     * @return Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(Request $request)
     {
@@ -66,8 +59,6 @@ class DrawioImageController extends Controller
 
     /**
      * Get the content of an image based64 encoded.
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function getAsBase64($id)
     {

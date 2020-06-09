@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Resetowanie hasła',
     'reset_password_send_instructions' => 'Wprowadź adres e-mail powiązany z Twoim kontem, by otrzymać link do resetowania hasła.',
     'reset_password_send_button' => 'Wyślij link do resetowania hasła',
-    'reset_password_sent_success' => 'Wysłano link do resetowania hasła na adres :email.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'Hasło zostało zresetowane pomyślnie.',
     'email_reset_subject' => 'Resetowanie hasła do :appName',
     'email_reset_text' => 'Otrzymujesz tę wiadomość ponieważ ktoś zażądał zresetowania hasła do Twojego konta.',

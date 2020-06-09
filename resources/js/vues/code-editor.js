@@ -5,6 +5,7 @@ const methods = {
         if (!this.editor) this.editor = codeLib.popupEditor(this.$refs.editor, this.language);
         this.$refs.overlay.components.overlay.show(() => {
             codeLib.updateLayout(this.editor);
+            this.editor.focus();
         });
     },
     hide() {
