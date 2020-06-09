@@ -287,7 +287,7 @@ return [
     'profile_not_created_pages' => ':userName heeft geen pagina\'s gemaakt',
     'profile_not_created_chapters' => ':userName heeft geen hoofdstukken gemaakt',
     'profile_not_created_books' => ':userName heeft geen boeken gemaakt',
-    'profile_not_created_shelves' => ':userName heeft nog geen boekplanken gemaakt',
+    'profile_not_created_shelves' => ':userName heeft nog geen boekenplanken gemaakt',
 
     // Comments
     'comment' => 'Reactie',
