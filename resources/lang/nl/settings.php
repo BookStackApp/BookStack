@@ -44,9 +44,9 @@ return [
     // Color settings
     'content_colors' => 'Kleuren inhoud',
     'content_colors_desc' => 'Stelt de kleuren in voor alle elementen in de pagina-organisatieleiding. Het kiezen van kleuren met dezelfde helderheid als de standaard kleuren wordt aanbevolen voor de leesbaarheid.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
+    'bookshelf_color' => 'Kleur van de Boekenplank',
+    'book_color' => 'Kleur van het Boek',
+    'chapter_color' => 'Kleur van het Hoofdstuk',
     'page_color' => 'Pagina kleur',
     'page_draft_color' => 'Klad pagina kleur',
 
@@ -160,9 +160,9 @@ return [
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
-    'user_api_token_name' => 'Name',
+    'user_api_token_name' => 'Naam',
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
-    'user_api_token_expiry' => 'Expiry Date',
+    'user_api_token_expiry' => 'Vervaldatum',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
     'user_api_token_create_success' => 'API token successfully created',
@@ -174,7 +174,7 @@ return [
     'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
     'user_api_token_created' => 'Token Created :timeAgo',
     'user_api_token_updated' => 'Token Updated :timeAgo',
-    'user_api_token_delete' => 'Delete Token',
+    'user_api_token_delete' => 'Token Verwijderen',
     'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
     'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
     'user_api_token_delete_success' => 'API token successfully deleted',
