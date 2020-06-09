@@ -60,9 +60,9 @@ return [
     'search_date_options' => 'Datum Opties',
     'search_updated_before' => 'Geupdate voor',
     'search_updated_after' => 'Geupdate na',
-    'search_created_before' => 'Gecreeerd voor',
-    'search_created_after' => 'Gecreeerd na',
-    'search_set_date' => 'Zet datum',
+    'search_created_before' => 'Gecreëerd voor',
+    'search_created_after' => 'Gecreëerd na',
+    'search_set_date' => 'Stel datum in',
     'search_update' => 'Update zoekresultaten',
 
     // Shelves
@@ -244,11 +244,11 @@ return [
     'shelf_tags' => 'Tags van Boekplanken',
     'tag' => 'Label',
     'tags' =>  'Tags',
-    'tag_name' =>  'Tag Name',
+    'tag_name' =>  'Naam Tag',
     'tag_value' => 'Label Waarde (Optioneel)',
     'tags_explain' => "Voeg labels toe om de inhoud te categoriseren. \n Je kunt meerdere labels toevoegen.",
     'tags_add' => 'Voeg een extra label toe',
-    'tags_remove' => 'Remove this tag',
+    'tags_remove' => 'Deze tag verwijderen',
     'attachments' => 'Bijlages',
     'attachments_explain' => 'Upload bijlages of voeg een link toe. Deze worden zichtbaar in het navigatiepaneel.',
     'attachments_explain_instant_save' => 'Wijzigingen worden meteen opgeslagen.',
@@ -274,12 +274,12 @@ return [
     'attachments_file_uploaded' => 'Bestand succesvol geüpload',
     'attachments_file_updated' => 'Bestand succesvol bijgewerkt',
     'attachments_link_attached' => 'Link successfully gekoppeld aan de pagina',
-    'templates' => 'Templates',
-    'templates_set_as_template' => 'Page is a template',
-    'templates_explain_set_as_template' => 'You can set this page as a template so its contents be utilized when creating other pages. Other users will be able to use this template if they have view permissions for this page.',
-    'templates_replace_content' => 'Replace page content',
-    'templates_append_content' => 'Append to page content',
-    'templates_prepend_content' => 'Prepend to page content',
+    'templates' => 'Sjablonen',
+    'templates_set_as_template' => 'Pagina is een sjabloon',
+    'templates_explain_set_as_template' => 'Je kunt deze pagina als template instellen zodat de inhoud wordt gebruikt bij het maken van andere pagina\'s. Andere gebruikers kunnen deze template gebruiken als ze rechten hebben om deze pagina te bekijken.',
+    'templates_replace_content' => 'Pagina-inhoud vervangen',
+    'templates_append_content' => 'Toevoegen aan pagina-inhoud',
+    'templates_prepend_content' => 'Voeg vooraan toe aan pagina-inhoud',
 
     // Profile View
     'profile_user_for_x' => 'Lid sinds :time',
@@ -287,12 +287,12 @@ return [
     'profile_not_created_pages' => ':userName heeft geen pagina\'s gemaakt',
     'profile_not_created_chapters' => ':userName heeft geen hoofdstukken gemaakt',
     'profile_not_created_books' => ':userName heeft geen boeken gemaakt',
-    'profile_not_created_shelves' => ':userName has not created any shelves',
+    'profile_not_created_shelves' => ':userName heeft nog geen boekplanken gemaakt',
 
     // Comments
     'comment' => 'Reactie',
     'comments' => 'Reacties',
-    'comment_add' => 'Add Comment',
+    'comment_add' => 'Reactie Toevoegen',
     'comment_placeholder' => 'Laat hier een reactie achter',
     'comment_count' => '{0} Geen reacties|{1} 1 Reactie|[2,*] :count Reacties',
     'comment_save' => 'Sla reactie op',
@@ -309,7 +309,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Weet u zeker dat u deze revisie wilt verwijderen?',
-    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
+    'revision_restore_confirm' => 'Weet u zeker dat u deze revisie wilt herstellen? De huidige pagina-inhoud wordt vervangen.',
     'revision_delete_success' => 'Revisie verwijderd',
     'revision_cannot_delete_latest' => 'Kan de laatste revisie niet verwijderen.'
 ];
