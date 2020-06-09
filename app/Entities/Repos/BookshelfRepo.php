@@ -28,8 +28,10 @@ class BookshelfRepo
      */
     public function getAllPaginated(int $count = 20, string $sort = 'name', string $order = 'asc'): LengthAwarePaginator
     {
-        return Bookshelf::visible()->with('visibleBooks')
-            ->orderBy($sort, $order)->paginate($count);
+        return Bookshelf::visible()
+            ->with('visibleBooks')
+            ->orderBy($sort, $order)
+            ->paginate($count);
     }
 
     /**
@@ -91,10 +93,14 @@ class BookshelfRepo
     /**
      * Create a new shelf in the system.
      */
-    public function update(Bookshelf $shelf, array $input, array $bookIds): Bookshelf
+    public function update(Bookshelf $shelf, array $input, ?array $bookIds): Bookshelf
     {
         $this->baseRepo->update($shelf, $input);
-        $this->updateBooks($shelf, $bookIds);
+
+        if (!is_null($bookIds)) {
+            $this->updateBooks($shelf, $bookIds);
+        }
+
         return $shelf;
     }
 

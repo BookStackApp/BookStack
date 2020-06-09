@@ -4,7 +4,7 @@
     <div>
         <button id="saml-login" class="button outline block svg">
             @icon('saml2')
-            {{ trans('auth.log_in_with', ['socialDriver' => config('saml2.name')]) }}
+            <span>{{ trans('auth.log_in_with', ['socialDriver' => config('saml2.name')]) }}</span>
         </button>
     </div>
 

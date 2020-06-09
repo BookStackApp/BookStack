@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Info',

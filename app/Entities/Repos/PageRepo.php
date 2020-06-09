@@ -180,12 +180,11 @@ class PageRepo
             $page->template = ($input['template'] === 'true');
         }
 
+        $pageContent = new PageContent($page);
+        $pageContent->setNewHTML($input['html']);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
-        $page->fill($input);
-        $pageContent = new PageContent($page);
-        $pageContent->setNewHTML($input['html']);
         $page->revision_count++;
 
         if (setting('app-editor') !== 'markdown') {
@@ -211,7 +210,7 @@ class PageRepo
      */
     protected function savePageRevision(Page $page, string $summary = null)
     {
-        $revision = new PageRevision($page->toArray());
+        $revision = new PageRevision($page->getAttributes());
 
         if (setting('app-editor') !== 'markdown') {
             $revision->markdown = '';
@@ -279,7 +278,7 @@ class PageRepo
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         $page->fill($revision->toArray());
         $content = new PageContent($page);
-        $content->setNewHTML($page->html);
+        $content->setNewHTML($revision->html);
         $page->updated_by = user()->id;
         $page->refreshSlug();
         $page->save();

@@ -66,6 +66,8 @@ return [
     'profile_menu' => 'Menu Hồ sơ',
     'view_profile' => 'Xem Hồ sơ',
     'edit_profile' => 'Sửa Hồ sơ',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Thông tin',

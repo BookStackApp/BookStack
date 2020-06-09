@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -48,5 +49,25 @@ class ResetPasswordController extends Controller
         $this->showSuccessNotification($message);
         return redirect($this->redirectPath())
             ->with('status', trans($response));
+    }
+
+    /**
+     * Get the response for a failed password reset.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        // We show invalid users as invalid tokens as to not leak what
+        // users may exist in the system.
+        if ($response === Password::INVALID_USER) {
+            $response = Password::INVALID_TOKEN;
+        }
+
+        return redirect()->back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => trans($response)]);
     }
 }

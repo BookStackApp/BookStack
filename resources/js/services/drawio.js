@@ -1,22 +1,21 @@
-
-const drawIoUrl = 'https://www.draw.io/?embed=1&ui=atlas&spin=1&proto=json';
 let iFrame = null;
 
 let onInit, onSave;
 
 /**
  * Show the draw.io editor.
- * @param onInitCallback - Must return a promise with the xml to load for the editor.
- * @param onSaveCallback - Is called with the drawing data on save.
+ * @param {String} drawioUrl
+ * @param {Function} onInitCallback - Must return a promise with the xml to load for the editor.
+ * @param {Function} onSaveCallback - Is called with the drawing data on save.
  */
-function show(onInitCallback, onSaveCallback) {
+function show(drawioUrl, onInitCallback, onSaveCallback) {
     onInit = onInitCallback;
     onSave = onSaveCallback;
 
     iFrame = document.createElement('iframe');
     iFrame.setAttribute('frameborder', '0');
     window.addEventListener('message', drawReceive);
-    iFrame.setAttribute('src', drawIoUrl);
+    iFrame.setAttribute('src', drawioUrl);
     iFrame.setAttribute('class', 'fullscreen');
     iFrame.style.backgroundColor = '#FFFFFF';
     document.body.appendChild(iFrame);

@@ -23,7 +23,7 @@ class CopyShelfPermissions extends Command
      *
      * @var string
      */
-    protected $description = 'Copy shelf permissions to all child books.';
+    protected $description = 'Copy shelf permissions to all child books';
 
     /**
      * @var BookshelfRepo

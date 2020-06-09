@@ -3,11 +3,12 @@
  * Callouts
  */
 .callout {
-  border-left: 3px solid #BBB;
+  border-inline-start: 3px solid #BBB;
   background-color: #EEE;
   padding: $-s $-s $-s $-xl;
   display: block;
   position: relative;
+  overflow: auto;
   &:before {
     background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMTUzODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTEgMTVoLTJ2LTZoMnY2em0wLThoLTJWN2gydjJ6Ii8+PC9zdmc+');
     background-repeat: no-repeat;
@@ -24,29 +25,29 @@
   }
   &.success {
     border-left-color: $positive;
-    background-color: lighten($positive, 68%);
-    color: darken($positive, 16%);
+    @include lightDark(background-color, lighten($positive, 68%), darken($positive, 22%));
+    @include lightDark(color, darken($positive, 16%), lighten($positive, 5%));
   }
   &.success:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMzNzZjMzkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bS0yIDE1bC01LTUgMS40MS0xLjQxTDEwIDE0LjE3bDcuNTktNy41OUwxOSA4bC05IDl6Ii8+PC9zdmc+");
   }
   &.danger {
     border-left-color: $negative;
-    background-color: lighten($negative, 56%);
-    color: darken($negative, 20%);
+    @include lightDark(background-color, lighten($negative, 56%), darken($negative, 30%));
+    @include lightDark(color, darken($negative, 20%), lighten($negative, 5%));
   }
   &.danger:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiOTE4MTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0xNS43MyAzSDguMjdMMyA4LjI3djcuNDZMOC4yNyAyMWg3LjQ2TDIxIDE1LjczVjguMjdMMTUuNzMgM3pNMTIgMTcuM2MtLjcyIDAtMS4zLS41OC0xLjMtMS4zIDAtLjcyLjU4LTEuMyAxLjMtMS4zLjcyIDAgMS4zLjU4IDEuMyAxLjMgMCAuNzItLjU4IDEuMy0xLjMgMS4zem0xLTQuM2gtMlY3aDJ2NnoiLz4gICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==");
   }
   &.info {
     border-left-color: $info;
-    background-color: lighten($info, 50%);
-    color: darken($info, 20%);
+    @include lightDark(color, darken($info, 20%), lighten($info, 10%));
+    @include lightDark(background-color, lighten($info, 50%), darken($info, 35%));
   }
   &.warning {
     border-left-color: $warning;
-    background-color: lighten($warning, 50%);
-    color: darken($warning, 20%);
+    @include lightDark(background-color, lighten($warning, 50%), darken($warning, 36%));
+    @include lightDark(color, darken($warning, 20%), $warning);
   }
   &.warning:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiNjUzMWMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEgMjFoMjJMMTIgMiAxIDIxem0xMi0zaC0ydi0yaDJ2MnptMC00aC0ydi00aDJ2NHoiLz48L3N2Zz4=");
@@ -58,7 +59,7 @@
  */
 
 .card {
-  background-color: #FFF;
+  @include lightDark(background-color, #FFF, #222);
   box-shadow: $bs-card;
   border-radius: 3px;
   border: 1px solid transparent;
@@ -89,6 +90,8 @@
 
 .card.drag-card {
   border: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #000);
+  @include lightDark(background-color, #fff, #333);
   border-radius: 4px;
   display: flex;
   padding: 0 0 0 ($-s + 28px);
@@ -109,7 +112,7 @@
       background-color: #EEE;
     }
     .svg-icon {
-      margin-right: 0px;
+      margin-inline-end: 0px;
     }
   }
   > div .outline input {
@@ -117,7 +120,7 @@
     width: 100%;
   }
   .handle {
-    background-color: #EEE;
+    @include lightDark(background-color, #eee, #2d2d2d);
     left: 0;
     position: absolute;
     top: 0;
@@ -134,6 +137,7 @@
   display: flex;
   flex-direction: column;
   border: 1px solid #ddd;
+  @include lightDark(border-color, #ddd, #000);
   margin-bottom: $-l;
   border-radius: 4px;
   overflow: hidden;
@@ -143,7 +147,7 @@
   &:hover {
     color: $text-dark;
     text-decoration: none;
-    box-shadow: $bs-card;
+    @include lightDark(box-shadow, $bs-card, $bs-card-dark);
   }
   h2 {
     width: 100%;
@@ -177,8 +181,8 @@
 
 .content-wrap.card {
   padding: $-m $-xxl;
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
   margin-bottom: $-xl;
   overflow: initial;
   min-height: 60vh;
@@ -211,26 +215,26 @@
 .tag-item {
   display: inline-flex;
   margin-bottom: $-xs;
-  margin-right: $-xs;
+  margin-inline-end: $-xs;
   border-radius: 4px;
   border: 1px solid #CCC;
   overflow: hidden;
   font-size: 0.85em;
   a, a:hover, a:active {
     padding: 4px 8px;
-    color: #777;
+    @include lightDark(color, #777, #999);
     transition: background-color ease-in-out 80ms;
     text-decoration: none;
   }
   a:hover {
-    background-color: rgba(255, 255, 255, 0.7);
+    @include lightDark(background-color, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   }
   svg {
     fill: #888;
   }
   .tag-value {
-    border-left: 1px solid #DDD;
-    background-color: rgba(255, 255, 255, 0.5);
+    border-inline-start: 1px solid #DDD;
+    @include lightDark(background-color, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2))
   }
 }
 

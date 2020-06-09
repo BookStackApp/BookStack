@@ -2,6 +2,10 @@
 
 use BookStack\Auth\User;
 
+/**
+ * @property int created_by
+ * @property int updated_by
+ */
 abstract class Ownable extends Model
 {
     /**
