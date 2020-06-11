@@ -94,10 +94,10 @@ return [
     'api_bad_authorization_format' => 'Een autorisatie token is gevonden, maar het formaat schijnt onjuist te zijn',
     'api_user_token_not_found' => 'Er is geen overeenkomende API token gevonden voor de opgegeven autorisatie token',
     'api_incorrect_token_secret' => 'Het opgegeven geheim voor de API token is onjuist',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_no_api_permission' => 'De eigenaar van de gebruikte API token heeft geen toestemming om API calls te maken',
+    'api_user_token_expired' => 'De gebruikte autorisatie token is verlopen',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Fout opgetreden bij het verzenden van een test email:',
 
 ];
