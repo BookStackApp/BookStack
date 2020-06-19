@@ -193,6 +193,8 @@ class PageRepo
 
         $page->save();
 
+        $page->indexforSearch();
+
         // Remove all update drafts for this user & page.
         $this->getUserDraftQuery($page)->delete();
 
