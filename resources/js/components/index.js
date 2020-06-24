@@ -1,96 +1,113 @@
-import dropdown from "./dropdown";
-import overlay from "./overlay";
-import backToTop from "./back-to-top";
-import notification from "./notification";
-import chapterToggle from "./chapter-toggle";
-import expandToggle from "./expand-toggle";
-import entitySelectorPopup from "./entity-selector-popup";
-import entitySelector from "./entity-selector";
-import sidebar from "./sidebar";
-import pagePicker from "./page-picker";
-import pageComments from "./page-comments";
-import wysiwygEditor from "./wysiwyg-editor";
-import markdownEditor from "./markdown-editor";
-import editorToolbox from "./editor-toolbox";
-import imagePicker from "./image-picker";
-import collapsible from "./collapsible";
-import toggleSwitch from "./toggle-switch";
-import pageDisplay from "./page-display";
-import shelfSort from "./shelf-sort";
-import homepageControl from "./homepage-control";
-import headerMobileToggle from "./header-mobile-toggle";
-import listSortControl from "./list-sort-control";
-import triLayout from "./tri-layout";
-import breadcrumbListing from "./breadcrumb-listing";
-import permissionsTable from "./permissions-table";
-import customCheckbox from "./custom-checkbox";
-import bookSort from "./book-sort";
-import settingAppColorPicker from "./setting-app-color-picker";
-import settingColorPicker from "./setting-color-picker";
-import entityPermissionsEditor from "./entity-permissions-editor";
-import templateManager from "./template-manager";
-import newUserPassword from "./new-user-password";
-import detailsHighlighter from "./details-highlighter";
-import codeHighlighter from "./code-highlighter";
+const componentMapping = {};
 
-const componentMapping = {
-    'dropdown': dropdown,
-    'overlay': overlay,
-    'back-to-top': backToTop,
-    'notification': notification,
-    'chapter-toggle': chapterToggle,
-    'expand-toggle': expandToggle,
-    'entity-selector-popup': entitySelectorPopup,
-    'entity-selector': entitySelector,
-    'sidebar': sidebar,
-    'page-picker': pagePicker,
-    'page-comments': pageComments,
-    'wysiwyg-editor': wysiwygEditor,
-    'markdown-editor': markdownEditor,
-    'editor-toolbox': editorToolbox,
-    'image-picker': imagePicker,
-    'collapsible': collapsible,
-    'toggle-switch': toggleSwitch,
-    'page-display': pageDisplay,
-    'shelf-sort': shelfSort,
-    'homepage-control': homepageControl,
-    'header-mobile-toggle': headerMobileToggle,
-    'list-sort-control': listSortControl,
-    'tri-layout': triLayout,
-    'breadcrumb-listing': breadcrumbListing,
-    'permissions-table': permissionsTable,
-    'custom-checkbox': customCheckbox,
-    'book-sort': bookSort,
-    'setting-app-color-picker': settingAppColorPicker,
-    'setting-color-picker': settingColorPicker,
-    'entity-permissions-editor': entityPermissionsEditor,
-    'template-manager': templateManager,
-    'new-user-password': newUserPassword,
-    'details-highlighter': detailsHighlighter,
-    'code-highlighter': codeHighlighter,
-};
+const definitionFiles = require.context('./', false, /\.js$/);
+for (const fileName of definitionFiles.keys()) {
+    const name = fileName.replace('./', '').split('.')[0];
+    if (name !== 'index') {
+        componentMapping[name] = definitionFiles(fileName).default;
+    }
+}
 
 window.components = {};
-
-const componentNames = Object.keys(componentMapping);
 
 /**
  * Initialize components of the given name within the given element.
  * @param {String} componentName
  * @param {HTMLElement|Document} parentElement
  */
-function initComponent(componentName, parentElement) {
-    let elems = parentElement.querySelectorAll(`[${componentName}]`);
-    if (elems.length === 0) return;
-
-    let component = componentMapping[componentName];
-    if (typeof window.components[componentName] === "undefined") window.components[componentName] = [];
+function searchForComponentInParent(componentName, parentElement) {
+    const elems = parentElement.querySelectorAll(`[${componentName}]`);
     for (let j = 0, jLen = elems.length; j < jLen; j++) {
-        let instance = new component(elems[j]);
-        if (typeof elems[j].components === 'undefined') elems[j].components = {};
-        elems[j].components[componentName] = instance;
-        window.components[componentName].push(instance);
+        initComponent(componentName, elems[j]);
     }
+}
+
+/**
+ * Initialize a component instance on the given dom element.
+ * @param {String} name
+ * @param {Element} element
+ */
+function initComponent(name, element) {
+    const componentModel = componentMapping[name];
+    if (componentModel === undefined) return;
+
+    // Create our component instance
+    let instance;
+    try {
+        instance = new componentModel(element);
+        instance.$el = element;
+        instance.$refs = parseRefs(name, element);
+        instance.$opts = parseOpts(name, element);
+        if (typeof instance.setup === 'function') {
+            instance.setup();
+        }
+    } catch (e) {
+        console.error('Failed to create component', e, name, element);
+    }
+
+
+    // Add to global listing
+    if (typeof window.components[name] === "undefined") {
+        window.components[name] = [];
+    }
+    window.components[name].push(instance);
+
+    // Add to element listing
+    if (typeof element.components === 'undefined') {
+        element.components = {};
+    }
+    element.components[name] = instance;
+}
+
+/**
+ * Parse out the element references within the given element
+ * for the given component name.
+ * @param {String} name
+ * @param {Element} element
+ */
+function parseRefs(name, element) {
+    const refs = {};
+    const prefix = `${name}@`
+    const refElems = element.querySelectorAll(`[refs*="${prefix}"]`);
+    for (const el of refElems) {
+        const refNames = el.getAttribute('refs')
+            .split(' ')
+            .filter(str => str.startsWith(prefix))
+            .map(str => str.replace(prefix, ''));
+        for (const ref of refNames) {
+            refs[ref] = el;
+        }
+    }
+    return refs;
+}
+
+/**
+ * Parse out the element component options.
+ * @param {String} name
+ * @param {Element} element
+ * @return {Object<String, String>}
+ */
+function parseOpts(name, element) {
+    const opts = {};
+    const prefix = `option:${name}:`;
+    for (const {name, value} of element.attributes) {
+        if (name.startsWith(prefix)) {
+            const optName = name.replace(prefix, '');
+            opts[kebabToCamel(optName)] = value || '';
+        }
+    }
+    return opts;
+}
+
+/**
+ * Convert a kebab-case string to camelCase
+ * @param {String} kebab
+ * @returns {string}
+ */
+function kebabToCamel(kebab) {
+    const ucFirst = (word) => word.slice(0,1).toUpperCase() + word.slice(1);
+    const words = kebab.split('-');
+    return words[0] + words.slice(1).map(ucFirst).join();
 }
 
 /**
@@ -99,11 +116,30 @@ function initComponent(componentName, parentElement) {
  */
 function initAll(parentElement) {
     if (typeof parentElement === 'undefined') parentElement = document;
-    for (let i = 0, len = componentNames.length; i < len; i++) {
-        initComponent(componentNames[i], parentElement);
+
+    // Old attribute system
+    for (const componentName of Object.keys(componentMapping)) {
+        searchForComponentInParent(componentName, parentElement);
+    }
+
+    // New component system
+    const componentElems = parentElement.querySelectorAll(`[component],[components]`);
+
+    for (const el of componentElems) {
+        const componentNames = `${el.getAttribute('component') || ''} ${(el.getAttribute('components'))}`.toLowerCase().split(' ').filter(Boolean);
+        for (const name of componentNames) {
+            initComponent(name, el);
+        }
     }
 }
 
 window.components.init = initAll;
 
 export default initAll;
+
+/**
+ * @typedef Component
+ * @property {HTMLElement} $el
+ * @property {Object<String, HTMLElement>} $refs
+ * @property {Object<String, String>} $opts
+ */

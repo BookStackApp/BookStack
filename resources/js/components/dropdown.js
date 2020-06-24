@@ -3,14 +3,16 @@ import {onSelect} from "../services/dom";
 /**
  * Dropdown
  * Provides some simple logic to create simple dropdown menus.
+ * @extends {Component}
  */
 class DropDown {
 
-    constructor(elem) {
-        this.container = elem;
-        this.menu = elem.querySelector('.dropdown-menu, [dropdown-menu]');
-        this.moveMenu = elem.hasAttribute('dropdown-move-menu');
-        this.toggle = elem.querySelector('[dropdown-toggle]');
+    setup() {
+        this.container = this.$el;
+        this.menu = this.$refs.menu;
+        this.toggle = this.$refs.toggle;
+        this.moveMenu = this.$opts.moveMenu;
+
         this.direction = (document.dir === 'rtl') ? 'right' : 'left';
         this.body = document.body;
         this.showing = false;

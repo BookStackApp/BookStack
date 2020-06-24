@@ -27,10 +27,13 @@
             </div>
 
             <div class="text-center px-m py-xs">
-                <div v-show="draftsEnabled" dropdown dropdown-move-menu class="dropdown-container draft-display text">
-                    <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" title="{{ trans('entities.pages_edit_draft_options') }}" class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</button>
+                <div v-show="draftsEnabled"
+                     component="dropdown"
+                     option:dropdown:move-menu="true"
+                     class="dropdown-container draft-display text">
+                    <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" title="{{ trans('entities.pages_edit_draft_options') }}" class="text-primary text-button"><span class="faded-text" v-text="draftText"></span>&nbsp; @icon('more')</button>
                     @icon('check-circle', ['class' => 'text-pos draft-notification svg-icon', ':class' => '{visible: draftUpdated}'])
-                    <ul class="dropdown-menu" role="menu">
+                    <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                         <li>
                             <button type="button" @click="saveDraft()" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</button>
                         </li>
@@ -45,9 +48,9 @@
             </div>
 
             <div class="action-buttons px-m py-xs" v-cloak>
-                <div dropdown dropdown-move-menu class="dropdown-container">
-                    <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></button>
-                    <ul class="wide dropdown-menu">
+                <div component="dropdown" dropdown-move-menu class="dropdown-container">
+                    <button refs="dropdown@toggle" type="button" aria-haspopup="true" aria-expanded="false" class="text-primary text-button">@icon('edit') <span v-text="changeSummaryShort"></span></button>
+                    <ul refs="dropdown@menu" class="wide dropdown-menu">
                         <li class="px-l py-m">
                             <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
                             <input name="summary" id="summary-input" type="text" placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" v-model="changeSummary" />
