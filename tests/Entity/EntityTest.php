@@ -273,15 +273,20 @@ class EntityTest extends BrowserKitTest
             ->seeInElement('#recently-updated-pages', $page->name);
     }
 
-    public function test_slug_multi_byte_lower_casing()
+    public function test_slug_multi_byte_url_safe()
     {
         $book = $this->newBook([
-            'name' => 'КНИГА'
+            'name' => 'информация'
         ]);
 
-        $this->assertEquals('книга', $book->slug);
-    }
+        $this->assertEquals('informatsiya', $book->slug);
 
+        $book = $this->newBook([
+            'name' => '¿Qué?'
+        ]);
+
+        $this->assertEquals('que', $book->slug);
+    }
 
     public function test_slug_format()
     {
