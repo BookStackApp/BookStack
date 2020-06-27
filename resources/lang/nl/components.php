@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Code invoegen',
     'code_language' => 'Code taal',
     'code_content' => 'Code',
+    'code_session_history' => 'Session History',
     'code_save' => 'Sla code op',
 ];
