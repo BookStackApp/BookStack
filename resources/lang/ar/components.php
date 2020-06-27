@@ -29,5 +29,6 @@ return [
     'code_editor' => 'تعديل الشفرة',
     'code_language' => 'لغة الشفرة',
     'code_content' => 'محتويات الشفرة',
+    'code_session_history' => 'Session History',
     'code_save' => 'حفظ الشفرة',
 ];
