@@ -569,6 +569,8 @@ ul.pagination {
   @include lightDark(color, #555, #eee);
   fill: currentColor;
   text-align: start !important;
+  max-height: 500px;
+  overflow-y: auto;
   &.wide {
     min-width: 220px;
   }

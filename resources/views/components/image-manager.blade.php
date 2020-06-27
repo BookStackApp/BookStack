@@ -8,7 +8,7 @@
         'components.file_upload_timeout',
     ])
 
-    <div overlay v-cloak @click="hide">
+    <div component="popup" class="popup-background" v-cloak @click="hide">
         <div class="popup-body" tabindex="-1" @click.stop>
 
             <div class="popup-header primary-background">

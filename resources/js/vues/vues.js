@@ -5,7 +5,6 @@ function exists(id) {
 }
 
 import entityDashboard from "./entity-dashboard";
-import codeEditor from "./code-editor";
 import imageManager from "./image-manager";
 import tagManager from "./tag-manager";
 import attachmentManager from "./attachment-manager";
@@ -13,7 +12,6 @@ import pageEditor from "./page-editor";
 
 let vueMapping = {
     'entity-dashboard': entityDashboard,
-    'code-editor': codeEditor,
     'image-manager': imageManager,
     'tag-manager': tagManager,
     'attachment-manager': attachmentManager,

@@ -137,7 +137,7 @@ function codePlugin() {
 
         if (!elemIsCodeBlock(selectedNode)) {
             const providedCode = editor.selection.getNode().textContent;
-            window.vues['code-editor'].open(providedCode, '', (code, lang) => {
+            window.components.first('code-editor').open(providedCode, '', (code, lang) => {
                 const wrap = document.createElement('div');
                 wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
                 wrap.querySelector('code').innerText = code;
@@ -155,7 +155,7 @@ function codePlugin() {
         let lang = selectedNode.hasAttribute('data-lang') ? selectedNode.getAttribute('data-lang') : '';
         let currentCode = selectedNode.querySelector('textarea').textContent;
 
-        window.vues['code-editor'].open(currentCode, lang, (code, lang) => {
+        window.components.first('code-editor').open(currentCode, lang, (code, lang) => {
             const editorElem = selectedNode.querySelector('.CodeMirror');
             const cmInstance = editorElem.CodeMirror;
             if (cmInstance) {
