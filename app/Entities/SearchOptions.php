@@ -45,6 +45,10 @@ class SearchOptions
      */
     public static function fromRequest(Request $request): SearchOptions
     {
+        if (!$request->has('search') && !$request->has('term')) {
+            return static::fromString('');
+        }
+
         if ($request->has('term')) {
             return static::fromString($request->get('term'));
         }
