@@ -29,5 +29,6 @@ return [
     'code_editor' => '編輯程式碼',
     'code_language' => '程式語言',
     'code_content' => '程式碼內容',
+    'code_session_history' => 'Session History',
     'code_save' => '儲存程式碼',
 ];
