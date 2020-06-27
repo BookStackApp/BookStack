@@ -6,6 +6,7 @@ use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Managers\EntityContext;
 use BookStack\Entities\SearchService;
+use BookStack\Entities\SearchOptions;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -33,20 +34,22 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        $searchTerm = $request->get('term');
-        $this->setPageTitle(trans('entities.search_for_term', ['term' => $searchTerm]));
+        $searchOpts = SearchOptions::fromRequest($request);
+        $fullSearchString = $searchOpts->toString();
+        $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
         $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($searchTerm) . '&page=' . ($page+1));
+        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page+1));
 
-        $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
+        $results = $this->searchService->searchEntities($searchOpts, 'all', $page, 20);
 
         return view('search.all', [
             'entities'   => $results['results'],
             'totalResults' => $results['total'],
-            'searchTerm' => $searchTerm,
+            'searchTerm' => $fullSearchString,
             'hasNextPage' => $results['has_more'],
-            'nextPageLink' => $nextPageLink
+            'nextPageLink' => $nextPageLink,
+            'options' => $searchOpts,
         ]);
     }
 
@@ -84,7 +87,7 @@ class SearchController extends Controller
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
             $searchTerm .= ' {type:'. implode('|', $entityTypes) .'}';
-            $entities = $this->searchService->searchEntities($searchTerm, 'all', 1, 20, $permission)['results'];
+            $entities = $this->searchService->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20, $permission)['results'];
         } else {
             $entities = $this->viewService->getPopular(20, 0, $entityTypes, $permission);
         }
