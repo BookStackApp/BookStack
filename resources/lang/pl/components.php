@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Edytuj kod',
     'code_language' => 'Język kodu',
     'code_content' => 'Zawartość kodu',
+    'code_session_history' => 'Session History',
     'code_save' => 'Zapisz kod',
 ];
