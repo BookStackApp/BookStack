@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Kód szerkesztése',
     'code_language' => 'Kód nyelve',
     'code_content' => 'Kód tartalom',
+    'code_session_history' => 'Session History',
     'code_save' => 'Kód mentése',
 ];
