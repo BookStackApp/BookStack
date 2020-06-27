@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Uredi kodo',
     'code_language' => 'Koda jezika',
     'code_content' => 'Koda vsebine',
+    'code_session_history' => 'Session History',
     'code_save' => 'Shrani kodo',
 ];
