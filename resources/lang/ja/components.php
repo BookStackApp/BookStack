@@ -29,5 +29,6 @@ return [
     'code_editor' => 'コードを編集する',
     'code_language' => 'プログラミング言語の選択',
     'code_content' => 'プログラム内容',
+    'code_session_history' => 'Session History',
     'code_save' => 'プログラムを保存',
 ];
