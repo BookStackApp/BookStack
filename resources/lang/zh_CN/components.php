@@ -29,5 +29,6 @@ return [
     'code_editor' => '编辑代码',
     'code_language' => '编程语言',
     'code_content' => '代码内容',
+    'code_session_history' => 'Session History',
     'code_save' => '保存代码',
 ];
