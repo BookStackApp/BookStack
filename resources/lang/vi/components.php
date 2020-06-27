@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Sửa Mã',
     'code_language' => 'Ngôn ngữ Mã',
     'code_content' => 'Nội dung Mã',
+    'code_session_history' => 'Session History',
     'code_save' => 'Lưu Mã',
 ];
