@@ -29,5 +29,6 @@ return [
     'code_editor' => '코드 수정',
     'code_language' => '언어',
     'code_content' => '내용',
+    'code_session_history' => 'Session History',
     'code_save' => '저장',
 ];
