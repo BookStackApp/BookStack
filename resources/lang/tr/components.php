@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Kodu Düzenle',
     'code_language' => 'Kod Dili',
     'code_content' => 'Kod İçeriği',
+    'code_session_history' => 'Session History',
     'code_save' => 'Kodu Kaydet',
 ];
