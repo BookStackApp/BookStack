@@ -141,7 +141,7 @@ body.flexbox {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .float {
