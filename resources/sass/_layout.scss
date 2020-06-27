@@ -49,6 +49,9 @@
   &.v-center {
     align-items: center;
   }
+  &.v-end {
+    align-items: end;
+  }
   &.no-gap {
     grid-row-gap: 0;
     grid-column-gap: 0;

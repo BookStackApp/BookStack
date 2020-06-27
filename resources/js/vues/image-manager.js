@@ -35,7 +35,7 @@ const methods = {
     show(providedCallback, imageType = null) {
         callback = providedCallback;
         this.showing = true;
-        this.$el.children[0].components.overlay.show();
+        this.$el.children[0].components.popup.show();
 
         // Get initial images if they have not yet been loaded in.
         if (dataLoaded && imageType === this.imageType) return;
@@ -53,7 +53,7 @@ const methods = {
         }
         this.showing = false;
         this.selectedImage = false;
-        this.$el.children[0].components.overlay.hide();
+        this.$el.children[0].components.popup.hide();
     },
 
     async fetchData() {

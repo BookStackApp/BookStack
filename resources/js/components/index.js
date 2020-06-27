@@ -36,7 +36,9 @@ function initComponent(name, element) {
     try {
         instance = new componentModel(element);
         instance.$el = element;
-        instance.$refs = parseRefs(name, element);
+        const allRefs = parseRefs(name, element);
+        instance.$refs = allRefs.refs;
+        instance.$manyRefs = allRefs.manyRefs;
         instance.$opts = parseOpts(name, element);
         if (typeof instance.setup === 'function') {
             instance.setup();
@@ -67,6 +69,7 @@ function initComponent(name, element) {
  */
 function parseRefs(name, element) {
     const refs = {};
+    const manyRefs = {};
     const prefix = `${name}@`
     const refElems = element.querySelectorAll(`[refs*="${prefix}"]`);
     for (const el of refElems) {
@@ -76,9 +79,13 @@ function parseRefs(name, element) {
             .map(str => str.replace(prefix, ''));
         for (const ref of refNames) {
             refs[ref] = el;
+            if (typeof manyRefs[ref] === 'undefined') {
+                manyRefs[ref] = [];
+            }
+            manyRefs[ref].push(el);
         }
     }
-    return refs;
+    return {refs, manyRefs};
 }
 
 /**
@@ -134,6 +141,7 @@ function initAll(parentElement) {
 }
 
 window.components.init = initAll;
+window.components.first = (name) => (window.components[name] || [null])[0];
 
 export default initAll;
 
@@ -141,5 +149,6 @@ export default initAll;
  * @typedef Component
  * @property {HTMLElement} $el
  * @property {Object<String, HTMLElement>} $refs
+ * @property {Object<String, HTMLElement[]>} $manyRefs
  * @property {Object<String, String>} $opts
  */

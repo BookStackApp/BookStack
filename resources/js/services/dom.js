@@ -25,17 +25,34 @@ export function onEvents(listenerElement, events, callback) {
 /**
  * Helper to run an action when an element is selected.
  * A "select" is made to be accessible, So can be a click, space-press or enter-press.
- * @param listenerElement
- * @param callback
+ * @param {HTMLElement|Array} elements
+ * @param {function} callback
  */
-export function onSelect(listenerElement, callback) {
-    listenerElement.addEventListener('click', callback);
-    listenerElement.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            callback(event);
-        }
-    });
+export function onSelect(elements, callback) {
+    if (!Array.isArray(elements)) {
+        elements = [elements];
+    }
+
+    for (const listenerElement of elements) {
+        listenerElement.addEventListener('click', callback);
+        listenerElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                callback(event);
+            }
+        });
+    }
+}
+
+/**
+ * Listen to enter press on the given element(s).
+ * @param {HTMLElement|Array} elements
+ * @param {function} callback
+ */
+export function onEnterPress(elements, callback) {
+    if (!Array.isArray(elements)) {
+        elements = [elements];
+    }
 }
 
 /**
