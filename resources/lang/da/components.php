@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Rediger kode',
     'code_language' => 'Kodesprog',
     'code_content' => 'Kodeindhold',
+    'code_session_history' => 'Session History',
     'code_save' => 'Gem kode',
 ];
