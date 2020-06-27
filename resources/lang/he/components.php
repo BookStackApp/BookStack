@@ -29,5 +29,6 @@ return [
     'code_editor' => 'ערוך קוד',
     'code_language' => 'שפת הקוד',
     'code_content' => 'תוכן הקוד',
+    'code_session_history' => 'Session History',
     'code_save' => 'שמור קוד',
 ];
