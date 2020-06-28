@@ -46,3 +46,18 @@ export function scrollAndHighlightElement(element) {
         element.style.backgroundColor = '';
     }, 3000);
 }
+
+/**
+ * Escape any HTML in the given 'unsafe' string.
+ * Take from https://stackoverflow.com/a/6234804.
+ * @param {String} unsafe
+ * @returns {string}
+ */
+export function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}

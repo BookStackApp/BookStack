@@ -1,6 +1,8 @@
-<div id="tag-manager" entity-id="{{ isset($entity) ? $entity->id : 0 }}" entity-type="{{ $entity ? $entity->getType() : $entityType }}">
+<div id="tag-manager" entity-id="{{ $entity->id ?? 0 }}" entity-type="{{ $entity ? $entity->getType() : $entityType }}">
     <div class="tags">
         <p class="text-muted small">{!! nl2br(e(trans('entities.tags_explain'))) !!}</p>
+
+        @include('components.tag-manager-list', ['tags' => $entity->tags->all() ?? []])
 
         <draggable :options="{handle: '.handle'}" :list="tags" element="div">
             <div v-for="(tag, i) in tags" :key="tag.key" class="card drag-card">
