@@ -115,9 +115,12 @@
       margin-inline-end: 0px;
     }
   }
-  > div .outline input {
+  .outline input {
     margin: $-s 0;
     width: 100%;
+  }
+  .outline {
+    position: relative;
   }
   .handle {
     @include lightDark(background-color, #eee, #2d2d2d);

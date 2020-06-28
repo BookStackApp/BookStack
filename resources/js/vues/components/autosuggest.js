@@ -2,12 +2,15 @@
 const template = `
     <div>
         <input :value="value" :autosuggest-type="type" ref="input"
-            :placeholder="placeholder" :name="name"
+            :placeholder="placeholder"
+            :name="name"
             type="text"
-            @input="inputUpdate($event.target.value)" @focus="inputUpdate($event.target.value)"
+            @input="inputUpdate($event.target.value)"
+            @focus="inputUpdate($event.target.value)"
             @blur="inputBlur"
             @keydown="inputKeydown"
             :aria-label="placeholder"
+            autocomplete="off"
         />
         <ul class="suggestion-box" v-if="showSuggestions">
             <li v-for="(suggestion, i) in suggestions"
