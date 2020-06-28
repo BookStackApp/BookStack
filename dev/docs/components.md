@@ -1,15 +1,21 @@
 # JavaScript Components
 
-This document details the format for JavaScript components in BookStack.
+This document details the format for JavaScript components in BookStack. This is a really simple class-based setup with a few helpers provided.
 
 #### Defining a Component in JS
 
 ```js
 class Dropdown {
     setup() {
+        this.toggle = this.$refs.toggle;
+        this.menu = this.$refs.menu;
+    
+        this.speed = parseInt(this.$opts.speed);
     }
 }
 ```
+
+All usage of $refs, $manyRefs and $opts should be done at the top of the `setup` function so any requirements can be easily seen.
 
 #### Using a Component in HTML
 

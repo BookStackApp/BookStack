@@ -4,14 +4,12 @@ function exists(id) {
     return document.getElementById(id) !== null;
 }
 
-import entityDashboard from "./entity-dashboard";
 import imageManager from "./image-manager";
 import tagManager from "./tag-manager";
 import attachmentManager from "./attachment-manager";
 import pageEditor from "./page-editor";
 
 let vueMapping = {
-    'entity-dashboard': entityDashboard,
     'image-manager': imageManager,
     'tag-manager': tagManager,
     'attachment-manager': attachmentManager,
