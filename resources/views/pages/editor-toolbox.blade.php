@@ -12,7 +12,7 @@
     <div toolbox-tab-content="tags">
         <h4>{{ trans('entities.page_tags') }}</h4>
         <div class="px-l">
-            @include('components.tag-manager', ['entity' => $page, 'entityType' => 'page'])
+            @include('components.tag-manager', ['entity' => $page])
         </div>
     </div>
 

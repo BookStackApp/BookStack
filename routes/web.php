@@ -134,8 +134,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
 
     // Tag routes (AJAX)
-    Route::group(['prefix' => 'ajax/tags'], function() {
-        Route::get('/get/{entityType}/{entityId}', 'TagController@getForEntity');
+    Route::group(['prefix' => 'ajax/tags'], function () {
         Route::get('/suggest/names', 'TagController@getNameSuggestions');
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
     });
