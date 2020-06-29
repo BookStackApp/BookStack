@@ -16,6 +16,7 @@ class AutoSuggest {
         this.input = this.$refs.input;
         this.list = this.$refs.list;
 
+        this.lastPopulated = 0;
         this.setupListeners();
     }
 
@@ -44,7 +45,10 @@ class AutoSuggest {
 
     selectSuggestion(value) {
         this.input.value = value;
+        this.lastPopulated = Date.now();
         this.input.focus();
+        this.input.dispatchEvent(new Event('input', {bubbles: true}));
+        this.input.dispatchEvent(new Event('change', {bubbles: true}));
         this.hideSuggestions();
     }
 
@@ -79,8 +83,12 @@ class AutoSuggest {
     }
 
     async requestSuggestions() {
+        if (Date.now() - this.lastPopulated < 50) {
+            return;
+        }
+
         const nameFilter = this.getNameFilterIfNeeded();
-        const search = this.input.value.slice(0, 3);
+        const search = this.input.value.slice(0, 3).toLowerCase();
         const suggestions = await this.loadSuggestions(search, nameFilter);
         let toShow = suggestions.slice(0, 6);
         if (search.length > 0) {

@@ -4,6 +4,7 @@
 --}}
 <table component="add-remove-rows"
        option:add-remove-rows:remove-selector="button.text-neg"
+       option:add-remove-rows:row-selector="tr"
        class="no-style">
     @foreach(array_merge($currentList, ['']) as $term)
         <tr @if(empty($term)) class="hidden" refs="add-remove-rows@model" @endif>

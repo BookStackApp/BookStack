@@ -66,7 +66,4 @@
         </div>
     </div>
 
-    @include('components.tag-manager', ['entity' => \BookStack\Entities\Book::find(1), 'entityType' => 'book'])
-
-
 @stop

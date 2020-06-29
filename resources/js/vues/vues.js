@@ -5,13 +5,11 @@ function exists(id) {
 }
 
 import imageManager from "./image-manager";
-import tagManager from "./tag-manager";
 import attachmentManager from "./attachment-manager";
 import pageEditor from "./page-editor";
 
 let vueMapping = {
     'image-manager': imageManager,
-    'tag-manager': tagManager,
     'attachment-manager': attachmentManager,
     'page-editor': pageEditor,
 };

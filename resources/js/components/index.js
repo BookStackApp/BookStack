@@ -70,13 +70,20 @@ function initComponent(name, element) {
 function parseRefs(name, element) {
     const refs = {};
     const manyRefs = {};
+
     const prefix = `${name}@`
-    const refElems = element.querySelectorAll(`[refs*="${prefix}"]`);
+    const selector = `[refs*="${prefix}"]`;
+    const refElems = [...element.querySelectorAll(selector)];
+    if (element.matches(selector)) {
+        refElems.push(element);
+    }
+
     for (const el of refElems) {
         const refNames = el.getAttribute('refs')
             .split(' ')
             .filter(str => str.startsWith(prefix))
-            .map(str => str.replace(prefix, ''));
+            .map(str => str.replace(prefix, ''))
+            .map(kebabToCamel);
         for (const ref of refNames) {
             refs[ref] = el;
             if (typeof manyRefs[ref] === 'undefined') {
