@@ -9,7 +9,7 @@
 
         <div component="sortable-list"
              option:sortable-list:handle-selector=".handle">
-            @include('components.tag-manager-list', ['tags' => $entity->tags->all() ?? []])
+            @include('components.tag-manager-list', ['tags' => $entity ? $entity->tags->all() : []])
         </div>
 
         <button refs="add-remove-rows@add" type="button" class="text-button">{{ trans('entities.tags_add') }}</button>
