@@ -10,7 +10,7 @@ return [
     'page_create_notification'    => 'Stránka byla úspěšně vytvořena',
     'page_update'                 => 'aktualizoval/a stránku',
     'page_update_notification'    => 'Stránka byla úspěšně aktualizována',
-    'page_delete'                 => 'smazal/a stránku',
+    'page_delete'                 => 'odstranil/a stránku',
     'page_delete_notification'    => 'Stránka byla úspěšně smazána',
     'page_restore'                => 'obnovil/a stránku',
     'page_restore_notification'   => 'Stránka byla úspěšně obnovena',
@@ -40,8 +40,8 @@ return [
     'bookshelf_create_notification'    => 'Knihovna byla úspěšně vytvořena',
     'bookshelf_update'                 => 'aktualizoval/a knihovnu',
     'bookshelf_update_notification'    => 'Knihovna byla úspěšně aktualizována',
-    'bookshelf_delete'                 => 'smazal/a knihovnu',
-    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
+    'bookshelf_delete'                 => 'odstranil/a knihovnu',
+    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně odstraněna',
 
     // Other
     'commented_on'                => 'okomentoval/a',
