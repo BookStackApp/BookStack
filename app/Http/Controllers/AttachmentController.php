@@ -152,7 +152,9 @@ class AttachmentController extends Controller
     {
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-view', $page);
-        return response()->json($page->attachments);
+        return view('pages.attachment-list', [
+            'attachments' => $page->attachments->all(),
+        ]);
     }
 
     /**
@@ -163,14 +165,13 @@ class AttachmentController extends Controller
     public function sortForPage(Request $request, int $pageId)
     {
         $this->validate($request, [
-            'files' => 'required|array',
-            'files.*.id' => 'required|integer',
+            'order' => 'required|array',
         ]);
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
-        $attachments = $request->get('files');
-        $this->attachmentService->updateFileOrderWithinPage($attachments, $pageId);
+        $attachmentOrder = $request->get('order');
+        $this->attachmentService->updateFileOrderWithinPage($attachmentOrder, $pageId);
         return response()->json(['message' => trans('entities.attachments_order_updated')]);
     }
 
