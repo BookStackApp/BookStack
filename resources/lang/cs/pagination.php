@@ -6,7 +6,7 @@
  */
 return [
 
-    'previous' => '\'&laquo; P',
+    'previous' => '&laquo; Předchozí',
     'next'     => 'Dal',
 
 ];
