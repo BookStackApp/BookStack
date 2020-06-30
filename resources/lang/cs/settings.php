@@ -135,7 +135,7 @@ return [
     'users_password_warning' => 'Vyplňujte pouze v případě, že chcete heslo změnit:',
     'users_system_public' => 'Symbolizuje libovolného veřejného návštěvníka, který navštívil vaší aplikaci. Nelze ho použít k přihlášení ale je přiřazen automaticky veřejnosti.',
     'users_delete' => 'Smazat uživatele',
-    'users_delete_named' => 'Smazat uživatele :userName',
+    'users_delete_named' => 'Odstranit uživatele :userName',
     'users_delete_warning' => 'Uživatel \':userName\' bude úplně smazán ze systému.',
     'users_delete_confirm' => 'Opravdu chcete tohoto uživatele smazat?',
     'users_delete_success' => 'Uživatel byl úspěšně smazán',
