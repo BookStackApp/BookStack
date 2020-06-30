@@ -23,7 +23,7 @@ return [
     'chapter_update_notification' => 'Kapitola byla úspěšně aktualizována',
     'chapter_delete'              => 'smazal/a kapitolu',
     'chapter_delete_notification' => 'Kapitola byla úspěšně smazána',
-    'chapter_move'                => 'přesunul/a kapitola',
+    'chapter_move'                => 'přesunul/a kapitolu',
 
     // Books
     'book_create'                 => 'vytvořil/a knihu',
