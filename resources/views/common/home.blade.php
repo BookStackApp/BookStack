@@ -66,4 +66,6 @@
         </div>
     </div>
 
+    @include('pages.attachment-manager', ['page' => \BookStack\Entities\Page::first()])
+
 @stop

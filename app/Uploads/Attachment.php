@@ -30,9 +30,8 @@ class Attachment extends Ownable
 
     /**
      * Get the url of this file.
-     * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         if ($this->external && strpos($this->path, 'http') !== 0) {
             return $this->path;

@@ -9,9 +9,12 @@ class SortableList {
         this.container = this.$el;
         this.handleSelector = this.$opts.handleSelector;
 
-        new Sortable(this.container, {
+        const sortable = new Sortable(this.container, {
             handle: this.handleSelector,
             animation: 150,
+            onSort: () => {
+                this.$emit('sort', {ids: sortable.toArray()});
+            }
         });
     }
 }

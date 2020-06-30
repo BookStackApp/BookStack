@@ -40,6 +40,14 @@ function initComponent(name, element) {
         instance.$refs = allRefs.refs;
         instance.$manyRefs = allRefs.manyRefs;
         instance.$opts = parseOpts(name, element);
+        instance.$emit = (eventName, data = {}) => {
+            data.from = instance;
+            const event = new CustomEvent(`${name}-${eventName}`, {
+                bubbles: true,
+                detail: data
+            });
+            instance.$el.dispatchEvent(event);
+        };
         if (typeof instance.setup === 'function') {
             instance.setup();
         }
@@ -158,4 +166,5 @@ export default initAll;
  * @property {Object<String, HTMLElement>} $refs
  * @property {Object<String, HTMLElement[]>} $manyRefs
  * @property {Object<String, String>} $opts
+ * @property {function(string, Object)} $emit
  */
