@@ -40,6 +40,10 @@ return [
             'driver' => 'saml2-session',
             'provider' => 'external',
         ],
+        'openid' => [
+            'driver' => 'openid-session',
+            'provider' => 'external',
+        ],
         'api' => [
             'driver' => 'api-token',
         ],
