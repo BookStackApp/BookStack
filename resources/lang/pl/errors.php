@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Przesyłanie pliku przekroczyło limit czasu.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Niezgodność strony podczas aktualizacji załącznika',
     'attachment_not_found' => 'Nie znaleziono załącznika',
 
     // Pages
