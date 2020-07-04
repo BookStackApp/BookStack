@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Filuppladdningen har tagits ut.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Fel i sidmatchning vid uppdatering av bilaga',
     'attachment_not_found' => 'Bilagan hittades ej',
 
     // Pages
