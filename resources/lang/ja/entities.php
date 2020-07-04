@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'アップロード',
     'attachments_link' => 'リンクを添付',
     'attachments_set_link' => 'リンクを設定',
-    'attachments_delete_confirm' => 'もう一度クリックし、削除を確認してください。',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'ファイルをドロップするか、クリックして選択',
     'attachments_no_files' => 'ファイルはアップロードされていません',
     'attachments_explain_link' => 'ファイルをアップロードしたくない場合、他のページやクラウド上のファイルへのリンクを添付できます。',
