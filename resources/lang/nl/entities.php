@@ -257,7 +257,7 @@ return [
     'attachments_upload' => 'Bestand Uploaden',
     'attachments_link' => 'Link Toevoegen',
     'attachments_set_link' => 'Zet Link',
-    'attachments_delete_confirm' => 'Klik opnieuw op \'verwijderen\' om de bijlage definitief te verwijderen.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Sleep hier een bestand of klik hier om een bestand toe te voegen',
     'attachments_no_files' => 'Er zijn geen bestanden geüpload',
     'attachments_explain_link' => 'Je kunt een link toevoegen als je geen bestanden wilt uploaden. Dit kan een link naar een andere pagina op deze website zijn, maar ook een link naar een andere website.',
