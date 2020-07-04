@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Naloži datoteko',
     'attachments_link' => 'Pripni povezavo',
     'attachments_set_link' => 'Nastavi povezavo',
-    'attachments_delete_confirm' => 'Ponovno kliknite izbriši, da potrdite izbris te priloge.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Spustite datoteke ali kliknite tukaj, če želite priložiti datoteko',
     'attachments_no_files' => 'Nobena datoteka ni bila naložena',
     'attachments_explain_link' => 'Lahko pripnete povezavo, če ne želite naložiti datoteke. Lahko je povezava na drugo stran ali povezava do dateteke v oblaku.',
