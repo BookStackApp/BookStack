@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'העלה קובץ',
     'attachments_link' => 'צרף קישור',
     'attachments_set_link' => 'הגדר קישור',
-    'attachments_delete_confirm' => 'יש ללחוץ שוב על מחיקה על מנת לאשר את מחיקת הקובץ המצורף',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'גרור לכאן קבצים או לחץ על מנת לצרף קבצים',
     'attachments_no_files' => 'לא הועלו קבצים',
     'attachments_explain_link' => 'ניתן לצרף קישור במקום העלאת קובץ, קישור זה יכול להוביל לדף אחר או לכל קובץ באינטרנט',
