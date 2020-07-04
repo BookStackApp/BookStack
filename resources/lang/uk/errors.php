@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Тайм-аут при завантаженні файлу',
 
     // Attachments
-    'attachment_page_mismatch' => 'Невідповідність сторінки при оновленні вкладень',
     'attachment_not_found' => 'Вкладення не знайдено',
 
     // Pages
