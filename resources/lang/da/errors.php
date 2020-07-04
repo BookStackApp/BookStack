@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Filuploaden udløb.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Der blev fundet en uoverensstemmelse på siden under opdatering af vedhæftet fil',
     'attachment_not_found' => 'Vedhæftning ikke fundet',
 
     // Pages
