@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Загрузить файл',
     'attachments_link' => 'Присоединить ссылку',
     'attachments_set_link' => 'Установить ссылку',
-    'attachments_delete_confirm' => 'Нажмите \'Удалить\' еще раз, чтобы подтвердить удаление этого файла.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Перетащите файл сюда или нажмите здесь, чтобы загрузить файл',
     'attachments_no_files' => 'Файлы не загружены',
     'attachments_explain_link' => 'Вы можете присоединить ссылку, если вы предпочитаете не загружать файл. Это может быть ссылка на другую страницу или ссылка на файл в облаке.',
