@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Dosya Yükle',
     'attachments_link' => 'Link Ekle',
     'attachments_set_link' => 'Bağlantıyı Ata',
-    'attachments_delete_confirm' => 'Eki silmek istediğinize emin misiniz?',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Dosyaları sürükleyin veya seçin',
     'attachments_no_files' => 'Hiçbir dosya yüklenmedi',
     'attachments_explain_link' => 'Eğer dosya yüklememeyi tercih ederseniz bağlantı ekleyebilirsiniz. Bu bağlantı başka bir sayfanın veya bulut depolamadaki bir dosyanın bağlantısı olabilir.',
