@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Upload de Arquivos',
     'attachments_link' => 'Links Anexados',
     'attachments_set_link' => 'Definir Link',
-    'attachments_delete_confirm' => 'Clique novamente em Excluir para confirmar a exclusão desse anexo.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Arraste arquivos para cá ou clique para anexar arquivos',
     'attachments_no_files' => 'Nenhum arquivo foi enviado',
     'attachments_explain_link' => 'Você pode anexar um link se preferir não fazer o upload do arquivo. O link poderá ser para uma outra página ou para um arquivo na nuvem.',
