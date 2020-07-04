@@ -257,7 +257,7 @@ return [
     'attachments_upload' => 'Dodaj plik',
     'attachments_link' => 'Dodaj link',
     'attachments_set_link' => 'Ustaw link',
-    'attachments_delete_confirm' => 'Kliknij ponownie Usuń by potwierdzić usunięcie załącznika.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Upuść pliki lub kliknij tutaj by przesłać pliki',
     'attachments_no_files' => 'Nie przesłano żadnych plików',
     'attachments_explain_link' => 'Możesz załączyć link jeśli nie chcesz przesyłać pliku. Może być to link do innej strony lub link do pliku w chmurze.',
