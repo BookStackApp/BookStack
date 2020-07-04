@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Nahrávání souboru trvalo příliš dlouho a tak bylo ukončeno.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Došlo ke zmatení stránky během nahrávání přílohy.',
     'attachment_not_found' => 'Příloha nenalezena',
 
     // Pages
