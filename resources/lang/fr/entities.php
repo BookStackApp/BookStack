@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Uploader un fichier',
     'attachments_link' => 'Attacher un lien',
     'attachments_set_link' => 'Définir un lien',
-    'attachments_delete_confirm' => 'Cliquer une seconde fois sur supprimer pour valider la suppression.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Glissez des fichiers ou cliquez ici pour attacher des fichiers',
     'attachments_no_files' => 'Aucun fichier ajouté',
     'attachments_explain_link' => 'Vous pouvez attacher un lien si vous ne souhaitez pas uploader un fichier.',
