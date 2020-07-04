@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Datei hochladen',
     'attachments_link' => 'Link hinzufügen',
     'attachments_set_link' => 'Link setzen',
-    'attachments_delete_confirm' => 'Klicken Sie erneut auf löschen, um diesen Anhang zu entfernen.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Ziehen Sie Dateien hierher oder klicken Sie, um eine Datei auszuwählen',
     'attachments_no_files' => 'Es wurden bisher keine Dateien hochgeladen.',
     'attachments_explain_link' => 'Wenn Sie keine Datei hochladen möchten, können Sie stattdessen einen Link hinzufügen. Dieser Link kann auf eine andere Seite oder eine Datei im Internet weisen.',
