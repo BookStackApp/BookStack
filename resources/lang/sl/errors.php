@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Čas nalaganjanja datoteke je potekel.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Neskladje strani med posodobitvijo priloge',
     'attachment_not_found' => 'Priloga ni najdena',
 
     // Pages
