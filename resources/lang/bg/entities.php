@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Прикачен файл',
     'attachments_link' => 'Прикачване на линк',
     'attachments_set_link' => 'Поставяне на линк',
-    'attachments_delete_confirm' => 'Натиснете изтрий отново, за да потвърдите изтриването на прикачения файл.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Поставете файлове или цъкнете тук за да прикачите файл',
     'attachments_no_files' => 'Няма прикачени фалове',
     'attachments_explain_link' => 'Може да прикачите линк, ако не искате да качвате файл. Този линк може да бъде към друга страница или към файл в облакова пространство.',
