@@ -256,7 +256,7 @@ return [
     'attachments_upload' => '파일 올리기',
     'attachments_link' => '링크로 첨부',
     'attachments_set_link' => '링크 설정',
-    'attachments_delete_confirm' => '삭제하려면 버튼을 한 번 더 클릭하세요.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => '여기에 파일을 드롭하거나 여기를 클릭하세요.',
     'attachments_no_files' => '올린 파일 없음',
     'attachments_explain_link' => '파일을 올리지 않고 링크로 첨부할 수 있습니다.',
