@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => '파일을 올리는 데 걸리는 시간이 서버에서 허용하는 수치를 넘습니다.',
 
     // Attachments
-    'attachment_page_mismatch' => '올리는 위치와 현재 문서가 다릅니다.',
     'attachment_not_found' => '첨부 파일이 없습니다.',
 
     // Pages
