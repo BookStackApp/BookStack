@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Tải lên Tập tin',
     'attachments_link' => 'Đính kèm Liên kết',
     'attachments_set_link' => 'Đặt Liên kết',
-    'attachments_delete_confirm' => 'Bấm xóa lần nữa để xác nhận bạn muốn xóa đính kèm này.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Thả các tập tin hoặc bấm vào đây để đính kèm một tập tin',
     'attachments_no_files' => 'Không có tập tin nào được tải lên',
     'attachments_explain_link' => 'Bạn có thể đính kèm một liên kết nếu bạn lựa chọn không tải lên tập tin. Liên kết này có thể trỏ đến một trang khác hoặc một tập tin ở trên mạng (đám mây).',
