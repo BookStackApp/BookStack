@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Ladda upp fil',
     'attachments_link' => 'Bifoga länk',
     'attachments_set_link' => 'Ange länk',
-    'attachments_delete_confirm' => 'Klicka på "ta bort" igen för att bekräfta att du vill ta bort bilagan.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Släpp filer här eller klicka för att ladda upp',
     'attachments_no_files' => 'Inga filer har laddats upp',
     'attachments_explain_link' => 'Du kan bifoga en länk om du inte vill ladda upp en fil. Detta kan vara en länk till en annan sida eller till en fil i molnet.',
