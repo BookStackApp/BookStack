@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Fájlfeltöltés',
     'attachments_link' => 'Hivatkozás csatolása',
     'attachments_set_link' => 'Hivatkozás beállítása',
-    'attachments_delete_confirm' => 'A csatolmány törléséhez ismét rá kell kattintani a törlésre.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Fájlok csatolása ejtéssel vagy kattintással',
     'attachments_no_files' => 'Nincsenek fájlok feltöltve',
     'attachments_explain_link' => 'Fájl feltöltése helyett hozzá lehet kapcsolni egy hivatkozást. Ez egy hivatkozás lesz egy másik oldalra vagy egy fájlra a felhőben.',
