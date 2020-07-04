@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Bij het bijwerken van de bijlage bleek de pagina onjuist',
     'attachment_not_found' => 'Bijlage niet gevonden',
 
     // Pages
