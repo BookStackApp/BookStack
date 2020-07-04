@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Nahrát soubor',
     'attachments_link' => 'Připojit odkaz',
     'attachments_set_link' => 'Nastavit odkaz',
-    'attachments_delete_confirm' => 'Stiskněte smazat znovu pro potvrzení smazání.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Přetáhněte sem soubory myší nebo sem kliknětě pro vybrání souboru.',
     'attachments_no_files' => 'Žádné soubory nebyli nahrány',
     'attachments_explain_link' => 'Můžete pouze připojit odkaz pokud nechcete nahrávat soubor přímo. Může to být odkaz na jinou stránku nebo na soubor v cloudu.',
