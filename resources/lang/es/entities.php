@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Subir Archivo',
     'attachments_link' => 'Adjuntar Enlace',
     'attachments_set_link' => 'Ajustar Enlace',
-    'attachments_delete' => 'Are you sure you want to delete this attachment?',
+    'attachments_delete' => '¿Está seguro de que quiere eliminar este archivo adjunto?',
     'attachments_dropzone' => 'Arrastre ficheros aquí o haga click aquí para adjuntar un fichero',
     'attachments_no_files' => 'No se han subido ficheros',
     'attachments_explain_link' => 'Puede agregar un enlace si prefiere no subir un archivo. Puede ser un enlace a otra página o un enlace a un fichero en la nube.',
