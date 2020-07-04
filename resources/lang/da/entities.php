@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Upload fil',
     'attachments_link' => 'Vedhæft link',
     'attachments_set_link' => 'Sæt link',
-    'attachments_delete_confirm' => 'Tryk på slet igen for at bekræft at du ønsker at slette denne vedhæftning.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Slip filer eller klik her for at vedhæfte en fil',
     'attachments_no_files' => 'Ingen filer er blevet overført',
     'attachments_explain_link' => 'Du kan vedhæfte et link, hvis du foretrækker ikke at uploade en fil. Dette kan være et link til en anden side eller et link til en fil i skyen.',
