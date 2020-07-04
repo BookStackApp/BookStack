@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Carica File',
     'attachments_link' => 'Allega Link',
     'attachments_set_link' => 'Imposta Link',
-    'attachments_delete_confirm' => 'Clicca elimina nuovamente per confermare l\'eliminazione di questo allegato.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Rilascia file o clicca qui per allegare un file',
     'attachments_no_files' => 'Nessun file è stato caricato',
     'attachments_explain_link' => 'Puoi allegare un link se preferisci non caricare un file. Questo può essere un link a un\'altra pagina o a un file nel cloud.',
