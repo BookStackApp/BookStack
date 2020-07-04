@@ -256,7 +256,7 @@ return [
     'attachments_upload' => '上传文件',
     'attachments_link' => '附加链接',
     'attachments_set_link' => '设置链接',
-    'attachments_delete_confirm' => '确认您想要删除此附件后，请点击删除。',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => '删除文件或点击此处添加文件',
     'attachments_no_files' => '尚未上传文件',
     'attachments_explain_link' => '如果您不想上传文件，则可以附加链接，这可以是指向其他页面的链接，也可以是指向云端文件的链接。',
