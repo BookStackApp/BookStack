@@ -9,11 +9,15 @@ class Dropzone {
     setup() {
         this.container = this.$el;
         this.url = this.$opts.url;
+        this.successMessage = this.$opts.successMessage;
+        this.removeMessage = this.$opts.removeMessage;
+        this.uploadLimitMessage = this.$opts.uploadLimitMessage;
+        this.timeoutMessage = this.$opts.timeoutMessage;
 
         const _this = this;
         this.dz = new DropZoneLib(this.container, {
             addRemoveLinks: true,
-            dictRemoveFile: window.trans('components.image_upload_remove'),
+            dictRemoveFile: this.removeMessage,
             timeout: Number(window.uploadTimeout) || 60000,
             maxFilesize: Number(window.uploadLimit) || 256,
             url: this.url,
@@ -32,15 +36,20 @@ class Dropzone {
         const token = window.document.querySelector('meta[name=token]').getAttribute('content');
         data.append('_token', token);
 
-        xhr.ontimeout = function (e) {
+        xhr.ontimeout = (e) => {
             this.dz.emit('complete', file);
-            this.dz.emit('error', file, window.trans('errors.file_upload_timeout'));
+            this.dz.emit('error', file, this.timeoutMessage);
         }
     }
 
     onSuccess(file, data) {
         this.container.dispatchEvent(new Event('dropzone'))
         this.$emit('success', {file, data});
+
+        if (this.successMessage) {
+            window.$events.emit('success', this.successMessage);
+        }
+
         fadeOut(file.previewElement, 800, () => {
             this.dz.removeFile(file);
         });
@@ -55,7 +64,7 @@ class Dropzone {
         }
 
         if (xhr && xhr.status === 413) {
-            setMessage(window.trans('errors.server_upload_limit'))
+            setMessage(this.uploadLimitMessage);
         } else if (errorMessage.file) {
             setMessage(errorMessage.file);
         }

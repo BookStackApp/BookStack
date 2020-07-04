@@ -17,7 +17,7 @@
     </div>
 
     @if(userCan('attachment-create-all'))
-        @include('pages.attachment-manager', ['page' => $page])
+        @include('attachments.manager', ['page' => $page])
     @endif
 
     <div toolbox-tab-content="templates">
