@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => '文件上传已超时。',
 
     // Attachments
-    'attachment_page_mismatch' => '附件更新期间的页面不匹配',
     'attachment_not_found' => '找不到附件',
 
     // Pages
