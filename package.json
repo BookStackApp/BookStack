@@ -28,8 +28,7 @@
     "markdown-it": "^11.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "sortablejs": "^1.10.2",
-    "vue": "^2.6.11",
-    "vuedraggable": "^2.23.2"
+    "vue": "^2.6.11"
   },
   "browser": {
     "vue": "vue/dist/vue.common.js"

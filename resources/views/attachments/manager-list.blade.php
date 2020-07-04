@@ -9,7 +9,11 @@
                 <a href="{{ $attachment->getUrl() }}" target="_blank">{{ $attachment->name }}</a>
             </div>
             <div class="flex-fill justify-flex-end">
-                <button type="button" class="drag-card-action text-center text-primary">@icon('edit')</button>
+                <button component="event-emit-select"
+                        option:event-emit-select:name="edit"
+                        option:event-emit-select:id="{{ $attachment->id }}"
+                        type="button"
+                        class="drag-card-action text-center text-primary">@icon('edit')</button>
                 <div component="dropdown" class="flex-fill relative">
                     <button refs="dropdown@toggle" type="button" class="drag-card-action text-center text-neg">@icon('close')</button>
                     <div refs="dropdown@menu" class="dropdown-menu">

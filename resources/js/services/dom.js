@@ -53,6 +53,14 @@ export function onEnterPress(elements, callback) {
     if (!Array.isArray(elements)) {
         elements = [elements];
     }
+
+    const listener = event => {
+        if (event.key === 'Enter') {
+            callback(event);
+        }
+    }
+
+    elements.forEach(e => e.addEventListener('keypress', listener));
 }
 
 /**
@@ -89,4 +97,13 @@ export function findText(selector, text) {
         }
     }
     return null;
+}
+
+/**
+ * Show a loading indicator in the given element.
+ * This will effectively clear the element.
+ * @param {Element} element
+ */
+export function showLoading(element) {
+    element.innerHTML = `<div class="loading-container"><div></div><div></div><div></div></div>`;
 }

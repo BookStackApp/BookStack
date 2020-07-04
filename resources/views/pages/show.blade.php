@@ -37,14 +37,7 @@
         <div id="page-attachments" class="mb-l">
             <h5>{{ trans('entities.pages_attachments') }}</h5>
             <div class="body">
-                @foreach($page->attachments as $attachment)
-                    <div class="attachment icon-list">
-                        <a class="icon-list-item py-xs" href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif>
-                            <span class="icon">@icon($attachment->external ? 'export' : 'file')</span>
-                            <span>{{ $attachment->name }}</span>
-                        </a>
-                    </div>
-                @endforeach
+                @include('attachments.list', ['attachments' => $page->attachments])
             </div>
         </div>
     @endif
