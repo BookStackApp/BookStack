@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Завантажити файл',
     'attachments_link' => 'Приєднати посилання',
     'attachments_set_link' => 'Встановити посилання',
-    'attachments_delete_confirm' => 'Натисніть кнопку Видалити ще раз, щоб підтвердити, що ви хочете видалити це вкладення.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Перетягніть файли, або натисніть тут щоб прикріпити файл',
     'attachments_no_files' => 'Файли не завантажені',
     'attachments_explain_link' => 'Ви можете приєднати посилання, якщо не бажаєте завантажувати файл. Це може бути посилання на іншу сторінку або посилання на файл у хмарі.',
