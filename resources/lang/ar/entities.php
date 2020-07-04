@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'رفع ملف',
     'attachments_link' => 'إرفاق رابط',
     'attachments_set_link' => 'تحديد الرابط',
-    'attachments_delete_confirm' => 'اضغط على زر الحذف مرة أخرى لتأكيد حذف المرفق.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'أسقط الملفات أو اضغط هنا لإرفاق ملف',
     'attachments_no_files' => 'لم يتم رفع أي ملفات',
     'attachments_explain_link' => 'بالإمكان إرفاق رابط في حال عدم تفضيل رفع ملف. قد يكون الرابط لصفحة أخرى أو لملف في أحد خدمات التخزين السحابي.',
