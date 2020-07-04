@@ -257,7 +257,7 @@ return [
     'attachments_upload' => 'Nahrať súbor',
     'attachments_link' => 'Priložiť odkaz',
     'attachments_set_link' => 'Nastaviť odkaz',
-    'attachments_delete_confirm' => 'Kliknite znova na zmazať pre potvrdenie zmazania prílohy.',
+    'attachments_delete' => 'Are you sure you want to delete this attachment?',
     'attachments_dropzone' => 'Presuňte súbory alebo klinknite sem pre priloženie súboru',
     'attachments_no_files' => 'Žiadne súbory neboli nahrané',
     'attachments_explain_link' => 'Ak nechcete priložiť súbor, môžete priložiť odkaz. Môže to byť odkaz na inú stránku alebo odkaz na súbor v cloude.',
