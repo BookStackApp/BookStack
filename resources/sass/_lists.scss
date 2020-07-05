@@ -560,10 +560,8 @@ ul.pagination {
   right: 0;
   margin: $-m 0;
   @include lightDark(background-color, #fff, #333);
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   border-radius: 1px;
-  border: 1px solid #EEE;
-  @include lightDark(border-color, #eee, #000);
   min-width: 180px;
   padding: $-xs 0;
   @include lightDark(color, #555, #eee);
