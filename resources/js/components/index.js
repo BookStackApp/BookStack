@@ -129,7 +129,7 @@ function parseOpts(name, element) {
 function kebabToCamel(kebab) {
     const ucFirst = (word) => word.slice(0,1).toUpperCase() + word.slice(1);
     const words = kebab.split('-');
-    return words[0] + words.slice(1).map(ucFirst).join();
+    return words[0] + words.slice(1).map(ucFirst).join('');
 }
 
 /**
