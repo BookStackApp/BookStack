@@ -1,5 +1,6 @@
 <?php namespace Tests\Entity;
 
+use BookStack\Entities\Page;
 use BookStack\Entities\Repos\PageRepo;
 use Tests\BrowserKitTest;
 
@@ -99,6 +100,17 @@ class PageDraftTest extends BrowserKitTest
             ->dontSeeInElement('.book-contents', 'New Page')
             ->visit($chapter->getUrl())
             ->dontSeeInElement('.book-contents', 'New Page');
+    }
+
+    public function test_page_html_in_ajax_fetch_response()
+    {
+        $this->asAdmin();
+        $page = Page::query()->first();
+
+        $this->getJson('/ajax/page/' . $page->id);
+        $this->seeJson([
+            'html' => $page->html,
+        ]);
     }
 
 }

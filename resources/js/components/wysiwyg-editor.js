@@ -236,7 +236,7 @@ function codePlugin() {
     });
 }
 
-function drawIoPlugin(drawioUrl, isDarkMode) {
+function drawIoPlugin(drawioUrl, isDarkMode, pageId) {
 
     let pageEditor = null;
     let currentNode = null;
@@ -270,7 +270,6 @@ function drawIoPlugin(drawioUrl, isDarkMode) {
     async function updateContent(pngData) {
         const id = "image-" + Math.random().toString(16).slice(2);
         const loadingImage = window.baseUrl('/loading.gif');
-        const pageId = Number(document.getElementById('page-editor').getAttribute('page-id'));
 
         // Handle updating an existing image
         if (currentNode) {
@@ -410,19 +409,19 @@ function listenForBookStackEditorEvents(editor) {
 
 class WysiwygEditor {
 
-    constructor(elem) {
-        this.elem = elem;
 
-        const pageEditor = document.getElementById('page-editor');
-        this.pageId = pageEditor.getAttribute('page-id');
-        this.textDirection = pageEditor.getAttribute('text-direction');
+    setup() {
+        this.elem = this.$el;
+
+        this.pageId = this.$opts.pageId;
+        this.textDirection = this.$opts.textDirection;
         this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
         this.plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor media";
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
-        window.$events.emitPublic(elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
+        window.$events.emitPublic(this.elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
         window.tinymce.init(this.tinyMceConfig);
     }
 
@@ -433,7 +432,7 @@ class WysiwygEditor {
         const drawioUrlElem = document.querySelector('[drawio-url]');
         if (drawioUrlElem) {
             const url = drawioUrlElem.getAttribute('drawio-url');
-            drawIoPlugin(url, this.isDarkMode);
+            drawIoPlugin(url, this.isDarkMode, this.pageId);
             this.plugins += ' drawio';
         }
 

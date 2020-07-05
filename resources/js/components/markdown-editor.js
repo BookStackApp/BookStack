@@ -8,12 +8,11 @@ import DrawIO from "../services/drawio";
 
 class MarkdownEditor {
 
-    constructor(elem) {
-        this.elem = elem;
+    setup() {
+        this.elem = this.$el;
 
-        const pageEditor = document.getElementById('page-editor');
-        this.pageId = pageEditor.getAttribute('page-id');
-        this.textDirection = pageEditor.getAttribute('text-direction');
+        this.pageId = this.$opts.pageId;
+        this.textDirection = this.$opts.textDirection;
 
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
@@ -27,12 +26,18 @@ class MarkdownEditor {
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
 
-        this.display.addEventListener('load', () => {
+        const displayLoad = () => {
             this.displayDoc = this.display.contentDocument;
             this.init();
-        });
+        };
 
-        window.$events.emitPublic(elem, 'editor-markdown::setup', {
+        if (this.display.contentDocument.readyState === 'complete') {
+            displayLoad();
+        } else {
+            this.display.addEventListener('load', displayLoad.bind(this));
+        }
+
+        window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.markdown,
             displayEl: this.display,
             codeMirrorInstance: this.cm,

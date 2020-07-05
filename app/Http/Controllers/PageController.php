@@ -163,6 +163,8 @@ class PageController extends Controller
     public function getPageAjax(int $pageId)
     {
         $page = $this->pageRepo->getById($pageId);
+        $page->setHidden(array_diff($page->getHidden(), ['html', 'markdown']));
+        $page->addHidden(['book']);
         return response()->json($page);
     }
 
