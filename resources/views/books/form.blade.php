@@ -31,7 +31,7 @@
         <label for="tag-manager">{{ trans('entities.book_tags') }}</label>
     </button>
     <div class="collapse-content" collapsible-content>
-        @include('components.tag-manager', ['entity' => $book ?? null, 'entityType' => 'chapter'])
+        @include('components.tag-manager', ['entity' => $book ?? null])
     </div>
 </div>
 

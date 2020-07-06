@@ -77,6 +77,13 @@ return [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
         ],
+
+        // Testing channel
+        // Uses a shared testing instance during tests
+        // so that logs can be checked against.
+        'testing' => [
+            'driver' => 'testing',
+        ],
     ],
 
 ];

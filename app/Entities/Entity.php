@@ -288,7 +288,7 @@ class Entity extends Ownable
     public function rebuildPermissions()
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        Permissions::buildJointPermissionsForEntity($this);
+        Permissions::buildJointPermissionsForEntity(clone $this);
     }
 
     /**
@@ -297,7 +297,7 @@ class Entity extends Ownable
     public function indexForSearch()
     {
         $searchService = app()->make(SearchService::class);
-        $searchService->indexEntity($this);
+        $searchService->indexEntity(clone $this);
     }
 
     /**

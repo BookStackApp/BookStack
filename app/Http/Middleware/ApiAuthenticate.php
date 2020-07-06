@@ -35,9 +35,9 @@ class ApiAuthenticate
     {
         // Return if the user is already found to be signed in via session-based auth.
         // This is to make it easy to browser the API via browser after just logging into the system.
-        if (signedInUser()) {
+        if (signedInUser() || session()->isStarted()) {
             $this->ensureEmailConfirmedIfRequested();
-            if (!auth()->user()->can('access-api')) {
+            if (!user()->can('access-api')) {
                 throw new ApiAuthException(trans('errors.api_user_no_api_permission'), 403);
             }
             return;

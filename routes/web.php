@@ -124,6 +124,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/attachments/upload/{id}', 'AttachmentController@uploadUpdate');
     Route::post('/attachments/link', 'AttachmentController@attachLink');
     Route::put('/attachments/{id}', 'AttachmentController@update');
+    Route::get('/attachments/edit/{id}', 'AttachmentController@getUpdateForm');
     Route::get('/attachments/get/page/{pageId}', 'AttachmentController@listForPage');
     Route::put('/attachments/sort/page/{pageId}', 'AttachmentController@sortForPage');
     Route::delete('/attachments/{id}', 'AttachmentController@delete');
@@ -134,8 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
 
     // Tag routes (AJAX)
-    Route::group(['prefix' => 'ajax/tags'], function() {
-        Route::get('/get/{entityType}/{entityId}', 'TagController@getForEntity');
+    Route::group(['prefix' => 'ajax/tags'], function () {
         Route::get('/suggest/names', 'TagController@getNameSuggestions');
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
     });

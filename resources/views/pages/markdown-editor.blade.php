@@ -1,4 +1,7 @@
-<div v-pre id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
+<div id="markdown-editor" component="markdown-editor"
+     option:markdown-editor:page-id="{{ $model->id ?? 0 }}"
+     option:markdown-editor:text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+     class="flex-fill flex code-fill">
     @exposeTranslations([
         'errors.image_upload_error',
     ])

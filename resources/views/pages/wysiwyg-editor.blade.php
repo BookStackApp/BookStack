@@ -1,4 +1,7 @@
-<div wysiwyg-editor class="flex-fill flex">
+<div component="wysiwyg-editor"
+     option:wysiwyg-editor:page-id="{{ $model->id ?? 0 }}"
+     option:wysiwyg-editor:text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+     class="flex-fill flex">
 
     @exposeTranslations([
         'errors.image_upload_error',
