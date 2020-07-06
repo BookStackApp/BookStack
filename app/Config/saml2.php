@@ -139,6 +139,9 @@ return [
             //      )
             // ),
         ],
+        'security' => [
+            'requestedAuthnContext' => env('SAML2_REQUESTED_AUTHN_CONTEXT', true),
+        ],
     ],
 
 ];
