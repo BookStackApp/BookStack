@@ -5,7 +5,6 @@ use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\SamlException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
-use Illuminate\Support\Str;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
 use OneLogin\Saml2\IdPMetadataParser;
@@ -18,17 +17,15 @@ use OneLogin\Saml2\ValidationError;
 class Saml2Service extends ExternalAuthService
 {
     protected $config;
-    protected $registrationService;
-    protected $user;
 
     /**
      * Saml2Service constructor.
      */
     public function __construct(RegistrationService $registrationService, User $user)
     {
+        parent::__construct($registrationService, $user);
+        
         $this->config = config('saml2');
-        $this->registrationService = $registrationService;
-        $this->user = $user;
     }
 
     /**
@@ -307,31 +304,6 @@ class Saml2Service extends ExternalAuthService
         }
 
         return $defaultValue;
-    }
-
-    /**
-     * Get the user from the database for the specified details.
-     * @throws SamlException
-     * @throws UserRegistrationException
-     */
-    protected function getOrRegisterUser(array $userDetails): ?User
-    {
-        $user = $this->user->newQuery()
-          ->where('external_auth_id', '=', $userDetails['external_id'])
-          ->first();
-
-        if (is_null($user)) {
-            $userData = [
-                'name' => $userDetails['name'],
-                'email' => $userDetails['email'],
-                'password' => Str::random(32),
-                'external_auth_id' => $userDetails['external_id'],
-            ];
-
-            $user = $this->registrationService->registerUser($userData, null, false);
-        }
-
-        return $user;
     }
 
     /**

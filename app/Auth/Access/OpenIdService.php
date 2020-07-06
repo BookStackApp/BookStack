@@ -5,7 +5,6 @@ use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\OpenIdException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
-use Illuminate\Support\Str;
 use Lcobucci\JWT\Token;
 use OpenIDConnectClient\AccessToken;
 use OpenIDConnectClient\OpenIDConnectProvider;
@@ -17,17 +16,15 @@ use OpenIDConnectClient\OpenIDConnectProvider;
 class OpenIdService extends ExternalAuthService
 {
     protected $config;
-    protected $registrationService;
-    protected $user;
 
     /**
      * OpenIdService constructor.
      */
     public function __construct(RegistrationService $registrationService, User $user)
     {
+        parent::__construct($registrationService, $user);
+        
         $this->config = config('openid');
-        $this->registrationService = $registrationService;
-        $this->user = $user;
     }
 
     /**
@@ -173,31 +170,6 @@ class OpenIdService extends ExternalAuthService
             'email' => $email,
             'name' => $this->getUserDisplayName($token, $email),
         ];
-    }
-
-    /**
-     * Get the user from the database for the specified details.
-     * @throws OpenIdException
-     * @throws UserRegistrationException
-     */
-    protected function getOrRegisterUser(array $userDetails): ?User
-    {
-        $user = $this->user->newQuery()
-          ->where('external_auth_id', '=', $userDetails['external_id'])
-          ->first();
-
-        if (is_null($user)) {
-            $userData = [
-                'name' => $userDetails['name'],
-                'email' => $userDetails['email'],
-                'password' => Str::random(32),
-                'external_auth_id' => $userDetails['external_id'],
-            ];
-
-            $user = $this->registrationService->registerUser($userData, null, false);
-        }
-
-        return $user;
     }
 
     /**
