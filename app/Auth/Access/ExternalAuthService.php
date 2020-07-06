@@ -3,9 +3,46 @@
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class ExternalAuthService
 {
+    protected $registrationService;
+    protected $user;
+
+    /**
+     * ExternalAuthService base constructor.
+     */
+    public function __construct(RegistrationService $registrationService, User $user)
+    {
+        $this->registrationService = $registrationService;
+        $this->user = $user;
+    }
+    
+    /**
+     * Get the user from the database for the specified details.
+     * @throws UserRegistrationException
+     */
+    protected function getOrRegisterUser(array $userDetails): ?User
+    {
+        $user = $this->user->newQuery()
+          ->where('external_auth_id', '=', $userDetails['external_id'])
+          ->first();
+
+        if (is_null($user)) {
+            $userData = [
+                'name' => $userDetails['name'],
+                'email' => $userDetails['email'],
+                'password' => Str::random(32),
+                'external_auth_id' => $userDetails['external_id'],
+            ];
+
+            $user = $this->registrationService->registerUser($userData, null, false);
+        }
+
+        return $user;
+    }
+
     /**
      * Check a role against an array of group names to see if it matches.
      * Checked against role 'external_auth_id' if set otherwise the name of the role.
