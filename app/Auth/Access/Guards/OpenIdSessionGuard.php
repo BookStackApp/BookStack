@@ -2,6 +2,11 @@
 
 namespace BookStack\Auth\Access\Guards;
 
+use BookStack\Auth\Access\OpenIdService;
+use BookStack\Auth\Access\RegistrationService;
+use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Session\Session;
+
 /**
  * OpenId Session Guard
  *
@@ -14,6 +19,41 @@ namespace BookStack\Auth\Access\Guards;
  */
 class OpenIdSessionGuard extends ExternalBaseSessionGuard
 {
+
+    protected $openidService;
+
+    /**
+     * OpenIdSessionGuard constructor.
+     */
+    public function __construct(
+        $name,
+        UserProvider $provider,
+        Session $session,
+        OpenIdService $openidService,
+        RegistrationService $registrationService
+    ) {
+        $this->openidService = $openidService;
+        parent::__construct($name, $provider, $session, $registrationService);
+    }
+
+    /**
+     * Get the currently authenticated user.
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function user()
+    {
+        // retrieve the current user
+        $user = parent::user();
+
+        // refresh the current user
+        if ($user && !$this->openidService->refresh()) {
+            $this->user = null;
+        }
+
+        return $this->user;
+    }
+
     /**
      * Validate a user's credentials.
      *
