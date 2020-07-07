@@ -6,6 +6,7 @@ use BookStack\Exceptions\OpenIdException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
 use Lcobucci\JWT\Token;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use OpenIDConnectClient\AccessToken;
 use OpenIDConnectClient\OpenIDConnectProvider;
 
@@ -54,6 +55,46 @@ class OpenIdService extends ExternalAuthService
     }
 
     /**
+     * Refresh the currently logged in user.
+     * @throws Error
+     */
+    public function refresh(): bool
+    {
+        // Retrieve access token for current session
+        $json = session()->get('openid_token');
+        $accessToken = new AccessToken(json_decode($json, true));
+
+        // Check whether the access token or ID token is expired
+        if (!$accessToken->getIdToken()->isExpired() && !$accessToken->hasExpired()) {
+            return true;
+        }
+
+        // If no refresh token available, logout
+        if ($accessToken->getRefreshToken() === null) {
+            $this->actionLogout();
+            return false;
+        }
+
+        // ID token or access token is expired, we refresh it using the refresh token
+        try {
+            $provider = $this->getProvider();
+
+            $accessToken = $provider->getAccessToken('refresh_token', [
+                'refresh_token' => $accessToken->getRefreshToken(),
+            ]);
+        } catch (IdentityProviderException $e) {
+            // Refreshing failed, logout
+            $this->actionLogout();
+            return false;
+        }
+
+        // A valid token was obtained, we update the access token
+        session()->put('openid_token', json_encode($accessToken));
+
+        return true;
+    }
+
+    /**
      * Process the Authorization response from the authorization server and
      * return the matching, or new if registration active, user matched to
      * the authorization server.
@@ -86,7 +127,7 @@ class OpenIdService extends ExternalAuthService
     }
 
     /**
-     * Load the underlying Onelogin SAML2 toolkit.
+     * Load the underlying OpenID Connect Provider.
      * @throws Error
      * @throws Exception
      */
@@ -155,7 +196,7 @@ class OpenIdService extends ExternalAuthService
     }
 
     /**
-     * Extract the details of a user from a SAML response.
+     * Extract the details of a user from an ID token.
      */
     protected function getUserDetails(Token $token): array
     {
@@ -202,6 +243,7 @@ class OpenIdService extends ExternalAuthService
         }
 
         auth()->login($user);
+        session()->put('openid_token', json_encode($accessToken));
         return $user;
     }
 }
