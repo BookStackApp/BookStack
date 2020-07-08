@@ -88,9 +88,10 @@ class OpenIdService extends ExternalAuthService
             // Refreshing failed, logout
             $this->actionLogout();
             return false;
-        } catch (InvalidTokenException $e) {
-            // A refresh token doesn't necessarily contain
-            // an ID token, ignore this exception
+        } catch (\Exception $e) {
+            // Unknown error, logout and throw
+            $this->actionLogout();
+            throw $e;
         }
 
         // A valid token was obtained, we update the access token
