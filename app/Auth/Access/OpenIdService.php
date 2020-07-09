@@ -63,7 +63,7 @@ class OpenIdService extends ExternalAuthService
     {
         // Retrieve access token for current session
         $json = session()->get('openid_token');
-        $accessToken = new AccessToken(json_decode($json, true));
+        $accessToken = new AccessToken(json_decode($json, true) ?? []);
 
         // Check if both the access token and the ID token (if present) are unexpired
         $idToken = $accessToken->getIdToken();
