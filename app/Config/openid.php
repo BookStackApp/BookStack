@@ -18,6 +18,9 @@ return [
     // Overrides, in JSON format, to the configuration passed to underlying OpenIDConnectProvider library.
     'openid_overrides' => env('OPENID_OVERRIDES', null),
 
+    // Custom service instances, used by the underlying OpenIDConnectProvider library
+    'openid_services' => [],
+
     'openid' => [
         // OAuth2/OpenId client id, as configured in your Authorization server.
         'clientId'                => env('OPENID_CLIENT_ID', ''),

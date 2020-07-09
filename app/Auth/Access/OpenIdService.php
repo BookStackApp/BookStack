@@ -139,6 +139,7 @@ class OpenIdService extends ExternalAuthService
      */
     protected function getProvider(): OpenIDConnectProvider
     {
+        // Setup settings
         $settings = $this->config['openid'];
         $overrides = $this->config['openid_overrides'] ?? [];
 
@@ -149,12 +150,27 @@ class OpenIdService extends ExternalAuthService
         $openIdSettings = $this->loadOpenIdDetails();
         $settings = array_replace_recursive($settings, $openIdSettings, $overrides);
 
-        $signer = new \Lcobucci\JWT\Signer\Rsa\Sha256();
-        return new OpenIDConnectProvider($settings, ['signer' => $signer]);
+        // Setup services
+        $services = $this->loadOpenIdServices();
+        $overrides = $this->config['openid_services'] ?? [];
+
+        $services = array_replace_recursive($services, $overrides);
+
+        return new OpenIDConnectProvider($settings, $services);
     }
 
     /**
-     * Load dynamic service provider options required by the onelogin toolkit.
+     * Load services utilized by the OpenID Connect provider.
+     */
+    protected function loadOpenIdServices(): array
+    {
+        return [
+            'signer' => new \Lcobucci\JWT\Signer\Rsa\Sha256(),
+        ];
+    }
+
+    /**
+     * Load dynamic service provider options required by the OpenID Connect provider.
      */
     protected function loadOpenIdDetails(): array
     {
