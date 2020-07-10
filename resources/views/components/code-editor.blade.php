@@ -22,6 +22,9 @@
                             <a refs="code-editor@languageLink" data-lang="INI">INI</a>
                             <a refs="code-editor@languageLink" data-lang="Java">Java</a>
                             <a refs="code-editor@languageLink" data-lang="JavaScript">JavaScript</a>
+                            <a refs="code-editor@languageLink" data-lang="TypeScript">TypeScript</a>
+                            <a refs="code-editor@languageLink" data-lang="JSX">JSX</a>
+                            <a refs="code-editor@languageLink" data-lang="TSX">TSX</a>
                             <a refs="code-editor@languageLink" data-lang="JSON">JSON</a>
                             <a refs="code-editor@languageLink" data-lang="Lua">Lua</a>
                             <a refs="code-editor@languageLink" data-lang="MarkDown">MarkDown</a>

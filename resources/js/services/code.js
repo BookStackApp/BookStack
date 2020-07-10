@@ -27,6 +27,7 @@ import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/jsx/jsx';
 import 'codemirror/mode/yaml/yaml';
 
 // Addons
@@ -52,13 +53,17 @@ const modeMap = {
     hs: 'haskell',
     html: 'htmlmixed',
     ini: 'properties',
-    javascript: 'javascript',
-    json: {name: 'javascript', json: true},
     js: 'javascript',
+    javascript: 'javascript',
+    ts: { name: 'javascript', typescript: true },
+    typescript: { name: 'javascript', typescript: true },
+    jsx: { name: "jsx", base: { name: "javascript"}},
+    tsx: { name: "jsx", base: { name: "javascript", typescript: true }},
+    json: { name: 'javascript', json: true }, 
     jl: 'julia',
     julia: 'julia',
     lua: 'lua',
-    md: 'markdown',
+    md: 'markdown', 
     mdown: 'markdown',
     markdown: 'markdown',
     ml: 'mllike',
