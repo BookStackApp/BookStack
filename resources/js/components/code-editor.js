@@ -11,9 +11,8 @@ class CodeEditor {
         this.container = this.$refs.container;
         this.popup = this.$el;
         this.editorInput = this.$refs.editor;
-        this.languageLinks = this.$manyRefs.languageLink;
         this.saveButton = this.$refs.saveButton;
-        this.languageInput = this.$refs.languageInput;
+        this.languageSelect = this.$refs.languageSelect;
         this.historyDropDown = this.$refs.historyDropDown;
         this.historyList = this.$refs.historyList;
 
@@ -31,13 +30,10 @@ class CodeEditor {
             }
         });
 
-        onSelect(this.languageLinks, event => {
-            const language = event.target.dataset.lang;
-            this.languageInput.value = language;
-            this.updateEditorMode(language);
+        onSelect(this.languageSelect, event => {
+            this.updateEditorMode(this.getLanguageValue());
         });
 
-        onEnterPress(this.languageInput, e => this.save());
         onSelect(this.saveButton, e => this.save());
 
         onChildEvent(this.historyList, 'button', 'click', (event, elem) => {
@@ -51,13 +47,13 @@ class CodeEditor {
 
     save() {
         if (this.callback) {
-            this.callback(this.editor.getValue(), this.languageInput.value);
+            this.callback(this.editor.getValue(), this.getLanguageValue());
         }
         this.hide();
     }
 
     open(code, language, callback) {
-        this.languageInput.value = language;
+        this.languageSelect.value = language;
         this.callback = callback;
 
         this.show();
@@ -68,7 +64,7 @@ class CodeEditor {
 
     show() {
         if (!this.editor) {
-            this.editor = Code.popupEditor(this.editorInput, this.languageInput.value);
+            this.editor = Code.popupEditor(this.editorInput, this.getLanguageValue());
         }
         this.loadHistory();
         this.popup.components.popup.show(() => {
@@ -110,6 +106,11 @@ class CodeEditor {
         this.history[String(Date.now())] = code;
         const historyString = JSON.stringify(this.history);
         window.sessionStorage.setItem(this.historyKey, historyString);
+    }
+
+    getLanguageValue() {
+        const selectedIndex = this.languageSelect.selectedIndex;
+        return this.languageSelect.options[selectedIndex].value;
     }
 
 }

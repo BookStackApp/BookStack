@@ -11,37 +11,38 @@
                 <div class="form-group">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
                     <div class="lang-options">
-                        <small>
-                            <a refs="code-editor@languageLink" data-lang="CSS">CSS</a>
-                            <a refs="code-editor@languageLink" data-lang="C">C</a>
-                            <a refs="code-editor@languageLink" data-lang="C++">C++</a>
-                            <a refs="code-editor@languageLink" data-lang="C#">C#</a>
-                            <a refs="code-editor@languageLink" data-lang="Fortran">Fortran</a>
-                            <a refs="code-editor@languageLink" data-lang="Go">Go</a>
-                            <a refs="code-editor@languageLink" data-lang="HTML">HTML</a>
-                            <a refs="code-editor@languageLink" data-lang="INI">INI</a>
-                            <a refs="code-editor@languageLink" data-lang="Java">Java</a>
-                            <a refs="code-editor@languageLink" data-lang="JavaScript">JavaScript</a>
-                            <a refs="code-editor@languageLink" data-lang="TypeScript">TypeScript</a>
-                            <a refs="code-editor@languageLink" data-lang="JSX">JSX</a>
-                            <a refs="code-editor@languageLink" data-lang="TSX">TSX</a>
-                            <a refs="code-editor@languageLink" data-lang="JSON">JSON</a>
-                            <a refs="code-editor@languageLink" data-lang="Lua">Lua</a>
-                            <a refs="code-editor@languageLink" data-lang="MarkDown">MarkDown</a>
-                            <a refs="code-editor@languageLink" data-lang="Nginx">Nginx</a>
-                            <a refs="code-editor@languageLink" data-lang="PASCAL">Pascal</a>
-                            <a refs="code-editor@languageLink" data-lang="Perl">Perl</a>
-                            <a refs="code-editor@languageLink" data-lang="PHP">PHP</a>
-                            <a refs="code-editor@languageLink" data-lang="Powershell">Powershell</a>
-                            <a refs="code-editor@languageLink" data-lang="Python">Python</a>
-                            <a refs="code-editor@languageLink" data-lang="Ruby">Ruby</a>
-                            <a refs="code-editor@languageLink" data-lang="shell">Shell/Bash</a>
-                            <a refs="code-editor@languageLink" data-lang="SQL">SQL</a>
-                            <a refs="code-editor@languageLink" data-lang="XML">XML</a>
-                            <a refs="code-editor@languageLink" data-lang="YAML">YAML</a>
-                        </small>
+                        <select  id="code-editor-language" refs="code-editor@languageSelect">
+                            <?php $options = array(
+                                "C++",
+                                "C#",
+                                "Fortran",
+                                "Go",
+                                "HTML",
+                                "INI",
+                                "Java",
+                                "JavaScript",
+                                "TypeScript",
+                                "JSX",
+                                "TSX",
+                                "JSON",
+                                "Lua",
+                                "MarkDown",
+                                "Nginx",
+                                "PASCAL",
+                                "Perl",
+                                "PHP",
+                                "Powershell",
+                                "Python",
+                                "Ruby",
+                                "shell",
+                                "SQL",
+                                "XML",
+                                "YAML");?>
+                            <?php foreach ($options as &$option): ?>
+                                <option value="<?php echo $option; ?>"><?php echo $option; ?></option>"
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-                    <input refs="code-editor@languageInput" id="code-editor-language" type="text">
                 </div>
 
                 <div class="form-group">
