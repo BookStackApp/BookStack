@@ -100,7 +100,7 @@ return [
 
     // Books
     'book' => 'كتاب',
-    'books' => 'كتب',
+    'books' => 'الكتب',
     'x_books' => ':count كتاب|:count كتب',
     'books_empty' => 'لم يتم إنشاء أي كتب',
     'books_popular' => 'كتب رائجة',
