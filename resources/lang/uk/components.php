@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Завантажити ще',
     'image_image_name' => 'Назва зображення',
     'image_delete_used' => 'Це зображення використовується на наступних сторінках.',
-    'image_delete_confirm' => 'Натисніть кнопку Видалити ще раз, щоб підтвердити, що хочете видалити це зображення.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Вибрати зображення',
     'image_dropzone' => 'Перетягніть зображення, або натисніть тут для завантаження',
     'images_deleted' => 'Зображень видалено',
