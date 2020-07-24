@@ -33,6 +33,7 @@ return [
     'copy' => 'Sao chép',
     'reply' => 'Trả lời',
     'delete' => 'Xóa',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Tìm kiếm',
     'search_clear' => 'Xoá tìm kiếm',
     'reset' => 'Thiết lập lại',
