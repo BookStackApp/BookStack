@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Load More',
     'image_image_name' => 'Image Name',
     'image_delete_used' => 'This image is used in the pages below.',
-    'image_delete_confirm' => 'Click delete again to confirm you want to delete this image.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Select Image',
     'image_dropzone' => 'Drop images or click here to upload',
     'images_deleted' => 'Images Deleted',

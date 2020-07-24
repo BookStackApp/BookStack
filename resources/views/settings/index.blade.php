@@ -275,6 +275,5 @@
 
     </div>
 
-    @include('components.image-manager', ['imageType' => 'system'])
     @include('components.entity-selector-popup', ['entityTypes' => 'page'])
 @stop

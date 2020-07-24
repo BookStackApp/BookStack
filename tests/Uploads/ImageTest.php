@@ -71,11 +71,7 @@ class ImageTest extends TestCase
         $newName = Str::random();
         $update = $this->put('/images/' . $image->id, ['name' => $newName]);
         $update->assertSuccessful();
-        $update->assertJson([
-            'id' => $image->id,
-            'name' => $newName,
-            'type' => 'gallery',
-        ]);
+        $update->assertSee($newName);
 
         $this->deleteImage($imgDetails['path']);
 
@@ -92,31 +88,22 @@ class ImageTest extends TestCase
         $imgDetails = $this->uploadGalleryImage();
         $image = Image::query()->first();
 
-        $emptyJson = ['images' => [], 'has_more' => false];
-        $resultJson = [
-            'images' => [
-                [
-                    'id' => $image->id,
-                    'name' => $imgDetails['name'],
-                ]
-            ],
-            'has_more' => false,
-        ];
-
         $pageId = $imgDetails['page']->id;
         $firstPageRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}");
-        $firstPageRequest->assertSuccessful()->assertJson($resultJson);
+        $firstPageRequest->assertSuccessful()->assertElementExists('div');
+        $firstPageRequest->assertSuccessful()->assertSeeText($image->name);
 
         $secondPageRequest = $this->get("/images/gallery?page=2&uploaded_to={$pageId}");
-        $secondPageRequest->assertSuccessful()->assertExactJson($emptyJson);
+        $secondPageRequest->assertSuccessful()->assertElementNotExists('div');
 
         $namePartial = substr($imgDetails['name'], 0, 3);
         $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
-        $searchHitRequest->assertSuccessful()->assertJson($resultJson);
+        $searchHitRequest->assertSuccessful()->assertSee($imgDetails['name']);
 
         $namePartial = Str::random(16);
-        $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
-        $searchHitRequest->assertSuccessful()->assertExactJson($emptyJson);
+        $searchFailRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
+        $searchFailRequest->assertSuccessful()->assertDontSee($imgDetails['name']);
+        $searchFailRequest->assertSuccessful()->assertElementNotExists('div');
     }
 
     public function test_image_usage()
@@ -131,14 +118,10 @@ class ImageTest extends TestCase
         $page->html = '<img src="'.$image->url.'">';
         $page->save();
 
-        $usage = $this->get('/images/usage/' . $image->id);
+        $usage = $this->get('/images/edit/' . $image->id . '?delete=true');
         $usage->assertSuccessful();
-        $usage->assertJson([
-            [
-                'id' => $page->id,
-                'name' => $page->name
-            ]
-        ]);
+        $usage->assertSeeText($page->name);
+        $usage->assertSee($page->getUrl());
 
         $this->deleteImage($imgDetails['path']);
     }

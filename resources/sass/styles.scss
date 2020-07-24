@@ -140,8 +140,10 @@ $btt-size: 40px;
 
 .contained-search-box {
   display: flex;
+  height: 38px;
   input, button {
     border-radius: 0;
+    border: 1px solid #ddd;
     @include lightDark(border-color, #ddd, #000);
     margin-inline-start: -1px;
   }
@@ -161,6 +163,9 @@ $btt-size: 40px;
   button.cancel.active {
     background-color: $negative;
     color: #EEE;
+  }
+  svg {
+    margin: 0;
   }
 }
 

@@ -185,7 +185,7 @@ class ImageRepo
      * Load thumbnails onto an image object.
      * @throws Exception
      */
-    protected function loadThumbs(Image $image)
+    public function loadThumbs(Image $image)
     {
         $image->thumbs = [
             'gallery' => $this->getThumbnail($image, 150, 150, false),
@@ -218,5 +218,21 @@ class ImageRepo
         } catch (Exception $exception) {
             return null;
         }
+    }
+
+    /**
+     * Get the user visible pages using the given image.
+     */
+    public function getPagesUsingImage(Image $image): array
+    {
+        $pages = Page::visible()
+            ->where('html', 'like', '%' . $image->url . '%')
+            ->get(['id', 'name', 'slug', 'book_id']);
+
+        foreach ($pages as $page) {
+            $page->url = $page->getUrl();
+        }
+
+        return $pages->all();
     }
 }

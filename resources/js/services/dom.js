@@ -107,3 +107,14 @@ export function findText(selector, text) {
 export function showLoading(element) {
     element.innerHTML = `<div class="loading-container"><div></div><div></div><div></div></div>`;
 }
+
+/**
+ * Remove any loading indicators within the given element.
+ * @param {Element} element
+ */
+export function removeLoading(element) {
+    const loadingEls = element.querySelectorAll('.loading-container');
+    for (const el of loadingEls) {
+        el.remove();
+    }
+}

@@ -43,7 +43,6 @@ class Dropzone {
     }
 
     onSuccess(file, data) {
-        this.container.dispatchEvent(new Event('dropzone'))
         this.$emit('success', {file, data});
 
         if (this.successMessage) {

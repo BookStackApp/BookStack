@@ -4,10 +4,7 @@ function exists(id) {
     return document.getElementById(id) !== null;
 }
 
-import imageManager from "./image-manager";
-
 let vueMapping = {
-    'image-manager': imageManager,
 };
 
 window.vues = {};

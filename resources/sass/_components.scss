@@ -197,11 +197,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   transition: all cubic-bezier(.4, 0, 1, 1) 160ms;
   overflow: hidden;
   &.selected {
-    //transform: scale3d(0.92, 0.92, 0.92);
-    border: 4px solid #FFF;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    transform: scale3d(0.92, 0.92, 0.92);
+    outline: currentColor 2px solid;
   }
   img {
     width: 100%;
@@ -231,7 +228,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
-#image-manager .load-more {
+.image-manager .load-more {
   display: block;
   text-align: center;
   @include lightDark(background-color, #EEE, #444);
@@ -243,6 +240,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   font-style: italic;
 }
 
+.image-manager .loading-container {
+  text-align: center;
+}
+
 .image-manager-sidebar {
   width: 300px;
   overflow-y: auto;
@@ -250,6 +251,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-inline-start: 1px solid #DDD;
   @include lightDark(border-color, #ddd, #000);
   .inner {
+    min-height: auto;
     padding: $-m;
   }
   img {
@@ -291,6 +293,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+.image-manager .corner-button {
+  margin: 0;
+  border-radius: 0;
+  padding: $-m;
+}
+
 // Dropzone
 /*
  * The MIT License
@@ -298,7 +306,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
  */
 .dz-message {
   font-size: 1em;
-  line-height: 2.35;
+  line-height: 2.85;
   font-style: italic;
   color: #888;
   text-align: center;
@@ -601,8 +609,13 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     display: inline-block;
     @include lightDark(color, #666, #999);
     cursor: pointer;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid transparent;
     &.selected {
       border-bottom: 2px solid var(--color-primary);
+    }
+    &:last-child {
+      border-right: 0;
     }
   }
 }
