@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Charger plus',
     'image_image_name' => 'Nom de l\'image',
     'image_delete_used' => 'Cette image est utilisée dans les pages ci-dessous.',
-    'image_delete_confirm' => 'Confirmez que vous souhaitez bien supprimer cette image.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Sélectionner l\'image',
     'image_dropzone' => 'Glissez les images ici ou cliquez pour les ajouter',
     'images_deleted' => 'Images supprimées',
