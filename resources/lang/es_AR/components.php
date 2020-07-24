@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Cargar más',
     'image_image_name' => 'Nombre de imagen',
     'image_delete_used' => 'Esta imagen esta siendo utilizada en las páginas a continuación.',
-    'image_delete_confirm' => 'Haga click de nuevo para confirmar que quiere borrar esta imagen.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Seleccionar Imagen',
     'image_dropzone' => 'Arrastre las imágenes o hacer click aquí para Subir',
     'images_deleted' => 'Imágenes borradas',
@@ -29,6 +29,6 @@ return [
     'code_editor' => 'Editar Código',
     'code_language' => 'Lenguaje del Código',
     'code_content' => 'Contenido del Código',
-    'code_session_history' => 'Session History',
+    'code_session_history' => 'Historial de la sesión',
     'code_save' => 'Guardar Código',
 ];
