@@ -20,13 +20,6 @@ const translator = new Translations();
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
 
-// Make services available to Vue instances
-import Vue from "vue"
-Vue.prototype.$http = httpInstance;
-Vue.prototype.$events = eventManager;
-
-// Load Vues and components
-import vues from "./vues/vues"
+// Load Components
 import components from "./components"
-vues();
 components();
