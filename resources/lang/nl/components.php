@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Meer Laden',
     'image_image_name' => 'Afbeeldingsnaam',
     'image_delete_used' => 'Deze afbeeldingen is op onderstaande pagina\'s in gebruik.',
-    'image_delete_confirm' => 'Klik opnieuw op verwijderen om de afbeelding echt te verwijderen.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Kies Afbeelding',
     'image_dropzone' => 'Sleep afbeeldingen hier of klik hier om te uploaden',
     'images_deleted' => 'Verwijderde Afbeeldingen',
