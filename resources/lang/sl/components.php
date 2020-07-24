@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Naloži več',
     'image_image_name' => 'Ime slike',
     'image_delete_used' => 'Ta slika je uporabljena na spodnjih straneh.',
-    'image_delete_confirm' => 'Ponovno kliknite izbriši, da potrdite izbris te slike.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Izberite sliko',
     'image_dropzone' => 'Povlecite slike ali kliknite tukaj za nalaganje',
     'images_deleted' => 'Slike so bile izbrisane',
