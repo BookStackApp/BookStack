@@ -33,6 +33,7 @@ return [
     'copy' => '複製',
     'reply' => '回覆',
     'delete' => '刪除',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => '搜尋',
     'search_clear' => '清除搜尋',
     'reset' => '重置',
