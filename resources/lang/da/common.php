@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopier',
     'reply' => 'Besvar',
     'delete' => 'Slet',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Søg',
     'search_clear' => 'Ryd søgning',
     'reset' => 'Nulstil',
