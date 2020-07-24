@@ -33,6 +33,7 @@ return [
     'copy' => '복사',
     'reply' => '답글',
     'delete' => '삭제',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => '검색',
     'search_clear' => '검색 지우기',
     'reset' => '리셋',
