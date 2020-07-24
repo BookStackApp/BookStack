@@ -33,6 +33,7 @@ return [
     'copy' => 'העתק',
     'reply' => 'השב',
     'delete' => 'מחק',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'חיפוש',
     'search_clear' => 'נקה חיפוש',
     'reset' => 'איפוס',
