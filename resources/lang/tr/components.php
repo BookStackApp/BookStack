@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Devamını Göster',
     'image_image_name' => 'Görsel Adı',
     'image_delete_used' => 'Bu görsel aşağıda bulunan sayfalarda kullanılmış.',
-    'image_delete_confirm' => 'Bu görseli silmek istediğinize emin misiniz?',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Görsel Seç',
     'image_dropzone' => 'Görselleri sürükleyin ya da seçin',
     'images_deleted' => 'Görseller Silindi',
