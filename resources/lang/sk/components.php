@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Načítať viac',
     'image_image_name' => 'Názov obrázka',
     'image_delete_used' => 'Tento obrázok je použitý na stránkach uvedených nižšie.',
-    'image_delete_confirm' => 'Kliknite znova na zmazať pre potvrdenie zmazania tohto obrázka.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Vybrať obrázok',
     'image_dropzone' => 'Presuňte obrázky sem alebo kliknite sem pre nahranie',
     'images_deleted' => 'Obrázky zmazané',
