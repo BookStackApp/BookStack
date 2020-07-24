@@ -121,6 +121,11 @@ body.flexbox {
   position: relative;
 }
 
+.flex-container-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .flex {
   min-height: 0;
   flex: 1;
