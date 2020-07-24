@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Indlæse mere',
     'image_image_name' => 'Billednavn',
     'image_delete_used' => 'Dette billede er brugt på siderne nedenfor.',
-    'image_delete_confirm' => 'Tryk på slet igen for at bekræft at du ønsker at slette dette billede.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Vælg billede',
     'image_dropzone' => 'Træk-og-slip billede eller klik her for at uploade',
     'images_deleted' => 'Billede slettet',
