@@ -223,6 +223,7 @@ class ImageService extends UploadService
         $storage->setVisibility($thumbFilePath, 'public');
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
 
+
         return $this->getPublicUrl($thumbFilePath);
     }
 
@@ -292,11 +293,9 @@ class ImageService extends UploadService
 
     /**
      * Destroys an image at the given path.
-     * Searches for image thumbnails in addition to main provided path..
-     * @param string $path
-     * @return bool
+     * Searches for image thumbnails in addition to main provided path.
      */
-    protected function destroyImagesFromPath(string $path)
+    protected function destroyImagesFromPath(string $path): bool
     {
         $storage = $this->getStorage();
 
@@ -306,8 +305,7 @@ class ImageService extends UploadService
 
         // Delete image files
         $imagesToDelete = $allImages->filter(function ($imagePath) use ($imageFileName) {
-            $expectedIndex = strlen($imagePath) - strlen($imageFileName);
-            return strpos($imagePath, $imageFileName) === $expectedIndex;
+            return basename($imagePath) === $imageFileName;
         });
         $storage->delete($imagesToDelete->all());
 
