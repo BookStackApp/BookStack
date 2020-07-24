@@ -33,6 +33,7 @@ return [
     'copy' => 'Copy',
     'reply' => 'Reply',
     'delete' => 'Zmazať',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Hľadť',
     'search_clear' => 'Vyčistiť hľadanie',
     'reset' => 'Reset',
