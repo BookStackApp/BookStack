@@ -262,10 +262,11 @@ class ImageTest extends TestCase
         $page = Page::first();
         $this->asAdmin();
         $imageName = 'first-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
 
         $this->uploadImage($imageName, $page->id);
         $image = Image::first();
-        $relPath = $this->getTestImagePath('gallery', $imageName);
 
         $delete = $this->delete( '/images/' . $image->id);
         $delete->assertStatus(200);
@@ -275,6 +276,31 @@ class ImageTest extends TestCase
             'type' => 'gallery'
         ]);
 
+        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has not been deleted as expected');
+    }
+
+    public function test_image_delete_does_not_delete_similar_images()
+    {
+        $page = Page::first();
+        $this->asAdmin();
+        $imageName = 'first-image.png';
+
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+
+        $this->uploadImage($imageName, $page->id);
+        $this->uploadImage($imageName, $page->id);
+        $this->uploadImage($imageName, $page->id);
+
+        $image = Image::first();
+        $folder = public_path(dirname($relPath));
+        $imageCount = count(glob($folder . '/*'));
+
+        $delete = $this->delete( '/images/' . $image->id);
+        $delete->assertStatus(200);
+
+        $newCount = count(glob($folder . '/*'));
+        $this->assertEquals($imageCount - 1, $newCount, 'More files than expected have been deleted');
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has not been deleted as expected');
     }
 
