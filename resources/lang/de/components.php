@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Mehr',
     'image_image_name' => 'Bildname',
     'image_delete_used' => 'Dieses Bild wird auf den folgenden Seiten benutzt. ',
-    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
+    'image_delete_confirm_text' => 'Möchten Sie dieses Bild wirklich löschen?',
     'image_select_image' => 'Bild auswählen',
     'image_dropzone' => 'Ziehen Sie Bilder hierher oder klicken Sie, um ein Bild auszuwählen',
     'images_deleted' => 'Bilder gelöscht',
