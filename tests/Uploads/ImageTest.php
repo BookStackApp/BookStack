@@ -182,6 +182,38 @@ class ImageTest extends TestCase
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded double extension file was uploaded but should have been stopped');
     }
 
+    public function test_url_entities_removed_from_filenames()
+    {
+        $this->asEditor();
+        $badNames = [
+            "bad-char-#-image.png",
+            "bad-char-?-image.png",
+            "?#.png",
+            "?.png",
+            "#.png",
+        ];
+        foreach ($badNames as $name) {
+            $galleryFile = $this->getTestImage($name);
+            $page = Page::first();
+            $badPath = $this->getTestImagePath('gallery', $name);
+            $this->deleteImage($badPath);
+
+            $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+            $upload->assertStatus(200);
+
+            $lastImage = Image::query()->latest('id')->first();
+            $newFileName = explode('.', basename($lastImage->path))[0];
+
+            $this->assertEquals($lastImage->name, $name);
+            $this->assertFalse(strpos($lastImage->path, $name), 'Path contains original image name');
+            $this->assertFalse(file_exists(public_path($badPath)), 'Uploaded image file name was not stripped of url entities');
+
+            $this->assertTrue(strlen($newFileName) > 0, 'File name was reduced to nothing');
+
+            $this->deleteImage($lastImage->path);
+        }
+    }
+
     public function test_secure_images_uploads_to_correct_place()
     {
         config()->set('filesystems.images', 'local_secure');
