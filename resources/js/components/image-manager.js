@@ -27,8 +27,8 @@ class ImageManager {
         this.type = 'gallery';
         this.lastSelected = {};
         this.lastSelectedTime = 0;
+        this.callback = null;
         this.resetState = () => {
-            this.callback = null;
             this.hasData = false;
             this.page = 1;
             this.filter = 'all';
@@ -143,12 +143,17 @@ class ImageManager {
         this.resetState();
         this.resetListView();
         this.resetSearchView();
-        this.formContainer.innerHTML = '';
+        this.resetEditForm();
         this.setActiveFilterTab('all');
+        this.selectButton.classList.add('hidden');
     }
 
     resetSearchView() {
         this.searchInput.value = '';
+    }
+
+    resetEditForm() {
+        this.formContainer.innerHTML = '';
     }
 
     resetListView() {
@@ -173,6 +178,8 @@ class ImageManager {
         if (!alreadySelected) {
             event.target.classList.add('selected');
             this.loadImageEditForm(image.id);
+        } else {
+            this.resetEditForm();
         }
         this.selectButton.classList.toggle('hidden', alreadySelected);
 
