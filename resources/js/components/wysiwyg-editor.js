@@ -417,7 +417,7 @@ class WysiwygEditor {
         this.textDirection = this.$opts.textDirection;
         this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
-        this.plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor media";
+        this.plugins = "image table textcolor paste link autolink fullscreen code customhr autosave lists codeeditor media";
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
