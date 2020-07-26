@@ -24,7 +24,7 @@ header {
   padding: $-xxs 0;
   @include lightDark(border-bottom-color, #DDD, #000);
   @include whenDark {
-    filter: saturate(0.6) brightness(0.8);
+    filter: saturate(0.8) brightness(0.8);
   }
   .links {
     display: inline-block;
