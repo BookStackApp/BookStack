@@ -357,13 +357,15 @@ ul.pagination {
     border: 1px solid #CCC;
     margin-inline-start: -1px;
     user-select: none;
-    &.disabled {
-      cursor: not-allowed;
-    }
+    @include lightDark(color, #555, #eee);
+    @include lightDark(border-color, #ccc, #666);
+  }
+  li.disabled {
+    cursor: not-allowed;
   }
   li.active span {
-    @include lightDark(color, #444, #eee);
-    @include lightDark(background-color, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+    @include lightDark(color, #111, #eee);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5));
   }
 }
 
