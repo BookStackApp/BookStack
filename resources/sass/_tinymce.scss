@@ -51,6 +51,9 @@
       overflow:auto;
       iframe {
         flex: 1;
+        // Force TinyMCE iframe to render on its own layer
+        // for much greater performance in Safari
+        will-change: transform;
       }
     }
   }

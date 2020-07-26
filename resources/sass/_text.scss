@@ -96,9 +96,6 @@ a {
   text-decoration: none;
   transition: filter ease-in-out 80ms;
   line-height: 1.6;
-  @include whenDark {
-    filter: brightness(1.3) saturate(0.7);
-  }
   &:hover {
     text-decoration: underline;
   }
