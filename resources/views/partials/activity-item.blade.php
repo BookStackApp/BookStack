@@ -7,7 +7,7 @@
     @endif
 </div>
 
-<div v-pre>
+<div>
     @if($activity->user)
         <a href="{{ $activity->user->getProfileUrl() }}">{{ $activity->user->name }}</a>
     @else

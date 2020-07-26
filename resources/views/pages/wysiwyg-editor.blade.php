@@ -7,7 +7,7 @@
         'errors.image_upload_error',
     ])
 
-    <textarea id="html-editor"  name="html" rows="5" v-pre
+    <textarea id="html-editor"  name="html" rows="5"
           @if($errors->has('html')) class="text-neg" @endif>@if(isset($model) || old('html')){{ old('html') ? old('html') : $model->html }}@endif</textarea>
 </div>
 
