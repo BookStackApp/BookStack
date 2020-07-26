@@ -18,11 +18,6 @@
 @import "lists";
 @import "pages";
 
-[v-cloak] {
-  display: none; opacity: 0;
-  animation-name: none !important;
-}
-
 // Jquery Sortable Styles
 .dragged {
   position: absolute;
