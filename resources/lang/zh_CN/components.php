@@ -15,7 +15,7 @@ return [
     'image_load_more' => '显示更多',
     'image_image_name' => '图片名称',
     'image_delete_used' => '该图像用于以下页面。',
-    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
+    'image_delete_confirm_text' => '您确认要删除此图片吗？',
     'image_select_image' => '选择图片',
     'image_dropzone' => '拖放图片或点击此处上传',
     'images_deleted' => '图片已删除',
