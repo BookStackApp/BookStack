@@ -33,7 +33,7 @@ return [
     'copy' => '复制',
     'reply' => '回复',
     'delete' => '删除',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => '确认删除',
     'search' => '搜索',
     'search_clear' => '清除搜索',
     'reset' => '重置',
