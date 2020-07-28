@@ -38,4 +38,14 @@ class Attachment extends Ownable
         }
         return url('/attachments/' . $this->id);
     }
+
+    public function htmlLink(): string
+    {
+        return '<a target="_blank" href="'.e($this->getUrl()).'">'.e($this->name).'</a>';
+    }
+
+    public function markdownLink(): string
+    {
+
+    }
 }
