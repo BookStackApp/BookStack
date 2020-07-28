@@ -77,9 +77,13 @@ class LoginController extends Controller
             ]);
         }
 
+        // Store the previous location for redirect after login
         $previous = url()->previous('');
-        if (setting('app-public') && $previous && $previous !== url('/login')) {
-            redirect()->setIntendedUrl($previous);
+        if ($previous && $previous !== url('/login') && setting('app-public')) {
+            $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+            if ($isPreviousFromInstance) {
+                redirect()->setIntendedUrl($previous);
+            }
         }
 
         return view('auth.login', [

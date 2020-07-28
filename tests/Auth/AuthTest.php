@@ -381,6 +381,17 @@ class AuthTest extends BrowserKitTest
             ->seePageUrlIs($page->getUrl());
     }
 
+    public function test_login_intended_redirect_does_not_redirect_to_external_pages()
+    {
+        config()->set('app.url', 'http://localhost');
+        $this->setSettings(['app-public' => true]);
+
+        $this->get('/login', ['referer' => 'https://example.com']);
+        $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+
+        $login->assertRedirectedTo('http://localhost');
+    }
+
     public function test_login_authenticates_admins_on_all_guards()
     {
         $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
