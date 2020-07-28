@@ -99,6 +99,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
+        $username = $request->get($this->username());
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -107,9 +108,7 @@ class LoginController extends Controller
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
-            // Also log some error message
-            Activity::logFailedAccess($request->get($this->username()));
-
+            Activity::logFailedLogin($username);
             return $this->sendLockoutResponse($request);
         }
 
@@ -118,6 +117,7 @@ class LoginController extends Controller
                 return $this->sendLoginResponse($request);
             }
         } catch (LoginAttemptException $exception) {
+            Activity::logFailedLogin($username);
             return $this->sendLoginAttemptExceptionResponse($exception, $request);
         }
 
@@ -126,9 +126,7 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        // Also log some error message
-        Activity::logFailedAccess($request->get($this->username()));
-
+        Activity::logFailedLogin($username);
         return $this->sendFailedLoginResponse($request);
     }
 

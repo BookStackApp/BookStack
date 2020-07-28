@@ -401,6 +401,18 @@ class AuthTest extends BrowserKitTest
         $this->assertFalse(auth('saml2')->check());
     }
 
+    public function test_failed_logins_are_logged_when_message_configured()
+    {
+        $log = $this->withTestLogger();
+        config()->set(['logging.failed_login.message' => 'Failed login for %u']);
+
+        $this->post('/login', ['email' => 'admin@example.com', 'password' => 'cattreedog']);
+        $this->assertTrue($log->hasWarningThatContains('Failed login for admin@example.com'));
+
+        $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $this->assertFalse($log->hasWarningThatContains('Failed login for admin@admin.com'));
+    }
+
     /**
      * Perform a login
      */

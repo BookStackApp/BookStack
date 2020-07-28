@@ -4,6 +4,7 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\Entity;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class ActivityService
 {
@@ -49,7 +50,7 @@ class ActivityService
     protected function newActivityForUser(string $key, ?int $bookId = null): Activity
     {
         return $this->activity->newInstance()->forceFill([
-            'key' => strtolower($key),
+            'key'     => strtolower($key),
             'user_id' => $this->user->id,
             'book_id' => $bookId ?? 0,
         ]);
@@ -64,8 +65,8 @@ class ActivityService
     {
         $activities = $entity->activity()->get();
         $entity->activity()->update([
-            'extra' => $entity->name,
-            'entity_id' => 0,
+            'extra'       => $entity->name,
+            'entity_id'   => 0,
             'entity_type' => '',
         ]);
         return $activities;
@@ -99,7 +100,7 @@ class ActivityService
             $query = $this->activity->newQuery()->where('entity_type', '=', $entity->getMorphClass())
                 ->where('entity_id', '=', $entity->id);
         }
-        
+
         $activity = $this->permissionService
             ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
@@ -161,19 +162,18 @@ class ActivityService
     }
 
     /**
-     * Log failed accesses, for further processing by tools like Fail2Ban
-     *
-     * @param username
-     * @return void
-      */
-    public function logFailedAccess($username)
+     * Log out a failed login attempt, Providing the given username
+     * as part of the message if the '%u' string is used.
+     */
+    public function logFailedLogin(string $username)
     {
-        $log_msg = config('logging.failed_access_message');
-
-        if (!is_string($username) || !is_string($log_msg) || strlen($log_msg)<1)
+        $message = config('logging.failed_login.message');
+        if (!$message) {
             return;
+        }
 
-        $log_msg = str_replace("%u", $username, $log_msg);
-        error_log($log_msg, 4);
+        $message = str_replace("%u", $username, $message);
+        $channel = config('logging.failed_login.channel');
+        Log::channel($channel)->warning($message);
     }
 }

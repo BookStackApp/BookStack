@@ -593,4 +593,17 @@ class LdapTest extends BrowserKitTest
 
         $this->see('A user with the email tester@example.com already exists but with different credentials');
     }
+
+    public function test_failed_logins_are_logged_when_message_configured()
+    {
+        $log = $this->withTestLogger();
+        config()->set(['logging.failed_login.message' => 'Failed login for %u']);
+
+        $this->commonLdapMocks(1, 1, 1, 1, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->andReturn(['count' => 0]);
+
+        $this->post('/login', ['username' => 'timmyjenkins', 'password' => 'cattreedog']);
+        $this->assertTrue($log->hasWarningThatContains('Failed login for timmyjenkins'));
+    }
 }

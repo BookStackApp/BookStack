@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 
@@ -73,6 +75,19 @@ return [
             'level' => 'debug',
         ],
 
+        // Custom errorlog implementation that logs out a plain,
+        // non-formatted message intended for the webserver log.
+        'errorlog_plain_webserver' => [
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => ErrorLogHandler::class,
+            'handler_with' => [4],
+            'formatter' => LineFormatter::class,
+            'formatter_with' => [
+                'format' => "%message%",
+            ],
+        ],
+
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,
@@ -86,9 +101,12 @@ return [
         ],
     ],
 
-    // Failed Access Message
-    // Defines the message to log into webserver logs in case of failed access,
-    // for further processing by tools like Fail2Ban.
-    'failed_access_message' => env('FAILED_ACCESS_MESSAGE', ''),
+
+    // Failed Login Message
+    // Allows a configurable message to be logged when a login request fails.
+    'failed_login' => [
+        'message' => env('LOG_FAILED_LOGIN_MESSAGE', null),
+        'channel' => env('LOG_FAILED_LOGIN_CHANNEL', 'errorlog_plain_webserver'),
+    ],
 
 ];
