@@ -69,7 +69,10 @@ async function dataRequest(method, url, data = null) {
 
     // Send data as JSON if a plain object
     if (typeof data === 'object' && !(data instanceof FormData)) {
-        options.headers = {'Content-Type': 'application/json'};
+        options.headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+        };
         options.body = JSON.stringify(data);
     }
 
