@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use Activity;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
@@ -106,6 +107,9 @@ class LoginController extends Controller
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
+            // Also log some error message
+            Activity::logFailedAccess($request->get($this->username()));
+
             return $this->sendLockoutResponse($request);
         }
 
@@ -121,6 +125,9 @@ class LoginController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
+
+        // Also log some error message
+        Activity::logFailedAccess($request->get($this->username()));
 
         return $this->sendFailedLoginResponse($request);
     }
