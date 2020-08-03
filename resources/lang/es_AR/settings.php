@@ -171,7 +171,7 @@ return [
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Este es un identificador no editable generado por el sistema y único para este token que necesitará ser proporcionado en solicitudes de API.',
-    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret' => 'Clave de Token',
     'user_api_token_secret_desc' => 'Esta es una clave no editable generada por el sistema que necesitará ser proporcionada en solicitudes de API. Solo se monstraré esta vez así que guarde su valor en un lugar seguro.',
     'user_api_token_created' => 'Token creado :timeAgo',
     'user_api_token_updated' => 'Token actualizado :timeAgo',
