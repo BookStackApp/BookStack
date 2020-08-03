@@ -256,7 +256,7 @@ return [
     'attachments_upload' => 'Archivo adjuntado',
     'attachments_link' => 'Adjuntar enlace',
     'attachments_set_link' => 'Establecer enlace',
-    'attachments_delete' => 'Are you sure you want to delete this attachment?',
+    'attachments_delete' => '¿Está seguro que desea eliminar el archivo adjunto?',
     'attachments_dropzone' => 'Arrastre archivos aquí o presione aquí para adjuntar un archivo',
     'attachments_no_files' => 'No se adjuntó ningún archivo',
     'attachments_explain_link' => 'Usted puede agregar un enlace o si lo prefiere puede agregar un archivo. Esto puede ser un enlace a otra página o un enlace a un archivo en la nube.',
