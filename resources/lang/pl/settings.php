@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Dostęp do systemowego API',
     'role_manage_settings' => 'Zarządzanie ustawieniami aplikacji',
     'role_asset' => 'Zarządzanie zasobami',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Te ustawienia kontrolują zarządzanie zasobami systemu. Uprawnienia książek, rozdziałów i stron nadpisują te ustawienia.',
     'role_asset_admins' => 'Administratorzy mają automatycznie dostęp do wszystkich treści, ale te opcję mogą być pokazywać lub ukrywać opcje interfejsu użytkownika.',
     'role_all' => 'Wszyscy',
