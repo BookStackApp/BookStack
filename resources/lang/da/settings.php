@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Tilgå system-API',
     'role_manage_settings' => 'Administrer app-indstillinger',
     'role_asset' => 'Tilladelser for medier og "assets"',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Disse tilladelser kontrollerer standardadgang til medier og "assets" i systemet. Tilladelser til bøger, kapitler og sider tilsidesætter disse tilladelser.',
     'role_asset_admins' => 'Administratorer får automatisk adgang til alt indhold, men disse indstillinger kan vise eller skjule UI-indstillinger.',
     'role_all' => 'Alle',
