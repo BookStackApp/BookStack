@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Truy cập đến API hệ thống',
     'role_manage_settings' => 'Quản lý cài đặt của ứng dụng',
     'role_asset' => 'Quyền tài sản (asset)',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Các quyền này điều khiển truy cập mặc định tới tài sản (asset) nằm trong hệ thống. Quyền tại Sách, Chường và Trang se ghi đè các quyền này.',
     'role_asset_admins' => 'Quản trị viên được tự động cấp quyền truy cập đến toàn bộ nội dung, tuy nhiên các tùy chọn đó có thể hiện hoặc ẩn tùy chọn giao diện.',
     'role_all' => 'Tất cả',
