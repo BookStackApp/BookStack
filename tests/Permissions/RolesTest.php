@@ -2,10 +2,8 @@
 
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Page;
-use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
 use Laravel\BrowserKitTesting\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\BrowserKitTest;
 
 class RolesTest extends BrowserKitTest
@@ -852,7 +850,7 @@ class RolesTest extends BrowserKitTest
 
     private function addComment($page) {
         $comment = factory(\BookStack\Actions\Comment::class)->make();
-        $url = "/ajax/page/$page->id/comment";
+        $url = "/comment/$page->id";
         $request = [
             'text' => $comment->text,
             'html' => $comment->html
@@ -865,7 +863,7 @@ class RolesTest extends BrowserKitTest
 
     private function updateComment($commentId) {
         $comment = factory(\BookStack\Actions\Comment::class)->make();
-        $url = "/ajax/comment/$commentId";
+        $url = "/comment/$commentId";
         $request = [
             'text' => $comment->text,
             'html' => $comment->html
@@ -875,7 +873,7 @@ class RolesTest extends BrowserKitTest
     }
 
     private function deleteComment($commentId) {
-         $url = '/ajax/comment/' . $commentId;
+         $url = '/comment/' . $commentId;
          return $this->json('DELETE', $url);
     }
 
