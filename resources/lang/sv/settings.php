@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Åtkomst till systemets API',
     'role_manage_settings' => 'Hantera appinställningar',
     'role_asset' => 'Tillgång till innehåll',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',
     'role_asset_admins' => 'Administratörer har automatisk tillgång till allt innehåll men dessa alternativ kan visa och dölja vissa gränssnittselement',
     'role_all' => 'Alla',
