@@ -71,15 +71,14 @@ class RegistrationService
         // Start email confirmation flow if required
         if ($this->emailConfirmationService->confirmationRequired() && !$emailConfirmed) {
             $newUser->save();
-            $message = '';
 
             try {
                 $this->emailConfirmationService->sendConfirmation($newUser);
             } catch (Exception $e) {
                 $message = trans('auth.email_confirm_send_error');
+                throw new UserRegistrationException($message, '/register/confirm');
             }
 
-            throw new UserRegistrationException($message, '/register/confirm');
         }
 
         return $newUser;
