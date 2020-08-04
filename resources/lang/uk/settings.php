@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Керування налаштуваннями програми',
     'role_asset' => 'Дозволи',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Ці дозволи контролюють стандартні доступи всередині системи. Права на книги, розділи та сторінки перевизначать ці дозволи.',
     'role_asset_admins' => 'Адміністратори автоматично отримують доступ до всього вмісту, але ці параметри можуть відображати або приховувати параметри інтерфейсу користувача.',
     'role_all' => 'Все',
