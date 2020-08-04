@@ -106,6 +106,7 @@ return [
     'role_access_api' => '存取系統API',
     'role_manage_settings' => '管理App設定',
     'role_asset' => '資源項目',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => '對系統內資源的預設權限將由這裡的權限控制。若有單獨設定在書本、章節和頁面上的權限，將會覆蓋這裡的權限設定。',
     'role_asset_admins' => '管理員會自動獲得對所有內容的存取權限，但這些選項可能會顯示或隱藏UI的選項。',
     'role_all' => '全部',
