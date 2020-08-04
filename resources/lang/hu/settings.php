@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Hozzáférés a rendszer API-hoz',
     'role_manage_settings' => 'Alkalmazás beállításainak kezelése',
     'role_asset' => 'Eszköz jogosultságok',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Ezek a jogosultság vezérlik a alapértelmezés szerinti hozzáférést a rendszerben található eszközökhöz. A könyvek, fejezetek és oldalak jogosultságai felülírják ezeket a jogosultságokat.',
     'role_asset_admins' => 'Az adminisztrátorok automatikusan hozzáférést kapnak minden tartalomhoz, de ezek a beállítások megjeleníthetnek vagy elrejthetnek felhasználói felület beállításokat.',
     'role_all' => 'Összes',
