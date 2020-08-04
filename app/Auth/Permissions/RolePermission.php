@@ -3,6 +3,9 @@
 use BookStack\Auth\Role;
 use BookStack\Model;
 
+/**
+ * @property int $id
+ */
 class RolePermission extends Model
 {
     /**

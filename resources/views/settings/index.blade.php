@@ -231,7 +231,8 @@
                             <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
                             <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
                                 @foreach(\BookStack\Auth\Role::all() as $role)
-                                    <option value="{{$role->id}}" data-role-name="{{ $role->name }}"
+                                    <option value="{{$role->id}}"
+                                            data-system-role-name="{{ $role->system_name ?? '' }}"
                                             @if(setting('registration-role', \BookStack\Auth\Role::first()->id) == $role->id) selected @endif
                                     >
                                         {{ $role->display_name }}
