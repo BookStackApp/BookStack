@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Sistem programlama arayüzüne (API) eriş',
     'role_manage_settings' => 'Uygulama ayarlarını yönet',
     'role_asset' => 'Varlık Yetkileri',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Bu izinler, sistem içindeki varlıklara varsayılan erişim izinlerini ayarlar. Kitaplar, bölümler ve sayfalar üzerindeki izinler, buradaki izinleri geçersiz kılar.',
     'role_asset_admins' => 'Yöneticilere otomatik olarak bütün içeriğe erişim yetkisi verilir ancak bu seçenekler, kullanıcı arayüzündeki bazı seçeneklerin gösterilmesine veya gizlenmesine neden olabilir.',
     'role_all' => 'Hepsi',
