@@ -71,41 +71,56 @@ class OpenIdService extends ExternalAuthService
 
         $accessToken = new AccessToken(json_decode($json, true) ?? []);
 
-        // Check if both the access token and the ID token (if present) are unexpired
-        $idToken = $accessToken->getIdToken();
-        $accessTokenUnexpired = $accessToken->getExpires() && !$accessToken->hasExpired();
-        $idTokenUnexpired = !$idToken || !$idToken->isExpired(); 
-        if ($accessTokenUnexpired && $idTokenUnexpired) {
+        // If the token is not expired, refreshing isn't necessary
+        if ($this->isUnexpired($accessToken)) {
             return true;
         }
 
-        // If no refresh token available, logout
-        if ($accessToken->getRefreshToken() === null) {
-            $this->actionLogout();
-            return false;
-        }
-
-        // ID token or access token is expired, we refresh it using the refresh token
+        // Try to obtain refreshed access token
         try {
-            $provider = $this->getProvider();
-
-            $accessToken = $provider->getAccessToken('refresh_token', [
-                'refresh_token' => $accessToken->getRefreshToken(),
-            ]);
-        } catch (IdentityProviderException $e) {
-            // Refreshing failed, logout
-            $this->actionLogout();
-            return false;
+            $newAccessToken = $this->refreshAccessToken($accessToken);
         } catch (\Exception $e) {
-            // Unknown error, logout and throw
+            // Log out if an unknown problem arises
             $this->actionLogout();
             throw $e;
         }
 
-        // A valid token was obtained, we update the access token
-        session()->put('openid_token', json_encode($accessToken));
+        // If a token was obtained, update the access token, otherwise log out
+        if ($newAccessToken !== null) {
+            session()->put('openid_token', json_encode($newAccessToken));
+            return true;
+        } else {
+            $this->actionLogout();
+            return false;
+        }
+    }
 
-        return true;
+    protected function isUnexpired(AccessToken $accessToken): bool
+    {
+        $idToken = $accessToken->getIdToken();
+        
+        $accessTokenUnexpired = $accessToken->getExpires() && !$accessToken->hasExpired();
+        $idTokenUnexpired = !$idToken || !$idToken->isExpired(); 
+
+        return $accessTokenUnexpired && $idTokenUnexpired;
+    }
+
+    protected function refreshAccessToken(AccessToken $accessToken): ?AccessToken
+    {
+        // If no refresh token available, abort
+        if ($accessToken->getRefreshToken() === null) {
+            return null;
+        }
+
+        // ID token or access token is expired, we refresh it using the refresh token
+        try {
+            return $this->getProvider()->getAccessToken('refresh_token', [
+                'refresh_token' => $accessToken->getRefreshToken(),
+            ]);
+        } catch (IdentityProviderException $e) {
+            // Refreshing failed
+            return null;
+        }
     }
 
     /**
