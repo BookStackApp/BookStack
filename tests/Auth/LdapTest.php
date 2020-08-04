@@ -594,6 +594,48 @@ class LdapTest extends BrowserKitTest
         $this->see('A user with the email tester@example.com already exists but with different credentials');
     }
 
+    public function test_login_with_email_confirmation_required_maps_groups_but_shows_confirmation_screen()
+    {
+        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
+        $user = factory(User::class)->make();
+        setting()->put('registration-confirmation', 'true');
+
+        app('config')->set([
+            'services.ldap.user_to_groups' => true,
+            'services.ldap.group_attribute' => 'memberOf',
+            'services.ldap.remove_from_groups' => true,
+        ]);
+
+        $this->commonLdapMocks(1, 1, 3, 4, 3, 2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')
+            ->times(3)
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$user->name],
+                'cn' => [$user->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')],
+                'mail' => [$user->email],
+                'memberof' => [
+                    'count' => 1,
+                    0 => "cn=ldaptester,ou=groups,dc=example,dc=com",
+                ]
+            ]]);
+
+        $this->mockUserLogin()->seePageIs('/register/confirm/awaiting');
+        $this->seeInDatabase('users', [
+            'email' => $user->email,
+            'email_confirmed' => false,
+        ]);
+
+        $user  = User::query()->where('email', '=', $user->email)->first();
+        $this->seeInDatabase('role_user', [
+            'user_id' => $user->id,
+            'role_id' => $roleToReceive->id
+        ]);
+
+        $homePage = $this->get('/');
+        $homePage->assertRedirectedTo('/register/confirm/awaiting');
+    }
+
     public function test_failed_logins_are_logged_when_message_configured()
     {
         $log = $this->withTestLogger();
