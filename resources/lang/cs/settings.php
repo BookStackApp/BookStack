@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Přístup k API systému',
     'role_manage_settings' => 'Správa nastavení aplikace',
     'role_asset' => 'Práva děl',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Tato práva řídí přístup k dílům v rámci systému. Specifická práva na knihách, kapitolách a stránkách překryjí tato nastavení.',
     'role_asset_admins' => 'Administrátoři automaticky dostávají přístup k veškerému obsahu, ale tyto volby mohou ukázat nebo skrýt volby v uživatelském rozhraní.',
     'role_all' => 'Vše',
