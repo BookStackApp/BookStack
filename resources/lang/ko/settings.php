@@ -106,6 +106,7 @@ return [
     'role_access_api' => '시스템 접근 API',
     'role_manage_settings' => '사이트 설정 관리',
     'role_asset' => '권한 항목',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => '책자, 챕터, 문서별 권한은 이 설정에 우선합니다.',
     'role_asset_admins' => 'Admin 권한은 어디든 접근할 수 있지만 이 설정은 사용자 인터페이스에서 해당 활동을 표시할지 결정합니다.',
     'role_all' => '모든 항목',
