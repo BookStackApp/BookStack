@@ -107,6 +107,7 @@ return [
     'role_access_api' => 'API de sistema de acceso',
     'role_manage_settings' => 'Gestionar ajustes de activos',
     'role_asset' => 'Permisos de activos',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos a Libros, Capítulos y Páginas sobreescribiran estos permisos.',
     'role_asset_admins' => 'Los administradores reciben automáticamente acceso a todo el contenido pero estas opciones pueden mostrar u ocultar opciones de UI.',
     'role_all' => 'Todo',
