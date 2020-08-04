@@ -213,13 +213,14 @@ class AuthTest extends BrowserKitTest
     public function test_user_creation()
     {
         $user = factory(User::class)->make();
+        $adminRole = Role::getRole('admin');
 
         $this->asAdmin()
             ->visit('/settings/users')
             ->click('Add New User')
             ->type($user->name, '#name')
             ->type($user->email, '#email')
-            ->check('roles[admin]')
+            ->check("roles[{$adminRole->id}]")
             ->type($user->password, '#password')
             ->type($user->password, '#password-confirm')
             ->press('Save')
