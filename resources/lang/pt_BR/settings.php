@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Acessar API do sistema',
     'role_manage_settings' => 'Gerenciar configurações da aplicação',
     'role_asset' => 'Permissões de Ativos',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Essas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por essas permissões.',
     'role_asset_admins' => 'Administradores recebem automaticamente acesso a todo o conteúdo, mas essas opções podem mostrar ou ocultar as opções da Interface de Usuário.',
     'role_all' => 'Todos',
