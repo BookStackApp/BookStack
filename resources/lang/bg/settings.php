@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Достъп до API на системата',
     'role_manage_settings' => 'Управление на настройките на приложението',
     'role_asset' => 'Настройки за достъп до активи',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Тези настойки за достъп контролират достъпа по подразбиране до активите в системата. Настойките за достъп до книги, глави и страници ще отменят тези настройки.',
     'role_asset_admins' => 'Администраторите автоматично получават достъп до цялото съдържание, но тези опции могат да показват или скриват опциите за потребителския интерфейс.',
     'role_all' => 'Всички',
