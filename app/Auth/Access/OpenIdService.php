@@ -95,6 +95,9 @@ class OpenIdService extends ExternalAuthService
         }
     }
 
+    /**
+     * Check whether an access token or OpenID token isn't expired.
+     */
     protected function isUnexpired(AccessToken $accessToken): bool
     {
         $idToken = $accessToken->getIdToken();
@@ -105,6 +108,10 @@ class OpenIdService extends ExternalAuthService
         return $accessTokenUnexpired && $idTokenUnexpired;
     }
 
+    /**
+     * Generate an updated access token, through the associated refresh token.
+     * @throws Error
+     */
     protected function refreshAccessToken(AccessToken $accessToken): ?AccessToken
     {
         // If no refresh token available, abort
