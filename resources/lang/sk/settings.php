@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Spravovať nastavenia aplikácie',
     'role_asset' => 'Oprávnenia majetku',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Tieto oprávnenia regulujú prednastavený prístup k zdroju v systéme. Oprávnenia pre knihy, kapitoly a stránky majú vyššiu prioritu.',
     'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'Všetko',
