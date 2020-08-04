@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Gestire impostazioni app',
     'role_asset' => 'Permessi Entità',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Questi permessi controllano l\'accesso di default alle entità. I permessi nei Libri, Capitoli e Pagine sovrascriveranno questi.',
     'role_asset_admins' => 'Gli amministratori hanno automaticamente accesso a tutti i contenuti ma queste opzioni possono mostrare o nascondere le opzioni della UI.',
     'role_all' => 'Tutti',
