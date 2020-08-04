@@ -8,7 +8,6 @@ use Exception;
 use Lcobucci\JWT\Token;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use OpenIDConnectClient\AccessToken;
-use OpenIDConnectClient\Exception\InvalidTokenException;
 use OpenIDConnectClient\OpenIDConnectProvider;
 
 /**
@@ -63,11 +62,20 @@ class OpenIdService extends ExternalAuthService
     {
         // Retrieve access token for current session
         $json = session()->get('openid_token');
+
+        // If no access token was found, reject the refresh
+        if (!$json) {
+            $this->actionLogout();
+            return false;
+        }
+
         $accessToken = new AccessToken(json_decode($json, true) ?? []);
 
         // Check if both the access token and the ID token (if present) are unexpired
         $idToken = $accessToken->getIdToken();
-        if (!$accessToken->hasExpired() && (!$idToken || !$idToken->isExpired())) {
+        $accessTokenUnexpired = $accessToken->getExpires() && !$accessToken->hasExpired();
+        $idTokenUnexpired = !$idToken || !$idToken->isExpired(); 
+        if ($accessTokenUnexpired && $idTokenUnexpired) {
             return true;
         }
 
