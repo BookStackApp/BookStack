@@ -106,6 +106,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Beheer app instellingen',
     'role_asset' => 'Asset Permissies',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Deze permissies bepalen de standaardtoegangsrechten. Permissies op boeken, hoofdstukken en pagina\'s overschrijven deze instelling.',
     'role_asset_admins' => 'Beheerders krijgen automatisch toegang tot alle inhoud, maar deze opties kunnen interface opties tonen of verbergen.',
     'role_all' => 'Alles',
