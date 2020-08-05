@@ -11,7 +11,7 @@ return [
     // Attribute, within a OpenId token, to find the user's email address
     'email_attribute' => env('OPENID_EMAIL_ATTRIBUTE', 'email'),
     // Attribute, within a OpenId token, to find the user's display name
-    'display_name_attributes' => explode('|', env('OPENID_DISPLAY_NAME_ATTRIBUTES', 'username')),
+    'display_name_attributes' => explode('|', env('OPENID_DISPLAY_NAME_ATTRIBUTES', 'name')),
     // Attribute, within a OpenId token, to use to connect a BookStack user to the OpenId user.
     'external_id_attribute' => env('OPENID_EXTERNAL_ID_ATTRIBUTE', null),
 
