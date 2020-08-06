@@ -30,7 +30,10 @@ class DrawioImageController extends Controller
         $parentTypeFilter = $request->get('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('drawio', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
-        return response()->json($imgData);
+        return view('components.image-manager-list', [
+            'images' => $imgData['images'],
+            'hasMore' => $imgData['has_more'],
+        ]);
     }
 
     /**
@@ -72,6 +75,7 @@ class DrawioImageController extends Controller
         if ($imageData === null) {
             return $this->jsonError("Image data could not be found");
         }
+
         return response()->json([
             'content' => base64_encode($imageData)
         ]);

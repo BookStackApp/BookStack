@@ -6,6 +6,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 use BookStack\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class GalleryImageController extends Controller
 {
@@ -13,7 +14,6 @@ class GalleryImageController extends Controller
 
     /**
      * GalleryImageController constructor.
-     * @param ImageRepo $imageRepo
      */
     public function __construct(ImageRepo $imageRepo)
     {
@@ -24,8 +24,6 @@ class GalleryImageController extends Controller
     /**
      * Get a list of gallery images, in a list.
      * Can be paged and filtered by entity.
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function list(Request $request)
     {
@@ -35,14 +33,15 @@ class GalleryImageController extends Controller
         $parentTypeFilter = $request->get('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('gallery', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
-        return response()->json($imgData);
+        return view('components.image-manager-list', [
+            'images' => $imgData['images'],
+            'hasMore' => $imgData['has_more'],
+        ]);
     }
 
     /**
      * Store a new gallery image in the system.
-     * @param Request $request
-     * @return Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @throws ValidationException
      */
     public function create(Request $request)
     {

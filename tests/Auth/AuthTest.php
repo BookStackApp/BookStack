@@ -213,13 +213,14 @@ class AuthTest extends BrowserKitTest
     public function test_user_creation()
     {
         $user = factory(User::class)->make();
+        $adminRole = Role::getRole('admin');
 
         $this->asAdmin()
             ->visit('/settings/users')
             ->click('Add New User')
             ->type($user->name, '#name')
             ->type($user->email, '#email')
-            ->check('roles[admin]')
+            ->check("roles[{$adminRole->id}]")
             ->type($user->password, '#password')
             ->type($user->password, '#password-confirm')
             ->press('Save')
@@ -381,6 +382,17 @@ class AuthTest extends BrowserKitTest
             ->seePageUrlIs($page->getUrl());
     }
 
+    public function test_login_intended_redirect_does_not_redirect_to_external_pages()
+    {
+        config()->set('app.url', 'http://localhost');
+        $this->setSettings(['app-public' => true]);
+
+        $this->get('/login', ['referer' => 'https://example.com']);
+        $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+
+        $login->assertRedirectedTo('http://localhost');
+    }
+
     public function test_login_authenticates_admins_on_all_guards()
     {
         $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
@@ -399,6 +411,18 @@ class AuthTest extends BrowserKitTest
         $this->assertTrue(auth()->check());
         $this->assertFalse(auth('ldap')->check());
         $this->assertFalse(auth('saml2')->check());
+    }
+
+    public function test_failed_logins_are_logged_when_message_configured()
+    {
+        $log = $this->withTestLogger();
+        config()->set(['logging.failed_login.message' => 'Failed login for %u']);
+
+        $this->post('/login', ['email' => 'admin@example.com', 'password' => 'cattreedog']);
+        $this->assertTrue($log->hasWarningThatContains('Failed login for admin@example.com'));
+
+        $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $this->assertFalse($log->hasWarningThatContains('Failed login for admin@admin.com'));
     }
 
     /**

@@ -109,14 +109,14 @@ class AttachmentService extends UploadService
     }
 
     /**
-     * Updates the file ordering for a listing of attached files.
-     * @param array $attachmentList
-     * @param $pageId
+     * Updates the ordering for a listing of attached files.
      */
-    public function updateFileOrderWithinPage($attachmentList, $pageId)
+    public function updateFileOrderWithinPage(array $attachmentOrder, string $pageId)
     {
-        foreach ($attachmentList as $index => $attachment) {
-            Attachment::where('uploaded_to', '=', $pageId)->where('id', '=', $attachment['id'])->update(['order' => $index]);
+        foreach ($attachmentOrder as $index => $attachmentId) {
+            Attachment::query()->where('uploaded_to', '=', $pageId)
+                ->where('id', '=', $attachmentId)
+                ->update(['order' => $index]);
         }
     }
 

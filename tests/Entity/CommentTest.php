@@ -13,7 +13,7 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $comment = factory(Comment::class)->make(['parent_id' => 2]);
-        $resp = $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+        $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $resp->assertStatus(200);
         $resp->assertSee($comment->text);
@@ -36,11 +36,11 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $comment = factory(Comment::class)->make();
-        $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+        $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
         $newText = 'updated text content';
-        $resp = $this->putJson("/ajax/comment/$comment->id", [
+        $resp = $this->putJson("/comment/$comment->id", [
             'text' => $newText,
         ]);
 
@@ -60,11 +60,11 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $comment = factory(Comment::class)->make();
-        $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+        $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
 
-        $resp = $this->delete("/ajax/comment/$comment->id");
+        $resp = $this->delete("/comment/$comment->id");
         $resp->assertStatus(200);
 
         $this->assertDatabaseMissing('comments', [
@@ -75,7 +75,7 @@ class CommentTest extends TestCase
     public function test_comments_converts_markdown_input_to_html()
     {
         $page = Page::first();
-        $this->asAdmin()->postJson("/ajax/page/$page->id/comment", [
+        $this->asAdmin()->postJson("/comment/$page->id", [
             'text' => '# My Title',
         ]);
 
@@ -96,7 +96,7 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $script = '<script>const a = "script";</script>\n\n# sometextinthecomment';
-        $this->postJson("/ajax/page/$page->id/comment", [
+        $this->postJson("/comment/$page->id", [
             'text' => $script,
         ]);
 
@@ -105,7 +105,7 @@ class CommentTest extends TestCase
         $pageView->assertSee('sometextinthecomment');
 
         $comment = $page->comments()->first();
-        $this->putJson("/ajax/comment/$comment->id", [
+        $this->putJson("/comment/$comment->id", [
             'text' => $script . 'updated',
         ]);
 

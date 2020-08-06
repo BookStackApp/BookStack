@@ -36,7 +36,7 @@ class AttachmentTest extends TestCase
     protected function deleteUploads()
     {
         $fileService = $this->app->make(\BookStack\Uploads\AttachmentService::class);
-        foreach (\BookStack\Uploads\Attachment::all() as $file) {
+        foreach (Attachment::all() as $file) {
             $fileService->deleteFile($file);
         }
     }
@@ -110,12 +110,12 @@ class AttachmentTest extends TestCase
         $this->asAdmin();
 
         $linkReq = $this->call('POST', 'attachments/link', [
-            'link' => 'https://example.com',
-            'name' => 'Example Attachment Link',
-            'uploaded_to' => $page->id,
+            'attachment_link_url' => 'https://example.com',
+            'attachment_link_name' => 'Example Attachment Link',
+            'attachment_link_uploaded_to' => $page->id,
         ]);
 
-        $expectedResp = [
+        $expectedData = [
             'path' => 'https://example.com',
             'name' => 'Example Attachment Link',
             'uploaded_to' => $page->id,
@@ -127,8 +127,7 @@ class AttachmentTest extends TestCase
         ];
 
         $linkReq->assertStatus(200);
-        $linkReq->assertJson($expectedResp);
-        $this->assertDatabaseHas('attachments', $expectedResp);
+        $this->assertDatabaseHas('attachments', $expectedData);
         $attachment = Attachment::orderBy('id', 'desc')->take(1)->first();
 
         $pageGet = $this->get($page->getUrl());
@@ -147,28 +146,27 @@ class AttachmentTest extends TestCase
         $this->asAdmin();
 
         $this->call('POST', 'attachments/link', [
-            'link' => 'https://example.com',
-            'name' => 'Example Attachment Link',
-            'uploaded_to' => $page->id,
+            'attachment_link_url' => 'https://example.com',
+            'attachment_link_name' => 'Example Attachment Link',
+            'attachment_link_uploaded_to' => $page->id,
         ]);
 
-        $attachmentId = \BookStack\Uploads\Attachment::first()->id;
+        $attachmentId = Attachment::first()->id;
 
         $update = $this->call('PUT', 'attachments/' . $attachmentId, [
-            'uploaded_to' => $page->id,
-            'name' => 'My new attachment name',
-            'link' => 'https://test.example.com'
+            'attachment_edit_name' => 'My new attachment name',
+            'attachment_edit_url' => 'https://test.example.com'
         ]);
 
-        $expectedResp = [
+        $expectedData = [
+            'id' => $attachmentId,
             'path' => 'https://test.example.com',
             'name' => 'My new attachment name',
             'uploaded_to' => $page->id
         ];
 
         $update->assertStatus(200);
-        $update->assertJson($expectedResp);
-        $this->assertDatabaseHas('attachments', $expectedResp);
+        $this->assertDatabaseHas('attachments', $expectedData);
 
         $this->deleteUploads();
     }
@@ -184,7 +182,7 @@ class AttachmentTest extends TestCase
         $filePath = storage_path($attachment->path);
         $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
 
-        $attachment = \BookStack\Uploads\Attachment::first();
+        $attachment = Attachment::first();
         $this->delete($attachment->getUrl());
 
         $this->assertDatabaseMissing('attachments', [
