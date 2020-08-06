@@ -117,7 +117,7 @@ class AuthTest extends BrowserKitTest
             ->type($user->email, '#email')
             ->type($user->password, '#password')
             ->press('Create Account')
-            ->seePageIs('/register/confirm')
+            ->seePageIs('/register/confirm/awaiting')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
         // Ensure notification sent
@@ -167,8 +167,10 @@ class AuthTest extends BrowserKitTest
             ->type($user->email, '#email')
             ->type($user->password, '#password')
             ->press('Create Account')
-            ->seePageIs('/register/confirm')
+            ->seePageIs('/register/confirm/awaiting')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
+
+        $this->visit('/')->click('Logout');
 
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
@@ -199,8 +201,10 @@ class AuthTest extends BrowserKitTest
             ->type($user->email, '#email')
             ->type($user->password, '#password')
             ->press('Create Account')
-            ->seePageIs('/register/confirm')
+            ->seePageIs('/register/confirm/awaiting')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
+
+        $this->visit('/')->click('Logout');
 
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
