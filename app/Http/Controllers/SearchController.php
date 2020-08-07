@@ -38,10 +38,9 @@ class SearchController extends Controller
         $fullSearchString = $searchOpts->toString();
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
-        $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page+1));
+        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($this->getPageNumber() + 1));
 
-        $results = $this->searchService->searchEntities($searchOpts, 'all', $page, 20);
+        $results = $this->searchService->searchEntities($searchOpts, 'all', $this->getPageNumber(), 20);
 
         return view('search.all', [
             'entities'   => $results['results'],
@@ -137,5 +136,15 @@ class SearchController extends Controller
         }
 
         return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
+    }
+
+    private function getPageNumber()
+    {
+        $page = request()->get('page');
+        if(empty($page) || intval($page) === 0) {
+            return 1;
+        }
+
+        return intval($page);
     }
 }
