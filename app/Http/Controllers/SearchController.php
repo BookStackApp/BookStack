@@ -38,7 +38,7 @@ class SearchController extends Controller
         $fullSearchString = $searchOpts->toString();
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
-        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($this->getPageNumber() + 1));
+        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . $this->getNextPageNumber() );
 
         $results = $this->searchService->searchEntities($searchOpts, 'all', $this->getPageNumber(), 20);
 
@@ -146,5 +146,10 @@ class SearchController extends Controller
         }
 
         return intval($page);
+    }
+
+    private function getNextPageNumber()
+    {
+        return $this->getPageNumber() + 1;
     }
 }
