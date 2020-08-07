@@ -57,20 +57,32 @@ class SearchService
     }
 
     private function getEntityTypesToSearch($whichEntityTypeToSearch, $searchOpts){
+        $types = array_keys($this->entityProvider->all());
         if ($whichEntityTypeToSearch !== 'all') {
-            return $whichEntityTypeToSearch;
-        }
-        if ($this->existFilterType($searchOpts)) {
-            return explode('|', $searchOpts->filters['type']);
+            $types = $whichEntityTypeToSearch;
+        } else if ($this->existFilterType($searchOpts)) {
+            $types = explode('|', $searchOpts->filters['type']);
         }
 
-        return array_keys($this->entityProvider->all());
+        return $this->filterEntityTypes($types);
     }
 
     private function existFilterType($searchOpts)
     {
         return   isset($searchOpts->filters['type'])
             && ( ! empty($searchOpts->filters['type']) );
+    }
+
+    private function filterEntityTypes($entityTypes)
+    {
+        $validEntityTypes = [];
+        foreach ($entityTypes as $entityType) {
+            if (in_array($entityType, array_keys($this->entityProvider->all()))) {
+                array_push($validEntityTypes, $entityType);
+            }
+        }
+
+        return $validEntityTypes;
     }
 
     /**
@@ -80,6 +92,7 @@ class SearchService
      */
     public function searchEntities(SearchOptions $searchOpts, string $whichEntityTypeToSearch = 'all', int $page = 1, int $count = 20, string $action = 'view'): array
     {
+
         $entityTypesToSearch = $this->getEntityTypesToSearch($whichEntityTypeToSearch, $searchOpts);
 
         $results = collect();
@@ -87,9 +100,6 @@ class SearchService
         $hasMore = false;
 
         foreach ($entityTypesToSearch as $entityType) {
-            if (!in_array($entityType, array_keys($this->entityProvider->all()))) {
-                continue;
-            }
             $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
             $entityTotal = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action, true);
             if ($entityTotal > $page * $count) {
