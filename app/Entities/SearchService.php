@@ -56,28 +56,38 @@ class SearchService
         $this->db = $connection;
     }
 
+    private function getEntityTypesToSearch($whichEntityTypeToSearch, $searchOpts){
+        if ($whichEntityTypeToSearch !== 'all') {
+            return $whichEntityTypeToSearch;
+        }
+        if ($this->existFilterType($searchOpts)) {
+            return explode('|', $searchOpts->filters['type']);
+        }
+
+        return array_keys($this->entityProvider->all());
+    }
+
+    private function existFilterType($searchOpts)
+    {
+        return   isset($searchOpts->filters['type'])
+            && ( ! empty($searchOpts->filters['type']) );
+    }
+
     /**
      * Search all entities in the system.
      * The provided count is for each entity to search,
      * Total returned could can be larger and not guaranteed.
      */
-    public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20, string $action = 'view'): array
+    public function searchEntities(SearchOptions $searchOpts, string $whichEntityTypeToSearch = 'all', int $page = 1, int $count = 20, string $action = 'view'): array
     {
-        $entityTypes = array_keys($this->entityProvider->all());
-        $entityTypesToSearch = $entityTypes;
-
-        if ($entityType !== 'all') {
-            $entityTypesToSearch = $entityType;
-        } else if (isset($searchOpts->filters['type'])) {
-            $entityTypesToSearch = explode('|', $searchOpts->filters['type']);
-        }
+        $entityTypesToSearch = $this->getEntityTypesToSearch($whichEntityTypeToSearch, $searchOpts);
 
         $results = collect();
         $total = 0;
         $hasMore = false;
 
         foreach ($entityTypesToSearch as $entityType) {
-            if (!in_array($entityType, $entityTypes)) {
+            if (!in_array($entityType, array_keys($this->entityProvider->all()))) {
                 continue;
             }
             $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
