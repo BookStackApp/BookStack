@@ -100,8 +100,9 @@ class SearchService
         $hasMore = false;
 
         foreach ($entityTypesToSearch as $entityType) {
-            $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
-            $entityTotal = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action, true);
+            $search = $this->buildEntitySearchQuery($searchOpts, $entityType, $action)
+                                               ->skip(($page-1) * $count)->take($count)->get();
+            $entityTotal = $this->buildEntitySearchQuery($searchOpts, $entityType, $action)->count();
             if ($entityTotal > $page * $count) {
                 $hasMore = true;
             }
@@ -146,23 +147,6 @@ class SearchService
         $opts = SearchOptions::fromString($searchString);
         $pages = $this->buildEntitySearchQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
         return $pages->sortByDesc('score');
-    }
-
-    /**
-     * Search across a particular entity type.
-     * Setting getCount = true will return the total
-     * matching instead of the items themselves.
-     * @return \Illuminate\Database\Eloquent\Collection|int|static[]
-     */
-    public function searchEntityTable(SearchOptions $searchOpts, string $entityType = 'page', int $page = 1, int $count = 20, string $action = 'view', bool $getCount = false)
-    {
-        $query = $this->buildEntitySearchQuery($searchOpts, $entityType, $action);
-        if ($getCount) {
-            return $query->count();
-        }
-
-        $query = $query->skip(($page-1) * $count)->take($count);
-        return $query->get();
     }
 
     /**
