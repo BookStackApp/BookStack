@@ -6,20 +6,20 @@
 return [
 
     // Pages
-    'page_create'                 => '建立了頁面',
+    'page_create'                 => '已建立頁面',
     'page_create_notification'    => '頁面已建立成功',
-    'page_update'                 => '更新了頁面',
+    'page_update'                 => '已更新頁面',
     'page_update_notification'    => '頁面已更新成功',
-    'page_delete'                 => '刪除了頁面',
+    'page_delete'                 => '已刪除頁面',
     'page_delete_notification'    => '頁面已刪除成功',
-    'page_restore'                => '恢複了頁面',
-    'page_restore_notification'   => '頁面已恢複成功',
+    'page_restore'                => '已還原頁面',
+    'page_restore_notification'   => '頁面已還原成功',
     'page_move'                   => '移動了頁面',
 
     // Chapters
-    'chapter_create'              => '建立了章節',
+    'chapter_create'              => '已建立章節',
     'chapter_create_notification' => '章節已建立成功',
-    'chapter_update'              => '更新了章節',
+    'chapter_update'              => '已更新章節',
     'chapter_update_notification' => '章節已建立成功',
     'chapter_delete'              => '刪除了章節',
     'chapter_delete_notification' => '章節已刪除成功',
