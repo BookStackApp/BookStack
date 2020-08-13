@@ -29,6 +29,6 @@ return [
     'code_editor' => 'Upraviť kód',
     'code_language' => 'Kód jazyka',
     'code_content' => 'Obsah kódu',
-    'code_session_history' => 'Session History',
-    'code_save' => 'Save Code',
+    'code_session_history' => 'História relácií',
+    'code_save' => 'Ulož kód',
 ];
