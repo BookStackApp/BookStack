@@ -34,7 +34,7 @@ return [
     'reply' => 'Odpovedať',
     'delete' => 'Zmazať',
     'delete_confirm' => 'Potvrdiť zmazanie',
-    'search' => 'Hľadť',
+    'search' => 'Hľadať',
     'search_clear' => 'Vyčistiť hľadanie',
     'reset' => 'Resetovať',
     'remove' => 'Odstrániť',
