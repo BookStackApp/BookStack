@@ -116,6 +116,12 @@ return [
         'auto_confirm' => env('DISCORD_AUTO_CONFIRM_EMAIL', false),
     ],
 
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+    ],
+
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
         'dump_user_details' => env('LDAP_DUMP_USER_DETAILS', false),
