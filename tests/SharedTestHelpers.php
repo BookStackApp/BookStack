@@ -271,7 +271,7 @@ trait SharedTestHelpers
     protected function assertPermissionError($response)
     {
         if ($response instanceof BrowserKitTest) {
-            $response = \Illuminate\Foundation\Testing\TestResponse::fromBaseResponse($response->response);
+            $response = \Illuminate\Testing\TestResponse::fromBaseResponse($response->response);
         }
 
         $response->assertRedirect('/');

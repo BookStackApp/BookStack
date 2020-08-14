@@ -1,6 +1,6 @@
 <?php namespace Tests;
 
-use \Illuminate\Foundation\Testing\TestResponse as BaseTestResponse;
+use \Illuminate\Testing\TestResponse as BaseTestResponse;
 use Symfony\Component\DomCrawler\Crawler;
 use PHPUnit\Framework\Assert as PHPUnit;
 
