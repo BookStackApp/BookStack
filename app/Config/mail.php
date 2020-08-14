@@ -12,7 +12,7 @@ return [
 
     // Mail driver to use.
     // Options: smtp, mail, sendmail, log
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_MAILER', 'smtp'),
 
     // SMTP host address
     'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
