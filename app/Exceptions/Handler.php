@@ -2,6 +2,7 @@
 
 namespace BookStack\Exceptions;
 
+use Throwable;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -34,9 +35,9 @@ class Handler extends ExceptionHandler
      *
      * @param  \Exception $e
      * @return mixed
-     * @throws Exception
+     * @throws \Throwable
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
         return parent::report($e);
     }
@@ -48,7 +49,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         if ($this->isApiRequest($request)) {
             return $this->renderApiException($e);
