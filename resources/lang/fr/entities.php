@@ -88,7 +88,7 @@ return [
     'shelves_edit' => 'Modifier l\'étagère',
     'shelves_delete' => 'Supprimer l\'étagère',
     'shelves_delete_named' => 'Supprimer l\'étagère :name',
-    'shelves_delete_explain' => "Ceci va supprimer l\\'étagère nommée \\':bookName\\'. Les livres contenus dans cette étagère ne seront pas supprimés.",
+    'shelves_delete_explain' => "Ceci va supprimer l'étagère nommée ':name'. Les livres contenus dans cette étagère ne seront pas supprimés.",
     'shelves_delete_confirmation' => 'Êtes-vous sûr(e) de vouloir supprimer cette étagère ?',
     'shelves_permissions' => 'Permissions de l\'étagère',
     'shelves_permissions_updated' => 'Permissions de l\'étagère mises à jour',
