@@ -7,7 +7,7 @@
 return [
 
     'failed' => '使用者名稱或密碼錯誤。',
-    'throttle' => '您的登入次數過多，請在:秒後重試。',
+    'throttle' => '您的登入次數過多，請在:seconds秒後重試。',
 
     // Login & Register
     'sign_up' => '註冊',
@@ -43,7 +43,7 @@ return [
     'reset_password' => '重置密碼',
     'reset_password_send_instructions' => '在下方輸入您的電子郵件，您將收到一封帶有密碼重置連結的郵件。',
     'reset_password_send_button' => '發送重置連結',
-    'reset_password_sent' => '重置密碼的連結會發送至電子郵件 (如果此電子郵件在我們的系統中存在) ',
+    'reset_password_sent' => '重置密碼的連結會發送至電子郵件地址:email（如果系統記錄中存在此電子郵件地址）',
     'reset_password_success' => '您的密碼已成功重置。',
     'email_reset_subject' => '重置您的:appName密碼',
     'email_reset_text' => '您收到此電子郵件是因為我們收到了您的帳號的密碼重置請求。',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => '重新發送確認Email',
 
     // User Invite
-    'user_invite_email_subject' => '您被邀請加入:bookstack！',
-    'user_invite_email_greeting' => '我們為您在bookstack上創建了一個新賬戶。',
+    'user_invite_email_subject' => '您受邀請加入:appName！',
+    'user_invite_email_greeting' => '我們為您在:appName上創建了一個新賬戶。',
     'user_invite_email_text' => '請點擊下面的按鈕設置賬戶密碼并獲取訪問權限:',
     'user_invite_email_action' => '請設置賬戶密碼',
-    'user_invite_page_welcome' => '歡迎使用:bookstack',
-    'user_invite_page_text' => '要完善您的賬戶并獲取訪問權限，您需要設置一個密碼，該密碼將在以後訪問時用於登陸:bookstack',
+    'user_invite_page_welcome' => '歡迎使用:appName',
+    'user_invite_page_text' => '要完成設置您的賬戶並獲取訪問權限，您需要設置一個密碼。該密碼將在以後訪問時用於登陸:appName',
     'user_invite_page_confirm_button' => '請確定密碼',
-    'user_invite_success' => '密碼已設置，您現在可以進入:bookstack了啦'
+    'user_invite_success' => '密碼已設置，您現在可以進入:appName了啦！'
 ];
