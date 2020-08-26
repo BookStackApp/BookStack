@@ -106,7 +106,7 @@ return [
     'role_access_api' => 'Доступ к системному API',
     'role_manage_settings' => 'Управление настройками приложения',
     'role_asset' => 'Права доступа к материалам',
-    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
+    'roles_system_warning' => 'Имейте в виду, что доступ к любому из указанных выше трех разрешений может позволить пользователю изменить свои собственные привилегии или привилегии других пользователей системы. Назначить роли с этими правами только доверенным пользователям.',
     'role_asset_desc' => 'Эти разрешения контролируют доступ по умолчанию к параметрам внутри системы. Разрешения на книги, главы и страницы перезапишут эти разрешения.',
     'role_asset_admins' => 'Администраторы автоматически получают доступ ко всему контенту, но эти опции могут отображать или скрывать параметры пользовательского интерфейса.',
     'role_all' => 'Все',
