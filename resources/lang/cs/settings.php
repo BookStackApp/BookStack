@@ -15,7 +15,7 @@ return [
     'app_customization' => 'Customization',
     'app_features_security' => 'Features & Security',
     'app_name' => 'Název aplikace',
-    'app_name_desc' => 'Název se bude zobrazovat v záhlaví této aplikace a v odesílaných emailech.',
+    'app_name_desc' => 'Název se bude zobrazovat v záhlaví této aplikace a v odesílaných e-mailech.',
     'app_name_header' => 'Zobrazovát název aplikace v záhlaví?',
     'app_public_access' => 'Public Access',
     'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
@@ -59,9 +59,9 @@ return [
     'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
     'reg_email_confirmation' => 'Email Confirmation',
     'reg_email_confirmation_toggle' => 'Require email confirmation',
-    'reg_confirm_email_desc' => 'Pokud zapnete omezení emailové domény, tak bude ověřování emailové adresy vyžadováno vždy.',
+    'reg_confirm_email_desc' => 'Pokud zapnete omezení e-mailové domény, tak bude ověřování e-mailové adresy vyžadováno vždy.',
     'reg_confirm_restrict_domain' => 'Omezit registraci podle domény',
-    'reg_confirm_restrict_domain_desc' => 'Zadejte emailové domény, kterým bude povolena registrace uživatelů. Oddělujete čárkou. Uživatelům bude odeslán email s odkazem pro potvrzení vlastnictví emailové adresy. Bez potvrzení nebudou moci aplikaci používat. <br> Pozn.: Uživatelé si mohou emailovou adresu změnit po úspěšné registraci.',
+    'reg_confirm_restrict_domain_desc' => 'Zadejte e-mailové domény, kterým bude povolena registrace uživatelů. Oddělujete čárkou. Uživatelům bude odeslán e-mail s odkazem pro potvrzení vlastnictví e-mailové adresy. Bez potvrzení nebudou moci aplikaci používat. <br> Pozn.: Uživatelé si mohou e-mailovou adresu změnit po úspěšné registraci.',
     'reg_confirm_restrict_domain_placeholder' => 'Žádná omezení nebyla nastvena',
 
     // Maintenance settings
