@@ -13,6 +13,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \BookStack\Http\Middleware\TrimStrings::class,
         \BookStack\Http\Middleware\TrustProxies::class,
+        \BookStack\Http\Middleware\SsoLogin::class
     ];
 
     /**
