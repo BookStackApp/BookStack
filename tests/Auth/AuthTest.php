@@ -170,6 +170,11 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
+        $this->visit('/')
+            ->seePageIs('/register/confirm/awaiting');
+
+        auth()->logout();
+
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
             ->type($user->password, '#password')
@@ -202,6 +207,10 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
+        $this->visit('/')
+            ->seePageIs('/register/confirm/awaiting');
+
+        auth()->logout();
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
             ->type($user->password, '#password')

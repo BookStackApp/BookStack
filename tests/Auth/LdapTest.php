@@ -620,7 +620,7 @@ class LdapTest extends BrowserKitTest
                 ]
             ]]);
 
-        $this->mockUserLogin()->seePageIs('/register/confirm/awaiting');
+        $this->mockUserLogin()->seePageIs('/register/confirm');
         $this->seeInDatabase('users', [
             'email' => $user->email,
             'email_confirmed' => false,
