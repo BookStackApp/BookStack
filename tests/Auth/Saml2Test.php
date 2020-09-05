@@ -304,7 +304,9 @@ class Saml2Test extends TestCase
 
         $this->withPost(['SAMLResponse' => $this->acsPostData], function () use ($memberRole, $adminRole) {
             $acsPost = $this->followingRedirects()->post('/saml2/acs');
-            $acsPost->assertSee('Your email address has not yet been confirmed');
+
+            $this->assertEquals('http://localhost/register/confirm', url()->current());
+            $acsPost->assertSee('Please check your email and click the confirmation button to access BookStack.');
             $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
             $userRoleIds = $user->roles()->pluck('id');
