@@ -51,7 +51,7 @@ All development on BookStack is currently done on the master branch. When it's t
 
 * [Node.js](https://nodejs.org/en/) v10.0+
 
-This project uses SASS for CSS development and this is built, along with the JavaScript, using webpack. The below npm commands can be used to install the dependencies & run the build tasks:
+This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
 
 ``` bash
 # Install NPM Dependencies
