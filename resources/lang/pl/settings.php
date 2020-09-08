@@ -176,7 +176,7 @@ return [
     'user_api_token_created' => 'Token utworzony :timeAgo',
     'user_api_token_updated' => 'Token zaktualizowany :timeAgo',
     'user_api_token_delete' => 'Usuń token',
-    'user_api_token_delete_warning' => 'Spowoduje to całkowite usunięcie tego tokenu API o nazwie \':tokenName\' z systemu.',
+    'user_api_token_delete_warning' => 'Spowoduje to całkowite usunięcie tokenu API o nazwie \':tokenName\' z systemu.',
     'user_api_token_delete_confirm' => 'Czy jesteś pewien, że chcesz usunąć ten token?',
     'user_api_token_delete_success' => 'Token API został poprawnie usunięty',
 
