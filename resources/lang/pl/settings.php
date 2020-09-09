@@ -142,7 +142,7 @@ return [
     'users_delete_success' => 'Użytkownik usunięty pomyślnie',
     'users_edit' => 'Edytuj użytkownika',
     'users_edit_profile' => 'Edytuj profil',
-    'users_edit_success' => 'Użytkownik zaktualizowany pomyśłnie',
+    'users_edit_success' => 'Użytkownik zaktualizowany pomyślnie',
     'users_avatar' => 'Avatar użytkownika',
     'users_avatar_desc' => 'Ten obrazek powinien posiadać wymiary 256x256px.',
     'users_preferred_language' => 'Preferowany język',
