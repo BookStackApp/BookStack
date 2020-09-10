@@ -23,6 +23,8 @@
 </head>
 <body>
 
+@include('partials.export-header-footer')
+
 <div class="page-content">
 
     <h1 style="font-size: 4.8em">{{$chapter->name}}</h1>

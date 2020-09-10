@@ -33,6 +33,8 @@
 </head>
 <body>
 
+@include('partials.export-header-footer')
+
 <div id="page-show">
     <div class="page-content">
 

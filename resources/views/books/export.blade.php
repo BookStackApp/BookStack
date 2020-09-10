@@ -20,6 +20,8 @@
         ul.contents ul li {
             list-style: circle;
         }
+
+
         @media screen {
             .page-break {
                 border-top: 1px solid #DDD;
@@ -30,6 +32,9 @@
     @include('partials.custom-head')
 </head>
 <body>
+
+@include('partials.export-header-footer')
+
 
 <div class="page-content">
 
