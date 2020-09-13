@@ -266,6 +266,7 @@ return [
     'attachments_link_url' => 'Odkaz na súbor',
     'attachments_link_url_hint' => 'Url stránky alebo súboru',
     'attach' => 'Priložiť',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Upraviť súbor',
     'attachments_edit_file_name' => 'Názov súboru',
     'attachments_edit_drop_upload' => 'Presuňte súbory sem alebo klinknite pre nahranie a prepis',
