@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'ファイルURL',
     'attachments_link_url_hint' => 'WebサイトまたはファイルへのURL',
     'attach' => '添付',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'ファイルを編集',
     'attachments_edit_file_name' => 'ファイル名',
     'attachments_edit_drop_upload' => 'ファイルをドロップするか、クリックしてアップロード',
