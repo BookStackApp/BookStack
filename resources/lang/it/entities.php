@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Link al file',
     'attachments_link_url_hint' => 'Url del sito o del file',
     'attach' => 'Allega',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Modifica File',
     'attachments_edit_file_name' => 'Nome File',
     'attachments_edit_drop_upload' => 'Rilascia file o clicca qui per caricare e sovrascrivere',
