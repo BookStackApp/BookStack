@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Hivatkozás fájlra',
     'attachments_link_url_hint' => 'Weboldal vagy fájl webcíme',
     'attach' => 'Csatolás',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Fájl szerkesztése',
     'attachments_edit_file_name' => 'Fájl neve',
     'attachments_edit_drop_upload' => 'Feltöltés és felülírás ejtéssel vagy kattintással',
