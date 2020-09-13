@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Link to file',
     'attachments_link_url_hint' => 'Url of site or file',
     'attach' => 'Attach',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Edit File',
     'attachments_edit_file_name' => 'File Name',
     'attachments_edit_drop_upload' => 'Drop files or click here to upload and overwrite',
