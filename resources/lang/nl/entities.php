@@ -266,6 +266,7 @@ return [
     'attachments_link_url' => 'Link naar bestand',
     'attachments_link_url_hint' => 'Url, site of bestand',
     'attach' => 'Koppelen',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Bestand Bewerken',
     'attachments_edit_file_name' => 'Bestandsnaam',
     'attachments_edit_drop_upload' => 'Sleep een bestand of klik hier om te uploaden en te overschrijven',
