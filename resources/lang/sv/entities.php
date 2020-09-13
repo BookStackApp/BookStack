@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Länk till fil',
     'attachments_link_url_hint' => 'URL till sida eller fil',
     'attach' => 'Bifoga',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Redigera fil',
     'attachments_edit_file_name' => 'Filnamn',
     'attachments_edit_drop_upload' => 'Släpp filer här eller klicka för att ladda upp och skriva över',
