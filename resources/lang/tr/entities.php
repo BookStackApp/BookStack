@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Dosya bağlantısı',
     'attachments_link_url_hint' => 'Dosyanın veya sitenin url adresi',
     'attach' => 'Ekle',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Dosyayı Düzenle',
     'attachments_edit_file_name' => 'Dosya Adı',
     'attachments_edit_drop_upload' => 'Üzerine yazılacak dosyaları sürükleyin veya seçin',
