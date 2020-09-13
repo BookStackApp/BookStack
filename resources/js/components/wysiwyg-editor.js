@@ -638,8 +638,8 @@ class WysiwygEditor {
 
                 });
 
+                // Custom drop event handling
                 editor.on('drop', function (event) {
-                    console.log('drop')
                     let dom = editor.dom,
                         rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
 

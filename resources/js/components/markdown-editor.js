@@ -256,7 +256,7 @@ class MarkdownEditor {
             }
 
             const clipboard = new Clipboard(event.dataTransfer);
-            if (clipboard.hasItems()) {
+            if (clipboard.hasItems() && clipboard.getImages().length > 0) {
                 const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
                 cm.setCursor(cursorPos);
                 event.stopPropagation();

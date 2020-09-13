@@ -21,11 +21,9 @@ class SortableList {
                 this.$emit('sort', {ids: sortable.toArray()});
             },
             setData(dataTransferItem, dragEl) {
-                console.log('cat');
                 const jsonContent = dragEl.getAttribute('data-drag-content');
                 if (jsonContent) {
                     const contentByType = JSON.parse(jsonContent);
-                    dataTransferItem.setData('bookstack/json', jsonContent);
                     for (const [type, content] of Object.entries(contentByType)) {
                         dataTransferItem.setData(type, content);
                     }

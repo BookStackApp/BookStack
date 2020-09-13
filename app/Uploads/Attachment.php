@@ -3,6 +3,13 @@
 use BookStack\Entities\Page;
 use BookStack\Ownable;
 
+/**
+ * @property int id
+ * @property string name
+ * @property string path
+ * @property string extension
+ * @property bool external
+ */
 class Attachment extends Ownable
 {
     protected $fillable = ['name', 'order'];
@@ -39,13 +46,19 @@ class Attachment extends Ownable
         return url('/attachments/' . $this->id);
     }
 
+    /**
+     * Generate a HTML link to this attachment.
+     */
     public function htmlLink(): string
     {
         return '<a target="_blank" href="'.e($this->getUrl()).'">'.e($this->name).'</a>';
     }
 
+    /**
+     * Generate a markdown link to this attachment.
+     */
     public function markdownLink(): string
     {
-
+        return '['. $this->name .']('. $this->getUrl() .')';
     }
 }
