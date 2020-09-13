@@ -33,6 +33,15 @@ class Attachments {
         this.container.addEventListener('event-emit-select-edit-back', event => {
             this.stopEdit();
         });
+
+        this.container.addEventListener('event-emit-select-insert', event => {
+            const insertContent = event.target.closest('[data-drag-content]').getAttribute('data-drag-content');
+            const contentTypes = JSON.parse(insertContent);
+            window.$events.emit('editor::insert', {
+                html: contentTypes['text/html'],
+                markdown: contentTypes['text/plain'],
+            });
+        });
     }
 
     reloadList() {

@@ -401,6 +401,11 @@ function listenForBookStackEditorEvents(editor) {
         editor.setContent(content);
     });
 
+    // Insert editor content at the current location
+    window.$events.listen('editor::insert', ({html}) => {
+        editor.insertContent(html);
+    });
+
     // Focus on the editor
     window.$events.listen('editor::focus', () => {
         editor.focus();

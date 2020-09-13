@@ -563,6 +563,12 @@ class MarkdownEditor {
             this.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
         });
 
+        // Insert editor content at the current location
+        window.$events.listen('editor::insert', (eventContent) => {
+            const markdown = getContentToInsert(eventContent);
+            this.cm.replaceSelection(markdown);
+        });
+
         // Focus on editor
         window.$events.listen('editor::focus', () => {
             this.cm.focus();
