@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use Activity;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
@@ -76,9 +77,13 @@ class LoginController extends Controller
             ]);
         }
 
+        // Store the previous location for redirect after login
         $previous = url()->previous('');
-        if (setting('app-public') && $previous && $previous !== url('/login')) {
-            redirect()->setIntendedUrl($previous);
+        if ($previous && $previous !== url('/login') && setting('app-public')) {
+            $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+            if ($isPreviousFromInstance) {
+                redirect()->setIntendedUrl($previous);
+            }
         }
 
         return view('auth.login', [
@@ -98,6 +103,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
+        $username = $request->get($this->username());
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -106,6 +112,7 @@ class LoginController extends Controller
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
+            Activity::logFailedLogin($username);
             return $this->sendLockoutResponse($request);
         }
 
@@ -114,6 +121,7 @@ class LoginController extends Controller
                 return $this->sendLoginResponse($request);
             }
         } catch (LoginAttemptException $exception) {
+            Activity::logFailedLogin($username);
             return $this->sendLoginAttemptExceptionResponse($exception, $request);
         }
 
@@ -122,6 +130,7 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
+        Activity::logFailedLogin($username);
         return $this->sendFailedLoginResponse($request);
     }
 

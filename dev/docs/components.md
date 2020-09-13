@@ -60,3 +60,40 @@ Will result with `this.$opts` being:
     "show": ""  
 }
 ```
+
+#### Global Helpers
+
+There are various global helper libraries which can be used in components:
+
+```js
+// HTTP service
+window.$http.get(url, params);
+window.$http.post(url, data);
+window.$http.put(url, data);
+window.$http.delete(url, data);
+window.$http.patch(url, data);
+
+// Global event system
+// Emit a global event
+window.$events.emit(eventName, eventData);
+// Listen to a global event
+window.$events.listen(eventName, callback);
+// Show a success message
+window.$events.success(message);
+// Show an error message
+window.$events.error(message);
+// Show validation errors, if existing, as an error notification
+window.$events.showValidationErrors(error);
+
+// Translator
+// Take the given plural text and count to decide on what plural option
+// to use, Similar to laravel's trans_choice function but instead
+// takes the direction directly instead of a translation key.
+window.trans_plural(translationString, count, replacements);
+
+// Component System
+// Parse and initialise any components from the given root el down.
+window.components.init(rootEl);
+// Get the first active component of the given name
+window.components.first(name);
+```
