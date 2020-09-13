@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Liên kết đến tập tin',
     'attachments_link_url_hint' => 'URL của trang hoặc tập tin',
     'attach' => 'Đính kèm',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Sửa tập tin',
     'attachments_edit_file_name' => 'Tên tệp tin',
     'attachments_edit_drop_upload' => 'Thả tập tin hoặc bấm vào đây để tải lên và ghi đè',
