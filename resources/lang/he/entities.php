@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'קישור לקובץ',
     'attachments_link_url_hint' => 'כתובת האתר או הקובץ',
     'attach' => 'צרף',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'ערוך קובץ',
     'attachments_edit_file_name' => 'שם הקובץ',
     'attachments_edit_drop_upload' => 'גרור קבצים או לחץ כאן על מנת להעלות קבצים במקום הקבצים הקיימים',
