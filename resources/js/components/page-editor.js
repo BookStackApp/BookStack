@@ -40,7 +40,6 @@ class PageEditor {
             frequency: 30000,
             last: 0,
         };
-        this.draftHasError = false;
 
         if (this.pageId !== 0 && this.draftsEnabled) {
             window.setTimeout(() => {
@@ -115,17 +114,19 @@ class PageEditor {
 
         try {
             const resp = await window.$http.put(`/ajax/page/${this.pageId}/save-draft`, data);
-            this.draftHasError = false;
             if (!this.isNewDraft) {
                 this.toggleDiscardDraftVisibility(true);
             }
             this.draftNotifyChange(`${resp.data.message} ${Dates.utcTimeStampToLocalTime(resp.data.timestamp)}`);
             this.autoSave.last = Date.now();
         } catch (err) {
-            if (!this.draftHasError) {
-                this.draftHasError = true;
-                window.$events.emit('error', this.autosaveFailText);
-            }
+            // Save the editor content in LocalStorage as a last resort, just in case.
+            try {
+                const saveKey = `draft-save-fail-${(new Date()).toISOString()}`;
+                window.localStorage.setItem(saveKey, JSON.stringify(data));
+            } catch (err) {}
+
+            window.$events.emit('error', this.autosaveFailText);
         }
 
     }
