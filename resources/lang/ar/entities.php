@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Link to file',
     'attachments_link_url_hint' => 'رابط الموقع أو الملف',
     'attach' => 'إرفاق',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'تعديل الملف',
     'attachments_edit_file_name' => 'اسم الملف',
     'attachments_edit_drop_upload' => 'أسقط الملفات أو اضغط هنا للرفع والاستبدال',
