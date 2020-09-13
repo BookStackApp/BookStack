@@ -290,6 +290,35 @@ class Saml2Test extends TestCase
         });
     }
 
+    public function test_group_sync_functions_when_email_confirmation_required()
+    {
+        setting()->put('registration-confirmation', 'true');
+        config()->set([
+            'saml2.onelogin.strict' => false,
+            'saml2.user_to_groups' => true,
+            'saml2.remove_from_groups' => false,
+        ]);
+
+        $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
+        $adminRole = Role::getSystemRole('admin');
+
+        $this->withPost(['SAMLResponse' => $this->acsPostData], function () use ($memberRole, $adminRole) {
+            $acsPost = $this->followingRedirects()->post('/saml2/acs');
+
+            $this->assertEquals('http://localhost/register/confirm', url()->current());
+            $acsPost->assertSee('Please check your email and click the confirmation button to access BookStack.');
+            $user = User::query()->where('external_auth_id', '=', 'user')->first();
+
+            $userRoleIds = $user->roles()->pluck('id');
+            $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
+            $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
+            $this->assertTrue($user->email_confirmed == false, 'User email remains unconfirmed');
+        });
+
+        $homeGet = $this->get('/');
+        $homeGet->assertRedirect('/register/confirm/awaiting');
+    }
+
     protected function withGet(array $options, callable $callback)
     {
         return $this->withGlobal($_GET, $options, $callback);

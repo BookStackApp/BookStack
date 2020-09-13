@@ -3,10 +3,10 @@
     @foreach($roles as $role)
         <div>
             @include('components.custom-checkbox', [
-                'name' => $name . '[' . str_replace('.', 'DOT', $role->name) . ']',
+                'name' => $name . '[' . strval($role->id) . ']',
                 'label' => $role->display_name,
                 'value' => $role->id,
-                'checked' => old($name . '.' . str_replace('.', 'DOT', $role->name)) || (!old('name') && isset($model) && $model->hasRole($role->name))
+                'checked' => old($name . '.' . strval($role->id)) || (!old('name') && isset($model) && $model->hasRole($role->id))
             ])
         </div>
     @endforeach

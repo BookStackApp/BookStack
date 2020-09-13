@@ -3,13 +3,16 @@
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Role
+ * @property int $id
  * @property string $display_name
  * @property string $description
  * @property string $external_auth_id
- * @package BookStack\Auth
+ * @property string $system_name
  */
 class Role extends Model
 {
@@ -26,9 +29,8 @@ class Role extends Model
 
     /**
      * Get all related JointPermissions.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function jointPermissions()
+    public function jointPermissions(): HasMany
     {
         return $this->hasMany(JointPermission::class);
     }
@@ -43,10 +45,8 @@ class Role extends Model
 
     /**
      * Check if this role has a permission.
-     * @param $permissionName
-     * @return bool
      */
-    public function hasPermission($permissionName)
+    public function hasPermission(string $permissionName): bool
     {
         $permissions = $this->getRelationValue('permissions');
         foreach ($permissions as $permission) {
@@ -59,7 +59,6 @@ class Role extends Model
 
     /**
      * Add a permission to this role.
-     * @param RolePermission $permission
      */
     public function attachPermission(RolePermission $permission)
     {
@@ -68,7 +67,6 @@ class Role extends Model
 
     /**
      * Detach a single permission from this role.
-     * @param RolePermission $permission
      */
     public function detachPermission(RolePermission $permission)
     {
@@ -76,39 +74,33 @@ class Role extends Model
     }
 
     /**
-     * Get the role object for the specified role.
-     * @param $roleName
-     * @return Role
+     * Get the role of the specified display name.
      */
-    public static function getRole($roleName)
+    public static function getRole(string $displayName): ?Role
     {
-        return static::query()->where('name', '=', $roleName)->first();
+        return static::query()->where('display_name', '=', $displayName)->first();
     }
 
     /**
      * Get the role object for the specified system role.
-     * @param $roleName
-     * @return Role
      */
-    public static function getSystemRole($roleName)
+    public static function getSystemRole(string $systemName): ?Role
     {
-        return static::query()->where('system_name', '=', $roleName)->first();
+        return static::query()->where('system_name', '=', $systemName)->first();
     }
 
     /**
      * Get all visible roles
-     * @return mixed
      */
-    public static function visible()
+    public static function visible(): Collection
     {
         return static::query()->where('hidden', '=', false)->orderBy('name')->get();
     }
 
     /**
      * Get the roles that can be restricted.
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public static function restrictable()
+    public static function restrictable(): Collection
     {
         return static::query()->where('system_name', '!=', 'admin')->get();
     }

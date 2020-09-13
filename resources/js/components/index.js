@@ -1,12 +1,106 @@
-const componentMapping = {};
+import addRemoveRows from "./add-remove-rows.js"
+import ajaxDeleteRow from "./ajax-delete-row.js"
+import ajaxForm from "./ajax-form.js"
+import attachments from "./attachments.js"
+import autoSuggest from "./auto-suggest.js"
+import backToTop from "./back-to-top.js"
+import bookSort from "./book-sort.js"
+import breadcrumbListing from "./breadcrumb-listing.js"
+import chapterToggle from "./chapter-toggle.js"
+import codeEditor from "./code-editor.js"
+import codeHighlighter from "./code-highlighter.js"
+import collapsible from "./collapsible.js"
+import customCheckbox from "./custom-checkbox.js"
+import detailsHighlighter from "./details-highlighter.js"
+import dropdown from "./dropdown.js"
+import dropzone from "./dropzone.js"
+import editorToolbox from "./editor-toolbox.js"
+import entityPermissionsEditor from "./entity-permissions-editor.js"
+import entitySearch from "./entity-search.js"
+import entitySelector from "./entity-selector.js"
+import entitySelectorPopup from "./entity-selector-popup.js"
+import eventEmitSelect from "./event-emit-select.js"
+import expandToggle from "./expand-toggle.js"
+import headerMobileToggle from "./header-mobile-toggle.js"
+import homepageControl from "./homepage-control.js"
+import imageManager from "./image-manager.js"
+import imagePicker from "./image-picker.js"
+import index from "./index.js"
+import listSortControl from "./list-sort-control.js"
+import markdownEditor from "./markdown-editor.js"
+import newUserPassword from "./new-user-password.js"
+import notification from "./notification.js"
+import optionalInput from "./optional-input.js"
+import pageComments from "./page-comments.js"
+import pageDisplay from "./page-display.js"
+import pageEditor from "./page-editor.js"
+import pagePicker from "./page-picker.js"
+import permissionsTable from "./permissions-table.js"
+import popup from "./popup.js"
+import settingAppColorPicker from "./setting-app-color-picker.js"
+import settingColorPicker from "./setting-color-picker.js"
+import shelfSort from "./shelf-sort.js"
+import sidebar from "./sidebar.js"
+import sortableList from "./sortable-list.js"
+import tabs from "./tabs.js"
+import tagManager from "./tag-manager.js"
+import templateManager from "./template-manager.js"
+import toggleSwitch from "./toggle-switch.js"
+import triLayout from "./tri-layout.js"
+import wysiwygEditor from "./wysiwyg-editor.js"
 
-const definitionFiles = require.context('./', false, /\.js$/);
-for (const fileName of definitionFiles.keys()) {
-    const name = fileName.replace('./', '').split('.')[0];
-    if (name !== 'index') {
-        componentMapping[name] = definitionFiles(fileName).default;
-    }
-}
+const componentMapping = {
+    "add-remove-rows": addRemoveRows,
+    "ajax-delete-row": ajaxDeleteRow,
+    "ajax-form": ajaxForm,
+    "attachments": attachments,
+    "auto-suggest": autoSuggest,
+    "back-to-top": backToTop,
+    "book-sort": bookSort,
+    "breadcrumb-listing": breadcrumbListing,
+    "chapter-toggle": chapterToggle,
+    "code-editor": codeEditor,
+    "code-highlighter": codeHighlighter,
+    "collapsible": collapsible,
+    "custom-checkbox": customCheckbox,
+    "details-highlighter": detailsHighlighter,
+    "dropdown": dropdown,
+    "dropzone": dropzone,
+    "editor-toolbox": editorToolbox,
+    "entity-permissions-editor": entityPermissionsEditor,
+    "entity-search": entitySearch,
+    "entity-selector": entitySelector,
+    "entity-selector-popup": entitySelectorPopup,
+    "event-emit-select": eventEmitSelect,
+    "expand-toggle": expandToggle,
+    "header-mobile-toggle": headerMobileToggle,
+    "homepage-control": homepageControl,
+    "image-manager": imageManager,
+    "image-picker": imagePicker,
+    "index": index,
+    "list-sort-control": listSortControl,
+    "markdown-editor": markdownEditor,
+    "new-user-password": newUserPassword,
+    "notification": notification,
+    "optional-input": optionalInput,
+    "page-comments": pageComments,
+    "page-display": pageDisplay,
+    "page-editor": pageEditor,
+    "page-picker": pagePicker,
+    "permissions-table": permissionsTable,
+    "popup": popup,
+    "setting-app-color-picker": settingAppColorPicker,
+    "setting-color-picker": settingColorPicker,
+    "shelf-sort": shelfSort,
+    "sidebar": sidebar,
+    "sortable-list": sortableList,
+    "tabs": tabs,
+    "tag-manager": tagManager,
+    "template-manager": templateManager,
+    "toggle-switch": toggleSwitch,
+    "tri-layout": triLayout,
+    "wysiwyg-editor": wysiwygEditor,
+};
 
 window.components = {};
 

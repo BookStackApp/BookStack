@@ -2,10 +2,8 @@
 
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Page;
-use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
 use Laravel\BrowserKitTesting\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\BrowserKitTest;
 
 class RolesTest extends BrowserKitTest
@@ -59,7 +57,7 @@ class RolesTest extends BrowserKitTest
             ->type('Test Role', 'display_name')
             ->type('A little test description', 'description')
             ->press('Save Role')
-            ->seeInDatabase('roles', ['display_name' => $testRoleName, 'name' => 'test-role', 'description' => $testRoleDesc])
+            ->seeInDatabase('roles', ['display_name' => $testRoleName, 'description' => $testRoleDesc])
             ->seePageIs('/settings/roles');
         // Updating
         $this->asAdmin()->visit('/settings/roles')
@@ -67,7 +65,7 @@ class RolesTest extends BrowserKitTest
             ->click($testRoleName)
             ->type($testRoleUpdateName, '#display_name')
             ->press('Save Role')
-            ->seeInDatabase('roles', ['display_name' => $testRoleUpdateName, 'name' => 'test-role', 'description' => $testRoleDesc])
+            ->seeInDatabase('roles', ['display_name' => $testRoleUpdateName, 'description' => $testRoleDesc])
             ->seePageIs('/settings/roles');
         // Deleting
         $this->asAdmin()->visit('/settings/roles')
@@ -99,6 +97,25 @@ class RolesTest extends BrowserKitTest
 
         $this->seePageIs($editUrl);
         $this->see('This user is the only user assigned to the administrator role');
+    }
+
+    public function test_migrate_users_on_delete_works()
+    {
+        $roleA = Role::query()->create(['display_name' => 'Delete Test A']);
+        $roleB = Role::query()->create(['display_name' => 'Delete Test B']);
+        $this->user->attachRole($roleB);
+
+        $this->assertCount(0, $roleA->users()->get());
+        $this->assertCount(1, $roleB->users()->get());
+
+        $deletePage = $this->asAdmin()->get("/settings/roles/delete/{$roleB->id}");
+        $deletePage->seeElement('select[name=migrate_role_id]');
+        $this->asAdmin()->delete("/settings/roles/delete/{$roleB->id}", [
+            'migrate_role_id' => $roleA->id,
+        ]);
+
+        $this->assertCount(1, $roleA->users()->get());
+        $this->assertEquals($this->user->id, $roleA->users()->first()->id);
     }
 
     public function test_manage_user_permission()
@@ -669,9 +686,11 @@ class RolesTest extends BrowserKitTest
     public function test_public_role_visible_in_user_edit_screen()
     {
         $user = \BookStack\Auth\User::first();
+        $adminRole = Role::getSystemRole('admin');
+        $publicRole = Role::getSystemRole('public');
         $this->asAdmin()->visit('/settings/users/' . $user->id)
-            ->seeElement('[name="roles[admin]"]')
-            ->seeElement('[name="roles[public]"]');
+            ->seeElement('[name="roles['.$adminRole->id.']"]')
+            ->seeElement('[name="roles['.$publicRole->id.']"]');
     }
 
     public function test_public_role_visible_in_role_listing()
@@ -684,9 +703,8 @@ class RolesTest extends BrowserKitTest
     public function test_public_role_visible_in_default_role_setting()
     {
         $this->asAdmin()->visit('/settings')
-            ->seeElement('[data-role-name="admin"]')
-            ->seeElement('[data-role-name="public"]');
-
+            ->seeElement('[data-system-role-name="admin"]')
+            ->seeElement('[data-system-role-name="public"]');
     }
 
     public function test_public_role_not_deleteable()
@@ -852,7 +870,7 @@ class RolesTest extends BrowserKitTest
 
     private function addComment($page) {
         $comment = factory(\BookStack\Actions\Comment::class)->make();
-        $url = "/ajax/page/$page->id/comment";
+        $url = "/comment/$page->id";
         $request = [
             'text' => $comment->text,
             'html' => $comment->html
@@ -865,7 +883,7 @@ class RolesTest extends BrowserKitTest
 
     private function updateComment($commentId) {
         $comment = factory(\BookStack\Actions\Comment::class)->make();
-        $url = "/ajax/comment/$commentId";
+        $url = "/comment/$commentId";
         $request = [
             'text' => $comment->text,
             'html' => $comment->html
@@ -875,7 +893,7 @@ class RolesTest extends BrowserKitTest
     }
 
     private function deleteComment($commentId) {
-         $url = '/ajax/comment/' . $commentId;
+         $url = '/comment/' . $commentId;
          return $this->json('DELETE', $url);
     }
 

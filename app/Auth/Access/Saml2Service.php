@@ -311,7 +311,6 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Get the user from the database for the specified details.
-     * @throws SamlException
      * @throws UserRegistrationException
      */
     protected function getOrRegisterUser(array $userDetails): ?User

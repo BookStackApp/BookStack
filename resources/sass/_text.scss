@@ -130,7 +130,7 @@ p, ul, ol, pre, table, blockquote {
 hr {
   border: 0;
   height: 1px;
-  @include lightDark(background, #eaeaea, #222);
+  @include lightDark(background, #eaeaea, #555);
   margin-bottom: $-l;
   &.faded {
     background-image: linear-gradient(to right, #FFF, #e3e0e0 20%, #e3e0e0 80%, #FFF);

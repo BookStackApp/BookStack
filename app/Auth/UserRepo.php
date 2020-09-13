@@ -238,7 +238,7 @@ class UserRepo
      */
     public function getAllRoles()
     {
-        return $this->role->newQuery()->orderBy('name', 'asc')->get();
+        return $this->role->newQuery()->orderBy('display_name', 'asc')->get();
     }
 
     /**

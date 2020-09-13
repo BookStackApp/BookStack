@@ -3,6 +3,8 @@
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ExternalAuthService
 {
@@ -39,22 +41,14 @@ class ExternalAuthService
     /**
      * Match an array of group names to BookStack system roles.
      * Formats group names to be lower-case and hyphenated.
-     * @param array $groupNames
-     * @return \Illuminate\Support\Collection
      */
-    protected function matchGroupsToSystemsRoles(array $groupNames)
+    protected function matchGroupsToSystemsRoles(array $groupNames): Collection
     {
         foreach ($groupNames as $i => $groupName) {
             $groupNames[$i] = str_replace(' ', '-', trim(strtolower($groupName)));
         }
 
-        $roles = Role::query()->where(function (Builder $query) use ($groupNames) {
-            $query->whereIn('name', $groupNames);
-            foreach ($groupNames as $groupName) {
-                $query->orWhere('external_auth_id', 'LIKE', '%' . $groupName . '%');
-            }
-        })->get();
-
+        $roles = Role::query()->get(['id', 'external_auth_id', 'display_name']);
         $matchedRoles = $roles->filter(function (Role $role) use ($groupNames) {
             return $this->roleMatchesGroupNames($role, $groupNames);
         });
