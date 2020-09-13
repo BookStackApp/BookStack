@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => '파일로 링크',
     'attachments_link_url_hint' => '파일 주소',
     'attach' => '파일 첨부',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => '파일 수정',
     'attachments_edit_file_name' => '파일 이름',
     'attachments_edit_drop_upload' => '여기에 파일을 드롭하거나 여기를 클릭하세요. 파일을 올리거나 덮어쓸 수 있습니다.',
