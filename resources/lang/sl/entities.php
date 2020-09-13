@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Povezava do datoteke',
     'attachments_link_url_hint' => 'Url mesta ali datoteke',
     'attach' => 'Pripni',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Uredi datoteko',
     'attachments_edit_file_name' => 'Ime datoteke',
     'attachments_edit_drop_upload' => 'Spustite datoteke ali kliknite tukaj, če želite naložiti in prepisati',
