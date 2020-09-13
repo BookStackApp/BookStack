@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Посилання на файл',
     'attachments_link_url_hint' => 'URL-адреса сайту або файлу',
     'attach' => 'Приєднати',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Редагувати файл',
     'attachments_edit_file_name' => 'Назва файлу',
     'attachments_edit_drop_upload' => 'Перетягніть файли, або натисніть тут щоб завантажити та перезаписати',
