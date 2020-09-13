@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Линк към файла',
     'attachments_link_url_hint' => 'Url на сайт или файл',
     'attach' => 'Прикачване',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Редактирай файл',
     'attachments_edit_file_name' => 'Име на файл',
     'attachments_edit_drop_upload' => 'Поставете файл или цъкнете тук за да прикачите и обновите',
