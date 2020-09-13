@@ -266,6 +266,7 @@ return [
     'attachments_link_url' => 'Link do pliku',
     'attachments_link_url_hint' => 'Strona lub plik',
     'attach' => 'Załącz',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Edytuj plik',
     'attachments_edit_file_name' => 'Nazwa pliku',
     'attachments_edit_drop_upload' => 'Upuść pliki lub kliknij tutaj by przesłać pliki i nadpisać istniejące',
