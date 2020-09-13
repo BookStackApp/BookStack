@@ -265,6 +265,7 @@ return [
     'attachments_link_url' => 'Link til filen',
     'attachments_link_url_hint' => 'Adresse (URL) på side eller fil',
     'attach' => 'Vedhæft',
+    'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Rediger fil',
     'attachments_edit_file_name' => 'Filnavn',
     'attachments_edit_drop_upload' => 'Slip filer eller klik her for at uploade og overskrive',
