@@ -153,10 +153,6 @@ function icon(string $name, array $attrs = []): string
  * Generate a url with multiple parameters for sorting purposes.
  * Works out the logic to set the correct sorting direction
  * Discards empty parameters and allows overriding.
- * @param string $path
- * @param array $data
- * @param array $overrideData
- * @return string
  */
 function sortUrl(string $path, array $data, array $overrideData = []): string
 {
@@ -166,7 +162,7 @@ function sortUrl(string $path, array $data, array $overrideData = []): string
     // Change sorting direction is already sorted on current attribute
     if (isset($overrideData['sort']) && $overrideData['sort'] === $data['sort']) {
         $queryData['order'] = ($data['order'] === 'asc') ? 'desc' : 'asc';
-    } else {
+    } elseif (isset($overrideData['sort'])) {
         $queryData['order'] = 'asc';
     }
 

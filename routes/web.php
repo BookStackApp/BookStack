@@ -166,6 +166,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/maintenance/cleanup-images', 'MaintenanceController@cleanupImages');
         Route::post('/maintenance/send-test-email', 'MaintenanceController@sendTestEmail');
 
+        // Audit Log
+        Route::get('/audit', 'AuditLogController@index');
+
         // Users
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');

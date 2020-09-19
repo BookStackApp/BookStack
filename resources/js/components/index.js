@@ -42,6 +42,7 @@ import settingColorPicker from "./setting-color-picker.js"
 import shelfSort from "./shelf-sort.js"
 import sidebar from "./sidebar.js"
 import sortableList from "./sortable-list.js"
+import submitOnChange from "./submit-on-change.js"
 import tabs from "./tabs.js"
 import tagManager from "./tag-manager.js"
 import templateManager from "./template-manager.js"
@@ -94,6 +95,7 @@ const componentMapping = {
     "shelf-sort": shelfSort,
     "sidebar": sidebar,
     "sortable-list": sortableList,
+    "submit-on-change": submitOnChange,
     "tabs": tabs,
     "tag-manager": tagManager,
     "template-manager": templateManager,
