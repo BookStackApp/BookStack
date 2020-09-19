@@ -312,10 +312,10 @@ class PageContentTest extends TestCase
         $this->actingAs($this->getAdmin())
             ->put($page->getUrl(''), [
                 'name' => 'Testing',
-                'html' => '<p>Hello &amp; welcome</p>',
+                'html' => '<p>&quot;Hello &amp; welcome&quot;</p>',
             ]);
 
         $page->refresh();
-        $this->assertEquals('Hello & welcome', $page->text);
+        $this->assertEquals('"Hello & welcome"', $page->text);
     }
 }
