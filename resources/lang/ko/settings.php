@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => '이메일 전송이 성공하였습니다.',
     'maint_send_test_email_mail_text' => '축하합니다! 이 메일을 받음으로 이메일 설정이 정상적으로 되었음을 확인하였습니다.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => '권한',
     'role_user_roles' => '사용자 권한',
