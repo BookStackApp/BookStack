@@ -304,4 +304,18 @@ class PageContentTest extends TestCase
             'level' => 3,
         ], $navMap[2]);
     }
+
+    public function test_page_text_decodes_html_entities()
+    {
+        $page = Page::query()->first();
+
+        $this->actingAs($this->getAdmin())
+            ->put($page->getUrl(''), [
+                'name' => 'Testing',
+                'html' => '<p>Hello &amp; welcome</p>',
+            ]);
+
+        $page->refresh();
+        $this->assertEquals('Hello & welcome', $page->text);
+    }
 }
