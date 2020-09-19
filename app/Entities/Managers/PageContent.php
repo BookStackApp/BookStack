@@ -25,7 +25,7 @@ class PageContent
     public function setNewHTML(string $html)
     {
         $this->page->html = $this->formatHtml($html);
-        $this->page->text = html_entity_decode($this->toPlainText());
+        $this->page->text = $this->toPlainText();
     }
 
     /**
@@ -108,7 +108,7 @@ class PageContent
     protected function toPlainText(): string
     {
         $html = $this->render(true);
-        return strip_tags($html);
+        return html_entity_decode(strip_tags($html));
     }
 
     /**
