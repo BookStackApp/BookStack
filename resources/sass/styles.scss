@@ -289,3 +289,14 @@ $btt-size: 40px;
     }
   }
 }
+
+table a.audit-log-user {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+}
+table a.icon-list-item {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+}
