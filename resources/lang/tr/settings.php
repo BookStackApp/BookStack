@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'E-posta iletimi çalışıyor gibi görünüyor!',
     'maint_send_test_email_mail_text' => 'Tebrikler! Eğer bu e-posta bildirimini alıyorsanız, e-posta ayarlarınız doğru bir şekilde ayarlanmış demektir.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Roller',
     'role_user_roles' => 'Kullanıcı Rolleri',
