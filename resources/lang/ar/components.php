@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'المزيد',
     'image_image_name' => 'اسم الصورة',
     'image_delete_used' => 'هذه الصورة مستخدمة بالصفحات أدناه.',
-    'image_delete_confirm' => 'اضغط زر الحذف مرة أخرى لتأكيد حذف هذه الصورة.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'تحديد الصورة',
     'image_dropzone' => 'قم بإسقاط الصورة أو اضغط هنا للرفع',
     'images_deleted' => 'تم حذف الصور',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'تعديل الشفرة',
     'code_language' => 'لغة الشفرة',
     'code_content' => 'محتويات الشفرة',
+    'code_session_history' => 'Session History',
     'code_save' => 'حفظ الشفرة',
 ];

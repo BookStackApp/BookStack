@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Електронна пошта вже підтверджена, спробуйте увійти.',
     'email_confirmation_invalid' => 'Цей токен підтвердження недійсний або вже був використаний, будь ласка, спробуйте знову зареєструватися.',
     'email_confirmation_expired' => 'Термін дії токена підтвердження минув, новий електронний лист підтвердження був відправлений.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'Потрібно підтвердити адресу електронної пошти для облікового запису, який використовується',
     'ldap_fail_anonymous' => 'LDAP-доступ невдалий, з використання анонімного зв\'язку',
     'ldap_fail_authed' => 'LDAP-доступ невдалий, використовуючи задані параметри dn та password',
     'ldap_extension_not_installed' => 'Розширення PHP LDAP не встановлено',
@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Тайм-аут при завантаженні файлу',
 
     // Attachments
-    'attachment_page_mismatch' => 'Невідповідність сторінки при оновленні вкладень',
     'attachment_not_found' => 'Вкладення не знайдено',
 
     // Pages
@@ -83,21 +82,21 @@ return [
     // Error pages
     '404_page_not_found' => 'Сторінку не знайдено',
     'sorry_page_not_found' => 'Вибачте, сторінку, яку ви шукали, не знайдено.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Якщо ви очікували що ця сторінки існує – можливо у вас немає дозволу на її перегляд.',
     'return_home' => 'Повернутися на головну',
     'error_occurred' => 'Виникла помилка',
     'app_down' => ':appName зараз недоступний',
     'back_soon' => 'Він повернеться найближчим часом.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
+    'api_no_authorization_found' => 'У запиті не знайдено токен авторизації',
+    'api_bad_authorization_format' => 'У запиті знайдено токен авторизації, але формат недійсний',
+    'api_user_token_not_found' => 'Не знайдено відповідного API-токена для наданого токена авторизації',
     'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_token_expired' => 'Термін дії токена авторизації закінчився',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Помилка під час надсилання тестового електронного листа:',
 
 ];

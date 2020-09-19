@@ -18,7 +18,7 @@ return [
 
     'name' => 'Meno',
     'username' => 'Používateľské meno',
-    'email' => 'Email',
+    'email' => 'E-mail',
     'password' => 'Heslo',
     'password_confirm' => 'Potvrdiť heslo',
     'password_hint' => 'Musí mať viac ako 7 znakov',
@@ -26,8 +26,8 @@ return [
     'remember_me' => 'Zapamätať si ma',
     'ldap_email_hint' => 'Zadajte prosím email, ktorý sa má použiť pre tento účet.',
     'create_account' => 'Vytvoriť účet',
-    'already_have_account' => 'Already have an account?',
-    'dont_have_account' => 'Don\'t have an account?',
+    'already_have_account' => 'Už máte svoj ​​účet?',
+    'dont_have_account' => 'Nemáte účet?',
     'social_login' => 'Sociálne prihlásenie',
     'social_registration' => 'Sociálna registrácia',
     'social_registration_text' => 'Registrovať sa a prihlásiť sa použitím inej služby.',
@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Reset hesla',
     'reset_password_send_instructions' => 'Zadajte svoj email nižšie a bude Vám odoslaný email s odkazom pre reset hesla.',
     'reset_password_send_button' => 'Poslať odkaz na reset hesla',
-    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
+    'reset_password_sent' => 'Odkaz na obnovenie hesla bude odoslaný na :email, ak sa táto e-mailová adresa nachádza v systéme.',
     'reset_password_success' => 'Vaše heslo bolo úspešne resetované.',
     'email_reset_subject' => 'Reset Vášho :appName hesla',
     'email_reset_text' => 'Tento email Ste dostali pretože sme dostali požiadavku na reset hesla pre Váš účet.',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Znova odoslať overovací email',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'Dostali ste pozvánku na pripojenie sa k aplikácii :appName!',
+    'user_invite_email_greeting' => 'Účet pre :appName bol pre vás vytvorený.',
+    'user_invite_email_text' => 'Kliknutím na tlačidlo nižšie nastavíte heslo k účtu a získate prístup:',
+    'user_invite_email_action' => 'Heslo k účtu',
+    'user_invite_page_welcome' => 'Vitajte na stránke :appName!',
+    'user_invite_page_text' => 'Ak chcete dokončiť svoj účet a získať prístup, musíte nastaviť heslo, ktoré sa použije na prihlásenie do aplikácie :appName pri budúcich návštevách.',
+    'user_invite_page_confirm_button' => 'Potvrdiť heslo',
+    'user_invite_success' => 'Nastavené heslo, teraz máte prístup k :appName!'
 ];

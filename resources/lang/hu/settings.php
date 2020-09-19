@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'Az email kézbesítés működőképesnek tűnik!',
     'maint_send_test_email_mail_text' => 'Gratulálunk! Mivel ez az email figyelmeztetés megérkezett az email beállítások megfelelőek.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Szerepkörök',
     'role_user_roles' => 'Felhasználói szerepkörök',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Hozzáférés a rendszer API-hoz',
     'role_manage_settings' => 'Alkalmazás beállításainak kezelése',
     'role_asset' => 'Eszköz jogosultságok',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Ezek a jogosultság vezérlik a alapértelmezés szerinti hozzáférést a rendszerben található eszközökhöz. A könyvek, fejezetek és oldalak jogosultságai felülírják ezeket a jogosultságokat.',
     'role_asset_admins' => 'Az adminisztrátorok automatikusan hozzáférést kapnak minden tartalomhoz, de ezek a beállítások megjeleníthetnek vagy elrejthetnek felhasználói felület beállításokat.',
     'role_all' => 'Összes',

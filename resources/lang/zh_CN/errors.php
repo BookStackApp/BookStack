@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => '文件上传已超时。',
 
     // Attachments
-    'attachment_page_mismatch' => '附件更新期间的页面不匹配',
     'attachment_not_found' => '找不到附件',
 
     // Pages
@@ -83,7 +82,7 @@ return [
     // Error pages
     '404_page_not_found' => '无法找到页面',
     'sorry_page_not_found' => '对不起，无法找到您想访问的页面。',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => '您可能没有查看权限。',
     'return_home' => '返回主页',
     'error_occurred' => '出现错误',
     'app_down' => ':appName现在正在关闭',

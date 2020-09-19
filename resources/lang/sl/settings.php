@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'Zdi se, da dostava e-pošte deluje!',
     'maint_send_test_email_mail_text' => 'Čestitke! Če ste prejeli e.poštno obvestilo so bile vaše e-poštne nastavitve pravilno konfigurirane.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Vloge',
     'role_user_roles' => 'Pravilo uporabnika',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Nastavitve za upravljanje',
     'role_asset' => 'Sistemska dovoljenja',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
     'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
     'role_all' => 'Vse',

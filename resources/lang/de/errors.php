@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Der Upload der Datei ist abgelaufen.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Die Seite stimmte nach dem Hochladen des Anhangs nicht überein.',
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',
 
     // Pages

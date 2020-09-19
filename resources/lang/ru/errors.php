@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Время загрузки файла истекло.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Несоответствие страницы во время обновления вложения',
     'attachment_not_found' => 'Вложение не найдено',
 
     // Pages

@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Il caricamento del file è andato in timeout.',
 
     // Attachments
-    'attachment_page_mismatch' => 'La pagina non è corrisposta durante l\'aggiornamento dell\'allegato',
     'attachment_not_found' => 'Allegato non trovato',
 
     // Pages

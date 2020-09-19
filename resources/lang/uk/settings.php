@@ -43,10 +43,10 @@ return [
 
     // Color settings
     'content_colors' => 'Кольори вмісту',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'content_colors_desc' => 'Встановлює кольори для всіх елементів в ієрархії організації сторінок. Рекомендуємо вибирати кольори із яскравістю, схожою на кольори за замовчуванням, для кращої читабельності.',
     'bookshelf_color' => 'Колір полиці',
     'book_color' => 'Колір книги',
-    'chapter_color' => 'Chapter Color',
+    'chapter_color' => 'Колір глави',
     'page_color' => 'Колір сторінки',
     'page_draft_color' => 'Колір чернетки',
 
@@ -56,7 +56,7 @@ return [
     'reg_enable_toggle' => 'Дозволити реєстрацію',
     'reg_enable_desc' => 'При включенні реєстрації відвідувач зможе зареєструватися як користувач програми. Після реєстрації їм надається єдина роль користувача за замовчуванням.',
     'reg_default_role' => 'Роль користувача за умовчанням після реєстрації',
-    'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
+    'reg_enable_external_warning' => 'Цей параметр ігнорується, якщо активна зовнішня автентифікація LDAP або SAML. Облікові записи користувачів для неіснуючих учасників будуть створені автоматично, якщо аутентифікація у зовнішній системі буде успішною.',
     'reg_email_confirmation' => 'Підтвердження електронною поштою',
     'reg_email_confirmation_toggle' => 'Необхідне підтвердження електронною поштою',
     'reg_confirm_email_desc' => 'Якщо використовується обмеження домену, то підтвердження електронною поштою буде потрібно, а нижче значення буде проігноровано.',
@@ -80,6 +80,20 @@ return [
     'maint_send_test_email_mail_subject' => 'Перевірка електронної пошти',
     'maint_send_test_email_mail_greeting' => 'Доставляння електронної пошти працює!',
     'maint_send_test_email_mail_text' => 'Вітаємо! Оскільки ви отримали цього листа, поштова скринька налаштована правильно.',
+
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
 
     // Role Settings
     'roles' => 'Ролі',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Керування налаштуваннями програми',
     'role_asset' => 'Дозволи',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Ці дозволи контролюють стандартні доступи всередині системи. Права на книги, розділи та сторінки перевизначать ці дозволи.',
     'role_asset_admins' => 'Адміністратори автоматично отримують доступ до всього вмісту, але ці параметри можуть відображати або приховувати параметри інтерфейсу користувача.',
     'role_all' => 'Все',

@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Le téléchargement du fichier a expiré.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page incorrecte durant la mise à jour du fichier joint',
     'attachment_not_found' => 'Fichier joint non trouvé',
 
     // Pages

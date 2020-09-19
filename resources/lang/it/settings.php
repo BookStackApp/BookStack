@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'L\'invio delle email sembra funzionare!',
     'maint_send_test_email_mail_text' => 'Congratulazioni! Siccome hai ricevuto questa notifica email, le tue impostazioni sembrano essere configurate correttamente.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Ruoli',
     'role_user_roles' => 'Ruoli Utente',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Gestire impostazioni app',
     'role_asset' => 'Permessi Entità',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Questi permessi controllano l\'accesso di default alle entità. I permessi nei Libri, Capitoli e Pagine sovrascriveranno questi.',
     'role_asset_admins' => 'Gli amministratori hanno automaticamente accesso a tutti i contenuti ma queste opzioni possono mostrare o nascondere le opzioni della UI.',
     'role_all' => 'Tutti',
@@ -154,12 +169,12 @@ return [
     'users_social_disconnected' => 'L\'account :socialAccount è stato disconnesso correttamente dal tuo profilo.',
     'users_api_tokens' => 'API Tokens',
     'users_api_tokens_none' => 'No API tokens have been created for this user',
-    'users_api_tokens_create' => 'Create Token',
-    'users_api_tokens_expires' => 'Expires',
+    'users_api_tokens_create' => 'Crea Token',
+    'users_api_tokens_expires' => 'Scade',
     'users_api_tokens_docs' => 'API Documentation',
 
     // API Tokens
-    'user_api_token_create' => 'Create API Token',
+    'user_api_token_create' => 'Crea Token API',
     'user_api_token_name' => 'Nome',
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
     'user_api_token_expiry' => 'Data di scadenza',
@@ -167,17 +182,17 @@ return [
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
     'user_api_token_create_success' => 'API token successfully created',
     'user_api_token_update_success' => 'API token successfully updated',
-    'user_api_token' => 'API Token',
+    'user_api_token' => 'Token API',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
     'user_api_token_secret' => 'Token Secret',
     'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
     'user_api_token_created' => 'Token Created :timeAgo',
-    'user_api_token_updated' => 'Token Updated :timeAgo',
-    'user_api_token_delete' => 'Delete Token',
+    'user_api_token_updated' => 'Token Aggiornato :timeAgo',
+    'user_api_token_delete' => 'Elimina Token',
     'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
-    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
-    'user_api_token_delete_success' => 'API token successfully deleted',
+    'user_api_token_delete_confirm' => 'Sei sicuri di voler eliminare questo token API?',
+    'user_api_token_delete_success' => 'Token API eliminato correttamente',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

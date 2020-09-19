@@ -33,6 +33,7 @@ return [
     'copy' => '复制',
     'reply' => '回复',
     'delete' => '删除',
+    'delete_confirm' => '确认删除',
     'search' => '搜索',
     'search_clear' => '清除搜索',
     'reset' => '重置',
@@ -66,8 +67,8 @@ return [
     'profile_menu' => '个人资料',
     'view_profile' => '查看资料',
     'edit_profile' => '编辑资料',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => '夜间模式',
+    'light_mode' => '日间模式',
 
     // Layout tabs
     'tab_info' => '信息',

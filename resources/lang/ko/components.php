@@ -15,7 +15,7 @@ return [
     'image_load_more' => '더 로드하기',
     'image_image_name' => '이미지 이름',
     'image_delete_used' => '이 이미지는 다음 문서들이 쓰고 있습니다.',
-    'image_delete_confirm' => '이 이미지를 지울 건가요?',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => '이미지 선택',
     'image_dropzone' => '여기에 이미지를 드롭하거나 여기를 클릭하세요. 이미지를 올릴 수 있습니다.',
     'images_deleted' => '이미지 삭제함',
@@ -29,5 +29,6 @@ return [
     'code_editor' => '코드 수정',
     'code_language' => '언어',
     'code_content' => '내용',
+    'code_session_history' => 'Session History',
     'code_save' => '저장',
 ];

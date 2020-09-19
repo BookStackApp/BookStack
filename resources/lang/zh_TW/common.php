@@ -33,6 +33,7 @@ return [
     'copy' => '複製',
     'reply' => '回覆',
     'delete' => '刪除',
+    'delete_confirm' => '確認刪除',
     'search' => '搜尋',
     'search_clear' => '清除搜尋',
     'reset' => '重置',
@@ -66,8 +67,8 @@ return [
     'profile_menu' => '個人資料菜單',
     'view_profile' => '檢視資料',
     'edit_profile' => '編輯資料',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => '深色模式',
+    'light_mode' => '明亮模式',
 
     // Layout tabs
     'tab_info' => '訊息',

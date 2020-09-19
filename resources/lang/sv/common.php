@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopiera',
     'reply' => 'Svara',
     'delete' => 'Ta bort',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Sök',
     'search_clear' => 'Rensa sökning',
     'reset' => 'Återställ',

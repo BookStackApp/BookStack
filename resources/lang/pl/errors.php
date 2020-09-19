@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'E-mail został potwierdzony, spróbuj się zalogować.',
     'email_confirmation_invalid' => 'Ten token jest nieprawidłowy lub został już wykorzystany. Spróbuj zarejestrować się ponownie.',
     'email_confirmation_expired' => 'Ten token potwierdzający wygasł. Wysłaliśmy Ci kolejny.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'Adres e-mail dla używanego konta musi zostać potwierdzony',
     'ldap_fail_anonymous' => 'Dostęp LDAP przy użyciu anonimowego powiązania nie powiódł się',
     'ldap_fail_authed' => 'Dostęp LDAP przy użyciu tego DN i hasła nie powiódł się',
     'ldap_extension_not_installed' => 'Rozszerzenie LDAP PHP nie zostało zainstalowane',
@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Przesyłanie pliku przekroczyło limit czasu.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Niezgodność strony podczas aktualizacji załącznika',
     'attachment_not_found' => 'Nie znaleziono załącznika',
 
     // Pages
@@ -83,21 +82,21 @@ return [
     // Error pages
     '404_page_not_found' => 'Strona nie została znaleziona',
     'sorry_page_not_found' => 'Przepraszamy, ale strona której szukasz nie została znaleziona.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Jeśli spodziewałeś się, że ta strona istnieje, prawdopodobnie nie masz uprawnień do jej wyświetlenia.',
     'return_home' => 'Powrót do strony głównej',
     'error_occurred' => 'Wystąpił błąd',
     'app_down' => ':appName jest aktualnie wyłączona',
     'back_soon' => 'Niedługo zostanie uruchomiona ponownie.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Nie znaleziono tokenu autoryzacji dla żądania',
+    'api_bad_authorization_format' => 'Token autoryzacji został znaleziony w żądaniu, ale format okazał się nieprawidłowy',
+    'api_user_token_not_found' => 'Nie znaleziono pasującego tokenu API dla podanego tokenu autoryzacji',
+    'api_incorrect_token_secret' => 'Podany sekret dla tego API jest nieprawidłowy',
+    'api_user_no_api_permission' => 'Właściciel używanego tokenu API nie ma uprawnień do wykonywania zapytań do API',
+    'api_user_token_expired' => 'Token uwierzytelniania wygasł',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Błąd podczas wysyłania testowej wiadomości e-mail:',
 
 ];

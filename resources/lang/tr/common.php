@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopyala',
     'reply' => 'Yanıtla',
     'delete' => 'Sil',
+    'delete_confirm' => 'Silmeyi Onayla',
     'search' => 'Ara',
     'search_clear' => 'Aramayı Temizle',
     'reset' => 'Sıfırla',

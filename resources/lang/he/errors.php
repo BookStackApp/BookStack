@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'The file upload has timed out.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
     'attachment_not_found' => 'קובץ מצורף לא נמצא',
 
     // Pages

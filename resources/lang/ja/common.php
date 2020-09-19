@@ -33,6 +33,7 @@ return [
     'copy' => 'Copy',
     'reply' => '返信',
     'delete' => '削除',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => '検索',
     'search_clear' => '検索をクリア',
     'reset' => 'リセット',

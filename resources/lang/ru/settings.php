@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'Доставка электронной почты работает!',
     'maint_send_test_email_mail_text' => 'Поздравляем! Поскольку вы получили это письмо, электронная почта настроена правильно.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Роли',
     'role_user_roles' => 'Роли пользователя',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Доступ к системному API',
     'role_manage_settings' => 'Управление настройками приложения',
     'role_asset' => 'Права доступа к материалам',
+    'roles_system_warning' => 'Имейте в виду, что доступ к любому из указанных выше трех разрешений может позволить пользователю изменить свои собственные привилегии или привилегии других пользователей системы. Назначить роли с этими правами только доверенным пользователям.',
     'role_asset_desc' => 'Эти разрешения контролируют доступ по умолчанию к параметрам внутри системы. Разрешения на книги, главы и страницы перезапишут эти разрешения.',
     'role_asset_admins' => 'Администраторы автоматически получают доступ ко всему контенту, но эти опции могут отображать или скрывать параметры пользовательского интерфейса.',
     'role_all' => 'Все',

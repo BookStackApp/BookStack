@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'انتهت عملية تحميل الملف.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
     'attachment_not_found' => 'لم يتم العثور على المرفق',
 
     // Pages

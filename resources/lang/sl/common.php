@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopiraj',
     'reply' => 'Odgovori',
     'delete' => 'Izbriši',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Išči',
     'search_clear' => 'Počisti iskanje',
     'reset' => 'Ponastavi',

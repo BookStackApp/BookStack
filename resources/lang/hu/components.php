@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Több betöltése',
     'image_image_name' => 'Kép neve',
     'image_delete_used' => 'Ez a kép a lenti oldalakon van használatban.',
-    'image_delete_confirm' => 'A kép törléséhez ismét rá kell kattintani a törlésre.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Kép kiválasztása',
     'image_dropzone' => 'Képek feltöltése ejtéssel vagy kattintással',
     'images_deleted' => 'Képek törölve',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Kód szerkesztése',
     'code_language' => 'Kód nyelve',
     'code_content' => 'Kód tartalom',
+    'code_session_history' => 'Session History',
     'code_save' => 'Kód mentése',
 ];

@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Nulstil adgangskode',
     'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
     'reset_password_send_button' => 'Send link til nulstilling',
-    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
+    'reset_password_sent' => 'Et link til nulstilling af adgangskode sendes til :email, hvis den e-mail-adresse findes i systemet.',
     'reset_password_success' => 'Din adgangskode er blevet nulstillet.',
     'email_reset_subject' => 'Nulstil din :appName adgangskode',
     'email_reset_text' => 'Du modtager denne E-Mail fordi vi har modtaget en anmodning om at nulstille din adgangskode.',

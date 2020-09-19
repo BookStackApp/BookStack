@@ -6,43 +6,43 @@
 return [
 
     // Pages
-    'page_create'                 => 'vytvořená stránka',
+    'page_create'                 => 'vytvořil/a stránku',
     'page_create_notification'    => 'Stránka byla úspěšně vytvořena',
-    'page_update'                 => 'aktualizovaná stránka',
+    'page_update'                 => 'aktualizoval/a stránku',
     'page_update_notification'    => 'Stránka byla úspěšně aktualizována',
-    'page_delete'                 => 'smazaná stránka',
+    'page_delete'                 => 'odstranil/a stránku',
     'page_delete_notification'    => 'Stránka byla úspěšně smazána',
-    'page_restore'                => 'renovovaná stránka',
-    'page_restore_notification'   => 'Stránka byla úspěšně renovována',
-    'page_move'                   => 'přesunutá stránka',
+    'page_restore'                => 'obnovil/a stránku',
+    'page_restore_notification'   => 'Stránka byla úspěšně obnovena',
+    'page_move'                   => 'přesunul/a stránku',
 
     // Chapters
-    'chapter_create'              => 'vytvořená kapitola',
+    'chapter_create'              => 'vytvořil/a kapitolu',
     'chapter_create_notification' => 'Kapitola byla úspěšně vytvořena',
-    'chapter_update'              => 'aktualizovaná kapitola',
+    'chapter_update'              => 'aktualizoval/a kapitolu',
     'chapter_update_notification' => 'Kapitola byla úspěšně aktualizována',
-    'chapter_delete'              => 'smazaná kapitola',
+    'chapter_delete'              => 'smazal/a kapitolu',
     'chapter_delete_notification' => 'Kapitola byla úspěšně smazána',
-    'chapter_move'                => 'přesunutá kapitola',
+    'chapter_move'                => 'přesunul/a kapitolu',
 
     // Books
-    'book_create'                 => 'vytvořená kniha',
+    'book_create'                 => 'vytvořil/a knihu',
     'book_create_notification'    => 'Kniha byla úspěšně vytvořena',
-    'book_update'                 => 'aktualizovaná kniha',
+    'book_update'                 => 'aktualizoval/a knihu',
     'book_update_notification'    => 'Kniha byla úspěšně aktualizována',
-    'book_delete'                 => 'smazaná kniha',
+    'book_delete'                 => 'smazal/a knihu',
     'book_delete_notification'    => 'Kniha byla úspěšně smazána',
-    'book_sort'                   => 'seřazená kniha',
+    'book_sort'                   => 'seřadil/a knihu',
     'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
 
     // Bookshelves
-    'bookshelf_create'            => 'vytvořená knihovna',
-    'bookshelf_create_notification'    => 'Knihovna úspěšně vytvořena',
-    'bookshelf_update'                 => 'aktualizovaná knihovna',
+    'bookshelf_create'            => 'vytvořil/a knihovnu',
+    'bookshelf_create_notification'    => 'Knihovna byla úspěšně vytvořena',
+    'bookshelf_update'                 => 'aktualizoval/a knihovnu',
     'bookshelf_update_notification'    => 'Knihovna byla úspěšně aktualizována',
-    'bookshelf_delete'                 => 'smazaná knihovna',
-    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
+    'bookshelf_delete'                 => 'odstranil/a knihovnu',
+    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně odstraněna',
 
     // Other
-    'commented_on'                => 'okomentováno v',
+    'commented_on'                => 'okomentoval/a',
 ];

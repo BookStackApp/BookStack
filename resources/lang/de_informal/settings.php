@@ -84,6 +84,20 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'maint_send_test_email_mail_greeting' => 'E-Mail-Versand scheint zu funktionieren!',
     'maint_send_test_email_mail_text' => 'Glückwunsch! Da du diese E-Mail Benachrichtigung erhalten hast, scheinen deine E-Mail-Einstellungen korrekt konfiguriert zu sein.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Rollen',
     'role_user_roles' => 'Benutzer-Rollen',
@@ -109,6 +123,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_access_api' => 'Systemzugriffs-API',
     'role_manage_settings' => 'Globaleinstellungen verwalten',
     'role_asset' => 'Berechtigungen',
+    'roles_system_warning' => 'Beachten Sie, dass der Zugriff auf eine der oben genannten drei Berechtigungen einem Benutzer erlauben kann, seine eigenen Berechtigungen oder die Rechte anderer im System zu ändern. Weisen Sie nur Rollen, mit diesen Berechtigungen, vertrauenswürdigen Benutzern zu.',
     'role_asset_desc' => 'Diese Berechtigungen gelten für den Standard-Zugriff innerhalb des Systems. Berechtigungen für Bücher, Kapitel und Seiten überschreiben diese Berechtigungenen.',
     'role_asset_admins' => 'Administratoren erhalten automatisch Zugriff auf alle Inhalte, aber diese Optionen können Oberflächenoptionen ein- oder ausblenden.',
     'role_all' => 'Alle',
@@ -195,7 +210,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
-        'he' => 'Hebräisch',
+        'he' => 'עברית',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',
