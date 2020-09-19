@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => '電子郵件傳遞似乎有效！',
     'maint_send_test_email_mail_text' => '恭喜你！ 收到此電子郵件通知時，您的電子郵件設置已經認證成功。',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => '角色',
     'role_user_roles' => '使用者角色',
