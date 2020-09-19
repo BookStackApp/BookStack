@@ -20,7 +20,7 @@ return [
     'username' => 'Uživatelské jméno',
     'email' => 'E-mail',
     'password' => 'Heslo',
-    'password_confirm' => 'Potvrdit heslo',
+    'password_confirm' => 'Oveření hesla',
     'password_hint' => 'Musí mít více než 7 znaků',
     'forgot_password' => 'Zapomněli jste heslo?',
     'remember_me' => 'Zapamatovat si mě',
