@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'O upload do arquivo expirou.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Erro de \'Page mismatch\' durante a atualização do anexo',
     'attachment_not_found' => 'Anexo não encontrado',
 
     // Pages

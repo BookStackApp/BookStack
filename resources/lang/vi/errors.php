@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Đã quá thời gian tải lên tệp tin.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Trang không trùng khớp khi cập nhật đính kèm',
     'attachment_not_found' => 'Không tìm thấy đính kèm',
 
     // Pages

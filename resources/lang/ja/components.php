@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'さらに読み込む',
     'image_image_name' => '画像名',
     'image_delete_used' => 'この画像は以下のページで利用されています。',
-    'image_delete_confirm' => '削除してもよろしければ、再度ボタンを押して下さい。',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => '画像を選択',
     'image_dropzone' => '画像をドロップするか、クリックしてアップロード',
     'images_deleted' => '画像を削除しました',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'コードを編集する',
     'code_language' => 'プログラミング言語の選択',
     'code_content' => 'プログラム内容',
+    'code_session_history' => 'セッション履歴',
     'code_save' => 'プログラムを保存',
 ];

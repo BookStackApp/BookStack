@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopieren',
     'reply' => 'Antworten',
     'delete' => 'Löschen',
+    'delete_confirm' => 'Löschen Bestätigen',
     'search' => 'Suchen',
     'search_clear' => 'Suche löschen',
     'reset' => 'Zurücksetzen',

@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Načítať viac',
     'image_image_name' => 'Názov obrázka',
     'image_delete_used' => 'Tento obrázok je použitý na stránkach uvedených nižšie.',
-    'image_delete_confirm' => 'Kliknite znova na zmazať pre potvrdenie zmazania tohto obrázka.',
+    'image_delete_confirm_text' => 'Naozaj chcete vymazať tento obrázok?',
     'image_select_image' => 'Vybrať obrázok',
     'image_dropzone' => 'Presuňte obrázky sem alebo kliknite sem pre nahranie',
     'images_deleted' => 'Obrázky zmazané',
@@ -23,11 +23,12 @@ return [
     'image_upload_success' => 'Obrázok úspešne nahraný',
     'image_update_success' => 'Detaily obrázka úspešne aktualizované',
     'image_delete_success' => 'Obrázok úspešne zmazaný',
-    'image_upload_remove' => 'Remove',
+    'image_upload_remove' => 'Odstrániť',
 
     // Code Editor
-    'code_editor' => 'Edit Code',
-    'code_language' => 'Code Language',
-    'code_content' => 'Code Content',
-    'code_save' => 'Save Code',
+    'code_editor' => 'Upraviť kód',
+    'code_language' => 'Kód jazyka',
+    'code_content' => 'Obsah kódu',
+    'code_session_history' => 'História relácií',
+    'code_save' => 'Ulož kód',
 ];

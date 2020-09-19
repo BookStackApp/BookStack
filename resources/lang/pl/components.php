@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Wczytaj więcej',
     'image_image_name' => 'Nazwa obrazka',
     'image_delete_used' => 'Ten obrazek jest używany na stronach wyświetlonych poniżej.',
-    'image_delete_confirm' => 'Kliknij ponownie Usuń by potwierdzić usunięcie obrazka.',
+    'image_delete_confirm_text' => 'Czy na pewno chcesz usunąć ten obraz?',
     'image_select_image' => 'Wybierz obrazek',
     'image_dropzone' => 'Upuść obrazki tutaj lub kliknij by wybrać obrazki do przesłania',
     'images_deleted' => 'Usunięte obrazki',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Edytuj kod',
     'code_language' => 'Język kodu',
     'code_content' => 'Zawartość kodu',
+    'code_session_history' => 'Historia sesji',
     'code_save' => 'Zapisz kod',
 ];

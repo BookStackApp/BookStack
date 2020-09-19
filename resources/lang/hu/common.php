@@ -33,6 +33,7 @@ return [
     'copy' => 'Másolás',
     'reply' => 'Válasz',
     'delete' => 'Törlés',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Keresés',
     'search_clear' => 'Keresés törlése',
     'reset' => 'Visszaállítás',

@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'La livraison d\'email semble fonctionner !',
     'maint_send_test_email_mail_text' => 'Félicitations ! Lorsque vous avez reçu cette notification par courriel, vos paramètres d\'email semblent être configurés correctement.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Rôles',
     'role_user_roles' => 'Rôles des utilisateurs',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Accès à l\'API du système',
     'role_manage_settings' => 'Gérer les préférences de l\'application',
     'role_asset' => 'Permissions des ressources',
+    'roles_system_warning' => 'Sachez que l\'accès à l\'une des trois permissions ci-dessus peut permettre à un utilisateur de modifier ses propres privilèges ou les privilèges des autres utilisateurs du système. Attribuer uniquement des rôles avec ces permissions à des utilisateurs de confiance.',
     'role_asset_desc' => 'Ces permissions contrôlent l\'accès par défaut des ressources dans le système. Les permissions dans les livres, les chapitres et les pages ignoreront ces permissions',
     'role_asset_admins' => 'Les administrateurs ont automatiquement accès à tous les contenus mais les options suivantes peuvent afficher ou masquer certaines options de l\'interface.',
     'role_all' => 'Tous',

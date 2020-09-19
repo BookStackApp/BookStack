@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => '¡El envío de correos electrónicos parece funcionar!',
     'maint_send_test_email_mail_text' => '¡Enhorabuena! Al recibir esta notificación de correo electrónico, tu configuración de correo electrónico parece estar ajustada correctamente.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Roles',
     'role_user_roles' => 'Roles de usuario',
@@ -107,6 +121,7 @@ return [
     'role_access_api' => 'API de sistema de acceso',
     'role_manage_settings' => 'Gestionar ajustes de activos',
     'role_asset' => 'Permisos de activos',
+    'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario alterar sus propios privilegios o los privilegios de otros en el sistema. Sólo asignar roles con estos permisos a usuarios de confianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos a Libros, Capítulos y Páginas sobreescribiran estos permisos.',
     'role_asset_admins' => 'Los administradores reciben automáticamente acceso a todo el contenido pero estas opciones pueden mostrar u ocultar opciones de UI.',
     'role_all' => 'Todo',
@@ -171,7 +186,7 @@ return [
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Este es un identificador no editable generado por el sistema y único para este token que necesitará ser proporcionado en solicitudes de API.',
-    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret' => 'Clave de Token',
     'user_api_token_secret_desc' => 'Esta es una clave no editable generada por el sistema que necesitará ser proporcionada en solicitudes de API. Solo se monstraré esta vez así que guarde su valor en un lugar seguro.',
     'user_api_token_created' => 'Token creado :timeAgo',
     'user_api_token_updated' => 'Token actualizado :timeAgo',

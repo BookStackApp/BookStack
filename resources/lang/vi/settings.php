@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'Chức năng gửi email có vẻ đã hoạt động!',
     'maint_send_test_email_mail_text' => 'Chúc mừng! Khi bạn nhận được email thông báo này, cài đặt email của bạn có vẻ đã được cấu hình đúng.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Quyền',
     'role_user_roles' => 'Quyền người dùng',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Truy cập đến API hệ thống',
     'role_manage_settings' => 'Quản lý cài đặt của ứng dụng',
     'role_asset' => 'Quyền tài sản (asset)',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Các quyền này điều khiển truy cập mặc định tới tài sản (asset) nằm trong hệ thống. Quyền tại Sách, Chường và Trang se ghi đè các quyền này.',
     'role_asset_admins' => 'Quản trị viên được tự động cấp quyền truy cập đến toàn bộ nội dung, tuy nhiên các tùy chọn đó có thể hiện hoặc ẩn tùy chọn giao diện.',
     'role_all' => 'Tất cả',

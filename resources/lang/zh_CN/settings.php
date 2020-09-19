@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => '邮件发送功能看起来工作正常！',
     'maint_send_test_email_mail_text' => '恭喜！您收到了此邮件通知，你的电子邮件设置看起来配置正确。',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => '角色',
     'role_user_roles' => '用户角色',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => '访问系统 API',
     'role_manage_settings' => '管理App设置',
     'role_asset' => '资源许可',
+    'roles_system_warning' => '请注意，具有上述三个权限中的任何一个都可以允许用户更改自己的特权或系统中其他人的特权。 只将具有这些权限的角色分配给受信任的用户。',
     'role_asset_desc' => '对系统内资源的默认访问许可将由这些权限控制。单独设置在书籍，章节和页面上的权限将覆盖这里的权限设定。',
     'role_asset_admins' => '管理员可自动获得对所有内容的访问权限，但这些选项可能会显示或隐藏UI选项。',
     'role_all' => '全部的',
@@ -131,7 +146,7 @@ return [
     'users_send_invite_text' => '您可以向该用户发送邀请电子邮件，允许他们设置自己的密码，否则，您可以自己设置他们的密码。',
     'users_send_invite_option' => '发送邀请用户电子邮件',
     'users_external_auth_id' => '外部身份认证ID',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
+    'users_external_auth_id_desc' => '这是用于与您的外部身份验证系统通信时匹配此用户的ID。',
     'users_password_warning' => '如果您想更改密码，请填写以下内容：',
     'users_system_public' => '此用户代表访问您的App的任何访客。它不能用于登录，而是自动分配。',
     'users_delete' => '删除用户',

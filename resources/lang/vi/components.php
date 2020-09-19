@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Hiện thêm',
     'image_image_name' => 'Tên Ảnh',
     'image_delete_used' => 'Ảnh này được sử dụng trong các trang dưới đây.',
-    'image_delete_confirm' => 'Bấm nút xóa lần nữa để xác nhận bạn muốn xóa ảnh này.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Chọn Ảnh',
     'image_dropzone' => 'Thả các ảnh hoặc bấm vào đây để tải lên',
     'images_deleted' => 'Các ảnh đã được xóa',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Sửa Mã',
     'code_language' => 'Ngôn ngữ Mã',
     'code_content' => 'Nội dung Mã',
+    'code_session_history' => 'Session History',
     'code_save' => 'Lưu Mã',
 ];

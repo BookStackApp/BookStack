@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'E-postleverans verkar fungera!',
     'maint_send_test_email_mail_text' => 'Grattis! Eftersom du fick detta e-postmeddelande verkar dina e-postinställningar vara korrekt konfigurerade.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Roller',
     'role_user_roles' => 'Användarroller',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Åtkomst till systemets API',
     'role_manage_settings' => 'Hantera appinställningar',
     'role_asset' => 'Tillgång till innehåll',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',
     'role_asset_admins' => 'Administratörer har automatisk tillgång till allt innehåll men dessa alternativ kan visa och dölja vissa gränssnittselement',
     'role_all' => 'Alla',
