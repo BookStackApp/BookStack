@@ -57,7 +57,7 @@ return [
     'reg_enable_desc' => '启用注册后，用户将可以自己注册为站点用户。 注册后，他们将获得一个默认的单一用户角色。',
     'reg_default_role' => '注册后的默认用户角色',
     'reg_enable_external_warning' => '当启用外部LDAP或者SAML认证时，上面的选项会被忽略。当使用外部系统认证认证成功时，将自动创建非现有会员的用户账户。',
-    'reg_email_confirmation' => '邮箱确认',
+    'reg_email_confirmation' => '邮箱确认n',
     'reg_email_confirmation_toggle' => '需要电子邮件确认',
     'reg_confirm_email_desc' => '如果使用域名限制，则需要Email验证，并且该值将被忽略。',
     'reg_confirm_restrict_domain' => '域名限制',
@@ -200,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bǎlgarski',
         'cs' => 'Česky',
         'da' => '丹麦',
         'de' => 'Deutsch (Sie)',

@@ -82,18 +82,18 @@ return [
     'maint_send_test_email_mail_text' => 'Félicitations ! Lorsque vous avez reçu cette notification par courriel, vos paramètres d\'email semblent être configurés correctement.',
 
     // Audit Log
-    'audit' => 'Audit Log',
-    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
-    'audit_event_filter' => 'Event Filter',
-    'audit_event_filter_no_filter' => 'No Filter',
-    'audit_deleted_item' => 'Deleted Item',
-    'audit_deleted_item_name' => 'Name: :name',
-    'audit_table_user' => 'User',
-    'audit_table_event' => 'Event',
-    'audit_table_item' => 'Related Item',
-    'audit_table_date' => 'Activity Date',
-    'audit_date_from' => 'Date Range From',
-    'audit_date_to' => 'Date Range To',
+    'audit' => 'Journal d\'audit',
+    'audit_desc' => 'Ce journal d\'audit affiche une liste des activités suivies dans le système. Cette liste n\'est pas filtrée contrairement aux listes d\'activités similaires dans le système où les filtres d\'autorisation sont appliqués.',
+    'audit_event_filter' => 'Filtres d\'événement',
+    'audit_event_filter_no_filter' => 'Pas de filtre',
+    'audit_deleted_item' => 'Élément supprimé',
+    'audit_deleted_item_name' => 'Nom: :name',
+    'audit_table_user' => 'Utilisateur',
+    'audit_table_event' => 'Evènement',
+    'audit_table_item' => 'Élément Associé',
+    'audit_table_date' => 'Date d\'activation',
+    'audit_date_from' => 'À partir du',
+    'audit_date_to' => 'Jusqu\'au',
 
     // Role Settings
     'roles' => 'Rôles',
@@ -200,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bulgare',
         'cs' => 'Česky',
         'da' => 'Danois',
         'de' => 'Deutsch (Sie)',

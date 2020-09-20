@@ -179,7 +179,7 @@ return [
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
     'user_api_token_expiry' => 'Lejárati dátum',
     'user_api_token_expiry_desc' => 'Dátum megadása ameddig a vezérjel érvényes. Ez után a dátum után az ezzel a vezérjellel történő kérések nem fognak működni. Üresen hagyva a lejárati idő 100 évre lesz beállítva.',
-    'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID"" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
+    'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
     'user_api_token_create_success' => 'API vezérjel sikeresen létrehozva',
     'user_api_token_update_success' => 'API vezérjel sikeresen frissítve',
     'user_api_token' => 'API vezérjel',
@@ -200,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bǎlgarski',
         'cs' => 'Česky',
         'da' => 'Dansk',
         'de' => 'Deutsch (Sie)',
