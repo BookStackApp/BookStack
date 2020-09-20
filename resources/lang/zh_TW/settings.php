@@ -200,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bǎlgarski',
         'cs' => 'Česky',
         'da' => '丹麥',
         'de' => 'Deutsch (Sie)',

@@ -203,6 +203,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bǎlgarski',
         'cs' => 'Česky',
         'da' => 'Dänisch',
         'de' => 'Deutsch (Sie)',
