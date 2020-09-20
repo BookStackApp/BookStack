@@ -51,7 +51,7 @@ All development on BookStack is currently done on the master branch. When it's t
 
 * [Node.js](https://nodejs.org/en/) v10.0+
 
-This project uses SASS for CSS development and this is built, along with the JavaScript, using webpack. The below npm commands can be used to install the dependencies & run the build tasks:
+This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
 
 ``` bash
 # Install NPM Dependencies
@@ -157,8 +157,7 @@ These are the great open-source projects used to help build BookStack:
 * [Laravel](http://laravel.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [CodeMirror](https://codemirror.net)
-* [Vue.js](http://vuejs.org/)
-* [Sortable](https://github.com/SortableJS/Sortable) & [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
+* [Sortable](https://github.com/SortableJS/Sortable)
 * [Google Material Icons](https://material.io/icons/)
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [clipboard.js](https://clipboardjs.com/)

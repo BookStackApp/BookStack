@@ -66,8 +66,8 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $validationRules = [
-            'name'             => 'required',
-            'email'            => 'required|email|unique:users,email'
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email'
         ];
 
         $authMethod = config('auth.method');

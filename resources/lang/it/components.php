@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Carica Altre',
     'image_image_name' => 'Nome Immagine',
     'image_delete_used' => 'Questa immagine è usata nelle pagine elencate.',
-    'image_delete_confirm' => 'Clicca elimina nuovamente per confermare.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Seleziona Immagine',
     'image_dropzone' => 'Rilascia immagini o clicca qui per caricarle',
     'images_deleted' => 'Immagini Eliminate',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Modifica Codice',
     'code_language' => 'Linguaggio Codice',
     'code_content' => 'Contenuto Codice',
+    'code_session_history' => 'Cronologia Sessione',
     'code_save' => 'Salva Codice',
 ];

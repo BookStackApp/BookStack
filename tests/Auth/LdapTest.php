@@ -237,9 +237,9 @@ class LdapTest extends BrowserKitTest
 
     public function test_login_maps_roles_and_retains_existing_roles()
     {
-        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
-        $roleToReceive2 = factory(Role::class)->create(['name' => 'ldaptester-second', 'display_name' => 'LdapTester Second']);
-        $existingRole = factory(Role::class)->create(['name' => 'ldaptester-existing']);
+        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
+        $roleToReceive2 = factory(Role::class)->create(['display_name' => 'LdapTester Second']);
+        $existingRole = factory(Role::class)->create(['display_name' => 'ldaptester-existing']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
         $this->mockUser->attachRole($existingRole);
 
@@ -283,8 +283,8 @@ class LdapTest extends BrowserKitTest
 
     public function test_login_maps_roles_and_removes_old_roles_if_set()
     {
-        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
-        $existingRole = factory(Role::class)->create(['name' => 'ldaptester-existing']);
+        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
+        $existingRole = factory(Role::class)->create(['display_name' => 'ldaptester-existing']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
         $this->mockUser->attachRole($existingRole);
 
@@ -323,15 +323,15 @@ class LdapTest extends BrowserKitTest
 
     public function test_external_auth_id_visible_in_roles_page_when_ldap_active()
     {
-        $role = factory(Role::class)->create(['name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);
+        $role = factory(Role::class)->create(['display_name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);
         $this->asAdmin()->visit('/settings/roles/' . $role->id)
             ->see('ex-auth-a');
     }
 
     public function test_login_maps_roles_using_external_auth_ids_if_set()
     {
-        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'external_auth_id' => 'test-second-param, ex-auth-a']);
-        $roleToNotReceive = factory(Role::class)->create(['name' => 'ldaptester-not-receive', 'display_name' => 'ex-auth-a', 'external_auth_id' => 'test-second-param']);
+        $roleToReceive = factory(Role::class)->create(['display_name' => 'ldaptester', 'external_auth_id' => 'test-second-param, ex-auth-a']);
+        $roleToNotReceive = factory(Role::class)->create(['display_name' => 'ex-auth-a', 'external_auth_id' => 'test-second-param']);
 
         app('config')->set([
             'services.ldap.user_to_groups' => true,
@@ -368,8 +368,8 @@ class LdapTest extends BrowserKitTest
 
     public function test_login_group_mapping_does_not_conflict_with_default_role()
     {
-        $roleToReceive = factory(Role::class)->create(['name' => 'ldaptester', 'display_name' => 'LdapTester']);
-        $roleToReceive2 = factory(Role::class)->create(['name' => 'ldaptester-second', 'display_name' => 'LdapTester Second']);
+        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
+        $roleToReceive2 = factory(Role::class)->create(['display_name' => 'LdapTester Second']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
 
         setting()->put('registration-role', $roleToReceive->id);
@@ -592,5 +592,60 @@ class LdapTest extends BrowserKitTest
         $this->post('/login', ['username' => 'bscott', 'password' => 'pass'])->followRedirects();
 
         $this->see('A user with the email tester@example.com already exists but with different credentials');
+    }
+
+    public function test_login_with_email_confirmation_required_maps_groups_but_shows_confirmation_screen()
+    {
+        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
+        $user = factory(User::class)->make();
+        setting()->put('registration-confirmation', 'true');
+
+        app('config')->set([
+            'services.ldap.user_to_groups' => true,
+            'services.ldap.group_attribute' => 'memberOf',
+            'services.ldap.remove_from_groups' => true,
+        ]);
+
+        $this->commonLdapMocks(1, 1, 3, 4, 3, 2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')
+            ->times(3)
+            ->andReturn(['count' => 1, 0 => [
+                'uid' => [$user->name],
+                'cn' => [$user->name],
+                'dn' => ['dc=test' . config('services.ldap.base_dn')],
+                'mail' => [$user->email],
+                'memberof' => [
+                    'count' => 1,
+                    0 => "cn=ldaptester,ou=groups,dc=example,dc=com",
+                ]
+            ]]);
+
+        $this->mockUserLogin()->seePageIs('/register/confirm');
+        $this->seeInDatabase('users', [
+            'email' => $user->email,
+            'email_confirmed' => false,
+        ]);
+
+        $user  = User::query()->where('email', '=', $user->email)->first();
+        $this->seeInDatabase('role_user', [
+            'user_id' => $user->id,
+            'role_id' => $roleToReceive->id
+        ]);
+
+        $homePage = $this->get('/');
+        $homePage->assertRedirectedTo('/register/confirm/awaiting');
+    }
+
+    public function test_failed_logins_are_logged_when_message_configured()
+    {
+        $log = $this->withTestLogger();
+        config()->set(['logging.failed_login.message' => 'Failed login for %u']);
+
+        $this->commonLdapMocks(1, 1, 1, 1, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->andReturn(['count' => 0]);
+
+        $this->post('/login', ['username' => 'timmyjenkins', 'password' => 'cattreedog']);
+        $this->assertTrue($log->hasWarningThatContains('Failed login for timmyjenkins'));
     }
 }

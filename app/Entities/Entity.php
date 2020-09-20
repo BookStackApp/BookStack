@@ -238,10 +238,8 @@ class Entity extends Ownable
 
     /**
      * Gets a limited-length version of the entities name.
-     * @param int $length
-     * @return string
      */
-    public function getShortName($length = 25)
+    public function getShortName(int $length = 25): string
     {
         if (mb_strlen($this->name) <= $length) {
             return $this->name;
@@ -288,7 +286,7 @@ class Entity extends Ownable
     public function rebuildPermissions()
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        Permissions::buildJointPermissionsForEntity($this);
+        Permissions::buildJointPermissionsForEntity(clone $this);
     }
 
     /**
@@ -297,7 +295,7 @@ class Entity extends Ownable
     public function indexForSearch()
     {
         $searchService = app()->make(SearchService::class);
-        $searchService->indexEntity($this);
+        $searchService->indexEntity(clone $this);
     }
 
     /**

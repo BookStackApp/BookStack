@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Dosya yüklemesi zaman aşımına uğradı',
 
     // Attachments
-    'attachment_page_mismatch' => 'Ek güncellemesi sırasında sayfa uyuşmazlığı yaşandı',
     'attachment_not_found' => 'Ek bulunamadı',
 
     // Pages

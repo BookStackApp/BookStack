@@ -49,7 +49,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = [
         'password', 'remember_token', 'system_name', 'email_confirmed', 'external_auth_id', 'email',
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'image_id',
     ];
 
     /**
@@ -101,12 +101,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Check if the user has a role.
-     * @param $role
-     * @return mixed
      */
-    public function hasRole($role)
+    public function hasRole($roleId): bool
     {
-        return $this->roles->pluck('name')->contains($role);
+        return $this->roles->pluck('id')->contains($roleId);
     }
 
     /**
@@ -163,7 +161,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Attach a role to this user.
-     * @param Role $role
      */
     public function attachRole(Role $role)
     {

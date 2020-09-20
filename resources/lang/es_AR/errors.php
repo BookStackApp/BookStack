@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'La carga del archivo ha caducado.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Página no coincidente durante la subida del adjunto ',
     'attachment_not_found' => 'No se encuentra el objeto adjunto',
 
     // Pages

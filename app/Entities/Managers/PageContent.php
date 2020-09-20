@@ -108,7 +108,7 @@ class PageContent
     protected function toPlainText(): string
     {
         $html = $this->render(true);
-        return strip_tags($html);
+        return html_entity_decode(strip_tags($html));
     }
 
     /**

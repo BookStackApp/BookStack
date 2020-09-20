@@ -1,9 +1,9 @@
 @extends('tri-layout')
 
 @section('container-attrs')
-    id="entity-dashboard"
-    entity-id="{{ $chapter->id }}"
-    entity-type="chapter"
+    component="entity-search"
+    option:entity-search:entity-id="{{ $chapter->id }}"
+    option:entity-search:entity-type="chapter"
 @stop
 
 @section('body')
@@ -16,17 +16,17 @@
     </div>
 
     <main class="content-wrap card">
-        <h1 class="break-text" v-pre>{{ $chapter->name }}</h1>
-        <div class="chapter-content" v-show="!searching">
-            <p v-pre class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
+        <h1 class="break-text">{{ $chapter->name }}</h1>
+        <div refs="entity-search@contentView" class="chapter-content">
+            <p class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
             @if(count($pages) > 0)
-                <div v-pre class="entity-list book-contents">
+                <div class="entity-list book-contents">
                     @foreach($pages as $page)
                         @include('pages.list-item', ['page' => $page])
                     @endforeach
                 </div>
             @else
-                <div class="mt-xl" v-pre>
+                <div class="mt-xl">
                     <hr>
                     <p class="text-muted italic mb-m mt-xl">{{ trans('entities.chapters_empty') }}</p>
 
@@ -49,7 +49,7 @@
             @endif
         </div>
 
-        @include('partials.entity-dashboard-search-results')
+        @include('partials.entity-search-results')
     </main>
 
 @stop
@@ -130,7 +130,7 @@
 
 @section('left')
 
-    @include('partials.entity-dashboard-search-box')
+    @include('partials.entity-search-form', ['label' => trans('entities.chapters_search_this')])
 
     @if($chapter->tags->count() > 0)
         <div class="mb-xl">

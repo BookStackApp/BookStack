@@ -15,7 +15,7 @@ return [
     'image_load_more' => '載入更多',
     'image_image_name' => '圖片名稱',
     'image_delete_used' => '所使用圖片目前用於以下頁面。',
-    'image_delete_confirm' => '如果你想刪除它，請再次按下按鈕。',
+    'image_delete_confirm_text' => '您確認想要刪除這個圖片？',
     'image_select_image' => '選擇圖片',
     'image_dropzone' => '拖曳圖片或點選這裡上傳',
     'images_deleted' => '圖片已刪除',
@@ -29,5 +29,6 @@ return [
     'code_editor' => '編輯程式碼',
     'code_language' => '程式語言',
     'code_content' => '程式碼內容',
+    'code_session_history' => 'Session 歷程',
     'code_save' => '儲存程式碼',
 ];

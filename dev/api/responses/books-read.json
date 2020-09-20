@@ -7,15 +7,12 @@
   "updated_at": "2020-01-12 14:11:51",
   "created_by": {
     "id": 1,
-    "name": "Admin",
-    "image_id": 48
+    "name": "Admin"
   },
   "updated_by": {
     "id": 1,
-    "name": "Admin",
-    "image_id": 48
+    "name": "Admin"
   },
-  "image_id": 452,
   "tags": [
     {
       "id": 13,

@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
@@ -46,6 +47,9 @@ class PageRevisionController extends Controller
         }
 
         $page->fill($revision->toArray());
+        // TODO - Refactor PageContent so we don't need to juggle this
+        $page->html = $revision->html;
+        $page->html = (new PageContent($page))->render();
 
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
         return view('pages.revision', [
@@ -73,6 +77,9 @@ class PageRevisionController extends Controller
         $diff = (new Htmldiff)->diff($prevContent, $revision->html);
 
         $page->fill($revision->toArray());
+        // TODO - Refactor PageContent so we don't need to juggle this
+        $page->html = $revision->html;
+        $page->html = (new PageContent($page))->render();
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
 
         return view('pages.revision', [

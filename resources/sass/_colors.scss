@@ -51,6 +51,11 @@
   fill: currentColor !important;
 }
 
+.text-white {
+  color: #fff;
+  fill: currentColor !important;
+}
+
 /*
  * Entity text colors
  */
@@ -89,10 +94,4 @@
 }
 .bg-shelf {
   background-color: var(--color-bookshelf);
-}
-
-.bg-shelf, .bg-book {
-  @include whenDark {
-    filter: brightness(67%) saturate(80%);
-  }
 }

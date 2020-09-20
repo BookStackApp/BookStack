@@ -22,14 +22,14 @@ return [
     'saml_user_not_registered' => '用戶:name未註冊，自動註冊不可用',
     'saml_no_email_address' => '在外部認證系統提供的數據中找不到該用戶的電子郵件地址',
     'saml_invalid_response_id' => '該應用程序啟動的進程無法識別來自外部身份驗證系統的請求。 登錄後返回可能會導致此問題。',
-    'saml_fail_authed' => '使用：system登錄失敗，系統未提供成功的授權',
+    'saml_fail_authed' => '使用 :system 登錄失敗，系統未提供成功的授權',
     'social_no_action_defined' => '沒有定義行為',
     'social_login_bad_response' => "在 :socialAccount 登錄時遇到錯誤：\n:error",
     'social_account_in_use' => ':socialAccount 帳號已被使用，請嘗試透過 :socialAccount 選項登錄。',
     'social_account_email_in_use' => 'Email :email 已經被使用。如果您已有帳號，則可以在個人資料設定中綁定您的 :socialAccount。',
     'social_account_existing' => ':socialAccount已經被綁定到您的帳號。',
     'social_account_already_used_existing' => ':socialAccount帳號已經被其他使用者使用。',
-    'social_account_not_used' => ':socialAccount帳號沒有綁定到任何使用者，請在您的個人資料設定中綁定。',
+    'social_account_not_used' => ':socialAccount帳號沒有綁定到任何使用者，請在您的個人資料設定中綁定。 ',
     'social_account_register_instructions' => '如果您還沒有帳號，您可以使用 :socialAccount 選項註冊帳號。',
     'social_driver_not_found' => '未找到社交驅動程式',
     'social_driver_not_configured' => '您的:socialAccount社交設定不正確。',
@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => '文件上傳已超時。',
 
     // Attachments
-    'attachment_page_mismatch' => '附件更新期間的頁面不符合',
     'attachment_not_found' => '沒有找到附件',
 
     // Pages
@@ -83,7 +82,7 @@ return [
     // Error pages
     '404_page_not_found' => '無法找到頁面',
     'sorry_page_not_found' => '對不起，無法找到您想進入的頁面。',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => '如果您確認這個頁面存在，則代表可能沒有查看它的權限。',
     'return_home' => '返回首頁',
     'error_occurred' => '發生錯誤',
     'app_down' => ':appName現在正在關閉',
@@ -98,6 +97,6 @@ return [
     'api_user_token_expired' => '授權令牌已過期',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => '寄送測試電子郵件時發生錯誤:',
 
 ];

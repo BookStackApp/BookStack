@@ -36,7 +36,7 @@ return [
     'book_sort_notification'      => 'تمت إعادة سرد الكتاب بنجاح',
 
     // Bookshelves
-    'bookshelf_create'            => 'created Bookshelf',
+    'bookshelf_create'            => 'تم إنشاء رف الكتب',
     'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
     'bookshelf_update'                 => 'updated bookshelf',
     'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',

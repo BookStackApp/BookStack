@@ -24,6 +24,16 @@ trait TestsApi
     }
 
     /**
+     * Format the given (field_name => ["messages"]) array
+     * into a standard validation response format.
+     */
+    protected function validationResponse(array $messages): array
+    {
+        $err = $this->errorResponse("The given data was invalid.", 422);
+        $err['error']['validation'] = $messages;
+        return $err;
+    }
+    /**
      * Get an approved API auth header.
      */
     protected function apiAuthHeader(): array

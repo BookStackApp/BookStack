@@ -1,27 +1,29 @@
-
+/**
+ * Entity Selector Popup
+ * @extends {Component}
+ */
 class EntitySelectorPopup {
 
-    constructor(elem) {
-        this.elem = elem;
+    setup() {
+        this.elem = this.$el;
+        this.selectButton = this.$refs.select;
         window.EntitySelectorPopup = this;
 
         this.callback = null;
         this.selection = null;
 
-        this.selectButton = elem.querySelector('.entity-link-selector-confirm');
         this.selectButton.addEventListener('click', this.onSelectButtonClick.bind(this));
-
         window.$events.listen('entity-select-change', this.onSelectionChange.bind(this));
         window.$events.listen('entity-select-confirm', this.onSelectionConfirm.bind(this));
     }
 
     show(callback) {
         this.callback = callback;
-        this.elem.components.overlay.show();
+        this.elem.components.popup.show();
     }
 
     hide() {
-        this.elem.components.overlay.hide();
+        this.elem.components.popup.hide();
     }
 
     onSelectButtonClick() {

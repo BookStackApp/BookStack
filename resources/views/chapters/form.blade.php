@@ -16,7 +16,7 @@
         <label for="tags">{{ trans('entities.chapter_tags') }}</label>
     </button>
     <div class="collapse-content" collapsible-content>
-        @include('components.tag-manager', ['entity' => isset($chapter)?$chapter:null, 'entityType' => 'chapter'])
+        @include('components.tag-manager', ['entity' => $chapter ?? null])
     </div>
 </div>
 

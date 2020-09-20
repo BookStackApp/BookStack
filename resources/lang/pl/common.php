@@ -33,12 +33,13 @@ return [
     'copy' => 'Skopiuj',
     'reply' => 'Odpowiedz',
     'delete' => 'Usuń',
+    'delete_confirm' => 'Potwierdź usunięcie',
     'search' => 'Szukaj',
     'search_clear' => 'Wyczyść wyszukiwanie',
     'reset' => 'Resetuj',
     'remove' => 'Usuń',
     'add' => 'Dodaj',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'Pełny ekran',
 
     // Sort Options
     'sort_options' => 'Opcje sortowania',
@@ -60,14 +61,14 @@ return [
     'grid_view' => 'Widok kafelkowy',
     'list_view' => 'Widok listy',
     'default' => 'Domyślny',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Ścieżka nawigacji',
 
     // Header
     'profile_menu' => 'Menu profilu',
     'view_profile' => 'Zobacz profil',
     'edit_profile' => 'Edytuj profil',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Tryb ciemny',
+    'light_mode' => 'Tryb jasny',
 
     // Layout tabs
     'tab_info' => 'Informacje',

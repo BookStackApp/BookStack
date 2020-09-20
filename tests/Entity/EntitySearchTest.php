@@ -277,4 +277,20 @@ class EntitySearchTest extends TestCase
             $search->assertSee($expectedShelf->name);
         }
     }
+
+    public function test_search_works_on_updated_page_content()
+    {
+        $page = Page::query()->first();
+        $this->asEditor();
+
+        $update = $this->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => '<p>dog pandabearmonster spaghetti</p>',
+        ]);
+
+        $search = $this->asEditor()->get('/search?term=pandabearmonster');
+        $search->assertStatus(200);
+        $search->assertSeeText($page->name);
+        $search->assertSee($page->getUrl());
+    }
 }

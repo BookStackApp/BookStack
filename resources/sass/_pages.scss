@@ -327,24 +327,16 @@ body.mce-fullscreen, body.markdown-fullscreen {
 }
 
 .suggestion-box {
-  position: absolute;
-  background-color: #FFF;
-  border: 1px solid #BBB;
-  box-shadow: $bs-light;
-  list-style: none;
-  z-index: 100;
+  top: auto;
+  margin: -4px 0 0;
+  right: auto;
+  left: 0;
   padding: 0;
-  margin: 0;
-  border-radius: 3px;
   li {
     display: block;
-    padding: $-xs $-s;
     border-bottom: 1px solid #DDD;
     &:last-child {
       border-bottom: 0;
-    }
-    &.active {
-      background-color: #EEE;
     }
   }
 }

@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'טען עוד',
     'image_image_name' => 'שם התמונה',
     'image_delete_used' => 'תמונה זו בשימוש בדפים שמתחת',
-    'image_delete_confirm' => 'לחץ ״מחק״ שוב על מנת לאשר שברצונך למחוק תמונה זו',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'בחר תמונה',
     'image_dropzone' => 'גרור תמונות או לחץ כאן להעלאה',
     'images_deleted' => 'התמונות נמחקו',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'ערוך קוד',
     'code_language' => 'שפת הקוד',
     'code_content' => 'תוכן הקוד',
+    'code_session_history' => 'Session History',
     'code_save' => 'שמור קוד',
 ];
