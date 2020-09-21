@@ -90,7 +90,7 @@ return [
     'audit_deleted_item_name' => '姓名: :name',
     'audit_table_user' => '用户',
     'audit_table_event' => '事件',
-    'audit_table_item' => '相关项',
+    'audit_table_item' => '相关项目',
     'audit_table_date' => '活动日期',
     'audit_date_from' => 'Date Range From',
     'audit_date_to' => 'Date Range To',
@@ -200,7 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'bg' => 'Bǎlgarski',
+        'bg' => '保加利亚语',
         'cs' => 'Česky',
         'da' => '丹麦',
         'de' => 'Deutsch (Sie)',
