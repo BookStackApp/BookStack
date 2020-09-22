@@ -47,12 +47,12 @@ jobs:
 
     - name: Start migration test
       run: |
-        php${{ matrix.php }} artisan migrate
+        php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
 
     - name: Start migration:rollback test
       run: |
-        php${{ matrix.php }} artisan migrate:rollback
+        php${{ matrix.php }} artisan migrate:rollback --force -n --database=mysql_testing
 
     - name: Start migration rerun test
       run: |
-        php${{ matrix.php }} artisan migrate
+        php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
