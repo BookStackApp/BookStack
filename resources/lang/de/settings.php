@@ -85,7 +85,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'maint_send_test_email_mail_text' => 'Glückwunsch! Da Sie diese E-Mail Benachrichtigung erhalten haben, scheinen Ihre E-Mail-Einstellungen korrekt konfiguriert zu sein.',
 
     // Audit Log
-    'audit' => 'Audit Log',
+    'audit' => 'Audit-Protokoll',
     'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'audit_event_filter' => 'Event Filter',
     'audit_event_filter_no_filter' => 'No Filter',
