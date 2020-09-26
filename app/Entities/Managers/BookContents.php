@@ -41,7 +41,6 @@ class BookContents
 
     /**
      * Get the contents as a sorted collection tree.
-     * TODO - Support $renderPages option
      */
     public function getTree(bool $showDrafts = false, bool $renderPages = false): Collection
     {
@@ -60,8 +59,12 @@ class BookContents
             }
         });
 
-        $all->each(function (Entity $entity) {
+        $all->each(function (Entity $entity) use ($renderPages) {
             $entity->setRelation('book', $this->book);
+
+            if ($renderPages && get_class($entity) == 'BookStack\Entities\Page') {
+                $entity->html = (new PageContent($entity))->render();
+            }
         });
 
         return collect($chapters)->concat($lonePages)->sortBy($this->bookChildSortFunc());
