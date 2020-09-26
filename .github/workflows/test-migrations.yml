@@ -1,0 +1,58 @@
+name: test-migrations
+
+on:
+  push:
+    branches:
+      - master
+      - release
+  pull_request:
+    branches:
+      - '*'
+      - '*/*'
+      - '!l10n_master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [7.2, 7.4]
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ matrix.php }}
+
+      - name: Start MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+
+      - name: Create database & user
+        run: |
+          mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
+          mysql -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED BY 'bookstack-test';"
+          mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
+          mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
+
+      - name: Install composer dependencies
+        run: composer install --prefer-dist --no-interaction --ansi
+
+      - name: Start migration test
+        run: |
+          php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
+
+      - name: Start migration:rollback test
+        run: |
+          php${{ matrix.php }} artisan migrate:rollback --force -n --database=mysql_testing
+
+      - name: Start migration rerun test
+        run: |
+          php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
