@@ -119,4 +119,6 @@ Simsimpicpic :: French
 Zenahr Barzani (Zenahr) :: German; Japanese; Dutch; German Informal
 tatsuya.info :: Japanese
 fadiapp :: Arabic
-Jakub “Jéžiš” Bouček (jakubboucek) :: Czech
+Jakub Bouček (jakubboucek) :: Czech
+Marco (cdrfun) :: German
+10935336 :: Chinese Simplified
