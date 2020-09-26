@@ -71,6 +71,25 @@ class PageContentTest extends TestCase
         $pageResp->assertSee($content);
     }
 
+    public function test_page_includes_rendered_on_book_export()
+    {
+        $page = Page::query()->first();
+        $secondPage = Page::query()
+            ->where('book_id', '!=', $page->book_id)
+            ->first();
+
+        $content = '<p id="bkmrk-meow">my cat is awesome and scratchy</p>';
+        $secondPage->html = $content;
+        $secondPage->save();
+
+        $page->html = "{{@{$secondPage->id}#bkmrk-meow}}";
+        $page->save();
+
+        $this->asEditor();
+        $htmlContent = $this->get($page->book->getUrl('/export/html'));
+        $htmlContent->assertSee('my cat is awesome and scratchy');
+    }
+
     public function test_page_content_scripts_removed_by_default()
     {
         $this->asEditor();
