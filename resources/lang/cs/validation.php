@@ -105,7 +105,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Ověření hesla je vyžadováno',
+            'required_with' => 'Je nutné potvrdit heslo',
         ],
     ],
 

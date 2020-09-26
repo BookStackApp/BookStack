@@ -265,7 +265,7 @@ return [
     'attachments_link_url' => 'Link zu einer Datei',
     'attachments_link_url_hint' => 'URL einer Seite oder Datei',
     'attach' => 'Hinzufügen',
-    'attachments_insert_link' => 'Add Attachment Link to Page',
+    'attachments_insert_link' => 'Link zum Anhang auf Seite einfügen',
     'attachments_edit_file' => 'Datei bearbeiten',
     'attachments_edit_file_name' => 'Dateiname',
     'attachments_edit_drop_upload' => 'Ziehen Sie Dateien hierher, um diese hochzuladen und zu überschreiben',

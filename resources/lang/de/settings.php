@@ -85,18 +85,18 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'maint_send_test_email_mail_text' => 'Glückwunsch! Da Sie diese E-Mail Benachrichtigung erhalten haben, scheinen Ihre E-Mail-Einstellungen korrekt konfiguriert zu sein.',
 
     // Audit Log
-    'audit' => 'Audit Log',
-    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
-    'audit_event_filter' => 'Event Filter',
-    'audit_event_filter_no_filter' => 'No Filter',
-    'audit_deleted_item' => 'Deleted Item',
+    'audit' => 'Audit-Protokoll',
+    'audit_desc' => 'Dieses Audit-Protokoll zeigt eine Liste der Aktivitäten an, welche vom System protokolliert werden. Im Gegensatz zu den anderen Aktivitätslisten im System, bei denen Berechtigungen angewendet werden, ist diese Liste ungefiltert.',
+    'audit_event_filter' => 'Ereignisfilter',
+    'audit_event_filter_no_filter' => 'Kein Filter',
+    'audit_deleted_item' => 'Gelöschtes Objekt',
     'audit_deleted_item_name' => 'Name: :name',
-    'audit_table_user' => 'User',
-    'audit_table_event' => 'Event',
-    'audit_table_item' => 'Related Item',
-    'audit_table_date' => 'Activity Date',
-    'audit_date_from' => 'Date Range From',
-    'audit_date_to' => 'Date Range To',
+    'audit_table_user' => 'Benutzer',
+    'audit_table_event' => 'Ereignis',
+    'audit_table_item' => 'Verwendetes Objekt',
+    'audit_table_date' => 'Aktivitätsdatum',
+    'audit_date_from' => 'Zeitraum von',
+    'audit_date_to' => 'Zeitraum bis',
 
     // Role Settings
     'roles' => 'Rollen',
@@ -203,7 +203,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
-        'bg' => 'Bǎlgarski',
+        'bg' => 'Bulgarisch',
         'cs' => 'Česky',
         'da' => 'Dänisch',
         'de' => 'Deutsch (Sie)',
