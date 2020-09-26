@@ -3,16 +3,7 @@
 @section('body')
 <div class="container small">
 
-    <div class="grid left-focus v-center no-row-gap">
-        <div class="py-m">
-            @include('settings.navbar', ['selected' => 'maintenance'])
-        </div>
-        <div class="text-right p-m">
-            <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
-            BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
-            </a>
-        </div>
-    </div>
+    @include('settings.navbar-with-version', ['selected' => 'maintenance'])
 
     <div id="image-cleanup" class="card content-wrap auto-height">
         <h2 class="list-heading">{{ trans('settings.maint_image_cleanup') }}</h2>

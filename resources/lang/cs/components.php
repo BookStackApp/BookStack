@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Načíst další',
     'image_image_name' => 'Název obrázku',
     'image_delete_used' => 'Tento obrázek je použit na níže uvedených stránkách.',
-    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
+    'image_delete_confirm_text' => 'Opravdu chcete odstranit tento obrázek?',
     'image_select_image' => 'Vyberte obrázek',
     'image_dropzone' => 'Přetáhněte obrázky nebo klikněte sem pro nahrání',
     'images_deleted' => 'Obrázky odstraněny',

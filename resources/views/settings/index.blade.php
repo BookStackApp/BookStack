@@ -3,16 +3,7 @@
 @section('body')
     <div class="container small">
 
-        <div class="grid left-focus v-center no-row-gap">
-            <div class="py-m">
-                @include('settings.navbar', ['selected' => 'settings'])
-            </div>
-            <div class="text-right p-m">
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
-                    BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
-                </a>
-            </div>
-        </div>
+        @include('settings.navbar-with-version', ['selected' => 'settings'])
 
         <div class="card content-wrap auto-height">
             <h2 id="features" class="list-heading">{{ trans('settings.app_features_security') }}</h2>
