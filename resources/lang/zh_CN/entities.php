@@ -265,7 +265,7 @@ return [
     'attachments_link_url' => '链接到文件',
     'attachments_link_url_hint' => '网站或文件的网址',
     'attach' => '附加',
-    'attachments_insert_link' => 'Add Attachment Link to Page',
+    'attachments_insert_link' => '将附加链接添加到页面',
     'attachments_edit_file' => '编辑文件',
     'attachments_edit_file_name' => '文件名',
     'attachments_edit_drop_upload' => '删除文件或点击这里上传并覆盖',
