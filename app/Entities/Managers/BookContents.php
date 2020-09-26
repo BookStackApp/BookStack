@@ -62,7 +62,7 @@ class BookContents
         $all->each(function (Entity $entity) use ($renderPages) {
             $entity->setRelation('book', $this->book);
 
-            if ($renderPages && get_class($entity) == 'BookStack\Entities\Page') {
+            if ($renderPages && $entity->isA('page')) {
                 $entity->html = (new PageContent($entity))->render();
             }
         });
