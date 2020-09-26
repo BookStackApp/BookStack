@@ -196,24 +196,6 @@ class Saml2Test extends TestCase
         });
     }
 
-    public function test_user_registration_with_existing_email()
-    {
-        config()->set([
-            'saml2.onelogin.strict' => false,
-        ]);
-
-        $viewer = $this->getViewer();
-        $viewer->email = 'user@example.com';
-        $viewer->save();
-
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $acsPost->assertRedirect('/');
-            $errorMessage = session()->get('error');
-            $this->assertEquals('A user with the email user@example.com already exists but with different credentials.', $errorMessage);
-        });
-    }
-
     public function test_saml_routes_are_only_active_if_saml_enabled()
     {
         config()->set(['auth.method' => 'standard']);
