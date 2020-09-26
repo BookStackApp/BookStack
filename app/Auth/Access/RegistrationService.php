@@ -57,7 +57,7 @@ class RegistrationService
         // Ensure user does not already exist
         $alreadyUser = !is_null($this->userRepo->getByEmail($userEmail));
         if ($alreadyUser) {
-            throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $userEmail]));
+            throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $userEmail]), '/login');
         }
 
         // Create the user
