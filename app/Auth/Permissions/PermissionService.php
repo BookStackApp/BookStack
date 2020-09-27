@@ -51,11 +51,6 @@ class PermissionService
 
     /**
      * PermissionService constructor.
-     * @param JointPermission $jointPermission
-     * @param EntityPermission $entityPermission
-     * @param Role $role
-     * @param Connection $db
-     * @param EntityProvider $entityProvider
      */
     public function __construct(
         JointPermission $jointPermission,
@@ -176,7 +171,7 @@ class PermissionService
         });
 
         // Chunk through all bookshelves
-        $this->entityProvider->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+        $this->entityProvider->bookshelf->newQuery()->withTrashed()->select(['id', 'restricted', 'created_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->buildJointPermissionsForShelves($shelves, $roles);
             });
@@ -188,11 +183,11 @@ class PermissionService
      */
     protected function bookFetchQuery()
     {
-        return $this->entityProvider->book->newQuery()
+        return $this->entityProvider->book->withTrashed()->newQuery()
             ->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
-                $query->select(['id', 'restricted', 'created_by', 'book_id']);
+                $query->withTrashed()->select(['id', 'restricted', 'created_by', 'book_id']);
             }, 'pages'  => function ($query) {
-                $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+                $query->withTrashed()->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
             }]);
     }
 

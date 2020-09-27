@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Entity
@@ -36,6 +37,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  */
 class Entity extends Ownable
 {
+    use SoftDeletes;
 
     /**
      * @var string - Name of property where the main text content is found
@@ -193,11 +195,18 @@ class Entity extends Ownable
 
     /**
      * Get the entity jointPermissions this is connected to.
-     * @return MorphMany
      */
-    public function jointPermissions()
+    public function jointPermissions(): MorphMany
     {
         return $this->morphMany(JointPermission::class, 'entity');
+    }
+
+    /**
+     * Get the related delete records for this entity.
+     */
+    public function deleteRecords(): MorphMany
+    {
+        return $this->morphMany(DeleteRecord::class, 'deletable');
     }
 
     /**
