@@ -287,9 +287,12 @@ class SearchService
 
         foreach ($this->entityProvider->all() as $entityModel) {
             $selectFields = ['id', 'name', $entityModel->textField];
-            $entityModel->newQuery()->select($selectFields)->chunk(1000, function ($entities) {
-                $this->indexEntities($entities);
-            });
+            $entityModel->newQuery()
+                ->withTrashed()
+                ->select($selectFields)
+                ->chunk(1000, function ($entities) {
+                    $this->indexEntities($entities);
+                });
         }
     }
 

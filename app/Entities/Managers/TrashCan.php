@@ -3,6 +3,7 @@
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Chapter;
+use BookStack\Entities\DeleteRecord;
 use BookStack\Entities\Entity;
 use BookStack\Entities\HasCoverImage;
 use BookStack\Entities\Page;
@@ -11,46 +12,67 @@ use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;
 use BookStack\Uploads\ImageService;
 use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 class TrashCan
 {
 
     /**
-     * Remove a bookshelf from the system.
-     * @throws Exception
+     * Send a shelf to the recycle bin.
      */
-    public function destroyShelf(Bookshelf $shelf)
+    public function softDestroyShelf(Bookshelf $shelf)
     {
-        $this->destroyCommonRelations($shelf);
+        DeleteRecord::createForEntity($shelf);
         $shelf->delete();
     }
 
     /**
-     * Remove a book from the system.
-     * @throws NotifyException
-     * @throws BindingResolutionException
+     * Send a book to the recycle bin.
+     * @throws Exception
      */
-    public function destroyBook(Book $book)
+    public function softDestroyBook(Book $book)
     {
+        DeleteRecord::createForEntity($book);
+
         foreach ($book->pages as $page) {
-            $this->destroyPage($page);
+            $this->softDestroyPage($page, false);
         }
 
         foreach ($book->chapters as $chapter) {
-            $this->destroyChapter($chapter);
+            $this->softDestroyChapter($chapter, false);
         }
 
-        $this->destroyCommonRelations($book);
         $book->delete();
     }
 
     /**
-     * Remove a page from the system.
-     * @throws NotifyException
+     * Send a chapter to the recycle bin.
+     * @throws Exception
      */
-    public function destroyPage(Page $page)
+    public function softDestroyChapter(Chapter $chapter, bool $recordDelete = true)
     {
+        if ($recordDelete) {
+            DeleteRecord::createForEntity($chapter);
+        }
+
+        if (count($chapter->pages) > 0) {
+            foreach ($chapter->pages as $page) {
+                $this->softDestroyPage($page, false);
+            }
+        }
+
+        $chapter->delete();
+    }
+
+    /**
+     * Send a page to the recycle bin.
+     * @throws Exception
+     */
+    public function softDestroyPage(Page $page, bool $recordDelete = true)
+    {
+        if ($recordDelete) {
+            DeleteRecord::createForEntity($page);
+        }
+
         // Check if set as custom homepage & remove setting if not used or throw error if active
         $customHome = setting('app-homepage', '0:');
         if (intval($page->id) === intval(explode(':', $customHome)[0])) {
@@ -60,6 +82,64 @@ class TrashCan
             setting()->remove('app-homepage');
         }
 
+        $page->delete();
+    }
+
+    /**
+     * Remove a bookshelf from the system.
+     * @throws Exception
+     */
+    public function destroyShelf(Bookshelf $shelf)
+    {
+        $this->destroyCommonRelations($shelf);
+        $shelf->forceDelete();
+    }
+
+    /**
+     * Remove a book from the system.
+     * Destroys any child chapters and pages.
+     * @throws Exception
+     */
+    public function destroyBook(Book $book)
+    {
+        $pages = $book->pages()->withTrashed()->get();
+        foreach ($pages as $page) {
+            $this->destroyPage($page);
+        }
+
+        $chapters = $book->chapters()->withTrashed()->get();
+        foreach ($chapters as $chapter) {
+            $this->destroyChapter($chapter);
+        }
+
+        $this->destroyCommonRelations($book);
+        $book->forceDelete();
+    }
+
+    /**
+     * Remove a chapter from the system.
+     * Destroys all pages within.
+     * @throws Exception
+     */
+    public function destroyChapter(Chapter $chapter)
+    {
+        $pages = $chapter->pages()->withTrashed()->get();
+        if (count($pages)) {
+            foreach ($pages as $page) {
+                $this->destroyPage($page);
+            }
+        }
+
+        $this->destroyCommonRelations($chapter);
+        $chapter->forceDelete();
+    }
+
+    /**
+     * Remove a page from the system.
+     * @throws Exception
+     */
+    public function destroyPage(Page $page)
+    {
         $this->destroyCommonRelations($page);
 
         // Delete Attached Files
@@ -68,24 +148,7 @@ class TrashCan
             $attachmentService->deleteFile($attachment);
         }
 
-        $page->delete();
-    }
-
-    /**
-     * Remove a chapter from the system.
-     * @throws Exception
-     */
-    public function destroyChapter(Chapter $chapter)
-    {
-        if (count($chapter->pages) > 0) {
-            foreach ($chapter->pages as $page) {
-                $page->chapter_id = 0;
-                $page->save();
-            }
-        }
-
-        $this->destroyCommonRelations($chapter);
-        $chapter->delete();
+        $page->forceDelete();
     }
 
     /**
@@ -100,6 +163,7 @@ class TrashCan
         $entity->comments()->delete();
         $entity->jointPermissions()->delete();
         $entity->searchTerms()->delete();
+        $entity->deleteRecords()->delete();
 
         if ($entity instanceof HasCoverImage && $entity->cover) {
             $imageService = app()->make(ImageService::class);

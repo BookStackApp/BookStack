@@ -12,6 +12,7 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -259,12 +260,12 @@ class PageRepo
 
     /**
      * Destroy a page from the system.
-     * @throws NotifyException
+     * @throws Exception
      */
     public function destroy(Page $page)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyPage($page);
+        $trashCan->softDestroyPage($page);
     }
 
     /**

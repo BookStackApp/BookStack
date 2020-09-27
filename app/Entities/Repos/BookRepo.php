@@ -123,12 +123,11 @@ class BookRepo
 
     /**
      * Remove a book from the system.
-     * @throws NotifyException
-     * @throws BindingResolutionException
+     * @throws Exception
      */
     public function destroy(Book $book)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyBook($book);
+        $trashCan->softDestroyBook($book);
     }
 }
