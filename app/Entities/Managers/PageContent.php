@@ -2,7 +2,6 @@
 
 use BookStack\Entities\Page;
 use DOMDocument;
-use DOMElement;
 use DOMNodeList;
 use DOMXPath;
 
@@ -44,18 +43,24 @@ class PageContent
         $container = $doc->documentElement;
         $body = $container->childNodes->item(0);
         $childNodes = $body->childNodes;
+        $xPath = new DOMXPath($doc);
 
         // Set ids on top-level nodes
         $idMap = [];
         foreach ($childNodes as $index => $childNode) {
-            $this->setUniqueId($childNode, $idMap);
+            [$oldId, $newId] = $this->setUniqueId($childNode, $idMap);
+            if ($newId && $newId !== $oldId) {
+                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
+            }
         }
 
         // Ensure no duplicate ids within child items
-        $xPath = new DOMXPath($doc);
         $idElems = $xPath->query('//body//*//*[@id]');
         foreach ($idElems as $domElem) {
-            $this->setUniqueId($domElem, $idMap);
+            [$oldId, $newId] = $this->setUniqueId($domElem, $idMap);
+            if ($newId && $newId !== $oldId) {
+                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
+            }
         }
 
         // Generate inner html as a string
@@ -68,22 +73,33 @@ class PageContent
     }
 
     /**
+     * Update the all links to the $old location to instead point to $new.
+     */
+    protected function updateLinks(DOMXPath $xpath, string $old, string $new)
+    {
+        $old = str_replace('"', '', $old);
+        $matchingLinks = $xpath->query('//body//*//*[@href="'.$old.'"]');
+        foreach ($matchingLinks as $domElem) {
+            $domElem->setAttribute('href', $new);
+        }
+    }
+
+    /**
      * Set a unique id on the given DOMElement.
      * A map for existing ID's should be passed in to check for current existence.
-     * @param DOMElement $element
-     * @param array $idMap
+     * Returns a pair of strings in the format [old_id, new_id]
      */
-    protected function setUniqueId($element, array &$idMap)
+    protected function setUniqueId(\DOMNode $element, array &$idMap): array
     {
         if (get_class($element) !== 'DOMElement') {
-            return;
+            return ['', ''];
         }
 
-        // Overwrite id if not a BookStack custom id
+        // Stop if there's an existing valid id that has not already been used.
         $existingId = $element->getAttribute('id');
         if (strpos($existingId, 'bkmrk') === 0 && !isset($idMap[$existingId])) {
             $idMap[$existingId] = true;
-            return;
+            return [$existingId, $existingId];
         }
 
         // Create an unique id for the element
@@ -100,6 +116,7 @@ class PageContent
 
         $element->setAttribute('id', $newId);
         $idMap[$newId] = true;
+        return [$existingId, $newId];
     }
 
     /**
