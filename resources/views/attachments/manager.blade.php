@@ -24,14 +24,14 @@
                         'successMessage' => trans('entities.attachments_file_uploaded'),
                     ])
                 </div>
-                <div refs="tabs@contentLinks" class="hidden">
+                <div refs="tabs@contentLinks" class="hidden link-form-container">
                     @include('attachments.manager-link-form', ['pageId' => $page->id])
                 </div>
             </div>
 
         </div>
 
-        <div refs="attachments@editContainer" class="hidden">
+        <div refs="attachments@editContainer" class="hidden attachment-edit-container">
 
         </div>
 
