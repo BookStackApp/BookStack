@@ -14,6 +14,11 @@ return [
     // Options: standard, ldap, saml2
     'method' => env('AUTH_METHOD', 'standard'),
 
+    // if ldap, allow admin to enable/disable auto registration
+    //  checked in Access call in /Auth/Acces/Guards/LdapSessionGuard.php
+    //  [defaults to true/existing behaviour]
+    'auto-register' => env('AUTH_AUTO_REGISTER', true),
+
     // Authentication Defaults
     // This option controls the default authentication "guard" and password
     // reset options for your application.

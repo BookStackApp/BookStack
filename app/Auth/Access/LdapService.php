@@ -342,4 +342,29 @@ class LdapService extends ExternalAuthService
         $userLdapGroups = $this->getUserGroups($username);
         $this->syncWithGroups($user, $userLdapGroups);
     }
+
+    /**
+     * Fetch all users for SyncLdap command
+     * defaults to using $this->config['sync_user_filter']
+     * allows for a filter to be passed in so if nested groups/recursion enabled
+     *  it can pass in the filter from that call
+     */
+    public function getAllUsers(string $filter = '')
+    {
+        $ldapConnection = $this->getConnection();
+        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
+
+        $baseDn = $this->config['base_dn'];
+
+        if ($filter) {
+            $userFilter = $filter;
+        } else {
+            $userFilter = $this->config['sync_user_filter'];
+        }
+
+        $usersLdap = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, array(config("services.ldap.id_attribute")));
+
+        return $usersLdap;
+    }
 }
