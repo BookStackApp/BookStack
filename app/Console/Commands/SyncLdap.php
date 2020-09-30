@@ -71,7 +71,6 @@ class SyncLdap extends Command
      */
     public function handle()
     {
-
         if (config('auth.method') !== 'ldap') {
             dd("Must be using ldap for auth method");
         }
@@ -88,13 +87,11 @@ class SyncLdap extends Command
         foreach ($this->users as $userdata) {
             // did we find an id_attribute?
             if (isset($userdata[$this->id_attribute][0])) {
-
                 $user_id = $userdata[$this->id_attribute][0];
 
                 // fetch the user details and check if they exist
                 $ldapUserDetails = $this->ldap->getUserDetails($user_id);
                 $user = User::where('email', '=', $ldapUserDetails["email"])->first();
-
                 if ($user === null) {
                     // user doesn't exist
                     $user = new User();
@@ -102,7 +99,6 @@ class SyncLdap extends Command
                     $user->email = $ldapUserDetails['email'];
                     $user->name = $ldapUserDetails['name'];
                     $user->external_auth_id = $user_id;
-
                     $user->save();
                 } else {
                     // user exists but this is the first time they're being paired to LDAP
@@ -112,7 +108,6 @@ class SyncLdap extends Command
                         $user->save();
                     }
                 }
-
                 // sync the user groups to bookstack groups
                 $this->ldap->syncGroups($user, $user_id);
             }
@@ -127,19 +122,21 @@ class SyncLdap extends Command
 
         for ($i = 0; $i < $data["count"]; $i++) {
             if (isset($data[$i][$this->id_attribute][0])) {
-                if (!in_array($data[$i][$this->id_attribute][0], $this->users_checked)) {
-                    $this->users_checked[] = $data[$i][$this->id_attribute][0];
+                $userdata = $data[$i][$this->id_attribute][0];
+                if (!in_array($userdata, $this->users_checked)) {
+                    $this->users_checked[] = $userdata;
                     $this->users[] = $data[$i];
                 }
             } elseif ((isset($data[$i]["dn"]) && $this->sync_user_recursive_groups)) {
                 // found a nested group record [dn => cn=GROUP ] for recursion
-                foreach ($this->LDAP->explodeDn($data[$i]["dn"], 0) as $attribute) {
+                $new_dn = $data[$i]["dn"];
+                foreach ($this->LDAP->explodeDn($new_dn, 0) as $attribute) {
                     // pop out the cn record for the group name
                     $pieces = explode("=", $attribute);
                     if (strtolower($pieces[0]) == 'cn') {
                         // was the group already checked?
                         if (!in_array($pieces[1], $this->cn_checked)) {
-                            $filter = "(memberOf=" . $data[$i]["dn"] . ")";
+                            $filter = "(memberOf=" . $new_dn . ")";
                             $this->cn_checked[] = $pieces[1];
                             $data = $this->ldap->getAllUsers($filter);
                             $this->checkDnForUserRecursive($data);
