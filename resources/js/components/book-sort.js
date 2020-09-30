@@ -1,4 +1,4 @@
-import {Sortable, MultiDrag} from "sortablejs";
+import Sortable from "sortablejs";
 
 // Auto sort control
 const sortOperations = {
@@ -43,7 +43,6 @@ class BookSort {
         this.input = elem.querySelector('[book-sort-input]');
 
         const initialSortBox = elem.querySelector('.sort-box');
-        Sortable.mount(new MultiDrag());
         this.setupBookSortable(initialSortBox);
         this.setupSortPresets();
 
