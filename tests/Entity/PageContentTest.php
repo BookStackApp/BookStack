@@ -262,6 +262,23 @@ class PageContentTest extends TestCase
         $this->assertEquals(substr_count($updatedPage->html, "bkmrk-test\""), 1);
     }
 
+    public function test_anchors_referencing_non_bkmrk_ids_rewritten_after_save()
+    {
+        $this->asEditor();
+        $page = Page::first();
+
+        $content = '<h1 id="non-standard-id">test</h1><p><a href="#non-standard-id">link</a></p>';
+        $this->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => $content,
+            'summary' => ''
+        ]);
+
+        $updatedPage = Page::where('id', '=', $page->id)->first();
+        $this->assertStringContainsString('id="bkmrk-test"', $updatedPage->html);
+        $this->assertStringContainsString('href="#bkmrk-test"', $updatedPage->html);
+    }
+
     public function test_get_page_nav_sets_correct_properties()
     {
         $content = '<h1 id="testa">Hello</h1><h2 id="testb">There</h2><h3 id="testc">Donkey</h3>';

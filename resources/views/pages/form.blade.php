@@ -1,7 +1,7 @@
 <div component="page-editor" class="page-editor flex-fill flex"
      option:page-editor:drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
      @if(config('services.drawio'))
-        drawio-url="{{ is_string(config('services.drawio')) ? config('services.drawio') : 'https://www.draw.io/?embed=1&proto=json&spin=1' }}"
+        drawio-url="{{ is_string(config('services.drawio')) ? config('services.drawio') : 'https://embed.diagrams.net/?embed=1&proto=json&spin=1' }}"
      @endif
      @if($model->name === trans('entities.pages_initial_name'))
         option:page-editor:has-default-title="true"

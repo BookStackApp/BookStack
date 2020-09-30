@@ -1,6 +1,7 @@
 <div component="ajax-form"
      option:ajax-form:url="/attachments/{{ $attachment->id }}"
      option:ajax-form:method="put"
+     option:ajax-form:response-container=".attachment-edit-container"
      option:ajax-form:success-message="{{ trans('entities.attachments_updated_success') }}">
     <h5>{{ trans('entities.attachments_edit_file') }}</h5>
 
