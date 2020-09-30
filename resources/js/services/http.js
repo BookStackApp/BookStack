@@ -141,10 +141,14 @@ async function request(url, options = {}) {
 /**
  * Get the content from a fetch response.
  * Checks the content-type header to determine the format.
- * @param response
+ * @param {Response} response
  * @returns {Promise<Object|String>}
  */
 async function getResponseContent(response) {
+    if (response.status === 204) {
+        return null;
+    }
+
     const responseContentType = response.headers.get('Content-Type');
     const subType = responseContentType.split('/').pop();
 
