@@ -144,6 +144,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_details_desc_no_email' => 'Legen Sie für diesen Benutzer einen Anzeigenamen fest, damit andere ihn erkennen können.',
     'users_role' => 'Benutzerrollen',
     'users_role_desc' => 'Wählen Sie aus, welchen Rollen dieser Benutzer zugeordnet werden soll. Wenn ein Benutzer mehreren Rollen zugeordnet ist, werden die Berechtigungen dieser Rollen gestapelt und er erhält alle Fähigkeiten der zugewiesenen Rollen.',
+    'users_role_create_user_role' => 'Neue Rolle für diesen Benutzer anlegen',
     'users_password' => 'Benutzerpasswort',
     'users_password_desc' => 'Legen Sie ein Passwort fest, mit dem Sie sich anmelden möchten. Diese muss mindestens 5 Zeichen lang sein.',
     'users_send_invite_text' => 'Sie können diesem Benutzer eine Einladungs-E-Mail senden, die es ihm erlaubt, sein eigenes Passwort zu setzen, andernfalls können Sie sein Passwort selbst setzen.',

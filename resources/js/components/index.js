@@ -10,6 +10,7 @@ import chapterToggle from "./chapter-toggle.js"
 import codeEditor from "./code-editor.js"
 import codeHighlighter from "./code-highlighter.js"
 import collapsible from "./collapsible.js"
+import createUserRole from "./create-user-role"
 import customCheckbox from "./custom-checkbox.js"
 import detailsHighlighter from "./details-highlighter.js"
 import dropdown from "./dropdown.js"
@@ -63,6 +64,7 @@ const componentMapping = {
     "code-editor": codeEditor,
     "code-highlighter": codeHighlighter,
     "collapsible": collapsible,
+    "create-user-role": createUserRole,
     "custom-checkbox": customCheckbox,
     "details-highlighter": detailsHighlighter,
     "dropdown": dropdown,

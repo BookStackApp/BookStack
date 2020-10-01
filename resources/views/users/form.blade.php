@@ -44,6 +44,19 @@
         <div class="mt-m">
             @include('form.role-checkboxes', ['name' => 'roles', 'roles' => $roles])
         </div>
+        @if(!isset($model))
+            <div class="mt-m" create-user-role>
+                @include('components.toggle-switch', [
+                    'name' => 'create_user_role',
+                    'value' => false,
+                    'label' => trans('settings.users_role_create_user_role')
+                ])
+                <div id="create-user-role-input" style="display: none">
+                    <label for="user_role_name">{{ trans('settings.role_name') }}</label>
+                    @include('form.text', ['name' => 'user_role_name'])
+                </div>
+            </div>
+        @endif
     </div>
 @endif
 

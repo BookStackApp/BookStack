@@ -2,6 +2,7 @@
 
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\Access\UserInviteService;
+use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\UserUpdateException;
@@ -16,16 +17,18 @@ class UserController extends Controller
     protected $userRepo;
     protected $inviteService;
     protected $imageRepo;
+    protected $permissionsRepo;
 
     /**
      * UserController constructor.
      */
-    public function __construct(User $user, UserRepo $userRepo, UserInviteService $inviteService, ImageRepo $imageRepo)
+    public function __construct(User $user, UserRepo $userRepo, UserInviteService $inviteService, ImageRepo $imageRepo, PermissionsRepo $permissionsRepo)
     {
         $this->user = $user;
         $this->userRepo = $userRepo;
         $this->inviteService = $inviteService;
         $this->imageRepo = $imageRepo;
+        $this->permissionsRepo = $permissionsRepo;
         parent::__construct();
     }
 
@@ -79,6 +82,12 @@ class UserController extends Controller
         } elseif ($authMethod === 'ldap' || $authMethod === 'saml2') {
             $validationRules['external_auth_id'] = 'required';
         }
+
+        if ($request->filled('user_role_name')) {
+            $this->checkPermission('user-roles-manage');
+            $validationRules['user_role_name'] = 'required|min:3|max:180';
+        }
+
         $this->validate($request, $validationRules);
 
         $user = $this->user->fill($request->all());
@@ -95,9 +104,21 @@ class UserController extends Controller
             $this->inviteService->sendInvitation($user);
         }
 
+        $roles = collect();
+
         if ($request->filled('roles')) {
-            $roles = $request->get('roles');
-            $this->userRepo->setUserRoles($user, $roles);
+            $roles = collect($request->get('roles'));
+        }
+
+        if ($request->filled('user_role_name')) {
+            $userRole = $this->permissionsRepo->saveNewRole([
+                'display_name' => $request->input('user_role_name'),
+            ]);
+            $roles->add($userRole->id);
+        }
+
+        if ($roles->isNotEmpty()) {
+            $this->userRepo->setUserRoles($user, $roles->all());
         }
 
         $this->userRepo->downloadAndAssignUserAvatar($user);
