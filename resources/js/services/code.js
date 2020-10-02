@@ -26,6 +26,7 @@ import 'codemirror/mode/rust/rust';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/toml/toml';
+import 'codemirror/mode/vbscript/vbscript';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/yaml/yaml';
 
@@ -84,6 +85,7 @@ const modeMap = {
     bash: 'shell',
     toml: 'toml',
     sql: 'text/x-sql',
+    vbscript: 'vbscript',
     xml: 'xml',
     yaml: 'yaml',
     yml: 'yaml',
