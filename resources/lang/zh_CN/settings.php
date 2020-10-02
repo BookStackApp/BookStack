@@ -92,8 +92,8 @@ return [
     'audit_table_event' => '事件',
     'audit_table_item' => '相关项目',
     'audit_table_date' => '活动日期',
-    'audit_date_from' => 'Date Range From',
-    'audit_date_to' => 'Date Range To',
+    'audit_date_from' => '日期范围从',
+    'audit_date_to' => '日期范围至',
 
     // Role Settings
     'roles' => '角色',
