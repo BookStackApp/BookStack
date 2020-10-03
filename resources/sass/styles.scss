@@ -290,12 +290,12 @@ $btt-size: 40px;
   }
 }
 
-table a.audit-log-user {
+table.table .table-user-item {
   display: grid;
   grid-template-columns: 42px 1fr;
   align-items: center;
 }
-table a.icon-list-item {
+table.table .table-entity-item {
   display: grid;
   grid-template-columns: 36px 1fr;
   align-items: center;
