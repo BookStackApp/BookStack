@@ -204,9 +204,9 @@ class Entity extends Ownable
     /**
      * Get the related delete records for this entity.
      */
-    public function deleteRecords(): MorphMany
+    public function deletions(): MorphMany
     {
-        return $this->morphMany(DeleteRecord::class, 'deletable');
+        return $this->morphMany(Deletion::class, 'deletable');
     }
 
     /**

@@ -60,19 +60,12 @@
             @foreach($activities as $activity)
                 <tr>
                     <td>
-                        @if($activity->user)
-                            <a href="{{ $activity->user->getEditUrl() }}" class="audit-log-user">
-                                <div><img class="avatar block" src="{{ $activity->user->getAvatar(40)}}" alt="{{ $activity->user->name }}"></div>
-                                <div>{{ $activity->user->name }}</div>
-                            </a>
-                        @else
-                            [ID: {{ $activity->user_id }}] {{ trans('common.deleted_user') }}
-                        @endif
+                        @include('partials.table-user', ['user' => $activity->user, 'user_id' => $activity->user_id])
                     </td>
                     <td>{{ $activity->key }}</td>
                     <td>
                         @if($activity->entity)
-                            <a href="{{ $activity->entity->getUrl() }}" class="icon-list-item">
+                            <a href="{{ $activity->entity->getUrl() }}" class="table-entity-item">
                                 <span role="presentation" class="icon text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
                                 <div class="text-{{ $activity->entity->getType() }}">
                                     {{ $activity->entity->name }}

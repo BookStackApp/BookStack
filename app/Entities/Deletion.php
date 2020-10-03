@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class DeleteRecord extends Model
+class Deletion extends Model
 {
 
     /**
@@ -13,21 +13,21 @@ class DeleteRecord extends Model
      */
     public function deletable(): MorphTo
     {
-        return $this->morphTo();
+        return $this->morphTo('deletable')->withTrashed();
     }
 
     /**
      * The the user that performed the deletion.
      */
-    public function deletedBy(): BelongsTo
+    public function deleter(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'deleted_by');
     }
 
     /**
      * Create a new deletion record for the provided entity.
      */
-    public static function createForEntity(Entity $entity): DeleteRecord
+    public static function createForEntity(Entity $entity): Deletion
     {
         $record = (new self())->forceFill([
             'deleted_by' => user()->id,

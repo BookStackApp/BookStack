@@ -80,6 +80,18 @@ return [
     'maint_send_test_email_mail_subject' => 'Test Email',
     'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
     'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
+    'maint_recycle_bin_desc' => 'Items deleted remain in the recycle bin until it is emptied. Open the recycle bin to restore or permanently remove items.',
+    'maint_recycle_bin_open' => 'Open Recycle Bin',
+
+    // Recycle Bin
+    'recycle_bin' => 'Recycle Bin',
+    'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'recycle_bin_deleted_item' => 'Deleted Item',
+    'recycle_bin_deleted_by' => 'Deleted By',
+    'recycle_bin_deleted_at' => 'Deletion Time',
+    'recycle_bin_contents_empty' => 'The recycle bin is currently empty',
+    'recycle_bin_empty' => 'Empty Recycle Bin',
+    'recycle_bin_empty_confirm' => 'This will permanently destroy all items in the recycle bin including content contained within each item. Are you sure you want to empty the recycle bin?',
 
     // Audit Log
     'audit' => 'Audit Log',

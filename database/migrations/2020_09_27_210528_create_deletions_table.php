@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeleteRecordsTable extends Migration
+class CreateDeletionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDeleteRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('delete_records', function (Blueprint $table) {
+        Schema::create('deletions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('deleted_by');
             $table->string('deletable_type', 100);
@@ -33,6 +33,6 @@ class CreateDeleteRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delete_records');
+        Schema::dropIfExists('deletions');
     }
 }
