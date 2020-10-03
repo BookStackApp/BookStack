@@ -92,6 +92,7 @@ return [
     'recycle_bin_contents_empty' => 'The recycle bin is currently empty',
     'recycle_bin_empty' => 'Empty Recycle Bin',
     'recycle_bin_empty_confirm' => 'This will permanently destroy all items in the recycle bin including content contained within each item. Are you sure you want to empty the recycle bin?',
+    'recycle_bin_empty_notification' => 'Deleted :count total items from the recycle bin.',
 
     // Audit Log
     'audit' => 'Audit Log',
