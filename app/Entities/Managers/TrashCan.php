@@ -90,10 +90,11 @@ class TrashCan
      * Remove a bookshelf from the system.
      * @throws Exception
      */
-    public function destroyShelf(Bookshelf $shelf)
+    public function destroyShelf(Bookshelf $shelf): int
     {
         $this->destroyCommonRelations($shelf);
         $shelf->forceDelete();
+        return 1;
     }
 
     /**
@@ -101,20 +102,24 @@ class TrashCan
      * Destroys any child chapters and pages.
      * @throws Exception
      */
-    public function destroyBook(Book $book)
+    public function destroyBook(Book $book): int
     {
+        $count = 0;
         $pages = $book->pages()->withTrashed()->get();
         foreach ($pages as $page) {
             $this->destroyPage($page);
+            $count++;
         }
 
         $chapters = $book->chapters()->withTrashed()->get();
         foreach ($chapters as $chapter) {
             $this->destroyChapter($chapter);
+            $count++;
         }
 
         $this->destroyCommonRelations($book);
         $book->forceDelete();
+        return $count + 1;
     }
 
     /**
@@ -122,24 +127,27 @@ class TrashCan
      * Destroys all pages within.
      * @throws Exception
      */
-    public function destroyChapter(Chapter $chapter)
+    public function destroyChapter(Chapter $chapter): int
     {
+        $count = 0;
         $pages = $chapter->pages()->withTrashed()->get();
         if (count($pages)) {
             foreach ($pages as $page) {
                 $this->destroyPage($page);
+                $count++;
             }
         }
 
         $this->destroyCommonRelations($chapter);
         $chapter->forceDelete();
+        return $count + 1;
     }
 
     /**
      * Remove a page from the system.
      * @throws Exception
      */
-    public function destroyPage(Page $page)
+    public function destroyPage(Page $page): int
     {
         $this->destroyCommonRelations($page);
 
@@ -150,6 +158,7 @@ class TrashCan
         }
 
         $page->forceDelete();
+        return 1;
     }
 
     /**
@@ -172,24 +181,27 @@ class TrashCan
     /**
      * Destroy all items that have pending deletions.
      */
-    public function destroyFromAllDeletions()
+    public function destroyFromAllDeletions(): int
     {
         $deletions = Deletion::all();
+        $deleteCount = 0;
         foreach ($deletions as $deletion) {
             // For each one we load in the relation since it may have already
             // been deleted as part of another deletion in this loop.
             $entity = $deletion->deletable()->first();
             if ($entity) {
-                $this->destroyEntity($deletion->deletable);
+                $count = $this->destroyEntity($deletion->deletable);
+                $deleteCount += $count;
             }
             $deletion->delete();
         }
+        return $deleteCount;
     }
 
     /**
      * Destroy the given entity.
      */
-    protected function destroyEntity(Entity $entity)
+    protected function destroyEntity(Entity $entity): int
     {
         if ($entity->isA('page')) {
             return $this->destroyPage($entity);

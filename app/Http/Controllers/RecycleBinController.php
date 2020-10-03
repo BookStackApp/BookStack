@@ -29,7 +29,9 @@ class RecycleBinController extends Controller
         $this->checkPermission('settings-manage');
         $this->checkPermission('restrictions-manage-all');
 
-        (new TrashCan())->destroyFromAllDeletions();
+        $deleteCount = (new TrashCan())->destroyFromAllDeletions();
+
+        $this->showSuccessNotification(trans('settings.recycle_bin_empty_notification', ['count' => $deleteCount]));
         return redirect('/settings/recycle-bin');
     }
 }
