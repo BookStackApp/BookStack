@@ -122,3 +122,4 @@ fadiapp :: Arabic
 Jakub Bouček (jakubboucek) :: Czech
 Marco (cdrfun) :: German
 10935336 :: Chinese Simplified
+孟繁阳 (FanyangMeng) :: Chinese Simplified
