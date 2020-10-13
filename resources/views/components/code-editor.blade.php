@@ -34,6 +34,7 @@
                             <a refs="code-editor@languageLink" data-lang="Ruby">Ruby</a>
                             <a refs="code-editor@languageLink" data-lang="shell">Shell/Bash</a>
                             <a refs="code-editor@languageLink" data-lang="SQL">SQL</a>
+                            <a refs="code-editor@languageLink" data-lang="VBScript">VBScript</a>
                             <a refs="code-editor@languageLink" data-lang="XML">XML</a>
                             <a refs="code-editor@languageLink" data-lang="YAML">YAML</a>
                         </small>

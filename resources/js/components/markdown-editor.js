@@ -440,10 +440,10 @@ class MarkdownEditor {
 
             const data = {
                 image: pngData,
-                uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+                uploaded_to: Number(this.pageId),
             };
 
-            window.$http.post(window.baseUrl('/images/drawio'), data).then(resp => {
+            window.$http.post("/images/drawio", data).then(resp => {
                 this.insertDrawing(resp.data, cursorPos);
                 DrawIO.close();
             }).catch(err => {
@@ -476,10 +476,10 @@ class MarkdownEditor {
 
             let data = {
                 image: pngData,
-                uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+                uploaded_to: Number(this.pageId),
             };
 
-            window.$http.post(window.baseUrl(`/images/drawio`), data).then(resp => {
+            window.$http.post("/images/drawio", data).then(resp => {
                 let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 let newContent = this.cm.getValue().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
