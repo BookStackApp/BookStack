@@ -1,4 +1,4 @@
-<?php namespace Test\User;
+<?php namespace Tests\User;
 
 use Activity;
 use BookStack\Auth\User;

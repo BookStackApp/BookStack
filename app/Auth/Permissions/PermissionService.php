@@ -3,11 +3,8 @@
 use BookStack\Auth\Permissions;
 use BookStack\Auth\Role;
 use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Entities\EntityProvider;
-use BookStack\Entities\Page;
 use BookStack\Ownable;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
