@@ -87,7 +87,7 @@ return [
     'audit_event_filter' => '事件过滤器',
     'audit_event_filter_no_filter' => '无过滤器',
     'audit_deleted_item' => '被删除的项目',
-    'audit_deleted_item_name' => '姓名: :name',
+    'audit_deleted_item_name' => '名称: :name',
     'audit_table_user' => '用户',
     'audit_table_event' => '事件',
     'audit_table_item' => '相关项目',
