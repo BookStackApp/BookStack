@@ -91,9 +91,9 @@ return [
     'audit_table_user' => '사용자',
     'audit_table_event' => '이벤트',
     'audit_table_item' => '관련 항목',
-    'audit_table_date' => 'Activity Date',
-    'audit_date_from' => 'Date Range From',
-    'audit_date_to' => 'Date Range To',
+    'audit_table_date' => '활동 날짜',
+    'audit_date_from' => '날짜 범위 시작',
+    'audit_date_to' => '날짜 범위 끝',
 
     // Role Settings
     'roles' => '권한',
