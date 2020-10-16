@@ -35,6 +35,7 @@
         "socialiteproviders/twitch": "^5.0"
     },
     "require-dev": {
+	   "imanghafoori/laravel-microscope": "^1.0",
         "barryvdh/laravel-debugbar": "^3.2.8",
         "barryvdh/laravel-ide-helper": "^2.6.4",
         "fzaninotto/faker": "^1.4",
