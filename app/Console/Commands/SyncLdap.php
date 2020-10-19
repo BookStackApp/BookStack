@@ -21,6 +21,16 @@ class SyncLdap extends Command
      *
      * Use case:
      * SSO logins need user account to exist/roles synced prior to login
+     *
+     * .env setting examples:
+     * LDAP_SYNC_USER_FILTER=(&(memberOf=CN=app-bookstack,OU=groups,OU=Access,DC=example.com))
+     *  the origin to sync
+     * LDAP_SYNC_USER_RECURSIVE_GROUPS=true
+     *  if there's nested groups, pull those in too
+     * LDAP_SYNC_EXCLUDE_EMAIL="admin@example.com,testaccount@example.com"
+     *  comma seperated list of strings
+     *  allow for email exclusions to be defined to skip adding the accounts
+     *  uses string matching, so can also block wildcards (ie: "-disabled")
      */
 
     public $users = array();
@@ -29,6 +39,7 @@ class SyncLdap extends Command
     public $groups = array();
     public $sync_user_filter;
     public $sync_user_recursive_groups;
+    public $sync_user_exclude_email;
     public $id_attribute;
     public $LDAP;
     public $ldap;
@@ -61,6 +72,7 @@ class SyncLdap extends Command
         $this->id_attribute = $config['id_attribute'];
         $this->sync_user_filter = $config['sync_user_filter'];
         $this->sync_user_recursive_groups = $config['sync_user_recursive_groups'];
+        $this->sync_user_exclude_email = $config['sync_user_exclude_email'];
         $this->LDAP = new Ldap();
         $this->ldap = new LdapService($this->LDAP);
     }
@@ -93,6 +105,13 @@ class SyncLdap extends Command
         Log::info("[syncldap] retrieved " . count($this->users) . " in " . count($this->cn_checked) . " groups");
         $usercount = 1;
 
+        // check if there's any strings to exclude from emails
+        if ($this->sync_user_exclude_email) {
+            $email_excludes = explode(',', $this->sync_user_exclude_email);
+        } else {
+            $email_excludes = false;
+        }
+
         // run thru the returned list of all user records
         foreach ($this->users as $userdata) {
             // did we find an id_attribute?
@@ -103,27 +122,45 @@ class SyncLdap extends Command
 
                 // fetch the user details and check if they exist
                 $ldapUserDetails = $this->ldap->getUserDetails($user_id);
-                $user = User::where('email', '=', $ldapUserDetails["email"])->first();
-                if ($user === null) {
-                    // user doesn't exist
-                    $user = new User();
-                    $user->password = Hash::make(Str::random(32));
-                    $user->email = $ldapUserDetails['email'];
-                    $user->name = $ldapUserDetails['name'];
-                    $user->external_auth_id = $user_id;
-                    $user->save();
-                } else {
-                    // user exists but this is the first time they're being paired to LDAP
-                    //   so set the external_auth_id
-                    if (is_null($user->external_auth_id)) {
-                        $user->email = $user_id;
-                        $user->save();
+
+                // check if email in excludes array
+                $exclude = false;
+                if (is_array($email_excludes)) {
+                    foreach ($email_excludes as $exclude_string) {
+                        if (strpos($ldapUserDetails["email"], trim($exclude_string)) !== false) {
+                            $exclude = true;
+                        }
                     }
                 }
-                // sync the user groups to bookstack groups
-                Log::info("[syncldap] syncing groups for " . $user_id . "(" . $usercount . "/" . count($this->users) . ")");
 
-                $this->ldap->syncGroups($user, $user_id);
+                if (!$exclude) {
+                    $user = User::where('email', '=', $ldapUserDetails["email"])->first();
+                    if ($user === null) {
+                        // user doesn't exist
+                        $user = new User();
+                        $user->password = Hash::make(Str::random(32));
+                        $user->email = $ldapUserDetails['email'];
+                        $user->name = $ldapUserDetails['name'];
+                        $user->external_auth_id = $user_id;
+                        $user->save();
+                    } else {
+                        // user exists but this is the first time they're being paired to LDAP
+                        //   so set the external_auth_id
+                        if (is_null($user->external_auth_id)) {
+                            $user->email = $user_id;
+                            $user->save();
+                        }
+                    }
+                    // sync the user groups to bookstack groups
+                    Log::info("[syncldap] syncing groups for " . $user_id . "(" . $usercount . "/" . count($this->users) . ")");
+
+                    $this->ldap->syncGroups($user, $user_id);
+                } else {
+                    Log::info("[syncldap] user email in exclude list " . $user_id . " [" . $ldapUserDetails["email"] . " - " . $this->sync_user_exclude_email . "] (" . $usercount . "/" . count($this->users) . ")");
+                }
+
+
+
                 $usercount++;
             }
         }

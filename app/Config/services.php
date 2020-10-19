@@ -134,6 +134,7 @@ return [
         'tls_insecure' => env('LDAP_TLS_INSECURE', false),
         'sync_user_filter' => env('LDAP_SYNC_USER_FILTER', false),
         'sync_user_recursive_groups' => env('LDAP_SYNC_USER_RECURSIVE_GROUPS', true),
+        'sync_user_exclude_email' => env('LDAP_SYNC_EXCLUDE_EMAIL', false),
     ],
 
 ];
