@@ -39,7 +39,7 @@ class SyncLdap extends Command
      *
      * @var string
      */
-    protected $signature = 'bookstack:syncldap';
+    protected $signature = 'bookstack:syncldap {filter? : Optional LDAP filter for initial group pull}';
 
     /**
      * The console command description.
@@ -72,6 +72,9 @@ class SyncLdap extends Command
      */
     public function handle()
     {
+        if ($this->argument('filter')) {
+            $this->sync_user_filter = $this->argument('filter');
+        }
 
         Log::info("[syncldap] starting...");
         if (config('auth.method') !== 'ldap') {
