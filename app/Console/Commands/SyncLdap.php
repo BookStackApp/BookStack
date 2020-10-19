@@ -138,8 +138,8 @@ class SyncLdap extends Command
                         if (!in_array($pieces[1], $this->cn_checked)) {
                             $filter = "(memberOf=" . $new_dn . ")";
                             $this->cn_checked[] = $pieces[1];
-                            $data = $this->ldap->getAllUsers($filter);
-                            $this->checkDnForUserRecursive($data);
+                            $newdata = $this->ldap->getAllUsers($filter);
+                            $this->checkDnForUserRecursive($newdata);
                         }
                     }
                 }
