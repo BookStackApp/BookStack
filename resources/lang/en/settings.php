@@ -214,7 +214,7 @@ return [
         'ja' => '日本語',
         'ko' => '한국어',
         'nl' => 'Nederlands',
-        'no_NB' => 'Norsk (Bokmål)'
+        'no_NB' => 'Norsk (Bokmål)',
         'pl' => 'Polski',
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
