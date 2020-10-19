@@ -5,6 +5,7 @@ namespace BookStack\Console\Commands;
 use Auth;
 use Hash;
 use Str;
+use Log;
 use BookStack\Auth\Access\Ldap;
 use Illuminate\Console\Command;
 use BookStack\Auth\Access\LdapService;
@@ -71,10 +72,13 @@ class SyncLdap extends Command
      */
     public function handle()
     {
+
+        Log::info("[syncldap] starting...");
         if (config('auth.method') !== 'ldap') {
             dd("Must be using ldap for auth method");
         }
 
+        Log::info("[syncldap] retrieving users");
         // get all users with the LDAP_SYNC_USER_FILTER
         //   [Use that to limit specific group/dn users to be auto-added]
         $data = $this->ldap->getAllUsers();
@@ -83,11 +87,16 @@ class SyncLdap extends Command
         //   [recursion enabled/disabled with LDAP_SYNC_USER_RECURSIVE_GROUPS]
         $this->checkDnForUserRecursive($data);
 
+        Log::info("[syncldap] retrieved " . count($this->users) . " in " . count($this->cn_checked) . " groups");
+        $usercount = 1;
+
         // run thru the returned list of all user records
         foreach ($this->users as $userdata) {
             // did we find an id_attribute?
             if (isset($userdata[$this->id_attribute][0])) {
                 $user_id = $userdata[$this->id_attribute][0];
+
+                Log::info("[syncldap] fetching user details for " . $user_id . "(" . $usercount . "/" . count($this->users) . ")");
 
                 // fetch the user details and check if they exist
                 $ldapUserDetails = $this->ldap->getUserDetails($user_id);
@@ -109,7 +118,10 @@ class SyncLdap extends Command
                     }
                 }
                 // sync the user groups to bookstack groups
+                Log::info("[syncldap] syncing groups for " . $user_id . "(" . $usercount . "/" . count($this->users) . ")");
+
                 $this->ldap->syncGroups($user, $user_id);
+                $usercount++;
             }
         }
     }
@@ -119,8 +131,7 @@ class SyncLdap extends Command
         // passes in the results of LdapService->getAllUsers (uses LDAP_SYNC_USER_FILTER)
         // needs to recurse and check for all nested groups
         //  nested recursion can be enabled/disabled with LDAP_SYNC_USER_RECURSIVE_GROUPS
-
-        for ($i = 0; $i < $data["count"]; $i++) {
+        for ($i = 0; $i < count($data); $i++) {
             if (isset($data[$i][$this->id_attribute][0])) {
                 $userdata = $data[$i][$this->id_attribute][0];
                 if (!in_array($userdata, $this->users_checked)) {
