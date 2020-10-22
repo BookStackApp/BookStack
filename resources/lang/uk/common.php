@@ -33,7 +33,7 @@ return [
     'copy' => 'Копіювати',
     'reply' => 'Відповісти',
     'delete' => 'Видалити',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Підтвердити видалення',
     'search' => 'Шукати',
     'search_clear' => 'Очистити пошук',
     'reset' => 'Скинути',
