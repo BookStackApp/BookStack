@@ -185,14 +185,14 @@ return [
     'user_api_token' => 'API Token',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
-    'user_api_token_secret' => 'Token Secret',
+    'user_api_token_secret' => 'Ключ токена',
     'user_api_token_secret_desc' => 'This is a system generated secret for this token which will need to be provided in API requests. This will only be displayed this one time so copy this value to somewhere safe and secure.',
-    'user_api_token_created' => 'Token created :timeAgo',
-    'user_api_token_updated' => 'Token updated :timeAgo',
-    'user_api_token_delete' => 'Delete Token',
-    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
-    'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
-    'user_api_token_delete_success' => 'API token successfully deleted',
+    'user_api_token_created' => 'Токен створено :timeAgo',
+    'user_api_token_updated' => 'Токен оновлено :timeAgo',
+    'user_api_token_delete' => 'Видалити токен',
+    'user_api_token_delete_warning' => 'Ця дія повністю видалить цей токен API із назвою \':tokenName\' з системи.',
+    'user_api_token_delete_confirm' => 'Дійсно хочете видалити цей токен API?',
+    'user_api_token_delete_success' => 'Токен API успішно видалено',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
