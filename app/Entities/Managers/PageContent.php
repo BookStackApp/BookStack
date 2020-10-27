@@ -296,6 +296,24 @@ class PageContent
             $scriptElem->parentNode->removeChild($scriptElem);
         }
 
+        // Remove clickable links to JavaScript URI
+        $badLinks = $xPath->query('//*[contains(@href, \'javascript:\')]');
+        foreach ($badLinks as $badLink) {
+            $badLink->parentNode->removeChild($badLink);
+        }
+
+        // Remove forms with calls to JavaScript URI
+        $badForms = $xPath->query('//*[contains(@action, \'javascript:\')] | //*[contains(@formaction, \'javascript:\')]');
+        foreach ($badForms as $badForm) {
+            $badForm->parentNode->removeChild($badForm);
+        }
+
+        // Remove meta tag to prevent external redirects
+        $metaTags = $xPath->query('//meta[contains(@content, \'url\')]');
+        foreach ($metaTags as $metaTag) {
+            $metaTag->parentNode->removeChild($metaTag);
+        }
+
         // Remove data or JavaScript iFrames
         $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
         foreach ($badIframes as $badIframe) {
