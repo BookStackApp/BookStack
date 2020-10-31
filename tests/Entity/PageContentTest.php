@@ -159,6 +159,72 @@ class PageContentTest extends TestCase
 
     }
 
+    public function test_javascript_uri_links_are_removed()
+    {
+        $checks = [
+            '<a id="xss" href="javascript:alert(document.cookie)>Click me</a>',
+            '<a id="xss" href="javascript: alert(document.cookie)>Click me</a>'
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<a id="xss">');
+            $pageView->assertElementNotContains('.page-content', 'href=javascript:');
+        }
+    }
+    public function test_form_actions_with_javascript_are_removed()
+    {
+        $checks = [
+            '<form><input id="xss" type=submit formaction=javascript:alert(document.domain) value=Submit><input></form>',
+            '<form ><button id="xss" formaction=javascript:alert(document.domain)>Click me</button></form>',
+            '<form id="xss" action=javascript:alert(document.domain)><input type=submit value=Submit></form>'
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<button id="xss"');
+            $pageView->assertElementNotContains('.page-content', '<input id="xss"');
+            $pageView->assertElementNotContains('.page-content', '<form id="xss"');
+            $pageView->assertElementNotContains('.page-content', 'action=javascript:');
+            $pageView->assertElementNotContains('.page-content', 'formaction=javascript:');
+        }
+    }
+    
+    public function test_metadata_redirects_are_removed()
+    {
+        $checks = [
+            '<meta http-equiv="refresh" content="0; url=//external_url">',
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<meta>');
+            $pageView->assertElementNotContains('.page-content', '</meta>');
+            $pageView->assertElementNotContains('.page-content', 'content=');
+            $pageView->assertElementNotContains('.page-content', 'external_url');
+        }
+    }
     public function test_page_inline_on_attributes_removed_by_default()
     {
         $this->asEditor();

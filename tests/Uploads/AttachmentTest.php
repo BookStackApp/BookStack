@@ -3,30 +3,42 @@
 use BookStack\Uploads\Attachment;
 use BookStack\Entities\Page;
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Uploads\AttachmentService;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
+use Tests\TestResponse;
 
 class AttachmentTest extends TestCase
 {
     /**
      * Get a test file that can be uploaded
-     * @param $fileName
-     * @return \Illuminate\Http\UploadedFile
      */
-    protected function getTestFile($fileName)
+    protected function getTestFile(string $fileName): UploadedFile
     {
-        return new \Illuminate\Http\UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', 55, null, true);
+        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', 55, null, true);
     }
 
     /**
      * Uploads a file with the given name.
-     * @param $name
-     * @param int $uploadedTo
-     * @return \Illuminate\Foundation\Testing\TestResponse
      */
-    protected function uploadFile($name, $uploadedTo = 0)
+    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Foundation\Testing\TestResponse
     {
         $file = $this->getTestFile($name);
         return $this->call('POST', '/attachments/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+    }
+
+    /**
+     * Create a new attachment
+     */
+    protected function createAttachment(Page $page): Attachment
+    {
+        $this->post('attachments/link', [
+            'attachment_link_url' => 'https://example.com',
+            'attachment_link_name' => 'Example Attachment Link',
+            'attachment_link_uploaded_to' => $page->id,
+        ]);
+
+        return Attachment::query()->latest()->first();
     }
 
     /**
@@ -35,7 +47,7 @@ class AttachmentTest extends TestCase
      */
     protected function deleteUploads()
     {
-        $fileService = $this->app->make(\BookStack\Uploads\AttachmentService::class);
+        $fileService = $this->app->make(AttachmentService::class);
         foreach (Attachment::all() as $file) {
             $fileService->deleteFile($file);
         }
@@ -145,21 +157,14 @@ class AttachmentTest extends TestCase
         $page = Page::first();
         $this->asAdmin();
 
-        $this->call('POST', 'attachments/link', [
-            'attachment_link_url' => 'https://example.com',
-            'attachment_link_name' => 'Example Attachment Link',
-            'attachment_link_uploaded_to' => $page->id,
-        ]);
-
-        $attachmentId = Attachment::first()->id;
-
-        $update = $this->call('PUT', 'attachments/' . $attachmentId, [
+        $attachment = $this->createAttachment($page);
+        $update = $this->call('PUT', 'attachments/' . $attachment->id, [
             'attachment_edit_name' => 'My new attachment name',
             'attachment_edit_url' => 'https://test.example.com'
         ]);
 
         $expectedData = [
-            'id' => $attachmentId,
+            'id' => $attachment->id,
             'path' => 'https://test.example.com',
             'name' => 'My new attachment name',
             'uploaded_to' => $page->id
@@ -241,5 +246,46 @@ class AttachmentTest extends TestCase
         $attachmentGet->assertSee("Attachment not found");
 
         $this->deleteUploads();
+    }
+
+    public function test_data_and_js_links_cannot_be_attached_to_a_page()
+    {
+        $page = Page::first();
+        $this->asAdmin();
+
+        $badLinks = [
+            'javascript:alert("bunny")',
+            ' javascript:alert("bunny")',
+            'JavaScript:alert("bunny")',
+            "\t\n\t\nJavaScript:alert(\"bunny\")",
+            "data:text/html;<a></a>",
+            "Data:text/html;<a></a>",
+            "Data:text/html;<a></a>",
+        ];
+
+        foreach ($badLinks as $badLink) {
+            $linkReq = $this->post('attachments/link', [
+                'attachment_link_url' => $badLink,
+                'attachment_link_name' => 'Example Attachment Link',
+                'attachment_link_uploaded_to' => $page->id,
+            ]);
+            $linkReq->assertStatus(422);
+            $this->assertDatabaseMissing('attachments', [
+                'path' => $badLink,
+            ]);
+        }
+
+        $attachment = $this->createAttachment($page);
+
+        foreach ($badLinks as $badLink) {
+            $linkReq = $this->put('attachments/' . $attachment->id, [
+                'attachment_edit_url' => $badLink,
+                'attachment_edit_name' => 'Example Attachment Link',
+            ]);
+            $linkReq->assertStatus(422);
+            $this->assertDatabaseMissing('attachments', [
+                'path' => $badLink,
+            ]);
+        }
     }
 }
