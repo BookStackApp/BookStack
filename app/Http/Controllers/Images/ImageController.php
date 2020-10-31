@@ -3,7 +3,7 @@
 use BookStack\Entities\Page;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Repos\PageRepo;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use Exception;

@@ -58,7 +58,7 @@ class RestrictionsTest extends BrowserKitTest
 
     public function test_bookshelf_update_restriction()
     {
-        $shelf = BookShelf::first();
+        $shelf = Bookshelf::first();
 
         $this->actingAs($this->user)
             ->visit($shelf->getUrl('/edit'))
