@@ -43,6 +43,13 @@ class AppServiceProvider extends ServiceProvider
             return substr_count($uploadName, '.') < 2;
         });
 
+        Validator::extend('safe_url', function ($attribute, $value, $parameters, $validator) {
+            $cleanLinkName = strtolower(trim($value));
+            $isJs = strpos($cleanLinkName, 'javascript:') === 0;
+            $isData = strpos($cleanLinkName, 'data:') === 0;
+            return !$isJs && !$isData;
+        });
+
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
             return "<?php echo icon($expression); ?>";
