@@ -90,6 +90,7 @@ return [
     'required_without'     => 'حقل :attribute مطلوب عندما تكون :values غير موجودة.',
     'required_without_all' => 'حقل :attribute مطلوب عندما لا يكون أي من :values موجودة.',
     'same'                 => 'يجب تطابق :attribute مع :other.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => 'يجب أن يكون :attribute بحجم :size.',
         'file'    => 'يجب أن يكون :attribute بحجم :size كيلو بايت.',
