@@ -90,6 +90,7 @@ return [
     'required_without'     => ':valuesが設定されていない場合、:attributeは必須です。',
     'required_without_all' => ':valuesが設定されていない場合、:attributeは必須です。',
     'same'                 => ':attributeと:otherは一致している必要があります。',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attributeは:sizeである必要があります。',
         'file'    => ':attributeは:sizeキロバイトである必要があります。',
