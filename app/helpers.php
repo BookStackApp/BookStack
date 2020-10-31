@@ -7,9 +7,6 @@ use BookStack\Settings\SettingService;
 
 /**
  * Get the path to a versioned file.
- *
- * @param  string $file
- * @return string
  * @throws Exception
  */
 function versioned_asset(string $file = ''): string
@@ -33,7 +30,6 @@ function versioned_asset(string $file = ''): string
 /**
  * Helper method to get the current User.
  * Defaults to public 'Guest' user if not logged in.
- * @return User
  */
 function user(): User
 {
@@ -57,9 +53,8 @@ function hasAppAccess(): bool
 }
 
 /**
- * Check if the current user has a permission.
- * If an ownable element is passed in the jointPermissions are checked against
- * that particular item.
+ * Check if the current user has a permission. If an ownable element
+ * is passed in the jointPermissions are checked against that particular item.
  */
 function userCan(string $permission, Ownable $ownable = null): bool
 {
@@ -75,9 +70,6 @@ function userCan(string $permission, Ownable $ownable = null): bool
 /**
  * Check if the current user has the given permission
  * on any item in the system.
- * @param string $permission
- * @param string|null $entityClass
- * @return bool
  */
 function userCanOnAny(string $permission, string $entityClass = null): bool
 {
@@ -87,27 +79,26 @@ function userCanOnAny(string $permission, string $entityClass = null): bool
 
 /**
  * Helper to access system settings.
- * @param string $key
- * @param $default
  * @return bool|string|SettingService
  */
 function setting(string $key = null, $default = false)
 {
     $settingService = resolve(SettingService::class);
+
     if (is_null($key)) {
         return $settingService;
     }
+
     return $settingService->get($key, $default);
 }
 
 /**
  * Get a path to a theme resource.
- * @param string $path
- * @return string
  */
 function theme_path(string $path = ''): string
 {
     $theme = config('view.theme');
+
     if (!$theme) {
         return '';
     }
@@ -121,9 +112,6 @@ function theme_path(string $path = ''): string
  * to the 'resources/assets/icons' folder.
  *
  * Returns an empty string if icon file not found.
- * @param $name
- * @param array $attrs
- * @return mixed
  */
 function icon(string $name, array $attrs = []): string
 {
@@ -139,6 +127,7 @@ function icon(string $name, array $attrs = []): string
 
     $iconPath = resource_path('icons/' . $name . '.svg');
     $themeIconPath = theme_path('icons/' . $name . '.svg');
+
     if ($themeIconPath && file_exists($themeIconPath)) {
         $iconPath = $themeIconPath;
     } else if (!file_exists($iconPath)) {
