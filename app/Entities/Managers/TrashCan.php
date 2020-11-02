@@ -240,26 +240,21 @@ class TrashCan
         $count = 1;
         $entity->restore();
 
-        if ($entity->isA('chapter') || $entity->isA('book')) {
-            foreach ($entity->pages()->withTrashed()->withCount('deletions')->get() as $page) {
-                if ($page->deletions_count > 0) {
-                    $page->deletions()->delete();
-                }
-
-                $page->restore();
-                $count++;
+        $restoreAction = function ($entity) use (&$count) {
+            if ($entity->deletions_count > 0) {
+                $entity->deletions()->delete();
             }
+
+            $entity->restore();
+            $count++;
+        };
+
+        if ($entity->isA('chapter') || $entity->isA('book')) {
+            $entity->pages()->withTrashed()->withCount('deletions')->get()->each($restoreAction);
         }
 
         if ($entity->isA('book')) {
-            foreach ($entity->chapters()->withTrashed()->withCount('deletions')->get() as $chapter) {
-                if ($chapter->deletions_count === 0) {
-                    $chapter->deletions()->delete();
-                }
-
-                $chapter->restore();
-                $count++;
-            }
+            $entity->chapters()->withTrashed()->withCount('deletions')->get()->each($restoreAction);
         }
 
         return $count;
