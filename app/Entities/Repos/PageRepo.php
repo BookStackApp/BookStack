@@ -321,7 +321,7 @@ class PageRepo
      */
     public function copy(Page $page, string $parentIdentifier = null, string $newName = null): Page
     {
-        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->parent();
+        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->getParent();
         if ($parent === null) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
@@ -440,8 +440,9 @@ class PageRepo
      */
     protected function getNewPriority(Page $page): int
     {
-        if ($page->parent() instanceof Chapter) {
-            $lastPage = $page->parent()->pages('desc')->first();
+        $parent = $page->getParent();
+        if ($parent instanceof Chapter) {
+            $lastPage = $parent->pages('desc')->first();
             return $lastPage ? $lastPage->priority + 1 : 0;
         }
 

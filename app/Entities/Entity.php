@@ -288,6 +288,22 @@ class Entity extends Ownable
     }
 
     /**
+     * Get the parent entity if existing.
+     * This is the "static" parent and does not include dynamic
+     * relations such as shelves to books.
+     */
+    public function getParent(): ?Entity
+    {
+        if ($this->isA('page')) {
+            return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book->withTrashed()->first();
+        }
+        if ($this->isA('chapter')) {
+            return $this->book->withTrashed()->first();
+        }
+        return null;
+    }
+
+    /**
      * Rebuild the permissions for this entity.
      */
     public function rebuildPermissions()

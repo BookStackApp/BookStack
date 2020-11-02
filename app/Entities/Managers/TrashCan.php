@@ -180,22 +180,89 @@ class TrashCan
 
     /**
      * Destroy all items that have pending deletions.
+     * @throws Exception
      */
     public function destroyFromAllDeletions(): int
     {
         $deletions = Deletion::all();
         $deleteCount = 0;
         foreach ($deletions as $deletion) {
-            // For each one we load in the relation since it may have already
-            // been deleted as part of another deletion in this loop.
-            $entity = $deletion->deletable()->first();
-            if ($entity) {
-                $count = $this->destroyEntity($deletion->deletable);
-                $deleteCount += $count;
-            }
-            $deletion->delete();
+            $deleteCount += $this->destroyFromDeletion($deletion);
         }
         return $deleteCount;
+    }
+
+    /**
+     * Destroy an element from the given deletion model.
+     * @throws Exception
+     */
+    public function destroyFromDeletion(Deletion $deletion): int
+    {
+        // We directly load the deletable element here just to ensure it still
+        // exists in the event it has already been destroyed during this request.
+        $entity = $deletion->deletable()->first();
+        $count = 0;
+        if ($entity) {
+            $count = $this->destroyEntity($deletion->deletable);
+        }
+        $deletion->delete();
+        return $count;
+    }
+
+    /**
+     * Restore the content within the given deletion.
+     * @throws Exception
+     */
+    public function restoreFromDeletion(Deletion $deletion): int
+    {
+        $shouldRestore = true;
+        $restoreCount = 0;
+        $parent = $deletion->deletable->getParent();
+
+        if ($parent && $parent->trashed()) {
+            $shouldRestore = false;
+        }
+
+        if ($shouldRestore) {
+            $restoreCount = $this->restoreEntity($deletion->deletable);
+        }
+
+        $deletion->delete();
+        return $restoreCount;
+    }
+
+    /**
+     * Restore an entity so it is essentially un-deleted.
+     * Deletions on restored child elements will be removed during this restoration.
+     */
+    protected function restoreEntity(Entity $entity): int
+    {
+        $count = 1;
+        $entity->restore();
+
+        if ($entity->isA('chapter') || $entity->isA('book')) {
+            foreach ($entity->pages()->withTrashed()->withCount('deletions')->get() as $page) {
+                if ($page->deletions_count > 0) {
+                    $page->deletions()->delete();
+                }
+
+                $page->restore();
+                $count++;
+            }
+        }
+
+        if ($entity->isA('book')) {
+            foreach ($entity->chapters()->withTrashed()->withCount('deletions')->get() as $chapter) {
+                if ($chapter->deletions_count === 0) {
+                    $chapter->deletions()->delete();
+                }
+
+                $chapter->restore();
+                $count++;
+            }
+        }
+
+        return $count;
     }
 
     /**
