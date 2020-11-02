@@ -44,10 +44,11 @@
                     <th>{{ trans('settings.recycle_bin_deleted_item') }}</th>
                     <th>{{ trans('settings.recycle_bin_deleted_by') }}</th>
                     <th>{{ trans('settings.recycle_bin_deleted_at') }}</th>
+                    <th></th>
                 </tr>
                 @if(count($deletions) === 0)
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             <p class="text-muted"><em>{{ trans('settings.recycle_bin_contents_empty') }}</em></p>
                         </td>
                     </tr>
@@ -55,12 +56,15 @@
                 @foreach($deletions as $deletion)
                 <tr>
                     <td>
-                        <div class="table-entity-item mb-m">
+                        <div class="table-entity-item">
                             <span role="presentation" class="icon text-{{$deletion->deletable->getType()}}">@icon($deletion->deletable->getType())</span>
                             <div class="text-{{ $deletion->deletable->getType() }}">
                                 {{ $deletion->deletable->name }}
                             </div>
                         </div>
+                        @if($deletion->deletable instanceof \BookStack\Entities\Book || $deletion->deletable instanceof \BookStack\Entities\Chapter)
+                            <div class="mb-m"></div>
+                        @endif
                         @if($deletion->deletable instanceof \BookStack\Entities\Book)
                             <div class="pl-xl block inline">
                                 <div class="text-chapter">
@@ -77,7 +81,16 @@
                         @endif
                     </td>
                     <td>@include('partials.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</td>
-                    <td>{{ $deletion->created_at }}</td>
+                    <td width="200">{{ $deletion->created_at }}</td>
+                    <td width="150" class="text-right">
+                        <div component="dropdown" class="dropdown-container">
+                            <button type="button" refs="dropdown@toggle" class="button outline">{{ trans('common.actions') }}</button>
+                            <ul refs="dropdown@menu" class="dropdown-menu">
+                                <li><a class="block" href="{{ url('/settings/recycle-bin/'.$deletion->id.'/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
+                                <li><a class="block" href="{{ url('/settings/recycle-bin/'.$deletion->id.'/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
             </table>

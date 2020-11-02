@@ -150,22 +150,25 @@ body.flexbox {
 .justify-flex-end {
   justify-content: flex-end;
 }
+.justify-center {
+  justify-content: center;
+}
 
 
 /**
  * Display and float utilities
  */
 .block {
-  display: block;
+  display: block !important;
   position: relative;
 }
 
 .inline {
-  display: inline;
+  display: inline !important;
 }
 
 .block.inline {
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .hidden {
