@@ -3,6 +3,7 @@
 use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityService;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\Managers\TrashCan;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
@@ -40,7 +41,7 @@ class AuditLogTest extends TestCase
         $resp->assertSeeText($page->name);
         $resp->assertSeeText('page_create');
         $resp->assertSeeText($activity->created_at->toDateTimeString());
-        $resp->assertElementContains('.audit-log-user', $admin->name);
+        $resp->assertElementContains('.table-user-item', $admin->name);
     }
 
     public function test_shows_name_for_deleted_items()
@@ -51,6 +52,7 @@ class AuditLogTest extends TestCase
         app(ActivityService::class)->add($page, 'page_create', $page->book->id);
 
         app(PageRepo::class)->destroy($page);
+        app(TrashCan::class)->empty();
 
         $resp = $this->get('settings/audit');
         $resp->assertSeeText('Deleted Item');

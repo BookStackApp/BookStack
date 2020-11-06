@@ -181,14 +181,13 @@ class BookController extends Controller
     /**
      * Remove the specified book from the system.
      * @throws Throwable
-     * @throws NotifyException
      */
     public function destroy(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
 
-        Activity::addMessage('book_delete', $book->name);
+        Activity::add($book, 'book_delete', $book->id);
         $this->bookRepo->destroy($book);
 
         return redirect('/books');

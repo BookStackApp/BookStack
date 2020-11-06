@@ -15,12 +15,14 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
+use Illuminate\Http\Response;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Throwable;
+use Illuminate\Foundation\Testing\Assert as PHPUnit;
 
 trait SharedTestHelpers
 {
@@ -270,14 +272,25 @@ trait SharedTestHelpers
      */
     protected function assertPermissionError($response)
     {
-        if ($response instanceof BrowserKitTest) {
-            $response = \Illuminate\Foundation\Testing\TestResponse::fromBaseResponse($response->response);
-        }
+        PHPUnit::assertTrue($this->isPermissionError($response->baseResponse ?? $response->response), "Failed asserting the response contains a permission error.");
+    }
 
-        $response->assertRedirect('/');
-        $this->assertSessionHas('error');
-        $error = session()->pull('error');
-        $this->assertStringStartsWith('You do not have permission to access', $error);
+    /**
+     * Assert a permission error has occurred.
+     */
+    protected function assertNotPermissionError($response)
+    {
+        PHPUnit::assertFalse($this->isPermissionError($response->baseResponse ?? $response->response), "Failed asserting the response does not contain a permission error.");
+    }
+
+    /**
+     * Check if the given response is a permission error.
+     */
+    private function isPermissionError($response): bool
+    {
+        return $response->status() === 302
+            && $response->headers->get('Location') === url('/')
+            && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0;
     }
 
     /**

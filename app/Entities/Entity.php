@@ -295,7 +295,7 @@ class Entity extends Ownable
     public function getParent(): ?Entity
     {
         if ($this->isA('page')) {
-            return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book->withTrashed()->first();
+            return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book()->withTrashed()->first();
         }
         if ($this->isA('chapter')) {
             return $this->book->withTrashed()->first();

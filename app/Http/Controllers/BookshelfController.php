@@ -182,7 +182,7 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
-        Activity::addMessage('bookshelf_delete', $shelf->name);
+        Activity::add($shelf, 'bookshelf_delete');
         $this->bookshelfRepo->destroy($shelf);
 
         return redirect('/shelves');
