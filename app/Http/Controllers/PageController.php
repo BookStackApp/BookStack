@@ -308,9 +308,8 @@ class PageController extends Controller
         $book = $page->book;
         $parent = $page->chapter ?? $book;
         $this->pageRepo->destroy($page);
-        Activity::addMessage('page_delete', $page->name, $book->id);
+        Activity::add($page, 'page_delete', $page->book_id);
 
-        $this->showSuccessNotification(trans('entities.pages_delete_success'));
         return redirect($parent->getUrl());
     }
 

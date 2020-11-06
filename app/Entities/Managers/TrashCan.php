@@ -90,7 +90,7 @@ class TrashCan
      * Remove a bookshelf from the system.
      * @throws Exception
      */
-    public function destroyShelf(Bookshelf $shelf): int
+    protected function destroyShelf(Bookshelf $shelf): int
     {
         $this->destroyCommonRelations($shelf);
         $shelf->forceDelete();
@@ -102,7 +102,7 @@ class TrashCan
      * Destroys any child chapters and pages.
      * @throws Exception
      */
-    public function destroyBook(Book $book): int
+    protected function destroyBook(Book $book): int
     {
         $count = 0;
         $pages = $book->pages()->withTrashed()->get();
@@ -127,7 +127,7 @@ class TrashCan
      * Destroys all pages within.
      * @throws Exception
      */
-    public function destroyChapter(Chapter $chapter): int
+    protected function destroyChapter(Chapter $chapter): int
     {
         $count = 0;
         $pages = $chapter->pages()->withTrashed()->get();
@@ -147,7 +147,7 @@ class TrashCan
      * Remove a page from the system.
      * @throws Exception
      */
-    public function destroyPage(Page $page): int
+    protected function destroyPage(Page $page): int
     {
         $this->destroyCommonRelations($page);
 
@@ -182,7 +182,7 @@ class TrashCan
      * Destroy all items that have pending deletions.
      * @throws Exception
      */
-    public function destroyFromAllDeletions(): int
+    public function empty(): int
     {
         $deletions = Deletion::all();
         $deleteCount = 0;

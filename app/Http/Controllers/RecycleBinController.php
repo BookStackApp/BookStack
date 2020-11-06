@@ -14,7 +14,6 @@ class RecycleBinController extends Controller
      */
     public function __construct()
     {
-        // TODO - Check this is enforced.
         $this->middleware(function ($request, $next) {
             $this->checkPermission('settings-manage');
             $this->checkPermission('restrictions-manage-all');
@@ -96,7 +95,7 @@ class RecycleBinController extends Controller
      */
     public function empty()
     {
-        $deleteCount = (new TrashCan())->destroyFromAllDeletions();
+        $deleteCount = (new TrashCan())->empty();
 
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
         return redirect($this->recycleBinBaseUrl);
