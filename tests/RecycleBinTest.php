@@ -6,8 +6,6 @@ use BookStack\Entities\Page;
 
 class RecycleBinTest extends TestCase
 {
-    // TODO - Test activity updating on destroy
-
     public function test_recycle_bin_routes_permissions()
     {
         $page = Page::query()->first();
@@ -64,5 +62,96 @@ class RecycleBinTest extends TestCase
         $viewReq->assertElementContains('table.table', $book->name);
         $viewReq->assertElementContains('table.table', $book->pages_count . ' Pages');
         $viewReq->assertElementContains('table.table', $book->chapters_count . ' Chapters');
+    }
+
+    public function test_recycle_bin_empty()
+    {
+        $page = Page::query()->first();
+        $book = Book::query()->where('id' , '!=', $page->book_id)->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $editor = $this->getEditor();
+        $this->actingAs($editor)->delete($page->getUrl());
+        $this->actingAs($editor)->delete($book->getUrl());
+
+        $this->assertTrue(Deletion::query()->count() === 2);
+        $emptyReq = $this->asAdmin()->post('/settings/recycle-bin/empty');
+        $emptyReq->assertRedirect('/settings/recycle-bin');
+
+        $this->assertTrue(Deletion::query()->count() === 0);
+        $this->assertDatabaseMissing('books', ['id' => $book->id]);
+        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
+        $this->assertDatabaseMissing('pages', ['id' => $book->pages->first()->id]);
+        $this->assertDatabaseMissing('chapters', ['id' => $book->chapters->first()->id]);
+
+        $itemCount = 2 + $book->pages->count() + $book->chapters->count();
+        $redirectReq = $this->get('/settings/recycle-bin');
+        $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+    }
+
+    public function test_entity_restore()
+    {
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $this->asEditor()->delete($book->getUrl());
+        $deletion = Deletion::query()->firstOrFail();
+
+        $this->assertEquals($book->pages->count(), \DB::table('pages')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), \DB::table('chapters')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+
+        $restoreReq = $this->asAdmin()->post("/settings/recycle-bin/{$deletion->id}/restore");
+        $restoreReq->assertRedirect('/settings/recycle-bin');
+        $this->assertTrue(Deletion::query()->count() === 0);
+
+        $this->assertEquals($book->pages->count(), \DB::table('pages')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), \DB::table('chapters')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
+
+        $itemCount = 1 + $book->pages->count() + $book->chapters->count();
+        $redirectReq = $this->get('/settings/recycle-bin');
+        $redirectReq->assertNotificationContains('Restored '.$itemCount.' total items from the recycle bin');
+    }
+
+    public function test_permanent_delete()
+    {
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $this->asEditor()->delete($book->getUrl());
+        $deletion = Deletion::query()->firstOrFail();
+
+        $deleteReq = $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}");
+        $deleteReq->assertRedirect('/settings/recycle-bin');
+        $this->assertTrue(Deletion::query()->count() === 0);
+
+        $this->assertDatabaseMissing('books', ['id' => $book->id]);
+        $this->assertDatabaseMissing('pages', ['id' => $book->pages->first()->id]);
+        $this->assertDatabaseMissing('chapters', ['id' => $book->chapters->first()->id]);
+
+        $itemCount = 1 + $book->pages->count() + $book->chapters->count();
+        $redirectReq = $this->get('/settings/recycle-bin');
+        $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+    }
+
+    public function test_permanent_entity_delete_updates_existing_activity_with_entity_name()
+    {
+        $page = Page::query()->firstOrFail();
+        $this->asEditor()->delete($page->getUrl());
+        $deletion = $page->deletions()->firstOrFail();
+
+        $this->assertDatabaseHas('activities', [
+            'key' => 'page_delete',
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+
+        $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}");
+
+        $this->assertDatabaseMissing('activities', [
+            'key' => 'page_delete',
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+
+        $this->assertDatabaseHas('activities', [
+            'key' => 'page_delete',
+            'entity_id' => 0,
+            'entity_type' => '',
+            'extra' => $page->name,
+        ]);
     }
 }
