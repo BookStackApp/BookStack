@@ -199,4 +199,34 @@ class RecycleBinTest extends TestCase
         $this->assertDatabaseMissing('pages', ['id' => $page->id]);
         $this->assertEquals(0, Deletion::query()->count());
     }
+
+    public function test_restore_flow_when_restoring_nested_delete_first()
+    {
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $chapter = $book->chapters->first();
+        $this->asEditor()->delete($chapter->getUrl());
+        $this->asEditor()->delete($book->getUrl());
+
+        $bookDeletion = $book->deletions()->first();
+        $chapterDeletion = $chapter->deletions()->first();
+
+        $chapterRestoreView = $this->asAdmin()->get("/settings/recycle-bin/{$chapterDeletion->id}/restore");
+        $chapterRestoreView->assertStatus(200);
+        $chapterRestoreView->assertSeeText($chapter->name);
+
+        $chapterRestore = $this->post("/settings/recycle-bin/{$chapterDeletion->id}/restore");
+        $chapterRestore->assertRedirect("/settings/recycle-bin");
+        $this->assertDatabaseMissing("deletions", ["id" => $chapterDeletion->id]);
+
+        $chapter->refresh();
+        $this->assertNotNull($chapter->deleted_at);
+
+        $bookRestoreView = $this->asAdmin()->get("/settings/recycle-bin/{$bookDeletion->id}/restore");
+        $bookRestoreView->assertStatus(200);
+        $bookRestoreView->assertSeeText($chapter->name);
+
+        $this->post("/settings/recycle-bin/{$bookDeletion->id}/restore");
+        $chapter->refresh();
+        $this->assertNull($chapter->deleted_at);
+    }
 }
