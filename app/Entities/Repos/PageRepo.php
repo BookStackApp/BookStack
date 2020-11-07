@@ -12,6 +12,7 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -259,12 +260,13 @@ class PageRepo
 
     /**
      * Destroy a page from the system.
-     * @throws NotifyException
+     * @throws Exception
      */
     public function destroy(Page $page)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyPage($page);
+        $trashCan->softDestroyPage($page);
+        $trashCan->autoClearOld();
     }
 
     /**
@@ -320,7 +322,7 @@ class PageRepo
      */
     public function copy(Page $page, string $parentIdentifier = null, string $newName = null): Page
     {
-        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->parent();
+        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->getParent();
         if ($parent === null) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
@@ -439,8 +441,9 @@ class PageRepo
      */
     protected function getNewPriority(Page $page): int
     {
-        if ($page->parent() instanceof Chapter) {
-            $lastPage = $page->parent()->pages('desc')->first();
+        $parent = $page->getParent();
+        if ($parent instanceof Chapter) {
+            $lastPage = $parent->pages('desc')->first();
             return $lastPage ? $lastPage->priority + 1 : 0;
         }
 

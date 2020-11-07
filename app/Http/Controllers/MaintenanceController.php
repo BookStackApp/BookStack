@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Entities\Managers\TrashCan;
 use BookStack\Notifications\TestEmail;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
@@ -19,7 +20,13 @@ class MaintenanceController extends Controller
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
-        return view('settings.maintenance', ['version' => $version]);
+        // Recycle bin details
+        $recycleStats = (new TrashCan())->getTrashedCounts();
+
+        return view('settings.maintenance', [
+            'version' => $version,
+            'recycleStats' => $recycleStats,
+        ]);
     }
 
     /**

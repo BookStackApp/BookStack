@@ -78,7 +78,7 @@ class PageController extends Controller
     public function editDraft(string $bookSlug, int $pageId)
     {
         $draft = $this->pageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-create', $draft->parent());
+        $this->checkOwnablePermission('page-create', $draft->getParent());
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         $draftsEnabled = $this->isSignedIn();
@@ -104,7 +104,7 @@ class PageController extends Controller
             'name' => 'required|string|max:255'
         ]);
         $draftPage = $this->pageRepo->getById($pageId);
-        $this->checkOwnablePermission('page-create', $draftPage->parent());
+        $this->checkOwnablePermission('page-create', $draftPage->getParent());
 
         $page = $this->pageRepo->publishDraft($draftPage, $request->all());
         Activity::add($page, 'page_create', $draftPage->book->id);
@@ -308,9 +308,8 @@ class PageController extends Controller
         $book = $page->book;
         $parent = $page->chapter ?? $book;
         $this->pageRepo->destroy($page);
-        Activity::addMessage('page_delete', $page->name, $book->id);
+        Activity::add($page, 'page_delete', $page->book_id);
 
-        $this->showSuccessNotification(trans('entities.pages_delete_success'));
         return redirect($parent->getUrl());
     }
 

@@ -166,6 +166,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/maintenance/cleanup-images', 'MaintenanceController@cleanupImages');
         Route::post('/maintenance/send-test-email', 'MaintenanceController@sendTestEmail');
 
+        // Recycle Bin
+        Route::get('/recycle-bin', 'RecycleBinController@index');
+        Route::post('/recycle-bin/empty', 'RecycleBinController@empty');
+        Route::get('/recycle-bin/{id}/destroy', 'RecycleBinController@showDestroy');
+        Route::delete('/recycle-bin/{id}', 'RecycleBinController@destroy');
+        Route::get('/recycle-bin/{id}/restore', 'RecycleBinController@showRestore');
+        Route::post('/recycle-bin/{id}/restore', 'RecycleBinController@restore');
+
         // Audit Log
         Route::get('/audit', 'AuditLogController@index');
 
