@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\Comment;
 use BookStack\Actions\CommentRepo;
 use BookStack\Auth\Permissions\JointPermission;
@@ -37,7 +38,7 @@ class CommandsTest extends TestCase
     {
         $this->asEditor();
         $page = Page::first();
-        \Activity::add($page, 'page_update', $page->book->id);
+        \Activity::add($page, ActivityType::PAGE_UPDATE, $page->book->id);
 
         $this->assertDatabaseHas('activities', [
             'key' => 'page_update',

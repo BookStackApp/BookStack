@@ -1,6 +1,5 @@
 <?php namespace BookStack\Http\Controllers;
 
-use Activity;
 use BookStack\Entities\Book;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Repos\ChapterRepo;
@@ -51,7 +50,6 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-create', $book);
 
         $chapter = $this->chapterRepo->create($request->all(), $book);
-        Activity::add($chapter, 'chapter_create', $book->id);
 
         return redirect($chapter->getUrl());
     }
@@ -100,7 +98,6 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-update', $chapter);
 
         $this->chapterRepo->update($chapter, $request->all());
-        Activity::add($chapter, 'chapter_update', $chapter->book->id);
 
         return redirect($chapter->getUrl());
     }
@@ -128,7 +125,6 @@ class ChapterController extends Controller
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('chapter-delete', $chapter);
 
-        Activity::add($chapter, 'chapter_delete', $chapter->book->id);
         $this->chapterRepo->destroy($chapter);
 
         return redirect($chapter->book->getUrl());
@@ -172,8 +168,6 @@ class ChapterController extends Controller
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
             return redirect()->back();
         }
-
-        Activity::add($chapter, 'chapter_move', $newBook->id);
 
         $this->showSuccessNotification(trans('entities.chapter_move_success', ['bookName' => $newBook->name]));
         return redirect($chapter->getUrl());

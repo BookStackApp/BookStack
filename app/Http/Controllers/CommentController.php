@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\CommentRepo;
 use BookStack\Entities\Page;
 use Illuminate\Http\Request;
@@ -40,7 +41,6 @@ class CommentController extends Controller
         // Create a new comment.
         $this->checkPermission('comment-create-all');
         $comment = $this->commentRepo->create($page, $request->get('text'), $request->get('parent_id'));
-        Activity::add($page, 'commented_on', $page->book->id);
         return view('comments.comment', ['comment' => $comment]);
     }
 

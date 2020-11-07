@@ -1,6 +1,7 @@
 <?php namespace Tests\User;
 
 use Activity;
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
 use BookStack\Entities\Bookshelf;
 use Tests\BrowserKitTest;
@@ -60,8 +61,8 @@ class UserProfileTest extends BrowserKitTest
         $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::add($entities['book'], 'book_update', $entities['book']->id);
-        Activity::add($entities['page'], 'page_create', $entities['book']->id);
+        Activity::add($entities['book'], ActivityType::BOOK_UPDATE, $entities['book']->id);
+        Activity::add($entities['page'], ActivityType::PAGE_CREATE, $entities['book']->id);
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
             ->seeInElement('#recent-user-activity', 'updated book')
@@ -74,8 +75,8 @@ class UserProfileTest extends BrowserKitTest
         $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::add($entities['book'], 'book_update', $entities['book']->id);
-        Activity::add($entities['page'], 'page_create', $entities['book']->id);
+        Activity::add($entities['book'], ActivityType::BOOK_UPDATE, $entities['book']->id);
+        Activity::add($entities['page'], ActivityType::PAGE_CREATE, $entities['book']->id);
 
         $this->asAdmin()->visit('/')->clickInElement('#recent-activity', $newUser->name)
             ->seePageIs('/user/' . $newUser->id)
