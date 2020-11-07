@@ -3,6 +3,7 @@
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\Entity;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -104,7 +105,9 @@ class ActivityService
         $activity = $this->permissionService
             ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
-            ->with(['entity', 'user.avatar'])
+            ->with(['entity' => function (Relation $query) {
+                $query->withTrashed();
+            }, 'user.avatar'])
             ->skip($count * ($page - 1))
             ->take($count)
             ->get();
