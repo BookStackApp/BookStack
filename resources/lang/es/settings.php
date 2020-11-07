@@ -80,11 +80,11 @@ return [
     'maint_send_test_email_mail_subject' => 'Probar correo electrónico',
     'maint_send_test_email_mail_greeting' => '¡El envío de correos electrónicos parece funcionar!',
     'maint_send_test_email_mail_text' => '¡Enhorabuena! Al recibir esta notificación de correo electrónico, tu configuración de correo electrónico parece estar ajustada correctamente.',
-    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
-    'maint_recycle_bin_open' => 'Open Recycle Bin',
+    'maint_recycle_bin_desc' => 'Los estantes, libros, capítulos y páginas eliminados se envían a la papelera de reciclaje para que puedan ser restauradas o eliminadas permanentemente. Los elementos más antiguos en la papelera de reciclaje pueden ser eliminados automáticamente después de un tiempo dependiendo de la configuración del sistema.',
+    'maint_recycle_bin_open' => 'Abrir papelera de reciclaje',
 
     // Recycle Bin
-    'recycle_bin' => 'Recycle Bin',
+    'recycle_bin' => 'Papelera de Reciclaje',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Deleted Item',
     'recycle_bin_deleted_by' => 'Deleted By',
