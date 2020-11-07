@@ -266,6 +266,7 @@ class PageRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyPage($page);
+        $trashCan->autoClearOld();
     }
 
     /**

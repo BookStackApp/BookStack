@@ -13,6 +13,7 @@ use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;
 use BookStack\Uploads\ImageService;
 use Exception;
+use Illuminate\Support\Carbon;
 
 class TrashCan
 {
@@ -229,6 +230,30 @@ class TrashCan
 
         $deletion->delete();
         return $restoreCount;
+    }
+
+    /**
+     * Automatically clear old content from the recycle bin
+     * depending on the configured lifetime.
+     * Returns the total number of deleted elements.
+     * @throws Exception
+     */
+    public function autoClearOld(): int
+    {
+        $lifetime = intval(config('app.recycle_bin_lifetime'));
+        if ($lifetime < 0) {
+            return 0;
+        }
+
+        $clearBeforeDate = Carbon::now()->addSeconds(10)->subDays($lifetime);
+        $deleteCount = 0;
+
+        $deletionsToRemove = Deletion::query()->where('created_at', '<', $clearBeforeDate)->get();
+        foreach ($deletionsToRemove as $deletion) {
+            $deleteCount += $this->destroyFromDeletion($deletion);
+        }
+
+        return $deleteCount;
     }
 
     /**
