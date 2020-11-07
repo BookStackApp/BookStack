@@ -61,8 +61,8 @@ class UserProfileTest extends BrowserKitTest
         $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::add($entities['book'], ActivityType::BOOK_UPDATE, $entities['book']->id);
-        Activity::add($entities['page'], ActivityType::PAGE_CREATE, $entities['book']->id);
+        Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
+        Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
             ->seeInElement('#recent-user-activity', 'updated book')
@@ -75,8 +75,8 @@ class UserProfileTest extends BrowserKitTest
         $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::add($entities['book'], ActivityType::BOOK_UPDATE, $entities['book']->id);
-        Activity::add($entities['page'], ActivityType::PAGE_CREATE, $entities['book']->id);
+        Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
+        Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
         $this->asAdmin()->visit('/')->clickInElement('#recent-activity', $newUser->name)
             ->seePageIs('/user/' . $newUser->id)

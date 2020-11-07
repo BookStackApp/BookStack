@@ -97,7 +97,7 @@ class BookController extends Controller
 
         if ($bookshelf) {
             $bookshelf->appendBook($book);
-            Activity::add($bookshelf, ActivityType::BOOKSHELF_UPDATE);
+            Activity::addForEntity($bookshelf, ActivityType::BOOKSHELF_UPDATE);
         }
 
         return redirect($book->getUrl());

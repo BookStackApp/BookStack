@@ -2,9 +2,11 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
+use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
+use BookStack\Entities\Page;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class ActivityService
@@ -21,11 +23,11 @@ class ActivityService
     }
 
     /**
-     * Add activity data to database.
+     * Add activity data to database for an entity.
      */
-    public function add(Entity $entity, string $type, ?int $bookId = null)
+    public function addForEntity(Entity $entity, string $type)
     {
-        $activity = $this->newActivityForUser($type, $bookId);
+        $activity = $this->newActivityForUser($type);
         $entity->activity()->save($activity);
         $this->setNotification($type);
     }
@@ -33,12 +35,11 @@ class ActivityService
     /**
      * Get a new activity instance for the current user.
      */
-    protected function newActivityForUser(string $key, ?int $bookId = null): Activity
+    protected function newActivityForUser(string $type): Activity
     {
         return $this->activity->newInstance()->forceFill([
-            'key'     => strtolower($key),
+            'key'     => strtolower($type),
             'user_id' => $this->user->id,
-            'book_id' => $bookId ?? 0,
         ]);
     }
 
@@ -47,15 +48,13 @@ class ActivityService
      * and instead uses the 'extra' field with the entities name.
      * Used when an entity is deleted.
      */
-    public function removeEntity(Entity $entity): Collection
+    public function removeEntity(Entity $entity)
     {
-        $activities = $entity->activity()->get();
         $entity->activity()->update([
             'extra'       => $entity->name,
             'entity_id'   => 0,
             'entity_type' => '',
         ]);
-        return $activities;
     }
 
     /**
@@ -80,16 +79,27 @@ class ActivityService
      */
     public function entityActivity(Entity $entity, int $count = 20, int $page = 1): array
     {
+        /** @var [string => int[]] $queryIds */
+        $queryIds = [$entity->getMorphClass() => [$entity->id]];
+
         if ($entity->isA('book')) {
-            $query = $this->activity->newQuery()->where('book_id', '=', $entity->id);
-        } else {
-            $query = $this->activity->newQuery()->where('entity_type', '=', $entity->getMorphClass())
-                ->where('entity_id', '=', $entity->id);
+            $queryIds[(new Chapter)->getMorphClass()] = $entity->chapters()->visible()->pluck('id');
+        }
+        if ($entity->isA('book') || $entity->isA('chapter')) {
+            $queryIds[(new Page)->getMorphClass()] = $entity->pages()->visible()->pluck('id');
         }
 
-        $activity = $this->permissionService
-            ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')
+        $query = $this->activity->newQuery();
+        $query->where(function (Builder $query) use ($queryIds) {
+            foreach ($queryIds as $morphClass => $idArr) {
+                $query->orWhere(function (Builder $innerQuery) use ($morphClass, $idArr) {
+                    $innerQuery->where('entity_type', '=', $morphClass)
+                        ->whereIn('entity_id', $idArr);
+                });
+            }
+        });
+
+        $activity = $query->orderBy('created_at', 'desc')
             ->with(['entity' => function (Relation $query) {
                 $query->withTrashed();
             }, 'user.avatar'])
