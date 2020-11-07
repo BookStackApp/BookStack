@@ -75,7 +75,7 @@ class BookSortController extends Controller
 
         // Rebuild permissions and add activity for involved books.
         $booksInvolved->each(function (Book $book) {
-            Activity::add($book, ActivityType::BOOK_SORT, $book->id);
+            Activity::addForEntity($book, ActivityType::BOOK_SORT);
         });
 
         return redirect($book->getUrl());

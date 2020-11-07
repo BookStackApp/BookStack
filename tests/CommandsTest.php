@@ -38,7 +38,7 @@ class CommandsTest extends TestCase
     {
         $this->asEditor();
         $page = Page::first();
-        \Activity::add($page, ActivityType::PAGE_UPDATE, $page->book->id);
+        \Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
 
         $this->assertDatabaseHas('activities', [
             'key' => 'page_update',

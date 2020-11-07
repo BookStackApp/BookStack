@@ -93,7 +93,7 @@ class BookRepo
     {
         $book = new Book();
         $this->baseRepo->create($book, $input);
-        Activity::add($book, ActivityType::BOOK_CREATE, $book->id);
+        Activity::addForEntity($book, ActivityType::BOOK_CREATE);
         return $book;
     }
 
@@ -103,7 +103,7 @@ class BookRepo
     public function update(Book $book, array $input): Book
     {
         $this->baseRepo->update($book, $input);
-        Activity::add($book, ActivityType::BOOK_UPDATE, $book->id);
+        Activity::addForEntity($book, ActivityType::BOOK_UPDATE);
         return $book;
     }
 
@@ -133,7 +133,7 @@ class BookRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyBook($book);
-        Activity::add($book, ActivityType::BOOK_DELETE, $book->id);
+        Activity::addForEntity($book, ActivityType::BOOK_DELETE);
 
         $trashCan->autoClearOld();
     }
