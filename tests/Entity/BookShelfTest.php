@@ -222,16 +222,25 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_delete()
     {
-        $shelf = Bookshelf::first();
-        $resp = $this->asEditor()->get($shelf->getUrl('/delete'));
-        $resp->assertSeeText('Delete Bookshelf');
-        $resp->assertSee("action=\"{$shelf->getUrl()}\"");
+        $shelf = Bookshelf::query()->whereHas('books')->first();
+        $this->assertNull($shelf->deleted_at);
+        $bookCount = $shelf->books()->count();
 
-        $resp = $this->delete($shelf->getUrl());
-        $resp->assertRedirect('/shelves');
-        $this->assertDatabaseMissing('bookshelves', ['id' => $shelf->id]);
-        $this->assertDatabaseMissing('bookshelves_books', ['bookshelf_id' => $shelf->id]);
-        $this->assertSessionHas('success');
+        $deleteViewReq = $this->asEditor()->get($shelf->getUrl('/delete'));
+        $deleteViewReq->assertSeeText('Are you sure you want to delete this bookshelf?');
+
+        $deleteReq = $this->delete($shelf->getUrl());
+        $deleteReq->assertRedirect(url('/shelves'));
+        $this->assertActivityExists('bookshelf_delete', $shelf);
+
+        $shelf->refresh();
+        $this->assertNotNull($shelf->deleted_at);
+
+        $this->assertTrue($shelf->books()->count() === $bookCount);
+        $this->assertTrue($shelf->deletions()->count() === 1);
+
+        $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
+        $redirectReq->assertNotificationContains('Bookshelf Successfully Deleted');
     }
 
     public function test_shelf_copy_permissions()

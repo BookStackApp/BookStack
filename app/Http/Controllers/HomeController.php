@@ -14,7 +14,6 @@ class HomeController extends Controller
 
     /**
      * Display the homepage.
-     * @return Response
      */
     public function index()
     {
@@ -22,14 +21,17 @@ class HomeController extends Controller
         $draftPages = [];
 
         if ($this->isSignedIn()) {
-            $draftPages = Page::visible()->where('draft', '=', true)
+            $draftPages = Page::visible()
+                ->where('draft', '=', true)
                 ->where('created_by', '=', user()->id)
-                ->orderBy('updated_at', 'desc')->take(6)->get();
+                ->orderBy('updated_at', 'desc')
+                ->take(6)
+                ->get();
         }
 
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->isSignedIn() ?
-              Views::getUserRecentlyViewed(12*$recentFactor, 0)
+              Views::getUserRecentlyViewed(12*$recentFactor, 1)
             : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
         $recentlyUpdatedPages = Page::visible()->where('draft', false)
             ->orderBy('updated_at', 'desc')->take(12)->get();

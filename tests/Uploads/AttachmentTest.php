@@ -1,5 +1,7 @@
 <?php namespace Tests\Uploads;
 
+use BookStack\Entities\Managers\TrashCan;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Attachment;
 use BookStack\Entities\Page;
 use BookStack\Auth\Permissions\PermissionService;
@@ -213,7 +215,8 @@ class AttachmentTest extends TestCase
             'name' => $fileName
         ]);
 
-        $this->call('DELETE', $page->getUrl());
+        app(PageRepo::class)->destroy($page);
+        app(TrashCan::class)->empty();
 
         $this->assertDatabaseMissing('attachments', [
             'name' => $fileName

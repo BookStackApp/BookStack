@@ -174,6 +174,7 @@ class BookshelfRepo
     public function destroy(Bookshelf $shelf)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyShelf($shelf);
+        $trashCan->softDestroyShelf($shelf);
+        $trashCan->autoClearOld();
     }
 }

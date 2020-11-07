@@ -23,7 +23,12 @@ class AuditLogController extends Controller
         ];
 
         $query = Activity::query()
-            ->with(['entity', 'user'])
+            ->with([
+                'entity' => function ($query) {
+                    $query->withTrashed();
+                },
+                'user'
+            ])
             ->orderBy($listDetails['sort'], $listDetails['order']);
 
         if ($listDetails['event']) {

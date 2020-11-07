@@ -80,6 +80,27 @@ return [
     'maint_send_test_email_mail_subject' => 'Test Email',
     'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
     'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
+    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
+    'maint_recycle_bin_open' => 'Open Recycle Bin',
+
+    // Recycle Bin
+    'recycle_bin' => 'Recycle Bin',
+    'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'recycle_bin_deleted_item' => 'Deleted Item',
+    'recycle_bin_deleted_by' => 'Deleted By',
+    'recycle_bin_deleted_at' => 'Deletion Time',
+    'recycle_bin_permanently_delete' => 'Permanently Delete',
+    'recycle_bin_restore' => 'Restore',
+    'recycle_bin_contents_empty' => 'The recycle bin is currently empty',
+    'recycle_bin_empty' => 'Empty Recycle Bin',
+    'recycle_bin_empty_confirm' => 'This will permanently destroy all items in the recycle bin including content contained within each item. Are you sure you want to empty the recycle bin?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item, along with any child elements listed below, from the system and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_list' => 'Items to be Destroyed',
+    'recycle_bin_restore_list' => 'Items to be Restored',
+    'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',
+    'recycle_bin_restore_deleted_parent' => 'The parent of this item has also been deleted. These will remain deleted until that parent is also restored.',
+    'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
+    'recycle_bin_restore_notification' => 'Restored :count total items from the recycle bin.',
 
     // Audit Log
     'audit' => 'Audit Log',

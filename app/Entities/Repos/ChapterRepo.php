@@ -6,10 +6,7 @@ use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
 use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class ChapterRepo
@@ -19,7 +16,6 @@ class ChapterRepo
 
     /**
      * ChapterRepo constructor.
-     * @param $baseRepo
      */
     public function __construct(BaseRepo $baseRepo)
     {
@@ -77,7 +73,8 @@ class ChapterRepo
     public function destroy(Chapter $chapter)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyChapter($chapter);
+        $trashCan->softDestroyChapter($chapter);
+        $trashCan->autoClearOld();
     }
 
     /**

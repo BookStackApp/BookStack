@@ -5,6 +5,24 @@
 
     @include('settings.navbar-with-version', ['selected' => 'maintenance'])
 
+    <div class="card content-wrap auto-height pb-xl">
+        <h2 class="list-heading">{{ trans('settings.recycle_bin') }}</h2>
+        <div class="grid half gap-xl">
+            <div>
+                <p class="small text-muted">{{ trans('settings.maint_recycle_bin_desc') }}</p>
+            </div>
+            <div>
+                <div class="grid half no-gap mb-m">
+                    <p class="mb-xs text-bookshelf">@icon('bookshelf'){{ trans('entities.shelves') }}: {{ $recycleStats['bookshelf'] }}</p>
+                    <p class="mb-xs text-book">@icon('book'){{ trans('entities.books') }}: {{ $recycleStats['book'] }}</p>
+                    <p class="mb-xs text-chapter">@icon('chapter'){{ trans('entities.chapters') }}: {{ $recycleStats['chapter'] }}</p>
+                    <p class="mb-xs text-page">@icon('page'){{ trans('entities.pages') }}: {{ $recycleStats['page'] }}</p>
+                </div>
+                <a href="{{ url('/settings/recycle-bin') }}" class="button outline">{{ trans('settings.maint_recycle_bin_open') }}</a>
+            </div>
+        </div>
+    </div>
+
     <div id="image-cleanup" class="card content-wrap auto-height">
         <h2 class="list-heading">{{ trans('settings.maint_image_cleanup') }}</h2>
         <div class="grid half gap-xl">
@@ -15,7 +33,7 @@
                 <form method="POST" action="{{ url('/settings/maintenance/cleanup-images') }}">
                     {!! csrf_field()  !!}
                     <input type="hidden" name="_method" value="DELETE">
-                    <div>
+                    <div class="mb-s">
                         @if(session()->has('cleanup-images-warning'))
                             <p class="text-neg">
                                 {{ session()->get('cleanup-images-warning') }}

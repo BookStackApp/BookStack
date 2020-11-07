@@ -50,14 +50,6 @@ class Page extends BookChild
     }
 
     /**
-     * Get the parent item
-     */
-    public function parent(): Entity
-    {
-        return $this->chapter_id ? $this->chapter : $this->book;
-    }
-
-    /**
      * Get the chapter that this page is in, If applicable.
      * @return BelongsTo
      */
