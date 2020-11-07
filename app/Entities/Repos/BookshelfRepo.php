@@ -175,5 +175,6 @@ class BookshelfRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyShelf($shelf);
+        $trashCan->autoClearOld();
     }
 }

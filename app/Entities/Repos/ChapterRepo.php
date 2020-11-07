@@ -74,6 +74,7 @@ class ChapterRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyChapter($chapter);
+        $trashCan->autoClearOld();
     }
 
     /**

@@ -80,7 +80,7 @@ return [
     'maint_send_test_email_mail_subject' => 'Test Email',
     'maint_send_test_email_mail_greeting' => 'Email delivery seems to work!',
     'maint_send_test_email_mail_text' => 'Congratulations! As you received this email notification, your email settings seem to be configured properly.',
-    'maint_recycle_bin_desc' => 'Items deleted remain in the recycle bin until it is emptied. Open the recycle bin to restore or permanently remove items.',
+    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
     'maint_recycle_bin_open' => 'Open Recycle Bin',
 
     // Recycle Bin

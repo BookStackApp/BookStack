@@ -129,5 +129,6 @@ class BookRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyBook($book);
+        $trashCan->autoClearOld();
     }
 }

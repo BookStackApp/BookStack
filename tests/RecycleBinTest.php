@@ -3,6 +3,8 @@
 use BookStack\Entities\Book;
 use BookStack\Entities\Deletion;
 use BookStack\Entities\Page;
+use DB;
+use Illuminate\Support\Carbon;
 
 class RecycleBinTest extends TestCase
 {
@@ -39,11 +41,11 @@ class RecycleBinTest extends TestCase
         $this->giveUserPermissions($editor, ['settings-manage']);
 
         foreach($routes as $route) {
-            \DB::beginTransaction();
+            DB::beginTransaction();
             [$method, $url] = explode(':', $route);
             $resp = $this->call($method, $url);
             $this->assertNotPermissionError($resp);
-            \DB::rollBack();
+            DB::rollBack();
         }
 
     }
@@ -93,15 +95,15 @@ class RecycleBinTest extends TestCase
         $this->asEditor()->delete($book->getUrl());
         $deletion = Deletion::query()->firstOrFail();
 
-        $this->assertEquals($book->pages->count(), \DB::table('pages')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
-        $this->assertEquals($book->chapters->count(), \DB::table('chapters')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->pages->count(), DB::table('pages')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), DB::table('chapters')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
 
         $restoreReq = $this->asAdmin()->post("/settings/recycle-bin/{$deletion->id}/restore");
         $restoreReq->assertRedirect('/settings/recycle-bin');
         $this->assertTrue(Deletion::query()->count() === 0);
 
-        $this->assertEquals($book->pages->count(), \DB::table('pages')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
-        $this->assertEquals($book->chapters->count(), \DB::table('chapters')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
+        $this->assertEquals($book->pages->count(), DB::table('pages')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), DB::table('chapters')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
@@ -153,5 +155,48 @@ class RecycleBinTest extends TestCase
             'entity_type' => '',
             'extra' => $page->name,
         ]);
+    }
+
+    public function test_auto_clear_functionality_works()
+    {
+        config()->set('app.recycle_bin_lifetime', 5);
+        $page = Page::query()->firstOrFail();
+        $otherPage = Page::query()->where('id', '!=', $page->id)->firstOrFail();
+
+        $this->asEditor()->delete($page->getUrl());
+        $this->assertDatabaseHas('pages', ['id' => $page->id]);
+        $this->assertEquals(1, Deletion::query()->count());
+
+        Carbon::setTestNow(Carbon::now()->addDays(6));
+        $this->asEditor()->delete($otherPage->getUrl());
+        $this->assertEquals(1, Deletion::query()->count());
+
+        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
+    }
+
+    public function test_auto_clear_functionality_with_negative_time_keeps_forever()
+    {
+        config()->set('app.recycle_bin_lifetime', -1);
+        $page = Page::query()->firstOrFail();
+        $otherPage = Page::query()->where('id', '!=', $page->id)->firstOrFail();
+
+        $this->asEditor()->delete($page->getUrl());
+        $this->assertEquals(1, Deletion::query()->count());
+
+        Carbon::setTestNow(Carbon::now()->addDays(6000));
+        $this->asEditor()->delete($otherPage->getUrl());
+        $this->assertEquals(2, Deletion::query()->count());
+
+        $this->assertDatabaseHas('pages', ['id' => $page->id]);
+    }
+
+    public function test_auto_clear_functionality_with_zero_time_deletes_instantly()
+    {
+        config()->set('app.recycle_bin_lifetime', 0);
+        $page = Page::query()->firstOrFail();
+
+        $this->asEditor()->delete($page->getUrl());
+        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
+        $this->assertEquals(0, Deletion::query()->count());
     }
 }
