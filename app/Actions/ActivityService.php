@@ -13,9 +13,6 @@ class ActivityService
     protected $user;
     protected $permissionService;
 
-    /**
-     * ActivityService constructor.
-     */
     public function __construct(Activity $activity, PermissionService $permissionService)
     {
         $this->activity = $activity;
@@ -26,23 +23,11 @@ class ActivityService
     /**
      * Add activity data to database.
      */
-    public function add(Entity $entity, string $activityKey, ?int $bookId = null)
+    public function add(Entity $entity, string $type, ?int $bookId = null)
     {
-        $activity = $this->newActivityForUser($activityKey, $bookId);
+        $activity = $this->newActivityForUser($type, $bookId);
         $entity->activity()->save($activity);
-        $this->setNotification($activityKey);
-    }
-
-    /**
-     * Adds a activity history with a message, without binding to a entity.
-     */
-    public function addMessage(string $activityKey, string $message, ?int $bookId = null)
-    {
-        $this->newActivityForUser($activityKey, $bookId)->forceFill([
-            'extra' => $message
-        ])->save();
-
-        $this->setNotification($activityKey);
+        $this->setNotification($type);
     }
 
     /**

@@ -1,10 +1,12 @@
 <?php namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Facades\Activity;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
@@ -87,11 +89,12 @@ class BookshelfRepo
         $shelf = new Bookshelf();
         $this->baseRepo->create($shelf, $input);
         $this->updateBooks($shelf, $bookIds);
+        Activity::add($shelf, ActivityType::BOOKSHELF_CREATE);
         return $shelf;
     }
 
     /**
-     * Create a new shelf in the system.
+     * Update an existing shelf in the system using the given input.
      */
     public function update(Bookshelf $shelf, array $input, ?array $bookIds): Bookshelf
     {
@@ -101,6 +104,7 @@ class BookshelfRepo
             $this->updateBooks($shelf, $bookIds);
         }
 
+        Activity::add($shelf, ActivityType::BOOKSHELF_UPDATE);
         return $shelf;
     }
 
@@ -175,6 +179,7 @@ class BookshelfRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyShelf($shelf);
+        Activity::add($shelf, ActivityType::BOOKSHELF_DELETE);
         $trashCan->autoClearOld();
     }
 }

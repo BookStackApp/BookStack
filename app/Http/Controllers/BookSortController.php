@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Book;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Repos\BookRepo;
@@ -74,7 +75,7 @@ class BookSortController extends Controller
 
         // Rebuild permissions and add activity for involved books.
         $booksInvolved->each(function (Book $book) {
-            Activity::add($book, 'book_sort', $book->id);
+            Activity::add($book, ActivityType::BOOK_SORT, $book->id);
         });
 
         return redirect($book->getUrl());

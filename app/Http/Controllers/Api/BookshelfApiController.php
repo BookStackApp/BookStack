@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Facades\Activity;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Bookshelf;
@@ -63,7 +64,6 @@ class BookshelfApiController extends ApiController
         $bookIds = $request->get('books', []);
         $shelf = $this->bookshelfRepo->create($requestData, $bookIds);
 
-        Activity::add($shelf, 'bookshelf_create', $shelf->id);
         return response()->json($shelf);
     }
 
@@ -94,12 +94,9 @@ class BookshelfApiController extends ApiController
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $requestData = $this->validate($request, $this->rules['update']);
-
         $bookIds = $request->get('books', null);
 
         $shelf = $this->bookshelfRepo->update($shelf, $requestData, $bookIds);
-        Activity::add($shelf, 'bookshelf_update', $shelf->id);
-
         return response()->json($shelf);
     }
 
@@ -115,8 +112,6 @@ class BookshelfApiController extends ApiController
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->bookshelfRepo->destroy($shelf);
-        Activity::addMessage('bookshelf_delete', $shelf->name);
-
         return response('', 204);
     }
 }

@@ -1,11 +1,13 @@
 <?php namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
 use BookStack\Entities\Book;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -91,6 +93,7 @@ class BookRepo
     {
         $book = new Book();
         $this->baseRepo->create($book, $input);
+        Activity::add($book, ActivityType::BOOK_CREATE, $book->id);
         return $book;
     }
 
@@ -100,6 +103,7 @@ class BookRepo
     public function update(Book $book, array $input): Book
     {
         $this->baseRepo->update($book, $input);
+        Activity::add($book, ActivityType::BOOK_UPDATE, $book->id);
         return $book;
     }
 
@@ -129,6 +133,8 @@ class BookRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyBook($book);
+        Activity::add($book, ActivityType::BOOK_DELETE, $book->id);
+
         $trashCan->autoClearOld();
     }
 }
