@@ -15,10 +15,6 @@ class BookSortController extends Controller
 
     protected $bookRepo;
 
-    /**
-     * BookSortController constructor.
-     * @param $bookRepo
-     */
     public function __construct(BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;

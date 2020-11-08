@@ -41,7 +41,7 @@ class CommandsTest extends TestCase
         \Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
 
         $this->assertDatabaseHas('activities', [
-            'key' => 'page_update',
+            'type' => 'page_update',
             'entity_id' => $page->id,
             'user_id' => $this->getEditor()->id
         ]);
@@ -51,7 +51,7 @@ class CommandsTest extends TestCase
 
 
         $this->assertDatabaseMissing('activities', [
-            'key' => 'page_update'
+            'type' => 'page_update'
         ]);
     }
 

@@ -12,14 +12,12 @@ use Illuminate\Support\Facades\Log;
 class ActivityService
 {
     protected $activity;
-    protected $user;
     protected $permissionService;
 
     public function __construct(Activity $activity, PermissionService $permissionService)
     {
         $this->activity = $activity;
         $this->permissionService = $permissionService;
-        $this->user = user();
     }
 
     /**
@@ -38,8 +36,8 @@ class ActivityService
     protected function newActivityForUser(string $type): Activity
     {
         return $this->activity->newInstance()->forceFill([
-            'key'     => strtolower($type),
-            'user_id' => $this->user->id,
+            'type'     => strtolower($type),
+            'user_id' => user()->id,
         ]);
     }
 
@@ -51,9 +49,9 @@ class ActivityService
     public function removeEntity(Entity $entity)
     {
         $entity->activity()->update([
-            'extra'       => $entity->name,
-            'entity_id'   => 0,
-            'entity_type' => '',
+            'detail'       => $entity->name,
+            'entity_id'   => null,
+            'entity_type' => null,
         ]);
     }
 
@@ -150,9 +148,9 @@ class ActivityService
     /**
      * Flashes a notification message to the session if an appropriate message is available.
      */
-    protected function setNotification(string $activityKey)
+    protected function setNotification(string $type)
     {
-        $notificationTextKey = 'activities.' . $activityKey . '_notification';
+        $notificationTextKey = 'activities.' . $type . '_notification';
         if (trans()->has($notificationTextKey)) {
             $message = trans($notificationTextKey);
             session()->flash('success', $message);
