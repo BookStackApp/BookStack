@@ -45,9 +45,6 @@ class BookChild extends Entity
         $this->save();
         $this->refresh();
 
-        // Update related activity
-        $this->activity()->update(['book_id' => $newBookId]);
-
         // Update all child pages if a chapter
         if ($this instanceof Chapter) {
             foreach ($this->pages as $page) {

@@ -19,8 +19,8 @@
                 <button refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" class="input-base text-left">{{ $listDetails['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
                 <ul refs="dropdown@menu" class="dropdown-menu">
                     <li @if($listDetails['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => '']) }}">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
-                    @foreach($activityKeys as $key)
-                        <li @if($key === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $key]) }}">{{ $key }}</a></li>
+                    @foreach($activityTypes as $type)
+                        <li @if($type === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $type]) }}">{{ $type }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -62,7 +62,7 @@
                     <td>
                         @include('partials.table-user', ['user' => $activity->user, 'user_id' => $activity->user_id])
                     </td>
-                    <td>{{ $activity->key }}</td>
+                    <td>{{ $activity->type }}</td>
                     <td>
                         @if($activity->entity)
                             <a href="{{ $activity->entity->getUrl() }}" class="table-entity-item">
@@ -71,10 +71,10 @@
                                     {{ $activity->entity->name }}
                                 </div>
                             </a>
-                        @elseif($activity->extra)
+                        @elseif($activity->detail)
                             <div class="px-m">
                                 {{ trans('settings.audit_deleted_item') }} <br>
-                                {{ trans('settings.audit_deleted_item_name', ['name' => $activity->extra]) }}
+                                {{ trans('settings.audit_deleted_item_name', ['name' => $activity->detail]) }}
                             </div>
                         @endif
                     </td>

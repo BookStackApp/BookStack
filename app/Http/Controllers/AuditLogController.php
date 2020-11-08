@@ -32,7 +32,7 @@ class AuditLogController extends Controller
             ->orderBy($listDetails['sort'], $listDetails['order']);
 
         if ($listDetails['event']) {
-            $query->where('key', '=', $listDetails['event']);
+            $query->where('type', '=', $listDetails['event']);
         }
 
         if ($listDetails['date_from']) {
@@ -45,12 +45,12 @@ class AuditLogController extends Controller
         $activities = $query->paginate(100);
         $activities->appends($listDetails);
 
-        $keys = DB::table('activities')->select('key')->distinct()->pluck('key');
+        $types = DB::table('activities')->select('type')->distinct()->pluck('type');
         $this->setPageTitle(trans('settings.audit'));
         return view('settings.audit', [
             'activities' => $activities,
             'listDetails' => $listDetails,
-            'activityKeys' => $keys,
+            'activityTypes' => $types,
         ]);
     }
 }
