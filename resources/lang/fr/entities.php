@@ -15,7 +15,7 @@ return [
     'recently_update' => 'Mis à jour récemment',
     'recently_viewed' => 'Vus récemment',
     'recent_activity' => 'Activité récente',
-    'create_now' => 'En créer un maintenant',
+    'create_now' => 'En créer une maintenant',
     'revisions' => 'Révisions',
     'meta_revision' => 'Révision #:revisionCount',
     'meta_created' => 'Créé :timeLength',
