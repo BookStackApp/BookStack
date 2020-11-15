@@ -85,7 +85,7 @@ return [
 
     // Recycle Bin
     'recycle_bin' => 'Corbeille',
-    'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'recycle_bin_desc' => 'Ici, vous pouvez restaurer les éléments qui ont été supprimés ou choisir de les effacer définitivement du système. Cette liste n\'est pas filtrée contrairement aux listes d\'activités similaires dans le système pour lesquelles les filtres d\'autorisation sont appliqués.',
     'recycle_bin_deleted_item' => 'Élément supprimé',
     'recycle_bin_deleted_by' => 'Supprimé par',
     'recycle_bin_deleted_at' => 'Date de suppression',
