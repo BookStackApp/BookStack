@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
@@ -47,10 +48,10 @@ class SettingController extends Controller
 
         // Cycles through posted settings and update them
         foreach ($request->all() as $name => $value) {
+            $key = str_replace('setting-', '', trim($name));
             if (strpos($name, 'setting-') !== 0) {
                 continue;
             }
-            $key = str_replace('setting-', '', trim($name));
             setting()->put($key, $value);
         }
 
@@ -68,8 +69,10 @@ class SettingController extends Controller
             setting()->remove('app-logo');
         }
 
+        $section = $request->get('section', '');
+        $this->logActivity(ActivityType::SETTINGS_UPDATE, $section);
         $this->showSuccessNotification(trans('settings.settings_save_success'));
-        $redirectLocation = '/settings#' . $request->get('section', '');
+        $redirectLocation = '/settings#' . $section;
         return redirect(rtrim($redirectLocation, '#'));
     }
 }
