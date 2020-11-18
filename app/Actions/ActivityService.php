@@ -5,6 +5,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
 use BookStack\Entities\Page;
+use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Log;
@@ -27,6 +28,22 @@ class ActivityService
     {
         $activity = $this->newActivityForUser($type);
         $entity->activity()->save($activity);
+        $this->setNotification($type);
+    }
+
+    /**
+     * Add a generic activity event to the database.
+     * @param string|Loggable $detail
+     */
+    public function add(string $type, $detail = '')
+    {
+        if ($detail instanceof Loggable) {
+            $detail = $detail->logDescriptor();
+        }
+
+        $activity = $this->newActivityForUser($type);
+        $activity->detail = $detail;
+        $activity->save();
         $this->setNotification($type);
     }
 

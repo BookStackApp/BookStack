@@ -1,7 +1,5 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Facades\Activity;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Bookshelf;
 use Exception;
