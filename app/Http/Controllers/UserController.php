@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
@@ -102,6 +103,7 @@ class UserController extends Controller
 
         $this->userRepo->downloadAndAssignUserAvatar($user);
 
+        $this->logActivity(ActivityType::USER_CREATE, $user);
         return redirect('/settings/users');
     }
 
@@ -194,6 +196,7 @@ class UserController extends Controller
 
         $user->save();
         $this->showSuccessNotification(trans('settings.users_edit_success'));
+        $this->logActivity(ActivityType::USER_UPDATE, $user);
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
         return redirect($redirectUrl);
@@ -234,6 +237,7 @@ class UserController extends Controller
 
         $this->userRepo->destroy($user);
         $this->showSuccessNotification(trans('settings.users_delete_success'));
+        $this->logActivity(ActivityType::USER_DELETE, $user);
 
         return redirect('/settings/users');
     }

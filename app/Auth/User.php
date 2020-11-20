@@ -1,6 +1,7 @@
 <?php namespace BookStack\Auth;
 
 use BookStack\Api\ApiToken;
+use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Uploads\Image;
@@ -27,7 +28,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $external_auth_id
  * @property string $system_name
  */
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable
 {
     use Authenticatable, CanResetPassword, Notifiable;
 
@@ -273,5 +274,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->name}";
     }
 }
