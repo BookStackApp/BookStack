@@ -1,5 +1,6 @@
 <?php namespace BookStack\Auth;
 
+use BookStack\Actions\Activity;
 use BookStack\Api\ApiToken;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
@@ -12,6 +13,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -228,6 +230,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function apiTokens(): HasMany
     {
         return $this->hasMany(ApiToken::class);
+    }
+
+    /**
+     * Get the latest activity instance for this user.
+     */
+    public function latestActivity(): HasOne
+    {
+        return $this->hasOne(Activity::class)->latest();
     }
 
     /**
