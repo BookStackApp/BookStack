@@ -53,7 +53,7 @@
                 <th>
                     <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'key']) }}">{{ trans('settings.audit_table_event') }}</a>
                 </th>
-                <th>{{ trans('settings.audit_table_item') }}</th>
+                <th>{{ trans('settings.audit_table_related') }}</th>
                 <th>
                     <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'created_at']) }}">{{ trans('settings.audit_table_date') }}</a></th>
             </tr>
@@ -71,11 +71,13 @@
                                     {{ $activity->entity->name }}
                                 </div>
                             </a>
-                        @elseif($activity->detail)
+                        @elseif($activity->detail && $activity->isForEntity())
                             <div class="px-m">
                                 {{ trans('settings.audit_deleted_item') }} <br>
                                 {{ trans('settings.audit_deleted_item_name', ['name' => $activity->detail]) }}
                             </div>
+                        @elseif($activity->detail)
+                            <div class="px-m">{{ $activity->detail }}</div>
                         @endif
                     </td>
                     <td>{{ $activity->created_at }}</td>
