@@ -44,9 +44,8 @@ class ActivityType
     const ROLE_UPDATE = 'role_update';
     const ROLE_DELETE = 'role_delete';
 
-    // TODO - Implement all below
-    const ACCESS_PASSWORD_RESET = 'access_password_reset_request';
-    const ACCESS_PASSWORD_RESET_UPDATE = 'access_password_reset_update';
-    const ACCESS_LOGIN = 'access_login';
-    const ACCESS_FAILED_LOGIN = 'access_failed_login';
+    const AUTH_PASSWORD_RESET = 'auth_password_reset_request';
+    const AUTH_PASSWORD_RESET_UPDATE = 'auth_password_reset_update';
+    const AUTH_LOGIN = 'auth_login';
+    const AUTH_REGISTER = 'auth_register';
 }

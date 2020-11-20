@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
@@ -51,6 +52,10 @@ class ForgotPasswordController extends Controller
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
+
+        if ($response === Password::RESET_LINK_SENT) {
+            $this->logActivity(ActivityType::AUTH_PASSWORD_RESET, $request->get('email'));
+        }
 
         if ($response === Password::RESET_LINK_SENT || $response === Password::INVALID_USER) {
             $message = trans('auth.reset_password_sent', ['email' => $request->get('email')]);

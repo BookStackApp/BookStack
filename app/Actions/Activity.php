@@ -6,6 +6,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Entity;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 /**
  * @property string $type
@@ -44,6 +45,16 @@ class Activity extends Model
     public function getText(): string
     {
         return trans('activities.' . $this->type);
+    }
+
+    /**
+     * Check if this activity is intended to be for an entity.
+     */
+    public function isForEntity(): bool
+    {
+        return Str::startsWith($this->type, [
+            'page_', 'chapter_', 'book_', 'bookshelf_'
+        ]);
     }
 
     /**
