@@ -32,7 +32,6 @@ class ActivityType
     const RECYCLE_BIN_RESTORE = 'recycle_bin_restore';
     const RECYCLE_BIN_DESTROY = 'recycle_bin_destroy';
 
-    // TODO - Implement all below
     const USER_CREATE = 'user_create';
     const USER_UPDATE = 'user_update';
     const USER_DELETE = 'user_delete';
@@ -45,6 +44,7 @@ class ActivityType
     const ROLE_UPDATE = 'role_update';
     const ROLE_DELETE = 'role_delete';
 
+    // TODO - Implement all below
     const ACCESS_PASSWORD_RESET = 'access_password_reset_request';
     const ACCESS_PASSWORD_RESET_UPDATE = 'access_password_reset_update';
     const ACCESS_LOGIN = 'access_login';

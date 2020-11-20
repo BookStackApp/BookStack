@@ -85,9 +85,9 @@ class RecycleBinController extends Controller
     {
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
+        $this->logActivity(ActivityType::RECYCLE_BIN_DESTROY, $deletion);
         $deleteCount = (new TrashCan())->destroyFromDeletion($deletion);
 
-        $this->logActivity(ActivityType::RECYCLE_BIN_DESTROY, $deletion);
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
         return redirect($this->recycleBinBaseUrl);
     }
