@@ -2,11 +2,12 @@
 
 namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
-use BookStack\Entities\Book;
 use BookStack\Entities\Entity;
 use BookStack\Entities\HasCoverImage;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -18,10 +19,6 @@ class BaseRepo
     protected $imageRepo;
 
 
-    /**
-     * BaseRepo constructor.
-     * @param $tagRepo
-     */
     public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo)
     {
         $this->tagRepo = $tagRepo;
@@ -115,5 +112,6 @@ class BaseRepo
 
         $entity->save();
         $entity->rebuildPermissions();
+        Activity::addForEntity($entity, ActivityType::PERMISSIONS_UPDATE);
     }
 }

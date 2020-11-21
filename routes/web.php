@@ -201,13 +201,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/users/{userId}/api-tokens/{tokenId}', 'UserApiTokenController@destroy');
 
         // Roles
-        Route::get('/roles', 'PermissionController@listRoles');
-        Route::get('/roles/new', 'PermissionController@createRole');
-        Route::post('/roles/new', 'PermissionController@storeRole');
-        Route::get('/roles/delete/{id}', 'PermissionController@showDeleteRole');
-        Route::delete('/roles/delete/{id}', 'PermissionController@deleteRole');
-        Route::get('/roles/{id}', 'PermissionController@editRole');
-        Route::put('/roles/{id}', 'PermissionController@updateRole');
+        Route::get('/roles', 'RoleController@list');
+        Route::get('/roles/new', 'RoleController@create');
+        Route::post('/roles/new', 'RoleController@store');
+        Route::get('/roles/delete/{id}', 'RoleController@showDelete');
+        Route::delete('/roles/delete/{id}', 'RoleController@delete');
+        Route::get('/roles/{id}', 'RoleController@edit');
+        Route::put('/roles/{id}', 'RoleController@update');
     });
 
 });

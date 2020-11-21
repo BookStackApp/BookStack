@@ -2,6 +2,7 @@
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityService;
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Entities\Page;
@@ -10,6 +11,14 @@ use Carbon\Carbon;
 
 class AuditLogTest extends TestCase
 {
+    /** @var ActivityService  */
+    protected $activityService;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->activityService = app(ActivityService::class);
+    }
 
     public function test_only_accessible_with_right_permissions()
     {
@@ -34,7 +43,7 @@ class AuditLogTest extends TestCase
         $admin = $this->getAdmin();
         $this->actingAs($admin);
         $page = Page::query()->first();
-        app(ActivityService::class)->add($page, 'page_create', $page->book->id);
+        $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
         $activity = Activity::query()->orderBy('id', 'desc')->first();
 
         $resp = $this->get('settings/audit');
@@ -49,7 +58,7 @@ class AuditLogTest extends TestCase
         $this->actingAs( $this->getAdmin());
         $page = Page::query()->first();
         $pageName = $page->name;
-        app(ActivityService::class)->add($page, 'page_create', $page->book->id);
+        $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
 
         app(PageRepo::class)->destroy($page);
         app(TrashCan::class)->empty();
@@ -64,7 +73,7 @@ class AuditLogTest extends TestCase
         $viewer = $this->getViewer();
         $this->actingAs($viewer);
         $page = Page::query()->first();
-        app(ActivityService::class)->add($page, 'page_create', $page->book->id);
+        $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
 
         $this->actingAs($this->getAdmin());
         app(UserRepo::class)->destroy($viewer);
@@ -77,7 +86,7 @@ class AuditLogTest extends TestCase
     {
         $this->actingAs($this->getAdmin());
         $page = Page::query()->first();
-        app(ActivityService::class)->add($page, 'page_create', $page->book->id);
+        $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
 
         $resp = $this->get('settings/audit');
         $resp->assertSeeText($page->name);
@@ -90,7 +99,7 @@ class AuditLogTest extends TestCase
     {
         $this->actingAs($this->getAdmin());
         $page = Page::query()->first();
-        app(ActivityService::class)->add($page, 'page_create', $page->book->id);
+        $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
 
         $yesterday = (Carbon::now()->subDay()->format('Y-m-d'));
         $tomorrow = (Carbon::now()->addDay()->format('Y-m-d'));

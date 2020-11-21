@@ -1,10 +1,11 @@
 <?php namespace BookStack\Auth\Permissions;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Role;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\Facades\Activity;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 
 class PermissionsRepo
 {
@@ -60,6 +61,7 @@ class PermissionsRepo
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
         $this->permissionService->buildJointPermissionForRole($role);
+        Activity::add(ActivityType::ROLE_CREATE, $role);
         return $role;
     }
 
@@ -88,12 +90,13 @@ class PermissionsRepo
         $role->fill($roleData);
         $role->save();
         $this->permissionService->buildJointPermissionForRole($role);
+        Activity::add(ActivityType::ROLE_UPDATE, $role);
     }
 
     /**
      * Assign an list of permission names to an role.
      */
-    public function assignRolePermissions(Role $role, array $permissionNameArray = [])
+    protected function assignRolePermissions(Role $role, array $permissionNameArray = [])
     {
         $permissions = [];
         $permissionNameArray = array_values($permissionNameArray);
@@ -137,6 +140,7 @@ class PermissionsRepo
         }
 
         $this->permissionService->deleteJointPermissionsForRole($role);
+        Activity::add(ActivityType::ROLE_DELETE, $role);
         $role->delete();
     }
 }

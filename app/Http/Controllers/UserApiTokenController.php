@@ -1,9 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Api\ApiToken;
 use BookStack\Auth\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -57,6 +57,8 @@ class UserApiTokenController extends Controller
 
         session()->flash('api-token-secret:' . $token->id, $secret);
         $this->showSuccessNotification(trans('settings.user_api_token_create_success'));
+        $this->logActivity(ActivityType::API_TOKEN_CREATE, $token);
+
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
@@ -93,6 +95,7 @@ class UserApiTokenController extends Controller
         ])->save();
 
         $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
+        $this->logActivity(ActivityType::API_TOKEN_UPDATE, $token);
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
@@ -117,6 +120,8 @@ class UserApiTokenController extends Controller
         $token->delete();
 
         $this->showSuccessNotification(trans('settings.user_api_token_delete_success'));
+        $this->logActivity(ActivityType::API_TOKEN_DELETE, $token);
+
         return redirect($user->getEditUrl('#api_tokens'));
     }
 

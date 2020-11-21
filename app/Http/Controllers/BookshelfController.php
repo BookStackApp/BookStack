@@ -92,7 +92,6 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->create($request->all(), $bookIds);
         $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null));
 
-        Activity::add($shelf, 'bookshelf_create');
         return redirect($shelf->getUrl());
     }
 
@@ -156,7 +155,6 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->update($shelf, $request->all(), $bookIds);
         $resetCover = $request->has('image_reset');
         $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null), $resetCover);
-        Activity::add($shelf, 'bookshelf_update');
 
         return redirect($shelf->getUrl());
     }
@@ -182,7 +180,6 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
-        Activity::add($shelf, 'bookshelf_delete');
         $this->bookshelfRepo->destroy($shelf);
 
         return redirect('/shelves');
