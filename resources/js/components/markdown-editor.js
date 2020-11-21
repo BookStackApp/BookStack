@@ -13,6 +13,7 @@ class MarkdownEditor {
 
         this.pageId = this.$opts.pageId;
         this.textDirection = this.$opts.textDirection;
+        this.imageUploadErrorText = this.$opts.imageUploadErrorText;
 
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
@@ -373,7 +374,7 @@ class MarkdownEditor {
                 const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
                 replaceContent(placeHolderText, newContent);
             }).catch(err => {
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', context.imageUploadErrorText);
                 replaceContent(placeHolderText, selectedText);
                 console.log(err);
             });
@@ -492,7 +493,7 @@ class MarkdownEditor {
                 this.cm.focus();
                 DrawIO.close();
             }).catch(err => {
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', this.imageUploadErrorText);
                 console.log(err);
             });
         });

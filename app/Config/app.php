@@ -124,6 +124,7 @@ return [
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
         BookStack\Providers\CustomFacadeProvider::class,
+        BookStack\Providers\CustomValidationServiceProvider::class,
     ],
 
     /*
