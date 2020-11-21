@@ -1,10 +1,8 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Actions\ActivityType;
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Facades\Activity;
 use GatherContent\Htmldiff\Htmldiff;
 
 class PageRevisionController extends Controller
@@ -18,7 +16,6 @@ class PageRevisionController extends Controller
     public function __construct(PageRepo $pageRepo)
     {
         $this->pageRepo = $pageRepo;
-        parent::__construct();
     }
 
     /**

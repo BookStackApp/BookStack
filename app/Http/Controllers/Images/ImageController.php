@@ -1,14 +1,11 @@
 <?php namespace BookStack\Http\Controllers\Images;
 
-use BookStack\Entities\Page;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Filesystem\Filesystem as File;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -26,7 +23,6 @@ class ImageController extends Controller
         $this->image = $image;
         $this->file = $file;
         $this->imageRepo = $imageRepo;
-        parent::__construct();
     }
 
     /**

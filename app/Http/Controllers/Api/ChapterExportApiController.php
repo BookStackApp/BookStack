@@ -17,7 +17,6 @@ class ChapterExportApiController extends ApiController
     {
         $this->chapterRepo = $chapterRepo;
         $this->exportService = $exportService;
-        parent::__construct();
     }
 
     /**

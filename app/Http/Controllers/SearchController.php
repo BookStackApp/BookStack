@@ -26,7 +26,6 @@ class SearchController extends Controller
         $this->viewService = $viewService;
         $this->searchService = $searchService;
         $this->entityContextManager = $entityContextManager;
-        parent::__construct();
     }
 
     /**

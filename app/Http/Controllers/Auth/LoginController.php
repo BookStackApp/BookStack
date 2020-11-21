@@ -46,7 +46,6 @@ class LoginController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->redirectPath = url('/');
         $this->redirectAfterLogout = url('/login');
-        parent::__construct();
     }
 
     public function username()

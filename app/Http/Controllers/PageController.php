@@ -1,7 +1,5 @@
 <?php namespace BookStack\Http\Controllers;
 
-use Activity;
-use BookStack\Actions\ActivityType;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Managers\PageEditActivity;
@@ -27,7 +25,6 @@ class PageController extends Controller
     public function __construct(PageRepo $pageRepo)
     {
         $this->pageRepo = $pageRepo;
-        parent::__construct();
     }
 
     /**

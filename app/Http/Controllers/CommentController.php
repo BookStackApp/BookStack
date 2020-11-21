@@ -14,7 +14,6 @@ class CommentController extends Controller
     public function __construct(CommentRepo $commentRepo)
     {
         $this->commentRepo = $commentRepo;
-        parent::__construct();
     }
 
     /**

@@ -25,7 +25,6 @@ class AttachmentController extends Controller
         $this->attachmentService = $attachmentService;
         $this->attachment = $attachment;
         $this->pageRepo = $pageRepo;
-        parent::__construct();
     }
 
 

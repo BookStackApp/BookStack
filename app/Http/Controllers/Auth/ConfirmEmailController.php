@@ -21,15 +21,11 @@ class ConfirmEmailController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @param EmailConfirmationService $emailConfirmationService
-     * @param UserRepo $userRepo
      */
     public function __construct(EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
     {
         $this->emailConfirmationService = $emailConfirmationService;
         $this->userRepo = $userRepo;
-        parent::__construct();
     }
 
 

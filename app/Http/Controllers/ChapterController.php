@@ -21,7 +21,6 @@ class ChapterController extends Controller
     public function __construct(ChapterRepo $chapterRepo)
     {
         $this->chapterRepo = $chapterRepo;
-        parent::__construct();
     }
 
     /**
