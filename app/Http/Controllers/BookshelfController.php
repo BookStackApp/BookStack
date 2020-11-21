@@ -2,7 +2,7 @@
 
 use Activity;
 use BookStack\Entities\Book;
-use BookStack\Entities\Managers\EntityContext;
+use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
@@ -22,7 +22,7 @@ class BookshelfController extends Controller
     /**
      * BookController constructor.
      */
-    public function __construct(BookshelfRepo $bookshelfRepo, EntityContext $entityContextManager, ImageRepo $imageRepo)
+    public function __construct(BookshelfRepo $bookshelfRepo, ShelfContext $entityContextManager, ImageRepo $imageRepo)
     {
         $this->bookshelfRepo = $bookshelfRepo;
         $this->entityContextManager = $entityContextManager;

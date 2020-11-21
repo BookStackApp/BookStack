@@ -2,10 +2,6 @@
 
 use BookStack\Model;
 
-/**
- * Class Attribute
- * @package BookStack
- */
 class Tag extends Model
 {
     protected $fillable = ['name', 'value', 'order'];

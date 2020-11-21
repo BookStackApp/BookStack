@@ -4,7 +4,6 @@
  * Class Ldap
  * An object-orientated thin abstraction wrapper for common PHP LDAP functions.
  * Allows the standard LDAP functions to be mocked for testing.
- * @package BookStack\Services
  */
 class Ldap
 {

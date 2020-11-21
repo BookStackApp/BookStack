@@ -3,7 +3,7 @@
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
 use BookStack\Entities\Book;
-use BookStack\Entities\Managers\TrashCan;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;

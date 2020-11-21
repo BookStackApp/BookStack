@@ -3,7 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\ExportService;
-use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use Throwable;

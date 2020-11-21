@@ -2,9 +2,9 @@
 
 use Activity;
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Managers\BookContents;
+use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Managers\EntityContext;
+use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\ImageUploadException;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class BookController extends Controller
     protected $bookRepo;
     protected $entityContextManager;
 
-    public function __construct(EntityContext $entityContextManager, BookRepo $bookRepo)
+    public function __construct(ShelfContext $entityContextManager, BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->entityContextManager = $entityContextManager;

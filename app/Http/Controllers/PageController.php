@@ -1,8 +1,8 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\Managers\BookContents;
-use BookStack\Entities\Managers\PageContent;
-use BookStack\Entities\Managers\PageEditActivity;
+use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\PageContent;
+use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;

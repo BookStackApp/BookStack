@@ -6,8 +6,6 @@
  * Provides access to the core entity models.
  * Wrapped up in this provider since they are often used together
  * so this is a neater alternative to injecting all in individually.
- *
- * @package BookStack\Entities
  */
 class EntityProvider
 {

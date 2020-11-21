@@ -3,8 +3,8 @@
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
-use BookStack\Entities\Managers\BookContents;
-use BookStack\Entities\Managers\TrashCan;
+use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;

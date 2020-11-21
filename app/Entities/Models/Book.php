@@ -12,7 +12,6 @@ use Illuminate\Support\Collection;
  * @property string $description
  * @property int $image_id
  * @property Image|null $cover
- * @package BookStack\Entities
  */
 class Book extends Entity implements HasCoverImage
 {

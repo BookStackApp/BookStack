@@ -14,7 +14,6 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property Carbon $expires_at
  * @property User $user
- * @package BookStack\Api
  */
 class ApiToken extends Model implements Loggable
 {

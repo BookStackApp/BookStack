@@ -5,7 +5,6 @@ use Illuminate\Support\Collection;
 /**
  * Class Chapter
  * @property Collection<Page> $pages
- * @package BookStack\Entities
  */
 class Chapter extends BookChild
 {

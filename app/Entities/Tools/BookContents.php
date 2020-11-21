@@ -1,4 +1,4 @@
-<?php namespace BookStack\Entities\Managers;
+<?php namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\BookChild;
@@ -18,7 +18,6 @@ class BookContents
 
     /**
      * BookContents constructor.
-     * @param $book
      */
     public function __construct(Book $book)
     {

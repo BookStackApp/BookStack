@@ -4,7 +4,7 @@ use BookStack\Actions\ViewService;
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
 use BookStack\Entities\Entity;
-use BookStack\Entities\Managers\EntityContext;
+use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\SearchService;
 use BookStack\Entities\SearchOptions;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class SearchController extends Controller
     public function __construct(
         ViewService $viewService,
         SearchService $searchService,
-        EntityContext $entityContextManager
+        ShelfContext $entityContextManager
     ) {
         $this->viewService = $viewService;
         $this->searchService = $searchService;
