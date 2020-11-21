@@ -1,7 +1,9 @@
 <?php namespace BookStack\Api;
 
 use BookStack\Http\Controllers\Api\ApiController;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -15,9 +17,26 @@ class ApiDocsGenerator
     protected $controllerClasses = [];
 
     /**
+     * Load the docs form the cache if existing
+     * otherwise generate and store in the cache.
+     */
+    public static function generateConsideringCache(): Collection
+    {
+        $appVersion = trim(file_get_contents(base_path('version')));
+        $cacheKey = 'api-docs::' . $appVersion;
+        if (Cache::has($cacheKey) && config('app.env') === 'production') {
+            $docs = Cache::get($cacheKey);
+        } else {
+            $docs = (new static())->generate();
+            Cache::put($cacheKey, $docs, 60 * 24);
+        }
+        return $docs;
+    }
+
+    /**
      * Generate API documentation.
      */
-    public function generate(): Collection
+    protected function generate(): Collection
     {
         $apiRoutes = $this->getFlatApiRoutes();
         $apiRoutes = $this->loadDetailsFromControllers($apiRoutes);
@@ -58,7 +77,7 @@ class ApiDocsGenerator
 
     /**
      * Load body params and their rules by inspecting the given class and method name.
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function getBodyParamsFromClass(string $className, string $methodName): ?array
     {
