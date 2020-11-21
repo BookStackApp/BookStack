@@ -1,5 +1,6 @@
 <?php namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
@@ -12,6 +13,7 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\Facades\Activity;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -165,7 +167,10 @@ class PageRepo
 
         $this->savePageRevision($draft, trans('entities.pages_initial_revision'));
         $draft->indexForSearch();
-        return $draft->refresh();
+        $draft->refresh();
+
+        Activity::addForEntity($draft, ActivityType::PAGE_CREATE);
+        return $draft;
     }
 
     /**
@@ -203,6 +208,7 @@ class PageRepo
             $this->savePageRevision($page, $summary);
         }
 
+        Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
         return $page;
     }
 
@@ -266,6 +272,7 @@ class PageRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyPage($page);
+        Activity::addForEntity($page, ActivityType::PAGE_DELETE);
         $trashCan->autoClearOld();
     }
 
@@ -286,6 +293,7 @@ class PageRepo
         $page->save();
 
         $page->indexForSearch();
+        Activity::addForEntity($page, ActivityType::PAGE_RESTORE);
         return $page;
     }
 
@@ -296,7 +304,7 @@ class PageRepo
      * @throws MoveOperationException
      * @throws PermissionsException
      */
-    public function move(Page $page, string $parentIdentifier): Book
+    public function move(Page $page, string $parentIdentifier): Entity
     {
         $parent = $this->findParentByIdentifier($parentIdentifier);
         if ($parent === null) {
@@ -311,7 +319,8 @@ class PageRepo
         $page->changeBook($parent instanceof Book ? $parent->id : $parent->book->id);
         $page->rebuildPermissions();
 
-        return ($parent instanceof Book ? $parent : $parent->book);
+        Activity::addForEntity($page, ActivityType::PAGE_MOVE);
+        return $parent;
     }
 
     /**

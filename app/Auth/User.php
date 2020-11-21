@@ -1,6 +1,8 @@
 <?php namespace BookStack\Auth;
 
+use BookStack\Actions\Activity;
 use BookStack\Api\ApiToken;
+use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Uploads\Image;
@@ -11,6 +13,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -27,7 +30,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $external_auth_id
  * @property string $system_name
  */
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable
 {
     use Authenticatable, CanResetPassword, Notifiable;
 
@@ -230,6 +233,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Get the latest activity instance for this user.
+     */
+    public function latestActivity(): HasOne
+    {
+        return $this->hasOne(Activity::class)->latest();
+    }
+
+    /**
      * Get the url for editing this user.
      */
     public function getEditUrl(string $path = ''): string
@@ -273,5 +284,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->name}";
     }
 }

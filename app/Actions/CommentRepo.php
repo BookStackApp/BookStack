@@ -2,6 +2,7 @@
 
 use BookStack\Entities\Entity;
 use League\CommonMark\CommonMarkConverter;
+use BookStack\Facades\Activity as ActivityService;
 
 /**
  * Class CommentRepo
@@ -44,6 +45,7 @@ class CommentRepo
         $comment->parent_id = $parent_id;
 
         $entity->comments()->save($comment);
+        ActivityService::addForEntity($entity, ActivityType::COMMENTED_ON);
         return $comment;
     }
 

@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Book;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\NotifyException;
@@ -55,8 +56,6 @@ class BookApiController extends ApiController
         $requestData = $this->validate($request, $this->rules['create']);
 
         $book = $this->bookRepo->create($requestData);
-        Activity::add($book, 'book_create', $book->id);
-
         return response()->json($book);
     }
 
@@ -80,7 +79,6 @@ class BookApiController extends ApiController
 
         $requestData = $this->validate($request, $this->rules['update']);
         $book = $this->bookRepo->update($book, $requestData);
-        Activity::add($book, 'book_update', $book->id);
 
         return response()->json($book);
     }
@@ -96,8 +94,6 @@ class BookApiController extends ApiController
         $this->checkOwnablePermission('book-delete', $book);
 
         $this->bookRepo->destroy($book);
-        Activity::addMessage('book_delete', $book->name);
-
         return response('', 204);
     }
 }

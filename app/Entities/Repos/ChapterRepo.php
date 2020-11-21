@@ -1,11 +1,13 @@
 <?php namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Book;
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Managers\BookContents;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Facades\Activity;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -46,6 +48,7 @@ class ChapterRepo
         $chapter->book_id = $parentBook->id;
         $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
         $this->baseRepo->create($chapter, $input);
+        Activity::addForEntity($chapter, ActivityType::CHAPTER_CREATE);
         return $chapter;
     }
 
@@ -55,6 +58,7 @@ class ChapterRepo
     public function update(Chapter $chapter, array $input): Chapter
     {
         $this->baseRepo->update($chapter, $input);
+        Activity::addForEntity($chapter, ActivityType::CHAPTER_UPDATE);
         return $chapter;
     }
 
@@ -74,6 +78,7 @@ class ChapterRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyChapter($chapter);
+        Activity::addForEntity($chapter, ActivityType::CHAPTER_DELETE);
         $trashCan->autoClearOld();
     }
 
@@ -93,6 +98,7 @@ class ChapterRepo
             throw new MoveOperationException('Chapters can only be moved into books');
         }
 
+        /** @var Book $parent */
         $parent = Book::visible()->where('id', '=', $entityId)->first();
         if ($parent === null) {
             throw new MoveOperationException('Book to move chapter into not found');
@@ -100,6 +106,8 @@ class ChapterRepo
 
         $chapter->changeBook($parent->id);
         $chapter->rebuildPermissions();
+        Activity::addForEntity($chapter, ActivityType::CHAPTER_MOVE);
+
         return $parent;
     }
 }

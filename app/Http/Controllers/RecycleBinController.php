@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Deletion;
 use BookStack\Entities\Managers\TrashCan;
 
@@ -56,6 +57,7 @@ class RecycleBinController extends Controller
     {
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
+        $this->logActivity(ActivityType::RECYCLE_BIN_RESTORE, $deletion);
         $restoreCount = (new TrashCan())->restoreFromDeletion($deletion);
 
         $this->showSuccessNotification(trans('settings.recycle_bin_restore_notification', ['count' => $restoreCount]));
@@ -83,6 +85,7 @@ class RecycleBinController extends Controller
     {
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
+        $this->logActivity(ActivityType::RECYCLE_BIN_DESTROY, $deletion);
         $deleteCount = (new TrashCan())->destroyFromDeletion($deletion);
 
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
@@ -97,6 +100,7 @@ class RecycleBinController extends Controller
     {
         $deleteCount = (new TrashCan())->empty();
 
+        $this->logActivity(ActivityType::RECYCLE_BIN_EMPTY);
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
         return redirect($this->recycleBinBaseUrl);
     }

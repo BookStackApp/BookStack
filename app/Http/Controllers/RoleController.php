@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class PermissionController extends Controller
+class RoleController extends Controller
 {
 
     protected $permissionsRepo;
@@ -23,7 +23,7 @@ class PermissionController extends Controller
     /**
      * Show a listing of the roles in the system.
      */
-    public function listRoles()
+    public function list()
     {
         $this->checkPermission('user-roles-manage');
         $roles = $this->permissionsRepo->getAllRoles();
@@ -33,7 +33,7 @@ class PermissionController extends Controller
     /**
      * Show the form to create a new role
      */
-    public function createRole()
+    public function create()
     {
         $this->checkPermission('user-roles-manage');
         return view('settings.roles.create');
@@ -42,7 +42,7 @@ class PermissionController extends Controller
     /**
      * Store a new role in the system.
      */
-    public function storeRole(Request $request)
+    public function store(Request $request)
     {
         $this->checkPermission('user-roles-manage');
         $this->validate($request, [
@@ -59,7 +59,7 @@ class PermissionController extends Controller
      * Show the form for editing a user role.
      * @throws PermissionsException
      */
-    public function editRole(string $id)
+    public function edit(string $id)
     {
         $this->checkPermission('user-roles-manage');
         $role = $this->permissionsRepo->getRoleById($id);
@@ -73,7 +73,7 @@ class PermissionController extends Controller
      * Updates a user role.
      * @throws ValidationException
      */
-    public function updateRole(Request $request, string $id)
+    public function update(Request $request, string $id)
     {
         $this->checkPermission('user-roles-manage');
         $this->validate($request, [
@@ -90,7 +90,7 @@ class PermissionController extends Controller
      * Show the view to delete a role.
      * Offers the chance to migrate users.
      */
-    public function showDeleteRole(string $id)
+    public function showDelete(string $id)
     {
         $this->checkPermission('user-roles-manage');
         $role = $this->permissionsRepo->getRoleById($id);
@@ -105,7 +105,7 @@ class PermissionController extends Controller
      * Migrate from a previous role if set.
      * @throws Exception
      */
-    public function deleteRole(Request $request, string $id)
+    public function delete(Request $request, string $id)
     {
         $this->checkPermission('user-roles-manage');
 

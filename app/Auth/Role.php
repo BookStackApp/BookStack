@@ -2,6 +2,7 @@
 
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
+use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $external_auth_id
  * @property string $system_name
  */
-class Role extends Model
+class Role extends Model implements Loggable
 {
 
     protected $fillable = ['display_name', 'description', 'external_auth_id'];
@@ -103,5 +104,13 @@ class Role extends Model
     public static function restrictable(): Collection
     {
         return static::query()->where('system_name', '!=', 'admin')->get();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->display_name}";
     }
 }

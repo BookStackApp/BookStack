@@ -1,11 +1,12 @@
 <?php namespace BookStack\Entities;
 
 use BookStack\Auth\User;
+use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Deletion extends Model
+class Deletion extends Model implements Loggable
 {
 
     /**
@@ -38,4 +39,9 @@ class Deletion extends Model
         return $record;
     }
 
+    public function logDescriptor(): string
+    {
+        $deletable = $this->deletable()->first();
+        return "Deletion ({$this->id}) for {$deletable->getType()} ({$deletable->id}) {$deletable->name}";
+    }
 }

@@ -5,16 +5,17 @@ namespace BookStack\Actions;
 use BookStack\Auth\User;
 use BookStack\Entities\Entity;
 use BookStack\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 /**
- * @property string $key
+ * @property string $type
  * @property User $user
  * @property Entity $entity
- * @property string $extra
+ * @property string $detail
  * @property string $entity_type
  * @property int $entity_id
  * @property int $user_id
- * @property int $book_id
  */
 class Activity extends Model
 {
@@ -32,20 +33,28 @@ class Activity extends Model
 
     /**
      * Get the user this activity relates to.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * Returns text from the language files, Looks up by using the
-     * activity key.
+     * Returns text from the language files, Looks up by using the activity key.
      */
-    public function getText()
+    public function getText(): string
     {
-        return trans('activities.' . $this->key);
+        return trans('activities.' . $this->type);
+    }
+
+    /**
+     * Check if this activity is intended to be for an entity.
+     */
+    public function isForEntity(): bool
+    {
+        return Str::startsWith($this->type, [
+            'page_', 'chapter_', 'book_', 'bookshelf_'
+        ]);
     }
 
     /**
@@ -53,6 +62,6 @@ class Activity extends Model
      */
     public function isSimilarTo(Activity $activityB): bool
     {
-        return [$this->key, $this->entity_type, $this->entity_id] === [$activityB->key, $activityB->entity_type, $activityB->entity_id];
+        return [$this->type, $this->entity_type, $this->entity_id] === [$activityB->type, $activityB->entity_type, $activityB->entity_id];
     }
 }

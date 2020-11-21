@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Managers\PageContent;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
@@ -101,7 +102,6 @@ class PageRevisionController extends Controller
 
         $page = $this->pageRepo->restoreRevision($page, $revisionId);
 
-        Activity::add($page, 'page_restore', $page->book->id);
         return redirect($page->getUrl());
     }
 

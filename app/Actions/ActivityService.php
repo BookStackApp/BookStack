@@ -2,58 +2,59 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
+use BookStack\Entities\Chapter;
 use BookStack\Entities\Entity;
+use BookStack\Entities\Page;
+use BookStack\Interfaces\Loggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class ActivityService
 {
     protected $activity;
-    protected $user;
     protected $permissionService;
 
-    /**
-     * ActivityService constructor.
-     */
     public function __construct(Activity $activity, PermissionService $permissionService)
     {
         $this->activity = $activity;
         $this->permissionService = $permissionService;
-        $this->user = user();
     }
 
     /**
-     * Add activity data to database.
+     * Add activity data to database for an entity.
      */
-    public function add(Entity $entity, string $activityKey, ?int $bookId = null)
+    public function addForEntity(Entity $entity, string $type)
     {
-        $activity = $this->newActivityForUser($activityKey, $bookId);
+        $activity = $this->newActivityForUser($type);
         $entity->activity()->save($activity);
-        $this->setNotification($activityKey);
+        $this->setNotification($type);
     }
 
     /**
-     * Adds a activity history with a message, without binding to a entity.
+     * Add a generic activity event to the database.
+     * @param string|Loggable $detail
      */
-    public function addMessage(string $activityKey, string $message, ?int $bookId = null)
+    public function add(string $type, $detail = '')
     {
-        $this->newActivityForUser($activityKey, $bookId)->forceFill([
-            'extra' => $message
-        ])->save();
+        if ($detail instanceof Loggable) {
+            $detail = $detail->logDescriptor();
+        }
 
-        $this->setNotification($activityKey);
+        $activity = $this->newActivityForUser($type);
+        $activity->detail = $detail;
+        $activity->save();
+        $this->setNotification($type);
     }
 
     /**
      * Get a new activity instance for the current user.
      */
-    protected function newActivityForUser(string $key, ?int $bookId = null): Activity
+    protected function newActivityForUser(string $type): Activity
     {
         return $this->activity->newInstance()->forceFill([
-            'key'     => strtolower($key),
-            'user_id' => $this->user->id,
-            'book_id' => $bookId ?? 0,
+            'type'     => strtolower($type),
+            'user_id' => user()->id,
         ]);
     }
 
@@ -62,15 +63,13 @@ class ActivityService
      * and instead uses the 'extra' field with the entities name.
      * Used when an entity is deleted.
      */
-    public function removeEntity(Entity $entity): Collection
+    public function removeEntity(Entity $entity)
     {
-        $activities = $entity->activity()->get();
         $entity->activity()->update([
-            'extra'       => $entity->name,
-            'entity_id'   => 0,
-            'entity_type' => '',
+            'detail'       => $entity->name,
+            'entity_id'   => null,
+            'entity_type' => null,
         ]);
-        return $activities;
     }
 
     /**
@@ -95,16 +94,27 @@ class ActivityService
      */
     public function entityActivity(Entity $entity, int $count = 20, int $page = 1): array
     {
+        /** @var [string => int[]] $queryIds */
+        $queryIds = [$entity->getMorphClass() => [$entity->id]];
+
         if ($entity->isA('book')) {
-            $query = $this->activity->newQuery()->where('book_id', '=', $entity->id);
-        } else {
-            $query = $this->activity->newQuery()->where('entity_type', '=', $entity->getMorphClass())
-                ->where('entity_id', '=', $entity->id);
+            $queryIds[(new Chapter)->getMorphClass()] = $entity->chapters()->visible()->pluck('id');
+        }
+        if ($entity->isA('book') || $entity->isA('chapter')) {
+            $queryIds[(new Page)->getMorphClass()] = $entity->pages()->visible()->pluck('id');
         }
 
-        $activity = $this->permissionService
-            ->filterRestrictedEntityRelations($query, 'activities', 'entity_id', 'entity_type')
-            ->orderBy('created_at', 'desc')
+        $query = $this->activity->newQuery();
+        $query->where(function (Builder $query) use ($queryIds) {
+            foreach ($queryIds as $morphClass => $idArr) {
+                $query->orWhere(function (Builder $innerQuery) use ($morphClass, $idArr) {
+                    $innerQuery->where('entity_type', '=', $morphClass)
+                        ->whereIn('entity_id', $idArr);
+                });
+            }
+        });
+
+        $activity = $query->orderBy('created_at', 'desc')
             ->with(['entity' => function (Relation $query) {
                 $query->withTrashed();
             }, 'user.avatar'])
@@ -155,9 +165,9 @@ class ActivityService
     /**
      * Flashes a notification message to the session if an appropriate message is available.
      */
-    protected function setNotification(string $activityKey)
+    protected function setNotification(string $type)
     {
-        $notificationTextKey = 'activities.' . $activityKey . '_notification';
+        $notificationTextKey = 'activities.' . $type . '_notification';
         if (trans()->has($notificationTextKey)) {
             $message = trans($notificationTextKey);
             session()->flash('success', $message);

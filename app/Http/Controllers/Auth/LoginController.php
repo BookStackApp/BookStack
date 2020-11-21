@@ -3,10 +3,10 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use Activity;
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
-use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -151,6 +151,7 @@ class LoginController extends Controller
             }
         }
 
+        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
         return redirect()->intended($this->redirectPath());
     }
 

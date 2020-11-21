@@ -1,5 +1,6 @@
 <?php namespace Tests;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\Comment;
 use BookStack\Actions\CommentRepo;
 use BookStack\Auth\Permissions\JointPermission;
@@ -37,10 +38,10 @@ class CommandsTest extends TestCase
     {
         $this->asEditor();
         $page = Page::first();
-        \Activity::add($page, 'page_update', $page->book->id);
+        \Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
 
         $this->assertDatabaseHas('activities', [
-            'key' => 'page_update',
+            'type' => 'page_update',
             'entity_id' => $page->id,
             'user_id' => $this->getEditor()->id
         ]);
@@ -50,7 +51,7 @@ class CommandsTest extends TestCase
 
 
         $this->assertDatabaseMissing('activities', [
-            'key' => 'page_update'
+            'type' => 'page_update'
         ]);
     }
 
