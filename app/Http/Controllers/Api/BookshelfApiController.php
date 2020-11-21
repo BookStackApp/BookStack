@@ -30,7 +30,6 @@ class BookshelfApiController extends ApiController
 
     /**
      * BookshelfApiController constructor.
-     * @param BookshelfRepo $bookshelfRepo
      */
     public function __construct(BookshelfRepo $bookshelfRepo)
     {

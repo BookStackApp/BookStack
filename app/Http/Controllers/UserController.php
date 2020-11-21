@@ -27,7 +27,6 @@ class UserController extends Controller
         $this->userRepo = $userRepo;
         $this->inviteService = $inviteService;
         $this->imageRepo = $imageRepo;
-        parent::__construct();
     }
 
     /**

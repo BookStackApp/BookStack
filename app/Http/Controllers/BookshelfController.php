@@ -27,7 +27,6 @@ class BookshelfController extends Controller
         $this->bookshelfRepo = $bookshelfRepo;
         $this->entityContextManager = $entityContextManager;
         $this->imageRepo = $imageRepo;
-        parent::__construct();
     }
 
     /**

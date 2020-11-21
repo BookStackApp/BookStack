@@ -18,7 +18,6 @@ class ChapterExportController extends Controller
     {
         $this->chapterRepo = $chapterRepo;
         $this->exportService = $exportService;
-        parent::__construct();
     }
 
     /**

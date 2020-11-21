@@ -15,7 +15,6 @@ class SettingController extends Controller
     public function __construct(ImageRepo $imageRepo)
     {
         $this->imageRepo = $imageRepo;
-        parent::__construct();
     }
 
     /**

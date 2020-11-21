@@ -20,7 +20,6 @@ class RecycleBinController extends Controller
             $this->checkPermission('restrictions-manage-all');
             return $next($request);
         });
-        parent::__construct();
     }
 
 

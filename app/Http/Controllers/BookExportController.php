@@ -19,7 +19,6 @@ class BookExportController extends Controller
     {
         $this->bookRepo = $bookRepo;
         $this->exportService = $exportService;
-        parent::__construct();
     }
 
     /**

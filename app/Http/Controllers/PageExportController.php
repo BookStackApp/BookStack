@@ -16,14 +16,11 @@ class PageExportController extends Controller
 
     /**
      * PageExportController constructor.
-     * @param PageRepo $pageRepo
-     * @param ExportService $exportService
      */
     public function __construct(PageRepo $pageRepo, ExportService $exportService)
     {
         $this->pageRepo = $pageRepo;
         $this->exportService = $exportService;
-        parent::__construct();
     }
 
     /**

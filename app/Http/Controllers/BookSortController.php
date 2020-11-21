@@ -18,7 +18,6 @@ class BookSortController extends Controller
     public function __construct(BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;
-        parent::__construct();
     }
 
     /**

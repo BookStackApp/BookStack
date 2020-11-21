@@ -16,11 +16,6 @@ abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Check if the current user is signed in.
      */

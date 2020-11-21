@@ -22,7 +22,6 @@ class BookController extends Controller
     {
         $this->bookRepo = $bookRepo;
         $this->entityContextManager = $entityContextManager;
-        parent::__construct();
     }
 
     /**

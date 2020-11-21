@@ -17,7 +17,6 @@ class BookExportApiController extends ApiController
     {
         $this->bookRepo = $bookRepo;
         $this->exportService = $exportService;
-        parent::__construct();
     }
 
     /**
