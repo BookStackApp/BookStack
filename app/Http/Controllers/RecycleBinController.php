@@ -31,6 +31,7 @@ class RecycleBinController extends Controller
     {
         $deletions = Deletion::query()->with(['deletable', 'deleter'])->paginate(10);
 
+        $this->setPageTitle(trans('settings.recycle_bin'));
         return view('settings.recycle-bin.index', [
             'deletions' => $deletions,
         ]);
