@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Book $book
  * @method Builder whereSlugs(string $bookSlug, string $childSlug)
  */
-class BookChild extends Entity
+abstract class BookChild extends Entity
 {
 
     /**

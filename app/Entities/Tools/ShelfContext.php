@@ -1,29 +1,18 @@
-<?php namespace BookStack\Entities\Managers;
+<?php namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Book;
 use BookStack\Entities\Bookshelf;
-use Illuminate\Session\Store;
 
-class EntityContext
+class ShelfContext
 {
-    protected $session;
-
     protected $KEY_SHELF_CONTEXT_ID = 'context_bookshelf_id';
-
-    /**
-     * EntityContextManager constructor.
-     */
-    public function __construct(Store $session)
-    {
-        $this->session = $session;
-    }
 
     /**
      * Get the current bookshelf context for the given book.
      */
     public function getContextualShelfForBook(Book $book): ?Bookshelf
     {
-        $contextBookshelfId = $this->session->get($this->KEY_SHELF_CONTEXT_ID, null);
+        $contextBookshelfId = session()->get($this->KEY_SHELF_CONTEXT_ID, null);
 
         if (!is_int($contextBookshelfId)) {
             return null;
@@ -37,11 +26,10 @@ class EntityContext
 
     /**
      * Store the current contextual shelf ID.
-     * @param int $shelfId
      */
     public function setShelfContext(int $shelfId)
     {
-        $this->session->put($this->KEY_SHELF_CONTEXT_ID, $shelfId);
+        session()->put($this->KEY_SHELF_CONTEXT_ID, $shelfId);
     }
 
     /**
@@ -49,6 +37,6 @@ class EntityContext
      */
     public function clearShelfContext()
     {
-        $this->session->forget($this->KEY_SHELF_CONTEXT_ID);
+        session()->forget($this->KEY_SHELF_CONTEXT_ID);
     }
 }

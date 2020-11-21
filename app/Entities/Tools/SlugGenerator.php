@@ -5,25 +5,14 @@ use Illuminate\Support\Str;
 class SlugGenerator
 {
 
-    protected $entity;
-
-    /**
-     * SlugGenerator constructor.
-     * @param $entity
-     */
-    public function __construct(Entity $entity)
-    {
-        $this->entity = $entity;
-    }
-
     /**
      * Generate a fresh slug for the given entity.
      * The slug will generated so it does not conflict within the same parent item.
      */
-    public function generate(): string
+    public function generate(Entity $entity): string
     {
-        $slug = $this->formatNameAsSlug($this->entity->name);
-        while ($this->slugInUse($slug)) {
+        $slug = $this->formatNameAsSlug($entity->name);
+        while ($this->slugInUse($slug, $entity)) {
             $slug .= '-' . substr(md5(rand(1, 500)), 0, 3);
         }
         return $slug;
@@ -45,16 +34,16 @@ class SlugGenerator
      * Check if a slug is already in-use for this
      * type of model within the same parent.
      */
-    protected function slugInUse(string $slug): bool
+    protected function slugInUse(string $slug, Entity $entity): bool
     {
-        $query = $this->entity->newQuery()->where('slug', '=', $slug);
+        $query = $entity->newQuery()->where('slug', '=', $slug);
 
-        if ($this->entity instanceof BookChild) {
-            $query->where('book_id', '=', $this->entity->book_id);
+        if ($entity instanceof BookChild) {
+            $query->where('book_id', '=', $entity->book_id);
         }
 
-        if ($this->entity->id) {
-            $query->where('id', '!=', $this->entity->id);
+        if ($entity->id) {
+            $query->where('id', '!=', $entity->id);
         }
 
         return $query->count() > 0;

@@ -4,7 +4,7 @@ use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityService;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\UserRepo;
-use BookStack\Entities\Managers\TrashCan;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;

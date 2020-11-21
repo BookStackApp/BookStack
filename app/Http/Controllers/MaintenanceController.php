@@ -3,7 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Managers\TrashCan;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Notifications\TestEmail;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;

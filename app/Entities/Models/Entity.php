@@ -32,8 +32,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Entity|Builder hasPermission(string $permission)
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
- *
- * @package BookStack\Entities
  */
 class Entity extends Ownable
 {
@@ -326,8 +324,7 @@ class Entity extends Ownable
      */
     public function refreshSlug(): string
     {
-        $generator = new SlugGenerator($this);
-        $this->slug = $generator->generate();
+        $this->slug = (new SlugGenerator)->generate($this);
         return $this->slug;
     }
 }

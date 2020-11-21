@@ -9,8 +9,6 @@ namespace BookStack\Auth\Access\Guards;
  * into the default laravel 'Guard' auth flow. Instead most of the logic is done
  * via the Saml2 controller & Saml2Service. This class provides a safer, thin
  * version of SessionGuard.
- *
- * @package BookStack\Auth\Access\Guards
  */
 class Saml2SessionGuard extends ExternalBaseSessionGuard
 {

@@ -2,7 +2,7 @@
 
 use Activity;
 use BookStack\Entities\Book;
-use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;

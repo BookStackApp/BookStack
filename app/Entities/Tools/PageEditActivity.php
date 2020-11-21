@@ -1,4 +1,4 @@
-<?php namespace BookStack\Entities\Managers;
+<?php namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Page;
 use BookStack\Entities\PageRevision;

@@ -1,7 +1,7 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Managers\BookContents;
-use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\ImageService;
 use DomPDF;
 use Exception;

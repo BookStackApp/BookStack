@@ -1,6 +1,6 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Page;
 use Tests\TestCase;
 

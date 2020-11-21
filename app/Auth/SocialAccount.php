@@ -7,7 +7,6 @@ use BookStack\Model;
  * Class SocialAccount
  * @property string $driver
  * @property User $user
- * @package BookStack\Auth
  */
 class SocialAccount extends Model implements Loggable
 {

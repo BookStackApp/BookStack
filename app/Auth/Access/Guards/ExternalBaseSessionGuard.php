@@ -15,8 +15,6 @@ use Illuminate\Contracts\Session\Session;
  * guard with 'remember' functionality removed. Basic auth and event emission
  * has also been removed to keep this simple. Designed to be extended by external
  * Auth Guards.
- *
- * @package Illuminate\Auth
  */
 class ExternalBaseSessionGuard implements StatefulGuard
 {
