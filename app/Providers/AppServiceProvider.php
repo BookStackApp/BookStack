@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Schema;
 use URL;
-use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,35 +31,9 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme($isHttps ? 'https' : 'http');
         }
 
-        // Custom validation methods
-        Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
-            $validImageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-            return in_array(strtolower($value->getClientOriginalExtension()), $validImageExtensions);
-        });
-
-        Validator::extend('no_double_extension', function ($attribute, $value, $parameters, $validator) {
-            $uploadName = $value->getClientOriginalName();
-            return substr_count($uploadName, '.') < 2;
-        });
-
-        Validator::extend('safe_url', function ($attribute, $value, $parameters, $validator) {
-            $cleanLinkName = strtolower(trim($value));
-            $isJs = strpos($cleanLinkName, 'javascript:') === 0;
-            $isData = strpos($cleanLinkName, 'data:') === 0;
-            return !$isJs && !$isData;
-        });
-
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
             return "<?php echo icon($expression); ?>";
-        });
-
-        Blade::directive('exposeTranslations', function ($expression) {
-            return "<?php \$__env->startPush('translations'); ?>" .
-                "<?php foreach({$expression} as \$key): ?>" .
-                '<meta name="translation" key="<?php echo e($key); ?>" value="<?php echo e(trans($key)); ?>">' . "\n" .
-                "<?php endforeach; ?>" .
-                '<?php $__env->stopPush(); ?>';
         });
 
         // Allow longer string lengths after upgrade to utf8mb4

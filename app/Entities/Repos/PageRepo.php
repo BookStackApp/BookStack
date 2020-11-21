@@ -11,7 +11,6 @@ use BookStack\Entities\Page;
 use BookStack\Entities\PageRevision;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use Exception;

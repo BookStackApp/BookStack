@@ -18,7 +18,6 @@ class BookshelfRepo
 
     /**
      * BookshelfRepo constructor.
-     * @param $baseRepo
      */
     public function __construct(BaseRepo $baseRepo)
     {

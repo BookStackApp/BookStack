@@ -6,11 +6,9 @@ use BookStack\Entities\Book;
 use BookStack\Entities\Managers\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;
 use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -24,7 +22,6 @@ class BookRepo
 
     /**
      * BookRepo constructor.
-     * @param $tagRepo
      */
     public function __construct(BaseRepo $baseRepo, TagRepo $tagRepo, ImageRepo $imageRepo)
     {
