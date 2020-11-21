@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'komentované na',
+    'permissions_update'          => 'updated permissions',
 ];
