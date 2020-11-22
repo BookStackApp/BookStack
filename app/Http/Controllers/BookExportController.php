@@ -10,15 +10,15 @@ class BookExportController extends Controller
 {
 
     protected $bookRepo;
-    protected $exportService;
+    protected $exportFormatter;
 
     /**
      * BookExportController constructor.
      */
-    public function __construct(BookRepo $bookRepo, ExportFormatter $exportService)
+    public function __construct(BookRepo $bookRepo, ExportFormatter $exportFormatter)
     {
         $this->bookRepo = $bookRepo;
-        $this->exportService = $exportService;
+        $this->exportFormatter = $exportFormatter;
     }
 
     /**
@@ -28,7 +28,7 @@ class BookExportController extends Controller
     public function pdf(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $pdfContent = $this->exportService->bookToPdf($book);
+        $pdfContent = $this->exportFormatter->bookToPdf($book);
         return $this->downloadResponse($pdfContent, $bookSlug . '.pdf');
     }
 
@@ -39,7 +39,7 @@ class BookExportController extends Controller
     public function html(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $htmlContent = $this->exportService->bookToContainedHtml($book);
+        $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
         return $this->downloadResponse($htmlContent, $bookSlug . '.html');
     }
 
@@ -49,7 +49,7 @@ class BookExportController extends Controller
     public function plainText(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $textContent = $this->exportService->bookToPlainText($book);
+        $textContent = $this->exportFormatter->bookToPlainText($book);
         return $this->downloadResponse($textContent, $bookSlug . '.txt');
     }
 }
