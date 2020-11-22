@@ -9,15 +9,15 @@ class ChapterExportController extends Controller
 {
 
     protected $chapterRepo;
-    protected $exportService;
+    protected $exportFormatter;
 
     /**
      * ChapterExportController constructor.
      */
-    public function __construct(ChapterRepo $chapterRepo, ExportFormatter $exportService)
+    public function __construct(ChapterRepo $chapterRepo, ExportFormatter $exportFormatter)
     {
         $this->chapterRepo = $chapterRepo;
-        $this->exportService = $exportService;
+        $this->exportFormatter = $exportFormatter;
     }
 
     /**
@@ -28,7 +28,7 @@ class ChapterExportController extends Controller
     public function pdf(string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
-        $pdfContent = $this->exportService->chapterToPdf($chapter);
+        $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
         return $this->downloadResponse($pdfContent, $chapterSlug . '.pdf');
     }
 
@@ -40,7 +40,7 @@ class ChapterExportController extends Controller
     public function html(string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
-        $containedHtml = $this->exportService->chapterToContainedHtml($chapter);
+        $containedHtml = $this->exportFormatter->chapterToContainedHtml($chapter);
         return $this->downloadResponse($containedHtml, $chapterSlug . '.html');
     }
 
@@ -51,7 +51,7 @@ class ChapterExportController extends Controller
     public function plainText(string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
-        $chapterText = $this->exportService->chapterToPlainText($chapter);
+        $chapterText = $this->exportFormatter->chapterToPlainText($chapter);
         return $this->downloadResponse($chapterText, $chapterSlug . '.txt');
     }
 }

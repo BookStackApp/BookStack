@@ -8,15 +8,15 @@ use Throwable;
 class ChapterExportApiController extends ApiController
 {
     protected $chapterRepo;
-    protected $exportService;
+    protected $exportFormatter;
 
     /**
      * ChapterExportController constructor.
      */
-    public function __construct(BookRepo $chapterRepo, ExportFormatter $exportService)
+    public function __construct(BookRepo $chapterRepo, ExportFormatter $exportFormatter)
     {
         $this->chapterRepo = $chapterRepo;
-        $this->exportService = $exportService;
+        $this->exportFormatter = $exportFormatter;
     }
 
     /**
@@ -26,7 +26,7 @@ class ChapterExportApiController extends ApiController
     public function exportPdf(int $id)
     {
         $chapter = Chapter::visible()->findOrFail($id);
-        $pdfContent = $this->exportService->chapterToPdf($chapter);
+        $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
         return $this->downloadResponse($pdfContent, $chapter->slug . '.pdf');
     }
 
@@ -37,7 +37,7 @@ class ChapterExportApiController extends ApiController
     public function exportHtml(int $id)
     {
         $chapter = Chapter::visible()->findOrFail($id);
-        $htmlContent = $this->exportService->chapterToContainedHtml($chapter);
+        $htmlContent = $this->exportFormatter->chapterToContainedHtml($chapter);
         return $this->downloadResponse($htmlContent, $chapter->slug . '.html');
     }
 
@@ -47,7 +47,7 @@ class ChapterExportApiController extends ApiController
     public function exportPlainText(int $id)
     {
         $chapter = Chapter::visible()->findOrFail($id);
-        $textContent = $this->exportService->chapterToPlainText($chapter);
+        $textContent = $this->exportFormatter->chapterToPlainText($chapter);
         return $this->downloadResponse($textContent, $chapter->slug . '.txt');
     }
 }
