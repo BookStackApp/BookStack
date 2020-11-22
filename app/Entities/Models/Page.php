@@ -1,8 +1,5 @@
 <?php namespace BookStack\Entities\Models;
 
-use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\PageRevision;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -35,7 +32,7 @@ class Page extends BookChild
     /**
      * Get the entities that are visible to the current user.
      */
-    public function scopeVisible(Builder $query)
+    public function scopeVisible(Builder $query): Builder
     {
         $query = Permissions::enforceDraftVisiblityOnQuery($query);
         return parent::scopeVisible($query);
@@ -89,22 +86,19 @@ class Page extends BookChild
     }
 
     /**
-     * Get the url for this page.
-     * @param string|bool $path
-     * @return string
+     * Get the url of this page.
      */
-    public function getUrl($path = false)
+    public function getUrl($path = ''): string
     {
-        $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
-        $midText = $this->draft ? '/draft/' : '/page/';
-        $idComponent = $this->draft ? $this->id : urlencode($this->slug);
+        $parts = [
+            'books',
+            urlencode($this->getAttribute('bookSlug') ?? $this->book->slug),
+            $this->draft ? 'draft' : 'page',
+            $this->draft ? $this->id : urlencode($this->slug),
+            trim($path, '/'),
+        ];
 
-        $url = '/books/' . urlencode($bookSlug) . $midText . $idComponent;
-        if ($path !== false) {
-            $url .= '/' . trim($path, '/');
-        }
-
-        return url($url);
+        return url('/' . implode('/', $parts));
     }
 
     /**

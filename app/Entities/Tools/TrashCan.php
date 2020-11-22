@@ -168,11 +168,10 @@ class TrashCan
      */
     public function getTrashedCounts(): array
     {
-        $provider = app(EntityProvider::class);
         $counts = [];
 
         /** @var Entity $instance */
-        foreach ($provider->all() as $key => $instance) {
+        foreach ((new EntityProvider)->all() as $key => $instance) {
             $counts[$key] = $instance->newQuery()->onlyTrashed()->count();
         }
 
