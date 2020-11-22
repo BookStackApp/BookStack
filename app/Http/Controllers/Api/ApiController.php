@@ -5,7 +5,7 @@ use BookStack\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 
-class ApiController extends Controller
+abstract class ApiController extends Controller
 {
 
     protected $rules = [];

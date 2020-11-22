@@ -34,3 +34,9 @@ Route::post('shelves', 'BookshelfApiController@create');
 Route::get('shelves/{id}', 'BookshelfApiController@read');
 Route::put('shelves/{id}', 'BookshelfApiController@update');
 Route::delete('shelves/{id}', 'BookshelfApiController@delete');
+
+Route::get('pages', 'PageApiController@list');
+Route::post('pages', 'PageApiController@create');
+Route::get('pages/{id}', 'PageApiController@read');
+Route::put('pages/{id}', 'PageApiController@update');
+Route::delete('pages/{id}', 'PageApiController@delete');

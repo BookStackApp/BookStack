@@ -35,9 +35,9 @@ class PageRepo
      * Get a page by ID.
      * @throws NotFoundException
      */
-    public function getById(int $id): Page
+    public function getById(int $id, array $relations = ['book']): Page
     {
-        $page = Page::visible()->with(['book'])->find($id);
+        $page = Page::visible()->with($relations)->find($id);
 
         if (!$page) {
             throw new NotFoundException(trans('errors.page_not_found'));
@@ -152,12 +152,8 @@ class PageRepo
     public function publishDraft(Page $draft, array $input): Page
     {
         $this->baseRepo->update($draft, $input);
-        if (isset($input['template']) && userCan('templates-manage')) {
-            $draft->template = ($input['template'] === 'true');
-        }
+        $this->updateTemplateStatusAndContentFromInput($draft, $input);
 
-        $pageContent = new PageContent($draft);
-        $pageContent->setNewHTML($input['html']);
         $draft->draft = false;
         $draft->revision_count = 1;
         $draft->priority = $this->getNewPriority($draft);
@@ -181,12 +177,7 @@ class PageRepo
         $oldHtml = $page->html;
         $oldName = $page->name;
 
-        if (isset($input['template']) && userCan('templates-manage')) {
-            $page->template = ($input['template'] === 'true');
-        }
-
-        $pageContent = new PageContent($page);
-        $pageContent->setNewHTML($input['html']);
+        $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
@@ -209,6 +200,20 @@ class PageRepo
 
         Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
         return $page;
+    }
+
+    protected function updateTemplateStatusAndContentFromInput(Page $page, array $input)
+    {
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $page->template = ($input['template'] === 'true');
+        }
+
+        $pageContent = new PageContent($page);
+        if (isset($input['html'])) {
+            $pageContent->setNewHTML($input['html']);
+        } else {
+            $pageContent->setNewMarkdown($input['markdown']);
+        }
     }
 
     /**
@@ -243,11 +248,10 @@ class PageRepo
     {
         // If the page itself is a draft simply update that
         if ($page->draft) {
-            $page->fill($input);
             if (isset($input['html'])) {
-                $content = new PageContent($page);
-                $content->setNewHTML($input['html']);
+                (new PageContent($page))->setNewHTML($input['html']);
             }
+            $page->fill($input);
             $page->save();
             return $page;
         }
