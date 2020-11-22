@@ -3,7 +3,7 @@
 use Activity;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\CommentRepo;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

@@ -1,5 +1,7 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Page;
 use Illuminate\Support\Collection;
 
 /**

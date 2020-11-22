@@ -19,7 +19,7 @@
                 <button type="submit" class="button">{{ trans('common.delete_confirm') }}</button>
             </form>
 
-            @if($deletion->deletable instanceof \BookStack\Entities\Entity)
+            @if($deletion->deletable instanceof \BookStack\Entities\Models\Entity)
                 <hr class="mt-m">
                 <h5>{{ trans('settings.recycle_bin_destroy_list') }}</h5>
                 @include('settings.recycle-bin.deletable-entity-list', ['entity' => $deletion->deletable])

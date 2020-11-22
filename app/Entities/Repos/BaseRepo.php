@@ -4,8 +4,8 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
-use BookStack\Entities\Entity;
-use BookStack\Entities\HasCoverImage;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;

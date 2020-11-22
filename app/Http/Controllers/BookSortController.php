@@ -3,7 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\SortOperationException;

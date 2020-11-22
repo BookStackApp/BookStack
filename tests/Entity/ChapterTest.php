@@ -1,6 +1,6 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Chapter;
+use BookStack\Entities\Models\Chapter;
 use Tests\TestCase;
 
 class ChapterTest extends TestCase

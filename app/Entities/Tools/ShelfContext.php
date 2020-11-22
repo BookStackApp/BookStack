@@ -1,7 +1,7 @@
 <?php namespace BookStack\Entities\Tools;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 
 class ShelfContext
 {

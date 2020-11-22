@@ -1,6 +1,6 @@
 <?php namespace Tests;
 
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Entity;
 use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Settings\SettingService;
@@ -71,9 +71,9 @@ abstract class BrowserKitTest extends TestCase
     protected function createEntityChainBelongingToUser($creatorUser, $updaterUser = false)
     {
         if ($updaterUser === false) $updaterUser = $creatorUser;
-        $book = factory(\BookStack\Entities\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
-        $chapter = factory(\BookStack\Entities\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
-        $page = factory(\BookStack\Entities\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id, 'chapter_id' => $chapter->id]);
+        $book = factory(\BookStack\Entities\Models\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
+        $chapter = factory(\BookStack\Entities\Models\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
+        $page = factory(\BookStack\Entities\Models\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id, 'chapter_id' => $chapter->id]);
         $restrictionService = $this->app[PermissionService::class];
         $restrictionService->buildJointPermissionsForEntity($book);
         return [

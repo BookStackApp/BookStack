@@ -18,7 +18,7 @@
                 <button type="submit" class="button">{{ trans('settings.recycle_bin_restore') }}</button>
             </form>
 
-            @if($deletion->deletable instanceof \BookStack\Entities\Entity)
+            @if($deletion->deletable instanceof \BookStack\Entities\Models\Entity)
                 <hr class="mt-m">
                 <h5>{{ trans('settings.recycle_bin_restore_list') }}</h5>
                 @if($deletion->deletable->getParent() && $deletion->deletable->getParent()->trashed())

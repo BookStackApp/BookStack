@@ -1,10 +1,8 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\NotifyException;
-use BookStack\Facades\Activity;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -27,9 +25,6 @@ class BookApiController extends ApiController
         ],
     ];
 
-    /**
-     * BooksApiController constructor.
-     */
     public function __construct(BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;
@@ -85,8 +80,7 @@ class BookApiController extends ApiController
 
     /**
      * Delete a single book from the system.
-     * @throws NotifyException
-     * @throws BindingResolutionException
+     * @throws \Exception
      */
     public function delete(string $id)
     {

@@ -1,8 +1,8 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Facades\Activity;
 use Illuminate\Database\Eloquent\Relations\HasMany;

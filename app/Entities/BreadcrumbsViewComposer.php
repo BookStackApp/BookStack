@@ -1,5 +1,6 @@
 <?php namespace BookStack\Entities;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\ShelfContext;
 use Illuminate\View\View;
 

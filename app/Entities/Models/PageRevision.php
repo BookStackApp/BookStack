@@ -1,6 +1,7 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use Carbon\Carbon;
 

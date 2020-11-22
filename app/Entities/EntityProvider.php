@@ -1,5 +1,12 @@
 <?php namespace BookStack\Entities;
 
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\PageRevision;
+
 /**
  * Class EntityProvider
  *

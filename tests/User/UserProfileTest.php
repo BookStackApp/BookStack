@@ -3,7 +3,7 @@
 use Activity;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Bookshelf;
 use Tests\BrowserKitTest;
 
 class UserProfileTest extends BrowserKitTest

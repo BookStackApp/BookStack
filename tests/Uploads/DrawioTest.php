@@ -1,6 +1,6 @@
 <?php namespace Tests\Uploads;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Uploads\Image;
 use Tests\TestCase;
 

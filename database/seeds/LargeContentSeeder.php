@@ -3,9 +3,9 @@
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
-use BookStack\Entities\SearchService;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\SearchIndex;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -23,12 +23,12 @@ class LargeContentSeeder extends Seeder
         $editorRole = Role::getRole('editor');
         $editorUser->attachRole($editorRole);
 
-        $largeBook = factory(\BookStack\Entities\Book::class)->create(['name' => 'Large book' . Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
+        $largeBook = factory(\BookStack\Entities\Models\Book::class)->create(['name' => 'Large book' . Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $pages = factory(Page::class, 200)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $chapters = factory(Chapter::class, 50)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $largeBook->pages()->saveMany($pages);
         $largeBook->chapters()->saveMany($chapters);
         app(PermissionService::class)->buildJointPermissions();
-        app(SearchService::class)->indexAllEntities();
+        app(SearchIndex::class)->indexAllEntities();
     }
 }

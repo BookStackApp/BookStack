@@ -1,5 +1,8 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Book;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
