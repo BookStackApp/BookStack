@@ -42,21 +42,14 @@ class EntityProvider
      */
     public $pageRevision;
 
-    /**
-     * EntityProvider constructor.
-     */
-    public function __construct(
-        Bookshelf $bookshelf,
-        Book $book,
-        Chapter $chapter,
-        Page $page,
-        PageRevision $pageRevision
-    ) {
-        $this->bookshelf = $bookshelf;
-        $this->book = $book;
-        $this->chapter = $chapter;
-        $this->page = $page;
-        $this->pageRevision = $pageRevision;
+
+    public function __construct()
+    {
+        $this->bookshelf = new Bookshelf();
+        $this->book = new Book();
+        $this->chapter = new Chapter();
+        $this->page = new Page();
+        $this->pageRevision = new PageRevision();
     }
 
     /**

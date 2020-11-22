@@ -31,7 +31,7 @@ class SearchIndex
     {
         $this->deleteEntityTerms($entity);
         $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
-        $bodyTerms = $this->generateTermArrayFromText($entity->getText() ?? '', 1 * $entity->searchFactor);
+        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
         $terms = array_merge($nameTerms, $bodyTerms);
         foreach ($terms as $index => $term) {
             $terms[$index]['entity_type'] = $entity->getMorphClass();

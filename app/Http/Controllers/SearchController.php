@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\SearchRunner;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Tools\SearchOptions;
+use BookStack\Entities\Tools\SiblingFetcher;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -98,39 +99,7 @@ class SearchController extends Controller
         $type = $request->get('entity_type', null);
         $id = $request->get('entity_id', null);
 
-        $entity = Entity::getEntityInstance($type)->newQuery()->visible()->find($id);
-        if (!$entity) {
-            return $this->jsonError(trans('errors.entity_not_found'), 404);
-        }
-
-        $entities = [];
-
-        // Page in chapter
-        if ($entity->isA('page') && $entity->chapter) {
-            $entities = $entity->chapter->getVisiblePages();
-        }
-
-        // Page in book or chapter
-        if (($entity->isA('page') && !$entity->chapter) || $entity->isA('chapter')) {
-            $entities = $entity->book->getDirectChildren();
-        }
-
-        // Book
-        // Gets just the books in a shelf if shelf is in context
-        if ($entity->isA('book')) {
-            $contextShelf = $this->entityContextManager->getContextualShelfForBook($entity);
-            if ($contextShelf) {
-                $entities = $contextShelf->visibleBooks()->get();
-            } else {
-                $entities = Book::visible()->get();
-            }
-        }
-
-        // Shelve
-        if ($entity->isA('bookshelf')) {
-            $entities = Bookshelf::visible()->get();
-        }
-
+        $entities = (new SiblingFetcher)->fetch($type, $id);
         return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
 }

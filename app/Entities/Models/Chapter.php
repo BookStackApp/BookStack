@@ -1,7 +1,5 @@
 <?php namespace BookStack\Entities\Models;
 
-use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\Page;
 use Illuminate\Support\Collection;
 
 /**
@@ -27,30 +25,18 @@ class Chapter extends BookChild
 
     /**
      * Get the url of this chapter.
-     * @param string|bool $path
-     * @return string
      */
-    public function getUrl($path = false)
+    public function getUrl($path = ''): string
     {
-        $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
-        $fullPath = '/books/' . urlencode($bookSlug) . '/chapter/' . urlencode($this->slug);
+        $parts = [
+            'books',
+            urlencode($this->getAttribute('bookSlug') ?? $this->book->slug),
+            'chapter',
+            urlencode($this->slug),
+            trim($path, '/'),
+        ];
 
-        if ($path !== false) {
-            $fullPath .= '/' . trim($path, '/');
-        }
-
-        return url($fullPath);
-    }
-
-    /**
-     * Get an excerpt of this chapter's description to the specified length or less.
-     * @param int $length
-     * @return string
-     */
-    public function getExcerpt(int $length = 100)
-    {
-        $description = $this->text ?? $this->description;
-        return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
+        return url('/' . implode('/', $parts));
     }
 
     /**
