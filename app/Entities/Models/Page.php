@@ -29,6 +29,11 @@ class Page extends BookChild
 
     protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot'];
 
+    protected $casts = [
+        'draft' => 'boolean',
+        'template' => 'boolean',
+    ];
+
     /**
      * Get the entities that are visible to the current user.
      */

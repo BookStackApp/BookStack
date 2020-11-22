@@ -4,6 +4,7 @@ use BookStack\Entities\Models\Page;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
+use League\CommonMark\CommonMarkConverter;
 
 class PageContent
 {
@@ -25,6 +26,27 @@ class PageContent
     {
         $this->page->html = $this->formatHtml($html);
         $this->page->text = $this->toPlainText();
+        $this->page->markdown = '';
+    }
+
+    /**
+     * Update the content of the page with new provided Markdown content.
+     */
+    public function setNewMarkdown(string $markdown)
+    {
+        $this->page->markdown = $markdown;
+        $html = $this->markdownToHtml($markdown);
+        $this->page->html = $this->formatHtml($html);
+        $this->page->text = $this->toPlainText();
+    }
+
+    /**
+     * Convert the given Markdown content to a HTML string.
+     */
+    protected function markdownToHtml(string $markdown): string
+    {
+        $converter = new CommonMarkConverter();
+        return $converter->convertToHtml($markdown);
     }
 
     /**
