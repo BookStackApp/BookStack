@@ -1,11 +1,11 @@
 <?php namespace Tests;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;

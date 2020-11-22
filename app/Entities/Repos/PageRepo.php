@@ -1,14 +1,14 @@
 <?php namespace BookStack\Entities\Repos;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\TrashCan;
-use BookStack\Entities\Page;
-use BookStack\Entities\PageRevision;
+use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\PageRevision;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;

@@ -1,8 +1,8 @@
 <?php namespace BookStack\Entities\Repos;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;

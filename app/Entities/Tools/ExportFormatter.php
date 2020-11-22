@@ -1,14 +1,15 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Tools;
 
-use BookStack\Entities\Tools\BookContents;
-use BookStack\Entities\Tools\PageContent;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Uploads\ImageService;
 use DomPDF;
 use Exception;
 use SnappyPDF;
 use Throwable;
 
-class ExportService
+class ExportFormatter
 {
 
     protected $imageService;

@@ -1,7 +1,7 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;

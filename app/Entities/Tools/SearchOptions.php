@@ -1,4 +1,4 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Tools;
 
 use Illuminate\Http\Request;
 

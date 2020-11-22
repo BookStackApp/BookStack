@@ -1,6 +1,6 @@
 <?php namespace BookStack\Uploads;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Ownable;
 
 /**

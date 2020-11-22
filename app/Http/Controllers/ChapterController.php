@@ -1,6 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Exceptions\MoveOperationException;

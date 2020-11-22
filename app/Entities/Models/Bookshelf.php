@@ -1,5 +1,8 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\HasCoverImage;
+use BookStack\Entities\Models\Book;
 use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

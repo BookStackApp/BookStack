@@ -1,9 +1,9 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;

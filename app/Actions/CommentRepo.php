@@ -1,6 +1,6 @@
 <?php namespace BookStack\Actions;
 
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Entity;
 use League\CommonMark\CommonMarkConverter;
 use BookStack\Facades\Activity as ActivityService;
 

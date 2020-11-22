@@ -1,6 +1,6 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use Tests\BrowserKitTest;
 
 class CommentSettingTest extends BrowserKitTest

@@ -1,6 +1,7 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Entity;
 use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

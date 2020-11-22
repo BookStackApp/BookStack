@@ -3,7 +3,7 @@
 use Activity;
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Tools\BookContents;
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\ImageUploadException;

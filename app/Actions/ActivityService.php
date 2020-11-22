@@ -2,9 +2,9 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;

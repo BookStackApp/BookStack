@@ -1,10 +1,10 @@
 <?php namespace BookStack\Auth;
 
 use Activity;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;

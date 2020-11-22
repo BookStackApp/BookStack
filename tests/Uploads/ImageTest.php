@@ -2,7 +2,7 @@
 
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Uploads\ImageService;
 use Illuminate\Support\Str;
 use Tests\TestCase;

@@ -1,6 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\ExportService;
+use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Exceptions\NotFoundException;
 use Throwable;
@@ -14,7 +14,7 @@ class ChapterExportController extends Controller
     /**
      * ChapterExportController constructor.
      */
-    public function __construct(ChapterRepo $chapterRepo, ExportService $exportService)
+    public function __construct(ChapterRepo $chapterRepo, ExportFormatter $exportService)
     {
         $this->chapterRepo = $chapterRepo;
         $this->exportService = $exportService;

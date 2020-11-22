@@ -1,6 +1,6 @@
 <?php namespace BookStack\Entities\Tools;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;

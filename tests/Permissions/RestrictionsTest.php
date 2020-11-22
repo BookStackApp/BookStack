@@ -1,11 +1,11 @@
 <?php namespace Tests\Permissions;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
 use BookStack\Auth\User;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use Tests\BrowserKitTest;
 
 class RestrictionsTest extends BrowserKitTest

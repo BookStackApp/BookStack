@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\ExportService;
+use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Repos\BookRepo;
 use Throwable;
 
@@ -15,7 +15,7 @@ class BookExportController extends Controller
     /**
      * BookExportController constructor.
      */
-    public function __construct(BookRepo $bookRepo, ExportService $exportService)
+    public function __construct(BookRepo $bookRepo, ExportFormatter $exportService)
     {
         $this->bookRepo = $bookRepo;
         $this->exportService = $exportService;

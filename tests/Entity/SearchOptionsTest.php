@@ -1,6 +1,6 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\SearchOptions;
+use BookStack\Entities\Tools\SearchOptions;
 use Tests\TestCase;
 
 class SearchOptionsTest extends TestCase

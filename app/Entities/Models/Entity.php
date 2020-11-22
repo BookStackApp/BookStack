@@ -1,4 +1,4 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\Comment;
@@ -6,6 +6,8 @@ use BookStack\Actions\Tag;
 use BookStack\Actions\View;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Entities\Tools\SearchIndex;
+use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Facades\Permissions;
 use BookStack\Ownable;
 use Carbon\Carbon;
@@ -227,10 +229,9 @@ class Entity extends Ownable
 
     /**
      * Get an instance of an entity of the given type.
-     * @param $type
-     * @return Entity
+     * TODO - Refactor out
      */
-    public static function getEntityInstance($type)
+    public static function getEntityInstance(string $type): ?Entity
     {
         $types = ['Page', 'Book', 'Chapter', 'Bookshelf'];
         $className = str_replace([' ', '-', '_'], '', ucwords($type));
@@ -238,7 +239,7 @@ class Entity extends Ownable
             return null;
         }
 
-        return app('BookStack\\Entities\\' . $className);
+        return app('BookStack\\Entities\\Models\\' . $className);
     }
 
     /**
@@ -315,8 +316,7 @@ class Entity extends Ownable
      */
     public function indexForSearch()
     {
-        $searchService = app()->make(SearchService::class);
-        $searchService->indexEntity(clone $this);
+        app(SearchIndex::class)->indexEntity(clone $this);
     }
 
     /**

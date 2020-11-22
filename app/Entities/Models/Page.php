@@ -1,5 +1,8 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\PageRevision;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

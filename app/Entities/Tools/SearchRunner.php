@@ -1,6 +1,8 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Tools;
 
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\Entity;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder;
@@ -8,12 +10,8 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class SearchService
+class SearchRunner
 {
-    /**
-     * @var SearchTerm
-     */
-    protected $searchTerm;
 
     /**
      * @var EntityProvider
@@ -37,23 +35,12 @@ class SearchService
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
-    /**
-     * SearchService constructor.
-     */
-    public function __construct(SearchTerm $searchTerm, EntityProvider $entityProvider, Connection $db, PermissionService $permissionService)
+
+    public function __construct(EntityProvider $entityProvider, Connection $db, PermissionService $permissionService)
     {
-        $this->searchTerm = $searchTerm;
         $this->entityProvider = $entityProvider;
         $this->db = $db;
         $this->permissionService = $permissionService;
-    }
-
-    /**
-     * Set the database connection
-     */
-    public function setConnection(Connection $connection)
-    {
-        $this->db = $connection;
     }
 
     /**
@@ -115,11 +102,12 @@ class SearchService
             $search = $this->buildEntitySearchQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
             $results = $results->merge($search);
         }
+
         return $results->sortByDesc('score')->take(20);
     }
 
     /**
-     * Search a book for entities
+     * Search a chapter for entities
      */
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
@@ -134,7 +122,7 @@ class SearchService
      * matching instead of the items themselves.
      * @return \Illuminate\Database\Eloquent\Collection|int|static[]
      */
-    public function searchEntityTable(SearchOptions $searchOpts, string $entityType = 'page', int $page = 1, int $count = 20, string $action = 'view', bool $getCount = false)
+    protected function searchEntityTable(SearchOptions $searchOpts, string $entityType = 'page', int $page = 1, int $count = 20, string $action = 'view', bool $getCount = false)
     {
         $query = $this->buildEntitySearchQuery($searchOpts, $entityType, $action);
         if ($getCount) {
@@ -155,28 +143,25 @@ class SearchService
 
         // Handle normal search terms
         if (count($searchOpts->searches) > 0) {
-            $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', \DB::raw('SUM(score) as score'));
+            $rawScoreSum = $this->db->raw('SUM(score) as score');
+            $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', $rawScoreSum);
             $subQuery->where('entity_type', '=', $entity->getMorphClass());
             $subQuery->where(function (Builder $query) use ($searchOpts) {
                 foreach ($searchOpts->searches as $inputTerm) {
                     $query->orWhere('term', 'like', $inputTerm .'%');
                 }
             })->groupBy('entity_type', 'entity_id');
-            $entitySelect->join(\DB::raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
+            $entitySelect->join($this->db->raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
                 $join->on('id', '=', 'entity_id');
             })->selectRaw($entity->getTable().'.*, s.score')->orderBy('score', 'desc');
             $entitySelect->mergeBindings($subQuery);
         }
 
         // Handle exact term matching
-        if (count($searchOpts->exacts) > 0) {
-            $entitySelect->where(function (EloquentBuilder $query) use ($searchOpts, $entity) {
-                foreach ($searchOpts->exacts as $inputTerm) {
-                    $query->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
-                        $query->where('name', 'like', '%'.$inputTerm .'%')
-                            ->orWhere($entity->textField, 'like', '%'.$inputTerm .'%');
-                    });
-                }
+        foreach ($searchOpts->exacts as $inputTerm) {
+            $entitySelect->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
+                $query->where('name', 'like', '%'.$inputTerm .'%')
+                    ->orWhere($entity->textField, 'like', '%'.$inputTerm .'%');
             });
         }
 
@@ -238,105 +223,6 @@ class SearchService
         });
         return $query;
     }
-
-    /**
-     * Index the given entity.
-     */
-    public function indexEntity(Entity $entity)
-    {
-        $this->deleteEntityTerms($entity);
-        $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
-        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
-        $terms = array_merge($nameTerms, $bodyTerms);
-        foreach ($terms as $index => $term) {
-            $terms[$index]['entity_type'] = $entity->getMorphClass();
-            $terms[$index]['entity_id'] = $entity->id;
-        }
-        $this->searchTerm->newQuery()->insert($terms);
-    }
-
-    /**
-     * Index multiple Entities at once
-     * @param \BookStack\Entities\Entity[] $entities
-     */
-    protected function indexEntities($entities)
-    {
-        $terms = [];
-        foreach ($entities as $entity) {
-            $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
-            $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
-            foreach (array_merge($nameTerms, $bodyTerms) as $term) {
-                $term['entity_id'] = $entity->id;
-                $term['entity_type'] = $entity->getMorphClass();
-                $terms[] = $term;
-            }
-        }
-
-        $chunkedTerms = array_chunk($terms, 500);
-        foreach ($chunkedTerms as $termChunk) {
-            $this->searchTerm->newQuery()->insert($termChunk);
-        }
-    }
-
-    /**
-     * Delete and re-index the terms for all entities in the system.
-     */
-    public function indexAllEntities()
-    {
-        $this->searchTerm->truncate();
-
-        foreach ($this->entityProvider->all() as $entityModel) {
-            $selectFields = ['id', 'name', $entityModel->textField];
-            $entityModel->newQuery()
-                ->withTrashed()
-                ->select($selectFields)
-                ->chunk(1000, function ($entities) {
-                    $this->indexEntities($entities);
-                });
-        }
-    }
-
-    /**
-     * Delete related Entity search terms.
-     * @param Entity $entity
-     */
-    public function deleteEntityTerms(Entity $entity)
-    {
-        $entity->searchTerms()->delete();
-    }
-
-    /**
-     * Create a scored term array from the given text.
-     * @param $text
-     * @param float|int $scoreAdjustment
-     * @return array
-     */
-    protected function generateTermArrayFromText($text, $scoreAdjustment = 1)
-    {
-        $tokenMap = []; // {TextToken => OccurrenceCount}
-        $splitChars = " \n\t.,!?:;()[]{}<>`'\"";
-        $token = strtok($text, $splitChars);
-
-        while ($token !== false) {
-            if (!isset($tokenMap[$token])) {
-                $tokenMap[$token] = 0;
-            }
-            $tokenMap[$token]++;
-            $token = strtok($splitChars);
-        }
-
-        $terms = [];
-        foreach ($tokenMap as $token => $count) {
-            $terms[] = [
-                'term' => $token,
-                'score' => $count * $scoreAdjustment
-            ];
-        }
-        return $terms;
-    }
-
-
-
 
     /**
      * Custom entity search filters

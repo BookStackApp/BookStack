@@ -1,13 +1,13 @@
 <?php namespace BookStack\Entities\Tools;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Deletion;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Deletion;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
-use BookStack\Entities\HasCoverImage;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\HasCoverImage;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;

@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Entities\SearchService;
+use BookStack\Entities\Tools\SearchIndex;
 use DB;
 use Illuminate\Console\Command;
 
@@ -22,17 +22,15 @@ class RegenerateSearch extends Command
      */
     protected $description = 'Re-index all content for searching';
 
-    protected $searchService;
+    protected $searchIndex;
 
     /**
      * Create a new command instance.
-     *
-     * @param SearchService $searchService
      */
-    public function __construct(SearchService $searchService)
+    public function __construct(SearchIndex $searchIndex)
     {
         parent::__construct();
-        $this->searchService = $searchService;
+        $this->searchIndex = $searchIndex;
     }
 
     /**
@@ -45,10 +43,9 @@ class RegenerateSearch extends Command
         $connection = DB::getDefaultConnection();
         if ($this->option('database') !== null) {
             DB::setDefaultConnection($this->option('database'));
-            $this->searchService->setConnection(DB::connection($this->option('database')));
         }
 
-        $this->searchService->indexAllEntities();
+        $this->searchIndex->indexAllEntities();
         DB::setDefaultConnection($connection);
         $this->comment('Search index regenerated');
     }

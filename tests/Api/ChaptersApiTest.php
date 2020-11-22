@@ -1,7 +1,7 @@
 <?php namespace Tests\Api;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use Tests\TestCase;
 
 class ChaptersApiTest extends TestCase

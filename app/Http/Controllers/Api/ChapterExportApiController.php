@@ -1,7 +1,7 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Entities\Chapter;
-use BookStack\Entities\ExportService;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Repos\BookRepo;
 use Throwable;
 
@@ -13,7 +13,7 @@ class ChapterExportApiController extends ApiController
     /**
      * ChapterExportController constructor.
      */
-    public function __construct(BookRepo $chapterRepo, ExportService $exportService)
+    public function __construct(BookRepo $chapterRepo, ExportFormatter $exportService)
     {
         $this->chapterRepo = $chapterRepo;
         $this->exportService = $exportService;

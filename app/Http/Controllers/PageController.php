@@ -3,7 +3,7 @@
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;

@@ -3,7 +3,7 @@
 namespace BookStack\Actions;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Entity;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;

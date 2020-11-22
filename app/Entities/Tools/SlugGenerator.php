@@ -1,5 +1,6 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Tools;
 
+use BookStack\Entities\Models\Entity;
 use Illuminate\Support\Str;
 
 class SlugGenerator

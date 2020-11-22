@@ -1,8 +1,8 @@
 <?php namespace BookStack\Entities\Repos;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;

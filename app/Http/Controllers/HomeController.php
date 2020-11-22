@@ -1,9 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use Illuminate\Http\Response;

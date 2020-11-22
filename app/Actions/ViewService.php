@@ -1,8 +1,8 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Book;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
 use DB;
 use Illuminate\Support\Collection;
@@ -28,7 +28,7 @@ class ViewService
 
     /**
      * Add a view to the given entity.
-     * @param \BookStack\Entities\Entity $entity
+     * @param \BookStack\Entities\Models\Entity $entity
      * @return int
      */
     public function add(Entity $entity)

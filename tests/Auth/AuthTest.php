@@ -2,7 +2,7 @@
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Notifications\ConfirmEmail;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Settings\SettingService;
