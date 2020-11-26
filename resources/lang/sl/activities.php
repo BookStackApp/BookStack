@@ -31,9 +31,9 @@ return [
     'book_update'                 => 'knjiga posodobljena',
     'book_update_notification'    => 'Uspešno posodobljeno',
     'book_delete'                 => 'izbrisana knjiga',
-    'book_delete_notification'    => 'Uspešno izbrisano',
+    'book_delete_notification'    => 'Knjiga uspešno ustvarjena',
     'book_sort'                   => 'razvrščena knjiga',
-    'book_sort_notification'      => 'Knjiga Uspešno Razvrščena',
+    'book_sort_notification'      => 'Knjiga uspešno razvrščena',
 
     // Bookshelves
     'bookshelf_create'            => 'knjižna polica izdelana',
@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'komentar na',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'pravice so posodobljene',
 ];
