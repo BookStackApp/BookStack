@@ -53,7 +53,7 @@ return [
     // Misc
     'deleted_user' => 'Izbrisan uporabnik',
     'no_activity' => 'Ni aktivnosti za prikaz',
-    'no_items' => 'Ni na voljo nobenih elementov',
+    'no_items' => 'Na voljo ni nobenega elementa',
     'back_to_top' => 'Nazaj na vrh',
     'toggle_details' => 'Preklopi podrobnosti',
     'toggle_thumbnails' => 'Preklopi sličice',
@@ -75,6 +75,6 @@ return [
     'tab_content' => 'Vsebina',
 
     // Email Content
-    'email_action_help' => 'Če imate težave s klikom na ":actionText" gumb, kopirajte im prilepite spodnjo povezavo v vaš brskalnik:',
+    'email_action_help' => 'V kolikor imate težave s klikom na gumb ":actionText", kopirajte in prilepite spodnjo povezavo v vaš brskalnik:',
     'email_rights' => 'Vse pravice pridržane',
 ];
