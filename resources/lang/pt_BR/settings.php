@@ -80,15 +80,15 @@ return [
     'maint_send_test_email_mail_subject' => 'E-mail de Teste',
     'maint_send_test_email_mail_greeting' => 'O envio de e-mails parece funcionar!',
     'maint_send_test_email_mail_text' => 'Parabéns! Já que você recebeu esta notificação, suas opções de e-mail parecem estar configuradas corretamente.',
-    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
+    'maint_recycle_bin_desc' => 'Prateleiras, livros, capítulos e páginas deletados são mandados para a lixeira podendo assim ser restaurados ou excluídos permanentemente. Itens mais antigos da lixeira podem vir a ser automaticamente removidos da lixeira após um tempo dependendo da configuração do sistema.',
     'maint_recycle_bin_open' => 'Abrir Lixeira',
 
     // Recycle Bin
     'recycle_bin' => 'Lixeira',
-    'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'recycle_bin_desc' => 'Aqui você pode restaurar itens que foram excluídos ou escolher removê-los permanentemente do sistema. Esta lista não é filtrada diferentemente de listas de atividades similares no sistema onde filtros de permissão são aplicados.',
     'recycle_bin_deleted_item' => 'Item excluído',
     'recycle_bin_deleted_by' => 'Excluído por',
-    'recycle_bin_deleted_at' => 'Deletion Time',
+    'recycle_bin_deleted_at' => 'Momento de Exclusão',
     'recycle_bin_permanently_delete' => 'Excluir permanentemente',
     'recycle_bin_restore' => 'Restaurar',
     'recycle_bin_contents_empty' => 'A lixeira está vazia',
