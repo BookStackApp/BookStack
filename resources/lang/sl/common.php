@@ -9,17 +9,17 @@ return [
     'confirm' => 'Potrdi',
     'back' => 'Nazaj',
     'save' => 'Shrani',
-    'continue' => 'Naprej',
+    'continue' => 'Nadaljuj',
     'select' => 'Izberi',
     'toggle_all' => 'Vklopi vse',
     'more' => 'Več',
 
     // Form Labels
-    'name' => 'Ime',
+    'name' => 'Naziv',
     'description' => 'Opis',
     'role' => 'Vloga',
     'cover_image' => 'Naslovna slika',
-    'cover_image_description' => 'Slika naj bo okoli 440x250px velika.',
+    'cover_image_description' => 'Slika naj bo velika približno 440x250px.',
     
     // Actions
     'actions' => 'Dejanja',
@@ -33,11 +33,11 @@ return [
     'copy' => 'Kopiraj',
     'reply' => 'Odgovori',
     'delete' => 'Izbriši',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Potrdi brisanje',
     'search' => 'Išči',
-    'search_clear' => 'Počisti iskanje',
+    'search_clear' => 'Razveljavi iskanje',
     'reset' => 'Ponastavi',
-    'remove' => 'Remove',
+    'remove' => 'Odstrani',
     'add' => 'Dodaj',
     'fullscreen' => 'Celozaslonski način',
 
@@ -67,8 +67,8 @@ return [
     'profile_menu' => 'Meni profila',
     'view_profile' => 'Ogled profila',
     'edit_profile' => 'Uredi profil',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Način temnega zaslona',
+    'light_mode' => 'Način svetlega zaslona',
 
     // Layout tabs
     'tab_info' => 'Informacije',
