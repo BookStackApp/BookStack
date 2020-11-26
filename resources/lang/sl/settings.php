@@ -67,8 +67,8 @@ return [
     // Maintenance settings
     'maint' => 'Vzdrževanje',
     'maint_image_cleanup' => 'odstrani /počisti slike',
-    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_image_cleanup_desc' => "Pregleda vsebino strani in revizij ter ugotovi, katere slike in risbe so v uporabi in katere so odvečne. Preden to poženeš, naredi popolno varnostno kopijo podatkovne zbirke in slik.",
+    'maint_image_cleanup_ignore_revisions' => 'Ne upoštevaj slik v revizijah',
     'maint_image_cleanup_run' => 'zaženite čiščenje',
     'maint_image_cleanup_warning' => ':zaznano je bilo število neuporabljenih slik. Ali si prepričan, da želiš odstraniti izbrane slike?',
     'maint_image_cleanup_success' => ':najdeno in izbrisano je bilo število neuporabljenih slik!',
@@ -80,12 +80,12 @@ return [
     'maint_send_test_email_mail_subject' => 'Preizkusno sporočilo',
     'maint_send_test_email_mail_greeting' => 'Zdi se, da dostava e-pošte deluje!',
     'maint_send_test_email_mail_text' => 'Čestitke! Če ste prejeli e.poštno obvestilo so bile vaše e-poštne nastavitve pravilno konfigurirane.',
-    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
-    'maint_recycle_bin_open' => 'Open Recycle Bin',
+    'maint_recycle_bin_desc' => 'Izbrisane police, knjige, poglavja in strani se pošljejo v koš, da jih je mogoče obnoviti ali trajno izbrisati. Starejše predmete v košu lahko čez nekaj časa samodejno odstranite, odvisno od konfiguracije sistema.',
+    'maint_recycle_bin_open' => 'Odpri koš',
 
     // Recycle Bin
-    'recycle_bin' => 'Recycle Bin',
-    'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'recycle_bin' => 'Koš',
+    'recycle_bin_desc' => 'Tu lahko obnovite predmete, ki so bili izbrisani, ali pa jih trajno odstranite s sistema. Ta seznam je nefiltriran, za razliko od podobnih seznamov dejavnosti v sistemu, kjer se uporabljajo filtri dovoljenj.',
     'recycle_bin_deleted_item' => 'Deleted Item',
     'recycle_bin_deleted_by' => 'Deleted By',
     'recycle_bin_deleted_at' => 'Deletion Time',
