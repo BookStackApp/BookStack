@@ -69,20 +69,20 @@ return [
     // Roles
     'role_cannot_be_edited' => 'Te vloge mi možno urejati',
     'role_system_cannot_be_deleted' => 'Ta vloga je sistemska in je ni možno brisati',
-    'role_registration_default_cannot_delete' => 'Te vloge ni možno brisati dokler je nastavljena kot privzeta',
-    'role_cannot_remove_only_admin' => 'Ta uporabnik je edini administrator. Dodelite vlogo administratorja drugemu uporabniku preden ga poskusite brisati.',
+    'role_registration_default_cannot_delete' => 'Te vloge ni možno brisati, dokler je nastavljena kot privzeta',
+    'role_cannot_remove_only_admin' => 'Ta uporabnik je edini administrator. Dodelite vlogo administratorja drugemu uporabniku, preden ga poskusite brisati.',
 
     // Comments
     'comment_list' => 'Napaka se je pojavila pri pridobivanju komentarjev.',
-    'cannot_add_comment_to_draft' => 'Ni mogoče dodajanje komentarjev v osnutek.',
-    'comment_add' => 'Napaka se je pojavila pri dodajanju / posodobitev komentarjev.',
+    'cannot_add_comment_to_draft' => 'V osnutek ni možno dodajati komentarjev.',
+    'comment_add' => 'Napaka se je pojavila pri dodajanju / posodobitvi komentarjev.',
     'comment_delete' => 'Napaka se je pojavila pri brisanju komentarja.',
     'empty_comment' => 'Praznega komentarja ne morete objaviti.',
 
     // Error pages
     '404_page_not_found' => 'Strani ni mogoče najti',
-    'sorry_page_not_found' => 'Oprostite, strani ki jo iščete ni mogoče najti.',
-    'sorry_page_not_found_permission_warning' => 'Če pričakujete, da ta stran obstaja, mogoče nimate pravic, da jo vidite.',
+    'sorry_page_not_found' => 'Oprostite, strani ki jo iščete, ni mogoče najti.',
+    'sorry_page_not_found_permission_warning' => 'Če pričakujete, da ta stran obstaja, mogoče nimate pravic ogleda zanjo.',
     'return_home' => 'Vrni se domov',
     'error_occurred' => 'Prišlo je do napake',
     'app_down' => ':appName trenutno ni dosegljiva',
