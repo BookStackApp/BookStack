@@ -29,14 +29,18 @@ Route::get('chapters/{id}/export/html', 'ChapterExportApiController@exportHtml')
 Route::get('chapters/{id}/export/pdf', 'ChapterExportApiController@exportPdf');
 Route::get('chapters/{id}/export/plaintext', 'ChapterExportApiController@exportPlainText');
 
-Route::get('shelves', 'BookshelfApiController@list');
-Route::post('shelves', 'BookshelfApiController@create');
-Route::get('shelves/{id}', 'BookshelfApiController@read');
-Route::put('shelves/{id}', 'BookshelfApiController@update');
-Route::delete('shelves/{id}', 'BookshelfApiController@delete');
-
 Route::get('pages', 'PageApiController@list');
 Route::post('pages', 'PageApiController@create');
 Route::get('pages/{id}', 'PageApiController@read');
 Route::put('pages/{id}', 'PageApiController@update');
 Route::delete('pages/{id}', 'PageApiController@delete');
+
+Route::get('pages/{id}/export/html', 'PageExportApiController@exportHtml');
+Route::get('pages/{id}/export/pdf', 'PageExportApiController@exportPdf');
+Route::get('pages/{id}/export/plaintext', 'PageExportApiController@exportPlainText');
+
+Route::get('shelves', 'BookshelfApiController@list');
+Route::post('shelves', 'BookshelfApiController@create');
+Route::get('shelves/{id}', 'BookshelfApiController@read');
+Route::put('shelves/{id}', 'BookshelfApiController@update');
+Route::delete('shelves/{id}', 'BookshelfApiController@delete');

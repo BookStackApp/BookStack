@@ -2,20 +2,14 @@
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\ExportFormatter;
-use BookStack\Entities\Repos\BookRepo;
 use Throwable;
 
 class BookExportApiController extends ApiController
 {
-    protected $bookRepo;
     protected $exportFormatter;
 
-    /**
-     * BookExportController constructor.
-     */
-    public function __construct(BookRepo $bookRepo, ExportFormatter $exportFormatter)
+    public function __construct(ExportFormatter $exportFormatter)
     {
-        $this->bookRepo = $bookRepo;
         $this->exportFormatter = $exportFormatter;
     }
 
