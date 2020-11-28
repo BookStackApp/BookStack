@@ -18,7 +18,7 @@ class Book extends Entity implements HasCoverImage
     public $searchFactor = 2;
 
     protected $fillable = ['name', 'description'];
-    protected $hidden = ['restricted', 'pivot', 'image_id'];
+    protected $hidden = ['restricted', 'pivot', 'image_id', 'deleted_at'];
 
     /**
      * Get the url for this book.

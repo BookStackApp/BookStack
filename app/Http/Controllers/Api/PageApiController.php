@@ -16,8 +16,8 @@ class PageApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'book_id' => 'required_unless:chapter_id|integer',
-            'chapter_id' => 'required_unless:book_id|integer',
+            'book_id' => 'required_without:chapter_id|integer',
+            'chapter_id' => 'required_without:book_id|integer',
             'name' => 'required|string|max:255',
             'html' => 'required_without:markdown|string',
             'markdown' => 'required_without:html|string',
@@ -53,6 +53,12 @@ class PageApiController extends ApiController
 
     /**
      * Create a new page in the system.
+     *
+     * The ID of a parent book or chapter is required to indicate
+     * where this page should be located.
+     *
+     * Any HTML content provided should be kept to a single-block depth of plain HTML
+     * elements to remain compatible with the BookStack front-end and editors.
      */
     public function create(Request $request)
     {
@@ -68,20 +74,27 @@ class PageApiController extends ApiController
         $draft = $this->pageRepo->getNewDraftPage($parent);
         $this->pageRepo->publishDraft($draft, $request->only(array_keys($this->rules['create'])));
 
-        return response()->json($draft->load(['tags']));
+        return response()->json($draft->forJsonDisplay());
     }
 
     /**
      * View the details of a single page.
+     *
+     * Pages will always have HTML content. They may have markdown content
+     * if the markdown editor was used to last update the page.
      */
     public function read(string $id)
     {
-        $page = $this->pageRepo->getById($id, ['tags', 'createdBy', 'updatedBy']);
-        return response()->json($page);
+        $page = $this->pageRepo->getById($id, []);
+        return response()->json($page->forJsonDisplay());
     }
 
     /**
      * Update the details of a single page.
+     *
+     * See the 'create' action for details on the provided HTML/Markdown.
+     * Providing a 'book_id' or 'chapter_id' property will essentially move
+     * the page into that parent element if you have permissions to do so.
      */
     public function update(Request $request, string $id)
     {
@@ -109,11 +122,12 @@ class PageApiController extends ApiController
         }
 
         $updatedPage = $this->pageRepo->update($page, $request->all());
-        return response()->json($updatedPage->load(['tags']));
+        return response()->json($updatedPage->forJsonDisplay());
     }
 
     /**
-     * Delete a page from the system.
+     * Delete a page.
+     * This will typically send the page to the recycle bin.
      */
     public function delete(string $id)
     {

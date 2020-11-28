@@ -100,7 +100,8 @@ class BookshelfApiController extends ApiController
 
 
     /**
-     * Delete a single shelf from the system.
+     * Delete a single shelf.
+     * This will typically send the shelf to the recycle bin.
      * @throws Exception
      */
     public function delete(string $id)
