@@ -3,6 +3,7 @@
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\SearchTerm;
+use Illuminate\Support\Collection;
 
 class SearchIndex
 {
@@ -75,8 +76,8 @@ class SearchIndex
             $entityModel->newQuery()
                 ->withTrashed()
                 ->select($selectFields)
-                ->chunk(1000, function ($entities) {
-                    $this->indexEntities($entities);
+                ->chunk(1000, function (Collection $entities) {
+                    $this->indexEntities($entities->all());
                 });
         }
     }
