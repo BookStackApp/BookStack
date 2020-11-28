@@ -1,0 +1,35 @@
+{
+	"id": 306,
+	"book_id": 1,
+	"chapter_id": 0,
+	"name": "A page written in markdown",
+	"slug": "a-page-written-in-markdown",
+	"html": "<h1 id=\"bkmrk-how-this-is-built\">How this is built</h1>\r\n<p id=\"bkmrk-this-page-is-written\">This page is written in markdown. BookStack stores the page data in HTML.</p>\r\n<p id=\"bkmrk-here%27s-a-cute-pictur\">Here's a cute picture of my cat:</p>\r\n<p id=\"bkmrk-\"><a href=\"http://example.com/uploads/images/gallery/2020-04/yXSrubes.jpg\"><img src=\"http://example.com/uploads/images/gallery/2020-04/scaled-1680-/yXSrubes.jpg\" alt=\"yXSrubes.jpg\"></a></p>",
+	"priority": 13,
+	"created_at": "2020-02-02 21:40:38",
+	"updated_at": "2020-11-28 14:43:20",
+	"created_by": {
+		"id": 1,
+		"name": "Admin"
+	},
+	"updated_by": {
+		"id": 1,
+		"name": "Admin"
+	},
+	"draft": false,
+	"markdown": "# How this is built\r\n\r\nThis page is written in markdown. BookStack stores the page data in HTML.\r\n\r\nHere's a cute picture of my cat:\r\n\r\n[![yXSrubes.jpg](http://example.com/uploads/images/gallery/2020-04/scaled-1680-/yXSrubes.jpg)](http://example.com/uploads/images/gallery/2020-04/yXSrubes.jpg)",
+	"revision_count": 5,
+	"template": false,
+	"tags": [
+		{
+			"name": "Category",
+			"value": "Top Content",
+			"order": 0
+		},
+		{
+			"name": "Animal",
+			"value": "Cat",
+			"order": 1
+		}
+	]
+}

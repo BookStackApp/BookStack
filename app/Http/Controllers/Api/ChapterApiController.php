@@ -86,7 +86,8 @@ class ChapterApiController extends ApiController
     }
 
     /**
-     * Delete a chapter from the system.
+     * Delete a chapter.
+     * This will typically send the chapter to the recycle bin.
      */
     public function delete(string $id)
     {
