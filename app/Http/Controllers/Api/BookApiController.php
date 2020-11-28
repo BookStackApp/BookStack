@@ -79,7 +79,8 @@ class BookApiController extends ApiController
     }
 
     /**
-     * Delete a single book from the system.
+     * Delete a single book.
+     * This will typically send the book to the recycle bin.
      * @throws \Exception
      */
     public function delete(string $id)

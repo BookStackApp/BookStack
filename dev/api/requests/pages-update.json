@@ -1,0 +1,9 @@
+{
+	"chapter_id": 1,
+	"name": "My updated API Page",
+	"html": "<p>my new API page - Updated</p>",
+	"tags": [
+		{"name": "Category", "value": "API Examples"},
+		{"name": "Rating", "value": "Alright"}
+	]
+}

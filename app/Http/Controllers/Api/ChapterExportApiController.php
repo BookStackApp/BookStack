@@ -7,15 +7,13 @@ use Throwable;
 
 class ChapterExportApiController extends ApiController
 {
-    protected $chapterRepo;
     protected $exportFormatter;
 
     /**
      * ChapterExportController constructor.
      */
-    public function __construct(BookRepo $chapterRepo, ExportFormatter $exportFormatter)
+    public function __construct(ExportFormatter $exportFormatter)
     {
-        $this->chapterRepo = $chapterRepo;
         $this->exportFormatter = $exportFormatter;
     }
 
