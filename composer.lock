@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34390536dd685e0bc49b179babaa06ec",
+    "content-hash": "a61fd1c287bd93fa496202c6583c7bb1",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -213,57 +213,6 @@
                 "wkhtmltopdf"
             ],
             "time": "2020-09-07T12:33:10+00:00"
-        },
-        {
-            "name": "cogpowered/finediff",
-            "version": "0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cogpowered/FineDiff.git",
-                "reference": "339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cogpowered/FineDiff/zipball/339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8",
-                "reference": "339ddc8c3afb656efed4f2f0a80e5c3d026f8ea8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "*",
-                "phpunit/phpunit": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "cogpowered\\FineDiff": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Crowe",
-                    "email": "rob@cogpowered.com"
-                },
-                {
-                    "name": "Raymond Hill"
-                }
-            ],
-            "description": "PHP implementation of a Fine granularity Diff engine",
-            "homepage": "https://github.com/cogpowered/FineDiff",
-            "keywords": [
-                "diff",
-                "finediff",
-                "opcode",
-                "string",
-                "text"
-            ],
-            "time": "2014-05-19T10:25:02+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1202,55 +1151,6 @@
                 "whoops"
             ],
             "time": "2020-06-14T09:00:00+00:00"
-        },
-        {
-            "name": "gathercontent/htmldiff",
-            "version": "0.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/gathercontent/htmldiff.git",
-                "reference": "24674a62315f64330134b4a4c5b01a7b59193c93"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/gathercontent/htmldiff/zipball/24674a62315f64330134b4a4c5b01a7b59193c93",
-                "reference": "24674a62315f64330134b4a4c5b01a7b59193c93",
-                "shasum": ""
-            },
-            "require": {
-                "cogpowered/finediff": "0.3.1",
-                "ext-tidy": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "GatherContent\\Htmldiff": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andrew Cairns",
-                    "email": "andrew@gathercontent.com"
-                },
-                {
-                    "name": "Mathew Chapman",
-                    "email": "mat@gathercontent.com"
-                },
-                {
-                    "name": "Peter Legierski",
-                    "email": "peter@gathercontent.com"
-                }
-            ],
-            "description": "Compare two HTML strings",
-            "time": "2015-04-15T15:39:46+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3624,6 +3524,52 @@
             ],
             "description": "Twitch OAuth2 Provider for Laravel Socialite",
             "time": "2020-05-06T22:51:30+00:00"
+        },
+        {
+            "name": "ssddanbrown/htmldiff",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ssddanbrown/HtmlDiff.git",
+                "reference": "d1978c7d1c685800997f982a0ae9cff1e45df70c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ssddanbrown/HtmlDiff/zipball/d1978c7d1c685800997f982a0ae9cff1e45df70c",
+                "reference": "d1978c7d1c685800997f982a0ae9cff1e45df70c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5|^9.4.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ssddanbrown\\HtmlDiff\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dan Brown",
+                    "email": "ssddanbrown@googlemail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "HTML Content Diff Generator",
+            "homepage": "https://github.com/ssddanbrown/htmldiff",
+            "support": {
+                "issues": "https://github.com/ssddanbrown/HtmlDiff/issues",
+                "source": "https://github.com/ssddanbrown/HtmlDiff/tree/v1.0.0"
+            },
+            "time": "2020-11-29T18:38:45+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -8690,12 +8636,11 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-tidy": "*",
         "ext-xml": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2.0"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
