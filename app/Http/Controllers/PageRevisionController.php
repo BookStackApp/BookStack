@@ -3,7 +3,7 @@
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
-use GatherContent\Htmldiff\Htmldiff;
+use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
 {
@@ -72,7 +72,7 @@ class PageRevisionController extends Controller
 
         $prev = $revision->getPrevious();
         $prevContent = $prev->html ?? '';
-        $diff = (new Htmldiff)->diff($prevContent, $revision->html);
+        $diff = Diff::excecute($prevContent, $revision->html);
 
         $page->fill($revision->toArray());
         // TODO - Refactor PageContent so we don't need to juggle this
