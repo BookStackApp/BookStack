@@ -44,6 +44,6 @@ return [
     'bookshelf_delete_notification'    => 'Knižnica úspešne odstránená',
 
     // Other
-    'commented_on'                => 'komentované na',
+    'commented_on'                => 'komentoval(a)',
     'permissions_update'          => 'aktualizované oprávnenia',
 ];
