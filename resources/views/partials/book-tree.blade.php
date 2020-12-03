@@ -1,4 +1,7 @@
-<nav id="book-tree" class="book-tree mb-xl" v-pre aria-label="{{ trans('entities.books_navigation') }}">
+<nav id="book-tree"
+     class="book-tree mb-xl"
+     aria-label="{{ trans('entities.books_navigation') }}">
+
     <h5>{{ trans('entities.books_navigation') }}</h5>
 
     <ul class="sidebar-page-list mt-xs menu entity-list">

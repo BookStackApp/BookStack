@@ -1,14 +1,14 @@
 <?php namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
-use BookStack\Entities\Book;
-use BookStack\Entities\Managers\TrashCan;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;
 use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -22,7 +22,6 @@ class BookRepo
 
     /**
      * BookRepo constructor.
-     * @param $tagRepo
      */
     public function __construct(BaseRepo $baseRepo, TagRepo $tagRepo, ImageRepo $imageRepo)
     {
@@ -91,6 +90,7 @@ class BookRepo
     {
         $book = new Book();
         $this->baseRepo->create($book, $input);
+        Activity::addForEntity($book, ActivityType::BOOK_CREATE);
         return $book;
     }
 
@@ -100,6 +100,7 @@ class BookRepo
     public function update(Book $book, array $input): Book
     {
         $this->baseRepo->update($book, $input);
+        Activity::addForEntity($book, ActivityType::BOOK_UPDATE);
         return $book;
     }
 
@@ -123,12 +124,14 @@ class BookRepo
 
     /**
      * Remove a book from the system.
-     * @throws NotifyException
-     * @throws BindingResolutionException
+     * @throws Exception
      */
     public function destroy(Book $book)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyBook($book);
+        $trashCan->softDestroyBook($book);
+        Activity::addForEntity($book, ActivityType::BOOK_DELETE);
+
+        $trashCan->autoClearOld();
     }
 }

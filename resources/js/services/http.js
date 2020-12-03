@@ -67,9 +67,21 @@ async function dataRequest(method, url, data = null) {
         body: data,
     };
 
+    // Send data as JSON if a plain object
     if (typeof data === 'object' && !(data instanceof FormData)) {
-        options.headers = {'Content-Type': 'application/json'};
+        options.headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+        };
         options.body = JSON.stringify(data);
+    }
+
+    // Ensure FormData instances are sent over POST
+    // Since Laravel does not read multipart/form-data from other types
+    // of request. Hence the addition of the magic _method value.
+    if (data instanceof FormData && method !== 'post') {
+        data.append('_method', method);
+        options.method = 'post';
     }
 
     return request(url, options)
@@ -109,7 +121,7 @@ async function request(url, options = {}) {
 
     const response = await fetch(url, options);
     const content = await getResponseContent(response);
-    return {
+    const returnData = {
         data: content,
         headers: response.headers,
         redirected: response.redirected,
@@ -117,16 +129,26 @@ async function request(url, options = {}) {
         statusText: response.statusText,
         url: response.url,
         original: response,
+    };
+
+    if (!response.ok) {
+        throw returnData;
     }
+
+    return returnData;
 }
 
 /**
  * Get the content from a fetch response.
  * Checks the content-type header to determine the format.
- * @param response
+ * @param {Response} response
  * @returns {Promise<Object|String>}
  */
 async function getResponseContent(response) {
+    if (response.status === 204) {
+        return null;
+    }
+
     const responseContentType = response.headers.get('Content-Type');
     const subType = responseContentType.split('/').pop();
 

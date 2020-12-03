@@ -88,12 +88,8 @@ class AttachmentService extends UploadService
 
     /**
      * Save a new File attachment from a given link and name.
-     * @param string $name
-     * @param string $link
-     * @param int $page_id
-     * @return Attachment
      */
-    public function saveNewFromLink($name, $link, $page_id)
+    public function saveNewFromLink(string $name, string $link, int $page_id): Attachment
     {
         $largestExistingOrder = Attachment::where('uploaded_to', '=', $page_id)->max('order');
         return Attachment::forceCreate([
@@ -109,27 +105,25 @@ class AttachmentService extends UploadService
     }
 
     /**
-     * Updates the file ordering for a listing of attached files.
-     * @param array $attachmentList
-     * @param $pageId
+     * Updates the ordering for a listing of attached files.
      */
-    public function updateFileOrderWithinPage($attachmentList, $pageId)
+    public function updateFileOrderWithinPage(array $attachmentOrder, string $pageId)
     {
-        foreach ($attachmentList as $index => $attachment) {
-            Attachment::where('uploaded_to', '=', $pageId)->where('id', '=', $attachment['id'])->update(['order' => $index]);
+        foreach ($attachmentOrder as $index => $attachmentId) {
+            Attachment::query()->where('uploaded_to', '=', $pageId)
+                ->where('id', '=', $attachmentId)
+                ->update(['order' => $index]);
         }
     }
 
 
     /**
      * Update the details of a file.
-     * @param Attachment $attachment
-     * @param $requestData
-     * @return Attachment
      */
-    public function updateFile(Attachment $attachment, $requestData)
+    public function updateFile(Attachment $attachment, array $requestData): Attachment
     {
         $attachment->name = $requestData['name'];
+
         if (isset($requestData['link']) && trim($requestData['link']) !== '') {
             $attachment->path = $requestData['link'];
             if (!$attachment->external) {
@@ -137,6 +131,7 @@ class AttachmentService extends UploadService
                 $attachment->external = true;
             }
         }
+
         $attachment->save();
         return $attachment;
     }

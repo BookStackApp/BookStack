@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Uploads\HttpFetcher;
 use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class ExportTest extends TestCase
 {

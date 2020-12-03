@@ -7,6 +7,12 @@
 }
 .primary-background-light {
   background-color: var(--color-primary-light);
+  @include whenDark {
+    background: #000;
+    .text-primary {
+      color: #AAA !important;
+    }
+  }
 }
 
 /*
@@ -36,13 +42,18 @@
 }
 
 .text-muted {
-  color: #575757 !important;
-  fill: #575757 !important;
+  @include lightDark(color, #575757, #888888, true);
+  fill: currentColor !important;
 }
 
 .text-dark {
-  color: #222 !important;
-  fill: #222 !important;
+  @include lightDark(color, #222, #ccc, true);
+  fill: currentColor !important;
+}
+
+.text-white {
+  color: #fff;
+  fill: currentColor !important;
 }
 
 /*

@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookshelfRepo;
 use Illuminate\Console\Command;
 
@@ -23,7 +23,7 @@ class CopyShelfPermissions extends Command
      *
      * @var string
      */
-    protected $description = 'Copy shelf permissions to all child books.';
+    protected $description = 'Copy shelf permissions to all child books';
 
     /**
      * @var BookshelfRepo

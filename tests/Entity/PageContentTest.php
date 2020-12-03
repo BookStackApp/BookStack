@@ -1,7 +1,8 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
-use BookStack\Entities\Managers\PageContent;
-use BookStack\Entities\Page;
+use BookStack\Entities\Tools\PageContent;
+use BookStack\Entities\Models\Page;
+use Tests\TestCase;
 
 class PageContentTest extends TestCase
 {
@@ -68,6 +69,25 @@ class PageContentTest extends TestCase
         $this->asEditor();
         $pageResp = $this->get($page->getUrl());
         $pageResp->assertSee($content);
+    }
+
+    public function test_page_includes_rendered_on_book_export()
+    {
+        $page = Page::query()->first();
+        $secondPage = Page::query()
+            ->where('book_id', '!=', $page->book_id)
+            ->first();
+
+        $content = '<p id="bkmrk-meow">my cat is awesome and scratchy</p>';
+        $secondPage->html = $content;
+        $secondPage->save();
+
+        $page->html = "{{@{$secondPage->id}#bkmrk-meow}}";
+        $page->save();
+
+        $this->asEditor();
+        $htmlContent = $this->get($page->book->getUrl('/export/html'));
+        $htmlContent->assertSee('my cat is awesome and scratchy');
     }
 
     public function test_page_content_scripts_removed_by_default()
@@ -139,6 +159,72 @@ class PageContentTest extends TestCase
 
     }
 
+    public function test_javascript_uri_links_are_removed()
+    {
+        $checks = [
+            '<a id="xss" href="javascript:alert(document.cookie)>Click me</a>',
+            '<a id="xss" href="javascript: alert(document.cookie)>Click me</a>'
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<a id="xss">');
+            $pageView->assertElementNotContains('.page-content', 'href=javascript:');
+        }
+    }
+    public function test_form_actions_with_javascript_are_removed()
+    {
+        $checks = [
+            '<form><input id="xss" type=submit formaction=javascript:alert(document.domain) value=Submit><input></form>',
+            '<form ><button id="xss" formaction=javascript:alert(document.domain)>Click me</button></form>',
+            '<form id="xss" action=javascript:alert(document.domain)><input type=submit value=Submit></form>'
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<button id="xss"');
+            $pageView->assertElementNotContains('.page-content', '<input id="xss"');
+            $pageView->assertElementNotContains('.page-content', '<form id="xss"');
+            $pageView->assertElementNotContains('.page-content', 'action=javascript:');
+            $pageView->assertElementNotContains('.page-content', 'formaction=javascript:');
+        }
+    }
+    
+    public function test_metadata_redirects_are_removed()
+    {
+        $checks = [
+            '<meta http-equiv="refresh" content="0; url=//external_url">',
+        ];
+
+        $this->asEditor();
+        $page = Page::first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', '<meta>');
+            $pageView->assertElementNotContains('.page-content', '</meta>');
+            $pageView->assertElementNotContains('.page-content', 'content=');
+            $pageView->assertElementNotContains('.page-content', 'external_url');
+        }
+    }
     public function test_page_inline_on_attributes_removed_by_default()
     {
         $this->asEditor();
@@ -242,6 +328,23 @@ class PageContentTest extends TestCase
         $this->assertEquals(substr_count($updatedPage->html, "bkmrk-test\""), 1);
     }
 
+    public function test_anchors_referencing_non_bkmrk_ids_rewritten_after_save()
+    {
+        $this->asEditor();
+        $page = Page::first();
+
+        $content = '<h1 id="non-standard-id">test</h1><p><a href="#non-standard-id">link</a></p>';
+        $this->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => $content,
+            'summary' => ''
+        ]);
+
+        $updatedPage = Page::where('id', '=', $page->id)->first();
+        $this->assertStringContainsString('id="bkmrk-test"', $updatedPage->html);
+        $this->assertStringContainsString('href="#bkmrk-test"', $updatedPage->html);
+    }
+
     public function test_get_page_nav_sets_correct_properties()
     {
         $content = '<h1 id="testa">Hello</h1><h2 id="testb">There</h2><h3 id="testc">Donkey</h3>';
@@ -302,5 +405,19 @@ class PageContentTest extends TestCase
             'nodeName' => 'h6',
             'level' => 3,
         ], $navMap[2]);
+    }
+
+    public function test_page_text_decodes_html_entities()
+    {
+        $page = Page::query()->first();
+
+        $this->actingAs($this->getAdmin())
+            ->put($page->getUrl(''), [
+                'name' => 'Testing',
+                'html' => '<p>&quot;Hello &amp; welcome&quot;</p>',
+            ]);
+
+        $page->refresh();
+        $this->assertEquals('"Hello & welcome"', $page->text);
     }
 }

@@ -1,9 +1,10 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
+use Tests\TestCase;
 
 class SortTest extends TestCase
 {
@@ -78,7 +79,7 @@ class SortTest extends TestCase
         $movePageResp = $this->actingAs($this->getEditor())->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
-        $page = Page::find($page->id);
+        $page->refresh();
 
         $movePageResp->assertRedirect($page->getUrl());
         $this->assertTrue($page->book->id == $newBook->id, 'Page parent is now the new book');

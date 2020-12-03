@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'A fáj feltöltése időtúllépést okozott.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Oldal eltárás csatolmány frissítése közben',
     'attachment_not_found' => 'Csatolmány nem található',
 
     // Pages

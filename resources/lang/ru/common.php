@@ -33,6 +33,7 @@ return [
     'copy' => 'Скопировать',
     'reply' => 'Ответить',
     'delete' => 'Удалить',
+    'delete_confirm' => 'Подтвердить удаление',
     'search' => 'Поиск',
     'search_clear' => 'Очистить поиск',
     'reset' => 'Сбросить',
@@ -66,6 +67,8 @@ return [
     'profile_menu' => 'Меню профиля',
     'view_profile' => 'Посмотреть профиль',
     'edit_profile' => 'Редактировать профиль',
+    'dark_mode' => 'Темный режим',
+    'light_mode' => 'Светлый режим',
 
     // Layout tabs
     'tab_info' => 'Информация',

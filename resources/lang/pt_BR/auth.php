@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Redefinir Senha',
     'reset_password_send_instructions' => 'Insira seu e-mail abaixo e uma mensagem com o link de redefinição de senha lhe será enviada.',
     'reset_password_send_button' => 'Enviar o Link de Redefinição',
-    'reset_password_sent_success' => 'Um link de redefinição de senha foi enviado para :email.',
+    'reset_password_sent' => 'Um link de redefinição de senha será enviado para :email se o endereço de e-mail for encontrado no sistema.',
     'reset_password_success' => 'Sua senha foi redefinida com sucesso.',
     'email_reset_subject' => 'Redefina a senha de :appName',
     'email_reset_text' => 'Você recebeu esse e-mail pois recebemos uma solicitação de redefinição de senha para a sua conta.',

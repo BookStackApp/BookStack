@@ -51,7 +51,7 @@ All development on BookStack is currently done on the master branch. When it's t
 
 * [Node.js](https://nodejs.org/en/) v10.0+
 
-This project uses SASS for CSS development and this is built, along with the JavaScript, using webpack. The below npm commands can be used to install the dependencies & run the build tasks:
+This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
 
 ``` bash
 # Install NPM Dependencies
@@ -93,12 +93,11 @@ To get started, make sure you meet the following requirements:
 
 If all the conditions are met, you can proceed with the following steps:
 
-1. Install PHP/Composer dependencies with **`docker-compose run app composer install`** (first time can take a while because the image has to be built).
-2. **Copy `.env.example` to `.env`** and change `APP_KEY` to a random 32 char string.
-3. Make sure **port 8080 is unused** *or else* change `DEV_PORT` to a free port on your host.
-4. **Run `chgrp -R docker storage`**. The development container will chown the `storage` directory to the `www-data` user inside the container so BookStack can write to it. You need to change the group to your host's `docker` group here to not lose access to the `storage` directory.
-5. **Run `docker-compose up`** and wait until all database migrations have been done.
-6. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
+1. **Copy `.env.example` to `.env`**, change `APP_KEY` to a random 32 char string and set `APP_ENV` to `local`.
+2. Make sure **port 8080 is unused** *or else* change `DEV_PORT` to a free port on your host.
+3. **Run `chgrp -R docker storage`**. The development container will chown the `storage` directory to the `www-data` user inside the container so BookStack can write to it. You need to change the group to your host's `docker` group here to not lose access to the `storage` directory.
+4. **Run `docker-compose up`** and wait until the image is built and all database migrations have been done.
+5. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
 
 If needed, You'll be able to run any artisan commands via docker-compose like so:
 
@@ -157,8 +156,7 @@ These are the great open-source projects used to help build BookStack:
 * [Laravel](http://laravel.com/)
 * [TinyMCE](https://www.tinymce.com/)
 * [CodeMirror](https://codemirror.net)
-* [Vue.js](http://vuejs.org/)
-* [Sortable](https://github.com/SortableJS/Sortable) & [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable)
+* [Sortable](https://github.com/SortableJS/Sortable)
 * [Google Material Icons](https://material.io/icons/)
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [clipboard.js](https://clipboardjs.com/)
@@ -169,6 +167,6 @@ These are the great open-source projects used to help build BookStack:
     * [Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy)
     * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
-* [Draw.io](https://github.com/jgraph/drawio)
+* [diagrams.net](https://github.com/jgraph/drawio)
 * [Laravel Stats](https://github.com/stefanzweifel/laravel-stats)
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml)

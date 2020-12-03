@@ -27,9 +27,9 @@
                     <button type="button" class="text-button" action="reply" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
                 @endif
                 @if(userCan('comment-delete', $comment))
-                    <div dropdown class="dropdown-container">
-                        <button type="button" dropdown-toggle aria-haspopup="true" aria-expanded="false" class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
-                        <ul class="dropdown-menu" role="menu">
+                    <div component="dropdown" class="dropdown-container">
+                        <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
+                        <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                             <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
                             <li><button action="delete" type="button" class="text-button text-neg" >@icon('delete'){{ trans('common.delete') }}</button></li>
                         </ul>

@@ -1,6 +1,6 @@
 <?php namespace Tests;
 
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Entity;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -53,9 +53,9 @@ abstract class TestCase extends BaseTestCase
      * Assert that an activity entry exists of the given key.
      * Checks the activity belongs to the given entity if provided.
      */
-    protected function assertActivityExists(string $key, Entity $entity = null)
+    protected function assertActivityExists(string $type, Entity $entity = null)
     {
-        $detailsToCheck = ['key' => $key];
+        $detailsToCheck = ['type' => $type];
 
         if ($entity) {
             $detailsToCheck['entity_type'] = $entity->getMorphClass();

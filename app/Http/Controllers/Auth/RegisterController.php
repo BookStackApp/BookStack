@@ -51,7 +51,6 @@ class RegisterController extends Controller
 
         $this->redirectTo = url('/');
         $this->redirectPath = url('/');
-        parent::__construct();
     }
 
     /**

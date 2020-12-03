@@ -1,7 +1,6 @@
 <?php namespace Tests\Uploads;
 
-
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use Illuminate\Http\UploadedFile;
 
 trait UsesImages
@@ -40,11 +39,8 @@ trait UsesImages
 
     /**
      * Get the path for a test image.
-     * @param $type
-     * @param $fileName
-     * @return string
      */
-    protected function getTestImagePath($type, $fileName)
+    protected function getTestImagePath(string $type, string $fileName): string
     {
         return '/uploads/images/' . $type . '/' . Date('Y-m') . '/' . $fileName;
     }

@@ -37,7 +37,7 @@ class Collapsible {
     }
 
     openIfContainsError() {
-        const error = this.content.querySelector('.text-neg');
+        const error = this.content.querySelector('.text-neg.text-small');
         if (error) {
             this.open();
         }

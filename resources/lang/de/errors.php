@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Der Upload der Datei ist abgelaufen.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Die Seite stimmte nach dem Hochladen des Anhangs nicht überein.',
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',
 
     // Pages
@@ -83,7 +82,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Seite nicht gefunden',
     'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Sie angefordert haben, wurde nicht gefunden.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Wenn Sie erwartet haben, dass diese Seite existiert, haben Sie möglicherweise nicht die Berechtigung, sie anzuzeigen.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
     'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',
@@ -98,6 +97,6 @@ return [
     'api_user_token_expired' => 'Das verwendete Autorisierungs-Token ist abgelaufen',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Fehler beim Senden einer Test E-Mail:',
 
 ];

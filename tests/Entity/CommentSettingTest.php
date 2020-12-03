@@ -1,28 +1,35 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
-class CommentSettingTest extends BrowserKitTest {
-  protected $page;
+use BookStack\Entities\Models\Page;
+use Tests\BrowserKitTest;
 
-  public function setUp(): void {
-      parent::setUp();
-      $this->page = \BookStack\Entities\Page::first();
-  }
+class CommentSettingTest extends BrowserKitTest
+{
+    protected $page;
 
-  public function test_comment_disable () {
-    $this->asAdmin();
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->page = Page::first();
+    }
 
-    $this->setSettings(['app-disable-comments' => 'true']);
+    public function test_comment_disable()
+    {
+        $this->asAdmin();
 
-    $this->asAdmin()->visit($this->page->getUrl())
-    ->pageNotHasElement('.comments-list');
-  }
+        $this->setSettings(['app-disable-comments' => 'true']);
 
-  public function test_comment_enable () {
-    $this->asAdmin();
+        $this->asAdmin()->visit($this->page->getUrl())
+            ->pageNotHasElement('.comments-list');
+    }
 
-    $this->setSettings(['app-disable-comments' => 'false']);
+    public function test_comment_enable()
+    {
+        $this->asAdmin();
 
-    $this->asAdmin()->visit($this->page->getUrl())
-    ->pageHasElement('.comments-list');
-  }
+        $this->setSettings(['app-disable-comments' => 'false']);
+
+        $this->asAdmin()->visit($this->page->getUrl())
+            ->pageHasElement('.comments-list');
+    }
 }

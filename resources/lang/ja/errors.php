@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'ファイルのアップロードがタイムアウトしました。',
 
     // Attachments
-    'attachment_page_mismatch' => '添付を更新するページが一致しません',
     'attachment_not_found' => '添付ファイルが見つかりません。',
 
     // Pages

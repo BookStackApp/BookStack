@@ -19,6 +19,7 @@ class Localization
      */
     protected $localeMap = [
         'ar' => 'ar',
+        'bg' => 'bg_BG',
         'da' => 'da_DK',
         'de' => 'de_DE',
         'de_informal' => 'de_DE',

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="bootstrap/init.php"
+         bootstrap="vendor/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -51,5 +51,7 @@
         <server name="DEBUGBAR_ENABLED" value="false"/>
         <server name="SAML2_ENABLED" value="false"/>
         <server name="API_REQUESTS_PER_MIN" value="180"/>
+        <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
+        <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
     </php>
 </phpunit>

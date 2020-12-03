@@ -47,7 +47,19 @@ class Translator {
      */
     getPlural(key, count, replacements) {
         const text = this.getTransText(key);
-        const splitText = text.split('|');
+        return this.parsePlural(text, count, replacements);
+    }
+
+    /**
+     * Parse the given translation and find the correct plural option
+     * to use. Similar format at laravel's 'trans_choice' helper.
+     * @param {String} translation
+     * @param {Number} count
+     * @param {Object} replacements
+     * @returns {String}
+     */
+    parsePlural(translation, count, replacements) {
+        const splitText = translation.split('|');
         const exactCountRegex = /^{([0-9]+)}/;
         const rangeRegex = /^\[([0-9]+),([0-9*]+)]/;
         let result = null;

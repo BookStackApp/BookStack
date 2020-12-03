@@ -6,7 +6,7 @@
     justify-self: stretch;
     align-self: stretch;
     height: auto;
-    margin-right: $-l;
+    margin-inline-end: $-l;
   }
   .icon:after {
     opacity: 0.5;
@@ -60,7 +60,7 @@
     border-radius: 0 4px 4px 0;
     padding: $-xs $-m;
     width: 100%;
-    text-align: left;
+    text-align: start;
   }
   .chapter-expansion-toggle:hover {
     background-color: rgba(0, 0, 0, 0.06);
@@ -88,14 +88,18 @@
 .sidebar-page-nav {
   $nav-indent: $-m;
   list-style: none;
-  margin: $-s 0 $-m $-xs;
+  @include margin($-s, 0, $-m, $-xs);
   position: relative;
   &:after {
     content: '';
     display: block;
     position: absolute;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    @include rtl {
+      left: auto;
+      right: 0;
+    }
+    @include lightDark(background-color, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
     width: 2px;
     top: 5px;
     bottom: 5px;
@@ -107,28 +111,28 @@
     position: relative;
   }
   .h1 {
-    padding-left: $nav-indent;
+    padding-inline-start: $nav-indent;
   }
   .h2 {
-    padding-left: $nav-indent * 1.5;
+    padding-inline-start: $nav-indent * 1.5;
   }
   .h3 {
-    padding-left: $nav-indent * 2;
+    padding-inline-start: $nav-indent * 2;
   }
   .h4 {
-    padding-left: $nav-indent * 2.5;
+    padding-inline-start: $nav-indent * 2.5;
   }
   .h5 {
-    padding-left: $nav-indent*3;
+    padding-inline-start: $nav-indent*3;
   }
   .h6 {
-    padding-left: $nav-indent*3.5;
+    padding-inline-start: $nav-indent*3.5;
   }
   .current-heading {
     font-weight: bold;
   }
   li:not(.current-heading) .sidebar-page-nav-bullet {
-    background-color: #BBB !important;
+    @include lightDark(background-color, #BBB, #666, true);
   }
   .sidebar-page-nav-bullet {
     width: 6px;
@@ -138,16 +142,21 @@
     top: 30%;
     border-radius: 50%;
     box-shadow: 0 0 0 6px #F2F2F2;
+    @include lightDark(box-shadow, 0 0 0 6px #F2F2F2, 0 0 0 6px #111);
     z-index: 1;
+    @include rtl {
+      left: auto;
+      right: -2px;
+    }
   }
 }
 
 // Sidebar list
 .book-tree .sidebar-page-list  {
   list-style: none;
-  margin: $-xs -$-s 0 -$-s;
-  padding-left: 0;
-  padding-right: 0;
+  @include margin($-xs, -$-s, 0, -$-s);
+  padding-inline-start: 0;
+  padding-inline-end: 0;
   position: relative;
 
   &:after, .sub-menu:after {
@@ -157,14 +166,18 @@
     left: $-m;
     top: 1rem;
     bottom: 1rem;
-    border-left: 4px solid rgba(0, 0, 0, 0.1);
+    border-inline-start: 4px solid rgba(0, 0, 0, 0.1);
     z-index: 0;
+    @include rtl {
+      left: auto;
+      right: $-m;
+    }
   }
 
   ul {
     list-style: none;
-    padding-left: 1rem;
-    padding-right: 0;
+    padding-inline-start: 1rem;
+    padding-inline-end: 0;
   }
 
   .entity-list-item {
@@ -183,7 +196,7 @@
   }
   .entity-list-item.no-hover {
     margin-top: -$-xs;
-    padding-right: 0;
+    padding-inline-end: 0;
   }
   .entity-list-item-name {
     font-size: 1em;
@@ -192,10 +205,10 @@
   .chapter-child-menu {
     font-size: .8rem;
     margin-top: -.2rem;
-    margin-left: -1rem;
+    margin-inline-start: -1rem;
   }
   [chapter-toggle] {
-    padding-left: .7rem;
+    padding-inline-start: .7rem;
     padding-bottom: .2rem;
   }
   .entity-list-item .icon {
@@ -218,7 +231,7 @@
 .chapter-child-menu {
   ul.sub-menu {
     display: none;
-    padding-left: 0;
+    padding-inline-start: 0;
     position: relative;
   }
   [chapter-toggle].open + .sub-menu {
@@ -254,25 +267,29 @@
   justify-content: space-between;
 }
 .sort-box-options .button {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .sortable-page-list {
-  margin-left: 0;
+  margin-inline-start: 0;
   padding: 0;
   .entity-list-item > span:first-child {
     align-self: flex-start;
+  }
+  .sortable-selected  .entity-list-item, .sortable-selected  .entity-list-item:hover {
+    outline: 1px dotted var(--color-primary);
+    background-color: var(--color-primary-light) !important;
   }
   .entity-list-item > div {
     display: block;
     flex: 1;
   }
   > ul {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
   ul {
     margin-bottom: $-m;
     margin-top: 0;
-    padding-left: $-m;
+    padding-inline-start: $-m;
   }
   li {
     border: 1px solid #DDD;
@@ -280,7 +297,7 @@
     min-height: 38px;
   }
   li.text-page, li.text-chapter {
-    border-left: 2px solid currentColor;
+    border-inline-start: 2px solid currentColor;
   }
   li:first-child {
     margin-top: $-xs;
@@ -320,7 +337,7 @@ ul.pagination {
   display: inline-block;
   list-style: none;
   margin: $-m 0;
-  padding-left: 1px;
+  padding-inline-start: 1px;
   li {
     float: left;
   }
@@ -338,14 +355,17 @@ ul.pagination {
     display: block;
     padding: $-xxs $-s;
     border: 1px solid #CCC;
-    margin-left: -1px;
+    margin-inline-start: -1px;
     user-select: none;
-    &.disabled {
-      cursor: not-allowed;
-    }
+    @include lightDark(color, #555, #eee);
+    @include lightDark(border-color, #ccc, #666);
+  }
+  li.disabled {
+    cursor: not-allowed;
   }
   li.active span {
-    color: #FFF;
+    @include lightDark(color, #111, #eee);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -402,13 +422,13 @@ ul.pagination {
     color: #666;
   }
   > span:first-child {
-    margin-right: $-m;
+    margin-inline-end: $-m;
     flex-basis: 1.88em;
     flex: none;
   }
   > span:last-child {
     flex: 1;
-    text-align: left;
+    text-align: start;
   }
   &:not(.no-hover) {
     cursor: pointer;
@@ -426,7 +446,7 @@ ul.pagination {
     border-color: rgba(0, 0, 0, 0.1);
   }
   &:focus {
-    background-color: #eee;
+    @include lightDark(background-color, #eee, #222);
     outline: 1px dotted #666;
     outline-offset: -2px;
   }
@@ -438,12 +458,12 @@ ul.pagination {
   position: relative;
   top: 1px;
   svg {
-    margin-right: 0;
+    margin-inline-end: 0;
   }
 }
 
 .card .entity-list-item:not(.no-hover):hover {
-  background-color: #F2F2F2;
+  @include lightDark(background-color, #F2F2F2, #2d2d2d)
 }
 .card .entity-list-item .entity-list-item:hover {
   background-color: #EEEEEE;
@@ -460,7 +480,7 @@ ul.pagination {
     text-overflow: ellipsis;
     height: 2.5em;
     overflow: hidden;
-    text-align: left;
+    text-align: start;
     display: block;
     white-space: nowrap;
   }
@@ -474,17 +494,16 @@ ul.pagination {
   background-position: 50% 50%;
   border-radius: 3px;
   position: relative;
-  margin-right: $-l;
+  margin-inline-end: $-l;
 
   &.entity-list-item-image-wide {
     width: 220px;
   }
 
   .svg-icon {
-    color: #FFF;
-    fill: #FFF;
+    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 1.66rem;
-    margin-right: 0;
+    margin-inline-end: 0;
     position: absolute;
     bottom: $-xs;
     left: $-xs;
@@ -542,15 +561,16 @@ ul.pagination {
   list-style: none;
   right: 0;
   margin: $-m 0;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  @include lightDark(background-color, #fff, #333);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
   border-radius: 1px;
-  border: 1px solid #EEE;
   min-width: 180px;
   padding: $-xs 0;
-  color: #555;
-  fill: #555;
-  text-align: left !important;
+  @include lightDark(color, #555, #eee);
+  fill: currentColor;
+  text-align: start !important;
+  max-height: 500px;
+  overflow-y: auto;
   &.wide {
     min-width: 220px;
   }
@@ -564,9 +584,11 @@ ul.pagination {
   a, button {
     display: block;
     padding: $-xs $-m;
-    color: #555;
+    @include lightDark(color, #555, #eee);
     fill: currentColor;
     white-space: nowrap;
+    line-height: 1.6;
+    cursor: pointer;
     &:hover, &:focus {
       text-decoration: none;
       background-color: var(--color-primary-light);
@@ -577,17 +599,20 @@ ul.pagination {
       outline-offset: -2px;
     }
     svg {
-      margin-right: $-s;
+      margin-inline-end: $-s;
       display: inline-block;
       width: 16px;
     }
   }
   button {
     width: 100%;
-    text-align: left;
+    text-align: start;
   }
   li.border-bottom {
     border-bottom: 1px solid #DDD;
+  }
+  li hr {
+    margin: $-xs 0;
   }
 }
 
@@ -612,10 +637,9 @@ ul.pagination {
 .featured-image-container-wrap {
   position: relative;
   .svg-icon {
-    color: #FFF;
-    fill: #FFF;
+    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 2rem;
-    margin-right: 0;
+    margin-inline-end: 0;
     position: absolute;
     bottom: 10px;
     left: 6px;
@@ -641,11 +665,10 @@ ul.pagination {
     padding: $-s;
   }
   a:not(.active) {
-    color: #444;
-    fill: #444;
+    @include lightDark(color, #444, #666);
   }
   a:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
     border-radius: 3px;
     text-decoration: none;
   }

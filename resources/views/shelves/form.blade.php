@@ -60,7 +60,7 @@
         <label for="tag-manager">{{ trans('entities.shelf_tags') }}</label>
     </button>
     <div class="collapse-content" collapsible-content>
-        @include('components.tag-manager', ['entity' => $shelf ?? null, 'entityType' => 'bookshelf'])
+        @include('components.tag-manager', ['entity' => $shelf ?? null])
     </div>
 </div>
 

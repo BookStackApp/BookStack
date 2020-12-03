@@ -1,12 +1,13 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
+use Tests\BrowserKitTest;
 
 class EntityTest extends BrowserKitTest
 {
@@ -16,27 +17,10 @@ class EntityTest extends BrowserKitTest
         // Test Creation
         $book = $this->bookCreation();
         $chapter = $this->chapterCreation($book);
-        $page = $this->pageCreation($chapter);
+        $this->pageCreation($chapter);
 
         // Test Updating
-        $book = $this->bookUpdate($book);
-
-        // Test Deletion
-        $this->bookDelete($book);
-    }
-
-    public function bookDelete(Book $book)
-    {
-        $this->asAdmin()
-            ->visit($book->getUrl())
-            // Check link works correctly
-            ->click('Delete')
-            ->seePageIs($book->getUrl() . '/delete')
-            // Ensure the book name is show to user
-            ->see($book->name)
-            ->press('Confirm')
-            ->seePageIs('/books')
-            ->notSeeInDatabase('books', ['id' => $book->id]);
+        $this->bookUpdate($book);
     }
 
     public function bookUpdate(Book $book)
@@ -271,15 +255,20 @@ class EntityTest extends BrowserKitTest
             ->seeInElement('#recently-updated-pages', $page->name);
     }
 
-    public function test_slug_multi_byte_lower_casing()
+    public function test_slug_multi_byte_url_safe()
     {
         $book = $this->newBook([
-            'name' => 'КНИГА'
+            'name' => 'информация'
         ]);
 
-        $this->assertEquals('книга', $book->slug);
-    }
+        $this->assertEquals('informatsiya', $book->slug);
 
+        $book = $this->newBook([
+            'name' => '¿Qué?'
+        ]);
+
+        $this->assertEquals('que', $book->slug);
+    }
 
     public function test_slug_format()
     {

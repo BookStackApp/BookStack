@@ -33,13 +33,19 @@ return [
     'copy' => 'העתק',
     'reply' => 'השב',
     'delete' => 'מחק',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'חיפוש',
     'search_clear' => 'נקה חיפוש',
     'reset' => 'איפוס',
     'remove' => 'הסר',
     'add' => 'הוסף',
+    'fullscreen' => 'Fullscreen',
 
     // Sort Options
+    'sort_options' => 'Sort Options',
+    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_ascending' => 'Sort Ascending',
+    'sort_descending' => 'Sort Descending',
     'sort_name' => 'שם',
     'sort_created_at' => 'תאריך יצירה',
     'sort_updated_at' => 'תאריך עדכון',
@@ -55,10 +61,14 @@ return [
     'grid_view' => 'תצוגת רשת',
     'list_view' => 'תצוגת רשימה',
     'default' => 'ברירת מחדל',
+    'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'profile_menu' => 'Profile Menu',
     'view_profile' => 'הצג פרופיל',
     'edit_profile' => 'ערוך פרופיל',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'מידע',

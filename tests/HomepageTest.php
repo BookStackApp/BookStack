@@ -1,6 +1,6 @@
 <?php namespace Tests;
 
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Bookshelf;
 
 class HomepageTest extends TestCase
 {

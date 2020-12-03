@@ -5,38 +5,39 @@
 return [
 
     // Buttons
-    'cancel' => 'Storno',
+    'cancel' => 'Zrušit',
     'confirm' => 'Potvrdit',
     'back' => 'Zpět',
     'save' => 'Uložit',
     'continue' => 'Pokračovat',
-    'select' => 'Zvolit',
+    'select' => 'Vybrat',
     'toggle_all' => 'Přepnout vše',
     'more' => 'Více',
 
     // Form Labels
-    'name' => 'Jméno',
+    'name' => 'Název',
     'description' => 'Popis',
-    'role' => 'Funkce',
-    'cover_image' => 'Obrázek na přebal',
-    'cover_image_description' => 'Obrázek by měl být asi 440 × 250px.',
+    'role' => 'Role',
+    'cover_image' => 'Obrázek obálky',
+    'cover_image_description' => 'Obrázek by měl být přibližně 440×250px.',
     
     // Actions
     'actions' => 'Akce',
-    'view' => 'Pohled',
+    'view' => 'Zobrazit',
     'view_all' => 'Zobrazit vše',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
-    'sort' => 'Řadit',
+    'sort' => 'Seřadit',
     'move' => 'Přesunout',
     'copy' => 'Kopírovat',
     'reply' => 'Odpovědět',
-    'delete' => 'Smazat',
+    'delete' => 'Odstranit',
+    'delete_confirm' => 'Potvrdit odstranění',
     'search' => 'Hledat',
-    'search_clear' => 'Vyčistit hledání',
-    'reset' => 'Resetovat',
-    'remove' => 'Odstranit',
+    'search_clear' => 'Vymazat hledání',
+    'reset' => 'Obnovit',
+    'remove' => 'Odebrat',
     'add' => 'Přidat',
     'fullscreen' => 'Celá obrazovka',
 
@@ -45,33 +46,35 @@ return [
     'sort_direction_toggle' => 'Přepínač směru řazení',
     'sort_ascending' => 'Řadit vzestupně',
     'sort_descending' => 'Řadit sestupně',
-    'sort_name' => 'Jméno',
+    'sort_name' => 'Název',
     'sort_created_at' => 'Datum vytvoření',
     'sort_updated_at' => 'Datum aktualizace',
 
     // Misc
-    'deleted_user' => 'Smazaný uživatel',
+    'deleted_user' => 'Odstraněný uživatel',
     'no_activity' => 'Žádná aktivita k zobrazení',
-    'no_items' => 'Žádné položky nejsou k mání',
+    'no_items' => 'Žádné položky k dispozici',
     'back_to_top' => 'Zpět na začátek',
-    'toggle_details' => 'Ukázat detaily',
-    'toggle_thumbnails' => 'Ukázat náhledy',
-    'details' => 'Detaily',
-    'grid_view' => 'Zobrazit dlaždice',
-    'list_view' => 'Zobrazit seznam',
+    'toggle_details' => 'Přepnout podrobnosti',
+    'toggle_thumbnails' => 'Přepnout náhledy',
+    'details' => 'Podrobnosti',
+    'grid_view' => 'Zobrazení mřížky',
+    'list_view' => 'Zobrazení seznamu',
     'default' => 'Výchozí',
     'breadcrumb' => 'Drobečková navigace',
 
     // Header
     'profile_menu' => 'Nabídka profilu',
-    'view_profile' => 'Ukázat profil',
+    'view_profile' => 'Zobrazit profil',
     'edit_profile' => 'Upravit profil',
+    'dark_mode' => 'Tmavý režim',
+    'light_mode' => 'Světelný režim',
 
     // Layout tabs
-    'tab_info' => 'Info',
+    'tab_info' => 'Informace',
     'tab_content' => 'Obsah',
 
     // Email Content
-    'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko ":actionText", zkopírujte odkaz níže přímo do webového prohlížeče:',
+    'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko „:actionText“, zkopírujte a vložte níže uvedenou URL do vašeho webového prohlížeče:',
     'email_rights' => 'Všechna práva vyhrazena',
 ];

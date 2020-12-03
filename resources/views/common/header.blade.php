@@ -29,7 +29,7 @@
                 <div class="links text-center">
                     @if (hasAppAccess())
                         <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
-                        @if(userCanOnAny('view', \BookStack\Entities\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
+                        @if(userCanOnAny('view', \BookStack\Entities\Models\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
                             <a href="{{ url('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
                         @endif
                         <a href="{{ url('/books') }}">@icon('books'){{ trans('entities.books') }}</a>
@@ -50,13 +50,13 @@
                 </div>
                 @if(signedInUser())
                     <?php $currentUser = user(); ?>
-                    <div class="dropdown-container" dropdown>
-                        <span class="user-name py-s hide-under-l" dropdown-toggle
+                    <div class="dropdown-container" component="dropdown">
+                        <span class="user-name py-s hide-under-l" refs="dropdown@toggle"
                               aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.profile_menu') }}" tabindex="0">
                             <img class="avatar" src="{{$currentUser->getAvatar(30)}}" alt="{{ $currentUser->name }}">
                             <span class="name">{{ $currentUser->getShortName(9) }}</span> @icon('caret-down')
                         </span>
-                        <ul class="dropdown-menu" role="menu">
+                        <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                             <li>
                                 <a href="{{ url("/user/{$currentUser->id}") }}">@icon('user'){{ trans('common.view_profile') }}</a>
                             </li>
@@ -69,6 +69,10 @@
                                 @else
                                     <a href="{{ url('/logout') }}">@icon('logout'){{ trans('auth.logout') }}</a>
                                 @endif
+                            </li>
+                            <li><hr></li>
+                            <li>
+                                @include('partials.dark-mode-toggle')
                             </li>
                         </ul>
                     </div>

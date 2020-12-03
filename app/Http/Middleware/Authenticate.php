@@ -44,6 +44,10 @@ class Authenticate
             ], 401);
         }
 
+        if (session()->get('sent-email-confirmation') === true) {
+            return redirect('/register/confirm');
+        }
+
         return redirect('/register/confirm/awaiting');
     }
 }

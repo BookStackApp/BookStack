@@ -2,10 +2,11 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use Activity;
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
-use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -45,7 +46,6 @@ class LoginController extends Controller
         $this->socialAuthService = $socialAuthService;
         $this->redirectPath = url('/');
         $this->redirectAfterLogout = url('/login');
-        parent::__construct();
     }
 
     public function username()
@@ -76,9 +76,13 @@ class LoginController extends Controller
             ]);
         }
 
+        // Store the previous location for redirect after login
         $previous = url()->previous('');
-        if (setting('app-public') && $previous && $previous !== url('/login')) {
-            redirect()->setIntendedUrl($previous);
+        if ($previous && $previous !== url('/login') && setting('app-public')) {
+            $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+            if ($isPreviousFromInstance) {
+                redirect()->setIntendedUrl($previous);
+            }
         }
 
         return view('auth.login', [
@@ -98,6 +102,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
+        $username = $request->get($this->username());
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -106,6 +111,7 @@ class LoginController extends Controller
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
+            Activity::logFailedLogin($username);
             return $this->sendLockoutResponse($request);
         }
 
@@ -114,6 +120,7 @@ class LoginController extends Controller
                 return $this->sendLoginResponse($request);
             }
         } catch (LoginAttemptException $exception) {
+            Activity::logFailedLogin($username);
             return $this->sendLoginAttemptExceptionResponse($exception, $request);
         }
 
@@ -122,7 +129,29 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
+        Activity::logFailedLogin($username);
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // Authenticate on all session guards if a likely admin
+        if ($user->can('users-manage') && $user->can('user-roles-manage')) {
+            $guards = ['standard', 'ldap', 'saml2'];
+            foreach ($guards as $guard) {
+                auth($guard)->login($user);
+            }
+        }
+
+        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
+        return redirect()->intended($this->redirectPath());
     }
 
     /**

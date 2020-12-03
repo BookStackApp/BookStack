@@ -18,7 +18,7 @@ class ClearViews extends Command
      *
      * @var string
      */
-    protected $description = 'Clear all view-counts for all entities.';
+    protected $description = 'Clear all view-counts for all entities';
 
     /**
      * Create a new command instance.

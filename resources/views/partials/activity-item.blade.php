@@ -7,7 +7,7 @@
     @endif
 </div>
 
-<div v-pre>
+<div>
     @if($activity->user)
         <a href="{{ $activity->user->getProfileUrl() }}">{{ $activity->user->name }}</a>
     @else
@@ -16,8 +16,12 @@
 
     {{ $activity->getText() }}
 
-    @if($activity->entity)
+    @if($activity->entity && is_null($activity->entity->deleted_at))
         <a href="{{ $activity->entity->getUrl() }}">{{ $activity->entity->name }}</a>
+    @endif
+
+    @if($activity->entity && !is_null($activity->entity->deleted_at))
+        "{{ $activity->entity->name }}"
     @endif
 
     @if($activity->extra) "{{ $activity->extra }}" @endif

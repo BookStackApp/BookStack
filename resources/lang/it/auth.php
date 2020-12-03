@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Reimposta Password',
     'reset_password_send_instructions' => 'Inserisci il tuo indirizzo sotto e ti verrà inviata una mail contenente un link per resettare la tua password.',
     'reset_password_send_button' => 'Invia Link Reset',
-    'reset_password_sent_success' => 'Un link di reset è stato mandato a :email.',
+    'reset_password_sent' => 'Un link di reset della password verrà inviato a :email se la mail verrà trovata nel sistema.',
     'reset_password_success' => 'La tua password è stata resettata correttamente.',
     'email_reset_subject' => 'Reimposta la password di :appName',
     'email_reset_text' => 'Stai ricevendo questa mail perché abbiamo ricevuto una richiesta di reset della password per il tuo account.',

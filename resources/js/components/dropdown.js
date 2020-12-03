@@ -3,14 +3,17 @@ import {onSelect} from "../services/dom";
 /**
  * Dropdown
  * Provides some simple logic to create simple dropdown menus.
+ * @extends {Component}
  */
 class DropDown {
 
-    constructor(elem) {
-        this.container = elem;
-        this.menu = elem.querySelector('.dropdown-menu, [dropdown-menu]');
-        this.moveMenu = elem.hasAttribute('dropdown-move-menu');
-        this.toggle = elem.querySelector('[dropdown-toggle]');
+    setup() {
+        this.container = this.$el;
+        this.menu = this.$refs.menu;
+        this.toggle = this.$refs.toggle;
+        this.moveMenu = this.$opts.moveMenu;
+
+        this.direction = (document.dir === 'rtl') ? 'right' : 'left';
         this.body = document.body;
         this.showing = false;
         this.setupListeners();
@@ -28,7 +31,11 @@ class DropDown {
             this.rect = this.menu.getBoundingClientRect();
             this.body.appendChild(this.menu);
             this.menu.style.position = 'fixed';
-            this.menu.style.left = `${this.rect.left}px`;
+            if (this.direction === 'right') {
+                this.menu.style.right = `${(this.rect.right - this.rect.width)}px`;
+            } else {
+                this.menu.style.left = `${this.rect.left}px`;
+            }
             this.menu.style.top = `${this.rect.top}px`;
             this.menu.style.width = `${this.rect.width}px`;
         }
@@ -67,7 +74,7 @@ class DropDown {
         this.toggle.setAttribute('aria-expanded', 'false');
         if (this.moveMenu) {
             this.menu.style.position = '';
-            this.menu.style.left = '';
+            this.menu.style[this.direction] = '';
             this.menu.style.top = '';
             this.menu.style.width = '';
             this.container.appendChild(this.menu);

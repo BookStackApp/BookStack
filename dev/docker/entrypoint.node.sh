@@ -5,4 +5,4 @@ set -e
 npm install
 npm rebuild node-sass
 
-exec npm run watch
+SHELL=/bin/sh exec npm run watch

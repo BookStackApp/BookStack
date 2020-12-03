@@ -1,31 +1,29 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ViewService;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Managers\EntityContext;
-use BookStack\Entities\SearchService;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Tools\SearchRunner;
+use BookStack\Entities\Tools\ShelfContext;
+use BookStack\Entities\Tools\SearchOptions;
+use BookStack\Entities\Tools\SiblingFetcher;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
     protected $viewService;
-    protected $searchService;
+    protected $searchRunner;
     protected $entityContextManager;
 
-    /**
-     * SearchController constructor.
-     */
     public function __construct(
         ViewService $viewService,
-        SearchService $searchService,
-        EntityContext $entityContextManager
+        SearchRunner $searchRunner,
+        ShelfContext $entityContextManager
     ) {
         $this->viewService = $viewService;
-        $this->searchService = $searchService;
+        $this->searchRunner = $searchRunner;
         $this->entityContextManager = $entityContextManager;
-        parent::__construct();
     }
 
     /**
@@ -33,23 +31,24 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        $searchTerm = $request->get('term');
-        $this->setPageTitle(trans('entities.search_for_term', ['term' => $searchTerm]));
+        $searchOpts = SearchOptions::fromRequest($request);
+        $fullSearchString = $searchOpts->toString();
+        $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
         $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($searchTerm) . '&page=' . ($page+1));
+        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page+1));
 
-        $results = $this->searchService->searchEntities($searchTerm, 'all', $page, 20);
+        $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, 20);
 
         return view('search.all', [
             'entities'   => $results['results'],
             'totalResults' => $results['total'],
-            'searchTerm' => $searchTerm,
+            'searchTerm' => $fullSearchString,
             'hasNextPage' => $results['has_more'],
-            'nextPageLink' => $nextPageLink
+            'nextPageLink' => $nextPageLink,
+            'options' => $searchOpts,
         ]);
     }
-
 
     /**
      * Searches all entities within a book.
@@ -57,7 +56,7 @@ class SearchController extends Controller
     public function searchBook(Request $request, int $bookId)
     {
         $term = $request->get('term', '');
-        $results = $this->searchService->searchBook($bookId, $term);
+        $results = $this->searchRunner->searchBook($bookId, $term);
         return view('partials.entity-list', ['entities' => $results]);
     }
 
@@ -67,7 +66,7 @@ class SearchController extends Controller
     public function searchChapter(Request $request, int $chapterId)
     {
         $term = $request->get('term', '');
-        $results = $this->searchService->searchChapter($chapterId, $term);
+        $results = $this->searchRunner->searchChapter($chapterId, $term);
         return view('partials.entity-list', ['entities' => $results]);
     }
 
@@ -84,7 +83,7 @@ class SearchController extends Controller
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
             $searchTerm .= ' {type:'. implode('|', $entityTypes) .'}';
-            $entities = $this->searchService->searchEntities($searchTerm, 'all', 1, 20, $permission)['results'];
+            $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20, $permission)['results'];
         } else {
             $entities = $this->viewService->getPopular(20, 0, $entityTypes, $permission);
         }
@@ -100,39 +99,7 @@ class SearchController extends Controller
         $type = $request->get('entity_type', null);
         $id = $request->get('entity_id', null);
 
-        $entity = Entity::getEntityInstance($type)->newQuery()->visible()->find($id);
-        if (!$entity) {
-            return $this->jsonError(trans('errors.entity_not_found'), 404);
-        }
-
-        $entities = [];
-
-        // Page in chapter
-        if ($entity->isA('page') && $entity->chapter) {
-            $entities = $entity->chapter->getVisiblePages();
-        }
-
-        // Page in book or chapter
-        if (($entity->isA('page') && !$entity->chapter) || $entity->isA('chapter')) {
-            $entities = $entity->book->getDirectChildren();
-        }
-
-        // Book
-        // Gets just the books in a shelf if shelf is in context
-        if ($entity->isA('book')) {
-            $contextShelf = $this->entityContextManager->getContextualShelfForBook($entity);
-            if ($contextShelf) {
-                $entities = $contextShelf->visibleBooks()->get();
-            } else {
-                $entities = Book::visible()->get();
-            }
-        }
-
-        // Shelve
-        if ($entity->isA('bookshelf')) {
-            $entities = Bookshelf::visible()->get();
-        }
-
+        $entities = (new SiblingFetcher)->fetch($type, $id);
         return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
 }

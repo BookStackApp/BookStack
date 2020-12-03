@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Het e-mailadres is al bevestigd. Probeer in te loggen.',
     'email_confirmation_invalid' => 'Deze bevestigingstoken is ongeldig, Probeer opnieuw te registreren.',
     'email_confirmation_expired' => 'De bevestigingstoken is verlopen, Een nieuwe bevestigingsmail is verzonden.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'Het e-mail adres van dit account moet worden bevestigd',
     'ldap_fail_anonymous' => 'LDAP toegang kon geen \'anonymous bind\' uitvoeren',
     'ldap_fail_authed' => 'LDAP toegang was niet mogelijk met de opgegeven dn & wachtwoord',
     'ldap_extension_not_installed' => 'LDAP PHP-extensie is niet geïnstalleerd',
@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Bij het bijwerken van de bijlage bleek de pagina onjuist',
     'attachment_not_found' => 'Bijlage niet gevonden',
 
     // Pages
@@ -83,21 +82,21 @@ return [
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
     'sorry_page_not_found' => 'Sorry, de pagina die je zocht is niet beschikbaar.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Als u verwacht dat deze pagina bestaat heeft u misschien geen rechten om het te bekijken.',
     'return_home' => 'Terug naar home',
     'error_occurred' => 'Er Ging Iets Fout',
     'app_down' => ':appName is nu niet beschikbaar',
     'back_soon' => 'Komt snel weer online.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Geen autorisatie token gevonden',
+    'api_bad_authorization_format' => 'Een autorisatie token is gevonden, maar het formaat schijnt onjuist te zijn',
+    'api_user_token_not_found' => 'Er is geen overeenkomende API token gevonden voor de opgegeven autorisatie token',
+    'api_incorrect_token_secret' => 'Het opgegeven geheim voor de API token is onjuist',
+    'api_user_no_api_permission' => 'De eigenaar van de gebruikte API token heeft geen toestemming om API calls te maken',
+    'api_user_token_expired' => 'De gebruikte autorisatie token is verlopen',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Fout opgetreden bij het verzenden van een test email:',
 
 ];

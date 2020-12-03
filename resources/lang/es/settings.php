@@ -13,12 +13,12 @@ return [
 
     // App Settings
     'app_customization' => 'Personalización',
-    'app_features_security' => 'Características & Seguridad',
+    'app_features_security' => 'Características y seguridad',
     'app_name' => 'Nombre de la aplicación',
-    'app_name_desc' => 'Este nombre se muestra en la cabecera y en cualquier correo electrónico',
-    'app_name_header' => 'Mostrar el nombre de la aplicación en la cabecera',
-    'app_public_access' => 'Acceso Público',
-    'app_public_access_desc' => 'Activando esta opción permitirá que usuarios sin iniciar sesión puedan ver el contenido de tu aplicación Bookstack.',
+    'app_name_desc' => 'Este nombre se muestra en la cabecera y en cualquier correo electrónico enviado por el sistema.',
+    'app_name_header' => 'Mostrar nombre en la cabecera',
+    'app_public_access' => 'Acceso público',
+    'app_public_access_desc' => 'Activar esta opción permitirá a los visitantes que no hayan iniciado sesión, poder ver el contenido de tu BookStack.',
     'app_public_access_desc_guest' => 'El acceso público para visitantes puede ser controlado a través del usuario "Guest".',
     'app_public_access_toggle' => 'Permitir acceso público',
     'app_public_viewing' => '¿Permitir acceso público?',
@@ -61,7 +61,7 @@ return [
     'reg_email_confirmation_toggle' => 'Requerir confirmación por Email',
     'reg_confirm_email_desc' => 'Si se emplea la restricción por dominio, entonces se requerirá la confirmación por correo electrónico y esta opción será ignorada.',
     'reg_confirm_restrict_domain' => 'Restricción de Dominio',
-    'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los dominio a los que les gustaría restringir el registro de usuarios. A los usuarios les será enviado un correo electrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Tenga en cuenta que los usuarios podrán cambiar sus direcciones de correo electrónico después de registrarse exitosamente.',
+    'reg_confirm_restrict_domain_desc' => 'Introduzca una lista separada por comas de los dominios para cuentas de correo a los que se les permitirá el registro de usuarios. A los usuarios les será enviado un correo electrónico para confirmar la dirección antes de que se le permita interactuar con la aplicación. <br> Tenga en cuenta que los usuarios podrán cambiar sus direcciones de correo electrónico después de registrarse exitosamente.',
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
 
     // Maintenance settings
@@ -80,6 +80,20 @@ return [
     'maint_send_test_email_mail_subject' => 'Probar correo electrónico',
     'maint_send_test_email_mail_greeting' => '¡El envío de correos electrónicos parece funcionar!',
     'maint_send_test_email_mail_text' => '¡Enhorabuena! Al recibir esta notificación de correo electrónico, tu configuración de correo electrónico parece estar ajustada correctamente.',
+
+    // Audit Log
+    'audit' => 'Registro de Auditoría',
+    'audit_desc' => 'Este registro de auditoría muestra una lista de actividades registradas en el sistema. Esta lista no está filtrada a diferencia de las listas de actividad similares en el sistema donde se aplican los filtros de permisos.',
+    'audit_event_filter' => 'Filtro de eventos',
+    'audit_event_filter_no_filter' => 'Sin filtro',
+    'audit_deleted_item' => 'Elemento eliminado',
+    'audit_deleted_item_name' => 'Nombre: :name',
+    'audit_table_user' => 'Usuario',
+    'audit_table_event' => 'Evento',
+    'audit_table_item' => 'Elemento relacionado',
+    'audit_table_date' => 'Fecha de la actividad',
+    'audit_date_from' => 'Rango de fecha desde',
+    'audit_date_to' => 'Rango de fecha hasta',
 
     // Role Settings
     'roles' => 'Roles',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'API de sistema de acceso',
     'role_manage_settings' => 'Gestionar ajustes de la aplicación',
     'role_asset' => 'Permisos de contenido',
+    'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario alterar sus propios privilegios o los privilegios de otros en el sistema. Sólo asignar roles con estos permisos a usuarios de confianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los contenidos del sistema. Los permisos de Libros, Capítulos y Páginas sobreescribiran estos permisos.',
     'role_asset_admins' => 'A los administradores se les asigna automáticamente permisos para acceder a todo el contenido pero estas opciones podrían mostrar u ocultar opciones de la interfaz.',
     'role_all' => 'Todo',
@@ -185,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bǎlgarski',
         'cs' => 'Česky',
         'da' => 'Danés',
         'de' => 'Deutsch (Sie)',
@@ -192,6 +208,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
+        'he' => 'עברית',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',
@@ -201,6 +218,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
+        'sl' => 'Slovenščina',
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',

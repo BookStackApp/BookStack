@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Nahrávanie súboru vypršalo.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Page mismatch during attachment update',
     'attachment_not_found' => 'Attachment not found',
 
     // Pages

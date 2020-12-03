@@ -27,7 +27,6 @@
                 </div>
             </div>
 
-            {{--TODO - Add last login--}}
             <table class="table">
                 <tr>
                     <th></th>
@@ -37,6 +36,9 @@
                         <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'email']) }}">{{ trans('auth.email') }}</a>
                     </th>
                     <th>{{ trans('settings.role_user_roles') }}</th>
+                    <th class="text-right">
+                        <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'latest_activity']) }}">{{ trans('settings.users_latest_activity') }}</a>
+                    </th>
                 </tr>
                 @foreach($users as $user)
                     <tr>
@@ -54,6 +56,11 @@
                             @foreach($user->roles as $index => $role)
                                 <small><a href="{{ url("/settings/roles/{$role->id}") }}">{{$role->display_name}}</a>@if($index !== count($user->roles) -1),@endif</small>
                             @endforeach
+                        </td>
+                        <td class="text-right text-muted">
+                            @if($user->latestActivity)
+                                <small title="{{ $user->latestActivity->created_at->format('Y-m-d H:i:s') }}">{{ $user->latestActivity->created_at->diffForHumans() }}</small>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

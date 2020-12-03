@@ -1,10 +1,11 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Uploads\Image;
 use Illuminate\Support\Str;
+use Tests\TestCase;
 use Tests\Uploads\UsesImages;
 
 class BookShelfTest extends TestCase
@@ -53,6 +54,25 @@ class BookShelfTest extends TestCase
     {
         $resp = $this->asEditor()->get('/shelves');
         $resp->assertElementContains('a', 'New Shelf');
+    }
+
+    public function test_book_not_visible_in_shelf_list_view_if_user_cant_view_shelf()
+    {
+        config()->set([
+            'app.views.bookshelves' => 'list',
+        ]);
+        $shelf = Bookshelf::query()->first();
+        $book = $shelf->books()->first();
+
+        $resp = $this->asEditor()->get('/shelves');
+        $resp->assertSee($book->name);
+        $resp->assertSee($book->getUrl());
+
+        $this->setEntityRestrictions($book, []);
+
+        $resp = $this->asEditor()->get('/shelves');
+        $resp->assertDontSee($book->name);
+        $resp->assertDontSee($book->getUrl());
     }
 
     public function test_shelves_create()
@@ -202,16 +222,25 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_delete()
     {
-        $shelf = Bookshelf::first();
-        $resp = $this->asEditor()->get($shelf->getUrl('/delete'));
-        $resp->assertSeeText('Delete Bookshelf');
-        $resp->assertSee("action=\"{$shelf->getUrl()}\"");
+        $shelf = Bookshelf::query()->whereHas('books')->first();
+        $this->assertNull($shelf->deleted_at);
+        $bookCount = $shelf->books()->count();
 
-        $resp = $this->delete($shelf->getUrl());
-        $resp->assertRedirect('/shelves');
-        $this->assertDatabaseMissing('bookshelves', ['id' => $shelf->id]);
-        $this->assertDatabaseMissing('bookshelves_books', ['bookshelf_id' => $shelf->id]);
-        $this->assertSessionHas('success');
+        $deleteViewReq = $this->asEditor()->get($shelf->getUrl('/delete'));
+        $deleteViewReq->assertSeeText('Are you sure you want to delete this bookshelf?');
+
+        $deleteReq = $this->delete($shelf->getUrl());
+        $deleteReq->assertRedirect(url('/shelves'));
+        $this->assertActivityExists('bookshelf_delete', $shelf);
+
+        $shelf->refresh();
+        $this->assertNotNull($shelf->deleted_at);
+
+        $this->assertTrue($shelf->books()->count() === $bookCount);
+        $this->assertTrue($shelf->deletions()->count() === 1);
+
+        $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
+        $redirectReq->assertNotificationContains('Bookshelf Successfully Deleted');
     }
 
     public function test_shelf_copy_permissions()
@@ -263,4 +292,32 @@ class BookShelfTest extends TestCase
         $pageVisit->assertElementNotContains('.breadcrumbs', $shelf->getShortName());
     }
 
+    public function test_bookshelves_show_on_book()
+    {
+        // Create shelf
+        $shelfInfo = [
+            'name' => 'My test shelf' . Str::random(4),
+            'description' => 'Test shelf description ' . Str::random(10)
+        ];
+
+        $this->asEditor()->post('/shelves', $shelfInfo);
+        $shelf = Bookshelf::where('name', '=', $shelfInfo['name'])->first();
+
+        // Create book and add to shelf
+        $this->asEditor()->post($shelf->getUrl('/create-book'), [
+            'name' => 'Test book name',
+            'description' => 'Book in shelf description'
+        ]);
+
+        $newBook = Book::query()->orderBy('id', 'desc')->first();
+
+        $resp = $this->asEditor()->get($newBook->getUrl());
+        $resp->assertElementContains('.tri-layout-left-contents', $shelfInfo['name']);
+
+        // Remove shelf
+        $this->delete($shelf->getUrl());
+
+        $resp = $this->asEditor()->get($newBook->getUrl());
+        $resp->assertDontSee($shelfInfo['name']);
+    }
 }

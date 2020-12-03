@@ -7,11 +7,10 @@ window.baseUrl = function(path) {
 };
 
 // Set events and http services on window
-import Events from "./services/events"
+import events from "./services/events"
 import httpInstance from "./services/http"
-const eventManager = new Events();
 window.$http = httpInstance;
-window.$events = eventManager;
+window.$events = events;
 
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
@@ -19,14 +18,8 @@ import Translations from "./services/translations"
 const translator = new Translations();
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
+window.trans_plural = translator.parsePlural.bind(translator);
 
-// Make services available to Vue instances
-import Vue from "vue"
-Vue.prototype.$http = httpInstance;
-Vue.prototype.$events = eventManager;
-
-// Load Vues and components
-import vues from "./vues/vues"
+// Load Components
 import components from "./components"
-vues();
 components();

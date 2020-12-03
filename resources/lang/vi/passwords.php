@@ -8,7 +8,7 @@ return [
 
     'password' => 'Mật khẩu phải có tối thiểu 8 ký tự và và phải trùng với mật khẩu xác nhận.',
     'user' => "Chúng tôi không tìm thấy người dùng với địa chỉ email đó.",
-    'token' => 'Token đặt lại mật khẩu không hợp lệ.',
+    'token' => 'The password reset token is invalid for this email address.',
     'sent' => 'Chúng tôi đã gửi email chứa liên kết đặt lại mật khẩu cho bạn!',
     'reset' => 'Mật khẩu của bạn đã được đặt lại!',
 

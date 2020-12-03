@@ -1,10 +1,14 @@
 <?php namespace Tests;
 
+use BookStack\Actions\ActivityType;
+use BookStack\Actions\Comment;
+use BookStack\Actions\CommentRepo;
 use BookStack\Auth\Permissions\JointPermission;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Page;
 use BookStack\Auth\User;
 use BookStack\Entities\Repos\PageRepo;
+use Symfony\Component\Console\Exception\RuntimeException;
 
 class CommandsTest extends TestCase
 {
@@ -34,10 +38,10 @@ class CommandsTest extends TestCase
     {
         $this->asEditor();
         $page = Page::first();
-        \Activity::add($page, 'page_update', $page->book->id);
+        \Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
 
         $this->assertDatabaseHas('activities', [
-            'key' => 'page_update',
+            'type' => 'page_update',
             'entity_id' => $page->id,
             'user_id' => $this->getEditor()->id
         ]);
@@ -47,7 +51,7 @@ class CommandsTest extends TestCase
 
 
         $this->assertDatabaseMissing('activities', [
-            'key' => 'page_update'
+            'type' => 'page_update'
         ]);
     }
 
@@ -165,5 +169,54 @@ class CommandsTest extends TestCase
         $this->assertTrue($child->permissions()->count() === 2, "Child book should have copied permissions");
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'view', 'role_id' => $editorRole->id]);
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);
+    }
+
+    public function test_update_url_command_updates_page_content()
+    {
+        $page = Page::query()->first();
+        $page->html = '<a href="https://example.com/donkeys"></a>';
+        $page->save();
+
+        $this->artisan('bookstack:update-url https://example.com https://cats.example.com')
+            ->expectsQuestion("This will search for \"https://example.com\" in your database and replace it with  \"https://cats.example.com\".\nAre you sure you want to proceed?", 'y')
+            ->expectsQuestion("This operation could cause issues if used incorrectly. Have you made a backup of your existing database?", 'y');
+
+        $this->assertDatabaseHas('pages', [
+            'id' => $page->id,
+            'html' => '<a href="https://cats.example.com/donkeys"></a>'
+        ]);
+    }
+
+    public function test_update_url_command_requires_valid_url()
+    {
+        $badUrlMessage = "The given urls are expected to be full urls starting with http:// or https://";
+        $this->artisan('bookstack:update-url //example.com https://cats.example.com')->expectsOutput($badUrlMessage);
+        $this->artisan('bookstack:update-url https://example.com htts://cats.example.com')->expectsOutput($badUrlMessage);
+        $this->artisan('bookstack:update-url example.com https://cats.example.com')->expectsOutput($badUrlMessage);
+
+        $this->expectException(RuntimeException::class);
+        $this->artisan('bookstack:update-url https://cats.example.com');
+    }
+
+    public function test_regenerate_comment_content_command()
+    {
+        Comment::query()->forceCreate([
+            'html' => 'some_old_content',
+            'text' => 'some_fresh_content',
+        ]);
+
+        $this->assertDatabaseHas('comments', [
+            'html' => 'some_old_content',
+        ]);
+
+        $exitCode = \Artisan::call('bookstack:regenerate-comment-content');
+        $this->assertTrue($exitCode === 0, 'Command executed successfully');
+
+        $this->assertDatabaseMissing('comments', [
+            'html' => 'some_old_content',
+        ]);
+        $this->assertDatabaseHas('comments', [
+            'html' => "<p>some_fresh_content</p>\n",
+        ]);
     }
 }

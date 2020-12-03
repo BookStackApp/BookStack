@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopiraj',
     'reply' => 'Odgovori',
     'delete' => 'Izbriši',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Išči',
     'search_clear' => 'Počisti iskanje',
     'reset' => 'Ponastavi',
@@ -66,6 +67,8 @@ return [
     'profile_menu' => 'Meni profila',
     'view_profile' => 'Ogled profila',
     'edit_profile' => 'Uredi profil',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Informacije',

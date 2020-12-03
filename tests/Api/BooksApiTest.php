@@ -1,6 +1,7 @@
-<?php namespace Tests;
+<?php namespace Tests\Api;
 
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
+use Tests\TestCase;
 
 class BooksApiTest extends TestCase
 {
@@ -103,5 +104,37 @@ class BooksApiTest extends TestCase
 
         $resp->assertStatus(204);
         $this->assertActivityExists('book_delete');
+    }
+
+    public function test_export_html_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $book = Book::visible()->first();
+
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/html");
+        $resp->assertStatus(200);
+        $resp->assertSee($book->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.html"');
+    }
+
+    public function test_export_plain_text_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $book = Book::visible()->first();
+
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/plaintext");
+        $resp->assertStatus(200);
+        $resp->assertSee($book->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.txt"');
+    }
+
+    public function test_export_pdf_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $book = Book::visible()->first();
+
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/pdf");
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.pdf"');
     }
 }

@@ -5,10 +5,10 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
-use BookStack\Entities\SearchService;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\SearchIndex;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -33,7 +33,7 @@ class DummyContentSeeder extends Seeder
 
         $byData = ['created_by' => $editorUser->id, 'updated_by' => $editorUser->id];
 
-        factory(\BookStack\Entities\Book::class, 5)->create($byData)
+        factory(\BookStack\Entities\Models\Book::class, 5)->create($byData)
             ->each(function($book) use ($editorUser, $byData) {
                 $chapters = factory(Chapter::class, 3)->create($byData)
                     ->each(function($chapter) use ($editorUser, $book, $byData){
@@ -45,7 +45,7 @@ class DummyContentSeeder extends Seeder
                 $book->pages()->saveMany($pages);
             });
 
-        $largeBook = factory(\BookStack\Entities\Book::class)->create(array_merge($byData, ['name' => 'Large book' . Str::random(10)]));
+        $largeBook = factory(\BookStack\Entities\Models\Book::class)->create(array_merge($byData, ['name' => 'Large book' . Str::random(10)]));
         $pages = factory(Page::class, 200)->make($byData);
         $chapters = factory(Chapter::class, 50)->make($byData);
         $largeBook->pages()->saveMany($pages);
@@ -67,6 +67,6 @@ class DummyContentSeeder extends Seeder
         $token->save();
 
         app(PermissionService::class)->buildJointPermissions();
-        app(SearchService::class)->indexAllEntities();
+        app(SearchIndex::class)->indexAllEntities();
     }
 }

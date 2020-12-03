@@ -101,22 +101,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/{userId}', 'UserController@showProfilePage');
 
     // Image routes
-    Route::group(['prefix' => 'images'], function () {
-
-        // Gallery
-        Route::get('/gallery', 'Images\GalleryImageController@list');
-        Route::post('/gallery', 'Images\GalleryImageController@create');
-
-        // Drawio
-        Route::get('/drawio', 'Images\DrawioImageController@list');
-        Route::get('/drawio/base64/{id}', 'Images\DrawioImageController@getAsBase64');
-        Route::post('/drawio', 'Images\DrawioImageController@create');
-
-        // Shared gallery & draw.io endpoint
-        Route::get('/usage/{id}', 'Images\ImageController@usage');
-        Route::put('/{id}', 'Images\ImageController@update');
-        Route::delete('/{id}', 'Images\ImageController@destroy');
-    });
+    Route::get('/images/gallery', 'Images\GalleryImageController@list');
+    Route::post('/images/gallery', 'Images\GalleryImageController@create');
+    Route::get('/images/drawio', 'Images\DrawioImageController@list');
+    Route::get('/images/drawio/base64/{id}', 'Images\DrawioImageController@getAsBase64');
+    Route::post('/images/drawio', 'Images\DrawioImageController@create');
+    Route::get('/images/edit/{id}', 'Images\ImageController@edit');
+    Route::put('/images/{id}', 'Images\ImageController@update');
+    Route::delete('/images/{id}', 'Images\ImageController@destroy');
 
     // Attachments routes
     Route::get('/attachments/{id}', 'AttachmentController@get');
@@ -124,6 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/attachments/upload/{id}', 'AttachmentController@uploadUpdate');
     Route::post('/attachments/link', 'AttachmentController@attachLink');
     Route::put('/attachments/{id}', 'AttachmentController@update');
+    Route::get('/attachments/edit/{id}', 'AttachmentController@getUpdateForm');
     Route::get('/attachments/get/page/{pageId}', 'AttachmentController@listForPage');
     Route::put('/attachments/sort/page/{pageId}', 'AttachmentController@sortForPage');
     Route::delete('/attachments/{id}', 'AttachmentController@delete');
@@ -134,8 +127,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
 
     // Tag routes (AJAX)
-    Route::group(['prefix' => 'ajax/tags'], function() {
-        Route::get('/get/{entityType}/{entityId}', 'TagController@getForEntity');
+    Route::group(['prefix' => 'ajax/tags'], function () {
         Route::get('/suggest/names', 'TagController@getNameSuggestions');
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
     });
@@ -143,9 +135,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ajax/search/entities', 'SearchController@searchEntitiesAjax');
 
     // Comments
-    Route::post('/ajax/page/{pageId}/comment', 'CommentController@savePageComment');
-    Route::put('/ajax/comment/{id}', 'CommentController@update');
-    Route::delete('/ajax/comment/{id}', 'CommentController@destroy');
+    Route::post('/comment/{pageId}', 'CommentController@savePageComment');
+    Route::put('/comment/{id}', 'CommentController@update');
+    Route::delete('/comment/{id}', 'CommentController@destroy');
 
     // Links
     Route::get('/link/{id}', 'PageController@redirectFromLink');
@@ -170,18 +162,31 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/', 'SettingController@update');
 
         // Maintenance
-        Route::get('/maintenance', 'SettingController@showMaintenance');
-        Route::delete('/maintenance/cleanup-images', 'SettingController@cleanupImages');
-        Route::post('/maintenance/send-test-email', 'SettingController@sendTestEmail');
+        Route::get('/maintenance', 'MaintenanceController@index');
+        Route::delete('/maintenance/cleanup-images', 'MaintenanceController@cleanupImages');
+        Route::post('/maintenance/send-test-email', 'MaintenanceController@sendTestEmail');
+
+        // Recycle Bin
+        Route::get('/recycle-bin', 'RecycleBinController@index');
+        Route::post('/recycle-bin/empty', 'RecycleBinController@empty');
+        Route::get('/recycle-bin/{id}/destroy', 'RecycleBinController@showDestroy');
+        Route::delete('/recycle-bin/{id}', 'RecycleBinController@destroy');
+        Route::get('/recycle-bin/{id}/restore', 'RecycleBinController@showRestore');
+        Route::post('/recycle-bin/{id}/restore', 'RecycleBinController@restore');
+
+        // Audit Log
+        Route::get('/audit', 'AuditLogController@index');
 
         // Users
         Route::get('/users', 'UserController@index');
         Route::get('/users/create', 'UserController@create');
         Route::get('/users/{id}/delete', 'UserController@delete');
-        Route::patch('/users/{id}/switch-book-view', 'UserController@switchBookView');
+        Route::patch('/users/{id}/switch-books-view', 'UserController@switchBooksView');
+        Route::patch('/users/{id}/switch-shelves-view', 'UserController@switchShelvesView');
         Route::patch('/users/{id}/switch-shelf-view', 'UserController@switchShelfView');
         Route::patch('/users/{id}/change-sort/{type}', 'UserController@changeSort');
         Route::patch('/users/{id}/update-expansion-preference/{key}', 'UserController@updateExpansionPreference');
+        Route::patch('/users/toggle-dark-mode', 'UserController@toggleDarkMode');
         Route::post('/users/create', 'UserController@store');
         Route::get('/users/{id}', 'UserController@edit');
         Route::put('/users/{id}', 'UserController@update');
@@ -196,13 +201,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/users/{userId}/api-tokens/{tokenId}', 'UserApiTokenController@destroy');
 
         // Roles
-        Route::get('/roles', 'PermissionController@listRoles');
-        Route::get('/roles/new', 'PermissionController@createRole');
-        Route::post('/roles/new', 'PermissionController@storeRole');
-        Route::get('/roles/delete/{id}', 'PermissionController@showDeleteRole');
-        Route::delete('/roles/delete/{id}', 'PermissionController@deleteRole');
-        Route::get('/roles/{id}', 'PermissionController@editRole');
-        Route::put('/roles/{id}', 'PermissionController@updateRole');
+        Route::get('/roles', 'RoleController@list');
+        Route::get('/roles/new', 'RoleController@create');
+        Route::post('/roles/new', 'RoleController@store');
+        Route::get('/roles/delete/{id}', 'RoleController@showDelete');
+        Route::delete('/roles/delete/{id}', 'RoleController@delete');
+        Route::get('/roles/{id}', 'RoleController@edit');
+        Route::put('/roles/{id}', 'RoleController@update');
     });
 
 });

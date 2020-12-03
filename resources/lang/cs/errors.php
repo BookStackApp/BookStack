@@ -13,16 +13,16 @@ return [
     'email_already_confirmed' => 'Emailová adresa již byla potvrzena. Zkuste se přihlásit.',
     'email_confirmation_invalid' => 'Tento potvrzovací odkaz již neplatí nebo už byl použit. Zkuste prosím registraci znovu.',
     'email_confirmation_expired' => 'Potvrzovací odkaz už neplatí, email s novým odkazem už byl poslán.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => 'E-mailová adresa pro používaný účet musí být potvrzena',
     'ldap_fail_anonymous' => 'Přístup k adresáři LDAP jako anonymní uživatel (anonymous bind) selhal',
     'ldap_fail_authed' => 'Přístup k adresáři LDAP pomocí zadaného jména (dn) a hesla selhal',
     'ldap_extension_not_installed' => 'Není nainstalováno rozšíření LDAP pro PHP',
     'ldap_cannot_connect' => 'Nelze se připojit k adresáři LDAP. Prvotní připojení selhalo.',
-    'saml_already_logged_in' => 'Already logged in',
-    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
-    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'saml_already_logged_in' => 'Již jste přihlášeni',
+    'saml_user_not_registered' => 'Uživatel :name není registrován a automatická registrace je zakázána',
+    'saml_no_email_address' => 'Nelze najít e-mailovou adresu pro tohoto uživatele v datech poskytnutých externím přihlašovacím systémem',
+    'saml_invalid_response_id' => 'Požadavek z externího ověřovacího systému nebyl rozpoznám procesem, který tato aplikace spustila. Tento problém může způsobit stisknutí tlačítka Zpět po přihlášení.',
+    'saml_fail_authed' => 'Přihlášení pomocí :system selhalo, systém neposkytl úspěšnou autorizaci',
     'social_no_action_defined' => 'Nebyla zvolena žádá akce',
     'social_login_bad_response' => "Nastala chyba během přihlašování přes :socialAccount \n:error",
     'social_account_in_use' => 'Tento účet na :socialAccount se již používá. Pokuste se s ním přihlásit volbou Přihlásit přes :socialAccount.',
@@ -33,7 +33,7 @@ return [
     'social_account_register_instructions' => 'Pokud ještě nemáte náš účet, můžete se zaregistrovat pomocí vašeho účtu na :socialAccount.',
     'social_driver_not_found' => 'Doplněk pro tohoto správce identity nebyl nalezen.',
     'social_driver_not_configured' => 'Nastavení vašeho účtu na :socialAccount není správné. :socialAccount musí mít vaše svolení pro naší aplikaci vás přihlásit.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Odkaz v pozvánce již bohužel vypršel. Namísto toho ale můžete zkusit resetovat heslo do Vašeho účtu.',
 
     // System
     'path_not_writable' => 'Nelze zapisovat na cestu k souboru :filePath. Zajistěte aby se dalo nahrávat na server.',
@@ -46,7 +46,6 @@ return [
     'file_upload_timeout' => 'Nahrávání souboru trvalo příliš dlouho a tak bylo ukončeno.',
 
     // Attachments
-    'attachment_page_mismatch' => 'Došlo ke zmatení stránky během nahrávání přílohy.',
     'attachment_not_found' => 'Příloha nenalezena',
 
     // Pages
@@ -83,21 +82,21 @@ return [
     // Error pages
     '404_page_not_found' => 'Stránka nenalezena',
     'sorry_page_not_found' => 'Omlouváme se, ale stránka, kterou hledáte nebyla nalezena.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Pokud očekáváte, že by stránka měla existovat, možná jen nemáte oprávnění pro její zobrazení.',
     'return_home' => 'Návrat domů',
     'error_occurred' => 'Nastala chyba',
     'app_down' => ':appName je momentálně vypnutá',
     'back_soon' => 'Brzy naběhne.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'V požadavku nebyla nalezen žádný autorizační token',
+    'api_bad_authorization_format' => 'V požadavku byl nalezen autorizační token, ale jeho formát se zdá být chybný',
+    'api_user_token_not_found' => 'Pro zadaný autorizační token nebyl nalezen žádný odpovídající API token',
+    'api_incorrect_token_secret' => 'Poskytnutý Token Secret neodpovídá použitému API tokenu',
+    'api_user_no_api_permission' => 'Vlastník použitého API tokenu nemá oprávnění provádět API volání',
+    'api_user_token_expired' => 'Platnost autorizačního tokenu vypršela',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Při posílání testovacího e-mailu nastala chyba:',
 
 ];

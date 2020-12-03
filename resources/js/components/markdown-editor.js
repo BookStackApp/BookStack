@@ -8,12 +8,12 @@ import DrawIO from "../services/drawio";
 
 class MarkdownEditor {
 
-    constructor(elem) {
-        this.elem = elem;
+    setup() {
+        this.elem = this.$el;
 
-        const pageEditor = document.getElementById('page-editor');
-        this.pageId = pageEditor.getAttribute('page-id');
-        this.textDirection = pageEditor.getAttribute('text-direction');
+        this.pageId = this.$opts.pageId;
+        this.textDirection = this.$opts.textDirection;
+        this.imageUploadErrorText = this.$opts.imageUploadErrorText;
 
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
@@ -27,12 +27,18 @@ class MarkdownEditor {
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
 
-        this.display.addEventListener('load', () => {
+        const displayLoad = () => {
             this.displayDoc = this.display.contentDocument;
             this.init();
-        });
+        };
 
-        window.$events.emitPublic(elem, 'editor-markdown::setup', {
+        if (this.display.contentDocument.readyState === 'complete') {
+            displayLoad();
+        } else {
+            this.display.addEventListener('load', displayLoad.bind(this));
+        }
+
+        window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.markdown,
             displayEl: this.display,
             codeMirrorInstance: this.cm,
@@ -127,7 +133,13 @@ class MarkdownEditor {
 
     loadStylesIntoDisplay() {
         if (this.displayStylesLoaded) return;
-        this.displayDoc.documentElement.className = 'markdown-editor-display';
+        this.displayDoc.documentElement.classList.add('markdown-editor-display');
+        // Set display to be dark mode if parent is
+
+        if (document.documentElement.classList.contains('dark-mode')) {
+            this.displayDoc.documentElement.style.backgroundColor = '#222';
+            this.displayDoc.documentElement.classList.add('dark-mode');
+        }
 
         this.displayDoc.head.innerHTML = '';
         const styles = document.head.querySelectorAll('style,link[rel=stylesheet]');
@@ -245,7 +257,7 @@ class MarkdownEditor {
             }
 
             const clipboard = new Clipboard(event.dataTransfer);
-            if (clipboard.hasItems()) {
+            if (clipboard.hasItems() && clipboard.getImages().length > 0) {
                 const cursorPos = cm.coordsChar({left: event.pageX, top: event.pageY});
                 cm.setCursor(cursorPos);
                 event.stopPropagation();
@@ -362,7 +374,7 @@ class MarkdownEditor {
                 const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
                 replaceContent(placeHolderText, newContent);
             }).catch(err => {
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', context.imageUploadErrorText);
                 replaceContent(placeHolderText, selectedText);
                 console.log(err);
             });
@@ -411,22 +423,28 @@ class MarkdownEditor {
         });
     }
 
+    getDrawioUrl() {
+        const drawioUrlElem = document.querySelector('[drawio-url]');
+        return drawioUrlElem ? drawioUrlElem.getAttribute('drawio-url') : false;
+    }
+
     // Show draw.io if enabled and handle save.
     actionStartDrawing() {
-        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true') return;
-        let cursorPos = this.cm.getCursor('from');
+        const url = this.getDrawioUrl();
+        if (!url) return;
 
-        DrawIO.show(() => {
+        const cursorPos = this.cm.getCursor('from');
+
+        DrawIO.show(url,() => {
             return Promise.resolve('');
         }, (pngData) => {
-            // let id = "image-" + Math.random().toString(16).slice(2);
-            // let loadingImage = window.baseUrl('/loading.gif');
-            let data = {
+
+            const data = {
                 image: pngData,
-                uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+                uploaded_to: Number(this.pageId),
             };
 
-            window.$http.post(window.baseUrl('/images/drawio'), data).then(resp => {
+            window.$http.post("/images/drawio", data).then(resp => {
                 this.insertDrawing(resp.data, cursorPos);
                 DrawIO.close();
             }).catch(err => {
@@ -445,24 +463,24 @@ class MarkdownEditor {
 
     // Show draw.io if enabled and handle save.
     actionEditDrawing(imgContainer) {
-        const drawingDisabled = document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') !== 'true';
-        if (drawingDisabled) {
+        const drawioUrl = this.getDrawioUrl();
+        if (!drawioUrl) {
             return;
         }
 
         const cursorPos = this.cm.getCursor('from');
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
-        DrawIO.show(() => {
+        DrawIO.show(drawioUrl, () => {
             return DrawIO.load(drawingId);
         }, (pngData) => {
 
             let data = {
                 image: pngData,
-                uploaded_to: Number(document.getElementById('page-editor').getAttribute('page-id'))
+                uploaded_to: Number(this.pageId),
             };
 
-            window.$http.post(window.baseUrl(`/images/drawio`), data).then(resp => {
+            window.$http.post("/images/drawio", data).then(resp => {
                 let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 let newContent = this.cm.getValue().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
@@ -475,7 +493,7 @@ class MarkdownEditor {
                 this.cm.focus();
                 DrawIO.close();
             }).catch(err => {
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', this.imageUploadErrorText);
                 console.log(err);
             });
         });
@@ -544,6 +562,17 @@ class MarkdownEditor {
             this.cm.setValue(content);
             const prependLineCount = markdown.split('\n').length;
             this.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
+        });
+
+        // Insert editor content at the current location
+        window.$events.listen('editor::insert', (eventContent) => {
+            const markdown = getContentToInsert(eventContent);
+            this.cm.replaceSelection(markdown);
+        });
+
+        // Focus on editor
+        window.$events.listen('editor::focus', () => {
+            this.cm.focus();
         });
     }
 }

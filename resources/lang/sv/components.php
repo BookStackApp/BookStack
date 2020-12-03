@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Ladda fler',
     'image_image_name' => 'Bildnamn',
     'image_delete_used' => 'Den här bilden används på nedanstående sidor.',
-    'image_delete_confirm' => 'Klicka på "ta bort" en gång till för att bekräfta att du vill ta bort bilden.',
+    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Välj bild',
     'image_dropzone' => 'Släpp bilder här eller klicka för att ladda upp',
     'images_deleted' => 'Bilder borttagna',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Redigera kod',
     'code_language' => 'Språk',
     'code_content' => 'Kod',
+    'code_session_history' => 'Session History',
     'code_save' => 'Spara',
 ];

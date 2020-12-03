@@ -1,0 +1,35 @@
+{
+	"id": 358,
+	"book_id": 1,
+	"chapter_id": 0,
+	"name": "My API Page",
+	"slug": "my-api-page",
+	"html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",
+	"priority": 14,
+	"created_at": "2020-11-28 15:01:39",
+	"updated_at": "2020-11-28 15:01:39",
+	"created_by": {
+		"id": 1,
+		"name": "Admin"
+	},
+	"updated_by": {
+		"id": 1,
+		"name": "Admin"
+	},
+	"draft": false,
+	"markdown": "",
+	"revision_count": 1,
+	"template": false,
+	"tags": [
+		{
+			"name": "Category",
+			"value": "Not Bad Content",
+			"order": 0
+		},
+		{
+			"name": "Rating",
+			"value": "Average",
+			"order": 1
+		}
+	]
+}

@@ -2,13 +2,10 @@
 
 use BookStack\Model;
 
-/**
- * Class Attribute
- * @package BookStack
- */
 class Tag extends Model
 {
     protected $fillable = ['name', 'value', 'order'];
+    protected $hidden = ['id', 'entity_id', 'entity_type', 'created_at', 'updated_at'];
 
     /**
      * Get the entity that this tag belongs to

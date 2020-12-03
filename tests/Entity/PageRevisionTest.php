@@ -1,6 +1,6 @@
-<?php namespace Entity;
+<?php namespace Tests\Entity;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use Tests\TestCase;
 
@@ -22,6 +22,21 @@ class PageRevisionTest extends TestCase
         $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
         $revisionView->assertStatus(200);
         $revisionView->assertSee('new content');
+    }
+
+    public function test_page_revision_preview_shows_content_of_revision()
+    {
+        $this->asEditor();
+
+        $pageRepo = app(PageRepo::class);
+        $page = Page::first();
+        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new revision content</p>', 'summary' => 'page revision testing']);
+        $pageRevision = $page->revisions->last();
+        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>Updated content</p>', 'summary' => 'page revision testing 2']);
+
+        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView->assertStatus(200);
+        $revisionView->assertSee('new revision content');
     }
 
     public function test_page_revision_restore_updates_content()

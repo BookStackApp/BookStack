@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopiera',
     'reply' => 'Svara',
     'delete' => 'Ta bort',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Sök',
     'search_clear' => 'Rensa sökning',
     'reset' => 'Återställ',
@@ -66,6 +67,8 @@ return [
     'profile_menu' => 'Profilmeny',
     'view_profile' => 'Visa profil',
     'edit_profile' => 'Redigera profil',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Information',

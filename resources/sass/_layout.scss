@@ -4,10 +4,10 @@
  */
 .container {
   max-width: $xxl;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: $-m;
-  padding-right: $-m;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  padding-inline-start: $-m;
+  padding-inline-end: $-m;
   &.small {
     max-width: 840px;
   }
@@ -48,6 +48,9 @@
   }
   &.v-center {
     align-items: center;
+  }
+  &.v-end {
+    align-items: end;
   }
   &.no-gap {
     grid-row-gap: 0;
@@ -118,9 +121,37 @@ body.flexbox {
   position: relative;
 }
 
+.flex-container-row {
+  display: flex;
+  flex-direction: row;
+  &.v-center {
+    align-items: center;
+  }
+}
+
+.flex-container-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-container-column.wrap, .flex-container-row.wrap {
+  flex-wrap: wrap;
+}
+
 .flex {
   min-height: 0;
   flex: 1;
+  &.fit-content {
+    flex-basis: auto;
+    flex-grow: 0;
+  }
+}
+
+.justify-flex-end {
+  justify-content: flex-end;
+}
+.justify-center {
+  justify-content: center;
 }
 
 
@@ -128,20 +159,20 @@ body.flexbox {
  * Display and float utilities
  */
 .block {
-  display: block;
+  display: block !important;
   position: relative;
 }
 
 .inline {
-  display: inline;
+  display: inline !important;
 }
 
 .block.inline {
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .float {
@@ -184,12 +215,12 @@ body.flexbox {
 /**
  * Fixes
  */
-.clearfix:before,
-.clearfix:after {
+.clearfix::before,
+.clearfix::after {
   content: " ";
   display: table;
 }
-.clearfix:after {
+.clearfix::after {
   clear: both;
 }
 
@@ -198,8 +229,8 @@ body.flexbox {
  */
 .tri-layout-container {
   display: grid;
-  margin-left: $-xl;
-  margin-right: $-xl;
+  margin-inline-start: $-xl;
+  margin-inline-end: $-xl;
   grid-template-columns: 1fr 4fr 1fr;
   grid-template-areas: "a b c";
   grid-column-gap: $-xxl;
@@ -223,7 +254,7 @@ body.flexbox {
     ". b b";
     grid-template-columns: 1fr 3fr;
     grid-template-rows: min-content min-content 1fr;
-    padding-right: $-l;
+    padding-inline-end: $-l;
   }
 }
 @include between($l, $xxl) {
@@ -258,11 +289,11 @@ body.flexbox {
     grid-template-areas:  none;
     grid-template-columns: 1fr;
     grid-column-gap: 0;
-    padding-right: $-xs;
-    padding-left: $-xs;
+    padding-inline-end: $-xs;
+    padding-inline-start: $-xs;
     .tri-layout-left-contents, .tri-layout-right-contents {
-      padding-left: $-m;
-      padding-right: $-m;
+      padding-inline-start: $-m;
+      padding-inline-end: $-m;
     }
     .tri-layout-left > *, .tri-layout-right > * {
       display: none;
@@ -316,7 +347,7 @@ body.flexbox {
 
 @include smaller-than($m) {
   .tri-layout-container {
-    margin-left: 0;
-    margin-right: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
   }
 }

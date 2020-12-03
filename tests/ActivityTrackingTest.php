@@ -1,7 +1,7 @@
 <?php namespace Tests;
 
 
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
 
 class ActivityTrackingTest extends BrowserKitTest
 {
