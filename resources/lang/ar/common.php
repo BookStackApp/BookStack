@@ -11,7 +11,7 @@ return [
     'save' => 'حفظ',
     'continue' => 'استمرار',
     'select' => 'تحديد',
-    'toggle_all' => 'Toggle All',
+    'toggle_all' => 'تبديل الكل',
     'more' => 'المزيد',
 
     // Form Labels
@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => 'إجراءات',
     'view' => 'عرض',
-    'view_all' => 'View All',
+    'view_all' => 'عرض الكل',
     'create' => 'إنشاء',
     'update' => 'تحديث',
     'edit' => 'تعديل',
@@ -33,17 +33,17 @@ return [
     'copy' => 'نسخ',
     'reply' => 'رد',
     'delete' => 'حذف',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'تأكيد الحذف',
     'search' => 'بحث',
     'search_clear' => 'مسح البحث',
     'reset' => 'إعادة تعيين',
     'remove' => 'إزالة',
     'add' => 'إضافة',
-    'fullscreen' => 'Fullscreen',
+    'fullscreen' => 'شاشة كاملة',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_options' => 'خيارات الترتيب',
+    'sort_direction_toggle' => 'الترتيب وفق الإتجاه',
     'sort_ascending' => 'Sort Ascending',
     'sort_descending' => 'Sort Descending',
     'sort_name' => 'Name',
