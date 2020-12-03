@@ -1,15 +1,16 @@
 <?php namespace BookStack\Auth;
 
 use Activity;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Images;
 use Log;
 
@@ -56,13 +57,19 @@ class UserRepo
 
     /**
      * Get all the users with their permissions in a paginated format.
-     * @param int $count
-     * @param $sortData
-     * @return Builder|static
      */
-    public function getAllUsersPaginatedAndSorted($count, $sortData)
+    public function getAllUsersPaginatedAndSorted(int $count, array $sortData): LengthAwarePaginator
     {
-        $query = $this->user->with('roles', 'avatar')->orderBy($sortData['sort'], $sortData['order']);
+        $sort = $sortData['sort'];
+        if ($sort === 'latest_activity') {
+            $sort = \BookStack\Actions\Activity::query()->select('created_at')
+                ->whereColumn('activities.user_id', 'users.id')
+                ->latest()
+                ->take(1);
+        }
+
+        $query = $this->user->with(['roles', 'avatar', 'latestActivity'])
+            ->orderBy($sort, $sortData['order']);
 
         if ($sortData['search']) {
             $term = '%' . $sortData['search'] . '%';
@@ -238,7 +245,7 @@ class UserRepo
      */
     public function getAllRoles()
     {
-        return $this->role->newQuery()->orderBy('name', 'asc')->get();
+        return $this->role->newQuery()->orderBy('display_name', 'asc')->get();
     }
 
     /**

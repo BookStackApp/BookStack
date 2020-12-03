@@ -2,12 +2,9 @@
 
 use BookStack\Auth\Permissions;
 use BookStack\Auth\Role;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
-use BookStack\Entities\Page;
 use BookStack\Ownable;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
@@ -51,11 +48,6 @@ class PermissionService
 
     /**
      * PermissionService constructor.
-     * @param JointPermission $jointPermission
-     * @param EntityPermission $entityPermission
-     * @param Role $role
-     * @param Connection $db
-     * @param EntityProvider $entityProvider
      */
     public function __construct(
         JointPermission $jointPermission,
@@ -82,7 +74,7 @@ class PermissionService
 
     /**
      * Prepare the local entity cache and ensure it's empty
-     * @param \BookStack\Entities\Entity[] $entities
+     * @param \BookStack\Entities\Models\Entity[] $entities
      */
     protected function readyEntityCache($entities = [])
     {
@@ -119,7 +111,7 @@ class PermissionService
     /**
      * Get a chapter via ID, Checks local cache
      * @param $chapterId
-     * @return \BookStack\Entities\Book
+     * @return \BookStack\Entities\Models\Book
      */
     protected function getChapter($chapterId)
     {
@@ -176,7 +168,7 @@ class PermissionService
         });
 
         // Chunk through all bookshelves
-        $this->entityProvider->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+        $this->entityProvider->bookshelf->newQuery()->withTrashed()->select(['id', 'restricted', 'created_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->buildJointPermissionsForShelves($shelves, $roles);
             });
@@ -188,11 +180,11 @@ class PermissionService
      */
     protected function bookFetchQuery()
     {
-        return $this->entityProvider->book->newQuery()
+        return $this->entityProvider->book->withTrashed()->newQuery()
             ->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
-                $query->select(['id', 'restricted', 'created_by', 'book_id']);
+                $query->withTrashed()->select(['id', 'restricted', 'created_by', 'book_id']);
             }, 'pages'  => function ($query) {
-                $query->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+                $query->withTrashed()->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
             }]);
     }
 
@@ -238,7 +230,7 @@ class PermissionService
 
     /**
      * Rebuild the entity jointPermissions for a particular entity.
-     * @param \BookStack\Entities\Entity $entity
+     * @param \BookStack\Entities\Models\Entity $entity
      * @throws \Throwable
      */
     public function buildJointPermissionsForEntity(Entity $entity)
@@ -333,7 +325,7 @@ class PermissionService
 
     /**
      * Delete all of the entity jointPermissions for a list of entities.
-     * @param \BookStack\Entities\Entity[] $entities
+     * @param \BookStack\Entities\Models\Entity[] $entities
      * @throws \Throwable
      */
     protected function deleteManyJointPermissionsForEntities($entities)
@@ -414,7 +406,7 @@ class PermissionService
 
     /**
      * Get the actions related to an entity.
-     * @param \BookStack\Entities\Entity $entity
+     * @param \BookStack\Entities\Models\Entity $entity
      * @return array
      */
     protected function getActions(Entity $entity)
@@ -500,7 +492,7 @@ class PermissionService
     /**
      * Create an array of data with the information of an entity jointPermissions.
      * Used to build data for bulk insertion.
-     * @param \BookStack\Entities\Entity $entity
+     * @param \BookStack\Entities\Models\Entity $entity
      * @param Role $role
      * @param $action
      * @param $permissionAll
@@ -591,7 +583,7 @@ class PermissionService
     /**
      * Check if an entity has restrictions set on itself or its
      * parent tree.
-     * @param \BookStack\Entities\Entity $entity
+     * @param \BookStack\Entities\Models\Entity $entity
      * @param $action
      * @return bool|mixed
      */
@@ -672,7 +664,7 @@ class PermissionService
     /**
      * Add restrictions for a generic entity
      * @param string $entityType
-     * @param Builder|\BookStack\Entities\Entity $query
+     * @param Builder|\BookStack\Entities\Models\Entity $query
      * @param string $action
      * @return Builder
      */

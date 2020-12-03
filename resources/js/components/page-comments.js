@@ -1,18 +1,30 @@
-import MarkdownIt from "markdown-it";
 import {scrollAndHighlightElement} from "../services/util";
 
-const md = new MarkdownIt({ html: false });
-
+/**
+ * @extends {Component}
+ */
 class PageComments {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.pageId = Number(elem.getAttribute('page-id'));
+    setup() {
+        this.elem = this.$el;
+        this.pageId = Number(this.$opts.pageId);
+
+        // Element references
+        this.container = this.$refs.commentContainer;
+        this.formContainer = this.$refs.formContainer;
+        this.commentCountBar = this.$refs.commentCountBar;
+        this.addButtonContainer = this.$refs.addButtonContainer;
+        this.replyToRow = this.$refs.replyToRow;
+
+        // Translations
+        this.updatedText = this.$opts.updatedText;
+        this.deletedText = this.$opts.deletedText;
+        this.createdText = this.$opts.createdText;
+        this.countText = this.$opts.countText;
+
+        // Internal State
         this.editingComment = null;
         this.parentId = null;
-
-        this.container = elem.querySelector('[comment-container]');
-        this.formContainer = elem.querySelector('[comment-form-container]');
 
         if (this.formContainer) {
             this.form = this.formContainer.querySelector('form');
@@ -35,13 +47,14 @@ class PageComments {
         if (actionElem === null) return;
         event.preventDefault();
 
-        let action = actionElem.getAttribute('action');
-        if (action === 'edit') this.editComment(actionElem.closest('[comment]'));
+        const action = actionElem.getAttribute('action');
+        const comment = actionElem.closest('[comment]');
+        if (action === 'edit') this.editComment(comment);
         if (action === 'closeUpdateForm') this.closeUpdateForm();
-        if (action === 'delete') this.deleteComment(actionElem.closest('[comment]'));
+        if (action === 'delete') this.deleteComment(comment);
         if (action === 'addComment') this.showForm();
         if (action === 'hideForm') this.hideForm();
-        if (action === 'reply') this.setReply(actionElem.closest('[comment]'));
+        if (action === 'reply') this.setReply(comment);
         if (action === 'remove-reply-to') this.removeReplyTo();
     }
 
@@ -68,19 +81,19 @@ class PageComments {
         let text = form.querySelector('textarea').value;
         let reqData = {
             text: text,
-            html: md.render(text),
             parent_id: this.parentId || null,
         };
         this.showLoading(form);
         let commentId = this.editingComment.getAttribute('comment');
-        window.$http.put(window.baseUrl(`/ajax/comment/${commentId}`), reqData).then(resp => {
+        window.$http.put(`/comment/${commentId}`, reqData).then(resp => {
             let newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
             this.editingComment.innerHTML = newComment.children[0].innerHTML;
-            window.$events.emit('success', window.trans('entities.comment_updated_success'));
+            window.$events.success(this.updatedText);
             window.components.init(this.editingComment);
             this.closeUpdateForm();
             this.editingComment = null;
+        }).catch(window.$events.showValidationErrors).then(() => {
             this.hideLoading(form);
         });
     }
@@ -88,9 +101,9 @@ class PageComments {
     deleteComment(commentElem) {
         let id = commentElem.getAttribute('comment');
         this.showLoading(commentElem.querySelector('[comment-content]'));
-        window.$http.delete(window.baseUrl(`/ajax/comment/${id}`)).then(resp => {
+        window.$http.delete(`/comment/${id}`).then(resp => {
             commentElem.parentNode.removeChild(commentElem);
-            window.$events.emit('success', window.trans('entities.comment_deleted_success'));
+            window.$events.success(this.deletedText);
             this.updateCount();
             this.hideForm();
         });
@@ -102,25 +115,27 @@ class PageComments {
         let text = this.formInput.value;
         let reqData = {
             text: text,
-            html: md.render(text),
             parent_id: this.parentId || null,
         };
         this.showLoading(this.form);
-        window.$http.post(window.baseUrl(`/ajax/page/${this.pageId}/comment`), reqData).then(resp => {
+        window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {
             let newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
             let newElem = newComment.children[0];
             this.container.appendChild(newElem);
             window.components.init(newElem);
-            window.$events.emit('success', window.trans('entities.comment_created_success'));
+            window.$events.success(this.createdText);
             this.resetForm();
             this.updateCount();
+        }).catch(err => {
+            window.$events.showValidationErrors(err);
+            this.hideLoading(this.form);
         });
     }
 
     updateCount() {
         let count = this.container.children.length;
-        this.elem.querySelector('[comments-title]').textContent = window.trans_choice('entities.comment_count', count, {count});
+        this.elem.querySelector('[comments-title]').textContent = window.trans_plural(this.countText, count, {count});
     }
 
     resetForm() {
@@ -134,7 +149,7 @@ class PageComments {
     showForm() {
         this.formContainer.style.display = 'block';
         this.formContainer.parentNode.style.display = 'block';
-        this.elem.querySelector('[comment-add-button-container]').style.display = 'none';
+        this.addButtonContainer.style.display = 'none';
         this.formInput.focus();
         this.formInput.scrollIntoView({behavior: "smooth"});
     }
@@ -142,14 +157,12 @@ class PageComments {
     hideForm() {
         this.formContainer.style.display = 'none';
         this.formContainer.parentNode.style.display = 'none';
-        const addButtonContainer = this.elem.querySelector('[comment-add-button-container]');
         if (this.getCommentCount() > 0) {
-            this.elem.appendChild(addButtonContainer)
+            this.elem.appendChild(this.addButtonContainer)
         } else {
-            const countBar = this.elem.querySelector('[comment-count-bar]');
-            countBar.appendChild(addButtonContainer);
+            this.commentCountBar.appendChild(this.addButtonContainer);
         }
-        addButtonContainer.style.display = 'block';
+        this.addButtonContainer.style.display = 'block';
     }
 
     getCommentCount() {
@@ -159,29 +172,29 @@ class PageComments {
     setReply(commentElem) {
         this.showForm();
         this.parentId = Number(commentElem.getAttribute('local-id'));
-        this.elem.querySelector('[comment-form-reply-to]').style.display = 'block';
-        let replyLink = this.elem.querySelector('[comment-form-reply-to] a');
+        this.replyToRow.style.display = 'block';
+        const replyLink = this.replyToRow.querySelector('a');
         replyLink.textContent = `#${this.parentId}`;
         replyLink.href = `#comment${this.parentId}`;
     }
 
     removeReplyTo() {
         this.parentId = null;
-        this.elem.querySelector('[comment-form-reply-to]').style.display = 'none';
+        this.replyToRow.style.display = 'none';
     }
 
     showLoading(formElem) {
-        let groups = formElem.querySelectorAll('.form-group');
-        for (let i = 0, len = groups.length; i < len; i++) {
-            groups[i].style.display = 'none';
+        const groups = formElem.querySelectorAll('.form-group');
+        for (let group of groups) {
+            group.style.display = 'none';
         }
         formElem.querySelector('.form-group.loading').style.display = 'block';
     }
 
     hideLoading(formElem) {
-        let groups = formElem.querySelectorAll('.form-group');
-        for (let i = 0, len = groups.length; i < len; i++) {
-            groups[i].style.display = 'block';
+        const groups = formElem.querySelectorAll('.form-group');
+        for (let group of groups) {
+            group.style.display = 'block';
         }
         formElem.querySelector('.form-group.loading').style.display = 'none';
     }

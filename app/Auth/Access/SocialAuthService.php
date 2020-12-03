@@ -1,10 +1,12 @@
 <?php namespace BookStack\Auth\Access;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Facades\Activity;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Contracts\Provider;
@@ -98,6 +100,7 @@ class SocialAuthService
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
             auth()->login($socialAccount->user);
+            Activity::add(ActivityType::AUTH_LOGIN, $socialAccount);
             return redirect()->intended('/');
         }
 

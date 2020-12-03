@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Mehr',
     'image_image_name' => 'Bildname',
     'image_delete_used' => 'Dieses Bild wird auf den folgenden Seiten benutzt. ',
-    'image_delete_confirm' => 'Bitte klicke erneut auf löschen, wenn Du dieses Bild wirklich entfernen möchtest.',
+    'image_delete_confirm_text' => 'Bist Du sicher, dass Du diese Seite löschen möchtest?',
     'image_select_image' => 'Bild auswählen',
     'image_dropzone' => 'Ziehe Bilder hierher oder klicke hier, um ein Bild auszuwählen',
     'images_deleted' => 'Bilder gelöscht',
@@ -29,5 +29,6 @@ return [
     'code_editor' => 'Code editieren',
     'code_language' => 'Code Sprache',
     'code_content' => 'Code Inhalt',
+    'code_session_history' => 'Sitzungsverlauf',
     'code_save' => 'Code speichern',
 ];

@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'E-Mail levering ser ud til at virke!',
     'maint_send_test_email_mail_text' => 'Tillykke! Da du har modtaget denne mailnotifikation, ser det ud som om, at dine mailindstillinger er opsat korrekt.',
 
+    // Audit Log
+    'audit' => 'Audit Log',
+    'audit_desc' => 'This audit log displays a list of activities tracked in the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
+    'audit_event_filter' => 'Event Filter',
+    'audit_event_filter_no_filter' => 'No Filter',
+    'audit_deleted_item' => 'Deleted Item',
+    'audit_deleted_item_name' => 'Name: :name',
+    'audit_table_user' => 'User',
+    'audit_table_event' => 'Event',
+    'audit_table_item' => 'Related Item',
+    'audit_table_date' => 'Activity Date',
+    'audit_date_from' => 'Date Range From',
+    'audit_date_to' => 'Date Range To',
+
     // Role Settings
     'roles' => 'Roller',
     'role_user_roles' => 'Brugerroller',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Tilgå system-API',
     'role_manage_settings' => 'Administrer app-indstillinger',
     'role_asset' => 'Tilladelser for medier og "assets"',
+    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Disse tilladelser kontrollerer standardadgang til medier og "assets" i systemet. Tilladelser til bøger, kapitler og sider tilsidesætter disse tilladelser.',
     'role_asset_admins' => 'Administratorer får automatisk adgang til alt indhold, men disse indstillinger kan vise eller skjule UI-indstillinger.',
     'role_all' => 'Alle',
@@ -185,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bǎlgarski',
         'cs' => 'Česky',
         'da' => 'Dansk',
         'de' => 'Deutsch (Sie)',
@@ -192,6 +208,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
+        'he' => 'Hebraisk',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',
@@ -201,6 +218,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
+        'sl' => 'Slovenščina',
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',

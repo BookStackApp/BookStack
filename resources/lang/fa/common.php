@@ -33,6 +33,7 @@ return [
     'copy' => 'Copy',
     'reply' => 'Reply',
     'delete' => 'Delete',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Search',
     'search_clear' => 'Clear Search',
     'reset' => 'Reset',
@@ -66,6 +67,8 @@ return [
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'View Profile',
     'edit_profile' => 'Edit Profile',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Info',

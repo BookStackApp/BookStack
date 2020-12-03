@@ -2,8 +2,8 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\ExportService;
-use BookStack\Entities\Managers\PageContent;
+use BookStack\Entities\Tools\ExportFormatter;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use Throwable;
@@ -12,18 +12,15 @@ class PageExportController extends Controller
 {
 
     protected $pageRepo;
-    protected $exportService;
+    protected $exportFormatter;
 
     /**
      * PageExportController constructor.
-     * @param PageRepo $pageRepo
-     * @param ExportService $exportService
      */
-    public function __construct(PageRepo $pageRepo, ExportService $exportService)
+    public function __construct(PageRepo $pageRepo, ExportFormatter $exportFormatter)
     {
         $this->pageRepo = $pageRepo;
-        $this->exportService = $exportService;
-        parent::__construct();
+        $this->exportFormatter = $exportFormatter;
     }
 
     /**
@@ -36,7 +33,7 @@ class PageExportController extends Controller
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $page->html = (new PageContent($page))->render();
-        $pdfContent = $this->exportService->pageToPdf($page);
+        $pdfContent = $this->exportFormatter->pageToPdf($page);
         return $this->downloadResponse($pdfContent, $pageSlug . '.pdf');
     }
 
@@ -49,7 +46,7 @@ class PageExportController extends Controller
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $page->html = (new PageContent($page))->render();
-        $containedHtml = $this->exportService->pageToContainedHtml($page);
+        $containedHtml = $this->exportFormatter->pageToContainedHtml($page);
         return $this->downloadResponse($containedHtml, $pageSlug . '.html');
     }
 
@@ -60,7 +57,7 @@ class PageExportController extends Controller
     public function plainText(string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $pageText = $this->exportService->pageToPlainText($page);
+        $pageText = $this->exportFormatter->pageToPlainText($page);
         return $this->downloadResponse($pageText, $pageSlug . '.txt');
     }
 }

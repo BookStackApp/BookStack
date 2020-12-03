@@ -38,7 +38,7 @@ function editorPaste(event, editor, wysiwygComponent) {
                 editor.dom.replace(newEl, id);
             }).catch(err => {
                 editor.dom.remove(id);
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', wysiwygComponent.imageUploadErrorText);
                 console.log(err);
             });
         }, 10);
@@ -98,21 +98,15 @@ function registerEditorShortcuts(editor) {
 
     // Loop through callout styles
     editor.shortcuts.add('meta+9', '', function() {
-        let selectedNode = editor.selection.getNode();
-        let formats = ['info', 'success', 'warning', 'danger'];
+        const selectedNode = editor.selection.getNode();
+        const callout = selectedNode ? selectedNode.closest('.callout') : null;
 
-        if (!selectedNode || selectedNode.className.indexOf('callout') === -1) {
-            editor.formatter.apply('calloutinfo');
-            return;
-        }
+        const formats = ['info', 'success', 'warning', 'danger'];
+        const currentFormatIndex = formats.findIndex(format => callout && callout.classList.contains(format));
+        const newFormatIndex = (currentFormatIndex + 1) % formats.length;
+        const newFormat = formats[newFormatIndex];
 
-        for (let i = 0; i < formats.length; i++) {
-            if (selectedNode.className.indexOf(formats[i]) === -1) continue;
-            let newFormat = (i === formats.length -1) ? formats[0] : formats[i+1];
-            editor.formatter.apply('callout' + newFormat);
-            return;
-        }
-        editor.formatter.apply('p');
+        editor.formatter.apply('callout' + newFormat);
     });
 
 }
@@ -139,19 +133,21 @@ function codePlugin() {
     }
 
     function showPopup(editor) {
-        let selectedNode = editor.selection.getNode();
+        const selectedNode = editor.selection.getNode();
 
         if (!elemIsCodeBlock(selectedNode)) {
-            let providedCode = editor.selection.getNode().textContent;
-            window.vues['code-editor'].open(providedCode, '', (code, lang) => {
-                let wrap = document.createElement('div');
+            const providedCode = editor.selection.getNode().textContent;
+            window.components.first('code-editor').open(providedCode, '', (code, lang) => {
+                const wrap = document.createElement('div');
                 wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
                 wrap.querySelector('code').innerText = code;
 
                 editor.formatter.toggle('pre');
-                let node = editor.selection.getNode();
+                const node = editor.selection.getNode();
                 editor.dom.setHTML(node, wrap.querySelector('pre').innerHTML);
                 editor.fire('SetContent');
+
+                editor.focus()
             });
             return;
         }
@@ -159,16 +155,18 @@ function codePlugin() {
         let lang = selectedNode.hasAttribute('data-lang') ? selectedNode.getAttribute('data-lang') : '';
         let currentCode = selectedNode.querySelector('textarea').textContent;
 
-        window.vues['code-editor'].open(currentCode, lang, (code, lang) => {
-            let editorElem = selectedNode.querySelector('.CodeMirror');
-            let cmInstance = editorElem.CodeMirror;
+        window.components.first('code-editor').open(currentCode, lang, (code, lang) => {
+            const editorElem = selectedNode.querySelector('.CodeMirror');
+            const cmInstance = editorElem.CodeMirror;
             if (cmInstance) {
                 Code.setContent(cmInstance, code);
                 Code.setMode(cmInstance, lang, code);
             }
-            let textArea = selectedNode.querySelector('textarea');
+            const textArea = selectedNode.querySelector('textarea');
             if (textArea) textArea.textContent = code;
             selectedNode.setAttribute('data-lang', lang);
+
+            editor.focus()
         });
     }
 
@@ -238,7 +236,7 @@ function codePlugin() {
     });
 }
 
-function drawIoPlugin() {
+function drawIoPlugin(drawioUrl, isDarkMode, pageId, wysiwygComponent) {
 
     let pageEditor = null;
     let currentNode = null;
@@ -266,13 +264,12 @@ function drawIoPlugin() {
     function showDrawingEditor(mceEditor, selectedNode = null) {
         pageEditor = mceEditor;
         currentNode = selectedNode;
-        DrawIO.show(drawingInit, updateContent);
+        DrawIO.show(drawioUrl, drawingInit, updateContent);
     }
 
     async function updateContent(pngData) {
         const id = "image-" + Math.random().toString(16).slice(2);
         const loadingImage = window.baseUrl('/loading.gif');
-        const pageId = Number(document.getElementById('page-editor').getAttribute('page-id'));
 
         // Handle updating an existing image
         if (currentNode) {
@@ -283,7 +280,7 @@ function drawIoPlugin() {
                 pageEditor.dom.setAttrib(imgElem, 'src', img.url);
                 pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
             } catch (err) {
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', wysiwygComponent.imageUploadErrorText);
                 console.log(err);
             }
             return;
@@ -298,7 +295,7 @@ function drawIoPlugin() {
                 pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
             } catch (err) {
                 pageEditor.dom.remove(id);
-                window.$events.emit('error', trans('errors.image_upload_error'));
+                window.$events.emit('error', wysiwygComponent.imageUploadErrorText);
                 console.log(err);
             }
         }, 5);
@@ -317,14 +314,17 @@ function drawIoPlugin() {
     window.tinymce.PluginManager.add('drawio', function(editor, url) {
 
         editor.addCommand('drawio', () => {
-            let selectedNode = editor.selection.getNode();
+            const selectedNode = editor.selection.getNode();
             showDrawingEditor(editor, isDrawing(selectedNode) ? selectedNode : null);
         });
 
         editor.addButton('drawio', {
             type: 'splitbutton',
             tooltip: 'Drawing',
-            image: `data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMwMDAwMDAiICB4bWxucz0iaHR0cDovL3d3 dy53My5vcmcvMjAwMC9zdmciPgogICAgPHBhdGggZD0iTTIzIDdWMWgtNnYySDdWMUgxdjZoMnYx MEgxdjZoNnYtMmgxMHYyaDZ2LTZoLTJWN2gyek0zIDNoMnYySDNWM3ptMiAxOEgzdi0yaDJ2Mnpt MTItMkg3di0ySDVWN2gyVjVoMTB2MmgydjEwaC0ydjJ6bTQgMmgtMnYtMmgydjJ6TTE5IDVWM2gy djJoLTJ6bS01LjI3IDloLTMuNDlsLS43MyAySDcuODlsMy40LTloMS40bDMuNDEgOWgtMS42M2wt Ljc0LTJ6bS0zLjA0LTEuMjZoMi42MUwxMiA4LjkxbC0xLjMxIDMuODN6Ii8+CiAgICA8cGF0aCBk PSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==`,
+            image: `data:image/svg+xml;base64,${btoa(`<svg viewBox="0 0 24 24" fill="${isDarkMode ? '#BBB' : '#000000'}"  xmlns="http://www.w3.org/2000/svg">
+    <path d="M23 7V1h-6v2H7V1H1v6h2v10H1v6h6v-2h10v2h6v-6h-2V7h2zM3 3h2v2H3V3zm2 18H3v-2h2v2zm12-2H7v-2H5V7h2V5h10v2h2v10h-2v2zm4 2h-2v-2h2v2zM19 5V3h2v2h-2zm-5.27 9h-3.49l-.73 2H7.89l3.4-9h1.4l3.41 9h-1.63l-.74-2zm-3.04-1.26h2.61L12 8.91l-1.31 3.83z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>`)}`,
             cmd: 'drawio',
             menu: [
                 {
@@ -401,32 +401,46 @@ function listenForBookStackEditorEvents(editor) {
         editor.setContent(content);
     });
 
+    // Insert editor content at the current location
+    window.$events.listen('editor::insert', ({html}) => {
+        editor.insertContent(html);
+    });
+
+    // Focus on the editor
+    window.$events.listen('editor::focus', () => {
+        editor.focus();
+    });
 }
 
 class WysiwygEditor {
 
-    constructor(elem) {
-        this.elem = elem;
+    setup() {
+        this.elem = this.$el;
 
-        const pageEditor = document.getElementById('page-editor');
-        this.pageId = pageEditor.getAttribute('page-id');
-        this.textDirection = pageEditor.getAttribute('text-direction');
+        this.pageId = this.$opts.pageId;
+        this.textDirection = this.$opts.textDirection;
+        this.imageUploadErrorText = this.$opts.imageUploadErrorText;
+        this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
-        this.plugins = "image table textcolor paste link autolink fullscreen imagetools code customhr autosave lists codeeditor media";
+        this.plugins = "image table textcolor paste link autolink fullscreen code customhr autosave lists codeeditor media";
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
-        window.$events.emitPublic(elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
+        window.$events.emitPublic(this.elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
         window.tinymce.init(this.tinyMceConfig);
     }
 
     loadPlugins() {
         codePlugin();
         customHrPlugin();
-        if (document.querySelector('[drawio-enabled]').getAttribute('drawio-enabled') === 'true') {
-            drawIoPlugin();
+
+        const drawioUrlElem = document.querySelector('[drawio-url]');
+        if (drawioUrlElem) {
+            const url = drawioUrlElem.getAttribute('drawio-url');
+            drawIoPlugin(url, this.isDarkMode, this.pageId, this);
             this.plugins += ' drawio';
         }
+
         if (this.textDirection === 'rtl') {
             this.plugins += ' directionality'
         }
@@ -447,6 +461,7 @@ class WysiwygEditor {
                 window.baseUrl('/dist/styles.css'),
             ],
             branding: false,
+            skin: this.isDarkMode ? 'dark' : 'lightgray',
             body_class: 'page-content',
             browser_spellcheck: true,
             relative_urls: false,
@@ -463,7 +478,7 @@ class WysiwygEditor {
             plugins: this.plugins,
             imagetools_toolbar: 'imageoptions',
             toolbar: this.getToolBar(),
-            content_style: "html, body {background: #FFF;} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}",
+            content_style: `html, body, html.dark-mode {background: ${this.isDarkMode ? '#222' : '#fff'};} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}`,
             style_formats: [
                 {title: "Header Large", format: "h2"},
                 {title: "Header Medium", format: "h3"},
@@ -500,7 +515,15 @@ class WysiwygEditor {
                         const originalField = win.document.getElementById(field_name);
                         originalField.value = entity.link;
                         const mceForm = originalField.closest('.mce-form');
-                        mceForm.querySelectorAll('input')[2].value = entity.name;
+                        const inputs = mceForm.querySelectorAll('input');
+
+                        // Set text to display if not empty
+                        if (!inputs[1].value) {
+                            inputs[1].value = entity.name;
+                        }
+
+                        // Set title field
+                        inputs[2].value = entity.name;
                     });
                 }
 
@@ -562,7 +585,10 @@ class WysiwygEditor {
                 });
 
                 function editorChange() {
-                    let content = editor.getContent();
+                    const content = editor.getContent();
+                    if (context.isDarkMode) {
+                        editor.contentDocument.documentElement.classList.add('dark-mode');
+                    }
                     window.$events.emit('editor-html-change', content);
                 }
 
@@ -617,6 +643,7 @@ class WysiwygEditor {
 
                 });
 
+                // Custom drop event handling
                 editor.on('drop', function (event) {
                     let dom = editor.dom,
                         rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());

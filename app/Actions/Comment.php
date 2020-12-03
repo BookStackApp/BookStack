@@ -2,9 +2,15 @@
 
 use BookStack\Ownable;
 
+/**
+ * @property string text
+ * @property string html
+ * @property int|null parent_id
+ * @property int local_id
+ */
 class Comment extends Ownable
 {
-    protected $fillable = ['text', 'html', 'parent_id'];
+    protected $fillable = ['text', 'parent_id'];
     protected $appends = ['created', 'updated'];
 
     /**

@@ -26,6 +26,7 @@ import 'codemirror/mode/rust/rust';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/toml/toml';
+import 'codemirror/mode/vbscript/vbscript';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/yaml/yaml';
 
@@ -84,6 +85,8 @@ const modeMap = {
     bash: 'shell',
     toml: 'toml',
     sql: 'text/x-sql',
+    vbs: 'vbscript',
+    vbscript: 'vbscript',
     xml: 'xml',
     yaml: 'yaml',
     yml: 'yaml',
@@ -191,7 +194,8 @@ function getMode(suggestion, content) {
  * @returns {*|string}
  */
 function getTheme() {
-    return window.codeTheme || 'default';
+    const darkMode = document.documentElement.classList.contains('dark-mode');
+    return window.codeTheme || (darkMode ? 'darcula' : 'default');
 }
 
 /**

@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Ponastavi geslo',
     'reset_password_send_instructions' => 'Spodaj vpišite vaš e-poštni naslov in prejeli boste e-pošto s povezavo za ponastavitev gesla.',
     'reset_password_send_button' => 'Pošlji povezavo za ponastavitev',
-    'reset_password_sent_success' => 'Povezava za ponastavitev gesla je bila poslana na :email.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'Vaše geslo je bilo uspešno spremenjeno.',
     'email_reset_subject' => 'Ponastavi svoje :appName geslo',
     'email_reset_text' => 'To e-poštno sporočilo ste prejeli, ker smo prejeli zahtevo za ponastavitev gesla za vaš račun.',

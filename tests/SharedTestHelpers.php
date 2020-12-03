@@ -1,11 +1,11 @@
 <?php namespace Tests;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Book;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;
@@ -15,9 +15,14 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
+use Illuminate\Http\Response;
 use Illuminate\Support\Env;
+use Illuminate\Support\Facades\Log;
 use Mockery;
+use Monolog\Handler\TestHandler;
+use Monolog\Logger;
 use Throwable;
+use Illuminate\Foundation\Testing\Assert as PHPUnit;
 
 trait SharedTestHelpers
 {
@@ -69,14 +74,14 @@ trait SharedTestHelpers
     }
 
     /**
-     * Get an instance of a user with 'viewer' permissions
-     * @param $attributes
-     * @return mixed
+     * Get an instance of a user with 'viewer' permissions.
      */
-    protected function getViewer($attributes = [])
+    protected function getViewer(array $attributes = []): User
     {
         $user = Role::getRole('viewer')->users()->first();
-        if (!empty($attributes)) $user->forceFill($attributes)->save();
+        if (!empty($attributes)) {
+            $user->forceFill($attributes)->save();
+        }
         return $user;
     }
 
@@ -267,14 +272,43 @@ trait SharedTestHelpers
      */
     protected function assertPermissionError($response)
     {
-        if ($response instanceof BrowserKitTest) {
-            $response = \Illuminate\Foundation\Testing\TestResponse::fromBaseResponse($response->response);
-        }
+        PHPUnit::assertTrue($this->isPermissionError($response->baseResponse ?? $response->response), "Failed asserting the response contains a permission error.");
+    }
 
-        $response->assertRedirect('/');
-        $this->assertSessionHas('error');
-        $error = session()->pull('error');
-        $this->assertStringStartsWith('You do not have permission to access', $error);
+    /**
+     * Assert a permission error has occurred.
+     */
+    protected function assertNotPermissionError($response)
+    {
+        PHPUnit::assertFalse($this->isPermissionError($response->baseResponse ?? $response->response), "Failed asserting the response does not contain a permission error.");
+    }
+
+    /**
+     * Check if the given response is a permission error.
+     */
+    private function isPermissionError($response): bool
+    {
+        return $response->status() === 302
+            && $response->headers->get('Location') === url('/')
+            && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0;
+    }
+
+    /**
+     * Set a test handler as the logging interface for the application.
+     * Allows capture of logs for checking against during tests.
+     */
+    protected function withTestLogger(): TestHandler
+    {
+        $monolog = new Logger('testing');
+        $testHandler = new TestHandler();
+        $monolog->pushHandler($testHandler);
+
+        Log::extend('testing', function() use ($monolog) {
+            return $monolog;
+        });
+        Log::setDefaultDriver('testing');
+
+        return $testHandler;
     }
 
 }

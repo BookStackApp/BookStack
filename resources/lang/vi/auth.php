@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Đặt lại mật khẩu',
     'reset_password_send_instructions' => 'Nhập email vào ô dưới đây và bạn sẽ nhận được một email với liên kết để đặt lại mật khẩu.',
     'reset_password_send_button' => 'Gửi liên kết đặt lại mật khẩu',
-    'reset_password_sent_success' => 'Một liên kết đặt lại mật khẩu đã được gửi tới :email.',
+    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
     'reset_password_success' => 'Mật khẩu đã được đặt lại thành công.',
     'email_reset_subject' => 'Đặt lại mật khẩu của :appName',
     'email_reset_text' => 'Bạn nhận được email này bởi vì chúng tôi nhận được một yêu cầu đặt lại mật khẩu cho tài khoản của bạn.',

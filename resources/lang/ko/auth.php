@@ -6,8 +6,8 @@
  */
 return [
 
-    'failed' => '가입하지 않았거나 비밀번호가 틀립니다.',
-    'throttle' => '여러 번 실패했습니다. :seconds초 후에 다시 시도하세요.',
+    'failed' => '자격 증명이 기록과 일치하지 않습니다.',
+    'throttle' => '로그인 시도가 너무 많습니다. :seconds초 후에 다시 시도하세요.',
 
     // Login & Register
     'sign_up' => '가입',
@@ -43,7 +43,7 @@ return [
     'reset_password' => '비밀번호 바꾸기',
     'reset_password_send_instructions' => '메일 주소를 입력하세요. 이 주소로 해당 과정을 위한 링크를 보낼 것입니다.',
     'reset_password_send_button' => '메일 보내기',
-    'reset_password_sent_success' => ':email로 메일을 보냈습니다.',
+    'reset_password_sent' => '시스템에서 이메일 주소가 발견되면, 암호 재설정 링크가 :email로 전송된다.',
     'reset_password_success' => '비밀번호를 바꿨습니다.',
     'email_reset_subject' => ':appName 비밀번호 바꾸기',
     'email_reset_text' => '비밀번호를 바꿉니다.',
@@ -70,8 +70,8 @@ return [
     'user_invite_email_greeting' => ':appName에서 가입한 기록이 있습니다.',
     'user_invite_email_text' => '다음 버튼을 눌러 확인하세요:',
     'user_invite_email_action' => '비밀번호 설정',
-    'user_invite_page_welcome' => ':appName로 접속했습니다.',
+    'user_invite_page_welcome' => ':appName에 오신 것을 환영합니다!',
     'user_invite_page_text' => ':appName에 로그인할 때 입력할 비밀번호를 설정하세요.',
     'user_invite_page_confirm_button' => '비밀번호 확인',
-    'user_invite_success' => '이제 :appName에 접근할 수 있습니다.'
+    'user_invite_success' => '암호가 설정되었고, 이제 :appName에 접근할 수 있습니다.'
 ];

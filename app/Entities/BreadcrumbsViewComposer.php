@@ -1,6 +1,7 @@
 <?php namespace BookStack\Entities;
 
-use BookStack\Entities\Managers\EntityContext;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Tools\ShelfContext;
 use Illuminate\View\View;
 
 class BreadcrumbsViewComposer
@@ -10,9 +11,9 @@ class BreadcrumbsViewComposer
 
     /**
      * BreadcrumbsViewComposer constructor.
-     * @param EntityContext $entityContextManager
+     * @param ShelfContext $entityContextManager
      */
-    public function __construct(EntityContext $entityContextManager)
+    public function __construct(ShelfContext $entityContextManager)
     {
         $this->entityContextManager = $entityContextManager;
     }

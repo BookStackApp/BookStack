@@ -81,6 +81,20 @@ return [
     'maint_send_test_email_mail_greeting' => 'La livraison d\'email semble fonctionner !',
     'maint_send_test_email_mail_text' => 'Félicitations ! Lorsque vous avez reçu cette notification par courriel, vos paramètres d\'email semblent être configurés correctement.',
 
+    // Audit Log
+    'audit' => 'Journal d\'audit',
+    'audit_desc' => 'Ce journal d\'audit affiche une liste des activités suivies dans le système. Cette liste n\'est pas filtrée contrairement aux listes d\'activités similaires dans le système où les filtres d\'autorisation sont appliqués.',
+    'audit_event_filter' => 'Filtres d\'événement',
+    'audit_event_filter_no_filter' => 'Pas de filtre',
+    'audit_deleted_item' => 'Élément supprimé',
+    'audit_deleted_item_name' => 'Nom: :name',
+    'audit_table_user' => 'Utilisateur',
+    'audit_table_event' => 'Evènement',
+    'audit_table_item' => 'Élément Associé',
+    'audit_table_date' => 'Date d\'activation',
+    'audit_date_from' => 'À partir du',
+    'audit_date_to' => 'Jusqu\'au',
+
     // Role Settings
     'roles' => 'Rôles',
     'role_user_roles' => 'Rôles des utilisateurs',
@@ -106,6 +120,7 @@ return [
     'role_access_api' => 'Accès à l\'API du système',
     'role_manage_settings' => 'Gérer les préférences de l\'application',
     'role_asset' => 'Permissions des ressources',
+    'roles_system_warning' => 'Sachez que l\'accès à l\'une des trois permissions ci-dessus peut permettre à un utilisateur de modifier ses propres privilèges ou les privilèges des autres utilisateurs du système. Attribuer uniquement des rôles avec ces permissions à des utilisateurs de confiance.',
     'role_asset_desc' => 'Ces permissions contrôlent l\'accès par défaut des ressources dans le système. Les permissions dans les livres, les chapitres et les pages ignoreront ces permissions',
     'role_asset_admins' => 'Les administrateurs ont automatiquement accès à tous les contenus mais les options suivantes peuvent afficher ou masquer certaines options de l\'interface.',
     'role_all' => 'Tous',
@@ -185,6 +200,7 @@ return [
     'language_select' => [
         'en' => 'English',
         'ar' => 'العربية',
+        'bg' => 'Bulgare',
         'cs' => 'Česky',
         'da' => 'Danois',
         'de' => 'Deutsch (Sie)',
@@ -192,6 +208,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
+        'he' => 'Hébreu',
         'hu' => 'Magyar',
         'it' => 'Italian',
         'ja' => '日本語',
@@ -201,6 +218,7 @@ return [
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
+        'sl' => 'Slovenščina',
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',

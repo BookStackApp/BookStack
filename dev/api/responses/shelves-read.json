@@ -1,0 +1,53 @@
+{
+  "id": 14,
+  "name": "My shelf",
+  "slug": "my-shelf",
+  "description": "This is my shelf with some books",
+  "created_by": {
+    "id": 1,
+    "name": "Admin"
+  },
+  "updated_by": {
+    "id": 1,
+    "name": "Admin"
+  },
+  "created_at": "2020-04-10 13:24:09",
+  "updated_at": "2020-04-10 13:31:04",
+  "tags": [
+    {
+      "id": 16,
+      "name": "Category",
+      "value": "Guide",
+      "order": 0
+    }
+  ],
+  "cover": {
+    "id": 501,
+    "name": "anafrancisconi_Sp04AfFCPNM.jpg",
+    "url": "http://bookstack.local/uploads/images/cover_book/2020-04/anafrancisconi_Sp04AfFCPNM.jpg",
+    "created_at": "2020-04-10 13:31:04",
+    "updated_at": "2020-04-10 13:31:04",
+    "created_by": 1,
+    "updated_by": 1,
+    "path": "/uploads/images/cover_book/2020-04/anafrancisconi_Sp04AfFCPNM.jpg",
+    "type": "cover_book",
+    "uploaded_to": 14
+  },
+  "books": [
+    {
+      "id": 5,
+      "name": "Sint explicabo alias sunt.",
+      "slug": "jbsQrzuaXe"
+    },
+    {
+      "id": 1,
+      "name": "BookStack User Guide",
+      "slug": "bookstack-user-guide"
+    },
+    {
+      "id": 3,
+      "name": "Molestiae doloribus sint velit suscipit dolorem.",
+      "slug": "H99QxALaoG"
+    }
+  ]
+}

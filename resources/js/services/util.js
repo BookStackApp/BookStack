@@ -46,3 +46,28 @@ export function scrollAndHighlightElement(element) {
         element.style.backgroundColor = '';
     }, 3000);
 }
+
+/**
+ * Escape any HTML in the given 'unsafe' string.
+ * Take from https://stackoverflow.com/a/6234804.
+ * @param {String} unsafe
+ * @returns {string}
+ */
+export function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/**
+ * Generate a random unique ID.
+ *
+ * @returns {string}
+ */
+export function uniqueId() {
+    const S4 = () => (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}

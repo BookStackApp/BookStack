@@ -1,4 +1,10 @@
-<?php namespace Tests;
+<?php namespace Tests\User;
+
+use Activity;
+use BookStack\Actions\ActivityType;
+use BookStack\Auth\User;
+use BookStack\Entities\Models\Bookshelf;
+use Tests\BrowserKitTest;
 
 class UserProfileTest extends BrowserKitTest
 {
@@ -7,7 +13,7 @@ class UserProfileTest extends BrowserKitTest
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = \BookStack\Auth\User::all()->last();
+        $this->user = User::all()->last();
     }
 
     public function test_profile_page_shows_name()
@@ -55,8 +61,8 @@ class UserProfileTest extends BrowserKitTest
         $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        \Activity::add($entities['book'], 'book_update', $entities['book']->id);
-        \Activity::add($entities['page'], 'page_create', $entities['book']->id);
+        Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
+        Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
         $this->asAdmin()->visit('/user/' . $newUser->id)
             ->seeInElement('#recent-user-activity', 'updated book')
@@ -69,8 +75,8 @@ class UserProfileTest extends BrowserKitTest
         $newUser = $this->getNewBlankUser();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        \Activity::add($entities['book'], 'book_update', $entities['book']->id);
-        \Activity::add($entities['page'], 'page_create', $entities['book']->id);
+        Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
+        Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
         $this->asAdmin()->visit('/')->clickInElement('#recent-activity', $newUser->name)
             ->seePageIs('/user/' . $newUser->id)
@@ -87,7 +93,7 @@ class UserProfileTest extends BrowserKitTest
 
     public function test_guest_profile_cannot_be_deleted()
     {
-        $guestUser = \BookStack\Auth\User::getDefault();
+        $guestUser = User::getDefault();
         $this->asAdmin()->visit('/settings/users/' . $guestUser->id . '/delete')
             ->see('Delete User')->see('Guest')
             ->press('Confirm')
@@ -114,6 +120,26 @@ class UserProfileTest extends BrowserKitTest
         $this->actingAs($editor)
             ->visit('/books')
             ->pageHasElement('.featured-image-container');
+    }
+
+    public function test_shelf_view_type_change()
+    {
+        $editor = $this->getEditor();
+        $shelf = Bookshelf::query()->first();
+        setting()->putUser($editor, 'bookshelf_view_type', 'list');
+
+        $this->actingAs($editor)->visit($shelf->getUrl())
+            ->pageNotHasElement('.featured-image-container')
+            ->pageHasElement('.content-wrap .entity-list-item')
+            ->see('Grid View');
+
+        $req = $this->patch("/settings/users/{$editor->id}/switch-shelf-view", ['view_type' => 'grid']);
+        $req->assertRedirectedTo($shelf->getUrl());
+
+        $this->actingAs($editor)->visit($shelf->getUrl())
+            ->pageHasElement('.featured-image-container')
+            ->pageNotHasElement('.content-wrap .entity-list-item')
+            ->see('List View');
     }
 
 }

@@ -134,6 +134,9 @@ class BookSort {
                 onSort: this.updateMapInput.bind(this),
                 dragClass: 'bg-white',
                 ghostClass: 'primary-background-light',
+                multiDrag: true,
+                multiDragKey: 'CTRL',
+                selectedClass: 'sortable-selected',
             });
         }
     }

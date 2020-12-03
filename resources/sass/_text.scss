@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
-  color: #222;
+  @include lightDark(color, #222, #BBB);
   .subheader {
     font-size: 0.5em;
     line-height: 1em;
@@ -91,7 +91,7 @@ h2.list-heading {
  */
 a {
   color: var(--color-primary);
-  fill: var(--color-primary);
+  fill: currentColor;
   cursor: pointer;
   text-decoration: none;
   transition: filter ease-in-out 80ms;
@@ -130,7 +130,7 @@ p, ul, ol, pre, table, blockquote {
 hr {
   border: 0;
   height: 1px;
-  background: #EAEAEA;
+  @include lightDark(background, #eaeaea, #555);
   margin-bottom: $-l;
   &.faded {
     background-image: linear-gradient(to right, #FFF, #e3e0e0 20%, #e3e0e0 80%, #FFF);
@@ -153,7 +153,7 @@ em, i, .italic {
 
 small, p.small, span.small, .text-small {
   font-size: 0.75rem;
-  color: lighten($text-dark, 10%);
+  @include lightDark(color, #5e5e5e, #999);
 }
 
 sup, .superscript {
@@ -168,8 +168,9 @@ sub, .subscript {
 
 pre {
   font-size: 12px;
-  background-color: #f5f5f5;
   border: 1px solid #DDD;
+  @include lightDark(background-color, #f5f5f5, #2B2B2B);
+  @include lightDark(border-color, #DDD, #111);
   padding-left: 31px;
   position: relative;
   padding-top: 3px;
@@ -181,9 +182,9 @@ pre {
     top: 0;
     width: 29px;
     left: 0;
-    background-color: #f5f5f5;
     height: 100%;
-    border-right: 1px solid #DDD;
+    @include lightDark(background-color, #f5f5f5, #313335);
+    @include lightDark(border-right, 1px solid #DDD, none);
   }
 }
 
@@ -200,8 +201,9 @@ blockquote {
   display: block;
   position: relative;
   border-left: 4px solid var(--color-primary);
-  background-color: #F8F8F8;
+  @include lightDark(background-color, #f8f8f8, #333);
   padding: $-s $-m $-s $-xl;
+  overflow: auto;
   &:before {
     content: "\201C";
     font-size: 2em;
@@ -226,10 +228,11 @@ blockquote {
 }
 
 .code-base {
-    background-color: #F8F8F8;
-    font-size: 0.80em;
-    border: 1px solid #DDD;
-    border-radius: 3px;
+  font-size: 0.84em;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  @include lightDark(background-color, #f8f8f8, #2b2b2b);
+  @include lightDark(border-color, #DDD, #444);
 }
 
 code {
@@ -262,7 +265,6 @@ span.highlight {
  * Lists
  */
 ul, ol {
-  overflow: hidden;
   p {
     margin: 0;
   }
@@ -313,10 +315,10 @@ li > ol, li > ul {
   text-align: center;
 }
 .text-left {
-  text-align: left;
+  text-align: start;
 }
 .text-right {
-  text-align: right;
+  text-align: end;
 }
 
 @each $sizeLetter, $size in $screen-sizes {
@@ -325,10 +327,10 @@ li > ol, li > ul {
       text-align: center;
     }
     .text-#{$sizeLetter}-left {
-      text-align: left;
+      text-align: start;
     }
     .text-#{$sizeLetter}-right {
-      text-align: right;
+      text-align: end;
     }
   }
 }
@@ -384,6 +386,7 @@ span.sep {
   display: inline-block;
   position: relative;
   bottom: -0.105em;
-  margin-right: $-xs;
+  margin-inline-end: $-xs;
   pointer-events: none;
+  fill: currentColor;
 }

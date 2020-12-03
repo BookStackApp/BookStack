@@ -33,6 +33,7 @@ return [
     'copy' => 'Sao chép',
     'reply' => 'Trả lời',
     'delete' => 'Xóa',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Tìm kiếm',
     'search_clear' => 'Xoá tìm kiếm',
     'reset' => 'Thiết lập lại',
@@ -66,6 +67,8 @@ return [
     'profile_menu' => 'Menu Hồ sơ',
     'view_profile' => 'Xem Hồ sơ',
     'edit_profile' => 'Sửa Hồ sơ',
+    'dark_mode' => 'Dark Mode',
+    'light_mode' => 'Light Mode',
 
     // Layout tabs
     'tab_info' => 'Thông tin',

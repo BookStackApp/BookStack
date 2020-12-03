@@ -1,4 +1,7 @@
-<?php namespace Tests;
+<?php namespace Tests\Unit;
+
+use Illuminate\Support\Facades\Log;
+use Tests\TestCase;
 
 /**
  * Class ConfigTest
@@ -32,6 +35,28 @@ class ConfigTest extends TestCase
         $oldDefault = 'http://bookstack.dev';
         $this->checkEnvConfigResult('APP_URL', $initUrl, 'app.url', $initUrl);
         $this->checkEnvConfigResult('APP_URL', $oldDefault, 'app.url', '');
+    }
+
+    public function test_errorlog_plain_webserver_channel()
+    {
+        // We can't full test this due to it being targeted for the SAPI logging handler
+        // so we just overwrite that component so we can capture the error log output.
+        config()->set([
+            'logging.channels.errorlog_plain_webserver.handler_with' => [0],
+        ]);
+
+        $temp = tempnam(sys_get_temp_dir(), 'bs-test');
+        $original = ini_set( 'error_log', $temp);
+
+        Log::channel('errorlog_plain_webserver')->info('Aww, look, a cute puppy');
+
+        ini_set( 'error_log', $original);
+
+        $output = file_get_contents($temp);
+        $this->assertStringContainsString('Aww, look, a cute puppy', $output);
+        $this->assertStringNotContainsString('INFO', $output);
+        $this->assertStringNotContainsString('info', $output);
+        $this->assertStringNotContainsString('testing', $output);
     }
 
     /**

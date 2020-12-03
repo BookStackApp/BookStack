@@ -1,7 +1,8 @@
-<?php namespace Tests;
+<?php namespace Tests\Auth;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use Tests\TestCase;
 
 class Saml2Test extends TestCase
 {
@@ -195,24 +196,6 @@ class Saml2Test extends TestCase
         });
     }
 
-    public function test_user_registration_with_existing_email()
-    {
-        config()->set([
-            'saml2.onelogin.strict' => false,
-        ]);
-
-        $viewer = $this->getViewer();
-        $viewer->email = 'user@example.com';
-        $viewer->save();
-
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $acsPost->assertRedirect('/');
-            $errorMessage = session()->get('error');
-            $this->assertEquals('A user with the email user@example.com already exists but with different credentials.', $errorMessage);
-        });
-    }
-
     public function test_saml_routes_are_only_active_if_saml_enabled()
     {
         config()->set(['auth.method' => 'standard']);
@@ -286,6 +269,62 @@ class Saml2Test extends TestCase
             $errorMessage = session()->get('error');
             $this->assertStringContainsString('That email domain does not have access to this application', $errorMessage);
             $this->assertDatabaseMissing('users', ['email' => 'user@example.com']);
+        });
+    }
+
+    public function test_group_sync_functions_when_email_confirmation_required()
+    {
+        setting()->put('registration-confirmation', 'true');
+        config()->set([
+            'saml2.onelogin.strict' => false,
+            'saml2.user_to_groups' => true,
+            'saml2.remove_from_groups' => false,
+        ]);
+
+        $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
+        $adminRole = Role::getSystemRole('admin');
+
+        $this->withPost(['SAMLResponse' => $this->acsPostData], function () use ($memberRole, $adminRole) {
+            $acsPost = $this->followingRedirects()->post('/saml2/acs');
+
+            $this->assertEquals('http://localhost/register/confirm', url()->current());
+            $acsPost->assertSee('Please check your email and click the confirmation button to access BookStack.');
+            $user = User::query()->where('external_auth_id', '=', 'user')->first();
+
+            $userRoleIds = $user->roles()->pluck('id');
+            $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
+            $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
+            $this->assertTrue($user->email_confirmed == false, 'User email remains unconfirmed');
+        });
+
+        $homeGet = $this->get('/');
+        $homeGet->assertRedirect('/register/confirm/awaiting');
+    }
+
+    public function test_login_where_existing_non_saml_user_shows_warning()
+    {
+        $this->post('/saml2/login');
+        config()->set(['saml2.onelogin.strict' => false]);
+
+        // Make the user pre-existing in DB with different auth_id
+        User::query()->forceCreate([
+            'email' => 'user@example.com',
+            'external_auth_id' => 'old_system_user_id',
+            'email_confirmed' => false,
+            'name' => 'Barry Scott'
+        ]);
+
+        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
+            $acsPost = $this->post('/saml2/acs');
+            $acsPost->assertRedirect('/login');
+            $this->assertFalse($this->isAuthenticated());
+            $this->assertDatabaseHas('users', [
+                'email' => 'user@example.com',
+                'external_auth_id' => 'old_system_user_id',
+            ]);
+
+            $loginGet = $this->get('/login');
+            $loginGet->assertSee("A user with the email user@example.com already exists but with different credentials");
         });
     }
 

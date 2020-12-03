@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'This password reset token is invalid.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'Gesla morajo biti najmanj osem znakov in se morajo ujemati s potrditvijo.',
+    'user' => "Ne moremo najti uporabnika s tem e-poštnim naslovom.",
+    'token' => 'The password reset token is invalid for this email address.',
+    'sent' => 'Poslali smo vam povezavo za ponastavitev gesla!',
+    'reset' => 'Vaše geslo je bilo ponastavljeno!',
 
 ];

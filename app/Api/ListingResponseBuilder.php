@@ -36,8 +36,10 @@ class ListingResponseBuilder
      */
     public function toResponse()
     {
-        $data = $this->fetchData();
-        $total = $this->query->count();
+        $filteredQuery = $this->filterQuery($this->query);
+
+        $total = $filteredQuery->count();
+        $data = $this->fetchData($filteredQuery);
 
         return response()->json([
             'data' => $data,
@@ -48,23 +50,22 @@ class ListingResponseBuilder
     /**
      * Fetch the data to return in the response.
      */
-    protected function fetchData(): Collection
+    protected function fetchData(Builder $query): Collection
     {
-        $this->applyCountAndOffset($this->query);
-        $this->applySorting($this->query);
-        $this->applyFiltering($this->query);
-
-        return $this->query->get($this->fields);
+        $query = $this->countAndOffsetQuery($query);
+        $query = $this->sortQuery($query);
+        return $query->get($this->fields);
     }
 
     /**
      * Apply any filtering operations found in the request.
      */
-    protected function applyFiltering(Builder $query)
+    protected function filterQuery(Builder $query): Builder
     {
+        $query = clone $query;
         $requestFilters = $this->request->get('filter', []);
         if (!is_array($requestFilters)) {
-            return;
+            return $query;
         }
 
         $queryFilters = collect($requestFilters)->map(function ($value, $key) {
@@ -73,7 +74,7 @@ class ListingResponseBuilder
             return !is_null($value);
         })->values()->toArray();
 
-        $query->where($queryFilters);
+        return $query->where($queryFilters);
     }
 
     /**
@@ -101,8 +102,9 @@ class ListingResponseBuilder
      * Apply sorting operations to the query from given parameters
      * otherwise falling back to the first given field, ascending.
      */
-    protected function applySorting(Builder $query)
+    protected function sortQuery(Builder $query): Builder
     {
+        $query = clone $query;
         $defaultSortName = $this->fields[0];
         $direction = 'asc';
 
@@ -116,20 +118,21 @@ class ListingResponseBuilder
             $sortName = $defaultSortName;
         }
 
-        $query->orderBy($sortName, $direction);
+        return $query->orderBy($sortName, $direction);
     }
 
     /**
      * Apply count and offset for paging, based on params from the request while falling
      * back to system defined default, taking the max limit into account.
      */
-    protected function applyCountAndOffset(Builder $query)
+    protected function countAndOffsetQuery(Builder $query): Builder
     {
+        $query = clone $query;
         $offset = max(0, $this->request->get('offset', 0));
         $maxCount = config('api.max_item_count');
         $count = $this->request->get('count', config('api.default_item_count'));
         $count = max(min($maxCount, $count), 1);
 
-        $query->skip($offset)->take($count);
+        return $query->skip($offset)->take($count);
     }
 }

@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => '확인이 끝난 메일 주소입니다. 로그인하세요.',
     'email_confirmation_invalid' => '이 링크는 더 이상 유효하지 않습니다. 다시 가입하세요.',
     'email_confirmation_expired' => '이 링크는 더 이상 유효하지 않습니다. 메일을 다시 보냈습니다.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => '사용 중인 계정의 이메일 주소를 확인해 주어야 합니다.',
     'ldap_fail_anonymous' => '익명 정보로 LDAP 서버에 접근할 수 없습니다.',
     'ldap_fail_authed' => '이 정보로 LDAP 서버에 접근할 수 없습니다.',
     'ldap_extension_not_installed' => 'PHP에 LDAP 확장 도구를 설치하세요.',
@@ -46,11 +46,10 @@ return [
     'file_upload_timeout' => '파일을 올리는 데 걸리는 시간이 서버에서 허용하는 수치를 넘습니다.',
 
     // Attachments
-    'attachment_page_mismatch' => '올리는 위치와 현재 문서가 다릅니다.',
     'attachment_not_found' => '첨부 파일이 없습니다.',
 
     // Pages
-    'page_draft_autosave_fail' => '쓰다 만 문서를 유실했습니다. 인터넷 연결 상태를 확인하세요.',
+    'page_draft_autosave_fail' => '초안 문서를 유실했습니다. 인터넷 연결 상태를 확인하세요.',
     'page_custom_home_deletion' => '처음 페이지는 지울 수 없습니다.',
 
     // Entities
@@ -61,7 +60,7 @@ return [
     'chapter_not_found' => '챕터가 없습니다.',
     'selected_book_not_found' => '고른 책자가 없습니다.',
     'selected_book_chapter_not_found' => '고른 책자나 챕터가 없습니다.',
-    'guests_cannot_save_drafts' => 'Guest는 쓰다 만 문서를 보관할 수 없습니다.',
+    'guests_cannot_save_drafts' => 'Guest는 초안 문서를 보관할 수 없습니다.',
 
     // Users
     'users_cannot_delete_only_admin' => 'Admin을 삭제할 수 없습니다.',
@@ -75,7 +74,7 @@ return [
 
     // Comments
     'comment_list' => '댓글을 가져오다 문제가 생겼습니다.',
-    'cannot_add_comment_to_draft' => '쓰다 만 문서에 댓글을 달 수 없습니다.',
+    'cannot_add_comment_to_draft' => '초안 문서에 댓글을 달 수 없습니다.',
     'comment_add' => '댓글을 등록하다 문제가 생겼습니다.',
     'comment_delete' => '댓글을 지우다 문제가 생겼습니다.',
     'empty_comment' => '빈 댓글은 등록할 수 없습니다.',
@@ -83,21 +82,21 @@ return [
     // Error pages
     '404_page_not_found' => '404 Not Found',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => '이 페이지가 존재하기를 기대했다면, 볼 수 있는 권한이 없을 수 있다.',
     'return_home' => '처음으로 돌아가기',
     'error_occurred' => '문제가 생겼습니다.',
     'app_down' => ':appName에 문제가 있는 것 같습니다',
     'back_soon' => '곧 되돌아갑니다.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => '요청에서 인증 토큰을 찾을 수 없다.',
+    'api_bad_authorization_format' => '요청에서 인증 토큰을 찾았지만, 형식이 잘못된 것 같다.',
+    'api_user_token_not_found' => '제공된 인증 토큰과 일치하는 API 토큰을 찾을 수 없다.',
+    'api_incorrect_token_secret' => '사용한 API 토큰에 대해 제공한 시크릿이 맞지 않는다.',
+    'api_user_no_api_permission' => '사용한 API 토큰의 소유자가, API 호출을 할 수 있는 권한이 없다.',
+    'api_user_token_expired' => '사용된 인증 토큰이 만료되었다.',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => '테스트 이메일 발송할 때 발생한 오류:',
 
 ];

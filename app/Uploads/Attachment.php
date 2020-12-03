@@ -1,8 +1,15 @@
 <?php namespace BookStack\Uploads;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Ownable;
 
+/**
+ * @property int id
+ * @property string name
+ * @property string path
+ * @property string extension
+ * @property bool external
+ */
 class Attachment extends Ownable
 {
     protected $fillable = ['name', 'order'];
@@ -30,13 +37,28 @@ class Attachment extends Ownable
 
     /**
      * Get the url of this file.
-     * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         if ($this->external && strpos($this->path, 'http') !== 0) {
             return $this->path;
         }
         return url('/attachments/' . $this->id);
+    }
+
+    /**
+     * Generate a HTML link to this attachment.
+     */
+    public function htmlLink(): string
+    {
+        return '<a target="_blank" href="'.e($this->getUrl()).'">'.e($this->name).'</a>';
+    }
+
+    /**
+     * Generate a markdown link to this attachment.
+     */
+    public function markdownLink(): string
+    {
+        return '['. $this->name .']('. $this->getUrl() .')';
     }
 }

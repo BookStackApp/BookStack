@@ -1,7 +1,8 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use BookStack\Actions\Comment;
+use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
@@ -12,7 +13,7 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $comment = factory(Comment::class)->make(['parent_id' => 2]);
-        $resp = $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+        $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $resp->assertStatus(200);
         $resp->assertSee($comment->text);
@@ -35,13 +36,12 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $comment = factory(Comment::class)->make();
-        $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+        $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
         $newText = 'updated text content';
-        $resp = $this->putJson("/ajax/comment/$comment->id", [
+        $resp = $this->putJson("/comment/$comment->id", [
             'text' => $newText,
-            'html' => '<p>'.$newText.'</p>',
         ]);
 
         $resp->assertStatus(200);
@@ -60,15 +60,57 @@ class CommentTest extends TestCase
         $page = Page::first();
 
         $comment = factory(Comment::class)->make();
-        $this->postJson("/ajax/page/$page->id/comment", $comment->getAttributes());
+        $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
 
-        $resp = $this->delete("/ajax/comment/$comment->id");
+        $resp = $this->delete("/comment/$comment->id");
         $resp->assertStatus(200);
 
         $this->assertDatabaseMissing('comments', [
             'id' => $comment->id
         ]);
+    }
+
+    public function test_comments_converts_markdown_input_to_html()
+    {
+        $page = Page::first();
+        $this->asAdmin()->postJson("/comment/$page->id", [
+            'text' => '# My Title',
+        ]);
+
+        $this->assertDatabaseHas('comments', [
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+            'text' => '# My Title',
+            'html' => "<h1>My Title</h1>\n",
+        ]);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertSee('<h1>My Title</h1>');
+    }
+
+    public function test_html_cannot_be_injected_via_comment_content()
+    {
+        $this->asAdmin();
+        $page = Page::first();
+
+        $script = '<script>const a = "script";</script>\n\n# sometextinthecomment';
+        $this->postJson("/comment/$page->id", [
+            'text' => $script,
+        ]);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee('sometextinthecomment');
+
+        $comment = $page->comments()->first();
+        $this->putJson("/comment/$comment->id", [
+            'text' => $script . 'updated',
+        ]);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee($script);
+        $pageView->assertSee('sometextinthecommentupdated');
     }
 }

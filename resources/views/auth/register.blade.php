@@ -44,7 +44,7 @@
                     <div>
                         <a id="social-register-{{$driver}}" class="button block outline svg" href="{{ url("/register/service/" . $driver) }}">
                             @icon('auth/' . $driver)
-                            {{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}
+                            <span>{{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}</span>
                         </a>
                     </div>
                 @endforeach

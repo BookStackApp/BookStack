@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Parolanız en az 6 karakterden oluşmalı ve doğrulama parolası ile eşleşmelidir. ',
-    'user' => "Bu e-mail adresi ile ilişkilendirilmiş bir kullanıcı bulamadık.",
-    'token' => 'Parola yenileme tokeni geçerli değil.',
-    'sent' => 'Parola sıfırlanma bağlantısını e-mail adresinize gönderdik!',
-    'reset' => 'Parolanız sıfırlandı!',
+    'password' => 'Şifreniz en az 6 karakterden oluşmalı ve her iki şifre de birbiri ile eşleşmelidir.',
+    'user' => "Bu e-posta adresine sahip bir kullanıcı bulamadık.",
+    'token' => 'Şifre sıfırlama anahtarı, bu e-posta adresi için geçersizdir.',
+    'sent' => 'Şifre sıfırlama bağlantısını e-posta adresinize gönderdik!',
+    'reset' => 'Şifreniz sıfırlandı!',
 
 ];

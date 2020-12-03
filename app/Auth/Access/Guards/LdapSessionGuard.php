@@ -60,10 +60,8 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
      * @param array $credentials
      * @param bool $remember
      * @return bool
-     * @throws LoginAttemptEmailNeededException
      * @throws LoginAttemptException
      * @throws LdapException
-     * @throws UserRegistrationException
      */
     public function attempt(array $credentials = [], $remember = false)
     {
@@ -82,7 +80,11 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         }
 
         if (is_null($user)) {
-            $user = $this->createNewFromLdapAndCreds($userDetails, $credentials);
+            try {
+                $user = $this->createNewFromLdapAndCreds($userDetails, $credentials);
+            } catch (UserRegistrationException $exception) {
+                throw new LoginAttemptException($exception->message);
+            }
         }
 
         // Sync LDAP groups if required

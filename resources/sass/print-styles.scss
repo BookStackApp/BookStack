@@ -20,8 +20,8 @@ html, body {
 .tri-layout-container {
   grid-template-columns: 1fr;
   grid-template-areas: "b";
-  margin-left: 0;
-  margin-right: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
   display: block;
 }
 
@@ -30,6 +30,6 @@ html, body {
 }
 
 .content-wrap.card {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
 }

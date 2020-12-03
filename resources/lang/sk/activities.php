@@ -36,13 +36,13 @@ return [
     'book_sort_notification'      => 'Kniha úspešne znovu zoradená',
 
     // Bookshelves
-    'bookshelf_create'            => 'created Bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+    'bookshelf_create'            => 'vytvorená knižnica',
+    'bookshelf_create_notification'    => 'Knižnica úspešne vytvorená',
+    'bookshelf_update'                 => 'aktualizovaná knižnica',
+    'bookshelf_update_notification'    => 'Knižnica úspešne aktualizovaná',
+    'bookshelf_delete'                 => 'odstránená knižnica',
+    'bookshelf_delete_notification'    => 'Knižnica úspešne odstránená',
 
     // Other
-    'commented_on'                => 'commented on',
+    'commented_on'                => 'komentované na',
 ];

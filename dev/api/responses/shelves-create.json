@@ -1,0 +1,10 @@
+{
+  "name": "My shelf",
+  "description": "This is my shelf with some books",
+  "created_by": 1,
+  "updated_by": 1,
+  "slug": "my-shelf",
+  "updated_at": "2020-04-10 13:24:09",
+  "created_at": "2020-04-10 13:24:09",
+  "id": 14
+}

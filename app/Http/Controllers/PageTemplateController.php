@@ -16,7 +16,6 @@ class PageTemplateController extends Controller
     public function __construct(PageRepo $pageRepo)
     {
         $this->pageRepo = $pageRepo;
-        parent::__construct();
     }
 
     /**

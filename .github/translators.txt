@@ -61,7 +61,7 @@ Rodrigo Saczuk Niz (rodrigoniz) :: Portuguese, Brazilian
 aekramer :: Dutch
 JachuPL :: Polish
 milesteg :: Hungarian
-Beenbag :: German
+Beenbag :: German; German Informal
 Lett3rs :: Danish
 Julian (julian.henneberg) :: German; German Informal
 3GNWn :: Danish
@@ -87,3 +87,39 @@ Rafael (raribeir) :: Portuguese, Brazilian
 Hiroyuki Odake (dakesan) :: Japanese
 Alex Lee (qianmengnet) :: Chinese Simplified
 swinn37 :: French
+Hasan Özbey (the-turk) :: Turkish
+rcy :: Swedish
+Ali Yasir Yılmaz (ayyilmaz) :: Turkish
+scureza :: Italian
+Biepa :: German Informal; German
+syecu :: Chinese Simplified
+Lap1t0r :: French
+Thinkverse (thinkverse) :: Swedish
+alef (toishoki) :: Turkish
+Robbert Feunekes (Muukuro) :: Dutch
+seohyeon.joo :: Korean
+Orenda (OREDNA) :: Bulgarian
+Marek Pavelka (marapavelka) :: Czech
+Venkinovec :: Czech
+Tommy Ku (tommyku) :: Chinese Traditional; Japanese
+Michał Bielejewski  (bielej) :: Polish
+jozefrebjak :: Slovak
+Ikhwan Koo (Ikhwan.Koo) :: Korean
+Whay (remkovdhoef) :: Dutch
+jc7115 :: Chinese Traditional
+주서현 (seohyeon.joo) :: Korean
+ReadySystems :: Arabic
+HFinch :: German; German Informal
+brechtgijsens :: Dutch
+Lowkey (v587ygq) :: Chinese Simplified
+sdl-blue :: German Informal
+sqlik :: Polish
+Roy van Schaijk (royvanschaijk) :: Dutch
+Simsimpicpic :: French
+Zenahr Barzani (Zenahr) :: German; Japanese; Dutch; German Informal
+tatsuya.info :: Japanese
+fadiapp :: Arabic
+Jakub Bouček (jakubboucek) :: Czech
+Marco (cdrfun) :: German
+10935336 :: Chinese Simplified
+孟繁阳 (FanyangMeng) :: Chinese Simplified

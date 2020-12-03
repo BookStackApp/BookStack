@@ -8,8 +8,8 @@ return [
 
     'password' => 'Passwörter müssen aus mindestens sechs Zeichen bestehen und mit der eingegebenen Wiederholung übereinstimmen.',
     'user' => "Es wurde kein Benutzer mit dieser E-Mail-Adresse gefunden.",
-    'token' => 'Dieser Link zum Zurücksetzen des Passwortes ist ungültig!',
-    'sent' => 'Der Link zum Zurücksetzen Ihres Passwortes wurde Ihnen per E-Mail zugesendet.',
-    'reset' => 'Ihr Passwort wurde zurückgesetzt!',
+    'token' => 'Der Token zum Zurücksetzen des Passworts für diese E-Mail-Adresse ist ungültig.',
+    'sent' => 'Wir haben dir einen Link zum Zurücksetzen des Passwortes per E-Mail geschickt!',
+    'reset' => 'Dein Passwort wurde zurückgesetzt!',
 
 ];

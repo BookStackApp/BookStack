@@ -25,7 +25,7 @@ class DeleteUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Delete users that are not "admin" or system users.';
+    protected $description = 'Delete users that are not "admin" or system users';
 
     public function __construct(User $user, UserRepo $userRepo)
     {

@@ -33,6 +33,7 @@ return [
     'copy' => 'Kopier',
     'reply' => 'Besvar',
     'delete' => 'Slet',
+    'delete_confirm' => 'Confirm Deletion',
     'search' => 'Søg',
     'search_clear' => 'Ryd søgning',
     'reset' => 'Nulstil',
@@ -66,6 +67,8 @@ return [
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
+    'dark_mode' => 'Mørk tilstand',
+    'light_mode' => 'Lys tilstand',
 
     // Layout tabs
     'tab_info' => 'Info',

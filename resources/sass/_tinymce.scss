@@ -10,10 +10,10 @@
 
 .mce-tinymce {
   .mce-panel {
-    background-color: #FFF;
+    @include lightDark(background-color, #fff, #333);
   }
   .mce-btn {
-    background-color: #FFF;
+    @include lightDark(background-color, #fff, #333);
   }
 }
 
@@ -51,6 +51,9 @@
       overflow:auto;
       iframe {
         flex: 1;
+        // Force TinyMCE iframe to render on its own layer
+        // for much greater performance in Safari
+        will-change: transform;
       }
     }
   }

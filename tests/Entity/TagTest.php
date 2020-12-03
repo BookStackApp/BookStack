@@ -1,11 +1,12 @@
-<?php namespace Tests;
+<?php namespace Tests\Entity;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Actions\Tag;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use BookStack\Auth\Permissions\PermissionService;
+use Tests\BrowserKitTest;
 
 class TagTest extends BrowserKitTest
 {
@@ -27,48 +28,6 @@ class TagTest extends BrowserKitTest
 
         $entity->tags()->saveMany($tags);
         return $entity;
-    }
-
-    public function test_get_page_tags()
-    {
-        $page = $this->getEntityWithTags(Page::class);
-
-        // Add some other tags to check they don't interfere
-        factory(Tag::class, $this->defaultTagCount)->create();
-
-        $this->asAdmin()->get("/ajax/tags/get/page/" . $page->id)
-            ->shouldReturnJson();
-
-        $json = json_decode($this->response->getContent());
-        $this->assertTrue(count($json) === $this->defaultTagCount, "Returned JSON item count is not as expected");
-    }
-
-    public function test_get_chapter_tags()
-    {
-        $chapter = $this->getEntityWithTags(Chapter::class);
-
-        // Add some other tags to check they don't interfere
-        factory(Tag::class, $this->defaultTagCount)->create();
-
-        $this->asAdmin()->get("/ajax/tags/get/chapter/" . $chapter->id)
-            ->shouldReturnJson();
-
-        $json = json_decode($this->response->getContent());
-        $this->assertTrue(count($json) === $this->defaultTagCount, "Returned JSON item count is not as expected");
-    }
-
-    public function test_get_book_tags()
-    {
-        $book = $this->getEntityWithTags(Book::class);
-
-        // Add some other tags to check they don't interfere
-        factory(Tag::class, $this->defaultTagCount)->create();
-
-        $this->asAdmin()->get("/ajax/tags/get/book/" . $book->id)
-            ->shouldReturnJson();
-
-        $json = json_decode($this->response->getContent());
-        $this->assertTrue(count($json) === $this->defaultTagCount, "Returned JSON item count is not as expected");
     }
 
     public function test_tag_name_suggestions()

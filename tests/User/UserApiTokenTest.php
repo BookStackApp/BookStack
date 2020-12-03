@@ -1,5 +1,6 @@
-<?php namespace Test;
+<?php namespace Tests\User;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Api\ApiToken;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -67,6 +68,7 @@ class UserApiTokenTest extends TestCase
         $this->assertTrue(strlen($secret) === 32);
 
         $this->assertSessionHas('success');
+        $this->assertActivityExists(ActivityType::API_TOKEN_CREATE);
     }
 
     public function test_create_with_no_expiry_sets_expiry_hundred_years_away()
@@ -124,6 +126,7 @@ class UserApiTokenTest extends TestCase
 
         $this->assertDatabaseHas('api_tokens', array_merge($updateData, ['id' => $token->id]));
         $this->assertSessionHas('success');
+        $this->assertActivityExists(ActivityType::API_TOKEN_UPDATE);
     }
 
     public function test_token_update_with_blank_expiry_sets_to_hundred_years_away()
@@ -162,6 +165,7 @@ class UserApiTokenTest extends TestCase
         $resp = $this->delete($tokenUrl);
         $resp->assertRedirect($editor->getEditUrl('#api_tokens'));
         $this->assertDatabaseMissing('api_tokens', ['id' => $token->id]);
+        $this->assertActivityExists(ActivityType::API_TOKEN_DELETE);
     }
 
     public function test_user_manage_can_delete_token_without_api_permission_themselves()

@@ -50,9 +50,9 @@
                                 @else
                                     <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
-                                    <div dropdown class="dropdown-container">
-                                        <a dropdown-toggle href="#" aria-haspopup="true" aria-expanded="false">{{ trans('entities.pages_revisions_restore') }}</a>
-                                        <ul class="dropdown-menu" role="menu">
+                                    <div component="dropdown" class="dropdown-container">
+                                        <a refs="dropdown@toggle" href="#" aria-haspopup="true" aria-expanded="false">{{ trans('entities.pages_revisions_restore') }}</a>
+                                        <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                                             <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_restore_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/restore') }}" method="POST">
@@ -64,9 +64,9 @@
                                         </ul>
                                     </div>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
-                                    <div dropdown class="dropdown-container">
-                                        <a dropdown-toggle href="#" aria-haspopup="true" aria-expanded="false">{{ trans('common.delete') }}</a>
-                                        <ul class="dropdown-menu" role="menu">
+                                    <div component="dropdown" class="dropdown-container">
+                                        <a refs="dropdown@toggle" href="#" aria-haspopup="true" aria-expanded="false">{{ trans('common.delete') }}</a>
+                                        <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                                             <li class="px-m py-s"><small class="text-muted">{{trans('entities.revision_delete_confirm')}}</small></li>
                                             <li>
                                                 <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
