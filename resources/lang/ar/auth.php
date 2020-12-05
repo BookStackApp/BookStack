@@ -70,7 +70,7 @@ return [
     'user_invite_email_greeting' => 'تم إنشاء حساب مستخدم لك على %site%.',
     'user_invite_email_text' => 'انقر على الزر أدناه لتعيين كلمة مرور الحساب والحصول على الوصول:',
     'user_invite_email_action' => 'كلمة سر المستخدم',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
+    'user_invite_page_welcome' => 'مرحبا بكم في :appName!',
     'user_invite_page_text' => 'لإكمال حسابك والحصول على حق الوصول تحتاج إلى تعيين كلمة مرور سيتم استخدامها لتسجيل الدخول إلى :appName في الزيارات المستقبلية.',
     'user_invite_page_confirm_button' => 'تأكيد كلمة المرور',
     'user_invite_success' => 'مجموعة كلمات المرور، لديك الآن حق الوصول إلى :appName!'
