@@ -80,11 +80,11 @@ return [
     'maint_send_test_email_mail_subject' => '测试电子邮件',
     'maint_send_test_email_mail_greeting' => '邮件发送功能看起来工作正常！',
     'maint_send_test_email_mail_text' => '恭喜！您收到了此邮件通知，你的电子邮件设置看起来配置正确。',
-    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
-    'maint_recycle_bin_open' => 'Open Recycle Bin',
+    'maint_recycle_bin_desc' => '被删除的书架、图书、章节、书页将会被存入回收站，您可以恢复过永久删除它们。回收站过旧的项目将会在设定的时间后自动清除。',
+    'maint_recycle_bin_open' => '打开回收站',
 
     // Recycle Bin
-    'recycle_bin' => 'Recycle Bin',
+    'recycle_bin' => '回收站',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Deleted Item',
     'recycle_bin_deleted_by' => 'Deleted By',
