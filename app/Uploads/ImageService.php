@@ -450,28 +450,32 @@ class ImageService
 
     /**
      * Get a storage path for the given image URL.
+     * Ensures the path will start with "uploads/images".
      * Returns null if the url cannot be resolved to a local URL.
      */
     private function imageUrlToStoragePath(string $url): ?string
     {
-        $url = trim($url);
+        $url = ltrim(trim($url), '/');
 
         // Handle potential relative paths
         $isRelative = strpos($url, 'http') !== 0;
         if ($isRelative) {
-            return trim($url, '/');
+            if (strpos(strtolower($url), 'uploads/images') === 0) {
+                return trim($url, '/');
+            }
+            return null;
         }
 
         // Handle local images based on paths on the same domain
         $potentialHostPaths = [
-            url('/'),
-            $this->getPublicUrl('/'),
+            url('uploads/images/'),
+            $this->getPublicUrl('/uploads/images/'),
         ];
 
         foreach ($potentialHostPaths as $potentialBasePath) {
             $potentialBasePath = strtolower($potentialBasePath);
             if (strpos(strtolower($url), $potentialBasePath) === 0) {
-                return trim(substr($url, strlen($potentialBasePath)), '/');
+                return 'uploads/images/' . trim(substr($url, strlen($potentialBasePath)), '/');
             }
         }
 
