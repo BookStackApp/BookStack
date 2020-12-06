@@ -1,9 +1,8 @@
 <?php namespace Tests\Entity;
 
-
 use BookStack\Entities\Chapter;
 use BookStack\Entities\Page;
-use BookStack\Uploads\HttpFetcher;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -154,14 +153,39 @@ class ExportTest extends TestCase
     public function test_page_export_sets_right_data_type_for_svg_embeds()
     {
         $page = Page::first();
-        $page->html = '<img src="http://example.com/image.svg">';
+        Storage::disk('local')->makeDirectory('uploads/images/gallery');
+        Storage::disk('local')->put('uploads/images/gallery/svg_test.svg', '<svg></svg>');
+        $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg">';
         $page->save();
 
         $this->asEditor();
-        $this->mockHttpFetch('<svg></svg>');
         $resp = $this->get($page->getUrl('/export/html'));
+        Storage::disk('local')->delete('uploads/images/gallery/svg_test.svg');
+
         $resp->assertStatus(200);
         $resp->assertSee('<img src="data:image/svg+xml;base64');
+    }
+
+    public function test_page_export_contained_html_image_fetches_only_run_when_url_points_to_image_upload_folder()
+    {
+        $page = Page::first();
+        $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg"/>'
+            ."\n".'<img src="http://localhost/uploads/svg_test.svg"/>'
+            ."\n".'<img src="/uploads/svg_test.svg"/>';
+        $storageDisk = Storage::disk('local');
+        $storageDisk->makeDirectory('uploads/images/gallery');
+        $storageDisk->put('uploads/images/gallery/svg_test.svg', '<svg>good</svg>');
+        $storageDisk->put('uploads/svg_test.svg', '<svg>bad</svg>');
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+
+        $storageDisk->delete('uploads/images/gallery/svg_test.svg');
+        $storageDisk->delete('uploads/svg_test.svg');
+
+        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg');
+        $resp->assertSee('http://localhost/uploads/svg_test.svg');
+        $resp->assertSee('src="/uploads/svg_test.svg"');
     }
 
 }
