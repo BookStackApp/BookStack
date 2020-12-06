@@ -167,12 +167,28 @@ class ExportTest extends TestCase
         $resp->assertSee('<img src="data:image/svg+xml;base64');
     }
 
+    public function test_page_image_containment_works_on_multiple_images_within_a_single_line()
+    {
+        $page = Page::first();
+        Storage::disk('local')->makeDirectory('uploads/images/gallery');
+        Storage::disk('local')->put('uploads/images/gallery/svg_test.svg', '<svg></svg>');
+        Storage::disk('local')->put('uploads/images/gallery/svg_test2.svg', '<svg></svg>');
+        $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg" class="a"><img src="http://localhost/uploads/images/gallery/svg_test2.svg" class="b">';
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        Storage::disk('local')->delete('uploads/images/gallery/svg_test.svg');
+        Storage::disk('local')->delete('uploads/images/gallery/svg_test2.svg');
+
+        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test');
+    }
+
     public function test_page_export_contained_html_image_fetches_only_run_when_url_points_to_image_upload_folder()
     {
         $page = Page::first();
         $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg"/>'
-            ."\n".'<img src="http://localhost/uploads/svg_test.svg"/>'
-            ."\n".'<img src="/uploads/svg_test.svg"/>';
+            .'<img src="http://localhost/uploads/svg_test.svg"/>'
+            .'<img src="/uploads/svg_test.svg"/>';
         $storageDisk = Storage::disk('local');
         $storageDisk->makeDirectory('uploads/images/gallery');
         $storageDisk->put('uploads/images/gallery/svg_test.svg', '<svg>good</svg>');
