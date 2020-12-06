@@ -418,36 +418,25 @@ class ImageService
 
     /**
      * Convert a image URI to a Base64 encoded string.
-     * Attempts to find locally via set storage method first.
+     * Attempts to convert the URL to a system storage url then
+     * fetch the data from the disk or storage location.
+     * Returns null if the image data cannot be fetched from storage.
      * @throws FileNotFoundException
      */
     public function imageUriToBase64(string $uri): ?string
     {
-        $isLocal = strpos(trim($uri), 'http') !== 0;
-
-        // Attempt to find local files even if url not absolute
-        $base = url('/');
-        if (!$isLocal && strpos($uri, $base) === 0) {
-            $isLocal = true;
-            $uri = str_replace($base, '', $uri);
+        $storagePath = $this->imageUrlToStoragePath($uri);
+        if (empty($uri) || is_null($storagePath)) {
+            return null;
         }
 
+        $storage = $this->getStorage();
         $imageData = null;
-
-        if ($isLocal) {
-            $uri = trim($uri, '/');
-            $storage = $this->getStorage();
-            if ($storage->exists($uri)) {
-                $imageData = $storage->get($uri);
-            }
-        } else {
-            try {
-                $imageData = $this->http->fetch($uri);
-            } catch (Exception $e) {
-            }
+        if ($storage->exists($storagePath)) {
+            $imageData = $storage->get($storagePath);
         }
 
-        if ($imageData === null) {
+        if (is_null($imageData)) {
             return null;
         }
 
@@ -457,6 +446,36 @@ class ImageService
         }
 
         return 'data:image/' . $extension . ';base64,' . base64_encode($imageData);
+    }
+
+    /**
+     * Get a storage path for the given image URL.
+     * Returns null if the url cannot be resolved to a local URL.
+     */
+    private function imageUrlToStoragePath(string $url): ?string
+    {
+        $url = trim($url);
+
+        // Handle potential relative paths
+        $isRelative = strpos($url, 'http') !== 0;
+        if ($isRelative) {
+            return trim($url, '/');
+        }
+
+        // Handle local images based on paths on the same domain
+        $potentialHostPaths = [
+            url('/'),
+            $this->getPublicUrl('/'),
+        ];
+
+        foreach ($potentialHostPaths as $potentialBasePath) {
+            $potentialBasePath = strtolower($potentialBasePath);
+            if (strpos(strtolower($url), $potentialBasePath) === 0) {
+                return trim(substr($url, strlen($potentialBasePath)), '/');
+            }
+        }
+
+        return null;
     }
 
     /**
