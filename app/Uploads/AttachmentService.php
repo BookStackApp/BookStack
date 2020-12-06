@@ -2,17 +2,29 @@
 
 use BookStack\Exceptions\FileUploadException;
 use Exception;
+use Illuminate\Contracts\Filesystem\Factory as FileSystem;
+use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class AttachmentService extends UploadService
+class AttachmentService
 {
+
+    protected $fileSystem;
+
+    /**
+     * AttachmentService constructor.
+     */
+    public function __construct(FileSystem $fileSystem)
+    {
+        $this->fileSystem = $fileSystem;
+    }
+
 
     /**
      * Get the storage that will be used for storing files.
-     * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
-    protected function getStorage()
+    protected function getStorage(): FileSystemInstance
     {
         $storageType = config('filesystems.attachments');
 
