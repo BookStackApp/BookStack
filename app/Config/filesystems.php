@@ -42,13 +42,6 @@ return [
             'root'   => storage_path(),
         ],
 
-        'ftp' => [
-            'driver'   => 'ftp',
-            'host'     => 'ftp.example.com',
-            'username' => 'your-username',
-            'password' => 'your-password',
-        ],
-
         's3' => [
             'driver' => 's3',
             'key'    => env('STORAGE_S3_KEY', 'your-key'),
@@ -57,16 +50,6 @@ return [
             'bucket' => env('STORAGE_S3_BUCKET', 'your-bucket'),
             'endpoint' => env('STORAGE_S3_ENDPOINT', null),
             'use_path_style_endpoint' => env('STORAGE_S3_ENDPOINT', null) !== null,
-        ],
-
-        'rackspace' => [
-            'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
-            'container' => 'your-container',
-            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-            'region'    => 'IAD',
-            'url_type'  => 'publicURL',
         ],
 
     ],
