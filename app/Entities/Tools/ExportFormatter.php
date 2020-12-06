@@ -143,7 +143,7 @@ class ExportFormatter
     protected function containHtml(string $htmlContent): string
     {
         $imageTagsOutput = [];
-        preg_match_all("/\<img.*src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
+        preg_match_all("/\<img.*?src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
 
         // Replace image src with base64 encoded image strings
         if (isset($imageTagsOutput[0]) && count($imageTagsOutput[0]) > 0) {
