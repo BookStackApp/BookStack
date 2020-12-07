@@ -212,7 +212,7 @@ return [
     'pages_revisions_date' => 'تاريخ المراجعة',
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => 'مراجعة #: رقم تعريفي',
-    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
+    'pages_revisions_numbered_changes' => 'مراجعة #: رقم تعريفي التغييرات',
     'pages_revisions_changelog' => 'سجل التعديل',
     'pages_revisions_changes' => 'التعديلات',
     'pages_revisions_current' => 'النسخة الحالية',
@@ -231,11 +231,11 @@ return [
         'start_b' => ':userName بدأ بتعديل هذه الصفحة',
         'time_a' => 'منذ أن تم تحديث هذه الصفحة',
         'time_b' => 'في آخر :minCount دقيقة/دقائق',
-        'message' => ':start :time. Take care not to overwrite each other\'s updates!',
+        'message' => 'وقت البدء: احرص على عدم الكتابة فوق تحديثات بعضنا البعض!',
     ],
     'pages_draft_discarded' => 'تم التخلص من المسودة. تم تحديث المحرر بمحتوى الصفحة الحالي',
-    'pages_specific' => 'Specific Page',
-    'pages_is_template' => 'Page Template',
+    'pages_specific' => 'صفحة محددة',
+    'pages_is_template' => 'قالب الصفحة',
 
     // Editor Sidebar
     'page_tags' => 'وسوم الصفحة',
