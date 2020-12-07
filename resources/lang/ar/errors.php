@@ -31,9 +31,9 @@ return [
     'social_account_already_used_existing' => 'حساب :socialAccount مستخدَم من قبل مستخدم آخر.',
     'social_account_not_used' => 'حساب :socialAccount غير مرتبط بأي مستخدم. الرجاء ربطه من خلال إعدادات ملفكم. ',
     'social_account_register_instructions' => 'إذا لم يكن لديكم حساب فيمكنكم التجسيل باستخدام خيار :socialAccount.',
-    'social_driver_not_found' => 'Social driver not found',
-    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'social_driver_not_found' => 'لم يتم العثور على السوشيال درايفر "Social driver"',
+    'social_driver_not_configured' => 'لم يتم تهيئة إعدادات حسابك الاجتماعي بشكل صحيح.',
+    'invite_token_expired' => 'انتهت صلاحية رابط هذه الدعوة. يمكنك بدلاً من ذلك محاولة إعادة تعيين كلمة مرور حسابك.',
 
     // System
     'path_not_writable' => 'لا يمكن الرفع إلى مسار :filePath. الرجاء التأكد من قابلية الكتابة إلى الخادم.',
@@ -53,8 +53,8 @@ return [
     'page_custom_home_deletion' => 'لا يمكن حذف الصفحة إذا كانت محددة كصفحة رئيسية',
 
     // Entities
-    'entity_not_found' => 'Entity not found',
-    'bookshelf_not_found' => 'Bookshelf not found',
+    'entity_not_found' => 'الكيان غير موجود',
+    'bookshelf_not_found' => 'رف الكتب غير موجود',
     'book_not_found' => 'لم يتم العثور على الكتاب',
     'page_not_found' => 'لم يتم العثور على الصفحة',
     'chapter_not_found' => 'لم يتم العثور على الفصل',
