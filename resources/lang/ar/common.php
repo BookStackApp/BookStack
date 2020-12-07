@@ -47,8 +47,8 @@ return [
     'sort_ascending' => 'فرز تصاعدي',
     'sort_descending' => 'فرز تنازلي',
     'sort_name' => 'الاسم',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_created_at' => 'تاريخ الإنشاء',
+    'sort_updated_at' => 'تاريخ التحديث',
 
     // Misc
     'deleted_user' => 'حذف مستخدم',
@@ -60,19 +60,19 @@ return [
     'details' => 'التفاصيل',
     'grid_view' => 'عرض شبكي',
     'list_view' => 'عرض منسدل',
-    'default' => 'Default',
-    'breadcrumb' => 'Breadcrumb',
+    'default' => 'افتراضي',
+    'breadcrumb' => 'شريط التنقل',
 
     // Header
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'قائمة ملف التعريف',
     'view_profile' => 'عرض الملف الشخصي',
     'edit_profile' => 'تعديل الملف الشخصي',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'الوضع المظلم',
+    'light_mode' => 'الوضع المضيء',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_content' => 'Content',
+    'tab_info' => 'معلومات',
+    'tab_content' => 'المحتوى',
 
     // Email Content
     'email_action_help' => 'إذا واجهتكم مشكلة بضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
