@@ -93,10 +93,10 @@ return [
     'api_bad_authorization_format' => 'تم العثور على رمز ترخيص مميز في الطلب ولكن يبدو أن التنسيق غير صحيح',
     'api_user_token_not_found' => 'لم يتم العثور على رمز API مطابق لرمز الترخيص المُقدم',
     'api_incorrect_token_secret' => 'الشفرة المُقدمة لرمز API المستخدم المحدد غير صحيحة',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_no_api_permission' => 'مالك رمز API المستخدم ليس لديه الصلاحية لإجراء مكالمات API',
+    'api_user_token_expired' => 'انتهت صلاحية رمز الترخيص المستخدم',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'حدث خطأ عند إرسال بريد إلكتروني تجريبي:',
 
 ];
