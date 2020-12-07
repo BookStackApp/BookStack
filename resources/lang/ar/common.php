@@ -44,9 +44,9 @@ return [
     // Sort Options
     'sort_options' => 'خيارات الترتيب',
     'sort_direction_toggle' => 'الترتيب وفق الإتجاه',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
+    'sort_ascending' => 'فرز تصاعدي',
+    'sort_descending' => 'فرز تنازلي',
+    'sort_name' => 'الاسم',
     'sort_created_at' => 'Created Date',
     'sort_updated_at' => 'Updated Date',
 
