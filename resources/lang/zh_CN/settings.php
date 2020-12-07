@@ -100,7 +100,7 @@ return [
     'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',
     'recycle_bin_restore_deleted_parent' => 'The parent of this item has also been deleted. These will remain deleted until that parent is also restored.',
     'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
-    'recycle_bin_restore_notification' => 'Restored :count total items from the recycle bin.',
+    'recycle_bin_restore_notification' => '已还原：从回收站中还原了 :count 个项目。',
 
     // Audit Log
     'audit' => '审核日志',
@@ -111,7 +111,7 @@ return [
     'audit_deleted_item_name' => '名称: :name',
     'audit_table_user' => '用户',
     'audit_table_event' => '事件',
-    'audit_table_related' => 'Related Item or Detail',
+    'audit_table_related' => '相关项目或详细信息',
     'audit_table_date' => '活动日期',
     'audit_date_from' => '日期范围从',
     'audit_date_to' => '日期范围至',
@@ -157,7 +157,7 @@ return [
     'user_profile' => '用户资料',
     'users_add_new' => '添加用户',
     'users_search' => '搜索用户',
-    'users_latest_activity' => 'Latest Activity',
+    'users_latest_activity' => '最新活动',
     'users_details' => '用户详细资料',
     'users_details_desc' => '设置该用户的显示名称和电子邮件地址。 该电子邮件地址将用于登录本站。',
     'users_details_desc_no_email' => '设置此用户的昵称，以便其他人识别。',
