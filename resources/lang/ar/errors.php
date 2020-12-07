@@ -70,7 +70,7 @@ return [
     'role_cannot_be_edited' => 'لا يمكن تعديل هذا الدور',
     'role_system_cannot_be_deleted' => 'هذا الدور خاص بالنظام ولا يمكن حذفه',
     'role_registration_default_cannot_delete' => 'لا يمكن حذف الدور إذا كان مسجل كالدور الأساسي بعد تسجيل الحساب',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_remove_only_admin' => 'هذا المستخدم هو المستخدم الوحيد المعين لدور المسؤول. قم بتعيين دور المسؤول لمستخدم آخر قبل محاولة إزالته هنا.',
 
     // Comments
     'comment_list' => 'حصل خطأ خلال جلب التعليقات.',
@@ -82,17 +82,17 @@ return [
     // Error pages
     '404_page_not_found' => 'لم يتم العثور على الصفحة',
     'sorry_page_not_found' => 'عفواً, لا يمكن العثور على الصفحة التي تبحث عنها.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'إذا كنت تتوقع أن تكون هذه الصفحة موجودة، قد لا يكون لديك تصريح بمشاهدتها.',
     'return_home' => 'العودة للصفحة الرئيسية',
     'error_occurred' => 'حدث خطأ',
     'app_down' => ':appName لا يعمل حالياً',
     'back_soon' => 'سيعود للعمل قريباً.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_no_authorization_found' => 'لم يتم العثور على رمز ترخيص مميز في الطلب',
+    'api_bad_authorization_format' => 'تم العثور على رمز ترخيص مميز في الطلب ولكن يبدو أن التنسيق غير صحيح',
+    'api_user_token_not_found' => 'لم يتم العثور على رمز API مطابق لرمز الترخيص المُقدم',
+    'api_incorrect_token_secret' => 'الشفرة المُقدمة لرمز API المستخدم المحدد غير صحيحة',
     'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
     'api_user_token_expired' => 'The authorization token used has expired',
 
