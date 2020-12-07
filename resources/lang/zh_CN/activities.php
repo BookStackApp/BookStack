@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => '评论',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => '权限已更新',
 ];
