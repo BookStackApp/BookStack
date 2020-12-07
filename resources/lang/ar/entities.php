@@ -265,7 +265,7 @@ return [
     'attachments_link_url' => 'رابط الملف',
     'attachments_link_url_hint' => 'رابط الموقع أو الملف',
     'attach' => 'إرفاق',
-    'attachments_insert_link' => 'Add Attachment Link to Page',
+    'attachments_insert_link' => 'إضافة رابط مرفق إلى الصفحة',
     'attachments_edit_file' => 'تعديل الملف',
     'attachments_edit_file_name' => 'اسم الملف',
     'attachments_edit_drop_upload' => 'أسقط الملفات أو اضغط هنا للرفع والاستبدال',
@@ -279,11 +279,11 @@ return [
     'templates_set_as_template' => 'هذه الصفحة عبارة عن قالب',
     'templates_explain_set_as_template' => 'يمكنك تعيين هذه الصفحة كقالب بحيث تستخدم محتوياتها عند إنشاء صفحات أخرى. سيتمكن المستخدمون الآخرون من استخدام هذا القالب إذا كان لديهم أذونات عرض لهذه الصفحة.',
     'templates_replace_content' => 'استبدال محتوى الصفحة',
-    'templates_append_content' => 'Append to page content',
-    'templates_prepend_content' => 'Prepend to page content',
+    'templates_append_content' => 'تذييل محتوى الصفحة',
+    'templates_prepend_content' => 'بادئة محتوى الصفحة',
 
     // Profile View
-    'profile_user_for_x' => 'User for :time',
+    'profile_user_for_x' => 'المستخدم لـ : الوقت',
     'profile_created_content' => 'المحتوى المنشأ',
     'profile_not_created_pages' => 'لم يتم إنشاء أي صفحات بواسطة :userName',
     'profile_not_created_chapters' => 'لم يتم إنشاء أي فصول بواسطة :userName',
