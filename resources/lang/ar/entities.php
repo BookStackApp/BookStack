@@ -288,7 +288,7 @@ return [
     'profile_not_created_pages' => 'لم يتم إنشاء أي صفحات بواسطة :userName',
     'profile_not_created_chapters' => 'لم يتم إنشاء أي فصول بواسطة :userName',
     'profile_not_created_books' => 'لم يتم إنشاء أي كتب بواسطة :userName',
-    'profile_not_created_shelves' => ':userName has not created any shelves',
+    'profile_not_created_shelves' => 'لم يقم "اسم المستخدم"بإنشاء أي أرفف',
 
     // Comments
     'comment' => 'تعليق',
