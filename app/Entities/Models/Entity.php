@@ -205,12 +205,12 @@ abstract class Entity extends Ownable
     }
 
     /**
-     * Get entity type.
-     * @return mixed
+     * Get the entity type as a simple lowercase word.
      */
-    public static function getType()
+    public static function getType(): string
     {
-        return strtolower(static::getClassName());
+        $className = array_slice(explode('\\', static::class), -1, 1)[0];
+        return strtolower($className);
     }
 
     /**

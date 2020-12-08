@@ -8,25 +8,24 @@ use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\Image;
+use BookStack\Uploads\UserAvatars;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Images;
 use Log;
 
 class UserRepo
 {
-
-    protected $user;
-    protected $role;
+    protected $userAvatar;
 
     /**
      * UserRepo constructor.
      */
-    public function __construct(User $user, Role $role)
+    public function __construct(UserAvatars $userAvatar)
     {
-        $this->user = $user;
-        $this->role = $role;
+        $this->userAvatar = $userAvatar;
     }
 
     /**
@@ -34,25 +33,23 @@ class UserRepo
      */
     public function getByEmail(string $email): ?User
     {
-        return $this->user->where('email', '=', $email)->first();
+        return User::query()->where('email', '=', $email)->first();
     }
 
     /**
-     * @param int $id
-     * @return User
+     * Get a user by their ID.
      */
-    public function getById($id)
+    public function getById(int $id): User
     {
-        return $this->user->newQuery()->findOrFail($id);
+        return User::query()->findOrFail($id);
     }
 
     /**
      * Get all the users with their permissions.
-     * @return Builder|static
      */
-    public function getAllUsers()
+    public function getAllUsers(): Collection
     {
-        return $this->user->with('roles', 'avatar')->orderBy('name', 'asc')->get();
+        return User::query()->with('roles', 'avatar')->orderBy('name', 'asc')->get();
     }
 
     /**
@@ -68,7 +65,7 @@ class UserRepo
                 ->take(1);
         }
 
-        $query = $this->user->with(['roles', 'avatar', 'latestActivity'])
+        $query = User::query()->with(['roles', 'avatar', 'latestActivity'])
             ->orderBy($sort, $sortData['order']);
 
         if ($sortData['search']) {
@@ -96,14 +93,12 @@ class UserRepo
 
     /**
      * Assign a user to a system-level role.
-     * @param User $user
-     * @param $systemRoleName
      * @throws NotFoundException
      */
-    public function attachSystemRole(User $user, $systemRoleName)
+    public function attachSystemRole(User $user, string $systemRoleName)
     {
-        $role = $this->role->newQuery()->where('system_name', '=', $systemRoleName)->first();
-        if ($role === null) {
+        $role = Role::getSystemRole($systemRoleName);
+        if (is_null($role)) {
             throw new NotFoundException("Role '{$systemRoleName}' not found");
         }
         $user->attachRole($role);
@@ -111,26 +106,23 @@ class UserRepo
 
     /**
      * Checks if the give user is the only admin.
-     * @param User $user
-     * @return bool
      */
-    public function isOnlyAdmin(User $user)
+    public function isOnlyAdmin(User $user): bool
     {
         if (!$user->hasSystemRole('admin')) {
             return false;
         }
 
-        $adminRole = $this->role->getSystemRole('admin');
-        if ($adminRole->users->count() > 1) {
+        $adminRole = Role::getSystemRole('admin');
+        if ($adminRole->users()->count() > 1) {
             return false;
         }
+
         return true;
     }
 
     /**
      * Set the assigned user roles via an array of role IDs.
-     * @param User $user
-     * @param array $roles
      * @throws UserUpdateException
      */
     public function setUserRoles(User $user, array $roles)
@@ -145,14 +137,11 @@ class UserRepo
     /**
      * Check if the given user is the last admin and their new roles no longer
      * contains the admin role.
-     * @param User $user
-     * @param array $newRoles
-     * @return bool
      */
     protected function demotingLastAdmin(User $user, array $newRoles) : bool
     {
         if ($this->isOnlyAdmin($user)) {
-            $adminRole = $this->role->getSystemRole('admin');
+            $adminRole = Role::getSystemRole('admin');
             if (!in_array(strval($adminRole->id), $newRoles)) {
                 return true;
             }
@@ -166,18 +155,18 @@ class UserRepo
      */
     public function create(array $data, bool $emailConfirmed = false): User
     {
-        return $this->user->forceCreate([
+        $details = [
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
             'email_confirmed' => $emailConfirmed,
             'external_auth_id' => $data['external_auth_id'] ?? '',
-        ]);
+        ];
+        return User::query()->forceCreate($details);
     }
 
     /**
      * Remove the given user from storage, Delete all related content.
-     * @param User $user
      * @throws Exception
      */
     public function destroy(User $user)
@@ -187,7 +176,10 @@ class UserRepo
         $user->delete();
         
         // Delete user profile images
-        $profileImages = Image::where('type', '=', 'user')->where('uploaded_to', '=', $user->id)->get();
+        $profileImages = Image::query()->where('type', '=', 'user')
+            ->where('uploaded_to', '=', $user->id)
+            ->get();
+
         foreach ($profileImages as $image) {
             Images::destroy($image);
         }
@@ -195,12 +187,8 @@ class UserRepo
 
     /**
      * Get the latest activity for a user.
-     * @param User $user
-     * @param int $count
-     * @param int $page
-     * @return array
      */
-    public function getActivity(User $user, $count = 20, $page = 0)
+    public function getActivity(User $user, int $count = 20, int $page = 0): array
     {
         return Activity::userActivity($user, $count, $page);
     }
@@ -241,33 +229,22 @@ class UserRepo
 
     /**
      * Get the roles in the system that are assignable to a user.
-     * @return mixed
      */
-    public function getAllRoles()
+    public function getAllRoles(): Collection
     {
-        return $this->role->newQuery()->orderBy('display_name', 'asc')->get();
+        return Role::query()->orderBy('display_name', 'asc')->get();
     }
 
     /**
      * Get an avatar image for a user and set it as their avatar.
      * Returns early if avatars disabled or not set in config.
-     * @param User $user
-     * @return bool
      */
-    public function downloadAndAssignUserAvatar(User $user)
+    public function downloadAndAssignUserAvatar(User $user): void
     {
-        if (!Images::avatarFetchEnabled()) {
-            return false;
-        }
-
         try {
-            $avatar = Images::saveUserAvatar($user);
-            $user->avatar()->associate($avatar);
-            $user->save();
-            return true;
+            $this->userAvatar->fetchAndAssignToUser($user);
         } catch (Exception $e) {
             Log::error('Failed to save user avatar image');
-            return false;
         }
     }
 }

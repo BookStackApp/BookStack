@@ -188,7 +188,7 @@ class UserController extends Controller
             $user->image_id = $image->id;
         }
 
-        // Delete the profile image if set to
+        // Delete the profile image if reset option is in request
         if ($request->has('profile_image_reset')) {
             $this->imageRepo->destroyImage($user->avatar);
         }

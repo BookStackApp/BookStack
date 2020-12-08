@@ -5,6 +5,7 @@ use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -23,7 +24,7 @@ class Role extends Model implements Loggable
     /**
      * The roles that belong to the role.
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->orderBy('name', 'asc');
     }
@@ -39,7 +40,7 @@ class Role extends Model implements Loggable
     /**
      * The RolePermissions that belong to the role.
      */
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(RolePermission::class, 'permission_role', 'role_id', 'permission_id');
     }
