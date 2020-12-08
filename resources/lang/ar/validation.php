@@ -52,11 +52,11 @@ return [
     'ip'                   => 'يجب أن يكون :attribute عنوان IP صالح.',
     'ipv4'                 => 'يجب أن تكون السمة: عنوان IPv4 صالحًا.',
     'ipv6'                 => 'يجب أن تكون السمة: عنوان IPv6 صالحًا.',
-    'json'                 => 'The :attribute must be a valid JSON string.',
+    'json'                 => 'يجب أن تكون السمة: سلسلة من نوع جسون JSON صالح.',
     'lt'                   => [
-        'numeric' => 'The :attribute must be less than :value.',
-        'file'    => 'The :attribute must be less than :value kilobytes.',
-        'string'  => 'The :attribute must be less than :value characters.',
+        'numeric' => 'يجب أن تكون السمة أقل من: القيمة.',
+        'file'    => 'يجب أن تكون السمة أقل من: القيمة كيلوبايت.',
+        'string'  => 'يجب أن تكون السمة أقل من: أحرف القيمة.',
         'array'   => 'The :attribute must have less than :value items.',
     ],
     'lte'                  => [
