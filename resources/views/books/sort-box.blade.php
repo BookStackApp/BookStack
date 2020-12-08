@@ -13,8 +13,8 @@
     <ul class="sortable-page-list sort-list">
 
         @foreach($bookChildren as $bookChild)
-            <li class="text-{{ $bookChild->getClassName() }}"
-                data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getClassName() }}"
+            <li class="text-{{ $bookChild->getType() }}"
+                data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getType() }}"
                 data-name="{{ $bookChild->name }}" data-created="{{ $bookChild->created_at->timestamp }}"
                 data-updated="{{ $bookChild->updated_at->timestamp }}">
                 <div class="entity-list-item">

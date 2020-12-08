@@ -1,7 +1,5 @@
 <?php namespace BookStack\Uploads;
 
-use BookStack\Auth\User;
-use BookStack\Exceptions\HttpFetchException;
 use BookStack\Exceptions\ImageUploadException;
 use DB;
 use ErrorException;
@@ -17,24 +15,21 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageService
 {
-
     protected $imageTool;
     protected $cache;
     protected $storageUrl;
     protected $image;
-    protected $http;
     protected $fileSystem;
 
     /**
      * ImageService constructor.
      */
-    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache, HttpFetcher $http)
+    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
     {
         $this->image = $image;
         $this->imageTool = $imageTool;
         $this->fileSystem = $fileSystem;
         $this->cache = $cache;
-        $this->http = $http;
     }
 
     /**
@@ -77,14 +72,9 @@ class ImageService
 
     /**
      * Save a new image from a uri-encoded base64 string of data.
-     * @param string $base64Uri
-     * @param string $name
-     * @param string $type
-     * @param int $uploadedTo
-     * @return Image
      * @throws ImageUploadException
      */
-    public function saveNewFromBase64Uri(string $base64Uri, string $name, string $type, $uploadedTo = 0)
+    public function saveNewFromBase64Uri(string $base64Uri, string $name, string $type, int $uploadedTo = 0): Image
     {
         $splitData = explode(';base64,', $base64Uri);
         if (count($splitData) < 2) {
@@ -95,29 +85,10 @@ class ImageService
     }
 
     /**
-     * Gets an image from url and saves it to the database.
-     * @param             $url
-     * @param string $type
-     * @param bool|string $imageName
-     * @return mixed
-     * @throws Exception
-     */
-    private function saveNewFromUrl($url, $type, $imageName = false)
-    {
-        $imageName = $imageName ? $imageName : basename($url);
-        try {
-            $imageData = $this->http->fetch($url);
-        } catch (HttpFetchException $exception) {
-            throw new Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
-        }
-        return $this->saveNew($imageName, $imageData, $type);
-    }
-
-    /**
      * Save a new image into storage.
      * @throws ImageUploadException
      */
-    private function saveNew(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
+    public function saveNew(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
         $storage = $this->getStorage($type);
         $secureUploads = setting('app-secure-images');
@@ -325,56 +296,6 @@ class ImageService
         $files = $storage->files($path);
         $folders = $storage->directories($path);
         return (count($files) === 0 && count($folders) === 0);
-    }
-
-    /**
-     * Save an avatar image from an external service.
-     * @throws Exception
-     */
-    public function saveUserAvatar(User $user, int $size = 500): Image
-    {
-        $avatarUrl = $this->getAvatarUrl();
-        $email = strtolower(trim($user->email));
-
-        $replacements = [
-            '${hash}' => md5($email),
-            '${size}' => $size,
-            '${email}' => urlencode($email),
-        ];
-
-        $userAvatarUrl = strtr($avatarUrl, $replacements);
-        $imageName = str_replace(' ', '-', $user->name . '-avatar.png');
-        $image = $this->saveNewFromUrl($userAvatarUrl, 'user', $imageName);
-        $image->created_by = $user->id;
-        $image->updated_by = $user->id;
-        $image->uploaded_to = $user->id;
-        $image->save();
-
-        return $image;
-    }
-
-    /**
-     * Check if fetching external avatars is enabled.
-     */
-    public function avatarFetchEnabled(): bool
-    {
-        $fetchUrl = $this->getAvatarUrl();
-        return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
-    }
-
-    /**
-     * Get the URL to fetch avatars from.
-     * @return string|mixed
-     */
-    protected function getAvatarUrl()
-    {
-        $url = trim(config('services.avatar_url'));
-
-        if (empty($url) && !config('services.disable_services')) {
-            $url = 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon';
-        }
-
-        return $url;
     }
 
     /**

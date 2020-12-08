@@ -26,12 +26,4 @@ abstract class Ownable extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    /**
-     * Gets the class name.
-     * @return string
-     */
-    public static function getClassName()
-    {
-        return strtolower(array_slice(explode('\\', static::class), -1, 1)[0]);
-    }
 }
