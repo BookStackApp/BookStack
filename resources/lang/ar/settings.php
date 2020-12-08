@@ -210,7 +210,7 @@ return [
     'user_api_token_secret' => 'الرمز السري',
     'user_api_token_secret_desc' => 'هذا الرمز السري تم إنشاؤه بواسطة النظام والذي يجب توفيره ضمن طلبات API. سيتم عرضه لمرة واحدة فقط ، لذا انسخ قيمة هذا الرمز إلى مكان آمن ومضمون.',
     'user_api_token_created' => 'تم إنشاء رمز :الوقت الزمني',
-    'user_api_token_updated' => 'Token updated :timeAgo',
+    'user_api_token_updated' => 'تم تحديث الرمز :الوقت الزمني',
     'user_api_token_delete' => 'Delete Token',
     'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
     'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
