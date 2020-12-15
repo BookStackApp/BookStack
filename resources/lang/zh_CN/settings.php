@@ -80,7 +80,7 @@ return [
     'maint_send_test_email_mail_subject' => '测试电子邮件',
     'maint_send_test_email_mail_greeting' => '邮件发送功能看起来工作正常！',
     'maint_send_test_email_mail_text' => '恭喜！您收到了此邮件通知，你的电子邮件设置看起来配置正确。',
-    'maint_recycle_bin_desc' => '被删除的书架，书籍，章节和页面会被存入回收站，以便可以还原或永久删除它们。回收站中的较旧项目可能会在一段时间后自动删除，具体取决于系统设置。',
+    'maint_recycle_bin_desc' => '被删除的书架、书籍、章节和页面会被存入回收站，你可以还原或永久删除它们。回收站中的较旧项目可能会在系统设置的一段时间后自动删除。',
     'maint_recycle_bin_open' => '打开回收站',
 
     // Recycle Bin
@@ -97,8 +97,8 @@ return [
     'recycle_bin_destroy_confirm' => '此操作将从系统中永久删除此项目以及下面列出的所有子元素，并且您将无法还原此内容。您确定要永久删除该项目吗？',
     'recycle_bin_destroy_list' => '要销毁的项目',
     'recycle_bin_restore_list' => '要恢复的项目',
-    'recycle_bin_restore_confirm' => '此操作会将已删除的项目，包括所有子元素恢复到其原始位置。如果项目的原始位置已被删除，并且现在位于回收站中，则该条目的上级项目也需要恢复。',
-    'recycle_bin_restore_deleted_parent' => '该项目的上级项目也已被删除。这些项目将保持被删除状态，直到上级项目也被恢复。',
+    'recycle_bin_restore_confirm' => '此操作会将已删除的项目及其所有子元素恢复到原始位置。如果项目的原始位置已被删除，并且现在位于回收站中，则要恢复项目的上级项目也需要恢复。',
+    'recycle_bin_restore_deleted_parent' => '该项目的上级项目也已被删除。这些项目将保持被删除状态，直到上级项目被恢复。',
     'recycle_bin_destroy_notification' => '从回收站中删除了 :count 个项目。',
     'recycle_bin_restore_notification' => '从回收站中恢复了 :count 个项目。',
 
