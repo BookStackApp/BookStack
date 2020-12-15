@@ -93,7 +93,7 @@ return [
     'recycle_bin_restore' => '恢复',
     'recycle_bin_contents_empty' => '回收站当前为空',
     'recycle_bin_empty' => '清空回收站',
-    'recycle_bin_empty_confirm' => '这将永久性销毁回收站中的所有项目，包括每个项目中包含的内容。您确定要清空回收站吗？',
+    'recycle_bin_empty_confirm' => '这将永久性销毁回收站中的所有项目（包括每个项目中包含的内容，例如图片）。您确定要清空回收站吗？',
     'recycle_bin_destroy_confirm' => '此操作将从系统中永久删除此项目以及下面列出的所有子元素，并且您将无法还原此内容。您确定要永久删除该项目吗？',
     'recycle_bin_destroy_list' => '要销毁的项目',
     'recycle_bin_restore_list' => '要恢复的项目',
