@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Tạo Chương mới',
     'chapters_delete' => 'Xóa Chương',
     'chapters_delete_named' => 'Xóa Chương :chapterName',
-    'chapters_delete_explain' => 'Chức năng này sẽ xóa chương với tên \':chapterName\'. Tất cả các trang sẽ bị loại bỏ và thêm trực tiếp vào sách chứa nó.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Bạn có chắc chắn muốn xóa chương này?',
     'chapters_edit' => 'Sửa Chương',
     'chapters_edit_named' => 'Sửa chương :chapterName',
