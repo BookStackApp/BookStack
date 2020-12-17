@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Yeni Bölüm Oluştur',
     'chapters_delete' => 'Bölümü Sil',
     'chapters_delete_named' => ':chapterName Bölümünü Sil',
-    'chapters_delete_explain' => 'Bu işlem sonunda \':chapterName\' bölümü silinecek ve bu bölüme ait bütün sayfalar direkt olarak ana kitaba aktarılacaktır.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Bölümü silmek istediğinize emin misiniz?',
     'chapters_edit' => 'Bölümü Düzenle',
     'chapters_edit_named' => ':chapterName Bölümünü Düzenle',
