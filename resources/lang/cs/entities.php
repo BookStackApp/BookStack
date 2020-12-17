@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Vytvořit novou kapitolu',
     'chapters_delete' => 'Smazat kapitolu',
     'chapters_delete_named' => 'Smazat kapitolu :chapterName',
-    'chapters_delete_explain' => 'Kapitola \':chapterName\' bude smazána. Všechny stránky v ní obsažené budou přesunuty přímo pod samotnou knihu.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Opravdu chcete tuto kapitolu smazat?',
     'chapters_edit' => 'Upravit kapitolu',
     'chapters_edit_named' => 'Upravit kapitolu :chapterName',
