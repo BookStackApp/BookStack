@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Criar Novo Capítulo',
     'chapters_delete' => 'Excluir Capítulo',
     'chapters_delete_named' => 'Excluir Capítulo :chapterName',
-    'chapters_delete_explain' => 'A ação vai excluir o capítulo de nome \':chapterName\'. Todas as páginas do capítulo serão removidas e adicionadas diretamente ao livro pai.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Tem certeza que deseja excluir o capítulo?',
     'chapters_edit' => 'Editar Capítulo',
     'chapters_edit_named' => 'Editar Capítulo :chapterName',
