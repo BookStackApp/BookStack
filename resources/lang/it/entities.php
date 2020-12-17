@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Crea un nuovo capitolo',
     'chapters_delete' => 'Elimina Capitolo',
     'chapters_delete_named' => 'Elimina il capitolo :chapterName',
-    'chapters_delete_explain' => 'Questo eliminerà il capitolo \':chapterName\'. Tutte le pagine verranno spostate nel libro.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Sei sicuro di voler eliminare questo capitolo?',
     'chapters_edit' => 'Elimina Capitolo',
     'chapters_edit_named' => 'Modifica il capitolo :chapterName',
