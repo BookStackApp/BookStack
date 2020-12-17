@@ -28,7 +28,7 @@
                 </div>
                 @if($bookChild->isA('chapter'))
                     <ul>
-                        @foreach($bookChild->pages as $page)
+                        @foreach($bookChild->visible_pages as $page)
                             <li class="text-page"
                                 data-id="{{$page->id}}" data-type="page"
                                 data-name="{{ $page->name }}" data-created="{{ $page->created_at->timestamp }}"

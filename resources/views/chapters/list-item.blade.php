@@ -1,4 +1,6 @@
-<a href="{{ $chapter->getUrl() }}" class="chapter entity-list-item @if($chapter->hasChildren()) has-children @endif" data-entity-type="chapter" data-entity-id="{{$chapter->id}}">
+{{--This view display child pages in a list if pre-loaded onto a 'visible_pages' property,--}}
+{{--To ensure that the pages have been loaded efficiently with permissions taken into account.--}}
+<a href="{{ $chapter->getUrl() }}" class="chapter entity-list-item @if($chapter->visible_pages->count() > 0) has-children @endif" data-entity-type="chapter" data-entity-id="{{$chapter->id}}">
     <span class="icon text-chapter">@icon('chapter')</span>
     <div class="content">
         <h4 class="entity-list-item-name break-text">{{ $chapter->name }}</h4>
@@ -7,16 +9,16 @@
         </div>
     </div>
 </a>
-@if ($chapter->hasChildren())
+@if ($chapter->visible_pages->count() > 0)
     <div class="chapter chapter-expansion">
         <span class="icon text-chapter">@icon('page')</span>
         <div class="content">
             <button type="button" chapter-toggle
                     aria-expanded="false"
-                    class="text-muted chapter-expansion-toggle">@icon('caret-right') <span>{{ trans_choice('entities.x_pages', $chapter->pages->count()) }}</span></button>
+                    class="text-muted chapter-expansion-toggle">@icon('caret-right') <span>{{ trans_choice('entities.x_pages', $chapter->visible_pages->count()) }}</span></button>
             <div class="inset-list">
                 <div class="entity-list-item-children">
-                    @include('partials.entity-list', ['entities' => $chapter->pages])
+                    @include('partials.entity-list', ['entities' => $chapter->visible_pages])
                 </div>
             </div>
         </div>
