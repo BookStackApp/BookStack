@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Skapa nytt kapitel',
     'chapters_delete' => 'Radera kapitel',
     'chapters_delete_named' => 'Radera kapitlet :chapterName',
-    'chapters_delete_explain' => 'Du håller på att ta bort kapitlet \':chapterName\'. Alla sidor kommer att flyttas direkt in i den aktuella boken istället.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Är du säker på att du vill ta bort det här kapitlet?',
     'chapters_edit' => 'Redigera kapitel',
     'chapters_edit_named' => 'Redigera kapitel :chapterName',
