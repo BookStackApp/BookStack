@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Új fejezet létrehozása',
     'chapters_delete' => 'Fejezet törlése',
     'chapters_delete_named' => ':chapterName fejezet törlése',
-    'chapters_delete_explain' => '\':chapterName\' nevű fejezet törölve lesz. Minden oldal el lesz távolítva és közvetlenül a szülő könyvhöz lesz hozzáadva.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Biztosan törölhető ez a fejezet?',
     'chapters_edit' => 'Fejezet szerkesztése',
     'chapters_edit_named' => ':chapterName fejezet szerkesztése',
