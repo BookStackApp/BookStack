@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Създай нова глава',
     'chapters_delete' => 'Изтрий глава',
     'chapters_delete_named' => 'Изтрий глава :chapterName',
-    'chapters_delete_explain' => 'Ще бъде изтрита глава с име \':chapterName\'. Всички страници в нея ще бъдат премахнати и добавени в основната книга.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Сигурни ли сте, че искате да изтриете тази глава?',
     'chapters_edit' => 'Редактирай глава',
     'chapters_edit_named' => 'Актуализирай глава :chapterName',
