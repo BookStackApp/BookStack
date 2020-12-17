@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Opret nyt kapitel',
     'chapters_delete' => 'Slet kapitel',
     'chapters_delete_named' => 'Slet kapitel :chapterName',
-    'chapters_delete_explain' => 'Dette vil slette kapitlet med navnet \':chapterName\'. Alle sider fjernes og tilføjes direkte til den tilhørende bog.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Er du sikker på du vil slette dette kapitel?',
     'chapters_edit' => 'Rediger kapitel',
     'chapters_edit_named' => 'Rediger kapitel :chapterName',
