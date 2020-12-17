@@ -146,8 +146,7 @@ return [
     'chapters_create' => 'Hoofdstuk Toevoegen',
     'chapters_delete' => 'Hoofdstuk Verwijderen',
     'chapters_delete_named' => 'Verwijder Hoofdstuk :chapterName',
-    'chapters_delete_explain' => 'Dit verwijdert het hoofdstuk \':chapterName\', Alle pagina\'s zullen verwijdert worden.
-        en toegevoegd worden aan het bijbehorende boek.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Weet je zeker dat je dit boek wilt verwijderen?',
     'chapters_edit' => 'Hoofdstuk Aanpassen',
     'chapters_edit_named' => 'Hoofdstuk :chapterName Aanpassen',
