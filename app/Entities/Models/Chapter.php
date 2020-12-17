@@ -40,15 +40,6 @@ class Chapter extends BookChild
     }
 
     /**
-     * Check if this chapter has any child pages.
-     * @return bool
-     */
-    public function hasChildren()
-    {
-        return count($this->pages) > 0;
-    }
-
-    /**
      * Get the visible pages in this chapter.
      */
     public function getVisiblePages(): Collection
