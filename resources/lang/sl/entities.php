@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Ustvari novo poglavje',
     'chapters_delete' => 'Izbriši poglavje',
     'chapters_delete_named' => 'Izbriši poglavje :chapterName',
-    'chapters_delete_explain' => 'S tem boste izbrisali poglavje \':chapterName\'. Vse strani bodo odstranjene in dodane neposredno v knjigo, v kateri je prej obstajalo to poglavje.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Ste prepričani, da želite izbrisati to poglavje?',
     'chapters_edit' => 'Uredi poglavje',
     'chapters_edit_named' => 'Uredi poglavje :chapterName',
