@@ -490,6 +490,22 @@ class RestrictionsTest extends BrowserKitTest
             ->dontSee($page->name);
     }
 
+    public function test_restricted_chapter_pages_not_visible_on_book_page()
+    {
+        $chapter = Chapter::query()->first();
+        $this->actingAs($this->user)
+            ->visit($chapter->book->getUrl())
+            ->see($chapter->pages->first()->name);
+
+        foreach ($chapter->pages as $page) {
+            $this->setEntityRestrictions($page, []);
+        }
+
+        $this->actingAs($this->user)
+            ->visit($chapter->book->getUrl())
+            ->dontSee($chapter->pages->first()->name);
+    }
+
     public function test_bookshelf_update_restriction_override()
     {
         $shelf = Bookshelf::first();
