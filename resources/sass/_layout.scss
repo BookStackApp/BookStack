@@ -282,6 +282,9 @@ body.flexbox {
     max-width: 940px;
     margin: 0 auto;
   }
+  .tri-layout-right-contents {
+    height: 1000px;
+  }
 }
 
 @include smaller-than($l) {
