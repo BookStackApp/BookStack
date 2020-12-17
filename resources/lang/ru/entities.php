@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Создать новую главу',
     'chapters_delete' => 'Удалить главу',
     'chapters_delete_named' => 'Удалить главу :chapterName',
-    'chapters_delete_explain' => 'Это удалит главу с именем \':chapterName\'. Все страницы главы будут удалены и перемещены напрямую в книгу.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Вы действительно хотите удалить эту главу?',
     'chapters_edit' => 'Редактировать главу',
     'chapters_edit_named' => 'Редактировать главу :chapterName',
