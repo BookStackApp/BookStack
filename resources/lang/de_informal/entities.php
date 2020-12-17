@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Neues Kapitel anlegen',
     'chapters_delete' => 'Kapitel entfernen',
     'chapters_delete_named' => 'Kapitel ":chapterName" entfernen',
-    'chapters_delete_explain' => 'Das Kapitel ":chapterName" wird gelöscht und alle zugehörigen Seiten dem übergeordneten Buch zugeordnet.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Bist Du sicher, dass Du dieses Kapitel löschen möchtest?',
     'chapters_edit' => 'Kapitel bearbeiten',
     'chapters_edit_named' => 'Kapitel ":chapterName" bearbeiten',
