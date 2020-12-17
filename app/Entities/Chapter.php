@@ -5,7 +5,6 @@ use Illuminate\Support\Collection;
 /**
  * Class Chapter
  * @property Collection<Page> $pages
- * @package BookStack\Entities
  */
 class Chapter extends BookChild
 {
@@ -50,15 +49,6 @@ class Chapter extends BookChild
     {
         $description = $this->text ?? $this->description;
         return mb_strlen($description) > $length ? mb_substr($description, 0, $length-3) . '...' : $description;
-    }
-
-    /**
-     * Check if this chapter has any child pages.
-     * @return bool
-     */
-    public function hasChildren()
-    {
-        return count($this->pages) > 0;
     }
 
     /**

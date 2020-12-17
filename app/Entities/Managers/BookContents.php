@@ -53,10 +53,14 @@ class BookContents
         $pages->groupBy('chapter_id')->each(function ($pages, $chapter_id) use ($chapterMap, &$lonePages) {
             $chapter = $chapterMap->get($chapter_id);
             if ($chapter) {
-                $chapter->setAttribute('pages', collect($pages)->sortBy($this->bookChildSortFunc()));
+                $chapter->setAttribute('visible_pages', collect($pages)->sortBy($this->bookChildSortFunc()));
             } else {
                 $lonePages = $lonePages->concat($pages);
             }
+        });
+
+        $chapters->whereNull('visible_pages')->each(function (Chapter $chapter) {
+            $chapter->setAttribute('visible_pages', collect([]));
         });
 
         $all->each(function (Entity $entity) use ($renderPages) {
