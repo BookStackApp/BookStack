@@ -146,8 +146,7 @@ return [
     'chapters_create' => 'Utwórz nowy rozdział',
     'chapters_delete' => 'Usuń rozdział',
     'chapters_delete_named' => 'Usuń rozdział :chapterName',
-    'chapters_delete_explain' => 'To spowoduje usunięcie rozdziału \':chapterName\', Wszystkie strony zostaną usunięte
-        i dodane bezpośrednio do książki.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Czy na pewno chcesz usunąć ten rozdział?',
     'chapters_edit' => 'Edytuj rozdział',
     'chapters_edit_named' => 'Edytuj rozdział :chapterName',
