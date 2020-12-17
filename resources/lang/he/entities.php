@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'צור פרק חדש',
     'chapters_delete' => 'מחק פרק',
     'chapters_delete_named' => 'מחק את פרק :chapterName',
-    'chapters_delete_explain' => 'פעולה זו תמחוק את הפרק בשם \':chapterName\'. כל הדפים יועברו אוטומטית לספר עצמו',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'האם ברצונך למחוק פרק זה?',
     'chapters_edit' => 'ערוך פרק',
     'chapters_edit_named' => 'ערוך פרק :chapterName',
