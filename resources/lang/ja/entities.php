@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'チャプターを作成',
     'chapters_delete' => 'チャプターを削除',
     'chapters_delete_named' => 'チャプター「:chapterName」を削除',
-    'chapters_delete_explain' => 'チャプター「:chapterName」を削除すると、チャプター内のすべてのページはブック内に直接追加されます。',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'チャプターを削除してよろしいですか？',
     'chapters_edit' => 'チャプターを編集',
     'chapters_edit_named' => 'チャプター「:chapterName」を編集',
