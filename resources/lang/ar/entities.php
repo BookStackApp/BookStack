@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'إنشاء فصل جديد',
     'chapters_delete' => 'حذف الفصل',
     'chapters_delete_named' => 'حذف فصل :chapterName',
-    'chapters_delete_explain' => 'سيتم حذف فصل \':chapterName\'. جميع الصفحات ستزال وستتم إضافتها مباشرة للكتاب الرئيسي.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'تأكيد حذف الفصل؟',
     'chapters_edit' => 'تعديل الفصل',
     'chapters_edit_named' => 'تعديل فصل :chapterName',
