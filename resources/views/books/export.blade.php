@@ -41,9 +41,9 @@
         <ul class="contents">
             @foreach($bookChildren as $bookChild)
                 <li><a href="#{{$bookChild->getType()}}-{{$bookChild->id}}">{{ $bookChild->name }}</a></li>
-                @if($bookChild->isA('chapter') && count($bookChild->pages) > 0)
+                @if($bookChild->isA('chapter') && count($bookChild->visible_pages) > 0)
                     <ul>
-                        @foreach($bookChild->pages as $page)
+                        @foreach($bookChild->visible_pages as $page)
                             <li><a href="#page-{{$page->id}}">{{ $page->name }}</a></li>
                         @endforeach
                     </ul>
@@ -59,8 +59,8 @@
         @if($bookChild->isA('chapter'))
             <p>{{ $bookChild->description }}</p>
 
-            @if(count($bookChild->pages) > 0)
-                @foreach($bookChild->pages as $page)
+            @if(count($bookChild->visible_pages) > 0)
+                @foreach($bookChild->visible_pages as $page)
                     <div class="page-break"></div>
                     <div class="chapter-hint">{{$bookChild->name}}</div>
                     <h1 id="page-{{$page->id}}">{{ $page->name }}</h1>
