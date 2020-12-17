@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Créer un nouveau chapitre',
     'chapters_delete' => 'Supprimer le chapitre',
     'chapters_delete_named' => 'Supprimer le chapitre :chapterName',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
+    'chapters_delete_explain' => 'Ceci supprimera le chapitre portant le nom \':chapterName\'. Toutes les pages qui existent dans ce chapitre seront également supprimées.',
     'chapters_delete_confirm' => 'Etes-vous sûr(e) de vouloir supprimer ce chapitre ?',
     'chapters_edit' => 'Modifier le chapitre',
     'chapters_edit_named' => 'Modifier le chapitre :chapterName',
