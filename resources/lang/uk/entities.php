@@ -146,7 +146,7 @@ return [
     'chapters_create' => 'Створити новий розділ',
     'chapters_delete' => 'Видалити розділ',
     'chapters_delete_named' => 'Видалити розділ :chapterName',
-    'chapters_delete_explain' => 'Ця дія видалить розділ з назвою \':chapterName\'. Всі сторінки будуть вилучені, та додані безпосередньо до батьківської книги.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Ви впевнені, що хочете видалити цей розділ?',
     'chapters_edit' => 'Редагувати розділ',
     'chapters_edit_named' => 'Редагувати розділ :chapterName',
