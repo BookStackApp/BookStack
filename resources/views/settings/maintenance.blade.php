@@ -41,9 +41,9 @@
                             <input type="hidden" name="ignore_revisions" value="{{ session()->getOldInput('ignore_revisions', 'false') }}">
                             <input type="hidden" name="confirm" value="true">
                         @else
-                            <label>
-                                <input type="checkbox" name="ignore_revisions" value="true">
-                                {{ trans('settings.maint_image_cleanup_ignore_revisions') }}
+                            <label class="flex-container-row">
+                                <div class="mr-s"><input type="checkbox" name="ignore_revisions" value="true"></div>
+                                <div>{{ trans('settings.maint_delete_images_only_in_revisions') }}</div>
                             </label>
                         @endif
                     </div>

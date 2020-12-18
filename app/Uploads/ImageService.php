@@ -304,22 +304,19 @@ class ImageService
      * Could be much improved to be more specific but kept it generic for now to be safe.
      *
      * Returns the path of the images that would be/have been deleted.
-     * @param bool $checkRevisions
-     * @param bool $dryRun
-     * @param array $types
-     * @return array
      */
-    public function deleteUnusedImages($checkRevisions = true, $dryRun = true, $types = ['gallery', 'drawio'])
+    public function deleteUnusedImages(bool $checkRevisions = true, bool $dryRun = true)
     {
-        $types = array_intersect($types, ['gallery', 'drawio']);
+        $types = ['gallery', 'drawio'];
         $deletedPaths = [];
 
         $this->image->newQuery()->whereIn('type', $types)
-            ->chunk(1000, function ($images) use ($types, $checkRevisions, &$deletedPaths, $dryRun) {
+            ->chunk(1000, function ($images) use ($checkRevisions, &$deletedPaths, $dryRun) {
                 foreach ($images as $image) {
                     $searchQuery = '%' . basename($image->path) . '%';
                     $inPage = DB::table('pages')
                             ->where('html', 'like', $searchQuery)->count() > 0;
+
                     $inRevision = false;
                     if ($checkRevisions) {
                         $inRevision = DB::table('page_revisions')
