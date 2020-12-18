@@ -146,7 +146,7 @@ return [
     'chapters_create' => '创建章节',
     'chapters_delete' => '删除章节',
     'chapters_delete_named' => '删除章节「:chapterName」',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
+    'chapters_delete_explain' => '这将删除名为“:chapterName”的章节。本章节中存在的所有页面也将被删除。',
     'chapters_delete_confirm' => '您确定要删除此章节吗？',
     'chapters_edit' => '编辑章节',
     'chapters_edit_named' => '编辑章节「:chapterName」',
