@@ -71,7 +71,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'maint' => 'Wartung',
     'maint_image_cleanup' => 'Bilder bereinigen',
     'maint_image_cleanup_desc' => "Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstellen Sie vor dem Start ein Backup Ihrer Datenbank und Bilder.",
-    'maint_image_cleanup_ignore_revisions' => 'Bilder in Versionen ignorieren',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Reinigung starten',
     'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchten Sie diese Bilder löschen?',
     'maint_image_cleanup_success' => ':count eventuell unbenutze Bilder wurden gefunden und gelöscht.',
