@@ -352,10 +352,19 @@ li > ol, li > ul {
   overflow-wrap: break-word;
 }
 
-.limit-text {
+.text-limit-lines-1 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.text-limit-lines-2 {
+  // -webkit use here is actually standardised cross-browser:
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 /**

@@ -21,7 +21,7 @@
         @else
             <div class="grid third">
                 @foreach($shelves as $key => $shelf)
-                    @include('shelves.grid-item', ['shelf' => $shelf])
+                    @include('partials.entity-grid-item', ['entity' => $shelf])
                 @endforeach
             </div>
         @endif
