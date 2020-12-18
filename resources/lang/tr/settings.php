@@ -68,7 +68,7 @@ return [
     'maint' => 'Bakım',
     'maint_image_cleanup' => 'Görselleri Temizle',
     'maint_image_cleanup_desc' => "Sayfaları ve revizyon içeriklerini tarayarak hangi görsellerin ve çizimlerin kullanımda olduğunu ve hangilerinin gereksiz olduğunu tespit eder. Bunu başlatmadan önce veritabanının ve görsellerin tam bir yedeğinin alındığından emin olun.",
-    'maint_image_cleanup_ignore_revisions' => 'Revizyonlardaki görselleri yoksay',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Temizliği Başlat',
     'maint_image_cleanup_warning' => 'Muhtemelen kullanılmayan :count adet görsel bulundu. Bu görselleri silmek istediğinize emin misiniz?',
     'maint_image_cleanup_success' => 'Muhtemelen kullanılmayan :count adet görsel bulundu ve silindi!',
