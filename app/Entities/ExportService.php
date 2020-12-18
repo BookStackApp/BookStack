@@ -203,7 +203,7 @@ class ExportService
     {
         $text = $chapter->name . "\n\n";
         $text .= $chapter->description . "\n\n";
-        foreach ($chapter->pages as $page) {
+        foreach ($chapter->getVisiblePages() as $page) {
             $text .= $this->pageToPlainText($page);
         }
         return $text;
@@ -214,7 +214,7 @@ class ExportService
      */
     public function bookToPlainText(Book $book): string
     {
-        $bookTree = (new BookContents($book))->getTree(false, true);
+        $bookTree = (new BookContents($book))->getTree(false, false);
         $text = $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {
