@@ -68,7 +68,7 @@ return [
     'maint' => 'Karbantartás',
     'maint_image_cleanup' => 'Képek tisztítása',
     'maint_image_cleanup_desc' => "Végigolvassa az oldalakat és a tartalmak változatait, hogy leellenőrizze jelenleg mely képek és rajzok vannak használatban, és mely képek szerepelnek többször. A futtatása előtt feltétlen készíteni kell egy teljes adatbázis és lemezkép mentést.",
-    'maint_image_cleanup_ignore_revisions' => 'Képek figyelmen kívül hagyása a változatokban',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Tisztítás futtatása',
     'maint_image_cleanup_warning' => ':count potenciálisan nem használt képet találtam. Biztosan törölhetőek ezek a képek?',
     'maint_image_cleanup_success' => ':count potenciálisan nem használt kép megtalálva és törölve!',
