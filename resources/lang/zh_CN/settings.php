@@ -68,7 +68,7 @@ return [
     'maint' => '维护',
     'maint_image_cleanup' => '清理图像',
     'maint_image_cleanup_desc' => "扫描页面和修订内容以检查哪些图像是正在使用的以及哪些图像是多余的。确保在运行前创建完整的数据库和映像备份。",
-    'maint_image_cleanup_ignore_revisions' => '忽略修订记录中的图像',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => '运行清理',
     'maint_image_cleanup_warning' => '发现了 :count 张可能未使用的图像。您确定要删除这些图像吗？',
     'maint_image_cleanup_success' => '找到并删除了 :count 张可能未使用的图像！',
