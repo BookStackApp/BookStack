@@ -68,7 +68,7 @@ return [
     'maint' => 'Vedligeholdelse',
     'maint_image_cleanup' => 'Ryd op i billeder',
     'maint_image_cleanup_desc' => "Scanner side & revisionsindhold for at kontrollere, hvilke billeder og tegninger, der i øjeblikket er i brug, og hvilke billeder, der er overflødige. Sørg for, at du opretter en komplet database og billedbackup, før du kører dette.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignorer billeder i revisioner',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Kør Oprydning',
     'maint_image_cleanup_warning' => 'der blev fundet :count potentielt ubrugte billeder. Er du sikker på, at du vil slette disse billeder?',
     'maint_image_cleanup_success' => ':count: potentielt ubrugte billeder fundet og slettet!',
