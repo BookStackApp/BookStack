@@ -68,7 +68,7 @@ return [
     'maint' => 'Обслуживание',
     'maint_image_cleanup' => 'Очистка изображений',
     'maint_image_cleanup_desc' => "Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.",
-    'maint_image_cleanup_ignore_revisions' => 'Пропускать изображения в версиях',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Выполнить очистку',
     'maint_image_cleanup_warning' => 'Найдено :count возможно бесполезных изображений. Вы уверены, что хотите удалить эти изображения?',
     'maint_image_cleanup_success' => ':count возможно бесполезных изображений было найдено и удалено!',
