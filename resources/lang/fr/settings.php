@@ -68,7 +68,7 @@ return [
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Nettoyer les images',
     'maint_image_cleanup_desc' => "Scan le contenu des pages et des révisions pour vérifier les images et les dessins en cours d'utilisation et lesquels sont redondant. Veuillez à faire une sauvegarde de la base de données et des images avant de lancer ceci.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignorer les images dans les révisions',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Lancer le nettoyage',
     'maint_image_cleanup_warning' => ':count images potentiellement inutilisées trouvées. Etes-vous sûr de vouloir supprimer ces images ?',
     'maint_image_cleanup_success' => ':count images potentiellement inutilisées trouvées et supprimées !',
