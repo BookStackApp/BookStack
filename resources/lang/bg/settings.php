@@ -68,7 +68,7 @@ return [
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Cleanup Images',
     'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignore images in revisions',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Run Cleanup',
     'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
     'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
