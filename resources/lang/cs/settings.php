@@ -68,7 +68,7 @@ return [
     'maint' => 'Údržba',
     'maint_image_cleanup' => 'Pročistění obrázků',
     'maint_image_cleanup_desc' => "Prohledá stránky a jejich revize, aby zjistil, které obrázky a kresby jsou momentálně používány a které jsou zbytečné. Zajistěte plnou zálohu databáze a obrázků než se do toho pustíte.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignorovat obrázky v revizích',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Spustit pročištění',
     'maint_image_cleanup_warning' => 'Nalezeno :count potenciálně nepoužitých obrázků. Jste si jistí, že je chcete smazat?',
     'maint_image_cleanup_success' => 'Potenciálně nepoužité obrázky byly smazány. Celkem :count.',
