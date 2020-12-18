@@ -68,7 +68,7 @@ return [
     'maint' => 'Vzdrževanje',
     'maint_image_cleanup' => 'Odstrani /počisti slike',
     'maint_image_cleanup_desc' => "Pregleda vsebino strani in revizij ter ugotovi, katere slike in risbe so v uporabi in katere so odvečne. Preden to poženeš, naredi popolno varnostno kopijo podatkovne zbirke in slik.",
-    'maint_image_cleanup_ignore_revisions' => 'Ne upoštevaj slik v revizijah',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Zaženi čiščenje',
     'maint_image_cleanup_warning' => 'Najdenih je bilo :count verjetno neuporabljenih slik. Ali si prepričan, da želiš odstraniti izbrane slike?',
     'maint_image_cleanup_success' => ':count verjetno neuporavljenih slik je bilo najdenih in izbrisanih!',
