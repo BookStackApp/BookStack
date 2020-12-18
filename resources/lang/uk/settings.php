@@ -68,7 +68,7 @@ return [
     'maint' => 'Обслуговування',
     'maint_image_cleanup' => 'Очищення зображень',
     'maint_image_cleanup_desc' => "Сканує вміст сторінки та версій, щоб перевірити, які зображення та малюнки в даний час використовуються, а також які зображення зайві. Переконайтеся, що ви створили повну резервну копію бази даних та зображення, перш ніж запускати це.",
-    'maint_image_cleanup_ignore_revisions' => 'Ігнорувати зображення в версіях',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Запустити очищення',
     'maint_image_cleanup_warning' => ':count потенційно невикористаних зображень було знайдено. Ви впевнені, що хочете видалити ці зображення?',
     'maint_image_cleanup_success' => ':count потенційно невикористані зображення знайдено і видалено!',
