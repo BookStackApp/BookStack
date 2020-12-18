@@ -68,7 +68,7 @@ return [
     'maint' => 'Underhåll',
     'maint_image_cleanup' => 'Rensa bilder',
     'maint_image_cleanup_desc' => "Söker igenom innehåll i sidor & revisioner för att se vilka bilder och teckningar som är i bruk och vilka som är överflödiga. Se till att ta en komplett backup av databas och bilder innan du kör detta.",
-    'maint_image_cleanup_ignore_revisions' => 'Ignorera bilder i revisioner',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Kör rensning',
     'maint_image_cleanup_warning' => 'Hittade :count bilder som potentiellt inte används. Vill du verkligen ta bort dessa bilder?',
     'maint_image_cleanup_success' => 'Hittade och raderade :count bilder som potentiellt inte används!',
