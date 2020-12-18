@@ -22,7 +22,7 @@
                 @else
                     <div class="grid third">
                         @foreach($shelf->visibleBooks as $key => $book)
-                            @include('books.grid-item', ['book' => $book])
+                            @include('partials.entity-grid-item', ['entity' => $book])
                         @endforeach
                     </div>
                 @endif
