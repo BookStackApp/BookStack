@@ -68,7 +68,7 @@ return [
     'maint' => 'Onderhoud',
     'maint_image_cleanup' => 'Afbeeldingen opschonen',
     'maint_image_cleanup_desc' => "Scant pagina- en revisie inhoud om te controleren welke afbeeldingen en tekeningen momenteel worden gebruikt en welke afbeeldingen overbodig zijn. Zorg ervoor dat je een volledige database en afbeelding backup maakt voordat je dit uitvoert.",
-    'maint_image_cleanup_ignore_revisions' => 'Afbeeldingen in revisies negeren',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Opschonen uitvoeren',
     'maint_image_cleanup_warning' => ':count potentieel ongebruikte afbeeldingen gevonden. Weet u zeker dat u deze afbeeldingen wilt verwijderen?',
     'maint_image_cleanup_success' => ':count potentieel ongebruikte afbeeldingen gevonden en verwijderd!',
