@@ -68,7 +68,7 @@ return [
     'maint' => 'תחזוקה',
     'maint_image_cleanup' => 'ניקוי תמונות',
     'maint_image_cleanup_desc' => "סורק את הדפים והגרסאות על מנת למצוא אילו תמונות לא בשימוש. יש לוודא גיבוי מלא של מסד הנתונים והתמונות לפני הרצה",
-    'maint_image_cleanup_ignore_revisions' => 'התעלם מהתמונות בגרסאות',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'הפעל ניקוי תמונות',
     'maint_image_cleanup_warning' => 'נמצאו כ :count תמונות אשר לא בשימוש האם ברצונך להמשיך?',
     'maint_image_cleanup_success' => ':count תמונות שלא בשימוש נמחקו',
