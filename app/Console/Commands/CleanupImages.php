@@ -14,8 +14,8 @@ class CleanupImages extends Command
      * @var string
      */
     protected $signature = 'bookstack:cleanup-images
-                            {--a|all : Include images that are used in page revisions}
-                            {--f|force : Actually run the deletions}
+                            {--a|all : Also delete images that are only used in old revisions}
+                            {--f|force : Actually run the deletions, Defaults to a dry-run}
                             ';
 
     /**
