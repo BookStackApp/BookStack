@@ -6,9 +6,10 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
+use Illuminate\Support\Str;
 use Tests\BrowserKitTest;
 
-class RestrictionsTest extends BrowserKitTest
+class EntityPermissionsTest extends BrowserKitTest
 {
 
     /**
@@ -642,11 +643,15 @@ class RestrictionsTest extends BrowserKitTest
     public function test_page_visible_if_has_permissions_when_book_not_visible()
     {
         $book = Book::first();
-
-        $this->setEntityRestrictions($book, []);
-
         $bookChapter = $book->chapters->first();
         $bookPage = $bookChapter->pages->first();
+
+        foreach ([$book, $bookChapter, $bookPage] as $entity) {
+            $entity->name = Str::random(24);
+            $entity->save();
+        }
+
+        $this->setEntityRestrictions($book, []);
         $this->setEntityRestrictions($bookPage, ['view']);
 
         $this->actingAs($this->viewer);
