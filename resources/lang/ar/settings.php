@@ -68,7 +68,7 @@ return [
     'maint' => 'الصيانة',
     'maint_image_cleanup' => 'تنظيف الصور',
     'maint_image_cleanup_desc' => "مسح الصفحة ومراجعة المحتوى للتحقق من أي الصور والرسوم المستخدمة حاليًا وأي الصور زائدة عن الحاجة. تأكد من إنشاء قاعدة بيانات كاملة و نسخة احتياطية للصور قبل تشغيل هذا.",
-    'maint_image_cleanup_ignore_revisions' => 'تجاهل الصور في المراجعات',
+    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'بدء التنظيف',
     'maint_image_cleanup_warning' => 'يوجد عدد :count من الصور المحتمل عدم استخدامها. تأكيد حذف الصور؟',
     'maint_image_cleanup_success' => 'تم إيجاد وحذف عدد :count من الصور المحتمل عدم استخدامها!',
