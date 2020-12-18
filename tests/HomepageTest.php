@@ -98,16 +98,16 @@ class HomepageTest extends TestCase
     {
         $editor = $this->getEditor();
         setting()->putUser($editor, 'bookshelves_view_type', 'grid');
+        $shelf = Bookshelf::query()->firstOrFail();
 
         $this->setSettings(['app-homepage-type' => 'bookshelves']);
 
         $this->asEditor();
         $homeVisit = $this->get('/');
         $homeVisit->assertSee('Shelves');
-        $homeVisit->assertSee('bookshelf-grid-item grid-card');
         $homeVisit->assertSee('grid-card-content');
-        $homeVisit->assertSee('grid-card-footer');
         $homeVisit->assertSee('featured-image-container');
+        $homeVisit->assertElementContains('.grid-card', $shelf->name);
 
         $this->setSettings(['app-homepage-type' => false]);
         $this->test_default_homepage_visible();
