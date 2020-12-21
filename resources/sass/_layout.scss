@@ -272,6 +272,7 @@ body.flexbox {
     min-height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    height: 100%;
     scrollbar-width: none;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
@@ -281,9 +282,6 @@ body.flexbox {
   .tri-layout-middle-contents {
     max-width: 940px;
     margin: 0 auto;
-  }
-  .tri-layout-right-contents {
-    height: 1000px;
   }
 }
 
