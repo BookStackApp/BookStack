@@ -6,6 +6,11 @@
     option:entity-search:entity-type="book"
 @stop
 
+@push('social-meta')
+    <meta property="og:description" content="{{ Str::words($book->description, 50, '...') }}">
+    <meta property="og:image" content="{{ $book->getBookCover() }}">
+@endpush
+
 @section('body')
 
     <div class="mb-s">
