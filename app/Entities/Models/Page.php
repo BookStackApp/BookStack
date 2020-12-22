@@ -126,4 +126,18 @@ class Page extends BookChild
         $refreshed->html = (new PageContent($refreshed))->render();
         return $refreshed;
     }
+
+    public function getCoverImage(): string
+    {
+        $dom = new \DomDocument();
+        $dom->loadHTML($this->html);
+        $images = $dom->getElementsByTagName('img');
+
+        try {
+            $cover = $images->length > 0 ? $images[0]->getAttribute('src') : $this->book->getBookCover();
+        } catch (Exception $err) {
+            $cover = $this->book->getBookCover();
+        }
+        return $cover;
+    }
 }
