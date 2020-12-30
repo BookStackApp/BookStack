@@ -43,13 +43,13 @@ BookStack releases are each assigned a version number, such as "v0.25.2", in the
 
 Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed. 
 
-For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](http://eepurl.com/cmmq5j).
+For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](https://updates.bookstackapp.com/signup/bookstack-news-and-updates).
 
 ## 🛠️ Development & Testing
 
 All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
-* [Node.js](https://nodejs.org/en/) v10.0+
+* [Node.js](https://nodejs.org/en/) v12.0+
 
 This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
 
@@ -129,7 +129,7 @@ The project's code of conduct [can be found here](https://github.com/BookStackAp
 
 Security information for administering a BookStack instance can be found on the [documentation site here](https://www.bookstackapp.com/docs/admin/security/).
 
-If you'd like to be notified of new potential security concerns you can [sign-up to the BookStack security mailing list](http://eepurl.com/glIh8z).
+If you'd like to be notified of new potential security concerns you can [sign-up to the BookStack security mailing list](https://updates.bookstackapp.com/signup/bookstack-security-updates).
 
 If you would like to report a security concern in a more confidential manner than via a GitHub issue, You can directly email the lead maintainer [ssddanbrown](https://github.com/ssddanbrown). You will need to login to be able to see the email address on the [GitHub profile page](https://github.com/ssddanbrown). Alternatively you can send a DM via twitter to [@ssddanbrown](https://twitter.com/ssddanbrown).
 
@@ -168,5 +168,4 @@ These are the great open-source projects used to help build BookStack:
     * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
 * [diagrams.net](https://github.com/jgraph/drawio)
-* [Laravel Stats](https://github.com/stefanzweifel/laravel-stats)
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml)
