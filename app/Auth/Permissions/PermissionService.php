@@ -5,7 +5,9 @@ use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
-use BookStack\Ownable;
+use BookStack\Model;
+use BookStack\Traits\HasCreatorAndUpdater;
+use BookStack\Traits\HasOwner;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -168,7 +170,7 @@ class PermissionService
         });
 
         // Chunk through all bookshelves
-        $this->entityProvider->bookshelf->newQuery()->withTrashed()->select(['id', 'restricted', 'created_by'])
+        $this->entityProvider->bookshelf->newQuery()->withTrashed()->select(['id', 'restricted', 'owned_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->buildJointPermissionsForShelves($shelves, $roles);
             });
@@ -181,10 +183,10 @@ class PermissionService
     protected function bookFetchQuery()
     {
         return $this->entityProvider->book->withTrashed()->newQuery()
-            ->select(['id', 'restricted', 'created_by'])->with(['chapters' => function ($query) {
-                $query->withTrashed()->select(['id', 'restricted', 'created_by', 'book_id']);
+            ->select(['id', 'restricted', 'owned_by'])->with(['chapters' => function ($query) {
+                $query->withTrashed()->select(['id', 'restricted', 'owned_by', 'book_id']);
             }, 'pages'  => function ($query) {
-                $query->withTrashed()->select(['id', 'restricted', 'created_by', 'book_id', 'chapter_id']);
+                $query->withTrashed()->select(['id', 'restricted', 'owned_by', 'book_id', 'chapter_id']);
             }]);
     }
 
@@ -286,7 +288,7 @@ class PermissionService
         });
 
         // Chunk through all bookshelves
-        $this->entityProvider->bookshelf->newQuery()->select(['id', 'restricted', 'created_by'])
+        $this->entityProvider->bookshelf->newQuery()->select(['id', 'restricted', 'owned_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->buildJointPermissionsForShelves($shelves, $roles);
             });
@@ -508,28 +510,24 @@ class PermissionService
             'action'             => $action,
             'has_permission'     => $permissionAll,
             'has_permission_own' => $permissionOwn,
-            'created_by'         => $entity->getRawAttribute('created_by')
+            'owned_by'         => $entity->getRawAttribute('owned_by')
         ];
     }
 
     /**
      * Checks if an entity has a restriction set upon it.
-     * @param Ownable $ownable
-     * @param $permission
-     * @return bool
+     * @param HasCreatorAndUpdater|HasOwner $ownable
      */
-    public function checkOwnableUserAccess(Ownable $ownable, $permission)
+    public function checkOwnableUserAccess(Model $ownable, string $permission): bool
     {
         $explodedPermission = explode('-', $permission);
 
-        $baseQuery = $ownable->where('id', '=', $ownable->id);
+        $baseQuery = $ownable->newQuery()->where('id', '=', $ownable->id);
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
-        $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
-
         // Handle non entity specific jointPermissions
-        if (in_array($explodedPermission[0], $nonJointPermissions)) {
+        if (!($ownable instanceof Entity)) {
             $allPermission = $this->currentUser() && $this->currentUser()->can($permission . '-all');
             $ownPermission = $this->currentUser() && $this->currentUser()->can($permission . '-own');
             $this->currentAction = 'view';
@@ -566,7 +564,7 @@ class PermissionService
                 $query->where('has_permission', '=', 1)
                     ->orWhere(function ($query2) use ($userId) {
                         $query2->where('has_permission_own', '=', 1)
-                            ->where('created_by', '=', $userId);
+                            ->where('owned_by', '=', $userId);
                     });
             });
 
@@ -615,7 +613,7 @@ class PermissionService
                         $query->where('has_permission', '=', true)
                             ->orWhere(function ($query) {
                                 $query->where('has_permission_own', '=', true)
-                                    ->where('created_by', '=', $this->currentUser()->id);
+                                    ->where('owned_by', '=', $this->currentUser()->id);
                             });
                     });
             });
@@ -639,7 +637,7 @@ class PermissionService
                         $query->where('has_permission', '=', true)
                             ->orWhere(function (Builder $query) {
                                 $query->where('has_permission_own', '=', true)
-                                    ->where('created_by', '=', $this->currentUser()->id);
+                                    ->where('owned_by', '=', $this->currentUser()->id);
                             });
                     });
             });
@@ -656,7 +654,7 @@ class PermissionService
             $query->where('draft', '=', false)
                 ->orWhere(function (Builder $query) {
                     $query->where('draft', '=', true)
-                        ->where('created_by', '=', $this->currentUser()->id);
+                        ->where('owned_by', '=', $this->currentUser()->id);
                 });
         });
     }
@@ -676,7 +674,7 @@ class PermissionService
                 $query->where('draft', '=', false)
                     ->orWhere(function ($query) {
                         $query->where('draft', '=', true)
-                            ->where('created_by', '=', $this->currentUser()->id);
+                            ->where('owned_by', '=', $this->currentUser()->id);
                     });
             });
         }
@@ -710,7 +708,7 @@ class PermissionService
                     ->where(function ($query) {
                         $query->where('has_permission', '=', true)->orWhere(function ($query) {
                             $query->where('has_permission_own', '=', true)
-                                ->where('created_by', '=', $this->currentUser()->id);
+                                ->where('owned_by', '=', $this->currentUser()->id);
                         });
                     });
             });
@@ -746,7 +744,7 @@ class PermissionService
                         ->where(function ($query) {
                             $query->where('has_permission', '=', true)->orWhere(function ($query) {
                                 $query->where('has_permission_own', '=', true)
-                                    ->where('created_by', '=', $this->currentUser()->id);
+                                    ->where('owned_by', '=', $this->currentUser()->id);
                             });
                         });
                 });

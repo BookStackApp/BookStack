@@ -1,27 +1,26 @@
-<?php namespace BookStack;
+<?php namespace BookStack\Traits;
 
 use BookStack\Auth\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int created_by
  * @property int updated_by
  */
-abstract class Ownable extends Model
+trait HasCreatorAndUpdater
 {
     /**
      * Relation for the user that created this entity.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function createdBy()
+    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
      * Relation for the user that updated this entity.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function updatedBy()
+    public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
     }

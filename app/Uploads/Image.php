@@ -1,11 +1,13 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Entities\Models\Page;
-use BookStack\Ownable;
+use BookStack\Model;
+use BookStack\Traits\HasCreatorAndUpdater;
 use Images;
 
-class Image extends Ownable
+class Image extends Model
 {
+    use HasCreatorAndUpdater;
 
     protected $fillable = ['name'];
     protected $hidden = [];
