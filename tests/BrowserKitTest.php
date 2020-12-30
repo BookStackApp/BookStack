@@ -71,7 +71,7 @@ abstract class BrowserKitTest extends TestCase
     /**
      * Create a group of entities that belong to a specific user.
      */
-    protected function createEntityChainBelongingToUser(User $creatorUser, ?User $updaterUser): array
+    protected function createEntityChainBelongingToUser(User $creatorUser, ?User $updaterUser = null): array
     {
         if (empty($updaterUser)) {
             $updaterUser = $creatorUser;
