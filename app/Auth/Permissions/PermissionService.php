@@ -526,8 +526,10 @@ class PermissionService
         $action = end($explodedPermission);
         $this->currentAction = $action;
 
+        $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
+
         // Handle non entity specific jointPermissions
-        if (!($ownable instanceof Entity)) {
+        if (in_array($explodedPermission[0], $nonJointPermissions)) {
             $allPermission = $this->currentUser() && $this->currentUser()->can($permission . '-all');
             $ownPermission = $this->currentUser() && $this->currentUser()->can($permission . '-own');
             $this->currentAction = 'view';

@@ -130,6 +130,7 @@ class PageRepo
         $page = (new Page())->forceFill([
             'name' => trans('entities.pages_initial_name'),
             'created_by' => user()->id,
+            'owned_by' => user()->id,
             'updated_by' => user()->id,
             'draft' => true,
         ]);

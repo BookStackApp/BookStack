@@ -34,6 +34,7 @@ class BaseRepo
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
+            'owned_by' => user()->id,
         ]);
         $entity->refreshSlug();
         $entity->save();
