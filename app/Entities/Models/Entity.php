@@ -9,7 +9,9 @@ use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Tools\SearchIndex;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Facades\Permissions;
-use BookStack\Ownable;
+use BookStack\Model;
+use BookStack\Traits\HasCreatorAndUpdater;
+use BookStack\Traits\HasOwner;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -35,9 +37,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Ownable
+abstract class Entity extends Model
 {
     use SoftDeletes;
+    use HasCreatorAndUpdater;
+    use HasOwner;
 
     /**
      * @var string - Name of property where the main text content is found

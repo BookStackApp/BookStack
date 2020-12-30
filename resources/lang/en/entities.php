@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entity Select',
     'images' => 'Images',
     'my_recent_drafts' => 'My Recent Drafts',

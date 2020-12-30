@@ -4,7 +4,8 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Facades\Activity;
 use BookStack\Interfaces\Loggable;
-use BookStack\Ownable;
+use BookStack\HasCreatorAndUpdater;
+use BookStack\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -72,7 +73,7 @@ abstract class Controller extends BaseController
     /**
      * Check the current user's permissions against an ownable item otherwise throw an exception.
      */
-    protected function checkOwnablePermission(string $permission, Ownable $ownable): void
+    protected function checkOwnablePermission(string $permission, Model $ownable): void
     {
         if (!userCan($permission, $ownable)) {
             $this->showPermissionError();
