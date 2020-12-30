@@ -289,7 +289,7 @@ class RolesTest extends BrowserKitTest
     {
         $otherShelf = Bookshelf::first();
         $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
-        $ownShelf->forceFill(['created_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
+        $ownShelf->forceFill(['owned_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
         $this->regenEntityPermissions($ownShelf);
 
         $this->checkAccessPermission('bookshelf-update-own', [
@@ -319,7 +319,7 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
         $otherShelf = Bookshelf::first();
         $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
-        $ownShelf->forceFill(['created_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
+        $ownShelf->forceFill(['owned_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
         $this->regenEntityPermissions($ownShelf);
 
         $this->checkAccessPermission('bookshelf-delete-own', [

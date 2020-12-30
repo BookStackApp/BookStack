@@ -287,7 +287,7 @@ class SortTest extends TestCase
         $resp = $this->actingAs($viewer)->get($page->getUrl());
         $resp->assertDontSee($page->getUrl('/copy'));
 
-        $newBook->created_by = $viewer->id;
+        $newBook->owned_by = $viewer->id;
         $newBook->save();
         $this->giveUserPermissions($viewer, ['page-create-own']);
         $this->regenEntityPermissions($newBook);
