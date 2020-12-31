@@ -4,11 +4,16 @@
 
     <p class="mb-none">{{ trans('entities.permissions_intro') }}</p>
 
-    <div class="form-group">
-        @include('form.checkbox', [
-            'name' => 'restricted',
-            'label' => trans('entities.permissions_enable'),
-        ])
+    <div class="grid half">
+        <div class="form-group">
+            @include('form.checkbox', [
+                'name' => 'restricted',
+                'label' => trans('entities.permissions_enable'),
+            ])
+        </div>
+        <div class="form-group">
+            <label for="owner">Owner</label>
+        </div>
     </div>
 
     <table permissions-table class="table permissions-table toggle-switch-list" style="{{ !$model->restricted ? 'display: none' : '' }}">
