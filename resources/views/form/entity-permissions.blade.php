@@ -2,19 +2,25 @@
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 
-    <p class="mb-none">{{ trans('entities.permissions_intro') }}</p>
-
-    <div class="grid half">
-        <div class="form-group">
-            @include('form.checkbox', [
-                'name' => 'restricted',
-                'label' => trans('entities.permissions_enable'),
-            ])
+    <div class="grid half left-focus v-center">
+        <div>
+            <p class="mb-none mt-m">{{ trans('entities.permissions_intro') }}</p>
+            <div>
+                @include('form.checkbox', [
+                    'name' => 'restricted',
+                    'label' => trans('entities.permissions_enable'),
+                ])
+            </div>
         </div>
-        <div class="form-group">
-            <label for="owner">Owner</label>
+        <div>
+            <div class="form-group">
+                <label for="owner">{{ trans('entities.permissions_owner') }}</label>
+                @include('components.user-select', ['user' => $model->ownedBy, 'name' => 'owned_by'])
+            </div>
         </div>
     </div>
+
+    <hr>
 
     <table permissions-table class="table permissions-table toggle-switch-list" style="{{ !$model->restricted ? 'display: none' : '' }}">
         <tr>

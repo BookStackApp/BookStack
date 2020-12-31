@@ -5,7 +5,6 @@ import attachments from "./attachments.js"
 import autoSuggest from "./auto-suggest.js"
 import backToTop from "./back-to-top.js"
 import bookSort from "./book-sort.js"
-import breadcrumbListing from "./breadcrumb-listing.js"
 import chapterToggle from "./chapter-toggle.js"
 import codeEditor from "./code-editor.js"
 import codeHighlighter from "./code-highlighter.js"
@@ -13,6 +12,7 @@ import collapsible from "./collapsible.js"
 import customCheckbox from "./custom-checkbox.js"
 import detailsHighlighter from "./details-highlighter.js"
 import dropdown from "./dropdown.js"
+import dropdownSearch from "./dropdown-search.js"
 import dropzone from "./dropzone.js"
 import editorToolbox from "./editor-toolbox.js"
 import entityPermissionsEditor from "./entity-permissions-editor.js"
@@ -48,6 +48,7 @@ import tagManager from "./tag-manager.js"
 import templateManager from "./template-manager.js"
 import toggleSwitch from "./toggle-switch.js"
 import triLayout from "./tri-layout.js"
+import userSelect from "./user-select.js"
 import wysiwygEditor from "./wysiwyg-editor.js"
 
 const componentMapping = {
@@ -58,7 +59,6 @@ const componentMapping = {
     "auto-suggest": autoSuggest,
     "back-to-top": backToTop,
     "book-sort": bookSort,
-    "breadcrumb-listing": breadcrumbListing,
     "chapter-toggle": chapterToggle,
     "code-editor": codeEditor,
     "code-highlighter": codeHighlighter,
@@ -66,6 +66,7 @@ const componentMapping = {
     "custom-checkbox": customCheckbox,
     "details-highlighter": detailsHighlighter,
     "dropdown": dropdown,
+    "dropdown-search": dropdownSearch,
     "dropzone": dropzone,
     "editor-toolbox": editorToolbox,
     "entity-permissions-editor": entityPermissionsEditor,
@@ -101,6 +102,7 @@ const componentMapping = {
     "template-manager": templateManager,
     "toggle-switch": toggleSwitch,
     "tri-layout": triLayout,
+    "user-select": userSelect,
     "wysiwyg-editor": wysiwygEditor,
 };
 
