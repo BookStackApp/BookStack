@@ -1,13 +1,17 @@
 <div class="dropdown-search custom-select-input" components="dropdown dropdown-search user-select"
      option:dropdown-search:url="/search/users/select"
 >
-    <input refs="user-select@input" type="hidden" name="{{ $name }}" value="{{ $user->id }}">
+    <input refs="user-select@input" type="hidden" name="{{ $name }}" value="{{ $user->id ?? '' }}">
     <div refs="dropdown@toggle"
          class="dropdown-search-toggle flex-container-row items-center"
          aria-haspopup="true" aria-expanded="false" tabindex="0">
         <div refs="user-select@user-info" class="flex-container-row items-center px-s">
-            <img class="avatar mr-m" src="{{ $user->getAvatar(30) }}" alt="{{ $user->name }}">
-            <span>{{ $user->name }}</span>
+            @if($user)
+                <img class="avatar mr-m" src="{{ $user->getAvatar(30) }}" alt="{{ $user->name }}">
+                <span>{{ $user->name }}</span>
+            @else
+                <span>{{ trans('settings.users_none_selected') }}</span>
+            @endif
         </div>
         <span style="font-size: 1.5rem; margin-left: auto;">
             @icon('caret-down')
