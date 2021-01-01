@@ -115,14 +115,6 @@ class BookRepo
     }
 
     /**
-     * Update the permissions of a book.
-     */
-    public function updatePermissions(Book $book, bool $restricted, Collection $permissions = null)
-    {
-        $this->baseRepo->updatePermissions($book, $restricted, $permissions);
-    }
-
-    /**
      * Remove a book from the system.
      * @throws Exception
      */

@@ -384,14 +384,6 @@ class PageRepo
     }
 
     /**
-     * Update the permissions of a page.
-     */
-    public function updatePermissions(Page $page, bool $restricted, Collection $permissions = null)
-    {
-        $this->baseRepo->updatePermissions($page, $restricted, $permissions);
-    }
-
-    /**
      * Change the page's parent to the given entity.
      */
     protected function changeParent(Page $page, Entity $parent)
