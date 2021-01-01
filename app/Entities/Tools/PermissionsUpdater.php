@@ -28,7 +28,7 @@ class PermissionsUpdater
         }
 
         if (!is_null($ownerId)) {
-            $this->updateOwnerFromId($entity, $ownerId);
+            $this->updateOwnerFromId($entity, intval($ownerId));
         }
 
         $entity->save();
