@@ -217,12 +217,13 @@ class UserController extends Controller
      * Remove the specified user from storage.
      * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
         $this->preventAccessInDemoMode();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
+        $newOwnerId = $request->get('new_owner_id', null);
 
         if ($this->userRepo->isOnlyAdmin($user)) {
             $this->showErrorNotification(trans('errors.users_cannot_delete_only_admin'));
@@ -234,7 +235,7 @@ class UserController extends Controller
             return redirect($user->getEditUrl());
         }
 
-        $this->userRepo->destroy($user);
+        $this->userRepo->destroy($user, $newOwnerId);
         $this->showSuccessNotification(trans('settings.users_delete_success'));
         $this->logActivity(ActivityType::USER_DELETE, $user);
 
