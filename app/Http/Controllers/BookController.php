@@ -4,6 +4,7 @@ use Activity;
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\ImageUploadException;
@@ -202,14 +203,12 @@ class BookController extends Controller
      * Set the restrictions for this book.
      * @throws Throwable
      */
-    public function permissions(Request $request, string $bookSlug)
+    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
 
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->bookRepo->updatePermissions($book, $restricted, $permissions);
+        $permissionsUpdater->updateFromPermissionsForm($book, $request);
 
         $this->showSuccessNotification(trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());

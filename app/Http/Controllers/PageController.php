@@ -5,6 +5,7 @@ use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
@@ -453,14 +454,12 @@ class PageController extends Controller
      * @throws NotFoundException
      * @throws Throwable
      */
-    public function permissions(Request $request, string $bookSlug, string $pageSlug)
+    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
 
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->pageRepo->updatePermissions($page, $restricted, $permissions);
+        $permissionsUpdater->updateFromPermissionsForm($page, $request);
 
         $this->showSuccessNotification(trans('entities.pages_permissions_success'));
         return redirect($page->getUrl());

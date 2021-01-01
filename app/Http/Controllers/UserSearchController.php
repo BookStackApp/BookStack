@@ -19,7 +19,7 @@ class UserSearchController extends Controller
             ->take(20);
 
         if (!empty($search)) {
-            $query->where(function(Builder $query) use ($search) {
+            $query->where(function (Builder $query) use ($search) {
                 $query->where('email', 'like', '%' . $search . '%')
                     ->orWhere('name', 'like', '%' . $search . '%');
             });
