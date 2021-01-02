@@ -279,6 +279,7 @@ body.flexbox {
     min-height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    height: 100%;
     scrollbar-width: none;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
