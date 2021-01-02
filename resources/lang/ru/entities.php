@@ -22,6 +22,7 @@ return [
     'meta_created_name' => ':user создал :timeLength',
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Выбор объекта',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Мои последние черновики',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'После включения опции эти разрешения будут иметь приоритет над любыми установленными разрешениями роли.',
     'permissions_enable' => 'Включение пользовательских разрешений',
     'permissions_save' => 'Сохранить разрешения',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Результаты поиска',
