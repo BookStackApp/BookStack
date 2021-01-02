@@ -24,6 +24,8 @@
         <server name="APP_LANG" value="en"/>
         <server name="APP_THEME" value="none"/>
         <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
+        <server name="APP_URL" value="http://bookstack.dev"/>
+        <server name="ALLOWED_IFRAME_HOSTS" value=""/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
@@ -35,6 +37,7 @@
         <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
         <server name="AVATAR_URL" value=""/>
         <server name="LDAP_VERSION" value="3"/>
+        <server name="SESSION_SECURE_COOKIE" value="null"/>
         <server name="STORAGE_TYPE" value="local"/>
         <server name="STORAGE_ATTACHMENT_TYPE" value="local"/>
         <server name="STORAGE_IMAGE_TYPE" value="local"/>
@@ -47,7 +50,6 @@
         <server name="GOOGLE_AUTO_REGISTER" value=""/>
         <server name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
         <server name="GOOGLE_SELECT_ACCOUNT" value=""/>
-        <server name="APP_URL" value="http://bookstack.dev"/>
         <server name="DEBUGBAR_ENABLED" value="false"/>
         <server name="SAML2_ENABLED" value="false"/>
         <server name="API_REQUESTS_PER_MIN" value="180"/>
