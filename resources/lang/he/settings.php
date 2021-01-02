@@ -239,6 +239,7 @@ return [
         'ja' => '日本語',
         'ko' => '한국어',
         'nl' => 'Nederlands',
+        'nb' => 'Norsk (Bokmål)',
         'pl' => 'Polski',
         'pt_BR' => 'Português do Brasil',
         'ru' => 'Русский',
