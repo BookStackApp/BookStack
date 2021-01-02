@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Sidrevisioner',
     'pages_revisions_named' => 'Sidrevisioner för :pageName',
     'pages_revision_named' => 'Sidrevision för :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Skapad av',
     'pages_revisions_date' => 'Revisionsdatum',
     'pages_revisions_number' => '#',
