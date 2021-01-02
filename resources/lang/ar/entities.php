@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'أنشئ :timeLength بواسطة :user',
     'meta_updated' => 'مُحدث :timeLength',
     'meta_updated_name' => 'مُحدث :timeLength بواسطة :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'اختيار الكيان',
     'images' => 'صور',
     'my_recent_drafts' => 'مسوداتي الحديثة',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'في حال التفعيل, ستتم تبدية هذه الأذونات على أذونات الأدوار.',
     'permissions_enable' => 'تفعيل الأذونات المخصصة',
     'permissions_save' => 'حفظ الأذونات',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'نتائج البحث',
