@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Pagina Revisies',
     'pages_revisions_named' => 'Pagina Revisies voor :pageName',
     'pages_revision_named' => 'Pagina Revisie voor :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Aangemaakt door',
     'pages_revisions_date' => 'Revisiedatum',
     'pages_revisions_number' => '#',
