@@ -179,15 +179,13 @@ trait SharedTestHelpers
 
     /**
      * Give the given user some permissions.
-     * @param User $user
-     * @param array $permissions
      */
-    protected function giveUserPermissions(User $user, $permissions = [])
+    protected function giveUserPermissions(User $user, array $permissions = [])
     {
         $newRole = $this->createNewRole($permissions);
         $user->attachRole($newRole);
         $user->load('roles');
-        $user->permissions(false);
+        $user->clearPermissionCache();
     }
 
     /**

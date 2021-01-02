@@ -25,6 +25,7 @@ class HomeController extends Controller
                 ->where('draft', '=', true)
                 ->where('created_by', '=', user()->id)
                 ->orderBy('updated_at', 'desc')
+                ->with('book')
                 ->take(6)
                 ->get();
         }
@@ -33,8 +34,11 @@ class HomeController extends Controller
         $recents = $this->isSignedIn() ?
               Views::getUserRecentlyViewed(12*$recentFactor, 1)
             : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
-        $recentlyUpdatedPages = Page::visible()->where('draft', false)
-            ->orderBy('updated_at', 'desc')->take(12)->get();
+        $recentlyUpdatedPages = Page::visible()->with('book')
+            ->where('draft', false)
+            ->orderBy('updated_at', 'desc')
+            ->take(12)
+            ->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
         $homepageOption = setting('app-homepage-type', 'default');

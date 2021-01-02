@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 
 /**
  * Class User
@@ -56,7 +57,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * This holds the user's permissions when loaded.
-     * @var array
+     * @var ?Collection
      */
     protected $permissions;
 
@@ -131,34 +132,43 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get all permissions belonging to a the current user.
-     * @param bool $cache
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
-     */
-    public function permissions($cache = true)
-    {
-        if (isset($this->permissions) && $cache) {
-            return $this->permissions;
-        }
-        $this->load('roles.permissions');
-        $permissions = $this->roles->map(function ($role) {
-            return $role->permissions;
-        })->flatten()->unique();
-        $this->permissions = $permissions;
-        return $permissions;
-    }
-
-    /**
      * Check if the user has a particular permission.
-     * @param $permissionName
-     * @return bool
      */
-    public function can($permissionName)
+    public function can(string $permissionName): bool
     {
         if ($this->email === 'guest') {
             return false;
         }
-        return $this->permissions()->pluck('name')->contains($permissionName);
+
+        return $this->permissions()->contains($permissionName);
+    }
+
+    /**
+     * Get all permissions belonging to a the current user.
+     */
+    protected function permissions(): Collection
+    {
+        if (isset($this->permissions)) {
+            return $this->permissions;
+        }
+
+        $this->permissions = $this->newQuery()->getConnection()->table('role_user', 'ru')
+            ->select('role_permissions.name as name')->distinct()
+            ->leftJoin('permission_role', 'ru.role_id', '=', 'permission_role.role_id')
+            ->leftJoin('role_permissions', 'permission_role.permission_id', '=', 'role_permissions.id')
+            ->where('ru.user_id', '=', $this->id)
+            ->get()
+            ->pluck('name');
+
+        return $this->permissions;
+    }
+
+    /**
+     * Clear any cached permissions on this instance.
+     */
+    public function clearPermissionCache()
+    {
+        $this->permissions = null;
     }
 
     /**

@@ -178,6 +178,10 @@ body.flexbox {
   display: none !important;
 }
 
+.fill-height {
+  height: 100%;
+}
+
 .float {
   float: left;
   &.right {
