@@ -138,14 +138,6 @@ class BookshelfRepo
     }
 
     /**
-     * Update the permissions of a bookshelf.
-     */
-    public function updatePermissions(Bookshelf $shelf, bool $restricted, Collection $permissions = null)
-    {
-        $this->baseRepo->updatePermissions($shelf, $restricted, $permissions);
-    }
-
-    /**
      * Copy down the permissions of the given shelf to all child books.
      */
     public function copyDownPermissions(Bookshelf $shelf, $checkUserPermissions = true): int

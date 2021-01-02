@@ -1,7 +1,8 @@
 <?php namespace BookStack\Uploads;
 
 use BookStack\Entities\Models\Page;
-use BookStack\Ownable;
+use BookStack\Model;
+use BookStack\Traits\HasCreatorAndUpdater;
 
 /**
  * @property int id
@@ -10,8 +11,10 @@ use BookStack\Ownable;
  * @property string extension
  * @property bool external
  */
-class Attachment extends Ownable
+class Attachment extends Model
 {
+    use HasCreatorAndUpdater;
+
     protected $fillable = ['name', 'order'];
 
     /**

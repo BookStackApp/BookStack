@@ -31,7 +31,7 @@ class DummyContentSeeder extends Seeder
         $role = Role::getRole('viewer');
         $viewerUser->attachRole($role);
 
-        $byData = ['created_by' => $editorUser->id, 'updated_by' => $editorUser->id];
+        $byData = ['created_by' => $editorUser->id, 'updated_by' => $editorUser->id, 'owned_by' => $editorUser->id];
 
         factory(\BookStack\Entities\Models\Book::class, 5)->create($byData)
             ->each(function($book) use ($editorUser, $byData) {

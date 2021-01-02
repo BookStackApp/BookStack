@@ -1,6 +1,7 @@
 <?php namespace BookStack\Auth;
 
 use Activity;
+use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
@@ -169,7 +170,7 @@ class UserRepo
      * Remove the given user from storage, Delete all related content.
      * @throws Exception
      */
-    public function destroy(User $user)
+    public function destroy(User $user, ?int $newOwnerId = null)
     {
         $user->socialAccounts()->delete();
         $user->apiTokens()->delete();
@@ -182,6 +183,25 @@ class UserRepo
 
         foreach ($profileImages as $image) {
             Images::destroy($image);
+        }
+
+        if (!empty($newOwnerId)) {
+            $newOwner = User::query()->find($newOwnerId);
+            if (!is_null($newOwner)) {
+                $this->migrateOwnership($user, $newOwner);
+            }
+        }
+    }
+
+    /**
+     * Migrate ownership of items in the system from one user to another.
+     */
+    protected function migrateOwnership(User $fromUser, User $toUser)
+    {
+        $entities = (new EntityProvider)->all();
+        foreach ($entities as $instance) {
+            $instance->newQuery()->where('owned_by', '=', $fromUser->id)
+                ->update(['owned_by' => $toUser->id]);
         }
     }
 

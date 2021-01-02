@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entity Select',
     'images' => 'Images',
     'my_recent_drafts' => 'My Recent Drafts',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
     'permissions_enable' => 'Enable Custom Permissions',
     'permissions_save' => 'Save Permissions',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Search Results',

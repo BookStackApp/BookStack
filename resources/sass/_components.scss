@@ -725,3 +725,64 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     border-top: 0;
   }
 }
+
+.dropdown-search-dropdown {
+  box-shadow: $bs-med;
+  overflow: hidden;
+  min-height: 100px;
+  width: 240px;
+  display: none;
+  position: absolute;
+  z-index: 80;
+  right: -$-m;
+  @include rtl {
+    right: auto;
+    left: -$-m;
+  }
+  .dropdown-search-search .svg-icon {
+    position: absolute;
+    left: $-s;
+    @include rtl {
+      right: $-s;
+      left: auto;
+    }
+    top: 11px;
+    fill: #888;
+    pointer-events: none;
+  }
+  .dropdown-search-list {
+    max-height: 400px;
+    overflow-y: scroll;
+    text-align: start;
+  }
+  .dropdown-search-item {
+    padding: $-s $-m;
+    &:hover,&:focus {
+      background-color: #F2F2F2;
+      text-decoration: none;
+    }
+  }
+  input {
+    padding-inline-start: $-xl;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid #DDD;
+  }
+}
+
+@include smaller-than($m) {
+  .dropdown-search-dropdown {
+    position: fixed;
+    right: auto;
+    left: $-m;
+  }
+  .dropdown-search-dropdown .dropdown-search-list {
+    max-height: 240px;
+  }
+}
+
+.custom-select-input {
+  max-width: 280px;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+}

@@ -1,14 +1,23 @@
-<div class="breadcrumb-listing" component="dropdown" breadcrumb-listing="{{ $entity->getType() }}:{{ $entity->id }}">
-    <div class="breadcrumb-listing-toggle" refs="dropdown@toggle"
+<div class="dropdown-search" components="dropdown dropdown-search"
+     option:dropdown-search:url="/search/entity/siblings?entity_type={{$entity->getType()}}&entity_id={{ $entity->id }}"
+     option:dropdown-search:local-search-selector=".entity-list-item"
+>
+    <div class="dropdown-search-toggle" refs="dropdown@toggle"
          aria-haspopup="true" aria-expanded="false" tabindex="0">
         <div class="separator">@icon('chevron-right')</div>
     </div>
-    <div refs="dropdown@menu" class="breadcrumb-listing-dropdown card" role="menu">
-        <div class="breadcrumb-listing-search">
+    <div refs="dropdown@menu" class="dropdown-search-dropdown card" role="menu">
+        <div class="dropdown-search-search">
             @icon('search')
-            <input autocomplete="off" type="text" name="entity-search" placeholder="{{ trans('common.search') }}" aria-label="{{ trans('common.search') }}">
+            <input refs="dropdown-search@searchInput"
+                   aria-label="{{ trans('common.search') }}"
+                   autocomplete="off"
+                   placeholder="{{ trans('common.search') }}"
+                   type="text">
         </div>
-        @include('partials.loading-icon')
-        <div class="breadcrumb-listing-entity-list px-m"></div>
+        <div refs="dropdown-search@loading">
+            @include('partials.loading-icon')
+        </div>
+        <div refs="dropdown-search@listContainer" class="dropdown-search-list px-m"></div>
     </div>
 </div>

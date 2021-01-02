@@ -2,6 +2,7 @@
 
 use Activity;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Exceptions\ImageUploadException;
@@ -19,9 +20,6 @@ class BookshelfController extends Controller
     protected $entityContextManager;
     protected $imageRepo;
 
-    /**
-     * BookController constructor.
-     */
     public function __construct(BookshelfRepo $bookshelfRepo, ShelfContext $entityContextManager, ImageRepo $imageRepo)
     {
         $this->bookshelfRepo = $bookshelfRepo;
@@ -200,14 +198,12 @@ class BookshelfController extends Controller
     /**
      * Set the permissions for this bookshelf.
      */
-    public function permissions(Request $request, string $slug)
+    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $slug)
     {
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->bookshelfRepo->updatePermissions($shelf, $restricted, $permissions);
+        $permissionsUpdater->updateFromPermissionsForm($shelf, $request);
 
         $this->showSuccessNotification(trans('entities.shelves_permissions_updated'));
         return redirect($shelf->getUrl());

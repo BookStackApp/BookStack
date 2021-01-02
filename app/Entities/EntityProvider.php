@@ -55,7 +55,7 @@ class EntityProvider
     /**
      * Fetch all core entity types as an associated array
      * with their basic names as the keys.
-     * @return [string => Entity]
+     * @return array<Entity>
      */
     public function all(): array
     {

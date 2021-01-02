@@ -130,6 +130,7 @@ class PageRepo
         $page = (new Page())->forceFill([
             'name' => trans('entities.pages_initial_name'),
             'created_by' => user()->id,
+            'owned_by' => user()->id,
             'updated_by' => user()->id,
             'draft' => true,
         ]);
@@ -380,14 +381,6 @@ class PageRepo
 
         $parentClass = $entityType === 'book' ? Book::class : Chapter::class;
         return $parentClass::visible()->where('id', '=', $entityId)->first();
-    }
-
-    /**
-     * Update the permissions of a page.
-     */
-    public function updatePermissions(Page $page, bool $restricted, Collection $permissions = null)
-    {
-        $this->baseRepo->updatePermissions($page, $restricted, $permissions);
     }
 
     /**
