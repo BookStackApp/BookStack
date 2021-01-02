@@ -22,7 +22,7 @@ return [
     'meta_created_name' => 'Creado :timeLength por :user',
     'meta_updated' => 'Actualizado :timeLength',
     'meta_updated_name' => 'Actualizado :timeLength por :user',
-    'meta_owned_name' => 'Owned by :user',
+    'meta_owned_name' => 'Propiedad de :user',
     'entity_select' => 'Seleccione entidad',
     'images' => 'Imágenes',
     'my_recent_drafts' => 'Mis borradores recientes',
@@ -40,7 +40,7 @@ return [
     'permissions_intro' => 'Una vez habilitado, estos permisos tendrán prioridad por encima de cualquier permiso establecido.',
     'permissions_enable' => 'Habilitar permisos personalizados',
     'permissions_save' => 'Guardar permisos',
-    'permissions_owner' => 'Owner',
+    'permissions_owner' => 'Propietario',
 
     // Search
     'search_results' => 'Resultados de búsqueda',
