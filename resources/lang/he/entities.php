@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'נוסחי דף',
     'pages_revisions_named' => 'נוסחי דף עבור :pageName',
     'pages_revision_named' => 'נוסח דף עבור :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'נוצר על ידי',
     'pages_revisions_date' => 'תאריך נוסח',
     'pages_revisions_number' => '#',
