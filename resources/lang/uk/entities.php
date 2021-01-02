@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Версія сторінки',
     'pages_revisions_named' => 'Версії сторінки для :pageName',
     'pages_revision_named' => 'Версія сторінки для :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Створена',
     'pages_revisions_date' => 'Дата версії',
     'pages_revisions_number' => '#',
