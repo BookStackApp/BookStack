@@ -22,6 +22,7 @@ return [
     'meta_created_name' => '作成: :timeLength (:user)',
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'エンティティ選択',
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'この設定は各ユーザの役割よりも優先して適用されます。',
     'permissions_enable' => 'カスタム権限設定を有効にする',
     'permissions_save' => '権限を保存',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => '検索結果',
