@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Creato :timeLength da :user',
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Selezione Entità',
     'images' => 'Immagini',
     'my_recent_drafts' => 'Bozze Recenti',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Una volta abilitati, questi permessi avranno la priorità su tutti gli altri.',
     'permissions_enable' => 'Abilita Permessi Custom',
     'permissions_save' => 'Salva Permessi',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Risultati Ricerca',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Crea un nuovo capitolo',
     'chapters_delete' => 'Elimina Capitolo',
     'chapters_delete_named' => 'Elimina il capitolo :chapterName',
-    'chapters_delete_explain' => 'Questo eliminerà il capitolo \':chapterName\'. Tutte le pagine verranno spostate nel libro.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Sei sicuro di voler eliminare questo capitolo?',
     'chapters_edit' => 'Elimina Capitolo',
     'chapters_edit_named' => 'Modifica il capitolo :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Versioni Pagina',
     'pages_revisions_named' => 'Versioni della pagina :pageName',
     'pages_revision_named' => 'Versione della pagina :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Creata Da',
     'pages_revisions_date' => 'Data Versione',
     'pages_revisions_number' => '#',

@@ -22,6 +22,7 @@ return [
     'meta_created_name' => ':user tarafından :timeLength oluşturuldu',
     'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Öge Seçimi',
     'images' => 'Görseller',
     'my_recent_drafts' => 'Son Taslaklarım',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Etkinleştirildikten sonra bu izinler, diğer bütün izinlerden öncelikli olacaktır.',
     'permissions_enable' => 'Özelleştirilmiş Yetkileri Etkinleştir',
     'permissions_save' => 'İzinleri Kaydet',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Arama Sonuçları',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Yeni Bölüm Oluştur',
     'chapters_delete' => 'Bölümü Sil',
     'chapters_delete_named' => ':chapterName Bölümünü Sil',
-    'chapters_delete_explain' => 'Bu işlem sonunda \':chapterName\' bölümü silinecek ve bu bölüme ait bütün sayfalar direkt olarak ana kitaba aktarılacaktır.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Bölümü silmek istediğinize emin misiniz?',
     'chapters_edit' => 'Bölümü Düzenle',
     'chapters_edit_named' => ':chapterName Bölümünü Düzenle',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Sayfa Revizyonları',
     'pages_revisions_named' => ':pageName için Sayfa Revizyonları',
     'pages_revision_named' => ':pageName için Sayfa Revizyonu',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Revize Eden',
     'pages_revisions_date' => 'Revizyon Tarihi',
     'pages_revisions_number' => '#',

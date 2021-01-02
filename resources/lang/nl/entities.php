@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Aangemaakt: :timeLength door :user',
     'meta_updated' => ':timeLength Aangepast',
     'meta_updated_name' => 'Aangepast: :timeLength door :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entiteit Selecteren',
     'images' => 'Afbeeldingen',
     'my_recent_drafts' => 'Mijn Concepten',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Als je dit aanzet, dan gelden rol-permissies niet meer voor deze pagina.',
     'permissions_enable' => 'Custom Permissies Aanzetten',
     'permissions_save' => 'Permissies Opslaan',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Zoekresultaten',
@@ -146,8 +148,7 @@ return [
     'chapters_create' => 'Hoofdstuk Toevoegen',
     'chapters_delete' => 'Hoofdstuk Verwijderen',
     'chapters_delete_named' => 'Verwijder Hoofdstuk :chapterName',
-    'chapters_delete_explain' => 'Dit verwijdert het hoofdstuk \':chapterName\', Alle pagina\'s zullen verwijdert worden.
-        en toegevoegd worden aan het bijbehorende boek.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Weet je zeker dat je dit boek wilt verwijderen?',
     'chapters_edit' => 'Hoofdstuk Aanpassen',
     'chapters_edit_named' => 'Hoofdstuk :chapterName Aanpassen',
@@ -209,6 +210,7 @@ return [
     'pages_revisions' => 'Pagina Revisies',
     'pages_revisions_named' => 'Pagina Revisies voor :pageName',
     'pages_revision_named' => 'Pagina Revisie voor :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Aangemaakt door',
     'pages_revisions_date' => 'Revisiedatum',
     'pages_revisions_number' => '#',

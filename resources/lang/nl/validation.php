@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute veld is verplicht wanneer :values niet ingesteld is.',
     'required_without_all' => ':attribute veld is verplicht wanneer geen van :values ingesteld zijn.',
     'same'                 => ':attribute en :other moeten overeenkomen.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute moet :size zijn.',
         'file'    => ':attribute moet :size kilobytes zijn.',

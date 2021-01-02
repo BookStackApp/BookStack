@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute es requerido cuando no se encuentre entre los valores :values.',
     'required_without_all' => ':attribute es requerido cuando ninguno de los valores :values están presentes.',
     'same'                 => ':attribute y :other deben coincidir.',
+    'safe_url'             => 'El enlace proporcionado puede no ser seguro.',
     'size'                 => [
         'numeric' => ':attribute debe ser :size.',
         'file'    => ':attribute debe ser :size kilobytes.',

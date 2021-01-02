@@ -43,7 +43,7 @@ return [
     'reset_password' => 'Återställ lösenord',
     'reset_password_send_instructions' => 'Ange din e-postadress nedan så skickar vi ett mail med en länk för att återställa ditt lösenord.',
     'reset_password_send_button' => 'Skicka återställningslänk',
-    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
+    'reset_password_sent' => 'En länk för återställning av lösenord kommer att skickas till :email om den e-postadressen finns i systemet.',
     'reset_password_success' => 'Ditt lösenord har återställts.',
     'email_reset_subject' => 'Återställ ditt lösenord till :appName',
     'email_reset_text' => 'Du får detta mail eftersom vi fått en begäran om att återställa lösenordet till ditt konto.',

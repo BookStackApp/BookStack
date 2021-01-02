@@ -12,16 +12,16 @@ return [
     'error_user_exists_different_creds' => 'Uporabnik z e-pošto :email že obstaja, vendar z drugačnimi poverilnicami.',
     'email_already_confirmed' => 'E-naslov je že bil potrjen, poskusite se prijaviti.',
     'email_confirmation_invalid' => 'Ta potrditveni žeton ni veljaven ali je že bil uporabljen. Poizkusite znova.',
-    'email_confirmation_expired' => 'Potrditveni žeton je pretečen. Nova potrditvena e-pošta je bila poslana.',
+    'email_confirmation_expired' => 'Potrditveni žeton je potekel. Nova potrditvena e-pošta je bila poslana.',
     'email_confirmation_awaiting' => 'Potrebno je potrditi e-naslov',
     'ldap_fail_anonymous' => 'Dostop do LDAP ni uspel z anonimno povezavo',
     'ldap_fail_authed' => 'Neuspešen LDAP dostop z danimi podrobnostimi dn & gesla',
-    'ldap_extension_not_installed' => 'PHP razširitev za LDAP ni nameščen',
+    'ldap_extension_not_installed' => 'PHP razširitev za LDAP ni nameščena',
     'ldap_cannot_connect' => 'Ne morem se povezati na LDAP strežnik, neuspešna začetna povezava',
     'saml_already_logged_in' => 'Že prijavljen',
     'saml_user_not_registered' => 'Uporabniško ime :name ni registrirano in avtomatska registracija je onemogočena',
     'saml_no_email_address' => 'Nisem našel e-naslova za tega uporabnika v podatkih iz zunanjega sistema za preverjanje pristnosti',
-    'saml_invalid_response_id' => 'Zahteva iz zunanjega sistema za preverjanje pristnosti ni prepoznana s strani procesa zagnanega s strani te aplikacije. Pomik nazaj po prijavi je lahko povzročil te težave.',
+    'saml_invalid_response_id' => 'Zahteva iz zunanjega sistema za preverjanje pristnosti ni prepoznana s strani procesa zagnanega s strani te aplikacije. Pomik nazaj po prijavi je lahko vzrok teh težav.',
     'saml_fail_authed' => 'Prijava z uporabo :system ni uspela, sistem ni zagotovil uspešne avtorizacije',
     'social_no_action_defined' => 'Akcija ni določena',
     'social_login_bad_response' => "Napaka pri :socialAccount prijavi:\n:error",
@@ -33,14 +33,14 @@ return [
     'social_account_register_instructions' => 'Če še nimate računa, se lahko registrirate z uporabo :socialAccount.',
     'social_driver_not_found' => 'Socialni vtičnik ni najden',
     'social_driver_not_configured' => 'Vaše nastavitve :socialAccount niso pravilo nastavljene.',
-    'invite_token_expired' => 'Ta link je pretečen. Namesto tega lahko ponastavite vaše geslo računa.',
+    'invite_token_expired' => 'Ta povezava je potekla. Namesto tega lahko ponastavite vaše geslo računa.',
 
     // System
-    'path_not_writable' => 'Poti :filePath ni bilo mogoče naložiti. Prepričajte se da je zapisljiva na strežnik.',
+    'path_not_writable' => 'Poti :filePath ni bilo mogoče naložiti. Prepričajte se, da je zapisljiva na strežnik.',
     'cannot_get_image_from_url' => 'Ne morem pridobiti slike z :url',
     'cannot_create_thumbs' => 'Strežnik ne more izdelati sličice. Prosimo preverite če imate GD PHP razširitev nameščeno.',
-    'server_upload_limit' => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite manjšo velikost datoteke.',
-    'uploaded'  => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite manjšo velikost datoteke.',
+    'server_upload_limit' => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite z manjšo velikostjo datoteke.',
+    'uploaded'  => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite zmanjšati velikost datoteke.',
     'image_upload_error' => 'Prišlo je do napake med nalaganjem slike',
     'image_upload_type_error' => 'Napačen tip (format) slike',
     'file_upload_timeout' => 'Čas nalaganjanja datoteke je potekel.',
@@ -50,10 +50,10 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Osnutka ni bilo mogoče shraniti. Pred shranjevanjem te strani se prepričajte, da imate internetno povezavo',
-    'page_custom_home_deletion' => 'Ne morem izbrisati strani dokler je nastavljena kot domača stran',
+    'page_custom_home_deletion' => 'Ne morem izbrisati strani, ki je nastavljena kot domača stran',
 
     // Entities
-    'entity_not_found' => 'Entiteta ni najdena',
+    'entity_not_found' => 'Ne najdem tega objekta',
     'bookshelf_not_found' => 'Knjižna polica ni najdena',
     'book_not_found' => 'Knjiga ni najdena',
     'page_not_found' => 'Stran ni najdena',
@@ -69,20 +69,20 @@ return [
     // Roles
     'role_cannot_be_edited' => 'Te vloge mi možno urejati',
     'role_system_cannot_be_deleted' => 'Ta vloga je sistemska in je ni možno brisati',
-    'role_registration_default_cannot_delete' => 'Te vloge ni možno brisati dokler je nastavljena kot privzeta',
-    'role_cannot_remove_only_admin' => 'Ta uporabnik je edini administrator. Dodelite vlogo administratorja drugemu uporabniku preden ga poskusite brisati.',
+    'role_registration_default_cannot_delete' => 'Te vloge ni možno brisati, dokler je nastavljena kot privzeta',
+    'role_cannot_remove_only_admin' => 'Ta uporabnik je edini administrator. Dodelite vlogo administratorja drugemu uporabniku, preden ga poskusite brisati.',
 
     // Comments
     'comment_list' => 'Napaka se je pojavila pri pridobivanju komentarjev.',
-    'cannot_add_comment_to_draft' => 'Ni mogoče dodajanje komentarjev v osnutek.',
-    'comment_add' => 'Napaka se je pojavila pri dodajanju / posodobitev komentarjev.',
+    'cannot_add_comment_to_draft' => 'V osnutek ni možno dodajati komentarjev.',
+    'comment_add' => 'Napaka se je pojavila pri dodajanju / posodobitvi komentarjev.',
     'comment_delete' => 'Napaka se je pojavila pri brisanju komentarja.',
     'empty_comment' => 'Praznega komentarja ne morete objaviti.',
 
     // Error pages
     '404_page_not_found' => 'Strani ni mogoče najti',
-    'sorry_page_not_found' => 'Oprostite, strani ki jo iščete ni mogoče najti.',
-    'sorry_page_not_found_permission_warning' => 'Če pričakujete, da ta stran obstaja, mogoče nimate pravic, da jo vidite.',
+    'sorry_page_not_found' => 'Oprostite, strani ki jo iščete, ni mogoče najti.',
+    'sorry_page_not_found_permission_warning' => 'Če pričakujete, da ta stran obstaja, mogoče nimate pravic ogleda zanjo.',
     'return_home' => 'Vrni se domov',
     'error_occurred' => 'Prišlo je do napake',
     'app_down' => ':appName trenutno ni dosegljiva',

@@ -33,7 +33,7 @@ return [
     'copy' => 'Másolás',
     'reply' => 'Válasz',
     'delete' => 'Törlés',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Törlés megerősítése',
     'search' => 'Keresés',
     'search_clear' => 'Keresés törlése',
     'reset' => 'Visszaállítás',
@@ -67,8 +67,8 @@ return [
     'profile_menu' => 'Profil menü',
     'view_profile' => 'Profil megtekintése',
     'edit_profile' => 'Profil szerkesztése',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Sötét mód',
+    'light_mode' => 'Világos mód',
 
     // Layout tabs
     'tab_info' => 'Információ',

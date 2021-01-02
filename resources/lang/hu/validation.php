@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute mező kötelező ha :values nincs beállítva.',
     'required_without_all' => ':attribute mező kötelező ha egyik :values sincs beállítva.',
     'same'                 => ':attribute és :other értékének egyeznie kell.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute :size méretű kell legyen.',
         'file'    => ':attribute :size kilobájt méretű kell legyen.',

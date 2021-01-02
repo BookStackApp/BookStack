@@ -37,12 +37,13 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'تم إنشاء رف الكتب',
-    'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+    'bookshelf_create_notification'    => 'تم إنشاء الرف بنجاح',
+    'bookshelf_update'                 => 'تم تحديث الرف',
+    'bookshelf_update_notification'    => 'تم تحديث الرف بنجاح',
+    'bookshelf_delete'                 => 'تم تحديث الرف',
+    'bookshelf_delete_notification'    => 'تم حذف الرف بنجاح',
 
     // Other
     'commented_on'                => 'تم التعليق',
+    'permissions_update'          => 'تحديث الأذونات',
 ];

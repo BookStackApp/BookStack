@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'коментирано на',
+    'permissions_update'          => 'updated permissions',
 ];

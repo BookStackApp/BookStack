@@ -26,8 +26,8 @@ return [
     'remember_me' => 'تذكرني',
     'ldap_email_hint' => 'الرجاء إدخال عنوان بريد إلكتروني لاستخدامه مع الحساب.',
     'create_account' => 'إنشاء حساب',
-    'already_have_account' => 'Already have an account?',
-    'dont_have_account' => 'Don\'t have an account?',
+    'already_have_account' => 'لديك حساب بالفعل؟',
+    'dont_have_account' => 'ليس لديك حساب؟',
     'social_login' => 'تسجيل الدخول باستخدام حسابات التواصل الاجتماعي',
     'social_registration' => 'إنشاء حساب باستخدام حسابات التواصل الاجتماعي',
     'social_registration_text' => 'إنشاء حساب والدخول باستخدام خدمة أخرى.',
@@ -43,7 +43,7 @@ return [
     'reset_password' => 'استعادة كلمة المرور',
     'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة المرور.',
     'reset_password_send_button' => 'أرسل رابط الاستعادة',
-    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
+    'reset_password_sent' => 'سيتم إرسال رابط إعادة تعيين كلمة المرور إلى عنوان البريد الإلكتروني هذا إذا كان موجودًا في النظام.',
     'reset_password_success' => 'تمت استعادة كلمة المرور بنجاح.',
     'email_reset_subject' => 'استعد كلمة المرور الخاصة بتطبيق :appName',
     'email_reset_text' => 'تم إرسال هذه الرسالة بسبب تلقينا لطلب استعادة كلمة المرور الخاصة بحسابكم.',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'إعادة إرسال رسالة التأكيد',
 
     // User Invite
-    'user_invite_email_subject' => 'You have been invited to join :appName!',
-    'user_invite_email_greeting' => 'An account has been created for you on :appName.',
-    'user_invite_email_text' => 'Click the button below to set an account password and gain access:',
-    'user_invite_email_action' => 'Set Account Password',
-    'user_invite_page_welcome' => 'Welcome to :appName!',
-    'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
-    'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_email_subject' => 'تم دعوتك للإنضمام إلى صفحة الحالة الخاصة بـ :app_name!',
+    'user_invite_email_greeting' => 'تم إنشاء حساب مستخدم لك على %site%.',
+    'user_invite_email_text' => 'انقر على الزر أدناه لتعيين كلمة مرور الحساب والحصول على الوصول:',
+    'user_invite_email_action' => 'كلمة سر المستخدم',
+    'user_invite_page_welcome' => 'مرحبا بكم في :appName!',
+    'user_invite_page_text' => 'لإكمال حسابك والحصول على حق الوصول تحتاج إلى تعيين كلمة مرور سيتم استخدامها لتسجيل الدخول إلى :appName في الزيارات المستقبلية.',
+    'user_invite_page_confirm_button' => 'تأكيد كلمة المرور',
+    'user_invite_success' => 'مجموعة كلمات المرور، لديك الآن حق الوصول إلى :appName!'
 ];

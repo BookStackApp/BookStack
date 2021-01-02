@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute är obligatoriskt när :values inte finns.',
     'required_without_all' => ':attribute är obligatirskt när ingen av :values finns.',
     'same'                 => ':attribute och :other måste stämma överens.',
+    'safe_url'             => 'Den angivna länken kanske inte är säker.',
     'size'                 => [
         'numeric' => ':attribute måste vara :size.',
         'file'    => ':attribute måste vara :size kilobyte.',

@@ -22,6 +22,7 @@ return [
     'meta_created_name' => '由 :user 建立於 :timeLength',
     'meta_updated' => '更新於 :timeLength',
     'meta_updated_name' => '由 :user 更新於 :timeLength',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => '選擇項目',
     'images' => '圖片',
     'my_recent_drafts' => '我最近的草稿',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => '本設定優先權高於每個使用者角色本身所具有的權限。',
     'permissions_enable' => '啟用自訂權限',
     'permissions_save' => '儲存權限',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => '搜尋結果',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => '建立章節',
     'chapters_delete' => '刪除章節',
     'chapters_delete_named' => '刪除章節「:chapterName」',
-    'chapters_delete_explain' => '這將刪除章節「:chapterName」。所有的頁面將被刪除並加入到其所在的書籍。',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => '您確定要刪除此章節嗎？',
     'chapters_edit' => '編輯章節',
     'chapters_edit_named' => '編輯章節「:chapterName」',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => '頁面修訂',
     'pages_revisions_named' => '“:pageName”頁面修訂',
     'pages_revision_named' => '“:pageName”頁面修訂',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => '建立者',
     'pages_revisions_date' => '修訂日期',
     'pages_revisions_number' => '#',

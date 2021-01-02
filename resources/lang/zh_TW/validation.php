@@ -90,6 +90,7 @@ return [
     'required_without'     => '當:values不存在時，:attribute 字段是必需的。',
     'required_without_all' => '當:values均不存在時，:attribute 字段是必需的。',
     'same'                 => ':attribute 與 :other 必須匹配。',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute 必須為:size。',
         'file'    => ':attribute 必須為:size KB。',
