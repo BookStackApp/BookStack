@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Vytvořeno :timeLength uživatelem :user',
     'meta_updated' => 'Aktualizováno :timeLength',
     'meta_updated_name' => 'Aktualizováno :timeLength uživatelem :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Výběr entity',
     'images' => 'Obrázky',
     'my_recent_drafts' => 'Mé nedávné koncepty',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Pokud je povoleno, tato oprávnění budou mít přednost před všemi nastavenými oprávněními role.',
     'permissions_enable' => 'Povolit vlastní oprávnění',
     'permissions_save' => 'Uložit oprávnění',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Výsledky hledání',
