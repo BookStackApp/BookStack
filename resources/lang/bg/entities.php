@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Създадено преди :timeLength от :user',
     'meta_updated' => 'Актуализирано :timeLength',
     'meta_updated_name' => 'Актуализирано преди :timeLength от :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Избор на обект',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Моите скорошни драфтове',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Веднъж добавени, тези права ще вземат приоритет над всички други установени права.',
     'permissions_enable' => 'Разреши уникални права',
     'permissions_save' => 'Запази права',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Резултати от търсенето',
