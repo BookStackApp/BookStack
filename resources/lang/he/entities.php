@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'נוצר :timeLength על ידי :user',
     'meta_updated' => 'עודכן :timeLength',
     'meta_updated_name' => 'עודכן :timeLength על ידי :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'בחר יישות',
     'images' => 'תמונות',
     'my_recent_drafts' => 'הטיוטות האחרונות שלי',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'ברגע שמסומן, הרשאות אלו יגברו על כל הרשאת תפקיד שקיימת',
     'permissions_enable' => 'הפעל הרשאות מותאמות אישית',
     'permissions_save' => 'שמור הרשאות',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'תוצאות חיפוש',
