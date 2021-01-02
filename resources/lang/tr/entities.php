@@ -22,6 +22,7 @@ return [
     'meta_created_name' => ':user tarafından :timeLength oluşturuldu',
     'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Öge Seçimi',
     'images' => 'Görseller',
     'my_recent_drafts' => 'Son Taslaklarım',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Etkinleştirildikten sonra bu izinler, diğer bütün izinlerden öncelikli olacaktır.',
     'permissions_enable' => 'Özelleştirilmiş Yetkileri Etkinleştir',
     'permissions_save' => 'İzinleri Kaydet',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Arama Sonuçları',
