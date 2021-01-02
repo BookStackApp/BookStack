@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Utworzono :timeLength przez :user',
     'meta_updated' => 'Zaktualizowano :timeLength',
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Wybór obiektu',
     'images' => 'Obrazki',
     'my_recent_drafts' => 'Moje ostatnie wersje robocze',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Jeśli włączone są indywidualne uprawnienia, to te uprawnienia będą miały priorytet względem pozostałych ustawionych uprawnień ról.',
     'permissions_enable' => 'Włącz własne uprawnienia',
     'permissions_save' => 'Zapisz uprawnienia',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Wyniki wyszukiwania',
