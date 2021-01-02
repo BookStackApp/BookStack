@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Oprettet :timeLength af :user',
     'meta_updated' => 'Opdateret :timeLength',
     'meta_updated_name' => 'Opdateret :timeLength af :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Vælg emne',
     'images' => 'Billeder',
     'my_recent_drafts' => 'Mine seneste kladder',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Når de er aktiveret, vil disse tilladelser have prioritet over alle indstillede rolletilladelser.',
     'permissions_enable' => 'Aktivér tilpassede tilladelser',
     'permissions_save' => 'Gem tilladelser',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Søgeresultater',
