@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Revize stránky',
     'pages_revisions_named' => 'Revize stránky pro :pageName',
     'pages_revision_named' => 'Revize stránky pro :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Vytvořeno uživatelem',
     'pages_revisions_date' => 'Datum revize',
     'pages_revisions_number' => 'Č.',
