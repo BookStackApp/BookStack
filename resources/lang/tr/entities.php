@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Sayfa Revizyonları',
     'pages_revisions_named' => ':pageName için Sayfa Revizyonları',
     'pages_revision_named' => ':pageName için Sayfa Revizyonu',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Revize Eden',
     'pages_revisions_date' => 'Revizyon Tarihi',
     'pages_revisions_number' => '#',
