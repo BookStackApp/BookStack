@@ -22,6 +22,7 @@ return [
     'meta_created_name' => '由 :user 创建于 :timeLength',
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => '实体选择',
     'images' => '图片',
     'my_recent_drafts' => '我最近的草稿',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => '本设置优先于每个用户角色本身所具有的权限。',
     'permissions_enable' => '启用自定义权限',
     'permissions_save' => '保存权限',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => '搜索结果',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => '创建章节',
     'chapters_delete' => '删除章节',
     'chapters_delete_named' => '删除章节「:chapterName」',
-    'chapters_delete_explain' => '这将删除章节「:chapterName」。所有的页面将被删除并添加到其所在的书籍。',
+    'chapters_delete_explain' => '这将删除名为“:chapterName”的章节。本章节中存在的所有页面也将被删除。',
     'chapters_delete_confirm' => '您确定要删除此章节吗？',
     'chapters_edit' => '编辑章节',
     'chapters_edit_named' => '编辑章节「:chapterName」',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => '页面修订',
     'pages_revisions_named' => '“:pageName”页面修订',
     'pages_revision_named' => '“:pageName”页面修订',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => '创建者',
     'pages_revisions_date' => '修订日期',
     'pages_revisions_number' => '#',

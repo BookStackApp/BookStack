@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute musí být vyplněno pokud :values není vyplněno.',
     'required_without_all' => ':attribute musí být vyplněno pokud není žádné z :values zvoleno.',
     'same'                 => ':attribute a :other se musí shodovat.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute musí být přesně :size.',
         'file'    => ':attribute musí mít přesně :size Kilobytů.',

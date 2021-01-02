@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'commented on',
+    'permissions_update'          => 'updated permissions',
 ];

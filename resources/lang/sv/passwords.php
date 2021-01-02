@@ -8,7 +8,7 @@ return [
 
     'password' => 'Lösenord måste vara minst sex tecken långa och anges likadant två gånger.',
     'user' => "Det finns ingen användare med den e-postadressen.",
-    'token' => 'The password reset token is invalid for this email address.',
+    'token' => 'Lösenordsåterställningstoken är ogiltig för denna e-postadress.',
     'sent' => 'Vi har mailat dig en länk för att återställa ditt lösenord!',
     'reset' => 'Ditt lösenord har blivit återställt!',
 

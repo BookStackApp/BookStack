@@ -90,6 +90,7 @@ return [
     'required_without'     => 'Políčko :attribute je povinné aj :values neexistuje.',
     'required_without_all' => 'Políčko :attribute je povinné ak ani jedno z :values neexistuje.',
     'same'                 => ':attribute a :other musia byť rovnaké.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute musí byť :size.',
         'file'    => ':attribute musí mať :size kilobajtov.',

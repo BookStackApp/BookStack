@@ -9,17 +9,17 @@ return [
     'confirm' => 'Potrdi',
     'back' => 'Nazaj',
     'save' => 'Shrani',
-    'continue' => 'Naprej',
+    'continue' => 'Nadaljuj',
     'select' => 'Izberi',
     'toggle_all' => 'Vklopi vse',
     'more' => 'Več',
 
     // Form Labels
-    'name' => 'Ime',
+    'name' => 'Naziv',
     'description' => 'Opis',
     'role' => 'Vloga',
     'cover_image' => 'Naslovna slika',
-    'cover_image_description' => 'Slika naj bo okoli 440x250px velika.',
+    'cover_image_description' => 'Slika naj bo velika približno 440x250px.',
     
     // Actions
     'actions' => 'Dejanja',
@@ -33,11 +33,11 @@ return [
     'copy' => 'Kopiraj',
     'reply' => 'Odgovori',
     'delete' => 'Izbriši',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Potrdi brisanje',
     'search' => 'Išči',
-    'search_clear' => 'Počisti iskanje',
+    'search_clear' => 'Razveljavi iskanje',
     'reset' => 'Ponastavi',
-    'remove' => 'Remove',
+    'remove' => 'Odstrani',
     'add' => 'Dodaj',
     'fullscreen' => 'Celozaslonski način',
 
@@ -53,7 +53,7 @@ return [
     // Misc
     'deleted_user' => 'Izbrisan uporabnik',
     'no_activity' => 'Ni aktivnosti za prikaz',
-    'no_items' => 'Ni na voljo nobenih elementov',
+    'no_items' => 'Na voljo ni nobenega elementa',
     'back_to_top' => 'Nazaj na vrh',
     'toggle_details' => 'Preklopi podrobnosti',
     'toggle_thumbnails' => 'Preklopi sličice',
@@ -67,14 +67,14 @@ return [
     'profile_menu' => 'Meni profila',
     'view_profile' => 'Ogled profila',
     'edit_profile' => 'Uredi profil',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'Način temnega zaslona',
+    'light_mode' => 'Način svetlega zaslona',
 
     // Layout tabs
     'tab_info' => 'Informacije',
     'tab_content' => 'Vsebina',
 
     // Email Content
-    'email_action_help' => 'Če imate težave s klikom na ":actionText" gumb, kopirajte im prilepite spodnjo povezavo v vaš brskalnik:',
+    'email_action_help' => 'V kolikor imate težave s klikom na gumb ":actionText", kopirajte in prilepite spodnjo povezavo v vaš brskalnik:',
     'email_rights' => 'Vse pravice pridržane',
 ];

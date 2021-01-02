@@ -90,6 +90,7 @@ return [
     'required_without'     => 'Trường :attribute là bắt buộc khi :values không tồn tại.',
     'required_without_all' => 'Trường :attribute là bắt buộc khi không có bất cứ :values nào tồn tại.',
     'same'                 => ':attribute và :other phải trùng khớp với nhau.',
+    'safe_url'             => 'Đường dẫn cung cấp có thể không an toàn.',
     'size'                 => [
         'numeric' => ':attribute phải có cỡ :size.',
         'file'    => ':attribute phải có cỡ :size KB.',

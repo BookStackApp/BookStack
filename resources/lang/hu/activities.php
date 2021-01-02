@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'megjegyzést fűzött hozzá:',
+    'permissions_update'          => 'updated permissions',
 ];

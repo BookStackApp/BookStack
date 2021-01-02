@@ -92,8 +92,8 @@ return [
     'api_no_authorization_found' => 'У запиті не знайдено токен авторизації',
     'api_bad_authorization_format' => 'У запиті знайдено токен авторизації, але формат недійсний',
     'api_user_token_not_found' => 'Не знайдено відповідного API-токена для наданого токена авторизації',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
+    'api_incorrect_token_secret' => 'Секрет, наданий для даного використовуваного токена API є неправильним',
+    'api_user_no_api_permission' => 'Власник використовуваного токена API не має дозволу здійснювати виклики API',
     'api_user_token_expired' => 'Термін дії токена авторизації закінчився',
 
     // Settings & Maintenance

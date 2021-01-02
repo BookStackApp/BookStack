@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Utworzono :timeLength przez :user',
     'meta_updated' => 'Zaktualizowano :timeLength',
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Wybór obiektu',
     'images' => 'Obrazki',
     'my_recent_drafts' => 'Moje ostatnie wersje robocze',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Jeśli włączone są indywidualne uprawnienia, to te uprawnienia będą miały priorytet względem pozostałych ustawionych uprawnień ról.',
     'permissions_enable' => 'Włącz własne uprawnienia',
     'permissions_save' => 'Zapisz uprawnienia',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Wyniki wyszukiwania',
@@ -146,8 +148,7 @@ return [
     'chapters_create' => 'Utwórz nowy rozdział',
     'chapters_delete' => 'Usuń rozdział',
     'chapters_delete_named' => 'Usuń rozdział :chapterName',
-    'chapters_delete_explain' => 'To spowoduje usunięcie rozdziału \':chapterName\', Wszystkie strony zostaną usunięte
-        i dodane bezpośrednio do książki.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Czy na pewno chcesz usunąć ten rozdział?',
     'chapters_edit' => 'Edytuj rozdział',
     'chapters_edit_named' => 'Edytuj rozdział :chapterName',
@@ -209,6 +210,7 @@ return [
     'pages_revisions' => 'Wersje strony',
     'pages_revisions_named' => 'Wersje strony :pageName',
     'pages_revision_named' => 'Wersja strony :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Utworzona przez',
     'pages_revisions_date' => 'Data wersji',
     'pages_revisions_number' => '#',

@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Criado :timeLength por :user',
     'meta_updated' => 'Atualizado :timeLength',
     'meta_updated_name' => 'Atualizado :timeLength por :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Seleção de Entidade',
     'images' => 'Imagens',
     'my_recent_drafts' => 'Meus Rascunhos Recentes',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Uma vez habilitadas, estas permissões terão prioridade sobre outro conjunto de permissões.',
     'permissions_enable' => 'Habilitar Permissões Customizadas',
     'permissions_save' => 'Salvar Permissões',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Resultado(s) da Pesquisa',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Criar Novo Capítulo',
     'chapters_delete' => 'Excluir Capítulo',
     'chapters_delete_named' => 'Excluir Capítulo :chapterName',
-    'chapters_delete_explain' => 'A ação vai excluir o capítulo de nome \':chapterName\'. Todas as páginas do capítulo serão removidas e adicionadas diretamente ao livro pai.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Tem certeza que deseja excluir o capítulo?',
     'chapters_edit' => 'Editar Capítulo',
     'chapters_edit_named' => 'Editar Capítulo :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Revisões da Página',
     'pages_revisions_named' => 'Revisões de Página para :pageName',
     'pages_revision_named' => 'Revisão de Página para :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Criada por',
     'pages_revisions_date' => 'Data da Revisão',
     'pages_revisions_number' => '#',

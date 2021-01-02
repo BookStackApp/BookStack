@@ -22,6 +22,7 @@ return [
     'meta_created_name' => '作成: :timeLength (:user)',
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'エンティティ選択',
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'この設定は各ユーザの役割よりも優先して適用されます。',
     'permissions_enable' => 'カスタム権限設定を有効にする',
     'permissions_save' => '権限を保存',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => '検索結果',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'チャプターを作成',
     'chapters_delete' => 'チャプターを削除',
     'chapters_delete_named' => 'チャプター「:chapterName」を削除',
-    'chapters_delete_explain' => 'チャプター「:chapterName」を削除すると、チャプター内のすべてのページはブック内に直接追加されます。',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'チャプターを削除してよろしいですか？',
     'chapters_edit' => 'チャプターを編集',
     'chapters_edit_named' => 'チャプター「:chapterName」を編集',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => '編集履歴',
     'pages_revisions_named' => ':pageName のリビジョン',
     'pages_revision_named' => ':pageName のリビジョン',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => '作成者',
     'pages_revisions_date' => '日付',
     'pages_revisions_number' => 'リビジョン',

@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => '댓글 쓰기',
+    'permissions_update'          => 'updated permissions',
 ];

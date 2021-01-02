@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'コメントする',
+    'permissions_update'          => 'updated permissions',
 ];

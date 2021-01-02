@@ -22,6 +22,7 @@ return [
     'meta_created_name' => ':user создал :timeLength',
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Выбор объекта',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Мои последние черновики',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'После включения опции эти разрешения будут иметь приоритет над любыми установленными разрешениями роли.',
     'permissions_enable' => 'Включение пользовательских разрешений',
     'permissions_save' => 'Сохранить разрешения',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Результаты поиска',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Создать новую главу',
     'chapters_delete' => 'Удалить главу',
     'chapters_delete_named' => 'Удалить главу :chapterName',
-    'chapters_delete_explain' => 'Это удалит главу с именем \':chapterName\'. Все страницы главы будут удалены и перемещены напрямую в книгу.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Вы действительно хотите удалить эту главу?',
     'chapters_edit' => 'Редактировать главу',
     'chapters_edit_named' => 'Редактировать главу :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Версии страницы',
     'pages_revisions_named' => 'Версии страницы для :pageName',
     'pages_revision_named' => 'Версия страницы для :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Создана',
     'pages_revisions_date' => 'Дата версии',
     'pages_revisions_number' => '#',

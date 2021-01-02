@@ -90,6 +90,7 @@ return [
     'required_without'     => 'Polje atributa je obvezno, če: vrednosti niso prisotne.',
     'required_without_all' => 'Polje atributa je obvezno, če nobena od: vrednosti ni prisotna.',
     'same'                 => 'Atribut in: drugi se morajo ujemati.',
+    'safe_url'             => 'Podana povezava morda ni varna.',
     'size'                 => [
         'numeric' => ':attribute mora biti :velikost.',
         'file'    => ':attribute mora biti :velikost KB.',
