@@ -2,7 +2,7 @@
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
-use BookStack\Ownable;
+use BookStack\Model;
 use BookStack\Settings\SettingService;
 
 /**
@@ -56,7 +56,7 @@ function hasAppAccess(): bool
  * Check if the current user has a permission. If an ownable element
  * is passed in the jointPermissions are checked against that particular item.
  */
-function userCan(string $permission, Ownable $ownable = null): bool
+function userCan(string $permission, Model $ownable = null): bool
 {
     if ($ownable === null) {
         return user() && user()->can($permission);

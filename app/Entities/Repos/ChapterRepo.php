@@ -63,14 +63,6 @@ class ChapterRepo
     }
 
     /**
-     * Update the permissions of a chapter.
-     */
-    public function updatePermissions(Chapter $chapter, bool $restricted, Collection $permissions = null)
-    {
-        $this->baseRepo->updatePermissions($chapter, $restricted, $permissions);
-    }
-
-    /**
      * Remove a chapter from the system.
      * @throws Exception
      */

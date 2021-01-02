@@ -3,6 +3,7 @@
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Repos\ChapterRepo;
+use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Http\Request;
@@ -190,14 +191,12 @@ class ChapterController extends Controller
      * Set the restrictions for this chapter.
      * @throws NotFoundException
      */
-    public function permissions(Request $request, string $bookSlug, string $chapterSlug)
+    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
 
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->chapterRepo->updatePermissions($chapter, $restricted, $permissions);
+        $permissionsUpdater->updateFromPermissionsForm($chapter, $request);
 
         $this->showSuccessNotification(trans('entities.chapters_permissions_success'));
         return redirect($chapter->getUrl());
