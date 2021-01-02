@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Versioni Pagina',
     'pages_revisions_named' => 'Versioni della pagina :pageName',
     'pages_revision_named' => 'Versione della pagina :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Creata Da',
     'pages_revisions_date' => 'Data Versione',
     'pages_revisions_number' => '#',
