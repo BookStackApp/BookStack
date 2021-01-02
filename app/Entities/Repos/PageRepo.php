@@ -286,9 +286,10 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $page->revision_count++;
-        $this->savePageRevision($page);
-
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
+        $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
+        $this->savePageRevision($page, $summary);
+
         $page->fill($revision->toArray());
         $content = new PageContent($page);
         $content->setNewHTML($revision->html);
