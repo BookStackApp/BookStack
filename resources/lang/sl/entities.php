@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Pregled strani',
     'pages_revisions_named' => 'Pregledi strani za :pageName',
     'pages_revision_named' => 'Pregled strani za :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Ustvaril',
     'pages_revisions_date' => 'Datum revizije',
     'pages_revisions_number' => '#',
