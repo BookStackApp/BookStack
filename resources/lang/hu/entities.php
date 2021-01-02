@@ -22,6 +22,7 @@ return [
     'meta_created_name' => ':user hozta létre :timeLength',
     'meta_updated' => 'Frissítve :timeLength',
     'meta_updated_name' => ':user frissítette :timeLength',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entitás kiválasztása',
     'images' => 'Képek',
     'my_recent_drafts' => 'Legutóbbi vázlataim',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Ha engedélyezett, ezek a jogosultságok elsőbbséget élveznek bármely beállított szerepkör jogosultsággal szemben.',
     'permissions_enable' => 'Egyéni jogosultságok engedélyezése',
     'permissions_save' => 'Jogosultságok mentése',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Keresési eredmények',
