@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Erstellt: :timeLength von :user',
     'meta_updated' => 'Zuletzt aktualisiert: :timeLength',
     'meta_updated_name' => 'Zuletzt aktualisiert: :timeLength von :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Eintrag auswählen',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Meine kürzlichen Entwürfe',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Wenn individuelle Berechtigungen aktiviert werden, überschreiben diese Einstellungen durch Rollen zugewiesene Berechtigungen.',
     'permissions_enable' => 'Individuelle Berechtigungen aktivieren',
     'permissions_save' => 'Berechtigungen speichern',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Suchergebnisse',
