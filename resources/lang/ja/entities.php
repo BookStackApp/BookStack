@@ -210,6 +210,7 @@ return [
     'pages_revisions' => '編集履歴',
     'pages_revisions_named' => ':pageName のリビジョン',
     'pages_revision_named' => ':pageName のリビジョン',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => '作成者',
     'pages_revisions_date' => '日付',
     'pages_revisions_number' => 'リビジョン',
