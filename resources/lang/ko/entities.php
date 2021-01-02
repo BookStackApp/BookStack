@@ -22,6 +22,7 @@ return [
     'meta_created_name' => '만듦 :timeLength, :user',
     'meta_updated' => '수정함 :timeLength',
     'meta_updated_name' => '수정함 :timeLength, :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => '항목 선택',
     'images' => '이미지',
     'my_recent_drafts' => '내 최근의 초안 문서',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => '한번 허용하면 이 설정은 사용자 권한에 우선합니다.',
     'permissions_enable' => '설정 허용',
     'permissions_save' => '권한 저장',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => '검색 결과',
