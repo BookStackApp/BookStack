@@ -22,6 +22,7 @@ return [
     'meta_created_name' => ':user створив :timeLength',
     'meta_updated' => 'Оновлено :timeLength',
     'meta_updated_name' => ':user оновив :timeLength',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Вибір об\'єкта',
     'images' => 'Зображення',
     'my_recent_drafts' => 'Мої останні чернетки',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Після ввімкнення ці дозволи будуть мати вищий пріоритет ніж інші дозволи ролей.',
     'permissions_enable' => 'Увімкнути спеціальні дозволи',
     'permissions_save' => 'Зберегти дозволи',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Результати пошуку',
