@@ -1,5 +1,7 @@
 <?php
 
+use \Illuminate\Support\Str;
+
 /**
  * Session configuration options.
  *
@@ -69,7 +71,8 @@ return [
     // By setting this option to true, session cookies will only be sent back
     // to the server if the browser has a HTTPS connection. This will keep
     // the cookie from being sent to you if it can not be done securely.
-    'secure' => env('SESSION_SECURE_COOKIE', false),
+    'secure' => env('SESSION_SECURE_COOKIE', null)
+        ?? Str::startsWith(env('APP_URL'), 'https:'),
 
     // HTTP Access Only
     // Setting this value to true will prevent JavaScript from accessing the
@@ -80,6 +83,6 @@ return [
     // This option determines how your cookies behave when cross-site requests
     // take place, and can be used to mitigate CSRF attacks. By default, we
     // do not enable this as other CSRF protection services are in place.
-    // Options: lax, strict
-    'same_site' => null,
+    // Options: lax, strict, none
+    'same_site' => 'lax',
 ];
