@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Revisões da Página',
     'pages_revisions_named' => 'Revisões de Página para :pageName',
     'pages_revision_named' => 'Revisão de Página para :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Criada por',
     'pages_revisions_date' => 'Data da Revisão',
     'pages_revisions_number' => '#',
