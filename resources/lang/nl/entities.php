@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Aangemaakt: :timeLength door :user',
     'meta_updated' => ':timeLength Aangepast',
     'meta_updated_name' => 'Aangepast: :timeLength door :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entiteit Selecteren',
     'images' => 'Afbeeldingen',
     'my_recent_drafts' => 'Mijn Concepten',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Als je dit aanzet, dan gelden rol-permissies niet meer voor deze pagina.',
     'permissions_enable' => 'Custom Permissies Aanzetten',
     'permissions_save' => 'Permissies Opslaan',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Zoekresultaten',
