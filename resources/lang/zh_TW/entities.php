@@ -210,6 +210,7 @@ return [
     'pages_revisions' => '頁面修訂',
     'pages_revisions_named' => '“:pageName”頁面修訂',
     'pages_revision_named' => '“:pageName”頁面修訂',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => '建立者',
     'pages_revisions_date' => '修訂日期',
     'pages_revisions_number' => '#',
