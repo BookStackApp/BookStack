@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'مراجعات الصفحة',
     'pages_revisions_named' => 'مراجعات صفحة :pageName',
     'pages_revision_named' => 'مراجعة صفحة :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'أنشئ بواسطة',
     'pages_revisions_date' => 'تاريخ المراجعة',
     'pages_revisions_number' => '#',
