@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Oldal változatai',
     'pages_revisions_named' => ':pageName oldal változatai',
     'pages_revision_named' => ':pageName oldal változata',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Létrehozta:',
     'pages_revisions_date' => 'Változat dátuma',
     'pages_revisions_number' => '#',
