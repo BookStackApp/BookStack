@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Ревизии на страницата',
     'pages_revisions_named' => 'Ревизии на страницата :pageName',
     'pages_revision_named' => 'Ревизия на страницата :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Създадено от',
     'pages_revisions_date' => 'Дата на ревизията',
     'pages_revisions_number' => '№',
