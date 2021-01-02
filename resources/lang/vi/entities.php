@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Được tạo :timeLength bởi :user',
     'meta_updated' => 'Được cập nhật :timeLength',
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Chọn thực thể',
     'images' => 'Ảnh',
     'my_recent_drafts' => 'Bản nháp gần đây của tôi',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Một khi được bật, các quyền này sẽ được ưu tiên trên hết tất cả các quyền hạn khác.',
     'permissions_enable' => 'Bật quyền hạn tùy chỉnh',
     'permissions_save' => 'Lưu quyền hạn',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Kết quả Tìm kiếm',
