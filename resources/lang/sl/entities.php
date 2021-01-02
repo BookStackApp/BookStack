@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Ustvaril :timeLength uporabnik :user',
     'meta_updated' => 'Posodobljeno :timeLength',
     'meta_updated_name' => 'Posodobil :timeLength uporabnik :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Izbira entitete',
     'images' => 'Slike',
     'my_recent_drafts' => 'Moji nedavni osnutki',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'V trenutku, ko bodo omogočena, bodo imela ta dovoljenja prednost pred dovoljenji za določanje vlog.',
     'permissions_enable' => 'Omogoči dovoljenja po meri',
     'permissions_save' => 'Shrani dovoljenja',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Rezultati iskanja',
