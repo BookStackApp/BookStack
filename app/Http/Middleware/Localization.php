@@ -32,6 +32,7 @@ class Localization
         'ja' => 'ja',
         'ko' => 'ko_KR',
         'nl' => 'nl_NL',
+        'no' => 'no_NB',
         'pl' => 'pl_PL',
         'pt' => 'pl_PT',
         'pt_BR' => 'pt_BR',
