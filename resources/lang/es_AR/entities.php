@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Creado el  :timeLength por :user',
     'meta_updated' => 'Actualizado el :timeLength',
     'meta_updated_name' => 'Actualizado el :timeLength por :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Seleccione entidad',
     'images' => 'Imágenes',
     'my_recent_drafts' => 'Mis borradores recientes',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'una vez habilitado, Estos permisos tendrán prioridad por encima de cualquier permiso establecido.',
     'permissions_enable' => 'Habilitar permisos custom',
     'permissions_save' => 'Guardar permisos',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Buscar resultados',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Crear nuevo capítulo',
     'chapters_delete' => 'Borrar capítulo',
     'chapters_delete_named' => 'Borrar capítulo :chapterName',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
+    'chapters_delete_explain' => 'Esto eliminará el capítulo con el nombre \':chapterName\'. También se eliminarán todas las páginas que existen dentro de este capítulo.',
     'chapters_delete_confirm' => '¿Está seguro de borrar este capítulo?',
     'chapters_edit' => 'Editar capítulo',
     'chapters_edit_named' => 'Editar capítulo :chapterName',
