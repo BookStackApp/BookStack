@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Phiên bản Trang',
     'pages_revisions_named' => 'Phiên bản Trang cho :pageName',
     'pages_revision_named' => 'Phiên bản Trang cho :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Tạo bởi',
     'pages_revisions_date' => 'Ngày của Phiên bản',
     'pages_revisions_number' => '#',
