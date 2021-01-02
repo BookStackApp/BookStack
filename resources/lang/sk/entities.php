@@ -210,6 +210,7 @@ return [
     'pages_revisions' => 'Revízie stránky',
     'pages_revisions_named' => 'Revízie stránky :pageName',
     'pages_revision_named' => 'Revízia stránky :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Vytvoril',
     'pages_revisions_date' => 'Dátum revízie',
     'pages_revisions_number' => '#',
