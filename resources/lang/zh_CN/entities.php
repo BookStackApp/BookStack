@@ -210,6 +210,7 @@ return [
     'pages_revisions' => '页面修订',
     'pages_revisions_named' => '“:pageName”页面修订',
     'pages_revision_named' => '“:pageName”页面修订',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => '创建者',
     'pages_revisions_date' => '修订日期',
     'pages_revisions_number' => '#',
