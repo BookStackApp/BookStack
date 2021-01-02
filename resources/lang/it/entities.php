@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Creato :timeLength da :user',
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Selezione Entità',
     'images' => 'Immagini',
     'my_recent_drafts' => 'Bozze Recenti',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Una volta abilitati, questi permessi avranno la priorità su tutti gli altri.',
     'permissions_enable' => 'Abilita Permessi Custom',
     'permissions_save' => 'Salva Permessi',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Risultati Ricerca',
