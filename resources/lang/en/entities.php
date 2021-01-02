@@ -210,7 +210,7 @@ return [
     'pages_revisions' => 'Page Revisions',
     'pages_revisions_named' => 'Page Revisions for :pageName',
     'pages_revision_named' => 'Page Revision for :pageName',
-    'pages_revision_restored_from' => 'Restored from #:id ":summary"',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Created By',
     'pages_revisions_date' => 'Revision Date',
     'pages_revisions_number' => '#',

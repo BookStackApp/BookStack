@@ -66,6 +66,28 @@ class PageRevisionTest extends TestCase
         $pageView->assertSee('def456');
     }
 
+    public function test_page_revision_restore_sets_new_revision_with_summary()
+    {
+        $this->asEditor();
+
+        $pageRepo = app(PageRepo::class);
+        $page = Page::first();
+        $pageRepo->update($page, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'My first update']);
+        $pageRepo->update($page, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => '']);
+        $page->refresh();
+
+        $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
+        $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $page->refresh();
+
+        $this->assertDatabaseHas('page_revisions', [
+            'page_id' => $page->id,
+            'text' => 'new contente def456',
+            'type' => 'version',
+            'summary' => "Restored from #{$revToRestore->id}; My first update",
+        ]);
+    }
+
     public function test_page_revision_count_increments_on_update()
     {
         $page = Page::first();

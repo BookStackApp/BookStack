@@ -220,7 +220,7 @@ class PageRepo
     /**
      * Saves a page revision into the system.
      */
-    protected function savePageRevision(Page $page, string $summary = null)
+    protected function savePageRevision(Page $page, string $summary = null): PageRevision
     {
         $revision = new PageRevision($page->getAttributes());
 
@@ -287,8 +287,6 @@ class PageRepo
     {
         $page->revision_count++;
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
-        $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
-        $this->savePageRevision($page, $summary);
 
         $page->fill($revision->toArray());
         $content = new PageContent($page);
@@ -296,8 +294,11 @@ class PageRepo
         $page->updated_by = user()->id;
         $page->refreshSlug();
         $page->save();
-
         $page->indexForSearch();
+
+        $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
+        $this->savePageRevision($page, $summary);
+
         Activity::addForEntity($page, ActivityType::PAGE_RESTORE);
         return $page;
     }
