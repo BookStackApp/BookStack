@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Skapad :timeLength av :user',
     'meta_updated' => 'Uppdaterad :timeLength',
     'meta_updated_name' => 'Uppdaterad :timeLength av :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Välj enhet',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mina nyaste utkast',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Dessa rättigheter kommer att överskrida eventuella rollbaserade rättigheter.',
     'permissions_enable' => 'Aktivera anpassade rättigheter',
     'permissions_save' => 'Spara rättigheter',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Sökresultat',
