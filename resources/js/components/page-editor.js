@@ -12,7 +12,7 @@ class PageEditor {
         this.editorType = this.$opts.editorType;
         this.pageId = Number(this.$opts.pageId);
         this.isNewDraft = this.$opts.pageNewDraft === 'true';
-        this.hasDefaultTitle = this.$opts.isDefaultTitle || false;
+        this.hasDefaultTitle = this.$opts.hasDefaultTitle || false;
 
         // Elements
         this.container = this.$el;
@@ -74,6 +74,7 @@ class PageEditor {
     }
 
     setInitialFocus() {
+        console.log({'HAS': this.hasDefaultTitle});
         if (this.hasDefaultTitle) {
             return this.titleElem.select();
         }

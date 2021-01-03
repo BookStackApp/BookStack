@@ -12,7 +12,8 @@
 			"created_at": "2019-05-05 21:49:58",
 			"updated_at": "2020-07-04 15:50:58",
 			"created_by": 1,
-			"updated_by": 1
+			"updated_by": 1,
+			"owned_by": 1
 		},
 		{
 			"id": 2,
@@ -26,7 +27,8 @@
 			"created_at": "2019-05-05 21:53:30",
 			"updated_at": "2019-06-06 12:03:04",
 			"created_by": 1,
-			"updated_by": 1
+			"updated_by": 1,
+			"owned_by": 1
 		},
 		{
 			"id": 3,
@@ -40,7 +42,8 @@
 			"created_at": "2019-05-05 21:53:49",
 			"updated_at": "2019-12-18 21:56:52",
 			"created_by": 1,
-			"updated_by": 1
+			"updated_by": 1,
+			"owned_by": 1
 		}
 	],
 	"total": 322

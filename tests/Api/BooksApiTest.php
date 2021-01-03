@@ -75,7 +75,10 @@ class BooksApiTest extends TestCase
             ],
             'updated_by' => [
                 'name' => $book->createdBy->name,
-            ]
+            ],
+            'owned_by' => [
+                'name' => $book->ownedBy->name
+            ],
         ]);
     }
 

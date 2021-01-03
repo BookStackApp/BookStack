@@ -31,11 +31,10 @@ abstract class BookChild extends Entity
 
     /**
      * Get the book this page sits in.
-     * @return BelongsTo
      */
     public function book(): BelongsTo
     {
-        return $this->belongsTo(Book::class);
+        return $this->belongsTo(Book::class)->withTrashed();
     }
 
     /**
