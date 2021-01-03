@@ -74,7 +74,12 @@ class ViewService
             $query->whereIn('viewable_type', $this->entityProvider->getMorphClasses($filterModels));
         }
 
-        return $query->with('viewable')->skip($skipCount)->take($count)->get()->pluck('viewable');
+        return $query->with('viewable')
+            ->skip($skipCount)
+            ->take($count)
+            ->get()
+            ->pluck('viewable')
+            ->filter();
     }
 
     /**

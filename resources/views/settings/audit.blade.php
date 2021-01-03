@@ -63,7 +63,7 @@
                         @include('partials.table-user', ['user' => $activity->user, 'user_id' => $activity->user_id])
                     </td>
                     <td>{{ $activity->type }}</td>
-                    <td>
+                    <td width="40%">
                         @if($activity->entity)
                             <a href="{{ $activity->entity->getUrl() }}" class="table-entity-item">
                                 <span role="presentation" class="icon text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
