@@ -37,7 +37,7 @@ class BookApiController extends ApiController
     {
         $books = Book::visible();
         return $this->apiListingResponse($books, [
-            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'image_id',
+            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by', 'image_id',
         ]);
     }
 
@@ -59,7 +59,7 @@ class BookApiController extends ApiController
      */
     public function read(string $id)
     {
-        $book = Book::visible()->with(['tags', 'cover', 'createdBy', 'updatedBy'])->findOrFail($id);
+        $book = Book::visible()->with(['tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy'])->findOrFail($id);
         return response()->json($book);
     }
 

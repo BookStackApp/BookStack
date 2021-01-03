@@ -121,7 +121,7 @@ class Page extends BookChild
      */
     public function forJsonDisplay(): Page
     {
-        $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy']);
+        $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
         $refreshed->html = (new PageContent($refreshed))->render();
         return $refreshed;

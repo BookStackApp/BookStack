@@ -43,7 +43,7 @@ class ChapterApiController extends ApiController
         $chapters = Chapter::visible();
         return $this->apiListingResponse($chapters, [
             'id', 'book_id', 'name', 'slug', 'description', 'priority',
-            'created_at', 'updated_at', 'created_by', 'updated_by',
+            'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by',
         ]);
     }
 
@@ -67,7 +67,7 @@ class ChapterApiController extends ApiController
      */
     public function read(string $id)
     {
-        $chapter = Chapter::visible()->with(['tags', 'createdBy', 'updatedBy', 'pages' => function (HasMany $query) {
+        $chapter = Chapter::visible()->with(['tags', 'createdBy', 'updatedBy', 'ownedBy', 'pages' => function (HasMany $query) {
             $query->visible()->get(['id', 'name', 'slug']);
         }])->findOrFail($id);
         return response()->json($chapter);
